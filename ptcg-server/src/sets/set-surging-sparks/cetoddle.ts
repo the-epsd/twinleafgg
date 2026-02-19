@@ -24,7 +24,8 @@ export class Cetoddle extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cetoddle';
-  public fullName: string = 'Cetoddle SSP';
+  public fullName: string = 'Cetoddle (SSP 53)';
+  public legacyFullName = 'Cetoddle SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Draining Fin

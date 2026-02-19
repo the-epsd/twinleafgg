@@ -34,7 +34,8 @@ export class Blazikenex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '89';
   public name: string = 'Blaziken ex';
-  public fullName: string = 'Blaziken ex MA';
+  public fullName: string = 'Blaziken ex (MA 89)';
+  public legacyFullName = 'Blaziken ex MA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

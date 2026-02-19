@@ -41,7 +41,8 @@ export class Vanilluxe extends PokemonCard {
 
   public name: string = 'Vanilluxe';
 
-  public fullName: string = 'Vanilluxe NVI';
+  public fullName: string = 'Vanilluxe (NVI 29)';
+  public legacyFullName = 'Vanilluxe NVI';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -31,5 +31,6 @@ export class Crabrawler extends PokemonCard {
   public setNumber: string = '121';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crabrawler';
-  public fullName: string = 'Crabrawler CEC';
+  public fullName: string = 'Crabrawler (CEC 121)';
+  public legacyFullName = 'Crabrawler CEC';
 }

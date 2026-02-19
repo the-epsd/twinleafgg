@@ -25,7 +25,8 @@ export class Venipede extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '52';
   public name: string = 'Venipede';
-  public fullName: string = 'Venipede BLW';
+  public fullName: string = 'Venipede (BLW 52)';
+  public legacyFullName = 'Venipede BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -48,7 +48,8 @@ export class GarchompV extends PokemonCard {
 
   public name: string = 'Garchomp V';
 
-  public fullName: string = 'Garchomp V ASR';
+  public fullName: string = 'Garchomp V (ASR 117)';
+  public legacyFullName = 'Garchomp V ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

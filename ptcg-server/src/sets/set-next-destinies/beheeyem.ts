@@ -34,7 +34,8 @@ export class Beheeyem extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beheeyem';
-  public fullName: string = 'Beheeyem NXD';
+  public fullName: string = 'Beheeyem (NXD 62)';
+  public legacyFullName = 'Beheeyem NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Brain Control - reveal hand and put one card on bottom of deck

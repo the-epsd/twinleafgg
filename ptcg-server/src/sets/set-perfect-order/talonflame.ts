@@ -31,7 +31,8 @@ export class Talonflame extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public name: string = 'Talonflame';
-  public fullName: string = 'Talonflame M3';
+  public fullName: string = 'Talonflame (M3 14)';
+  public legacyFullName = 'Talonflame M3';
 
   public readonly SKY_HUNT_MARKER = 'SKY_HUNT_MARKER';
 

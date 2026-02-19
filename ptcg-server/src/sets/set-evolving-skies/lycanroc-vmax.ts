@@ -40,7 +40,8 @@ export class LycanrocVmax extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lycanroc VMAX';
-  public fullName: string = 'Lycanroc VMAX EVS';
+  public fullName: string = 'Lycanroc VMAX (EVS 92)';
+  public legacyFullName = 'Lycanroc VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hunting Claw

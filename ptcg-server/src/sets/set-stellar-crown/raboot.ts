@@ -28,5 +28,6 @@ export class Raboot extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '27';
   public name: string = 'Raboot';
-  public fullName: string = 'Raboot SCR';
+  public fullName: string = 'Raboot (SCR 27)';
+  public legacyFullName = 'Raboot SCR';
 }

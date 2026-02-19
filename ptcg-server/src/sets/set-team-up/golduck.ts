@@ -40,7 +40,8 @@ export class Golduck extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golduck';
-  public fullName: string = 'Golduck TEU';
+  public fullName: string = 'Golduck (TEU 27)';
+  public legacyFullName = 'Golduck TEU';
 
   public amnesiaAttack: Attack | null = null;
 

@@ -30,7 +30,8 @@ export class Riolu extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
   public name = 'Riolu';
-  public fullName = 'Riolu UPR';
+  public fullName = 'Riolu (UPR 66)';
+  public legacyFullName = 'Riolu UPR';
 
   public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
   public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';

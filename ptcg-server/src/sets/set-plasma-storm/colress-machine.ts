@@ -23,7 +23,8 @@ export class ColressMachine extends TrainerCard {
 
   public name: string = 'Colress Machine';
 
-  public fullName: string = 'Colress Machine PLS';
+  public fullName: string = 'Colress Machine (PLS 119)';
+  public legacyFullName = 'Colress Machine PLS';
 
   public text: string =
     'Search your deck for a Plasma Energy card and attach it to 1 of your Team Plasma Pokémon. Shuffle your deck afterward.';

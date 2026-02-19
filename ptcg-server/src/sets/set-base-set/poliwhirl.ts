@@ -15,7 +15,8 @@ export class Poliwhirl extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Poliwhirl BS';
+  public fullName = 'Poliwhirl (BS 38)';
+  public legacyFullName = 'Poliwhirl BS';
 
   public cardType = CardType.WATER;
 

@@ -22,7 +22,8 @@ export class ScoopUp extends TrainerCard {
 
   public name: string = 'Scoop Up';
 
-  public fullName: string = 'Scoop Up BS';
+  public fullName: string = 'Scoop Up (BS 78)';
+  public legacyFullName = 'Scoop Up BS';
 
   public text: string =
     'Choose 1 of your Pokémon in play and return its Basic Pokémon card to your hand. (Discard all cards attached to that card.)';

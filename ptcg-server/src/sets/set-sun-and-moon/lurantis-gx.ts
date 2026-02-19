@@ -53,7 +53,8 @@ export class LurantisGX extends PokemonCard {
 
   public name: string = 'Lurantis-GX';
 
-  public fullName: string = 'Lurantis-GX SUM';
+  public fullName: string = 'Lurantis-GX (SUM 15)';
+  public legacyFullName = 'Lurantis-GX SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Flower Supply

@@ -21,7 +21,8 @@ export class Atticus extends TrainerCard {
   
   public name = 'Atticus';
   
-  public fullName = 'Atticus PAF';
+  public fullName = 'Atticus (PAF 77)';
+  public legacyFullName = 'Atticus PAF';
 
   public text: string =
     'You can use this card only if your opponent\'s Active Pokémon is Poisoned.' +

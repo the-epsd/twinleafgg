@@ -16,7 +16,8 @@ export class PokeKid extends TrainerCard {
   public setNumber: string = '173';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poké Kid';
-  public fullName: string = 'Poké Kid SSH';
+  public fullName: string = 'Poké Kid (SSH 173)';
+  public legacyFullName = 'Poké Kid SSH';
   public text: string = 'Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

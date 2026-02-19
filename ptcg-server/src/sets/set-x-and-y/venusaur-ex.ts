@@ -36,7 +36,8 @@ export class VenusaurEx extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Venusaur-EX';
-  public fullName: string = 'Venusaur-EX XY';
+  public fullName: string = 'Venusaur-EX (XY 1)';
+  public legacyFullName = 'Venusaur-EX XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: AGENTS-patterns.md (Poison)

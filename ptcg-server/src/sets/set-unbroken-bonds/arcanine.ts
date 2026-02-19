@@ -40,7 +40,8 @@ export class Arcanine extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '22';
   public name: string = 'Arcanine';
-  public fullName: string = 'Arcanine UNB';
+  public fullName: string = 'Arcanine (UNB 22)';
+  public legacyFullName = 'Arcanine UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

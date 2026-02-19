@@ -13,7 +13,8 @@ export class SceptileSpiritLink extends TrainerCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sceptile Spirit Link';
-  public fullName: string = 'Sceptile Spirit Link AOR';
+  public fullName: string = 'Sceptile Spirit Link (AOR 80)';
+  public legacyFullName = 'Sceptile Spirit Link AOR';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Sceptile-EX.';
 
   // Ref: set-phantom-forces/manectric-spirit-link.ts (Spirit Link - no-op, handled by engine)

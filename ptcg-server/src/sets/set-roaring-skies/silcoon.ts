@@ -34,7 +34,8 @@ export class Silcoon extends PokemonCard {
 
   public name: string = 'Silcoon';
 
-  public fullName: string = 'Silcoon ROS';
+  public fullName: string = 'Silcoon (ROS 4)';
+  public legacyFullName = 'Silcoon ROS';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -13,7 +13,8 @@ export class MirageGate extends TrainerCard {
   public setNumber: string = '163';
   public regulationMark = 'F';
   public name: string = 'Mirage Gate';
-  public fullName: string = 'Mirage Gate LOR';
+  public fullName: string = 'Mirage Gate (LOR 163)';
+  public legacyFullName = 'Mirage Gate LOR';
 
   public text: string =
     `You can use this card only if you have 7 or more cards in the Lost Zone. 

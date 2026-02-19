@@ -32,7 +32,8 @@ export class Arcanine extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arcanine';
-  public fullName: string = 'Arcanine NXD 13';
+  public fullName: string = 'Arcanine (NXD 13)';
+  public legacyFullName = 'Arcanine NXD 13';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Crunch

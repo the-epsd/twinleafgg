@@ -36,7 +36,8 @@ export class Jigglypuff extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jigglypuff';
-  public fullName: string = 'Jigglypuff XY';
+  public fullName: string = 'Jigglypuff (XY 87)';
+  public legacyFullName = 'Jigglypuff XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Heartfelt Song

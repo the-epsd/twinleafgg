@@ -38,7 +38,8 @@ export class Excadrill2 extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Excadrill';
-  public fullName: string = 'Excadrill PRC 97';
+  public fullName: string = 'Excadrill (PRC 97)';
+  public legacyFullName = 'Excadrill PRC 97';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dredge

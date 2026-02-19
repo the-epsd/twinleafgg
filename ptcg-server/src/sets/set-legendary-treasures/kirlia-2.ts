@@ -36,7 +36,8 @@ export class Kirlia2 extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kirlia';
-  public fullName: string = 'Kirlia LTR 60';
+  public fullName: string = 'Kirlia (LTR 60)';
+  public legacyFullName = 'Kirlia LTR 60';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mind Bend

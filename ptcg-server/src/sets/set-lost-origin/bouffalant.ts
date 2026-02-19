@@ -44,7 +44,8 @@ export class Bouffalant extends PokemonCard {
 
   public name: string = 'Bouffalant';
 
-  public fullName: string = 'Bouffalant LOR';
+  public fullName: string = 'Bouffalant (LOR 148)';
+  public legacyFullName = 'Bouffalant LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

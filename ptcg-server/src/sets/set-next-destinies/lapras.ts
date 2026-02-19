@@ -30,7 +30,8 @@ export class Lapras extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lapras';
-  public fullName: string = 'Lapras NXD';
+  public fullName: string = 'Lapras (NXD 25)';
+  public legacyFullName = 'Lapras NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Call for Family - search for up to 2 Basic Pokémon

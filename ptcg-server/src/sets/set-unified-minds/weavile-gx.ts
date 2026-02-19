@@ -88,7 +88,8 @@ export class WeavileGX extends PokemonCard {
 
   public set: string = 'UNM';
   public name: string = 'Weavile-GX';
-  public fullName: string = 'Weavile-GX UNM';
+  public fullName: string = 'Weavile-GX (UNM 132)';
+  public legacyFullName = 'Weavile-GX UNM';
   public setNumber: string = '132';
   public cardImage: string = 'assets/cardback.png';
 

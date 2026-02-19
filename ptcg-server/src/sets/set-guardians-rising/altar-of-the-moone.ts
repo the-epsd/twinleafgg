@@ -15,7 +15,8 @@ export class AltarOfTheMoone extends TrainerCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Altar of the Moone';
-  public fullName: string = 'Altar of the Moone GRI';
+  public fullName: string = 'Altar of the Moone (GRI 117)';
+  public legacyFullName = 'Altar of the Moone GRI';
   public text: string = 'The Retreat Cost of each Pokémon (both yours and your opponent\'s) that has any Psychic or [D] Energy attached to it is ColorlessColorless less.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

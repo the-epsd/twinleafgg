@@ -35,7 +35,8 @@ export class Toedscruelex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '22';
   public name: string = 'Toedscruel ex';
-  public fullName: string = 'Toedscruel ex OBF';
+  public fullName: string = 'Toedscruel ex (OBF 22)';
+  public legacyFullName = 'Toedscruel ex OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

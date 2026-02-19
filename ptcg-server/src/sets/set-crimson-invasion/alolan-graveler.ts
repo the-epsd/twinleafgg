@@ -36,7 +36,8 @@ export class AlolanGraveler extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Graveler';
-  public fullName: string = 'Alolan Graveler CIN';
+  public fullName: string = 'Alolan Graveler (CIN 33)';
+  public legacyFullName = 'Alolan Graveler CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Self-Destruct

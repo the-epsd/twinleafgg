@@ -18,7 +18,8 @@ export class BuffPadding extends TrainerCard {
 
   public name: string = 'Buff Padding';
 
-  public fullName: string = 'Buff Padding TEU';
+  public fullName: string = 'Buff Padding (TEU 136)';
+  public legacyFullName = 'Buff Padding TEU';
 
   public text: string = 'If the Pokémon this card is attached to has a Retreat Cost of exactly 4, it gets +50 HP.';
 

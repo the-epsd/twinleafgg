@@ -41,7 +41,8 @@ export class Ribombee extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ribombee';
-  public fullName: string = 'Ribombee SUM';
+  public fullName: string = 'Ribombee (SUM 93)';
+  public legacyFullName = 'Ribombee SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Curative Pollen

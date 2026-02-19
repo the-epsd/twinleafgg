@@ -35,7 +35,8 @@ export class Magnemite extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Magnemite BS';
+  public fullName = 'Magnemite (BS 53)';
+  public legacyFullName = 'Magnemite BS';
 
   public name = 'Magnemite';
 

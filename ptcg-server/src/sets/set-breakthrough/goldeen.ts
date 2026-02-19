@@ -28,7 +28,8 @@ export class Goldeen extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Goldeen';
-  public fullName: string = 'Goldeen BKT';
+  public fullName: string = 'Goldeen (BKT 27)';
+  public legacyFullName = 'Goldeen BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Reckless Charge

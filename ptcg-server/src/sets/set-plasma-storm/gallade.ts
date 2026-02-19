@@ -41,7 +41,8 @@ export class Gallade extends PokemonCard {
 
   public name: string = 'Gallade';
 
-  public fullName: string = 'Gallade PLS';
+  public fullName: string = 'Gallade (PLS 61)';
+  public legacyFullName = 'Gallade PLS';
 
   public cardImage: string = 'assets/cardback.png';
 

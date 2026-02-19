@@ -4,24 +4,28 @@ import { MetalEnergyN1 } from '../set-neo-genesis/other-prints';
 import { Pikachu } from '../set-base-set/pikachu';
 export class BebesSearchRR extends BebesSearch {
   public setNumber = '89';
-  public fullName: string = 'Bebe\'s Search RR';
+  public fullName: string = 'Bebe\'s Search (RR 89)';
+  public legacyFullName = 'Bebe\'s Search RR';
   public set = 'RR';
 }
 
 export class DarknessEnergySpecialRR extends DarknessEnergySpecial {
   public setNumber = '99';
-  public fullName: string = 'Darkness Energy RR';
+  public fullName: string = 'Darkness Energy (RR 99)';
+  public legacyFullName = 'Darkness Energy RR';
   public set = 'RR';
 }
 
 export class MetalEnergyN1RR extends MetalEnergyN1 {
   public setNumber = '100';
-  public fullName: string = 'Metal Energy RR';
+  public fullName: string = 'Metal Energy (RR 100)';
+  public legacyFullName = 'Metal Energy RR';
   public set = 'RR';
 }
 
 export class PikachuRR extends Pikachu {
   public setNumber = '112';
-  public fullName: string = 'Pikachu RR';
+  public fullName: string = 'Pikachu (RR 112)';
+  public legacyFullName = 'Pikachu RR';
   public set = 'RR';
 }

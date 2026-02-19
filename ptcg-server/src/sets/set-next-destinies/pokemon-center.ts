@@ -18,7 +18,8 @@ export class PokemonCenter extends TrainerCard {
 
   public name: string = 'Pokémon Center';
 
-  public fullName: string = 'Pokemon Center NXD';
+  public fullName: string = 'Pokémon Center (NXD 90)';
+  public legacyFullName = 'Pokemon Center NXD';
 
   public cardImage: string = 'assets/cardback.png';
 

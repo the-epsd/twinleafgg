@@ -36,7 +36,8 @@ export class Absol extends PokemonCard {
   public setNumber: string = '133';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Absol';
-  public fullName: string = 'Absol CEC';
+  public fullName: string = 'Absol (CEC 133)';
+  public legacyFullName = 'Absol CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ominous News

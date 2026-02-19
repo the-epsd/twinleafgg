@@ -13,7 +13,8 @@ export class CrystalShard extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'DX';
   public name: string = 'Crystal Shard';
-  public fullName: string = 'Crystal Shard DX';
+  public fullName: string = 'Crystal Shard (DX 85)';
+  public legacyFullName = 'Crystal Shard DX';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
 

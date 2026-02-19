@@ -36,7 +36,8 @@ export class Carnivine extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carnivine';
-  public fullName: string = 'Carnivine SLG';
+  public fullName: string = 'Carnivine (SLG 6)';
+  public legacyFullName = 'Carnivine SLG';
 
   public usedFlickPoison = false;
 

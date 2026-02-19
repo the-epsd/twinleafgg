@@ -34,7 +34,8 @@ export class Masquerain extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Masquerain';
-  public fullName: string = 'Masquerain PLB';
+  public fullName: string = 'Masquerain (PLB 2)';
+  public legacyFullName = 'Masquerain PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {

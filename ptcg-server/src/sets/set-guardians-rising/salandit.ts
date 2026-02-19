@@ -26,7 +26,7 @@ export class Salandit extends PokemonCard {
       name: 'Venoshock',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 40 more damage.'
     }
   ];
@@ -35,7 +35,8 @@ export class Salandit extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salandit';
-  public fullName: string = 'Salandit GRI';
+  public fullName: string = 'Salandit (GRI 15)';
+  public legacyFullName = 'Salandit GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Venoshock

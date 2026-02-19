@@ -25,7 +25,8 @@ export class Eri extends TrainerCard {
 
   public name: string = 'Eri';
 
-  public fullName: string = 'Eri TEF';
+  public fullName: string = 'Eri (TEF 146)';
+  public legacyFullName = 'Eri TEF';
 
   public text: string =
     'Your opponent reveals their hand. Discard up to 2 Item cards you find there.';

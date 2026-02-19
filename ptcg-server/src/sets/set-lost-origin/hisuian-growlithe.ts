@@ -37,7 +37,8 @@ export class HisuianGrowlithe extends PokemonCard {
 
   public name: string = 'Hisuian Growlithe';
 
-  public fullName: string = 'Hisuian Growlithe LOR';
+  public fullName: string = 'Hisuian Growlithe (LOR 83)';
+  public legacyFullName = 'Hisuian Growlithe LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Singe

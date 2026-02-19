@@ -89,7 +89,8 @@ export class Marshadow extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marshadow';
-  public fullName: string = 'Marshadow CEC';
+  public fullName: string = 'Marshadow (CEC 103)';
+  public legacyFullName = 'Marshadow CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shadow Imitation

@@ -60,7 +60,8 @@ export class ZinniasResolve extends TrainerCard {
   public setNumber: string = '164';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zinnia\'s Resolve';
-  public fullName: string = 'Zinnia\'s Resolve EVS';
+  public fullName: string = 'Zinnia\'s Resolve (EVS 164)';
+  public legacyFullName = 'Zinnia\'s Resolve EVS';
 
   public text: string =
     `You can play this card only if you discard 2 other cards from your hand.

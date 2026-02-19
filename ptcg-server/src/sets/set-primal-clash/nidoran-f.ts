@@ -31,5 +31,6 @@ export class NidoranF extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoran ♀';
-  public fullName: string = 'Nidoran ♀ PRC';
+  public fullName: string = 'Nidoran ♀ (PRC 66)';
+  public legacyFullName = 'Nidoran ♀ PRC';
 }

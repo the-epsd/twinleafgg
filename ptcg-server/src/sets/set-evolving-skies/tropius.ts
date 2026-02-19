@@ -39,7 +39,8 @@ export class Tropius extends PokemonCard {
 
   public name: string = 'Tropius';
 
-  public fullName: string = 'Tropius EVS';
+  public fullName: string = 'Tropius (EVS 6)';
+  public legacyFullName = 'Tropius EVS';
 
   // public damageDealt = false;
 

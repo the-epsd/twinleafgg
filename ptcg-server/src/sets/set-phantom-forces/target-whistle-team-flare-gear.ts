@@ -58,7 +58,8 @@ export class TargetWhistleTeamFlareGear extends TrainerCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Target Whistle';
-  public fullName: string = 'Target Whistle Team Flare Gear PHF';
+  public fullName: string = 'Target Whistle (PHF 106)';
+  public legacyFullName = 'Target Whistle Team Flare Gear PHF';
   public text: string = 'Put a Basic Pokémon from your opponent\'s discard pile onto his or her Bench.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -49,7 +49,8 @@ export class Mismagius extends PokemonCard {
 
   public name: string = 'Mismagius';
 
-  public fullName: string = 'Mismagius SIT';
+  public fullName: string = 'Mismagius (SIT 64)';
+  public legacyFullName = 'Mismagius SIT';
 
   public damageDealt = false;
 

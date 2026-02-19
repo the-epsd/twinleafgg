@@ -27,7 +27,7 @@ export class Watchog extends PokemonCard {
       name: 'Slam',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 60 damage for each heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Watchog extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Watchog';
-  public fullName: string = 'Watchog GRI';
+  public fullName: string = 'Watchog (GRI 108)';
+  public legacyFullName = 'Watchog GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Scrutinize

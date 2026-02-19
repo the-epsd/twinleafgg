@@ -28,7 +28,8 @@ export class Exeggcute extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Exeggcute';
-  public fullName: string = 'Exeggcute UNM';
+  public fullName: string = 'Exeggcute (UNM 73)';
+  public legacyFullName = 'Exeggcute UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Leech Seed

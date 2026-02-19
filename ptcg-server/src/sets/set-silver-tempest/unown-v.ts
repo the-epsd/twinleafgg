@@ -36,7 +36,8 @@ export class UnownV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
   public name: string = 'Unown V';
-  public fullName: string = 'Unown V SIT';
+  public fullName: string = 'Unown V (SIT 65)';
+  public legacyFullName = 'Unown V SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

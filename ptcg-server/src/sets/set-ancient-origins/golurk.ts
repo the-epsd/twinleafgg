@@ -29,7 +29,7 @@ export class Golurk extends PokemonCard {
       name: 'Superpower',
       cost: [C, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 40 more damage. If you do, this Pokémon does 20 damage to itself.'
     }
   ];
@@ -38,7 +38,8 @@ export class Golurk extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golurk';
-  public fullName: string = 'Golurk AOR';
+  public fullName: string = 'Golurk (AOR 35)';
+  public legacyFullName = 'Golurk AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Double Type (passive - adds Fighting type)

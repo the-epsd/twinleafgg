@@ -27,7 +27,7 @@ export class Hypno extends PokemonCard {
       name: 'Stir the Brain',
       cost: [P, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each card in your opponent\'s hand.'
     }
   ];
@@ -36,7 +36,8 @@ export class Hypno extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hypno';
-  public fullName: string = 'Hypno UNB';
+  public fullName: string = 'Hypno (UNB 72)';
+  public legacyFullName = 'Hypno UNB';
 
   // TODO: Hypnotic Pendulum ability - "When your opponent's Active Pokémon is Knocked Out, flip a coin. If heads, choose which of your opponent's Benched Pokémon becomes their new Active Pokémon."
   // This requires intercepting the post-KO active promotion system which is not straightforward with current engine facilities.

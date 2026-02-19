@@ -37,7 +37,8 @@ export class Kingler extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kingler';
-  public fullName: string = 'Kingler PHF';
+  public fullName: string = 'Kingler (PHF 14)';
+  public legacyFullName = 'Kingler PHF';
 
   public readonly REDUCE_DAMAGE_MARKER = 'KINGLER_REDUCE_DAMAGE_MARKER';
   public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'KINGLER_CLEAR_REDUCE_DAMAGE_MARKER';

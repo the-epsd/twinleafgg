@@ -41,7 +41,8 @@ export class Machamp extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name: string = 'Machamp';
-  public fullName: string = 'Machamp SF';
+  public fullName: string = 'Machamp (SF 20)';
+  public legacyFullName = 'Machamp SF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Take Out

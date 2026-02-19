@@ -16,7 +16,8 @@ export class Kabu extends TrainerCard {
   public setNumber: string = '163';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kabu';
-  public fullName: string = 'Kabu DAA';
+  public fullName: string = 'Kabu (DAA 163)';
+  public legacyFullName = 'Kabu DAA';
   public text: string = 'Shuffle your hand into your deck. Then, draw 4 cards. If your Active Pokémon is your only Pokémon in play, draw 8 cards instead. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -41,7 +41,8 @@ export class Klinklang extends PokemonCard {
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klinklang';
-  public fullName: string = 'Klinklang PLS';
+  public fullName: string = 'Klinklang (PLS 90)';
+  public legacyFullName = 'Klinklang PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Plasma Steel (passive - intercept DealDamageEffect)

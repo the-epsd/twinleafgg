@@ -39,7 +39,8 @@ export class Zygarde extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zygarde';
-  public fullName: string = 'Zygarde FCO';
+  public fullName: string = 'Zygarde (FCO 52)';
+  public legacyFullName = 'Zygarde FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lookout

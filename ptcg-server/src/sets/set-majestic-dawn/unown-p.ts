@@ -41,7 +41,8 @@ export class UnownP extends PokemonCard {
 
   public set: string = 'MD';
   public name: string = 'Unown P';
-  public fullName: string = 'Unown P MD';
+  public fullName: string = 'Unown P (MD 33)';
+  public legacyFullName = 'Unown P MD';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '33';
 

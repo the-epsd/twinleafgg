@@ -23,7 +23,7 @@ export class AegislashVmax extends PokemonCard {
       name: 'Max Hack',
       cost: [M, M, C],
       damage: 160,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each Prize card you have taken.'
     }
   ];
@@ -33,7 +33,8 @@ export class AegislashVmax extends PokemonCard {
   public setNumber: string = '127';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aegislash VMAX';
-  public fullName: string = 'Aegislash VMAX VIV';
+  public fullName: string = 'Aegislash VMAX (VIV 127)';
+  public legacyFullName = 'Aegislash VMAX VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Max Hack

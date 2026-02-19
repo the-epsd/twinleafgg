@@ -78,7 +78,8 @@ export class Duskull extends PokemonCard {
 
   public name: string = 'Duskull';
 
-  public fullName: string = 'Duskull SFA';
+  public fullName: string = 'Duskull (SFA 18)';
+  public legacyFullName = 'Duskull SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

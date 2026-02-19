@@ -48,7 +48,8 @@ export class LatiosGx extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Latios-GX';
-  public fullName: string = 'Latios-GX UNM';
+  public fullName: string = 'Latios-GX (UNM 78)';
+  public legacyFullName = 'Latios-GX UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Power Bind (passive - can't attack if 4 or fewer Pokemon in play)

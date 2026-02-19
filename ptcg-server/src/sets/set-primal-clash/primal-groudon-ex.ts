@@ -40,7 +40,8 @@ export class PrimalGroudonEx extends PokemonCard {
 
   public set: string = 'PRC';
   public name: string = 'Primal Groudon-EX';
-  public fullName: string = 'Primal Groudon-EX PRC';
+  public fullName: string = 'Primal Groudon-EX (PRC 86)';
+  public legacyFullName = 'Primal Groudon-EX PRC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
 

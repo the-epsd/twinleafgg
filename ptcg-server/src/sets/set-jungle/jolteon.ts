@@ -39,7 +39,8 @@ export class Jolteon extends PokemonCard {
 
   public name: string = 'Jolteon';
 
-  public fullName: string = 'Jolteon JU';
+  public fullName: string = 'Jolteon (JU 4)';
+  public legacyFullName = 'Jolteon JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

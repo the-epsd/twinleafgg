@@ -30,7 +30,8 @@ export class Sunkern extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public name: string = 'Sunkern';
-  public fullName: string = 'Sunkern HS';
+  public fullName: string = 'Sunkern (HS 85)';
+  public legacyFullName = 'Sunkern HS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

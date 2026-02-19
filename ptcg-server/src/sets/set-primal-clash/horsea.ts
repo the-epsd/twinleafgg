@@ -29,7 +29,8 @@ export class Horsea extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Horsea';
-  public fullName: string = 'Horsea PRC';
+  public fullName: string = 'Horsea (PRC 30)';
+  public legacyFullName = 'Horsea PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble

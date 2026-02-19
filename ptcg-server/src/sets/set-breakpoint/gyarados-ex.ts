@@ -37,7 +37,8 @@ export class GyaradosEx extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gyarados-EX';
-  public fullName: string = 'Gyarados-EX BKP';
+  public fullName: string = 'Gyarados-EX (BKP 26)';
+  public legacyFullName = 'Gyarados-EX BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stormy Seas

@@ -14,7 +14,8 @@ export class ShrineOfMemories extends TrainerCard {
   public setNumber: string = '139';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shrine of Memories';
-  public fullName: string = 'Shrine of Memories PRC';
+  public fullName: string = 'Shrine of Memories (PRC 139)';
+  public legacyFullName = 'Shrine of Memories PRC';
   public text: string = 'Each player\'s evolved Pokémon can use any attack from its previous Evolutions. (That player still needs the necessary Energy to use each attack.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

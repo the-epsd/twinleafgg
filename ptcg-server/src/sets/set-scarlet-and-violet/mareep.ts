@@ -38,6 +38,7 @@ export class Mareep extends PokemonCard {
 
   public name: string = 'Mareep';
 
-  public fullName: string = 'Mareep SVI';
+  public fullName: string = 'Mareep (SVI 66)';
+  public legacyFullName = 'Mareep SVI';
 
 }

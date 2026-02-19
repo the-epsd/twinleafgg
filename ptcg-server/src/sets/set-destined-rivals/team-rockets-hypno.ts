@@ -35,7 +35,8 @@ export class TeamRocketsHypno extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Hypno';
-  public fullName: string = 'Team Rocket\'s Hypno DRI';
+  public fullName: string = 'Team Rocket\'s Hypno (DRI 80)';
+  public legacyFullName = 'Team Rocket\'s Hypno DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

@@ -28,7 +28,8 @@ export class Metagross extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '63';
   public name: string = 'Metagross';
-  public fullName: string = 'Metagross JTG';
+  public fullName: string = 'Metagross (JTG 63)';
+  public legacyFullName = 'Metagross JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -23,7 +23,8 @@ export class Tynamo extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tynamo';
-  public fullName: string = 'Tynamo SV11B';
+  public fullName: string = 'Tynamo (BLK 30)';
+  public legacyFullName = 'Tynamo SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

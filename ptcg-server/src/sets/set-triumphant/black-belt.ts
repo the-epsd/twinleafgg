@@ -18,7 +18,8 @@ export class BlackBelt extends TrainerCard {
 
   public name: string = 'Black Belt';
 
-  public fullName: string = 'Black Belt TM';
+  public fullName: string = 'Black Belt (TM 85)';
+  public legacyFullName = 'Black Belt TM';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -33,7 +33,8 @@ export class Bouffalantex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '77';
   public name: string = 'Bouffalant ex';
-  public fullName: string = 'Bouffalant ex SV11W';
+  public fullName: string = 'Bouffalant ex (WHT 77)';
+  public legacyFullName = 'Bouffalant ex SV11W';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Bouffer: reduce damage taken by 30 after Weakness/Resistance

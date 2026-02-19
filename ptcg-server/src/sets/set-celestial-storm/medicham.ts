@@ -22,7 +22,7 @@ export class Medicham extends PokemonCard {
       name: 'Strike of Enlightenment',
       cost: [F, F],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon\'s remaining HP is 30 or less, this attack does 160 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Medicham extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Medicham';
-  public fullName: string = 'Medicham CES';
+  public fullName: string = 'Medicham (CES 77)';
+  public legacyFullName = 'Medicham CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Strike of Enlightenment

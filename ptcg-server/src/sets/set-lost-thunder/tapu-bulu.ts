@@ -20,7 +20,7 @@ export class TapuBulu extends PokemonCard {
       name: 'Heavy Punch',
       cost: [G, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage for each of your opponent\'s Benched Pokémon.'
     },
     {
@@ -35,7 +35,8 @@ export class TapuBulu extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tapu Bulu';
-  public fullName: string = 'Tapu Bulu LOT';
+  public fullName: string = 'Tapu Bulu (LOT 37)';
+  public legacyFullName = 'Tapu Bulu LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Heavy Punch

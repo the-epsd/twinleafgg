@@ -29,7 +29,7 @@ export class HawluchaEx extends PokemonCard {
       name: 'Moonsault Stomp',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 40 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class HawluchaEx extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hawlucha-EX';
-  public fullName: string = 'Hawlucha-EX FFI';
+  public fullName: string = 'Hawlucha-EX (FFI 64)';
+  public legacyFullName = 'Hawlucha-EX FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Counterattack

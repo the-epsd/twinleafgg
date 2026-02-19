@@ -37,7 +37,8 @@ export class Vanilluxe extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanilluxe';
-  public fullName: string = 'Vanilluxe BKT';
+  public fullName: string = 'Vanilluxe (BKT 45)';
+  public legacyFullName = 'Vanilluxe BKT';
 
   public readonly FRIGID_BREATH_MARKER = 'VANILLUXE_BKT_FRIGID_BREATH';
   public readonly CLEAR_FRIGID_BREATH_MARKER = 'VANILLUXE_BKT_CLEAR_FRIGID_BREATH';

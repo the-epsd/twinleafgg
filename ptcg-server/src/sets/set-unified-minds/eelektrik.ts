@@ -22,7 +22,7 @@ export class Eelektrik extends PokemonCard {
       name: 'Overspark',
       cost: [L],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard all [L] Energy from this Pokémon. This attack does 30 damage for each card you discarded in this way.'
     }
   ];
@@ -31,7 +31,8 @@ export class Eelektrik extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eelektrik';
-  public fullName: string = 'Eelektrik UNM';
+  public fullName: string = 'Eelektrik (UNM 65)';
+  public legacyFullName = 'Eelektrik UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Overspark

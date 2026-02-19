@@ -38,7 +38,8 @@ export class CentiskorchV extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Centiskorch V';
-  public fullName: string = 'Centiskorch V DAA';
+  public fullName: string = 'Centiskorch V (DAA 33)';
+  public legacyFullName = 'Centiskorch V DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Radiating Heat

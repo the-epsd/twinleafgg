@@ -35,7 +35,8 @@ export class Diglett extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Diglett';
-  public fullName: string = 'Diglett XY';
+  public fullName: string = 'Diglett (XY 58)';
+  public legacyFullName = 'Diglett XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mine

@@ -30,7 +30,8 @@ export class Dedenne extends PokemonCard {
 
   public name: string = 'Dedenne';
 
-  public fullName: string = 'Dedenne DAA';
+  public fullName: string = 'Dedenne (DAA 78)';
+  public legacyFullName = 'Dedenne DAA';
 
   public cardImage: string = 'assets/cardback.png';
 

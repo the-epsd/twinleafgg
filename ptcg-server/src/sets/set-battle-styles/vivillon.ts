@@ -38,7 +38,8 @@ export class Vivillon extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vivillon';
-  public fullName: string = 'Vivillon BST';
+  public fullName: string = 'Vivillon (BST 13)';
+  public legacyFullName = 'Vivillon BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Vital Powder

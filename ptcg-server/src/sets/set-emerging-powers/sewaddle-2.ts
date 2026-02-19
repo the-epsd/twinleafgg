@@ -27,5 +27,6 @@ export class Sewaddle2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
   public name: string = 'Sewaddle';
-  public fullName: string = 'Sewaddle EPO 4';
+  public fullName: string = 'Sewaddle (EPO 4)';
+  public legacyFullName = 'Sewaddle EPO 4';
 }

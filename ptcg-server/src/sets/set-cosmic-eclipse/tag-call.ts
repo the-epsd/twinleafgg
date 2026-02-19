@@ -75,7 +75,8 @@ export class TagCall extends TrainerCard {
 
   public name: string = 'Tag Call';
 
-  public fullName: string = 'Tag Call CEC';
+  public fullName: string = 'Tag Call (CEC 206)';
+  public legacyFullName = 'Tag Call CEC';
 
   public text: string =
     'Search your deck for up to 2 TAG TEAM cards, reveal them, and put them into your hand. Then, shuffle your deck.';

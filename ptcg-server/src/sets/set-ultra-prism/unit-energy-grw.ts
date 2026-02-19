@@ -20,7 +20,8 @@ export class UnitEnergyGRW extends EnergyCard {
 
   public name = 'Unit Energy GRW';
 
-  public fullName = 'Unit Energy GRW UPR';
+  public fullName = 'Unit Energy GRW (UPR 137)';
+  public legacyFullName = 'Unit Energy GRW UPR';
 
   public text = 'This card provides [C] Energy.' +
     '\n\n' +

@@ -28,7 +28,7 @@ export class Lucario2 extends PokemonCard {
       name: 'Fight Alone',
       cost: [M, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have fewer Pokémon in play than your opponent, this attack does 60 more damage for each Pokémon fewer you have in play.'
     }
   ];
@@ -37,7 +37,8 @@ export class Lucario2 extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lucario';
-  public fullName: string = 'Lucario FCO 63';
+  public fullName: string = 'Lucario (FCO 63)';
+  public legacyFullName = 'Lucario FCO 63';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Vacuum Wave

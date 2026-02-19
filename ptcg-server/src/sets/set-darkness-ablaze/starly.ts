@@ -49,7 +49,8 @@ export class Starly extends PokemonCard {
 
   public name: string = 'Starly';
 
-  public fullName: string = 'Starly DAA';
+  public fullName: string = 'Starly (DAA 145)';
+  public legacyFullName = 'Starly DAA';
 
   private readonly STARLY_SKY_CIRCUS_MARKER = 'STARLY_SKY_CIRCUS_MARKER';
 

@@ -40,7 +40,8 @@ export class AlolanGeodude extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Geodude';
-  public fullName: string = 'Alolan Geodude GRI';
+  public fullName: string = 'Alolan Geodude (GRI 40)';
+  public legacyFullName = 'Alolan Geodude GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Polish

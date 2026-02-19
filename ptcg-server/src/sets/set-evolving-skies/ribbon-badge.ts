@@ -16,7 +16,8 @@ export class RibbonBadge extends TrainerCard {
   public setNumber: string = '155';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ribbon Badge';
-  public fullName: string = 'Ribbon Badge EVS';
+  public fullName: string = 'Ribbon Badge (EVS 155)';
+  public legacyFullName = 'Ribbon Badge EVS';
   public text: string = 'If the Pokémon V this card is attached to has "Sylveon" in its name and is Knocked Out by damage from an attack from your opponent\'s Pokémon, that player takes 1 fewer Prize card. You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

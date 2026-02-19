@@ -31,7 +31,8 @@ export class Gastly extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gastly';
-  public fullName: string = 'Gastly CRE';
+  public fullName: string = 'Gastly (CRE 55)';
+  public legacyFullName = 'Gastly CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sleep Pulse

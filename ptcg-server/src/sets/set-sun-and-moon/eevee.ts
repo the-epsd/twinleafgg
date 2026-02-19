@@ -46,7 +46,8 @@ export class Eevee extends PokemonCard {
 
   public name: string = 'Eevee';
 
-  public fullName: string = 'Eevee SUM';
+  public fullName: string = 'Eevee (SUM 101)';
+  public legacyFullName = 'Eevee SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Energy Evolution (which is a mess but hey it works)

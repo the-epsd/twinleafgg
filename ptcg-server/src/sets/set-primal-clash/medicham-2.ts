@@ -36,7 +36,8 @@ export class Medicham2 extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Medicham';
-  public fullName: string = 'Medicham PRC 81';
+  public fullName: string = 'Medicham (PRC 81)';
+  public legacyFullName = 'Medicham PRC 81';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Calm Mind

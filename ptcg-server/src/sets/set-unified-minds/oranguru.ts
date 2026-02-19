@@ -30,7 +30,8 @@ export class Oranguru extends PokemonCard {
   public setNumber: string = '182';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Oranguru';
-  public fullName: string = 'Oranguru UNM';
+  public fullName: string = 'Oranguru (UNM 182)';
+  public legacyFullName = 'Oranguru UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sage's Riddle

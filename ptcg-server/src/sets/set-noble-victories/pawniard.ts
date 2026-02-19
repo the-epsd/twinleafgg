@@ -27,7 +27,8 @@ export class Pawniard extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pawniard';
-  public fullName: string = 'Pawniard NVI';
+  public fullName: string = 'Pawniard (NVI 81)';
+  public legacyFullName = 'Pawniard NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;

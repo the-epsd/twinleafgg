@@ -12,7 +12,8 @@ export class Machop extends PokemonCard {
 
   public setNumber = '52';
 
-  public fullName = 'Machop BS';
+  public fullName = 'Machop (BS 52)';
+  public legacyFullName = 'Machop BS';
 
   public cardType = CardType.FIGHTING;
 

@@ -81,7 +81,8 @@ export class DrampaGX extends PokemonCard {
 
   public name: string = 'Drampa-GX';
 
-  public fullName: string = 'Drampa-GX GRI';
+  public fullName: string = 'Drampa-GX (GRI 115)';
+  public legacyFullName = 'Drampa-GX GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

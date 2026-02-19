@@ -38,7 +38,8 @@ export class Swoobat extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swoobat';
-  public fullName: string = 'Swoobat VIV';
+  public fullName: string = 'Swoobat (VIV 74)';
+  public legacyFullName = 'Swoobat VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Unaware (passive - prevent all effects of opponent's attacks except damage)

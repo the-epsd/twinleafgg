@@ -40,7 +40,8 @@ export class Aggron extends PokemonCard {
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aggron';
-  public fullName: string = 'Aggron UNB';
+  public fullName: string = 'Aggron (UNB 125)';
+  public legacyFullName = 'Aggron UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Extra-Tight Press

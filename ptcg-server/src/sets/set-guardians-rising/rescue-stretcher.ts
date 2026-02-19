@@ -22,7 +22,8 @@ export class RescueStretcher extends TrainerCard {
 
   public name: string = 'Rescue Stretcher';
 
-  public fullName: string = 'Rescue Stretcher GRI';
+  public fullName: string = 'Rescue Stretcher (GRI 130)';
+  public legacyFullName = 'Rescue Stretcher GRI';
 
   public text: string =
     `Choose 1:

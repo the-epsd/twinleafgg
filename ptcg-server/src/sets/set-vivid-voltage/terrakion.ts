@@ -31,7 +31,7 @@ export class Terrakion extends PokemonCard {
       name: 'Earthen Power',
       cost: [F, F, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have a Stadium in play, this attack does 80 more damage.'
     }
   ];
@@ -41,7 +41,8 @@ export class Terrakion extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Terrakion';
-  public fullName: string = 'Terrakion VIV';
+  public fullName: string = 'Terrakion (VIV 92)';
+  public legacyFullName = 'Terrakion VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Guard Press

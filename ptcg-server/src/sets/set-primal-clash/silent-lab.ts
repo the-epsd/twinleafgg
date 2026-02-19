@@ -19,7 +19,8 @@ export class SilentLab extends TrainerCard {
 
   public name: string = 'Silent Lab';
 
-  public fullName: string = 'Silent Lab PRC';
+  public fullName: string = 'Silent Lab (PRC 140)';
+  public legacyFullName = 'Silent Lab PRC';
 
   public cardImage: string = 'assets/cardback.png';
 

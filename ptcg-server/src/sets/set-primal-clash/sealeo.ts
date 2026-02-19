@@ -36,7 +36,8 @@ export class Sealeo extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sealeo';
-  public fullName: string = 'Sealeo PRC';
+  public fullName: string = 'Sealeo (PRC 47)';
+  public legacyFullName = 'Sealeo PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Freezing Headbutt

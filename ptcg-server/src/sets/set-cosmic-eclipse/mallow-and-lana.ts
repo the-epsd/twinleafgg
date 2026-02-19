@@ -23,7 +23,8 @@ export class MallowAndLana extends TrainerCard {
 
   public name: string = 'Mallow & Lana';
 
-  public fullName: string = 'Mallow & Lana CEC';
+  public fullName: string = 'Mallow & Lana (CEC 198)';
+  public legacyFullName = 'Mallow & Lana CEC';
 
   public text: string =
     `Switch your Active Pokémon with 1 of your Benched Pokémon. 

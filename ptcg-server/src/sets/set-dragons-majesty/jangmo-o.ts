@@ -39,7 +39,8 @@ export class JangmoO extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jangmo-o';
-  public fullName: string = 'Jangmo-o DRM';
+  public fullName: string = 'Jangmo-o (DRM 52)';
+  public legacyFullName = 'Jangmo-o DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rigidify

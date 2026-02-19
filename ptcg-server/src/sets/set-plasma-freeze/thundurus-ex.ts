@@ -30,7 +30,8 @@ export class ThundurusEX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '38';
   public name: string = 'Thundurus-EX';
-  public fullName: string = 'Thundurus EX PLF';
+  public fullName: string = 'Thundurus-EX (PLF 38)';
+  public legacyFullName = 'Thundurus EX PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

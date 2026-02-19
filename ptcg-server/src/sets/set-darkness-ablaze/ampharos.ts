@@ -37,7 +37,8 @@ export class Ampharos extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ampharos';
-  public fullName: string = 'Ampharos DAA';
+  public fullName: string = 'Ampharos (DAA 57)';
+  public legacyFullName = 'Ampharos DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dazzle Blast

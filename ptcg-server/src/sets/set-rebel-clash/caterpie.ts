@@ -37,7 +37,8 @@ export class Caterpie extends PokemonCard {
 
   public name: string = 'Caterpie';
 
-  public fullName: string = 'Caterpie RCL';
+  public fullName: string = 'Caterpie (RCL 1)';
+  public legacyFullName = 'Caterpie RCL';
 
   public cardImage: string = 'assets/cardback.png';
 

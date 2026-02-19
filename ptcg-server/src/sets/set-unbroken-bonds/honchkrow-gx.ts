@@ -43,7 +43,8 @@ export class HonchkrowGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
   public name: string = 'Honchkrow-GX';
-  public fullName: string = 'Honchkrow-GX UNB';
+  public fullName: string = 'Honchkrow-GX (UNB 109)';
+  public legacyFullName = 'Honchkrow-GX UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ruler of the Night

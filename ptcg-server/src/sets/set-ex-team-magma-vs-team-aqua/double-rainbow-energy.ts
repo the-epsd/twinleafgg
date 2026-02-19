@@ -16,7 +16,8 @@ export class DoubleRainbowEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
   public name = 'Double Rainbow Energy';
-  public fullName = 'Double Rainbow Energy MA';
+  public fullName = 'Double Rainbow Energy (MA 88)';
+  public legacyFullName = 'Double Rainbow Energy MA';
 
   public text: string = 'Double Rainbow Energy can be attached only to an Evolved Pokémon (excluding Pokémon-ex). While in play, Double Rainbow Energy provides every type of Energy but provides 2 Energy at a time. (Doesn\'t count as a basic Energy when not in play and has no effect other than providing Energy.) Damage done to your opponent\'s Pokémon by the Pokémon Double Rainbow Energy is attached to is reduced by 10 (after applying Weakness and Resistance). When the Pokémon Double Rainbow Energy is attached to is no longer an Evolved Pokémon, discard Double Rainbow Energy.';
 

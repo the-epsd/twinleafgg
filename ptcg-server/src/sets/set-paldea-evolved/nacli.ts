@@ -29,7 +29,8 @@ export class Nacli extends PokemonCard {
 
   public set: string = 'PAL';
   public name: string = 'Nacli';
-  public fullName: string = 'Nacli PAL';
+  public fullName: string = 'Nacli (PAL 121)';
+  public legacyFullName = 'Nacli PAL';
   public setNumber: string = '121';
   public regulationMark: string = 'G';
   public cardImage: string = 'assets/cardback.png';

@@ -28,7 +28,8 @@ export class Floette extends PokemonCard {
 
   public set: string = 'CEC';
   public name: string = 'Floette';
-  public fullName: string = 'Floette CEC';
+  public fullName: string = 'Floette (CEC 151)';
+  public legacyFullName = 'Floette CEC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '151';
 

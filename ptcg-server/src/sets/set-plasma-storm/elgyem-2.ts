@@ -36,7 +36,8 @@ export class Elgyem2 extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Elgyem';
-  public fullName: string = 'Elgyem PLS 69';
+  public fullName: string = 'Elgyem (PLS 69)';
+  public legacyFullName = 'Elgyem PLS 69';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

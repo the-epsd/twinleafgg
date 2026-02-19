@@ -35,7 +35,8 @@ export class WhimsicottVSTAR extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
   public name: string = 'Whimsicott VSTAR';
-  public fullName: string = 'Whimsicott VSTAR BRS';
+  public fullName: string = 'Whimsicott VSTAR (BRS 65)';
+  public legacyFullName = 'Whimsicott VSTAR BRS';
 
   public readonly DOMINATING_ECHO_MARKER = 'DOMINATING_ECHO_MARKER';
 

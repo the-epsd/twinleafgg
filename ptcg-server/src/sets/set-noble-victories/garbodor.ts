@@ -33,7 +33,8 @@ export class Garbodor extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Garbodor';
-  public fullName: string = 'Garbodor NVI';
+  public fullName: string = 'Garbodor (NVI 49)';
+  public legacyFullName = 'Garbodor NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Gentle Wrap - prevent retreat

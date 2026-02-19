@@ -25,7 +25,7 @@ export class Heliolisk extends PokemonCard {
       name: 'Quick Attack',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     },
     {
@@ -40,7 +40,8 @@ export class Heliolisk extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heliolisk';
-  public fullName: string = 'Heliolisk GRI';
+  public fullName: string = 'Heliolisk (GRI 44)';
+  public legacyFullName = 'Heliolisk GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Quick Attack

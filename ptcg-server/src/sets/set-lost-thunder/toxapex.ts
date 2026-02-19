@@ -28,7 +28,7 @@ export class Toxapex extends PokemonCard {
       name: 'Venom Fever',
       cost: [W, W],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 50 damage for each damage counter on that Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class Toxapex extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toxapex';
-  public fullName: string = 'Toxapex LOT';
+  public fullName: string = 'Toxapex (LOT 69)';
+  public legacyFullName = 'Toxapex LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Sting

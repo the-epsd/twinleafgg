@@ -50,7 +50,8 @@ export class Tatsugiri extends PokemonCard {
 
   public name: string = 'Tatsugiri';
 
-  public fullName: string = 'Tatsugiri TWM';
+  public fullName: string = 'Tatsugiri (TWM 131)';
+  public legacyFullName = 'Tatsugiri TWM';
 
   public readonly CROWD_PULLER_MARKER = 'CROWD_PULLER_MARKER';
 

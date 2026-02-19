@@ -35,7 +35,8 @@ export class Heatran extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heatran';
-  public fullName: string = 'Heatran LOT';
+  public fullName: string = 'Heatran (LOT 48)';
+  public legacyFullName = 'Heatran LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lava Burn

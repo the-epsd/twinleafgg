@@ -45,7 +45,8 @@ export class ZygardeGx extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zygarde-GX';
-  public fullName: string = 'Zygarde-GX FLI';
+  public fullName: string = 'Zygarde-GX (FLI 73)';
+  public legacyFullName = 'Zygarde-GX FLI';
 
   public readonly VERDICT_MARKER = 'ZYGARDE_GX_FLI_VERDICT_MARKER';
   public readonly CLEAR_VERDICT_MARKER = 'ZYGARDE_GX_FLI_CLEAR_VERDICT_MARKER';

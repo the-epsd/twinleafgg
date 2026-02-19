@@ -37,7 +37,8 @@ export class ZeraoraV extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zeraora V';
-  public fullName: string = 'Zeraora V CRE';
+  public fullName: string = 'Zeraora V (CRE 53)';
+  public legacyFullName = 'Zeraora V CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track when another Rapid Strike Pokemon uses an attack (for "last turn" bonus)

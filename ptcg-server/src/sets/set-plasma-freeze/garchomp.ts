@@ -31,7 +31,8 @@ export class Garchomp extends PokemonCard {
   public setNumber: string = '120';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Garchomp';
-  public fullName: string = 'Garchomp PLF';
+  public fullName: string = 'Garchomp (PLF 120)';
+  public legacyFullName = 'Garchomp PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mach Cut - discard a Special Energy from defending

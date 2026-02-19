@@ -16,7 +16,8 @@ export class Volkner extends TrainerCard {
   
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   
-  public fullName: string = 'Volkner UPR';
+  public fullName: string = 'Volkner (UPR 135)';
+  public legacyFullName = 'Volkner UPR';
   
   public text = 'Search your deck for an Item card and a [L] Energy card, reveal them, and put them into your hand. Then, shuffle your deck.';
 

@@ -33,7 +33,8 @@ export class MedichamV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
   public name: string = 'Medicham V';
-  public fullName: string = 'Medicham V EVS';
+  public fullName: string = 'Medicham V (EVS 83)';
+  public legacyFullName = 'Medicham V EVS';
 
   public readonly YOGA_LOOP_MARKER = 'YOGA_LOOP_MARKER';
   public readonly YOGA_LOOP_MARKER_2 = 'YOGA_LOOP_MARKER_2';

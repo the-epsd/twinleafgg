@@ -30,7 +30,8 @@ export class StarmieBreak extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Starmie BREAK';
-  public fullName: string = 'Starmie BREAK EVO';
+  public fullName: string = 'Starmie BREAK (EVO 32)';
+  public legacyFullName = 'Starmie BREAK EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Break Star

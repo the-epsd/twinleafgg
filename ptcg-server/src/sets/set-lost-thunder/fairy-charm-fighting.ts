@@ -16,7 +16,8 @@ export class FairyCharmFighting extends TrainerCard {
   public setNumber: string = '176';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fairy Charm Fighting';
-  public fullName: string = 'Fairy Charm Fighting LOT';
+  public fullName: string = 'Fairy Charm Fighting (LOT 176)';
+  public legacyFullName = 'Fairy Charm Fighting LOT';
   public text: string = 'Prevent all damage done to the Fairy Pokémon this card is attached to by attacks from your opponent\'s Fighting Pokémon-GX and Fighting Pokémon-EX.';
 
   // Ref: set-lost-thunder/fairy-charm-dragon.ts (Fairy Charm Dragon)

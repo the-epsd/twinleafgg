@@ -39,7 +39,8 @@ export class Celebi extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celebi';
-  public fullName: string = 'Celebi TM';
+  public fullName: string = 'Celebi (TM 92)';
+  public legacyFullName = 'Celebi TM';
 
   public readonly FOREST_BREATH_MARKER: string = 'FOREST_BREATH_MARKER';
   public readonly TIME_CIRCLE_MARKER: string = 'TIME_CIRCLE_MARKER';

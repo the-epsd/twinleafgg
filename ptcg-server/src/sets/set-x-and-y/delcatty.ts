@@ -40,7 +40,8 @@ export class Delcatty extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Delcatty';
-  public fullName: string = 'Delcatty XY';
+  public fullName: string = 'Delcatty (XY 105)';
+  public legacyFullName = 'Delcatty XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Energy Salon

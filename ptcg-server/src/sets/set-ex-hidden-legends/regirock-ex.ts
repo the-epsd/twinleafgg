@@ -31,7 +31,8 @@ export class Regirockex extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Regirock ex';
-  public fullName: string = 'Regirock ex HL';
+  public fullName: string = 'Regirock ex (HL 98)';
+  public legacyFullName = 'Regirock ex HL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle Healing Stone Poké-Body

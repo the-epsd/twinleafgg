@@ -19,7 +19,8 @@ export class MysteryPlateAlpha extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '133';
   public name: string = 'Mystery Plate α';
-  public fullName: string = 'Mystery Plate α SK';
+  public fullName: string = 'Mystery Plate α (SK 133)';
+  public legacyFullName = 'Mystery Plate α SK';
 
   public attacks: Attack[] = [{
     name: 'Desert Burn',

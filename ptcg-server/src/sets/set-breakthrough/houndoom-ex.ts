@@ -37,7 +37,8 @@ export class HoundoomEx extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Houndoom-EX';
-  public fullName: string = 'Houndoom-EX BKT';
+  public fullName: string = 'Houndoom-EX (BKT 21)';
+  public legacyFullName = 'Houndoom-EX BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Melting Horn

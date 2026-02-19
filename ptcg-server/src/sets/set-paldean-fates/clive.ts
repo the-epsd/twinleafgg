@@ -20,7 +20,8 @@ export class Clive extends TrainerCard {
 
   public name = 'Clive';
 
-  public fullName = 'Clive PAF';
+  public fullName = 'Clive (PAF 78)';
+  public legacyFullName = 'Clive PAF';
 
   public text: string =
     'Your opponent reveals their hand. Draw 2 cards for each Supporter card you find there.';

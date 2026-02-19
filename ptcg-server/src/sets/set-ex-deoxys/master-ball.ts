@@ -13,7 +13,8 @@ export class MasterBall extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
   public name: string = 'Master Ball';
-  public fullName: string = 'Master Ball DX';
+  public fullName: string = 'Master Ball (DX 88)';
+  public legacyFullName = 'Master Ball DX';
 
   public text: string =
     'Look at the top 7 cards from your deck. Choose a Basic Pokémon or Evolution card from those cards, show it to your opponent, and put it into your hand. Put the other 6 cards back on top of your deck. Shuffle your deck afterward.';

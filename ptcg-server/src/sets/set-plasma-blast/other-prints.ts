@@ -24,130 +24,152 @@ import { Virizion } from '../set-noble-victories/virizion';
 export class ScoopUpCyclonePLB extends ScoopUpCyclone {
   public set = 'PLB';
   public setNumber = '95';
-  public fullName: string = 'Scoop Up Cyclone PLB';
+  public fullName: string = 'Scoop Up Cyclone (PLB 95)';
+  public legacyFullName = 'Scoop Up Cyclone PLB';
 }
 
 export class UltraBallPLB extends UltraBall {
   public set = 'PLB';
   public setNumber = '90';
-  public fullName: string = 'Ultra ball PLB';
+  public fullName: string = 'Ultra Ball (PLB 90)';
+  public legacyFullName = 'Ultra ball PLB';
 }
 
 export class MasterBallPLB extends MasterBall {
   public set = 'PLB';
   public setNumber = '94';
-  public fullName: string = 'Master Ball PLB';
+  public fullName: string = 'Master Ball (PLB 94)';
+  public legacyFullName = 'Master Ball PLB';
 }
 
 export class ProfessorJuniperPLB extends ProfessorJuniper {
   public set = 'PLB';
   public setNumber = '84';
-  public fullName: string = 'Professor Juniper PLB';
+  public fullName: string = 'Professor Juniper (PLB 84)';
+  public legacyFullName = 'Professor Juniper PLB';
 }
 export class BlastoisePLB extends Blastoise {
   public setNumber = '16';
-  public fullName: string = 'Blastoise PLB';
+  public fullName: string = 'Blastoise (PLB 16)';
+  public legacyFullName = 'Blastoise PLB';
   public set = 'PLB';
 }
 
 export class CaitlinPLB extends Caitlin {
   public setNumber = '78';
-  public fullName: string = 'Caitlin PLB';
+  public fullName: string = 'Caitlin (PLB 78)';
+  public legacyFullName = 'Caitlin PLB';
   public set = 'PLB';
 }
 
 export class EnergyRetrievalPLB extends EnergyRetrieval {
   public setNumber = '80';
-  public fullName: string = 'Energy Retrieval PLB';
+  public fullName: string = 'Energy Retrieval (PLB 80)';
+  public legacyFullName = 'Energy Retrieval PLB';
   public set = 'PLB';
 }
 
 export class PlumeFossilPLB extends PlumeFossil {
   public setNumber = '82';
-  public fullName: string = 'Plume Fossil PLB';
+  public fullName: string = 'Plume Fossil (PLB 82)';
+  public legacyFullName = 'Plume Fossil PLB';
   public set = 'PLB';
 }
 
 export class PokemonCatcherPLB extends PokemonCatcher {
   public setNumber = '83';
-  public fullName: string = 'Pokemon Catcher PLB';
+  public fullName: string = 'Pokémon Catcher (PLB 83)';
+  public legacyFullName = 'Pokemon Catcher PLB';
   public set = 'PLB';
 }
 
 export class RareCandyPLB extends RareCandy {
   public setNumber = '85';
-  public fullName: string = 'Rare Candy PLB';
+  public fullName: string = 'Rare Candy (PLB 85)';
+  public legacyFullName = 'Rare Candy PLB';
   public set = 'PLB';
 }
 
 export class PlasmaEnergyPLB extends PlasmaEnergy {
   public setNumber = '91';
-  public fullName: string = 'Plasma Energy PLB';
+  public fullName: string = 'Plasma Energy (PLB 91)';
+  public legacyFullName = 'Plasma Energy PLB';
   public set = 'PLB';
 }
 
 export class VirizionEX2PLB extends VirizionEXPLB9 {
   public setNumber = '96';
-  public fullName: string = 'Virizion EX2 PLB';
+  public fullName: string = 'Virizion-EX (PLB 96)';
+  public legacyFullName = 'Virizion EX2 PLB';
   public set = 'PLB';
 }
 
 export class GenesectEX2PLB extends GenesectEXPLB11 {
   public setNumber = '97';
-  public fullName: string = 'Genesect EX2 PLB';
+  public fullName: string = 'Genesect-EX (PLB 97)';
+  public legacyFullName = 'Genesect EX2 PLB';
   public set = 'PLB';
 }
 
 export class JirachiEX2PLB extends JirachiEXPLB60 {
   public setNumber = '98';
-  public fullName: string = 'Jirachi EX2 PLB';
+  public fullName: string = 'Jirachi-EX (PLB 98)';
+  public legacyFullName = 'Jirachi EX2 PLB';
   public set = 'PLB';
 }
 
 export class PalkiaEX2PLB extends PalkiaEXPLB66 {
   public setNumber = '100';
-  public fullName: string = 'Palkia EX2 PLB';
+  public fullName: string = 'Palkia-EX (PLB 100)';
+  public legacyFullName = 'Palkia EX2 PLB';
   public set = 'PLB';
 }
 
 export class ExeggcutePLB extends Exeggcute {
   public setNumber = '102';
-  public fullName: string = 'Exeggcute PLB';
+  public fullName: string = 'Exeggcute (PLB 102)';
+  public legacyFullName = 'Exeggcute PLB';
   public set = 'PLB';
 }
 
 export class DusknoirPLB extends Dusknoir {
   public setNumber = '104';
-  public fullName: string = 'Dusknoir PLB';
+  public fullName: string = 'Dusknoir (PLB 104)';
+  public legacyFullName = 'Dusknoir PLB';
   public set = 'PLB';
 }
 
 export class RareCandy2PLB extends RareCandyHP90 {
   public setNumber = '105';
-  public fullName: string = 'Rare Candy2 PLB';
+  public fullName: string = 'Rare Candy (PLB 105)';
+  public legacyFullName = 'Rare Candy2 PLB';
   public set = 'PLB';
 }
 
 export class CoverFossilPLB extends CoverFossil {
   public set: string = 'PLB';
   public setNumber: string = '79';
-  public fullName: string = 'Cover Fossil PLB';
+  public fullName: string = 'Cover Fossil (PLB 79)';
+  public legacyFullName = 'Cover Fossil PLB';
 }
 
 export class DialgaEx2 extends DialgaEx {
   public set: string = 'PLB';
   public setNumber: string = '99';
-  public fullName: string = 'Dialga-EX PLB 99';
+  public fullName: string = 'Dialga-EX (PLB 99)';
+  public legacyFullName = 'Dialga-EX PLB 99';
 }
 
 export class Iris2 extends Iris {
   public set: string = 'PLB';
   public setNumber: string = '101';
-  public fullName: string = 'Iris PLB 101';
+  public fullName: string = 'Iris (PLB 101)';
+  public legacyFullName = 'Iris PLB 101';
 }
 
 export class VirizionPLB extends Virizion {
   public set: string = 'PLB';
   public setNumber: string = '103';
-  public fullName: string = 'Virizion PLB';
+  public fullName: string = 'Virizion (PLB 103)';
+  public legacyFullName = 'Virizion PLB';
 }

@@ -30,7 +30,8 @@ export class Anorith extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
   public name: string = 'Anorith';
-  public fullName: string = 'Anorith LM';
+  public fullName: string = 'Anorith (LM 29)';
+  public legacyFullName = 'Anorith LM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

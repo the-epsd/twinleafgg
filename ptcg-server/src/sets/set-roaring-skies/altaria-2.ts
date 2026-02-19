@@ -38,7 +38,8 @@ export class Altaria2 extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Altaria';
-  public fullName: string = 'Altaria ROS 74';
+  public fullName: string = 'Altaria (ROS 74)';
+  public legacyFullName = 'Altaria ROS 74';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Clear Humming (passive - remove weakness from Colorless Pokemon)

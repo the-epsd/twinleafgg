@@ -36,7 +36,8 @@ export class Tynamo extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tynamo';
-  public fullName: string = 'Tynamo VIV';
+  public fullName: string = 'Tynamo (VIV 57)';
+  public legacyFullName = 'Tynamo VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Levitate (passive - no retreat cost if has any energy)

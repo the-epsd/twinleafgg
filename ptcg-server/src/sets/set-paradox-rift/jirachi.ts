@@ -44,7 +44,8 @@ export class Jirachi extends PokemonCard {
 
   public name: string = 'Jirachi';
 
-  public fullName: string = 'Jirachi PAR';
+  public fullName: string = 'Jirachi (PAR 126)';
+  public legacyFullName = 'Jirachi PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -36,7 +36,8 @@ export class Beautifly extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beautifly';
-  public fullName: string = 'Beautifly LOT';
+  public fullName: string = 'Beautifly (LOT 26)';
+  public legacyFullName = 'Beautifly LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Skill Dive

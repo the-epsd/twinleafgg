@@ -26,7 +26,8 @@ export class RadiantHeatran extends PokemonCard {
 
   public set: string = 'ASR';
   public name: string = 'Radiant Heatran';
-  public fullName: string = 'Radiant Heatran ASR';
+  public fullName: string = 'Radiant Heatran (ASR 27)';
+  public legacyFullName = 'Radiant Heatran ASR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '27';
 

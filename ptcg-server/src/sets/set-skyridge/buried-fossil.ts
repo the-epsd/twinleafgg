@@ -32,7 +32,8 @@ export class BuriedFossil extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '47';
   public name: string = 'Buried Fossil';
-  public fullName: string = 'Buried Fossil SK';
+  public fullName: string = 'Buried Fossil (SK 47)';
+  public legacyFullName = 'Buried Fossil SK';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

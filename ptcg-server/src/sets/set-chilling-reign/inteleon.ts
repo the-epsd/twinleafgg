@@ -50,7 +50,8 @@ export class Inteleon extends PokemonCard {
 
   public name: string = 'Inteleon';
 
-  public fullName: string = 'Inteleon CRE';
+  public fullName: string = 'Inteleon (CRE 43)';
+  public legacyFullName = 'Inteleon CRE';
 
   public readonly QUICK_SHOOTING_MARKER = 'QUICK_SHOOTING_MARKER';
 

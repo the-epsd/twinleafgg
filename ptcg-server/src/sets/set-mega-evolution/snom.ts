@@ -24,7 +24,8 @@ export class Snom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
   public name = 'Snom';
-  public fullName = 'Snom MEG';
+  public fullName = 'Snom (MEG 42)';
+  public legacyFullName = 'Snom MEG';
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

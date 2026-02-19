@@ -38,7 +38,8 @@ export class Vanilluxe extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanilluxe';
-  public fullName: string = 'Vanilluxe GRI';
+  public fullName: string = 'Vanilluxe (GRI 35)';
+  public legacyFullName = 'Vanilluxe GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hail

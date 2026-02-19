@@ -40,7 +40,8 @@ export class TeamMagmasGroudon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '9';
   public name: string = 'Team Magma\'s Groudon';
-  public fullName: string = 'Team Magma\'s Groudon MA';
+  public fullName: string = 'Team Magma\'s Groudon (MA 9)';
+  public legacyFullName = 'Team Magma\'s Groudon MA';
 
   public wantsToSwitch: boolean = false;
 

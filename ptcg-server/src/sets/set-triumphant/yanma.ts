@@ -30,7 +30,8 @@ export class Yanma extends PokemonCard {
 
   public set: string = 'TM';
   public name: string = 'Yanma';
-  public fullName: string = 'Yanma TM';
+  public fullName: string = 'Yanma (TM 84)';
+  public legacyFullName = 'Yanma TM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
 

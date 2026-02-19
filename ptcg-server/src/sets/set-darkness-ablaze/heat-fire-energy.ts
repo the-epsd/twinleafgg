@@ -23,7 +23,8 @@ export class HeatFireEnergy extends EnergyCard {
 
   public name = 'Heat Fire Energy';
 
-  public fullName = 'Heat Fire Energy DAA';
+  public fullName = 'Heat Fire Energy (DAA 174)';
+  public legacyFullName = 'Heat Fire Energy DAA';
 
   public text =
     `As long as this card is attached to a Pokémon, it provides [R] Energy.

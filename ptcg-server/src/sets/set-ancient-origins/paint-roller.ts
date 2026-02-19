@@ -15,7 +15,8 @@ export class PaintRoller extends TrainerCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Paint Roller';
-  public fullName: string = 'Paint Roller AOR';
+  public fullName: string = 'Paint Roller (AOR 79)';
+  public legacyFullName = 'Paint Roller AOR';
   public text: string = 'Discard any Stadium card in play. Then, draw a card.';
 
   // Ref: set-roaring-skies/salamence.ts (Shatter - DISCARD_A_STADIUM_CARD_IN_PLAY)

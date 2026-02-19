@@ -13,7 +13,8 @@ export class HighPressureSystem extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'DR';
   public name: string = 'High Pressure System';
-  public fullName: string = 'High Pressure System DR';
+  public fullName: string = 'High Pressure System (DR 85)';
+  public legacyFullName = 'High Pressure System DR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
 

@@ -41,7 +41,8 @@ export class Wigglytuff extends PokemonCard {
 
   public name: string = 'Wigglytuff';
 
-  public fullName: string = 'Wigglytuff JU';
+  public fullName: string = 'Wigglytuff (JU 16)';
+  public legacyFullName = 'Wigglytuff JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

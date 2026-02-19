@@ -8,6 +8,7 @@ import { PikachuVUNIONBottomRight } from './pikachu-v-union-br';
 
 export class PikachuVUNIONTopRight extends PokemonCard {
   public stage: Stage = Stage.VUNION;
+  public multiPartPosition: 'Top' | 'Bottom' | 'Top Left' | 'Top Right' | 'Bottom Left' | 'Bottom Right' = 'Top Right';
   public tags = [CardTag.POKEMON_VUNION];
   public cardType: CardType = L;
   public hp: number = 300;
@@ -38,7 +39,8 @@ export class PikachuVUNIONTopRight extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '140';
   public name: string = 'Pikachu V-UNION';
-  public fullName: string = 'Pikachu V-UNION (Top Right) SWSH';
+  public fullName: string = 'Pikachu V-UNION (SWSH 140)';
+  public legacyFullName = 'Pikachu V-UNION (Top Right) SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union

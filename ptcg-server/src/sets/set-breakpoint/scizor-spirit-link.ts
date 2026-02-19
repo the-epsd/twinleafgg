@@ -13,7 +13,8 @@ export class ScizorSpiritLink extends TrainerCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scizor Spirit Link';
-  public fullName: string = 'Scizor Spirit Link BKP';
+  public fullName: string = 'Scizor Spirit Link (BKP 111)';
+  public legacyFullName = 'Scizor Spirit Link BKP';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Scizor-EX.';
 
   // Ref: set-evolutions/pidgeot-spirit-link.ts (Spirit Link)

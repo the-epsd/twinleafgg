@@ -31,7 +31,8 @@ export class TeamRocketsWobbuffet extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
   public name: string = 'Team Rocket\'s Wobbuffet';
-  public fullName: string = 'Team Rocket\'s Wobbuffet DRI';
+  public fullName: string = 'Team Rocket\'s Wobbuffet (DRI 82)';
+  public legacyFullName = 'Team Rocket\'s Wobbuffet DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Rocket Mirror

@@ -37,7 +37,8 @@ export class Simisear extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Simisear';
-  public fullName: string = 'Simisear XY';
+  public fullName: string = 'Simisear (XY 23)';
+  public legacyFullName = 'Simisear XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: AGENTS-patterns.md (Asleep)

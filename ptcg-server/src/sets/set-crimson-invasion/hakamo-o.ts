@@ -36,7 +36,8 @@ export class HakamoO extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hakamo-o';
-  public fullName: string = 'Hakamo-o CIN';
+  public fullName: string = 'Hakamo-o (CIN 76)';
+  public legacyFullName = 'Hakamo-o CIN';
 
   public usedNobleRoar = false;
 

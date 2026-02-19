@@ -15,7 +15,8 @@ export class CalamitousWasteland extends TrainerCard {
   public set: string = 'PAL';
   public regulationMark: string = 'G';
   public name: string = 'Calamitous Wasteland';
-  public fullName: string = 'Calamitous Wasteland PAL';
+  public fullName: string = 'Calamitous Wasteland (PAL 175)';
+  public legacyFullName = 'Calamitous Wasteland PAL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '175';
 

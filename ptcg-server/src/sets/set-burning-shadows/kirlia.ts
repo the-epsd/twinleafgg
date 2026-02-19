@@ -33,5 +33,6 @@ export class Kirlia extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kirlia';
-  public fullName: string = 'Kirlia BUS';
+  public fullName: string = 'Kirlia (BUS 92)';
+  public legacyFullName = 'Kirlia BUS';
 }

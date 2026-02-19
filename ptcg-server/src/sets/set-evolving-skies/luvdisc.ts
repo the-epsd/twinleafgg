@@ -35,7 +35,8 @@ export class Luvdisc extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luvdisc';
-  public fullName: string = 'Luvdisc EVS';
+  public fullName: string = 'Luvdisc (EVS 39)';
+  public legacyFullName = 'Luvdisc EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Synchrodraw

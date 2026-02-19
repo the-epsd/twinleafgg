@@ -25,7 +25,8 @@ export class GScope extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
   public name: string = 'G Scope';
-  public fullName: string = 'G Scope PLB';
+  public fullName: string = 'G Scope (PLB 93)';
+  public legacyFullName = 'G Scope PLB';
 
   public attacks: Attack[] = [{
     name: 'G Scope',

@@ -35,7 +35,8 @@ export class ClawitzerBreak extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clawitzer BREAK';
-  public fullName: string = 'Clawitzer BREAK STS';
+  public fullName: string = 'Clawitzer BREAK (STS 35)';
+  public legacyFullName = 'Clawitzer BREAK STS';
 
   public readonly LOCK_ON_TARGET_MARKER = 'LOCK_ON_TARGET_MARKER';
   public readonly LOCK_ON_PHASE1_MARKER = 'LOCK_ON_PHASE1_MARKER';

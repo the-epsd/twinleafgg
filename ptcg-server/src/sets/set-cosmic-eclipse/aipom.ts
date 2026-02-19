@@ -35,7 +35,8 @@ export class Aipom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '169';
   public name: string = 'Aipom';
-  public fullName: string = 'Aipom CEC';
+  public fullName: string = 'Aipom (CEC 169)';
+  public legacyFullName = 'Aipom CEC';
 
   public readonly SCAMPERING_TAIL_MARKER = 'SCAMPERING_TAIL_MARKER';
 

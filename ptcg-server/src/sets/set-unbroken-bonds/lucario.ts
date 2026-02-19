@@ -32,7 +32,7 @@ export class Lucario extends PokemonCard {
       name: 'Rush Up',
       cost: [M, M],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you attached a Pokémon Tool card from your hand to this Pokémon during this turn, this attack does 70 more damage.'
     }
   ];
@@ -41,7 +41,8 @@ export class Lucario extends PokemonCard {
   public setNumber: string = '126';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lucario';
-  public fullName: string = 'Lucario UNB';
+  public fullName: string = 'Lucario (UNB 126)';
+  public legacyFullName = 'Lucario UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track tool attachment to this Pokemon

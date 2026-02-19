@@ -40,7 +40,8 @@ export class Skarmory extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skarmory';
-  public fullName: string = 'Skarmory PLS';
+  public fullName: string = 'Skarmory (PLS 87)';
+  public legacyFullName = 'Skarmory PLS';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

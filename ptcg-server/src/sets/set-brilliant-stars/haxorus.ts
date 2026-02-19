@@ -30,7 +30,8 @@ export class Haxorus extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '112';
   public name = 'Haxorus';
-  public fullName = 'Haxorus BRS';
+  public fullName = 'Haxorus (BRS 112)';
+  public legacyFullName = 'Haxorus BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

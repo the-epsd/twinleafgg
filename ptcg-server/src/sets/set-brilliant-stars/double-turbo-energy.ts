@@ -23,7 +23,8 @@ export class DoubleTurboEnergy extends EnergyCard {
 
   public name = 'Double Turbo Energy';
 
-  public fullName = 'Double Turbo Energy BRS';
+  public fullName = 'Double Turbo Energy (BRS 151)';
+  public legacyFullName = 'Double Turbo Energy BRS';
 
   public text: string = 'As long as this card is attached to a Pokémon, it provides [C][C] Energy.' +
     '\n' +

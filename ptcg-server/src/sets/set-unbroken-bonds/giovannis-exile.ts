@@ -14,7 +14,8 @@ export class GiovannisExile extends TrainerCard {
   public setNumber: string = '174';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Giovanni\'s Exile';
-  public fullName: string = 'Giovanni\'s Exile UNB';
+  public fullName: string = 'Giovanni\'s Exile (UNB 174)';
+  public legacyFullName = 'Giovanni\'s Exile UNB';
   public text: string = 'Discard up to 2 of your Benched Pokémon that have no damage counters on them and all cards attached to them. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-lost-thunder/cofagrigus.ts (Spirit Juggling - discard benched Pokemon pattern)

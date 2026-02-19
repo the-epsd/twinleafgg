@@ -19,7 +19,8 @@ export class BuddyBuddyRescue extends TrainerCard {
 
   public name: string = 'Buddy-Buddy Rescue';
 
-  public fullName: string = 'Buddy-Buddy Rescue SSH';
+  public fullName: string = 'Buddy-Buddy Rescue (BKT 135)';
+  public legacyFullName = 'Buddy-Buddy Rescue SSH';
 
   public text: string =
     'Each player puts a Pokémon from his or her discard pile into his or her hand. (Your opponent chooses first.)';

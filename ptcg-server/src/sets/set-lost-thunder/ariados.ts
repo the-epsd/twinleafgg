@@ -36,7 +36,8 @@ export class Ariados extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ariados';
-  public fullName: string = 'Ariados LOT';
+  public fullName: string = 'Ariados (LOT 10)';
+  public legacyFullName = 'Ariados LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Trapping Thread

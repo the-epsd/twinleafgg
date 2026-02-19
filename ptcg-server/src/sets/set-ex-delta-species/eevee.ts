@@ -25,7 +25,8 @@ export class Eevee extends PokemonCard {
 
   public set: string = 'DS';
   public name: string = 'Eevee';
-  public fullName: string = 'Eevee DS';
+  public fullName: string = 'Eevee (DS 68)';
+  public legacyFullName = 'Eevee DS';
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
 

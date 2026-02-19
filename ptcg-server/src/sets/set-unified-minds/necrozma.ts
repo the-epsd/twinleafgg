@@ -29,7 +29,8 @@ export class Necrozma extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '101';
   public name: string = 'Necrozma';
-  public fullName: string = 'Necrozma UNM';
+  public fullName: string = 'Necrozma (UNM 101)';
+  public legacyFullName = 'Necrozma UNM';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

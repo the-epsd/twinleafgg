@@ -40,7 +40,8 @@ export class IonosWattrel extends PokemonCard {
 
   public name: string = 'Iono\'s Wattrel';
 
-  public fullName: string = 'Iono\'s Wattrel JTG';
+  public fullName: string = 'Iono\'s Wattrel (JTG 54)';
+  public legacyFullName = 'Iono\'s Wattrel JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

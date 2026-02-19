@@ -33,7 +33,8 @@ export class Zorua2 extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zorua';
-  public fullName: string = 'Zorua DEX 70';
+  public fullName: string = 'Zorua (DEX 70)';
+  public legacyFullName = 'Zorua DEX 70';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Paralyzing Gaze

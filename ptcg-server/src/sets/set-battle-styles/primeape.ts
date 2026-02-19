@@ -30,7 +30,8 @@ export class Primeape extends PokemonCard {
 
   public set: string = 'BST';
   public name: string = 'Primeape';
-  public fullName: string = 'Primeape BST';
+  public fullName: string = 'Primeape (BST 67)';
+  public legacyFullName = 'Primeape BST';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public regulationMark = 'E';

@@ -44,7 +44,8 @@ export class XurkitreeGx extends PokemonCard {
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Xurkitree-GX';
-  public fullName: string = 'Xurkitree-GX UPR';
+  public fullName: string = 'Xurkitree-GX (UPR 142)';
+  public legacyFullName = 'Xurkitree-GX UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Flashing Head (passive - prevent damage from Pokemon with Special Energy)

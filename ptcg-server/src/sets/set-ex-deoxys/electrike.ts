@@ -31,7 +31,8 @@ export class Electrike extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '59';
   public name: string = 'Electrike';
-  public fullName: string = 'Electrike DX';
+  public fullName: string = 'Electrike (DX 59)';
+  public legacyFullName = 'Electrike DX';
 
   public readonly OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER';
 

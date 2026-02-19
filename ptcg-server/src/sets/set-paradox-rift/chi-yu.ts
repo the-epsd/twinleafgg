@@ -53,7 +53,8 @@ export class ChiYu extends PokemonCard {
 
   public name: string = 'Chi-Yu';
 
-  public fullName: string = 'Chi-Yu PAR';
+  public fullName: string = 'Chi-Yu (PAR 29)';
+  public legacyFullName = 'Chi-Yu PAR';
 
   // public damageDealt = false;
 

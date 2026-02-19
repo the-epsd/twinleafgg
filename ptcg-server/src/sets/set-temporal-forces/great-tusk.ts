@@ -44,7 +44,8 @@ export class GreatTusk extends PokemonCard {
 
   public name: string = 'Great Tusk';
 
-  public fullName: string = 'Great Tusk TEF';
+  public fullName: string = 'Great Tusk (TEF 97)';
+  public legacyFullName = 'Great Tusk TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

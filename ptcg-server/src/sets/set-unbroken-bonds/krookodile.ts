@@ -24,7 +24,7 @@ export class Krookodile extends PokemonCard {
       name: 'Chomp Chomp Panic',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 50 damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     },
     {
@@ -39,7 +39,8 @@ export class Krookodile extends PokemonCard {
   public setNumber: string = '116';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Krookodile';
-  public fullName: string = 'Krookodile UNB';
+  public fullName: string = 'Krookodile (UNB 116)';
+  public legacyFullName = 'Krookodile UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Chomp Chomp Panic

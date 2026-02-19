@@ -44,7 +44,8 @@ export class Pidgeotto extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pidgeotto';
-  public fullName: string = 'Pidgeotto FLF';
+  public fullName: string = 'Pidgeotto (FLF 76)';
+  public legacyFullName = 'Pidgeotto FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/malamar-2.ts (Mental Panic - coin-gated attack block)

@@ -24,7 +24,7 @@ export class Scizor extends PokemonCard {
       name: 'Raid',
       cost: [M],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon evolved from Scyther during this turn, this attack does 90 more damage.'
     },
     {
@@ -40,7 +40,8 @@ export class Scizor extends PokemonCard {
   public setNumber: string = '128';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scizor';
-  public fullName: string = 'Scizor RCL';
+  public fullName: string = 'Scizor (RCL 128)';
+  public legacyFullName = 'Scizor RCL';
 
   public readonly GUARD_CLAW_MARKER = 'SCIZOR_RCL_GUARD_CLAW_MARKER';
   public readonly CLEAR_GUARD_CLAW_MARKER = 'SCIZOR_RCL_CLEAR_GUARD_CLAW_MARKER';

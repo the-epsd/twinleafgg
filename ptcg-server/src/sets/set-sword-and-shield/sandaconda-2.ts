@@ -29,7 +29,7 @@ export class Sandaconda2 extends PokemonCard {
       name: 'Power Press',
       cost: [F, F],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has at least 1 extra [F] Energy attached (in addition to this attack\'s cost), this attack does 70 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Sandaconda2 extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandaconda';
-  public fullName: string = 'Sandaconda SSH 110';
+  public fullName: string = 'Sandaconda (SSH 110)';
+  public legacyFullName = 'Sandaconda SSH 110';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sand Sac (passive - damage reduction)

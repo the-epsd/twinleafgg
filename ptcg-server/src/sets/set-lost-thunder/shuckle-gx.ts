@@ -56,7 +56,8 @@ export class ShuckleGX extends PokemonCard {
 
   public name: string = 'Shuckle-GX';
 
-  public fullName: string = 'Shuckle-GX LOT';
+  public fullName: string = 'Shuckle-GX (LOT 17)';
+  public legacyFullName = 'Shuckle-GX LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Protective Shell

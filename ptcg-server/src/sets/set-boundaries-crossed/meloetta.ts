@@ -35,7 +35,8 @@ export class Meloetta extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meloetta';
-  public fullName: string = 'Meloetta BCR';
+  public fullName: string = 'Meloetta (BCR 77)';
+  public legacyFullName = 'Meloetta BCR';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
 

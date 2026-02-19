@@ -33,7 +33,8 @@ export class Houndoom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
   public name: string = 'Houndoom';
-  public fullName: string = 'Houndoom UD';
+  public fullName: string = 'Houndoom (UD 82)';
+  public legacyFullName = 'Houndoom UD';
 
   public readonly FIRE_BREATH_MARKER = 'FIRE_BREATH_MARKER';
 

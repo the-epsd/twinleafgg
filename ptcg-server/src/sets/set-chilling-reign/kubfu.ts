@@ -35,7 +35,8 @@ export class Kubfu extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kubfu';
-  public fullName: string = 'Kubfu CRE';
+  public fullName: string = 'Kubfu (CRE 93)';
+  public legacyFullName = 'Kubfu CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Training

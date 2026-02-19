@@ -27,7 +27,8 @@ export class TechnicalMachineTurboEnergize extends TrainerCard {
 
   public name: string = 'Technical Machine: Turbo Energize';
 
-  public fullName: string = 'Technical Machine: Turbo Energize PAR';
+  public fullName: string = 'Technical Machine: Turbo Energize (PAR 179)';
+  public legacyFullName = 'Technical Machine: Turbo Energize PAR';
 
   public attacks: Attack[] = [{
     name: 'Turbo Energize',

@@ -22,7 +22,7 @@ export class Heliolisk extends PokemonCard {
       name: 'Parabolic Counter',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent has any Lightning Pokémon in play, this attack does 90 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Heliolisk extends PokemonCard {
   public setNumber: string = '180';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heliolisk';
-  public fullName: string = 'Heliolisk CEC';
+  public fullName: string = 'Heliolisk (CEC 180)';
+  public legacyFullName = 'Heliolisk CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Parabolic Counter

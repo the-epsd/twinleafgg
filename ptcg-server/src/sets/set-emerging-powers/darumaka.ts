@@ -27,5 +27,6 @@ export class Darumaka extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name: string = 'Darumaka';
-  public fullName: string = 'Darumaka EPO';
+  public fullName: string = 'Darumaka (EPO 20)';
+  public legacyFullName = 'Darumaka EPO';
 }

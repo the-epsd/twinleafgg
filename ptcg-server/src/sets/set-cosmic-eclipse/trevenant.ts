@@ -41,7 +41,8 @@ export class Trevenant extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trevenant';
-  public fullName: string = 'Trevenant CEC';
+  public fullName: string = 'Trevenant (CEC 94)';
+  public legacyFullName = 'Trevenant CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Perplexing Forest

@@ -31,7 +31,8 @@ export class BruteBonnet extends PokemonCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Brute Bonnet';
-  public fullName: string = 'Brute Bonnet TWM';
+  public fullName: string = 'Brute Bonnet (TWM 118)';
+  public legacyFullName = 'Brute Bonnet TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -39,7 +39,8 @@ export class Primeape extends PokemonCard {
 
   public name: string = 'Primeape';
 
-  public fullName: string = 'Primeape JU';
+  public fullName: string = 'Primeape (JU 43)';
+  public legacyFullName = 'Primeape JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

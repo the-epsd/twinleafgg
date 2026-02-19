@@ -20,5 +20,6 @@ export class Petilil extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
   public name: string = 'Petilil';
-  public fullName: string = 'Petilil JTG';
+  public fullName: string = 'Petilil (JTG 6)';
+  public legacyFullName = 'Petilil JTG';
 }

@@ -21,7 +21,8 @@ export class MissFortuneSisters extends TrainerCard {
 
   public name: string = 'Miss Fortune Sisters';
 
-  public fullName: string = 'Miss Fortune Sisters LOR';
+  public fullName: string = 'Miss Fortune Sisters (LOR 164)';
+  public legacyFullName = 'Miss Fortune Sisters LOR';
 
   public text: string =
     'Look at the top 5 cards of your opponent\'s deck and discard any number of Item cards you find there. Your opponent shuffles the other cards back into their deck.';

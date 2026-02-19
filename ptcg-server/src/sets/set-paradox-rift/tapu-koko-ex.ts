@@ -48,7 +48,8 @@ export class TapuKokoex extends PokemonCard {
 
   public name: string = 'Tapu Koko ex';
 
-  public fullName: string = 'Tapu Koko ex PAR';
+  public fullName: string = 'Tapu Koko ex (PAR 68)';
+  public legacyFullName = 'Tapu Koko ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

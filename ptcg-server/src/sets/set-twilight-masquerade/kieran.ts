@@ -23,7 +23,8 @@ export class Kieran extends TrainerCard {
 
   public name: string = 'Kieran';
 
-  public fullName: string = 'Kieran TWM';
+  public fullName: string = 'Kieran (TWM 154)';
+  public legacyFullName = 'Kieran TWM';
 
   private readonly KIERAN_MARKER = 'KIERAN_MARKER';
 

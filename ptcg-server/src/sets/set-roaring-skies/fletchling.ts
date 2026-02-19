@@ -21,7 +21,7 @@ export class Fletchling extends PokemonCard {
       name: 'Acrobatics',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 10 more damage for each heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Fletchling extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fletchling';
-  public fullName: string = 'Fletchling ROS';
+  public fullName: string = 'Fletchling (ROS 82)';
+  public legacyFullName = 'Fletchling ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Acrobatics

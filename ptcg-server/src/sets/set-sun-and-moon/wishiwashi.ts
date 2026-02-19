@@ -30,7 +30,8 @@ export class Wishiwashi extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
   public name: string = 'Wishiwashi';
-  public fullName: string = 'Wishiwashi SUM';
+  public fullName: string = 'Wishiwashi (SUM 44)';
+  public legacyFullName = 'Wishiwashi SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -29,7 +29,7 @@ export class Stoutland extends PokemonCard {
       name: 'Knock Away',
       cost: [C, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 100 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Stoutland extends PokemonCard {
   public setNumber: string = '135';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stoutland';
-  public fullName: string = 'Stoutland EVS';
+  public fullName: string = 'Stoutland (EVS 135)';
+  public legacyFullName = 'Stoutland EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Intimidating Fang

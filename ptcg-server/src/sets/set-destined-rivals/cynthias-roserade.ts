@@ -34,7 +34,8 @@ export class CynthiasRoserade extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cynthia\'s Roserade';
-  public fullName: string = 'Cynthia\'s Roserade DRI';
+  public fullName: string = 'Cynthia\'s Roserade (DRI 8)';
+  public legacyFullName = 'Cynthia\'s Roserade DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

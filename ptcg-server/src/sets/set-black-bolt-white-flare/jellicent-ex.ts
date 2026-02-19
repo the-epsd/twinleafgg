@@ -40,7 +40,8 @@ export class Jellicentex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
   public name: string = 'Jellicent ex';
-  public fullName: string = 'Jellicent ex SV11W';
+  public fullName: string = 'Jellicent ex (WHT 45)';
+  public legacyFullName = 'Jellicent ex SV11W';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

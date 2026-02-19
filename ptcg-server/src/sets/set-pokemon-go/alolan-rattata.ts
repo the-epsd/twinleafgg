@@ -19,7 +19,8 @@ export class AlolanRattata extends PokemonCard {
   public regulationMark = 'F';
   public set: string = 'PGO';
   public name: string = 'Alolan Rattata';
-  public fullName: string = 'Alolan Rattata PGO';
+  public fullName: string = 'Alolan Rattata (PGO 41)';
+  public legacyFullName = 'Alolan Rattata PGO';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
 

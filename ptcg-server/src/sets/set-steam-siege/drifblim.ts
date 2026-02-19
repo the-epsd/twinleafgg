@@ -38,7 +38,8 @@ export class Drifblim extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drifblim';
-  public fullName: string = 'Drifblim STS';
+  public fullName: string = 'Drifblim (STS 47)';
+  public legacyFullName = 'Drifblim STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Eerie Wave

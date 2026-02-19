@@ -31,7 +31,7 @@ export class Cresselia extends PokemonCard {
       name: 'Photon Laser',
       cost: [P, P],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have at least 5 Energy in play, this attack does 90 more damage.'
     }
   ];
@@ -41,7 +41,8 @@ export class Cresselia extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cresselia';
-  public fullName: string = 'Cresselia CRE';
+  public fullName: string = 'Cresselia (CRE 64)';
+  public legacyFullName = 'Cresselia CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Crescent Glow

@@ -29,7 +29,7 @@ export class Bewear extends PokemonCard {
       name: 'Cross-Cut',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 60 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Bewear extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bewear';
-  public fullName: string = 'Bewear CIN';
+  public fullName: string = 'Bewear (CIN 56)';
+  public legacyFullName = 'Bewear CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fluffy (passive - reduce damage from non-Fire Pokemon)

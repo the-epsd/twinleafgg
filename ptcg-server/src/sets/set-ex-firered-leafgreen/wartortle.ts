@@ -31,7 +31,8 @@ export class Wartortle extends PokemonCard {
 
   public set: string = 'RG';
   public name: string = 'Wartortle';
-  public fullName: string = 'Wartortle RG';
+  public fullName: string = 'Wartortle (RG 50)';
+  public legacyFullName = 'Wartortle RG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '50';
 

@@ -19,7 +19,8 @@ export class BuddyBuddyPoffin extends TrainerCard {
 
   public name: string = 'Buddy-Buddy Poffin';
 
-  public fullName: string = 'Buddy-Buddy Poffin TEF';
+  public fullName: string = 'Buddy-Buddy Poffin (TEF 144)';
+  public legacyFullName = 'Buddy-Buddy Poffin TEF';
 
   public text: string =
     'Search your deck for up to 2 Basic Pokémon with 70 HP or less and put them onto your Bench. Then, shuffle your deck.';

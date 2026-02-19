@@ -38,7 +38,8 @@ export class TapuFini extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tapu Fini';
-  public fullName: string = 'Tapu Fini CRE';
+  public fullName: string = 'Tapu Fini (CRE 40)';
+  public legacyFullName = 'Tapu Fini CRE';
 
   public usedSmashTurn: boolean = false;
 

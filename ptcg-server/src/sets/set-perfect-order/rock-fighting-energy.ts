@@ -16,7 +16,8 @@ export class RockFightingEnergy extends EnergyCard {
   public regulationMark = 'J';
   public set: string = 'M3';
   public name = 'Rock Fighting Energy';
-  public fullName = 'Rock Fighting Energy M3';
+  public fullName = 'Rock Fighting Energy (M3 80)';
+  public legacyFullName = 'Rock Fighting Energy M3';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '80';
   public text = `This card provides [F] Energy while this card is attached to a Pokémon.

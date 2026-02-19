@@ -21,7 +21,7 @@ export class Hippowdon extends PokemonCard {
       name: 'Triple Smash',
       cost: [F, F, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 80 damage for each heads.'
     },
     {
@@ -37,7 +37,8 @@ export class Hippowdon extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hippowdon';
-  public fullName: string = 'Hippowdon DAA';
+  public fullName: string = 'Hippowdon (DAA 94)';
+  public legacyFullName = 'Hippowdon DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Triple Smash

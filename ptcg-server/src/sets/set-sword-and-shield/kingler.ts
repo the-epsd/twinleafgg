@@ -27,7 +27,7 @@ export class Kingler extends PokemonCard {
       name: 'Claw Rend',
       cost: [W, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 60 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Kingler extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kingler';
-  public fullName: string = 'Kingler SSH';
+  public fullName: string = 'Kingler (SSH 44)';
+  public legacyFullName = 'Kingler SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Heavy Pincers

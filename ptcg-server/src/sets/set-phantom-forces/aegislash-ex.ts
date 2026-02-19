@@ -37,7 +37,8 @@ export class AegislashEX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
   public name: string = 'Aegislash-EX';
-  public fullName: string = 'Aegislash-EX PHF';
+  public fullName: string = 'Aegislash-EX (PHF 65)';
+  public legacyFullName = 'Aegislash-EX PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

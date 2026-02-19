@@ -21,7 +21,8 @@ export class Amarys extends TrainerCard {
 
   public name: string = 'Amarys';
 
-  public fullName: string = 'Amarys PRE';
+  public fullName: string = 'Amarys (PRE 93)';
+  public legacyFullName = 'Amarys PRE';
 
   public readonly AMARYS_USED_MARKER = 'AMARYS_USED_MARKER';
 

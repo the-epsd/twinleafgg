@@ -32,7 +32,8 @@ export class Volcarona extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
   public name: string = 'Volcarona';
-  public fullName: string = 'Volcarona NVI';
+  public fullName: string = 'Volcarona (NVI 21)';
+  public legacyFullName = 'Volcarona NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

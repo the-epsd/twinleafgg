@@ -28,7 +28,8 @@ export class Riolu2 extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Riolu';
-  public fullName: string = 'Riolu FCO 46';
+  public fullName: string = 'Riolu (FCO 46)';
+  public legacyFullName = 'Riolu FCO 46';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Smash Punch

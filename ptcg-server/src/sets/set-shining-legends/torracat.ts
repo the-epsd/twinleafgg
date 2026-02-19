@@ -36,7 +36,8 @@ export class Torracat extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Torracat';
-  public fullName: string = 'Torracat SLG';
+  public fullName: string = 'Torracat (SLG 16)';
+  public legacyFullName = 'Torracat SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swagger

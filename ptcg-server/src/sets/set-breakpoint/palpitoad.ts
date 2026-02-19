@@ -22,7 +22,7 @@ export class Palpitoad extends PokemonCard {
       name: 'Frog Hop',
       cost: [W, W],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Palpitoad extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Palpitoad';
-  public fullName: string = 'Palpitoad BKP';
+  public fullName: string = 'Palpitoad (BKP 34)';
+  public legacyFullName = 'Palpitoad BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Frog Hop

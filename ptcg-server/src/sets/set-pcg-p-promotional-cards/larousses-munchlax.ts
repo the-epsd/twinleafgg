@@ -28,7 +28,8 @@ export class LaRoussesMunchlax extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'LaRousse\'s Munchlax';
-  public fullName: string = 'LaRousse\'s Munchlax PCGP';
+  public fullName: string = 'LaRousse\'s Munchlax (PCGP 20)';
+  public legacyFullName = 'LaRousse\'s Munchlax PCGP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
 

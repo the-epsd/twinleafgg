@@ -140,7 +140,8 @@ export class RareCandy extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
   public name: string = 'Rare Candy';
-  public fullName: string = 'Rare Candy HP';
+  public fullName: string = 'Rare Candy (HP 90)';
+  public legacyFullName = 'Rare Candy HP';
 
   public text: string =
     'Choose 1 of your Basic Pokémon in play. If you have a Stage 1 or Stage 2 card that evolves from that Pokémon in your hand, put that card on the Basic Pokémon. (This counts as evolving that Pokémon.)';

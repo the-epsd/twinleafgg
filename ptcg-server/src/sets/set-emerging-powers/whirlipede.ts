@@ -33,7 +33,8 @@ export class Whirlipede extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '39';
   public name: string = 'Whirlipede';
-  public fullName: string = 'Whirlipede EPO';
+  public fullName: string = 'Whirlipede (EPO 39)';
+  public legacyFullName = 'Whirlipede EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

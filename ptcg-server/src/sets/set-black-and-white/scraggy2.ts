@@ -30,7 +30,8 @@ export class Scraggy2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';
   public name: string = 'Scraggy';
-  public fullName: string = 'Scraggy BLW 69';
+  public fullName: string = 'Scraggy (BLW 69)';
+  public legacyFullName = 'Scraggy BLW 69';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Both attacks are basic damage attacks with no special effects

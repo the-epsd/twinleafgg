@@ -131,7 +131,8 @@ export class Wally extends TrainerCard {
 
   public name: string = 'Wally';
 
-  public fullName: string = 'Wally ROS';
+  public fullName: string = 'Wally (ROS 94)';
+  public legacyFullName = 'Wally ROS';
 
   public cardImage: string = 'assets/cardback.png';
 

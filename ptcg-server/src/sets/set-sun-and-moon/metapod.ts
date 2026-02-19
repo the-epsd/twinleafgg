@@ -38,7 +38,8 @@ export class Metapod extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metapod';
-  public fullName: string = 'Metapod SUM';
+  public fullName: string = 'Metapod (SUM 2)';
+  public legacyFullName = 'Metapod SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Iron Defense

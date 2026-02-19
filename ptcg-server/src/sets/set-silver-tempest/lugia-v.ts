@@ -48,7 +48,8 @@ export class LugiaV extends PokemonCard {
 
   public name: string = 'Lugia V';
 
-  public fullName: string = 'Lugia V SIT';
+  public fullName: string = 'Lugia V (SIT 138)';
+  public legacyFullName = 'Lugia V SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

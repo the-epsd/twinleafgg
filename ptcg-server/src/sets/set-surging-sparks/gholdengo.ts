@@ -30,7 +30,8 @@ export class Gholdengo extends PokemonCard {
   public set: string = 'SSP';
   public regulationMark = 'H';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Gholdengo SSP';
+  public fullName: string = 'Gholdengo (SSP 131)';
+  public legacyFullName = 'Gholdengo SSP';
   public name: string = 'Gholdengo';
   public setNumber: string = '131';
 

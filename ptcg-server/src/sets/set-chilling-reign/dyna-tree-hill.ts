@@ -23,7 +23,8 @@ export class DynaTreeHill extends TrainerCard {
 
   public name = 'Dyna Tree Hill';
 
-  public fullName = 'Dyna Tree Hill CRE';
+  public fullName = 'Dyna Tree Hill (CRE 135)';
+  public legacyFullName = 'Dyna Tree Hill CRE';
   
   public text = 'Pokémon (both yours and your opponent\'s) can\'t be healed.';
     

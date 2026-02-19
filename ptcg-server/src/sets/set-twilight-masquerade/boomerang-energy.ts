@@ -15,7 +15,8 @@ export class BoomerangEnergy extends EnergyCard {
   public setNumber: string = '166';
   public regulationMark = 'H';
   public name = 'Boomerang Energy';
-  public fullName = 'Boomerang Energy TWM';
+  public fullName = 'Boomerang Energy (TWM 166)';
+  public legacyFullName = 'Boomerang Energy TWM';
 
   public text = `As long as this card is attached to a Pokémon, it provides [C] Energy.
     

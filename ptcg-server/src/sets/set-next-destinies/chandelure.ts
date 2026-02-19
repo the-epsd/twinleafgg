@@ -34,7 +34,8 @@ export class Chandelure extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chandelure';
-  public fullName: string = 'Chandelure NXD';
+  public fullName: string = 'Chandelure (NXD 20)';
+  public legacyFullName = 'Chandelure NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Flame Burst - 30 damage to active, 30 to 2 benched

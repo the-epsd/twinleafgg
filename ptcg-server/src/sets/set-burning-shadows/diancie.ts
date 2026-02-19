@@ -121,7 +121,8 @@ export class Diancie extends PokemonCard {
 
   public set: string = 'BUS';
   public name: string = 'Diancie';
-  public fullName: string = 'Diancie BUS';
+  public fullName: string = 'Diancie (BUS 94)';
+  public legacyFullName = 'Diancie BUS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '94';
 

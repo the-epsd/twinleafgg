@@ -41,7 +41,8 @@ export class VenusaurSnivyGX extends PokemonCard {
   public setNumber = '1';
   public cardImage = 'assets/cardback.png';
   public name = 'Venusaur & Snivy-GX';
-  public fullName = 'Venusaur & Snivy-GX CEC';
+  public fullName = 'Venusaur & Snivy-GX (CEC 1)';
+  public legacyFullName = 'Venusaur & Snivy-GX CEC';
 
   public readonly SHINING_VINE_MARKER = 'SHINING_VINE_MARKER';
 

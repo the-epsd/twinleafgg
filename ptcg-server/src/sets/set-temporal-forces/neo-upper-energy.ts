@@ -16,7 +16,8 @@ export class NeoUpperEnergy extends EnergyCard {
   public setNumber: string = '162';
   public cardImage: string = 'assets/cardback.png';
   public name = 'Neo Upper Energy';
-  public fullName = 'Neo Upper Energy TEF';
+  public fullName = 'Neo Upper Energy (TEF 162)';
+  public legacyFullName = 'Neo Upper Energy TEF';
 
   public text = `As long as this card is attached to a Pokémon, it provides [C] Energy.
 

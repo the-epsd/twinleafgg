@@ -57,7 +57,8 @@ export class Switch extends TrainerCard {
 
   public name: string = 'Switch';
 
-  public fullName: string = 'Switch BS';
+  public fullName: string = 'Switch (BS 95)';
+  public legacyFullName = 'Switch BS';
 
   public text: string =
     'Switch your Active Pokemon with 1 of your Benched Pokemon.';

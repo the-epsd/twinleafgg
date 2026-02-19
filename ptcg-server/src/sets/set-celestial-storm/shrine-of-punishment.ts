@@ -21,7 +21,8 @@ export class ShrineOfPunishment extends TrainerCard {
 
   public name: string = 'Shrine of Punishment';
 
-  public fullName: string = 'Shrine of Punishment CES';
+  public fullName: string = 'Shrine of Punishment (CES 143)';
+  public legacyFullName = 'Shrine of Punishment CES';
 
   public text: string =
     'Between turns, put 1 damage counter on each Pokémon-GX and Pokémon-EX (both yours and your opponent\'s).';

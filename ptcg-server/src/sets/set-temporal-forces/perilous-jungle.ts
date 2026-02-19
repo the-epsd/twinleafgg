@@ -20,7 +20,8 @@ export class PerilousJungle extends TrainerCard {
 
   public name: string = 'Perilous Jungle';
 
-  public fullName: string = 'Perilous Jungle TEF';
+  public fullName: string = 'Perilous Jungle (TEF 156)';
+  public legacyFullName = 'Perilous Jungle TEF';
 
   public cardImage: string = 'assets/cardback.png';
 

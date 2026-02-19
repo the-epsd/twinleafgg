@@ -43,7 +43,8 @@ export class Arcanineex extends PokemonCard {
   public setNumber: string = '83';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Arcanine ex';
-  public fullName: string = 'Arcanine ex LM';
+  public fullName: string = 'Arcanine ex (LM 83)';
+  public legacyFullName = 'Arcanine ex LM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

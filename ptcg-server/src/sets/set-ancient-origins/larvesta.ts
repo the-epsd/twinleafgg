@@ -25,5 +25,6 @@ export class Larvesta extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Larvesta';
-  public fullName: string = 'Larvesta AOR';
+  public fullName: string = 'Larvesta (AOR 16)';
+  public legacyFullName = 'Larvesta AOR';
 }

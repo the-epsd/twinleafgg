@@ -16,7 +16,8 @@ export class Beauty extends TrainerCard {
   public setNumber: string = '148';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beauty';
-  public fullName: string = 'Beauty VIV';
+  public fullName: string = 'Beauty (VIV 148)';
+  public legacyFullName = 'Beauty VIV';
   public text: string = 'If you go first, you may play this card during your first turn. Draw 2 cards. You may play only 1 Supporter card during your turn.';
 
   public firstTurn = true;

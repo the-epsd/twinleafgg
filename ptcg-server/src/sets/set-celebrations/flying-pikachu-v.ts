@@ -37,7 +37,8 @@ export class FlyingPikachuV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
   public name: string = 'Flying Pikachu V';
-  public fullName: string = 'Flying Pikachu V CEL';
+  public fullName: string = 'Flying Pikachu V (CEL 6)';
+  public legacyFullName = 'Flying Pikachu V CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {

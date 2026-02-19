@@ -50,7 +50,8 @@ export class Baxcalibur extends PokemonCard {
 
   public name: string = 'Baxcalibur';
 
-  public fullName: string = 'Baxcalibur PAL';
+  public fullName: string = 'Baxcalibur (PAL 60)';
+  public legacyFullName = 'Baxcalibur PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

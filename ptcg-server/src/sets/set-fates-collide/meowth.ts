@@ -29,7 +29,8 @@ export class Meowth extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meowth';
-  public fullName: string = 'Meowth FCO';
+  public fullName: string = 'Meowth (FCO 74)';
+  public legacyFullName = 'Meowth FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Turmoil Strike

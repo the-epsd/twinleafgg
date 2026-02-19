@@ -65,7 +65,8 @@ export class Gallade extends PokemonCard {
 
   public name: string = 'Gallade';
 
-  public fullName: string = 'Gallade ASR';
+  public fullName: string = 'Gallade (ASR 62)';
+  public legacyFullName = 'Gallade ASR';
 
   public readonly BUDDY_CATCH_MARKER = 'BUDDY_CATCH_MARKER';
 

@@ -15,6 +15,7 @@ export class WaterEnergy extends EnergyCard {
 
   public name = 'Water Energy';
 
-  public fullName = 'Water Energy SVE';
+  public fullName = 'Water Energy (SVE 3)';
+  public legacyFullName = 'Water Energy SVE';
 
 }

@@ -37,7 +37,8 @@ export class Ludicolo extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Ludicolo';
-  public fullName: string = 'Ludicolo M2';
+  public fullName: string = 'Ludicolo (PFL 7)';
+  public legacyFullName = 'Ludicolo M2';
 
   public readonly EXCITED_HEALING_MARKER = 'EXCITED_HEALING_MARKER';
 

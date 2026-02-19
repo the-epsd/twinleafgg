@@ -30,7 +30,8 @@ export class Voltorb extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Voltorb';
-  public fullName: string = 'Voltorb TRR';
+  public fullName: string = 'Voltorb (TRR 80)';
+  public legacyFullName = 'Voltorb TRR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

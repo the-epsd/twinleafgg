@@ -30,7 +30,8 @@ export class Aggron extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '89';
   public name: string = 'Aggron';
-  public fullName: string = 'Aggron CRZ';
+  public fullName: string = 'Aggron (CRZ 89)';
+  public legacyFullName = 'Aggron CRZ';
 
   public readonly COUNTER_PRESS_MARKER = 'COUNTER_PRESS_MARKER';
   public readonly CLEAR_COUNTER_PRESS_MARKER = 'CLEAR_COUNTER_PRESS_MARKER';

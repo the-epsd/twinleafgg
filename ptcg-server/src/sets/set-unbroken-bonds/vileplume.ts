@@ -37,7 +37,8 @@ export class Vileplume extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vileplume';
-  public fullName: string = 'Vileplume UNB';
+  public fullName: string = 'Vileplume (UNB 8)';
+  public legacyFullName = 'Vileplume UNB';
 
   public readonly VARIED_POLLEN_MARKER = 'VARIED_POLLEN_MARKER';
 

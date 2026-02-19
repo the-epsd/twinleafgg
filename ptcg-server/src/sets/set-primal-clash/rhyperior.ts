@@ -29,7 +29,7 @@ export class Rhyperior extends PokemonCard {
       name: 'Stone Edge',
       cost: [F, F, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Rhyperior extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rhyperior';
-  public fullName: string = 'Rhyperior PRC';
+  public fullName: string = 'Rhyperior (PRC 76)';
+  public legacyFullName = 'Rhyperior PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Shower

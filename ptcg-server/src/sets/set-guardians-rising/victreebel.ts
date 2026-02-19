@@ -37,7 +37,8 @@ export class Victreebel extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Victreebel';
-  public fullName: string = 'Victreebel GRI';
+  public fullName: string = 'Victreebel (GRI 3)';
+  public legacyFullName = 'Victreebel GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pollen Hazard

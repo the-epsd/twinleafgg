@@ -24,7 +24,8 @@ export class Braixen extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Braixen';
-  public fullName: string = 'Braixen M4';
+  public fullName: string = 'Braixen (M4 12)';
+  public legacyFullName = 'Braixen M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -33,7 +33,8 @@ export class Gothita extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
   public name: string = 'Gothita';
-  public fullName: string = 'Gothita PAL';
+  public fullName: string = 'Gothita (PAL 90)';
+  public legacyFullName = 'Gothita PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Eerie Wave

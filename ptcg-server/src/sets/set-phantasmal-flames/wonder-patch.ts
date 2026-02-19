@@ -20,7 +20,8 @@ export class WonderPatch extends TrainerCard {
   public name: string = 'Wondrous Patch';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '94';
-  public fullName: string = 'Wonder Patch MBD';
+  public fullName: string = 'Wondrous Patch (PFL 94)';
+  public legacyFullName = 'Wonder Patch MBD';
   public text: string = 'Attach a basic [P] Energy card from your discard pile to 1 of your Benched [P] Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

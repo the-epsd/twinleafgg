@@ -22,7 +22,8 @@ export class Lotad extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lotad';
-  public fullName: string = 'Lotad DX';
+  public fullName: string = 'Lotad (DX 35)';
+  public legacyFullName = 'Lotad DX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

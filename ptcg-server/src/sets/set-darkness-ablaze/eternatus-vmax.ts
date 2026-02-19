@@ -34,7 +34,8 @@ export class EternatusVMAX extends PokemonCard {
 
   public set: string = 'DAA';
   public name: string = 'Eternatus VMAX';
-  public fullName: string = 'Eternatus VMAX DAA';
+  public fullName: string = 'Eternatus VMAX (DAA 117)';
+  public legacyFullName = 'Eternatus VMAX DAA';
   public setNumber: string = '117';
   public regulationMark: string = 'D';
   public cardImage: string = 'assets/cardback.png';

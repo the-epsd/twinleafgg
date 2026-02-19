@@ -31,5 +31,6 @@ export class Magmar extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magmar';
-  public fullName: string = 'Magmar DRX';
+  public fullName: string = 'Magmar (DRX 20)';
+  public legacyFullName = 'Magmar DRX';
 }

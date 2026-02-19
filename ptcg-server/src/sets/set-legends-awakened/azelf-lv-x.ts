@@ -31,7 +31,8 @@ export class AzelfLVX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '140';
   public name: string = 'Azelf';
-  public fullName: string = 'Azelf Lv. X LA';
+  public fullName: string = 'Azelf (LA 140)';
+  public legacyFullName = 'Azelf Lv. X LA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

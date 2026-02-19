@@ -33,7 +33,8 @@ export class TeamMagmasClaydol extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
   public name: string = 'Team Magma\'s Claydol';
-  public fullName: string = 'Team Magma\'s Claydol MA';
+  public fullName: string = 'Team Magma\'s Claydol (MA 8)';
+  public legacyFullName = 'Team Magma\'s Claydol MA';
 
   public readonly MAGMA_SWITCH_MARKER = 'MAGMA_SWITCH_MARKER';
 

@@ -38,7 +38,7 @@ export class ScizorGx extends PokemonCard {
       name: 'Cross-Cut-GX',
       cost: [C, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 100 more damage. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];
@@ -47,7 +47,8 @@ export class ScizorGx extends PokemonCard {
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scizor-GX';
-  public fullName: string = 'Scizor-GX CES';
+  public fullName: string = 'Scizor-GX (CES 90)';
+  public legacyFullName = 'Scizor-GX CES';
 
   public readonly STEEL_WING_MARKER = 'SCIZOR_GX_STEEL_WING_MARKER';
   public readonly CLEAR_STEEL_WING_MARKER = 'SCIZOR_GX_CLEAR_STEEL_WING_MARKER';

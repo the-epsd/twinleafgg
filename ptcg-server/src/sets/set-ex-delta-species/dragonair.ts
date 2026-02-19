@@ -23,7 +23,8 @@ export class Dragonair extends PokemonCard {
 
   public set: string = 'DS';
   public name: string = 'Dragonair';
-  public fullName: string = 'Dragonair DS';
+  public fullName: string = 'Dragonair (DS 42)';
+  public legacyFullName = 'Dragonair DS';
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
 

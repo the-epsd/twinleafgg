@@ -39,7 +39,8 @@ export class EiscueV extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eiscue V';
-  public fullName: string = 'Eiscue V RCL';
+  public fullName: string = 'Eiscue V (RCL 55)';
+  public legacyFullName = 'Eiscue V RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Cold Absorption (passive - heal when attaching Water Energy from hand to this Pokemon)

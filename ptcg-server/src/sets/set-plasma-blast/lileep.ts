@@ -35,7 +35,8 @@ export class Lileep extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lileep';
-  public fullName: string = 'Lileep PLB';
+  public fullName: string = 'Lileep (PLB 3)';
+  public legacyFullName = 'Lileep PLB';
 
   public readonly PREHISTORIC_CALL_MARKER = 'PREHISTORIC_CALL_MARKER';
 

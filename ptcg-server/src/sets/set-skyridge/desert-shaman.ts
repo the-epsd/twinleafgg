@@ -10,7 +10,8 @@ export class DesertShaman extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '123';
   public name: string = 'Desert Shaman';
-  public fullName: string = 'Desert Shaman SK';
+  public fullName: string = 'Desert Shaman (SK 123)';
+  public legacyFullName = 'Desert Shaman SK';
   public text = 'Shuffle your hand into your deck and draw up to 4 cards. Your opponent does the same.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

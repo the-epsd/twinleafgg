@@ -45,7 +45,8 @@ export class Dragonair extends PokemonCard {
 
   public name: string = 'Dragonair';
 
-  public fullName: string = 'Dragonair OBF';
+  public fullName: string = 'Dragonair (OBF 158)';
+  public legacyFullName = 'Dragonair OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

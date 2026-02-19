@@ -27,5 +27,6 @@ export class Fletchling extends PokemonCard {
   public setNumber: string = '151';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fletchling';
-  public fullName: string = 'Fletchling DAA';
+  public fullName: string = 'Fletchling (DAA 151)';
+  public legacyFullName = 'Fletchling DAA';
 }

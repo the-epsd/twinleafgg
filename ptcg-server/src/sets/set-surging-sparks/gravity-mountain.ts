@@ -17,7 +17,8 @@ export class GravityMountain extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '177';
   public name: string = 'Gravity Mountain';
-  public fullName: string = 'Gravity Mountain SSP';
+  public fullName: string = 'Gravity Mountain (SSP 177)';
+  public legacyFullName = 'Gravity Mountain SSP';
 
   public text: string =
     'Each Stage 2 Pokémon in play (both yours and your opponent\'s) gets -30 HP. ';

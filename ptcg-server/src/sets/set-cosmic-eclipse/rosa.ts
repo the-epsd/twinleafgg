@@ -85,7 +85,8 @@ export class Rosa extends TrainerCard {
   public setNumber: string = '204';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rosa';
-  public fullName: string = 'Rosa CEC';
+  public fullName: string = 'Rosa (CEC 204)';
+  public legacyFullName = 'Rosa CEC';
 
   public text: string =
     `You can play this card only if 1 of your Pokémon was Knocked Out during your opponent's last turn.

@@ -30,7 +30,8 @@ export class Heatmor extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
   public name: string = 'Heatmor';
-  public fullName: string = 'Heatmor NVI';
+  public fullName: string = 'Heatmor (NVI 18)';
+  public legacyFullName = 'Heatmor NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

@@ -34,7 +34,8 @@ export class Pidgeot extends PokemonCard {
   public setNumber: string = '124';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pidgeot';
-  public fullName: string = 'Pidgeot TEU';
+  public fullName: string = 'Pidgeot (TEU 124)';
+  public legacyFullName = 'Pidgeot TEU';
 
   public usedWhirlwind = false;
 

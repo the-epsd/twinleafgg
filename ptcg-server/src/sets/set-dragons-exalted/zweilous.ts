@@ -80,7 +80,8 @@ export class Zweilous extends PokemonCard {
 
   public name: string = 'Zweilous';
 
-  public fullName: string = 'Zweilous DRX';
+  public fullName: string = 'Zweilous (DRX 95)';
+  public legacyFullName = 'Zweilous DRX';
 
   public cardImage: string = 'assets/cardback.png';
 

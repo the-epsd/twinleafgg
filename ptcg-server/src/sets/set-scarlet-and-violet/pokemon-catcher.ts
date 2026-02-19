@@ -59,7 +59,8 @@ export class PokemonCatcher extends TrainerCard {
 
   public name: string = 'Pokémon Catcher';
 
-  public fullName: string = 'Pokemon Catcher SVI';
+  public fullName: string = 'Pokémon Catcher (SVI 187)';
+  public legacyFullName = 'Pokemon Catcher SVI';
 
   public text: string =
     'Flip a coin. If heads, switch 1 of your opponent\'s Benched Pokemon ' +

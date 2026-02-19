@@ -29,7 +29,8 @@ export class IronMoth extends PokemonCard {
   public regulationMark = 'H';
   public set: string = 'SFA';
   public name: string = 'Iron Moth';
-  public fullName: string = 'Iron Moth SFA';
+  public fullName: string = 'Iron Moth (SFA 9)';
+  public legacyFullName = 'Iron Moth SFA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '9';
 

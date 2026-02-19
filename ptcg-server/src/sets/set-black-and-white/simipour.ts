@@ -34,7 +34,8 @@ export class Simipour extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '34';
   public name: string = 'Simipour';
-  public fullName: string = 'Simipour BLW';
+  public fullName: string = 'Simipour (BLW 34)';
+  public legacyFullName = 'Simipour BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

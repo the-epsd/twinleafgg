@@ -28,7 +28,7 @@ export class Grimmsnarl extends PokemonCard {
       name: 'Energy Press',
       cost: [D, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -38,7 +38,8 @@ export class Grimmsnarl extends PokemonCard {
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grimmsnarl';
-  public fullName: string = 'Grimmsnarl RCL';
+  public fullName: string = 'Grimmsnarl (RCL 125)';
+  public legacyFullName = 'Grimmsnarl RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Dark Oath

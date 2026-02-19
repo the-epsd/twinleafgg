@@ -34,7 +34,8 @@ export class Magmortar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
   public name: string = 'Magmortar';
-  public fullName: string = 'Magmortar JTG';
+  public fullName: string = 'Magmortar (JTG 21)';
+  public legacyFullName = 'Magmortar JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

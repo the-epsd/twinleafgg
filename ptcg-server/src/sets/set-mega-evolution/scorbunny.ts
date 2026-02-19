@@ -24,7 +24,8 @@ export class Scorbunny extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scorbunny';
-  public fullName: string = 'Scorbunny M1L';
+  public fullName: string = 'Scorbunny (MEG 26)';
+  public legacyFullName = 'Scorbunny M1L';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Wild Kick

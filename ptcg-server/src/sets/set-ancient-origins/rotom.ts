@@ -36,7 +36,8 @@ export class Rotom extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rotom';
-  public fullName: string = 'Rotom AOR';
+  public fullName: string = 'Rotom (AOR 29)';
+  public legacyFullName = 'Rotom AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Electric Mischief

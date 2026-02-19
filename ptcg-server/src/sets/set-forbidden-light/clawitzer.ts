@@ -41,7 +41,8 @@ export class Clawitzer extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clawitzer';
-  public fullName: string = 'Clawitzer FLI';
+  public fullName: string = 'Clawitzer (FLI 26)';
+  public legacyFullName = 'Clawitzer FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Standing By

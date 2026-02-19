@@ -11,7 +11,8 @@ export class AntheaAndConcordia extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '187';
   public name: string = 'Anthea & Concordia';
-  public fullName: string = 'Anthea & Concordia M2a';
+  public fullName: string = 'Anthea & Concordia (ASC 187)';
+  public legacyFullName = 'Anthea & Concordia M2a';
   public extraPrizes = false;
 
   public text: string = `You can use this card only if you have N's Darmanitan, N's Zoroark ex, N's Vanilluxe, N's Klinklang, N's Reshiram, and N's Zekrom in play.

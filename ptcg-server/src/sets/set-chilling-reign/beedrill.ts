@@ -49,7 +49,8 @@ export class Beedrill extends PokemonCard {
 
   public name: string = 'Beedrill';
 
-  public fullName: string = 'Beedrill CRE';
+  public fullName: string = 'Beedrill (CRE 3)';
+  public legacyFullName = 'Beedrill CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

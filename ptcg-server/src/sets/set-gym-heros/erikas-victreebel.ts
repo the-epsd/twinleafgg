@@ -34,7 +34,8 @@ export class ErikasVictreebel extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Erika\'s Victreebel';
-  public fullName: string = 'Erika\'s Victreebel G1';
+  public fullName: string = 'Erika\'s Victreebel (G1 26)';
+  public legacyFullName = 'Erika\'s Victreebel G1';
 
   public readonly FRAGRANCE_TRAP_MARKER = 'FRAGRANCE_TRAP_MARKER';
 

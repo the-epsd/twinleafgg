@@ -30,7 +30,8 @@ export class Stunky extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stunky';
-  public fullName: string = 'Stunky DRX';
+  public fullName: string = 'Stunky (DRX 76)';
+  public legacyFullName = 'Stunky DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -25,7 +25,8 @@ export class Joltik2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
   public name: string = 'Joltik';
-  public fullName: string = 'Joltik BLW 45';
+  public fullName: string = 'Joltik (BLW 45)';
+  public legacyFullName = 'Joltik BLW 45';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Leech Life - heal same amount as damage dealt

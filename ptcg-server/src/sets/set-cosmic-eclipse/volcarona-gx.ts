@@ -48,7 +48,8 @@ export class VolcaronaGx extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Volcarona-GX';
-  public fullName: string = 'Volcarona-GX CEC';
+  public fullName: string = 'Volcarona-GX (CEC 35)';
+  public legacyFullName = 'Volcarona-GX CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Flaming Shot

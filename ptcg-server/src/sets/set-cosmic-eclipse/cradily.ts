@@ -37,7 +37,8 @@ export class Cradily extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cradily';
-  public fullName: string = 'Cradily CEC';
+  public fullName: string = 'Cradily (CEC 11)';
+  public legacyFullName = 'Cradily CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Swaying Strangle (passive - block retreat if affected by special conditions)

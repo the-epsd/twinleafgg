@@ -23,7 +23,8 @@ export class Worker extends TrainerCard {
 
   public name: string = 'Worker';
 
-  public fullName: string = 'Worker SIT';
+  public fullName: string = 'Worker (SIT 167)';
+  public legacyFullName = 'Worker SIT';
 
   public text: string =
     'Draw 3 cards. Discard a Stadium in play.';

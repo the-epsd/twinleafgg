@@ -22,7 +22,8 @@ export class Larvesta extends PokemonCard {
 
   public name: string = 'Larvesta';
 
-  public fullName: string = 'Larvesta SSP';
+  public fullName: string = 'Larvesta (SSP 24)';
+  public legacyFullName = 'Larvesta SSP';
 
   public regulationMark = 'H';
 

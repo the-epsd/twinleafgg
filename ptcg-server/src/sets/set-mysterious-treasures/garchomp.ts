@@ -30,7 +30,8 @@ export class Garchomp extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '9';
   public name: string = 'Garchomp';
-  public fullName: string = 'Garchomp MT';
+  public fullName: string = 'Garchomp (MT 9)';
+  public legacyFullName = 'Garchomp MT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -25,7 +25,7 @@ export class MHoundoomEx extends PokemonCard {
       name: 'Inferno Fang',
       cost: [R, R],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard all [R] Energy attached to this Pokémon. If you do, this attack does 80 more damage.'
     }
   ];
@@ -34,7 +34,8 @@ export class MHoundoomEx extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Houndoom-EX';
-  public fullName: string = 'M Houndoom-EX BKT';
+  public fullName: string = 'M Houndoom-EX (BKT 22)';
+  public legacyFullName = 'M Houndoom-EX BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Inferno Fang

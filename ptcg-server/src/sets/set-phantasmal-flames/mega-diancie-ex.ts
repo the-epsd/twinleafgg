@@ -31,7 +31,8 @@ export class MegaDiancieex extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Diancie ex';
-  public fullName: string = 'Mega Diancie ex M2';
+  public fullName: string = 'Mega Diancie ex (PFL 41)';
+  public legacyFullName = 'Mega Diancie ex M2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

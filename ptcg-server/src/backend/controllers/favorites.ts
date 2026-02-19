@@ -13,11 +13,24 @@ export class Favorites extends Controller {
   public async onList(req: Request, res: Response) {
     const userId: number = req.body.userId;
     const favorites = await UserFavoriteCard.find({ where: { userId } });
+    const cardManager = CardManager.getInstance();
 
     const favoritesMap: { [cardName: string]: string } = {};
-    favorites.forEach(fav => {
+    const toMigrate: UserFavoriteCard[] = [];
+    for (const fav of favorites) {
+      // Auto-migrate legacy fullName to current fullName
+      const card = cardManager.getCardByName(fav.fullName);
+      if (card && card.fullName !== fav.fullName) {
+        fav.fullName = card.fullName;
+        toMigrate.push(fav);
+      }
       favoritesMap[fav.cardName] = fav.fullName;
-    });
+    }
+
+    // Batch-save migrated favorites in the background
+    if (toMigrate.length > 0) {
+      Promise.all(toMigrate.map(fav => fav.save())).catch(() => {});
+    }
 
     res.send({ ok: true, favorites: favoritesMap });
   }

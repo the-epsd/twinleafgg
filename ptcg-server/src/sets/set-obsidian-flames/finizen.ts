@@ -101,7 +101,8 @@ export class Finizen extends PokemonCard {
 
   public name: string = 'Finizen';
 
-  public fullName: string = 'Finizen OBF';
+  public fullName: string = 'Finizen (OBF 60)';
+  public legacyFullName = 'Finizen OBF';
 
   public usedSpinTurn = false;
 

@@ -24,7 +24,7 @@ export class Tentacool extends PokemonCard {
       name: 'Bubble Jutsu',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you played Janine from your hand during this turn, this attack does 50 more damage.'
     }
   ];
@@ -33,7 +33,8 @@ export class Tentacool extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tentacool';
-  public fullName: string = 'Tentacool UNB';
+  public fullName: string = 'Tentacool (UNB 40)';
+  public legacyFullName = 'Tentacool UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track if Janine was played this turn

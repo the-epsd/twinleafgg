@@ -32,5 +32,6 @@ export class Zweilous extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zweilous';
-  public fullName: string = 'Zweilous EVS';
+  public fullName: string = 'Zweilous (EVS 114)';
+  public legacyFullName = 'Zweilous EVS';
 }

@@ -57,7 +57,8 @@ export class TeamRocketsPupitar extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Pupitar';
-  public fullName: string = 'Team Rocket\'s Pupitar DRI';
+  public fullName: string = 'Team Rocket\'s Pupitar (DRI 95)';
+  public legacyFullName = 'Team Rocket\'s Pupitar DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

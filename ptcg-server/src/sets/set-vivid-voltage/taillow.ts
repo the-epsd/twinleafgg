@@ -24,7 +24,8 @@ export class Taillow extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '133';
   public name = 'Taillow';
-  public fullName = 'Taillow VIV';
+  public fullName = 'Taillow (VIV 133)';
+  public legacyFullName = 'Taillow VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

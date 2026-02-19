@@ -13,7 +13,8 @@ export class DarkMetalEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '94';
   public name = 'Dark Metal Energy';
-  public fullName = 'Dark Metal Energy TRR';
+  public fullName = 'Dark Metal Energy (TRR 94)';
+  public legacyFullName = 'Dark Metal Energy TRR';
 
   public text = 'Attach Dark Metal Energy to 1 of your Pokémon. While in play, Dark Metal Energy provides [D] Energy and [M] Energy, but provides only 1 Energy at a time. (Doesn\'t count as a basic Energy card when not in play and has no effect other than providing Energy.)';
 

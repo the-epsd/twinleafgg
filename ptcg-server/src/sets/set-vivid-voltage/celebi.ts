@@ -21,7 +21,7 @@ export class Celebi extends PokemonCard {
       name: 'Energy Press',
       cost: [G],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 30 damage for each Energy attached to your opponent\'s Active Pokémon.'
     },
     {
@@ -37,7 +37,8 @@ export class Celebi extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celebi';
-  public fullName: string = 'Celebi VIV';
+  public fullName: string = 'Celebi (VIV 9)';
+  public legacyFullName = 'Celebi VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Energy Press

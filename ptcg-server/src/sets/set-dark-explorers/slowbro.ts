@@ -32,7 +32,8 @@ export class Slowbro extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slowbro';
-  public fullName: string = 'Slowbro DEX';
+  public fullName: string = 'Slowbro (DEX 24)';
+  public legacyFullName = 'Slowbro DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Airhead - prevent attacking if 2, 4, or 6 Prize cards left

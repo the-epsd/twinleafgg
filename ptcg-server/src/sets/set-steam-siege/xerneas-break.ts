@@ -31,7 +31,8 @@ export class XerneasBREAK extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
   public name: string = 'Xerneas BREAK';
-  public fullName: string = 'Xerneas BREAK STS';
+  public fullName: string = 'Xerneas BREAK (STS 82)';
+  public legacyFullName = 'Xerneas BREAK STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Life Stream

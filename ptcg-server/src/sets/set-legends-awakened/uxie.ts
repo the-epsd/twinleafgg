@@ -85,7 +85,8 @@ export class Uxie extends PokemonCard {
 
   public name: string = 'Uxie';
 
-  public fullName: string = 'Uxie LA';
+  public fullName: string = 'Uxie (LA 43)';
+  public legacyFullName = 'Uxie LA';
 
   public cardImage: string = 'assets/cardback.png';
 

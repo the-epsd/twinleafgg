@@ -31,7 +31,8 @@ export class Bouffalant extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public name: string = 'Bouffalant';
-  public fullName: string = 'Bouffalant BLW 91';
+  public fullName: string = 'Bouffalant (BLW 91)';
+  public legacyFullName = 'Bouffalant BLW 91';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

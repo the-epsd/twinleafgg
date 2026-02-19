@@ -33,7 +33,8 @@ export class Togepi extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togepi';
-  public fullName: string = 'Togepi ASR';
+  public fullName: string = 'Togepi (ASR 55)';
+  public legacyFullName = 'Togepi ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

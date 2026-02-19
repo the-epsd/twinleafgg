@@ -87,7 +87,8 @@ export class Nessa extends TrainerCard {
 
   public name: string = 'Nessa';
 
-  public fullName: string = 'Nessa VIV';
+  public fullName: string = 'Nessa (VIV 157)';
+  public legacyFullName = 'Nessa VIV';
 
   public text: string =
     'Put up to 4 in any combination of [W] Pokémon and [W] Energy cards from your discard pile into your hand.';

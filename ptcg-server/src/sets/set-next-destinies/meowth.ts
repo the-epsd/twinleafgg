@@ -32,7 +32,8 @@ export class Meowth extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meowth';
-  public fullName: string = 'Meowth NXD';
+  public fullName: string = 'Meowth (NXD 80)';
+  public legacyFullName = 'Meowth NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Double Scratch

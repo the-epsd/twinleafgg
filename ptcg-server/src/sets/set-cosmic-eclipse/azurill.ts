@@ -28,7 +28,8 @@ export class Azurill extends PokemonCard {
   public setNumber: string = '146';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Azurill';
-  public fullName: string = 'Azurill CEC';
+  public fullName: string = 'Azurill (CEC 146)';
+  public legacyFullName = 'Azurill CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Growing Up

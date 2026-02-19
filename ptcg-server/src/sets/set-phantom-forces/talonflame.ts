@@ -27,7 +27,7 @@ export class Talonflame extends PokemonCard {
       name: 'Acrobatics',
       cost: [R],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
     },
     {
@@ -42,7 +42,8 @@ export class Talonflame extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Talonflame';
-  public fullName: string = 'Talonflame PHF';
+  public fullName: string = 'Talonflame (PHF 10)';
+  public legacyFullName = 'Talonflame PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Acrobatics

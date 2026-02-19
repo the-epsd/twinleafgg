@@ -39,7 +39,8 @@ export class XerneasGX extends PokemonCard {
 
   public set: string = 'FLI';
   public name: string = 'Xerneas-GX';
-  public fullName: string = 'Xerneas-GX FLI';
+  public fullName: string = 'Xerneas-GX (FLI 90)';
+  public legacyFullName = 'Xerneas-GX FLI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
 

@@ -32,7 +32,8 @@ export class Lanturn extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
   public name: string = 'Lanturn';
-  public fullName: string = 'Lanturn UL';
+  public fullName: string = 'Lanturn (UL 86)';
+  public legacyFullName = 'Lanturn UL';
 
   public readonly UNDERWATER_DIVE_MARKER = 'UNDERWATER_DIVE_MARKER';
 

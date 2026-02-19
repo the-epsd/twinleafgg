@@ -35,7 +35,8 @@ export class Pidove extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pidove';
-  public fullName: string = 'Pidove ROS';
+  public fullName: string = 'Pidove (ROS 78)';
+  public legacyFullName = 'Pidove ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Homing Pidove

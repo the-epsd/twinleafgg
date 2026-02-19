@@ -51,7 +51,8 @@ export class Meowscaradaex extends PokemonCard {
 
   public name: string = 'Meowscarada ex';
 
-  public fullName: string = 'Meowscarada ex PAL';
+  public fullName: string = 'Meowscarada ex (PAL 15)';
+  public legacyFullName = 'Meowscarada ex PAL';
 
   public readonly BOUQUET_MAGIC_MARKER = 'BOUQUET_MAGIC_MARKER';
 

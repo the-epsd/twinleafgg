@@ -22,7 +22,7 @@ export class Escavalier extends PokemonCard {
       name: 'Fury Attack',
       cost: [M],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 30 damage for each heads.'
     },
     {
@@ -37,7 +37,8 @@ export class Escavalier extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Escavalier';
-  public fullName: string = 'Escavalier CIN';
+  public fullName: string = 'Escavalier (CIN 69)';
+  public legacyFullName = 'Escavalier CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Attack

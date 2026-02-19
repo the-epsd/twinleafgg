@@ -29,7 +29,8 @@ export class Lumineon extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lumineon';
-  public fullName: string = 'Lumineon UNM';
+  public fullName: string = 'Lumineon (UNM 40)';
+  public legacyFullName = 'Lumineon UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Neon Trickery

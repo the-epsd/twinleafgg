@@ -29,7 +29,8 @@ export class Foongus extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Foongus';
-  public fullName: string = 'Foongus UNM';
+  public fullName: string = 'Foongus (UNM 13)';
+  public legacyFullName = 'Foongus UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spore

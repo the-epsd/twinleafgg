@@ -33,7 +33,8 @@ export class Pidgeotto extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '58';
   public name: string = 'Pidgeotto';
-  public fullName: string = 'Pidgeotto SW';
+  public fullName: string = 'Pidgeotto (SW 58)';
+  public legacyFullName = 'Pidgeotto SW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

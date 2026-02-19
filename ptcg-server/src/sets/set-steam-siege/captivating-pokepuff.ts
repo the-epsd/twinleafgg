@@ -16,7 +16,8 @@ export class CaptivatingPokePuff extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '99';
   public name: string = 'Captivating Poké Puff';
-  public fullName: string = 'Captivating Poké Puff STS';
+  public fullName: string = 'Captivating Poké Puff (STS 99)';
+  public legacyFullName = 'Captivating Poké Puff STS';
 
   public text: string =
     'Your opponent reveals his or her hand. Put any number of Basic Pokémon you find there onto your opponent\'s Bench.';

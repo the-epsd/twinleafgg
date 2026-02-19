@@ -20,7 +20,8 @@ export class DrawEnergy extends EnergyCard {
 
   public name = 'Draw Energy';
 
-  public fullName = 'Draw Energy CEC';
+  public fullName = 'Draw Energy (CEC 209)';
+  public legacyFullName = 'Draw Energy CEC';
 
   public text =
     'This card provides [C] Energy.' +

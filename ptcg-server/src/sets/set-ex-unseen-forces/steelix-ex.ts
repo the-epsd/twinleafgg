@@ -40,7 +40,8 @@ export class Steelixex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
   public name: string = 'Steelix ex';
-  public fullName: string = 'Steelix ex UF';
+  public fullName: string = 'Steelix ex (UF 109)';
+  public legacyFullName = 'Steelix ex UF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AddSpecialConditionsEffect && effect.specialConditions.includes(SpecialCondition.POISONED) && effect.target.getPokemonCard() === this) {

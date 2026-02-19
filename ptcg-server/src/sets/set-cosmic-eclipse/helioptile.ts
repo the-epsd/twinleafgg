@@ -38,7 +38,8 @@ export class Helioptile extends PokemonCard {
   public setNumber: string = '179';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Helioptile';
-  public fullName: string = 'Helioptile CEC';
+  public fullName: string = 'Helioptile (CEC 179)';
+  public legacyFullName = 'Helioptile CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tail Whip

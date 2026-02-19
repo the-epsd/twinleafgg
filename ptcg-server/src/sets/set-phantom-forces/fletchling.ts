@@ -28,7 +28,7 @@ export class Fletchling extends PokemonCard {
       name: 'Quick Attack',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Fletchling extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fletchling';
-  public fullName: string = 'Fletchling PHF';
+  public fullName: string = 'Fletchling (PHF 89)';
+  public legacyFullName = 'Fletchling PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Quick Attack

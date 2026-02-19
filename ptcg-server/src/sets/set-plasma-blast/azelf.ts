@@ -32,7 +32,8 @@ export class Azelf extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Azelf';
-  public fullName: string = 'Azelf PLB';
+  public fullName: string = 'Azelf (PLB 38)';
+  public legacyFullName = 'Azelf PLB';
 
   public usedTradingPlaces = false;
   public usedPsyjamming = false;

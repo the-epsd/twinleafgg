@@ -8,7 +8,8 @@ export class Gyarados extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Gyarados BS';
+  public fullName = 'Gyarados (BS 6)';
+  public legacyFullName = 'Gyarados BS';
 
   public name = 'Gyarados';
 

@@ -30,7 +30,8 @@ export class Muk extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '63';
   public name: string = 'Muk';
-  public fullName: string = 'Muk TEU';
+  public fullName: string = 'Muk (TEU 63)';
+  public legacyFullName = 'Muk TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

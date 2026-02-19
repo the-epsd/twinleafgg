@@ -45,7 +45,8 @@ export class Kleavor extends PokemonCard {
 
   public name: string = 'Kleavor';
 
-  public fullName: string = 'Kleavor ASR';
+  public fullName: string = 'Kleavor (ASR 85)';
+  public legacyFullName = 'Kleavor ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

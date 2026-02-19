@@ -18,7 +18,7 @@ export class Scrafty extends PokemonCard {
       name: 'Turf Raid',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each of your remaining Prize cards.'
     },
     {
@@ -33,7 +33,8 @@ export class Scrafty extends PokemonCard {
   public setNumber: string = '138';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scrafty';
-  public fullName: string = 'Scrafty UNM';
+  public fullName: string = 'Scrafty (UNM 138)';
+  public legacyFullName = 'Scrafty UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Turf Raid

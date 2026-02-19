@@ -69,7 +69,8 @@ export class NestBall extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '181';
   public name: string = 'Nest Ball';
-  public fullName: string = 'Nest Ball SVI';
+  public fullName: string = 'Nest Ball (SVI 181)';
+  public legacyFullName = 'Nest Ball SVI';
   public text: string = 'Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {

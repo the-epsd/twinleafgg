@@ -21,7 +21,8 @@ export class GreedyDice extends TrainerCard {
 
   public name: string = 'Greedy Dice';
 
-  public fullName: string = 'Greedy Dice STS';
+  public fullName: string = 'Greedy Dice (STS 102)';
+  public legacyFullName = 'Greedy Dice STS';
 
   public text: string =
     'You can play this card only if you took it as a face-down Prize card, before you put it into your hand.' +

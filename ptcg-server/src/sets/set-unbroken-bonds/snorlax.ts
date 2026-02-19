@@ -27,7 +27,7 @@ export class Snorlax extends PokemonCard {
       name: 'Big Counter',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a TAG TEAM, this attack does 120 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Snorlax extends PokemonCard {
   public setNumber: string = '158';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snorlax';
-  public fullName: string = 'Snorlax UNB';
+  public fullName: string = 'Snorlax (UNB 158)';
+  public legacyFullName = 'Snorlax UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Lazy Eating (passive - between turns heal)

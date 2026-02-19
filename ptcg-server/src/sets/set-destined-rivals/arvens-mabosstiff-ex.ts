@@ -32,7 +32,8 @@ export class ArvensMabosstiffex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '139';
   public name: string = 'Arven\'s Mabosstiff ex';
-  public fullName: string = 'Arven\'s Mabosstiff ex DRI';
+  public fullName: string = 'Arven\'s Mabosstiff ex (DRI 139)';
+  public legacyFullName = 'Arven\'s Mabosstiff ex DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Hustle Tackle

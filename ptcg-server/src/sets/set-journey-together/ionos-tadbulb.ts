@@ -34,6 +34,7 @@ export class IonosTadbulb extends PokemonCard {
 
   public name: string = 'Iono\'s Tadbulb';
 
-  public fullName: string = 'Iono\'s Tadbulb JTG';
+  public fullName: string = 'Iono\'s Tadbulb (JTG 52)';
+  public legacyFullName = 'Iono\'s Tadbulb JTG';
 
 }

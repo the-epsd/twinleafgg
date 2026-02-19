@@ -26,7 +26,7 @@ export class Regirock extends PokemonCard {
       name: 'Unyielding Rock',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, this attack does 60 more damage.'
     }
   ];
@@ -35,7 +35,8 @@ export class Regirock extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Regirock';
-  public fullName: string = 'Regirock AOR';
+  public fullName: string = 'Regirock (AOR 40)';
+  public legacyFullName = 'Regirock AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Unyielding Rock

@@ -37,7 +37,8 @@ export class RaichuGx extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raichu-GX';
-  public fullName: string = 'Raichu-GX HIF';
+  public fullName: string = 'Raichu-GX (HIF 20)';
+  public legacyFullName = 'Raichu-GX HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Spark Ball-GX

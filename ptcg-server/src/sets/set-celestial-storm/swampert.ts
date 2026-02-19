@@ -36,7 +36,8 @@ export class Swampert extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '35';
   public name: string = 'Swampert';
-  public fullName: string = 'Swampert CES';
+  public fullName: string = 'Swampert (CES 35)';
+  public legacyFullName = 'Swampert CES';
 
   public readonly POWER_DRAW_MARKER = 'POWER_DRAW_MARKER';
 

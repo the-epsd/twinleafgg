@@ -32,7 +32,8 @@ export class DarkFlaaffy extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dark Flaaffy';
-  public fullName: string = 'Dark Flaaffy TRR';
+  public fullName: string = 'Dark Flaaffy (TRR 33)';
+  public legacyFullName = 'Dark Flaaffy TRR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -47,7 +47,8 @@ export class Dusclops extends PokemonCard {
 
   public name: string = 'Dusclops';
 
-  public fullName: string = 'Dusclops SFA';
+  public fullName: string = 'Dusclops (SFA 19)';
+  public legacyFullName = 'Dusclops SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

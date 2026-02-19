@@ -46,7 +46,8 @@ export class AlolanExeggutorGx extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Exeggutor-GX';
-  public fullName: string = 'Alolan Exeggutor-GX CIN';
+  public fullName: string = 'Alolan Exeggutor-GX (CIN 74)';
+  public legacyFullName = 'Alolan Exeggutor-GX CIN';
 
   public usedTowerGoRound = false;
 

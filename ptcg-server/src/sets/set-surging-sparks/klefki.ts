@@ -46,7 +46,8 @@ export class Klefki extends PokemonCard {
 
   public name: string = 'Klefki';
 
-  public fullName: string = 'Klefki SSP';
+  public fullName: string = 'Klefki (SSP 128)';
+  public legacyFullName = 'Klefki SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

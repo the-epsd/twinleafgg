@@ -24,14 +24,14 @@ export class Electivire extends PokemonCard {
       name: 'Tag Team Spark',
       cost: [L],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each Energy attached to your Magmortar.'
     },
     {
       name: 'Gigavolt',
       cost: [L, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
     }
   ];
@@ -40,7 +40,8 @@ export class Electivire extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electivire';
-  public fullName: string = 'Electivire FFI';
+  public fullName: string = 'Electivire (FFI 30)';
+  public legacyFullName = 'Electivire FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tag Team Spark

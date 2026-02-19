@@ -32,7 +32,8 @@ export class GiratinaEX extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Giratina-EX';
-  public fullName: string = 'Giratina EX AOR';
+  public fullName: string = 'Giratina-EX (AOR 57)';
+  public legacyFullName = 'Giratina EX AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

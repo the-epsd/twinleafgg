@@ -27,7 +27,8 @@ export class Floragato extends PokemonCard {
 
   public set: string = 'PAL';
   public name: string = 'Floragato';
-  public fullName: string = 'Floragato PAL';
+  public fullName: string = 'Floragato (PAL 14)';
+  public legacyFullName = 'Floragato PAL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public regulationMark = 'G';

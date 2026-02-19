@@ -26,5 +26,6 @@ export class Clobbopus extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clobbopus';
-  public fullName: string = 'Clobbopus CRE';
+  public fullName: string = 'Clobbopus (CRE 91)';
+  public legacyFullName = 'Clobbopus CRE';
 }

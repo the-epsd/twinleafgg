@@ -20,7 +20,7 @@ export class Regirock extends PokemonCard {
       name: 'Enhanced Stomp',
       cost: [F],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 20 more damage.'
     },
     {
@@ -35,7 +35,8 @@ export class Regirock extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Regirock';
-  public fullName: string = 'Regirock CES';
+  public fullName: string = 'Regirock (CES 80)';
+  public legacyFullName = 'Regirock CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Enhanced Stomp

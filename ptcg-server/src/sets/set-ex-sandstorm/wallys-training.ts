@@ -104,7 +104,8 @@ export class WallysTraining extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'SS';
   public name: string = 'Wally\'s Training';
-  public fullName: string = 'Wally\'s Training SS';
+  public fullName: string = 'Wally\'s Training (SS 89)';
+  public legacyFullName = 'Wally\'s Training SS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '89';
 

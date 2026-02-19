@@ -37,7 +37,8 @@ export class WhiteKyurem extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'White Kyurem';
-  public fullName: string = 'White Kyurem BCR';
+  public fullName: string = 'White Kyurem (BCR 102)';
+  public legacyFullName = 'White Kyurem BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Damage Rush

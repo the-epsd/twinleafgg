@@ -86,7 +86,8 @@ export class EreikasInvitation extends TrainerCard {
 
   public name: string = 'Erika\'s Invitation';
 
-  public fullName: string = 'Erika\'s Invitation MEW';
+  public fullName: string = 'Erika\'s Invitation (MEW 160)';
+  public legacyFullName = 'Erika\'s Invitation MEW';
 
   public text: string =
     'Your opponent reveals their hand, and you put a Basic Pokémon you find there onto your opponent\'s Bench. If you put a Pokémon onto their Bench in this way, switch in that Pokémon to the Active Spot.';

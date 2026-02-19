@@ -38,7 +38,8 @@ export class Drampa extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drampa';
-  public fullName: string = 'Drampa DRM';
+  public fullName: string = 'Drampa (DRM 51)';
+  public legacyFullName = 'Drampa DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dragon Wisdom

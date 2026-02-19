@@ -29,7 +29,8 @@ export class Oddish extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Oddish';
-  public fullName: string = 'Oddish BUS';
+  public fullName: string = 'Oddish (BUS 4)';
+  public legacyFullName = 'Oddish BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Powder

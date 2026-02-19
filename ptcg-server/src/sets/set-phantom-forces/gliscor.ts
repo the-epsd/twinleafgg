@@ -41,7 +41,8 @@ export class Gliscor extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gliscor';
-  public fullName: string = 'Gliscor PHF';
+  public fullName: string = 'Gliscor (PHF 47)';
+  public legacyFullName = 'Gliscor PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Submission Hold

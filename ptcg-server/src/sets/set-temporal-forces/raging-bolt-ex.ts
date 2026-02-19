@@ -47,7 +47,8 @@ export class RagingBoltex extends PokemonCard {
 
   public name: string = 'Raging Bolt ex';
 
-  public fullName: string = 'Raging Bolt ex TEF';
+  public fullName: string = 'Raging Bolt ex (TEF 123)';
+  public legacyFullName = 'Raging Bolt ex TEF';
 
   // Implement power
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -30,7 +30,8 @@ export class Sawsbuck extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sawsbuck';
-  public fullName: string = 'Sawsbuck TEF';
+  public fullName: string = 'Sawsbuck (TEF 17)';
+  public legacyFullName = 'Sawsbuck TEF';
 
   public readonly CHANGING_SEASONS_MARKER = 'CHANGING_SEASONS_MARKER';
 

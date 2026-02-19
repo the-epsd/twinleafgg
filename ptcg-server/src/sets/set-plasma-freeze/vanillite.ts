@@ -30,7 +30,8 @@ export class Vanillite extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanillite';
-  public fullName: string = 'Vanillite PLF';
+  public fullName: string = 'Vanillite (PLF 27)';
+  public legacyFullName = 'Vanillite PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

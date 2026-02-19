@@ -37,7 +37,8 @@ export class Malamar extends PokemonCard {
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Malamar';
-  public fullName: string = 'Malamar BUS';
+  public fullName: string = 'Malamar (BUS 90)';
+  public legacyFullName = 'Malamar BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psybeam

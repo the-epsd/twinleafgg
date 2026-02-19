@@ -90,7 +90,8 @@ export class HyperPotion extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '54';
   public name: string = 'Hyper Potion';
-  public fullName: string = 'Hyper Potion CPA';
+  public fullName: string = 'Hyper Potion (CPA 54)';
+  public legacyFullName = 'Hyper Potion CPA';
 
   public text: string =
     'Heal 120 damage from 1 of your Pokémon that has at least 2 Energy attached. If you healed any damage in this way, discard 2 Energy from it.';

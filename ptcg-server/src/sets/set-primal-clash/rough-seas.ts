@@ -15,7 +15,8 @@ export class RoughSeas extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'PRC';
   public name: string = 'Rough Seas';
-  public fullName: string = 'Rough Seas PRC';
+  public fullName: string = 'Rough Seas (PRC 137)';
+  public legacyFullName = 'Rough Seas PRC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '137';
 

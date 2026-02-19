@@ -48,7 +48,8 @@ export class LuxrayGlLvX extends PokemonCard {
   public setNumber: string = '109A';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luxray GL LV.X';
-  public fullName: string = 'Luxray GL LV.X CEL';
+  public fullName: string = 'Luxray GL LV.X (CEL 109A)';
+  public legacyFullName = 'Luxray GL LV.X CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Bright Look

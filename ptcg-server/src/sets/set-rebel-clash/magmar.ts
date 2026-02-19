@@ -27,7 +27,7 @@ export class Magmar extends PokemonCard {
       name: 'Heat Breath',
       cost: [R, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Magmar extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magmar';
-  public fullName: string = 'Magmar RCL';
+  public fullName: string = 'Magmar (RCL 29)';
+  public legacyFullName = 'Magmar RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Heat Breath

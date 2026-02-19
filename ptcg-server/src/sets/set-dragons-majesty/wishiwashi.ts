@@ -36,7 +36,8 @@ export class Wishiwashi extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wishiwashi';
-  public fullName: string = 'Wishiwashi DRM';
+  public fullName: string = 'Wishiwashi (DRM 31)';
+  public legacyFullName = 'Wishiwashi DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Meet Up (passive - boost Wishiwashi-GX HP and damage)

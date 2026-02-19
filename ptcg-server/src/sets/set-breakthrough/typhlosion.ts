@@ -23,7 +23,7 @@ export class Typhlosion extends PokemonCard {
       name: 'Massive Eruption',
       cost: [R],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard the top 5 cards of your deck. This attack does 80 damage times the number of Energy cards you discarded.'
     },
     {
@@ -38,7 +38,8 @@ export class Typhlosion extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Typhlosion';
-  public fullName: string = 'Typhlosion BKT';
+  public fullName: string = 'Typhlosion (BKT 20)';
+  public legacyFullName = 'Typhlosion BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Massive Eruption

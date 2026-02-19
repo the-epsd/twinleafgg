@@ -26,7 +26,8 @@ export class Marill extends PokemonCard {
 
   public set: string = 'SS';
   public name: string = 'Marill';
-  public fullName: string = 'Marill SS';
+  public fullName: string = 'Marill (SS 68)';
+  public legacyFullName = 'Marill SS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '68';
 

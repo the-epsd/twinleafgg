@@ -31,7 +31,8 @@ export class ShiningJirachi extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shining Jirachi';
-  public fullName: string = 'Shining Jirachi SLG';
+  public fullName: string = 'Shining Jirachi (SLG 42)';
+  public legacyFullName = 'Shining Jirachi SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stellar Reign

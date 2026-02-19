@@ -35,7 +35,8 @@ export class Raikou extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raikou';
-  public fullName: string = 'Raikou SLG';
+  public fullName: string = 'Raikou (SLG 32)';
+  public legacyFullName = 'Raikou SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Booming Thunder

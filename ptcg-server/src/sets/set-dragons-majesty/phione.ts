@@ -37,7 +37,8 @@ export class Phione extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Phione';
-  public fullName: string = 'Phione DRM';
+  public fullName: string = 'Phione (DRM 30)';
+  public legacyFullName = 'Phione DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Murmurs of the Sea (passive - prevent Confusion on Water Pokemon)

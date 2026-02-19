@@ -30,7 +30,8 @@ export class AlolanVulpix extends PokemonCard {
 
   public name: string = 'Alolan Vulpix';
 
-  public fullName: string = 'Alolan Vulpix HIF';
+  public fullName: string = 'Alolan Vulpix (HIF SV8)';
+  public legacyFullName = 'Alolan Vulpix HIF';
 
   public cardImage: string = 'assets/cardback.png';
 

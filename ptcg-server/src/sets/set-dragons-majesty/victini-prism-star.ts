@@ -36,7 +36,8 @@ export class VictiniPrismStar extends PokemonCard {
 
   public name: string = 'Victini Prism Star';
 
-  public fullName: string = 'Victini Prism Star DRM';
+  public fullName: string = 'Victini Prism Star (DRM 7)';
+  public legacyFullName = 'Victini Prism Star DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

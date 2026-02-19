@@ -45,7 +45,8 @@ export class IronJugulis extends PokemonCard {
 
   public name: string = 'Iron Jugulis';
 
-  public fullName: string = 'Iron Jugulis PAR';
+  public fullName: string = 'Iron Jugulis (PAR 158)';
+  public legacyFullName = 'Iron Jugulis PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

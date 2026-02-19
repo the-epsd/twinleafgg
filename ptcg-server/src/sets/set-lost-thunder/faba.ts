@@ -19,7 +19,8 @@ export class Faba extends TrainerCard {
 
   public name: string = 'Faba';
 
-  public fullName: string = 'Faba LOT';
+  public fullName: string = 'Faba (LOT 173)';
+  public legacyFullName = 'Faba LOT';
 
   public text: string =
     'Choose a Pokémon Tool or Special Energy card attached to 1 of your opponent\'s Pokémon, or any Stadium card in play, and put it in the Lost Zone.';

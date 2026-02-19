@@ -37,7 +37,8 @@ export class Slurpuff extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slurpuff';
-  public fullName: string = 'Slurpuff CRE';
+  public fullName: string = 'Slurpuff (CRE 68)';
+  public legacyFullName = 'Slurpuff CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Follow the Scent

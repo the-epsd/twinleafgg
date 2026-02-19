@@ -18,7 +18,8 @@ export class DangerousEnergy extends EnergyCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dangerous Energy';
-  public fullName: string = 'Dangerous Energy AOR';
+  public fullName: string = 'Dangerous Energy (AOR 82)';
+  public legacyFullName = 'Dangerous Energy AOR';
   public text: string = 'This card can only be attached to Darkness Pokémon. This card provides [D] Energy only while this card is attached to a Darkness Pokémon. Whenever the Darkness Pokémon this card is attached to is your Active Pokémon and is damaged by an attack from your opponent\'s Pokémon-EX (even if that Pokémon is Knocked Out), put 2 damage counters on the Attacking Pokémon-EX. (If this card is attached to anything other than a Darkness Pokémon, discard this card.)';
 
   // Refs: set-fusion-strike/fusion-strike-energy.ts (type-restricted energy), set-flashfire/qwilfish.ts (ON_DAMAGED_BY_OPPONENT_ATTACK retaliation)

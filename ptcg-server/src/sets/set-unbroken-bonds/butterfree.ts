@@ -35,7 +35,8 @@ export class Butterfree extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Butterfree';
-  public fullName: string = 'Butterfree UNB';
+  public fullName: string = 'Butterfree (UNB 4)';
+  public legacyFullName = 'Butterfree UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Triple Charge

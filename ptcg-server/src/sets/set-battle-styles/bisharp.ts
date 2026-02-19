@@ -29,7 +29,7 @@ export class Bisharp extends PokemonCard {
       name: 'Steel Slice',
       cost: [M, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Metal Pokémon, this attack does 90 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Bisharp extends PokemonCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bisharp';
-  public fullName: string = 'Bisharp BST';
+  public fullName: string = 'Bisharp (BST 104)';
+  public legacyFullName = 'Bisharp BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Steel Slice

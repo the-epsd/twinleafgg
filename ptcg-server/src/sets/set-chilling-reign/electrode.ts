@@ -10,5 +10,6 @@ export class Electrode extends ElectrodeVIV {
   public set: string = 'CRE';
   public setNumber: string = '222';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Electrode CRE';
+  public fullName: string = 'Electrode (CRE 222)';
+  public legacyFullName = 'Electrode CRE';
 }

@@ -36,7 +36,8 @@ export class Mankey extends PokemonCard {
 
   public name: string = 'Mankey';
 
-  public fullName: string = 'Mankey JU';
+  public fullName: string = 'Mankey (JU 55)';
+  public legacyFullName = 'Mankey JU';
 
   public readonly PEEK_MARKER = 'PEEK_MARKER';
 

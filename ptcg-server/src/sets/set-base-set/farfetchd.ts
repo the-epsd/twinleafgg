@@ -15,7 +15,8 @@ export class Farfetchd extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Farfetch\'d BS';
+  public fullName = 'Farfetch\'d (BS 27)';
+  public legacyFullName = 'Farfetch\'d BS';
 
   public stage = Stage.BASIC;
 

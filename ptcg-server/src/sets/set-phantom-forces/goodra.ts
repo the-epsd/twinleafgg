@@ -36,7 +36,8 @@ export class Goodra extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Goodra';
-  public fullName: string = 'Goodra PHF';
+  public fullName: string = 'Goodra (PHF 77)';
+  public legacyFullName = 'Goodra PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Slip Trip (passive - block tool attachment for both players)

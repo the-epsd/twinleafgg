@@ -27,7 +27,7 @@ export class Nidorino extends PokemonCard {
       name: 'Fury Attack',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Nidorino extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidorino';
-  public fullName: string = 'Nidorino EVO';
+  public fullName: string = 'Nidorino (EVO 44)';
+  public legacyFullName = 'Nidorino EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Fury Attack

@@ -51,7 +51,8 @@ export class Flamigo extends PokemonCard {
 
   public name: string = 'Flamigo';
 
-  public fullName: string = 'Flamigo PAL';
+  public fullName: string = 'Flamigo (PAL 170)';
+  public legacyFullName = 'Flamigo PAL';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

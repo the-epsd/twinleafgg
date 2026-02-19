@@ -28,7 +28,8 @@ export class Staryu extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Staryu';
-  public fullName: string = 'Staryu XY';
+  public fullName: string = 'Staryu (XY 33)';
+  public legacyFullName = 'Staryu XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/mareep.ts (Thunder Jolt - self damage)

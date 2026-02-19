@@ -36,7 +36,8 @@ export class Arcanine extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arcanine';
-  public fullName: string = 'Arcanine BKP';
+  public fullName: string = 'Arcanine (BKP 11)';
+  public legacyFullName = 'Arcanine BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Flamethrower

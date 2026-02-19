@@ -45,7 +45,8 @@ export class Skuntank extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skuntank';
-  public fullName: string = 'Skuntank DRX';
+  public fullName: string = 'Skuntank (DRX 77)';
+  public legacyFullName = 'Skuntank DRX';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'SKUNTANK_DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
   public readonly CLEAR_DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'SKUNTANK_CLEAR_DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';

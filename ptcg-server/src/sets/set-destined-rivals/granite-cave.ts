@@ -18,7 +18,8 @@ export class GraniteCave extends TrainerCard {
   public setNumber: string = '166';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Granite Cave';
-  public fullName: string = 'Granite Cave DRI';
+  public fullName: string = 'Granite Cave (DRI 166)';
+  public legacyFullName = 'Granite Cave DRI';
 
   public text: string =
     'Steven\'s Pokémon (both yours and your opponent\'s) take 30 less damage from attacks from the opponent\'s Pokémon (after applying Weakness and Resistance).';

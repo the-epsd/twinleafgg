@@ -32,7 +32,8 @@ export class Haxorus extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Haxorus';
-  public fullName: string = 'Haxorus DRV';
+  public fullName: string = 'Haxorus (DRV 16)';
+  public legacyFullName = 'Haxorus DRV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Axe Slugger - +60 if defending is Colorless

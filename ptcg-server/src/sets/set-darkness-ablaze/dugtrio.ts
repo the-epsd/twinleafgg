@@ -40,7 +40,8 @@ export class Dugtrio extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dugtrio';
-  public fullName: string = 'Dugtrio DAA';
+  public fullName: string = 'Dugtrio (DAA 85)';
+  public legacyFullName = 'Dugtrio DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dig

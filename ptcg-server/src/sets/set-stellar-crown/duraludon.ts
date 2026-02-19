@@ -43,7 +43,8 @@ export class Duraludon extends PokemonCard {
 
   public name: string = 'Duraludon';
 
-  public fullName: string = 'Duraludon SCR';
+  public fullName: string = 'Duraludon (SCR 106)';
+  public legacyFullName = 'Duraludon SCR';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -45,7 +45,8 @@ export class Noctowl extends PokemonCard {
 
   public name: string = 'Noctowl';
 
-  public fullName: string = 'Noctowl SCR';
+  public fullName: string = 'Noctowl (SCR 115)';
+  public legacyFullName = 'Noctowl SCR';
 
   public readonly JEWEL_HUNT_MARKER = 'JEWEL_HUNT_MARKER';
 

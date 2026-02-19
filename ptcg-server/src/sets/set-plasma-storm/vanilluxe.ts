@@ -36,7 +36,8 @@ export class Vanilluxe extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanilluxe';
-  public fullName: string = 'Vanilluxe PLS';
+  public fullName: string = 'Vanilluxe (PLS 37)';
+  public legacyFullName = 'Vanilluxe PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Enefountain

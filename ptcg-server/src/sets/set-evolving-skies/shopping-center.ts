@@ -8,7 +8,8 @@ export class ShoppingCenter extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '157';
   public name: string = 'Shopping Center';
-  public fullName: string = 'Shopping Center EVS';
+  public fullName: string = 'Shopping Center (EVS 157)';
+  public legacyFullName = 'Shopping Center EVS';
 
   public text: string = 'Once during each player\'s turn, that player may put a Pokémon Tool attached to 1 of their Pokémon into their hand.';
 

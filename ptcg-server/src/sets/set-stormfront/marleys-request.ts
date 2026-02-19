@@ -9,7 +9,8 @@ export class MarleysRequest extends TrainerCard {
   public set = 'SF';
   public setNumber: string = '87';
   public name = 'Marley\'s Request';
-  public fullName = 'Marley\'s Request SF';
+  public fullName = 'Marley\'s Request (SF 87)';
+  public legacyFullName = 'Marley\'s Request SF';
 
   public text = 'Search your discard pile for 2 different Trainer, Supporter, or Stadium cards, show them to your opponent, and your opponent chooses 1 of them. Put that card into your hand, and discard the other card. (If all Trainer, Supporter, and Stadium cards in your discard pile have the same name, choose 1 of them. Show that card to your opponent and put it into your hand.)';
 

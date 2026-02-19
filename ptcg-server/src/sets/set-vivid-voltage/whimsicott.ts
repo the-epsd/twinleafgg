@@ -30,7 +30,7 @@ export class Whimsicott extends PokemonCard {
       name: 'Flying Fury',
       cost: [P],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Before doing damage, you may discard any number of Pokémon Tools from your Pokémon. This attack does 40 more damage for each card you discarded in this way.'
     }
   ];
@@ -40,7 +40,8 @@ export class Whimsicott extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whimsicott';
-  public fullName: string = 'Whimsicott VIV';
+  public fullName: string = 'Whimsicott (VIV 76)';
+  public legacyFullName = 'Whimsicott VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Triple Draw

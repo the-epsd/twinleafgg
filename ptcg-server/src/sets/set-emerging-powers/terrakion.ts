@@ -31,7 +31,8 @@ export class Terrakion extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '63';
   public name: string = 'Terrakion';
-  public fullName: string = 'Terrakion EPO';
+  public fullName: string = 'Terrakion (EPO 63)';
+  public legacyFullName = 'Terrakion EPO';
 
   public readonly SACRED_SWORD_MARKER = 'TERRAKION_SACRED_SWORD_MARKER';
 

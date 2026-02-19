@@ -24,7 +24,8 @@ export class Spinda extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '141';
   public name = 'Spinda';
-  public fullName = 'Spinda SIT';
+  public fullName = 'Spinda (SIT 141)';
+  public legacyFullName = 'Spinda SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

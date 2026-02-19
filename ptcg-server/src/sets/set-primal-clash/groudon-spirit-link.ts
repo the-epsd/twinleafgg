@@ -8,7 +8,8 @@ export class GroudonSpiritLink extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'PRC';
   public name: string = 'Groudon Spirit Link';
-  public fullName: string = 'Groudon Spirit Link PRC';
+  public fullName: string = 'Groudon Spirit Link (PRC 131)';
+  public legacyFullName = 'Groudon Spirit Link PRC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '131';
 

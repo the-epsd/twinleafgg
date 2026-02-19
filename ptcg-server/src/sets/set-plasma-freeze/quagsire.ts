@@ -35,7 +35,8 @@ export class Quagsire extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Quagsire';
-  public fullName: string = 'Quagsire PLF';
+  public fullName: string = 'Quagsire (PLF 22)';
+  public legacyFullName = 'Quagsire PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Laid-Back (passive - damage reduction)

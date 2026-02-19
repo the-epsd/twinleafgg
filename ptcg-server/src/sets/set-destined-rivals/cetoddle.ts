@@ -27,5 +27,6 @@ export class Cetoddle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '64';
   public name: string = 'Cetoddle';
-  public fullName: string = 'Cetoddle DRI';
+  public fullName: string = 'Cetoddle (DRI 64)';
+  public legacyFullName = 'Cetoddle DRI';
 }

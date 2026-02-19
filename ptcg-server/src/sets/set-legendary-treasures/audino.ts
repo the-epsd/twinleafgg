@@ -30,7 +30,8 @@ export class Audino extends PokemonCard {
   public setNumber: string = 'RC17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Audino';
-  public fullName: string = 'Audino LTR';
+  public fullName: string = 'Audino (LTR RC17)';
+  public legacyFullName = 'Audino LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Relaxed Roll

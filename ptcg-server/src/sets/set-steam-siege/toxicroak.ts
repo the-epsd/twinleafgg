@@ -37,7 +37,8 @@ export class Toxicroak extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toxicroak';
-  public fullName: string = 'Toxicroak STS';
+  public fullName: string = 'Toxicroak (STS 59)';
+  public legacyFullName = 'Toxicroak STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Poison Enzyme (passive - prevent damage from opponent's Poisoned Pokemon)

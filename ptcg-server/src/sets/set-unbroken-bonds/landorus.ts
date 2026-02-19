@@ -35,7 +35,8 @@ export class Landorus extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Landorus';
-  public fullName: string = 'Landorus UNB';
+  public fullName: string = 'Landorus (UNB 103)';
+  public legacyFullName = 'Landorus UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Linear Attack

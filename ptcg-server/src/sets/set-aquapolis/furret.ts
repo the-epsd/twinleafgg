@@ -88,7 +88,8 @@ export class Furret extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Furret';
-  public fullName: string = 'Furret AQ';
+  public fullName: string = 'Furret (AQ 48)';
+  public legacyFullName = 'Furret AQ';
 
   public readonly SCAVENGER_HUNT_MARKER = 'SCAVENGER_HUNT_MARKER';
 

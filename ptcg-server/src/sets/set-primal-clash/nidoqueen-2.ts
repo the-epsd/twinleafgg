@@ -36,7 +36,8 @@ export class Nidoqueen2 extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoqueen';
-  public fullName: string = 'Nidoqueen PRC 69';
+  public fullName: string = 'Nidoqueen (PRC 69)';
+  public legacyFullName = 'Nidoqueen PRC 69';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Jab

@@ -21,7 +21,7 @@ export class Machamp extends PokemonCard {
       name: 'Macho Revenge',
       cost: [F, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage for each Fighting Pokémon in your discard pile.'
     },
     {
@@ -37,7 +37,8 @@ export class Machamp extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machamp';
-  public fullName: string = 'Machamp CPA';
+  public fullName: string = 'Machamp (CPA 26)';
+  public legacyFullName = 'Machamp CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Macho Revenge

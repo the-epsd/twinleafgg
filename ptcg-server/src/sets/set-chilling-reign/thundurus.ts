@@ -36,7 +36,8 @@ export class Thundurus extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Thundurus';
-  public fullName: string = 'Thundurus CRE';
+  public fullName: string = 'Thundurus (CRE 52)';
+  public legacyFullName = 'Thundurus CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Assisting Spark

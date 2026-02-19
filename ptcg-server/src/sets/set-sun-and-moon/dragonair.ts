@@ -41,7 +41,8 @@ export class Dragonair extends PokemonCard {
 
   public name: string = 'Dragonair';
 
-  public fullName: string = 'Dragonair SUM';
+  public fullName: string = 'Dragonair (SUM 95)';
+  public legacyFullName = 'Dragonair SUM';
 
   public readonly DRAGONS_WISH_MARKER = 'DRAGONS_WISH_MARKER';
   public readonly DRAGONS_WISH_2_MARKER = 'DRAGONS_WISH_2_MARKER';

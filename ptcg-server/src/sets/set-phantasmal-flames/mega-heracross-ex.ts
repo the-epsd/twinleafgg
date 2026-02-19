@@ -31,7 +31,8 @@ export class MegaHeracrossex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
   public name: string = 'Mega Heracross ex';
-  public fullName: string = 'Mega Heracross ex PFL';
+  public fullName: string = 'Mega Heracross ex (PFL 4)';
+  public legacyFullName = 'Mega Heracross ex PFL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

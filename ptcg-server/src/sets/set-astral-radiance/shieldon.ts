@@ -33,7 +33,8 @@ export class Shieldon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
   public name = 'Shieldon';
-  public fullName = 'Shieldon ASR';
+  public fullName = 'Shieldon (ASR 109)';
+  public legacyFullName = 'Shieldon ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

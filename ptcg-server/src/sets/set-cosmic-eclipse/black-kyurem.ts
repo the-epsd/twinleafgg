@@ -28,7 +28,7 @@ export class BlackKyurem extends PokemonCard {
       name: 'Dazzling Blizzard',
       cost: [W, W, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have any Stadium card in play, this attack does 100 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class BlackKyurem extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Black Kyurem';
-  public fullName: string = 'Black Kyurem CEC';
+  public fullName: string = 'Black Kyurem (CEC 61)';
+  public legacyFullName = 'Black Kyurem CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Frozen Wings

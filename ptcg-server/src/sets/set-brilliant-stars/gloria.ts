@@ -20,7 +20,8 @@ export class Gloria extends TrainerCard {
 
   public name: string = 'Gloria';
 
-  public fullName: string = 'Gloria BRS';
+  public fullName: string = 'Gloria (BRS 141)';
+  public legacyFullName = 'Gloria BRS';
 
   public text: string =
     'Search your deck for up to 3 Basic Pokémon that don\'t have a Rule Box and put them onto your Bench. Then, shuffle your deck. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';

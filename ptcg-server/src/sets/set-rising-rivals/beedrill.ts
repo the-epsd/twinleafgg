@@ -32,7 +32,8 @@ export class Beedrill extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '15';
   public name: string = 'Beedrill';
-  public fullName: string = 'Beedrill RR';
+  public fullName: string = 'Beedrill (RR 15)';
+  public legacyFullName = 'Beedrill RR';
 
   public readonly FLUTTER_WINGS_MARKER = 'FLUTTER_WINGS_MARKER';
 

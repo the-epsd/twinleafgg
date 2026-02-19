@@ -24,7 +24,8 @@ export class Varoom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '154';
   public name: string = 'Varoom';
-  public fullName: string = 'Varoom OBF';
+  public fullName: string = 'Varoom (OBF 154)';
+  public legacyFullName = 'Varoom OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

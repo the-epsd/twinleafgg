@@ -30,7 +30,8 @@ export class Togetic extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togetic';
-  public fullName: string = 'Togetic PLS';
+  public fullName: string = 'Togetic (PLS 103)';
+  public legacyFullName = 'Togetic PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sweet Kiss

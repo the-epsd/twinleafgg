@@ -31,7 +31,7 @@ export class Talonflame extends PokemonCard {
       name: 'Nitro Dive',
       cost: [C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any [R] Energy attached, this attack does 80 more damage.'
     }
   ];
@@ -41,7 +41,8 @@ export class Talonflame extends PokemonCard {
   public setNumber: string = '140';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Talonflame';
-  public fullName: string = 'Talonflame EVS';
+  public fullName: string = 'Talonflame (EVS 140)';
+  public legacyFullName = 'Talonflame EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Clutch

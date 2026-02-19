@@ -45,7 +45,8 @@ export class Granbull extends PokemonCard {
 
   public name: string = 'Granbull';
 
-  public fullName: string = 'Granbull LOT';
+  public fullName: string = 'Granbull (LOT 138)';
+  public legacyFullName = 'Granbull LOT';
 
   public setNumber: string = '138';
 

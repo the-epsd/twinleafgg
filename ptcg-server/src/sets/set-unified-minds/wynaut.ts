@@ -24,7 +24,8 @@ export class Wynaut extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wynaut';
-  public fullName: string = 'Wynaut UNM';
+  public fullName: string = 'Wynaut (UNM 77)';
+  public legacyFullName = 'Wynaut UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Peppy Pick

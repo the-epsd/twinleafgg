@@ -20,7 +20,7 @@ export class Grookey extends PokemonCard {
       name: 'Fury Swipes',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 10 damage for each heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Grookey extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grookey';
-  public fullName: string = 'Grookey SSH';
+  public fullName: string = 'Grookey (SSH 10)';
+  public legacyFullName = 'Grookey SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Swipes

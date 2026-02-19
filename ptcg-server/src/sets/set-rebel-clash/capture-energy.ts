@@ -22,7 +22,8 @@ export class CaptureEnergy extends EnergyCard {
 
   public name = 'Capture Energy';
 
-  public fullName = 'Capture Energy RCL';
+  public fullName = 'Capture Energy (RCL 171)';
+  public legacyFullName = 'Capture Energy RCL';
 
   public text =
     `This card provides [C] Energy.

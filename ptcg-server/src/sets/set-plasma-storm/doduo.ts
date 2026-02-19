@@ -30,7 +30,8 @@ export class Doduo extends PokemonCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Doduo';
-  public fullName: string = 'Doduo PLS';
+  public fullName: string = 'Doduo (PLS 99)';
+  public legacyFullName = 'Doduo PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Gatling Peck

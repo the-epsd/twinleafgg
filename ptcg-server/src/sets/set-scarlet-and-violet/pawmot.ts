@@ -28,7 +28,8 @@ export class Pawmot extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
   public name: string = 'Pawmot';
-  public fullName: string = 'Pawmot SVI';
+  public fullName: string = 'Pawmot (SVI 76)';
+  public legacyFullName = 'Pawmot SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {

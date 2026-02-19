@@ -70,7 +70,8 @@ export class MaxPotion extends TrainerCard {
 
   public name: string = 'Max Potion';
 
-  public fullName: string = 'Max Potion EPO';
+  public fullName: string = 'Max Potion (EPO 94)';
+  public legacyFullName = 'Max Potion EPO';
 
   public cardImage: string = 'assets/cardback.png';
 

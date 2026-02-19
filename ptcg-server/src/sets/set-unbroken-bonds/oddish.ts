@@ -37,7 +37,8 @@ export class Oddish extends PokemonCard {
 
   public name: string = 'Oddish';
 
-  public fullName: string = 'Oddish UNB';
+  public fullName: string = 'Oddish (UNB 5)';
+  public legacyFullName = 'Oddish UNB';
 
   public cardImage: string = 'assets/cardback.png';
 

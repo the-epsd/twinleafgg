@@ -40,7 +40,8 @@ export class Whiscash extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whiscash';
-  public fullName: string = 'Whiscash RCL';
+  public fullName: string = 'Whiscash (RCL 100)';
+  public legacyFullName = 'Whiscash RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Submerge

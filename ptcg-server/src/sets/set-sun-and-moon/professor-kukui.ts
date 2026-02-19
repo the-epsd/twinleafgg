@@ -16,7 +16,8 @@ export class ProfessorKukui extends TrainerCard {
 
   public name: string = 'Professor Kukui';
 
-  public fullName: string = 'Professor Kukui SUM';
+  public fullName: string = 'Professor Kukui (SUM 128)';
+  public legacyFullName = 'Professor Kukui SUM';
 
   public cardImage: string = 'assets/cardback.png';
 

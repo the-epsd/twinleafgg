@@ -29,7 +29,7 @@ export class Lunatone extends PokemonCard {
       name: 'Psychic',
       cost: [P, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -39,7 +39,8 @@ export class Lunatone extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lunatone';
-  public fullName: string = 'Lunatone DAA';
+  public fullName: string = 'Lunatone (DAA 72)';
+  public legacyFullName = 'Lunatone DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Future Sight

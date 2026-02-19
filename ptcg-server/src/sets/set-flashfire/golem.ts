@@ -37,7 +37,8 @@ export class Golem extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golem';
-  public fullName: string = 'Golem FLF';
+  public fullName: string = 'Golem (FLF 47)';
+  public legacyFullName = 'Golem FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/timburr.ts (Pummel)

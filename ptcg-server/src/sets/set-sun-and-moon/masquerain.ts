@@ -30,7 +30,8 @@ export class Masquerain extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Masquerain';
-  public fullName: string = 'Masquerain SUM';
+  public fullName: string = 'Masquerain (SUM 8)';
+  public legacyFullName = 'Masquerain SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Struggle Bug

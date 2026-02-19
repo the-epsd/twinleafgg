@@ -30,7 +30,8 @@ export class Houndstone extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
   public name: string = 'Houndstone';
-  public fullName: string = 'Houndstone M1S';
+  public fullName: string = 'Houndstone (MEG 66)';
+  public legacyFullName = 'Houndstone M1S';
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -89,7 +89,8 @@ export class Floatzel extends PokemonCard {
 
   public name: string = 'Floatzel';
 
-  public fullName: string = 'Floatzel GE';
+  public fullName: string = 'Floatzel (GE 37)';
+  public legacyFullName = 'Floatzel GE';
 
   public cardImage: string = 'assets/cardback.png';
 

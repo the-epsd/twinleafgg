@@ -42,7 +42,8 @@ export class Melmetal extends PokemonCard {
   public setNumber: string = '129';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Melmetal';
-  public fullName: string = 'Melmetal UNB';
+  public fullName: string = 'Melmetal (UNB 129)';
+  public legacyFullName = 'Melmetal UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Metal Eater

@@ -22,7 +22,7 @@ export class Ninetales extends PokemonCard {
       name: 'Hex',
       cost: [R],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 90 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Ninetales extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ninetales';
-  public fullName: string = 'Ninetales RCL';
+  public fullName: string = 'Ninetales (RCL 25)';
+  public legacyFullName = 'Ninetales RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hex

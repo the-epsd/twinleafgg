@@ -10,7 +10,8 @@ export class Hitmonchan extends PokemonCard {
 
   public set = 'TEU';
 
-  public fullName = 'Hitmonchan TEU';
+  public fullName = 'Hitmonchan (TEU 74)';
+  public legacyFullName = 'Hitmonchan TEU';
 
   public stage = Stage.BASIC;
 

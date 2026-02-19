@@ -57,7 +57,8 @@ export class RayquazaGX extends PokemonCard {
 
   public name: string = 'Rayquaza-GX';
 
-  public fullName: string = 'Rayquaza-GX CES';
+  public fullName: string = 'Rayquaza-GX (CES 109)';
+  public legacyFullName = 'Rayquaza-GX CES';
 
   public setNumber: string = '109';
 

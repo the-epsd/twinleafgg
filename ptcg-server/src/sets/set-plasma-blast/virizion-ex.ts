@@ -84,7 +84,8 @@ export class VirizionEX extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Virizion-EX';
-  public fullName: string = 'Virizion EX PLB';
+  public fullName: string = 'Virizion-EX (PLB 9)';
+  public legacyFullName = 'Virizion EX PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

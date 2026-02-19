@@ -35,7 +35,8 @@ export class Stunfisk extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stunfisk';
-  public fullName: string = 'Stunfisk SLG';
+  public fullName: string = 'Stunfisk (SLG 46)';
+  public legacyFullName = 'Stunfisk SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Shock

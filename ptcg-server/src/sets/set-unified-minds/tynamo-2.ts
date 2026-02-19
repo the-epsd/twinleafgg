@@ -25,7 +25,8 @@ export class Tynamo2 extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tynamo';
-  public fullName: string = 'Tynamo UNM 64';
+  public fullName: string = 'Tynamo (UNM 64)';
+  public legacyFullName = 'Tynamo UNM 64';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Generate Electricity

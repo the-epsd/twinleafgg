@@ -32,5 +32,6 @@ export class Skwovet extends PokemonCard {
   public setNumber: string = '151';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skwovet';
-  public fullName: string = 'Skwovet RCL';
+  public fullName: string = 'Skwovet (RCL 151)';
+  public legacyFullName = 'Skwovet RCL';
 }

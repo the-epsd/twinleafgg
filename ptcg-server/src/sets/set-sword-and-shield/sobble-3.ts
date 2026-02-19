@@ -22,5 +22,6 @@ export class Sobble3 extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sobble';
-  public fullName: string = 'Sobble SSH 54';
+  public fullName: string = 'Sobble (SSH 54)';
+  public legacyFullName = 'Sobble SSH 54';
 }

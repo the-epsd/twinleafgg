@@ -35,7 +35,8 @@ export class Volbeat extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
   public name: string = 'Volbeat';
-  public fullName: string = 'Volbeat GE';
+  public fullName: string = 'Volbeat (GE 92)';
+  public legacyFullName = 'Volbeat GE';
 
   public readonly LIGHT_CONDUCT_MARKER = 'LIGHT_CONDUCT_MARKER';
 

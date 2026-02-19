@@ -15,7 +15,8 @@ export class LuminousEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '191';
   public name = 'Luminous Energy';
-  public fullName = 'Luminous Energy PAL';
+  public fullName = 'Luminous Energy (PAL 191)';
+  public legacyFullName = 'Luminous Energy PAL';
 
   public text =
     `As long as this card is attached to a Pokémon, it provides every type of Energy but provides only 1 Energy at a time.

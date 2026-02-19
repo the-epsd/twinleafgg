@@ -32,7 +32,8 @@ export class Metang extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metang';
-  public fullName: string = 'Metang PLF';
+  public fullName: string = 'Metang (PLF 51)';
+  public legacyFullName = 'Metang PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

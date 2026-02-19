@@ -28,7 +28,7 @@ export class Huntail extends PokemonCard {
       name: 'Dangerous Bite',
       cost: [W, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, this attack does 80 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Huntail extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Huntail';
-  public fullName: string = 'Huntail CES';
+  public fullName: string = 'Huntail (CES 42)';
+  public legacyFullName = 'Huntail CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Big Bite

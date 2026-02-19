@@ -39,7 +39,8 @@ export class Dreepy extends PokemonCard {
 
   public name: string = 'Dreepy';
 
-  public fullName: string = 'Dreepy SIT';
+  public fullName: string = 'Dreepy (SIT 87)';
+  public legacyFullName = 'Dreepy SIT';
 
   public readonly INFESTATION_MARKER = 'INFESTATION_MARKER';
 

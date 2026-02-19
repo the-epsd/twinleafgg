@@ -93,7 +93,8 @@ export class FurisodeGirl extends TrainerCard {
 
   public name: string = 'Furisode Girl';
 
-  public fullName: string = 'Furisode Girl SIT';
+  public fullName: string = 'Furisode Girl (SIT 157)';
+  public legacyFullName = 'Furisode Girl SIT';
 
   public text: string =
     'Search your deck for a Basic Pokémon and put it onto your Bench. Then, shuffle your deck. You may switch that Pokémon with your Active Pokémon.';

@@ -57,7 +57,8 @@ export class JolteonGX extends PokemonCard {
 
   public name: string = 'Jolteon-GX';
 
-  public fullName: string = 'Jolteon-GX SMP';
+  public fullName: string = 'Jolteon-GX (SMP 173)';
+  public legacyFullName = 'Jolteon-GX SMP';
 
   // for the GX attack
   public readonly ECLIPSE_MARKER = 'ECLIPSE_MARKER';

@@ -21,7 +21,8 @@ export class CaptivatingPokePuff extends TrainerCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Captivating Pok\u00e9 Puff';
-  public fullName: string = 'Captivating Pok\u00e9 Puff STS';
+  public fullName: string = 'Captivating Pok\u00e9 Puff (STS 99)';
+  public legacyFullName = 'Captivating Pok\u00e9 Puff STS';
   public text: string = 'Your opponent reveals his or her hand. Put any number of Basic Pok\u00e9mon you find there onto your opponent\'s Bench.';
 
   // Ref: set-steam-siege/captivating-pokepuff.ts (same card, existing implementation)

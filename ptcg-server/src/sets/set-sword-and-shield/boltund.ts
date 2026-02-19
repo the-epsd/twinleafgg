@@ -28,7 +28,7 @@ export class Boltund extends PokemonCard {
       name: 'Fighting Fangs',
       cost: [L, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Pokémon V or Pokémon-GX, this attack does 90 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Boltund extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Boltund';
-  public fullName: string = 'Boltund SSH';
+  public fullName: string = 'Boltund (SSH 75)';
+  public legacyFullName = 'Boltund SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Big Bite

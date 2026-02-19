@@ -29,7 +29,7 @@ export class Granbull extends PokemonCard {
       name: 'Fight Back',
       cost: [Y, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any damage counters on it, this attack does 80 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Granbull extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Granbull';
-  public fullName: string = 'Granbull SUM';
+  public fullName: string = 'Granbull (SUM 91)';
+  public legacyFullName = 'Granbull SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dark Clamp

@@ -27,7 +27,8 @@ export class TeamRocketsDrowzee extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Drowzee';
-  public fullName: string = 'Team Rocket\'s Drowzee DRI';
+  public fullName: string = 'Team Rocket\'s Drowzee (DRI 79)';
+  public legacyFullName = 'Team Rocket\'s Drowzee DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {

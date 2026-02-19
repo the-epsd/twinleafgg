@@ -36,7 +36,8 @@ export class Mew extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mew';
-  public fullName: string = 'Mew EVO';
+  public fullName: string = 'Mew (EVO 53)';
+  public legacyFullName = 'Mew EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Neutral Shield (passive - prevent all effects from Evolution Pokemon)

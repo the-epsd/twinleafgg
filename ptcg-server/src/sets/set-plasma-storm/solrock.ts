@@ -35,7 +35,8 @@ export class Solrock extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solrock';
-  public fullName: string = 'Solrock PLS';
+  public fullName: string = 'Solrock (PLS 74)';
+  public legacyFullName = 'Solrock PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Heat Burn

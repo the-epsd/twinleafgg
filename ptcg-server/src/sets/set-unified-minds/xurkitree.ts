@@ -19,7 +19,7 @@ export class Xurkitree extends PokemonCard {
       name: 'Three Mirrors',
       cost: [L],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent has exactly 3 Prize cards remaining, this attack does 90 more damage.'
     },
     {
@@ -34,7 +34,8 @@ export class Xurkitree extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Xurkitree';
-  public fullName: string = 'Xurkitree UNM';
+  public fullName: string = 'Xurkitree (UNM 70)';
+  public legacyFullName = 'Xurkitree UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Three Mirrors

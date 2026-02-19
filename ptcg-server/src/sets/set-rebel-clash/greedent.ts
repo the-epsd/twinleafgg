@@ -37,7 +37,8 @@ export class Greedent extends PokemonCard {
   public setNumber: string = '152';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Greedent';
-  public fullName: string = 'Greedent RCL';
+  public fullName: string = 'Greedent (RCL 152)';
+  public legacyFullName = 'Greedent RCL';
 
   public readonly GREEDY_TAIL_MARKER = 'GREEDY_TAIL_MARKER';
 

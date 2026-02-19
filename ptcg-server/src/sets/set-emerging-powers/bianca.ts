@@ -16,7 +16,8 @@ export class Bianca extends TrainerCard {
 
   public name: string = 'Bianca';
 
-  public fullName: string = 'Bianca EPO';
+  public fullName: string = 'Bianca (EPO 90)';
+  public legacyFullName = 'Bianca EPO';
 
   public cardImage: string = 'assets/cardback.png';
 

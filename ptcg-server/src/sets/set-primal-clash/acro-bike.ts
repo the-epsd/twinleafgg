@@ -17,7 +17,8 @@ export class AcroBike extends TrainerCard {
 
   public name: string = 'Acro Bike';
 
-  public fullName: string = 'Acro Bike PRC';
+  public fullName: string = 'Acro Bike (PRC 122)';
+  public legacyFullName = 'Acro Bike PRC';
 
   public cardImage: string = 'assets/cardback.png';
 

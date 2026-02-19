@@ -31,7 +31,8 @@ export class PokeParksCelebi extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'PokéPark\'s Celebi';
-  public fullName: string = 'PokéPark\'s Celebi PCGP';
+  public fullName: string = 'PokéPark\'s Celebi (PCGP 44)';
+  public legacyFullName = 'PokéPark\'s Celebi PCGP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
 

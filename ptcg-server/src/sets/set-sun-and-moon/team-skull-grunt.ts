@@ -16,7 +16,8 @@ export class TeamSkullGrunt extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '133';
   public name: string = 'Team Skull Grunt';
-  public fullName: string = 'Team Skull Grunt SUM';
+  public fullName: string = 'Team Skull Grunt (SUM 133)';
+  public legacyFullName = 'Team Skull Grunt SUM';
 
   public text: string = 'Your opponent reveals their hand. Discard 2 Energy cards from it.';
 

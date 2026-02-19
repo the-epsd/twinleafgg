@@ -19,7 +19,8 @@ export class BoostEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '145';
   public name = 'Boost Energy';
-  public fullName = 'Boost Energy AQ';
+  public fullName = 'Boost Energy (AQ 145)';
+  public legacyFullName = 'Boost Energy AQ';
 
   public text =
     'Boost Energy can be attached only to an Evolved Pokémon. Discard Boost Energy at the end of the turn it was attached. Boost Energy provides [C][C][C] Energy. The Pokémon Boost Energy is attached to can\'t retreat.\n\nWhen the Pokémon Boost Energy is attached to is no longer an Evolved Pokémon, discard Boost Energy.';

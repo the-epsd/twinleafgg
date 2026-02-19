@@ -38,7 +38,8 @@ export class Scizor extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
   public name: string = 'Scizor';
-  public fullName: string = 'Scizor UD';
+  public fullName: string = 'Scizor (UD 84)';
+  public legacyFullName = 'Scizor UD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

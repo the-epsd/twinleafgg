@@ -29,7 +29,8 @@ export class PokeParksPikachu extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'PokéPark\'s Pikachu';
-  public fullName: string = 'PokéPark\'s Pikachu PCGP';
+  public fullName: string = 'PokéPark\'s Pikachu (PCGP 43)';
+  public legacyFullName = 'PokéPark\'s Pikachu PCGP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '43';
 

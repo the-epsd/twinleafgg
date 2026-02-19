@@ -38,7 +38,8 @@ export class Manectric extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Manectric';
-  public fullName: string = 'Manectric DAA';
+  public fullName: string = 'Manectric (DAA 59)';
+  public legacyFullName = 'Manectric DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Strafe

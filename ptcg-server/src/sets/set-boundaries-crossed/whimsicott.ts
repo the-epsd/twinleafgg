@@ -39,7 +39,8 @@ export class Whimsicott extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whimsicott';
-  public fullName: string = 'Whimsicott BCR';
+  public fullName: string = 'Whimsicott (BCR 15)';
+  public legacyFullName = 'Whimsicott BCR';
   public readonly FLUFFY_TAG_MARKER = 'FLUFFY_TAG_MARKER';
   public readonly CLEAR_FLUFFY_TAG_MARKER = 'CLEAR_FLUFFY_TAG_MARKER';
 

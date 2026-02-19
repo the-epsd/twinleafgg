@@ -25,7 +25,8 @@ export class MegaEmboarex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '31';
   public name: string = 'Mega Emboar ex';
-  public fullName: string = 'Mega Emboar ex MC';
+  public fullName: string = 'Mega Emboar ex (ASC 31)';
+  public legacyFullName = 'Mega Emboar ex MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -35,7 +35,8 @@ export class Heatran extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heatran';
-  public fullName: string = 'Heatran CES';
+  public fullName: string = 'Heatran (CES 98)';
+  public legacyFullName = 'Heatran CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Steelworks

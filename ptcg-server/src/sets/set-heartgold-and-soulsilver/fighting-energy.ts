@@ -15,6 +15,7 @@ export class FightingEnergy extends EnergyCard {
 
   public name = 'Fighting Energy';
 
-  public fullName = 'Fighting Energy HS';
+  public fullName = 'Fighting Energy (HS 120)';
+  public legacyFullName = 'Fighting Energy HS';
 
 }

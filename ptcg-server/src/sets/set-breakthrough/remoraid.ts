@@ -35,7 +35,8 @@ export class Remoraid extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Remoraid';
-  public fullName: string = 'Remoraid BKT';
+  public fullName: string = 'Remoraid (BKT 31)';
+  public legacyFullName = 'Remoraid BKT';
 
   public usedWildRiver = false;
 

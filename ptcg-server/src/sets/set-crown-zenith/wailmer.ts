@@ -37,7 +37,8 @@ export class Wailmer extends PokemonCard {
 
   public name: string = 'Wailmer';
 
-  public fullName: string = 'Wailmer CRZ';
+  public fullName: string = 'Wailmer (CRZ 31)';
+  public legacyFullName = 'Wailmer CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

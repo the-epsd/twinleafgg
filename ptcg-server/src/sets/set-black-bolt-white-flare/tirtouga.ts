@@ -28,7 +28,8 @@ export class Tirtouga extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tirtouga';
-  public fullName: string = 'Tirtouga SV11B';
+  public fullName: string = 'Tirtouga (BLK 22)';
+  public legacyFullName = 'Tirtouga SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

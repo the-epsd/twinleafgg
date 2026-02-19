@@ -50,7 +50,8 @@ export class Noivernex extends PokemonCard {
 
   public name: string = 'Noivern ex';
 
-  public fullName: string = 'Noivern ex PAL';
+  public fullName: string = 'Noivern ex (PAL 153)';
+  public legacyFullName = 'Noivern ex PAL';
 
   public readonly PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string = 'PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';
   public readonly CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER: string = 'CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER';

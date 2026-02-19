@@ -28,7 +28,8 @@ export class Nincada extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nincada';
-  public fullName: string = 'Nincada ROS';
+  public fullName: string = 'Nincada (ROS 9)';
+  public legacyFullName = 'Nincada ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Slight Intrusion

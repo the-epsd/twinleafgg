@@ -36,7 +36,8 @@ export class Hariyama extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hariyama';
-  public fullName: string = 'Hariyama SUM';
+  public fullName: string = 'Hariyama (SUM 68)';
+  public legacyFullName = 'Hariyama SUM';
 
   public usedPushOut = false;
 

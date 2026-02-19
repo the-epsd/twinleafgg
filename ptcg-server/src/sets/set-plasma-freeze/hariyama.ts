@@ -38,7 +38,8 @@ export class Hariyama extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hariyama';
-  public fullName: string = 'Hariyama PLF';
+  public fullName: string = 'Hariyama (PLF 63)';
+  public legacyFullName = 'Hariyama PLF';
 
   public readonly PIVOT_THROW_MARKER = 'PIVOT_THROW_MARKER';
   public readonly CLEAR_PIVOT_THROW_MARKER = 'CLEAR_PIVOT_THROW_MARKER';

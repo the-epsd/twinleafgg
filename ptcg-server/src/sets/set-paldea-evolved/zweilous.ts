@@ -30,7 +30,8 @@ export class Zweilous extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '139';
   public name = 'Zweilous';
-  public fullName = 'Zweilous PAL';
+  public fullName = 'Zweilous (PAL 139)';
+  public legacyFullName = 'Zweilous PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

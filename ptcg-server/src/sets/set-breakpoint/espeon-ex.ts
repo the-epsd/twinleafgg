@@ -31,7 +31,8 @@ export class EspeonEX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '52';
   public name: string = 'Espeon-EX';
-  public fullName: string = 'Espeon-EX BKP';
+  public fullName: string = 'Espeon-EX (BKP 52)';
+  public legacyFullName = 'Espeon-EX BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -22,7 +22,7 @@ export class Empoleon extends PokemonCard {
       name: 'Total Command',
       cost: [W, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage for each Benched Pokémon (both yours and your opponent\'s).'
     },
     {
@@ -37,7 +37,8 @@ export class Empoleon extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Empoleon';
-  public fullName: string = 'Empoleon UPR';
+  public fullName: string = 'Empoleon (UPR 34)';
+  public legacyFullName = 'Empoleon UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Total Command

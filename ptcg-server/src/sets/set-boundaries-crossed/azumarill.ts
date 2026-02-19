@@ -35,7 +35,8 @@ export class Azumarill extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Azumarill';
-  public fullName: string = 'Azumarill BCR';
+  public fullName: string = 'Azumarill (BCR 37)';
+  public legacyFullName = 'Azumarill BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Deep Dive

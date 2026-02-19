@@ -33,7 +33,8 @@ export class SeasManaphy4 extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'Sea\'s Manaphy';
-  public fullName: string = 'Sea\'s Manaphy PCGP 150';
+  public fullName: string = 'Sea\'s Manaphy (PCGP 150)';
+  public legacyFullName = 'Sea\'s Manaphy PCGP 150';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '150';
 

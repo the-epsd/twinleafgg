@@ -32,5 +32,6 @@ export class Quagsire extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Quagsire';
-  public fullName: string = 'Quagsire UNB';
+  public fullName: string = 'Quagsire (UNB 97)';
+  public legacyFullName = 'Quagsire UNB';
 }

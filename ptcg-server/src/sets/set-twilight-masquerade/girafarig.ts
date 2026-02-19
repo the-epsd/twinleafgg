@@ -27,7 +27,8 @@ export class Girafarig extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
   public name: string = 'Girafarig';
-  public fullName: string = 'Girafarig TWM';
+  public fullName: string = 'Girafarig (TWM 83)';
+  public legacyFullName = 'Girafarig TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)){

@@ -38,7 +38,8 @@ export class RaichuV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
   public name: string = 'Raichu V';
-  public fullName: string = 'Raichu V BRS';
+  public fullName: string = 'Raichu V (BRS 45)';
+  public legacyFullName = 'Raichu V BRS';
 
   // Implement power
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

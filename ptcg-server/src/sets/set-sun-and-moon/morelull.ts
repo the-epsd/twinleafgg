@@ -35,7 +35,8 @@ export class Morelull extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Morelull';
-  public fullName: string = 'Morelull SUM';
+  public fullName: string = 'Morelull (SUM 16)';
+  public legacyFullName = 'Morelull SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flickering Spores

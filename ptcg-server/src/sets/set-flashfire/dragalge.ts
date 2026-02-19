@@ -44,7 +44,8 @@ export class Dragalge extends PokemonCard {
 
   public name: string = 'Dragalge';
 
-  public fullName: string = 'Dragalge FLF';
+  public fullName: string = 'Dragalge (FLF 71)';
+  public legacyFullName = 'Dragalge FLF';
 
   public cardImage: string = 'assets/cardback.png';
 

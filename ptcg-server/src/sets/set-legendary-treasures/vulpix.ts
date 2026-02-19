@@ -30,7 +30,8 @@ export class Vulpix extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vulpix';
-  public fullName: string = 'Vulpix LTR';
+  public fullName: string = 'Vulpix (LTR 20)';
+  public legacyFullName = 'Vulpix LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Firebreathing

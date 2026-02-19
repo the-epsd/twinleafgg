@@ -29,7 +29,8 @@ export class Electrode extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
   public name: string = 'Electrode';
-  public fullName: string = 'Electrode TM';
+  public fullName: string = 'Electrode (TM 93)';
+  public legacyFullName = 'Electrode TM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

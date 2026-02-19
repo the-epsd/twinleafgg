@@ -32,7 +32,8 @@ export class Cradily extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
   public name: string = 'Cradily';
-  public fullName: string = 'Cradily PLB';
+  public fullName: string = 'Cradily (PLB 4)';
+  public legacyFullName = 'Cradily PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

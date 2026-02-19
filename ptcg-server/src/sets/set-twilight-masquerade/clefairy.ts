@@ -32,6 +32,7 @@ export class Clefairy extends PokemonCard {
 
   public name: string = 'Clefairy';
 
-  public fullName: string = 'Clefairy TWM';
+  public fullName: string = 'Clefairy (TWM 78)';
+  public legacyFullName = 'Clefairy TWM';
 
 }

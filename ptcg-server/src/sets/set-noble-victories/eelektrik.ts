@@ -43,7 +43,8 @@ export class Eelektrik extends PokemonCard {
 
   public name: string = 'Eelektrik';
 
-  public fullName: string = 'Eelektrik NVI';
+  public fullName: string = 'Eelektrik (NVI 40)';
+  public legacyFullName = 'Eelektrik NVI';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -37,7 +37,8 @@ export class Charmeleon extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charmeleon';
-  public fullName: string = 'Charmeleon DRM';
+  public fullName: string = 'Charmeleon (DRM 2)';
+  public legacyFullName = 'Charmeleon DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Burning Fighter (on-evolve)

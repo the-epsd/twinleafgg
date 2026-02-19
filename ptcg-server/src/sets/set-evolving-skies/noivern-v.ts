@@ -27,7 +27,7 @@ export class NoivernV extends PokemonCard {
       name: 'Synchro Loud',
       cost: [P, D],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have the same number of cards in your hand as your opponent, this attack does 120 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class NoivernV extends PokemonCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Noivern V';
-  public fullName: string = 'Noivern V EVS';
+  public fullName: string = 'Noivern V (EVS 117)';
+  public legacyFullName = 'Noivern V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Boomburst

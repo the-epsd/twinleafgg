@@ -43,7 +43,8 @@ export class Vikavolt extends PokemonCard {
 
   public name: string = 'Vikavolt';
 
-  public fullName: string = 'Vikavolt TEF';
+  public fullName: string = 'Vikavolt (TEF 56)';
+  public legacyFullName = 'Vikavolt TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 

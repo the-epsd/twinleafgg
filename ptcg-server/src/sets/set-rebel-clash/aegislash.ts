@@ -46,7 +46,8 @@ export class Aegislash extends PokemonCard {
 
   public name: string = 'Aegislash';
 
-  public fullName: string = 'Aegislash RCL';
+  public fullName: string = 'Aegislash (RCL 135)';
+  public legacyFullName = 'Aegislash RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

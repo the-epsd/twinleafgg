@@ -37,7 +37,8 @@ export class Golbat extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golbat';
-  public fullName: string = 'Golbat UNB';
+  public fullName: string = 'Golbat (UNB 65)';
+  public legacyFullName = 'Golbat UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Leech Life

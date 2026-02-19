@@ -15,7 +15,8 @@ export class Fennel extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
   public name: string = 'Fennel';
-  public fullName: string = 'Fennel SV11B';
+  public fullName: string = 'Fennel (BLK 82)';
+  public legacyFullName = 'Fennel SV11B';
   public text: string = 'Heal 40 damage from each of your Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

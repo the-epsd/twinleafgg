@@ -29,7 +29,8 @@ export class ErikasBellsprout extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '38';
   public name: string = 'Erika\'s Bellsprout';
-  public fullName: string = 'Erika\'s Bellsprout G2';
+  public fullName: string = 'Erika\'s Bellsprout (G2 38)';
+  public legacyFullName = 'Erika\'s Bellsprout G2';
 
   public ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';
 

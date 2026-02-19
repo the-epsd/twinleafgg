@@ -30,7 +30,7 @@ export class Magearna extends PokemonCard {
       name: 'Energy Press',
       cost: [M, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -39,7 +39,8 @@ export class Magearna extends PokemonCard {
   public setNumber: string = '131';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magearna';
-  public fullName: string = 'Magearna LOT';
+  public fullName: string = 'Magearna (LOT 131)';
+  public legacyFullName = 'Magearna LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Minor Errand-Running

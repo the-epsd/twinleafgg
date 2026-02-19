@@ -125,7 +125,8 @@ export class RareCandy extends TrainerCard {
 
   public name: string = 'Rare Candy';
 
-  public fullName: string = 'Rare Candy SUM';
+  public fullName: string = 'Rare Candy (SUM 129)';
+  public legacyFullName = 'Rare Candy SUM';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -32,7 +32,8 @@ export class Zweilous2 extends PokemonCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zweilous';
-  public fullName: string = 'Zweilous DRX 96';
+  public fullName: string = 'Zweilous (DRX 96)';
+  public legacyFullName = 'Zweilous DRX 96';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Draw In - attach 2 Dark Energy from discard to this Pokemon

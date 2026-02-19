@@ -30,7 +30,8 @@ export class Skrelp extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skrelp';
-  public fullName: string = 'Skrelp BKP';
+  public fullName: string = 'Skrelp (BKP 63)';
+  public legacyFullName = 'Skrelp BKP';
 
   public readonly HIDE_MARKER = 'SKRELP_BKP_HIDE_MARKER';
   public readonly CLEAR_HIDE_MARKER = 'SKRELP_BKP_CLEAR_HIDE_MARKER';

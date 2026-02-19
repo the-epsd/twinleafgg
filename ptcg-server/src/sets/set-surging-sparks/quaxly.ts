@@ -24,7 +24,8 @@ export class Quaxly extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Quaxly';
-  public fullName: string = 'Quaxly SSP';
+  public fullName: string = 'Quaxly (SSP 50)';
+  public legacyFullName = 'Quaxly SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Aerial Ace

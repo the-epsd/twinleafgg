@@ -23,7 +23,8 @@ export class StoneFightingEnergy extends EnergyCard {
 
   public name = 'Stone Fighting Energy';
 
-  public fullName = 'Stone Fighting Energy VIV';
+  public fullName = 'Stone Fighting Energy (VIV 164)';
+  public legacyFullName = 'Stone Fighting Energy VIV';
 
   public text =
     `As long as this card is attached to a Pokémon, it provides [F] Energy.

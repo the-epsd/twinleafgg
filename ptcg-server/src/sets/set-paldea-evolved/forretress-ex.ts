@@ -36,7 +36,8 @@ export class Forretressex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
   public name: string = 'Forretress ex';
-  public fullName: string = 'Forretress ex PAL';
+  public fullName: string = 'Forretress ex (PAL 5)';
+  public legacyFullName = 'Forretress ex PAL';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

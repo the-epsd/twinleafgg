@@ -33,7 +33,8 @@ export class MPidgeotEx extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Pidgeot-EX';
-  public fullName: string = 'M Pidgeot-EX EVO';
+  public fullName: string = 'M Pidgeot-EX (EVO 65)';
+  public legacyFullName = 'M Pidgeot-EX EVO';
 
   private usedMachCyclone = false;
   private wantsToSwitch = false;

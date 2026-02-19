@@ -45,7 +45,8 @@ export class SlakingV extends PokemonCard {
 
   public name: string = 'Slaking V';
 
-  public fullName: string = 'Slaking V LOR';
+  public fullName: string = 'Slaking V (PGO 58)';
+  public legacyFullName = 'Slaking V LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

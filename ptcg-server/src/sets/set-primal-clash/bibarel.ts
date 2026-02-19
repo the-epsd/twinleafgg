@@ -28,7 +28,7 @@ export class Bibarel extends PokemonCard {
       name: 'Continuous Headbutt',
       cost: [C, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 80 damage times the number of heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Bibarel extends PokemonCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bibarel';
-  public fullName: string = 'Bibarel PRC';
+  public fullName: string = 'Bibarel (PRC 118)';
+  public legacyFullName = 'Bibarel PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Yawn

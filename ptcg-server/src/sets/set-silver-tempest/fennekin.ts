@@ -29,7 +29,8 @@ export class Fennekin extends PokemonCard {
   public regulationMark: string = 'F';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fennekin';
-  public fullName: string = 'Fennekin SIT';
+  public fullName: string = 'Fennekin (SIT 25)';
+  public legacyFullName = 'Fennekin SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

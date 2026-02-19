@@ -32,5 +32,6 @@ export class Nidorino extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidorino';
-  public fullName: string = 'Nidorino TEU';
+  public fullName: string = 'Nidorino (TEU 58)';
+  public legacyFullName = 'Nidorino TEU';
 }

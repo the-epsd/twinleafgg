@@ -33,7 +33,8 @@ export class Mareep extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
   public name: string = 'Mareep';
-  public fullName: string = 'Mareep PL';
+  public fullName: string = 'Mareep (PL 82)';
+  public legacyFullName = 'Mareep PL';
 
   private turnTracker: number = 0;
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

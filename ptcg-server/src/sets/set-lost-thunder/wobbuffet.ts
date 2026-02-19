@@ -30,7 +30,7 @@ export class Wobbuffet extends PokemonCard {
       name: 'Knock Away',
       cost: [P, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Wobbuffet extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wobbuffet';
-  public fullName: string = 'Wobbuffet LOT';
+  public fullName: string = 'Wobbuffet (LOT 93)';
+  public legacyFullName = 'Wobbuffet LOT';
 
   private isOnBench(state: State): boolean {
     let onBench = false;

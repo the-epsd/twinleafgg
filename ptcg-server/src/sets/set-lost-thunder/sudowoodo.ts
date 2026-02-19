@@ -20,7 +20,7 @@ export class Sudowoodo extends PokemonCard {
       name: 'Reply Strongly',
       cost: [F],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon was damaged by an attack during your opponent\'s last turn while it was your Active Pokémon, this attack does 80 more damage.'
     }
   ];
@@ -29,7 +29,8 @@ export class Sudowoodo extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sudowoodo';
-  public fullName: string = 'Sudowoodo LOT';
+  public fullName: string = 'Sudowoodo (LOT 110)';
+  public legacyFullName = 'Sudowoodo LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Reply Strongly

@@ -13,7 +13,8 @@ export class GalladeSpiritLink extends TrainerCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gallade Spirit Link';
-  public fullName: string = 'Gallade Spirit Link ROS';
+  public fullName: string = 'Gallade Spirit Link (ROS 83)';
+  public legacyFullName = 'Gallade Spirit Link ROS';
   public text: string = 'Your turn does not end if the Pok\u00e9mon this card is attached to becomes M Gallade-EX.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

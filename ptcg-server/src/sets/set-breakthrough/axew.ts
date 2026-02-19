@@ -31,5 +31,6 @@ export class Axew extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Axew';
-  public fullName: string = 'Axew BKT';
+  public fullName: string = 'Axew (BKT 108)';
+  public legacyFullName = 'Axew BKT';
 }

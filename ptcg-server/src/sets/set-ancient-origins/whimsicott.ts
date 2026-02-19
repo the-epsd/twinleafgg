@@ -38,7 +38,8 @@ export class Whimsicott extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whimsicott';
-  public fullName: string = 'Whimsicott AOR';
+  public fullName: string = 'Whimsicott (AOR 56)';
+  public legacyFullName = 'Whimsicott AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Windy Mischief

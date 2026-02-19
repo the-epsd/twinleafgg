@@ -30,7 +30,8 @@ export class Magikarp extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magikarp';
-  public fullName: string = 'Magikarp RCL';
+  public fullName: string = 'Magikarp (RCL 39)';
+  public legacyFullName = 'Magikarp RCL';
 
   public usedLeapOut = false;
 

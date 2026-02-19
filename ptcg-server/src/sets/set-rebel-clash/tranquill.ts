@@ -34,5 +34,6 @@ export class Tranquill extends PokemonCard {
   public setNumber: string = '144';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tranquill';
-  public fullName: string = 'Tranquill RCL';
+  public fullName: string = 'Tranquill (RCL 144)';
+  public legacyFullName = 'Tranquill RCL';
 }

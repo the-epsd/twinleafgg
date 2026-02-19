@@ -36,7 +36,8 @@ export class Empoleon extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Empoleon';
-  public fullName: string = 'Empoleon LTR';
+  public fullName: string = 'Empoleon (LTR 35)';
+  public legacyFullName = 'Empoleon LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Emperor's Strike

@@ -25,5 +25,6 @@ export class Espurr extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Espurr';
-  public fullName: string = 'Espurr BKP';
+  public fullName: string = 'Espurr (BKP 58)';
+  public legacyFullName = 'Espurr BKP';
 }

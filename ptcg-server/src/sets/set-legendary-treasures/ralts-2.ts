@@ -29,7 +29,8 @@ export class Ralts2 extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ralts';
-  public fullName: string = 'Ralts LTR 59';
+  public fullName: string = 'Ralts (LTR 59)';
+  public legacyFullName = 'Ralts LTR 59';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mind Bend

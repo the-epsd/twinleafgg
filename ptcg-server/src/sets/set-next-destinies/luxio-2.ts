@@ -33,7 +33,8 @@ export class Luxio2 extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luxio';
-  public fullName: string = 'Luxio NXD 45';
+  public fullName: string = 'Luxio (NXD 45)';
+  public legacyFullName = 'Luxio NXD 45';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Quick Turn

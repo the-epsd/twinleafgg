@@ -28,7 +28,8 @@ export class Chinchou extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
   public name: string = 'Chinchou';
-  public fullName: string = 'Chinchou AQ';
+  public fullName: string = 'Chinchou (AQ 71)';
+  public legacyFullName = 'Chinchou AQ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

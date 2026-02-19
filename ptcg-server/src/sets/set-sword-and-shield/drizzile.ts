@@ -43,7 +43,8 @@ export class Drizzile extends PokemonCard {
 
   public name: string = 'Drizzile';
 
-  public fullName: string = 'Drizzile SSH';
+  public fullName: string = 'Drizzile (SSH 56)';
+  public legacyFullName = 'Drizzile SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

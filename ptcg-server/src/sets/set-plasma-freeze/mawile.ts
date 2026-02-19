@@ -36,7 +36,8 @@ export class Mawile extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mawile';
-  public fullName: string = 'Mawile PLF';
+  public fullName: string = 'Mawile (PLF 80)';
+  public legacyFullName = 'Mawile PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Astonish

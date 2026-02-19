@@ -40,7 +40,8 @@ export class Talonflame extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Talonflame';
-  public fullName: string = 'Talonflame DAA';
+  public fullName: string = 'Talonflame (DAA 32)';
+  public legacyFullName = 'Talonflame DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Scorching Feathers (passive - when damaged by opponent's attack, attacker is Burned)

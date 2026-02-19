@@ -30,7 +30,8 @@ export class Salandit extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salandit';
-  public fullName: string = 'Salandit SSH';
+  public fullName: string = 'Salandit (SSH 27)';
+  public legacyFullName = 'Salandit SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Smog

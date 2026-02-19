@@ -17,7 +17,8 @@ export class Tangela extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Tangela';
+  public fullName = 'Tangela (BS 66)';
+  public legacyFullName = 'Tangela';
 
   public cardType = CardType.GRASS;
 

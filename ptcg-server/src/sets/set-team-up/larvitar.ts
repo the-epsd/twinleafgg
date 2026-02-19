@@ -29,7 +29,8 @@ export class Larvitar extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Larvitar';
-  public fullName: string = 'Larvitar TEU';
+  public fullName: string = 'Larvitar (TEU 79)';
+  public legacyFullName = 'Larvitar TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Chip Away

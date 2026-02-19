@@ -28,7 +28,7 @@ export class Kabutops extends PokemonCard {
       name: 'X-Scissor',
       cost: [F, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 60 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Kabutops extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kabutops';
-  public fullName: string = 'Kabutops FCO';
+  public fullName: string = 'Kabutops (FCO 39)';
+  public legacyFullName = 'Kabutops FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Cling

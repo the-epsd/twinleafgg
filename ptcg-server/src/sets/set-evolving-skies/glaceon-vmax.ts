@@ -39,7 +39,8 @@ export class GlaceonVmax extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Glaceon VMAX';
-  public fullName: string = 'Glaceon VMAX EVS';
+  public fullName: string = 'Glaceon VMAX (EVS 41)';
+  public legacyFullName = 'Glaceon VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Crystal Veil (passive)

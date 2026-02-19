@@ -39,7 +39,8 @@ export class Sylveon extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sylveon';
-  public fullName: string = 'Sylveon FLI';
+  public fullName: string = 'Sylveon (FLI 87)';
+  public legacyFullName = 'Sylveon FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wink Wink

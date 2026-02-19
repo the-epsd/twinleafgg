@@ -36,7 +36,8 @@ export class Golduck extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golduck';
-  public fullName: string = 'Golduck BCR';
+  public fullName: string = 'Golduck (BCR 34)';
+  public legacyFullName = 'Golduck BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Confuse Ray

@@ -31,5 +31,6 @@ export class Krabby extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Krabby';
-  public fullName: string = 'Krabby PHF';
+  public fullName: string = 'Krabby (PHF 13)';
+  public legacyFullName = 'Krabby PHF';
 }

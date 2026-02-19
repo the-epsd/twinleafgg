@@ -27,7 +27,8 @@ export class Ferroseed extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '70';
   public name: string = 'Ferroseed';
-  public fullName: string = 'Ferroseed EPO';
+  public fullName: string = 'Ferroseed (EPO 70)';
+  public legacyFullName = 'Ferroseed EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

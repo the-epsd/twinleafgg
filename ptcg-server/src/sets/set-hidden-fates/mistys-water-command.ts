@@ -14,7 +14,8 @@ export class MistysWaterCommand extends TrainerCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Misty\'s Water Command';
-  public fullName: string = 'Misty\'s Water Command HIF';
+  public fullName: string = 'Misty\'s Water Command (HIF 63)';
+  public legacyFullName = 'Misty\'s Water Command HIF';
   public text: string = 'Move any number of [W] Energy from your Pokémon to your Psyduck, Horsea, Staryu, Starmie-GX, Magikarp, Gyarados, or Lapras in any way you like. You may play only 1 Supporter card during your turn (before your attack).';
 
   private readonly VALID_POKEMON_NAMES = [

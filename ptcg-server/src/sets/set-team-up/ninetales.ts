@@ -35,7 +35,8 @@ export class Ninetales extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name = 'Ninetales';
-  public fullName = 'Ninetales TEU';
+  public fullName = 'Ninetales (TEU 16)';
+  public legacyFullName = 'Ninetales TEU';
 
   public readonly NINE_TEMPTATIONS_MARKER = 'NINE_TEMPTATIONS_MARKER';
 

@@ -31,7 +31,8 @@ export class Turtonator extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Turtonator';
-  public fullName: string = 'Turtonator M3';
+  public fullName: string = 'Turtonator (M3 17)';
+  public legacyFullName = 'Turtonator M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Thorny Shell ability - discard energy from attacking Pokemon when this takes damage

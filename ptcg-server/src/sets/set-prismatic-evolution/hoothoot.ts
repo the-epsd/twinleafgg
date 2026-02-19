@@ -31,7 +31,8 @@ export class Hoothoot extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '77';
   public name: string = 'Hoothoot';
-  public fullName: string = 'Hoothoot PRE';
+  public fullName: string = 'Hoothoot (PRE 77)';
+  public legacyFullName = 'Hoothoot PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AddSpecialConditionsEffect && effect.specialConditions.includes(SpecialCondition.ASLEEP)){

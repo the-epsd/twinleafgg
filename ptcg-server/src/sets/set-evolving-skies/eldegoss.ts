@@ -34,7 +34,8 @@ export class Eldegoss extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Eldegoss';
-  public fullName: string = 'Eldegoss EVS';
+  public fullName: string = 'Eldegoss (EVS 16)';
+  public legacyFullName = 'Eldegoss EVS';
 
   public readonly COTTON_LIFT_MARKER = 'COTTON_LIFT_MARKER';
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

@@ -81,7 +81,8 @@ export class GiovannisCharisma extends TrainerCard {
 
   public name: string = 'Giovanni\'s Charisma';
 
-  public fullName: string = 'Giovanni\'s Charisma MEW';
+  public fullName: string = 'Giovanni\'s Charisma (MEW 161)';
+  public legacyFullName = 'Giovanni\'s Charisma MEW';
 
   public text: string =
     'Put an Energy attached to your opponent\'s Active Pokémon into their hand. If you do, attach an Energy card from your hand to your Active Pokémon.';

@@ -31,7 +31,8 @@ export class Slowpoke extends PokemonCard {
 
   public set: string = 'UF';
   public name: string = 'Slowpoke';
-  public fullName: string = 'Slowpoke UF';
+  public fullName: string = 'Slowpoke (UF 72)';
+  public legacyFullName = 'Slowpoke UF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '72';
 

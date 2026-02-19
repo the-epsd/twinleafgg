@@ -31,7 +31,8 @@ export class IlenesMimeJr extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Ilene\'s Mime Jr.';
-  public fullName: string = 'Ilene\'s Mime Jr. MAL';
+  public fullName: string = 'Ilene\'s Mime Jr. (MAL 3)';
+  public legacyFullName = 'Ilene\'s Mime Jr. MAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

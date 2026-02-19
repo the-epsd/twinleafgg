@@ -13,7 +13,8 @@ export class AggronSpiritLink extends TrainerCard {
   public setNumber: string = '123';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aggron Spirit Link';
-  public fullName: string = 'Aggron Spirit Link PRC';
+  public fullName: string = 'Aggron Spirit Link (PRC 123)';
+  public legacyFullName = 'Aggron Spirit Link PRC';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Aggron-EX.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

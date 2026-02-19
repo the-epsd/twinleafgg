@@ -45,7 +45,8 @@ export class Gliscor extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gliscor';
-  public fullName: string = 'Gliscor BCR';
+  public fullName: string = 'Gliscor (BCR 81)';
+  public legacyFullName = 'Gliscor BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Ring

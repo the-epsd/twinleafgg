@@ -38,7 +38,8 @@ export class Moltres extends PokemonCard {
 
   public name: string = 'Moltres';
 
-  public fullName: string = 'Moltres FO';
+  public fullName: string = 'Moltres (FO 12)';
+  public legacyFullName = 'Moltres FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

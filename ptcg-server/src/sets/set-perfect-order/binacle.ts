@@ -29,7 +29,8 @@ export class Binacle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Binacle';
-  public fullName: string = 'Binacle M3';
+  public fullName: string = 'Binacle (M3 41)';
+  public legacyFullName = 'Binacle M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

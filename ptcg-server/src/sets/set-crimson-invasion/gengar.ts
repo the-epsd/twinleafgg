@@ -38,7 +38,8 @@ export class Gengar extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gengar';
-  public fullName: string = 'Gengar CIN';
+  public fullName: string = 'Gengar (CIN 38)';
+  public legacyFullName = 'Gengar CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Gnawing Curse (passive - trigger on opponent's energy attachment)

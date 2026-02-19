@@ -38,7 +38,8 @@ export class CharizardVmax extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charizard VMAX';
-  public fullName: string = 'Charizard VMAX DAA';
+  public fullName: string = 'Charizard VMAX (DAA 20)';
+  public legacyFullName = 'Charizard VMAX DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: G-Max Wildfire

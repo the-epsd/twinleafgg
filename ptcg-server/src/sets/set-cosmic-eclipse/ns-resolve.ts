@@ -17,7 +17,8 @@ export class NsResolve extends TrainerCard {
   public setNumber: string = '200';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'N\'s Resolve';
-  public fullName: string = 'N\'s Resolve CEC';
+  public fullName: string = 'N\'s Resolve (CEC 200)';
+  public legacyFullName = 'N\'s Resolve CEC';
   public text: string = 'Discard the top 6 cards of your deck. If any of those cards are basic Energy cards, attach them to 1 of your Benched Dragon Pokémon. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

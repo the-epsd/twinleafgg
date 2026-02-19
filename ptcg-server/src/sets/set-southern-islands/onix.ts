@@ -30,7 +30,8 @@ export class Onix extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Onix';
-  public fullName: string = 'Onix SI';
+  public fullName: string = 'Onix (SI 3)';
+  public legacyFullName = 'Onix SI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

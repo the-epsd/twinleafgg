@@ -82,7 +82,8 @@ export class Dusclops extends PokemonCard {
 
   public name: string = 'Dusclops';
 
-  public fullName: string = 'Dusclops BCR';
+  public fullName: string = 'Dusclops (BCR 62)';
+  public legacyFullName = 'Dusclops BCR';
 
   public cardImage: string = 'assets/cardback.png';
 

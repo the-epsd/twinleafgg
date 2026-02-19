@@ -40,7 +40,8 @@ export class Pidgeot extends PokemonCard {
 
   public name: string = 'Pidgeot';
 
-  public fullName: string = 'Pidgeot JU';
+  public fullName: string = 'Pidgeot (JU 8)';
+  public legacyFullName = 'Pidgeot JU';
 
   public BOUNCE_ACTIVE_MARKER = 'BOUNCE_ACTIVE_MARKER';
 

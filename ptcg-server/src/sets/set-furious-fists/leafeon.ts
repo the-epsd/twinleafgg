@@ -28,7 +28,7 @@ export class Leafeon extends PokemonCard {
       name: 'Magical Leaf',
       cost: [G, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage and heal 30 damage from this Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class Leafeon extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Leafeon';
-  public fullName: string = 'Leafeon FFI';
+  public fullName: string = 'Leafeon (FFI 7)';
+  public legacyFullName = 'Leafeon FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Soothing Scent

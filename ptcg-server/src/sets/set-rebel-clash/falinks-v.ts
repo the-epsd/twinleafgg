@@ -33,7 +33,8 @@ export class FalinksV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '110';
   public name: string = 'Falinks V';
-  public fullName: string = 'Falinks V RCL';
+  public fullName: string = 'Falinks V (RCL 110)';
+  public legacyFullName = 'Falinks V RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

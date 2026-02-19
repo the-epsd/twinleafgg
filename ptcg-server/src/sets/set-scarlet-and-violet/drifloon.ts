@@ -44,7 +44,8 @@ export class Drifloon extends PokemonCard {
 
   public name: string = 'Drifloon';
 
-  public fullName: string = 'Drifloon SVI';
+  public fullName: string = 'Drifloon (SVI 89)';
+  public legacyFullName = 'Drifloon SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

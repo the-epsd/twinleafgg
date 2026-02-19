@@ -43,7 +43,8 @@ export class Honchkrow extends PokemonCard {
 
   public name: string = 'Honchkrow';
 
-  public fullName: string = 'Honchkrow UPR';
+  public fullName: string = 'Honchkrow (UPR 72)';
+  public legacyFullName = 'Honchkrow UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Rip and Run

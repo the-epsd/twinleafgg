@@ -79,7 +79,8 @@ export class Gardenia extends TrainerCard {
 
   public name: string = 'Gardenia';
 
-  public fullName: string = 'Gardenia UPR';
+  public fullName: string = 'Gardenia (UPR 124)';
+  public legacyFullName = 'Gardenia UPR';
 
   public cardImage: string = 'assets/cardback.png';
 

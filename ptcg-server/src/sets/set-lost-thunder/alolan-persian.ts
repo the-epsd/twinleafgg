@@ -23,7 +23,7 @@ export class AlolanPersian extends PokemonCard {
       name: 'Empty Threat',
       cost: [],
       damage: 90,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-' as const,
       text: 'This attack does 30 less damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -32,7 +32,8 @@ export class AlolanPersian extends PokemonCard {
   public setNumber: string = '119';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Persian';
-  public fullName: string = 'Alolan Persian LOT';
+  public fullName: string = 'Alolan Persian (LOT 119)';
+  public legacyFullName = 'Alolan Persian LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Empty Threat

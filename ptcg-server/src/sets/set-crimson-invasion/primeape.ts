@@ -41,7 +41,8 @@ export class Primeape extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Primeape';
-  public fullName: string = 'Primeape CIN';
+  public fullName: string = 'Primeape (CIN 51)';
+  public legacyFullName = 'Primeape CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Lucha Fight

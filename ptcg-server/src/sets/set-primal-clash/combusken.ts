@@ -22,7 +22,7 @@ export class Combusken extends PokemonCard {
       name: 'Quick Attack',
       cost: [R],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Combusken extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Combusken';
-  public fullName: string = 'Combusken PRC';
+  public fullName: string = 'Combusken (PRC 27)';
+  public legacyFullName = 'Combusken PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Quick Attack

@@ -37,7 +37,8 @@ export class Pikachu extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikachu';
-  public fullName: string = 'Pikachu BKT';
+  public fullName: string = 'Pikachu (BKT 48)';
+  public legacyFullName = 'Pikachu BKT';
 
   public readonly PREVENT_ALL_MARKER = 'PIKACHU_BKT_PREVENT_ALL';
   public readonly CLEAR_PREVENT_ALL_MARKER = 'PIKACHU_BKT_CLEAR_PREVENT_ALL';

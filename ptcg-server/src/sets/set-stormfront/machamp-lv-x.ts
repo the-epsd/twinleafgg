@@ -41,7 +41,8 @@ export class MachampLVX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '98';
   public name: string = 'Machamp';
-  public fullName: string = 'Machamp LV.X SF';
+  public fullName: string = 'Machamp (SF 98)';
+  public legacyFullName = 'Machamp LV.X SF';
 
   public readonly PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER';
   public readonly CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER';

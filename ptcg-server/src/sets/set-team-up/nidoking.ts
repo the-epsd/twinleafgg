@@ -30,7 +30,7 @@ export class Nidoking extends PokemonCard {
       name: 'King\'s Drum',
       cost: [P, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Nidoqueen is on your Bench, this attack does 100 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Nidoking extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoking';
-  public fullName: string = 'Nidoking TEU';
+  public fullName: string = 'Nidoking (TEU 59)';
+  public legacyFullName = 'Nidoking TEU';
 
   public usedDragOff = false;
 

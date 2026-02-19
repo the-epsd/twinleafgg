@@ -38,7 +38,8 @@ export class Dartrix extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dartrix';
-  public fullName: string = 'Dartrix CEC';
+  public fullName: string = 'Dartrix (CEC 19)';
+  public legacyFullName = 'Dartrix CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Wing Flick

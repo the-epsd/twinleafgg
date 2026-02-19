@@ -36,7 +36,8 @@ export class LugiaEx extends PokemonCard {
 
   public name: string = 'Lugia-EX';
 
-  public fullName: string = 'Lugia EX PLS';
+  public fullName: string = 'Lugia-EX (PLS 108)';
+  public legacyFullName = 'Lugia EX PLS';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -22,7 +22,8 @@ export class PowerHourglass extends TrainerCard {
 
   public name: string = 'Powerglass';
 
-  public fullName: string = 'Powerglass SFA';
+  public fullName: string = 'Powerglass (SFA 63)';
+  public legacyFullName = 'Powerglass SFA';
 
   public text: string = 'At the end of your turn, if the Pokémon this card is attached to is in the Active Spot, you may attach a Basic Energy from your discard pile to that Pokémon.';
 

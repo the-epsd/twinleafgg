@@ -22,7 +22,7 @@ export class Heatran extends PokemonCard {
       name: 'Steel Drop',
       cost: [M, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 40 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Heatran extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heatran';
-  public fullName: string = 'Heatran PHF';
+  public fullName: string = 'Heatran (PHF 63)';
+  public legacyFullName = 'Heatran PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Steel Drop

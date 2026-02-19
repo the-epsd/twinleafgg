@@ -39,7 +39,8 @@ export class LucarioMelmetalGX extends PokemonCard {
   public setNumber = '120';
   public cardImage = 'assets/cardback.png';
   public name = 'Lucario & Melmetal-GX';
-  public fullName = 'Lucario & Melmetal-GX UNB';
+  public fullName = 'Lucario & Melmetal-GX (UNB 120)';
+  public legacyFullName = 'Lucario & Melmetal-GX UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Steel Fist

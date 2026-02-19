@@ -21,7 +21,8 @@ export class DamagePump extends TrainerCard {
 
   public name: string = 'Damage Pump';
 
-  public fullName: string = 'Damage Pump LOR';
+  public fullName: string = 'Damage Pump (LOR 156)';
+  public legacyFullName = 'Damage Pump LOR';
 
   public text: string =
     'Move up to 2 damage counters from 1 of your Pokémon to your other Pokémon in any way you like.';

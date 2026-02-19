@@ -29,7 +29,7 @@ export class Wormadam extends PokemonCard {
       name: 'Leaf Cutter',
       cost: [G, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Wormadam extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wormadam';
-  public fullName: string = 'Wormadam FCO';
+  public fullName: string = 'Wormadam (FCO 3)';
+  public legacyFullName = 'Wormadam FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Solar Ray

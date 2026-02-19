@@ -41,7 +41,8 @@ export class Copperajah extends PokemonCard {
 
   public name: string = 'Copperajah';
 
-  public fullName: string = 'Copperajah SSH';
+  public fullName: string = 'Copperajah (SSH 137)';
+  public legacyFullName = 'Copperajah SSH';
 
   public cardImage: string = 'assets/cardback.png';
 

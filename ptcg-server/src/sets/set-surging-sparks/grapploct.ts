@@ -32,7 +32,8 @@ export class Grapploct extends PokemonCard {
   public cardImage = 'assets/cardback.png';
   public regulationMark: string = 'H';
   public name: string = 'Grapploct';
-  public fullName: string = 'Grapploct SSP';
+  public fullName: string = 'Grapploct (SSP 113)';
+  public legacyFullName = 'Grapploct SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Raging Tentacles

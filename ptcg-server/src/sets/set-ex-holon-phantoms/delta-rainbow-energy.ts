@@ -11,7 +11,8 @@ export class DeltaRainbowEnergy extends EnergyCard {
   public energyType = EnergyType.SPECIAL;
   public set: string = 'HP';
   public name = 'Delta Rainbow Energy';
-  public fullName = 'Delta Rainbow Energy HP';
+  public fullName = 'Delta Rainbow Energy (HP 98)';
+  public legacyFullName = 'Delta Rainbow Energy HP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '98';
 

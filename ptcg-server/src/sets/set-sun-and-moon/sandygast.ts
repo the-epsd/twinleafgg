@@ -35,7 +35,8 @@ export class Sandygast extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandygast';
-  public fullName: string = 'Sandygast SUM';
+  public fullName: string = 'Sandygast (SUM 74)';
+  public legacyFullName = 'Sandygast SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shore Up

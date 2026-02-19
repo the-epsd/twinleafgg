@@ -37,7 +37,8 @@ export class Altaria extends PokemonCard {
   public setNumber: string = 'SV37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Altaria';
-  public fullName: string = 'Altaria HIF';
+  public fullName: string = 'Altaria (HIF SV37)';
+  public legacyFullName = 'Altaria HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fight Song (passive - boost Dragon Pokemon damage)

@@ -31,7 +31,8 @@ export class Dratini2 extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dratini';
-  public fullName: string = 'Dratini DRV 2';
+  public fullName: string = 'Dratini (DRV 2)';
+  public legacyFullName = 'Dratini DRV 2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -38,7 +38,8 @@ export class Tornadus extends PokemonCard {
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tornadus';
-  public fullName: string = 'Tornadus VIV';
+  public fullName: string = 'Tornadus (VIV 142)';
+  public legacyFullName = 'Tornadus VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Jet Draft

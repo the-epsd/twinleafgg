@@ -36,7 +36,8 @@ export class Watchog extends PokemonCard {
   public setNumber: string = '119';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Watchog';
-  public fullName: string = 'Watchog BCR';
+  public fullName: string = 'Watchog (BCR 119)';
+  public legacyFullName = 'Watchog BCR';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';
 

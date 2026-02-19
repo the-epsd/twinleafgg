@@ -29,7 +29,8 @@ export class Spinda extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spinda';
-  public fullName: string = 'Spinda SUM';
+  public fullName: string = 'Spinda (SUM 102)';
+  public legacyFullName = 'Spinda SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Teeter Punch

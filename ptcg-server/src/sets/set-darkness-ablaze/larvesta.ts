@@ -30,7 +30,8 @@ export class Larvesta extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Larvesta';
-  public fullName: string = 'Larvesta DAA';
+  public fullName: string = 'Larvesta (DAA 29)';
+  public legacyFullName = 'Larvesta DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Singe

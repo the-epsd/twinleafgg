@@ -23,7 +23,8 @@ export class RotasBonsly extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'Rota\'s Bonsly';
-  public fullName: string = 'Rota\'s Bonsly PCGP';
+  public fullName: string = 'Rota\'s Bonsly (PCGP 87)';
+  public legacyFullName = 'Rota\'s Bonsly PCGP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
 

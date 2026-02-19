@@ -35,7 +35,8 @@ export class TeamRocketsTyranitar extends PokemonCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Tyranitar';
-  public fullName: string = 'Team Rocket\'s Tyranitar DRI';
+  public fullName: string = 'Team Rocket\'s Tyranitar (DRI 96)';
+  public legacyFullName = 'Team Rocket\'s Tyranitar DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sand Stream

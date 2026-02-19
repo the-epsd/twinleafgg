@@ -39,7 +39,8 @@ export class Kingdraex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '94';
   public name: string = 'Kingdra ex';
-  public fullName: string = 'Kingdra ex DF';
+  public fullName: string = 'Kingdra ex (DF 94)';
+  public legacyFullName = 'Kingdra ex DF';
 
   public readonly PROTECTIVE_MARKER = 'PROTECTIVE_MARKER';
 

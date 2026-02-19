@@ -16,7 +16,8 @@ export class HustleBelt extends TrainerCard {
 
   public name: string = 'Hustle Belt';
 
-  public fullName: string = 'Hustle Belt CES';
+  public fullName: string = 'Hustle Belt (CES 134)';
+  public legacyFullName = 'Hustle Belt CES';
 
   public cardImage: string = 'assets/cardback.png';
 

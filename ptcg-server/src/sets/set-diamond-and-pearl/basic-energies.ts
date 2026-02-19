@@ -15,7 +15,8 @@ export class GrassEnergy extends EnergyCard {
 
   public name = 'Grass Energy';
 
-  public fullName = 'Grass Energy DP';
+  public fullName = 'Grass Energy (DP 123)';
+  public legacyFullName = 'Grass Energy DP';
 
 }
 
@@ -33,7 +34,8 @@ export class FireEnergy extends EnergyCard {
 
   public name = 'Fire Energy';
 
-  public fullName = 'Fire Energy DP';
+  public fullName = 'Fire Energy (DP 124)';
+  public legacyFullName = 'Fire Energy DP';
 
 }
 
@@ -51,7 +53,8 @@ export class WaterEnergy extends EnergyCard {
 
   public name = 'Water Energy';
 
-  public fullName = 'Water Energy DP';
+  public fullName = 'Water Energy (DP 125)';
+  public legacyFullName = 'Water Energy DP';
 
 }
 
@@ -69,7 +72,8 @@ export class LightningEnergy extends EnergyCard {
 
   public name = 'Lightning Energy';
 
-  public fullName = 'Lightning Energy DP';
+  public fullName = 'Lightning Energy (DP 126)';
+  public legacyFullName = 'Lightning Energy DP';
 
 }
 
@@ -87,7 +91,8 @@ export class PsychicEnergy extends EnergyCard {
 
   public name = 'Psychic Energy';
 
-  public fullName = 'Psychic Energy DP';
+  public fullName = 'Psychic Energy (DP 127)';
+  public legacyFullName = 'Psychic Energy DP';
 
 }
 
@@ -105,7 +110,8 @@ export class FightingEnergy extends EnergyCard {
 
   public name = 'Fighting Energy';
 
-  public fullName = 'Fighting Energy DP';
+  public fullName = 'Fighting Energy (DP 128)';
+  public legacyFullName = 'Fighting Energy DP';
 
 }
 
@@ -123,7 +129,8 @@ export class DarknessEnergy extends EnergyCard {
 
   public name = 'Darkness Energy';
 
-  public fullName = 'Darkness Energy DP';
+  public fullName = 'Darkness Energy (DP 129)';
+  public legacyFullName = 'Darkness Energy DP';
 
 }
 
@@ -141,6 +148,7 @@ export class MetalEnergy extends EnergyCard {
 
   public name = 'Metal Energy';
 
-  public fullName = 'Metal Energy DP';
+  public fullName = 'Metal Energy (DP 130)';
+  public legacyFullName = 'Metal Energy DP';
 
 }

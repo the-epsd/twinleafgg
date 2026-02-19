@@ -25,5 +25,6 @@ export class Mareanie extends PokemonCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mareanie';
-  public fullName: string = 'Mareanie UNM';
+  public fullName: string = 'Mareanie (UNM 96)';
+  public legacyFullName = 'Mareanie UNM';
 }

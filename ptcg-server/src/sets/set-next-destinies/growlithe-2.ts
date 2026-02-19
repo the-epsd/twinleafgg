@@ -32,7 +32,8 @@ export class Growlithe2 extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Growlithe';
-  public fullName: string = 'Growlithe NXD 10';
+  public fullName: string = 'Growlithe (NXD 10)';
+  public legacyFullName = 'Growlithe NXD 10';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Stoke

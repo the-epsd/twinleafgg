@@ -14,7 +14,8 @@ export class SabrinasSuggestion extends TrainerCard {
   public setNumber: string = '154';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sabrina\'s Suggestion';
-  public fullName: string = 'Sabrina\'s Suggestion TEU';
+  public fullName: string = 'Sabrina\'s Suggestion (TEU 154)';
+  public legacyFullName = 'Sabrina\'s Suggestion TEU';
   public text: string = 'Your opponent reveals their hand. You may choose a Supporter card you find there and use the effect of that card as the effect of this card. You may play only 1 Supporter card during your turn (before your attack).';
 
   // TODO: "Use the effect of that card as the effect of this card" - Using another player's supporter effect dynamically is too complex to implement with current engine facilities. Implementing as reveal only.

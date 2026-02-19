@@ -27,7 +27,7 @@ export class Heracross extends PokemonCard {
       name: 'Single-Horn Throw',
       cost: [G, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. If both of them are heads, this attack does 160 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Heracross extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heracross';
-  public fullName: string = 'Heracross CRE';
+  public fullName: string = 'Heracross (CRE 6)';
+  public legacyFullName = 'Heracross CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Single-Horn Throw

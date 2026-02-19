@@ -28,7 +28,7 @@ export class Camerupt extends PokemonCard {
       name: 'Eruption',
       cost: [R, R, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Each player discards the top card of his or her deck. This attack does 60 more damage for each Energy card discarded in this way.'
     }
   ];
@@ -37,7 +37,8 @@ export class Camerupt extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Camerupt';
-  public fullName: string = 'Camerupt BKP';
+  public fullName: string = 'Camerupt (BKP 13)';
+  public legacyFullName = 'Camerupt BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Eruption

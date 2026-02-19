@@ -33,5 +33,6 @@ export class Palpitoad extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Palpitoad';
-  public fullName: string = 'Palpitoad EVS';
+  public fullName: string = 'Palpitoad (EVS 89)';
+  public legacyFullName = 'Palpitoad EVS';
 }

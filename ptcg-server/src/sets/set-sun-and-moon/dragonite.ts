@@ -36,7 +36,8 @@ export class Dragonite extends PokemonCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragonite';
-  public fullName: string = 'Dragonite SUM';
+  public fullName: string = 'Dragonite (SUM 96)';
+  public legacyFullName = 'Dragonite SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dragon Wave

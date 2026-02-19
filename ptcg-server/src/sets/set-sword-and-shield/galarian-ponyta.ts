@@ -31,7 +31,8 @@ export class GalarianPonyta extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Ponyta';
-  public fullName: string = 'Galarian Ponyta SSH';
+  public fullName: string = 'Galarian Ponyta (SSH 79)';
+  public legacyFullName = 'Galarian Ponyta SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psy Bolt

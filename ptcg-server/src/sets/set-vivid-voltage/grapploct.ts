@@ -32,7 +32,7 @@ export class Grapploct extends PokemonCard {
       name: 'Tentacle Buster',
       cost: [F, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon used Full Nelson during your last turn, this attack does 120 more damage.'
     }
   ];
@@ -42,7 +42,8 @@ export class Grapploct extends PokemonCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grapploct';
-  public fullName: string = 'Grapploct VIV';
+  public fullName: string = 'Grapploct (VIV 101)';
+  public legacyFullName = 'Grapploct VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Full Nelson

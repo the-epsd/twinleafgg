@@ -20,7 +20,7 @@ export class Mudbray extends PokemonCard {
       name: 'Double Kick',
       cost: [F, F],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage for each heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class Mudbray extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mudbray';
-  public fullName: string = 'Mudbray GRI';
+  public fullName: string = 'Mudbray (GRI 75)';
+  public legacyFullName = 'Mudbray GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Kick

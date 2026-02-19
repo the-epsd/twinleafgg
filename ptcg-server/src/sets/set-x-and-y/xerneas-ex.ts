@@ -30,7 +30,8 @@ export class XerneasEX extends PokemonCard {
 
   public set: string = 'XY';
   public name: string = 'Xerneas-EX';
-  public fullName: string = 'Xerneas-EX XY';
+  public fullName: string = 'Xerneas-EX (XY 97)';
+  public legacyFullName = 'Xerneas-EX XY';
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
 

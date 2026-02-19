@@ -26,7 +26,7 @@ export class Keldeo extends PokemonCard {
       name: 'Resolute Blade',
       cost: [W, W],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each of your opponent\'s Benched Pokémon.'
     }
   ];
@@ -35,7 +35,8 @@ export class Keldeo extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Keldeo';
-  public fullName: string = 'Keldeo SLG';
+  public fullName: string = 'Keldeo (SLG 26)';
+  public legacyFullName = 'Keldeo SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bail Out

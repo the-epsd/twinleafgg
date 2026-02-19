@@ -31,7 +31,8 @@ export class Togekiss extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public name: string = 'Togekiss';
-  public fullName: string = 'Togekiss OBF';
+  public fullName: string = 'Togekiss (OBF 85)';
+  public legacyFullName = 'Togekiss OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Precious Gift

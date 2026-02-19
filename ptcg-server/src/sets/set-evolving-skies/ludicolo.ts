@@ -42,7 +42,8 @@ export class Ludicolo extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ludicolo';
-  public fullName: string = 'Ludicolo EVS';
+  public fullName: string = 'Ludicolo (EVS 34)';
+  public legacyFullName = 'Ludicolo EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Enthusiastic Dance (on-evolve activation)

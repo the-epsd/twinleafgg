@@ -36,7 +36,8 @@ export class AlolanGrimer extends PokemonCard {
   public setNumber: string = '130';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Grimer';
-  public fullName: string = 'Alolan Grimer CEC';
+  public fullName: string = 'Alolan Grimer (CEC 130)';
+  public legacyFullName = 'Alolan Grimer CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Nasty Goo

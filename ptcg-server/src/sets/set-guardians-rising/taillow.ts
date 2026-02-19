@@ -29,7 +29,8 @@ export class Taillow extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Taillow';
-  public fullName: string = 'Taillow GRI';
+  public fullName: string = 'Taillow (GRI 103)';
+  public legacyFullName = 'Taillow GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Reckless Charge

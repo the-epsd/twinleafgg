@@ -34,7 +34,8 @@ export class Bisharp extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '149';
   public name: string = 'Bisharp';
-  public fullName: string = 'Bisharp OBF';
+  public fullName: string = 'Bisharp (OBF 149)';
+  public legacyFullName = 'Bisharp OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Fury Cutter

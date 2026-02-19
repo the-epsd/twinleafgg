@@ -30,7 +30,8 @@ export class Haunter extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Haunter';
-  public fullName: string = 'Haunter DP';
+  public fullName: string = 'Haunter (DP 50)';
+  public legacyFullName = 'Haunter DP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -33,7 +33,8 @@ export class Glameow extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Glameow';
-  public fullName: string = 'Glameow UPR';
+  public fullName: string = 'Glameow (UPR 108)';
+  public legacyFullName = 'Glameow UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Gentle Bite

@@ -32,5 +32,6 @@ export class Bergmite extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bergmite';
-  public fullName: string = 'Bergmite EVS';
+  public fullName: string = 'Bergmite (EVS 44)';
+  public legacyFullName = 'Bergmite EVS';
 }

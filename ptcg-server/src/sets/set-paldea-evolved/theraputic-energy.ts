@@ -15,7 +15,8 @@ export class TherapeuticEnergy extends EnergyCard {
   public setNumber: string = '193';
   public regulationMark = 'G';
   public name = 'Therapeutic Energy';
-  public fullName = 'Therapeutic Energy PAL';
+  public fullName = 'Therapeutic Energy (PAL 193)';
+  public legacyFullName = 'Therapeutic Energy PAL';
 
   public text = `As long as this card is attached to a Pokémon, it provides [C] Energy.
 

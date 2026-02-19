@@ -28,7 +28,8 @@ export class Darumaka extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Darumaka';
-  public fullName: string = 'Darumaka BCR';
+  public fullName: string = 'Darumaka (BCR 27)';
+  public legacyFullName = 'Darumaka BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Reckless Charge

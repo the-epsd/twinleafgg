@@ -31,7 +31,8 @@ export class Hydreigon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '62';
   public name: string = 'Hydreigon';
-  public fullName: string = 'Hydreigon CIN';
+  public fullName: string = 'Hydreigon (CIN 62)';
+  public legacyFullName = 'Hydreigon CIN';
 
   public readonly WEED_OUT_MARKER = 'WEED_OUT_MARKER';
 

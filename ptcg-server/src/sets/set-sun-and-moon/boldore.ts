@@ -35,7 +35,8 @@ export class Boldore extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Boldore';
-  public fullName: string = 'Boldore SUM';
+  public fullName: string = 'Boldore (SUM 70)';
+  public legacyFullName = 'Boldore SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Rock Hurl

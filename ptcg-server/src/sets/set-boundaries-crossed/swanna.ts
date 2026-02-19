@@ -39,7 +39,8 @@ export class Swanna extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swanna';
-  public fullName: string = 'Swanna BCR';
+  public fullName: string = 'Swanna (BCR 43)';
+  public legacyFullName = 'Swanna BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Aerial Ace

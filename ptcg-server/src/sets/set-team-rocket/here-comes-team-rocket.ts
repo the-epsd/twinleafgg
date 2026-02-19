@@ -12,7 +12,8 @@ export class HereComesTeamRocket extends TrainerCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Here Comes Team Rocket!';
-  public fullName: string = 'Here Comes Team Rocket! TR';
+  public fullName: string = 'Here Comes Team Rocket! (TR 15)';
+  public legacyFullName = 'Here Comes Team Rocket! TR';
 
   public text: string = 'Each player turns all of his or her Prize cards face up. (Those Prize cards remain face up for the rest of the game.)';
 

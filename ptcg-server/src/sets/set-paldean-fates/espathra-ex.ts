@@ -43,7 +43,8 @@ export class Espathraex extends PokemonCard {
 
   public name: string = 'Espathra ex';
 
-  public fullName: string = 'Espathra ex PAF';
+  public fullName: string = 'Espathra ex (PAF 6)';
+  public legacyFullName = 'Espathra ex PAF';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

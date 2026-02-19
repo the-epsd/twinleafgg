@@ -15,7 +15,8 @@ export class Olivia extends TrainerCard {
   public setNumber: string = '119';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Olivia';
-  public fullName: string = 'Olivia BUS';
+  public fullName: string = 'Olivia (BUS 119)';
+  public legacyFullName = 'Olivia BUS';
   public text: string = 'Search your deck for up to 2 Pokémon-GX, reveal them, and put them into your hand. Then, shuffle your deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

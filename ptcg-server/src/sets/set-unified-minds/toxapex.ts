@@ -26,5 +26,6 @@ export class Toxapex extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toxapex';
-  public fullName: string = 'Toxapex UNM';
+  public fullName: string = 'Toxapex (UNM 97)';
+  public legacyFullName = 'Toxapex UNM';
 }

@@ -21,7 +21,7 @@ export class Grumpig extends PokemonCard {
       name: 'Mirror Step',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If 1 of your opponent\'s Pokémon in play has the same name as 1 of your Pokémon in play, this attack does 70 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Grumpig extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grumpig';
-  public fullName: string = 'Grumpig CES';
+  public fullName: string = 'Grumpig (CES 60)';
+  public legacyFullName = 'Grumpig CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mirror Step

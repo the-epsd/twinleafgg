@@ -31,5 +31,6 @@ export class Buneary extends PokemonCard {
   public setNumber: string = '116';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Buneary';
-  public fullName: string = 'Buneary BCR';
+  public fullName: string = 'Buneary (BCR 116)';
+  public legacyFullName = 'Buneary BCR';
 }

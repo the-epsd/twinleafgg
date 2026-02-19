@@ -29,7 +29,8 @@ export class Spearow extends PokemonCard {
 
   public set: string = 'MEW';
   public name: string = 'Spearow';
-  public fullName: string = 'Spearow MEW';
+  public fullName: string = 'Spearow (MEW 21)';
+  public legacyFullName = 'Spearow MEW';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
 

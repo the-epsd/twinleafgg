@@ -27,7 +27,8 @@ export class TechnicalMachineCrisisPunch extends TrainerCard {
 
   public name: string = 'Technical Machine: Crisis Punch';
 
-  public fullName: string = 'Technical Machine: Crisis Punch PAF';
+  public fullName: string = 'Technical Machine: Crisis Punch (PAF 90)';
+  public legacyFullName = 'Technical Machine: Crisis Punch PAF';
 
   public attacks: Attack[] = [{
     name: 'Crisis Punch',

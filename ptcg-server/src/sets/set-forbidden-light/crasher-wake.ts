@@ -99,7 +99,8 @@ export class CrasherWake extends TrainerCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crasher Wake';
-  public fullName: string = 'Crasher Wake FLI';
+  public fullName: string = 'Crasher Wake (FLI 104)';
+  public legacyFullName = 'Crasher Wake FLI';
 
   public text: string =
     'Discard 2 [W] Energy cards from your hand. If you do, search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.';

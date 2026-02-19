@@ -43,7 +43,8 @@ export class Indeedee extends PokemonCard {
 
   public name: string = 'Indeedee';
 
-  public fullName: string = 'Indeedee BST';
+  public fullName: string = 'Indeedee (BST 120)';
+  public legacyFullName = 'Indeedee BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

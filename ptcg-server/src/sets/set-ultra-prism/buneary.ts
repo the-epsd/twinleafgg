@@ -35,7 +35,8 @@ export class Buneary extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Buneary';
-  public fullName: string = 'Buneary UPR';
+  public fullName: string = 'Buneary (UPR 106)';
+  public legacyFullName = 'Buneary UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Weak Kneed

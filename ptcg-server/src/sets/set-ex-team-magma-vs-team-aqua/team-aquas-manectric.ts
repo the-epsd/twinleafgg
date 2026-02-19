@@ -35,7 +35,8 @@ export class TeamAquasManectric extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
   public name: string = 'Team Aqua\'s Manectric';
-  public fullName: string = 'Team Aqua\'s Manectric MA';
+  public fullName: string = 'Team Aqua\'s Manectric (MA 4)';
+  public legacyFullName = 'Team Aqua\'s Manectric MA';
 
   public readonly POWER_SHIFT_MARKER = 'POWER_SHIFT_MARKER';
 

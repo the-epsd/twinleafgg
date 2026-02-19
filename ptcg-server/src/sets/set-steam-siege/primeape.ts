@@ -29,7 +29,7 @@ export class Primeape extends PokemonCard {
       name: 'Spirited Throw',
       cost: [F, F],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If, before doing damage, your opponent\'s Active Pok\u00e9mon has more remaining HP than this Pok\u00e9mon, this attack does 60 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Primeape extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Primeape';
-  public fullName: string = 'Primeape STS';
+  public fullName: string = 'Primeape (STS 53)';
+  public legacyFullName = 'Primeape STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swagger

@@ -37,7 +37,8 @@ export class Mothim extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mothim';
-  public fullName: string = 'Mothim FCO';
+  public fullName: string = 'Mothim (FCO 4)';
+  public legacyFullName = 'Mothim FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Wormadam First

@@ -30,7 +30,8 @@ export class Toxicroak extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '31';
   public name: string = 'Toxicroak';
-  public fullName: string = 'Toxicroak MD';
+  public fullName: string = 'Toxicroak (MD 31)';
+  public legacyFullName = 'Toxicroak MD';
 
   public usedParalyzePoison = false;
 

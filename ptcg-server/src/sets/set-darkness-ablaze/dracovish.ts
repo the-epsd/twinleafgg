@@ -37,7 +37,8 @@ export class Dracovish extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dracovish';
-  public fullName: string = 'Dracovish DAA';
+  public fullName: string = 'Dracovish (DAA 53)';
+  public legacyFullName = 'Dracovish DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Primal Law (passive - block opponent from evolving while in active spot)

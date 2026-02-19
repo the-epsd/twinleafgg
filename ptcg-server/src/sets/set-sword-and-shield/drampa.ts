@@ -29,7 +29,8 @@ export class Drampa extends PokemonCard {
   public setNumber: string = '149';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drampa';
-  public fullName: string = 'Drampa SSH';
+  public fullName: string = 'Drampa (SSH 149)';
+  public legacyFullName = 'Drampa SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dragon Pulse

@@ -60,7 +60,8 @@ export class Grimer extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '54';
   public name: string = 'Grimer';
-  public fullName: string = 'Grimer LM';
+  public fullName: string = 'Grimer (LM 54)';
+  public legacyFullName = 'Grimer LM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

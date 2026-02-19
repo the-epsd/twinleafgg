@@ -65,7 +65,8 @@ export class EnergySearch extends TrainerCard {
 
   public name: string = 'Energy Search';
 
-  public fullName: string = 'Energy Search FO';
+  public fullName: string = 'Energy Search (FO 59)';
+  public legacyFullName = 'Energy Search FO';
 
   public text: string =
     'Search your deck for a basic Energy card and put it into your hand. Shuffle your deck afterward.';

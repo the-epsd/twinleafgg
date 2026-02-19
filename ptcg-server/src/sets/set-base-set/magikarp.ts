@@ -11,7 +11,8 @@ export class Magikarp extends PokemonCard {
   
   public set = 'BS';
   
-  public fullName = 'Magikarp BS';
+  public fullName = 'Magikarp (BS 35)';
+  public legacyFullName = 'Magikarp BS';
   
   public cardType = CardType.WATER;
 

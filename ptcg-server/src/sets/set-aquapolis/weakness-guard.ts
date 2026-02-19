@@ -14,7 +14,8 @@ export class WeaknessGuard extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '141';
   public name: string = 'Weakness Guard';
-  public fullName: string = 'Weakness Guard AQ';
+  public fullName: string = 'Weakness Guard (AQ 141)';
+  public legacyFullName = 'Weakness Guard AQ';
 
   public text: string =
     'Attach this card to 1 of your Pokémon. Discard it at the end of your opponent\'s next turn.\n\nAs long as this card is attached, this Pokémon has no Weakness.';

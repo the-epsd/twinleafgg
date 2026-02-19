@@ -20,7 +20,8 @@ export class ProfessorsLetter extends TrainerCard {
 
   public name: string = 'Professor\'s Letter';
 
-  public fullName: string = 'Professors Letter XY';
+  public fullName: string = 'Professor\'s Letter (XY 123)';
+  public legacyFullName = 'Professors Letter XY';
 
   public cardImage: string = 'assets/cardback.png';
 

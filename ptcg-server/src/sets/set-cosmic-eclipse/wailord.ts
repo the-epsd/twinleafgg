@@ -32,5 +32,6 @@ export class Wailord extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wailord';
-  public fullName: string = 'Wailord CEC';
+  public fullName: string = 'Wailord (CEC 46)';
+  public legacyFullName = 'Wailord CEC';
 }

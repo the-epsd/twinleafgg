@@ -32,7 +32,8 @@ export class Bruxish extends PokemonCard {
 
   public set: string = 'BUS';
   public name: string = 'Bruxish';
-  public fullName: string = 'Bruxish BUS';
+  public fullName: string = 'Bruxish (BUS 38)';
+  public legacyFullName = 'Bruxish BUS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '38';
 

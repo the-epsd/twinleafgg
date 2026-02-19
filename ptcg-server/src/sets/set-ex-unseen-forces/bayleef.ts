@@ -31,7 +31,8 @@ export class Bayleef extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '35';
   public name: string = 'Bayleef';
-  public fullName: string = 'Bayleef UF';
+  public fullName: string = 'Bayleef (UF 35)';
+  public legacyFullName = 'Bayleef UF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

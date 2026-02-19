@@ -7,6 +7,7 @@ import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class EnteiAndRaikouLegendBottom extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
+  public multiPartPosition: 'Top' | 'Bottom' | 'Top Left' | 'Top Right' | 'Bottom Left' | 'Bottom Right' = 'Bottom';
   public tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
   public cardType = R;
   public additionalCardTypes = [L];
@@ -41,7 +42,8 @@ export class EnteiAndRaikouLegendBottom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public name: string = 'Entei & Raikou LEGEND';
-  public fullName: string = 'Entei & Raikou LEGEND (Bottom) UL';
+  public fullName: string = 'Entei & Raikou LEGEND (UL 91)';
+  public legacyFullName = 'Entei & Raikou LEGEND (Bottom) UL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the avengers

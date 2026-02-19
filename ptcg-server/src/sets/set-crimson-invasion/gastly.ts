@@ -30,7 +30,8 @@ export class Gastly extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gastly';
-  public fullName: string = 'Gastly CIN';
+  public fullName: string = 'Gastly (CIN 36)';
+  public legacyFullName = 'Gastly CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ominous Eyes

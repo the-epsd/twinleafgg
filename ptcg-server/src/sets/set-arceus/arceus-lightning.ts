@@ -32,7 +32,8 @@ export class ArceusLightning extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'AR6';
   public name: string = 'Arceus';
-  public fullName: string = 'Arceus Lightning AR';
+  public fullName: string = 'Arceus (AR AR6)';
+  public legacyFullName = 'Arceus Lightning AR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

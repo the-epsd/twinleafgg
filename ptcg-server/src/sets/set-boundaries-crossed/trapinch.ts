@@ -27,7 +27,8 @@ export class Trapinch extends PokemonCard {
 
   public set: string = 'BCR';
   public name: string = 'Trapinch';
-  public fullName: string = 'Trapinch BCR';
+  public fullName: string = 'Trapinch (BCR 83)';
+  public legacyFullName = 'Trapinch BCR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
 

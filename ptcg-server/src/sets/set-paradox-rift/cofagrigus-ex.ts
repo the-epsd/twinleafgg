@@ -37,7 +37,8 @@ export class Cofagrigusex extends PokemonCard {
   public setNumber: string = '76';
 
   public name: string = 'Cofagrigus ex';
-  public fullName: string = 'Cofagrigus ex PAR';
+  public fullName: string = 'Cofagrigus ex (PAR 76)';
+  public legacyFullName = 'Cofagrigus ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Gold Coffin

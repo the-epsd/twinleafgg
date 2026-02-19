@@ -37,7 +37,8 @@ export class InteleonV extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Inteleon V';
-  public fullName: string = 'Inteleon V RCL';
+  public fullName: string = 'Inteleon V (RCL 49)';
+  public legacyFullName = 'Inteleon V RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Snipe Shot

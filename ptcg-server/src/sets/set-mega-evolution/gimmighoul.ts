@@ -20,7 +20,8 @@ export class Gimmighoul extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public name: string = 'Gimmighoul';
-  public fullName: string = 'Gimmighoul M1L';
+  public fullName: string = 'Gimmighoul (MEG 67)';
+  public legacyFullName = 'Gimmighoul M1L';
   public regulationMark: string = 'I';
 }
 

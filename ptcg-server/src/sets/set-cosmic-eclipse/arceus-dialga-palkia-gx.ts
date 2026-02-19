@@ -62,7 +62,8 @@ export class ArceusDialgaPalkiaGX extends PokemonCard {
 
   public set: string = 'CEC';
   public name = 'Arceus & Dialga & Palkia-GX';
-  public fullName = 'Arceus & Dialga & Palkia GX CEC';
+  public fullName = 'Arceus & Dialga & Palkia-GX (CEC 156)';
+  public legacyFullName = 'Arceus & Dialga & Palkia GX CEC';
   public setNumber: string = '156';
   public cardImage: string = 'assets/cardback.png';
 

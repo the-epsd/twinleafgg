@@ -32,7 +32,8 @@ export class Lurantis extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '25';
   public name: string = 'Lurantis';
-  public fullName: string = 'Lurantis SMP';
+  public fullName: string = 'Lurantis (SMP 25)';
+  public legacyFullName = 'Lurantis SMP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

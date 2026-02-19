@@ -36,7 +36,8 @@ export class Piplup extends PokemonCard {
   public setNumber: string = 'RC6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Piplup';
-  public fullName: string = 'Piplup LTR';
+  public fullName: string = 'Piplup (LTR RC6)';
+  public legacyFullName = 'Piplup LTR';
 
   public readonly CHARM_MARKER = 'CHARM_MARKER';
   public readonly CLEAR_CHARM_MARKER = 'CLEAR_CHARM_MARKER';

@@ -22,7 +22,7 @@ export class Electivire extends PokemonCard {
       name: 'Tumbling Attack',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Electivire extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electivire';
-  public fullName: string = 'Electivire BST';
+  public fullName: string = 'Electivire (BST 45)';
+  public legacyFullName = 'Electivire BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tumbling Attack

@@ -28,7 +28,8 @@ export class Bagon2 extends PokemonCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bagon';
-  public fullName: string = 'Bagon CES 104';
+  public fullName: string = 'Bagon (CES 104)';
+  public legacyFullName = 'Bagon CES 104';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Reckless Charge

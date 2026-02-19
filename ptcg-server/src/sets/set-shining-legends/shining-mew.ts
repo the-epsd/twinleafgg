@@ -26,7 +26,8 @@ export class ShiningMew extends PokemonCard {
 
   public set: string = 'SLG';
   public name: string = 'Shining Mew';
-  public fullName: string = 'Shining Mew SLG';
+  public fullName: string = 'Shining Mew (SLG 40)';
+  public legacyFullName = 'Shining Mew SLG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
 

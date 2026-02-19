@@ -33,7 +33,8 @@ export class Onix extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Onix';
-  public fullName: string = 'Onix UNM';
+  public fullName: string = 'Onix (UNM 103)';
+  public legacyFullName = 'Onix UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bedrock Press

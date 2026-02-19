@@ -47,7 +47,8 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
 
   public name: string = 'Origin Forme Palkia VSTAR';
 
-  public fullName: string = 'Origin Forme Palkia VSTAR ASR';
+  public fullName: string = 'Origin Forme Palkia VSTAR (ASR 40)';
+  public legacyFullName = 'Origin Forme Palkia VSTAR ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -22,7 +22,7 @@ export class Swoobat extends PokemonCard {
       name: 'Synchro Woofer',
       cost: [P],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have the same number of cards in your hand as your opponent, this attack does 80 more damage.'
     }
   ];
@@ -32,7 +32,8 @@ export class Swoobat extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swoobat';
-  public fullName: string = 'Swoobat EVS';
+  public fullName: string = 'Swoobat (EVS 69)';
+  public legacyFullName = 'Swoobat EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Synchro Woofer

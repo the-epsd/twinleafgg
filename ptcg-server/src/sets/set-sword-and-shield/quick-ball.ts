@@ -104,7 +104,8 @@ export class QuickBall extends TrainerCard {
 
   public name: string = 'Quick Ball';
 
-  public fullName: string = 'Quick Ball SSH';
+  public fullName: string = 'Quick Ball (SSH 179)';
+  public legacyFullName = 'Quick Ball SSH';
 
   public text: string =
     'You can play this card only if you discard another card from your hand. ' +

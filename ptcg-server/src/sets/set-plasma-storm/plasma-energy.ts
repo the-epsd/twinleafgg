@@ -13,7 +13,8 @@ export class PlasmaEnergy extends EnergyCard {
 
   public name = 'Plasma Energy';
 
-  public fullName = 'Plasma Energy PLS';
+  public fullName = 'Plasma Energy (PLS 127)';
+  public legacyFullName = 'Plasma Energy PLS';
 
   public cardImage: string = 'assets/cardback.png';
 

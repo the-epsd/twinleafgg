@@ -22,5 +22,6 @@ export class Ferroseed2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
   public name: string = 'Ferroseed';
-  public fullName: string = 'Ferroseed EPO 71';
+  public fullName: string = 'Ferroseed (EPO 71)';
+  public legacyFullName = 'Ferroseed EPO 71';
 }

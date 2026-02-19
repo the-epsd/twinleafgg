@@ -25,7 +25,8 @@ export class Mareep extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mareep';
-  public fullName: string = 'Mareep DR';
+  public fullName: string = 'Mareep (DR 64)';
+  public legacyFullName = 'Mareep DR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle Jolt attack

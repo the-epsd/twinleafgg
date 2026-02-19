@@ -36,7 +36,8 @@ export class Lampent extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lampent';
-  public fullName: string = 'Lampent PLS';
+  public fullName: string = 'Lampent (PLS 22)';
+  public legacyFullName = 'Lampent PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Freefloating

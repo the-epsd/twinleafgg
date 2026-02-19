@@ -39,7 +39,8 @@ export class Carbink2 extends PokemonCard {
   public setNumber: string = '143';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carbink';
-  public fullName: string = 'Carbink LOT 143';
+  public fullName: string = 'Carbink (LOT 143)';
+  public legacyFullName = 'Carbink LOT 143';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wonder Ray

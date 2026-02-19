@@ -41,7 +41,8 @@ export class Victreebel extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Victreebel';
-  public fullName: string = 'Victreebel FFI';
+  public fullName: string = 'Victreebel (FFI 3)';
+  public legacyFullName = 'Victreebel FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Wafting Scent

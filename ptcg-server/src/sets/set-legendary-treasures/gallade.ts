@@ -37,7 +37,8 @@ export class Gallade extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gallade';
-  public fullName: string = 'Gallade LTR';
+  public fullName: string = 'Gallade (LTR 81)';
+  public legacyFullName = 'Gallade LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Nerve Shot

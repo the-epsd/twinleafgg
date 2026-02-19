@@ -24,7 +24,8 @@ export class Kyogre extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
   public name: string = 'Kyogre';
-  public fullName: string = 'Kyogre SHF';
+  public fullName: string = 'Kyogre (SHF 21)';
+  public legacyFullName = 'Kyogre SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

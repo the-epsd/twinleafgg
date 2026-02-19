@@ -35,7 +35,8 @@ export class Steelix extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steelix';
-  public fullName: string = 'Steelix PLF';
+  public fullName: string = 'Steelix (PLF 79)';
+  public legacyFullName = 'Steelix PLF';
 
   public readonly METAL_DEFENDER_MARKER = 'STEELIX_METAL_DEFENDER_MARKER';
   public readonly CLEAR_METAL_DEFENDER_MARKER = 'STEELIX_CLEAR_METAL_DEFENDER_MARKER';

@@ -36,7 +36,8 @@ export class Garbodor extends PokemonCard {
 
   public set: string = 'BKP';
   public name: string = 'Garbodor';
-  public fullName: string = 'Garbodor BKP';
+  public fullName: string = 'Garbodor (BKP 57)';
+  public legacyFullName = 'Garbodor BKP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '57';
 

@@ -29,7 +29,7 @@ export class Ampharos extends PokemonCard {
       name: 'Searchlight Tail',
       cost: [L, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Your opponent reveals their hand. If you find any Energy cards there, this attack does 90 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Ampharos extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ampharos';
-  public fullName: string = 'Ampharos CRE';
+  public fullName: string = 'Ampharos (CRE 49)';
+  public legacyFullName = 'Ampharos CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Shock

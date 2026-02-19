@@ -31,234 +31,273 @@ import { Ilima } from './ilima';
 
 export class DoubleColorlessEnergySUM extends DoubleColorlessEnergy {
   public setNumber = '136';
-  public fullName: string = 'Double Colorless Energy SUM';
+  public fullName: string = 'Double Colorless Energy (SUM 136)';
+  public legacyFullName = 'Double Colorless Energy SUM';
   public text = 'Double Colorless Energy provides [C][C] Energy.';
   public set = 'SUM';
 }
 
 export class ExpShareSUM extends ExpShare {
   public setNumber = '118';
-  public fullName: string = 'Exp. Share SUM';
+  public fullName: string = 'Exp. Share (SUM 118)';
+  public legacyFullName = 'Exp. Share SUM';
   public set = 'SUM';
 }
 
 export class HauSUM extends Hau {
   public setNumber = '120';
-  public fullName: string = 'Hau SUM';
+  public fullName: string = 'Hau (SUM 120)';
+  public legacyFullName = 'Hau SUM';
   public set = 'SUM';
 }
 
 export class NestBallSUM extends NestBall {
   public setNumber = '123';
-  public fullName: string = 'Nest Ball SUM';
+  public fullName: string = 'Nest Ball (SUM 123)';
+  public legacyFullName = 'Nest Ball SUM';
   public set = 'SUM';
 }
 
 export class RareCandySUM extends RareCandy {
   public setNumber = '129';
-  public fullName: string = 'Rare Candy SUM';
+  public fullName: string = 'Rare Candy (SUM 129)';
+  public legacyFullName = 'Rare Candy SUM';
   public set = 'SUM';
 }
 
 export class RotomDexSR extends RotomDex {
   public setNumber = '159';
-  public fullName: string = 'Rotom DexSR SUM';
+  public fullName: string = 'Rotom Dex (SUM 159)';
+  public legacyFullName = 'Rotom DexSR SUM';
   public set = 'SUM';
 }
 
 export class UltraBallSUMSR extends UltraBall {
   public setNumber = '161';
-  public fullName: string = 'Ultra Ball SUM SR';
+  public fullName: string = 'Ultra Ball (SUM 161)';
+  public legacyFullName = 'Ultra Ball SUM SR';
   public set = 'SUM';
 }
 export class CrushingHammerSUM extends CrushingHammer {
   public setNumber = '115';
-  public fullName: string = 'Crushing Hammer SUM';
+  public fullName: string = 'Crushing Hammer (SUM 115)';
+  public legacyFullName = 'Crushing Hammer SUM';
   public set = 'SUM';
 }
 
 export class EnergySwitchPKSUM extends EnergySwitchPK {
   public setNumber = '117';
-  public fullName: string = 'Energy Switch SUM';
+  public fullName: string = 'Energy Switch (SUM 117)';
+  public legacyFullName = 'Energy Switch SUM';
   public set = 'SUM';
 }
 
 export class GreatBallSUM extends GreatBall {
   public setNumber = '119';
-  public fullName: string = 'Great Ball SUM';
+  public fullName: string = 'Great Ball (SUM 119)';
+  public legacyFullName = 'Great Ball SUM';
   public set = 'SUM';
 }
 
 export class LillieSUM extends Lillie {
   public setNumber = '122';
-  public fullName: string = 'Lillie SUM';
+  public fullName: string = 'Lillie (SUM 122)';
+  public legacyFullName = 'Lillie SUM';
   public set = 'SUM';
 }
 
 export class PokeBallSUM extends PokeBall {
   public setNumber = '125';
-  public fullName: string = 'Poké Ball SUM';
+  public fullName: string = 'Poké Ball (SUM 125)';
+  public legacyFullName = 'Poké Ball SUM';
   public set = 'SUM';
 }
 
 export class PokemonCatcherSUM extends PokemonCatcher {
   public setNumber = '126';
-  public fullName: string = 'Pokémon Catcher SUM';
+  public fullName: string = 'Pokémon Catcher (SUM 126)';
+  public legacyFullName = 'Pokémon Catcher SUM';
   public set = 'SUM';
 }
 
 export class PotionSUM extends Potion {
   public setNumber = '127';
-  public fullName: string = 'Potion SUM';
+  public fullName: string = 'Potion (SUM 127)';
+  public legacyFullName = 'Potion SUM';
   public set = 'SUM';
 }
 
 export class SwitchSUM extends Switch {
   public setNumber = '132';
-  public fullName: string = 'Switch SUM';
+  public fullName: string = 'Switch (SUM 132)';
+  public legacyFullName = 'Switch SUM';
   public set = 'SUM';
 }
 
 export class UltraBallSUM extends UltraBall {
   public setNumber = '135';
-  public fullName: string = 'Ultra Ball SUM';
+  public fullName: string = 'Ultra Ball (SUM 135)';
+  public legacyFullName = 'Ultra Ball SUM';
   public set = 'SUM';
 }
 
 export class LurantisGX2SUM extends LurantisGXSUM15 {
   public setNumber = '138';
-  public fullName: string = 'Lurantis-GX2 SUM';
+  public fullName: string = 'Lurantis-GX (SUM 138)';
+  public legacyFullName = 'Lurantis-GX2 SUM';
   public set = 'SUM';
 }
 
 export class EspeonGX2SUM extends EspeonGXSUM61 {
   public setNumber = '140';
-  public fullName: string = 'Espeon-GX2 SUM';
+  public fullName: string = 'Espeon-GX (SUM 140)';
+  public legacyFullName = 'Espeon-GX2 SUM';
   public set = 'SUM';
 }
 
 export class TaurosGX2SUM extends TaurosGXSUM100 {
   public setNumber = '144';
-  public fullName: string = 'Tauros-GX2 SUM';
+  public fullName: string = 'Tauros-GX (SUM 144)';
+  public legacyFullName = 'Tauros-GX2 SUM';
   public set = 'SUM';
 }
 
 export class Lillie2SUM extends LillieUPR125 {
   public setNumber = '147';
-  public fullName: string = 'Lillie2 SUM';
+  public fullName: string = 'Lillie (SUM 147)';
+  public legacyFullName = 'Lillie2 SUM';
   public set = 'SUM';
 }
 
 export class ProfessorKukui2SUM extends ProfessorKukuiSUM128 {
   public setNumber = '148';
-  public fullName: string = 'Professor Kukui2 SUM';
+  public fullName: string = 'Professor Kukui (SUM 148)';
+  public legacyFullName = 'Professor Kukui2 SUM';
   public set = 'SUM';
 }
 
 export class TeamSkullGrunt2SUM extends TeamSkullGruntSUM133 {
   public setNumber = '149';
-  public fullName: string = 'Team Skull Grunt2 SUM';
+  public fullName: string = 'Team Skull Grunt (SUM 149)';
+  public legacyFullName = 'Team Skull Grunt2 SUM';
   public set = 'SUM';
 }
 
 export class LurantisGX3SUM extends LurantisGXSUM15 {
   public setNumber = '150';
-  public fullName: string = 'Lurantis-GX3 SUM';
+  public fullName: string = 'Lurantis-GX (SUM 150)';
+  public legacyFullName = 'Lurantis-GX3 SUM';
   public set = 'SUM';
 }
 
 export class EspeonGX3SUM extends EspeonGXSUM61 {
   public setNumber = '152';
-  public fullName: string = 'Espeon-GX3 SUM';
+  public fullName: string = 'Espeon-GX (SUM 152)';
+  public legacyFullName = 'Espeon-GX3 SUM';
   public set = 'SUM';
 }
 
 export class TaurosGX3SUM extends TaurosGXSUM100 {
   public setNumber = '156';
-  public fullName: string = 'Tauros-GX3 SUM';
+  public fullName: string = 'Tauros-GX (SUM 156)';
+  public legacyFullName = 'Tauros-GX3 SUM';
   public set = 'SUM';
 }
 
 export class NestBall2SUM extends NestBallSVI181 {
   public setNumber = '158';
-  public fullName: string = 'Nest Ball2 SUM';
+  public fullName: string = 'Nest Ball (SUM 158)';
+  public legacyFullName = 'Nest Ball2 SUM';
   public set = 'SUM';
 }
 
 export class Switch2SUM extends SwitchBS95 {
   public setNumber = '160';
-  public fullName: string = 'Switch2 SUM';
+  public fullName: string = 'Switch (SUM 160)';
+  public legacyFullName = 'Switch2 SUM';
   public set = 'SUM';
 }
 
 export class Eevee2SUM extends EeveeSUM101 {
   public setNumber = '101a';
-  public fullName: string = 'Eevee2 SUM';
+  public fullName: string = 'Eevee (SUM 101a)';
+  public legacyFullName = 'Eevee2 SUM';
   public set = 'SUM';
 }
 
 export class LaprasGx2 extends LaprasGx {
   public set: string = 'SUM';
   public setNumber: string = '139';
-  public fullName: string = 'Lapras-GX SUM 139';
+  public fullName: string = 'Lapras-GX (SUM 139)';
+  public legacyFullName = 'Lapras-GX SUM 139';
 }
 
 export class LunalaGx2 extends LunalaGx {
   public set: string = 'SUM';
   public setNumber: string = '141';
-  public fullName: string = 'Lunala-GX SUM 141';
+  public fullName: string = 'Lunala-GX (SUM 141)';
+  public legacyFullName = 'Lunala-GX SUM 141';
 }
 
 export class UmbreonGx2 extends UmbreonGx {
   public set: string = 'SUM';
   public setNumber: string = '142';
-  public fullName: string = 'Umbreon-GX SUM 142';
+  public fullName: string = 'Umbreon-GX (SUM 142)';
+  public legacyFullName = 'Umbreon-GX SUM 142';
 }
 
 export class SolgaleoGx2 extends SolgaleoGx {
   public set: string = 'SUM';
   public setNumber: string = '143';
-  public fullName: string = 'Solgaleo-GX SUM 143';
+  public fullName: string = 'Solgaleo-GX (SUM 143)';
+  public legacyFullName = 'Solgaleo-GX SUM 143';
 }
 
 export class GumshoosGx2 extends GumshoosGx {
   public set: string = 'SUM';
   public setNumber: string = '145';
-  public fullName: string = 'Gumshoos-GX SUM 145';
+  public fullName: string = 'Gumshoos-GX (SUM 145)';
+  public legacyFullName = 'Gumshoos-GX SUM 145';
 }
 
 export class Ilima2 extends Ilima {
   public set: string = 'SUM';
   public setNumber: string = '146';
-  public fullName: string = 'Ilima SUM 146';
+  public fullName: string = 'Ilima (SUM 146)';
+  public legacyFullName = 'Ilima SUM 146';
 }
 
 export class LaprasGx3 extends LaprasGx {
   public set: string = 'SUM';
   public setNumber: string = '151';
-  public fullName: string = 'Lapras-GX SUM 151';
+  public fullName: string = 'Lapras-GX (SUM 151)';
+  public legacyFullName = 'Lapras-GX SUM 151';
 }
 
 export class LunalaGx3 extends LunalaGx {
   public set: string = 'SUM';
   public setNumber: string = '153';
-  public fullName: string = 'Lunala-GX SUM 153';
+  public fullName: string = 'Lunala-GX (SUM 153)';
+  public legacyFullName = 'Lunala-GX SUM 153';
 }
 
 export class UmbreonGx3 extends UmbreonGx {
   public set: string = 'SUM';
   public setNumber: string = '154';
-  public fullName: string = 'Umbreon-GX SUM 154';
+  public fullName: string = 'Umbreon-GX (SUM 154)';
+  public legacyFullName = 'Umbreon-GX SUM 154';
 }
 
 export class SolgaleoGx3 extends SolgaleoGx {
   public set: string = 'SUM';
   public setNumber: string = '155';
-  public fullName: string = 'Solgaleo-GX SUM 155';
+  public fullName: string = 'Solgaleo-GX (SUM 155)';
+  public legacyFullName = 'Solgaleo-GX SUM 155';
 }
 
 export class GumshoosGx3 extends GumshoosGx {
   public set: string = 'SUM';
   public setNumber: string = '157';
-  public fullName: string = 'Gumshoos-GX SUM 157';
+  public fullName: string = 'Gumshoos-GX (SUM 157)';
+  public legacyFullName = 'Gumshoos-GX SUM 157';
 }

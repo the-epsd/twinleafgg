@@ -15,6 +15,7 @@ export class FireEnergy extends EnergyCard {
 
   public name = 'Fire Energy';
 
-  public fullName = 'Fire Energy SVE';
+  public fullName = 'Fire Energy (SVE 2)';
+  public legacyFullName = 'Fire Energy SVE';
 
 }

@@ -47,7 +47,8 @@ export class GiratinaV extends PokemonCard {
 
   public name: string = 'Giratina V';
 
-  public fullName: string = 'Giratina V LOR';
+  public fullName: string = 'Giratina V (LOR 130)';
+  public legacyFullName = 'Giratina V LOR';
 
   public readonly FLOWER_SELECTING_MARKER = 'FLOWER_SELECTING_MARKER';
 

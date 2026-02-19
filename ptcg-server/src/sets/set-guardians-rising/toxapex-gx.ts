@@ -27,7 +27,7 @@ export class ToxapexGx extends PokemonCard {
       name: 'Spike Cannon',
       cost: [P],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 30 damage for each heads.'
     },
     {
@@ -48,7 +48,8 @@ export class ToxapexGx extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toxapex-GX';
-  public fullName: string = 'Toxapex-GX GRI';
+  public fullName: string = 'Toxapex-GX (GRI 57)';
+  public legacyFullName = 'Toxapex-GX GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spike Cannon

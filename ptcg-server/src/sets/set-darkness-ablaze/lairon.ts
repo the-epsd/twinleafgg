@@ -23,7 +23,7 @@ export class Lairon extends PokemonCard {
       name: 'Knock Away',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {
@@ -39,7 +39,8 @@ export class Lairon extends PokemonCard {
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lairon';
-  public fullName: string = 'Lairon DAA';
+  public fullName: string = 'Lairon (DAA 122)';
+  public legacyFullName = 'Lairon DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Knock Away

@@ -20,7 +20,8 @@ export class UnitEnergyLPM extends EnergyCard {
 
   public name = 'Unit Energy LPM';
 
-  public fullName = 'Unit Energy LPM UPR';
+  public fullName = 'Unit Energy LPM (UPR 138)';
+  public legacyFullName = 'Unit Energy LPM UPR';
 
   public text = 'This card provides [C] Energy.' +
     '\n\n' +

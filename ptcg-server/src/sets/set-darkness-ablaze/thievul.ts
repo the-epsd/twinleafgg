@@ -36,7 +36,8 @@ export class Thievul extends PokemonCard {
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Thievul';
-  public fullName: string = 'Thievul DAA';
+  public fullName: string = 'Thievul (DAA 113)';
+  public legacyFullName = 'Thievul DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Nasty Plot

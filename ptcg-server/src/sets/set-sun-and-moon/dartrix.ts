@@ -42,7 +42,8 @@ export class Dartrix extends PokemonCard {
 
   public name: string = 'Dartrix';
 
-  public fullName: string = 'Dartrix SUM';
+  public fullName: string = 'Dartrix (SUM 10)';
+  public legacyFullName = 'Dartrix SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sharp Blade Quill

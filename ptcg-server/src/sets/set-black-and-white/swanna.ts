@@ -34,7 +34,8 @@ export class Swanna extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '37';
   public name: string = 'Swanna';
-  public fullName: string = 'Swanna BLW';
+  public fullName: string = 'Swanna (BLW 37)';
+  public legacyFullName = 'Swanna BLW';
 
   public readonly FEATHER_DANCE_MARKER = 'FEATHER_DANCE_MARKER';
   public usedAquaRing = false;

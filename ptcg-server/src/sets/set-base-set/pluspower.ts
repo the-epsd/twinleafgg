@@ -15,7 +15,8 @@ export class PlusPower extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
   public name: string = 'PlusPower';
-  public fullName: string = 'PlusPower BS';
+  public fullName: string = 'PlusPower (BS 84)';
+  public legacyFullName = 'PlusPower BS';
   public putIntoPlay = true;
 
   public text: string =

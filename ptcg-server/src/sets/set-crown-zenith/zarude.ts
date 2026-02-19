@@ -29,7 +29,8 @@ export class Zarude extends PokemonCard {
   public set: string = 'CRZ';
   public regulationMark = 'F';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Zarude CRZ';
+  public fullName: string = 'Zarude (CRZ 16)';
+  public legacyFullName = 'Zarude CRZ';
   public name: string = 'Zarude';
   public setNumber: string = '16';
 

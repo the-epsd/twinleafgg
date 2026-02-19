@@ -22,7 +22,8 @@ export class Caretaker extends TrainerCard {
 
   public name: string = 'Caretaker';
 
-  public fullName: string = 'Caretaker TWM';
+  public fullName: string = 'Caretaker (TWM 144)';
+  public legacyFullName = 'Caretaker TWM';
 
   public text: string =
     'Draw 2 cards. Then, if Community Center is in play, shuffle this Caretaker back into your deck.';

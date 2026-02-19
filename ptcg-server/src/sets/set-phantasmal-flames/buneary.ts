@@ -30,7 +30,8 @@ export class Buneary extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
   public name: string = 'Buneary';
-  public fullName: string = 'Buneary M2';
+  public fullName: string = 'Buneary (PFL 83)';
+  public legacyFullName = 'Buneary M2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

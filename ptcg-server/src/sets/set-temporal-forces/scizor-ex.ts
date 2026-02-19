@@ -38,7 +38,8 @@ export class Scizorex extends PokemonCard {
 
   public set: string = 'TEF';
   public name: string = 'Scizor ex';
-  public fullName: string = 'Scizor ex TEF';
+  public fullName: string = 'Scizor ex (TEF 111)';
+  public legacyFullName = 'Scizor ex TEF';
   public setNumber: string = '111';
   public regulationMark: string = 'H';
   public cardImage: string = 'assets/cardback.png';

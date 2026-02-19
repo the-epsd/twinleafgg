@@ -34,7 +34,8 @@ export class Dhelmise extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dhelmise';
-  public fullName: string = 'Dhelmise UNM';
+  public fullName: string = 'Dhelmise (UNM 20)';
+  public legacyFullName = 'Dhelmise UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sea Creeper Net

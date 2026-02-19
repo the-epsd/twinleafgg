@@ -27,7 +27,8 @@ export class OmastarBreak extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Omastar BREAK';
-  public fullName: string = 'Omastar BREAK FCO';
+  public fullName: string = 'Omastar BREAK (FCO 19)';
+  public legacyFullName = 'Omastar BREAK FCO';
 
   public readonly DANGEROUS_TENTACLE_MARKER = 'DANGEROUS_TENTACLE_MARKER';
 

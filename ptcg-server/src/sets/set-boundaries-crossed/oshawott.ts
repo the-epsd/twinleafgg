@@ -31,5 +31,6 @@ export class Oshawott extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Oshawott';
-  public fullName: string = 'Oshawott BCR';
+  public fullName: string = 'Oshawott (BCR 39)';
+  public legacyFullName = 'Oshawott BCR';
 }

@@ -43,7 +43,8 @@ export class Oranguru extends PokemonCard {
 
   public name: string = 'Oranguru';
 
-  public fullName: string = 'Oranguru SSH';
+  public fullName: string = 'Oranguru (SSH 148)';
+  public legacyFullName = 'Oranguru SSH';
 
   public readonly PRIMATE_WISDOM_MARKER = 'PRIMATE_WISDOM_MARKER';
 

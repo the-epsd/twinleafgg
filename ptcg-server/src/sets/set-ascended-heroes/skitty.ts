@@ -20,5 +20,6 @@ export class Skitty extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '165';
   public name: string = 'Skitty';
-  public fullName: string = 'Skitty ASC';
+  public fullName: string = 'Skitty (ASC 165)';
+  public legacyFullName = 'Skitty ASC';
 }

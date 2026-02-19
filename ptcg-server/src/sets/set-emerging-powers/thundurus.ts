@@ -30,7 +30,8 @@ export class Thundurus extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '35';
   public name: string = 'Thundurus';
-  public fullName: string = 'Thundurus EPO';
+  public fullName: string = 'Thundurus (EPO 35)';
+  public legacyFullName = 'Thundurus EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

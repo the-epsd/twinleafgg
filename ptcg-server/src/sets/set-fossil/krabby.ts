@@ -62,7 +62,8 @@ export class Krabby extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '51';
   public name: string = 'Krabby';
-  public fullName: string = 'Krabby FO';
+  public fullName: string = 'Krabby (FO 51)';
+  public legacyFullName = 'Krabby FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

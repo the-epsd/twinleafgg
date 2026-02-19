@@ -48,7 +48,8 @@ export class OriginFormeDialgaV extends PokemonCard {
 
   public name: string = 'Origin Forme Dialga V';
 
-  public fullName: string = 'Origin Forme Dialga V ASR';
+  public fullName: string = 'Origin Forme Dialga V (ASR 113)';
+  public legacyFullName = 'Origin Forme Dialga V ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -22,7 +22,7 @@ export class Ducklett extends PokemonCard {
       name: 'Aerial Ace',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -31,7 +31,8 @@ export class Ducklett extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ducklett';
-  public fullName: string = 'Ducklett CEC';
+  public fullName: string = 'Ducklett (CEC 59)';
+  public legacyFullName = 'Ducklett CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Aerial Ace

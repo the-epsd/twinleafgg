@@ -26,5 +26,6 @@ export class Gligar extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gligar';
-  public fullName: string = 'Gligar BST';
+  public fullName: string = 'Gligar (BST 71)';
+  public legacyFullName = 'Gligar BST';
 }

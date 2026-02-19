@@ -41,7 +41,8 @@ export class Spiritomb extends PokemonCard {
 
   public name: string = 'Spiritomb';
 
-  public fullName: string = 'Spiritomb UNB';
+  public fullName: string = 'Spiritomb (UNB 112)';
+  public legacyFullName = 'Spiritomb UNB';
 
   public readonly BUILDING_SPITE_MARKER = 'BUILDING_SPITE_MARKER';
 

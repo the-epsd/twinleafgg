@@ -26,5 +26,6 @@ export class Diglett extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Diglett';
-  public fullName: string = 'Diglett DAA';
+  public fullName: string = 'Diglett (DAA 84)';
+  public legacyFullName = 'Diglett DAA';
 }

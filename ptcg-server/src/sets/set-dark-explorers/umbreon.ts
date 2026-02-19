@@ -34,7 +34,8 @@ export class Umbreon extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Umbreon';
-  public fullName: string = 'Umbreon DEX';
+  public fullName: string = 'Umbreon (DEX 60)';
+  public legacyFullName = 'Umbreon DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Shadow Drain - heal same amount as damage dealt

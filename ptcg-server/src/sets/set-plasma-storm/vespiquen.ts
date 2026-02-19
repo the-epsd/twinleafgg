@@ -36,7 +36,8 @@ export class Vespiquen extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vespiquen';
-  public fullName: string = 'Vespiquen PLS';
+  public fullName: string = 'Vespiquen (PLS 5)';
+  public legacyFullName = 'Vespiquen PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Gather Order

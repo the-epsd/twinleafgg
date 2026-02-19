@@ -34,7 +34,8 @@ export class Dragoniteex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public name: string = 'Dragonite ex';
-  public fullName: string = 'Dragonite ex DF';
+  public fullName: string = 'Dragonite ex (DF 91)';
+  public legacyFullName = 'Dragonite ex DF';
 
   public readonly OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER';
 

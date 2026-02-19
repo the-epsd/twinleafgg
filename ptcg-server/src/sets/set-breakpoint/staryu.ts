@@ -33,6 +33,7 @@ export class Staryu extends PokemonCard {
 
   public name: string = 'Staryu';
 
-  public fullName: string = 'Staryu BKP';
+  public fullName: string = 'Staryu (BKP 25)';
+  public legacyFullName = 'Staryu BKP';
 
 }

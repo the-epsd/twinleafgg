@@ -16,7 +16,8 @@ export class Doctor extends TrainerCard {
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Doctor';
-  public fullName: string = 'Doctor CRE';
+  public fullName: string = 'Doctor (CRE 134)';
+  public legacyFullName = 'Doctor CRE';
   public text: string = 'Draw 2 cards. If your opponent\'s Active Pokémon is a Pokémon VMAX, draw 2 more cards. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

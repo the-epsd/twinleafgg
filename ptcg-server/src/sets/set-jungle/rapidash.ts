@@ -38,7 +38,8 @@ export class Rapidash extends PokemonCard {
 
   public name: string = 'Rapidash';
 
-  public fullName: string = 'Rapidash JU';
+  public fullName: string = 'Rapidash (JU 44)';
+  public legacyFullName = 'Rapidash JU';
 
   public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
   public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';

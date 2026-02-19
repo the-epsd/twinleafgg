@@ -35,7 +35,8 @@ export class Steelix extends PokemonCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steelix';
-  public fullName: string = 'Steelix UNM';
+  public fullName: string = 'Steelix (UNM 104)';
+  public legacyFullName = 'Steelix UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ground Stream

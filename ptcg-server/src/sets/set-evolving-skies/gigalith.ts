@@ -42,7 +42,8 @@ export class Gigalith extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gigalith';
-  public fullName: string = 'Gigalith EVS';
+  public fullName: string = 'Gigalith (EVS 88)';
+  public legacyFullName = 'Gigalith EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Guard Press

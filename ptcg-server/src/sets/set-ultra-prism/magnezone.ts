@@ -33,7 +33,8 @@ export class Magnezone extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
   public name: string = 'Magnezone';
-  public fullName: string = 'Magnezone UPR';
+  public fullName: string = 'Magnezone (UPR 83)';
+  public legacyFullName = 'Magnezone UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

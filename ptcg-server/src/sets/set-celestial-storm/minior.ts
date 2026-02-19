@@ -36,7 +36,8 @@ export class Minior extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Minior';
-  public fullName: string = 'Minior CES';
+  public fullName: string = 'Minior (CES 83)';
+  public legacyFullName = 'Minior CES';
 
   public readonly FALLING_STAR_MARKER = 'MINIOR_FALLING_STAR_MARKER';
 

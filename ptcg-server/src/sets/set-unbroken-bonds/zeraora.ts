@@ -31,7 +31,8 @@ export class Zeraora extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zeraora';
-  public fullName: string = 'Zeraora UNB';
+  public fullName: string = 'Zeraora (UNB 60)';
+  public legacyFullName = 'Zeraora UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

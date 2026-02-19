@@ -36,7 +36,8 @@ export class Gliscor extends PokemonCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gliscor';
-  public fullName: string = 'Gliscor UNB';
+  public fullName: string = 'Gliscor (UNB 99)';
+  public legacyFullName = 'Gliscor UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Collect

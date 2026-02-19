@@ -7,7 +7,8 @@ export class YellHorn extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
 
-  public fullName: string = 'Yell Horn DAA';
+  public fullName: string = 'Yell Horn (DAA 173)';
+  public legacyFullName = 'Yell Horn DAA';
 
   public set: string = 'DAA';
 

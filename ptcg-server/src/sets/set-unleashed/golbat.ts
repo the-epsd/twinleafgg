@@ -25,7 +25,8 @@ export class Golbat extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '30';
   public name: string = 'Golbat';
-  public fullName: string = 'Golbat UL';
+  public fullName: string = 'Golbat (UL 30)';
+  public legacyFullName = 'Golbat UL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

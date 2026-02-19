@@ -36,7 +36,8 @@ export class Zekrom extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zekrom';
-  public fullName: string = 'Zekrom CEL';
+  public fullName: string = 'Zekrom (CEL 10)';
+  public legacyFullName = 'Zekrom CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Field Crush

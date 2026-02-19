@@ -32,7 +32,8 @@ export class Combee extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
   public name: string = 'Combee';
-  public fullName: string = 'Combee OBF';
+  public fullName: string = 'Combee (OBF 8)';
+  public legacyFullName = 'Combee OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

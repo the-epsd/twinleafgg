@@ -28,7 +28,8 @@ export class Landorus extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
   public name: string = 'Landorus';
-  public fullName: string = 'Landorus M3';
+  public fullName: string = 'Landorus (M3 40)';
+  public legacyFullName = 'Landorus M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Rock Tumble - ignore resistance

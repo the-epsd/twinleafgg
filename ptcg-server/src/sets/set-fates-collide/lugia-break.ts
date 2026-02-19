@@ -30,7 +30,8 @@ export class LugiaBreak extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lugia BREAK';
-  public fullName: string = 'Lugia BREAK FCO';
+  public fullName: string = 'Lugia BREAK (FCO 79)';
+  public legacyFullName = 'Lugia BREAK FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flash of Destruction

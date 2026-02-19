@@ -28,7 +28,7 @@ export class Feraligatr extends PokemonCard {
       name: 'Second Strike',
       cost: [W, W, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 80 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Feraligatr extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Feraligatr';
-  public fullName: string = 'Feraligatr PHF';
+  public fullName: string = 'Feraligatr (PHF 17)';
+  public legacyFullName = 'Feraligatr PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hyper Whirlpool

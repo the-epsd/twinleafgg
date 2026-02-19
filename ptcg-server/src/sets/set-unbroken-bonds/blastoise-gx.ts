@@ -30,7 +30,7 @@ export class BlastoiseGx extends PokemonCard {
       name: 'Rocket Splash',
       cost: [W, W],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Shuffle any amount of [W] Energy from your Pokémon into your deck. This attack does 60 damage for each card you shuffled into your deck in this way.'
     },
     {
@@ -45,7 +45,8 @@ export class BlastoiseGx extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blastoise-GX';
-  public fullName: string = 'Blastoise-GX UNB';
+  public fullName: string = 'Blastoise-GX (UNB 35)';
+  public legacyFullName = 'Blastoise-GX UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Solid Shell (passive - damage reduction)

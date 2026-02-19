@@ -22,7 +22,8 @@ export class CyclingRoad extends TrainerCard {
 
   public name = 'Cycling Road';
 
-  public fullName = 'Cycling Road MEW';
+  public fullName = 'Cycling Road (MEW 157)';
+  public legacyFullName = 'Cycling Road MEW';
 
   public text = 'Once during each player\'s turn, that player may discard a Basic Energy card from their hand in order to draw a card.';
     

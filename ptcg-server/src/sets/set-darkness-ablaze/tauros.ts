@@ -26,5 +26,6 @@ export class Tauros extends PokemonCard {
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tauros';
-  public fullName: string = 'Tauros DAA';
+  public fullName: string = 'Tauros (DAA 134)';
+  public legacyFullName = 'Tauros DAA';
 }

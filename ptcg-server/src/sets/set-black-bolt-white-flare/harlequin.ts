@@ -59,7 +59,8 @@ export class Harlequin extends TrainerCard {
   public setNumber: string = '83';
   public regulationMark = 'I';
   public name: string = 'Harlequin';
-  public fullName: string = 'Harlequin WHT';
+  public fullName: string = 'Harlequin (WHT 83)';
+  public legacyFullName = 'Harlequin WHT';
 
   public text: string =
     'Each player shuffles their hand into their deck. Then, flip a coin. If heads, you draw 5 cards, and your opponent draws 3 cards. If tails, you draw 3 cards, and your opponent draws 5 cards.';

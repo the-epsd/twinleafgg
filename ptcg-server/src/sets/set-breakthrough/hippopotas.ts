@@ -30,7 +30,8 @@ export class Hippopotas extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hippopotas';
-  public fullName: string = 'Hippopotas BKT';
+  public fullName: string = 'Hippopotas (BKT 83)';
+  public legacyFullName = 'Hippopotas BKT';
 
   public readonly SAND_ATTACK_MARKER = 'HIPPOPOTAS_BKT_SAND_ATTACK_MARKER';
   public readonly CLEAR_SAND_ATTACK_MARKER = 'HIPPOPOTAS_BKT_CLEAR_SAND_ATTACK_MARKER';

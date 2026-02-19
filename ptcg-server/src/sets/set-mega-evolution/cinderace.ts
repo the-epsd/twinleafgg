@@ -30,7 +30,8 @@ export class Cinderace extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
   public name: string = 'Cinderace';
-  public fullName: string = 'Cinderace M1L';
+  public fullName: string = 'Cinderace (MEG 28)';
+  public legacyFullName = 'Cinderace M1L';
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

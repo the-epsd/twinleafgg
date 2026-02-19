@@ -38,7 +38,8 @@ export class Dusclops extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dusclops';
-  public fullName: string = 'Dusclops VIV';
+  public fullName: string = 'Dusclops (VIV 70)';
+  public legacyFullName = 'Dusclops VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Confuse Ray

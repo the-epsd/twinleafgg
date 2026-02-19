@@ -25,5 +25,6 @@ export class Swinub extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swinub';
-  public fullName: string = 'Swinub CIN';
+  public fullName: string = 'Swinub (CIN 19)';
+  public legacyFullName = 'Swinub CIN';
 }

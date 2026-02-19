@@ -79,7 +79,8 @@ export class MtCoronet extends TrainerCard {
 
   public name = 'Mt. Coronet';
 
-  public fullName = 'Mt. Coronet UPR';
+  public fullName = 'Mt. Coronet (UPR 130)';
+  public legacyFullName = 'Mt. Coronet UPR';
 
   public text = 'Once during each player\'s turn, that player may put 2 [M] Energy cards from their discard pile into their hand.';
 

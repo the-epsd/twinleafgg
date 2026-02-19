@@ -31,7 +31,8 @@ export class Taillow extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Taillow';
-  public fullName: string = 'Taillow XY';
+  public fullName: string = 'Taillow (XY 102)';
+  public legacyFullName = 'Taillow XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-undaunted/houndour.ts (Jump On)

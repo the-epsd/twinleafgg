@@ -33,7 +33,8 @@ export class Conkeldurr extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '61';
   public name: string = 'Conkeldurr';
-  public fullName: string = 'Conkeldurr BLW';
+  public fullName: string = 'Conkeldurr (BLW 61)';
+  public legacyFullName = 'Conkeldurr BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

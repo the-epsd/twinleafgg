@@ -27,7 +27,8 @@ export class DarkCroconaw extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '32';
   public name: string = 'Dark Croconaw';
-  public fullName: string = 'Dark Croconaw N4';
+  public fullName: string = 'Dark Croconaw (N4 32)';
+  public legacyFullName = 'Dark Croconaw N4';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
   public readonly SMOKESCREEN_MARKER = 'SMOKESCREEN_MARKER';

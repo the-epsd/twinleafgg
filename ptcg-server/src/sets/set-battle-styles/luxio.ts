@@ -38,7 +38,8 @@ export class Luxio extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luxio';
-  public fullName: string = 'Luxio BST';
+  public fullName: string = 'Luxio (BST 47)';
+  public legacyFullName = 'Luxio BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Jumping Kick

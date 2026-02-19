@@ -42,7 +42,8 @@ export class Sableye extends PokemonCard {
 
   public set: string = 'SF';
   public name: string = 'Sableye';
-  public fullName: string = 'Sableye SF';
+  public fullName: string = 'Sableye (SF 48)';
+  public legacyFullName = 'Sableye SF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';
 

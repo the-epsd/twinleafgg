@@ -32,7 +32,8 @@ export class DittoVmax extends PokemonCard {
   public setNumber: string = 'SV119';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ditto VMAX';
-  public fullName: string = 'Ditto VMAX SHF';
+  public fullName: string = 'Ditto VMAX (SHF SV119)';
+  public legacyFullName = 'Ditto VMAX SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Max Transform

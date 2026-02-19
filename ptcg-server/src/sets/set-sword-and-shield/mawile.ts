@@ -37,7 +37,8 @@ export class Mawile extends PokemonCard {
   public setNumber: string = '129';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mawile';
-  public fullName: string = 'Mawile SSH';
+  public fullName: string = 'Mawile (SSH 129)';
+  public legacyFullName = 'Mawile SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Find a Friend

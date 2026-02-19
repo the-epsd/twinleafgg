@@ -33,7 +33,8 @@ export class StevensSkarmory extends PokemonCard {
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steven\'s Skarmory';
-  public fullName: string = 'Steven\'s Skarmory DRI';
+  public fullName: string = 'Steven\'s Skarmory (DRI 142)';
+  public legacyFullName = 'Steven\'s Skarmory DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

@@ -32,7 +32,8 @@ export class Rayquaza extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '153';
   public name: string = 'Rayquaza';
-  public fullName: string = 'Rayquaza M2a';
+  public fullName: string = 'Rayquaza (ASC 153)';
+  public legacyFullName = 'Rayquaza M2a';
 
   public movedToActiveThisTurn = false;
 

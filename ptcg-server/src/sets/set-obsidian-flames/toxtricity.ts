@@ -33,7 +33,8 @@ export class Toxtricity extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '72';
   public name: string = 'Toxtricity';
-  public fullName: string = 'Toxtricity OBF';
+  public fullName: string = 'Toxtricity (OBF 72)';
+  public legacyFullName = 'Toxtricity OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
   

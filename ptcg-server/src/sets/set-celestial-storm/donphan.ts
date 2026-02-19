@@ -22,7 +22,7 @@ export class Donphan extends PokemonCard {
       name: 'Flail',
       cost: [F],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 10 damage for each damage counter on this Pokémon.'
     },
     {
@@ -37,7 +37,8 @@ export class Donphan extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Donphan';
-  public fullName: string = 'Donphan CES';
+  public fullName: string = 'Donphan (CES 73)';
+  public legacyFullName = 'Donphan CES';
 
   public usedRapidSpin = false;
 

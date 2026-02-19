@@ -36,7 +36,8 @@ export class Dragalge extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragalge';
-  public fullName: string = 'Dragalge BKP';
+  public fullName: string = 'Dragalge (BKP 86)';
+  public legacyFullName = 'Dragalge BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Severe Poison

@@ -48,7 +48,8 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
 
   public name: string = 'Hisuian Zoroark VSTAR';
 
-  public fullName: string = 'Hisuian Zoroark VSTAR LOR';
+  public fullName: string = 'Hisuian Zoroark VSTAR (LOR 147)';
+  public legacyFullName = 'Hisuian Zoroark VSTAR LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

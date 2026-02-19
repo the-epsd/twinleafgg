@@ -37,7 +37,8 @@ export class Abomasnow extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Abomasnow';
-  public fullName: string = 'Abomasnow BKT';
+  public fullName: string = 'Abomasnow (BKT 40)';
+  public legacyFullName = 'Abomasnow BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ice Age

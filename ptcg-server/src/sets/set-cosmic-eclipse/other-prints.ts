@@ -48,382 +48,446 @@ import { IslandChallengeAmulet } from './island-challenge-amulet';
 export class GuzmaAndHalaCEC extends GuzmaAndHala {
   public set: string = 'CEC';
   public setNumber: string = '229';
-  public fullName: string = 'Guzma & Hala CEC 229';
+  public fullName: string = 'Guzma & Hala (CEC 229)';
+  public legacyFullName = 'Guzma & Hala CEC 229';
 }
 export class UnidentifiedFossilCEC extends UnidentifiedFossil {
   public setNumber = '207';
-  public fullName: string = 'Unidentified Fossil CEC';
+  public fullName: string = 'Unidentified Fossil (CEC 207)';
+  public legacyFullName = 'Unidentified Fossil CEC';
   public set = 'CEC';
 }
 
 export class VenusaurSnivyGX2CEC extends VenusaurSnivyGXCEC1 {
   public setNumber = '210';
-  public fullName: string = 'Venusaur & Snivy-GX2 CEC';
+  public fullName: string = 'Venusaur & Snivy-GX (CEC 210)';
+  public legacyFullName = 'Venusaur & Snivy-GX2 CEC';
   public set = 'CEC';
 }
 
 export class VileplumeGX2CEC extends VileplumeGXCEC4 {
   public setNumber = '211';
-  public fullName: string = 'Vileplume-GX2 CEC';
+  public fullName: string = 'Vileplume-GX (CEC 211)';
+  public legacyFullName = 'Vileplume-GX2 CEC';
   public set = 'CEC';
 }
 
 export class CharizardBraixenGX2CEC extends CharizardBraixenGXCEC22 {
   public setNumber = '212';
-  public fullName: string = 'Charizard & Braixen-GX2 CEC';
+  public fullName: string = 'Charizard & Braixen-GX (CEC 212)';
+  public legacyFullName = 'Charizard & Braixen-GX2 CEC';
   public set = 'CEC';
 }
 
 export class BlastoisePiplupGX2CEC extends BlastoisePiplupGXCEC38 {
   public setNumber = '214';
-  public fullName: string = 'Blastoise & Piplup-GX2 CEC';
+  public fullName: string = 'Blastoise & Piplup-GX (CEC 214)';
+  public legacyFullName = 'Blastoise & Piplup-GX2 CEC';
   public set = 'CEC';
 }
 
 export class BlastoisePiplupGX3CEC extends BlastoisePiplupGXCEC38 {
   public setNumber = '215';
-  public fullName: string = 'Blastoise & Piplup-GX3 CEC';
+  public fullName: string = 'Blastoise & Piplup-GX (CEC 215)';
+  public legacyFullName = 'Blastoise & Piplup-GX3 CEC';
   public set = 'CEC';
 }
 
 export class SolgaleoLunalaGX2CEC extends SolgaleoLunalaGXCEC75 {
   public setNumber = '216';
-  public fullName: string = 'Solgaleo & Lunala-GX2 CEC';
+  public fullName: string = 'Solgaleo & Lunala-GX (CEC 216)';
+  public legacyFullName = 'Solgaleo & Lunala-GX2 CEC';
   public set = 'CEC';
 }
 
 export class OricorioGX2CEC extends OricorioGXCEC95 {
   public setNumber = '217';
-  public fullName: string = 'Oricorio-GX2 CEC';
+  public fullName: string = 'Oricorio-GX (CEC 217)';
+  public legacyFullName = 'Oricorio-GX2 CEC';
   public set = 'CEC';
 }
 
 export class AlolanPersianGX2CEC extends AlolanPersianGXCEC129 {
   public setNumber = '219';
-  public fullName: string = 'Alolan Persian-GX2 CEC';
+  public fullName: string = 'Alolan Persian-GX (CEC 219)';
+  public legacyFullName = 'Alolan Persian-GX2 CEC';
   public set = 'CEC';
 }
 
 export class ArceusDialgaPalkiaGX2CEC extends ArceusDialgaPalkiaGXCEC156 {
   public setNumber = '220';
-  public fullName: string = 'Arceus & Dialga & Palkia-GX2 CEC';
+  public fullName: string = 'Arceus & Dialga & Palkia-GX (CEC 220)';
+  public legacyFullName = 'Arceus & Dialga & Palkia-GX2 CEC';
   public set = 'CEC';
 }
 
 export class ArceusDialgaPalkiaGX3CEC extends ArceusDialgaPalkiaGXCEC156 {
   public setNumber = '221';
-  public fullName: string = 'Arceus & Dialga & Palkia-GX3 CEC';
+  public fullName: string = 'Arceus & Dialga & Palkia-GX (CEC 221)';
+  public legacyFullName = 'Arceus & Dialga & Palkia-GX3 CEC';
   public set = 'CEC';
 }
 
 export class NaganadelGuzzlordGX2CEC extends NaganadelGuzzlordGXCEC158 {
   public setNumber = '223';
-  public fullName: string = 'Naganadel & Guzzlord-GX2 CEC';
+  public fullName: string = 'Naganadel & Guzzlord-GX (CEC 223)';
+  public legacyFullName = 'Naganadel & Guzzlord-GX2 CEC';
   public set = 'CEC';
 }
 
 export class NaganadelGuzzlordGX3CEC extends NaganadelGuzzlordGXCEC158 {
   public setNumber = '224';
-  public fullName: string = 'Naganadel & Guzzlord-GX3 CEC';
+  public fullName: string = 'Naganadel & Guzzlord-GX (CEC 224)';
+  public legacyFullName = 'Naganadel & Guzzlord-GX3 CEC';
   public set = 'CEC';
 }
 
 export class MegaLopunnyJigglypuffGX2CEC extends MegaLopunnyJigglypuffGXCEC165 {
   public setNumber = '225';
-  public fullName: string = 'Mega Lopunny & Jigglypuff-GX2 CEC';
+  public fullName: string = 'Mega Lopunny & Jigglypuff-GX (CEC 225)';
+  public legacyFullName = 'Mega Lopunny & Jigglypuff-GX2 CEC';
   public set = 'CEC';
 }
 
 export class MegaLopunnyJigglypuffGX3CEC extends MegaLopunnyJigglypuffGXCEC165 {
   public setNumber = '226';
-  public fullName: string = 'Mega Lopunny & Jigglypuff-GX3 CEC';
+  public fullName: string = 'Mega Lopunny & Jigglypuff-GX (CEC 226)';
+  public legacyFullName = 'Mega Lopunny & Jigglypuff-GX3 CEC';
   public set = 'CEC';
 }
 
 export class CynthiaAndCaitlin2CEC extends CynthiaAndCaitlinCEC189 {
   public setNumber = '228';
-  public fullName: string = 'Cynthia & Caitlin2 CEC';
+  public fullName: string = 'Cynthia & Caitlin (CEC 228)';
+  public legacyFullName = 'Cynthia & Caitlin2 CEC';
   public set = 'CEC';
 }
 
 export class LilliesFullForce2CEC extends LilliesFullForceCEC196 {
   public setNumber = '230';
-  public fullName: string = 'Lillie\'s Full Force2 CEC';
+  public fullName: string = 'Lillie\'s Full Force (CEC 230)';
+  public legacyFullName = 'Lillie\'s Full Force2 CEC';
   public set = 'CEC';
 }
 
 export class MallowAndLana2CEC extends MallowAndLanaCEC198 {
   public setNumber = '231';
-  public fullName: string = 'Mallow & Lana2 CEC';
+  public fullName: string = 'Mallow & Lana (CEC 231)';
+  public legacyFullName = 'Mallow & Lana2 CEC';
   public set = 'CEC';
 }
 
 export class ProfessorOaksSetup2CEC extends ProfessorOaksSetupCEC201 {
   public setNumber = '233';
-  public fullName: string = 'Professor Oak\'s Setup2 CEC';
+  public fullName: string = 'Professor Oak\'s Setup (CEC 233)';
+  public legacyFullName = 'Professor Oak\'s Setup2 CEC';
   public set = 'CEC';
 }
 
 export class Rosa2CEC extends RosaCEC204 {
   public setNumber = '236';
-  public fullName: string = 'Rosa2 CEC';
+  public fullName: string = 'Rosa (CEC 236)';
+  public legacyFullName = 'Rosa2 CEC';
   public set = 'CEC';
 }
 
 export class Wishiwashi2CEC extends WishiwashiCEC62 {
   public setNumber = '240';
-  public fullName: string = 'Wishiwashi2 CEC';
+  public fullName: string = 'Wishiwashi (CEC 240)';
+  public legacyFullName = 'Wishiwashi2 CEC';
   public set = 'CEC';
 }
 
 export class Pikachu2CEC extends PikachuCEC66 {
   public setNumber = '241';
-  public fullName: string = 'Pikachu2 CEC';
+  public fullName: string = 'Pikachu (CEC 241)';
+  public legacyFullName = 'Pikachu2 CEC';
   public set = 'CEC';
 }
 
 export class Koffing2CEC extends KoffingCEC76 {
   public setNumber = '243';
-  public fullName: string = 'Koffing2 CEC';
+  public fullName: string = 'Koffing (CEC 243)';
+  public legacyFullName = 'Koffing2 CEC';
   public set = 'CEC';
 }
 
 export class Mimikyu3CEC extends MimikyuCEC96 {
   public setNumber = '245';
-  public fullName: string = 'Mimikyu3 CEC';
+  public fullName: string = 'Mimikyu (CEC 245)';
+  public legacyFullName = 'Mimikyu3 CEC';
   public set = 'CEC';
 }
 
 export class Excadrill2CEC extends ExcadrillCEC115 {
   public setNumber = '246';
-  public fullName: string = 'Excadrill2 CEC';
+  public fullName: string = 'Excadrill (CEC 246)';
+  public legacyFullName = 'Excadrill2 CEC';
   public set = 'CEC';
 }
 
 export class Steelix2CEC extends SteelixCEC139 {
   public setNumber = '247';
-  public fullName: string = 'Steelix2 CEC';
+  public fullName: string = 'Steelix (CEC 247)';
+  public legacyFullName = 'Steelix2 CEC';
   public set = 'CEC';
 }
 
 export class Stoutland2CEC extends StoutlandCEC176 {
   public setNumber = '248';
-  public fullName: string = 'Stoutland2 CEC';
+  public fullName: string = 'Stoutland (CEC 248)';
+  public legacyFullName = 'Stoutland2 CEC';
   public set = 'CEC';
 }
 
 export class VenusaurSnivyGX3CEC extends VenusaurSnivyGXCEC1 {
   public setNumber = '249';
-  public fullName: string = 'Venusaur & Snivy-GX3 CEC';
+  public fullName: string = 'Venusaur & Snivy-GX (CEC 249)';
+  public legacyFullName = 'Venusaur & Snivy-GX3 CEC';
   public set = 'CEC';
 }
 
 export class VileplumeGX3CEC extends VileplumeGXCEC4 {
   public setNumber = '250';
-  public fullName: string = 'Vileplume-GX3 CEC';
+  public fullName: string = 'Vileplume-GX (CEC 250)';
+  public legacyFullName = 'Vileplume-GX3 CEC';
   public set = 'CEC';
 }
 
 export class CharizardBraixenGX3CEC extends CharizardBraixenGXCEC22 {
   public setNumber = '251';
-  public fullName: string = 'Charizard & Braixen-GX3 CEC';
+  public fullName: string = 'Charizard & Braixen-GX (CEC 251)';
+  public legacyFullName = 'Charizard & Braixen-GX3 CEC';
   public set = 'CEC';
 }
 
 export class BlastoisePiplupGX4CEC extends BlastoisePiplupGXCEC38 {
   public setNumber = '253';
-  public fullName: string = 'Blastoise & Piplup-GX4 CEC';
+  public fullName: string = 'Blastoise & Piplup-GX (CEC 253)';
+  public legacyFullName = 'Blastoise & Piplup-GX4 CEC';
   public set = 'CEC';
 }
 
 export class SolgaleoLunalaGX3CEC extends SolgaleoLunalaGXCEC75 {
   public setNumber = '254';
-  public fullName: string = 'Solgaleo & Lunala-GX3 CEC';
+  public fullName: string = 'Solgaleo & Lunala-GX (CEC 254)';
+  public legacyFullName = 'Solgaleo & Lunala-GX3 CEC';
   public set = 'CEC';
 }
 
 export class OricorioGX3CEC extends OricorioGXCEC95 {
   public setNumber = '255';
-  public fullName: string = 'Oricorio-GX3 CEC';
+  public fullName: string = 'Oricorio-GX (CEC 255)';
+  public legacyFullName = 'Oricorio-GX3 CEC';
   public set = 'CEC';
 }
 
 export class AlolanPersianGX3CEC extends AlolanPersianGXCEC129 {
   public setNumber = '257';
-  public fullName: string = 'Alolan Persian-GX3 CEC';
+  public fullName: string = 'Alolan Persian-GX (CEC 257)';
+  public legacyFullName = 'Alolan Persian-GX3 CEC';
   public set = 'CEC';
 }
 
 export class ArceusDialgaPalkiaGX4CEC extends ArceusDialgaPalkiaGXCEC156 {
   public setNumber = '258';
-  public fullName: string = 'Arceus & Dialga & Palkia-GX4 CEC';
+  public fullName: string = 'Arceus & Dialga & Palkia-GX (CEC 258)';
+  public legacyFullName = 'Arceus & Dialga & Palkia-GX4 CEC';
   public set = 'CEC';
 }
 
 export class NaganadelGuzzlordGX4CEC extends NaganadelGuzzlordGXCEC158 {
   public setNumber = '260';
-  public fullName: string = 'Naganadel & Guzzlord-GX4 CEC';
+  public fullName: string = 'Naganadel & Guzzlord-GX (CEC 260)';
+  public legacyFullName = 'Naganadel & Guzzlord-GX4 CEC';
   public set = 'CEC';
 }
 
 export class MegaLopunnyJigglypuffGX4CEC extends MegaLopunnyJigglypuffGXCEC165 {
   public setNumber = '261';
-  public fullName: string = 'Mega Lopunny & Jigglypuff-GX4 CEC';
+  public fullName: string = 'Mega Lopunny & Jigglypuff-GX (CEC 261)';
+  public legacyFullName = 'Mega Lopunny & Jigglypuff-GX4 CEC';
   public set = 'CEC';
 }
 
 export class GiantHearthCEC extends GiantHearth {
   public setNumber = '263';
-  public fullName: string = 'Giant Hearth CEC';
+  public fullName: string = 'Giant Hearth (CEC 263)';
+  public legacyFullName = 'Giant Hearth CEC';
   public set = 'CEC';
 }
 
 export class GreatCatcher2CEC extends GreatCatcherCEC192 {
   public setNumber = '264';
-  public fullName: string = 'Great Catcher2 CEC';
+  public fullName: string = 'Great Catcher (CEC 264)';
+  public legacyFullName = 'Great Catcher2 CEC';
   public set = 'CEC';
 }
 
 export class LanasFishingRod2CEC extends LanasFishingRodCEC195 {
   public setNumber = '266';
-  public fullName: string = 'Lana\'s Fishing Rod2 CEC';
+  public fullName: string = 'Lana\'s Fishing Rod (CEC 266)';
+  public legacyFullName = 'Lana\'s Fishing Rod2 CEC';
   public set = 'CEC';
 }
 
 export class LilliesPokeDoll2CEC extends LilliesPokeDollCEC197 {
   public setNumber = '267';
-  public fullName: string = 'Lillie\'s Poké Doll2 CEC';
+  public fullName: string = 'Lillie\'s Poké Doll (CEC 267)';
+  public legacyFullName = 'Lillie\'s Poké Doll2 CEC';
   public set = 'CEC';
 }
 
 export class MartialArtsDojoCEC extends MartialArtsDojo {
   public setNumber = '268';
-  public fullName: string = 'Martial Arts Dojo CEC';
+  public fullName: string = 'Martial Arts Dojo (CEC 268)';
+  public legacyFullName = 'Martial Arts Dojo CEC';
   public set = 'CEC';
 }
 
 export class PowerPlantCEC extends PowerPlant {
   public setNumber = '269';
-  public fullName: string = 'Power Plant CEC';
+  public fullName: string = 'Power Plant (CEC 269)';
+  public legacyFullName = 'Power Plant CEC';
   public set = 'CEC';
 }
 
 export class TagCall2CEC extends TagCallCEC206 {
   public setNumber = '270';
-  public fullName: string = 'Tag Call2 CEC';
+  public fullName: string = 'Tag Call (CEC 270)';
+  public legacyFullName = 'Tag Call2 CEC';
   public set = 'CEC';
 }
 
 export class DrawEnergy2CEC extends DrawEnergyCEC209 {
   public setNumber = '271';
-  public fullName: string = 'Draw Energy2 CEC';
+  public fullName: string = 'Draw Energy (CEC 271)';
+  public legacyFullName = 'Draw Energy2 CEC';
   public set = 'CEC';
 }
 
 export class TogepiCleffaIgglybuffGX2CEC extends TogepiCleffaIgglybuffGXCEC143 {
   public setNumber = '143a';
-  public fullName: string = 'Togepi & Cleffa & Igglybuff-GX2 CEC';
+  public fullName: string = 'Togepi & Cleffa & Igglybuff-GX (CEC 143a)';
+  public legacyFullName = 'Togepi & Cleffa & Igglybuff-GX2 CEC';
   public set = 'CEC';
 }
 
 export class VolcaronaGx2 extends VolcaronaGx {
   public set: string = 'CEC';
   public setNumber: string = '213';
-  public fullName: string = 'Volcarona-GX CEC 213';
+  public fullName: string = 'Volcarona-GX (CEC 213)';
+  public legacyFullName = 'Volcarona-GX CEC 213';
 }
 
 export class FlygonGx2 extends FlygonGx {
   public set: string = 'CEC';
   public setNumber: string = '218';
-  public fullName: string = 'Flygon-GX CEC 218';
+  public fullName: string = 'Flygon-GX (CEC 218)';
+  public legacyFullName = 'Flygon-GX CEC 218';
 }
 
 export class ReshiramAndZekromGx2 extends ReshiramAndZekromGx {
   public set: string = 'CEC';
   public setNumber: string = '222';
-  public fullName: string = 'Reshiram & Zekrom-GX CEC 222';
+  public fullName: string = 'Reshiram & Zekrom-GX (CEC 222)';
+  public legacyFullName = 'Reshiram & Zekrom-GX CEC 222';
 }
 
 export class SilvallyGx2 extends SilvallyGx {
   public set: string = 'CEC';
   public setNumber: string = '227';
-  public fullName: string = 'Silvally-GX CEC 227';
+  public fullName: string = 'Silvally-GX (CEC 227)';
+  public legacyFullName = 'Silvally-GX CEC 227';
 }
 
 export class NsResolve2 extends NsResolve {
   public set: string = 'CEC';
   public setNumber: string = '232';
-  public fullName: string = 'N\'s Resolve CEC 232';
+  public fullName: string = 'N\'s Resolve (CEC 232)';
+  public legacyFullName = 'N\'s Resolve CEC 232';
 }
 
 export class RedAndBlue2 extends RedAndBlue {
   public set: string = 'CEC';
   public setNumber: string = '234';
-  public fullName: string = 'Red & Blue CEC 234';
+  public fullName: string = 'Red & Blue (CEC 234)';
+  public legacyFullName = 'Red & Blue CEC 234';
 }
 
 export class RollerSkater2 extends RollerSkater {
   public set: string = 'CEC';
   public setNumber: string = '235';
-  public fullName: string = 'Roller Skater CEC 235';
+  public fullName: string = 'Roller Skater (CEC 235)';
+  public legacyFullName = 'Roller Skater CEC 235';
 }
 
 export class Torkoal2 extends Torkoal {
   public set: string = 'CEC';
   public setNumber: string = '237';
-  public fullName: string = 'Torkoal CEC 237';
+  public fullName: string = 'Torkoal (CEC 237)';
+  public legacyFullName = 'Torkoal CEC 237';
 }
 
 export class Weavile2 extends Weavile {
   public set: string = 'CEC';
   public setNumber: string = '238';
-  public fullName: string = 'Weavile CEC 238';
+  public fullName: string = 'Weavile (CEC 238)';
+  public legacyFullName = 'Weavile CEC 238';
 }
 
 export class Piplup2 extends Piplup {
   public set: string = 'CEC';
   public setNumber: string = '239';
-  public fullName: string = 'Piplup CEC 239';
+  public fullName: string = 'Piplup (CEC 239)';
+  public legacyFullName = 'Piplup CEC 239';
 }
 
 export class Magnemite2 extends Magnemite {
   public set: string = 'CEC';
   public setNumber: string = '242';
-  public fullName: string = 'Magnemite CEC 242';
+  public fullName: string = 'Magnemite (CEC 242)';
+  public legacyFullName = 'Magnemite CEC 242';
 }
 
 export class Gallade2 extends Gallade {
   public set: string = 'CEC';
   public setNumber: string = '244';
-  public fullName: string = 'Gallade CEC 244';
+  public fullName: string = 'Gallade (CEC 244)';
+  public legacyFullName = 'Gallade CEC 244';
 }
 
 export class VolcaronaGx3 extends VolcaronaGx {
   public set: string = 'CEC';
   public setNumber: string = '252';
-  public fullName: string = 'Volcarona-GX CEC 252';
+  public fullName: string = 'Volcarona-GX (CEC 252)';
+  public legacyFullName = 'Volcarona-GX CEC 252';
 }
 
 export class FlygonGx3 extends FlygonGx {
   public set: string = 'CEC';
   public setNumber: string = '256';
-  public fullName: string = 'Flygon-GX CEC 256';
+  public fullName: string = 'Flygon-GX (CEC 256)';
+  public legacyFullName = 'Flygon-GX CEC 256';
 }
 
 export class ReshiramAndZekromGx3 extends ReshiramAndZekromGx {
   public set: string = 'CEC';
   public setNumber: string = '259';
-  public fullName: string = 'Reshiram & Zekrom-GX CEC 259';
+  public fullName: string = 'Reshiram & Zekrom-GX (CEC 259)';
+  public legacyFullName = 'Reshiram & Zekrom-GX CEC 259';
 }
 
 export class SilvallyGx3 extends SilvallyGx {
   public set: string = 'CEC';
   public setNumber: string = '262';
-  public fullName: string = 'Silvally-GX CEC 262';
+  public fullName: string = 'Silvally-GX (CEC 262)';
+  public legacyFullName = 'Silvally-GX CEC 262';
 }
 
 export class IslandChallengeAmulet2 extends IslandChallengeAmulet {
   public set: string = 'CEC';
   public setNumber: string = '265';
-  public fullName: string = 'Island Challenge Amulet CEC 265';
+  public fullName: string = 'Island Challenge Amulet (CEC 265)';
+  public legacyFullName = 'Island Challenge Amulet CEC 265';
 }

@@ -31,7 +31,8 @@ export class Rufflet extends PokemonCard {
   public setNumber: string = '115';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rufflet';
-  public fullName: string = 'Rufflet PLS';
+  public fullName: string = 'Rufflet (PLS 115)';
+  public legacyFullName = 'Rufflet PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Incessant Peck

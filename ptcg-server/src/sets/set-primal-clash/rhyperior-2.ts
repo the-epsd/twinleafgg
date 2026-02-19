@@ -36,7 +36,8 @@ export class Rhyperior2 extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rhyperior';
-  public fullName: string = 'Rhyperior PRC 77';
+  public fullName: string = 'Rhyperior (PRC 77)';
+  public legacyFullName = 'Rhyperior PRC 77';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Rock Wall

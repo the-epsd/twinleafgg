@@ -28,5 +28,6 @@ export class Toedscool extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toedscool';
-  public fullName: string = 'Toedscool SCR';
+  public fullName: string = 'Toedscool (SCR 17)';
+  public legacyFullName = 'Toedscool SCR';
 } 

@@ -82,7 +82,8 @@ export class ErikasMaids extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'G1';
   public name: string = 'Erika\'s Maids';
-  public fullName: string = 'Erika\'s Maids G1';
+  public fullName: string = 'Erika\'s Maids (G1 109)';
+  public legacyFullName = 'Erika\'s Maids G1';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
 

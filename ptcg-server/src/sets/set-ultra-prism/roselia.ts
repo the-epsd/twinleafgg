@@ -32,7 +32,8 @@ export class Roselia extends PokemonCard {
 
   public name: string = 'Roselia';
 
-  public fullName: string = 'Roselia UPR';
+  public fullName: string = 'Roselia (UPR 4)';
+  public legacyFullName = 'Roselia UPR';
 
   public cardImage: string = 'assets/cardback.png';
 

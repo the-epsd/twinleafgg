@@ -33,7 +33,8 @@ export class Durant extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '70';
   public name: string = 'Durant';
-  public fullName: string = 'Durant WHT';
+  public fullName: string = 'Durant (WHT 70)';
+  public legacyFullName = 'Durant WHT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

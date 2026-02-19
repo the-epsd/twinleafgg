@@ -22,7 +22,7 @@ export class Aggron extends PokemonCard {
       name: 'Revenge Cannon',
       cost: [M, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on all of your Benched Pokémon.'
     },
     {
@@ -37,7 +37,8 @@ export class Aggron extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aggron';
-  public fullName: string = 'Aggron CIN';
+  public fullName: string = 'Aggron (CIN 67)';
+  public legacyFullName = 'Aggron CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Revenge Cannon

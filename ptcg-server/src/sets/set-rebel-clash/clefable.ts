@@ -38,7 +38,8 @@ export class Clefable extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clefable';
-  public fullName: string = 'Clefable RCL';
+  public fullName: string = 'Clefable (RCL 75)';
+  public legacyFullName = 'Clefable RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Prankish (on-evolve - put energy from opponent's active on top of deck)

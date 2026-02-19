@@ -24,7 +24,8 @@ export class FullMetalLab extends TrainerCard {
 
   public name: string = 'Full Metal Lab';
 
-  public fullName: string = 'Full Metal Lab TEF';
+  public fullName: string = 'Full Metal Lab (TEF 148)';
+  public legacyFullName = 'Full Metal Lab TEF';
 
   public text: string =
     '[M] Pokémon (both yours and your opponent\'s) take 30 less damage from attacks from the opponent\'s Pokémon (after applying Weakness and Resistance).';

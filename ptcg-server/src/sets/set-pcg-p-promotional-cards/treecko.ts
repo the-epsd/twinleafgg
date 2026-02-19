@@ -32,7 +32,8 @@ export class Treecko extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Treecko';
-  public fullName: string = 'Treecko PCGP 37';
+  public fullName: string = 'Treecko (PCGP 37)';
+  public legacyFullName = 'Treecko PCGP 37';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -17,7 +17,8 @@ export class MaxiesHiddenBallTrick extends TrainerCard {
 
   public name: string = 'Maxie\'s Hidden Ball Trick';
 
-  public fullName: string = 'Maxie\'s Hidden Ball Trick PRC';
+  public fullName: string = 'Maxie\'s Hidden Ball Trick (PRC 133)';
+  public legacyFullName = 'Maxie\'s Hidden Ball Trick PRC';
 
   public cardImage: string = 'assets/cardback.png';
 

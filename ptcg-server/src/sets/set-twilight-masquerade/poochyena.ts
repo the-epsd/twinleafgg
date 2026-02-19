@@ -32,7 +32,8 @@ export class Poochyena extends PokemonCard {
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poochyena';
-  public fullName: string = 'Poochyena TWM';
+  public fullName: string = 'Poochyena (TWM 113)';
+  public legacyFullName = 'Poochyena TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

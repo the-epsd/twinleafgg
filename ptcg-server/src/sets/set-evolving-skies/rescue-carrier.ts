@@ -69,7 +69,8 @@ export class RescueCarrier extends TrainerCard {
 
   public name: string = 'Rescue Carrier';
 
-  public fullName: string = 'Rescue Carrier EVS';
+  public fullName: string = 'Rescue Carrier (EVS 154)';
+  public legacyFullName = 'Rescue Carrier EVS';
 
   public text: string =
     'Put up to 2 Pokémon, each with 90 HP or less, from your discard pile into your hand.';

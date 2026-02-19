@@ -42,7 +42,8 @@ export class Mew extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Mew';
-  public fullName: string = 'Mew P5';
+  public fullName: string = 'Mew (P5 3)';
+  public legacyFullName = 'Mew P5';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

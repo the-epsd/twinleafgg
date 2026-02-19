@@ -15,7 +15,8 @@ export class PokemonFlute extends TrainerCard {
 
   public name: string = 'Pokemon Flute';
 
-  public fullName: string = 'Pokemon Flute BS'; // Replace with the appropriate set abbreviation
+  public fullName: string = 'Pokemon Flute (BS 86)';
+  public legacyFullName = 'Pokemon Flute BS'; // Replace with the appropriate set abbreviation
 
   public cardImage: string = 'assets/cardback.png'; // Replace with the appropriate card image path
 

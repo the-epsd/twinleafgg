@@ -21,7 +21,8 @@ export class MetalGoggles extends TrainerCard {
 
   public name: string = 'Metal Goggles';
 
-  public fullName: string = 'Metal Goggles TEU';
+  public fullName: string = 'Metal Goggles (TEU 148)';
+  public legacyFullName = 'Metal Goggles TEU';
 
   public text: string =
     'The [M] Pokémon this card is attached to takes 30 less damage from your opponent\'s attacks (after applying Weakness and Resistance), and your opponent\'s attacks and Abilities can\'t put damage counters on it.';

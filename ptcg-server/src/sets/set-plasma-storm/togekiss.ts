@@ -38,7 +38,8 @@ export class Togekiss extends PokemonCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togekiss';
-  public fullName: string = 'Togekiss PLS';
+  public fullName: string = 'Togekiss (PLS 104)';
+  public legacyFullName = 'Togekiss PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Bright Veil (passive - intercept opponent's Item cards)

@@ -65,7 +65,8 @@ export class FieryTorch extends TrainerCard {
 
   public name: string = 'Fiery Torch';
 
-  public fullName: string = 'Fiery Torch FLF';
+  public fullName: string = 'Fiery Torch (FLF 89)';
+  public legacyFullName = 'Fiery Torch FLF';
 
   public text: string =
     'Discard a [R] Energy card from your hand. (If you can\'t discard a [R] Energy card, you can\'t play this card.) Draw 2 cards.';

@@ -32,7 +32,8 @@ export class Cubchoo extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
   public name: string = 'Cubchoo';
-  public fullName: string = 'Cubchoo EPO';
+  public fullName: string = 'Cubchoo (EPO 28)';
+  public legacyFullName = 'Cubchoo EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -76,7 +76,8 @@ export class Gimmighoul extends PokemonCard {
 
   public name: string = 'Gimmighoul';
 
-  public fullName: string = 'Gimmighoul PAR';
+  public fullName: string = 'Gimmighoul (PAR 87)';
+  public legacyFullName = 'Gimmighoul PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -37,7 +37,8 @@ export class GalarianMrMime extends PokemonCard {
   public setNumber: string = 'SV020';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Mr. Mime';
-  public fullName: string = 'Galarian Mr. Mime SHF';
+  public fullName: string = 'Galarian Mr. Mime (SHF SV020)';
+  public legacyFullName = 'Galarian Mr. Mime SHF';
 
   public readonly REDUCE_DAMAGE_MARKER = 'GALARIAN_MR_MIME_SHF_REDUCE_DAMAGE_MARKER';
   public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'GALARIAN_MR_MIME_SHF_CLEAR_REDUCE_DAMAGE_MARKER';

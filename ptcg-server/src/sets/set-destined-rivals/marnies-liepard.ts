@@ -25,7 +25,8 @@ export class MarniesLiepard extends PokemonCard {
   public setNumber = '131';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marnie\'s Liepard';
-  public fullName: string = 'Marnie\'s Liepard DRI';
+  public fullName: string = 'Marnie\'s Liepard (DRI 131)';
+  public legacyFullName = 'Marnie\'s Liepard DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

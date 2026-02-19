@@ -46,7 +46,8 @@ export class TyranitarGx extends PokemonCard {
   public setNumber: string = '121';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tyranitar-GX';
-  public fullName: string = 'Tyranitar-GX LOT';
+  public fullName: string = 'Tyranitar-GX (LOT 121)';
+  public legacyFullName = 'Tyranitar-GX LOT';
 
   public readonly LOST_OUT_MARKER = 'LOST_OUT_MARKER';
 

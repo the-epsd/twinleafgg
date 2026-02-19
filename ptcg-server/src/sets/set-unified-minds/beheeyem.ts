@@ -34,7 +34,8 @@ export class Beheeyem extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public name: string = 'Beheeyem';
-  public fullName: string = 'Beheeyem UNM';
+  public fullName: string = 'Beheeyem (UNM 91)';
+  public legacyFullName = 'Beheeyem UNM';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 

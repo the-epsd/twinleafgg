@@ -33,7 +33,8 @@ export class Dragonite extends PokemonCard {
   public regulationMark: string = 'G';
   public set: string = 'MEW';
   public name: string = 'Dragonite';
-  public fullName: string = 'Dragonite MEW';
+  public fullName: string = 'Dragonite (MEW 149)';
+  public legacyFullName = 'Dragonite MEW';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '149';
 

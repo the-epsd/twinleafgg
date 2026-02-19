@@ -38,7 +38,8 @@ export class Butterfree extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Butterfree';
-  public fullName: string = 'Butterfree BUS';
+  public fullName: string = 'Butterfree (BUS 3)';
+  public legacyFullName = 'Butterfree BUS';
 
   public usedByeByeHeal = false;
 

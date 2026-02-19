@@ -32,7 +32,8 @@ export class Blissey extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
   public name: string = 'Blissey';
-  public fullName: string = 'Blissey AQ';
+  public fullName: string = 'Blissey (AQ 6)';
+  public legacyFullName = 'Blissey AQ';
 
   public readonly HAPPY_HEALING_MARKER = 'HAPPY_HEALING_MARKER';
 

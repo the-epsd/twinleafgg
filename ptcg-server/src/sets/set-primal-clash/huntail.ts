@@ -22,7 +22,7 @@ export class Huntail extends PokemonCard {
       name: 'Powerful Storm',
       cost: [W],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage times the amount of Energy attached to all of your Pokémon.'
     },
     {
@@ -37,7 +37,8 @@ export class Huntail extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Huntail';
-  public fullName: string = 'Huntail PRC';
+  public fullName: string = 'Huntail (PRC 50)';
+  public legacyFullName = 'Huntail PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Powerful Storm

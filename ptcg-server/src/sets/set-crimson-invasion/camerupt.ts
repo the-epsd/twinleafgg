@@ -22,7 +22,7 @@ export class Camerupt extends PokemonCard {
       name: 'Continuous Headbutt',
       cost: [R, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 80 damage for each heads.'
     },
     {
@@ -37,7 +37,8 @@ export class Camerupt extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Camerupt';
-  public fullName: string = 'Camerupt CIN';
+  public fullName: string = 'Camerupt (CIN 14)';
+  public legacyFullName = 'Camerupt CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Headbutt

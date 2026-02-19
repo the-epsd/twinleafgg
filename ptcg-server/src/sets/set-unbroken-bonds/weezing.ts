@@ -37,7 +37,8 @@ export class Weezing extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weezing';
-  public fullName: string = 'Weezing UNB';
+  public fullName: string = 'Weezing (UNB 74)';
+  public legacyFullName = 'Weezing UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Detention Gas (passive - between turns)

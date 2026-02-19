@@ -29,7 +29,8 @@ export class Gothita extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothita';
-  public fullName: string = 'Gothita GRI';
+  public fullName: string = 'Gothita (GRI 52)';
+  public legacyFullName = 'Gothita GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Blown Kiss

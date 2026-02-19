@@ -29,7 +29,8 @@ export class Yanmega extends PokemonCard {
   public set: string = 'CRZ';
   public regulationMark = 'F';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Yanmega CRZ';
+  public fullName: string = 'Yanmega (CRZ 9)';
+  public legacyFullName = 'Yanmega CRZ';
   public name: string = 'Yanmega';
   public setNumber: string = '9';
 

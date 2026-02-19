@@ -30,7 +30,8 @@ export class EspeonStar extends PokemonCard {
 
   public set: string = 'P5';
   public name: string = 'Espeon Star';
-  public fullName: string = 'Espeon Star P5';
+  public fullName: string = 'Espeon Star (P5 16)';
+  public legacyFullName = 'Espeon Star P5';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
 

@@ -2,7 +2,8 @@ import { Leftovers } from '../set-pokemon-151/leftovers';
 import { RareCandy } from '../set-ex-holon-phantoms/rare-candy';
 
 export class RareCandyGE extends RareCandy {
-  public fullName = 'Rare Candy GE';
+  public fullName = 'Rare Candy (GE 102)';
+  public legacyFullName = 'Rare Candy GE';
   public name = 'Rare Candy';
   public set = 'GE';
   public setNumber = '102';
@@ -10,6 +11,7 @@ export class RareCandyGE extends RareCandy {
 }
 export class LeftoversGE extends Leftovers {
   public setNumber = '99';
-  public fullName: string = 'Leftovers GE';
+  public fullName: string = 'Leftovers (GE 99)';
+  public legacyFullName = 'Leftovers GE';
   public set = 'GE';
 }

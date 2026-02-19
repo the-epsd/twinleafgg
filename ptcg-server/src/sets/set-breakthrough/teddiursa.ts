@@ -25,5 +25,6 @@ export class Teddiursa extends PokemonCard {
   public setNumber: string = '121';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Teddiursa';
-  public fullName: string = 'Teddiursa BKT';
+  public fullName: string = 'Teddiursa (BKT 121)';
+  public legacyFullName = 'Teddiursa BKT';
 }

@@ -39,7 +39,8 @@ export class HisuianSamurott extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '100';
   public name: string = 'Hisuian Samurott';
-  public fullName: string = 'Hisuian Samurott ASR';
+  public fullName: string = 'Hisuian Samurott (ASR 100)';
+  public legacyFullName = 'Hisuian Samurott ASR';
 
   public readonly WILY_STANCE_MARKER = 'WILY_STANCE_MARKER';
 

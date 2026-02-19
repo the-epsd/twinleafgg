@@ -36,7 +36,8 @@ export class Noivern extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Noivern';
-  public fullName: string = 'Noivern FFI';
+  public fullName: string = 'Noivern (FFI 77)';
+  public legacyFullName = 'Noivern FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Echolocation (passive - intercept DealDamageEffect)

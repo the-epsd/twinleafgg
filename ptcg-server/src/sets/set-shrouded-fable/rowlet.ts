@@ -41,7 +41,8 @@ export class Rowlet extends PokemonCard {
 
   public name: string = 'Rowlet';
 
-  public fullName: string = 'Rowlet SFA';
+  public fullName: string = 'Rowlet (SFA 3)';
+  public legacyFullName = 'Rowlet SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -46,7 +46,8 @@ export class IonosElectrode extends PokemonCard {
 
   public name: string = 'Iono\'s Electrode';
 
-  public fullName: string = 'Iono\'s Electrode JTG';
+  public fullName: string = 'Iono\'s Electrode (JTG 48)';
+  public legacyFullName = 'Iono\'s Electrode JTG';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

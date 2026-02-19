@@ -18,114 +18,133 @@ import { Karen as KarenXYP177 } from '../set-x-and-y-promos/karen';
 import { Bronzong } from '../set-phantom-forces/bronzong';
 
 export class BronzongXYP extends Bronzong {
-  public fullName = 'Bronzong XYP 21';
+  public fullName = 'Bronzong (XYP 21)';
+  public legacyFullName = 'Bronzong XYP 21';
   public set = 'XYP';
   public setNumber = '21';
 }
 export class XerneasXYP extends Xerneas {
   public setNumber = '5';
-  public fullName: string = 'Xerneas XYP';
+  public fullName: string = 'Xerneas (XYP 5)';
+  public legacyFullName = 'Xerneas XYP';
   public set = 'XYP';
 }
 
 export class YveltalXYP extends Yveltal {
   public setNumber = '6';
-  public fullName: string = 'Yveltal XYP';
+  public fullName: string = 'Yveltal (XYP 6)';
+  public legacyFullName = 'Yveltal XYP';
   public set = 'XYP';
 }
 
 export class XerneasEXXYP extends XerneasEX {
   public setNumber = '7';
-  public fullName: string = 'Xerneas-EX XYP';
+  public fullName: string = 'Xerneas-EX (XYP 7)';
+  public legacyFullName = 'Xerneas-EX XYP';
   public set = 'XYP';
 }
 
 export class YveltalExXYP extends YveltalEx {
   public setNumber = '8';
-  public fullName: string = 'Yveltal EX XYP';
+  public fullName: string = 'Yveltal-EX (XYP 8)';
+  public legacyFullName = 'Yveltal EX XYP';
   public set = 'XYP';
 }
 
 export class DragalgeXYP extends Dragalge {
   public setNumber = '10';
-  public fullName: string = 'Dragalge XYP';
+  public fullName: string = 'Dragalge (XYP 10)';
+  public legacyFullName = 'Dragalge XYP';
   public set = 'XYP';
 }
 
 export class GroudonExXYP extends GroudonEx {
   public setNumber = '42';
-  public fullName: string = 'Groudon EX XYP';
+  public fullName: string = 'Groudon-EX (XYP 42)';
+  public legacyFullName = 'Groudon EX XYP';
   public set = 'XYP';
 }
 
 export class HoopaEXXYP extends HoopaEX {
   public setNumber = '71';
-  public fullName: string = 'Hoopa EX XYP';
+  public fullName: string = 'Hoopa-EX (XYP 71)';
+  public legacyFullName = 'Hoopa EX XYP';
   public set = 'XYP';
 }
 
 export class MeloettaXYP extends Meloetta {
   public setNumber = '120';
-  public fullName: string = 'Meloetta XYP120';
+  public fullName: string = 'Meloetta (XYP 120)';
+  public legacyFullName = 'Meloetta XYP120';
   public set = 'XYP';
 }
 
 export class MewExXYP extends MewEx {
   public setNumber = '126';
-  public fullName: string = 'Mew EX XYP';
+  public fullName: string = 'Mew-EX (XYP 126)';
+  public legacyFullName = 'Mew EX XYP';
   public set = 'XYP';
 }
 
 export class Froakie2XYP extends FroakieBKP38 {
   public setNumber = '138';
-  public fullName: string = 'Froakie2 XYP';
+  public fullName: string = 'Froakie (XYP 138)';
+  public legacyFullName = 'Froakie2 XYP';
   public set = 'XYP';
 }
 
 export class VolcanionXYP extends Volcanion {
   public setNumber = '145';
-  public fullName: string = 'Volcanion XYP';
+  public fullName: string = 'Volcanion (XYP 145)';
+  public legacyFullName = 'Volcanion XYP';
   public set = 'XYP';
 }
 
 export class XerneasEX2XYP extends XerneasEXXY97 {
   public setNumber = '149';
-  public fullName: string = 'Xerneas-EX2 XYP';
+  public fullName: string = 'Xerneas-EX (XYP 149)';
+  public legacyFullName = 'Xerneas-EX2 XYP';
   public set = 'XYP';
 }
 
 export class YveltalEx2XYP extends YveltalExXY79 {
   public setNumber = '150';
-  public fullName: string = 'Yveltal EX2 XYP';
+  public fullName: string = 'Yveltal-EX (XYP 150)';
+  public legacyFullName = 'Yveltal EX2 XYP';
   public set = 'XYP';
 }
 
 export class VolcanionEXXYP extends VolcanionEX {
   public setNumber = '173';
-  public fullName: string = 'Volcanion EX XYP';
+  public fullName: string = 'Volcanion-EX (XYP 173)';
+  public legacyFullName = 'Volcanion EX XYP';
   public set = 'XYP';
 }
 
 export class MagearnaEXXYP extends MagearnaEX {
   public setNumber = '175';
-  public fullName: string = 'Magearna-EX XYP';
+  public fullName: string = 'Magearna-EX (XYP 175)';
+  public legacyFullName = 'Magearna-EX XYP';
   public set = 'XYP';
 }
 
 export class Jirachi2XYP extends JirachiXYP67 {
   public setNumber = '67a';
-  public fullName: string = 'Jirachi2 XYP';
+  public fullName: string = 'Jirachi (XYP 67a)';
+  public legacyFullName = 'Jirachi2 XYP';
   public set = 'XYP';
 }
 
 export class YveltalEx3XYP extends YveltalExXY79 {
   public setNumber = '150a';
-  public fullName: string = 'Yveltal EX3 XYP';
+  public fullName: string = 'Yveltal-EX (XYP 150a)';
+  public legacyFullName = 'Yveltal EX3 XYP';
   public set = 'XYP';
 }
 
 export class Karen2XYP extends KarenXYP177 {
   public setNumber = '177a';
-  public fullName: string = 'Karen2 XYP';
+  public fullName: string = 'Karen (XYP 177a)';
+  public legacyFullName = 'Karen2 XYP';
   public set = 'XYP';
 }

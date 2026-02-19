@@ -22,7 +22,8 @@ export class Elgyem extends PokemonCard {
 
   public set: string = 'UNM';
   public name: string = 'Elgyem';
-  public fullName: string = 'Elgyem UNM';
+  public fullName: string = 'Elgyem (UNM 90)';
+  public legacyFullName = 'Elgyem UNM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
 

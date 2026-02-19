@@ -27,7 +27,8 @@ export class Sableye extends PokemonCard {
   public setNumber: string = '133';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sableye';
-  public fullName: string = 'Sableye UNM';
+  public fullName: string = 'Sableye (UNM 133)';
+  public legacyFullName = 'Sableye UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mirror Gem

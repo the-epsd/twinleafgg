@@ -70,7 +70,8 @@ export class FeatherBall extends TrainerCard {
 
   public name: string = 'Feather Ball';
 
-  public fullName: string = 'Feather Ball ASR';
+  public fullName: string = 'Feather Ball (ASR 141)';
+  public legacyFullName = 'Feather Ball ASR';
 
   public text =
     'Search your deck for 1 Pokemon with no retreat cost, ' +

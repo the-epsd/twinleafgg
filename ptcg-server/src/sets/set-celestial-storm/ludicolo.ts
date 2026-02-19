@@ -28,7 +28,7 @@ export class Ludicolo extends PokemonCard {
       name: 'Circular Steps',
       cost: [W, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each other Pokémon in play (both yours and your opponent\'s).'
     }
   ];
@@ -37,7 +37,8 @@ export class Ludicolo extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ludicolo';
-  public fullName: string = 'Ludicolo CES';
+  public fullName: string = 'Ludicolo (CES 38)';
+  public legacyFullName = 'Ludicolo CES';
 
   public readonly SWING_DANCE_MARKER = 'LUDICOLO_CES_SWING_DANCE_MARKER';
 

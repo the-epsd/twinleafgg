@@ -39,7 +39,8 @@ export class MawileGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '141';
   public name: string = 'Mawile-GX';
-  public fullName: string = 'Mawile-GX UNM';
+  public fullName: string = 'Mawile-GX (UNM 141)';
+  public legacyFullName = 'Mawile-GX UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

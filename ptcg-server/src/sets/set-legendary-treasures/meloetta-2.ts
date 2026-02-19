@@ -37,7 +37,8 @@ export class Meloetta2 extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meloetta';
-  public fullName: string = 'Meloetta LTR 86';
+  public fullName: string = 'Meloetta (LTR 86)';
+  public legacyFullName = 'Meloetta LTR 86';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Magical Dance

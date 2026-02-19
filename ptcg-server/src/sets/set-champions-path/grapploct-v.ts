@@ -32,7 +32,7 @@ export class GrapploctV extends PokemonCard {
       name: 'Moonsault Press',
       cost: [F, F, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 100 more damage.'
     }
   ];
@@ -42,7 +42,8 @@ export class GrapploctV extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grapploct V';
-  public fullName: string = 'Grapploct V CPA';
+  public fullName: string = 'Grapploct V (CPA 32)';
+  public legacyFullName = 'Grapploct V CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tie Up

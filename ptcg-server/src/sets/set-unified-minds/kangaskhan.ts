@@ -26,7 +26,7 @@ export class Kangaskhan extends PokemonCard {
       name: 'Tag Impact',
       cost: [C, C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 50 damage for each of your TAG TEAM Pokémon in play.'
     }
   ];
@@ -35,7 +35,8 @@ export class Kangaskhan extends PokemonCard {
   public setNumber: string = '163';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kangaskhan';
-  public fullName: string = 'Kangaskhan UNM';
+  public fullName: string = 'Kangaskhan (UNM 163)';
+  public legacyFullName = 'Kangaskhan UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Draw

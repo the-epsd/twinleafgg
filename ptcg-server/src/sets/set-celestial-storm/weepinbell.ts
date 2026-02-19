@@ -28,7 +28,7 @@ export class Weepinbell extends PokemonCard {
       name: 'Double Razor Leaf',
       cost: [G, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Weepinbell extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weepinbell';
-  public fullName: string = 'Weepinbell CES';
+  public fullName: string = 'Weepinbell (CES 2)';
+  public legacyFullName = 'Weepinbell CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Growth

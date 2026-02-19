@@ -30,7 +30,8 @@ export class Sizzlipede extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sizzlipede';
-  public fullName: string = 'Sizzlipede BST';
+  public fullName: string = 'Sizzlipede (BST 29)';
+  public legacyFullName = 'Sizzlipede BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Searing Flame

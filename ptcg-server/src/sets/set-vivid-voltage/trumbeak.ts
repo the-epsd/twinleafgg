@@ -40,7 +40,8 @@ export class Trumbeak extends PokemonCard {
   public setNumber: string = '144';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trumbeak';
-  public fullName: string = 'Trumbeak VIV';
+  public fullName: string = 'Trumbeak (VIV 144)';
+  public legacyFullName = 'Trumbeak VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Charging Trumpet (on-evolve - look top 3, attach any basic Energy to any Pokemon)

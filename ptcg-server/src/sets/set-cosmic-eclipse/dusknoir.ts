@@ -43,7 +43,8 @@ export class Dusknoir extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dusknoir';
-  public fullName: string = 'Dusknoir CEC';
+  public fullName: string = 'Dusknoir (CEC 85)';
+  public legacyFullName = 'Dusknoir CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Grim Marking

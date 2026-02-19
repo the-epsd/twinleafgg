@@ -51,7 +51,8 @@ export class Kirlia extends PokemonCard {
 
   public name: string = 'Kirlia';
 
-  public fullName: string = 'Kirlia SIT';
+  public fullName: string = 'Kirlia (SIT 68)';
+  public legacyFullName = 'Kirlia SIT';
 
   public readonly REFINEMENT_MARKER = 'REFINEMENT_MARKER';
 

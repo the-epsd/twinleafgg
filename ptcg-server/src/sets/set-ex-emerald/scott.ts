@@ -10,7 +10,8 @@ export class Scott extends TrainerCard {
   public set = 'EM';
   public setNumber: string = '84';
   public name = 'Scott';
-  public fullName = 'Scott EM';
+  public fullName = 'Scott (EM 84)';
+  public legacyFullName = 'Scott EM';
 
   public text = 'Search your deck for up to 3 cards in any combination of Supporter cards and Stadium cards, show them to your opponent, and put them into your hand. Shuffle your deck afterward.';
 

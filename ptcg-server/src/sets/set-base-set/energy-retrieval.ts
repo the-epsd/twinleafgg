@@ -80,7 +80,8 @@ export class EnergyRetrieval extends TrainerCard {
 
   public name: string = 'Energy Retrieval';
 
-  public fullName: string = 'Energy Retrieval BS';
+  public fullName: string = 'Energy Retrieval (BS 81)';
+  public legacyFullName = 'Energy Retrieval BS';
 
   public text: string =
     'Trade 1 of the other cards in your hand for up to 2 basic Energy cards from your discard pile.';

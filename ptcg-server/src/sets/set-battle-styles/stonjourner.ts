@@ -31,7 +31,8 @@ export class Stonjourner extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
   public name: string = 'Stonjourner';
-  public fullName: string = 'Stonjourner BST';
+  public fullName: string = 'Stonjourner (BST 84)';
+  public legacyFullName = 'Stonjourner BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

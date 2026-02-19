@@ -65,7 +65,8 @@ export class UnownR extends PokemonCard {
 
   public name: string = 'Unown R';
 
-  public fullName: string = 'Unown R LA';
+  public fullName: string = 'Unown R (LA 77)';
+  public legacyFullName = 'Unown R LA';
 
   public cardImage: string = 'assets/cardback.png';
 

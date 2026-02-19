@@ -22,7 +22,7 @@ export class Hypno extends PokemonCard {
       name: 'Meditate',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
     },
     {
@@ -37,7 +37,8 @@ export class Hypno extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hypno';
-  public fullName: string = 'Hypno SUM';
+  public fullName: string = 'Hypno (SUM 60)';
+  public legacyFullName = 'Hypno SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Meditate

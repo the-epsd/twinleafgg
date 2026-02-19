@@ -31,7 +31,8 @@ export class Salazzle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
   public name: string = 'Salazzle';
-  public fullName: string = 'Salazzle SCR';
+  public fullName: string = 'Salazzle (SCR 24)';
+  public legacyFullName = 'Salazzle SCR';
 
   public readonly SUDDEN_SCORCHING_MARKER = 'SUDDEN_SCORCHING_MARKER';
 

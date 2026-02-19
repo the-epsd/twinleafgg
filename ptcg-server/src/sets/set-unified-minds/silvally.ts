@@ -31,7 +31,8 @@ export class Silvally extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '184';
   public name: string = 'Silvally';
-  public fullName: string = 'Silvally UNM';
+  public fullName: string = 'Silvally (UNM 184)';
+  public legacyFullName = 'Silvally UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

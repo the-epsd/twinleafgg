@@ -34,7 +34,8 @@ export class Tropius extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tropius';
-  public fullName: string = 'Tropius PLB';
+  public fullName: string = 'Tropius (PLB 5)';
+  public legacyFullName = 'Tropius PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

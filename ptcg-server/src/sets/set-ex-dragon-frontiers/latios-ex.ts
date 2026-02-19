@@ -38,7 +38,8 @@ export class Latiosex extends PokemonCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Latios ex';
-  public fullName: string = 'Latios ex DF';
+  public fullName: string = 'Latios ex (DF 96)';
+  public legacyFullName = 'Latios ex DF';
 
   public readonly ICE_BARRIER_MARKER = 'ICE_BARRIER_MARKER';
 

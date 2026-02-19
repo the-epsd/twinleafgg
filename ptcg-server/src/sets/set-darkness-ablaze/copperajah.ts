@@ -30,7 +30,7 @@ export class Copperajah extends PokemonCard {
       name: 'Vengeful Stomp',
       cost: [M, M, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your Benched Pokémon have any damage counters on them, this attack does 120 more damage.'
     }
   ];
@@ -40,7 +40,8 @@ export class Copperajah extends PokemonCard {
   public setNumber: string = '132';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Copperajah';
-  public fullName: string = 'Copperajah DAA';
+  public fullName: string = 'Copperajah (DAA 132)';
+  public legacyFullName = 'Copperajah DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Antibacterial Skin (passive - block special conditions)

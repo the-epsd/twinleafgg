@@ -31,7 +31,8 @@ export class Seismitoad extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Seismitoad';
-  public fullName: string = 'Seismitoad DRX';
+  public fullName: string = 'Seismitoad (DRX 36)';
+  public legacyFullName = 'Seismitoad DRX';
 
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';

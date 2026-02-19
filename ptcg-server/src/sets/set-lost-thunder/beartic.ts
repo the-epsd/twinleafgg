@@ -21,7 +21,7 @@ export class Beartic extends PokemonCard {
       name: 'Resolute Claws',
       cost: [W, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Pokémon-GX or a Pokémon-EX, this attack does 60 more damage (before applying Weakness and Resistance).'
     },
     {
@@ -36,7 +36,8 @@ export class Beartic extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beartic';
-  public fullName: string = 'Beartic LOT';
+  public fullName: string = 'Beartic (LOT 62)';
+  public legacyFullName = 'Beartic LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Resolute Claws

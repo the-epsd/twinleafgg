@@ -36,7 +36,8 @@ export class Oricorio2 extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Oricorio';
-  public fullName: string = 'Oricorio CES 55';
+  public fullName: string = 'Oricorio (CES 55)';
+  public legacyFullName = 'Oricorio CES 55';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Zappy Pom-Poms

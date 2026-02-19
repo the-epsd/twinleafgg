@@ -34,7 +34,8 @@ export class RegigigasEx extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Regigigas-EX';
-  public fullName: string = 'Regigigas-EX NXD';
+  public fullName: string = 'Regigigas-EX (NXD 82)';
+  public legacyFullName = 'Regigigas-EX NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Giga Power

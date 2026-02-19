@@ -24,7 +24,7 @@ export class Mandibuzz extends PokemonCard {
       name: 'Bone Rush',
       cost: [D],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 30 damage for each heads.'
     },
     {
@@ -40,7 +40,8 @@ export class Mandibuzz extends PokemonCard {
   public setNumber: string = '120';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mandibuzz';
-  public fullName: string = 'Mandibuzz RCL';
+  public fullName: string = 'Mandibuzz (RCL 120)';
+  public legacyFullName = 'Mandibuzz RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bone Rush

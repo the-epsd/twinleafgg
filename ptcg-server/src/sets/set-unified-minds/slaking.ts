@@ -28,7 +28,7 @@ export class Slaking extends PokemonCard {
       name: 'Dynamic Swing',
       cost: [C, C, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 100 more damage. If you do, during your opponent\'s next turn, this Pokémon takes 100 more damage from attacks (after applying Weakness and Resistance).'
     }
   ];
@@ -37,7 +37,8 @@ export class Slaking extends PokemonCard {
   public setNumber: string = '170';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slaking';
-  public fullName: string = 'Slaking UNM';
+  public fullName: string = 'Slaking (UNM 170)';
+  public legacyFullName = 'Slaking UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Counterattack (passive - damaged by opponent's attack)

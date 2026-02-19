@@ -27,7 +27,7 @@ export class Machop extends PokemonCard {
       name: 'Steady Punch',
       cost: [F, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Machop extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machop';
-  public fullName: string = 'Machop CPA';
+  public fullName: string = 'Machop (CPA 24)';
+  public legacyFullName = 'Machop CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Steady Punch

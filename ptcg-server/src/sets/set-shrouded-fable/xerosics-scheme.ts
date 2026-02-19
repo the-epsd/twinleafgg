@@ -21,7 +21,8 @@ export class XerosicsScheme extends TrainerCard {
 
   public name: string = 'Xerosic\'s Machinations';
 
-  public fullName: string = 'Xerosic\'s Machinations SFA';
+  public fullName: string = 'Xerosic\'s Machinations (SFA 64)';
+  public legacyFullName = 'Xerosic\'s Machinations SFA';
 
   public text: string =
     'Your opponent discards cards from their hand until they have 3 cards in their hand.';

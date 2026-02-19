@@ -41,7 +41,8 @@ export class MorpekoV extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Morpeko V';
-  public fullName: string = 'Morpeko V SSH';
+  public fullName: string = 'Morpeko V (SSH 79)';
+  public legacyFullName = 'Morpeko V SSH';
 
   public electroWheelSwitched = false;
 

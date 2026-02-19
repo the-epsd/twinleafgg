@@ -31,7 +31,8 @@ export class Goldeen extends PokemonCard {
 
   public name: string = 'Goldeen';
 
-  public fullName: string = 'Goldeen UNB';
+  public fullName: string = 'Goldeen (UNB 48)';
+  public legacyFullName = 'Goldeen UNB';
 
   public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
   public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';

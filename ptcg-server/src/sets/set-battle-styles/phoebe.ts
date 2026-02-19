@@ -19,7 +19,8 @@ export class Phoebe extends TrainerCard {
   public setNumber: string = '130';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Phoebe';
-  public fullName: string = 'Phoebe BST';
+  public fullName: string = 'Phoebe (BST 130)';
+  public legacyFullName = 'Phoebe BST';
   public text: string = 'During this turn, damage from your Pokémon VMAX\'s attacks isn\'t affected by any effects on your opponent\'s Active Pokémon. You may play only 1 Supporter card during your turn.';
 
   public readonly PHOEBE_MARKER = 'PHOEBE_MARKER';

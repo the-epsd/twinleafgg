@@ -35,7 +35,8 @@ export class Toxtricityex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '100';
   public name: string = 'Toxtricity ex';
-  public fullName: string = 'Toxtricity ex PAR';
+  public fullName: string = 'Toxtricity ex (PAR 100)';
+  public legacyFullName = 'Toxtricity ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Knocking Hammer

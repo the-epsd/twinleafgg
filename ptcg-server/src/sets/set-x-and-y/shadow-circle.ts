@@ -17,7 +17,8 @@ export class ShadowCircle extends TrainerCard {
 
   public name: string = 'Shadow Circle';
 
-  public fullName: string = 'Shadow Circle XY';
+  public fullName: string = 'Shadow Circle (XY 126)';
+  public legacyFullName = 'Shadow Circle XY';
 
   public cardImage: string = 'assets/cardback.png';
 

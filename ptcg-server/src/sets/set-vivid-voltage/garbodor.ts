@@ -23,7 +23,7 @@ export class Garbodor extends PokemonCard {
       name: 'Trash Cyclone',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 30 damage for each Pokémon Tool card in your discard pile. Then, shuffle those cards into your deck.'
     },
     {
@@ -39,7 +39,8 @@ export class Garbodor extends PokemonCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Garbodor';
-  public fullName: string = 'Garbodor VIV';
+  public fullName: string = 'Garbodor (VIV 111)';
+  public legacyFullName = 'Garbodor VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Trash Cyclone

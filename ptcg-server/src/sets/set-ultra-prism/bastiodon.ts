@@ -32,7 +32,8 @@ export class Bastiodon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public name = 'Bastiodon';
-  public fullName = 'Bastiodon UPR';
+  public fullName = 'Bastiodon (UPR 85)';
+  public legacyFullName = 'Bastiodon UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -16,7 +16,8 @@ export class Opal extends TrainerCard {
   public setNumber: string = '158';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Opal';
-  public fullName: string = 'Opal VIV';
+  public fullName: string = 'Opal (VIV 158)';
+  public legacyFullName = 'Opal VIV';
   public text: string = 'Flip 2 coins. Search your deck for a number of cards up to the number of heads, put them into your hand, and shuffle your deck. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

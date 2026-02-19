@@ -34,7 +34,8 @@ export class MegaFroslassex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '47';
   public name: string = 'Mega Froslass ex';
-  public fullName: string = 'Mega Froslass ex M2a';
+  public fullName: string = 'Mega Froslass ex (ASC 47)';
+  public legacyFullName = 'Mega Froslass ex M2a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Rebellion attack - 50x damage based on opponent's hand size

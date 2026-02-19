@@ -40,7 +40,8 @@ export class Combusken extends PokemonCard {
 
   public name: string = 'Combusken';
 
-  public fullName: string = 'Combusken DRM';
+  public fullName: string = 'Combusken (DRM 5)';
+  public legacyFullName = 'Combusken DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
   

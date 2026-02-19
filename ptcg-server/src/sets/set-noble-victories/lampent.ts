@@ -27,7 +27,8 @@ export class Lampent extends PokemonCard {
 
   public set: string = 'NVI';
   public name: string = 'Lampent';
-  public fullName: string = 'Lampent NVI';
+  public fullName: string = 'Lampent (NVI 59)';
+  public legacyFullName = 'Lampent NVI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '59';
 

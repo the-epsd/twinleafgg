@@ -16,7 +16,8 @@ export class ThunderMountain extends TrainerCard {
   public setNumber: string = '191';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Thunder Mountain \u25C7';
-  public fullName: string = 'Thunder Mountain \u25C7 LOT';
+  public fullName: string = 'Thunder Mountain \u25C7 (LOT 191)';
+  public legacyFullName = 'Thunder Mountain \u25C7 LOT';
   public text: string = 'The attacks of Lightning Pok\u00e9mon (both yours and your opponent\'s) cost Lightning less. Whenever any player plays an Item or Supporter card from their hand, prevent all effects of that card done to this Stadium card. \u25C7 (Prism Star) Rule: You can\'t have more than 1 \u25C7 card with the same name in your deck. If a \u25C7 card would go to the discard pile, put it in the Lost Zone instead.';
 
   // Ref: set-lost-thunder/thunder-mountain-prism-star.ts (same card, duplicate implementation)

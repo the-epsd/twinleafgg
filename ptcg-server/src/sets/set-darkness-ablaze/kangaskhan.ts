@@ -45,7 +45,8 @@ export class Kangaskhan extends PokemonCard {
 
   public name: string = 'Kangaskhan';
 
-  public fullName: string = 'Kangaskhan DAA';
+  public fullName: string = 'Kangaskhan (DAA 133)';
+  public legacyFullName = 'Kangaskhan DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

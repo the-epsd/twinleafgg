@@ -40,7 +40,8 @@ export class Celebi extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celebi';
-  public fullName: string = 'Celebi XYP';
+  public fullName: string = 'Celebi (XYP 93)';
+  public legacyFullName = 'Celebi XYP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {

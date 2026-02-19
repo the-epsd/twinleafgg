@@ -36,7 +36,8 @@ export class Drifloon extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drifloon';
-  public fullName: string = 'Drifloon UPR';
+  public fullName: string = 'Drifloon (UPR 51)';
+  public legacyFullName = 'Drifloon UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Creepy Wind

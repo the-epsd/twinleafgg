@@ -25,5 +25,6 @@ export class Seedot extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Seedot';
-  public fullName: string = 'Seedot BKP';
+  public fullName: string = 'Seedot (BKP 4)';
+  public legacyFullName = 'Seedot BKP';
 }

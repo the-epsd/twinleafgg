@@ -36,6 +36,7 @@ export class Hitmonchan extends PokemonCard {
 
   public name: string = 'Hitmonchan';
 
-  public fullName: string = 'Hitmonchan BS';
+  public fullName: string = 'Hitmonchan (BS 7)';
+  public legacyFullName = 'Hitmonchan BS';
 
 }

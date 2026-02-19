@@ -32,7 +32,8 @@ export class Articuno extends PokemonCard {
   public setNumber: string = '144';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Articuno';
-  public fullName: string = 'Articuno MEW';
+  public fullName: string = 'Articuno (MEW 144)';
+  public legacyFullName = 'Articuno MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

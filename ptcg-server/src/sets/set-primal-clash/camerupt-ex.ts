@@ -23,14 +23,14 @@ export class CameruptEx extends PokemonCard {
       name: 'Tumbling Attack',
       cost: [R, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {
       name: 'Explosive Jet',
       cost: [R, R, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard as many [R] Energy attached to your Pokémon as you like. This attack does 50 damage times the number of Energy cards you discarded.'
     }
   ];
@@ -39,7 +39,8 @@ export class CameruptEx extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Camerupt-EX';
-  public fullName: string = 'Camerupt-EX PRC';
+  public fullName: string = 'Camerupt-EX (PRC 29)';
+  public legacyFullName = 'Camerupt-EX PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tumbling Attack

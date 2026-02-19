@@ -22,7 +22,7 @@ export class Golurk extends PokemonCard {
       name: 'Wreck',
       cost: [P, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 60 more damage. Discard that Stadium card.'
     },
     {
@@ -37,7 +37,8 @@ export class Golurk extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golurk';
-  public fullName: string = 'Golurk FFI';
+  public fullName: string = 'Golurk (FFI 43)';
+  public legacyFullName = 'Golurk FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wreck

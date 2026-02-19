@@ -96,7 +96,8 @@ export class Rotom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
   public name: string = 'Rotom';
-  public fullName: string = 'Rotom M2a';
+  public fullName: string = 'Rotom (ASC 92)';
+  public legacyFullName = 'Rotom M2a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Rotocall attack

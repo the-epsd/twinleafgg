@@ -13,7 +13,8 @@ export class SacredCharm extends TrainerCard {
   public regulationMark = 'I';
   public set: string = 'PFL';
   public name: string = 'Sacred Charm';
-  public fullName: string = 'Sacred Charm M2';
+  public fullName: string = 'Sacred Charm (PFL 93)';
+  public legacyFullName = 'Sacred Charm M2';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
   public text: string = 'The Pokémon this card is attached to takes 30 less damage from attacks from your opponent\'s Pokémon that have any Abilities.';

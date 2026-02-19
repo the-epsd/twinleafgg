@@ -38,7 +38,8 @@ export class AlolanDugtrio extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Dugtrio';
-  public fullName: string = 'Alolan Dugtrio SUM';
+  public fullName: string = 'Alolan Dugtrio (SUM 87)';
+  public legacyFullName = 'Alolan Dugtrio SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Tangling Hair (passive - retreat cost increase)

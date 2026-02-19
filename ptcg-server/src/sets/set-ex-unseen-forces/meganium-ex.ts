@@ -43,7 +43,8 @@ export class Meganiumex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '106';
   public name: string = 'Meganium ex';
-  public fullName: string = 'Meganium ex UF';
+  public fullName: string = 'Meganium ex (UF 106)';
+  public legacyFullName = 'Meganium ex UF';
 
   public readonly NURTURE_AND_HEAL_MARKER = 'NURTURE_AND_HEAL_MARKER';
 

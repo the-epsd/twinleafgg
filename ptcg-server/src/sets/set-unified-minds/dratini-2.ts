@@ -28,7 +28,7 @@ export class Dratini2 extends PokemonCard {
       name: 'Jump On',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Dratini2 extends PokemonCard {
   public setNumber: string = '148';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dratini';
-  public fullName: string = 'Dratini UNM 148';
+  public fullName: string = 'Dratini (UNM 148)';
+  public legacyFullName = 'Dratini UNM 148';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Aqua Lift (passive - modify retreat cost)

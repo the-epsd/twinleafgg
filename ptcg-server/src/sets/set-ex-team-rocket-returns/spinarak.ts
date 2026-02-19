@@ -28,7 +28,8 @@ export class Spinarak extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spinarak';
-  public fullName: string = 'Spinarak TRR';
+  public fullName: string = 'Spinarak (TRR 78)';
+  public legacyFullName = 'Spinarak TRR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

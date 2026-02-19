@@ -30,7 +30,7 @@ export class Tyranitar extends PokemonCard {
       name: 'Dark Mountain',
       cost: [D, D, D, D, D],
       damage: 150,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Discard the top 2 cards of your deck. This attack does 50 more damage for each Supporter card discarded in this way.'
     }
   ];
@@ -39,7 +39,8 @@ export class Tyranitar extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tyranitar';
-  public fullName: string = 'Tyranitar FCO';
+  public fullName: string = 'Tyranitar (FCO 56)';
+  public legacyFullName = 'Tyranitar FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Raging Roar

@@ -37,7 +37,8 @@ export class Mimikyu extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mimikyu';
-  public fullName: string = 'Mimikyu DAA';
+  public fullName: string = 'Mimikyu (DAA 81)';
+  public legacyFullName = 'Mimikyu DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Heal Jamming (passive - prevent healing to opponent's benched Pokemon)

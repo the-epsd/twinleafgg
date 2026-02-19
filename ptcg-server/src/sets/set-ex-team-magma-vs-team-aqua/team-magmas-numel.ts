@@ -30,7 +30,8 @@ export class TeamMagmasNumel extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '64';
   public name: string = 'Team Magma\'s Numel';
-  public fullName: string = 'Team Magma\'s Numel MA';
+  public fullName: string = 'Team Magma\'s Numel (MA 64)';
+  public legacyFullName = 'Team Magma\'s Numel MA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

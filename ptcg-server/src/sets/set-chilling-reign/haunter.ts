@@ -28,5 +28,6 @@ export class Haunter extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Haunter';
-  public fullName: string = 'Haunter CRE';
+  public fullName: string = 'Haunter (CRE 56)';
+  public legacyFullName = 'Haunter CRE';
 }

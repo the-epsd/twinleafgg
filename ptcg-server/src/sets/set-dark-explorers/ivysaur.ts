@@ -43,7 +43,8 @@ export class Ivysaur extends PokemonCard {
 
   public name: string = 'Ivysaur';
 
-  public fullName: string = 'Ivysaur DEX';
+  public fullName: string = 'Ivysaur (DEX 2)';
+  public legacyFullName = 'Ivysaur DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -39,7 +39,8 @@ export class Noctowl extends PokemonCard {
   public setNumber: string = '144';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Noctowl';
-  public fullName: string = 'Noctowl SSH';
+  public fullName: string = 'Noctowl (SSH 144)';
+  public legacyFullName = 'Noctowl SSH';
 
   public usedCarryOff = false;
 

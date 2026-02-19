@@ -37,7 +37,8 @@ export class Regigigas extends PokemonCard {
 
   public name: string = 'Regigigas';
 
-  public fullName: string = 'Regigigas PHF';
+  public fullName: string = 'Regigigas (PHF 86)';
+  public legacyFullName = 'Regigigas PHF';
 
   public cardImage: string = 'assets/cardback.png';
 

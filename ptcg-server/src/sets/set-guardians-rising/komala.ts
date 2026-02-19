@@ -35,7 +35,8 @@ export class Komala extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Komala';
-  public fullName: string = 'Komala GRI';
+  public fullName: string = 'Komala (GRI 114)';
+  public legacyFullName = 'Komala GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Comatose (passive - when energy is attached from hand, become asleep)

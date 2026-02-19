@@ -42,7 +42,8 @@ export class Spidopsex extends PokemonCard {
 
   public name: string = 'Spidops ex';
 
-  public fullName: string = 'Spidops ex SVI';
+  public fullName: string = 'Spidops ex (SVI 19)';
+  public legacyFullName = 'Spidops ex SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

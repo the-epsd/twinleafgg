@@ -33,7 +33,8 @@ export class Archeops extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Archeops';
-  public fullName: string = 'Archeops SV11W';
+  public fullName: string = 'Archeops (WHT 51)';
+  public legacyFullName = 'Archeops SV11W';
 
   public readonly PRIMAL_WINGS_MARKER = 'PRIMAL_WINGS_MARKER';
 

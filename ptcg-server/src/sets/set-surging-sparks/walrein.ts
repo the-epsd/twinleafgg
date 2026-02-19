@@ -39,7 +39,8 @@ export class Walrein extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
   public name: string = 'Walrein';
-  public fullName: string = 'Walrein SSP';
+  public fullName: string = 'Walrein (SSP 45)';
+  public legacyFullName = 'Walrein SSP';
 
   public readonly FRIGID_FANGS_MARKER = 'FRIGID_FANGS_MARKER';
 

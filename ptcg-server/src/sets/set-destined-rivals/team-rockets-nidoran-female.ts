@@ -26,7 +26,8 @@ export class TeamRocketsNidoranFemale extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Nidoran F';
-  public fullName: string = 'Team Rocket\'s Nidoran F DRI';
+  public fullName: string = 'Team Rocket\'s Nidoran F (DRI 114)';
+  public legacyFullName = 'Team Rocket\'s Nidoran F DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

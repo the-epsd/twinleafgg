@@ -38,7 +38,8 @@ export class Krookodile extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '62';
   public name: string = 'Krookodile';
-  public fullName: string = 'Krookodile EPO';
+  public fullName: string = 'Krookodile (EPO 62)';
+  public legacyFullName = 'Krookodile EPO';
 
   public readonly BLACK_EYES_MARKER = 'BLACK_EYES_MARKER';
 

@@ -40,7 +40,8 @@ export class TeamRocketsPorygonZ extends PokemonCard {
   public setNumber: string = '155';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Porygon-Z';
-  public fullName: string = 'Team Rocket\'s Porygon-Z DRI';
+  public fullName: string = 'Team Rocket\'s Porygon-Z (DRI 155)';
+  public legacyFullName = 'Team Rocket\'s Porygon-Z DRI';
 
   public readonly RECONSTITUTE_MARKER = 'RECONSTITUTE_MARKER';
 

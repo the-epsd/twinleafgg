@@ -12,7 +12,8 @@ export class PokeManiac extends TrainerCard {
   public setNumber: string = '204';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pok\u00e9 Maniac';
-  public fullName: string = 'Pok\u00e9 Maniac UNM';
+  public fullName: string = 'Pok\u00e9 Maniac (UNM 204)';
+  public legacyFullName = 'Pok\u00e9 Maniac UNM';
   public text: string = 'Search your deck for up to 3 Pok\u00e9mon that have a Retreat Cost of exactly 4, reveal them, and put them into your hand. Then, shuffle your deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-cosmic-eclipse/steelix.ts (Thumping Fall - retreat cost 4 filter)

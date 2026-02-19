@@ -32,7 +32,8 @@ export class Espeon extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Espeon';
-  public fullName: string = 'Espeon DEX';
+  public fullName: string = 'Espeon (DEX 48)';
+  public legacyFullName = 'Espeon DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Solar Revelation - prevent effects (except damage) on Pokémon with energy

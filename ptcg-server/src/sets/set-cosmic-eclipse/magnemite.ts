@@ -34,7 +34,8 @@ export class Magnemite extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magnemite';
-  public fullName: string = 'Magnemite CEC';
+  public fullName: string = 'Magnemite (CEC 68)';
+  public legacyFullName = 'Magnemite CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mirror Shot

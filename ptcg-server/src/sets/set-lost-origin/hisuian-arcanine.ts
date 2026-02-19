@@ -43,7 +43,8 @@ export class HisuianArcanine extends PokemonCard {
 
   public name: string = 'Hisuian Arcanine';
 
-  public fullName: string = 'Hisuian Arcanine LOR';
+  public fullName: string = 'Hisuian Arcanine (LOR 84)';
+  public legacyFullName = 'Hisuian Arcanine LOR';
 
   public setNumber: string = '84';
 

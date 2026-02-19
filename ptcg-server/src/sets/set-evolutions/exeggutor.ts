@@ -22,7 +22,7 @@ export class Exeggutor extends PokemonCard {
       name: 'ふみつけ[Stomp]',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'コインを1回投げオモテなら、10ダメージを追加。 Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];
@@ -31,7 +31,8 @@ export class Exeggutor extends PokemonCard {
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'ナッシー[Exeggutor]';
-  public fullName: string = 'ナッシー[Exeggutor] EVO';
+  public fullName: string = 'ナッシー[Exeggutor] (EVO 109)';
+  public legacyFullName = 'ナッシー[Exeggutor] EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: ふみつけ[Stomp]

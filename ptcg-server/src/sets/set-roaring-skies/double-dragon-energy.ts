@@ -18,7 +18,8 @@ export class DoubleDragonEnergy extends EnergyCard {
 
   public name = 'Double Dragon Energy';
 
-  public fullName = 'Double Dragon Energy ROS';
+  public fullName = 'Double Dragon Energy (ROS 97)';
+  public legacyFullName = 'Double Dragon Energy ROS';
 
   public cardImage: string = 'assets/cardback.png';
 

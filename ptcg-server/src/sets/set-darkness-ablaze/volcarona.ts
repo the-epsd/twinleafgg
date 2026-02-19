@@ -36,7 +36,8 @@ export class Volcarona extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Volcarona';
-  public fullName: string = 'Volcarona DAA';
+  public fullName: string = 'Volcarona (DAA 30)';
+  public legacyFullName = 'Volcarona DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Cauterize

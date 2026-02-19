@@ -40,7 +40,8 @@ export class Deerling extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Deerling';
-  public fullName: string = 'Deerling CRE';
+  public fullName: string = 'Deerling (CRE 11)';
+  public legacyFullName = 'Deerling CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Growl

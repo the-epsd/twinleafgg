@@ -32,5 +32,6 @@ export class Jigglypuff extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jigglypuff';
-  public fullName: string = 'Jigglypuff DAA';
+  public fullName: string = 'Jigglypuff (DAA 67)';
+  public legacyFullName = 'Jigglypuff DAA';
 }

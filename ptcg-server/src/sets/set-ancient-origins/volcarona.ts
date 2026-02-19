@@ -37,7 +37,8 @@ export class Volcarona extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Volcarona';
-  public fullName: string = 'Volcarona AOR';
+  public fullName: string = 'Volcarona (AOR 17)';
+  public legacyFullName = 'Volcarona AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Solar Birth

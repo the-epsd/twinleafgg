@@ -32,7 +32,8 @@ export class Machoke extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machoke';
-  public fullName: string = 'Machoke PLB';
+  public fullName: string = 'Machoke (PLB 48)';
+  public legacyFullName = 'Machoke PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -23,7 +23,8 @@ export class BoxOfDisaster extends TrainerCard {
 
   public name = 'Box of Disaster';
 
-  public fullName = 'Box of Disaster LOR';
+  public fullName = 'Box of Disaster (LOR 154)';
+  public legacyFullName = 'Box of Disaster LOR';
 
   public damageDealt: boolean = false;
 

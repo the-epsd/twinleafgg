@@ -32,5 +32,6 @@ export class Snover extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snover';
-  public fullName: string = 'Snover RCL';
+  public fullName: string = 'Snover (RCL 12)';
+  public legacyFullName = 'Snover RCL';
 }

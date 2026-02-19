@@ -36,7 +36,8 @@ export class Serperior extends PokemonCard {
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Serperior';
-  public fullName: string = 'Serperior DRX';
+  public fullName: string = 'Serperior (DRX 125)';
+  public legacyFullName = 'Serperior DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Royal Heal - Between turns healing

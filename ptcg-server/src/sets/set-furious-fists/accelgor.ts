@@ -26,7 +26,7 @@ export class Accelgor extends PokemonCard {
       name: 'Raid',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon evolved from Shelmet during this turn, this attack does 40 more damage.'
     },
     {
@@ -41,7 +41,8 @@ export class Accelgor extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Accelgor';
-  public fullName: string = 'Accelgor FFI';
+  public fullName: string = 'Accelgor (FFI 9)';
+  public legacyFullName = 'Accelgor FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Raid

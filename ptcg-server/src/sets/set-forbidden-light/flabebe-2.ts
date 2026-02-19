@@ -31,7 +31,8 @@ export class Flabebe2 extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flabébé';
-  public fullName: string = 'Flabébé FLI 84';
+  public fullName: string = 'Flabébé (FLI 84)';
+  public legacyFullName = 'Flabébé FLI 84';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Secret Blessings

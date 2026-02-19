@@ -31,7 +31,8 @@ export class DialgaEx extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dialga-EX';
-  public fullName: string = 'Dialga-EX PLB';
+  public fullName: string = 'Dialga-EX (PLB 65)';
+  public legacyFullName = 'Dialga-EX PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

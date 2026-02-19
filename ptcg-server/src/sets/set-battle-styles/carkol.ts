@@ -33,7 +33,8 @@ export class Carkol extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '79';
   public name: string = 'Carkol';
-  public fullName: string = 'Carkol BST';
+  public fullName: string = 'Carkol (BST 79)';
+  public legacyFullName = 'Carkol BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

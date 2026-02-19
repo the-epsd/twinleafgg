@@ -35,7 +35,8 @@ export class Drowzee extends PokemonCard {
 
   public set: string = 'TR';
   public name: string = 'Drowzee';
-  public fullName: string = 'Drowzee TR';
+  public fullName: string = 'Drowzee (TR 54)';
+  public legacyFullName = 'Drowzee TR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '54';
 

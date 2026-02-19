@@ -38,7 +38,8 @@ export class Dusknoir extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dusknoir';
-  public fullName: string = 'Dusknoir FLF';
+  public fullName: string = 'Dusknoir (FLF 40)';
+  public legacyFullName = 'Dusknoir FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Refs: set-plasma-freeze/yamask.ts (damage counter movement), AGENTS-patterns.md (ability pattern)

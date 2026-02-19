@@ -36,7 +36,8 @@ export class Solrock extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solrock';
-  public fullName: string = 'Solrock CES';
+  public fullName: string = 'Solrock (CES 62)';
+  public legacyFullName = 'Solrock CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sunbeam (passive - modify HP of Lunatone)

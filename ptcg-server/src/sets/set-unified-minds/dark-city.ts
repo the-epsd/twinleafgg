@@ -15,7 +15,8 @@ export class DarkCity extends TrainerCard {
 
   public name: string = 'Dark City';
 
-  public fullName: string = 'Dark City UNM';
+  public fullName: string = 'Dark City (UNM 193)';
+  public legacyFullName = 'Dark City UNM';
 
   public cardImage: string = 'assets/cardback.png';
 

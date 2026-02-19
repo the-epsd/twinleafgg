@@ -93,7 +93,8 @@ export class CrushingHammer extends TrainerCard {
 
   public name: string = 'Crushing Hammer';
 
-  public fullName: string = 'Crushing Hammer SVI';
+  public fullName: string = 'Crushing Hammer (SVI 168)';
+  public legacyFullName = 'Crushing Hammer SVI';
 
   public text: string =
     'Flip a coin. If heads, discard an Energy attached to 1 of your ' +

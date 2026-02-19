@@ -49,7 +49,8 @@ export class Xatu extends PokemonCard {
 
   public name: string = 'Xatu';
 
-  public fullName: string = 'Xatu PAR';
+  public fullName: string = 'Xatu (PAR 72)';
+  public legacyFullName = 'Xatu PAR';
 
   public readonly AKASHIC_SENSE_MARKER = 'AKASHIC_SENSE_MARKER';
 

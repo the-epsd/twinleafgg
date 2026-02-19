@@ -33,7 +33,8 @@ export class Froslass extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
   public name: string = 'Froslass';
-  public fullName: string = 'Froslass TWM';
+  public fullName: string = 'Froslass (TWM 53)';
+  public legacyFullName = 'Froslass TWM';
 
   public CHILLING_CURTAIN_MARKER = 'CHILLING_CURTAIN_MARKER';
 

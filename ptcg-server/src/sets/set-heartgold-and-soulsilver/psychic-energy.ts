@@ -15,6 +15,7 @@ export class PsychicEnergy extends EnergyCard {
 
   public name = 'Psychic Energy';
 
-  public fullName = 'Psychic Energy HS';
+  public fullName = 'Psychic Energy (HS 119)';
+  public legacyFullName = 'Psychic Energy HS';
 
 }

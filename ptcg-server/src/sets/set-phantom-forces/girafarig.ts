@@ -27,7 +27,7 @@ export class Girafarig extends PokemonCard {
       name: 'Psybite',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any [P] Energy attached to it, this attack does 30 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Girafarig extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Girafarig';
-  public fullName: string = 'Girafarig PHF';
+  public fullName: string = 'Girafarig (PHF 82)';
+  public legacyFullName = 'Girafarig PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Psybite

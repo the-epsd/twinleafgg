@@ -35,7 +35,8 @@ export class StaraptorFB extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
   public name: string = 'Staraptor FB';
-  public fullName: string = 'Staraptor FB SV';
+  public fullName: string = 'Staraptor FB (SV 11)';
+  public legacyFullName = 'Staraptor FB SV';
 
   public usedWhirlwind = false;
 

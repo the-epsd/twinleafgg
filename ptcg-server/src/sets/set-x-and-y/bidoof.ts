@@ -28,7 +28,8 @@ export class Bidoof extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bidoof';
-  public fullName: string = 'Bidoof XY';
+  public fullName: string = 'Bidoof (XY 106)';
+  public legacyFullName = 'Bidoof XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hyper Fang

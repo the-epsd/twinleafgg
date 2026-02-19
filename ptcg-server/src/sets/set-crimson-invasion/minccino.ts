@@ -29,7 +29,8 @@ export class Minccino extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Minccino';
-  public fullName: string = 'Minccino CIN';
+  public fullName: string = 'Minccino (CIN 85)';
+  public legacyFullName = 'Minccino CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tickle

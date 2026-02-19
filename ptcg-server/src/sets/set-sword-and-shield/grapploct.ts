@@ -39,7 +39,8 @@ export class Grapploct extends PokemonCard {
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grapploct';
-  public fullName: string = 'Grapploct SSH';
+  public fullName: string = 'Grapploct (SSH 113)';
+  public legacyFullName = 'Grapploct SSH';
 
   public readonly OCTOLOCK_MARKER = 'GRAPPLOCT_SSH_OCTOLOCK_MARKER';
 

@@ -27,7 +27,7 @@ export class Kecleon extends PokemonCard {
       name: 'Tongue Smack',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 50 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Kecleon extends PokemonCard {
   public setNumber: string = '161';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kecleon';
-  public fullName: string = 'Kecleon LOT';
+  public fullName: string = 'Kecleon (LOT 161)';
+  public legacyFullName = 'Kecleon LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Unit Color 1 (passive - type change when Unit Energy GFW attached)

@@ -36,7 +36,8 @@ export class Lucario extends PokemonCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lucario';
-  public fullName: string = 'Lucario UNM';
+  public fullName: string = 'Lucario (UNM 117)';
+  public legacyFullName = 'Lucario UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Tag Coach (passive - reduce damage to TAG TEAM Pokemon)

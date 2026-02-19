@@ -26,7 +26,8 @@ export class Klink extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klink';
-  public fullName: string = 'Klink DEX';
+  public fullName: string = 'Klink (DEX 75)';
+  public legacyFullName = 'Klink DEX';
 
   private usedSmashTurn: boolean = false;
 

@@ -12,6 +12,7 @@ import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
 
 export class ZacianVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
+  public multiPartPosition: 'Top' | 'Bottom' | 'Top Left' | 'Top Right' | 'Bottom Left' | 'Bottom Right' = 'Top Left';
   public tags = [ CardTag.POKEMON_VUNION ];
   public cardType: CardType = M;
   public hp: number = 320;
@@ -61,7 +62,8 @@ export class ZacianVUNIONTopLeft extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '163';
   public name: string = 'Zacian V-UNION';
-  public fullName: string = 'Zacian V-UNION (Top Left) SWSH';
+  public fullName: string = 'Zacian V-UNION (SWSH 163)';
+  public legacyFullName = 'Zacian V-UNION (Top Left) SWSH';
 
   public readonly DANCE_REDUCED_DAMAGE_MARKER = 'DANCE_REDUCED_DAMAGE_MARKER';
 

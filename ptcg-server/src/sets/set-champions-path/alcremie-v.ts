@@ -41,7 +41,8 @@ export class AlcremieV extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alcremie V';
-  public fullName: string = 'Alcremie V CPA';
+  public fullName: string = 'Alcremie V (CPA 22)';
+  public legacyFullName = 'Alcremie V CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sugary Sprinkles

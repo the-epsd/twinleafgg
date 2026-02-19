@@ -44,7 +44,8 @@ export class ShayminV extends PokemonCard {
 
   public name: string = 'Shaymin V';
 
-  public fullName: string = 'Shaymin V BRS';
+  public fullName: string = 'Shaymin V (BRS 13)';
+  public legacyFullName = 'Shaymin V BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -33,7 +33,8 @@ export class EthansPichu extends PokemonCard {
 
   public name: string = 'Ethan\'s Pichu';
 
-  public fullName: string = 'Ethan\'s Pichu DRI';
+  public fullName: string = 'Ethan\'s Pichu (DRI 71)';
+  public legacyFullName = 'Ethan\'s Pichu DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

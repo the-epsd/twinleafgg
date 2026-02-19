@@ -10,7 +10,8 @@ export class Magneton extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Magneton BS';
+  public fullName = 'Magneton (BS 9)';
+  public legacyFullName = 'Magneton BS';
 
   public name = 'Magneton';
 

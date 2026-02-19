@@ -33,7 +33,8 @@ export class Beartic2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '30';
   public name: string = 'Beartic';
-  public fullName: string = 'Beartic EPO 30';
+  public fullName: string = 'Beartic (EPO 30)';
+  public legacyFullName = 'Beartic EPO 30';
 
   public readonly SHEER_COLD_MARKER = 'SHEER_COLD_MARKER';
 

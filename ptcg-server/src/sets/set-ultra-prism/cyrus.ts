@@ -18,7 +18,8 @@ export class Cyrus extends TrainerCard {
   public setNumber: string = '120';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cyrus \u25C7';
-  public fullName: string = 'Cyrus \u25C7 UPR';
+  public fullName: string = 'Cyrus \u25C7 (UPR 120)';
+  public legacyFullName = 'Cyrus \u25C7 UPR';
   public text: string = 'You can play this card only if your Active Pokémon is a Water or Metal Pokémon. Your opponent chooses 2 Benched Pokémon and shuffles the others, and all cards attached to them, into their deck. You may play only 1 Supporter card during your turn (before your attack). \u25C7 (Prism Star) Rule: You can\'t have more than 1 \u25C7 card with the same name in your deck. If a \u25C7 card would go to the discard pile, put it in the Lost Zone instead.';
 
   // Ref: set-ultra-prism/cyrus-prism-star.ts (Cyrus Prism Star)

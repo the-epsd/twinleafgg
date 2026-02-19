@@ -30,7 +30,8 @@ export class Carnivine extends PokemonCard {
   public set: string = 'BST';
   public regulationMark = 'E';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Carnivine BST';
+  public fullName: string = 'Carnivine (BST 9)';
+  public legacyFullName = 'Carnivine BST';
   public name: string = 'Carnivine';
   public setNumber: string = '9';
 

@@ -32,7 +32,8 @@ export class Lickilicky extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '162';
   public name = 'Lickilicky';
-  public fullName = 'Lickilicky UNM';
+  public fullName = 'Lickilicky (UNM 162)';
+  public legacyFullName = 'Lickilicky UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

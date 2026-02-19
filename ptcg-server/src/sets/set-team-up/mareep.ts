@@ -21,7 +21,8 @@ export class Mareep extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public fullName = 'Mareep TEU';
+  public fullName = 'Mareep (TEU 41)';
+  public legacyFullName = 'Mareep TEU';
 
   public name = 'Mareep';
 

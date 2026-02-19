@@ -42,7 +42,8 @@ export class Krookodile extends PokemonCard {
 
   public name: string = 'Krookodile';
 
-  public fullName: string = 'Krookodile DEX';
+  public fullName: string = 'Krookodile (DEX 66)';
+  public legacyFullName = 'Krookodile DEX';
 
   public cardImage: string = 'assets/cardback.png';
 

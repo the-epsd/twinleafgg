@@ -32,7 +32,8 @@ export class Gyarados extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gyarados';
-  public fullName: string = 'Gyarados DRX';
+  public fullName: string = 'Gyarados (DRX 24)';
+  public legacyFullName = 'Gyarados DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

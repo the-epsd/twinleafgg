@@ -29,7 +29,8 @@ export class SamiyasMantyke extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'Samiya\'s Mantyke';
-  public fullName: string = 'Samiya\'s Mantyke PCGP';
+  public fullName: string = 'Samiya\'s Mantyke (PCGP 137)';
+  public legacyFullName = 'Samiya\'s Mantyke PCGP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '137';
 

@@ -25,7 +25,7 @@ export class CentiskorchVmax extends PokemonCard {
       name: 'G-Max Centiferno',
       cost: [C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 40 more damage for each [R] Energy attached to this Pokémon. If you did any damage with this attack, you may attach a [R] Energy card from your discard pile to this Pokémon.'
     }
   ];
@@ -35,7 +35,8 @@ export class CentiskorchVmax extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Centiskorch VMAX';
-  public fullName: string = 'Centiskorch VMAX DAA';
+  public fullName: string = 'Centiskorch VMAX (DAA 34)';
+  public legacyFullName = 'Centiskorch VMAX DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: G-Max Centiferno

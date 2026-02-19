@@ -36,7 +36,8 @@ export class Pyroar extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pyroar';
-  public fullName: string = 'Pyroar LOT';
+  public fullName: string = 'Pyroar (LOT 51)';
+  public legacyFullName = 'Pyroar LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Crunch

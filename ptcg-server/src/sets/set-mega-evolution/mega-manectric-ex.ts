@@ -33,7 +33,8 @@ export class MegaManectricEx extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '50';
   public name: string = 'Mega Manectric ex';
-  public fullName: string = 'Mega Manectric ex M1S';
+  public fullName: string = 'Mega Manectric ex (MEG 50)';
+  public legacyFullName = 'Mega Manectric ex M1S';
   public regulationMark: string = 'I';
 
   public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';

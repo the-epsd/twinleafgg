@@ -31,7 +31,8 @@ export class GengarEx extends PokemonCard {
 
   public set: string = 'PHF';
   public name: string = 'Gengar-EX';
-  public fullName: string = 'Gengar-EX PHF';
+  public fullName: string = 'Gengar-EX (PHF 34)';
+  public legacyFullName = 'Gengar-EX PHF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '34';
 

@@ -32,5 +32,6 @@ export class Anorith extends PokemonCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Anorith';
-  public fullName: string = 'Anorith CEC';
+  public fullName: string = 'Anorith (CEC 111)';
+  public legacyFullName = 'Anorith CEC';
 }

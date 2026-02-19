@@ -31,5 +31,6 @@ export class Makuhita extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Makuhita';
-  public fullName: string = 'Makuhita FFI';
+  public fullName: string = 'Makuhita (FFI 51)';
+  public legacyFullName = 'Makuhita FFI';
 }

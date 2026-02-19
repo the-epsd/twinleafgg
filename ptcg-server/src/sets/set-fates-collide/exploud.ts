@@ -26,7 +26,7 @@ export class Exploud extends PokemonCard {
       name: 'Ambush',
       cost: [C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     },
     {
@@ -41,7 +41,8 @@ export class Exploud extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Exploud';
-  public fullName: string = 'Exploud FCO';
+  public fullName: string = 'Exploud (FCO 82)';
+  public legacyFullName = 'Exploud FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ambush

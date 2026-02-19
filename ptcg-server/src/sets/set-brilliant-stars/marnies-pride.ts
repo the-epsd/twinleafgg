@@ -24,7 +24,8 @@ export class MarniesPride extends TrainerCard {
 
   public name: string = 'Marnie\'s Pride';
 
-  public fullName: string = 'Marnie\'s Pride BRS';
+  public fullName: string = 'Marnie\'s Pride (BRS 145)';
+  public legacyFullName = 'Marnie\'s Pride BRS';
 
   public text: string = 'Attach a basic Energy card from your discard pile to 1 of your Benched Pokémon.';
 

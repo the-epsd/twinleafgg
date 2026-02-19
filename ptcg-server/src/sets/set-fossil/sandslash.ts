@@ -31,7 +31,8 @@ export class Sandslash extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Sandslash';
-  public fullName: string = 'Sandslash FO';
+  public fullName: string = 'Sandslash (FO 41)';
+  public legacyFullName = 'Sandslash FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

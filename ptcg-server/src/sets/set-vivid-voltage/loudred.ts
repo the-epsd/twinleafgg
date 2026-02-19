@@ -26,7 +26,8 @@ export class Loudred extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '136';
   public name: string = 'Loudred';
-  public fullName: string = 'Loudred VIV';
+  public fullName: string = 'Loudred (VIV 136)';
+  public legacyFullName = 'Loudred VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

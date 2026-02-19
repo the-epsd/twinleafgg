@@ -16,7 +16,8 @@ export class HolonLass extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
   public name: string = 'Holon Lass';
-  public fullName: string = 'Holon Lass DS';
+  public fullName: string = 'Holon Lass (DS 92)';
+  public legacyFullName = 'Holon Lass DS';
 
   public text: string =
     'Discard a card from your hand. If you can\'t discard a card from your hand, you can\'t play this card.\n\nCount the total number of Prize cards left(both yours and your opponent\'s). Look at that many cards from the top of your deck, choose as many Energy cards as you like, show them to your opponent, and put them into your hand. Put the other cards back on top of your deck. Shuffle your deck afterward.';

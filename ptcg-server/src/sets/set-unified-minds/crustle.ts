@@ -28,7 +28,7 @@ export class Crustle extends PokemonCard {
       name: 'Fury Cutter',
       cost: [G, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 3 coins. If 1 of them is heads, this attack does 40 more damage. If 2 of them are heads, this attack does 80 more damage. If all of them are heads, this attack does 150 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Crustle extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crustle';
-  public fullName: string = 'Crustle UNM';
+  public fullName: string = 'Crustle (UNM 11)';
+  public legacyFullName = 'Crustle UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Shell Armor (passive - damage reduction)

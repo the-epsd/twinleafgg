@@ -36,7 +36,8 @@ export class Latias extends PokemonCard {
 
   public set: string = 'HP';
   public name: string = 'Latias';
-  public fullName: string = 'Latias HP';
+  public fullName: string = 'Latias (HP 11)';
+  public legacyFullName = 'Latias HP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
 

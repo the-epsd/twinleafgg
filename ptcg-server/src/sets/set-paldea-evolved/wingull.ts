@@ -21,6 +21,7 @@ export class Wingull extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '158';
   public name: string = 'Wingull';
-  public fullName: string = 'Wingull PAL';
+  public fullName: string = 'Wingull (PAL 158)';
+  public legacyFullName = 'Wingull PAL';
 
 }

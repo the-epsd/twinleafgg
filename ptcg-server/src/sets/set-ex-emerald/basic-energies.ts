@@ -15,7 +15,8 @@ export class GrassEnergy extends EnergyCard {
 
   public name = 'Grass Energy';
 
-  public fullName = 'Grass Energy EM';
+  public fullName = 'Grass Energy (EM 101)';
+  public legacyFullName = 'Grass Energy EM';
 
 }
 
@@ -33,7 +34,8 @@ export class FireEnergy extends EnergyCard {
 
   public name = 'Fire Energy';
 
-  public fullName = 'Fire Energy EM';
+  public fullName = 'Fire Energy (EM 102)';
+  public legacyFullName = 'Fire Energy EM';
 
 }
 
@@ -51,7 +53,8 @@ export class WaterEnergy extends EnergyCard {
 
   public name = 'Water Energy';
 
-  public fullName = 'Water Energy EM';
+  public fullName = 'Water Energy (EM 103)';
+  public legacyFullName = 'Water Energy EM';
 
 }
 
@@ -69,7 +72,8 @@ export class LightningEnergy extends EnergyCard {
 
   public name = 'Lightning Energy';
 
-  public fullName = 'Lightning Energy EM';
+  public fullName = 'Lightning Energy (EM 104)';
+  public legacyFullName = 'Lightning Energy EM';
 
 }
 
@@ -87,7 +91,8 @@ export class PsychicEnergy extends EnergyCard {
 
   public name = 'Psychic Energy';
 
-  public fullName = 'Psychic Energy EM';
+  public fullName = 'Psychic Energy (EM 105)';
+  public legacyFullName = 'Psychic Energy EM';
 
 }
 
@@ -105,6 +110,7 @@ export class FightingEnergy extends EnergyCard {
 
   public name = 'Fighting Energy';
 
-  public fullName = 'Fighting Energy EM';
+  public fullName = 'Fighting Energy (EM 106)';
+  public legacyFullName = 'Fighting Energy EM';
 
 }

@@ -29,7 +29,7 @@ export class Steelix extends PokemonCard {
       name: 'Tail Crush',
       cost: [M, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Steelix extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steelix';
-  public fullName: string = 'Steelix CES';
+  public fullName: string = 'Steelix (CES 89)';
+  public legacyFullName = 'Steelix CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Tail Crush

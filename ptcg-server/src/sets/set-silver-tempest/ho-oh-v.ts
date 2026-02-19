@@ -30,7 +30,8 @@ export class HoOhV extends PokemonCard {
 
   public set: string = 'SIT';
   public name: string = 'Ho-Oh V';
-  public fullName: string = 'Ho-Oh V SIT';
+  public fullName: string = 'Ho-Oh V (SIT 001)';
+  public legacyFullName = 'Ho-Oh V SIT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '001';
 

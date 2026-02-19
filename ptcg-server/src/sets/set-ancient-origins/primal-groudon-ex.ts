@@ -37,7 +37,7 @@ export class PrimalGroudonEx extends PokemonCard {
       name: 'Gaia Volcano',
       cost: [F, F, F, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card.'
     }
   ];
@@ -46,7 +46,8 @@ export class PrimalGroudonEx extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Primal Groudon-EX';
-  public fullName: string = 'Primal Groudon-EX AOR';
+  public fullName: string = 'Primal Groudon-EX (AOR 97)';
+  public legacyFullName = 'Primal Groudon-EX AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Primal Reversion Rule + Theta Max

@@ -39,7 +39,7 @@ export class IncineroarGx extends PokemonCard {
       name: 'Darkest Tornado-GX',
       cost: [C, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 50 more damage for each damage counter on this Pokémon. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];
@@ -48,7 +48,8 @@ export class IncineroarGx extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Incineroar-GX';
-  public fullName: string = 'Incineroar-GX TEU';
+  public fullName: string = 'Incineroar-GX (TEU 97)';
+  public legacyFullName = 'Incineroar-GX TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Scar Charge

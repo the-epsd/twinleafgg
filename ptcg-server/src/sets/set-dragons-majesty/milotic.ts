@@ -37,7 +37,8 @@ export class Milotic extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Milotic';
-  public fullName: string = 'Milotic DRM';
+  public fullName: string = 'Milotic (DRM 29)';
+  public legacyFullName = 'Milotic DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Aurora Wave

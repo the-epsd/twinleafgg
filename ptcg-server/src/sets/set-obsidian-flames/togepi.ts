@@ -31,7 +31,8 @@ export class Togepi extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
   public name: string = 'Togepi';
-  public fullName: string = 'Togepi OBF';
+  public fullName: string = 'Togepi (OBF 83)';
+  public legacyFullName = 'Togepi OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Whiny Voice

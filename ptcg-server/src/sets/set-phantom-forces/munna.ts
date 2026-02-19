@@ -26,7 +26,7 @@ export class Munna extends PokemonCard {
       name: 'Double Headbutt',
       cost: [P, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
     }
   ];
@@ -35,7 +35,8 @@ export class Munna extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Munna';
-  public fullName: string = 'Munna PHF';
+  public fullName: string = 'Munna (PHF 39)';
+  public legacyFullName = 'Munna PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: See Through

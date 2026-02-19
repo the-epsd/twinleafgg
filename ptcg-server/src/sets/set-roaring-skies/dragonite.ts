@@ -40,7 +40,8 @@ export class Dragonite extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragonite';
-  public fullName: string = 'Dragonite ROS';
+  public fullName: string = 'Dragonite (ROS 51)';
+  public legacyFullName = 'Dragonite ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Max Wind

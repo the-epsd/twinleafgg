@@ -44,7 +44,8 @@ export class Gimmighoul extends PokemonCard {
 
   public name: string = 'Gimmighoul';
 
-  public fullName: string = 'Gimmighoul SSP';
+  public fullName: string = 'Gimmighoul (SSP 97)';
+  public legacyFullName = 'Gimmighoul SSP';
 
   public cardImage: string = 'assets/cardback.png';
 

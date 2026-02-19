@@ -26,7 +26,8 @@ export class Feebas extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '49';
   public name: string = 'Feebas';
-  public fullName: string = 'Feebas TWM';
+  public fullName: string = 'Feebas (TWM 49)';
+  public legacyFullName = 'Feebas TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Flail

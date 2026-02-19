@@ -37,7 +37,8 @@ export class Durant extends PokemonCard {
   public setNumber: string = '132';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Durant';
-  public fullName: string = 'Durant RCL';
+  public fullName: string = 'Durant (RCL 132)';
+  public legacyFullName = 'Durant RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Gathering Food

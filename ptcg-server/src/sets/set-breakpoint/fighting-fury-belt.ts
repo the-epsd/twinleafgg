@@ -17,7 +17,8 @@ export class FightingFuryBelt extends TrainerCard {
 
   public name: string = 'Fighting Fury Belt';
 
-  public fullName: string = 'Fighting Fury Belt BKP';
+  public fullName: string = 'Fighting Fury Belt (BKP 99)';
+  public legacyFullName = 'Fighting Fury Belt BKP';
 
   public cardImage: string = 'assets/cardback.png';
 

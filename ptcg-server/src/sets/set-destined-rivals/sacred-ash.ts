@@ -63,7 +63,8 @@ export class SacredAsh extends TrainerCard {
   public set: string = 'DRI';
   public regulationMark = 'I';
   public name: string = 'Sacred Ash';
-  public fullName: string = 'Sacred Ash DRI';
+  public fullName: string = 'Sacred Ash (DRI 168)';
+  public legacyFullName = 'Sacred Ash DRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '168';
 

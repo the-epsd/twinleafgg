@@ -51,7 +51,8 @@ export class HypnotoxicLaser extends TrainerCard {
 
   public name: string = 'Hypnotoxic Laser';
 
-  public fullName: string = 'Hypnotoxic Laser PLS';
+  public fullName: string = 'Hypnotoxic Laser (PLS 123)';
+  public legacyFullName = 'Hypnotoxic Laser PLS';
 
   public cardImage: string = 'assets/cardback.png';
 

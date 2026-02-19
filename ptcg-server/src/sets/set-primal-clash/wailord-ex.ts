@@ -41,7 +41,8 @@ export class WailordEx extends PokemonCard {
 
   public name: string = 'Wailord-EX';
 
-  public fullName: string = 'Wailord EX PRC';
+  public fullName: string = 'Wailord-EX (PRC 38)';
+  public legacyFullName = 'Wailord EX PRC';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -27,7 +27,8 @@ export class NsJoltik extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'N\'s Joltik';
-  public fullName: string = 'N\'s Joltik JTG';
+  public fullName: string = 'N\'s Joltik (JTG 49)';
+  public legacyFullName = 'N\'s Joltik JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

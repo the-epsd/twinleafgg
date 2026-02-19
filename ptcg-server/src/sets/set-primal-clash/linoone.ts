@@ -22,7 +22,7 @@ export class Linoone extends PokemonCard {
       name: 'Fury Swipes',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
     },
     {
@@ -37,7 +37,8 @@ export class Linoone extends PokemonCard {
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Linoone';
-  public fullName: string = 'Linoone PRC';
+  public fullName: string = 'Linoone (PRC 112)';
+  public legacyFullName = 'Linoone PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Swipes

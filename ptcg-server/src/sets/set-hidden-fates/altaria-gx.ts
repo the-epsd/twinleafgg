@@ -48,7 +48,8 @@ export class AltariaGx extends PokemonCard {
   public setNumber: string = 'SV77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Altaria-GX';
-  public fullName: string = 'Altaria-GX HIF';
+  public fullName: string = 'Altaria-GX (HIF SV77)';
+  public legacyFullName = 'Altaria-GX HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bright Tone

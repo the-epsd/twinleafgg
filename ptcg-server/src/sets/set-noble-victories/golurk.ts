@@ -34,7 +34,8 @@ export class Golurk extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '72';
   public name: string = 'Golurk';
-  public fullName: string = 'Golurk NVI';
+  public fullName: string = 'Golurk (NVI 72)';
+  public legacyFullName = 'Golurk NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

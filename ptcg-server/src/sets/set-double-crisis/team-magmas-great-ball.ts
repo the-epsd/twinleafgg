@@ -82,7 +82,8 @@ export class TeamMagmasGreatBall extends TrainerCard {
 
   public name: string = 'Team Magma\'s Great Ball';
 
-  public fullName: string = 'Team Magma\'s Great Ball DCR';
+  public fullName: string = 'Team Magma\'s Great Ball (DCR 31)';
+  public legacyFullName = 'Team Magma\'s Great Ball DCR';
 
   public cardImage: string = 'assets/cardback.png';
 

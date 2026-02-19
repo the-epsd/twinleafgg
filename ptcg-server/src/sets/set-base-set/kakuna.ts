@@ -17,7 +17,8 @@ export class Kakuna extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Kakuna BS';
+  public fullName = 'Kakuna (BS 33)';
+  public legacyFullName = 'Kakuna BS';
 
   public stage = Stage.STAGE_1;
 

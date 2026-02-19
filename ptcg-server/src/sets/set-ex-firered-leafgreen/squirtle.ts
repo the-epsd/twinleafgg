@@ -29,7 +29,8 @@ export class Squirtle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
   public name: string = 'Squirtle';
-  public fullName: string = 'Squirtle RG';
+  public fullName: string = 'Squirtle (RG 83)';
+  public legacyFullName = 'Squirtle RG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -29,7 +29,8 @@ export class Thievul extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '105';
   public name = 'Thievul';
-  public fullName = 'Thievul EVS';
+  public fullName = 'Thievul (EVS 105)';
+  public legacyFullName = 'Thievul EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

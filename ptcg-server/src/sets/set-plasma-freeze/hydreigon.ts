@@ -36,7 +36,8 @@ export class Hydreigon extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hydreigon';
-  public fullName: string = 'Hydreigon PLF';
+  public fullName: string = 'Hydreigon (PLF 78)';
+  public legacyFullName = 'Hydreigon PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tractorbeam

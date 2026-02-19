@@ -16,7 +16,8 @@ export class HolonMentor extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
   public name: string = 'Holon Mentor';
-  public fullName: string = 'Holon Mentor DS';
+  public fullName: string = 'Holon Mentor (DS 93)';
+  public legacyFullName = 'Holon Mentor DS';
 
   public text: string =
     'Discard a card from your hand. If you can\'t discard a card from your hand, you can\'t play this card.\n\nSearch your deck for up to 3 Basic Pokémon that each has 100 HP or less, show them to your opponent, and put them into your hand. Shuffle your deck afterward.';

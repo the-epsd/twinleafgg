@@ -31,7 +31,8 @@ export class Claydol extends PokemonCard {
   public set: string = 'GE';
   public setNumber: string = '15';
   public name: string = 'Claydol';
-  public fullName: string = 'Claydol GE';
+  public fullName: string = 'Claydol (GE 15)';
+  public legacyFullName = 'Claydol GE';
   public cardImage: string = 'assets/cardback.png';
 
   public readonly COSMIC_POWER_MARKER = 'COSMIC_POWER_MARKER';

@@ -27,7 +27,8 @@ export class Palafin extends PokemonCard {
   public setNumber: string = '60';
   public regulationMark = 'H';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Palafin TWM';
+  public fullName: string = 'Palafin (TWM 60)';
+  public legacyFullName = 'Palafin TWM';
   public name: string = 'Palafin';
 
   public ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';

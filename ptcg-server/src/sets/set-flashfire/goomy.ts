@@ -35,7 +35,8 @@ export class Goomy extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Goomy';
-  public fullName: string = 'Goomy FLF';
+  public fullName: string = 'Goomy (FLF 72)';
+  public legacyFullName = 'Goomy FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: AGENTS-patterns.md (Heal X damage from this Pokemon)

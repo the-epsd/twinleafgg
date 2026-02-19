@@ -40,7 +40,8 @@ export class Toucannon extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toucannon';
-  public fullName: string = 'Toucannon SUM';
+  public fullName: string = 'Toucannon (SUM 108)';
+  public legacyFullName = 'Toucannon SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Echoed Voice

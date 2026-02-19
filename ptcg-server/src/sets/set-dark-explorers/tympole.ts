@@ -24,7 +24,8 @@ export class Tympole extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tympole';
-  public fullName: string = 'Tympole DEX';
+  public fullName: string = 'Tympole (DEX 31)';
+  public legacyFullName = 'Tympole DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Spiral Drain - heal 20 damage from this Pokémon

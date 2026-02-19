@@ -37,7 +37,8 @@ export class Grumpig extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grumpig';
-  public fullName: string = 'Grumpig BCR';
+  public fullName: string = 'Grumpig (BCR 60)';
+  public legacyFullName = 'Grumpig BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psybeam

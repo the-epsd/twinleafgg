@@ -40,7 +40,8 @@ export class Clefable extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clefable';
-  public fullName: string = 'Clefable GRI';
+  public fullName: string = 'Clefable (GRI 89)';
+  public legacyFullName = 'Clefable GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lullaby

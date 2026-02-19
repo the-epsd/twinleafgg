@@ -24,7 +24,8 @@ export class Joltik extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
   public name = 'Joltik';
-  public fullName = 'Joltik SFA';
+  public fullName = 'Joltik (SFA 1)';
+  public legacyFullName = 'Joltik SFA';
   public regulationMark = 'H';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

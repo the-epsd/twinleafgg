@@ -37,7 +37,8 @@ export class Scatterbug extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scatterbug';
-  public fullName: string = 'Scatterbug FLI';
+  public fullName: string = 'Scatterbug (FLI 5)';
+  public legacyFullName = 'Scatterbug FLI';
 
   public readonly ABNORMAL_OUTBREAK_MARKER = 'SCATTERBUG_FLI_ABNORMAL_OUTBREAK_MARKER';
 

@@ -43,7 +43,8 @@ export class NoivernGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '99';
   public name: string = 'Noivern-GX';
-  public fullName: string = 'Noivern-GX BUS';
+  public fullName: string = 'Noivern-GX (BUS 99)';
+  public legacyFullName = 'Noivern-GX BUS';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
   public readonly OPPONENT_CANNOT_PLAY_SPECIAL_ENERGY_MARKER = 'OPPONENT_CANNOT_PLAY_SPECIAL_ENERGY_MARKER';

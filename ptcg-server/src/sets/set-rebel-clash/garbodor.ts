@@ -31,7 +31,8 @@ export class Garbodor extends PokemonCard {
   public set: string = 'RCL';
   public regulationMark = 'D';
   public name: string = 'Garbodor';
-  public fullName: string = 'Garbodor RCL';
+  public fullName: string = 'Garbodor (RCL 118)';
+  public legacyFullName = 'Garbodor RCL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '118';
 

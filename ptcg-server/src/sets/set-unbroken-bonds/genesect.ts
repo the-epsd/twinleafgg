@@ -36,7 +36,8 @@ export class Genesect extends PokemonCard {
   public setNumber: string = '127';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Genesect';
-  public fullName: string = 'Genesect UNB';
+  public fullName: string = 'Genesect (UNB 127)';
+  public legacyFullName = 'Genesect UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fast-Flight Configuration (passive - no retreat cost if opponent has GX/EX)

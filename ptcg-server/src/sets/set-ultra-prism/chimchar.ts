@@ -25,5 +25,6 @@ export class Chimchar extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chimchar';
-  public fullName: string = 'Chimchar UPR';
+  public fullName: string = 'Chimchar (UPR 20)';
+  public legacyFullName = 'Chimchar UPR';
 }

@@ -36,7 +36,8 @@ export class Blastoise extends PokemonCard {
   public set: string = 'BCR';
   public setNumber: string = '31';
   public name: string = 'Blastoise';
-  public fullName: string = 'Blastoise BCR';
+  public fullName: string = 'Blastoise (BCR 31)';
+  public legacyFullName = 'Blastoise BCR';
   public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

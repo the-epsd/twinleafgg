@@ -36,7 +36,8 @@ export class DarkElectrode extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dark Electrode';
-  public fullName: string = 'Dark Electrode TRR';
+  public fullName: string = 'Dark Electrode (TRR 4)';
+  public legacyFullName = 'Dark Electrode TRR';
 
   public readonly DARKNESS_NAVIGATION_MARKER = 'DARKNESS_NAVIGATION_MARKER';
   public usedEnergyBomb = false;

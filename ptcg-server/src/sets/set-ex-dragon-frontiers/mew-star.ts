@@ -38,7 +38,8 @@ export class MewStar extends PokemonCard {
 
   public set: string = 'DF';
   public name: string = 'Mew Star';
-  public fullName: string = 'Mew Star DF';
+  public fullName: string = 'Mew Star (DF 101)';
+  public legacyFullName = 'Mew Star DF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '101';
 

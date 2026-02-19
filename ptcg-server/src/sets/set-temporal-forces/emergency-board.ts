@@ -21,7 +21,8 @@ export class EmergencyBoard extends TrainerCard {
 
   public name: string = 'Rescue Board';
 
-  public fullName: string = 'Rescue Board TEF';
+  public fullName: string = 'Rescue Board (TEF 159)';
+  public legacyFullName = 'Rescue Board TEF';
 
   public text: string = 'The Retreat Cost of the Pokémon this card is attached to is [C] less. If that Pokémon\'s remaining HP is 30 or less, it has no Retreat Cost.';
 

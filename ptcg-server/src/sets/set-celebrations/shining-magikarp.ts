@@ -34,7 +34,8 @@ export class ShiningMagikarp extends PokemonCard {
   public setNumber: string = '66A';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shining Magikarp';
-  public fullName: string = 'Shining Magikarp CEL';
+  public fullName: string = 'Shining Magikarp (CEL 66A)';
+  public legacyFullName = 'Shining Magikarp CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Gold Scale

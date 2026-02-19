@@ -15,7 +15,8 @@ export class BattleReporter extends TrainerCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Battle Reporter';
-  public fullName: string = 'Battle Reporter FFI';
+  public fullName: string = 'Battle Reporter (FFI 88)';
+  public legacyFullName = 'Battle Reporter FFI';
   public text: string = 'Draw cards until you have the same number of cards in your hand as your opponent. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

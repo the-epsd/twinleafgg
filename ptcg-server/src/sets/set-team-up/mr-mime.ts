@@ -35,7 +35,8 @@ export class MrMime extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mr. Mime';
-  public fullName: string = 'Mr. Mime TEU';
+  public fullName: string = 'Mr. Mime (TEU 66)';
+  public legacyFullName = 'Mr. Mime TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Scoop-Up Block

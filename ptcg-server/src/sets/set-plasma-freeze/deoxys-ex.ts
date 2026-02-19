@@ -32,7 +32,8 @@ export class DeoxysEX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
   public name: string = 'Deoxys-EX';
-  public fullName: string = 'Deoxys EX PLF';
+  public fullName: string = 'Deoxys-EX (PLF 53)';
+  public legacyFullName = 'Deoxys EX PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -36,7 +36,8 @@ export class Mantine extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name: string = 'Mantine';
-  public fullName: string = 'Mantine DF';
+  public fullName: string = 'Mantine (DF 20)';
+  public legacyFullName = 'Mantine DF';
 
   public readonly POWER_CIRCULATION_MARKER = 'POWER_CIRCULATION_MARKER';
 

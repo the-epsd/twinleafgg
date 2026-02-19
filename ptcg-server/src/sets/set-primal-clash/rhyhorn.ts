@@ -28,7 +28,8 @@ export class Rhyhorn extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rhyhorn';
-  public fullName: string = 'Rhyhorn PRC';
+  public fullName: string = 'Rhyhorn (PRC 74)';
+  public legacyFullName = 'Rhyhorn PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Take Down

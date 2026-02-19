@@ -37,7 +37,8 @@ export class Camerupt extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Camerupt';
-  public fullName: string = 'Camerupt BCR';
+  public fullName: string = 'Camerupt (BCR 22)';
+  public legacyFullName = 'Camerupt BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fire Shard

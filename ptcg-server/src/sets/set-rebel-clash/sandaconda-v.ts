@@ -37,7 +37,8 @@ export class SandacondaV extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandaconda V';
-  public fullName: string = 'Sandaconda V RCL';
+  public fullName: string = 'Sandaconda V (RCL 108)';
+  public legacyFullName = 'Sandaconda V RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sand Eater

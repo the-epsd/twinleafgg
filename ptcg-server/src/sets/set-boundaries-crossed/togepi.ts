@@ -29,7 +29,8 @@ export class Togepi extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togepi';
-  public fullName: string = 'Togepi BCR';
+  public fullName: string = 'Togepi (BCR 110)';
+  public legacyFullName = 'Togepi BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Attract Smack

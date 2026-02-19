@@ -20,7 +20,8 @@ export class LostCity extends TrainerCard {
 
   public name: string = 'Lost City';
 
-  public fullName: string = 'Lost City LOR';
+  public fullName: string = 'Lost City (LOR 161)';
+  public legacyFullName = 'Lost City LOR';
 
   public text: string =
     'Whenever a Pokémon (either yours or your opponent\'s) is Knocked Out, put that Pokémon in the Lost Zone instead of the discard pile. (Discard all attached cards.)';

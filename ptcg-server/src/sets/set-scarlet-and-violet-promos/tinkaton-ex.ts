@@ -45,7 +45,8 @@ export class Tinkatonex extends PokemonCard {
 
   public name: string = 'Tinkaton ex';
 
-  public fullName: string = 'Tinkaton ex SVP';
+  public fullName: string = 'Tinkaton ex (SVP 31)';
+  public legacyFullName = 'Tinkaton ex SVP';
 
   public regulationMark: string = 'G';
 

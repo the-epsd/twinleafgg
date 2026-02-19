@@ -29,7 +29,7 @@ export class Tangrowth extends PokemonCard {
       name: 'Flog',
       cost: [G, G, G, C],
       damage: 110,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Tangrowth extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tangrowth';
-  public fullName: string = 'Tangrowth STS';
+  public fullName: string = 'Tangrowth (STS 2)';
+  public legacyFullName = 'Tangrowth STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Leaf Storm

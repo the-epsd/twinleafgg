@@ -42,7 +42,8 @@ export class GalarianMrRime extends PokemonCard {
 
   public name: string = 'Galarian Mr. Rime';
 
-  public fullName: string = 'Galarian Mr. Rime DAA';
+  public fullName: string = 'Galarian Mr. Rime (DAA 36)';
+  public legacyFullName = 'Galarian Mr. Rime DAA';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

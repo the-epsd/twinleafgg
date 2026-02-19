@@ -98,7 +98,8 @@ export class SuperRod extends TrainerCard {
 
   public name: string = 'Super Rod';
 
-  public fullName: string = 'Super Rod PAL';
+  public fullName: string = 'Super Rod (PAL 188)';
+  public legacyFullName = 'Super Rod PAL';
 
   public text: string =
     'Shuffle 3 in any combination of Pokemon and basic Energy cards from ' +

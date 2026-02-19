@@ -39,7 +39,8 @@ export class GalarianCursola extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Cursola';
-  public fullName: string = 'Galarian Cursola RCL';
+  public fullName: string = 'Galarian Cursola (RCL 79)';
+  public legacyFullName = 'Galarian Cursola RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Perish Body

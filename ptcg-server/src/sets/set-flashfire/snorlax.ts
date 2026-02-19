@@ -37,7 +37,8 @@ export class Snorlax extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snorlax';
-  public fullName: string = 'Snorlax FLF';
+  public fullName: string = 'Snorlax (FLF 80)';
+  public legacyFullName = 'Snorlax FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Stir and Snooze

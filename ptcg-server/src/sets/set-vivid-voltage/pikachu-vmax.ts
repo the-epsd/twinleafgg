@@ -22,7 +22,7 @@ export class PikachuVmax extends PokemonCard {
       name: 'G-Max Volt Tackle',
       cost: [L, L, L],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard all Energy from this Pokémon. If you do, this attack does 150 more damage.'
     }
   ];
@@ -32,7 +32,8 @@ export class PikachuVmax extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikachu VMAX';
-  public fullName: string = 'Pikachu VMAX VIV';
+  public fullName: string = 'Pikachu VMAX (VIV 44)';
+  public legacyFullName = 'Pikachu VMAX VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: G-Max Volt Tackle

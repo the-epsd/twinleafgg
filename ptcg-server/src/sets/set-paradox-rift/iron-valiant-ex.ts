@@ -35,7 +35,8 @@ export class IronValiantex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '89';
   public name: string = 'Iron Valiant ex';
-  public fullName: string = 'Iron Valiant ex PAR';
+  public fullName: string = 'Iron Valiant ex (PAR 89)';
+  public legacyFullName = 'Iron Valiant ex PAR';
 
   public tachyonBits: number = 0;
   public readonly TACHYON_BITS_MARKER = 'TACHYON_BITS_MARKER';

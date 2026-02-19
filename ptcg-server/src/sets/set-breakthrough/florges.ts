@@ -46,7 +46,8 @@ export class Florges extends PokemonCard {
 
   public name: string = 'Florges';
 
-  public fullName: string = 'Florges BKT';
+  public fullName: string = 'Florges (BKT 103)';
+  public legacyFullName = 'Florges BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

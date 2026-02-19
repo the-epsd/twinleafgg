@@ -16,7 +16,8 @@ export class LifeForest extends TrainerCard {
   public setNumber: string = '180';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Life Forest \u25c7';
-  public fullName: string = 'Life Forest \u25c7 LOT';
+  public fullName: string = 'Life Forest \u25c7 (LOT 180)';
+  public legacyFullName = 'Life Forest \u25c7 LOT';
   public text: string = 'Once during each player\'s turn, that player may heal 60 damage and remove all Special Conditions from 1 of their Grass Pokémon. Whenever any player plays an Item or Supporter card from their hand, prevent all effects of that card done to this Stadium card. \u25c7 (Prism Star) Rule: You can\'t have more than 1 \u25c7 card with the same name in your deck. If a \u25c7 card would go to the discard pile, put it in the Lost Zone instead.';
 
   // Ref: set-breakpoint/all-night-party.ts (UseStadiumEffect pattern), set-lost-thunder/heat-factory-prism-star.ts (Prism Star stadium)

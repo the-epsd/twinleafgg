@@ -38,7 +38,8 @@ export class Barbaracle extends PokemonCard {
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Barbaracle';
-  public fullName: string = 'Barbaracle LOR';
+  public fullName: string = 'Barbaracle (LOR 107)';
+  public legacyFullName = 'Barbaracle LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckPrizesDestinationEffect && StateUtils.isPokemonInPlay(effect.player, this)) {

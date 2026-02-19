@@ -37,7 +37,8 @@ export class Vaporeon extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vaporeon';
-  public fullName: string = 'Vaporeon CEC';
+  public fullName: string = 'Vaporeon (CEC 42)';
+  public legacyFullName = 'Vaporeon CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Vitality Cheer (passive - HP boost for Eevee-evolving GX)

@@ -21,7 +21,7 @@ export class Dragonair extends PokemonCard {
       name: 'Dragon Tail',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 60 damage for each heads.'
     },
     {
@@ -36,7 +36,8 @@ export class Dragonair extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragonair';
-  public fullName: string = 'Dragonair DRM';
+  public fullName: string = 'Dragonair (DRM 36)';
+  public legacyFullName = 'Dragonair DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dragon Tail

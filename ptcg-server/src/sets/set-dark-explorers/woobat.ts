@@ -32,7 +32,8 @@ export class Woobat extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Woobat';
-  public fullName: string = 'Woobat DEX';
+  public fullName: string = 'Woobat (DEX 50)';
+  public legacyFullName = 'Woobat DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

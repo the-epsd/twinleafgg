@@ -22,7 +22,7 @@ export class Xatu extends PokemonCard {
       name: 'Energy Gaze',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Your opponent reveals their hand. If you find any Energy cards there, this attack does 60 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Xatu extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Xatu';
-  public fullName: string = 'Xatu LOT';
+  public fullName: string = 'Xatu (LOT 88)';
+  public legacyFullName = 'Xatu LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Energy Gaze

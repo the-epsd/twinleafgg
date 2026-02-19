@@ -30,7 +30,8 @@ export class Nincada extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nincada';
-  public fullName: string = 'Nincada DRX';
+  public fullName: string = 'Nincada (DRX 10)';
+  public legacyFullName = 'Nincada DRX';
 
   private readonly PREVENT_DAMAGE_MARKER = 'NINCADA_PREVENT_DAMAGE_MARKER';
   private readonly CLEAR_PREVENT_DAMAGE_MARKER = 'NINCADA_CLEAR_PREVENT_DAMAGE_MARKER';

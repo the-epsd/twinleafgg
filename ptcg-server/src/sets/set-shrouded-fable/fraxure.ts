@@ -29,7 +29,8 @@ export class Fraxure extends PokemonCard {
 
   public set: string = 'SFA';
   public name: string = 'Fraxure';
-  public fullName: string = 'Fraxure SFA';
+  public fullName: string = 'Fraxure (SFA 45)';
+  public legacyFullName = 'Fraxure SFA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
   public regulationMark: string = 'H';

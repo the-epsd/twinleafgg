@@ -37,7 +37,8 @@ export class Nidoqueen extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoqueen';
-  public fullName: string = 'Nidoqueen RR';
+  public fullName: string = 'Nidoqueen (RR 30)';
+  public legacyFullName = 'Nidoqueen RR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle Maternal Comfort Poké-Body

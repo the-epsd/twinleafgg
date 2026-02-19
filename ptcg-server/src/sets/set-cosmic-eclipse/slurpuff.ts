@@ -37,7 +37,8 @@ export class Slurpuff extends PokemonCard {
   public setNumber: string = '154';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slurpuff';
-  public fullName: string = 'Slurpuff CEC';
+  public fullName: string = 'Slurpuff (CEC 154)';
+  public legacyFullName = 'Slurpuff CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Olfactory Enchantment

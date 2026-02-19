@@ -31,7 +31,8 @@ export class Palossand extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '100';
   public name: string = 'Palossand';
-  public fullName: string = 'Palossand SIT';
+  public fullName: string = 'Palossand (SIT 100)';
+  public legacyFullName = 'Palossand SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     

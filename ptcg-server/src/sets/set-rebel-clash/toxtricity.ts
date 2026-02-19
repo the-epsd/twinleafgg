@@ -39,7 +39,8 @@ export class Toxtricity extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toxtricity';
-  public fullName: string = 'Toxtricity RCL';
+  public fullName: string = 'Toxtricity (RCL 69)';
+  public legacyFullName = 'Toxtricity RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Shout

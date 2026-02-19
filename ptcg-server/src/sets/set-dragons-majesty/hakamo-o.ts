@@ -37,7 +37,8 @@ export class HakamoO extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hakamo-o';
-  public fullName: string = 'Hakamo-o DRM';
+  public fullName: string = 'Hakamo-o (DRM 53)';
+  public legacyFullName = 'Hakamo-o DRM';
 
   public readonly GUARD_PRESS_MARKER = 'GUARD_PRESS_MARKER';
   public readonly CLEAR_GUARD_PRESS_MARKER = 'CLEAR_GUARD_PRESS_MARKER';

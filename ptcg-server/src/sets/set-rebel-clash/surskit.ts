@@ -30,7 +30,8 @@ export class Surskit extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Surskit';
-  public fullName: string = 'Surskit RCL';
+  public fullName: string = 'Surskit (RCL 10)';
+  public legacyFullName = 'Surskit RCL';
 
   public readonly AGILITY_MARKER = 'SURSKIT_RCL_AGILITY_MARKER';
   public readonly CLEAR_AGILITY_MARKER = 'SURSKIT_RCL_CLEAR_AGILITY_MARKER';

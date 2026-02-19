@@ -14,7 +14,8 @@ export class NsCastle extends TrainerCard {
   public tags = [CardTag.NS];
   public set: string = 'JTG';
   public name: string = 'N\'s Castle';
-  public fullName: string = 'N\'s Castle JTG';
+  public fullName: string = 'N\'s Castle (JTG 152)';
+  public legacyFullName = 'N\'s Castle JTG';
   public regulationMark = 'I';
   public cardImage: string = 'assets/cardback.png';
   public setNumber = '152';

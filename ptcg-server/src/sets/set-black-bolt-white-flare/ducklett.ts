@@ -31,7 +31,8 @@ export class Ducklett extends PokemonCard {
   public regulationMark = 'I';
   public set: string = 'WHT';
   public name: string = 'Ducklett';
-  public fullName: string = 'Ducklett SV11W';
+  public fullName: string = 'Ducklett (WHT 25)';
+  public legacyFullName = 'Ducklett SV11W';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '25';
 

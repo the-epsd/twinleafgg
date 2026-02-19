@@ -29,7 +29,8 @@ export class Surskit extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Surskit';
-  public fullName: string = 'Surskit CES';
+  public fullName: string = 'Surskit (CES 15)';
+  public legacyFullName = 'Surskit CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble

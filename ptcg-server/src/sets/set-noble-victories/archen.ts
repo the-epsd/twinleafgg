@@ -35,7 +35,8 @@ export class Archen extends PokemonCard {
 
   public name: string = 'Archen';
 
-  public fullName: string = 'Archen NVI';
+  public fullName: string = 'Archen (NVI 66)';
+  public legacyFullName = 'Archen NVI';
 
   public cardImage: string = 'assets/cardback.png';
 

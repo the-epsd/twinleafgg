@@ -40,7 +40,8 @@ export class Plusle extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Plusle';
-  public fullName: string = 'Plusle SW';
+  public fullName: string = 'Plusle (SW 36)';
+  public legacyFullName = 'Plusle SW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -44,7 +44,8 @@ export class HisuianZoroarkV extends PokemonCard {
 
   public name: string = 'Hisuian Zoroark V';
 
-  public fullName: string = 'Hisuian Zoroark V LOR';
+  public fullName: string = 'Hisuian Zoroark V (LOR 146)';
+  public legacyFullName = 'Hisuian Zoroark V LOR';
 
   public usedVoidReturn: boolean = false;
 

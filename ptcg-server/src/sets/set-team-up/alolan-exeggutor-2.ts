@@ -27,7 +27,7 @@ export class AlolanExeggutor2 extends PokemonCard {
       name: 'Egg Splat',
       cost: [G, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard any number of Exeggcute from your hand. This attack does 60 damage for each card you discarded in this way.'
     }
   ];
@@ -36,7 +36,8 @@ export class AlolanExeggutor2 extends PokemonCard {
   public setNumber: string = '115';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Exeggutor';
-  public fullName: string = 'Alolan Exeggutor TEU 115';
+  public fullName: string = 'Alolan Exeggutor (TEU 115)';
+  public legacyFullName = 'Alolan Exeggutor TEU 115';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Paradise Draw

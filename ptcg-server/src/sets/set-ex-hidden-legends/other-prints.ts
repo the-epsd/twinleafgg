@@ -3,12 +3,14 @@ import { Beldum } from '../set-nintendo-promos/beldum';
 
 export class StevensAdviceHL extends StevensAdvice {
   public setNumber = '92';
-  public fullName: string = 'Steven\'s Advice HL';
+  public fullName: string = 'Steven\'s Advice (HL 92)';
+  public legacyFullName = 'Steven\'s Advice HL';
   public set = 'HL';
 }
 
 export class BeldumHL extends Beldum {
   public setNumber = '29';
-  public fullName: string = 'Beldum HL';
+  public fullName: string = 'Beldum (HL 29)';
+  public legacyFullName = 'Beldum HL';
   public set = 'HL';
 }

@@ -29,7 +29,8 @@ export class Piplup extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Piplup';
-  public fullName: string = 'Piplup UPR';
+  public fullName: string = 'Piplup (UPR 31)';
+  public legacyFullName = 'Piplup UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Splatter

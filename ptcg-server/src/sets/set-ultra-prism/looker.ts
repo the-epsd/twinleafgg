@@ -15,7 +15,8 @@ export class Looker extends TrainerCard {
   public setNumber: string = '126';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Looker';
-  public fullName: string = 'Looker UPR';
+  public fullName: string = 'Looker (UPR 126)';
+  public legacyFullName = 'Looker UPR';
   public text: string = 'Draw 3 cards from the bottom of your deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-team-up/ingo-and-emmet.ts (draw from bottom of deck)

@@ -35,7 +35,8 @@ export class Torkoal extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Torkoal';
-  public fullName: string = 'Torkoal FLF';
+  public fullName: string = 'Torkoal (FLF 16)';
+  public legacyFullName = 'Torkoal FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/zoroark.ts (Night Claw - coin flip tails discard energy)

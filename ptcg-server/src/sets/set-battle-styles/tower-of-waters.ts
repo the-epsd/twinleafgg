@@ -23,7 +23,8 @@ export class TowerOfWaters extends TrainerCard {
 
   public name: string = 'Tower of Waters';
 
-  public fullName: string = 'Tower of Waters BST';
+  public fullName: string = 'Tower of Waters (BST 138)';
+  public legacyFullName = 'Tower of Waters BST';
 
   public text: string =
     'The Retreat Cost of each Rapid Strike Pokémon in play (both yours and your opponent\'s) is [C][C] less.';

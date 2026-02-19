@@ -33,7 +33,8 @@ export class KyuremEx extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kyurem-EX';
-  public fullName: string = 'Kyurem-EX PLB';
+  public fullName: string = 'Kyurem-EX (PLB 30)';
+  public legacyFullName = 'Kyurem-EX PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

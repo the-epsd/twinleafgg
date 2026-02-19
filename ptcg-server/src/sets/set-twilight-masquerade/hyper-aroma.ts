@@ -70,7 +70,8 @@ export class HyperAroma extends TrainerCard {
 
   public name: string = 'Hyper Aroma';
 
-  public fullName: string = 'Hyper Aroma TWM';
+  public fullName: string = 'Hyper Aroma (TWM 152)';
+  public legacyFullName = 'Hyper Aroma TWM';
 
   public text: string =
     'Search your deck for up to three Stage 1 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';

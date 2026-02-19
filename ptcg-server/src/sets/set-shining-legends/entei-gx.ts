@@ -42,7 +42,8 @@ export class EnteiGx extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Entei GX';
-  public fullName: string = 'Entei GX SLG';
+  public fullName: string = 'Entei GX (SLG 10)';
+  public legacyFullName = 'Entei GX SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Fire Fang

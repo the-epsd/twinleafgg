@@ -35,7 +35,7 @@ export class Octillery extends PokemonCard {
       name: 'Special Artillery',
       cost: [W, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard a Special Energy from this Pokémon. If you do, this attack does 80 more damage.'
     }
   ];
@@ -44,7 +44,8 @@ export class Octillery extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Octillery';
-  public fullName: string = 'Octillery CIN';
+  public fullName: string = 'Octillery (CIN 23)';
+  public legacyFullName = 'Octillery CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ink Spit

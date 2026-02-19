@@ -22,7 +22,8 @@ export class CapaciousBucket extends TrainerCard {
 
   public name: string = 'Capacious Bucket';
 
-  public fullName: string = 'Capacious Bucket RCL';
+  public fullName: string = 'Capacious Bucket (RCL 156)';
+  public legacyFullName = 'Capacious Bucket RCL';
 
   public cardImage: string = 'assets/cardback.png';
 

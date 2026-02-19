@@ -21,7 +21,7 @@ export class Taillow extends PokemonCard {
       name: 'Double Peck',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Taillow extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Taillow';
-  public fullName: string = 'Taillow ROS';
+  public fullName: string = 'Taillow (ROS 70)';
+  public legacyFullName = 'Taillow ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Peck

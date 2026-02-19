@@ -30,7 +30,8 @@ export class Mimikyu extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '80';
   public name: string = 'Mimikyu';
-  public fullName: string = 'Mimikyu LOR';
+  public fullName: string = 'Mimikyu (LOR 80)';
+  public legacyFullName = 'Mimikyu LOR';
   public regulationMark = 'F';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

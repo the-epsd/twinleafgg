@@ -46,7 +46,8 @@ export class Victini extends PokemonCard {
 
   public name: string = 'Victini';
 
-  public fullName: string = 'Victini SSP';
+  public fullName: string = 'Victini (SSP 21)';
+  public legacyFullName = 'Victini SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

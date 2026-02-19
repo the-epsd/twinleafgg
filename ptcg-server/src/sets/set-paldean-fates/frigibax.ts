@@ -41,7 +41,8 @@ export class Frigibax extends PokemonCard {
 
   public name: string = 'Frigibax';
 
-  public fullName: string = 'Frigibax PAF';
+  public fullName: string = 'Frigibax (PAF 17)';
+  public legacyFullName = 'Frigibax PAF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

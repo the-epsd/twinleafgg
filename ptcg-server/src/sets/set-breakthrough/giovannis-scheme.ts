@@ -17,7 +17,8 @@ export class GiovannisScheme extends TrainerCard {
   public setNumber: string = '138';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Giovanni\'s Scheme';
-  public fullName: string = 'Giovanni\'s Scheme BKT';
+  public fullName: string = 'Giovanni\'s Scheme (BKT 138)';
+  public legacyFullName = 'Giovanni\'s Scheme BKT';
   public text: string = 'Choose 1:\n• Draw cards until you have 5 cards in your hand.\n• During this turn, your Pokémon\'s attacks do 20 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance). You may play only 1 Supporter card during your turn (before your attack).';
 
   private readonly GIOVANNIS_SCHEME_MARKER = 'GIOVANNIS_SCHEME_MARKER';

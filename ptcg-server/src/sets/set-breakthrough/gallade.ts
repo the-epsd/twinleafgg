@@ -31,7 +31,8 @@ export class Gallade extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
   public name: string = 'Gallade';
-  public fullName: string = 'Gallade BKT';
+  public fullName: string = 'Gallade (BKT 84)';
+  public legacyFullName = 'Gallade BKT';
 
   public readonly PREMONITION_MARKER = 'PREMONITION_MARKER';
 

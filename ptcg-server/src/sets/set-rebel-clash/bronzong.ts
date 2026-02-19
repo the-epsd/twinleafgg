@@ -38,7 +38,8 @@ export class Bronzong extends PokemonCard {
   public setNumber: string = '130';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bronzong';
-  public fullName: string = 'Bronzong RCL';
+  public fullName: string = 'Bronzong (RCL 130)';
+  public legacyFullName = 'Bronzong RCL';
 
   public usedGyroBall = false;
 

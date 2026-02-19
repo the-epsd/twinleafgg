@@ -10,7 +10,8 @@ export class EnergyPickup extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '132';
   public name: string = 'Energy Pickup';
-  public fullName: string = 'Energy Pickup LA';
+  public fullName: string = 'Energy Pickup (LA 132)';
+  public legacyFullName = 'Energy Pickup LA';
 
   public text = 'Flip a coin. If heads, search your discard pile for a basic Energy card and attach it to 1 of your Pokémon.';
 

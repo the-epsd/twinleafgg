@@ -37,7 +37,8 @@ export class Trevenant extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trevenant';
-  public fullName: string = 'Trevenant RCL';
+  public fullName: string = 'Trevenant (RCL 15)';
+  public legacyFullName = 'Trevenant RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Shadow Cage

@@ -32,7 +32,8 @@ export class AmbipomG extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ambipom G';
-  public fullName: string = 'Ambipom G RR';
+  public fullName: string = 'Ambipom G (RR 56)';
+  public legacyFullName = 'Ambipom G RR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Jamming Wave

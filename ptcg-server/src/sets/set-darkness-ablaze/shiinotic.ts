@@ -31,7 +31,7 @@ export class Shiinotic extends PokemonCard {
       name: 'Fear the Forest',
       cost: [P, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Glimwood Tangle is in play, this attack does 60 more damage.'
     }
   ];
@@ -41,7 +41,8 @@ export class Shiinotic extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shiinotic';
-  public fullName: string = 'Shiinotic DAA';
+  public fullName: string = 'Shiinotic (DAA 80)';
+  public legacyFullName = 'Shiinotic DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flickering Light

@@ -40,7 +40,8 @@ export class Nuzleaf extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nuzleaf';
-  public fullName: string = 'Nuzleaf STS';
+  public fullName: string = 'Nuzleaf (STS 10)';
+  public legacyFullName = 'Nuzleaf STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Harden

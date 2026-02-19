@@ -43,7 +43,8 @@ export class ChienPao extends PokemonCard {
 
   public name: string = 'Chien-Pao';
 
-  public fullName: string = 'Chien-Pao SSP';
+  public fullName: string = 'Chien-Pao (SSP 56)';
+  public legacyFullName = 'Chien-Pao SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

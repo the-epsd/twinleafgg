@@ -38,7 +38,8 @@ export class WobbuffetV extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wobbuffet V';
-  public fullName: string = 'Wobbuffet V SSH';
+  public fullName: string = 'Wobbuffet V (SSH 86)';
+  public legacyFullName = 'Wobbuffet V SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Gritty Comeback

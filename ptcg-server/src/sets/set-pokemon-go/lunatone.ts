@@ -46,7 +46,8 @@ export class Lunatone extends PokemonCard {
 
   public name: string = 'Lunatone';
 
-  public fullName: string = 'Lunatone PGO';
+  public fullName: string = 'Lunatone (PGO 34)';
+  public legacyFullName = 'Lunatone PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -44,7 +44,8 @@ export class Miltank extends PokemonCard {
 
   public name: string = 'Miltank';
 
-  public fullName: string = 'Miltank ASR';
+  public fullName: string = 'Miltank (ASR 126)';
+  public legacyFullName = 'Miltank ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -33,7 +33,8 @@ export class Garganacl extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '104';
   public name: string = 'Garganacl';
-  public fullName: string = 'Garganacl PAR';
+  public fullName: string = 'Garganacl (PAR 104)';
+  public legacyFullName = 'Garganacl PAR';
 
   public readonly ENERGIZING_ROCK_SALT_MARKER = 'ENERGIZING_ROCK_SALT_MARKER';
 

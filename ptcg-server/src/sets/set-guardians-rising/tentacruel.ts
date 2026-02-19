@@ -28,7 +28,7 @@ export class Tentacruel extends PokemonCard {
       name: 'Seething Tentacles',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
     }
   ];
@@ -37,7 +37,8 @@ export class Tentacruel extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tentacruel';
-  public fullName: string = 'Tentacruel GRI';
+  public fullName: string = 'Tentacruel (GRI 24)';
+  public legacyFullName = 'Tentacruel GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Sting

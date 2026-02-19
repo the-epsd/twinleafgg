@@ -32,7 +32,8 @@ export class CramorantV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '155';
   public name: string = 'Cramorant V';
-  public fullName: string = 'Cramorant V SSH';
+  public fullName: string = 'Cramorant V (SSH 155)';
+  public legacyFullName = 'Cramorant V SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Beak Catch

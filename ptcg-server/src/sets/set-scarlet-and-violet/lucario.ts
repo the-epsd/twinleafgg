@@ -33,7 +33,8 @@ export class Lucario extends PokemonCard {
   public evolvesFrom = 'Riolu';
   public name: string = 'Lucario';
 
-  public fullName: string = 'Lucario SVI';
+  public fullName: string = 'Lucario (SVI 114)';
+  public legacyFullName = 'Lucario SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -36,7 +36,8 @@ export class Azelf extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Azelf';
-  public fullName: string = 'Azelf FLI';
+  public fullName: string = 'Azelf (FLI 43)';
+  public legacyFullName = 'Azelf FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psychic Abduction

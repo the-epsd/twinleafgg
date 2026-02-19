@@ -34,7 +34,8 @@ export class Weezing extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '51';
   public name: string = 'Weezing';
-  public fullName: string = 'Weezing DX';
+  public fullName: string = 'Weezing (DX 51)';
+  public legacyFullName = 'Weezing DX';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
 

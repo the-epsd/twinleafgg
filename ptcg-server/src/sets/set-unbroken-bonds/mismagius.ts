@@ -32,7 +32,8 @@ export class Mismagius extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mismagius';
-  public fullName: string = 'Mismagius UNB';
+  public fullName: string = 'Mismagius (UNB 78)';
+  public legacyFullName = 'Mismagius UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

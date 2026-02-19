@@ -57,7 +57,8 @@ export class ElectrodeGX extends PokemonCard {
 
   public name: string = 'Electrode-GX';
 
-  public fullName: string = 'Electrode-GX CES';
+  public fullName: string = 'Electrode-GX (CES 48)';
+  public legacyFullName = 'Electrode-GX CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

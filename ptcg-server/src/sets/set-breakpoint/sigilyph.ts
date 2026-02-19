@@ -37,7 +37,8 @@ export class Sigilyph extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sigilyph';
-  public fullName: string = 'Sigilyph BKP';
+  public fullName: string = 'Sigilyph (BKP 55)';
+  public legacyFullName = 'Sigilyph BKP';
 
   public readonly REFLECTIVE_SHIELD_MARKER = 'SIGILYPH_BKP_REFLECTIVE_SHIELD_MARKER';
   public readonly CLEAR_REFLECTIVE_SHIELD_MARKER = 'SIGILYPH_BKP_CLEAR_REFLECTIVE_SHIELD_MARKER';

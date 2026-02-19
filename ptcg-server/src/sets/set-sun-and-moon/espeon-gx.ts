@@ -56,7 +56,8 @@ export class EspeonGX extends PokemonCard {
 
   public name: string = 'Espeon-GX';
 
-  public fullName: string = 'Espeon-GX SUM';
+  public fullName: string = 'Espeon-GX (SUM 61)';
+  public legacyFullName = 'Espeon-GX SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Psybeam

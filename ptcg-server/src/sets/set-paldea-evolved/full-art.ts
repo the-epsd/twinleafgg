@@ -92,17 +92,20 @@ import { WoChienex } from './wo-chien-ex';
 
 export class FrigibaxIR extends Frigibax {
   public setNumber = '208';
-  public fullName: string = 'FrigibaxIR PAL';
+  public fullName: string = 'Frigibax (PAL 208)';
+  public legacyFullName = 'FrigibaxIR PAL';
 }
 
 export class ArctibaxIR extends Arctibax {
   public setNumber = '209';
-  public fullName: string = 'ArctibaxIR PAL';
+  public fullName: string = 'Arctibax (PAL 209)';
+  public legacyFullName = 'ArctibaxIR PAL';
 }
 
 export class BaxcaliburIR extends Baxcalibur {
   public setNumber = '210';
-  public fullName: string = 'BaxcaliburIR PAL';
+  public fullName: string = 'Baxcalibur (PAL 210)';
+  public legacyFullName = 'BaxcaliburIR PAL';
 }
 
 // export class RaichuIR extends Raichu {
@@ -127,17 +130,19 @@ export class BaxcaliburIR extends Baxcalibur {
 
 // export class RabscaIR extends Rabsca {
 //   public setNumber = '215';
-//   public fullName: string = 'RabscaIR PAL';
+//   public fullName: string = 'Baxcalibur (PAL 215)';
 // }
 
 export class TinkatinkIR extends Tinkatink {
   public setNumber = '216';
-  public fullName: string = 'TinkatinkIR PAL';
+  public fullName: string = 'Tinkatink (PAL 216)';
+  public legacyFullName = 'TinkatinkIR PAL';
 }
 
 export class TinkatuffIR extends Tinkatuff2 {
   public setNumber = '217';
-  public fullName: string = 'TinkatuffIR PAL';
+  public fullName: string = 'Tinkatuff (PAL 217)';
+  public legacyFullName = 'TinkatuffIR PAL';
 }
 
 // export class Paldean TaurosIR extends Paldean Tauros {
@@ -182,12 +187,13 @@ export class TinkatuffIR extends Tinkatuff2 {
 
 // export class MausholdIR extends Maushold {
 //   public setNumber = '226';
-//   public fullName: string = 'MausholdIR PAL';
+//   public fullName: string = 'Tinkatuff (PAL 226)';
 // }
 
 export class FlamigoIR extends Flamigo {
   public setNumber = '227';
-  public fullName: string = 'FlamigoIR PAL';
+  public fullName: string = 'Flamigo (PAL 227)';
+  public legacyFullName = 'FlamigoIR PAL';
 }
 
 // export class FarigirafIR extends Farigiraf {
@@ -202,37 +208,41 @@ export class FlamigoIR extends Flamigo {
 
 // export class ForretressexFA extends Forretressex {
 //   public setNumber = '230';
-//   public fullName: string = 'Forretress exFA PAL';
+//   public fullName: string = 'Flamigo (PAL 230)';
 // }
 
 export class MeowscaradaexFA extends Meowscaradaex {
   public setNumber = '231';
-  public fullName: string = 'Meowscarada exFA PAL';
+  public fullName: string = 'Meowscarada ex (PAL 231)';
+  public legacyFullName = 'Meowscarada exFA PAL';
 }
 
 export class WoChienexFA extends WoChienex {
   public setNumber = '232';
-  public fullName: string = 'Wo-Chien exFA PAL';
+  public fullName: string = 'Wo-Chien ex (PAL 232)';
+  public legacyFullName = 'Wo-Chien exFA PAL';
 }
 
 // export class Skeledirge exFA extends Skeledirge ex {
 //   public setNumber = '233';
-//   public fullName: string = 'Skeledirge exFA PAL';
+//   public fullName: string = 'Wo-Chien ex (PAL 233)';
 // }
 
 export class ChiYuexFA extends ChiYuex {
   public setNumber = '234';
-  public fullName: string = 'Chi-Yu exFA PAL';
+  public fullName: string = 'Chi-Yu ex (PAL 234)';
+  public legacyFullName = 'Chi-Yu exFA PAL';
 }
 
 // export class Quaquaval exFA extends Quaquaval ex {
 //   public setNumber = '235';
-//   public fullName: string = 'Quaquaval exFA PAL';
+//   public fullName: string = 'Chi-Yu ex (PAL 235)';
 // }
 
 export class ChienPaoexFA extends ChienPaoex {
   public setNumber = '236';
-  public fullName: string = 'Chien-Pao exFA PAL';
+  public fullName: string = 'Chien-Pao ex (PAL 236)';
+  public legacyFullName = 'Chien-Pao exFA PAL';
 }
 
 // export class Bellibolt exFA extends Bellibolt ex {
@@ -242,33 +252,31 @@ export class ChienPaoexFA extends ChienPaoex {
 
 // export class Slowking exFA extends Slowking ex {
 //   public setNumber = '238';
-//   public fullName: string = 'Slowking exFA PAL';
 // }
 
 // export class Dedenne exFA extends Dedenne ex {
 //   public setNumber = '239';
-//   public fullName: string = 'Dedenne exFA PAL';
 // }
 
 export class TinkatonexFA extends Tinkatonex {
   public set = 'PAL';
   public setNumber = '240';
-  public fullName: string = 'Tinkaton exFA PAL';
+  public fullName: string = 'Tinkaton ex (PAL 240)';
+  public legacyFullName = 'Tinkaton exFA PAL';
 }
 
 // export class Lycanroc exFA extends Lycanroc ex {
 //   public setNumber = '241';
-//   public fullName: string = 'Lycanroc exFA PAL';
 // }
 
 // export class Annihilape exFA extends Annihilape ex {
 //   public setNumber = '242';
-//   public fullName: string = 'Annihilape exFA PAL';
 // }
 
 export class TingLuexFA extends TingLuex {
   public setNumber = '243';
-  public fullName: string = 'Ting-Lu exFA PAL';
+  public fullName: string = 'Ting-Lu ex (PAL 243)';
+  public legacyFullName = 'Ting-Lu exFA PAL';
 }
 
 // export class Paldean Clodsire exFA extends Paldean Clodsire ex {
@@ -278,27 +286,31 @@ export class TingLuexFA extends TingLuex {
 
 // export class Copperajah exFA extends Copperajah ex {
 //   public setNumber = '245';
-//   public fullName: string = 'Copperajah exFA PAL';
+//   public fullName: string = 'Ting-Lu ex (PAL 245)';
 // }
 
 export class NoivernexFA extends Noivernex {
   public setNumber = '246';
-  public fullName: string = 'Noivern exFA PAL';
+  public fullName: string = 'Noivern ex (PAL 246)';
+  public legacyFullName = 'Noivern exFA PAL';
 }
 
 export class SquawkabillyexFA extends Squawkabillyex {
   public setNumber = '247';
-  public fullName: string = 'Squawkabilly exFA PAL';
+  public fullName: string = 'Squawkabilly ex (PAL 247)';
+  public legacyFullName = 'Squawkabilly exFA PAL';
 }
 
 export class BossOrdersFA extends BossOrders {
   public setNumber = '248';
-  public fullName: string = 'Boss\'s OrdersFA PAL';
+  public fullName: string = 'Boss\'s Orders (PAL 248)';
+  public legacyFullName = 'Boss\'s OrdersFA PAL';
 }
 
 export class ClavellFA extends Clavell {
   public setNumber = '249';
-  public fullName: string = 'ClavellFA PAL';
+  public fullName: string = 'Clavell (PAL 249)';
+  public legacyFullName = 'ClavellFA PAL';
 }
 
 // export class DendraFA extends Dendra {
@@ -308,108 +320,122 @@ export class ClavellFA extends Clavell {
 
 // export class FalknerFA extends Falkner {
 //   public setNumber = '251';
-//   public fullName: string = 'FalknerFA PAL';
+//   public fullName: string = 'Clavell (PAL 251)';
 // }
 
 export class GiacomoFA extends Giacomo {
   public setNumber = '252';
-  public fullName: string = 'GiacomoFA PAL';
+  public fullName: string = 'Giacomo (PAL 252)';
+  public legacyFullName = 'GiacomoFA PAL';
 }
 
 export class GrushaFA extends Grusha {
   public setNumber = '253';
-  public fullName: string = 'GrushaFA PAL';
+  public fullName: string = 'Grusha (PAL 253)';
+  public legacyFullName = 'GrushaFA PAL';
 }
 
 export class IonoFA extends Iono {
   public setNumber = '254';
-  public fullName: string = 'IonoFA PAL';
+  public fullName: string = 'Iono (PAL 254)';
+  public legacyFullName = 'IonoFA PAL';
 }
 
 // export class SaguaroFA extends Saguaro {
 //   public setNumber = '255';
-//   public fullName: string = 'SaguaroFA PAL';
+//   public fullName: string = 'Iono (PAL 255)';
 // }
 
 export class MeowscaradaexSIR extends Meowscaradaex {
   public setNumber = '256';
-  public fullName: string = 'Meowscarada exSIR PAL';
+  public fullName: string = 'Meowscarada ex (PAL 256)';
+  public legacyFullName = 'Meowscarada exSIR PAL';
 }
 
 export class WoChienexSIR extends WoChienex {
   public setNumber = '257';
-  public fullName: string = 'Wo-Chien exSIR PAL';
+  public fullName: string = 'Wo-Chien ex (PAL 257)';
+  public legacyFullName = 'Wo-Chien exSIR PAL';
 }
 
 // export class Skeledirge exSIR extends Skeledirge ex {
 //   public setNumber = '258';
-//   public fullName: string = 'Skeledirge exSIR PAL';
+//   public fullName: string = 'Wo-Chien ex (PAL 258)';
 // }
 
 export class ChiYuexSIR extends ChiYuex {
   public setNumber = '259';
-  public fullName: string = 'Chi-Yu exSIR PAL';
+  public fullName: string = 'Chi-Yu ex (PAL 259)';
+  public legacyFullName = 'Chi-Yu exSIR PAL';
 }
 
 // export class Quaquaval exSIR extends Quaquaval ex {
 //   public setNumber = '260';
-//   public fullName: string = 'Quaquaval exSIR PAL';
 // }
 
 export class ChienPaoexSIR extends ChienPaoex {
   public setNumber = '261';
-  public fullName: string = 'Chien-Pao exSIR PAL';
+  public fullName: string = 'Chien-Pao ex (PAL 261)';
+  public legacyFullName = 'Chien-Pao exSIR PAL';
 }
 
 export class TinkatonexSIR extends Tinkatonex {
   public set = 'PAL';
   public setNumber = '262';
-  public fullName: string = 'Tinkaton exSIR PAL';
+  public fullName: string = 'Tinkaton ex (PAL 262)';
+  public legacyFullName = 'Tinkaton exSIR PAL';
 }
 
 export class TingLuexSIR extends TingLuex {
   public setNumber = '263';
-  public fullName: string = 'Ting-Lu exSIR PAL';
+  public fullName: string = 'Ting-Lu ex (PAL 263)';
+  public legacyFullName = 'Ting-Lu exSIR PAL';
 }
 
 export class SquawkabillyexSIR extends Squawkabillyex {
   public setNumber = '264';
-  public fullName: string = 'Squawkabilly exSIR PAL';
+  public fullName: string = 'Squawkabilly ex (PAL 264)';
+  public legacyFullName = 'Squawkabilly exSIR PAL';
 }
 
 export class BossOrdersSIR extends BossOrders {
   public setNumber = '265';
-  public fullName: string = 'Boss\'s OrdersSIR PAL';
+  public fullName: string = 'Boss\'s Orders (PAL 265)';
+  public legacyFullName = 'Boss\'s OrdersSIR PAL';
 }
 
 // export class DendraSIR extends Dendra {
 //   public setNumber = '266';
-//   public fullName: string = 'DendraSIR PAL';
+//   public fullName: string = 'Boss\'s Orders (PAL 266)';
 // }
 
 export class GiacomoSIR extends Giacomo {
   public setNumber = '267';
-  public fullName: string = 'GiacomoSIR PAL';
+  public fullName: string = 'Giacomo (PAL 267)';
+  public legacyFullName = 'GiacomoSIR PAL';
 }
 
 export class GrushaSIR extends Grusha {
   public setNumber = '268';
-  public fullName: string = 'GrushaSIR PAL';
+  public fullName: string = 'Grusha (PAL 268)';
+  public legacyFullName = 'GrushaSIR PAL';
 }
 
 export class IonoSIR extends Iono {
   public setNumber = '269';
-  public fullName: string = 'IonoSIR PAL';
+  public fullName: string = 'Iono (PAL 269)';
+  public legacyFullName = 'IonoSIR PAL';
 }
 
 // export class SaguaroSIR extends Saguaro {
 //   public setNumber = '270';
-//   public fullName: string = 'SaguaroSIR PAL';
+//   public fullName: string = 'Iono (PAL 270)';
 // }
 
 export class MeowscaradaexHR extends Meowscaradaex {
   public setNumber = '271';
-  public fullName: string = 'Meowscarada exHR PAL';
+  public fullName: string = 'Meowscarada ex (PAL 271)';
+  public legacyFullName = 'Meowscarada exHR PAL';
 }
 
 // export class Skeledirge exHR extends Skeledirge ex {
@@ -419,25 +445,29 @@ export class MeowscaradaexHR extends Meowscaradaex {
 
 // export class Quaquaval exHR extends Quaquaval ex {
 //   public setNumber = '273';
-//   public fullName: string = 'Quaquaval exHR PAL';
+//   public fullName: string = 'Meowscarada ex (PAL 273)';
 // }
 
 export class ChienPaoexHR extends ChienPaoex {
   public setNumber = '274';
-  public fullName: string = 'Chien-Pao exHR PAL';
+  public fullName: string = 'Chien-Pao ex (PAL 274)';
+  public legacyFullName = 'Chien-Pao exHR PAL';
 }
 
 export class TingLuexHR extends TingLuex {
   public setNumber = '275';
-  public fullName: string = 'Ting-Lu exHR PAL';
+  public fullName: string = 'Ting-Lu ex (PAL 275)';
+  public legacyFullName = 'Ting-Lu exHR PAL';
 }
 
 export class SuperRodHR extends SuperRod {
   public setNumber = '276';
-  public fullName: string = 'Super RodHR PAL';
+  public fullName: string = 'Super Rod (PAL 276)';
+  public legacyFullName = 'Super RodHR PAL';
 }
 
 export class SuperiorEnergyRetrievalHR extends SuperiorEnergyRetrieval {
   public setNumber = '277';
-  public fullName: string = 'Superior Energy RetrievalHR PAL';
+  public fullName: string = 'Superior Energy Retrieval (PAL 277)';
+  public legacyFullName = 'Superior Energy RetrievalHR PAL';
 }

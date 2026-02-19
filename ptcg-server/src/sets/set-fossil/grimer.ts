@@ -30,7 +30,8 @@ export class Grimer extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';
   public name: string = 'Grimer';
-  public fullName: string = 'Grimer FO';
+  public fullName: string = 'Grimer (FO 48)';
+  public legacyFullName = 'Grimer FO';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

@@ -67,7 +67,8 @@ export class DiveBall extends TrainerCard {
 
   public name: string = 'Dive Ball';
 
-  public fullName: string = 'Dive Ball PRC';
+  public fullName: string = 'Dive Ball (PRC 125)';
+  public legacyFullName = 'Dive Ball PRC';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -30,7 +30,8 @@ export class Vibrava extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vibrava';
-  public fullName: string = 'Vibrava DRM';
+  public fullName: string = 'Vibrava (DRM 38)';
+  public legacyFullName = 'Vibrava DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sonic Edge

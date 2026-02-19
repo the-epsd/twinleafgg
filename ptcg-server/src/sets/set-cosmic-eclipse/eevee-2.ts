@@ -34,7 +34,8 @@ export class Eevee2 extends PokemonCard {
   public setNumber: string = '167';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eevee';
-  public fullName: string = 'Eevee CEC 167';
+  public fullName: string = 'Eevee (CEC 167)';
+  public legacyFullName = 'Eevee CEC 167';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Follow My Tail

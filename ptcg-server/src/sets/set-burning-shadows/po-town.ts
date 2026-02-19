@@ -14,7 +14,8 @@ export class PoTown extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '121';
   public name: string = 'Po Town';
-  public fullName: string = 'Po Town BUS';
+  public fullName: string = 'Po Town (BUS 121)';
+  public legacyFullName = 'Po Town BUS';
 
   public text: string = 'Whenever any player plays a Pokémon from their hand to evolve 1 of their Pokémon, put 3 damage counters on that Pokémon.';
 

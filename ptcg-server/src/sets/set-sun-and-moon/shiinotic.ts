@@ -42,7 +42,8 @@ export class Shiinotic extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shiinotic';
-  public fullName: string = 'Shiinotic SUM';
+  public fullName: string = 'Shiinotic (SUM 17)';
+  public legacyFullName = 'Shiinotic SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Illuminate

@@ -36,7 +36,8 @@ export class Inkay extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Inkay';
-  public fullName: string = 'Inkay ROS';
+  public fullName: string = 'Inkay (ROS 41)';
+  public legacyFullName = 'Inkay ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rip Off

@@ -36,7 +36,8 @@ export class Snubbull extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snubbull';
-  public fullName: string = 'Snubbull BKT';
+  public fullName: string = 'Snubbull (BKT 98)';
+  public legacyFullName = 'Snubbull BKT';
 
   public usedRoar = false;
 

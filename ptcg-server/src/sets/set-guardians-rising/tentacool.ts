@@ -30,7 +30,8 @@ export class Tentacool extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tentacool';
-  public fullName: string = 'Tentacool GRI';
+  public fullName: string = 'Tentacool (GRI 23)';
+  public legacyFullName = 'Tentacool GRI';
 
   public readonly HEAL_BLOCK_MARKER = 'TENTACOOL_GRI_HEAL_BLOCK_MARKER';
   public readonly CLEAR_HEAL_BLOCK_MARKER = 'TENTACOOL_GRI_CLEAR_HEAL_BLOCK_MARKER';

@@ -27,7 +27,8 @@ export class MowRotom extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mow Rotom';
-  public fullName: string = 'Mow Rotom DRI';
+  public fullName: string = 'Mow Rotom (DRI 9)';
+  public legacyFullName = 'Mow Rotom DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

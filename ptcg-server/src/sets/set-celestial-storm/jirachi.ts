@@ -39,7 +39,8 @@ export class Jirachi extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jirachi \u25c7';
-  public fullName: string = 'Jirachi \u25c7 CES';
+  public fullName: string = 'Jirachi \u25c7 (CES 97)';
+  public legacyFullName = 'Jirachi \u25c7 CES';
 
   public readonly KNOCKOUT_MARKER = 'JIRACHI_CES_KNOCKOUT_MARKER';
   public readonly CLEAR_KNOCKOUT_MARKER = 'JIRACHI_CES_CLEAR_KNOCKOUT_MARKER';

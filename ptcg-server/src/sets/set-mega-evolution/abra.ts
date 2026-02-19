@@ -23,7 +23,8 @@ export class Abra extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '54';
   public name: string = 'Abra';
-  public fullName: string = 'Abra M1S';
+  public fullName: string = 'Abra (MEG 54)';
+  public legacyFullName = 'Abra M1S';
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

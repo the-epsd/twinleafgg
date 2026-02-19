@@ -41,7 +41,8 @@ export class Paras extends PokemonCard {
 
   public name: string = 'Paras';
 
-  public fullName: string = 'Paras JU';
+  public fullName: string = 'Paras (JU 59)';
+  public legacyFullName = 'Paras JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

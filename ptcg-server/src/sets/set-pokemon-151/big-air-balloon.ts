@@ -16,7 +16,8 @@ export class BigAirBalloon extends TrainerCard {
 
   public name: string = 'Big Air Balloon';
 
-  public fullName: string = 'Big Air Balloon MEW';
+  public fullName: string = 'Big Air Balloon (MEW 155)';
+  public legacyFullName = 'Big Air Balloon MEW';
 
   public cardImage: string = 'assets/cardback.png';
 

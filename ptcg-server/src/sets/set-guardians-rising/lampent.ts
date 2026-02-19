@@ -26,5 +26,6 @@ export class Lampent extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lampent';
-  public fullName: string = 'Lampent GRI';
+  public fullName: string = 'Lampent (GRI 12)';
+  public legacyFullName = 'Lampent GRI';
 }

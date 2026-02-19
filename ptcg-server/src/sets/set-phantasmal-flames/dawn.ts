@@ -93,7 +93,8 @@ export class Dawn extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Dawn';
-  public fullName: string = 'Dawn M2';
+  public fullName: string = 'Dawn (PFL 87)';
+  public legacyFullName = 'Dawn M2';
 
   public text: string = 'Search your deck for a Basic Pokémon, a Stage 1 Pokémon, and a Stage 2 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
 

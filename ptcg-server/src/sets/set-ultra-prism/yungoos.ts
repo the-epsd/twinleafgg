@@ -34,7 +34,8 @@ export class Yungoos extends PokemonCard {
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yungoos';
-  public fullName: string = 'Yungoos UPR';
+  public fullName: string = 'Yungoos (UPR 112)';
+  public legacyFullName = 'Yungoos UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Scout

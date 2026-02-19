@@ -21,7 +21,7 @@ export class Pawniard extends PokemonCard {
       name: 'Charge Order',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 10 damage times the number of your Pawniard.'
     }
   ];
@@ -30,7 +30,8 @@ export class Pawniard extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pawniard';
-  public fullName: string = 'Pawniard STS';
+  public fullName: string = 'Pawniard (STS 63)';
+  public legacyFullName = 'Pawniard STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Charge Order

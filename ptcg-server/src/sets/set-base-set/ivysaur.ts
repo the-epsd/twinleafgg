@@ -35,7 +35,8 @@ export class Ivysaur extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name = 'Ivysaur';
-  public fullName = 'Ivysaur BS';
+  public fullName = 'Ivysaur (BS 30)';
+  public legacyFullName = 'Ivysaur BS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -38,7 +38,8 @@ export class Darmanitan extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Darmanitan';
-  public fullName: string = 'Darmanitan BCR';
+  public fullName: string = 'Darmanitan (BCR 28)';
+  public legacyFullName = 'Darmanitan BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Tumble

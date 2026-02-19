@@ -36,7 +36,8 @@ export class Tyrunt extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tyrunt';
-  public fullName: string = 'Tyrunt FFI';
+  public fullName: string = 'Tyrunt (FFI 61)';
+  public legacyFullName = 'Tyrunt FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Crunch

@@ -35,7 +35,8 @@ export class Cosmog2 extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cosmog';
-  public fullName: string = 'Cosmog CEC 100';
+  public fullName: string = 'Cosmog (CEC 100)';
+  public legacyFullName = 'Cosmog CEC 100';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Unaware (passive - prevent effects except damage)

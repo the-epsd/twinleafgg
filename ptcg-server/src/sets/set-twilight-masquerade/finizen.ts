@@ -23,7 +23,8 @@ export class Finizen extends PokemonCard {
   public setNumber = '59';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Finizen';
-  public fullName: string = 'Finizen TWM';
+  public fullName: string = 'Finizen (TWM 59)';
+  public legacyFullName = 'Finizen TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Aqua Slash

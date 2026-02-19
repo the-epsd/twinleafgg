@@ -32,5 +32,6 @@ export class Sandshrew extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandshrew';
-  public fullName: string = 'Sandshrew BCR';
+  public fullName: string = 'Sandshrew (BCR 78)';
+  public legacyFullName = 'Sandshrew BCR';
 }

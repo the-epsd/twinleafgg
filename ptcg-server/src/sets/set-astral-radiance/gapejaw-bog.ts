@@ -18,7 +18,8 @@ export class GapejawBog extends TrainerCard {
 
   public name = 'Gapejaw Bog';
 
-  public fullName = 'Gapejaw Bog ASR';
+  public fullName = 'Gapejaw Bog (ASR 142)';
+  public legacyFullName = 'Gapejaw Bog ASR';
 
   public text = 'Whenever either player puts a Basic Pokémon from their hand onto their Bench, put 2 damage counters on that Pokémon.';
 

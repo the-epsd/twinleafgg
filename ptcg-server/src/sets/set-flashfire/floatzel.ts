@@ -36,7 +36,8 @@ export class Floatzel extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Floatzel';
-  public fullName: string = 'Floatzel FLF';
+  public fullName: string = 'Floatzel (FLF 29)';
+  public legacyFullName = 'Floatzel FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-plasma-freeze/kingdra.ts (discard pile shuffle into deck)

@@ -46,7 +46,8 @@ export class HisuianArcanine extends PokemonCard {
 
   public name: string = 'Hisuian Arcanine';
 
-  public fullName: string = 'Hisuian Arcanine ASR';
+  public fullName: string = 'Hisuian Arcanine (ASR 71)';
+  public legacyFullName = 'Hisuian Arcanine ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

@@ -29,7 +29,7 @@ export class HeracrossEx2 extends PokemonCard {
       name: 'Giga Power',
       cost: [G, G, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 40 more damage. If you do, this Pok\u00e9mon does 20 damage to itself.'
     }
   ];
@@ -38,7 +38,8 @@ export class HeracrossEx2 extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heracross-EX';
-  public fullName: string = 'Heracross-EX FFI 105';
+  public fullName: string = 'Heracross-EX (FFI 105)';
+  public legacyFullName = 'Heracross-EX FFI 105';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER_HERACROSS_EX_2';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER_HERACROSS_EX_2';

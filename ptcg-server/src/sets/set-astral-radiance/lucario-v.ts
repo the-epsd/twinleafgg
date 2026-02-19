@@ -47,7 +47,8 @@ export class LucarioV extends PokemonCard {
 
   public name: string = 'Lucario V';
 
-  public fullName: string = 'Lucario V ASR';
+  public fullName: string = 'Lucario V (ASR 78)';
+  public legacyFullName = 'Lucario V ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

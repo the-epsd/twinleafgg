@@ -31,7 +31,8 @@ export class Vigoroth extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vigoroth';
-  public fullName: string = 'Vigoroth DRX';
+  public fullName: string = 'Vigoroth (DRX 102)';
+  public legacyFullName = 'Vigoroth DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -24,5 +24,6 @@ export class StevensBeldum extends PokemonCard {
   public setNumber: string = '143';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steven\'s Beldum';
-  public fullName: string = 'Steven\'s Beldum DRI';
+  public fullName: string = 'Steven\'s Beldum (DRI 143)';
+  public legacyFullName = 'Steven\'s Beldum DRI';
 }

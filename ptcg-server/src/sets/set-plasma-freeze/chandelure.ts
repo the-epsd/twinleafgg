@@ -38,7 +38,8 @@ export class Chandelure extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chandelure';
-  public fullName: string = 'Chandelure PLF';
+  public fullName: string = 'Chandelure (PLF 16)';
+  public legacyFullName = 'Chandelure PLF';
 
   public readonly FLARE_NAVIGATE_MARKER = 'FLARE_NAVIGATE_MARKER';
 

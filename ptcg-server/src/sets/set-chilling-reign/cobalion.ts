@@ -36,7 +36,8 @@ export class Cobalion extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cobalion';
-  public fullName: string = 'Cobalion CRE';
+  public fullName: string = 'Cobalion (CRE 114)';
+  public legacyFullName = 'Cobalion CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Metal Slash

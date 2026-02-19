@@ -31,7 +31,7 @@ export class Swalot extends PokemonCard {
       name: 'Swallow Up',
       cost: [P, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If, before doing damage, your opponent\'s Active Pokémon has less remaining HP than this Pokémon, this attack does 80 more damage.'
     }
   ];
@@ -40,7 +40,8 @@ export class Swalot extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swalot';
-  public fullName: string = 'Swalot CES';
+  public fullName: string = 'Swalot (CES 58)';
+  public legacyFullName = 'Swalot CES';
 
   public amnesiaAttack: Attack | null = null;
 

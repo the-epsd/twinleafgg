@@ -29,7 +29,8 @@ export class Litten extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Litten';
-  public fullName: string = 'Litten UNB';
+  public fullName: string = 'Litten (UNB 26)';
+  public legacyFullName = 'Litten UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Singe

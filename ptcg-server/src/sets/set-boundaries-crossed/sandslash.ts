@@ -39,7 +39,8 @@ export class Sandslash extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandslash';
-  public fullName: string = 'Sandslash BCR';
+  public fullName: string = 'Sandslash (BCR 79)';
+  public legacyFullName = 'Sandslash BCR';
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
   public readonly SAND_ATTACK_MARKER = 'SAND_ATTACK_MARKER';
 

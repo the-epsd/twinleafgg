@@ -21,7 +21,7 @@ export class ZygardeEx extends PokemonCard {
       name: 'Land\'s Pulse',
       cost: [F],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 20 more damage.'
     },
     {
@@ -42,7 +42,8 @@ export class ZygardeEx extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zygarde-EX';
-  public fullName: string = 'Zygarde-EX FCO';
+  public fullName: string = 'Zygarde-EX (FCO 54)';
+  public legacyFullName = 'Zygarde-EX FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Land's Pulse

@@ -49,7 +49,8 @@ export class Oricorio2 extends PokemonCard {
 
   public name: string = 'Oricorio';
 
-  public fullName: string = 'Oricorio GRI';
+  public fullName: string = 'Oricorio (GRI 56)';
+  public legacyFullName = 'Oricorio GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Supernatural Dance

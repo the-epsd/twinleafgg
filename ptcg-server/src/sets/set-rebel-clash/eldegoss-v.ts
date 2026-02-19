@@ -39,7 +39,8 @@ export class EldegossV extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eldegoss V';
-  public fullName: string = 'Eldegoss V RCL';
+  public fullName: string = 'Eldegoss V (RCL 19)';
+  public legacyFullName = 'Eldegoss V RCL';
 
   public wantsToShuffle = false;
 

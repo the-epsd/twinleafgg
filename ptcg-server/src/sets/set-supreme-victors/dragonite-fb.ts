@@ -30,7 +30,8 @@ export class DragoniteFB extends PokemonCard {
 
   public set: string = 'SV';
   public name: string = 'Dragonite FB';
-  public fullName: string = 'Dragonite FB SV';
+  public fullName: string = 'Dragonite FB (SV 56)';
+  public legacyFullName = 'Dragonite FB SV';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '56';
 

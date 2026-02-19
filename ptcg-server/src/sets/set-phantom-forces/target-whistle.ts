@@ -67,7 +67,8 @@ export class TargetWhistle extends TrainerCard {
 
   public name: string = 'Target Whistle';
 
-  public fullName: string = 'Target Whistle PHF';
+  public fullName: string = 'Target Whistle (PHF 106)';
+  public legacyFullName = 'Target Whistle PHF';
 
   public text: string =
     'Put a Basic Pokémon from your opponent\'s discard pile onto his or her Bench.';

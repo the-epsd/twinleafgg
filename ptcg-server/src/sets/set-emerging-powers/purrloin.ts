@@ -25,7 +25,8 @@ export class Purrloin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '64';
   public name: string = 'Purrloin';
-  public fullName: string = 'Purrloin EPO';
+  public fullName: string = 'Purrloin (EPO 64)';
+  public legacyFullName = 'Purrloin EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

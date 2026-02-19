@@ -37,7 +37,8 @@ export class Centiskorch extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Centiskorch';
-  public fullName: string = 'Centiskorch CPA';
+  public fullName: string = 'Centiskorch (CPA 10)';
+  public legacyFullName = 'Centiskorch CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Searing Flame

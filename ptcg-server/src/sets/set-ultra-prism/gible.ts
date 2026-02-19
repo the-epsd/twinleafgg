@@ -64,7 +64,8 @@ export class Gible extends PokemonCard {
 
   public name: string = 'Gible';
 
-  public fullName: string = 'Gible UPR';
+  public fullName: string = 'Gible (UPR 96)';
+  public legacyFullName = 'Gible UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

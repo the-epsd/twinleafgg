@@ -17,7 +17,8 @@ export class SteelShelter extends TrainerCard {
 
   public name: string = 'Steel Shelter';
 
-  public fullName: string = 'Steel Shelter PFO';
+  public fullName: string = 'Steel Shelter (PHF 105)';
+  public legacyFullName = 'Steel Shelter PFO';
 
   public cardImage: string = 'assets/cardback.png';
 

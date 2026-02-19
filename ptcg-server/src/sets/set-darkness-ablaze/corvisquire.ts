@@ -28,7 +28,7 @@ export class Corvisquire extends PokemonCard {
       name: 'Fury Attack',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 40 damage for each heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class Corvisquire extends PokemonCard {
   public setNumber: string = '155';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Corvisquire';
-  public fullName: string = 'Corvisquire DAA';
+  public fullName: string = 'Corvisquire (DAA 155)';
+  public legacyFullName = 'Corvisquire DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Fury Attack

@@ -38,7 +38,8 @@ export class Rayquaza extends PokemonCard {
 
   public name: string = 'Rayquaza';
 
-  public fullName: string = 'Rayquaza DRV';
+  public fullName: string = 'Rayquaza (DRV 11)';
+  public legacyFullName = 'Rayquaza DRV';
 
   public cardImage: string = 'assets/cardback.png';
 

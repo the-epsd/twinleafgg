@@ -55,7 +55,8 @@ export class RandomReceiver extends TrainerCard {
 
   public name: string = 'Random Receiver';
 
-  public fullName: string = 'Random Receiver DEX';
+  public fullName: string = 'Random Receiver (DEX 99)';
+  public legacyFullName = 'Random Receiver DEX';
 
   public cardImage: string = 'assets/cardback.png';
 

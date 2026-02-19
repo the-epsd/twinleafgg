@@ -40,7 +40,8 @@ export class Magnezone extends PokemonCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magnezone';
-  public fullName: string = 'Magnezone TM';
+  public fullName: string = 'Magnezone (TM 96)';
+  public legacyFullName = 'Magnezone TM';
 
   public readonly MAGNETIC_DRAW_MARKER = 'MAGNETIC_DRAW_MARKER';
 

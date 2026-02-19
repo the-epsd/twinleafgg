@@ -30,7 +30,8 @@ export class Dedenne2 extends PokemonCard {
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dedenne';
-  public fullName: string = 'Dedenne LOT 142';
+  public fullName: string = 'Dedenne (LOT 142)';
+  public legacyFullName = 'Dedenne LOT 142';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Zzzap Touch

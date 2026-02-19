@@ -30,7 +30,7 @@ export class Cacturne extends PokemonCard {
       name: 'Spiny Punch',
       cost: [G, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any [D] Energy attached, this attack does 70 more damage.'
     }
   ];
@@ -40,7 +40,8 @@ export class Cacturne extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cacturne';
-  public fullName: string = 'Cacturne BST';
+  public fullName: string = 'Cacturne (BST 5)';
+  public legacyFullName = 'Cacturne BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pull

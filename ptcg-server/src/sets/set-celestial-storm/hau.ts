@@ -11,7 +11,8 @@ export class Hau extends TrainerCard {
   public setNumber: string = '132';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hau';
-  public fullName: string = 'Hau CES';
+  public fullName: string = 'Hau (CES 132)';
+  public legacyFullName = 'Hau CES';
   public text: string = 'Draw 3 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

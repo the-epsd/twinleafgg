@@ -38,7 +38,8 @@ export class MewtwoEx extends PokemonCard {
   public setNumber: string = '54A';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mewtwo EX';
-  public fullName: string = 'Mewtwo EX CEL';
+  public fullName: string = 'Mewtwo EX (CEL 54A)';
+  public legacyFullName = 'Mewtwo EX CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: X Ball

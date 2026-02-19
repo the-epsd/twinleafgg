@@ -26,7 +26,8 @@ export class NsPurrloin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
   public name: string = 'N\'s Purrloin';
-  public fullName: string = 'N\'s Purrloin JTG';
+  public fullName: string = 'N\'s Purrloin (JTG 96)';
+  public legacyFullName = 'N\'s Purrloin JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

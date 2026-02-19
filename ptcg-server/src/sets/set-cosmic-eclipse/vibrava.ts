@@ -28,7 +28,8 @@ export class Vibrava extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
   public name: string = 'Vibrava';
-  public fullName: string = 'Vibrava CEC';
+  public fullName: string = 'Vibrava (CEC 109)';
+  public legacyFullName = 'Vibrava CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Snow Cover

@@ -86,7 +86,8 @@ export class LilliesComfey extends PokemonCard {
 
   public name: string = 'Lillie\'s Comfey';
 
-  public fullName: string = 'Lillie\'s Comfey JTG';
+  public fullName: string = 'Lillie\'s Comfey (JTG 68)';
+  public legacyFullName = 'Lillie\'s Comfey JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

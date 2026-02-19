@@ -33,7 +33,8 @@ export class Shinx extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '68';
   public name: string = 'Shinx';
-  public fullName: string = 'Shinx PAL';
+  public fullName: string = 'Shinx (PAL 68)';
+  public legacyFullName = 'Shinx PAL';
 
   public readonly BIG_ROAR_MARKER = 'BIG_ROAR_MARKER';
 

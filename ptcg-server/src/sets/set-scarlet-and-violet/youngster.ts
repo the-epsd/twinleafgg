@@ -52,7 +52,8 @@ export class Youngster extends TrainerCard {
 
   public name: string = 'Youngster';
 
-  public fullName: string = 'Youngster SVI';
+  public fullName: string = 'Youngster (SVI 198)';
+  public legacyFullName = 'Youngster SVI';
 
   public text: string =
     'Shuffle your hand into your deck. Then, draw 5 cards.';

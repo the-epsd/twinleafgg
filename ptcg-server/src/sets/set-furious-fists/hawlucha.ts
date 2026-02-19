@@ -40,7 +40,8 @@ export class Hawlucha extends PokemonCard {
 
   public name: string = 'Hawlucha';
 
-  public fullName: string = 'Hawlucha FFI';
+  public fullName: string = 'Hawlucha (FFI 63)';
+  public legacyFullName = 'Hawlucha FFI';
 
   public cardImage: string = 'assets/cardback.png';
 

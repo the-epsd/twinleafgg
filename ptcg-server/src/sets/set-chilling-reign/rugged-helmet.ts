@@ -18,7 +18,8 @@ export class RuggedHelmet extends TrainerCard {
   public setNumber: string = '152';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rugged Helmet';
-  public fullName: string = 'Rugged Helmet CRE';
+  public fullName: string = 'Rugged Helmet (CRE 152)';
+  public legacyFullName = 'Rugged Helmet CRE';
   public text: string = 'Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached. If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if it is Knocked Out), put an Energy attached to the Attacking Pokémon into your opponent\'s hand. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

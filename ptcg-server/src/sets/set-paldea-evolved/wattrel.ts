@@ -46,7 +46,8 @@ export class Wattrel extends PokemonCard {
 
   public name: string = 'Wattrel';
 
-  public fullName: string = 'Wattrel PAL';
+  public fullName: string = 'Wattrel (PAL 80)';
+  public legacyFullName = 'Wattrel PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

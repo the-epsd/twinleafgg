@@ -30,6 +30,7 @@ export class Sealeo extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
   public name: string = 'Sealeo';
-  public fullName: string = 'Sealeo SSP';
+  public fullName: string = 'Sealeo (SSP 44)';
+  public legacyFullName = 'Sealeo SSP';
 
 }

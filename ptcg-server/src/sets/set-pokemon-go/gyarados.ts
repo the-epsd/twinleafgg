@@ -32,7 +32,8 @@ export class Gyarados extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '22';
   public name: string = 'Gyarados';
-  public fullName: string = 'Gyarados PGO';
+  public fullName: string = 'Gyarados (PGO 22)';
+  public legacyFullName = 'Gyarados PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Wreak Havoc

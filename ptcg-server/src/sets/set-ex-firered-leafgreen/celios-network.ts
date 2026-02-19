@@ -14,7 +14,8 @@ export class CeliosNetwork extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
   public name: string = 'Celio\'s Network';
-  public fullName: string = 'Celio\'s Network RG';
+  public fullName: string = 'Celio\'s Network (RG 88)';
+  public legacyFullName = 'Celio\'s Network RG';
 
   public text: string =
     'Search your deck for a Basic Pokémon or Evolution card (excluding Pokémon-ex), show it to your opponent, and put it into your hand. Shuffle your deck afterward.';

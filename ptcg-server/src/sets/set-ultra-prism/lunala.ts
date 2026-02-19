@@ -24,7 +24,7 @@ export class Lunala extends PokemonCard {
       name: 'Psystorm',
       cost: [P, P, P, P],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage times the amount of Energy attached to all Pokémon.'
     }
   ];
@@ -33,7 +33,8 @@ export class Lunala extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lunala \u25c7';
-  public fullName: string = 'Lunala \u25c7 UPR';
+  public fullName: string = 'Lunala \u25c7 (UPR 62)';
+  public legacyFullName = 'Lunala \u25c7 UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Full Moon Star

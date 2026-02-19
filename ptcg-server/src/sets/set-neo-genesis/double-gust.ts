@@ -8,7 +8,8 @@ export class DoubleGust extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'N1';
   public name: string = 'Double Gust';
-  public fullName: string = 'Double Gust N1';
+  public fullName: string = 'Double Gust (N1 100)';
+  public legacyFullName = 'Double Gust N1';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '100';
   public text = 'If you have any Benched Pokémon, your opponent chooses 1 of them and switches it with your Active Pokémon. Then, if your opponent has any Benched Pokémon, choose 1 of them and switch it with his or her Active Pokémon.';

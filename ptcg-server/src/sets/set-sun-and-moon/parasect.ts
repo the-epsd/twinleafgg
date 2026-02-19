@@ -22,7 +22,7 @@ export class Parasect extends PokemonCard {
       name: 'Fury Cutter',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 3 coins. If 1 of them is heads, this attack does 20 more damage. If 2 of them are heads, this attack does 60 more damage. If all of them are heads, this attack does 120 damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Parasect extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Parasect';
-  public fullName: string = 'Parasect SUM';
+  public fullName: string = 'Parasect (SUM 5)';
+  public legacyFullName = 'Parasect SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Cutter

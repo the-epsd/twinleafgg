@@ -36,7 +36,8 @@ export class Bayleef extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bayleef';
-  public fullName: string = 'Bayleef LOT';
+  public fullName: string = 'Bayleef (LOT 7)';
+  public legacyFullName = 'Bayleef LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Soothing Scent

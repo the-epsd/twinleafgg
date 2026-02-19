@@ -68,409 +68,477 @@ import { UmbreonDarkraiGX } from '../set-unified-minds/umbreon-and-darkrai-gx';
 import { CharizardGX } from '../set-burning-shadows/charizard-gx';
 
 export class UmbreonDarkraiGXSMP extends UmbreonDarkraiGX {
-  public fullName = 'Umbreon & Darkrai-GX SMP';
+  public fullName = 'Umbreon & Darkrai-GX (SMP 241)';
+  public legacyFullName = 'Umbreon & Darkrai-GX SMP';
   public set = 'SMP';
   public setNumber = '241';
 }
 
 export class LucarioMelmetalGXSMP extends LucarioMelmetalGX {
-  public fullName = 'Lucario & Melmetal-GX SMP';
+  public fullName = 'Lucario & Melmetal-GX (SMP 192)';
+  public legacyFullName = 'Lucario & Melmetal-GX SMP';
   public set = 'SMP';
   public setNumber = '192';
 }
 
 export class LycanrocSMP extends Lycanroc {
-  public fullName = 'Lycanroc SMP';
+  public fullName = 'Lycanroc (SMP 118)';
+  public legacyFullName = 'Lycanroc SMP';
   public set = 'SMP';
   public setNumber = '118';
 }
 
 export class EeveeSnorlaxGXSMP extends EeveeSnorlaxGX {
-  public fullName = 'Eevee & Snorlax-GX SMP';
+  public fullName = 'Eevee & Snorlax-GX (SMP 169)';
+  public legacyFullName = 'Eevee & Snorlax-GX SMP';
   public set = 'SMP';
   public setNumber = '169';
 }
 
 export class MagikarpWailordGXSMP extends MagikarpWailordGX {
-  public fullName = 'Magikarp & Wailord-GX SMP';
+  public fullName = 'Magikarp & Wailord-GX (SMP 166)';
+  public legacyFullName = 'Magikarp & Wailord-GX SMP';
   public set = 'SMP';
   public setNumber = '166';
 }
 
 export class MewSMP extends Mew {
-  public fullName = 'Mew SMP';
+  public fullName = 'Mew (SMP 215)';
+  public legacyFullName = 'Mew SMP';
   public set = 'SMP';
   public setNumber = '215';
 }
 
 export class CelebiVenusaurGXSMP extends CelebiVenusaurGX {
-  public fullName = 'Celebi & Venusaur-GX SMP';
+  public fullName = 'Celebi & Venusaur-GX (SMP 167)';
+  public legacyFullName = 'Celebi & Venusaur-GX SMP';
   public set = 'SMP';
   public setNumber = '167';
 }
 
 export class DhelmiseSMP extends Dhelmise {
-  public fullName = 'Dhelmise SMP';
+  public fullName = 'Dhelmise (SMP 53)';
+  public legacyFullName = 'Dhelmise SMP';
   public set = 'SMP';
   public setNumber = '53';
 }
 
 export class EspeonDeoxysGXSMP extends EspeonDeoxysGX {
-  public fullName = 'Espeon & Deoxys-GX SMP';
+  public fullName = 'Espeon & Deoxys-GX (SMP 240)';
+  public legacyFullName = 'Espeon & Deoxys-GX SMP';
   public set = 'SMP';
   public setNumber = '240';
 }
 
 export class ReshiramCharizardGXSMP extends ReshiramCharizardGX {
-  public fullName = 'Reshiram & Charizard-GX SMP';
+  public fullName = 'Reshiram & Charizard-GX (SMP 201)';
+  public legacyFullName = 'Reshiram & Charizard-GX SMP';
   public set = 'SMP';
   public setNumber = '201';
 }
 
 export class TapuKokoSMP extends TapuKoko {
-  public fullName = 'Tapu Koko SMP 30a';
+  public fullName = 'Tapu Koko (SMP 30a)';
+  public legacyFullName = 'Tapu Koko SMP 30a';
   public set = 'SMP';
   public setNumber = '30a';
 }
 
 export class VenusaurSnivyGXSMP extends VenusaurSnivyGX {
-  public fullName = 'Venusaur & Snivy-GX SMP';
+  public fullName = 'Venusaur & Snivy-GX (SMP 229)';
+  public legacyFullName = 'Venusaur & Snivy-GX SMP';
   public set = 'SMP';
   public setNumber = '229';
 }
 
 export class PassimianSMP extends Passimian {
   public setNumber = '12';
-  public fullName: string = 'Passimian SMP';
+  public fullName: string = 'Passimian (SMP 12)';
+  public legacyFullName = 'Passimian SMP';
   public set = 'SMP';
 }
 
 export class OranguruSMP extends Oranguru {
   public setNumber = '13';
-  public fullName: string = 'Oranguru SMP';
+  public fullName: string = 'Oranguru (SMP 13)';
+  public legacyFullName = 'Oranguru SMP';
   public set = 'SMP';
 }
 
 export class Oricorio2SMP extends Oricorio2 {
   public setNumber = '19';
-  public fullName: string = 'Oricorio SMP';
+  public fullName: string = 'Oricorio (SMP 19)';
+  public legacyFullName = 'Oricorio SMP';
   public set = 'SMP';
 }
 
 export class Rowlet2SMP extends RowletSUM9 {
   public setNumber = '22';
-  public fullName: string = 'Rowlet2 SMP';
+  public fullName: string = 'Rowlet (SMP 22)';
+  public legacyFullName = 'Rowlet2 SMP';
   public set = 'SMP';
 }
 
 export class Popplio2SMP extends PopplioSUM39 {
   public setNumber = '24';
-  public fullName: string = 'Popplio2 SMP';
+  public fullName: string = 'Popplio (SMP 24)';
+  public legacyFullName = 'Popplio2 SMP';
   public set = 'SMP';
 }
 
 export class VikavoltSMP extends Vikavolt {
   public setNumber = '28';
-  public fullName: string = 'Vikavolt SMP';
+  public fullName: string = 'Vikavolt (SMP 28)';
+  public legacyFullName = 'Vikavolt SMP';
   public set = 'SMP';
 }
 
 export class TapuKoko3SMP extends TapuKokoSMP30 {
   public setNumber = '31';
-  public fullName: string = 'Tapu Koko3 SMP';
+  public fullName: string = 'Tapu Koko (SMP 31)';
+  public legacyFullName = 'Tapu Koko3 SMP';
   public set = 'SMP';
 }
 
 export class TapuBuluGXSMP extends TapuBuluGX {
   public setNumber = '32';
-  public fullName: string = 'Tapu Bulu-GX SMP';
+  public fullName: string = 'Tapu Bulu-GX (SMP 32)';
+  public legacyFullName = 'Tapu Bulu-GX SMP';
   public set = 'SMP';
 }
 
 export class TapuKokoGXSMP extends TapuKokoGX {
   public setNumber = '33';
-  public fullName: string = 'Tapu Koko-GX SMP';
+  public fullName: string = 'Tapu Koko-GX (SMP 33)';
+  public legacyFullName = 'Tapu Koko-GX SMP';
   public set = 'SMP';
 }
 
 export class EspeonGXSMP extends EspeonGX {
   public setNumber = '35';
-  public fullName: string = 'Espeon-GX SMP';
+  public fullName: string = 'Espeon-GX (SMP 35)';
+  public legacyFullName = 'Espeon-GX SMP';
   public set = 'SMP';
 }
 
 export class DecidueyeGXSMP extends DecidueyeGX {
   public setNumber = '37';
-  public fullName: string = 'Decidueye-GX SMP';
+  public fullName: string = 'Decidueye-GX (SMP 37)';
+  public legacyFullName = 'Decidueye-GX SMP';
   public set = 'SMP';
 }
 
 export class CosmogSMP extends Cosmog {
   public setNumber = '42';
-  public fullName: string = 'Cosmog SMP';
+  public fullName: string = 'Cosmog (SMP 42)';
+  public legacyFullName = 'Cosmog SMP';
   public set = 'SMP';
 }
 
 export class TapuKokoGX2SMP extends TapuKokoGXGRI47 {
   public setNumber = '50';
-  public fullName: string = 'Tapu Koko-GX2 SMP';
+  public fullName: string = 'Tapu Koko-GX (SMP 50)';
+  public legacyFullName = 'Tapu Koko-GX2 SMP';
   public set = 'SMP';
 }
 
 export class LucarioSMP extends Lucario {
   public setNumber = '54';
-  public fullName: string = 'Lucario SMP';
+  public fullName: string = 'Lucario (SMP 54)';
+  public legacyFullName = 'Lucario SMP';
   public set = 'SMP';
 }
 
 export class NecrozmaGXSMP extends NecrozmaGX {
   public setNumber = '58';
-  public fullName: string = 'Necrozma-GX SMP';
+  public fullName: string = 'Necrozma-GX (SMP 58)';
+  public legacyFullName = 'Necrozma-GX SMP';
   public set = 'SMP';
 }
 
 export class MarshadowGXSMP extends MarshadowGX {
   public setNumber = '59';
-  public fullName: string = 'Marshadow-GX SMP';
+  public fullName: string = 'Marshadow-GX (SMP 59)';
+  public legacyFullName = 'Marshadow-GX SMP';
   public set = 'SMP';
 }
 
 export class SalazzleGXSMP extends SalazzleGX {
   public setNumber = '63';
-  public fullName: string = 'Salazzle-GX SMP';
+  public fullName: string = 'Salazzle-GX (SMP 63)';
+  public legacyFullName = 'Salazzle-GX SMP';
   public set = 'SMP';
 }
 
 export class BuzzwoleGXSMP extends BuzzwoleGX {
   public setNumber = '69';
-  public fullName: string = 'Buzzwole-GX SMP';
+  public fullName: string = 'Buzzwole-GX (SMP 69)';
+  public legacyFullName = 'Buzzwole-GX SMP';
   public set = 'SMP';
 }
 
 export class SalazzleSMP extends Salazzle {
   public setNumber = '73';
-  public fullName: string = 'Salazzle SMP';
+  public fullName: string = 'Salazzle (SMP 73)';
+  public legacyFullName = 'Salazzle SMP';
   public set = 'SMP';
 }
 
 export class ZoruaSMP extends Zorua {
   public setNumber = '83';
-  public fullName: string = 'Zorua SMP';
+  public fullName: string = 'Zorua (SMP 83)';
+  public legacyFullName = 'Zorua SMP';
   public set = 'SMP';
 }
 
 export class ZoroarkGXSMP extends ZoroarkGX {
   public setNumber = '84';
-  public fullName: string = 'Zoroark-GX SMP';
+  public fullName: string = 'Zoroark-GX (SMP 84)';
+  public legacyFullName = 'Zoroark-GX SMP';
   public set = 'SMP';
 }
 
 export class MarshadowSMP extends Marshadow {
   public setNumber = '85';
-  public fullName: string = 'Marshadow SMP';
+  public fullName: string = 'Marshadow (SMP 85)';
+  public legacyFullName = 'Marshadow SMP';
   public set = 'SMP';
 }
 
 export class LatiosSMP extends Latios {
   public setNumber = '88';
-  public fullName: string = 'Latios SMP';
+  public fullName: string = 'Latios (SMP 88)';
+  public legacyFullName = 'Latios SMP';
   public set = 'SMP';
 }
 
 export class SilvallyGXSMP extends SilvallyGX {
   public setNumber = '91';
-  public fullName: string = 'Silvally-GX SMP';
+  public fullName: string = 'Silvally-GX (SMP 91)';
+  public legacyFullName = 'Silvally-GX SMP';
   public set = 'SMP';
 }
 
 export class Lucario2SMP extends LucarioUPR67 {
   public setNumber = '95';
-  public fullName: string = 'Lucario2 SMP';
+  public fullName: string = 'Lucario (SMP 95)';
+  public legacyFullName = 'Lucario2 SMP';
   public set = 'SMP';
 }
 
 export class Mimikyu2SMP extends MimikyuGRI58 {
   public setNumber = '99';
-  public fullName: string = 'Mimikyu2 SMP';
+  public fullName: string = 'Mimikyu (SMP 99)';
+  public legacyFullName = 'Mimikyu2 SMP';
   public set = 'SMP';
 }
 
 export class DawnWingsNecrozmaGXSMP extends DawnWingsNecrozmaGX {
   public setNumber = '101';
-  public fullName: string = 'Dawn Wings Necrozma-GX SMP';
+  public fullName: string = 'Dawn Wings Necrozma-GX (SMP 101)';
+  public legacyFullName = 'Dawn Wings Necrozma-GX SMP';
   public set = 'SMP';
 }
 
 export class DuskManeNecrozmaGXSMP extends DuskManeNecrozmaGX {
   public setNumber = '102';
-  public fullName: string = 'Dusk Mane Necrozma-GX SMP';
+  public fullName: string = 'Dusk Mane Necrozma-GX (SMP 102)';
+  public legacyFullName = 'Dusk Mane Necrozma-GX SMP';
   public set = 'SMP';
 }
 
 export class MalamarSMP extends Malamar {
   public setNumber = '117';
-  public fullName: string = 'Malamar SMP';
+  public fullName: string = 'Malamar (SMP 117)';
+  public legacyFullName = 'Malamar SMP';
   public set = 'SMP';
 }
 
 export class NaganadelGXSMP extends NaganadelGX {
   public setNumber = '125';
-  public fullName: string = 'Naganadel-GX SMP';
+  public fullName: string = 'Naganadel-GX (SMP 125)';
+  public legacyFullName = 'Naganadel-GX SMP';
   public set = 'SMP';
 }
 
 export class UltraNecrozmaGXSMP extends UltraNecrozmaGX {
   public setNumber = '126';
-  public fullName: string = 'Ultra Necrozma-GX SMP';
+  public fullName: string = 'Ultra Necrozma-GX (SMP 126)';
+  public legacyFullName = 'Ultra Necrozma-GX SMP';
   public set = 'SMP';
 }
 
 export class DelcattySMP extends Delcatty {
   public setNumber = '132';
-  public fullName: string = 'Delcatty SMP';
+  public fullName: string = 'Delcatty (SMP 132)';
+  public legacyFullName = 'Delcatty SMP';
   public set = 'SMP';
 }
 
 export class GlaceonGXSMP extends GlaceonGX {
   public setNumber = '147';
-  public fullName: string = 'Glaceon-GX SMP';
+  public fullName: string = 'Glaceon-GX (SMP 147)';
+  public legacyFullName = 'Glaceon-GX SMP';
   public set = 'SMP';
 }
 
 export class RaikouSMP extends Raikou {
   public setNumber = '150';
-  public fullName: string = 'Raikou SMP';
+  public fullName: string = 'Raikou (SMP 150)';
+  public legacyFullName = 'Raikou SMP';
   public set = 'SMP';
 }
 
 export class GiratinaSMP extends Giratina {
   public setNumber = '151';
-  public fullName: string = 'Giratina SMP';
+  public fullName: string = 'Giratina (SMP 151)';
+  public legacyFullName = 'Giratina SMP';
   public set = 'SMP';
 }
 
 export class CharizardSMP extends Charizard {
   public setNumber = '158';
-  public fullName: string = 'Charizard SMP';
+  public fullName: string = 'Charizard (SMP 158)';
+  public legacyFullName = 'Charizard SMP';
   public set = 'SMP';
 }
 
 export class Zapdos2SMP extends ZapdosTEU40 {
   public setNumber = '159';
-  public fullName: string = 'Zapdos2 SMP';
+  public fullName: string = 'Zapdos (SMP 159)';
+  public legacyFullName = 'Zapdos2 SMP';
   public set = 'SMP';
 }
 
 export class NidoqueenSMP extends Nidoqueen {
   public setNumber = '160';
-  public fullName: string = 'Nidoqueen SMP';
+  public fullName: string = 'Nidoqueen (SMP 160)';
+  public legacyFullName = 'Nidoqueen SMP';
   public set = 'SMP';
 }
 
 export class JirachiSMP extends Jirachi {
   public setNumber = '161';
-  public fullName: string = 'Jirachi SMP';
+  public fullName: string = 'Jirachi (SMP 161)';
+  public legacyFullName = 'Jirachi SMP';
   public set = 'SMP';
 }
 
 export class VolcanionSMP extends Volcanion {
   public setNumber = '179';
-  public fullName: string = 'Volcanion SMP';
+  public fullName: string = 'Volcanion (SMP 179)';
+  public legacyFullName = 'Volcanion SMP';
   public set = 'SMP';
 }
 
 export class PersianSMP extends Persian {
   public setNumber = '182';
-  public fullName: string = 'Persian SMP';
+  public fullName: string = 'Persian (SMP 182)';
+  public legacyFullName = 'Persian SMP';
   public set = 'SMP';
 }
 
 export class MewtwoMewGXSMP extends MewtwoMewGX {
   public setNumber = '191';
-  public fullName: string = 'Mewtwo & Mew-GX SMP';
+  public fullName: string = 'Mewtwo & Mew-GX (SMP 191)';
+  public legacyFullName = 'Mewtwo & Mew-GX SMP';
   public set = 'SMP';
 }
 
 export class GarchompGiratinaGXSMP extends GarchompGiratinaGX {
   public setNumber = '193';
-  public fullName: string = 'Garchomp & Giratina-GX SMP';
+  public fullName: string = 'Garchomp & Giratina-GX (SMP 193)';
+  public legacyFullName = 'Garchomp & Giratina-GX SMP';
   public set = 'SMP';
 }
 
 export class NecrozmaSMP extends Necrozma {
   public setNumber = '204';
-  public fullName: string = 'Necrozma SMP';
+  public fullName: string = 'Necrozma (SMP 204)';
+  public legacyFullName = 'Necrozma SMP';
   public set = 'SMP';
 }
 
 export class MoltresZapdosArticunoGXSMP extends MoltresZapdosArticunoGX {
   public setNumber = '210';
-  public fullName: string = 'Moltres & Zapdos & Articuno-GX SMP';
+  public fullName: string = 'Moltres & Zapdos & Articuno-GX (SMP 210)';
+  public legacyFullName = 'Moltres & Zapdos & Articuno-GX SMP';
   public set = 'SMP';
 }
 
 export class Mewtwo2SMP extends MewtwoUNB75 {
   public setNumber = '214';
-  public fullName: string = 'Mewtwo2 SMP';
+  public fullName: string = 'Mewtwo (SMP 214)';
+  public legacyFullName = 'Mewtwo2 SMP';
   public set = 'SMP';
 }
 
 export class BuzzwoleSMP extends Buzzwole {
   public setNumber = '218';
-  public fullName: string = 'Buzzwole SMP';
+  public fullName: string = 'Buzzwole (SMP 218)';
+  public legacyFullName = 'Buzzwole SMP';
   public set = 'SMP';
 }
 
 export class EnteiSMP extends Entei {
   public setNumber = '219';
-  public fullName: string = 'Entei SMP';
+  public fullName: string = 'Entei (SMP 219)';
+  public legacyFullName = 'Entei SMP';
   public set = 'SMP';
 }
 
 export class PhioneSMP extends Phione {
   public setNumber = '220';
-  public fullName: string = 'Phione SMP';
+  public fullName: string = 'Phione (SMP 220)';
+  public legacyFullName = 'Phione SMP';
   public set = 'SMP';
 }
 
 export class BlacephalonSMP extends Blacephalon {
   public setNumber = '221';
-  public fullName: string = 'Blacephalon SMP';
+  public fullName: string = 'Blacephalon (SMP 221)';
+  public legacyFullName = 'Blacephalon SMP';
   public set = 'SMP';
 }
 
 export class Charizard2SMP extends CharizardTEU14 {
   public setNumber = '226';
-  public fullName: string = 'Charizard2 SMP';
+  public fullName: string = 'Charizard (SMP 226)';
+  public legacyFullName = 'Charizard2 SMP';
   public set = 'SMP';
 }
 
 export class CharizardBraixenGXSMP extends CharizardBraixenGX {
   public setNumber = '230';
-  public fullName: string = 'Charizard & Braixen-GX SMP';
+  public fullName: string = 'Charizard & Braixen-GX (SMP 230)';
+  public legacyFullName = 'Charizard & Braixen-GX SMP';
   public set = 'SMP';
 }
 
 export class ReshiramCharizardGX2SMP extends ReshiramCharizardGXUNB20 {
   public setNumber = '247';
-  public fullName: string = 'Reshiram & Charizard-GX2 SMP';
+  public fullName: string = 'Reshiram & Charizard-GX (SMP 247)';
+  public legacyFullName = 'Reshiram & Charizard-GX2 SMP';
   public set = 'SMP';
 }
 
 export class PikachuZekromGX2SMP extends PikachuZekromGXSMP168 {
   public setNumber = '248';
-  public fullName: string = 'Pikachu & Zekrom-GX2 SMP';
+  public fullName: string = 'Pikachu & Zekrom-GX (SMP 248)';
+  public legacyFullName = 'Pikachu & Zekrom-GX2 SMP';
   public set = 'SMP';
 }
 
 export class SolgaleoGX3SMP extends SolgaleoGXSMP104 {
   public setNumber = '104a';
-  public fullName: string = 'Solgaleo-GX3 SMP';
+  public fullName: string = 'Solgaleo-GX (SMP 104a)';
+  public legacyFullName = 'Solgaleo-GX3 SMP';
   public set = 'SMP';
 }
 
 export class CharizardGXSMP60 extends CharizardGX {
   public setNumber = '60';
-  public fullName: string = 'Charizard-GX SMP 60';
+  public fullName: string = 'Charizard-GX (SMP 60)';
+  public legacyFullName = 'Charizard-GX SMP 60';
   public set = 'SMP';
 }

@@ -13,7 +13,8 @@ export class ManectricSpiritLink extends TrainerCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Manectric Spirit Link';
-  public fullName: string = 'Manectric Spirit Link PHF';
+  public fullName: string = 'Manectric Spirit Link (PHF 100)';
+  public legacyFullName = 'Manectric Spirit Link PHF';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Manectric-EX.';
 
   // Ref: set-roaring-skies/rayquaza-spirit-link.ts (Spirit Link - no-op, handled by engine)

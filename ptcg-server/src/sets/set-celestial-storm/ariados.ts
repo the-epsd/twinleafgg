@@ -22,7 +22,7 @@ export class Ariados extends PokemonCard {
       name: 'Reactive Poison',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 50 more damage for each Special Condition affecting your opponent\'s Active Pokémon.'
     },
     {
@@ -37,7 +37,8 @@ export class Ariados extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ariados';
-  public fullName: string = 'Ariados CES';
+  public fullName: string = 'Ariados (CES 6)';
+  public legacyFullName = 'Ariados CES';
 
   public usedSpiderTrap = false;
 

@@ -69,7 +69,8 @@ export class SwitchCart extends TrainerCard {
 
   public name: string = 'Switch Cart';
 
-  public fullName: string = 'Switch Cart ASR';
+  public fullName: string = 'Switch Cart (ASR 154)';
+  public legacyFullName = 'Switch Cart ASR';
 
   public text: string =
     'Switch your Active Basic Pokémon with 1 of your Benched Pokémon. If you do, heal 30 damage from the Pokémon you moved to your Bench.';

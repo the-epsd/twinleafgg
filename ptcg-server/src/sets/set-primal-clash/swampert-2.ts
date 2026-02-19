@@ -35,7 +35,7 @@ export class Swampert2 extends PokemonCard {
       name: 'Hydro Pump',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each [W] Energy attached to this Pokémon.'
     }
   ];
@@ -44,7 +44,8 @@ export class Swampert2 extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swampert';
-  public fullName: string = 'Swampert PRC 36';
+  public fullName: string = 'Swampert (PRC 36)';
+  public legacyFullName = 'Swampert PRC 36';
 
   public readonly DIVING_SEARCH_MARKER = 'SWAMPERT2_DIVING_SEARCH_MARKER';
 

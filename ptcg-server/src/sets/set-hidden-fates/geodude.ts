@@ -25,5 +25,6 @@ export class Geodude extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Geodude';
-  public fullName: string = 'Geodude HIF';
+  public fullName: string = 'Geodude (HIF 33)';
+  public legacyFullName = 'Geodude HIF';
 }

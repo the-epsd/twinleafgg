@@ -30,7 +30,8 @@ export class Zygarde extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '118';
   public name: string = 'Zygarde';
-  public fullName: string = 'Zygarde EVS';
+  public fullName: string = 'Zygarde (EVS 118)';
+  public legacyFullName = 'Zygarde EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -19,7 +19,8 @@ export class SingleStrikeEnergy extends EnergyCard {
   public setNumber: string = '141';
   public cardImage: string = 'assets/cardback.png';
   public name = 'Single Strike Energy';
-  public fullName = 'Single Strike Energy BST';
+  public fullName = 'Single Strike Energy (BST 141)';
+  public legacyFullName = 'Single Strike Energy BST';
 
   public text = `This card can only be attached to a Single Strike Pokémon. If this card is attached to anything other than a Single Strike Pokémon, discard this card.
 

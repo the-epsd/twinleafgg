@@ -30,7 +30,8 @@ export class TeamRocketsEnergy extends EnergyCard {
 
   public name = 'Team Rocket\'s Energy';
 
-  public fullName = 'Team Rocket\'s Energy DRI';
+  public fullName = 'Team Rocket\'s Energy (DRI 182)';
+  public legacyFullName = 'Team Rocket\'s Energy DRI';
 
   public text = `This card can only be attached to a Team Rocket's Pokémon. If this card is attached to anything other than a Team Rocket's Pokémon, discard this card.
 

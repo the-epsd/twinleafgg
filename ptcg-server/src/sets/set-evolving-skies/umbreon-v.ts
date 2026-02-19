@@ -34,7 +34,8 @@ export class UmbreonV extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Umbreon V';
-  public fullName: string = 'Umbreon V EVS';
+  public fullName: string = 'Umbreon V (EVS 94)';
+  public legacyFullName = 'Umbreon V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

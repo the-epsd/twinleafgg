@@ -35,7 +35,8 @@ export class Fennekin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '10';
   public name: string = 'Fennekin';
-  public fullName: string = 'Fennekin FCO';
+  public fullName: string = 'Fennekin (FCO 10)';
+  public legacyFullName = 'Fennekin FCO';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
 

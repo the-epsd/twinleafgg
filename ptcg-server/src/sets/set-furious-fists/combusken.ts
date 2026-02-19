@@ -28,7 +28,7 @@ export class Combusken extends PokemonCard {
       name: 'Midair Strike',
       cost: [R, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Combusken extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Combusken';
-  public fullName: string = 'Combusken FFI';
+  public fullName: string = 'Combusken (FFI 13)';
+  public legacyFullName = 'Combusken FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Midair Strike

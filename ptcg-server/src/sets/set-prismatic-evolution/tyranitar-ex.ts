@@ -35,7 +35,8 @@ export class Tyranitarex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '64';
   public name: string = 'Tyranitar ex';
-  public fullName: string = 'Tyranitar ex PRE';
+  public fullName: string = 'Tyranitar ex (PRE 64)';
+  public legacyFullName = 'Tyranitar ex PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Grind

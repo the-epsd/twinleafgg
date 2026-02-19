@@ -21,7 +21,7 @@ export class Vanillish extends PokemonCard {
       name: 'Ice Shard',
       cost: [W],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Fighting Pokémon, this attack does 30 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Vanillish extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanillish';
-  public fullName: string = 'Vanillish GRI';
+  public fullName: string = 'Vanillish (GRI 34)';
+  public legacyFullName = 'Vanillish GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ice Shard

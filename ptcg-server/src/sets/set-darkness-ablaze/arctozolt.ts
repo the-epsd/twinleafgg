@@ -29,7 +29,8 @@ export class Arctozolt extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
   public name: string = 'Arctozolt';
-  public fullName: string = 'Arctozolt DAA';
+  public fullName: string = 'Arctozolt (DAA 66)';
+  public legacyFullName = 'Arctozolt DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 

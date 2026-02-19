@@ -32,7 +32,7 @@ export class Druddigon extends PokemonCard {
       name: 'Dragon Tail',
       cost: [R, W, C],
       damage: 100,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 100 damage for each heads.'
     }
   ];
@@ -41,7 +41,8 @@ export class Druddigon extends PokemonCard {
   public setNumber: string = '157';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Druddigon';
-  public fullName: string = 'Druddigon UNM';
+  public fullName: string = 'Druddigon (UNM 157)';
+  public legacyFullName = 'Druddigon UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Drag Off

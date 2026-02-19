@@ -31,5 +31,6 @@ export class Hippopotas extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hippopotas';
-  public fullName: string = 'Hippopotas PRC';
+  public fullName: string = 'Hippopotas (PRC 87)';
+  public legacyFullName = 'Hippopotas PRC';
 }

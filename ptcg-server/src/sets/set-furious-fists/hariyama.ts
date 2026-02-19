@@ -38,7 +38,8 @@ export class Hariyama extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hariyama';
-  public fullName: string = 'Hariyama FFI';
+  public fullName: string = 'Hariyama (FFI 52)';
+  public legacyFullName = 'Hariyama FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Thick Fat (passive - reduce damage from Fire/Water Pokemon)

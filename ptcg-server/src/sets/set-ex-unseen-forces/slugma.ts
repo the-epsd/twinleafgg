@@ -26,7 +26,8 @@ export class Slugma extends PokemonCard {
 
   public set: string = 'UF';
   public name: string = 'Slugma';
-  public fullName: string = 'Slugma UF';
+  public fullName: string = 'Slugma (UF 73)';
+  public legacyFullName = 'Slugma UF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';
 

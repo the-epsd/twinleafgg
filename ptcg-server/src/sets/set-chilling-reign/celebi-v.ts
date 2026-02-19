@@ -40,7 +40,8 @@ export class CelebiV extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celebi V';
-  public fullName: string = 'Celebi V CRE';
+  public fullName: string = 'Celebi V (CRE 7)';
+  public legacyFullName = 'Celebi V CRE';
 
   public usedSlashBack: boolean = false;
 

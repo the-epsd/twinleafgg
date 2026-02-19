@@ -29,7 +29,8 @@ export class Torchic extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Torchic';
-  public fullName: string = 'Torchic CES';
+  public fullName: string = 'Torchic (CES 25)';
+  public legacyFullName = 'Torchic CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ember

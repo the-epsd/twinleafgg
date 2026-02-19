@@ -95,7 +95,8 @@ export class Irida extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '147';
   public name: string = 'Irida';
-  public fullName: string = 'Irida ASR';
+  public fullName: string = 'Irida (ASR 147)';
+  public legacyFullName = 'Irida ASR';
 
   public text: string =
     'Search your deck for a [W] Pokémon and an Item ' +

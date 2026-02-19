@@ -32,7 +32,8 @@ export class GalarianSlowpoke extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Slowpoke';
-  public fullName: string = 'Galarian Slowpoke BST';
+  public fullName: string = 'Galarian Slowpoke (BST 54)';
+  public legacyFullName = 'Galarian Slowpoke BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tantailizing

@@ -16,7 +16,8 @@ export class SpeedStadium extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'DP';
   public name = 'Speed Stadium';
-  public fullName = 'Speed Stadium DP';
+  public fullName = 'Speed Stadium (DP 114)';
+  public legacyFullName = 'Speed Stadium DP';
 
   public text = 'Once during each player\'s turn, the player may flip a coin until he or she gets tails. For each heads, that player draws a card.';
 

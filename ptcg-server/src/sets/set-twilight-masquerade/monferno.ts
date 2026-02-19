@@ -43,7 +43,8 @@ export class Monferno extends PokemonCard {
 
   public name: string = 'Monferno';
 
-  public fullName: string = 'Monferno TWM';
+  public fullName: string = 'Monferno (TWM 32)';
+  public legacyFullName = 'Monferno TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

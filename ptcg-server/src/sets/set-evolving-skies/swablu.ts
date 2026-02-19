@@ -37,7 +37,8 @@ export class Swablu extends PokemonCard {
 
   public name: string = 'Swablu';
 
-  public fullName: string = 'Swablu EVS';
+  public fullName: string = 'Swablu (EVS 132)';
+  public legacyFullName = 'Swablu EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -26,7 +26,8 @@ export class StrongEnergy extends EnergyCard {
 
   public name = 'Strong Energy';
 
-  public fullName = 'Strong Energy FFI';
+  public fullName = 'Strong Energy (FFI 104)';
+  public legacyFullName = 'Strong Energy FFI';
 
   public cardImage: string = 'assets/cardback.png';
 

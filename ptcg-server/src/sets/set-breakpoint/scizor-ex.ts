@@ -30,7 +30,7 @@ export class ScizorEx extends PokemonCard {
       name: 'Gale Thrust',
       cost: [M, M],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 60 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class ScizorEx extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scizor-EX';
-  public fullName: string = 'Scizor-EX BKP';
+  public fullName: string = 'Scizor-EX (BKP 76)';
+  public legacyFullName = 'Scizor-EX BKP';
 
   public readonly STEEL_WING_MARKER = 'SCIZOR_EX_STEEL_WING_MARKER';
   public readonly CLEAR_STEEL_WING_MARKER = 'SCIZOR_EX_CLEAR_STEEL_WING_MARKER';

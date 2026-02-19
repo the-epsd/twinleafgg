@@ -88,7 +88,8 @@ export class Clefairy extends PokemonCard {
   
   public name: string = 'Clefairy';
   
-  public fullName: string = 'Clefairy VIV';
+  public fullName: string = 'Clefairy (VIV 63)';
+  public legacyFullName = 'Clefairy VIV';
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

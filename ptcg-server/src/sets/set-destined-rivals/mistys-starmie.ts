@@ -27,7 +27,8 @@ export class MistysStarmie extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '47';
   public name: string = 'Misty\'s Starmie';
-  public fullName: string = 'Misty\'s Starmie DRI';
+  public fullName: string = 'Misty\'s Starmie (DRI 47)';
+  public legacyFullName = 'Misty\'s Starmie DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sudden Flash

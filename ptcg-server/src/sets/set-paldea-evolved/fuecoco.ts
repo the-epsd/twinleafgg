@@ -27,7 +27,8 @@ export class Fuecoco extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fuecoco';
-  public fullName: string = 'Fuecoco PAL';
+  public fullName: string = 'Fuecoco (PAL 35)';
+  public legacyFullName = 'Fuecoco PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

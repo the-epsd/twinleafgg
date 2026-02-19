@@ -20,7 +20,8 @@ export class Victini extends PokemonCard {
 
   public set: string = 'NVI';
   public name: string = 'Victini';
-  public fullName: string = 'Victini NVI';
+  public fullName: string = 'Victini (NVI 15)';
+  public legacyFullName = 'Victini NVI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '15';
 

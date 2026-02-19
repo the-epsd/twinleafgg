@@ -68,7 +68,8 @@ export class Bellsprout extends PokemonCard {
 
   public name: string = 'Bellsprout';
 
-  public fullName: string = 'Bellsprout JU';
+  public fullName: string = 'Bellsprout (JU 49)';
+  public legacyFullName = 'Bellsprout JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

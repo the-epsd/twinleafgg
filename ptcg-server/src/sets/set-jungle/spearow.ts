@@ -44,7 +44,8 @@ export class Spearow extends PokemonCard {
 
   public name: string = 'Spearow';
 
-  public fullName: string = 'Spearow JU';
+  public fullName: string = 'Spearow (JU 62)';
+  public legacyFullName = 'Spearow JU';
 
   private mirrorMoveEffects: AbstractAttackEffect[] = [];
 

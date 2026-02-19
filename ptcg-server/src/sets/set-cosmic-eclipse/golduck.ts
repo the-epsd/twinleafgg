@@ -29,7 +29,8 @@ export class Golduck extends PokemonCard {
 
   public set: string = 'CEC';
   public name: string = 'Golduck';
-  public fullName: string = 'Golduck CEC';
+  public fullName: string = 'Golduck (CEC 41)';
+  public legacyFullName = 'Golduck CEC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
 

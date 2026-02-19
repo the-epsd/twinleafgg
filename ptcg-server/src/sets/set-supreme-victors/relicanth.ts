@@ -33,7 +33,8 @@ export class Relicanth extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '79';
   public name: string = 'Relicanth';
-  public fullName: string = 'Relicanth SV';
+  public fullName: string = 'Relicanth (SV 79)';
+  public legacyFullName = 'Relicanth SV';
 
   public MEMORY_SKIPPED_ATTACK: Attack | undefined;
 

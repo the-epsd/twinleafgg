@@ -36,7 +36,8 @@ export class Dragonite extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '151';
   public name: string = 'Dragonite';
-  public fullName: string = 'Dragonite UNM';
+  public fullName: string = 'Dragonite (UNM 151)';
+  public legacyFullName = 'Dragonite UNM';
 
   public readonly HURRICANE_CHARGE_MARKER = 'HURRICANE_CHARGE_MARKER';
 

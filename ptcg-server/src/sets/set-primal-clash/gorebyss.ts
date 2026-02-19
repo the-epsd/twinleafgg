@@ -31,7 +31,7 @@ export class Gorebyss extends PokemonCard {
       name: 'Psychic',
       cost: [W, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -40,7 +40,8 @@ export class Gorebyss extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gorebyss';
-  public fullName: string = 'Gorebyss PRC';
+  public fullName: string = 'Gorebyss (PRC 51)';
+  public legacyFullName = 'Gorebyss PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Captivate

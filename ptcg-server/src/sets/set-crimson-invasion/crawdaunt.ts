@@ -31,7 +31,8 @@ export class Crawdaunt extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crawdaunt';
-  public fullName: string = 'Crawdaunt CIN';
+  public fullName: string = 'Crawdaunt (CIN 25)';
+  public legacyFullName = 'Crawdaunt CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Claws

@@ -81,7 +81,8 @@ export class ComputerSearch extends TrainerCard {
 
   public name: string = 'Computer Search';
 
-  public fullName: string = 'Computer Search BCR';
+  public fullName: string = 'Computer Search (BCR 137)';
+  public legacyFullName = 'Computer Search BCR';
 
   public cardImage: string = 'assets/cardback.png';
 

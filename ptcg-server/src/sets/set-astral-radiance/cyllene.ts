@@ -22,7 +22,8 @@ export class Cyllene extends TrainerCard {
 
   public name: string = 'Cyllene';
 
-  public fullName: string = 'Cyllene ASR';
+  public fullName: string = 'Cyllene (ASR 138)';
+  public legacyFullName = 'Cyllene ASR';
 
   public text: string =
     'Flip 2 coins. Put a number of cards up to the number of heads from your discard pile on top of your deck in any order.';

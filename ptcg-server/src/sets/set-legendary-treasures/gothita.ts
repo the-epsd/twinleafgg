@@ -32,7 +32,8 @@ export class Gothita extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothita';
-  public fullName: string = 'Gothita LTR 69';
+  public fullName: string = 'Gothita (LTR 69)';
+  public legacyFullName = 'Gothita LTR 69';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hypnotic Gaze

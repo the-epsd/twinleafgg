@@ -31,7 +31,8 @@ export class Meowscarada extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
   public name: string = 'Meowscarada';
-  public fullName: string = 'Meowscarada JTG';
+  public fullName: string = 'Meowscarada (JTG 18)';
+  public legacyFullName = 'Meowscarada JTG';
 
   public SHOWTIME_MARKER = 'SHOWTIME_MARKER';
 

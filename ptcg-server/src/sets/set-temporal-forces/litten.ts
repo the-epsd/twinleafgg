@@ -31,7 +31,8 @@ export class Litten extends PokemonCard {
 
   public name: string = 'Litten';
 
-  public fullName: string = 'Litten TEF';
+  public fullName: string = 'Litten (TEF 32)';
+  public legacyFullName = 'Litten TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){

@@ -18,7 +18,8 @@ export class DarknessEnergySpecial extends EnergyCard {
 
   public name = 'Darkness Energy';
 
-  public fullName = 'Darkness Energy UD';
+  public fullName = 'Darkness Energy (UD 79)';
+  public legacyFullName = 'Darkness Energy UD';
 
   public cardImage: string = 'assets/cardback.png';
 

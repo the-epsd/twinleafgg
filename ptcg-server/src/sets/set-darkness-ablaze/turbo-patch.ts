@@ -20,7 +20,8 @@ export class TurboPatch extends TrainerCard {
   public setNumber: string = '172';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Turbo Patch';
-  public fullName: string = 'Turbo Patch DAA';
+  public fullName: string = 'Turbo Patch (DAA 172)';
+  public legacyFullName = 'Turbo Patch DAA';
   public text: string = 'Flip a coin. If heads, attach a basic Energy card from your discard pile to 1 of your Basic Pokémon that isn\'t a Pokémon-GX. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

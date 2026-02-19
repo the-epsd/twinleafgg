@@ -33,7 +33,8 @@ export class Darmanitan extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Darmanitan';
-  public fullName: string = 'Darmanitan NXD';
+  public fullName: string = 'Darmanitan (NXD 60)';
+  public legacyFullName = 'Darmanitan NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Synchrodraw - shuffle hand, draw equal to opponent's hand

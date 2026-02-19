@@ -20,7 +20,7 @@ export class Solosis extends PokemonCard {
       name: 'Mini Link',
       cost: [P, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Solosis is on your Bench, this attack does 30 more damage.'
     }
   ];
@@ -29,7 +29,8 @@ export class Solosis extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solosis';
-  public fullName: string = 'Solosis FCO';
+  public fullName: string = 'Solosis (FCO 33)';
+  public legacyFullName = 'Solosis FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mini Link

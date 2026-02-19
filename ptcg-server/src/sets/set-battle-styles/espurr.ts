@@ -22,7 +22,7 @@ export class Espurr extends PokemonCard {
       name: 'Focused Wish',
       cost: [P, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -32,7 +32,8 @@ export class Espurr extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Espurr';
-  public fullName: string = 'Espurr BST';
+  public fullName: string = 'Espurr (BST 60)';
+  public legacyFullName = 'Espurr BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Focused Wish

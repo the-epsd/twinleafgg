@@ -21,7 +21,7 @@ export class Froakie extends PokemonCard {
       name: 'Quick Attack',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Froakie extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Froakie';
-  public fullName: string = 'Froakie UNB';
+  public fullName: string = 'Froakie (UNB 51)';
+  public legacyFullName = 'Froakie UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Quick Attack

@@ -36,7 +36,8 @@ export class Steenee extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steenee';
-  public fullName: string = 'Steenee DAA';
+  public fullName: string = 'Steenee (DAA 15)';
+  public legacyFullName = 'Steenee DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Captivate

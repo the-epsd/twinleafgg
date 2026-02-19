@@ -40,7 +40,8 @@ export class TapuKoko extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tapu Koko \u25C7';
-  public fullName: string = 'Tapu Koko \u25C7 TEU';
+  public fullName: string = 'Tapu Koko \u25C7 (TEU 51)';
+  public legacyFullName = 'Tapu Koko \u25C7 TEU';
 
   // Ref: set-team-up/tapu-koko-prism-star.ts (Dance of the Ancients - existing implementation)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

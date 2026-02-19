@@ -38,7 +38,8 @@ export class Liepard extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Liepard';
-  public fullName: string = 'Liepard SLG';
+  public fullName: string = 'Liepard (SLG 49)';
+  public legacyFullName = 'Liepard SLG';
 
   public DISABLED_ATTACK: Attack | undefined;
 

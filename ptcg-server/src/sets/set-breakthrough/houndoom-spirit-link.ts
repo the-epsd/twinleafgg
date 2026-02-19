@@ -13,7 +13,8 @@ export class HoundoomSpiritLink extends TrainerCard {
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Houndoom Spirit Link';
-  public fullName: string = 'Houndoom Spirit Link BKT';
+  public fullName: string = 'Houndoom Spirit Link (BKT 142)';
+  public legacyFullName = 'Houndoom Spirit Link BKT';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Houndoom-EX.';
 
   // Ref: set-ancient-origins/sceptile-spirit-link.ts (Spirit Link - no-op, handled by engine)

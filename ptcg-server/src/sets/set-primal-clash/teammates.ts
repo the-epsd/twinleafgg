@@ -65,7 +65,8 @@ export class Teammates extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '141';
   public name: string = 'Teammates';
-  public fullName: string = 'Teammates PRC';
+  public fullName: string = 'Teammates (PRC 141)';
+  public legacyFullName = 'Teammates PRC';
 
   public text: string =
     `You can play this card only if 1 of your Pokémon was Knocked Out during your opponent's last turn.

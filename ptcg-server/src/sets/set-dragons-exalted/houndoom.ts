@@ -37,7 +37,8 @@ export class Houndoom extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Houndoom';
-  public fullName: string = 'Houndoom DRX';
+  public fullName: string = 'Houndoom (DRX 75)';
+  public legacyFullName = 'Houndoom DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

@@ -25,7 +25,8 @@ export class LegacyEnergy extends EnergyCard {
 
   public name = 'Legacy Energy';
 
-  public fullName = 'Legacy Energy TWM';
+  public fullName = 'Legacy Energy (TWM 167)';
+  public legacyFullName = 'Legacy Energy TWM';
 
   public text: string = `As long as this card is attached to a Pokémon, it provides every type of Energy but provides only 1 Energy at a time.
 

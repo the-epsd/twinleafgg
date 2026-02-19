@@ -31,7 +31,8 @@ export class Charcadet extends PokemonCard {
   public regulationMark: string = 'G';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charcadet';
-  public fullName: string = 'Charcadet PAR';
+  public fullName: string = 'Charcadet (PAR 25)';
+  public legacyFullName = 'Charcadet PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

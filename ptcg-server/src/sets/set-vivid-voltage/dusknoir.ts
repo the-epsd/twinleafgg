@@ -35,7 +35,8 @@ export class Dusknoir extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
   public name: string = 'Dusknoir';
-  public fullName: string = 'Dusknoir VIV';
+  public fullName: string = 'Dusknoir (VIV 71)';
+  public legacyFullName = 'Dusknoir VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Negate special energy effect when it is attached to a Pokemon

@@ -10,67 +10,78 @@ import { ZeraoraVMAX } from '../set-crown-zenith/zeraora-vmax';
 import { ZeraoraVSTAR } from '../set-crown-zenith/zeraora-vstar';
 
 export class BossOrdersSWSH extends BossOrders {
-  public fullName = 'Boss Orders SWSH';
+  public fullName = 'Boss\'s Orders (SWSH 251)';
+  public legacyFullName = 'Boss Orders SWSH';
   public set = 'SWSH';
   public setNumber = '251';
 }
 
 export class BronzongSWSH extends Bronzong {
-  public fullName = 'Bronzong SWSH 91';
+  public fullName = 'Bronzong (SWSH 91)';
+  public legacyFullName = 'Bronzong SWSH 91';
   public set = 'SWSH';
   public setNumber = '91';
 }
 
 export class CharizardSWSH extends Charizard {
-  public fullName = 'Charizard SWSH';
+  public fullName = 'Charizard (SWSH 66)';
+  public legacyFullName = 'Charizard SWSH';
   public set = 'SWSH';
   public setNumber = '66';
 }
 
 export class KirliaSWSH extends Kirlia {
-  public fullName = 'Kirlia SWSH';
+  public fullName = 'Kirlia (SWSH 271)';
+  public legacyFullName = 'Kirlia SWSH';
   public set = 'SWSH';
   public setNumber = '271';
 }
 
 export class MarnieSWSH extends Marnie {
-  public fullName = 'Marnie SWSH 120';
+  public fullName = 'Marnie (SWSH 120)';
+  public legacyFullName = 'Marnie SWSH 120';
   public set = 'SWSH';
   public setNumber = '120';
 }
 
 export class ProfessorsResearchSWSH extends ProfessorsResearch {
-  public fullName = 'Professor\'s Research SWSH';
+  public fullName = 'Professor\'s Research (SWSH 152)';
+  public legacyFullName = 'Professor\'s Research SWSH';
   public set = 'SWSH';
   public setNumber = '152';
 }
 
 export class MarnieSWSH2 extends Marnie {
-  public fullName = 'Marnie SWSH 121';
+  public fullName = 'Marnie (SWSH 121)';
+  public legacyFullName = 'Marnie SWSH 121';
   public set = 'SWSH';
   public setNumber = '121';
 }
 
 export class HisuianSamurottSWSH extends HisuianSamurott {
-  public fullName = 'Hisuian Samurott SWSH';
+  public fullName = 'Hisuian Samurott (SWSH 207)';
+  public legacyFullName = 'Hisuian Samurott SWSH';
   public set = 'SWSH';
   public setNumber = '207';
 }
 
 export class ZeraoraVSWSH extends ZeraoraV {
-  public fullName = 'Zeraora V SWSH';
+  public fullName = 'Zeraora V (SWSH 263)';
+  public legacyFullName = 'Zeraora V SWSH';
   public set = 'SWSH';
   public setNumber = '263';
 }
 
 export class ZeraoraVMAXSWSH extends ZeraoraVMAX {
-  public fullName = 'Zeraora VMAX SWSH';
+  public fullName = 'Zeraora VMAX (SWSH 264)';
+  public legacyFullName = 'Zeraora VMAX SWSH';
   public set = 'SWSH';
   public setNumber = '264';
 }
 
 export class ZeraoraVSTARSWSH extends ZeraoraVSTAR {
-  public fullName = 'Zeraora VSTAR SWSH';
+  public fullName = 'Zeraora VSTAR (SWSH 265)';
+  public legacyFullName = 'Zeraora VSTAR SWSH';
   public set = 'SWSH';
   public setNumber = '265';
 }

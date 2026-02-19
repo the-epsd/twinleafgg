@@ -26,7 +26,8 @@ export class Nuzleaf extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nuzleaf';
-  public fullName: string = 'Nuzleaf NXD';
+  public fullName: string = 'Nuzleaf (NXD 71)';
+  public legacyFullName = 'Nuzleaf NXD';
 
   private usedSurprisePunch = false;
 

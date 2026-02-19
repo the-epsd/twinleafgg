@@ -27,7 +27,8 @@ export class BlackKyuremEX extends PokemonCard {
 
   public set: string = 'PLS';
   public name: string = 'Black Kyurem-EX';
-  public fullName: string = 'Black Kyurem EX PLS';
+  public fullName: string = 'Black Kyurem-EX (PLS 95)';
+  public legacyFullName = 'Black Kyurem EX PLS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '95';
 

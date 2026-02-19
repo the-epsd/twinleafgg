@@ -26,5 +26,6 @@ export class Barboach extends PokemonCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Barboach';
-  public fullName: string = 'Barboach RCL';
+  public fullName: string = 'Barboach (RCL 99)';
+  public legacyFullName = 'Barboach RCL';
 }

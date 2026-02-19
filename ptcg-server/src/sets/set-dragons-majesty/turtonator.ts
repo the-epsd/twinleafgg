@@ -28,7 +28,8 @@ export class Turtonator extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Turtonator';
-  public fullName: string = 'Turtonator DRM';
+  public fullName: string = 'Turtonator (DRM 50)';
+  public legacyFullName = 'Turtonator DRM';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

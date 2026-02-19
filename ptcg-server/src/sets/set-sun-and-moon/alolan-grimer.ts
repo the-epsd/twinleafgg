@@ -37,7 +37,8 @@ export class AlolanGrimer extends PokemonCard {
 
   public name: string = 'Alolan Grimer';
 
-  public fullName: string = 'Alolan Grimer SUM';
+  public fullName: string = 'Alolan Grimer (SUM 57)';
+  public legacyFullName = 'Alolan Grimer SUM';
 
   public cardImage: string = 'assets/cardback.png';
 

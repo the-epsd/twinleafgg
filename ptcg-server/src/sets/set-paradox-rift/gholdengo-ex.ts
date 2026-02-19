@@ -56,7 +56,8 @@ export class Gholdengoex extends PokemonCard {
 
   public name: string = 'Gholdengo ex';
 
-  public fullName: string = 'Gholdengo ex PAR';
+  public fullName: string = 'Gholdengo ex (PAR 139)';
+  public legacyFullName = 'Gholdengo ex PAR';
 
   public readonly MAKE_IT_RAIN_MARKER = 'MAKE_IT_RAIN_MARKER';
 

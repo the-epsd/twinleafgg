@@ -27,7 +27,7 @@ export class Barbaracle extends PokemonCard {
       name: 'Hand Press',
       cost: [F, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have more cards in your hand than your opponent, this attack does 80 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Barbaracle extends PokemonCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Barbaracle';
-  public fullName: string = 'Barbaracle RCL';
+  public fullName: string = 'Barbaracle (RCL 104)';
+  public legacyFullName = 'Barbaracle RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Hurl

@@ -33,7 +33,8 @@ export class Chatot extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chatot';
-  public fullName: string = 'Chatot PLB';
+  public fullName: string = 'Chatot (PLB 77)';
+  public legacyFullName = 'Chatot PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

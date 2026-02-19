@@ -23,7 +23,7 @@ export class Sceptile2 extends PokemonCard {
       name: 'Leaf Blade',
       cost: [G],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Sceptile2 extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sceptile';
-  public fullName: string = 'Sceptile PRC 9';
+  public fullName: string = 'Sceptile (PRC 9)';
+  public legacyFullName = 'Sceptile PRC 9';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Leaf Blade

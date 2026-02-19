@@ -39,7 +39,8 @@ export class Marshadow extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marshadow';
-  public fullName: string = 'Marshadow EVS';
+  public fullName: string = 'Marshadow (EVS 80)';
+  public legacyFullName = 'Marshadow EVS';
 
   public readonly SHADOW_FLICKER_MARKER = 'MARSHADOW_EVS_SHADOW_FLICKER_MARKER';
   public readonly CLEAR_SHADOW_FLICKER_MARKER = 'MARSHADOW_EVS_CLEAR_SHADOW_FLICKER_MARKER';

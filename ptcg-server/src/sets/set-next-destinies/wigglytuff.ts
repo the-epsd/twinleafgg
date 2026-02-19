@@ -34,7 +34,8 @@ export class Wigglytuff extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wigglytuff';
-  public fullName: string = 'Wigglytuff NXD';
+  public fullName: string = 'Wigglytuff (NXD 79)';
+  public legacyFullName = 'Wigglytuff NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Round

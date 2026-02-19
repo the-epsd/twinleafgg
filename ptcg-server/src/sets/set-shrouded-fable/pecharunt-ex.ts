@@ -106,7 +106,8 @@ export class Pecharuntex extends PokemonCard {
 
   public name: string = 'Pecharunt ex';
 
-  public fullName: string = 'Pecharunt ex SFA';
+  public fullName: string = 'Pecharunt ex (SFA 39)';
+  public legacyFullName = 'Pecharunt ex SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

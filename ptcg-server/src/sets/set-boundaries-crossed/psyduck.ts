@@ -29,7 +29,8 @@ export class Psyduck extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Psyduck';
-  public fullName: string = 'Psyduck BCR';
+  public fullName: string = 'Psyduck (BCR 32)';
+  public legacyFullName = 'Psyduck BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dazzle Dance

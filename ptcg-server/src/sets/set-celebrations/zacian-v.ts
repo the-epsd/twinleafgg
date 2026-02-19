@@ -38,7 +38,8 @@ export class ZacianV extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zacian V';
-  public fullName: string = 'Zacian V CEL';
+  public fullName: string = 'Zacian V (CEL 16)';
+  public legacyFullName = 'Zacian V CEL';
 
   public readonly RUSH_IN_MARKER = 'RUSH_IN_MARKER';
 

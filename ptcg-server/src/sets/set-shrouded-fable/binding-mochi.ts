@@ -16,7 +16,8 @@ export class BindingMochi extends TrainerCard {
   public setNumber: string = '55';
   public regulationMark = 'H';
   public name: string = 'Binding Mochi';
-  public fullName: string = 'Binding Mochi SFA';
+  public fullName: string = 'Binding Mochi (SFA 55)';
+  public legacyFullName = 'Binding Mochi SFA';
 
   public text: string =
     'Attacks used by the Poisoned Pokémon this card is attached to do 40 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';

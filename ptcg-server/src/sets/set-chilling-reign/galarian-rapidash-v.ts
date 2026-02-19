@@ -36,7 +36,8 @@ export class GalarianRapidashV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '167';
   public name: string = 'Galarian Rapidash V';
-  public fullName: string = 'Galarian Rapidash V CRE';
+  public fullName: string = 'Galarian Rapidash V (CRE 167)';
+  public legacyFullName = 'Galarian Rapidash V CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

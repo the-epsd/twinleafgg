@@ -33,7 +33,8 @@ export class Salamence extends PokemonCard {
 
   public set: string = 'DS';
   public name: string = 'Salamence';
-  public fullName: string = 'Salamence DS';
+  public fullName: string = 'Salamence (DS 14)';
+  public legacyFullName = 'Salamence DS';
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
 

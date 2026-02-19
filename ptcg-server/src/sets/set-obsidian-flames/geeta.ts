@@ -15,7 +15,8 @@ export class Geeta extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '188';
   public name: string = 'Geeta';
-  public fullName: string = 'Geeta OBF';
+  public fullName: string = 'Geeta (OBF 188)';
+  public legacyFullName = 'Geeta OBF';
 
   public text: string =
     'Search your deck for up to 2 Basic Energy cards and attach them to 1 of your Pokémon. Then, shuffle your deck. During this turn, your Pokémon can\'t attack. (This includes Pokémon that come into play this turn.)';

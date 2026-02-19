@@ -23,7 +23,8 @@ export class Timburr extends PokemonCard {
 
   public name: string = 'Timburr';
 
-  public fullName: string = 'Timburr BLW';
+  public fullName: string = 'Timburr (BLW 58)';
+  public legacyFullName = 'Timburr BLW';
 
   public cardImage: string = 'assets/cardback.png';
 

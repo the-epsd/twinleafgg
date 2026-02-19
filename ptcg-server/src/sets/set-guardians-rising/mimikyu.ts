@@ -32,7 +32,8 @@ export class Mimikyu extends PokemonCard {
 
   public name: string = 'Mimikyu';
 
-  public fullName: string = 'Mimikyu GRI';
+  public fullName: string = 'Mimikyu (GRI 58)';
+  public legacyFullName = 'Mimikyu GRI';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -39,7 +39,8 @@ export class Spewpa extends PokemonCard {
 
   public name: string = 'Spewpa';
 
-  public fullName: string = 'Spewpa SVI';
+  public fullName: string = 'Spewpa (SVI 9)';
+  public legacyFullName = 'Spewpa SVI';
 
   public cardImage: string = 'assets/cardback.png';
 

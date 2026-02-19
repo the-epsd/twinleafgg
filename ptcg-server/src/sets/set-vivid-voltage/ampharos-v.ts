@@ -38,7 +38,8 @@ export class AmpharosV extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ampharos V';
-  public fullName: string = 'Ampharos V VIV';
+  public fullName: string = 'Ampharos V (VIV 49)';
+  public legacyFullName = 'Ampharos V VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dazzle Blast

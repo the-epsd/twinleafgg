@@ -36,7 +36,8 @@ export class Skwovet extends PokemonCard {
   public setNumber: string = '127';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skwovet';
-  public fullName: string = 'Skwovet CRE';
+  public fullName: string = 'Skwovet (CRE 127)';
+  public legacyFullName = 'Skwovet CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Scrounge

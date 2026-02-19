@@ -50,7 +50,8 @@ export class ProfessorOaksSetup extends TrainerCard {
 
   public name: string = 'Professor Oak\'s Setup';
 
-  public fullName: string = 'Professor Oak\'s Setup CEC';
+  public fullName: string = 'Professor Oak\'s Setup (CEC 201)';
+  public legacyFullName = 'Professor Oak\'s Setup CEC';
 
   public cardImage: string = 'assets/cardback.png';
 

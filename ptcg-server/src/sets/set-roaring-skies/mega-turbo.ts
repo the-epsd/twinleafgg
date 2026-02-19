@@ -9,7 +9,8 @@ export class MegaTurbo extends TrainerCard {
   public name: string = 'Mega Turbo';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
-  public fullName: string = 'Mega Turbo ROS';
+  public fullName: string = 'Mega Turbo (ROS 86)';
+  public legacyFullName = 'Mega Turbo ROS';
 
   public text: string =
     'Attach a basic Energy card from your discard pile to 1 of your Mega Evolution Pokémon.';

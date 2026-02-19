@@ -40,7 +40,8 @@ export class Archeops extends PokemonCard {
   public setNumber: string = '121';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Archeops';
-  public fullName: string = 'Archeops UNM';
+  public fullName: string = 'Archeops (UNM 121)';
+  public legacyFullName = 'Archeops UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: U-turn

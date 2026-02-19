@@ -39,7 +39,8 @@ export class Liepard extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Liepard';
-  public fullName: string = 'Liepard BCR';
+  public fullName: string = 'Liepard (BCR 91)';
+  public legacyFullName = 'Liepard BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tail Trickery

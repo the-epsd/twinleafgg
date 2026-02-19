@@ -21,7 +21,8 @@ export class TimerBall extends TrainerCard {
 
   public name: string = 'Timer Ball';
 
-  public fullName: string = 'Timer Ball SUM';
+  public fullName: string = 'Timer Ball (SUM 134)';
+  public legacyFullName = 'Timer Ball SUM';
 
   public cardImage: string = 'assets/cardback.png';
 

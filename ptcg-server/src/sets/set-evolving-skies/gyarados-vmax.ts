@@ -44,7 +44,8 @@ export class GyaradosVMAX extends PokemonCard {
 
   public name: string = 'Gyarados VMAX';
 
-  public fullName: string = 'Gyarados VMAX EVS';
+  public fullName: string = 'Gyarados VMAX (EVS 29)';
+  public legacyFullName = 'Gyarados VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

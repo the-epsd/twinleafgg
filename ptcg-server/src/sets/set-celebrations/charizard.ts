@@ -42,7 +42,8 @@ export class Charizard extends PokemonCard {
   public setNumber: string = '4A';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charizard';
-  public fullName: string = 'Charizard CEL';
+  public fullName: string = 'Charizard (CEL 4A)';
+  public legacyFullName = 'Charizard CEL';
 
   public readonly ENERGY_BURN_MARKER = 'CHARIZARD_CEL_ENERGY_BURN_MARKER';
 

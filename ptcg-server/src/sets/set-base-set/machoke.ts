@@ -13,7 +13,8 @@ export class Machoke extends PokemonCard {
 
   public set = 'BS';
   
-  public fullName = 'Machoke BS';
+  public fullName = 'Machoke (BS 34)';
+  public legacyFullName = 'Machoke BS';
   
   public cardType = CardType.FIGHTING;
   

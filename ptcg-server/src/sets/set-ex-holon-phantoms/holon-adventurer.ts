@@ -15,7 +15,8 @@ export class HolonAdventurer extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public name: string = 'Holon Adventurer';
-  public fullName: string = 'Holon Adventurer HP';
+  public fullName: string = 'Holon Adventurer (HP 85)';
+  public legacyFullName = 'Holon Adventurer HP';
 
   public text: string = `Discard a card from your hand. If you can't discard a card from your hand, you can't play this card.
   

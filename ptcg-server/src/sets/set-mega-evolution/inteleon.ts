@@ -33,7 +33,8 @@ export class Inteleon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Inteleon';
-  public fullName: string = 'Inteleon M1S';
+  public fullName: string = 'Inteleon (MEG 41)';
+  public legacyFullName = 'Inteleon M1S';
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -34,7 +34,8 @@ export class TalonflameV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
   public name: string = 'Talonflame V';
-  public fullName: string = 'Talonflame V VIV';
+  public fullName: string = 'Talonflame V (VIV 29)';
+  public legacyFullName = 'Talonflame V VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

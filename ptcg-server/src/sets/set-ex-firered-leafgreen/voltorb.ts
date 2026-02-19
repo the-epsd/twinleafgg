@@ -29,7 +29,8 @@ export class Voltorb extends PokemonCard {
 
   public set: string = 'RG';
   public name: string = 'Voltorb';
-  public fullName: string = 'Voltorb RG';
+  public fullName: string = 'Voltorb (RG 85)';
+  public legacyFullName = 'Voltorb RG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
 

@@ -50,7 +50,8 @@ export class BattleCompressorTeamFlareGear extends TrainerCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Battle Compressor Team Flare Gear';
-  public fullName: string = 'Battle Compressor Team Flare Gear PHF';
+  public fullName: string = 'Battle Compressor Team Flare Gear (PHF 92)';
+  public legacyFullName = 'Battle Compressor Team Flare Gear PHF';
   public text: string = 'Search your deck for up to 3 cards and discard them. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

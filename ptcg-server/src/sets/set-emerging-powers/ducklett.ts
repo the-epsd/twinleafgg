@@ -34,7 +34,8 @@ export class Ducklett extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '26';
   public name: string = 'Ducklett';
-  public fullName: string = 'Ducklett EPO';
+  public fullName: string = 'Ducklett (EPO 26)';
+  public legacyFullName = 'Ducklett EPO';
 
   public readonly ROOST_MARKER = 'ROOST_MARKER';
 

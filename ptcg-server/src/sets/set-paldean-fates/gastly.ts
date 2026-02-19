@@ -40,7 +40,8 @@ export class Gastly extends PokemonCard {
 
   public name: string = 'Gastly';
 
-  public fullName: string = 'Gastly PAF';
+  public fullName: string = 'Gastly (PAF 55)';
+  public legacyFullName = 'Gastly PAF';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 

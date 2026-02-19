@@ -64,7 +64,8 @@ export class Kiawe extends TrainerCard {
 
   public name: string = 'Kiawe';
 
-  public fullName: string = 'Kiawe BUS';
+  public fullName: string = 'Kiawe (BUS 116)';
+  public legacyFullName = 'Kiawe BUS';
 
   public setNumber: string = '116';
 

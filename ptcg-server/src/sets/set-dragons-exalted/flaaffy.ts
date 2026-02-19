@@ -37,7 +37,8 @@ export class Flaaffy extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flaaffy';
-  public fullName: string = 'Flaaffy DRX';
+  public fullName: string = 'Flaaffy (DRX 39)';
+  public legacyFullName = 'Flaaffy DRX';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER_FLAAFFY';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER_FLAAFFY';

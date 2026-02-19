@@ -24,7 +24,8 @@ export class MistysMagikarp extends PokemonCard {
 
   public set: string = 'DRI';
   public name: string = 'Misty\'s Magikarp';
-  public fullName: string = 'Misty\'s Magikarp DRI';
+  public fullName: string = 'Misty\'s Magikarp (DRI 48)';
+  public legacyFullName = 'Misty\'s Magikarp DRI';
   public regulationMark = 'I';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';

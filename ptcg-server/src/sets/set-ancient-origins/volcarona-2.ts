@@ -22,7 +22,7 @@ export class Volcarona2 extends PokemonCard {
       name: 'Burning Scales',
       cost: [R],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     },
     {
@@ -37,7 +37,8 @@ export class Volcarona2 extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Volcarona';
-  public fullName: string = 'Volcarona AOR 18';
+  public fullName: string = 'Volcarona (AOR 18)';
+  public legacyFullName = 'Volcarona AOR 18';
 
   public usedWindWheel = false;
 

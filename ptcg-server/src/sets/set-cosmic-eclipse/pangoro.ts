@@ -32,5 +32,6 @@ export class Pangoro extends PokemonCard {
   public setNumber: string = '120';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pangoro';
-  public fullName: string = 'Pangoro CEC';
+  public fullName: string = 'Pangoro (CEC 120)';
+  public legacyFullName = 'Pangoro CEC';
 }

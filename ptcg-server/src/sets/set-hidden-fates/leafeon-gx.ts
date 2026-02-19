@@ -48,7 +48,8 @@ export class LeafeonGx extends PokemonCard {
   public setNumber: string = 'SV46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Leafeon-GX';
-  public fullName: string = 'Leafeon-GX HIF';
+  public fullName: string = 'Leafeon-GX (HIF SV46)';
+  public legacyFullName = 'Leafeon-GX HIF';
 
   public readonly BREATH_OF_THE_LEAVES_MARKER = 'LEAFEON_GX_HIF_BREATH_OF_THE_LEAVES_MARKER';
 

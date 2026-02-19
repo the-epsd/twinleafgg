@@ -35,7 +35,8 @@ export class Machamp extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machamp';
-  public fullName: string = 'Machamp PLB';
+  public fullName: string = 'Machamp (PLB 49)';
+  public legacyFullName = 'Machamp PLB';
 
   public readonly CLOSE_COMBAT_MARKER = 'CLOSE_COMBAT_MARKER';
   public readonly CLEAR_CLOSE_COMBAT_MARKER = 'CLEAR_CLOSE_COMBAT_MARKER';

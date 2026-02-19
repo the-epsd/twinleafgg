@@ -31,7 +31,8 @@ export class Maractus extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
   public name: string = 'Maractus';
-  public fullName: string = 'Maractus JTG';
+  public fullName: string = 'Maractus (JTG 8)';
+  public legacyFullName = 'Maractus JTG';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER: string = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

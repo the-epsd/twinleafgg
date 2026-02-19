@@ -26,5 +26,6 @@ export class Pawniard2 extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pawniard';
-  public fullName: string = 'Pawniard PLF 72';
+  public fullName: string = 'Pawniard (PLF 72)';
+  public legacyFullName = 'Pawniard PLF 72';
 }

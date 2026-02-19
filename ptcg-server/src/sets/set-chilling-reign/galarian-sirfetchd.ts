@@ -38,7 +38,8 @@ export class GalarianSirfetchd extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Sirfetch\'d';
-  public fullName: string = 'Galarian Sirfetch\'d CRE';
+  public fullName: string = 'Galarian Sirfetch\'d (CRE 79)';
+  public legacyFullName = 'Galarian Sirfetch\'d CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Leek Strike

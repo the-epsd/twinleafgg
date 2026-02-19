@@ -97,7 +97,8 @@ export class ItemFinder extends TrainerCard {
 
   public name: string = 'Item Finder';
 
-  public fullName: string = 'Item Finder BS';
+  public fullName: string = 'Item Finder (BS 74)';
+  public legacyFullName = 'Item Finder BS';
 
   public text: string =
     'Discard 2 of the other cards from your hand in order to put a Trainer card from your discard pile into your hand.';

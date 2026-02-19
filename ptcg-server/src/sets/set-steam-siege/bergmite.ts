@@ -35,7 +35,8 @@ export class Bergmite extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bergmite';
-  public fullName: string = 'Bergmite STS';
+  public fullName: string = 'Bergmite (STS 36)';
+  public legacyFullName = 'Bergmite STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ice Block

@@ -21,7 +21,7 @@ export class Mienfoo extends PokemonCard {
       name: 'Double Stab',
       cost: [F, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Mienfoo extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mienfoo';
-  public fullName: string = 'Mienfoo BST';
+  public fullName: string = 'Mienfoo (BST 76)';
+  public legacyFullName = 'Mienfoo BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Stab

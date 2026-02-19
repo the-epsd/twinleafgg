@@ -36,7 +36,8 @@ export class Cramorant extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cramorant';
-  public fullName: string = 'Cramorant SSH';
+  public fullName: string = 'Cramorant (SSH 62)';
+  public legacyFullName = 'Cramorant SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Water Arrow

@@ -32,7 +32,8 @@ export class Mesprit extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mesprit';
-  public fullName: string = 'Mesprit PLB';
+  public fullName: string = 'Mesprit (PLB 37)';
+  public legacyFullName = 'Mesprit PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Mental Shroud - passive, intercept CheckPokemonStatsEffect

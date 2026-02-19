@@ -29,7 +29,8 @@ export class Pumpkaboo extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pumpkaboo';
-  public fullName: string = 'Pumpkaboo CIN';
+  public fullName: string = 'Pumpkaboo (CIN 44)';
+  public legacyFullName = 'Pumpkaboo CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Astonish

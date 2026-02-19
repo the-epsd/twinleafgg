@@ -81,7 +81,8 @@ export class Lusamine extends TrainerCard {
 
   public name: string = 'Lusamine';
 
-  public fullName: string = 'Lusamine CIN';
+  public fullName: string = 'Lusamine (CIN 96)';
+  public legacyFullName = 'Lusamine CIN';
 
   public cardImage: string = 'assets/cardback.png';
 

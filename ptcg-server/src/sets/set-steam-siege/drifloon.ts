@@ -31,7 +31,8 @@ export class Drifloon extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drifloon';
-  public fullName: string = 'Drifloon STS';
+  public fullName: string = 'Drifloon (STS 46)';
+  public legacyFullName = 'Drifloon STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Transfer Pain

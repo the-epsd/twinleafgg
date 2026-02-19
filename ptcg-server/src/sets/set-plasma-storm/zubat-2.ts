@@ -31,7 +31,8 @@ export class Zubat2 extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zubat';
-  public fullName: string = 'Zubat PLS 52';
+  public fullName: string = 'Zubat (PLS 52)';
+  public legacyFullName = 'Zubat PLS 52';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

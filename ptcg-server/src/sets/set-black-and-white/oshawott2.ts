@@ -26,7 +26,8 @@ export class Oshawott2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
   public name: string = 'Oshawott';
-  public fullName: string = 'Oshawott BLW 28';
+  public fullName: string = 'Oshawott (BLW 28)';
+  public legacyFullName = 'Oshawott BLW 28';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

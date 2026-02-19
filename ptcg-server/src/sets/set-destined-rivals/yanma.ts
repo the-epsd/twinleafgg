@@ -33,7 +33,8 @@ export class Yanma extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '2';
   public name: string = 'Yanma';
-  public fullName: string = 'Yanma DRI';
+  public fullName: string = 'Yanma (DRI 2)';
+  public legacyFullName = 'Yanma DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Whirlwind

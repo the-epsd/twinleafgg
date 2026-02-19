@@ -52,7 +52,8 @@ export class Chandelure extends PokemonCard {
 
   public name: string = 'Chandelure';
 
-  public fullName: string = 'Chandelure NVI';
+  public fullName: string = 'Chandelure (NVI 60)';
+  public legacyFullName = 'Chandelure NVI';
 
   public cardImage: string = 'assets/cardback.png';
 

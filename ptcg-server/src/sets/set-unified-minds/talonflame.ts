@@ -33,7 +33,8 @@ export class Talonflame extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Talonflame';
-  public fullName: string = 'Talonflame UNM';
+  public fullName: string = 'Talonflame (UNM 32)';
+  public legacyFullName = 'Talonflame UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Heat Wave

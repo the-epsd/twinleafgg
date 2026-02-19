@@ -37,7 +37,8 @@ export class Stunfisk extends PokemonCard {
   public setNumber: string = 'RC12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stunfisk';
-  public fullName: string = 'Stunfisk LTR';
+  public fullName: string = 'Stunfisk (LTR RC12)';
+  public legacyFullName = 'Stunfisk LTR';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
   public readonly SAND_ATTACK_MARKER = 'SAND_ATTACK_MARKER';

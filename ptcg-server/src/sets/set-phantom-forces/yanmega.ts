@@ -29,7 +29,7 @@ export class Yanmega extends PokemonCard {
       name: 'Surprise Strike',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 50 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Yanmega extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yanmega';
-  public fullName: string = 'Yanmega PHF';
+  public fullName: string = 'Yanmega (PHF 4)';
+  public legacyFullName = 'Yanmega PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Reset movedToActiveThisTurn at end of turn

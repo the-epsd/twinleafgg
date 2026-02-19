@@ -16,7 +16,8 @@ export class BluesTactics extends TrainerCard {
   public setNumber: string = '188';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blue\'s Tactics';
-  public fullName: string = 'Blue\'s Tactics UNM';
+  public fullName: string = 'Blue\'s Tactics (UNM 188)';
+  public legacyFullName = 'Blue\'s Tactics UNM';
   public text: string = 'At the end of this turn, draw cards until you have 8 cards in your hand. You may play only 1 Supporter card during your turn (before your attack).';
 
   public readonly BLUES_TACTICS_MARKER = 'BLUES_TACTICS_MARKER';

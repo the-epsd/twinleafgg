@@ -46,7 +46,8 @@ export class SolgaleoGx extends PokemonCard {
   public setNumber: string = '173';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solgaleo-GX';
-  public fullName: string = 'Solgaleo-GX UPR';
+  public fullName: string = 'Solgaleo-GX (UPR 173)';
+  public legacyFullName = 'Solgaleo-GX UPR';
 
   public readonly ULTRA_ROAD_MARKER = 'SOLGALEO_GX_UPR_ULTRA_ROAD_MARKER';
 

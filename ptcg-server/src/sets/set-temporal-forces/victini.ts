@@ -44,7 +44,8 @@ export class Victini extends PokemonCard {
 
   public name: string = 'Victini';
 
-  public fullName: string = 'Victini TEF';
+  public fullName: string = 'Victini (TEF 30)';
+  public legacyFullName = 'Victini TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -38,7 +38,8 @@ export class PalkiaEx extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Palkia-EX';
-  public fullName: string = 'Palkia-EX BKP';
+  public fullName: string = 'Palkia-EX (BKP 31)';
+  public legacyFullName = 'Palkia-EX BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Aqua Turbo

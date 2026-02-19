@@ -37,7 +37,8 @@ export class Croconaw extends PokemonCard {
 
   public name: string = 'Croconaw';
 
-  public fullName: string = 'Croconaw TEF';
+  public fullName: string = 'Croconaw (TEF 40)';
+  public legacyFullName = 'Croconaw TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

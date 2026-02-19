@@ -23,7 +23,8 @@ export class Quaxwell extends PokemonCard {
 
   public name: string = 'Quaxwell';
 
-  public fullName: string = 'Quaxwell SSP';
+  public fullName: string = 'Quaxwell (SSP 51)';
+  public legacyFullName = 'Quaxwell SSP';
 
   public regulationMark = 'H';
 

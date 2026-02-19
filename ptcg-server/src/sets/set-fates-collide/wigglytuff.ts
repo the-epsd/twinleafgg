@@ -32,7 +32,7 @@ export class Wigglytuff extends PokemonCard {
       name: 'Double Slap',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
     }
   ];
@@ -41,7 +41,8 @@ export class Wigglytuff extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wigglytuff';
-  public fullName: string = 'Wigglytuff FCO';
+  public fullName: string = 'Wigglytuff (FCO 66)';
+  public legacyFullName = 'Wigglytuff FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Expand

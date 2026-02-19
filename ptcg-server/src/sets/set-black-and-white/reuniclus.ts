@@ -86,7 +86,8 @@ export class Reuniclus extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '57';
   public name: string = 'Reuniclus';
-  public fullName: string = 'Reuniclus BLW';
+  public fullName: string = 'Reuniclus (BLW 57)';
+  public legacyFullName = 'Reuniclus BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

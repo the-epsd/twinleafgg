@@ -37,7 +37,8 @@ export class RhyperiorV extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rhyperior V';
-  public fullName: string = 'Rhyperior V DAA';
+  public fullName: string = 'Rhyperior V (DAA 95)';
+  public legacyFullName = 'Rhyperior V DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Drill Run

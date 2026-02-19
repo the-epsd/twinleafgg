@@ -18,7 +18,8 @@ export class HopsBag extends TrainerCard {
 
   public name: string = 'Hop\'s Bag';
 
-  public fullName: string = 'Hop\'s Bag JTG';
+  public fullName: string = 'Hop\'s Bag (JTG 147)';
+  public legacyFullName = 'Hop\'s Bag JTG';
 
   public text: string = 'Search your deck for up to 2 Basic Hop\'s Pokémon and put them onto your Bench. Then, shuffle your deck.';
 

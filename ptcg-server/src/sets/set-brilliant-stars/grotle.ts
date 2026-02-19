@@ -34,7 +34,8 @@ export class Grotle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Grotle';
-  public fullName: string = 'Grotle BRS';
+  public fullName: string = 'Grotle (BRS 7)';
+  public legacyFullName = 'Grotle BRS';
 
   public readonly SUN_DRENCHED_SHELL_MARKER = 'SUN_DRENCHED_SHELL_MARKER';
 

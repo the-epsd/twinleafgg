@@ -29,7 +29,8 @@ export class Skitty extends PokemonCard {
 
   public set: string = 'LM';
   public name: string = 'Skitty';
-  public fullName: string = 'Skitty LM';
+  public fullName: string = 'Skitty (LM 64)';
+  public legacyFullName = 'Skitty LM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '64';
 

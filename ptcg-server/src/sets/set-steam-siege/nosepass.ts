@@ -35,7 +35,8 @@ export class Nosepass extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nosepass';
-  public fullName: string = 'Nosepass STS';
+  public fullName: string = 'Nosepass (STS 54)';
+  public legacyFullName = 'Nosepass STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Wave

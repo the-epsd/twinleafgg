@@ -25,7 +25,8 @@ export class Horsea extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Horsea';
-  public fullName: string = 'Horsea PLF';
+  public fullName: string = 'Horsea (PLF 18)';
+  public legacyFullName = 'Horsea PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

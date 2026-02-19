@@ -28,5 +28,6 @@ export class Quaxly extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Quaxly';
-  public fullName: string = 'Quaxly SVI';
+  public fullName: string = 'Quaxly (SVI 52)';
+  public legacyFullName = 'Quaxly SVI';
 }

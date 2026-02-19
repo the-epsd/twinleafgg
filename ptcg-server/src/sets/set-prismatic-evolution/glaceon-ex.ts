@@ -43,7 +43,8 @@ export class Glaceonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '26';
   public name: string = 'Glaceon ex';
-  public fullName: string = 'Glaceon ex PRE';
+  public fullName: string = 'Glaceon ex (PRE 26)';
+  public legacyFullName = 'Glaceon ex PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Frost Bullet

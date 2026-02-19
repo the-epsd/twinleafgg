@@ -15,7 +15,8 @@ export class StrangeCave extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'LM';
   public name = 'Strange Cave';
-  public fullName = 'Strange Cave LM';
+  public fullName = 'Strange Cave (LM 77)';
+  public legacyFullName = 'Strange Cave LM';
 
   public text = 'Once during each player\'s turn, that player may put an Omanyte, Kabuto, Aerodactyl, Aerodactyl ex, Lileep, or Anorith onto his or her Bench from his or her hand. Treat the new Benched Pokémon as Basic Pokémon.';
 

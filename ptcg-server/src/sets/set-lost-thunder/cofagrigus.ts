@@ -22,7 +22,7 @@ export class Cofagrigus extends PokemonCard {
       name: 'Spirit Juggling',
       cost: [P, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Discard any number of your Benched Pokémon. This attack does 30 more damage for each Benched Pokémon you discarded in this way.'
     }
   ];
@@ -31,7 +31,8 @@ export class Cofagrigus extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cofagrigus';
-  public fullName: string = 'Cofagrigus LOT';
+  public fullName: string = 'Cofagrigus (LOT 100)';
+  public legacyFullName = 'Cofagrigus LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spirit Juggling

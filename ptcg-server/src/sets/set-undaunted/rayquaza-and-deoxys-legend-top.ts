@@ -9,6 +9,7 @@ import { KnockOutEffect } from '../../game/store/effects/game-effects';
 
 export class RayquazaAndDeoxysLegendTop extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
+  public multiPartPosition: 'Top' | 'Bottom' | 'Top Left' | 'Top Right' | 'Bottom Left' | 'Bottom Right' = 'Top';
   public tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
   public cardType = C;
   public additionalCardTypes = [P];
@@ -40,7 +41,8 @@ export class RayquazaAndDeoxysLegendTop extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '89';
   public name: string = 'Rayquaza & Deoxys LEGEND';
-  public fullName: string = 'Rayquaza & Deoxys LEGEND (Top) UD';
+  public fullName: string = 'Rayquaza & Deoxys LEGEND (UD 89)';
+  public legacyFullName = 'Rayquaza & Deoxys LEGEND (Top) UD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the avengers

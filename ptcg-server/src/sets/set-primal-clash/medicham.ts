@@ -36,7 +36,8 @@ export class Medicham extends PokemonCard {
 
   public set: string = 'PRC';
   public name: string = 'Medicham';
-  public fullName: string = 'Medicham PRC';
+  public fullName: string = 'Medicham (PRC 81)';
+  public legacyFullName = 'Medicham PRC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
 

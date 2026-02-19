@@ -22,7 +22,7 @@ export class Crustle extends PokemonCard {
       name: 'X-Scissor',
       cost: [G, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 60 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Crustle extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crustle';
-  public fullName: string = 'Crustle EVS';
+  public fullName: string = 'Crustle (EVS 12)';
+  public legacyFullName = 'Crustle EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: X-Scissor

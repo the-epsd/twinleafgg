@@ -37,7 +37,8 @@ export class Galvantula extends PokemonCard {
 
   public name: string = 'Galvantula';
 
-  public fullName: string = 'Galvantula SFA';
+  public fullName: string = 'Galvantula (SFA 2)';
+  public legacyFullName = 'Galvantula SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

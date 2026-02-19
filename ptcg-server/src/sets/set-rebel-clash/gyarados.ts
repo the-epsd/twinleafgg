@@ -37,7 +37,8 @@ export class Gyarados extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gyarados';
-  public fullName: string = 'Gyarados RCL';
+  public fullName: string = 'Gyarados (RCL 40)';
+  public legacyFullName = 'Gyarados RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Big Storm

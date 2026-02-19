@@ -20,7 +20,8 @@ export class PokemonResearchLab extends TrainerCard {
 
   public name = 'Pokémon Research Lab';
 
-  public fullName = 'Pokémon Research Lab UNM';
+  public fullName = 'Pokémon Research Lab (UNM 205)';
+  public legacyFullName = 'Pokémon Research Lab UNM';
 
   public text = 'Once during each player\'s turn, that player may search their deck for up to 2 Pokémon that evolve from Unidentified Fossil, put those Pokémon onto their Bench, and shuffle their deck. If a player searches their deck in this way, their turn ends.';
 

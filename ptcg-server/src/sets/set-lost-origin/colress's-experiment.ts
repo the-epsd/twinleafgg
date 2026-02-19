@@ -21,7 +21,8 @@ export class ColresssExperiment extends TrainerCard {
 
   public name: string = 'Colress\'s Experiment';
 
-  public fullName: string = 'Colress\'s Experiment LOR';
+  public fullName: string = 'Colress\'s Experiment (LOR 155)';
+  public legacyFullName = 'Colress\'s Experiment LOR';
 
   public text: string =
     'Look at the top 5 cards of your deck and put 3 of them into your hand. Put the other cards in the Lost Zone.';

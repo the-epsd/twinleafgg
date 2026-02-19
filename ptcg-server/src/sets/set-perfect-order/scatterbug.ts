@@ -20,5 +20,6 @@ export class Scatterbug extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Scatterbug';
-  public fullName: string = 'Scatterbug M3';
+  public fullName: string = 'Scatterbug (M3 7)';
+  public legacyFullName = 'Scatterbug M3';
 }

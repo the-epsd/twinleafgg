@@ -30,7 +30,8 @@ export class Doublade extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Doublade';
-  public fullName: string = 'Doublade UNM';
+  public fullName: string = 'Doublade (UNM 94)';
+  public legacyFullName = 'Doublade UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Slashing Cutter

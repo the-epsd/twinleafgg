@@ -39,7 +39,8 @@ export class MewtwoGX extends PokemonCard {
   public setNumber = '39';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Mewtwo-GX';
-  public fullName: string = 'Mewtwo-GX SLG';
+  public fullName: string = 'Mewtwo-GX (SLG 39)';
+  public legacyFullName = 'Mewtwo-GX SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

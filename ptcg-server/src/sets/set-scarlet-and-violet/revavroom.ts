@@ -35,7 +35,8 @@ export class Revavroom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '142';
   public name: string = 'Revavroom';
-  public fullName: string = 'Revavroom SVI';
+  public fullName: string = 'Revavroom (SVI 142)';
+  public legacyFullName = 'Revavroom SVI';
 
   public readonly RUMBLING_ENGINE_MARKER = 'RUMBLING_ENGINE_MARKER';
 

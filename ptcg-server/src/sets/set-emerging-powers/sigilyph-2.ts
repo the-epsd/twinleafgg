@@ -34,7 +34,8 @@ export class Sigilyph2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
   public name: string = 'Sigilyph';
-  public fullName: string = 'Sigilyph EPO 42';
+  public fullName: string = 'Sigilyph (EPO 42)';
+  public legacyFullName = 'Sigilyph EPO 42';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

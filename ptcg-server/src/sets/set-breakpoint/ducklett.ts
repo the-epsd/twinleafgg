@@ -29,7 +29,8 @@ export class Ducklett extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ducklett';
-  public fullName: string = 'Ducklett BKP';
+  public fullName: string = 'Ducklett (BKP 36)';
+  public legacyFullName = 'Ducklett BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lunge

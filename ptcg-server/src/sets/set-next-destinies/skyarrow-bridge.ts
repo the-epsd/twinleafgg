@@ -17,7 +17,8 @@ export class SkyarrowBridge extends TrainerCard {
 
   public name: string = 'Skyarrow Bridge';
 
-  public fullName: string = 'Skyarrow Bridge NXD';
+  public fullName: string = 'Skyarrow Bridge (NXD 91)';
+  public legacyFullName = 'Skyarrow Bridge NXD';
 
   public cardImage: string = 'assets/cardback.png';
 

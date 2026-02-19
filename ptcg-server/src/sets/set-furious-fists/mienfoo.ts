@@ -34,7 +34,8 @@ export class Mienfoo extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mienfoo';
-  public fullName: string = 'Mienfoo FFI';
+  public fullName: string = 'Mienfoo (FFI 56)';
+  public legacyFullName = 'Mienfoo FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Lunge

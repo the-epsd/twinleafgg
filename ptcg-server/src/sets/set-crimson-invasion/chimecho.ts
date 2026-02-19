@@ -38,7 +38,8 @@ export class Chimecho extends PokemonCard {
 
   public name: string = 'Chimecho';
 
-  public fullName: string = 'Chimecho CIN';
+  public fullName: string = 'Chimecho (CIN 43)';
+  public legacyFullName = 'Chimecho CIN';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 

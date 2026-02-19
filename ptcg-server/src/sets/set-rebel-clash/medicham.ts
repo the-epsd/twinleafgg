@@ -28,7 +28,7 @@ export class Medicham extends PokemonCard {
       name: 'Psychic',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -38,7 +38,8 @@ export class Medicham extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Medicham';
-  public fullName: string = 'Medicham RCL';
+  public fullName: string = 'Medicham (RCL 98)';
+  public legacyFullName = 'Medicham RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Yoga Kick

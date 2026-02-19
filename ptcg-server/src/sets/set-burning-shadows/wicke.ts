@@ -15,7 +15,8 @@ export class Wicke extends TrainerCard {
   public setNumber: string = '127';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wicke';
-  public fullName: string = 'Wicke BUS';
+  public fullName: string = 'Wicke (BUS 127)';
+  public legacyFullName = 'Wicke BUS';
   public text: string = 'Each player counts the cards in their hand, shuffles those cards into their deck, then draws that many cards. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -44,7 +44,8 @@ export class Absol extends PokemonCard {
 
   public name: string = 'Absol';
 
-  public fullName: string = 'Absol CRZ';
+  public fullName: string = 'Absol (CRZ 76)';
+  public legacyFullName = 'Absol CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

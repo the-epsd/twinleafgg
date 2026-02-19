@@ -31,6 +31,7 @@ export class Dratini extends PokemonCard {
 
   public name: string = 'Dratini';
 
-  public fullName: string = 'Dratini OBF';
+  public fullName: string = 'Dratini (OBF 157)';
+  public legacyFullName = 'Dratini OBF';
 
 }

@@ -26,5 +26,6 @@ export class Diglett extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Diglett';
-  public fullName: string = 'Diglett SSH';
+  public fullName: string = 'Diglett (SSH 92)';
+  public legacyFullName = 'Diglett SSH';
 }

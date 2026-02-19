@@ -43,7 +43,8 @@ export class GalarianWeezing extends PokemonCard {
 
   public name: string = 'Galarian Weezing';
 
-  public fullName: string = 'Galarian Weezing SHF';
+  public fullName: string = 'Galarian Weezing (SHF 42)';
+  public legacyFullName = 'Galarian Weezing SHF';
 
   public cardImage: string = 'assets/cardback.png';
 

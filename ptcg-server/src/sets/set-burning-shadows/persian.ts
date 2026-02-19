@@ -40,7 +40,8 @@ export class Persian extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Persian';
-  public fullName: string = 'Persian BUS';
+  public fullName: string = 'Persian (BUS 102)';
+  public legacyFullName = 'Persian BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Screech

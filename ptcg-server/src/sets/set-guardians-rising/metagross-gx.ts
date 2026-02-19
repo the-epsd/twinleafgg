@@ -60,7 +60,8 @@ export class MetagrossGX extends PokemonCard {
 
   public name: string = 'Metagross-GX';
 
-  public fullName: string = 'Metagross-GX GRI';
+  public fullName: string = 'Metagross-GX (GRI 85)';
+  public legacyFullName = 'Metagross-GX GRI';
 
   public cardImage: string = 'assets/cardback.png';
 

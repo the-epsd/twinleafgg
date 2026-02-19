@@ -12,7 +12,8 @@ export class WeaknessPolicy extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'PRC';
   public name: string = 'Weakness Policy';
-  public fullName: string = 'Weakness Policy PRC';
+  public fullName: string = 'Weakness Policy (PRC 142)';
+  public legacyFullName = 'Weakness Policy PRC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '142';
 

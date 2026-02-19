@@ -21,7 +21,8 @@ export class SingleStrikeScrollOfScorn extends TrainerCard {
   public setNumber: string = '133';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Single Strike Scroll of Scorn';
-  public fullName: string = 'Single Strike Scroll of Scorn BST';
+  public fullName: string = 'Single Strike Scroll of Scorn (BST 133)';
+  public legacyFullName = 'Single Strike Scroll of Scorn BST';
   public text: string = 'Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached. The Single Strike Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) You may play any number of Item cards during your turn.';
 
   public attacks: Attack[] = [{

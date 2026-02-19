@@ -34,7 +34,8 @@ export class Magearna extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magearna';
-  public fullName: string = 'Magearna UPR';
+  public fullName: string = 'Magearna (UPR 91)';
+  public legacyFullName = 'Magearna UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Change Clothes

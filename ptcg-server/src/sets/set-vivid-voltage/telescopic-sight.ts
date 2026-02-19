@@ -13,7 +13,8 @@ export class TelescopicSight extends TrainerCard {
   public setNumber = '160';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Telescopic Sight';
-  public fullName: string = 'Telescopic Sight VIV';
+  public fullName: string = 'Telescopic Sight (VIV 160)';
+  public legacyFullName = 'Telescopic Sight VIV';
   public text: string = 'The attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Benched Pokémon V and Benched Pokémon-GX.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

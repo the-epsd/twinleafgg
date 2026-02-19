@@ -15,7 +15,8 @@ export class KarateBelt extends TrainerCard {
 
   public name: string = 'Karate Belt';
 
-  public fullName: string = 'Karate Belt UNM';
+  public fullName: string = 'Karate Belt (UNM 201)';
+  public legacyFullName = 'Karate Belt UNM';
 
   public cardImage: string = 'assets/cardback.png';
 

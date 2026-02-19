@@ -36,7 +36,8 @@ export class Zapdos extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
   public name: string = 'Zapdos';
-  public fullName: string = 'Zapdos AQ';
+  public fullName: string = 'Zapdos (AQ 44)';
+  public legacyFullName = 'Zapdos AQ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

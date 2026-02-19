@@ -24,7 +24,8 @@ export class Bronzor extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '111';
   public name = 'Bronzor';
-  public fullName = 'Bronzor ASR';
+  public fullName = 'Bronzor (ASR 111)';
+  public legacyFullName = 'Bronzor ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

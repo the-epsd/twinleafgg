@@ -28,5 +28,6 @@ export class Rufflet extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
   public name: string = 'Rufflet';
-  public fullName: string = 'Rufflet EPO';
+  public fullName: string = 'Rufflet (EPO 86)';
+  public legacyFullName = 'Rufflet EPO';
 }

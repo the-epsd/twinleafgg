@@ -32,5 +32,6 @@ export class Tirtouga extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tirtouga';
-  public fullName: string = 'Tirtouga UNM';
+  public fullName: string = 'Tirtouga (UNM 44)';
+  public legacyFullName = 'Tirtouga UNM';
 }

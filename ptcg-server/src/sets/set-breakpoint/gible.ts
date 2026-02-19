@@ -28,7 +28,8 @@ export class Gible extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gible';
-  public fullName: string = 'Gible BKP';
+  public fullName: string = 'Gible (BKP 68)';
+  public legacyFullName = 'Gible BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Never Enough

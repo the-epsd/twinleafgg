@@ -42,7 +42,8 @@ export class Staraptor extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Staraptor';
-  public fullName: string = 'Staraptor CIN';
+  public fullName: string = 'Staraptor (CIN 83)';
+  public legacyFullName = 'Staraptor CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Clutch

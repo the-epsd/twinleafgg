@@ -40,7 +40,8 @@ export class Flareon extends PokemonCard {
 
   public set: string = 'SK';
   public name: string = 'Flareon';
-  public fullName: string = 'Flareon SK';
+  public fullName: string = 'Flareon (SK 8)';
+  public legacyFullName = 'Flareon SK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
 

@@ -44,7 +44,8 @@ export class DragoniteGx extends PokemonCard {
   public setNumber: string = '152';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragonite-GX';
-  public fullName: string = 'Dragonite-GX UNM';
+  public fullName: string = 'Dragonite-GX (UNM 152)';
+  public legacyFullName = 'Dragonite-GX UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Sky Judgment

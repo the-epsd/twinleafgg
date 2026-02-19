@@ -21,7 +21,8 @@ export class CapeOfToughness extends TrainerCard {
 
   public name: string = 'Cape of Toughness';
 
-  public fullName: string = 'Cape of Toughness DAA';
+  public fullName: string = 'Cape of Toughness (DAA 160)';
+  public legacyFullName = 'Cape of Toughness DAA';
 
   public text: string =
     'The Basic Pokémon this card is attached to gets +50 HP, except Pokémon-GX.';

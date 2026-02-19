@@ -32,7 +32,8 @@ export class Ribombee extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
   public name: string = 'Ribombee';
-  public fullName: string = 'Ribombee BUS';
+  public fullName: string = 'Ribombee (BUS 96)';
+  public legacyFullName = 'Ribombee BUS';
 
   public readonly HONEY_GATHER_MARKER = 'HONEY_GATHER_MARKER';
 

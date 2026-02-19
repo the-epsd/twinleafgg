@@ -13,7 +13,8 @@ export class TeamGalacticsInventionG101EnergyGain extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'PL';
   public name: string = 'Team Galactic\'s Invention G-101 Energy Gain';
-  public fullName: string = 'Team Galactic\'s Invention G-101 Energy Gain PL';
+  public fullName: string = 'Team Galactic\'s Invention G-101 Energy Gain (PL 116)';
+  public legacyFullName = 'Team Galactic\'s Invention G-101 Energy Gain PL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '116';
 

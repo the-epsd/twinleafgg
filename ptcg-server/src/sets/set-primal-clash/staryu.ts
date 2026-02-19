@@ -28,7 +28,8 @@ export class Staryu extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Staryu';
-  public fullName: string = 'Staryu PRC';
+  public fullName: string = 'Staryu (PRC 32)';
+  public legacyFullName = 'Staryu PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lunge

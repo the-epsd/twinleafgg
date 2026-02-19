@@ -72,7 +72,8 @@ export class PokeBall extends TrainerCard {
 
   public name = 'Poké Ball';
 
-  public fullName: string = 'Poké Ball JU';
+  public fullName: string = 'Poké Ball (JU 64)';
+  public legacyFullName = 'Poké Ball JU';
 
   public text: string = 'Flip a coin. If heads, you may search your deck for any Basic Pokémon or Evolution card. Show that card to your opponent, then put it into your hand. Shuffle your deck afterward.';
 

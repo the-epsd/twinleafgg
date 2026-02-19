@@ -38,7 +38,8 @@ export class Sandaconda extends PokemonCard {
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandaconda';
-  public fullName: string = 'Sandaconda SSH';
+  public fullName: string = 'Sandaconda (SSH 109)';
+  public legacyFullName = 'Sandaconda SSH';
 
   public readonly COIL_MARKER = 'SANDACONDA_SSH_COIL_MARKER';
   public readonly CLEAR_COIL_MARKER = 'SANDACONDA_SSH_CLEAR_COIL_MARKER';

@@ -49,7 +49,8 @@ export class Reuniclus extends PokemonCard {
 
   public name: string = 'Reuniclus';
 
-  public fullName: string = 'Reuniclus TEF';
+  public fullName: string = 'Reuniclus (TEF 72)';
+  public legacyFullName = 'Reuniclus TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

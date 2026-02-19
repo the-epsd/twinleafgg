@@ -34,7 +34,7 @@ export class Wigglytuff extends PokemonCard {
       name: 'Charmed Slap',
       cost: [Y, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has a Pokémon Tool card that has "Fairy Charm" in its name attached to it, this attack does 70 more damage.'
     }
   ];
@@ -43,7 +43,8 @@ export class Wigglytuff extends PokemonCard {
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wigglytuff';
-  public fullName: string = 'Wigglytuff LOT';
+  public fullName: string = 'Wigglytuff (LOT 134)';
+  public legacyFullName = 'Wigglytuff LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Expand

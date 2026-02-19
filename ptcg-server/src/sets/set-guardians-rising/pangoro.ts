@@ -36,7 +36,8 @@ export class Pangoro extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pangoro';
-  public fullName: string = 'Pangoro GRI';
+  public fullName: string = 'Pangoro (GRI 82)';
+  public legacyFullName = 'Pangoro GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sky Uppercut

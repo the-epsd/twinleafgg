@@ -15,6 +15,7 @@ export class GrassEnergy extends EnergyCard {
 
   public name = 'Grass Energy';
 
-  public fullName = 'Grass Energy HS';
+  public fullName = 'Grass Energy (HS 115)';
+  public legacyFullName = 'Grass Energy HS';
 
 }

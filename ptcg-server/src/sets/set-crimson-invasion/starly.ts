@@ -35,7 +35,8 @@ export class Starly extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Starly';
-  public fullName: string = 'Starly CIN';
+  public fullName: string = 'Starly (CIN 81)';
+  public legacyFullName = 'Starly CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bug Search

@@ -83,350 +83,408 @@ import { Tinkatuff2 } from '../set-paldea-evolved/tinkatuff-2';
 export class OddishSV extends Oddish {
   public setNumber = '92';
   public set = 'PAF';
-  public fullName: string = 'Oddish PAF';
+  public fullName: string = 'Oddish (PAF 92)';
+  public legacyFullName = 'Oddish PAF';
 }
 
 export class GloomSV extends Gloom {
   public setNumber = '93';
   public set = 'PAF';
-  public fullName: string = 'Gloom PAF';
+  public fullName: string = 'Gloom (PAF 93)';
+  public legacyFullName = 'Gloom PAF';
 }
 
 export class VileplumeSV extends Vileplume {
   public setNumber = '94';
   public set = 'PAF';
-  public fullName: string = 'Vileplume PAF';
+  public fullName: string = 'Vileplume (PAF 94)';
+  public legacyFullName = 'Vileplume PAF';
 }
 
 export class PinecoSV extends Pineco {
   public setNumber = '99';
   public set = 'PAF';
-  public fullName: string = 'Pineco PAF';
+  public fullName: string = 'Pineco (PAF 99)';
+  public legacyFullName = 'Pineco PAF';
 }
 
 export class SmolivSV extends Smoliv {
   public setNumber = '102';
   public set = 'PAF';
-  public fullName: string = 'Smoliv PAF';
+  public fullName: string = 'Smoliv (PAF 102)';
+  public legacyFullName = 'Smoliv PAF';
 }
 
 export class DollivSV extends Dolliv {
   public setNumber = '103';
   public set = 'PAF';
-  public fullName: string = 'Dolliv PAF';
+  public fullName: string = 'Dolliv (PAF 103)';
+  public legacyFullName = 'Dolliv PAF';
 }
 
 export class ArbolivaSV extends Arboliva {
   public setNumber = '104';
   public set = 'PAF';
-  public fullName: string = 'Arboliva PAF';
+  public fullName: string = 'Arboliva (PAF 104)';
+  public legacyFullName = 'Arboliva PAF';
 }
 
 export class CapsakidSV extends Capsakid {
   public setNumber = '106';
   public set = 'PAF';
-  public fullName: string = 'Capsakid PAF';
+  public fullName: string = 'Capsakid (PAF 106)';
+  public legacyFullName = 'Capsakid PAF';
 }
 
 export class CharmanderSV extends Charmander {
   public setNumber = '109';
   public set = 'PAF';
-  public fullName: string = 'CharmanderSV PAF';
+  public fullName: string = 'Charmander (PAF 109)';
+  public legacyFullName = 'CharmanderSV PAF';
 }
 
 export class CharmeleonSV extends Charmeleon {
   public setNumber = '110';
   public set = 'PAF';
-  public fullName: string = 'CharmeleonSV PAF';
+  public fullName: string = 'Charmeleon (PAF 110)';
+  public legacyFullName = 'CharmeleonSV PAF';
 }
 
 export class EnteiSV extends Entei {
   public setNumber = '112';
   public set = 'PAF';
-  public fullName: string = 'Entei PAF';
+  public fullName: string = 'Entei (PAF 112)';
+  public legacyFullName = 'Entei PAF';
 }
 
 export class CharcadetSV extends Charcadet {
   public setNumber = '114';
   public set = 'PAF';
-  public fullName: string = 'CharcadetSV PAF';
+  public fullName: string = 'Charcadet (PAF 114)';
+  public legacyFullName = 'CharcadetSV PAF';
 }
 
 export class ArmarougeSV extends Armarouge {
   public setNumber = '115';
   public set = 'PAF';
-  public fullName: string = 'ArmarougeSV PAF';
+  public fullName: string = 'Armarouge (PAF 115)';
+  public legacyFullName = 'ArmarougeSV PAF';
 }
 
 export class SlowpokeSV extends Slowpoke {
   public setNumber = '116';
   public set = 'PAF';
-  public fullName: string = 'Slowpoke PAF';
+  public fullName: string = 'Slowpoke (PAF 116)';
+  public legacyFullName = 'Slowpoke PAF';
 }
 
 export class StaryuSV extends Staryu {
   public setNumber = '118';
   public set = 'PAF';
-  public fullName: string = 'Staryu PAF';
+  public fullName: string = 'Staryu (PAF 118)';
+  public legacyFullName = 'Staryu PAF';
 }
 
 export class StarmieSV extends Starmie {
   public setNumber = '119';
   public set = 'PAF';
-  public fullName: string = 'Starmie PAF';
+  public fullName: string = 'Starmie (PAF 119)';
+  public legacyFullName = 'Starmie PAF';
 }
 
 export class FinizenSV extends Finizen {
   public setNumber = '123';
   public set = 'PAF';
-  public fullName: string = 'Finizen PAF';
+  public fullName: string = 'Finizen (PAF 123)';
+  public legacyFullName = 'Finizen PAF';
 }
 
 export class PalafinSV extends Palafin {
   public setNumber = '124';
   public set = 'PAF';
-  public fullName: string = 'Palafin PAF';
+  public fullName: string = 'Palafin (PAF 124)';
+  public legacyFullName = 'Palafin PAF';
 }
 
 export class FrigibaxSV extends Frigibax {
   public setNumber = '128';
   public set = 'PAF';
-  public fullName: string = 'FrigibaxSV PAF';
+  public fullName: string = 'Frigibax (PAF 128)';
+  public legacyFullName = 'FrigibaxSV PAF';
 }
 
 export class ArctibaxSV extends Arctibax {
   public setNumber = '129';
   public set = 'PAF';
-  public fullName: string = 'Arctibax PAF';
+  public fullName: string = 'Arctibax (PAF 129)';
+  public legacyFullName = 'Arctibax PAF';
 }
 
 export class BaxcaliburSV extends Baxcalibur {
   public setNumber = '130';
   public set = 'PAF';
-  public fullName: string = 'Baxcalibur PAF';
+  public fullName: string = 'Baxcalibur (PAF 130)';
+  public legacyFullName = 'Baxcalibur PAF';
 }
 
 export class LuxraySV extends Luxray {
   public setNumber = '137';
   public set = 'PAF';
-  public fullName: string = 'Luxray PAF';
+  public fullName: string = 'Luxray (PAF 137)';
+  public legacyFullName = 'Luxray PAF';
 }
 
 export class ThundurusSV extends Thundurus {
   public setNumber = '139';
   public set = 'PAF';
-  public fullName: string = 'Thundurus PAF';
+  public fullName: string = 'Thundurus (PAF 139)';
+  public legacyFullName = 'Thundurus PAF';
 }
 
 export class PawmiSV extends Pawmi {
   public setNumber = '142';
   public set = 'PAF';
-  public fullName: string = 'Pawmi PAF';
+  public fullName: string = 'Pawmi (PAF 142)';
+  public legacyFullName = 'Pawmi PAF';
 }
 
 export class PawmoSV extends Pawmo {
   public setNumber = '143';
   public set = 'PAF';
-  public fullName: string = 'Pawmo PAF';
+  public fullName: string = 'Pawmo (PAF 143)';
+  public legacyFullName = 'Pawmo PAF';
 }
 
 export class PawmotSV extends Pawmot {
   public setNumber = '144';
   public set = 'PAF';
-  public fullName: string = 'Pawmot PAF';
+  public fullName: string = 'Pawmot (PAF 144)';
+  public legacyFullName = 'Pawmot PAF';
 }
 
 
 export class WattrelSV extends Wattrel {
   public setNumber = '145';
   public set = 'PAF';
-  public fullName: string = 'Wattrel PAF';
+  public fullName: string = 'Wattrel (PAF 145)';
+  public legacyFullName = 'Wattrel PAF';
 }
 
 export class KilowattrelSV extends Kilowattrel {
   public setNumber = '146';
   public set = 'PAF';
-  public fullName: string = 'KilowattrelSV PAF';
+  public fullName: string = 'Kilowattrel (PAF 146)';
+  public legacyFullName = 'KilowattrelSV PAF';
 }
 
 export class CleffaSV extends Cleffa {
   public setNumber = '150';
   public set = 'PAF';
-  public fullName: string = 'Cleffa PAF';
+  public fullName: string = 'Cleffa (PAF 150)';
+  public legacyFullName = 'Cleffa PAF';
 }
 
 export class NatuSV extends Natu {
   public setNumber = '151';
   public set = 'PAF';
-  public fullName: string = 'NatuSV PAF';
+  public fullName: string = 'Natu (PAF 151)';
+  public legacyFullName = 'NatuSV PAF';
 }
 
 export class XatuSV extends Xatu {
   public setNumber = '152';
   public set = 'PAF';
-  public fullName: string = 'XatuSV PAF';
+  public fullName: string = 'Xatu (PAF 152)';
+  public legacyFullName = 'XatuSV PAF';
 }
 
 export class RaltsSV extends Ralts {
   public setNumber = '153';
   public set = 'PAF';
-  public fullName: string = 'RaltsSV PAF';
+  public fullName: string = 'Ralts (PAF 153)';
+  public legacyFullName = 'RaltsSV PAF';
 }
 
 export class KirliaSV extends Kirlia {
   public setNumber = '154';
   public set = 'PAF';
-  public fullName: string = 'Kirlia PAF';
+  public fullName: string = 'Kirlia (PAF 154)';
+  public legacyFullName = 'Kirlia PAF';
 }
 
 export class DrifloonSV extends Drifloon {
   public setNumber = '155';
   public set = 'PAF';
-  public fullName: string = 'Drifloon PAF';
+  public fullName: string = 'Drifloon (PAF 155)';
+  public legacyFullName = 'Drifloon PAF';
 }
 
 export class MimeJrSV extends MimeJr {
   public setNumber = '157';
   public set = 'PAF';
-  public fullName: string = 'MimeJrSV PAF';
+  public fullName: string = 'Mime Jr. (PAF 157)';
+  public legacyFullName = 'MimeJrSV PAF';
 }
 
 export class SpiritombSV extends Spiritomb {
   public setNumber = '158';
   public set = 'PAF';
-  public fullName: string = 'Spiritomb PAF';
+  public fullName: string = 'Spiritomb (PAF 158)';
+  public legacyFullName = 'Spiritomb PAF';
 }
 
 export class KlefkiSV extends Klefki {
   public setNumber = '159';
   public set = 'PAF';
-  public fullName: string = 'Klefki PAF';
+  public fullName: string = 'Klefki (PAF 159)';
+  public legacyFullName = 'Klefki PAF';
 }
 
 export class MimikyuSV extends Mimikyu {
   public setNumber = '160';
   public set = 'PAF';
-  public fullName: string = 'MimikyuSV PAF';
+  public fullName: string = 'Mimikyu (PAF 160)';
+  public legacyFullName = 'MimikyuSV PAF';
 }
 
 export class TinkatinkSV extends Tinkatink {
   public setNumber = '165';
   public set = 'PAF';
-  public fullName: string = 'Tinkatink PAF';
+  public fullName: string = 'Tinkatink (PAF 165)';
+  public legacyFullName = 'Tinkatink PAF';
 }
 
 export class TinkatuffSV extends Tinkatuff2 {
   public setNumber = '166';
   public set = 'PAF';
-  public fullName: string = 'Tinkatuff PAF';
+  public fullName: string = 'Tinkatuff (PAF 166)';
+  public legacyFullName = 'Tinkatuff PAF';
 }
 
 export class TinkatonSV extends Tinkaton {
   public setNumber = '167';
   public set = 'PAF';
-  public fullName: string = 'Tinkaton PAF';
+  public fullName: string = 'Tinkaton (PAF 167)';
+  public legacyFullName = 'Tinkaton PAF';
 }
 
 export class RioluSV extends Riolu2 {
   public setNumber = '173';
   public set = 'PAF';
-  public fullName: string = 'Riolu PAF';
+  public fullName: string = 'Riolu (PAF 173)';
+  public legacyFullName = 'Riolu PAF';
 }
 
 export class LucarioSV extends Lucario {
   public setNumber = '174';
   public set = 'PAF';
-  public fullName: string = 'Lucario PAF';
+  public fullName: string = 'Lucario (PAF 174)';
+  public legacyFullName = 'Lucario PAF';
 }
 
 export class HawluchaSV extends Hawlucha {
   public setNumber = '175';
   public set = 'PAF';
-  public fullName: string = 'Hawlucha PAF';
+  public fullName: string = 'Hawlucha (PAF 175)';
+  public legacyFullName = 'Hawlucha PAF';
 }
 
 export class MurkrowSV extends Murkrow {
   public setNumber = '181';
   public set = 'PAF';
-  public fullName: string = 'Murkrow PAF';
+  public fullName: string = 'Murkrow (PAF 181)';
+  public legacyFullName = 'Murkrow PAF';
 }
 
 export class ScizorSV extends Scizor {
   public setNumber = '191';
   public set = 'PAF';
-  public fullName: string = 'Scizor PAF';
+  public fullName: string = 'Scizor (PAF 191)';
+  public legacyFullName = 'Scizor PAF';
 }
 
 export class RevavroomSV extends Revavroom {
   public setNumber = '193';
   public set = 'PAF';
-  public fullName: string = 'Revavroom PAF';
+  public fullName: string = 'Revavroom (PAF 193)';
+  public legacyFullName = 'Revavroom PAF';
 }
 
 export class NoibatSV extends Noibat {
   public setNumber = '194';
   public set = 'PAF';
-  public fullName: string = 'NoibatSV PAF';
+  public fullName: string = 'Noibat (PAF 194)';
+  public legacyFullName = 'NoibatSV PAF';
 }
 
 export class PidgeySV extends Pidgey {
   public setNumber = '196';
   public set = 'PAF';
-  public fullName: string = 'Pidgey PAF';
+  public fullName: string = 'Pidgey (PAF 196)';
+  public legacyFullName = 'Pidgey PAF';
 }
 
 export class PidgeottoSV extends Pidgeotto {
   public setNumber = '197';
   public set = 'PAF';
-  public fullName: string = 'Pidgeotto PAF';
+  public fullName: string = 'Pidgeotto (PAF 197)';
+  public legacyFullName = 'Pidgeotto PAF';
 }
 
 export class DoduoSV extends Doduo {
   public setNumber = '199';
   public set = 'PAF';
-  public fullName: string = 'Doduo PAF';
+  public fullName: string = 'Doduo (PAF 199)';
+  public legacyFullName = 'Doduo PAF';
 }
 
 export class DodrioSV extends Dodrio {
   public setNumber = '200';
   public set = 'PAF';
-  public fullName: string = 'Dodrio PAF';
+  public fullName: string = 'Dodrio (PAF 200)';
+  public legacyFullName = 'Dodrio PAF';
 }
 
 export class DittoSV extends Ditto {
   public setNumber = '201';
   public set = 'PAF';
-  public fullName: string = 'Ditto PAF';
+  public fullName: string = 'Ditto (PAF 201)';
+  public legacyFullName = 'Ditto PAF';
 }
 
 export class SnorlaxSV extends Snorlax {
   public setNumber = '202';
   public set = 'PAF';
-  public fullName = 'Snorlax PAF';
+  public fullName = 'Snorlax (PAF 202)';
+  public legacyFullName = 'Snorlax PAF';
 }
 
 export class WingullSV extends Wingull {
   public setNumber = '203';
   public set = 'PAF';
-  public fullName: string = 'Wingull PAF';
+  public fullName: string = 'Wingull (PAF 203)';
+  public legacyFullName = 'Wingull PAF';
 }
 
 export class PelipperSV extends Pelipper {
   public setNumber = '204';
   public set = 'PAF';
-  public fullName: string = 'Pelipper PAF';
+  public fullName: string = 'Pelipper (PAF 204)';
+  public legacyFullName = 'Pelipper PAF';
 }
 
 export class SkwovetSV extends Skwovet {
   public setNumber = '205';
   public set = 'PAF';
-  public fullName: string = 'Skwovet PAF';
+  public fullName: string = 'Skwovet (PAF 205)';
+  public legacyFullName = 'Skwovet PAF';
 }
 
 export class FlamigoSV extends Flamigo {
   public setNumber = '211';
   public set = 'PAF';
-  public fullName: string = 'Flamigo PAF';
+  public fullName: string = 'Flamigo (PAF 211)';
+  public legacyFullName = 'Flamigo PAF';
 }
 
 // Shiny ex
@@ -434,49 +492,57 @@ export class FlamigoSV extends Flamigo {
 export class ForretressexSV extends Forretressex {
   public setNumber = '212';
   public set = 'PAF';
-  public fullName: string = 'Forretress ex PAF';
+  public fullName: string = 'Forretress ex (PAF 212)';
+  public legacyFullName = 'Forretress ex PAF';
 }
 
 export class ToedscruelexSV extends Toedscruelex {
   public setNumber = '213';
   public set = 'PAF';
-  public fullName: string = 'Toedscruel ex PAF';
+  public fullName: string = 'Toedscruel ex (PAF 213)';
+  public legacyFullName = 'Toedscruel ex PAF';
 }
 
 export class EspathraexSV extends Espathraex {
   public setNumber = '214';
   public set = 'PAF';
-  public fullName: string = 'Espathra exSV PAF';
+  public fullName: string = 'Espathra ex (PAF 214)';
+  public legacyFullName = 'Espathra exSV PAF';
 }
 
 export class MewexSV extends Mewex {
   public setNumber = '216';
   public set = 'PAF';
-  public fullName: string = 'Mew ex PAF';
+  public fullName: string = 'Mew ex (PAF 216)';
+  public legacyFullName = 'Mew ex PAF';
 }
 
 export class GardevoirexSV extends Gardevoirex {
   public setNumber = '217';
   public set = 'PAF';
-  public fullName: string = 'Gardevoir exSV PAF';
+  public fullName: string = 'Gardevoir ex (PAF 217)';
+  public legacyFullName = 'Gardevoir exSV PAF';
 }
 
 export class NoivernexSV extends Noivernex {
   public setNumber = '220';
   public set = 'PAF';
-  public fullName: string = 'Noivern exSV PAF';
+  public fullName: string = 'Noivern ex (PAF 220)';
+  public legacyFullName = 'Noivern exSV PAF';
 }
 
 export class PidgeotexSV extends Pidgeotex {
   public setNumber = '221';
   public set = 'PAF';
-  public fullName: string = 'Pidgeot ex PAF';
+  public fullName: string = 'Pidgeot ex (PAF 221)';
+  public legacyFullName = 'Pidgeot ex PAF';
 }
 
 export class SquawkabillyexSV extends Squawkabillyex {
   public setNumber = '223';
   public set = 'PAF';
-  public fullName: string = 'Squawkabilly exSV PAF';
+  public fullName: string = 'Squawkabilly ex (PAF 223)';
+  public legacyFullName = 'Squawkabilly exSV PAF';
 }
 
 // Shiny Full arts
@@ -484,19 +550,22 @@ export class SquawkabillyexSV extends Squawkabillyex {
 export class WugtrioSVFA extends Wugtrio {
   public setNumber = '224';
   public set = 'PAF';
-  public fullName: string = 'WugtrioFA PAF';
+  public fullName: string = 'Wugtrio (PAF 224)';
+  public legacyFullName = 'WugtrioFA PAF';
 }
 
 export class PalafinSVFA extends Palafin {
   public setNumber = '225';
   public set = 'PAF';
-  public fullName: string = 'PalafinFA PAF';
+  public fullName: string = 'Palafin (PAF 225)';
+  public legacyFullName = 'PalafinFA PAF';
 }
 
 export class PawmiSVFA extends Pawmi {
   public setNumber = '226';
   public set = 'PAF';
-  public fullName: string = 'PawmiFA PAF';
+  public fullName: string = 'Pawmi (PAF 226)';
+  public legacyFullName = 'PawmiFA PAF';
 }
 
 // FA Trainers
@@ -504,31 +573,36 @@ export class PawmiSVFA extends Pawmi {
 export class CliveSV extends Clive {
   public setNumber = '227';
   public set = 'PAF';
-  public fullName: string = 'CliveFA PAF';
+  public fullName: string = 'Clive (PAF 227)';
+  public legacyFullName = 'CliveFA PAF';
 }
 
 export class JudgeSV extends Judge {
   public setNumber = '228';
   public set = 'PAF';
-  public fullName: string = 'Judge PAF';
+  public fullName: string = 'Judge (PAF 228)';
+  public legacyFullName = 'Judge PAF';
 }
 
 export class NemonaSV extends Nemona {
   public setNumber = '229';
   public set = 'PAF';
-  public fullName: string = 'NemonaFA PAF';
+  public fullName: string = 'Nemona (PAF 229)';
+  public legacyFullName = 'NemonaFA PAF';
 }
 
 export class PaldeanStudentSV1 extends StudentsInPaldea {
   public setNumber = '230';
   public set = 'PAF';
-  public fullName: string = 'Paldean StudentFA PAF';
+  public fullName: string = 'Paldean Student (PAF 230)';
+  public legacyFullName = 'Paldean StudentFA PAF';
 }
 
 export class PaldeanStudentSV2 extends StudentsInPaldea {
   public setNumber = '231';
   public set = 'PAF';
-  public fullName: string = 'Paldean StudentFA2 PAF';
+  public fullName: string = 'Paldean Student (PAF 231)';
+  public legacyFullName = 'Paldean StudentFA2 PAF';
 }
 
 // SIR Pokemon
@@ -536,19 +610,22 @@ export class PaldeanStudentSV2 extends StudentsInPaldea {
 export class MewexSVSIR extends Mewex {
   public setNumber = '232';
   public set = 'PAF';
-  public fullName: string = 'Mew exSIR PAF';
+  public fullName: string = 'Mew ex (PAF 232)';
+  public legacyFullName = 'Mew exSIR PAF';
 }
 
 export class GardevoirexSVSIR extends Gardevoirex {
   public setNumber = '233';
   public set = 'PAF';
-  public fullName: string = 'Gardevoir exSIR PAF';
+  public fullName: string = 'Gardevoir ex (PAF 233)';
+  public legacyFullName = 'Gardevoir exSIR PAF';
 }
 
 export class CharizardexSVSIR extends Charizardex {
   public setNumber = '234';
   public set = 'PAF';
-  public fullName: string = 'Charizard exSIR PAF';
+  public fullName: string = 'Charizard ex (PAF 234)';
+  public legacyFullName = 'Charizard exSIR PAF';
 }
 
 // SIR Trainers
@@ -556,65 +633,76 @@ export class CharizardexSVSIR extends Charizardex {
 export class ArvenSV extends Arven {
   public setNumber = '235';
   public set = 'PAF';
-  public fullName: string = 'ArvenSIR PAF';
+  public fullName: string = 'Arven (PAF 235)';
+  public legacyFullName = 'ArvenSIR PAF';
 }
 
 export class CliveSV2 extends Clive {
   public setNumber = '236';
   public set = 'PAF';
-  public fullName: string = 'CliveSIR PAF';
+  public fullName: string = 'Clive (PAF 236)';
+  public legacyFullName = 'CliveSIR PAF';
 }
 
 export class IonoSV extends Iono {
   public setNumber = '237';
   public set = 'PAF';
-  public fullName: string = 'IonoSIR PAF';
+  public fullName: string = 'Iono (PAF 237)';
+  public legacyFullName = 'IonoSIR PAF';
 }
 
 export class NemonaSV2 extends Nemona {
   public setNumber = '238';
   public set = 'PAF';
-  public fullName: string = 'NemonaSIR PAF';
+  public fullName: string = 'Nemona (PAF 238)';
+  public legacyFullName = 'NemonaSIR PAF';
 }
 
 export class PennySV extends Penny {
   public setNumber = '239';
   public set = 'PAF';
-  public fullName: string = 'PennySIR PAF';
+  public fullName: string = 'Penny (PAF 239)';
+  public legacyFullName = 'PennySIR PAF';
 }
 
 export class WoChienexUR extends WoChienex {
   public setNumber = '240';
   public set = 'PAF';
-  public fullName: string = 'Wo-Chien ex PAF';
+  public fullName: string = 'Wo-Chien ex (PAF 240)';
+  public legacyFullName = 'Wo-Chien ex PAF';
 }
 
 export class ChiYuexUR extends ChiYuex {
   public setNumber = '241';
   public set = 'PAF';
-  public fullName: string = 'Chi-Yu ex PAF';
+  public fullName: string = 'Chi-Yu ex (PAF 241)';
+  public legacyFullName = 'Chi-Yu ex PAF';
 }
 
 export class ChienPaoexUR extends ChienPaoex {
   public setNumber = '242';
   public set = 'PAF';
-  public fullName: string = 'Chien-Pao ex PAF';
+  public fullName: string = 'Chien-Pao ex (PAF 242)';
+  public legacyFullName = 'Chien-Pao ex PAF';
 }
 
 export class MiraidonexUR extends Miraidonex {
   public setNumber = '243';
   public set = 'PAF';
-  public fullName: string = 'Miraidon ex PAF';
+  public fullName: string = 'Miraidon ex (PAF 243)';
+  public legacyFullName = 'Miraidon ex PAF';
 }
 
 export class TingLuexUR extends TingLuex {
   public setNumber = '244';
   public set = 'PAF';
-  public fullName: string = 'Ting-Lu ex PAF';
+  public fullName: string = 'Ting-Lu ex (PAF 244)';
+  public legacyFullName = 'Ting-Lu ex PAF';
 }
 
 export class KoraidonexUR extends Koraidonex {
   public setNumber = '245';
   public set = 'PAF';
-  public fullName: string = 'Koraidon ex PAF';
+  public fullName: string = 'Koraidon ex (PAF 245)';
+  public legacyFullName = 'Koraidon ex PAF';
 }

@@ -12,7 +12,8 @@ export class FullHealEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
   public name = 'Full Heal Energy';
-  public fullName = 'Full Heal Energy TR';
+  public fullName = 'Full Heal Energy (TR 81)';
+  public legacyFullName = 'Full Heal Energy TR';
 
   public text = 'If you play this card from your hand, the Pokémon you attach it to is no longer Asleep, Confused, Paralyzed, or Poisoned.\n\nFull Heal Energy provides [C] energy. (Doesn\'t count as a basic Energy card.)';
 

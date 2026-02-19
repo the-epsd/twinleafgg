@@ -48,7 +48,8 @@ export class Musharna extends PokemonCard {
 
   public name: string = 'Musharna';
 
-  public fullName: string = 'Musharna NXD';
+  public fullName: string = 'Musharna (NXD 59)';
+  public legacyFullName = 'Musharna NXD';
 
   public cardImage: string = 'assets/cardback.png';
 

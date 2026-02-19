@@ -14,7 +14,8 @@ export class Revive extends TrainerCard {
 
   public name: string = 'Revive';
 
-  public fullName: string = 'Revive BS'; // Replace with the appropriate set abbreviation
+  public fullName: string = 'Revive (BS 89)';
+  public legacyFullName = 'Revive BS'; // Replace with the appropriate set abbreviation
 
   public cardImage: string = 'assets/cardback.png'; // Replace with the appropriate card image path
 

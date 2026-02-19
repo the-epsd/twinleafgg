@@ -52,7 +52,8 @@ export class GalarianArticuno extends PokemonCard {
 
   public name: string = 'Galarian Articuno';
 
-  public fullName: string = 'Galarian Articuno EVS';
+  public fullName: string = 'Galarian Articuno (EVS 63)';
+  public legacyFullName = 'Galarian Articuno EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -38,7 +38,8 @@ export class Pumpkaboo extends PokemonCard {
 
   public name: string = 'Pumpkaboo';
 
-  public fullName: string = 'Pumpkaboo PHF';
+  public fullName: string = 'Pumpkaboo (PHF 44)';
+  public legacyFullName = 'Pumpkaboo PHF';
 
   public cardImage: string = 'assets/cardback.png';
 

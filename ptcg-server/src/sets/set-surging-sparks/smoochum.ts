@@ -40,7 +40,8 @@ export class Smoochum extends PokemonCard {
 
   public name: string = 'Smoochum';
 
-  public fullName: string = 'Smoochum SSP';
+  public fullName: string = 'Smoochum (SSP 75)';
+  public legacyFullName = 'Smoochum SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

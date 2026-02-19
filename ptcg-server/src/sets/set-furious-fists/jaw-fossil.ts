@@ -64,7 +64,8 @@ export class JawFossil extends TrainerCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jaw Fossil';
-  public fullName: string = 'Jaw Fossil FFI';
+  public fullName: string = 'Jaw Fossil (FFI 94)';
+  public legacyFullName = 'Jaw Fossil FFI';
   public text: string = 'Look at the bottom 7 cards of your deck. You may reveal a Tyrunt you find there and put it onto your Bench. Shuffle the other cards back into your deck.';
 
   // Ref: set-furious-fists/sail-fossil.ts (bottom 7 fossil pattern)

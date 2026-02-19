@@ -27,7 +27,7 @@ export class Indeedee2 extends PokemonCard {
       name: 'Psychic',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class Indeedee2 extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Indeedee';
-  public fullName: string = 'Indeedee SHF 56';
+  public fullName: string = 'Indeedee (SHF 56)';
+  public legacyFullName = 'Indeedee SHF 56';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Helping Hand

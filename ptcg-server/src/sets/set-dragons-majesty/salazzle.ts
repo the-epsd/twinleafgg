@@ -38,7 +38,8 @@ export class Salazzle extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salazzle';
-  public fullName: string = 'Salazzle DRM';
+  public fullName: string = 'Salazzle (DRM 14)';
+  public legacyFullName = 'Salazzle DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ring of Fire

@@ -30,7 +30,7 @@ export class Orbeetle extends PokemonCard {
       name: 'Brainwave',
       cost: [G, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each [P] Energy attached to this Pokémon.'
     }
   ];
@@ -40,7 +40,8 @@ export class Orbeetle extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Orbeetle';
-  public fullName: string = 'Orbeetle SSH';
+  public fullName: string = 'Orbeetle (SSH 19)';
+  public legacyFullName = 'Orbeetle SSH';
 
   public readonly BUGS_RADAR_MARKER = 'ORBEETLE_SSH_BUGS_RADAR_MARKER';
 

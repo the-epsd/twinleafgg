@@ -30,7 +30,8 @@ export class Gible extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '106';
   public name: string = 'Gible';
-  public fullName: string = 'Gible SV';
+  public fullName: string = 'Gible (SV 106)';
+  public legacyFullName = 'Gible SV';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
   public readonly SMOKESCREEN_MARKER = 'SMOKESCREEN_MARKER';

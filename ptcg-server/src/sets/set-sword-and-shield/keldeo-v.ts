@@ -28,7 +28,7 @@ export class KeldeoV extends PokemonCard {
       name: 'Secret Sword',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each [W] Energy attached to this Pokémon.'
     }
   ];
@@ -38,7 +38,8 @@ export class KeldeoV extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Keldeo V';
-  public fullName: string = 'Keldeo V SSH';
+  public fullName: string = 'Keldeo V (SSH 53)';
+  public legacyFullName = 'Keldeo V SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Secret Sword

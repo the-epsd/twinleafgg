@@ -22,7 +22,8 @@ export class DefianceBand extends TrainerCard {
 
   public name: string = 'Defiance Band';
 
-  public fullName: string = 'Defiance Band SVI';
+  public fullName: string = 'Defiance Band (SVI 169)';
+  public legacyFullName = 'Defiance Band SVI';
 
   public text: string =
     'If you have more Prize cards remaining than your opponent, the attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';

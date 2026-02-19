@@ -23,7 +23,8 @@ export class Snover extends PokemonCard {
 
   public set: string = 'MEG';
   public name: string = 'Snover';
-  public fullName: string = 'Snover M1S';
+  public fullName: string = 'Snover (MEG 35)';
+  public legacyFullName = 'Snover M1S';
   public setNumber: string = '35';
   public regulationMark: string = 'I';
   public cardImage: string = 'assets/cardback.png';

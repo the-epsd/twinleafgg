@@ -38,7 +38,8 @@ export class Marshtomp extends PokemonCard {
 
   public name: string = 'Marshtomp';
 
-  public fullName: string = 'Marshtomp CES';
+  public fullName: string = 'Marshtomp (CES 34)';
+  public legacyFullName = 'Marshtomp CES';
   
   public evolvesFrom: string = 'Mudkip';
 

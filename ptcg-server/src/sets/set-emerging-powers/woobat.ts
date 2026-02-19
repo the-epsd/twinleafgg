@@ -25,7 +25,8 @@ export class Woobat extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '36';
   public name: string = 'Woobat';
-  public fullName: string = 'Woobat EPO';
+  public fullName: string = 'Woobat (EPO 36)';
+  public legacyFullName = 'Woobat EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

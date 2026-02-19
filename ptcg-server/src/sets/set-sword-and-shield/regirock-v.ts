@@ -21,7 +21,7 @@ export class RegirockV extends PokemonCard {
       name: 'Raging Hammer',
       cost: [F, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     },
     {
@@ -37,7 +37,8 @@ export class RegirockV extends PokemonCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Regirock V';
-  public fullName: string = 'Regirock V SSH';
+  public fullName: string = 'Regirock V (SSH 104)';
+  public legacyFullName = 'Regirock V SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Raging Hammer

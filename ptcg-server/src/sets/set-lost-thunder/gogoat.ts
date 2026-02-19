@@ -35,7 +35,8 @@ export class Gogoat extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gogoat';
-  public fullName: string = 'Gogoat LOT';
+  public fullName: string = 'Gogoat (LOT 36)';
+  public legacyFullName = 'Gogoat LOT';
 
   public readonly LEAF_WALLOP_MARKER = 'GOGOAT_LOT_LEAF_WALLOP_MARKER';
   public readonly LEAF_WALLOP_CLEAR_MARKER = 'GOGOAT_LOT_LEAF_WALLOP_CLEAR_MARKER';

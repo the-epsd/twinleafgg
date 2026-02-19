@@ -36,7 +36,8 @@ export class Espeon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
   public name: string = 'Espeon';
-  public fullName: string = 'Espeon UD';
+  public fullName: string = 'Espeon (UD 81)';
+  public legacyFullName = 'Espeon UD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -42,7 +42,8 @@ export class LaprasGx extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lapras-GX';
-  public fullName: string = 'Lapras-GX SUM';
+  public fullName: string = 'Lapras-GX (SUM 35)';
+  public legacyFullName = 'Lapras-GX SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Collect

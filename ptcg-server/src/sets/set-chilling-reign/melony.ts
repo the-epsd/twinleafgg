@@ -21,7 +21,8 @@ export class Melony extends TrainerCard {
 
   public name: string = 'Melony';
 
-  public fullName: string = 'Melony CRE';
+  public fullName: string = 'Melony (CRE 146)';
+  public legacyFullName = 'Melony CRE';
 
   public text: string =
     'Attach a [W] Energy card from your discard pile to 1 of your Pokémon V. If you do, draw 3 cards.';

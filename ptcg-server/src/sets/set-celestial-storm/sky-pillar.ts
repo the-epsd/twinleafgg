@@ -18,7 +18,8 @@ export class SkyPillar extends TrainerCard {
 
   public name: string = 'Sky Pillar';
 
-  public fullName: string = 'Sky Pillar CES';
+  public fullName: string = 'Sky Pillar (CES 144)';
+  public legacyFullName = 'Sky Pillar CES';
 
   public text: string = 'Prevent all effects of the opponent\'s attacks, including damage, done to Benched Pokémon (both yours and your opponent\'s).';
 

@@ -22,7 +22,7 @@ export class Quilava extends PokemonCard {
       name: 'Mini Eruption',
       cost: [R, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Discard the top card of your deck. If that card is an Energy card, this attack does 30 more damage.'
     }
   ];
@@ -31,7 +31,8 @@ export class Quilava extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Quilava';
-  public fullName: string = 'Quilava BKT';
+  public fullName: string = 'Quilava (BKT 19)';
+  public legacyFullName = 'Quilava BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mini Eruption

@@ -29,7 +29,8 @@ export class Skrelp extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skrelp';
-  public fullName: string = 'Skrelp CEC';
+  public fullName: string = 'Skrelp (CEC 91)';
+  public legacyFullName = 'Skrelp CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Breath

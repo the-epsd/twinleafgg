@@ -35,7 +35,8 @@ export class Simisear extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Simisear';
-  public fullName: string = 'Simisear BUS';
+  public fullName: string = 'Simisear (BUS 23)';
+  public legacyFullName = 'Simisear BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Flare Recharge

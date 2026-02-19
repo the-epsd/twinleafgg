@@ -31,7 +31,8 @@ export class Sneasel extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '13';
   public name: string = 'Sneasel';
-  public fullName: string = 'Sneasel SFA';
+  public fullName: string = 'Sneasel (SFA 13)';
+  public legacyFullName = 'Sneasel SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

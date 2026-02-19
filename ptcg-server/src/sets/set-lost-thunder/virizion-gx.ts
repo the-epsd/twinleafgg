@@ -27,7 +27,7 @@ export class VirizionGx extends PokemonCard {
       name: 'Sensitive Blade',
       cost: [G, G],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you played a Supporter card from your hand during this turn, this attack does 80 more damage.'
     },
     {
@@ -42,7 +42,8 @@ export class VirizionGx extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Virizion-GX';
-  public fullName: string = 'Virizion-GX LOT';
+  public fullName: string = 'Virizion-GX (LOT 34)';
+  public legacyFullName = 'Virizion-GX LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Draw

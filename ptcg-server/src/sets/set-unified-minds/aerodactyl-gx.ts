@@ -35,7 +35,7 @@ export class AerodactylGx extends PokemonCard {
       name: 'Wild Dive-GX',
       cost: [F],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 50 damage times the amount of Energy attached to your opponent\'s Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];
@@ -44,7 +44,8 @@ export class AerodactylGx extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aerodactyl-GX';
-  public fullName: string = 'Aerodactyl-GX UNM';
+  public fullName: string = 'Aerodactyl-GX (UNM 106)';
+  public legacyFullName = 'Aerodactyl-GX UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Primal Winds (passive - CheckAttackCostEffect)

@@ -48,7 +48,8 @@ export class Infernape extends PokemonCard {
 
   public name: string = 'Infernape';
 
-  public fullName: string = 'Infernape TWM';
+  public fullName: string = 'Infernape (TWM 33)';
+  public legacyFullName = 'Infernape TWM';
 
   public readonly TAR_GENERATOR_MARKER = 'TAR_GENERATOR_MARKER';
 

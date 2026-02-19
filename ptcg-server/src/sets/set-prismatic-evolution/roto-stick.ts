@@ -69,7 +69,8 @@ export class RotoStick extends TrainerCard {
 
   public name: string = 'Roto-Stick';
 
-  public fullName: string = 'Roto-Stick PRE';
+  public fullName: string = 'Roto-Stick (PRE 127)';
+  public legacyFullName = 'Roto-Stick PRE';
 
   public text: string =
     'Look at the top 4 cards of your deck. You may choose any number of Supporter cards you find there, reveal them, and put them into your hand. Shuffle the other cards back into your deck.';

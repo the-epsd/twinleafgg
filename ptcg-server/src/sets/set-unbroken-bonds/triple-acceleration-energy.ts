@@ -24,7 +24,8 @@ export class TripleAccelerationEnergy extends EnergyCard {
 
   public name = 'Triple Acceleration Energy';
 
-  public fullName = 'Triple Acceleration Energy UNB';
+  public fullName = 'Triple Acceleration Energy (UNB 190)';
+  public legacyFullName = 'Triple Acceleration Energy UNB';
 
   public text =
     'This card can only be attached to Evolution Pokémon. If this card is attached to 1 of your Pokémon, discard it at the end of the turn.' +

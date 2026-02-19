@@ -73,7 +73,8 @@ export class Meowstic extends PokemonCard {
   public setNumber = 'RC15';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Meowstic';
-  public fullName: string = 'Meowstic GEN';
+  public fullName: string = 'Meowstic (GEN RC15)';
+  public legacyFullName = 'Meowstic GEN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -45,7 +45,8 @@ export class Aerodactyl extends PokemonCard {
 
   public name: string = 'Aerodactyl';
 
-  public fullName: string = 'Aerodactyl FO';
+  public fullName: string = 'Aerodactyl (FO 1)';
+  public legacyFullName = 'Aerodactyl FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

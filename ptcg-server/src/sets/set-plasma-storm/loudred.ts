@@ -36,7 +36,8 @@ export class Loudred extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Loudred';
-  public fullName: string = 'Loudred PLS';
+  public fullName: string = 'Loudred (PLS 106)';
+  public legacyFullName = 'Loudred PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Supersonic

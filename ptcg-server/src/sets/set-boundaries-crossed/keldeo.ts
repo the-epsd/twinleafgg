@@ -36,7 +36,8 @@ export class Keldeo extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Keldeo';
-  public fullName: string = 'Keldeo BCR';
+  public fullName: string = 'Keldeo (BCR 47)';
+  public legacyFullName = 'Keldeo BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Hydro Pump

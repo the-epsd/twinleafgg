@@ -14,7 +14,8 @@ export class LuckyEgg extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'AR';
   public name: string = 'Lucky Egg';
-  public fullName: string = 'Lucky Egg AR';
+  public fullName: string = 'Lucky Egg (AR 88)';
+  public legacyFullName = 'Lucky Egg AR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
 

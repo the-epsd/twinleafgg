@@ -28,7 +28,7 @@ export class Kirlia extends PokemonCard {
       name: 'Quick Turn',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Kirlia extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kirlia';
-  public fullName: string = 'Kirlia BKT';
+  public fullName: string = 'Kirlia (BKT 69)';
+  public legacyFullName = 'Kirlia BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Beckon

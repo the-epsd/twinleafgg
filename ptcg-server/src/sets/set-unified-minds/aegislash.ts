@@ -30,7 +30,7 @@ export class Aegislash extends PokemonCard {
       name: 'Trash Slash',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 10 damage for each Item card in your discard pile. You can\'t do more than 130 damage in this way.'
     }
   ];
@@ -39,7 +39,8 @@ export class Aegislash extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aegislash';
-  public fullName: string = 'Aegislash UNM';
+  public fullName: string = 'Aegislash (UNM 95)';
+  public legacyFullName = 'Aegislash UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Durable Blade (passive - intercept KnockOutEffect)

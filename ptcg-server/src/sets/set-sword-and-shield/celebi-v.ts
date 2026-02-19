@@ -27,7 +27,7 @@ export class CelebiV extends PokemonCard {
       name: 'Line Force',
       cost: [G, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each of your Benched Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class CelebiV extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celebi V';
-  public fullName: string = 'Celebi V SSH';
+  public fullName: string = 'Celebi V (SSH 1)';
+  public legacyFullName = 'Celebi V SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Find a Friend

@@ -39,7 +39,8 @@ export class ArticunoEx extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Articuno-EX';
-  public fullName: string = 'Articuno-EX PLS';
+  public fullName: string = 'Articuno-EX (PLS 25)';
+  public legacyFullName = 'Articuno-EX PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Blizzard

@@ -48,7 +48,8 @@ export class Torterraex extends PokemonCard {
 
   public name: string = 'Torterra ex';
 
-  public fullName: string = 'Torterra ex TEF';
+  public fullName: string = 'Torterra ex (TEF 12)';
+  public legacyFullName = 'Torterra ex TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

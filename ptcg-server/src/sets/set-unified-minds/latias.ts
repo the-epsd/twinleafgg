@@ -23,7 +23,7 @@ export class Latias extends PokemonCard {
       name: 'Energy Arrow',
       cost: [P],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage times the amount of Energy attached to 1 of your opponent\'s Pokemon to that Pokemon. This damage isn\'t affected by Weakness or Resistance.'
     },
     {
@@ -38,7 +38,8 @@ export class Latias extends PokemonCard {
   public setNumber: string = '153';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Latias';
-  public fullName: string = 'Latias UNM';
+  public fullName: string = 'Latias (UNM 153)';
+  public legacyFullName = 'Latias UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Energy Arrow

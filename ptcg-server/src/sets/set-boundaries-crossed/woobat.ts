@@ -33,7 +33,8 @@ export class Woobat extends PokemonCard {
   public setNumber = '70';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Woobat';
-  public fullName: string = 'Woobat BCR';
+  public fullName: string = 'Woobat (BCR 70)';
+  public legacyFullName = 'Woobat BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // See Through

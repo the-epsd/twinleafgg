@@ -29,7 +29,7 @@ export class Zoroark extends PokemonCard {
       name: 'Night Punishment',
       cost: [D, C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage for each Pokémon in your discard pile. You can\'t do more than 200 damage in this way.'
     }
   ];
@@ -38,7 +38,8 @@ export class Zoroark extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zoroark';
-  public fullName: string = 'Zoroark TEU';
+  public fullName: string = 'Zoroark (TEU 91)';
+  public legacyFullName = 'Zoroark TEU';
 
   public usedTaunt = false;
 

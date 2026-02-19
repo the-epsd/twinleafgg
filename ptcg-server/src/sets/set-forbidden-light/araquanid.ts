@@ -32,7 +32,7 @@ export class Araquanid extends PokemonCard {
       name: 'Bubble Trap',
       cost: [C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If 1 of your Pokémon used Bubble during your last turn, this attack does 80 more damage.'
     }
   ];
@@ -41,7 +41,8 @@ export class Araquanid extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Araquanid';
-  public fullName: string = 'Araquanid FLI';
+  public fullName: string = 'Araquanid (FLI 33)';
+  public legacyFullName = 'Araquanid FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble

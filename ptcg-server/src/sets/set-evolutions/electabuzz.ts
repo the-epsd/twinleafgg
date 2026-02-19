@@ -44,7 +44,8 @@ export class Electabuzz extends PokemonCard {
 
   public name: string = 'Electabuzz';
 
-  public fullName: string = 'Electabuzz EVO';
+  public fullName: string = 'Electabuzz (EVO 41)';
+  public legacyFullName = 'Electabuzz EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {

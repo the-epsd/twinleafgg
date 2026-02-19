@@ -37,7 +37,8 @@ export class Manectric extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Manectric';
-  public fullName: string = 'Manectric CES';
+  public fullName: string = 'Manectric (CES 52)';
+  public legacyFullName = 'Manectric CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Electric Start

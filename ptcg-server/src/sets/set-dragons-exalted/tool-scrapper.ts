@@ -78,7 +78,8 @@ export class ToolScrapper extends TrainerCard {
 
   public name: string = 'Tool Scrapper';
 
-  public fullName: string = 'Tool Scrapper DRX';
+  public fullName: string = 'Tool Scrapper (DRX 116)';
+  public legacyFullName = 'Tool Scrapper DRX';
 
   public cardImage: string = 'assets/cardback.png';
 

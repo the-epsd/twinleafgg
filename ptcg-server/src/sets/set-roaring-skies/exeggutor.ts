@@ -22,7 +22,7 @@ export class Exeggutor extends PokemonCard {
       name: 'Shake It Off',
       cost: [G],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage times the number of Colorless Pokémon your opponent has in play.'
     },
     {
@@ -37,7 +37,8 @@ export class Exeggutor extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Exeggutor';
-  public fullName: string = 'Exeggutor ROS';
+  public fullName: string = 'Exeggutor (ROS 2)';
+  public legacyFullName = 'Exeggutor ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shake It Off

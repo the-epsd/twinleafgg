@@ -47,7 +47,8 @@ export class SandyShocks extends PokemonCard {
 
   public name: string = 'Sandy Shocks';
 
-  public fullName: string = 'Sandy Shocks TEF';
+  public fullName: string = 'Sandy Shocks (TEF 98)';
+  public legacyFullName = 'Sandy Shocks TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -30,7 +30,8 @@ export class Flaaffy extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '50';
   public name = 'Flaaffy';
-  public fullName = 'Flaaffy SW';
+  public fullName = 'Flaaffy (SW 50)';
+  public legacyFullName = 'Flaaffy SW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

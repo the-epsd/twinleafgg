@@ -30,7 +30,8 @@ export class Woobat extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Woobat';
-  public fullName: string = 'Woobat LTR';
+  public fullName: string = 'Woobat (LTR 64)';
+  public legacyFullName = 'Woobat LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dual Cut

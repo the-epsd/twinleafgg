@@ -36,7 +36,8 @@ export class Zapdosex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '145';
   public name: string = 'Zapdos ex';
-  public fullName: string = 'Zapdos ex MEW';
+  public fullName: string = 'Zapdos ex (MEW 145)';
+  public legacyFullName = 'Zapdos ex MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -31,7 +31,8 @@ export class Venusaur extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '68';
   public name: string = 'Venusaur';
-  public fullName: string = 'Venusaur EX';
+  public fullName: string = 'Venusaur (EX 68)';
+  public legacyFullName = 'Venusaur EX';
 
   public readonly HARVEST_BOUNTY_MARKER = 'HARVEST_BOUNTY_MARKER';
 

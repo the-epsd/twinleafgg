@@ -13,7 +13,8 @@ export class VenusaurSpiritLink extends TrainerCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Venusaur Spirit Link';
-  public fullName: string = 'Venusaur Spirit Link EVO';
+  public fullName: string = 'Venusaur Spirit Link (EVO 89)';
+  public legacyFullName = 'Venusaur Spirit Link EVO';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Venusaur-EX.';
 
   // Ref: set-steam-siege/steelix-spirit-link.ts (Spirit Link - no-op, handled by engine)

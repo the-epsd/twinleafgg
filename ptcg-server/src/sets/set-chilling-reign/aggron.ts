@@ -42,7 +42,8 @@ export class Aggron extends PokemonCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aggron';
-  public fullName: string = 'Aggron CRE';
+  public fullName: string = 'Aggron (CRE 111)';
+  public legacyFullName = 'Aggron CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Guard Press

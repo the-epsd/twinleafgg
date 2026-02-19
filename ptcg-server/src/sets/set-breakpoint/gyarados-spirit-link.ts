@@ -13,7 +13,8 @@ export class GyaradosSpiritLink extends TrainerCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gyarados Spirit Link';
-  public fullName: string = 'Gyarados Spirit Link BKP';
+  public fullName: string = 'Gyarados Spirit Link (BKP 101)';
+  public legacyFullName = 'Gyarados Spirit Link BKP';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Gyarados-EX.';
 
   // Ref: set-evolutions/pidgeot-spirit-link.ts (Spirit Link)

@@ -21,7 +21,7 @@ export class Kyurem extends PokemonCard {
       name: 'Outrage',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     },
     {
@@ -36,7 +36,8 @@ export class Kyurem extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kyurem';
-  public fullName: string = 'Kyurem DRM';
+  public fullName: string = 'Kyurem (DRM 47)';
+  public legacyFullName = 'Kyurem DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Outrage

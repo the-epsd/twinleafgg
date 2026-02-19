@@ -33,7 +33,8 @@ export class Xerneas extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
   public name: string = 'Xerneas';
-  public fullName: string = 'Xerneas STS';
+  public fullName: string = 'Xerneas (STS 81)';
+  public legacyFullName = 'Xerneas STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

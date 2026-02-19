@@ -32,7 +32,8 @@ export class Vulpix extends PokemonCard {
 
   public name: string = 'Vulpix';
 
-  public fullName: string = 'Vulpix SSP';
+  public fullName: string = 'Vulpix (SSP 16)';
+  public legacyFullName = 'Vulpix SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

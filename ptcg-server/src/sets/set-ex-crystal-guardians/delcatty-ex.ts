@@ -38,7 +38,8 @@ export class Delcattyex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public name: string = 'Delcatty ex';
-  public fullName: string = 'Delcatty ex CG';
+  public fullName: string = 'Delcatty ex (CG 91)';
+  public legacyFullName = 'Delcatty ex CG';
 
   public readonly NIGHT_VISION_MARKER = 'NIGHT_VISION_MARKER';
 

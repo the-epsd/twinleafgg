@@ -34,7 +34,8 @@ export class Wynaut extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
   public name: string = 'Wynaut';
-  public fullName: string = 'Wynaut DP';
+  public fullName: string = 'Wynaut (DP 42)';
+  public legacyFullName = 'Wynaut DP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -42,7 +42,8 @@ export class Dudunsparce extends PokemonCard {
 
   public name: string = 'Dudunsparce';
 
-  public fullName: string = 'Dudunsparce PAL';
+  public fullName: string = 'Dudunsparce (PAL 157)';
+  public legacyFullName = 'Dudunsparce PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

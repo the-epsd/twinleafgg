@@ -17,7 +17,8 @@ export class BubbleWaterEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '99';
   public name = 'Bubble Water Energy';
-  public fullName = 'Bubble Water Energy M4';
+  public fullName = 'Bubble Water Energy (M4 99)';
+  public legacyFullName = 'Bubble Water Energy M4';
   public text = 'This card can only be attached to [W] Pokémon. The [W] Pokémon this card is attached to cannot have any Special Conditions. Remove all Special Conditions from that Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

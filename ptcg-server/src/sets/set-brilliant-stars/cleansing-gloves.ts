@@ -16,7 +16,8 @@ export class CleansingGloves extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '136';
   public name: string = 'Cleansing Gloves';
-  public fullName: string = 'Cleansing Gloves BRS';
+  public fullName: string = 'Cleansing Gloves (BRS 136)';
+  public legacyFullName = 'Cleansing Gloves BRS';
 
   public text: string =
     'The attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Active [P] Pokémon (before applying Weakness and Resistance).';

@@ -34,7 +34,8 @@ export class ArvensToedscruel extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '110';
   public name: string = 'Arven\'s Toedscruel';
-  public fullName: string = 'Arven\'s Toedscruel DRI';
+  public fullName: string = 'Arven\'s Toedscruel (DRI 110)';
+  public legacyFullName = 'Arven\'s Toedscruel DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Pull

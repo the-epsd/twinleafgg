@@ -31,7 +31,8 @@ export class UnwonE extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public name: string = 'Unown [E]';
-  public fullName: string = 'Unown [E] N2';
+  public fullName: string = 'Unown [E] (N2 67)';
+  public legacyFullName = 'Unown [E] N2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

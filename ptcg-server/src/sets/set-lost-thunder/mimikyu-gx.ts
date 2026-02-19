@@ -49,7 +49,8 @@ export class MimikyuGX extends PokemonCard {
 
   public name: string = 'Mimikyu-GX';
 
-  public fullName: string = 'Mimikyu-GX LOT';
+  public fullName: string = 'Mimikyu-GX (LOT 149)';
+  public legacyFullName = 'Mimikyu-GX LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Perplex

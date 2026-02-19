@@ -21,7 +21,7 @@ export class Smeargle extends PokemonCard {
       name: 'Live Painting',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Reveal any number of basic Energy cards from your hand. This attack does 30 more damage for each type of basic Energy you revealed in this way.'
     }
   ];
@@ -31,7 +31,8 @@ export class Smeargle extends PokemonCard {
   public setNumber: string = '128';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Smeargle';
-  public fullName: string = 'Smeargle EVS';
+  public fullName: string = 'Smeargle (EVS 128)';
+  public legacyFullName = 'Smeargle EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Live Painting

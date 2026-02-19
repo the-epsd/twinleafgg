@@ -22,7 +22,7 @@ export class Diggersby extends PokemonCard {
       name: 'Mining Rush',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard up to 6 cards from the top of your deck. If you do, this attack does 30 damage for each card you discarded in this way.'
     },
     {
@@ -38,7 +38,8 @@ export class Diggersby extends PokemonCard {
   public setNumber: string = '147';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Diggersby';
-  public fullName: string = 'Diggersby RCL';
+  public fullName: string = 'Diggersby (RCL 147)';
+  public legacyFullName = 'Diggersby RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mining Rush

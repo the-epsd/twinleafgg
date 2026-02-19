@@ -14,7 +14,8 @@ export class LadyOuting extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
   public name: string = 'Lady Outing';
-  public fullName: string = 'Lady Outing RS';
+  public fullName: string = 'Lady Outing (RS 83)';
+  public legacyFullName = 'Lady Outing RS';
 
   public text: string =
     'Search your deck for up to 3 different types of basic Energy cards, show them to your opponent, and put them into your hand. Shuffle your deck afterward.';

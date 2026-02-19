@@ -34,7 +34,8 @@ export class Ampharos extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ampharos';
-  public fullName: string = 'Ampharos DRX';
+  public fullName: string = 'Ampharos (DRX 40)';
+  public legacyFullName = 'Ampharos DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Electromagnetic Wall - damage when opponent attaches energy from hand

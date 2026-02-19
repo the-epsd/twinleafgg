@@ -40,7 +40,8 @@ export class Grumpig extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grumpig';
-  public fullName: string = 'Grumpig CIN';
+  public fullName: string = 'Grumpig (CIN 42)';
+  public legacyFullName = 'Grumpig CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Own Tempo (passive - can't be Confused)

@@ -36,7 +36,8 @@ export class Talonflame extends PokemonCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Talonflame';
-  public fullName: string = 'Talonflame GRI';
+  public fullName: string = 'Talonflame (GRI 111)';
+  public legacyFullName = 'Talonflame GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flame Charge

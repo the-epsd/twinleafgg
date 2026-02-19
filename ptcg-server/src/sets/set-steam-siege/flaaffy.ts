@@ -37,7 +37,8 @@ export class Flaaffy extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flaaffy';
-  public fullName: string = 'Flaaffy STS';
+  public fullName: string = 'Flaaffy (STS 39)';
+  public legacyFullName = 'Flaaffy STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Thunder Shock

@@ -81,7 +81,8 @@ export class FogCrystal extends TrainerCard {
 
   public name: string = 'Fog Crystal';
 
-  public fullName: string = 'Fog Crystal CRE';
+  public fullName: string = 'Fog Crystal (CRE 140)';
+  public legacyFullName = 'Fog Crystal CRE';
 
   public text: string =
     'Search your deck for a [P] Energy card or a Basic [P] Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';

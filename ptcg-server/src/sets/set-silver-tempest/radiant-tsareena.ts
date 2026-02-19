@@ -49,7 +49,8 @@ export class RadiantTsareena extends PokemonCard {
 
   public name: string = 'Radiant Tsareena';
 
-  public fullName: string = 'Radiant Tsareena SIT';
+  public fullName: string = 'Radiant Tsareena (SIT 16)';
+  public legacyFullName = 'Radiant Tsareena SIT';
 
   public readonly ELEGANT_HEAL_MARKER = 'ELEGANT_HEAL_MARKER';
 

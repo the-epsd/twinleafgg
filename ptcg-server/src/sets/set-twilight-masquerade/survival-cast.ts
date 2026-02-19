@@ -27,7 +27,8 @@ export class SurvivalCast extends TrainerCard {
 
   public name = 'Survival Brace';
 
-  public fullName = 'Survival Brace TWM';
+  public fullName = 'Survival Brace (TWM 164)';
+  public legacyFullName = 'Survival Brace TWM';
 
   public text: string =
     'If the Pokémon this card is attached to has full HP and would be Knocked Out by damage from an opponent\'s attack, that Pokémon is not Knocked Out and its remaining HP becomes 10 instead. Then, discard this card.';

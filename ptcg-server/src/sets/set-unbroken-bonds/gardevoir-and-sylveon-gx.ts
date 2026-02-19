@@ -17,7 +17,8 @@ export class GardevoirSylveonGX extends PokemonCard {
   public setNumber = '130';
   public cardImage = 'assets/cardback.png';
   public name = 'Gardevoir & Sylveon-GX';
-  public fullName = 'Gardevoir & Sylveon-GX UNB';
+  public fullName = 'Gardevoir & Sylveon-GX (UNB 130)';
+  public legacyFullName = 'Gardevoir & Sylveon-GX UNB';
   public attacks = [
     {
       name: 'Fairy Song',

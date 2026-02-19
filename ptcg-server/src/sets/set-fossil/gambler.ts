@@ -13,7 +13,8 @@ export class Gambler extends TrainerCard {
 
   public name: string = 'Gambler';
 
-  public fullName: string = 'Gambler FO';
+  public fullName: string = 'Gambler (FO 60)';
+  public legacyFullName = 'Gambler FO';
 
   public text: string =
     'Shuffle your hand into your deck. Flip a coin. If heads, draw 8 cards. If tails, draw 1 card.';

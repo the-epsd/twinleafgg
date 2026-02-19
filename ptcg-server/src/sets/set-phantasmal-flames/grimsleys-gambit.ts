@@ -10,7 +10,8 @@ export class GrimsleysGambit extends TrainerCard {
   public setNumber: string = '90';
   public regulationMark = 'I';
   public name: string = 'Grimsley\'s Move';
-  public fullName: string = 'Grimsley\'s Gambit M2';
+  public fullName: string = 'Grimsley\'s Move (PFL 90)';
+  public legacyFullName = 'Grimsley\'s Gambit M2';
   public text: string = 'Look at the top 7 cards of your deck and put a [D] Pokémon you find there onto your Bench. Shuffle the other cards and put them on the bottom of your deck. You can\'t use this card on your first turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -31,5 +31,6 @@ export class Fennekin2 extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fennekin';
-  public fullName: string = 'Fennekin FLI 15';
+  public fullName: string = 'Fennekin (FLI 15)';
+  public legacyFullName = 'Fennekin FLI 15';
 }

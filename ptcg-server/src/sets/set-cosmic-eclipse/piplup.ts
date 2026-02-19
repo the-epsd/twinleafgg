@@ -24,7 +24,8 @@ export class Piplup extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '54';
   public name: string = 'Piplup';
-  public fullName: string = 'Piplup CEC';
+  public fullName: string = 'Piplup (CEC 54)';
+  public legacyFullName = 'Piplup CEC';
 
   public readonly BUBBLE_HOLD_MARKER = 'BUBBLE_HOLD_MARKER';
 

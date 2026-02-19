@@ -14,7 +14,8 @@ export class WonderPlatinum extends TrainerCard {
 
   public setNumber: string = '33';
 
-  public fullName: string = 'Wonder Platinum DPt-P';
+  public fullName: string = 'Wonder Platinum (DPt-P 33)';
+  public legacyFullName = 'Wonder Platinum DPt-P';
 
   public text: string =
     'Look at all of your face-down Prize cards. You may choose 1 Energy card you find there, show it to your opponent, and put it into your hand. If you do, put this card as a Prize card face up instead of discarding it.';

@@ -18,7 +18,8 @@ export class RockGuard extends TrainerCard {
 
   public name: string = 'Rock Guard';
 
-  public fullName: string = 'Rock Guard PLF';
+  public fullName: string = 'Rock Guard (PLF 108)';
+  public legacyFullName = 'Rock Guard PLF';
 
   public cardImage: string = 'assets/cardback.png';
 

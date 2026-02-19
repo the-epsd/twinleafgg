@@ -38,7 +38,8 @@ export class DrapionV extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drapion V';
-  public fullName: string = 'Drapion V VIV';
+  public fullName: string = 'Drapion V (VIV 106)';
+  public legacyFullName = 'Drapion V VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Hazardous Claws

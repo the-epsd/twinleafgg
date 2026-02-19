@@ -20,7 +20,8 @@ export class Clay extends TrainerCard {
 
   public name = 'Clay';
 
-  public fullName = 'Clay CEC';
+  public fullName = 'Clay (CEC 188)';
+  public legacyFullName = 'Clay CEC';
 
   public text = 'Discard the top 7 cards of your deck. If any of those cards are Item cards, put them into your hand.';
 

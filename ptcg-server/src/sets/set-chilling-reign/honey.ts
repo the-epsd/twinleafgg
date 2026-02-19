@@ -16,7 +16,8 @@ export class Honey extends TrainerCard {
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Honey';
-  public fullName: string = 'Honey CRE';
+  public fullName: string = 'Honey (CRE 142)';
+  public legacyFullName = 'Honey CRE';
   public text: string = 'Draw a card for each of your opponent\'s Benched Pokémon V. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

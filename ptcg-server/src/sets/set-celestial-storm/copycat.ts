@@ -48,7 +48,8 @@ export class Copycat extends TrainerCard {
 
   public name: string = 'Copycat';
 
-  public fullName: string = 'Copycat CES';
+  public fullName: string = 'Copycat (CES 127)';
+  public legacyFullName = 'Copycat CES';
 
   public cardImage: string = 'assets/cardback.png';
 

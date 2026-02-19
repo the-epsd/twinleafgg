@@ -33,5 +33,6 @@ export class Clefable extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clefable';
-  public fullName: string = 'Clefable HIF';
+  public fullName: string = 'Clefable (HIF 40)';
+  public legacyFullName = 'Clefable HIF';
 }

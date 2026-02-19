@@ -5,7 +5,8 @@ export class Growlithe extends PokemonCard {
   
   public set = 'BS';
   
-  public fullName = 'Growlithe BS';
+  public fullName = 'Growlithe (BS 28)';
+  public legacyFullName = 'Growlithe BS';
 
   public name = 'Growlithe';
 

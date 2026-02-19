@@ -83,7 +83,8 @@ export class Flareonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public name: string = 'Flareon ex';
-  public fullName: string = 'Flareon ex PRE';
+  public fullName: string = 'Flareon ex (PRE 14)';
+  public legacyFullName = 'Flareon ex PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Burning Charge

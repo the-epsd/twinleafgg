@@ -39,300 +39,350 @@ import { Nessa } from '../set-vivid-voltage/nessa';
 import { MewVMAX } from '../set-fusion-strike/mew-vmax';
 export class DelphoxV2LOR extends DelphoxVLOR27 {
   public setNumber = '173';
-  public fullName: string = 'Delphox V2 LOR';
+  public fullName: string = 'Delphox V (LOR 173)';
+  public legacyFullName = 'Delphox V2 LOR';
   public set = 'LOR';
 }
 
 export class KyuremV2LOR extends KyuremVLOR48 {
   public setNumber = '174';
-  public fullName: string = 'Kyurem V2 LOR';
+  public fullName: string = 'Kyurem V (LOR 174)';
+  public legacyFullName = 'Kyurem V2 LOR';
   public set = 'LOR';
 }
 
 export class MagnezoneV2LOR extends MagnezoneVLOR56 {
   public setNumber = '175';
-  public fullName: string = 'Magnezone V2 LOR';
+  public fullName: string = 'Magnezone V (LOR 175)';
+  public legacyFullName = 'Magnezone V2 LOR';
   public set = 'LOR';
 }
 
 export class RotomV2LOR extends RotomVLOR58 {
   public setNumber = '176';
-  public fullName: string = 'Rotom V2 LOR';
+  public fullName: string = 'Rotom V (LOR 176)';
+  public legacyFullName = 'Rotom V2 LOR';
   public set = 'LOR';
 }
 
 export class RotomV3LOR extends RotomVLOR58 {
   public setNumber = '177';
-  public fullName: string = 'Rotom V3 LOR';
+  public fullName: string = 'Rotom V (LOR 177)';
+  public legacyFullName = 'Rotom V3 LOR';
   public set = 'LOR';
 }
 
 export class DrapionV2LOR extends DrapionVLOR118 {
   public setNumber = '182';
-  public fullName: string = 'Drapion V2 LOR';
+  public fullName: string = 'Drapion V (LOR 182)';
+  public legacyFullName = 'Drapion V2 LOR';
   public set = 'LOR';
 }
 
 export class GalarianPerrserkerV2LOR extends GalarianPerrserkerVLOR129 {
   public setNumber = '183';
-  public fullName: string = 'Galarian Perrserker V2 LOR';
+  public fullName: string = 'Galarian Perrserker V (LOR 183)';
+  public legacyFullName = 'Galarian Perrserker V2 LOR';
   public set = 'LOR';
 }
 
 export class GalarianPerrserkerV3LOR extends GalarianPerrserkerVLOR129 {
   public setNumber = '184';
-  public fullName: string = 'Galarian Perrserker V3 LOR';
+  public fullName: string = 'Galarian Perrserker V (LOR 184)';
+  public legacyFullName = 'Galarian Perrserker V3 LOR';
   public set = 'LOR';
 }
 
 export class GiratinaV2LOR extends GiratinaVLOR130 {
   public setNumber = '185';
-  public fullName: string = 'Giratina V2 LOR';
+  public fullName: string = 'Giratina V (LOR 185)';
+  public legacyFullName = 'Giratina V2 LOR';
   public set = 'LOR';
 }
 
 export class GiratinaV3LOR extends GiratinaVLOR130 {
   public setNumber = '186';
-  public fullName: string = 'Giratina V3 LOR';
+  public fullName: string = 'Giratina V (LOR 186)';
+  public legacyFullName = 'Giratina V3 LOR';
   public set = 'LOR';
 }
 
 export class HisuianGoodraV2LOR extends HisuianGoodraVLOR135 {
   public setNumber = '187';
-  public fullName: string = 'Hisuian Goodra V2 LOR';
+  public fullName: string = 'Hisuian Goodra V (LOR 187)';
+  public legacyFullName = 'Hisuian Goodra V2 LOR';
   public set = 'LOR';
 }
 
 export class PidgeotV2LOR extends PidgeotVLOR137 {
   public setNumber = '188';
-  public fullName: string = 'Pidgeot V2 LOR';
+  public fullName: string = 'Pidgeot V (LOR 188)';
+  public legacyFullName = 'Pidgeot V2 LOR';
   public set = 'LOR';
 }
 
 export class Arezu2LOR extends ArezuLOR153 {
   public setNumber = '189';
-  public fullName: string = 'Arezu2 LOR';
+  public fullName: string = 'Arezu (LOR 189)';
+  public legacyFullName = 'Arezu2 LOR';
   public set = 'LOR';
 }
 
 export class ColresssExperiment2LOR extends ColresssExperimentLOR155 {
   public setNumber = '190';
-  public fullName: string = 'Colress\'s Experiment2 LOR';
+  public fullName: string = 'Colress\'s Experiment (LOR 190)';
+  public legacyFullName = 'Colress\'s Experiment2 LOR';
   public set = 'LOR';
 }
 
 export class LadyFLI2LOR extends LadyFLIFLI109 {
   public setNumber = '193';
-  public fullName: string = 'Lady2 LOR';
+  public fullName: string = 'Lady (LOR 193)';
+  public legacyFullName = 'Lady2 LOR';
   public set = 'LOR';
 }
 
 export class MissFortuneSisters2LOR extends MissFortuneSistersLOR164 {
   public setNumber = '194';
-  public fullName: string = 'Miss Fortune Sisters2 LOR';
+  public fullName: string = 'Miss Fortune Sisters (LOR 194)';
+  public legacyFullName = 'Miss Fortune Sisters2 LOR';
   public set = 'LOR';
 }
 
 export class Thorton2LOR extends ThortonLOR167 {
   public setNumber = '195';
-  public fullName: string = 'Thorton2 LOR';
+  public fullName: string = 'Thorton (LOR 195)';
+  public legacyFullName = 'Thorton2 LOR';
   public set = 'LOR';
 }
 
 export class Volo2LOR extends VoloLOR169 {
   public setNumber = '196';
-  public fullName: string = 'Volo2 LOR';
+  public fullName: string = 'Volo (LOR 196)';
+  public legacyFullName = 'Volo2 LOR';
   public set = 'LOR';
 }
 
 export class KyuremVMAX2LOR extends KyuremVMAXLOR49 {
   public setNumber = '197';
-  public fullName: string = 'Kyurem VMAX2 LOR';
+  public fullName: string = 'Kyurem VMAX (LOR 197)';
+  public legacyFullName = 'Kyurem VMAX2 LOR';
   public set = 'LOR';
 }
 
 export class MagnezoneVSTAR2LOR extends MagnezoneVSTARLOR57 {
   public setNumber = '198';
-  public fullName: string = 'Magnezone VSTAR2 LOR';
+  public fullName: string = 'Magnezone VSTAR (LOR 198)';
+  public legacyFullName = 'Magnezone VSTAR2 LOR';
   public set = 'LOR';
 }
 
 export class DrapionVSTAR2LOR extends DrapionVSTARLOR119 {
   public setNumber = '200';
-  public fullName: string = 'Drapion VSTAR2 LOR';
+  public fullName: string = 'Drapion VSTAR (LOR 200)';
+  public legacyFullName = 'Drapion VSTAR2 LOR';
   public set = 'LOR';
 }
 
 export class GiratinaVSTAR2LOR extends GiratinaVSTARLOR131 {
   public setNumber = '201';
-  public fullName: string = 'Giratina VSTAR2 LOR';
+  public fullName: string = 'Giratina VSTAR (LOR 201)';
+  public legacyFullName = 'Giratina VSTAR2 LOR';
   public set = 'LOR';
 }
 
 export class HisuianGoodraVSTAR2LOR extends HisuianGoodraVSTARLOR136 {
   public setNumber = '202';
-  public fullName: string = 'Hisuian Goodra VSTAR2 LOR';
+  public fullName: string = 'Hisuian Goodra VSTAR (LOR 202)';
+  public legacyFullName = 'Hisuian Goodra VSTAR2 LOR';
   public set = 'LOR';
 }
 
 export class HisuianZoroarkVSTAR2LOR extends HisuianZoroarkVSTARLOR147 {
   public setNumber = '203';
-  public fullName: string = 'Hisuian Zoroark VSTAR2 LOR';
+  public fullName: string = 'Hisuian Zoroark VSTAR (LOR 203)';
+  public legacyFullName = 'Hisuian Zoroark VSTAR2 LOR';
   public set = 'LOR';
 }
 
 export class Arezu3LOR extends ArezuLOR153 {
   public setNumber = '204';
-  public fullName: string = 'Arezu3 LOR';
+  public fullName: string = 'Arezu (LOR 204)';
+  public legacyFullName = 'Arezu3 LOR';
   public set = 'LOR';
 }
 
 export class ColresssExperiment3LOR extends ColresssExperimentLOR155 {
   public setNumber = '205';
-  public fullName: string = 'Colress\'s Experiment3 LOR';
+  public fullName: string = 'Colress\'s Experiment (LOR 205)';
+  public legacyFullName = 'Colress\'s Experiment3 LOR';
   public set = 'LOR';
 }
 
 export class LadyFLI3LOR extends LadyFLIFLI109 {
   public setNumber = '208';
-  public fullName: string = 'Lady3 LOR';
+  public fullName: string = 'Lady (LOR 208)';
+  public legacyFullName = 'Lady3 LOR';
   public set = 'LOR';
 }
 
 export class MissFortuneSisters3LOR extends MissFortuneSistersLOR164 {
   public setNumber = '209';
-  public fullName: string = 'Miss Fortune Sisters3 LOR';
+  public fullName: string = 'Miss Fortune Sisters (LOR 209)';
+  public legacyFullName = 'Miss Fortune Sisters3 LOR';
   public set = 'LOR';
 }
 
 export class Thorton3LOR extends ThortonLOR167 {
   public setNumber = '210';
-  public fullName: string = 'Thorton3 LOR';
+  public fullName: string = 'Thorton (LOR 210)';
+  public legacyFullName = 'Thorton3 LOR';
   public set = 'LOR';
 }
 
 export class Volo3LOR extends VoloLOR169 {
   public setNumber = '211';
-  public fullName: string = 'Volo3 LOR';
+  public fullName: string = 'Volo (LOR 211)';
+  public legacyFullName = 'Volo3 LOR';
   public set = 'LOR';
 }
 
 export class GiratinaVSTAR3LOR extends GiratinaVSTARLOR131 {
   public setNumber = '212';
-  public fullName: string = 'Giratina VSTAR3 LOR';
+  public fullName: string = 'Giratina VSTAR (LOR 212)';
+  public legacyFullName = 'Giratina VSTAR3 LOR';
   public set = 'LOR';
 }
 
 export class HisuianZoroarkVSTAR3LOR extends HisuianZoroarkVSTARLOR147 {
   public setNumber = '213';
-  public fullName: string = 'Hisuian Zoroark VSTAR3 LOR';
+  public fullName: string = 'Hisuian Zoroark VSTAR (LOR 213)';
+  public legacyFullName = 'Hisuian Zoroark VSTAR3 LOR';
   public set = 'LOR';
 }
 
 export class BoxOfDisaster2LOR extends BoxOfDisasterLOR154 {
   public setNumber = '214';
-  public fullName: string = 'Box of Disaster2 LOR';
+  public fullName: string = 'Box of Disaster (LOR 214)';
+  public legacyFullName = 'Box of Disaster2 LOR';
   public set = 'LOR';
 }
 
 export class CollapsedStadiumLOR extends CollapsedStadium {
   public setNumber = '215';
-  public fullName: string = 'Collapsed Stadium LOR';
+  public fullName: string = 'Collapsed Stadium (LOR 215)';
+  public legacyFullName = 'Collapsed Stadium LOR';
   public set = 'LOR';
 }
 
 export class DarkPatchLOR extends DarkPatch {
   public setNumber = '216';
-  public fullName: string = 'Dark Patch LOR';
+  public fullName: string = 'Dark Patch (LOR 216)';
+  public legacyFullName = 'Dark Patch LOR';
   public set = 'LOR';
 }
 
 export class LostVacuum2LOR extends LostVacuumLOR162 {
   public setNumber = '217';
-  public fullName: string = 'Lost Vacuum2 LOR';
+  public fullName: string = 'Lost Vacuum (LOR 217)';
+  public legacyFullName = 'Lost Vacuum2 LOR';
   public set = 'LOR';
 }
 
 export class CharizardLOR extends Charizard {
   public setNumber = 'TG3';
-  public fullName: string = 'Charizard LOR';
+  public fullName: string = 'Charizard (LOR TG3)';
+  public legacyFullName = 'Charizard LOR';
   public set = 'LOR';
 }
 
 export class Pikachu2LOR extends PikachuLOR52 {
   public setNumber = 'TG5';
-  public fullName: string = 'Pikachu2 LOR';
+  public fullName: string = 'Pikachu (LOR TG5)';
+  public legacyFullName = 'Pikachu2 LOR';
   public set = 'LOR';
 }
 
 export class Gengar2LOR extends GengarLOR66 {
   public setNumber = 'TG6';
-  public fullName: string = 'Gengar2 LOR';
+  public fullName: string = 'Gengar (LOR TG6)';
+  public legacyFullName = 'Gengar2 LOR';
   public set = 'LOR';
 }
 
 export class Banette2LOR extends BanetteCRE63 {
   public setNumber = 'TG7';
-  public fullName: string = 'Banette2 LOR';
+  public fullName: string = 'Banette (LOR TG7)';
+  public legacyFullName = 'Banette2 LOR';
   public set = 'LOR';
 }
 
 export class HisuianArcanine2LOR extends HisuianArcanineLOR84 {
   public setNumber = 'TG8';
-  public fullName: string = 'Hisuian Arcanine2 LOR';
+  public fullName: string = 'Hisuian Arcanine (LOR TG8)';
+  public legacyFullName = 'Hisuian Arcanine2 LOR';
   public set = 'LOR';
 }
 
 export class Snorlax2LOR extends SnorlaxLOR143 {
   public setNumber = 'TG10';
-  public fullName: string = 'Snorlax2 LOR';
+  public fullName: string = 'Snorlax (LOR TG10)';
+  public legacyFullName = 'Snorlax2 LOR';
   public set = 'LOR';
 }
 
 export class CrobatVLOR extends CrobatV {
   public setNumber = 'TG20';
-  public fullName: string = 'Crobat V LOR';
+  public fullName: string = 'Crobat V (LOR TG20)';
+  public legacyFullName = 'Crobat V LOR';
   public set = 'LOR';
 }
 
 export class EternatusVLOR extends EternatusV {
   public setNumber = 'TG21';
-  public fullName: string = 'Eternatus V LOR';
+  public fullName: string = 'Eternatus V (LOR TG21)';
+  public legacyFullName = 'Eternatus V LOR';
   public set = 'LOR';
 }
 
 export class EternatusVMAXLOR extends EternatusVMAX {
   public setNumber = 'TG22';
-  public fullName: string = 'Eternatus VMAX LOR';
+  public fullName: string = 'Eternatus VMAX (LOR TG22)';
+  public legacyFullName = 'Eternatus VMAX LOR';
   public set = 'LOR';
 }
 
 export class AdventurersDiscoveryLOR extends AdventurersDiscovery {
   public setNumber = 'TG23';
-  public fullName: string = 'Adventurer\'s Discovery LOR';
+  public fullName: string = 'Adventurer\'s Discovery (LOR TG23)';
+  public legacyFullName = 'Adventurer\'s Discovery LOR';
   public set = 'LOR';
 }
 
 export class BossOrdersLOR extends BossOrders {
   public setNumber = 'TG24';
-  public fullName: string = 'Boss\'s Orders LOR';
+  public fullName: string = 'Boss\'s Orders (LOR TG24)';
+  public legacyFullName = 'Boss\'s Orders LOR';
   public set = 'LOR';
 }
 
 export class CookLOR extends Cook {
   public setNumber = 'TG25';
-  public fullName: string = 'Cook LOR';
+  public fullName: string = 'Cook (LOR TG25)';
+  public legacyFullName = 'Cook LOR';
   public set = 'LOR';
 }
 
 export class NessaLOR extends Nessa {
   public setNumber = 'TG27';
-  public fullName: string = 'Nessa LOR';
+  public fullName: string = 'Nessa (LOR TG27)';
+  public legacyFullName = 'Nessa LOR';
   public set = 'LOR';
 }
 
 export class MewVMAXLOR extends MewVMAX {
   public setNumber = 'TG30';
-  public fullName: string = 'Mew VMAX LOR';
+  public fullName: string = 'Mew VMAX (LOR TG30)';
+  public legacyFullName = 'Mew VMAX LOR';
   public set = 'LOR';
 }

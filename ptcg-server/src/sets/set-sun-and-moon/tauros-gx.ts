@@ -40,7 +40,8 @@ export class TaurosGX extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tauros-GX';
-  public fullName: string = 'Tauros-GX SUM';
+  public fullName: string = 'Tauros-GX (SUM 100)';
+  public legacyFullName = 'Tauros-GX SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Rage

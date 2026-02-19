@@ -1,7 +1,8 @@
 import { BalloonBerry } from '../set-ex-dragon/balloon-berry';
 
 export class BalloonBerryN3 extends BalloonBerry {
-  public fullName = 'Balloon Berry N3';
+  public fullName = 'Balloon Berry (N3 60)';
+  public legacyFullName = 'Balloon Berry N3';
   public name = 'Balloon Berry';
   public set = 'N3';
   public setNumber = '60';

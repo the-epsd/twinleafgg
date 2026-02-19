@@ -36,7 +36,8 @@ export class Xatu extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Xatu';
-  public fullName: string = 'Xatu LTR';
+  public fullName: string = 'Xatu (LTR 56)';
+  public legacyFullName = 'Xatu LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fortunate Draw

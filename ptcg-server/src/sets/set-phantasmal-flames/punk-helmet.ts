@@ -13,7 +13,8 @@ export class PunkHelmet extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'PFL';
   public name: string = 'Punk Helmet';
-  public fullName: string = 'Punk Helmet PFL';
+  public fullName: string = 'Punk Helmet (PFL 92)';
+  public legacyFullName = 'Punk Helmet PFL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
   public regulationMark: string = 'I';

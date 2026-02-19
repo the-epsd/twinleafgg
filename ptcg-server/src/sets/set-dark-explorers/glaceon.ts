@@ -33,7 +33,8 @@ export class Glaceon extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Glaceon';
-  public fullName: string = 'Glaceon DEX';
+  public fullName: string = 'Glaceon (DEX 30)';
+  public legacyFullName = 'Glaceon DEX';
 
   private usedReflectEnergy = false;
 

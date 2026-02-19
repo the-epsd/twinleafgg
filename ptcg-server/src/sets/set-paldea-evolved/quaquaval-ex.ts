@@ -34,7 +34,8 @@ export class Quaquavalex extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Quaquaval ex';
-  public fullName: string = 'Quaquaval ex PAL';
+  public fullName: string = 'Quaquaval ex (PAL 52)';
+  public legacyFullName = 'Quaquaval ex PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AfterDamageEffect && effect.attack === this.attacks[0]){

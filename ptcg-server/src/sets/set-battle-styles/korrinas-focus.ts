@@ -21,7 +21,8 @@ export class KorrinasFocus extends TrainerCard {
 
   public name: string = 'Korrina\'s Focus';
 
-  public fullName: string = 'Korrina\'s Focus BST';
+  public fullName: string = 'Korrina\'s Focus (BST 128)';
+  public legacyFullName = 'Korrina\'s Focus BST';
 
   public text: string =
     'Draw cards until you have 6 cards in your hand.';

@@ -25,5 +25,6 @@ export class Litleo extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Litleo';
-  public fullName: string = 'Litleo FLI';
+  public fullName: string = 'Litleo (FLI 18)';
+  public legacyFullName = 'Litleo FLI';
 }

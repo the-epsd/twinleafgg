@@ -37,7 +37,8 @@ export class Pinsir extends PokemonCard {
 
   public name: string = 'Pinsir';
 
-  public fullName: string = 'Pinsir JU';
+  public fullName: string = 'Pinsir (JU 9)';
+  public legacyFullName = 'Pinsir JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

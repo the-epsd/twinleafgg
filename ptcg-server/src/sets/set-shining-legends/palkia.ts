@@ -35,7 +35,8 @@ export class Palkia extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Palkia';
-  public fullName: string = 'Palkia SLG';
+  public fullName: string = 'Palkia (SLG 24)';
+  public legacyFullName = 'Palkia SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spiral Drain

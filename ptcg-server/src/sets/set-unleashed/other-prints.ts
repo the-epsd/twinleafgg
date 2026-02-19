@@ -6,7 +6,8 @@ import { RareCandy } from '../set-ex-holon-phantoms/rare-candy';
 import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
 
 export class JudgeUL extends Judge {
-  public fullName = 'Judge UL';
+  public fullName = 'Judge (UL 78)';
+  public legacyFullName = 'Judge UL';
   public name = 'Judge';
   public set = 'UL';
   public setNumber = '78';
@@ -14,7 +15,8 @@ export class JudgeUL extends Judge {
 }
 
 export class RareCandyUL extends RareCandy {
-  public fullName = 'Rare Candy UL';
+  public fullName = 'Rare Candy (UL 82)';
+  public legacyFullName = 'Rare Candy UL';
   public name = 'Rare Candy';
   public set = 'UL';
   public setNumber = '82';
@@ -22,7 +24,8 @@ export class RareCandyUL extends RareCandy {
 }
 
 export class SuperScoopUpUL extends SuperScoopUp {
-  public fullName = 'Super Scoop Up UL';
+  public fullName = 'Super Scoop Up (UL 83)';
+  public legacyFullName = 'Super Scoop Up UL';
   public name = 'Super Scoop Up';
   public set = 'UL';
   public setNumber = '83';
@@ -30,18 +33,21 @@ export class SuperScoopUpUL extends SuperScoopUp {
 }
 export class JirachiUL extends Jirachi {
   public setNumber = '1';
-  public fullName: string = 'Jirachi UL';
+  public fullName: string = 'Jirachi (UL 1)';
+  public legacyFullName = 'Jirachi UL';
   public set = 'UL';
 }
 
 export class CheerleadersCheerUL extends CheerleadersCheer {
   public setNumber = '71';
-  public fullName: string = 'Cheerleader\'s Cheer UL';
+  public fullName: string = 'Cheerleader\'s Cheer (UL 71)';
+  public legacyFullName = 'Cheerleader\'s Cheer UL';
   public set = 'UL';
 }
 
 export class PlusPowerUL extends PlusPower {
   public setNumber = '80';
-  public fullName: string = 'PlusPower UL';
+  public fullName: string = 'PlusPower (UL 80)';
+  public legacyFullName = 'PlusPower UL';
   public set = 'UL';
 }

@@ -28,7 +28,8 @@ export class Spectrier extends PokemonCard {
 
   public set: string = 'ASC';
   public name: string = 'Spectrier';
-  public fullName: string = 'Spectrier ASC';
+  public fullName: string = 'Spectrier (ASC 98)';
+  public legacyFullName = 'Spectrier ASC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '98';
   public regulationMark = 'I';

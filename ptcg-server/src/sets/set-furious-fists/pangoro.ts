@@ -23,7 +23,7 @@ export class Pangoro extends PokemonCard {
       name: 'Clobber',
       cost: [D, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard an Item card from your hand. If you do, this attack does 40 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Pangoro extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pangoro';
-  public fullName: string = 'Pangoro FFI';
+  public fullName: string = 'Pangoro (FFI 68)';
+  public legacyFullName = 'Pangoro FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Clobber

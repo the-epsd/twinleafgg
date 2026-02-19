@@ -35,7 +35,8 @@ export class Cosmog extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cosmog';
-  public fullName: string = 'Cosmog TEU';
+  public fullName: string = 'Cosmog (TEU 69)';
+  public legacyFullName = 'Cosmog TEU';
 
   // Ref: set-steam-siege/seedot.ts (damage prevention on bench pattern)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

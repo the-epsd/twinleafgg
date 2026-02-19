@@ -34,7 +34,8 @@ export class Illumise extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
   public name: string = 'Illumise';
-  public fullName: string = 'Illumise GE';
+  public fullName: string = 'Illumise (GE 71)';
+  public legacyFullName = 'Illumise GE';
 
   public readonly SCENT_CONDUCT_MARKER = 'SCENT_CONDUCT_MARKER';
 

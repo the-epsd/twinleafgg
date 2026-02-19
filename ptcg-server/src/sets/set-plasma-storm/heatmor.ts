@@ -37,7 +37,8 @@ export class Heatmor extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heatmor';
-  public fullName: string = 'Heatmor PLS';
+  public fullName: string = 'Heatmor (PLS 23)';
+  public legacyFullName = 'Heatmor PLS';
 
   public usedLuringFlame = false;
 

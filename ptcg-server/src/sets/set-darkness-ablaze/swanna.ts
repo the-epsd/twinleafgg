@@ -79,7 +79,8 @@ export class Swanna extends PokemonCard {
 
   public name: string = 'Swanna';
 
-  public fullName: string = 'Swanna DAA';
+  public fullName: string = 'Swanna (DAA 149)';
+  public legacyFullName = 'Swanna DAA';
 
   private readonly SWANNA_SKY_CIRCUS_MARKER = 'SWANNA_SKY_CIRCUS_MARKER';
 

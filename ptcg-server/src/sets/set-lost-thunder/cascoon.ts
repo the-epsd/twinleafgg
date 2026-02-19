@@ -74,7 +74,8 @@ export class Cascoon extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cascoon';
-  public fullName: string = 'Cascoon LOT';
+  public fullName: string = 'Cascoon (LOT 27)';
+  public legacyFullName = 'Cascoon LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

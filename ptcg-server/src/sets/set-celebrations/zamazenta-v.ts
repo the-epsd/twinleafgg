@@ -39,7 +39,8 @@ export class ZamazentaV extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zamazenta V';
-  public fullName: string = 'Zamazenta V CEL';
+  public fullName: string = 'Zamazenta V (CEL 18)';
+  public legacyFullName = 'Zamazenta V CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Growl of the Shield (passive - reduce damage to your Fighting Pokemon from VMAX attacks)

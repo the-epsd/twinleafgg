@@ -35,7 +35,8 @@ export class Gothita extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothita';
-  public fullName: string = 'Gothita FFI';
+  public fullName: string = 'Gothita (FFI 39)';
+  public legacyFullName = 'Gothita FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Psy Bolt

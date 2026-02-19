@@ -25,5 +25,6 @@ export class Machop2 extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machop';
-  public fullName: string = 'Machop GRI 63';
+  public fullName: string = 'Machop (GRI 63)';
+  public legacyFullName = 'Machop GRI 63';
 }

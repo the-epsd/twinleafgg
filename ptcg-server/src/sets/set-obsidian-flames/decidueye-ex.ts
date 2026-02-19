@@ -49,7 +49,8 @@ export class Decidueyeex extends PokemonCard {
 
   public name: string = 'Decidueye ex';
 
-  public fullName: string = 'Decidueye ex OBF';
+  public fullName: string = 'Decidueye ex (OBF 15)';
+  public legacyFullName = 'Decidueye ex OBF';
 
   public readonly TOTAL_FREEDOM_MARKER = 'TOTAL_FREEDOM_MARKER';
 

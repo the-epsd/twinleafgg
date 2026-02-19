@@ -17,7 +17,8 @@ export class SuperBoostEnergy extends EnergyCard {
   public setNumber: string = '136';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Super Boost Energy ◇';
-  public fullName: string = 'Super Boost Energy ◇ UPR';
+  public fullName: string = 'Super Boost Energy ◇ (UPR 136)';
+  public legacyFullName = 'Super Boost Energy ◇ UPR';
   public text: string = 'This card provides [C] Energy. While this card is attached to a Stage 2 Pokémon, it provides every type of Energy but provides only 1 Energy at a time. If you have 3 or more Stage 2 Pokémon in play, it provides every type of Energy but provides 4 Energy at a time. ◇ (Prism Star) Rule: You can\'t have more than 1 ◇ card with the same name in your deck. If a ◇ card would go to the discard pile, put it in the Lost Zone instead.';
 
   // Ref: set-ultra-prism/super-boost-energy-prism-star.ts (Super Boost Energy)

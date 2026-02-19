@@ -32,7 +32,8 @@ export class MLatiosEx extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Latios-EX';
-  public fullName: string = 'M Latios-EX ROS';
+  public fullName: string = 'M Latios-EX (ROS 59)';
+  public legacyFullName = 'M Latios-EX ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sonic Ace

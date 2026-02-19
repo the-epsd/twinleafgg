@@ -18,7 +18,8 @@ export class MoomooCheese extends TrainerCard {
   public setNumber: string = '156';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Moomoo Cheese';
-  public fullName: string = 'Moomoo Cheese VIV';
+  public fullName: string = 'Moomoo Cheese (VIV 156)';
+  public legacyFullName = 'Moomoo Cheese VIV';
   public text: string = 'Heal 30 damage from up to 2 of your Pokémon that have Energy attached. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

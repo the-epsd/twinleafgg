@@ -15,7 +15,8 @@ export class Arcanine extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Arcanine BS';
+  public fullName = 'Arcanine (BS 23)';
+  public legacyFullName = 'Arcanine BS';
 
   public stage = Stage.STAGE_1;
 

@@ -27,7 +27,7 @@ export class Houndoom extends PokemonCard {
       name: 'Attack Operation',
       cost: [R, R],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have more cards in your hand than your opponent, this attack does 80 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Houndoom extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Houndoom';
-  public fullName: string = 'Houndoom LOT';
+  public fullName: string = 'Houndoom (LOT 46)';
+  public legacyFullName = 'Houndoom LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Nasty Plot

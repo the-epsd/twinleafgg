@@ -21,7 +21,8 @@ export class DrumsOfAwakening extends TrainerCard {
 
   public name: string = 'Awakening Drum';
 
-  public fullName: string = 'Awakening Drum TEF';
+  public fullName: string = 'Awakening Drum (TEF 141)';
+  public legacyFullName = 'Awakening Drum TEF';
 
   public text: string =
     'Draw a card for each of your Ancient Pokémon in play.';

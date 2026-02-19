@@ -30,7 +30,8 @@ export class PorygonZ extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Porygon-Z';
-  public fullName: string = 'Porygon-Z TM';
+  public fullName: string = 'Porygon-Z (TM 7)';
+  public legacyFullName = 'Porygon-Z TM';
 
   public readonly DIMENASIONAL_TRANSFER_MARKER = 'DIMENASIONAL_TRANSFER_MARKER';
 

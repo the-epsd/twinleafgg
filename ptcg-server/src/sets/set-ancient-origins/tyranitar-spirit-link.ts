@@ -13,7 +13,8 @@ export class TyranitarSpiritLink extends TrainerCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tyranitar Spirit Link';
-  public fullName: string = 'Tyranitar Spirit Link AOR';
+  public fullName: string = 'Tyranitar Spirit Link (AOR 81)';
+  public legacyFullName = 'Tyranitar Spirit Link AOR';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Tyranitar-EX.';
 
   // Ref: set-phantom-forces/manectric-spirit-link.ts (Spirit Link - no-op, handled by engine)

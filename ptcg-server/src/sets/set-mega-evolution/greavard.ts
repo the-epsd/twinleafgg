@@ -29,7 +29,8 @@ export class Greavard extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
   public name: string = 'Greavard';
-  public fullName: string = 'Greavard M1S';
+  public fullName: string = 'Greavard (MEG 65)';
+  public legacyFullName = 'Greavard M1S';
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

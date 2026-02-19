@@ -45,7 +45,8 @@ export class Magnezone extends PokemonCard {
 
   public name: string = 'Magnezone';
 
-  public fullName: string = 'Magnezone ASR';
+  public fullName: string = 'Magnezone (ASR 107)';
+  public legacyFullName = 'Magnezone ASR';
 
   public readonly GIGA_MAGNET_MARKER = 'GIGA_MAGNET_MARKER';
 

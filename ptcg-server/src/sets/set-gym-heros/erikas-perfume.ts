@@ -16,7 +16,8 @@ export class ErikasPerfume extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '110';
   public name: string = 'Erika\'s Perfume';
-  public fullName: string = 'Erika\'s Perfume G1';
+  public fullName: string = 'Erika\'s Perfume (G1 110)';
+  public legacyFullName = 'Erika\'s Perfume G1';
 
   public text: string =
     'Look at your opponent\'s hand. If he or she has any Basic Pokémon cards there, you may put any number of them onto your opponent\'s Bench (as long as there\'s room).';

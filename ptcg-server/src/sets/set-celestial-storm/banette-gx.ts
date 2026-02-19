@@ -64,7 +64,8 @@ export class BanetteGX extends PokemonCard {
 
   public name: string = 'Banette-GX';
 
-  public fullName: string = 'Banette-GX CES';
+  public fullName: string = 'Banette-GX (CES 66)';
+  public legacyFullName = 'Banette-GX CES';
 
   public readonly SHADY_MARKER = 'SHADY_MARKER';
 

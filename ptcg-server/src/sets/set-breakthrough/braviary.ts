@@ -28,7 +28,7 @@ export class Braviary extends PokemonCard {
       name: 'Dual Cut',
       cost: [C, C, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 80 damage times the number of heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Braviary extends PokemonCard {
   public setNumber: string = '130';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Braviary';
-  public fullName: string = 'Braviary BKT';
+  public fullName: string = 'Braviary (BKT 130)';
+  public legacyFullName = 'Braviary BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Dual Cut

@@ -25,7 +25,8 @@ export class ShayminPrismStar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '10';
   public name: string = 'Shaymin Prism Star';
-  public fullName: string = 'Shaymin Prism Star TEU';
+  public fullName: string = 'Shaymin Prism Star (TEU 10)';
+  public legacyFullName = 'Shaymin Prism Star TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

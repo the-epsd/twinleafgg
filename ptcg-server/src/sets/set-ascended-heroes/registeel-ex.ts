@@ -29,7 +29,8 @@ export class Registeelex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '145';
   public name: string = 'Registeel ex';
-  public fullName: string = 'Registeel ex MC';
+  public fullName: string = 'Registeel ex (ASC 145)';
+  public legacyFullName = 'Registeel ex MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Regicharge attack

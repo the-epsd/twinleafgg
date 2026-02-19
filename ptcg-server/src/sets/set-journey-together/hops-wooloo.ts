@@ -34,6 +34,7 @@ export class HopsWooloo extends PokemonCard {
 
   public name: string = 'Hop\'s Wooloo';
 
-  public fullName: string = 'Hop\'s Wooloo JTG';
+  public fullName: string = 'Hop\'s Wooloo (JTG 135)';
+  public legacyFullName = 'Hop\'s Wooloo JTG';
 
 }

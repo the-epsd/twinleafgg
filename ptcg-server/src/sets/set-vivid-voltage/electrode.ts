@@ -39,7 +39,8 @@ export class Electrode extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electrode';
-  public fullName: string = 'Electrode VIV';
+  public fullName: string = 'Electrode (VIV 46)';
+  public legacyFullName = 'Electrode VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Buzzap Generator

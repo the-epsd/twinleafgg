@@ -36,7 +36,8 @@ export class Raboot extends PokemonCard {
   public setNumber: string = 'SV016';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raboot';
-  public fullName: string = 'Raboot SHF';
+  public fullName: string = 'Raboot (SHF SV016)';
+  public legacyFullName = 'Raboot SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flame Charge

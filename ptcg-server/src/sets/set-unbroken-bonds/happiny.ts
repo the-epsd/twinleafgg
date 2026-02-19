@@ -29,7 +29,8 @@ export class Happiny extends PokemonCard {
   public setNumber: string = '161';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Happiny';
-  public fullName: string = 'Happiny UNB';
+  public fullName: string = 'Happiny (UNB 161)';
+  public legacyFullName = 'Happiny UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Playhouse Heal

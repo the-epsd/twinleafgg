@@ -28,7 +28,8 @@ export class PokeParksTorchic extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'PokéPark\'s Torchic';
-  public fullName: string = 'PokéPark\'s Torchic PCGP';
+  public fullName: string = 'PokéPark\'s Torchic (PCGP 47)';
+  public legacyFullName = 'PokéPark\'s Torchic PCGP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '47';
 

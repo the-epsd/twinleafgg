@@ -30,7 +30,8 @@ export class Cryogonal extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cryogonal';
-  public fullName: string = 'Cryogonal BCR';
+  public fullName: string = 'Cryogonal (BCR 46)';
+  public legacyFullName = 'Cryogonal BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ice Edge

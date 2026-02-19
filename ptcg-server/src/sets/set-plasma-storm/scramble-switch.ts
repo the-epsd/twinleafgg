@@ -70,7 +70,8 @@ export class ScrambleSwitch extends TrainerCard {
 
   public name: string = 'Scramble Switch';
 
-  public fullName: string = 'Scramble Switch PLS';
+  public fullName: string = 'Scramble Switch (PLS 129)';
+  public legacyFullName = 'Scramble Switch PLS';
 
   public cardImage: string = 'assets/cardback.png';
 

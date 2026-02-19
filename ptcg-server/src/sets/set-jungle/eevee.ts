@@ -39,7 +39,8 @@ export class Eevee extends PokemonCard {
 
   public name: string = 'Eevee';
 
-  public fullName: string = 'Eevee JU';
+  public fullName: string = 'Eevee (JU 51)';
+  public legacyFullName = 'Eevee JU';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
 

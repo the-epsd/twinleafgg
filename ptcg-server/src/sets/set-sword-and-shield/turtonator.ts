@@ -36,7 +36,8 @@ export class Turtonator extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Turtonator';
-  public fullName: string = 'Turtonator SSH';
+  public fullName: string = 'Turtonator (SSH 29)';
+  public legacyFullName = 'Turtonator SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Fire Spin

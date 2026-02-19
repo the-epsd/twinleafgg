@@ -28,7 +28,8 @@ export class Primarina extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Primarina';
-  public fullName: string = 'Primarina SUM';
+  public fullName: string = 'Primarina (SUM 41)';
+  public legacyFullName = 'Primarina SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

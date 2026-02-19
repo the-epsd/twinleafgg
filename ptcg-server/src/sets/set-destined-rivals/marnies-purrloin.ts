@@ -24,7 +24,8 @@ export class MarniesPurrloin extends PokemonCard {
   public setNumber = '130';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marnie\'s Purrloin';
-  public fullName: string = 'Marnie\'s Purrloin DRI';
+  public fullName: string = 'Marnie\'s Purrloin (DRI 130)';
+  public legacyFullName = 'Marnie\'s Purrloin DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

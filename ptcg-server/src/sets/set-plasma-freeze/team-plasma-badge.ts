@@ -13,7 +13,8 @@ export class TeamPlasmaBadge extends TrainerCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Plasma Badge';
-  public fullName: string = 'Team Plasma Badge PLF';
+  public fullName: string = 'Team Plasma Badge (PLF 104)';
+  public legacyFullName = 'Team Plasma Badge PLF';
   public text: string = 'The Pokémon this card is attached to is a Team Plasma Pokémon.';
 
   private readonly injectedTeamPlasmaTags = new Map<number, PokemonCard>();

@@ -30,7 +30,8 @@ export class Togedemaru2 extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togedemaru';
-  public fullName: string = 'Togedemaru CEC 74';
+  public fullName: string = 'Togedemaru (CEC 74)';
+  public legacyFullName = 'Togedemaru CEC 74';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Shock

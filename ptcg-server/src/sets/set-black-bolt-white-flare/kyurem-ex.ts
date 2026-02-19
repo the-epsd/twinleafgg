@@ -30,7 +30,8 @@ export class Kyuremex extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kyurem ex';
-  public fullName: string = 'Kyurem ex SV11B';
+  public fullName: string = 'Kyurem ex (BLK 28)';
+  public legacyFullName = 'Kyurem ex SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

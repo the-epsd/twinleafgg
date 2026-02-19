@@ -32,7 +32,8 @@ export class Archeops extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Archeops';
-  public fullName: string = 'Archeops PLB';
+  public fullName: string = 'Archeops (PLB 54)';
+  public legacyFullName = 'Archeops PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

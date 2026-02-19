@@ -38,7 +38,8 @@ export class Crawdaunt extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crawdaunt';
-  public fullName: string = 'Crawdaunt PRC';
+  public fullName: string = 'Crawdaunt (PRC 92)';
+  public legacyFullName = 'Crawdaunt PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Unruly Claw

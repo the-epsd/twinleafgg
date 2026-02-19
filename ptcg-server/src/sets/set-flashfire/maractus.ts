@@ -39,7 +39,8 @@ export class Maractus extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Maractus';
-  public fullName: string = 'Maractus FLF';
+  public fullName: string = 'Maractus (FLF 10)';
+  public legacyFullName = 'Maractus FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Refs: AGENTS.md (2-phase marker for "until end of your next turn")

@@ -36,7 +36,8 @@ export class Granbull extends PokemonCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Granbull';
-  public fullName: string = 'Granbull BKT';
+  public fullName: string = 'Granbull (BKT 99)';
+  public legacyFullName = 'Granbull BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Startling Bark

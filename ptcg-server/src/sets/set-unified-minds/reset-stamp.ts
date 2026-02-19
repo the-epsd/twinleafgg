@@ -15,7 +15,8 @@ export class ResetStamp extends TrainerCard {
 
   public name: string = 'Reset Stamp';
 
-  public fullName: string = 'Reset Stamp UNM';
+  public fullName: string = 'Reset Stamp (UNM 206)';
+  public legacyFullName = 'Reset Stamp UNM';
 
   public cardImage: string = 'assets/cardback.png';
 

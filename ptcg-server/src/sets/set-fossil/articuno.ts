@@ -42,7 +42,8 @@ export class Articuno extends PokemonCard {
 
   public name: string = 'Articuno';
 
-  public fullName: string = 'Articuno FO';
+  public fullName: string = 'Articuno (FO 2)';
+  public legacyFullName = 'Articuno FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

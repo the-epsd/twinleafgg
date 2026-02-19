@@ -95,7 +95,8 @@ export class Piers extends TrainerCard {
 
   public name: string = 'Piers';
 
-  public fullName: string = 'Piers CPA';
+  public fullName: string = 'Piers (CPA 58)';
+  public legacyFullName = 'Piers CPA';
 
   public text: string =
     'Search your deck for an Energy card and a [D] Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';

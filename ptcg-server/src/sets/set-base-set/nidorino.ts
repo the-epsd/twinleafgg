@@ -14,7 +14,8 @@ export class Nidorino extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Nidorino BS';
+  public fullName = 'Nidorino (BS 37)';
+  public legacyFullName = 'Nidorino BS';
 
   public cardType: CardType = CardType.GRASS;
 

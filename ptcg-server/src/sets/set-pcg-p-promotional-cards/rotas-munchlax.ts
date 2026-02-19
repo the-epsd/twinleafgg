@@ -32,7 +32,8 @@ export class RotasMunchlax extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
   public name: string = 'Rota\'s Munchlax';
-  public fullName: string = 'Rota\'s Munchlax PCGP';
+  public fullName: string = 'Rota\'s Munchlax (PCGP 88)';
+  public legacyFullName = 'Rota\'s Munchlax PCGP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

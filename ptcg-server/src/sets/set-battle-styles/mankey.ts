@@ -30,7 +30,8 @@ export class Mankey extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mankey';
-  public fullName: string = 'Mankey BST';
+  public fullName: string = 'Mankey (BST 66)';
+  public legacyFullName = 'Mankey BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Focus Fist

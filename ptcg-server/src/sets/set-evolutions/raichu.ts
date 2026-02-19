@@ -30,7 +30,7 @@ export class Raichu extends PokemonCard {
       name: 'Spark Bolt',
       cost: [L, L, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard all Energy attached to this Pok\u00e9mon. If you do, this attack does 70 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Raichu extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raichu';
-  public fullName: string = 'Raichu EVO';
+  public fullName: string = 'Raichu (EVO 36)';
+  public legacyFullName = 'Raichu EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Energize

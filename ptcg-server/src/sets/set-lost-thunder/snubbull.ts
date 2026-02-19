@@ -26,7 +26,8 @@ export class Snubbull extends PokemonCard {
 
   public name = 'Snubbull';
 
-  public fullName: string = 'Snubbull LOT';
+  public fullName: string = 'Snubbull (LOT 137)';
+  public legacyFullName = 'Snubbull LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

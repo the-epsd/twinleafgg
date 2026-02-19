@@ -32,7 +32,8 @@ export class Enamorus extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
   public name: string = 'Enamorus';
-  public fullName: string = 'Enamorus TWM';
+  public fullName: string = 'Enamorus (TWM 93)';
+  public legacyFullName = 'Enamorus TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

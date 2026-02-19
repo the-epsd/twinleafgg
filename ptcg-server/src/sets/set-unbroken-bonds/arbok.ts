@@ -28,7 +28,7 @@ export class Arbok extends PokemonCard {
       name: 'Heavy Choke',
       cost: [P, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon used Wrap during your last turn, this attack does 120 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Arbok extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arbok';
-  public fullName: string = 'Arbok UNB';
+  public fullName: string = 'Arbok (UNB 63)';
+  public legacyFullName = 'Arbok UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wrap

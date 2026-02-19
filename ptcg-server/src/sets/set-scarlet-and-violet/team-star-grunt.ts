@@ -22,7 +22,8 @@ export class TeamStarGrunt extends TrainerCard {
 
   public name: string = 'Team Star Grunt';
 
-  public fullName: string = 'Team Star Grunt SVI';
+  public fullName: string = 'Team Star Grunt (SVI 195)';
+  public legacyFullName = 'Team Star Grunt SVI';
 
   public text: string =
     'Put an Energy attached to your opponent\'s Active Pokémon on top of their deck.';

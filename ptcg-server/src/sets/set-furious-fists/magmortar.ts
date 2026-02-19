@@ -28,7 +28,7 @@ export class Magmortar extends PokemonCard {
       name: 'Twin Bursts',
       cost: [R, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Electivire is on your Bench, this attack does 80 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Magmortar extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magmortar';
-  public fullName: string = 'Magmortar FFI';
+  public fullName: string = 'Magmortar (FFI 11)';
+  public legacyFullName = 'Magmortar FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flame Charge

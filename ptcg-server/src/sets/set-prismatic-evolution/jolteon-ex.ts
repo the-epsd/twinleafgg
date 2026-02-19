@@ -35,7 +35,8 @@ export class Jolteonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '30';
   public name: string = 'Jolteon ex';
-  public fullName: string = 'Jolteon ex PRE';
+  public fullName: string = 'Jolteon ex (PRE 30)';
+  public legacyFullName = 'Jolteon ex PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

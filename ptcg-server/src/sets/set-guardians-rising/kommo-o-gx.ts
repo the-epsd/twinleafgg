@@ -46,7 +46,8 @@ export class KommoOGx extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kommo-o-GX';
-  public fullName: string = 'Kommo-o-GX GRI';
+  public fullName: string = 'Kommo-o-GX (GRI 100)';
+  public legacyFullName = 'Kommo-o-GX GRI';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

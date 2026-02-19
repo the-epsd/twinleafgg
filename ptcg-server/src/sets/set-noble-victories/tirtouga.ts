@@ -26,7 +26,8 @@ export class Tirtouga extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tirtouga';
-  public fullName: string = 'Tirtouga NVI';
+  public fullName: string = 'Tirtouga (NVI 25)';
+  public legacyFullName = 'Tirtouga NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;

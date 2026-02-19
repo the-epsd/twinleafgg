@@ -32,7 +32,8 @@ export class Kricketot extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kricketot';
-  public fullName: string = 'Kricketot NXD';
+  public fullName: string = 'Kricketot (NXD 3)';
+  public legacyFullName = 'Kricketot NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Double Headbutt

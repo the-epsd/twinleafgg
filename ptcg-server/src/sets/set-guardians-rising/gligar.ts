@@ -29,7 +29,8 @@ export class Gligar extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gligar';
-  public fullName: string = 'Gligar GRI';
+  public fullName: string = 'Gligar (GRI 67)';
+  public legacyFullName = 'Gligar GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Shot

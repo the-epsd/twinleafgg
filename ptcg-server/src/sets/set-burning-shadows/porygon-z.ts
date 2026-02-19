@@ -35,7 +35,8 @@ export class PorygonZ extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Porygon-Z';
-  public fullName: string = 'Porygon-Z BUS';
+  public fullName: string = 'Porygon-Z (BUS 105)';
+  public legacyFullName = 'Porygon-Z BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Initialize (on-evolve)

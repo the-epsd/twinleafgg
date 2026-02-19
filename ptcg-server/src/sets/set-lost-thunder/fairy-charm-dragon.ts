@@ -16,7 +16,8 @@ export class FairyCharmDragon extends TrainerCard {
   public setNumber: string = '177';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fairy Charm Dragon';
-  public fullName: string = 'Fairy Charm Dragon LOT';
+  public fullName: string = 'Fairy Charm Dragon (LOT 177)';
+  public legacyFullName = 'Fairy Charm Dragon LOT';
   public text: string = 'Prevent all damage done to the Fairy Pokémon this card is attached to by attacks from your opponent\'s Dragon Pokémon-GX and Dragon Pokémon-EX.';
 
   // Ref: set-x-and-y/hard-charm.ts (Tool damage intercept), set-dragons-majesty/altaria-gx.ts (GX/EX type check)

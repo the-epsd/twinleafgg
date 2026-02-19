@@ -13,7 +13,8 @@ export class Magmar extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Magmar BS';
+  public fullName = 'Magmar (BS 36)';
+  public legacyFullName = 'Magmar BS';
 
   public cardType = CardType.FIRE;
 

@@ -33,7 +33,8 @@ export class Quaquaval extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Quaquaval';
-  public fullName: string = 'Quaquaval SSP';
+  public fullName: string = 'Quaquaval (SSP 52)';
+  public legacyFullName = 'Quaquaval SSP';
 
   public readonly UP_TEMPO_MARKER = 'UP_TEMPO_MARKER';
 

@@ -32,7 +32,7 @@ export class AlcremieVmax extends PokemonCard {
       name: 'G-Max Whisk',
       cost: [P, P],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard any amount of Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way.'
     }
   ];
@@ -42,7 +42,8 @@ export class AlcremieVmax extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alcremie VMAX';
-  public fullName: string = 'Alcremie VMAX CPA';
+  public fullName: string = 'Alcremie VMAX (CPA 23)';
+  public legacyFullName = 'Alcremie VMAX CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Adornment

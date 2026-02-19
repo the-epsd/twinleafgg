@@ -33,7 +33,8 @@ export class Zweilous extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '78';
   public name: string = 'Zweilous';
-  public fullName: string = 'Zweilous NVI';
+  public fullName: string = 'Zweilous (NVI 78)';
+  public legacyFullName = 'Zweilous NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Double Hit

@@ -25,7 +25,8 @@ export class Pidgey extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pidgey';
-  public fullName: string = 'Pidgey FLF';
+  public fullName: string = 'Pidgey (FLF 75)';
+  public legacyFullName = 'Pidgey FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

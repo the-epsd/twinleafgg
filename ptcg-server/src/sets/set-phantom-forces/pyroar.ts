@@ -43,7 +43,8 @@ export class Pyroar extends PokemonCard {
 
   public name: string = 'Pyroar';
 
-  public fullName: string = 'Pyroar PHF';
+  public fullName: string = 'Pyroar (PHF 12)';
+  public legacyFullName = 'Pyroar PHF';
 
   public cardImage: string = 'assets/cardback.png';
 

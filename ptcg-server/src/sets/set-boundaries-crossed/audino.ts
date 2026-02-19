@@ -37,7 +37,8 @@ export class Audino extends PokemonCard {
   public setNumber: string = '126';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Audino';
-  public fullName: string = 'Audino BCR';
+  public fullName: string = 'Audino (BCR 126)';
+  public legacyFullName = 'Audino BCR';
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
   public readonly HIP_BUMP_MARKER = 'HIP_BUMP_MARKER';
 

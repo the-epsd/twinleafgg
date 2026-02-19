@@ -28,7 +28,8 @@ export class Buzzwole extends PokemonCard {
 
   public name: string = 'Buzzwole';
 
-  public fullName: string = 'Buzzwole FLI';
+  public fullName: string = 'Buzzwole (FLI 77)';
+  public legacyFullName = 'Buzzwole FLI';
 
   public cardImage: string = 'assets/cardback.png';
 

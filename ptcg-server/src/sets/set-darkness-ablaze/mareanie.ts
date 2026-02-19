@@ -36,7 +36,8 @@ export class Mareanie extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mareanie';
-  public fullName: string = 'Mareanie DAA';
+  public fullName: string = 'Mareanie (DAA 51)';
+  public legacyFullName = 'Mareanie DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Regeneration

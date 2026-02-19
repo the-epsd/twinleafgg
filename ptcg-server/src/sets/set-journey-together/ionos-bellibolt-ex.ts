@@ -46,7 +46,8 @@ export class IonosBelliboltex extends PokemonCard {
 
   public name: string = 'Iono\'s Bellibolt ex';
 
-  public fullName: string = 'Iono\'s Bellibolt ex JTG';
+  public fullName: string = 'Iono\'s Bellibolt ex (JTG 53)';
+  public legacyFullName = 'Iono\'s Bellibolt ex JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

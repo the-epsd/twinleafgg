@@ -36,7 +36,8 @@ export class Togetic extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togetic';
-  public fullName: string = 'Togetic ROS';
+  public fullName: string = 'Togetic (ROS 44)';
+  public legacyFullName = 'Togetic ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Go Fetch

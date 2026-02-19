@@ -48,7 +48,8 @@ export class IronHands extends PokemonCard {
 
   public name: string = 'Iron Hands';
 
-  public fullName: string = 'Iron Hands TEF';
+  public fullName: string = 'Iron Hands (TEF 61)';
+  public legacyFullName = 'Iron Hands TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

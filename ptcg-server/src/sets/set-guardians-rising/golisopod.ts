@@ -28,7 +28,7 @@ export class Golisopod extends PokemonCard {
       name: 'Resolute Claws',
       cost: [G, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Pokémon-GX or a Pokémon-EX, this attack does 70 more damage (before applying Weakness and Resistance).'
     }
   ];
@@ -37,7 +37,8 @@ export class Golisopod extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golisopod';
-  public fullName: string = 'Golisopod GRI';
+  public fullName: string = 'Golisopod (GRI 9)';
+  public legacyFullName = 'Golisopod GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Armor (passive - reduce damage by 30)

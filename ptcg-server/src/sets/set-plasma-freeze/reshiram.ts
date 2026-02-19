@@ -31,7 +31,8 @@ export class Reshiram extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Reshiram';
-  public fullName: string = 'Reshiram PLF';
+  public fullName: string = 'Reshiram (PLF 17)';
+  public legacyFullName = 'Reshiram PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

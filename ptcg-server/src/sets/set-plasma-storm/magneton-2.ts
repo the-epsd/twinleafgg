@@ -31,7 +31,8 @@ export class Magneton2 extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magneton';
-  public fullName: string = 'Magneton PLS 45';
+  public fullName: string = 'Magneton (PLS 45)';
+  public legacyFullName = 'Magneton PLS 45';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Knock Away

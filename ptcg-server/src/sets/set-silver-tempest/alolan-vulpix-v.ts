@@ -44,7 +44,8 @@ export class AlolanVulpixV extends PokemonCard {
 
   public name: string = 'Alolan Vulpix V';
 
-  public fullName: string = 'Alolan Vulpix V SIT';
+  public fullName: string = 'Alolan Vulpix V (SIT 33)';
+  public legacyFullName = 'Alolan Vulpix V SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -48,7 +48,8 @@ export class Incineroarex extends PokemonCard {
 
   public name: string = 'Incineroar ex';
 
-  public fullName: string = 'Incineroar ex TEF';
+  public fullName: string = 'Incineroar ex (TEF 34)';
+  public legacyFullName = 'Incineroar ex TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Hustle Play

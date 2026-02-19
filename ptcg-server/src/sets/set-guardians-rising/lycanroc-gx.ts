@@ -56,7 +56,8 @@ export class LycanrocGX extends PokemonCard {
 
   public name: string = 'Lycanroc-GX';
 
-  public fullName: string = 'Lycanroc-GX GRI';
+  public fullName: string = 'Lycanroc-GX (GRI 74)';
+  public legacyFullName = 'Lycanroc-GX GRI';
 
   public cardImage: string = 'assets/cardback.png';
 

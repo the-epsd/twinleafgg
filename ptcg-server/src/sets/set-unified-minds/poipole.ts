@@ -23,7 +23,7 @@ export class Poipole extends PokemonCard {
       name: 'Last Scene',
       cost: [P, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If each player has exactly 1 Prize card remaining, this attack does 130 more damage.'
     }
   ];
@@ -32,7 +32,8 @@ export class Poipole extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poipole';
-  public fullName: string = 'Poipole UNM';
+  public fullName: string = 'Poipole (UNM 102)';
+  public legacyFullName = 'Poipole UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Last Scene

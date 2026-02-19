@@ -53,5 +53,6 @@ export class HisuianBasculin extends PokemonCard {
 
   public name: string = 'Hisuian Basculin';
 
-  public fullName: string = 'Hisuian Basculin ASR';
+  public fullName: string = 'Hisuian Basculin (ASR 43)';
+  public legacyFullName = 'Hisuian Basculin ASR';
 }

@@ -37,7 +37,8 @@ export class Zangoose extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public name: string = 'Zangoose';
-  public fullName: string = 'Zangoose SS';
+  public fullName: string = 'Zangoose (SS 14)';
+  public legacyFullName = 'Zangoose SS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AddSpecialConditionsEffect && effect.specialConditions.includes(SpecialCondition.POISONED) && effect.target.getPokemonCard() === this) {

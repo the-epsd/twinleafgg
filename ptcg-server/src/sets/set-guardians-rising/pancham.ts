@@ -20,7 +20,7 @@ export class Pancham extends PokemonCard {
       name: 'Karate Chop',
       cost: [F, F],
       damage: 60,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-' as const,
       text: 'This attack does 10 less damage for each damage counter on this Pokémon.'
     }
   ];
@@ -29,7 +29,8 @@ export class Pancham extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pancham';
-  public fullName: string = 'Pancham GRI';
+  public fullName: string = 'Pancham (GRI 72)';
+  public legacyFullName = 'Pancham GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Karate Chop

@@ -32,7 +32,8 @@ export class Scraggy extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scraggy';
-  public fullName: string = 'Scraggy NXD';
+  public fullName: string = 'Scraggy (NXD 73)';
+  public legacyFullName = 'Scraggy NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Shed Skin

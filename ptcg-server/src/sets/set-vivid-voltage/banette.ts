@@ -38,7 +38,8 @@ export class Banette extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Banette';
-  public fullName: string = 'Banette VIV';
+  public fullName: string = 'Banette (VIV 68)';
+  public legacyFullName = 'Banette VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Curse of Devolution

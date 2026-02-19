@@ -15,7 +15,8 @@ export class CounterGain extends TrainerCard {
 
   public name: string = 'Counter Gain';
 
-  public fullName: string = 'Counter Gain LOT';
+  public fullName: string = 'Counter Gain (LOT 170)';
+  public legacyFullName = 'Counter Gain LOT';
 
   public cardImage: string = 'assets/cardback.png';
 

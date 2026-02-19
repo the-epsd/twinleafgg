@@ -31,7 +31,8 @@ export class MBlastoiseEx extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Blastoise-EX';
-  public fullName: string = 'M Blastoise-EX XY';
+  public fullName: string = 'M Blastoise-EX (XY 30)';
+  public legacyFullName = 'M Blastoise-EX XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hydro Bombard

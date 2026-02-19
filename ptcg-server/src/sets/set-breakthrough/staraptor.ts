@@ -36,7 +36,8 @@ export class Staraptor extends PokemonCard {
   public setNumber: string = '127';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Staraptor';
-  public fullName: string = 'Staraptor BKT';
+  public fullName: string = 'Staraptor (BKT 127)';
+  public legacyFullName = 'Staraptor BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Cyclone Slash

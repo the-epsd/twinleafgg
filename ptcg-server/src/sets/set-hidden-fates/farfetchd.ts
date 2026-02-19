@@ -26,5 +26,6 @@ export class Farfetchd extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Farfetch\'d';
-  public fullName: string = 'Farfetch\'d HIF';
+  public fullName: string = 'Farfetch\'d (HIF 45)';
+  public legacyFullName = 'Farfetch\'d HIF';
 }

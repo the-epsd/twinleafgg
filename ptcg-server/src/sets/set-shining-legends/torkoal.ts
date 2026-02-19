@@ -38,7 +38,8 @@ export class Torkoal extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Torkoal';
-  public fullName: string = 'Torkoal SLG';
+  public fullName: string = 'Torkoal (SLG 11)';
+  public legacyFullName = 'Torkoal SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: High-Pressure Heat

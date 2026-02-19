@@ -22,7 +22,7 @@ export class MGlalieEx extends PokemonCard {
       name: 'Cryo Mouth',
       cost: [W, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has 10 or more damage counters on it, this attack does 150 more damage.'
     }
   ];
@@ -31,7 +31,8 @@ export class MGlalieEx extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Glalie-EX';
-  public fullName: string = 'M Glalie-EX BKT';
+  public fullName: string = 'M Glalie-EX (BKT 35)';
+  public legacyFullName = 'M Glalie-EX BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Cryo Mouth

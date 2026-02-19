@@ -39,7 +39,8 @@ export class Gothitelle extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothitelle';
-  public fullName: string = 'Gothitelle FFI';
+  public fullName: string = 'Gothitelle (FFI 41)';
+  public legacyFullName = 'Gothitelle FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Teleport Room

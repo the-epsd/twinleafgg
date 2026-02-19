@@ -34,7 +34,8 @@ export class Galvantula extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galvantula';
-  public fullName: string = 'Galvantula DEX';
+  public fullName: string = 'Galvantula (DEX 43)';
+  public legacyFullName = 'Galvantula DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Quick Turn - flip 2 coins, 20x heads

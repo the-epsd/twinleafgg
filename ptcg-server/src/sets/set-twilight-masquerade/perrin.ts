@@ -91,7 +91,8 @@ export class Perrin extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'TWM';
   public name: string = 'Perrin';
-  public fullName: string = 'Perrin TWM';
+  public fullName: string = 'Perrin (TWM 160)';
+  public legacyFullName = 'Perrin TWM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '160';
 

@@ -30,7 +30,8 @@ export class BrocksZubat extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
   public name: string = 'Brock\'s Zubat';
-  public fullName: string = 'Brock\'s Zubat G1';
+  public fullName: string = 'Brock\'s Zubat (G1 24)';
+  public legacyFullName = 'Brock\'s Zubat G1';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

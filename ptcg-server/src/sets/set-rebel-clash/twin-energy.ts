@@ -15,7 +15,8 @@ export class TwinEnergy extends EnergyCard {
 
   public name = 'Twin Energy';
 
-  public fullName = 'Twin Energy RCL';
+  public fullName = 'Twin Energy (RCL 174)';
+  public legacyFullName = 'Twin Energy RCL';
 
   public cardImage: string = 'assets/cardback.png';
 

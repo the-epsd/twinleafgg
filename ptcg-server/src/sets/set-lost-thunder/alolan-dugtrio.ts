@@ -30,7 +30,8 @@ export class AlolanDugtrio extends PokemonCard {
   public setNumber: string = '123';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Dugtrio';
-  public fullName: string = 'Alolan Dugtrio LOT';
+  public fullName: string = 'Alolan Dugtrio (LOT 123)';
+  public legacyFullName = 'Alolan Dugtrio LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Digging Dash

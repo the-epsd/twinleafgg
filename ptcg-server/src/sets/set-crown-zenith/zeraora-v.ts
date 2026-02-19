@@ -26,7 +26,8 @@ export class ZeraoraV extends PokemonCard {
   public regulationMark = 'F';
   public set: string = 'CRZ';
   public name: string = 'Zeraora V';
-  public fullName: string = 'Zeraora V CRZ';
+  public fullName: string = 'Zeraora V (CRZ 53)';
+  public legacyFullName = 'Zeraora V CRZ';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
 

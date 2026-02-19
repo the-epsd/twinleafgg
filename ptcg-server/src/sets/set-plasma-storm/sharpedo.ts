@@ -40,7 +40,8 @@ export class Sharpedo extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sharpedo';
-  public fullName: string = 'Sharpedo PLS';
+  public fullName: string = 'Sharpedo (PLS 33)';
+  public legacyFullName = 'Sharpedo PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Rough Skin (passive - damage attacker on hit)

@@ -27,7 +27,8 @@ export class Misdreavus extends PokemonCard {
 
   public set: string = 'UD';
   public name: string = 'Misdreavus';
-  public fullName: string = 'Misdreavus UD';
+  public fullName: string = 'Misdreavus (UD 57)';
+  public legacyFullName = 'Misdreavus UD';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '57';
 

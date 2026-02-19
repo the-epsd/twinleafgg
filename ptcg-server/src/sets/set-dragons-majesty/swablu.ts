@@ -35,7 +35,8 @@ export class Swablu extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swablu';
-  public fullName: string = 'Swablu DRM';
+  public fullName: string = 'Swablu (DRM 56)';
+  public legacyFullName = 'Swablu DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Collect

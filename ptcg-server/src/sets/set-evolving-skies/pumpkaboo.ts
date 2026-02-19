@@ -46,7 +46,8 @@ export class Pumpkaboo extends PokemonCard {
 
   public name: string = 'Pumpkaboo';
 
-  public fullName: string = 'Pumpkaboo EVS';
+  public fullName: string = 'Pumpkaboo (EVS 76)';
+  public legacyFullName = 'Pumpkaboo EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

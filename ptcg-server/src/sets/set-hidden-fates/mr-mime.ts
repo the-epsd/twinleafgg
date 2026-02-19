@@ -27,7 +27,7 @@ export class MrMime extends PokemonCard {
       name: 'Double Slap',
       cost: [Y, Y],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 40 damage for each heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class MrMime extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mr. Mime';
-  public fullName: string = 'Mr. Mime HIF';
+  public fullName: string = 'Mr. Mime (HIF 43)';
+  public legacyFullName = 'Mr. Mime HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Happy Mime

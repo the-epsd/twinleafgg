@@ -30,7 +30,8 @@ export class Regiceex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';
   public name: string = 'Regice ex';
-  public fullName: string = 'Regice ex MC';
+  public fullName: string = 'Regice ex (ASC 48)';
+  public legacyFullName = 'Regice ex MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Regi Charge attack

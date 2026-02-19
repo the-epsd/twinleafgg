@@ -63,7 +63,8 @@ export class Zoroark extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zoroark';
-  public fullName: string = 'Zoroark BLW';
+  public fullName: string = 'Zoroark (BLW 71)';
+  public legacyFullName = 'Zoroark BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

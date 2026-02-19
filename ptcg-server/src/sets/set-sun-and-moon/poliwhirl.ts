@@ -21,7 +21,7 @@ export class Poliwhirl extends PokemonCard {
       name: 'Double Slap',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage for each heads.'
     },
     {
@@ -36,7 +36,8 @@ export class Poliwhirl extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poliwhirl';
-  public fullName: string = 'Poliwhirl SUM';
+  public fullName: string = 'Poliwhirl (SUM 31)';
+  public legacyFullName = 'Poliwhirl SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Slap

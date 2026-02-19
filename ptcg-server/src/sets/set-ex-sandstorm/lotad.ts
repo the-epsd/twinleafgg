@@ -28,7 +28,8 @@ export class Lotad extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lotad';
-  public fullName: string = 'Lotad SS';
+  public fullName: string = 'Lotad (SS 66)';
+  public legacyFullName = 'Lotad SS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle Healing Stone Poké-Body

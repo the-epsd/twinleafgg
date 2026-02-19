@@ -15,7 +15,8 @@ export class FightingStadium extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'FFI';
   public name: string = 'Fighting Stadium';
-  public fullName: string = 'Fighting Stadium FFI';
+  public fullName: string = 'Fighting Stadium (FFI 90)';
+  public legacyFullName = 'Fighting Stadium FFI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
 

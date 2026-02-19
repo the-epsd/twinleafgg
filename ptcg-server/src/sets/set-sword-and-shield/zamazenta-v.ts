@@ -39,7 +39,8 @@ export class ZamazentaV extends PokemonCard {
   public setNumber: string = '139';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zamazenta V';
-  public fullName: string = 'Zamazenta V SSH';
+  public fullName: string = 'Zamazenta V (SSH 139)';
+  public legacyFullName = 'Zamazenta V SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Dauntless Shield (passive)

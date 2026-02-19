@@ -24,7 +24,8 @@ export class VGuardEnergy extends EnergyCard {
 
   public name = 'V Guard Energy';
 
-  public fullName = 'V Guard Energy SIT';
+  public fullName = 'V Guard Energy (SIT 169)';
+  public legacyFullName = 'V Guard Energy SIT';
 
   public text =
     'As long as this card is attached to a Pokémon, it provides [C] Energy.' +

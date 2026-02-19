@@ -40,7 +40,8 @@ export class Hippowdon extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hippowdon';
-  public fullName: string = 'Hippowdon PRC';
+  public fullName: string = 'Hippowdon (PRC 88)';
+  public legacyFullName = 'Hippowdon PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Resistance Desert

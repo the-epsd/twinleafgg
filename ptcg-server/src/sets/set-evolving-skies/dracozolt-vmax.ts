@@ -41,7 +41,8 @@ export class DracozoltVmax extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dracozolt VMAX';
-  public fullName: string = 'Dracozolt VMAX EVS';
+  public fullName: string = 'Dracozolt VMAX (EVS 59)';
+  public legacyFullName = 'Dracozolt VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spark Trap

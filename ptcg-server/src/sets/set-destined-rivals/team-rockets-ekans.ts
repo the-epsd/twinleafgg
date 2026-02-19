@@ -32,7 +32,8 @@ export class TeamRocketsEkans extends PokemonCard {
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Ekans';
-  public fullName: string = 'Team Rocket\'s Ekans DRI';
+  public fullName: string = 'Team Rocket\'s Ekans (DRI 112)';
+  public legacyFullName = 'Team Rocket\'s Ekans DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {

@@ -32,5 +32,6 @@ export class Electrode extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electrode';
-  public fullName: string = 'Electrode BCR';
+  public fullName: string = 'Electrode (BCR 52)';
+  public legacyFullName = 'Electrode BCR';
 }

@@ -33,7 +33,8 @@ export class Prinplup extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '55';
   public name: string = 'Prinplup';
-  public fullName: string = 'Prinplup CEC';
+  public fullName: string = 'Prinplup (CEC 55)';
+  public legacyFullName = 'Prinplup CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

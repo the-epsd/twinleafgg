@@ -25,7 +25,8 @@ export class Flittle extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flittle';
-  public fullName: string = 'Flittle PAR';
+  public fullName: string = 'Flittle (PAR 80)';
+  public legacyFullName = 'Flittle PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

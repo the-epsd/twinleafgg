@@ -23,7 +23,7 @@ export class CopperajahVmax extends PokemonCard {
       name: 'Dangerous Nose',
       cost: [M, M, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, this attack does 100 more damage.'
     },
     {
@@ -39,7 +39,8 @@ export class CopperajahVmax extends PokemonCard {
   public setNumber: string = '137';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Copperajah VMAX';
-  public fullName: string = 'Copperajah VMAX RCL';
+  public fullName: string = 'Copperajah VMAX (RCL 137)';
+  public legacyFullName = 'Copperajah VMAX RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dangerous Nose

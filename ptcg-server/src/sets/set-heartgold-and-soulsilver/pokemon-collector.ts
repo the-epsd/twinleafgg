@@ -57,7 +57,8 @@ export class PokemonCollector extends TrainerCard {
 
   public name: string = 'Pokémon Collector';
 
-  public fullName: string = 'Pokémon Collector HS';
+  public fullName: string = 'Pokémon Collector (HS 97)';
+  public legacyFullName = 'Pokémon Collector HS';
 
   public cardImage: string = 'assets/cardback.png';
 

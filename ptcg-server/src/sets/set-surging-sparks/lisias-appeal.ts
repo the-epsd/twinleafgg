@@ -21,7 +21,8 @@ export class LisiasAppeal extends TrainerCard {
 
   public name: string = 'Lisia\'s Appeal';
 
-  public fullName: string = 'Lisia\'s Appeal SSP';
+  public fullName: string = 'Lisia\'s Appeal (SSP 179)';
+  public legacyFullName = 'Lisia\'s Appeal SSP';
 
   public text: string =
     'Switch in 1 of your opponent\'s Benched Basic Pokémon to the Active Spot. The new Active Pokémon is now Confused.';

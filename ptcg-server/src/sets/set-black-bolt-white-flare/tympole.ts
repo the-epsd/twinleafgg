@@ -26,7 +26,8 @@ export class Tympole extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '19';
   public name: string = 'Tympole';
-  public fullName: string = 'Tympole SV11B';
+  public fullName: string = 'Tympole (BLK 19)';
+  public legacyFullName = 'Tympole SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

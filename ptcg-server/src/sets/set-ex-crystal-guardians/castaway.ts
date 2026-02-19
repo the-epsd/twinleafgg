@@ -70,7 +70,8 @@ export class Castaway extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '72';
   public name: string = 'Castaway';
-  public fullName: string = 'Castaway CG';
+  public fullName: string = 'Castaway (CG 72)';
+  public legacyFullName = 'Castaway CG';
   public text = 'Search your deck for a Supporter card, a Pokémon Tool card, and a basic Energy card. Show them to your opponent, and put them into your hand. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

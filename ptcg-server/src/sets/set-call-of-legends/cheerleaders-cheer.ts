@@ -11,7 +11,8 @@ export class CheerleadersCheer extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CL';
   public name: string = 'Cheerleader\'s Cheer';
-  public fullName: string = 'Cheerleader\'s Cheer CL';
+  public fullName: string = 'Cheerleader\'s Cheer (CL 76)';
+  public legacyFullName = 'Cheerleader\'s Cheer CL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
 

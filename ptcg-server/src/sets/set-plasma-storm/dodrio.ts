@@ -37,7 +37,8 @@ export class Dodrio extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dodrio';
-  public fullName: string = 'Dodrio PLS';
+  public fullName: string = 'Dodrio (PLS 100)';
+  public legacyFullName = 'Dodrio PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Raging Pecks

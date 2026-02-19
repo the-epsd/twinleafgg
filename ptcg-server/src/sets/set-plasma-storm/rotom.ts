@@ -38,7 +38,8 @@ export class Rotom extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rotom';
-  public fullName: string = 'Rotom PLS';
+  public fullName: string = 'Rotom (PLS 49)';
+  public legacyFullName = 'Rotom PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Electribonus

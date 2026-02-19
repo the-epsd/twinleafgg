@@ -28,7 +28,7 @@ export class Lilligant extends PokemonCard {
       name: 'Petal Dance',
       cost: [G, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 40 damage for each heads. This Pokémon is now Confused.'
     }
   ];
@@ -37,7 +37,8 @@ export class Lilligant extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lilligant';
-  public fullName: string = 'Lilligant GRI';
+  public fullName: string = 'Lilligant (GRI 5)';
+  public legacyFullName = 'Lilligant GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Petal Blizzard

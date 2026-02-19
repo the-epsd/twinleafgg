@@ -35,7 +35,8 @@ export class Turtonator extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Turtonator';
-  public fullName: string = 'Turtonator GRI';
+  public fullName: string = 'Turtonator (GRI 17)';
+  public legacyFullName = 'Turtonator GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Body Slam

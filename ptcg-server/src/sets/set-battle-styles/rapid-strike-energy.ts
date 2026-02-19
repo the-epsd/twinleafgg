@@ -18,7 +18,8 @@ export class RapidStrikeEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '140';
   public name = 'Rapid Strike Energy';
-  public fullName = 'Rapid Strike Energy BST';
+  public fullName = 'Rapid Strike Energy (BST 140)';
+  public legacyFullName = 'Rapid Strike Energy BST';
 
   public text = `This card can only be attached to a Rapid Strike Pokémon. If this card is attached to anything other than a Rapid Strike Pokémon, discard this card.
 

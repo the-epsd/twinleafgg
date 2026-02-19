@@ -29,7 +29,7 @@ export class Glaceon extends PokemonCard {
       name: 'Ice Edge',
       cost: [W, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Glaceon extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Glaceon';
-  public fullName: string = 'Glaceon FFI';
+  public fullName: string = 'Glaceon (FFI 19)';
+  public legacyFullName = 'Glaceon FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Blizzard

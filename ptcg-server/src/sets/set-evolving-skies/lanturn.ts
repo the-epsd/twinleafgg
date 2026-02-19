@@ -42,7 +42,8 @@ export class Lanturn extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lanturn';
-  public fullName: string = 'Lanturn EVS';
+  public fullName: string = 'Lanturn (EVS 53)';
+  public legacyFullName = 'Lanturn EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Blinding Beam

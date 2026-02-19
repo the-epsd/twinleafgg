@@ -55,7 +55,8 @@ export class Pidgeotex extends PokemonCard {
 
   public name: string = 'Pidgeot ex';
 
-  public fullName: string = 'Pidgeot ex OBF';
+  public fullName: string = 'Pidgeot ex (OBF 164)';
+  public legacyFullName = 'Pidgeot ex OBF';
 
   public readonly QUICK_SEARCH_MARKER = 'QUICK_SEARCH_MARKER';
 

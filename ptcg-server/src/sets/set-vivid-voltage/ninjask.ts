@@ -36,7 +36,8 @@ export class Ninjask extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ninjask';
-  public fullName: string = 'Ninjask VIV';
+  public fullName: string = 'Ninjask (VIV 14)';
+  public legacyFullName = 'Ninjask VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Cast-off Shell

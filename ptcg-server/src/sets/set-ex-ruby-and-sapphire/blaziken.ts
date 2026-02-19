@@ -34,7 +34,8 @@ export class Blaziken extends PokemonCard {
 
   public set: string = 'RS';
   public name: string = 'Blaziken';
-  public fullName: string = 'Blaziken RS';
+  public fullName: string = 'Blaziken (RS 3)';
+  public legacyFullName = 'Blaziken RS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
 

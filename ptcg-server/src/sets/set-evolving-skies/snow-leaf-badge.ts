@@ -18,7 +18,8 @@ export class SnowLeafBadge extends TrainerCard {
   public setNumber: string = '159';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snow Leaf Badge';
-  public fullName: string = 'Snow Leaf Badge EVS';
+  public fullName: string = 'Snow Leaf Badge (EVS 159)';
+  public legacyFullName = 'Snow Leaf Badge EVS';
   public text: string = 'If the Pokémon V this card is attached to has "Leafeon" or "Glaceon" in its name, it has no Retreat Cost and no Weakness. You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

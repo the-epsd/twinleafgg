@@ -41,7 +41,8 @@ export class Eeveeex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '75';
   public name: string = 'Eevee ex';
-  public fullName: string = 'Eevee ex PRE';
+  public fullName: string = 'Eevee ex (PRE 75)';
+  public legacyFullName = 'Eevee ex PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Rainbow DNA

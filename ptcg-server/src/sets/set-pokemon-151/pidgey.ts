@@ -79,7 +79,8 @@ export class Pidgey extends PokemonCard {
 
   public name: string = 'Pidgey';
 
-  public fullName: string = 'Pidgey MEW';
+  public fullName: string = 'Pidgey (MEW 16)';
+  public legacyFullName = 'Pidgey MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

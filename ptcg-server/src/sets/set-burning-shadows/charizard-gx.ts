@@ -39,7 +39,8 @@ export class CharizardGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name: string = 'Charizard-GX';
-  public fullName: string = 'Charizard-GX BUS';
+  public fullName: string = 'Charizard-GX (BUS 20)';
+  public legacyFullName = 'Charizard-GX BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Crimson Storm: Discard 3 [R] energy from this Pokémon

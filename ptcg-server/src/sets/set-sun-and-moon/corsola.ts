@@ -34,7 +34,8 @@ export class Corsola extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Corsola';
-  public fullName: string = 'Corsola SUM';
+  public fullName: string = 'Corsola (SUM 36)';
+  public legacyFullName = 'Corsola SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Family

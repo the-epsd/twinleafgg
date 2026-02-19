@@ -39,7 +39,8 @@ export class Raikou extends PokemonCard {
 
   public name: string = 'Raikou';
 
-  public fullName: string = 'Raikou VIV';
+  public fullName: string = 'Raikou (VIV 50)';
+  public legacyFullName = 'Raikou VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -35,7 +35,8 @@ export class Gossifleur extends PokemonCard {
   public setNumber: string = 'SV010';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gossifleur';
-  public fullName: string = 'Gossifleur SHF';
+  public fullName: string = 'Gossifleur (SHF SV010)';
+  public legacyFullName = 'Gossifleur SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Family

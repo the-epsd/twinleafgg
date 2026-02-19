@@ -25,5 +25,6 @@ export class SurfingPikachu extends PokemonCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Surfing Pikachu';
-  public fullName: string = 'Surfing Pikachu EVO';
+  public fullName: string = 'Surfing Pikachu (EVO 111)';
+  public legacyFullName = 'Surfing Pikachu EVO';
 }

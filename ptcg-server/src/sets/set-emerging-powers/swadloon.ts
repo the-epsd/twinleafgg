@@ -33,7 +33,8 @@ export class Swadloon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
   public name: string = 'Swadloon';
-  public fullName: string = 'Swadloon EPO';
+  public fullName: string = 'Swadloon (EPO 5)';
+  public legacyFullName = 'Swadloon EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

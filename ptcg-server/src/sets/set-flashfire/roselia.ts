@@ -35,7 +35,8 @@ export class Roselia extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Roselia';
-  public fullName: string = 'Roselia FLF';
+  public fullName: string = 'Roselia (FLF 8)';
+  public legacyFullName = 'Roselia FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/bidoof.ts (coin flip pattern), set-x-and-y/vivillon.ts (Asleep condition)

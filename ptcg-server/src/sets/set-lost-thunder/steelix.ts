@@ -36,7 +36,8 @@ export class Steelix extends PokemonCard {
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steelix';
-  public fullName: string = 'Steelix LOT';
+  public fullName: string = 'Steelix (LOT 125)';
+  public legacyFullName = 'Steelix LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Iron Tackle

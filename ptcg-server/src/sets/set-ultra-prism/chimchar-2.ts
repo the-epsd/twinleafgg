@@ -20,7 +20,7 @@ export class Chimchar2 extends PokemonCard {
       name: 'Fury Swipes',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 10 damage for each heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class Chimchar2 extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chimchar';
-  public fullName: string = 'Chimchar UPR 21';
+  public fullName: string = 'Chimchar (UPR 21)';
+  public legacyFullName = 'Chimchar UPR 21';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Swipes

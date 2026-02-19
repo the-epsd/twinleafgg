@@ -31,7 +31,8 @@ export class Dunsparce extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '120';
   public name = 'Dunsparce';
-  public fullName = 'Dunsparce JTG';
+  public fullName = 'Dunsparce (JTG 120)';
+  public legacyFullName = 'Dunsparce JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this))

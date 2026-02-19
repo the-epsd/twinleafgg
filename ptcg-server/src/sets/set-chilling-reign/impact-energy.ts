@@ -27,7 +27,8 @@ export class ImpactEnergy extends EnergyCard {
 
   public name = 'Impact Energy';
 
-  public fullName = 'Impact Energy CRE';
+  public fullName = 'Impact Energy (CRE 157)';
+  public legacyFullName = 'Impact Energy CRE';
 
   public text = 'This card can only be attached to a Single Strike Pokémon. If this card is attached to anything other than a Single Strike Pokémon, discard this card.' +
     '\n\n' +

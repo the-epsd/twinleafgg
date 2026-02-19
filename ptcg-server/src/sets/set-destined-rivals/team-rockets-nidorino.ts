@@ -34,7 +34,8 @@ export class TeamRocketsNidorino extends PokemonCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Nidorino';
-  public fullName: string = 'Team Rocket\'s Nidorino DRI';
+  public fullName: string = 'Team Rocket\'s Nidorino (DRI 118)';
+  public legacyFullName = 'Team Rocket\'s Nidorino DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Horned Gouge

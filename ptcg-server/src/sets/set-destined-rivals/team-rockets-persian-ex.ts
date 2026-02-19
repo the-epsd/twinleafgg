@@ -105,7 +105,8 @@ export class TeamRocketsPersianex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '150';
   public name: string = 'Team Rocket\'s Persian ex';
-  public fullName: string = 'Team Rocket\'s Persian ex DRI';
+  public fullName: string = 'Team Rocket\'s Persian ex (DRI 150)';
+  public legacyFullName = 'Team Rocket\'s Persian ex DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Haughty Orders

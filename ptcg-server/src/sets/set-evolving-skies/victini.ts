@@ -29,7 +29,8 @@ export class Victini extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Victini';
-  public fullName: string = 'Victini EVS';
+  public fullName: string = 'Victini (EVS 20)';
+  public legacyFullName = 'Victini EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Victory Dive

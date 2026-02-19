@@ -35,7 +35,8 @@ export class Swinub extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swinub';
-  public fullName: string = 'Swinub BKT';
+  public fullName: string = 'Swinub (BKT 80)';
+  public legacyFullName = 'Swinub BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Powder Snow

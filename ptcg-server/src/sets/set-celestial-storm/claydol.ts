@@ -29,7 +29,7 @@ export class Claydol extends PokemonCard {
       name: 'Miraculous Spin',
       cost: [F, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 40 damage for each Steven\'s Resolve card in your discard pile.'
     }
   ];
@@ -38,7 +38,8 @@ export class Claydol extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Claydol';
-  public fullName: string = 'Claydol CES';
+  public fullName: string = 'Claydol (CES 79)';
+  public legacyFullName = 'Claydol CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psy Bolt

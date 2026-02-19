@@ -20,7 +20,8 @@ export class Furfrou extends PokemonCard {
 
   public set: string = 'FLI';
   public name: string = 'Furfrou';
-  public fullName: string = 'Furfrou FLI';
+  public fullName: string = 'Furfrou (FLI 99)';
+  public legacyFullName = 'Furfrou FLI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '99';
 

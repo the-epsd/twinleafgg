@@ -33,7 +33,8 @@ export class Meganium extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
   public name: string = 'Meganium';
-  public fullName: string = 'Meganium HS';
+  public fullName: string = 'Meganium (HS 109)';
+  public legacyFullName = 'Meganium HS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

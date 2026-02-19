@@ -28,7 +28,7 @@ export class Jumpluff extends PokemonCard {
       name: 'Solar Step',
       cost: [G],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage times the number of your remaining Prize cards.'
     }
   ];
@@ -37,7 +37,8 @@ export class Jumpluff extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jumpluff';
-  public fullName: string = 'Jumpluff STS';
+  public fullName: string = 'Jumpluff (STS 5)';
+  public legacyFullName = 'Jumpluff STS';
 
   public usedFluffyTransport = false;
 

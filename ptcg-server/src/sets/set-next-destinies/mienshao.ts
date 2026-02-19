@@ -36,7 +36,8 @@ export class Mienshao extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mienshao';
-  public fullName: string = 'Mienshao NXD';
+  public fullName: string = 'Mienshao (NXD 68)';
+  public legacyFullName = 'Mienshao NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Haul In - search for 2 Pokémon Tool cards

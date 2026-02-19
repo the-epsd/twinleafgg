@@ -29,7 +29,8 @@ export class Skwovet extends PokemonCard {
   public setNumber: string = '152';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skwovet';
-  public fullName: string = 'Skwovet DAA';
+  public fullName: string = 'Skwovet (DAA 152)';
+  public legacyFullName = 'Skwovet DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Whimsy Tackle

@@ -36,7 +36,8 @@ export class Weezing extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weezing';
-  public fullName: string = 'Weezing FCO';
+  public fullName: string = 'Weezing (FCO 28)';
+  public legacyFullName = 'Weezing FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Balloon Bomb

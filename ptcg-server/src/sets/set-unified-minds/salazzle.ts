@@ -26,5 +26,6 @@ export class Salazzle extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salazzle';
-  public fullName: string = 'Salazzle UNM';
+  public fullName: string = 'Salazzle (UNM 34)';
+  public legacyFullName = 'Salazzle UNM';
 }

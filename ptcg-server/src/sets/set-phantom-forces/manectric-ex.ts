@@ -29,7 +29,7 @@ export class ManectricEx extends PokemonCard {
       name: 'Assault Laser',
       cost: [L, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon has a Pokémon Tool card attached to it, this attack does 60 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class ManectricEx extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Manectric-EX';
-  public fullName: string = 'Manectric-EX PHF';
+  public fullName: string = 'Manectric-EX (PHF 23)';
+  public legacyFullName = 'Manectric-EX PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Overrun

@@ -30,7 +30,8 @@ export class Nidorina extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '33';
   public name: string = 'Nidorina';
-  public fullName: string = 'Nidorina MEW';
+  public fullName: string = 'Nidorina (MEW 33)';
+  public legacyFullName = 'Nidorina MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

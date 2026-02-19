@@ -38,7 +38,8 @@ export class Tentacruel extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tentacruel';
-  public fullName: string = 'Tentacruel UNB';
+  public fullName: string = 'Tentacruel (UNB 41)';
+  public legacyFullName = 'Tentacruel UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wicked Tentacles

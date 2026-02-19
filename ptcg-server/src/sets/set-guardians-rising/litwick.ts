@@ -29,7 +29,8 @@ export class Litwick extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Litwick';
-  public fullName: string = 'Litwick GRI';
+  public fullName: string = 'Litwick (GRI 11)';
+  public legacyFullName = 'Litwick GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flickering Flames

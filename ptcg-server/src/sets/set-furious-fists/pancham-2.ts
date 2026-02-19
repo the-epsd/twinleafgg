@@ -20,7 +20,7 @@ export class Pancham2 extends PokemonCard {
       name: 'Comet Punch',
       cost: [C, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class Pancham2 extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pancham';
-  public fullName: string = 'Pancham FFI 60';
+  public fullName: string = 'Pancham (FFI 60)';
+  public legacyFullName = 'Pancham FFI 60';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Comet Punch

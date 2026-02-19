@@ -29,7 +29,7 @@ export class Escavalier extends PokemonCard {
       name: 'Spiral Rush',
       cost: [M, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class Escavalier extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Escavalier';
-  public fullName: string = 'Escavalier PHF';
+  public fullName: string = 'Escavalier (PHF 64)';
+  public legacyFullName = 'Escavalier PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poke Through

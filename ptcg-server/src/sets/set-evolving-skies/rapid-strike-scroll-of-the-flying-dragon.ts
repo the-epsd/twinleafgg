@@ -22,7 +22,8 @@ export class RapidStrikeScrollOfTheFlyingDragon extends TrainerCard {
   public setNumber: string = '153';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rapid Strike Scroll of the Flying Dragon';
-  public fullName: string = 'Rapid Strike Scroll of the Flying Dragon EVS';
+  public fullName: string = 'Rapid Strike Scroll of the Flying Dragon (EVS 153)';
+  public legacyFullName = 'Rapid Strike Scroll of the Flying Dragon EVS';
   public text: string = 'The Rapid Strike Pokémon this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.) You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
 
   public attacks: Attack[] = [{

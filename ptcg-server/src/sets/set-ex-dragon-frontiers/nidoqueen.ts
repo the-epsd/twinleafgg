@@ -34,7 +34,8 @@ export class Nidoqueen extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Nidoqueen';
-  public fullName: string = 'Nidoqueen DF';
+  public fullName: string = 'Nidoqueen (DF 7)';
+  public legacyFullName = 'Nidoqueen DF';
 
   public readonly INVITATION_MARKER = 'INVITATION_MARKER';
 

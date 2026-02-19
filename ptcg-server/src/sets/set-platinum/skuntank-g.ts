@@ -40,7 +40,8 @@ export class SkuntankG extends PokemonCard {
 
   public name: string = 'Skuntank G';
 
-  public fullName: string = 'Skuntank G PL';
+  public fullName: string = 'Skuntank G (PL 94)';
+  public legacyFullName = 'Skuntank G PL';
 
   public cardImage: string = 'assets/cardback.png';
 

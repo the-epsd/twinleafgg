@@ -36,7 +36,8 @@ export class Oricorio3 extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Oricorio';
-  public fullName: string = 'Oricorio GRI 55';
+  public fullName: string = 'Oricorio (GRI 55)';
+  public legacyFullName = 'Oricorio GRI 55';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Vital Dance (on-play-from-hand)

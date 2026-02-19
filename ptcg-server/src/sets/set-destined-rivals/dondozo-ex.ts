@@ -36,7 +36,8 @@ export class Dondozoex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
   public name: string = 'Dondozo ex';
-  public fullName: string = 'Dondozo ex DRI';
+  public fullName: string = 'Dondozo ex (DRI 66)';
+  public legacyFullName = 'Dondozo ex DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Tsunami Reversal

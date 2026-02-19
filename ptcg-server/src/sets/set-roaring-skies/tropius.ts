@@ -21,7 +21,7 @@ export class Tropius extends PokemonCard {
       name: 'Stomp',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     },
     {
@@ -36,7 +36,8 @@ export class Tropius extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tropius';
-  public fullName: string = 'Tropius ROS';
+  public fullName: string = 'Tropius (ROS 12)';
+  public legacyFullName = 'Tropius ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stomp

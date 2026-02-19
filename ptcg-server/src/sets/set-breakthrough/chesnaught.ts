@@ -23,7 +23,7 @@ export class Chesnaught extends PokemonCard {
       name: 'Spike Lariat',
       cost: [G, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 60 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Chesnaught extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chesnaught';
-  public fullName: string = 'Chesnaught BKT';
+  public fullName: string = 'Chesnaught (BKT 11)';
+  public legacyFullName = 'Chesnaught BKT';
 
   public readonly REDUCE_DAMAGE_MARKER = 'CHESNAUGHT_BKT_REDUCE_DAMAGE_MARKER';
   public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'CHESNAUGHT_BKT_CLEAR_REDUCE_DAMAGE_MARKER';

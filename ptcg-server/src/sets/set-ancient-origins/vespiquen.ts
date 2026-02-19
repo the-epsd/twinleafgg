@@ -31,7 +31,8 @@ export class Vespiquen extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '10';
   public name: string = 'Vespiquen';
-  public fullName: string = 'Vespiquen AOR';
+  public fullName: string = 'Vespiquen (AOR 10)';
+  public legacyFullName = 'Vespiquen AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Intelligence Gathering

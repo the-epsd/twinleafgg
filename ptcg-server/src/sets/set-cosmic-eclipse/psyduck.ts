@@ -28,7 +28,8 @@ export class Psyduck extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
   public name: string = 'Psyduck';
-  public fullName: string = 'Psyduck CEC';
+  public fullName: string = 'Psyduck (CEC 40)';
+  public legacyFullName = 'Psyduck CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -44,7 +44,8 @@ export class Inteleon extends PokemonCard {
 
   public name: string = 'Inteleon';
 
-  public fullName: string = 'Inteleon SSH';
+  public fullName: string = 'Inteleon (SSH 58)';
+  public legacyFullName = 'Inteleon SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

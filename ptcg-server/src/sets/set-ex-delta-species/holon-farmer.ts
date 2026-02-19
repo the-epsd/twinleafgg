@@ -16,7 +16,8 @@ export class HolonFarmer extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public name: string = 'Holon Farmer';
-  public fullName: string = 'Holon Farmer DS';
+  public fullName: string = 'Holon Farmer (DS 91)';
+  public legacyFullName = 'Holon Farmer DS';
 
   public text: string =
     'Discard a card from your hand. If you can\'t discard a card from your hand, you can\'t play this card.\n\nSearch your discard pile for 3 basic Energy cards and any combination of 3 Basic Pokémon or Evolution cards, show them to your opponent, and put them on top of your deck. Shuffle your deck afterward.';

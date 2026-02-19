@@ -20,7 +20,8 @@ export class BlendEnergyWLFM extends EnergyCard {
 
   public name = 'Blend Energy WLFM';
 
-  public fullName = 'Blend Energy WLFM DRX';
+  public fullName = 'Blend Energy WLFM (DRX 118)';
+  public legacyFullName = 'Blend Energy WLFM DRX';
 
   public text = 'This card provides [C] Energy. When attached to a Pokemon, this card provides [W], [L], [F], or [M] but only 1 Energy at a time.';
 

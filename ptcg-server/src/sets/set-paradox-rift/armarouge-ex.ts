@@ -48,7 +48,8 @@ export class Armarougeex extends PokemonCard {
 
   public name: string = 'Armarouge ex';
 
-  public fullName: string = 'Armarouge ex PAR';
+  public fullName: string = 'Armarouge ex (PAR 27)';
+  public legacyFullName = 'Armarouge ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Crimson Armor

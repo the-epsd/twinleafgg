@@ -38,7 +38,8 @@ export class Brionne extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Brionne';
-  public fullName: string = 'Brionne LOT';
+  public fullName: string = 'Brionne (LOT 66)';
+  public legacyFullName = 'Brionne LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Captivate

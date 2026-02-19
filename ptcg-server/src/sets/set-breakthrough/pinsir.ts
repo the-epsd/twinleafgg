@@ -30,7 +30,7 @@ export class Pinsir extends PokemonCard {
       name: 'Heavy Suplex',
       cost: [G, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];
@@ -39,7 +39,8 @@ export class Pinsir extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pinsir';
-  public fullName: string = 'Pinsir BKT';
+  public fullName: string = 'Pinsir (BKT 3)';
+  public legacyFullName = 'Pinsir BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Overhead Throw

@@ -26,5 +26,6 @@ export class Butterfree extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Butterfree';
-  public fullName: string = 'Butterfree HIF';
+  public fullName: string = 'Butterfree (HIF 3)';
+  public legacyFullName = 'Butterfree HIF';
 }

@@ -29,7 +29,7 @@ export class Zoroark extends PokemonCard {
       name: 'Mind Jack',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each of your opponent\'s Benched Pokémon.'
     }
   ];
@@ -38,7 +38,8 @@ export class Zoroark extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zoroark';
-  public fullName: string = 'Zoroark BKT';
+  public fullName: string = 'Zoroark (BKT 91)';
+  public legacyFullName = 'Zoroark BKT';
 
   public readonly STAND_IN_MARKER = 'ZOROARK_BKT_STAND_IN_MARKER';
 

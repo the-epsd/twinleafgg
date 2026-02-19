@@ -40,7 +40,8 @@ export class Regirock extends PokemonCard {
   public setNumber = '49';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Regirock';
-  public fullName: string = 'Regirock XYP';
+  public fullName: string = 'Regirock (XYP 49)';
+  public legacyFullName = 'Regirock XYP';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -72,7 +72,8 @@ export class HeavyBall extends TrainerCard {
 
   public name: string = 'Heavy Ball';
 
-  public fullName: string = 'Heavy Ball NXD';
+  public fullName: string = 'Heavy Ball (NXD 88)';
+  public legacyFullName = 'Heavy Ball NXD';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -13,7 +13,8 @@ export class LavenderTown extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'TEU';
   public name = 'Lavender Town';
-  public fullName = 'Lavender Town TEU';
+  public fullName = 'Lavender Town (TEU 147)';
+  public legacyFullName = 'Lavender Town TEU';
 
   public text = 'Once during each player\'s turn, that player may have their opponent reveal their hand.';
 

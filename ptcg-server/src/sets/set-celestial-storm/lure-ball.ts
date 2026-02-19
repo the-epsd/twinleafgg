@@ -17,7 +17,8 @@ export class LureBall extends TrainerCard {
   public setNumber: string = '138';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lure Ball';
-  public fullName: string = 'Lure Ball CES';
+  public fullName: string = 'Lure Ball (CES 138)';
+  public legacyFullName = 'Lure Ball CES';
   public text: string = 'Flip 3 coins. For each heads, put an Evolution Pokémon from your discard pile into your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

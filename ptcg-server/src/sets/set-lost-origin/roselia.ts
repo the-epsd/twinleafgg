@@ -24,7 +24,8 @@ export class Roselia extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public name = 'Roselia';
-  public fullName = 'Roselia LOR';
+  public fullName = 'Roselia (LOR 14)';
+  public legacyFullName = 'Roselia LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -30,7 +30,8 @@ export class Zekrom extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zekrom';
-  public fullName: string = 'Zekrom VIV';
+  public fullName: string = 'Zekrom (VIV 60)';
+  public legacyFullName = 'Zekrom VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

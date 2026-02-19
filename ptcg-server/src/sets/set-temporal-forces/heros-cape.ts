@@ -23,7 +23,8 @@ export class HerosCape extends TrainerCard {
 
   public name: string = 'Hero\'s Cape';
 
-  public fullName: string = 'Hero\'s Cape TEF';
+  public fullName: string = 'Hero\'s Cape (TEF 152)';
+  public legacyFullName = 'Hero\'s Cape TEF';
 
   public text: string =
     'The Pokémon this card is attached to gets +100 HP.';

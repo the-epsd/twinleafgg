@@ -27,7 +27,7 @@ export class Lickilicky extends PokemonCard {
       name: 'Tonguenado',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 60 damage for each heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Lickilicky extends PokemonCard {
   public setNumber: string = '153';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lickilicky';
-  public fullName: string = 'Lickilicky UNB';
+  public fullName: string = 'Lickilicky (UNB 153)';
+  public legacyFullName = 'Lickilicky UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Eat Up

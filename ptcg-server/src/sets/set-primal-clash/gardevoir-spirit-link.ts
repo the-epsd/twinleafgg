@@ -8,7 +8,8 @@ export class GardevoirSpiritLink extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'PRC';
   public name: string = 'Gardevoir Spirit Link';
-  public fullName: string = 'Gardevoir Spirit Link PRC';
+  public fullName: string = 'Gardevoir Spirit Link (PRC 130)';
+  public legacyFullName = 'Gardevoir Spirit Link PRC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '130';
 

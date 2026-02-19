@@ -45,7 +45,8 @@ export class Mightyena extends PokemonCard {
 
   public name: string = 'Mightyena';
 
-  public fullName: string = 'Mightyena ASR';
+  public fullName: string = 'Mightyena (ASR 96)';
+  public legacyFullName = 'Mightyena ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -6,7 +6,8 @@ import { MultiEnergy } from '../set-ex-sandstorm/multi-energy';
 import { SuperRod } from '../set-noble-victories/super-rod';
 
 export class MultiEnergyMT extends MultiEnergy {
-  public fullName = 'Multi Energy MT';
+  public fullName = 'Multi Energy (MT 118)';
+  public legacyFullName = 'Multi Energy MT';
   public name = 'Multi Energy';
   public set = 'MT';
   public setNumber = '118';
@@ -14,7 +15,8 @@ export class MultiEnergyMT extends MultiEnergy {
 }
 
 export class NightMaintenanceMT extends SuperRod {
-  public fullName = 'Night Maintenance MT';
+  public fullName = 'Night Maintenance (MT 113)';
+  public legacyFullName = 'Night Maintenance MT';
   public name = 'Night Maintenance';
   public set = 'MT';
   public setNumber = '113';
@@ -22,24 +24,28 @@ export class NightMaintenanceMT extends SuperRod {
 }
 export class DuskBallMT extends DuskBall {
   public setNumber = '110';
-  public fullName: string = 'Dusk Ball MT';
+  public fullName: string = 'Dusk Ball (MT 110)';
+  public legacyFullName = 'Dusk Ball MT';
   public set = 'MT';
 }
 
 export class QuickBallMT extends QuickBall {
   public setNumber = '114';
-  public fullName: string = 'Quick Ball MT';
+  public fullName: string = 'Quick Ball (MT 114)';
+  public legacyFullName = 'Quick Ball MT';
   public set = 'MT';
 }
 
 export class DarknessEnergySpecialMT extends DarknessEnergySpecial {
   public setNumber = '119';
-  public fullName: string = 'Darkness Energy MT';
+  public fullName: string = 'Darkness Energy (MT 119)';
+  public legacyFullName = 'Darkness Energy MT';
   public set = 'MT';
 }
 
 export class MetalEnergyN1MT extends MetalEnergyN1 {
   public setNumber = '120';
-  public fullName: string = 'Metal Energy MT';
+  public fullName: string = 'Metal Energy (MT 120)';
+  public legacyFullName = 'Metal Energy MT';
   public set = 'MT';
 }

@@ -13,7 +13,8 @@ export class PokeNav extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
   public name: string = 'PokéNav';
-  public fullName: string = 'PokéNav RS';
+  public fullName: string = 'PokéNav (RS 88)';
+  public legacyFullName = 'PokéNav RS';
 
   public text: string =
     'Look at the top 3 cards of your deck. You may reveal a Pokémon or Energy card you find there and put it into your hand. Put the other cards back in any order.';

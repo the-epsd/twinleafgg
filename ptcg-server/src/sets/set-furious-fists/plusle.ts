@@ -37,7 +37,8 @@ export class Plusle extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Plusle';
-  public fullName: string = 'Plusle FFI';
+  public fullName: string = 'Plusle (FFI 31)';
+  public legacyFullName = 'Plusle FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Positive Hand

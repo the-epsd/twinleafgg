@@ -35,7 +35,8 @@ export class Farfetchd extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Farfetch\'d';
-  public fullName: string = 'Farfetch\'d EVO';
+  public fullName: string = 'Farfetch\'d (EVO 68)';
+  public legacyFullName = 'Farfetch\'d EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Leek Slap

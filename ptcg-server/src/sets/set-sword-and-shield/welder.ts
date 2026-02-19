@@ -18,7 +18,8 @@ export class Welder extends TrainerCard {
   public set: string = 'UNB';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Welder';
-  public fullName: string = 'Welder UNB';
+  public fullName: string = 'Welder (UNB 189)';
+  public legacyFullName = 'Welder UNB';
   public setNumber = '189';
 
   public text: string =

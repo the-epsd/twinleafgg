@@ -40,7 +40,8 @@ export class Salamenceex extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salamence ex';
-  public fullName: string = 'Salamence ex DX';
+  public fullName: string = 'Salamence ex (DX 103)';
+  public legacyFullName = 'Salamence ex DX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

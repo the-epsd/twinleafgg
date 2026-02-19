@@ -20,5 +20,6 @@ export class AlolanRattata extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
   public name: string = 'Alolan Rattata';
-  public fullName: string = 'Alolan Rattata SUM';
+  public fullName: string = 'Alolan Rattata (SUM 76)';
+  public legacyFullName = 'Alolan Rattata SUM';
 }

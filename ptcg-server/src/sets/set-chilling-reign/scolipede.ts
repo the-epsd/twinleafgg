@@ -28,7 +28,7 @@ export class Scolipede extends PokemonCard {
       name: 'Venoshock',
       cost: [D, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 120 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Scolipede extends PokemonCard {
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scolipede';
-  public fullName: string = 'Scolipede CRE';
+  public fullName: string = 'Scolipede (CRE 107)';
+  public legacyFullName = 'Scolipede CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Sting

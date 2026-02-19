@@ -60,7 +60,8 @@ export class Pokegear30 extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'UNB';
   public name: string = 'Pokegear 3.0';
-  public fullName: string = 'Pokegear 3.0 UNB';
+  public fullName: string = 'Pokegear 3.0 (UNB 182)';
+  public legacyFullName = 'Pokegear 3.0 UNB';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '182';
 

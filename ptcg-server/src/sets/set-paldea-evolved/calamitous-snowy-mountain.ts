@@ -20,7 +20,8 @@ export class CalamitousSnowyMountain extends TrainerCard {
 
   public name = 'Calamitous Snowy Mountain';
 
-  public fullName = 'Calamitous Snowy Mountain PAL';
+  public fullName = 'Calamitous Snowy Mountain (PAL 174)';
+  public legacyFullName = 'Calamitous Snowy Mountain PAL';
 
   public text = 'Whenever any player attaches an Energy card from their hand to 1 of their Basic non-[W] Pokémon, put 2 damage counters on that Pokémon.';
 

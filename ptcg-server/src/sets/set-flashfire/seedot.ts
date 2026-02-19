@@ -22,7 +22,8 @@ export class Seedot extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
   public name = 'Seedot';
-  public fullName = 'Seedot FLF';
+  public fullName = 'Seedot (FLF 5)';
+  public legacyFullName = 'Seedot FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

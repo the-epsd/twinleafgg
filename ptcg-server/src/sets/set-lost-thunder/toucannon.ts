@@ -37,7 +37,8 @@ export class Toucannon extends PokemonCard {
   public setNumber: string = '166';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toucannon';
-  public fullName: string = 'Toucannon LOT';
+  public fullName: string = 'Toucannon (LOT 166)';
+  public legacyFullName = 'Toucannon LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Heat Beak

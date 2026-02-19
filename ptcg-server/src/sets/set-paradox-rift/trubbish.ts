@@ -31,7 +31,8 @@ export class Trubbish extends PokemonCard {
 
   public name: string = 'Trubbish';
 
-  public fullName: string = 'Trubbish PAR';
+  public fullName: string = 'Trubbish (PAR 116)';
+  public legacyFullName = 'Trubbish PAR';
 
   public cardImage: string = 'assets/cardback.png';
 

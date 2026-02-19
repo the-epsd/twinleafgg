@@ -29,7 +29,8 @@ export class Popplio extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Popplio';
-  public fullName: string = 'Popplio LOT';
+  public fullName: string = 'Popplio (LOT 64)';
+  public legacyFullName = 'Popplio LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Disarming Voice

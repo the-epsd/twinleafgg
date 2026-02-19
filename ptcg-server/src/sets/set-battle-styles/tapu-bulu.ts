@@ -27,7 +27,7 @@ export class TapuBulu extends PokemonCard {
       name: 'Nature\'s Judgment',
       cost: [G, G, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard all Energy from this Pokémon. If you do, this attack does 80 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class TapuBulu extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tapu Bulu';
-  public fullName: string = 'Tapu Bulu BST';
+  public fullName: string = 'Tapu Bulu (BST 16)';
+  public legacyFullName = 'Tapu Bulu BST';
 
   private usedPushDown: boolean = false;
 

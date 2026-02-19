@@ -47,7 +47,8 @@ export class AntiqueJawFossil extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '68';
   public name: string = 'Antique Jaw Fossil';
-  public fullName: string = 'Antique Jaw Fossil M3';
+  public fullName: string = 'Antique Jaw Fossil (M3 68)';
+  public legacyFullName = 'Antique Jaw Fossil M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Discard from play

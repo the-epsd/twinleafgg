@@ -31,5 +31,6 @@ export class Gothita extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothita';
-  public fullName: string = 'Gothita BCR';
+  public fullName: string = 'Gothita (BCR 75)';
+  public legacyFullName = 'Gothita BCR';
 }

@@ -40,7 +40,8 @@ export class Liepard extends PokemonCard {
   public setNumber: string = '136';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Liepard';
-  public fullName: string = 'Liepard UNM';
+  public fullName: string = 'Liepard (UNM 136)';
+  public legacyFullName = 'Liepard UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Shadow Scratch

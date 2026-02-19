@@ -22,7 +22,8 @@ export class Sprigatito extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Sprigatito';
-  public fullName: string = 'Sprigatito JTG';
+  public fullName: string = 'Sprigatito (JTG 16)';
+  public legacyFullName = 'Sprigatito JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

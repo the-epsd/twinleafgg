@@ -39,7 +39,8 @@ export class Kyurem extends PokemonCard {
 
   public name: string = 'Kyurem';
 
-  public fullName: string = 'Kyurem NVI';
+  public fullName: string = 'Kyurem (NVI 34)';
+  public legacyFullName = 'Kyurem NVI';
 
   public cardImage: string = 'assets/cardback.png';
 

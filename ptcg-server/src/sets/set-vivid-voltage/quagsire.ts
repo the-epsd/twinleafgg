@@ -36,7 +36,8 @@ export class Quagsire extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Quagsire';
-  public fullName: string = 'Quagsire VIV';
+  public fullName: string = 'Quagsire (VIV 84)';
+  public legacyFullName = 'Quagsire VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Fickle Impact

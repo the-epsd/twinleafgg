@@ -14,7 +14,8 @@ export class CrystalWall extends TrainerCard {
   public setNumber: string = '139';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crystal Wall';
-  public fullName: string = 'Crystal Wall BCR';
+  public fullName: string = 'Crystal Wall (BCR 139)';
+  public legacyFullName = 'Crystal Wall BCR';
   public text: string = 'If this card is attached to Black Kyurem-EX, its maximum HP is 300. You can\'t have more than 1 ACE SPEC card in your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

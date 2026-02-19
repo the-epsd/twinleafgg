@@ -32,5 +32,6 @@ export class Beldum extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beldum';
-  public fullName: string = 'Beldum AOR';
+  public fullName: string = 'Beldum (AOR 47)';
+  public legacyFullName = 'Beldum AOR';
 }

@@ -35,7 +35,8 @@ export class Zapdos extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zapdos';
-  public fullName: string = 'Zapdos HIF';
+  public fullName: string = 'Zapdos (HIF 24)';
+  public legacyFullName = 'Zapdos HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hurricane Call

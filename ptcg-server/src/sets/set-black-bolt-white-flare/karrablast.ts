@@ -29,7 +29,8 @@ export class Karrablast extends PokemonCard {
   public set: string = 'BLK';
   public regulationMark = 'I';
   public name: string = 'Karrablast';
-  public fullName: string = 'Karrablast BLK';
+  public fullName: string = 'Karrablast (BLK 9)';
+  public legacyFullName = 'Karrablast BLK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '9';
 

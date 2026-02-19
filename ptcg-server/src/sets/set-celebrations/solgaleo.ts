@@ -43,7 +43,8 @@ export class Solgaleo extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solgaleo';
-  public fullName: string = 'Solgaleo CEL';
+  public fullName: string = 'Solgaleo (CEL 21)';
+  public legacyFullName = 'Solgaleo CEL';
 
   public readonly RUSH_IN_MARKER = 'SOLGALEO_CEL_RUSH_IN_MARKER';
 

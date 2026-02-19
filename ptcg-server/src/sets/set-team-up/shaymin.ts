@@ -22,7 +22,7 @@ export class Shaymin extends PokemonCard {
       name: 'Flower Storm',
       cost: [G, G],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 30 damage times the amount of basic Energy attached to all of your Pokémon.'
     }
   ];
@@ -31,7 +31,8 @@ export class Shaymin extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shaymin \u25C7';
-  public fullName: string = 'Shaymin \u25C7 TEU';
+  public fullName: string = 'Shaymin \u25C7 (TEU 10)';
+  public legacyFullName = 'Shaymin \u25C7 TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flower Storm

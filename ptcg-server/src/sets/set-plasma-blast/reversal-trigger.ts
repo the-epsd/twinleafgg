@@ -13,7 +13,8 @@ export class ReversalTrigger extends TrainerCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Reversal Trigger';
-  public fullName: string = 'Reversal Trigger PLB';
+  public fullName: string = 'Reversal Trigger (PLB 86)';
+  public legacyFullName = 'Reversal Trigger PLB';
   public text: string = 'When the Team Plasma Pokémon this card is attached to is Knocked Out by damage from an opponent\'s attack, search your deck for a card and put it into your hand. Shuffle your deck afterward.';
 
   public damageDealt = false;

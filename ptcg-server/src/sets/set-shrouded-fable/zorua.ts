@@ -42,7 +42,8 @@ export class Zorua extends PokemonCard {
 
   public name: string = 'Zorua';
 
-  public fullName: string = 'Zorua SFA';
+  public fullName: string = 'Zorua (SFA 31)';
+  public legacyFullName = 'Zorua SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

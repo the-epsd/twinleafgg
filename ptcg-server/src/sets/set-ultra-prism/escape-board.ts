@@ -16,7 +16,8 @@ export class EscapeBoard extends TrainerCard {
 
   public name: string = 'Escape Board';
 
-  public fullName: string = 'Escape Board UPR';
+  public fullName: string = 'Escape Board (UPR 122)';
+  public legacyFullName = 'Escape Board UPR';
 
   public cardImage: string = 'assets/cardback.png';
 

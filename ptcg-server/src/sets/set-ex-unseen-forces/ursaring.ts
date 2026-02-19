@@ -39,7 +39,8 @@ export class Ursaring extends PokemonCard {
 
   public set: string = 'UF';
   public name: string = 'Ursaring';
-  public fullName: string = 'Ursaring UF';
+  public fullName: string = 'Ursaring (UF 18)';
+  public legacyFullName = 'Ursaring UF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
 

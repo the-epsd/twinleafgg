@@ -36,7 +36,8 @@ export class UmbreonStar extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Umbreon Star';
-  public fullName: string = 'Umbreon Star P5';
+  public fullName: string = 'Umbreon Star (P5 17)';
+  public legacyFullName = 'Umbreon Star P5';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

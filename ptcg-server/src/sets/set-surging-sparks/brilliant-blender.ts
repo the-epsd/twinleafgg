@@ -61,7 +61,8 @@ export class BrilliantBlender extends TrainerCard {
   public regulationMark = 'H';
   public set: string = 'SSP';
   public name: string = 'Brilliant Blender';
-  public fullName: string = 'Brilliant Blender SSP';
+  public fullName: string = 'Brilliant Blender (SSP 164)';
+  public legacyFullName = 'Brilliant Blender SSP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '164';
 

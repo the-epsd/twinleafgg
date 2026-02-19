@@ -28,7 +28,8 @@ export class UnownDAMAGE extends PokemonCard {
   public setNumber = '90';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Unown';
-  public fullName: string = 'Unown DAMAGE LOT';
+  public fullName: string = 'Unown (LOT 90)';
+  public legacyFullName = 'Unown DAMAGE LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // DAMAGE

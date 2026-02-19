@@ -38,7 +38,8 @@ export class DragapultV extends PokemonCard {
 
   public name: string = 'Dragapult V';
 
-  public fullName: string = 'Dragapult V RCL';
+  public fullName: string = 'Dragapult V (RCL 92)';
+  public legacyFullName = 'Dragapult V RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

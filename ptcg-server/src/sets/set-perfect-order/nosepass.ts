@@ -20,5 +20,6 @@ export class Nosepass extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '36';
   public name: string = 'Nosepass';
-  public fullName: string = 'Nosepass M3';
+  public fullName: string = 'Nosepass (M3 36)';
+  public legacyFullName = 'Nosepass M3';
 }

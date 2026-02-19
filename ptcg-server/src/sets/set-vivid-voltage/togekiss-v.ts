@@ -22,7 +22,7 @@ export class TogekissV extends PokemonCard {
       name: 'White Wind',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 70 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class TogekissV extends PokemonCard {
   public setNumber: string = '140';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togekiss V';
-  public fullName: string = 'Togekiss V VIV';
+  public fullName: string = 'Togekiss V (VIV 140)';
+  public legacyFullName = 'Togekiss V VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: White Wind

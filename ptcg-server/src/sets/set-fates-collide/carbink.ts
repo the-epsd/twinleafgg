@@ -29,7 +29,7 @@ export class Carbink extends PokemonCard {
       name: 'Stone Edge',
       cost: [F, F, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Carbink extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carbink';
-  public fullName: string = 'Carbink FCO';
+  public fullName: string = 'Carbink (FCO 49)';
+  public legacyFullName = 'Carbink FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Energy Keeper

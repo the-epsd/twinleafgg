@@ -32,7 +32,8 @@ export class Fraxure extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fraxure';
-  public fullName: string = 'Fraxure DRV';
+  public fullName: string = 'Fraxure (DRV 14)';
+  public legacyFullName = 'Fraxure DRV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Grit - passive ability: +40 damage when affected by Special Condition

@@ -35,7 +35,8 @@ export class Dondozo extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '61';
   public name: string = 'Dondozo';
-  public fullName: string = 'Dondozo SVI';
+  public fullName: string = 'Dondozo (SVI 61)';
+  public legacyFullName = 'Dondozo SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

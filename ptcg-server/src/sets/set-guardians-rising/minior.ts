@@ -37,7 +37,8 @@ export class Minior extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Minior';
-  public fullName: string = 'Minior GRI';
+  public fullName: string = 'Minior (GRI 77)';
+  public legacyFullName = 'Minior GRI';
 
   public usedCosmicsplosion: boolean = false;
 

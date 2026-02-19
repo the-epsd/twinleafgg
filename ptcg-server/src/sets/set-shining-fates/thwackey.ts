@@ -34,7 +34,8 @@ export class Thwackey extends PokemonCard {
   public regulationMark: string = 'D';
   public set: string = 'SHF';
   public name: string = 'Thwackey';
-  public fullName: string = 'Thwackey SHF';
+  public fullName: string = 'Thwackey (SHF 12)';
+  public legacyFullName = 'Thwackey SHF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
 

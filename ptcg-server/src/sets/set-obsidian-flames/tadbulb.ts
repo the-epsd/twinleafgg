@@ -23,7 +23,8 @@ export class Tadbulb extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '75';
   public name: string = 'Tadbulb';
-  public fullName: string = 'Tadbulb OBF';
+  public fullName: string = 'Tadbulb (OBF 75)';
+  public legacyFullName = 'Tadbulb OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

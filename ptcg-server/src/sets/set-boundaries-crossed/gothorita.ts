@@ -36,7 +36,8 @@ export class Gothorita extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothorita';
-  public fullName: string = 'Gothorita BCR';
+  public fullName: string = 'Gothorita (BCR 76)';
+  public legacyFullName = 'Gothorita BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Destructive Beam

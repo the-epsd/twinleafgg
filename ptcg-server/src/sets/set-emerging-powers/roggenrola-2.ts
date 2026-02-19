@@ -32,7 +32,8 @@ export class Roggenrola2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '49';
   public name: string = 'Roggenrola';
-  public fullName: string = 'Roggenrola EPO 49';
+  public fullName: string = 'Roggenrola (EPO 49)';
+  public legacyFullName = 'Roggenrola EPO 49';
 
   public readonly HARDEN_MARKER = 'HARDEN_MARKER';
 

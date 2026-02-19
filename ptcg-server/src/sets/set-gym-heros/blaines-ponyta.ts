@@ -25,7 +25,8 @@ export class BlainesPonyta extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '63';
   public name: string = 'Blaine\'s Ponyta';
-  public fullName: string = 'Blaine\'s Ponyta G1';
+  public fullName: string = 'Blaine\'s Ponyta (G1 63)';
+  public legacyFullName = 'Blaine\'s Ponyta G1';
 
   public readonly AGILITY_MARKER = 'AGILITY_MARKER';
 

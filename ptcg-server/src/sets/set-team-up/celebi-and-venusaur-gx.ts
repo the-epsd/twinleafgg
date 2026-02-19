@@ -38,7 +38,8 @@ export class CelebiVenusaurGX extends PokemonCard {
   public setNumber = '1';
   public cardImage = 'assets/cardback.png';
   public name = 'Celebi & Venusaur-GX';
-  public fullName = 'Celebi & Venusaur-GX TEU';
+  public fullName = 'Celebi & Venusaur-GX (TEU 1)';
+  public legacyFullName = 'Celebi & Venusaur-GX TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Pollen Hazard

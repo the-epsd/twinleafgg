@@ -31,7 +31,8 @@ export class Wimpod extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';
   public name: string = 'Wimpod';
-  public fullName: string = 'Wimpod PAR';
+  public fullName: string = 'Wimpod (PAR 48)';
+  public legacyFullName = 'Wimpod PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sneaky Snacking

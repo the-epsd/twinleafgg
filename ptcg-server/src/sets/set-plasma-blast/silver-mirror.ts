@@ -12,7 +12,8 @@ export class SilverMirror extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'PLB';
   public name: string = 'Silver Mirror';
-  public fullName: string = 'Silver Mirror PLB';
+  public fullName: string = 'Silver Mirror (PLB 89)';
+  public legacyFullName = 'Silver Mirror PLB';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '89';
 

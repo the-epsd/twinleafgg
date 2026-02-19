@@ -17,7 +17,8 @@ export class EthansAdventure extends TrainerCard {
 
   public name = 'Ethan\'s Adventure';
 
-  public fullName = 'Ethan\'s Adventure DRI';
+  public fullName = 'Ethan\'s Adventure (DRI 165)';
+  public legacyFullName = 'Ethan\'s Adventure DRI';
 
   public text = 'Search your deck for up to 3 in any combination of Ethan\'s Pokémon and Basic [R] Energy, reveal them, and put them into your hand. Then, shuffle your deck.';
 

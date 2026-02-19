@@ -31,7 +31,8 @@ export class MalamarVmax extends PokemonCard {
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Malamar VMAX';
-  public fullName: string = 'Malamar VMAX RCL';
+  public fullName: string = 'Malamar VMAX (RCL 122)';
+  public legacyFullName = 'Malamar VMAX RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Max Jammer

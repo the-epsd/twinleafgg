@@ -31,7 +31,8 @@ export class Poliwhirl extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
   public name: string = 'Poliwhirl';
-  public fullName: string = 'Poliwhirl EVO';
+  public fullName: string = 'Poliwhirl (EVO 24)';
+  public legacyFullName = 'Poliwhirl EVO';
 
   public AMNESIA_ATTACK: Attack | undefined;
 

@@ -32,7 +32,8 @@ export class MSteelixEx extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Steelix-EX';
-  public fullName: string = 'M Steelix-EX STS';
+  public fullName: string = 'M Steelix-EX (STS 68)';
+  public legacyFullName = 'M Steelix-EX STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Canyon Axe

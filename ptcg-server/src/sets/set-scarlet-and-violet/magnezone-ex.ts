@@ -48,7 +48,8 @@ export class Magnezoneex extends PokemonCard {
 
   public name: string = 'Magnezone ex';
 
-  public fullName: string = 'Magnezone ex SVI';
+  public fullName: string = 'Magnezone ex (SVI 65)';
+  public legacyFullName = 'Magnezone ex SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

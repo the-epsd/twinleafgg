@@ -40,7 +40,8 @@ export class Espurr extends PokemonCard {
 
   public name: string = 'Espurr';
 
-  public fullName: string = 'Espurr UNB';
+  public fullName: string = 'Espurr (UNB 79)';
+  public legacyFullName = 'Espurr UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

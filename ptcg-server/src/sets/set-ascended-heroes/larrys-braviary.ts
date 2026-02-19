@@ -32,7 +32,8 @@ export class LarrysBraviary extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '174';
   public name: string = 'Larry\'s Braviary';
-  public fullName: string = 'Larry\'s Braviary MC';
+  public fullName: string = 'Larry\'s Braviary (ASC 174)';
+  public legacyFullName = 'Larry\'s Braviary MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -36,7 +36,8 @@ export class Gogoat extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gogoat';
-  public fullName: string = 'Gogoat FLI';
+  public fullName: string = 'Gogoat (FLI 10)';
+  public legacyFullName = 'Gogoat FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Milk Drink

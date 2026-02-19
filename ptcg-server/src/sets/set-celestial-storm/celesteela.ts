@@ -30,7 +30,8 @@ export class Celesteela extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celesteela';
-  public fullName: string = 'Celesteela CES';
+  public fullName: string = 'Celesteela (CES 100)';
+  public legacyFullName = 'Celesteela CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Moon Raker

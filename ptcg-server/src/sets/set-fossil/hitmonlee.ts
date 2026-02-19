@@ -38,7 +38,8 @@ export class Hitmonlee extends PokemonCard {
 
   public name: string = 'Hitmonlee';
 
-  public fullName: string = 'Hitmonlee FO';
+  public fullName: string = 'Hitmonlee (FO 7)';
+  public legacyFullName = 'Hitmonlee FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

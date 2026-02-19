@@ -29,7 +29,7 @@ export class Golbat extends PokemonCard {
       name: 'Acrobatics',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class Golbat extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golbat';
-  public fullName: string = 'Golbat SUM';
+  public fullName: string = 'Golbat (SUM 55)';
+  public legacyFullName = 'Golbat SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Super Poison Breath

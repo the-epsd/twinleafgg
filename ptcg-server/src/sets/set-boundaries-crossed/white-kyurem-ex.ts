@@ -37,7 +37,8 @@ export class WhiteKyuremEx extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'White Kyurem-EX';
-  public fullName: string = 'White Kyurem-EX BCR';
+  public fullName: string = 'White Kyurem-EX (BCR 103)';
+  public legacyFullName = 'White Kyurem-EX BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dragon Stream

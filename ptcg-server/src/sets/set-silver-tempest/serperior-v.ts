@@ -42,7 +42,8 @@ export class SerperiorV extends PokemonCard {
 
   public name: string = 'Serperior V';
 
-  public fullName: string = 'Serperior V SIT 7';
+  public fullName: string = 'Serperior V (SIT 7)';
+  public legacyFullName = 'Serperior V SIT 7';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

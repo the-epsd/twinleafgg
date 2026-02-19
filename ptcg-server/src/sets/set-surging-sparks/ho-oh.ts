@@ -44,7 +44,8 @@ export class HoOh extends PokemonCard {
 
   public name: string = 'Ho-Oh';
 
-  public fullName: string = 'Ho-Oh SSP';
+  public fullName: string = 'Ho-Oh (SSP 19)';
+  public legacyFullName = 'Ho-Oh SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -25,5 +25,6 @@ export class Minccino2 extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Minccino';
-  public fullName: string = 'Minccino FCO 87';
+  public fullName: string = 'Minccino (FCO 87)';
+  public legacyFullName = 'Minccino FCO 87';
 }

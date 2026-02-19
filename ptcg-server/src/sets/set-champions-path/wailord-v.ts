@@ -27,7 +27,7 @@ export class WailordV extends PokemonCard {
       name: 'Ocean Waves',
       cost: [W, W, W, W],
       damage: 120,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 120 damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class WailordV extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wailord V';
-  public fullName: string = 'Wailord V CPA';
+  public fullName: string = 'Wailord V (CPA 13)';
+  public legacyFullName = 'Wailord V CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Draw Up

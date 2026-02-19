@@ -24,7 +24,8 @@ export class Mienfoo extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mienfoo';
-  public fullName: string = 'Mienfoo NXD';
+  public fullName: string = 'Mienfoo (NXD 67)';
+  public legacyFullName = 'Mienfoo NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

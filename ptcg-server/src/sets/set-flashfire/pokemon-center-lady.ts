@@ -16,7 +16,8 @@ export class PokemonCenterLady extends TrainerCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pokémon Center Lady';
-  public fullName: string = 'Pokémon Center Lady FLF';
+  public fullName: string = 'Pokémon Center Lady (FLF 93)';
+  public legacyFullName = 'Pokémon Center Lady FLF';
   public text: string = 'Heal 60 damage and remove all Special Conditions from 1 of your Pokémon. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

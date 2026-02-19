@@ -75,7 +75,8 @@ export class Alakazam extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
   public name: string = 'Alakazam';
-  public fullName: string = 'Alakazam BS';
+  public fullName: string = 'Alakazam (BS 1)';
+  public legacyFullName = 'Alakazam BS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

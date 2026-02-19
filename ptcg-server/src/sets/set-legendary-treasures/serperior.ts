@@ -37,7 +37,8 @@ export class Serperior extends PokemonCard {
   public setNumber: string = 'RC3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Serperior';
-  public fullName: string = 'Serperior LTR';
+  public fullName: string = 'Serperior (LTR RC3)';
+  public legacyFullName = 'Serperior LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Royal Garden

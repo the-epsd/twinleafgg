@@ -36,7 +36,8 @@ export class Buizel extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Buizel';
-  public fullName: string = 'Buizel FLF';
+  public fullName: string = 'Buizel (FLF 28)';
+  public legacyFullName = 'Buizel FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/taillow.ts (Aerial Ace)

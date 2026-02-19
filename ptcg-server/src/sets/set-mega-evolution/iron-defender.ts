@@ -18,7 +18,8 @@ export class IronDefender extends TrainerCard {
   public cardImage = 'assets/cardback.png';
   public regulationMark: string = 'I';
   public name: string = 'Iron Defender';
-  public fullName: string = 'Iron Defender M1L';
+  public fullName: string = 'Iron Defender (MEG 118)';
+  public legacyFullName = 'Iron Defender M1L';
 
   public text: string = 'During your opponent\'s next turn, all of your [M] Pokémon take 30 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance). (This includes new Pokémon that come into play.)';
 

@@ -17,7 +17,8 @@ export class ArchiesAceInTheHole extends TrainerCard {
 
   public name: string = 'Archie\'s Ace in the Hole';
 
-  public fullName: string = 'Archie\'s Ace in the Hole PRC';
+  public fullName: string = 'Archie\'s Ace in the Hole (PRC 124)';
+  public legacyFullName = 'Archie\'s Ace in the Hole PRC';
 
   public cardImage: string = 'assets/cardback.png';
 

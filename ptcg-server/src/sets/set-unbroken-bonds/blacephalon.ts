@@ -32,7 +32,8 @@ export class Blacephalon extends PokemonCard {
   public setNumber = '32';
   public cardImage = 'assets/cardback.png';
   public name = 'Blacephalon';
-  public fullName = 'Blacephalon UNB';
+  public fullName = 'Blacephalon (UNB 32)';
+  public legacyFullName = 'Blacephalon UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Blazer

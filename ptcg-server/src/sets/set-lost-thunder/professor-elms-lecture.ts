@@ -67,7 +67,8 @@ export class ProfessorElmLecture extends TrainerCard {
 
   public name: string = 'Professor Elm\'s Lecture';
 
-  public fullName: string = 'Professor Elm\'s Lecture LOT';
+  public fullName: string = 'Professor Elm\'s Lecture (LOT 188)';
+  public legacyFullName = 'Professor Elm\'s Lecture LOT';
 
   public text: string =
     'Search your deck for up to 3 Pokémon with 60 HP or less, reveal them, and put them into your hand. Then, shuffle your deck.';

@@ -34,7 +34,8 @@ export class Jellicent extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jellicent';
-  public fullName: string = 'Jellicent NXD';
+  public fullName: string = 'Jellicent (NXD 35)';
+  public legacyFullName = 'Jellicent NXD';
 
   public readonly DAMAGE_RECEIVED_MARKER = 'DAMAGE_RECEIVED_MARKER';
   private lastDamageReceived: number = 0;

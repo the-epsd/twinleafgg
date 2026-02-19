@@ -39,7 +39,8 @@ export class Vaporeon extends PokemonCard {
 
   public name: string = 'Vaporeon';
 
-  public fullName: string = 'Vaporeon JU';
+  public fullName: string = 'Vaporeon (JU 12)';
+  public legacyFullName = 'Vaporeon JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

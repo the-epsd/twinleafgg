@@ -27,7 +27,7 @@ export class Zygarde extends PokemonCard {
       name: 'Peace Maker',
       cost: [F],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent has an Ultra Beast in play, this attack does 30 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Zygarde extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zygarde';
-  public fullName: string = 'Zygarde FLI';
+  public fullName: string = 'Zygarde (FLI 71)';
+  public legacyFullName = 'Zygarde FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Earthen Aura (passive - ignore Weakness/Resistance on this Pokemon's attacks)

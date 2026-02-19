@@ -44,7 +44,8 @@ export class Weavile extends PokemonCard {
 
   public name: string = 'Weavile';
 
-  public fullName: string = 'Weavile UPR';
+  public fullName: string = 'Weavile (UPR 74)';
+  public legacyFullName = 'Weavile UPR';
 
   public evolvesFrom = 'Sneasel';
 

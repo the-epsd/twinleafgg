@@ -131,7 +131,8 @@ export class Meganium extends PokemonCard {
 
   public set: string = 'LOT';
   public name: string = 'Meganium';
-  public fullName: string = 'Meganium LOT';
+  public fullName: string = 'Meganium (LOT 8)';
+  public legacyFullName = 'Meganium LOT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
 

@@ -44,7 +44,8 @@ export class AmpharosGx extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ampharos-GX';
-  public fullName: string = 'Ampharos-GX TEU';
+  public fullName: string = 'Ampharos-GX (TEU 43)';
+  public legacyFullName = 'Ampharos-GX TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Power Recharge

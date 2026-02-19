@@ -36,7 +36,8 @@ export class Lycanroc extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lycanroc';
-  public fullName: string = 'Lycanroc CPA';
+  public fullName: string = 'Lycanroc (CPA 30)';
+  public legacyFullName = 'Lycanroc CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Slashing Strike

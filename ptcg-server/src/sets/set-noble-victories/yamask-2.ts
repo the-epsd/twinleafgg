@@ -24,7 +24,8 @@ export class Yamask2 extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yamask';
-  public fullName: string = 'Yamask NVI 45';
+  public fullName: string = 'Yamask (NVI 45)';
+  public legacyFullName = 'Yamask NVI 45';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

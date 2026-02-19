@@ -28,7 +28,7 @@ export class Magmortar extends PokemonCard {
       name: 'Ground Burn',
       cost: [R, R, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Each player discards the top card of their deck. This attack does 100 more damage for each Energy card discarded in this way.'
     }
   ];
@@ -38,7 +38,8 @@ export class Magmortar extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magmortar';
-  public fullName: string = 'Magmortar RCL';
+  public fullName: string = 'Magmortar (RCL 30)';
+  public legacyFullName = 'Magmortar RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Burst Punch

@@ -33,7 +33,8 @@ export class Salamence extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salamence';
-  public fullName: string = 'Salamence PLB';
+  public fullName: string = 'Salamence (PLB 64)';
+  public legacyFullName = 'Salamence PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Breakwing - when evolved, discard all opponent's tools

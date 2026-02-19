@@ -30,7 +30,8 @@ export class Deino2 extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Deino';
-  public fullName: string = 'Deino PLF 76';
+  public fullName: string = 'Deino (PLF 76)';
+  public legacyFullName = 'Deino PLF 76';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

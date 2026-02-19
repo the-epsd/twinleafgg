@@ -35,7 +35,8 @@ export class LilliesClefairyex extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lillie\'s Clefairy ex';
-  public fullName: string = 'Lillie\'s Clefairy ex JTG';
+  public fullName: string = 'Lillie\'s Clefairy ex (JTG 56)';
+  public legacyFullName = 'Lillie\'s Clefairy ex JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -30,7 +30,8 @@ export class Kingler extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '38';
   public name: string = 'Kingler';
-  public fullName: string = 'Kingler FO';
+  public fullName: string = 'Kingler (FO 38)';
+  public legacyFullName = 'Kingler FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

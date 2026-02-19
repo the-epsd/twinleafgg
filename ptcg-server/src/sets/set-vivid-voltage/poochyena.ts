@@ -32,5 +32,6 @@ export class Poochyena extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poochyena';
-  public fullName: string = 'Poochyena VIV';
+  public fullName: string = 'Poochyena (VIV 103)';
+  public legacyFullName = 'Poochyena VIV';
 }

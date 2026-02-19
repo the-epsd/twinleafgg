@@ -16,7 +16,8 @@ export class GalarianChestplate extends TrainerCard {
   public setNumber: string = '141';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Chestplate';
-  public fullName: string = 'Galarian Chestplate CRE';
+  public fullName: string = 'Galarian Chestplate (CRE 141)';
+  public legacyFullName = 'Galarian Chestplate CRE';
   public text: string = 'Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached. If the Pokémon this card is attached to has "Galarian" in its name, it takes 30 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance). You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

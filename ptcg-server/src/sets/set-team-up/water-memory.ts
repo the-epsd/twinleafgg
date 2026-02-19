@@ -15,7 +15,8 @@ export class WaterMemory extends TrainerCard {
   public setNumber: string = '157';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Water Memory';
-  public fullName: string = 'Water Memory TEU';
+  public fullName: string = 'Water Memory (TEU 157)';
+  public legacyFullName = 'Water Memory TEU';
   public text: string = 'The Silvally-GX this card is attached to is a Water Pokémon.';
 
   // Ref: set-ultra-prism/fire-memory.ts (Fire Memory - CheckPokemonTypeEffect)

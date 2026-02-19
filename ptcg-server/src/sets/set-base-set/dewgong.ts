@@ -13,7 +13,8 @@ export class Dewgong extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Dewgong BS';
+  public fullName = 'Dewgong (BS 25)';
+  public legacyFullName = 'Dewgong BS';
 
   public cardType: CardType = CardType.WATER;
 

@@ -51,7 +51,8 @@ export class Liepard extends PokemonCard {
 
   public name: string = 'Liepard';
 
-  public fullName: string = 'Liepard BRS';
+  public fullName: string = 'Liepard (BRS 91)';
+  public legacyFullName = 'Liepard BRS';
 
   public readonly TRADE_MARKER = 'TRADE_MARKER';
 

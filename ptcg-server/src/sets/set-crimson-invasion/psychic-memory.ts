@@ -15,7 +15,8 @@ export class PsychicMemory extends TrainerCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Psychic Memory';
-  public fullName: string = 'Psychic Memory CIN';
+  public fullName: string = 'Psychic Memory (CIN 98)';
+  public legacyFullName = 'Psychic Memory CIN';
   public text: string = 'The Silvally-GX this card is attached to is a Psychic Pokémon.';
 
   // Ref: set-ancient-origins/golurk.ts (Double Type - CheckPokemonTypeEffect)

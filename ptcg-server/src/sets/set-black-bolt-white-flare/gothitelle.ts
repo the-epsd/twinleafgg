@@ -36,7 +36,8 @@ export class Gothitelle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '43';
   public name: string = 'Gothitelle';
-  public fullName: string = 'Gothitelle WHT';
+  public fullName: string = 'Gothitelle (WHT 43)';
+  public legacyFullName = 'Gothitelle WHT';
 
   public readonly DISTORTED_FUTURE_MARKER = 'DISTORTED_FUTURE_MARKER';
 

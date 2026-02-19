@@ -22,7 +22,8 @@ export class TeamRocketsHandiwork extends TrainerCard {
 
   public name: string = 'Team Rocket\'s Handiwork';
 
-  public fullName: string = 'Team Rocket\'s Handiwork FCO';
+  public fullName: string = 'Team Rocket\'s Handiwork (FCO 112)';
+  public legacyFullName = 'Team Rocket\'s Handiwork FCO';
 
   public text: string = 'Flip 2 coins. For each heads, discard 2 cards from the top of your opponent\'s deck.';
 

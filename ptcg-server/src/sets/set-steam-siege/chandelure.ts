@@ -37,7 +37,7 @@ export class Chandelure extends PokemonCard {
       name: 'Past Friends',
       cost: [P, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each Supporter card in your discard pile.'
     }
   ];
@@ -46,7 +46,8 @@ export class Chandelure extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chandelure';
-  public fullName: string = 'Chandelure STS';
+  public fullName: string = 'Chandelure (STS 50)';
+  public legacyFullName = 'Chandelure STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sinister Selection

@@ -31,7 +31,8 @@ export class TeamRocketsSneasel extends PokemonCard {
   public setNumber: string = '128';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Sneasel';
-  public fullName: string = 'Team Rocket\'s Sneasel DRI';
+  public fullName: string = 'Team Rocket\'s Sneasel (DRI 128)';
+  public legacyFullName = 'Team Rocket\'s Sneasel DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

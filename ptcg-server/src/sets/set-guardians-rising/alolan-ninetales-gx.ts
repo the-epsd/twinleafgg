@@ -43,7 +43,8 @@ export class AlolanNinetalesGX extends PokemonCard {
   ];
   public set: string = 'GRI';
   public name: string = 'Alolan Ninetales-GX';
-  public fullName: string = 'Alolan Ninetales-GX GRI';
+  public fullName: string = 'Alolan Ninetales-GX (GRI 22)';
+  public legacyFullName = 'Alolan Ninetales-GX GRI';
   public setNumber = '22';
   public cardImage = 'assets/cardback.png';
 

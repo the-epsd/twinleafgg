@@ -48,7 +48,8 @@ export class FlutterMane extends PokemonCard {
 
   public name: string = 'Flutter Mane';
 
-  public fullName: string = 'Flutter Mane TEF';
+  public fullName: string = 'Flutter Mane (TEF 78)';
+  public legacyFullName = 'Flutter Mane TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

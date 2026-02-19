@@ -24,7 +24,8 @@ export class Sudowoodo extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sudowoodo';
-  public fullName: string = 'Sudowoodo BKP';
+  public fullName: string = 'Sudowoodo (BKP 67)';
+  public legacyFullName = 'Sudowoodo BKP';
 
   // Ref: set-team-up/mimikyu.ts (Copycat)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -29,7 +29,8 @@ export class Azelf extends PokemonCard {
 
   public set: string = 'MT';
   public name: string = 'Azelf';
-  public fullName: string = 'Azelf MT';
+  public fullName: string = 'Azelf (MT 4)';
+  public legacyFullName = 'Azelf MT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
 

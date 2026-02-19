@@ -38,7 +38,8 @@ export class Aggron extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aggron';
-  public fullName: string = 'Aggron DRX';
+  public fullName: string = 'Aggron (DRX 80)';
+  public legacyFullName = 'Aggron DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/ninjask.ts (on-evolve trigger + ability-block check)

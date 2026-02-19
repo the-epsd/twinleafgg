@@ -36,6 +36,7 @@ export class Dwebble extends PokemonCard {
 
   public name: string = 'Dwebble';
 
-  public fullName: string = 'Dwebble DEX';
+  public fullName: string = 'Dwebble (DEX 7)';
+  public legacyFullName = 'Dwebble DEX';
 
 }

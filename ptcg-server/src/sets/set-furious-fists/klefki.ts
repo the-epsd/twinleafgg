@@ -37,7 +37,8 @@ export class Klefki extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klefki';
-  public fullName: string = 'Klefki FFI';
+  public fullName: string = 'Klefki (FFI 73)';
+  public legacyFullName = 'Klefki FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Secret Key (passive - modify resistance)

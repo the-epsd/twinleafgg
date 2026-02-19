@@ -37,7 +37,8 @@ export class Eelektrik extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eelektrik';
-  public fullName: string = 'Eelektrik VIV';
+  public fullName: string = 'Eelektrik (VIV 58)';
+  public legacyFullName = 'Eelektrik VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shocking Smash

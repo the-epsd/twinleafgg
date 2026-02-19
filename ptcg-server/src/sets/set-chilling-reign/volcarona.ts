@@ -37,7 +37,8 @@ export class Volcarona extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Volcarona';
-  public fullName: string = 'Volcarona CRE';
+  public fullName: string = 'Volcarona (CRE 24)';
+  public legacyFullName = 'Volcarona CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Fire Spin

@@ -20,7 +20,8 @@ export class Brigette extends TrainerCard {
 
   public name: string = 'Brigette';
 
-  public fullName: string = 'Brigette BKT';
+  public fullName: string = 'Brigette (BKT 134)';
+  public legacyFullName = 'Brigette BKT';
 
   public text: string =
     'Search your deck for 1 Basic Pokémon-EX or 3 Basic Pokémon (except for Pokémon-EX) and put them onto your Bench. Shuffle your deck afterward.';

@@ -31,7 +31,8 @@ export class Purrloin extends PokemonCard {
 
   public name: string = 'Purrloin';
 
-  public fullName: string = 'Purrloin BRS';
+  public fullName: string = 'Purrloin (BRS 90)';
+  public legacyFullName = 'Purrloin BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

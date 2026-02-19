@@ -15,6 +15,7 @@ export class LightningEnergy extends EnergyCard {
 
   public name = 'Lightning Energy';
 
-  public fullName = 'Lightning Energy SVE';
+  public fullName = 'Lightning Energy (SVE 4)';
+  public legacyFullName = 'Lightning Energy SVE';
 
 }

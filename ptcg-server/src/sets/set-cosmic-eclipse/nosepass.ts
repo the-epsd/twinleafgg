@@ -34,7 +34,8 @@ export class Nosepass extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nosepass';
-  public fullName: string = 'Nosepass CEC';
+  public fullName: string = 'Nosepass (CEC 106)';
+  public legacyFullName = 'Nosepass CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Draw Toward

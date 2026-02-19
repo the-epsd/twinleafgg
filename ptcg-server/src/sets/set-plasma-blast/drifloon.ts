@@ -29,7 +29,8 @@ export class Drifloon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '34';
   public name: string = 'Drifloon';
-  public fullName: string = 'Drifloon PLB';
+  public fullName: string = 'Drifloon (PLB 34)';
+  public legacyFullName = 'Drifloon PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

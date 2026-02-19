@@ -36,7 +36,8 @@ export class Salazzle extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salazzle';
-  public fullName: string = 'Salazzle GRI';
+  public fullName: string = 'Salazzle (GRI 16)';
+  public legacyFullName = 'Salazzle GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Hot Poison (on-evolve)

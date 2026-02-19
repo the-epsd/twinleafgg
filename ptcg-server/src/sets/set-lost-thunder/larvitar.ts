@@ -35,7 +35,8 @@ export class Larvitar extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Larvitar';
-  public fullName: string = 'Larvitar LOT';
+  public fullName: string = 'Larvitar (LOT 114)';
+  public legacyFullName = 'Larvitar LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Submerge (passive - prevent all damage on bench)

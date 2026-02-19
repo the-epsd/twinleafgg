@@ -31,7 +31,8 @@ export class Sharpedo extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sharpedo';
-  public fullName: string = 'Sharpedo CPA';
+  public fullName: string = 'Sharpedo (CPA 12)';
+  public legacyFullName = 'Sharpedo CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Aqua Jet

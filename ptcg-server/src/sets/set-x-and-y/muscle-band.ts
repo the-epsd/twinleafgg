@@ -16,7 +16,8 @@ export class MuscleBand extends TrainerCard {
 
   public name: string = 'Muscle Band';
 
-  public fullName: string = 'Muscle Band XY';
+  public fullName: string = 'Muscle Band (XY 121)';
+  public legacyFullName = 'Muscle Band XY';
 
   public cardImage: string = 'assets/cardback.png';
 

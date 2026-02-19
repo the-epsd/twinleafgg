@@ -40,7 +40,8 @@ export class Gengar extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gengar';
-  public fullName: string = 'Gengar SSH';
+  public fullName: string = 'Gengar (SSH 85)';
+  public legacyFullName = 'Gengar SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Life Shaker

@@ -31,7 +31,8 @@ export class Garchomp2 extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Garchomp';
-  public fullName: string = 'Garchomp DRX 91';
+  public fullName: string = 'Garchomp (DRX 91)';
+  public legacyFullName = 'Garchomp DRX 91';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Sand Tomb - Defending Pokemon can't retreat

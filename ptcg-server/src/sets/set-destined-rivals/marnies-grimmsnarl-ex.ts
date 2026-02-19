@@ -33,7 +33,8 @@ export class MarniesGrimmsnarlex extends PokemonCard {
   public setNumber: string = '136';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marnie\'s Grimmsnarl ex';
-  public fullName: string = 'Marnie\'s Grimmsnarl ex DRI';
+  public fullName: string = 'Marnie\'s Grimmsnarl ex (DRI 136)';
+  public legacyFullName = 'Marnie\'s Grimmsnarl ex DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if ((effect instanceof EvolveEffect) && effect.pokemonCard === this) {

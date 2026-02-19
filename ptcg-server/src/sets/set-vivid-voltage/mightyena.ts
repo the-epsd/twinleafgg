@@ -41,7 +41,8 @@ export class Mightyena extends PokemonCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mightyena';
-  public fullName: string = 'Mightyena VIV';
+  public fullName: string = 'Mightyena (VIV 104)';
+  public legacyFullName = 'Mightyena VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ferocious Bellow

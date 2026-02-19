@@ -36,7 +36,8 @@ export class Barbaracle extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Barbaracle';
-  public fullName: string = 'Barbaracle FCO';
+  public fullName: string = 'Barbaracle (FCO 23)';
+  public legacyFullName = 'Barbaracle FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Hand Block

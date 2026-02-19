@@ -38,7 +38,8 @@ export class Abomasnow extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Abomasnow';
-  public fullName: string = 'Abomasnow CRE';
+  public fullName: string = 'Abomasnow (CRE 10)';
+  public legacyFullName = 'Abomasnow CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Toughness Boost (passive CheckHpEffect boost for Single Strike Pokemon, not Abomasnow)

@@ -50,7 +50,8 @@ export class RayquazaVMAX extends PokemonCard {
 
   public name: string = 'Rayquaza VMAX';
 
-  public fullName: string = 'Rayquaza VMAX EVS';
+  public fullName: string = 'Rayquaza VMAX (EVS 111)';
+  public legacyFullName = 'Rayquaza VMAX EVS';
 
   public readonly AZURE_PULSE_MARKER = 'AZURE_PULSE_MARKER';
 

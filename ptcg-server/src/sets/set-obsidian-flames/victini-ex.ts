@@ -31,7 +31,8 @@ export class Victiniex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '33';
   public name: string = 'Victini ex';
-  public fullName: string = 'Victini ex OBF';
+  public fullName: string = 'Victini ex (OBF 33)';
+  public legacyFullName = 'Victini ex OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

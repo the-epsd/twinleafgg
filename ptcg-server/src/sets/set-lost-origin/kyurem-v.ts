@@ -44,7 +44,8 @@ export class KyuremV extends PokemonCard {
 
   public name: string = 'Kyurem V';
 
-  public fullName: string = 'Kyurem V LOR';
+  public fullName: string = 'Kyurem V (LOR 48)';
+  public legacyFullName = 'Kyurem V LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

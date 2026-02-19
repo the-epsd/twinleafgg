@@ -29,7 +29,7 @@ export class Tangrowth extends PokemonCard {
       name: 'Grass Knot',
       cost: [G, G, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];
@@ -38,7 +38,8 @@ export class Tangrowth extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tangrowth';
-  public fullName: string = 'Tangrowth PRC';
+  public fullName: string = 'Tangrowth (PRC 5)';
+  public legacyFullName = 'Tangrowth PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mega Drain

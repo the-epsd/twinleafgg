@@ -34,7 +34,8 @@ export class Baltoy extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Baltoy';
-  public fullName: string = 'Baltoy DRX';
+  public fullName: string = 'Baltoy (DRX 63)';
+  public legacyFullName = 'Baltoy DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-generations/red-card.ts (opponent shuffles hand and draws 4)

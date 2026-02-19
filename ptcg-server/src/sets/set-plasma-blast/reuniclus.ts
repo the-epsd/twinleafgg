@@ -33,7 +33,8 @@ export class Reuniclus extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Reuniclus';
-  public fullName: string = 'Reuniclus PLB';
+  public fullName: string = 'Reuniclus (PLB 44)';
+  public legacyFullName = 'Reuniclus PLB';
 
   public readonly BARRIER_ATTACK_MARKER = 'BARRIER_ATTACK_MARKER';
   public readonly CLEAR_BARRIER_ATTACK_MARKER = 'CLEAR_BARRIER_ATTACK_MARKER';

@@ -30,7 +30,8 @@ export class Dedenne extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dedenne';
-  public fullName: string = 'Dedenne VIV';
+  public fullName: string = 'Dedenne (VIV 77)';
+  public legacyFullName = 'Dedenne VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tail Trickery

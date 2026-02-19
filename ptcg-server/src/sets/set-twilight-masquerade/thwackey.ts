@@ -51,7 +51,8 @@ export class Thwackey extends PokemonCard {
 
   public name: string = 'Thwackey';
 
-  public fullName: string = 'Thwackey TWM';
+  public fullName: string = 'Thwackey (TWM 15)';
+  public legacyFullName = 'Thwackey TWM';
 
   public readonly BOOM_BOOM_DRUM_MARKER = 'BOOM_BOOM_DRUM_MARKER';
 

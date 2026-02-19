@@ -29,7 +29,8 @@ export class Chikorita extends PokemonCard {
 
   public set: string = 'DF';
   public name: string = 'Chikorita';
-  public fullName: string = 'Chikorita DF';
+  public fullName: string = 'Chikorita (DF 44)';
+  public legacyFullName = 'Chikorita DF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
 

@@ -30,7 +30,7 @@ export class Shiftry extends PokemonCard {
       name: 'Extrasensory',
       cost: [C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have the same number of cards in your hand as your opponent, this attack does 60 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Shiftry extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shiftry';
-  public fullName: string = 'Shiftry STS';
+  public fullName: string = 'Shiftry (STS 11)';
+  public legacyFullName = 'Shiftry STS';
 
   public readonly WICKED_WIND_MARKER = 'WICKED_WIND_MARKER';
   public readonly WICKED_WIND_CLEAR_MARKER = 'WICKED_WIND_CLEAR_MARKER';

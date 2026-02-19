@@ -17,7 +17,8 @@ export class Sprigatito extends PokemonCard {
 
   public set: string = 'PAL';
   public name: string = 'Sprigatito';
-  public fullName: string = 'Sprigatito PAL';
+  public fullName: string = 'Sprigatito (PAL 13)';
+  public legacyFullName = 'Sprigatito PAL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '13';
   public regulationMark = 'G';

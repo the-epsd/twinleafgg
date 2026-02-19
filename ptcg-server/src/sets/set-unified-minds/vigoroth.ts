@@ -34,7 +34,8 @@ export class Vigoroth extends PokemonCard {
   public setNumber: string = '169';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vigoroth';
-  public fullName: string = 'Vigoroth UNM';
+  public fullName: string = 'Vigoroth (UNM 169)';
+  public legacyFullName = 'Vigoroth UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Roar

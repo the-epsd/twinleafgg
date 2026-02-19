@@ -37,7 +37,8 @@ export class Furfrou extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Furfrou';
-  public fullName: string = 'Furfrou XY';
+  public fullName: string = 'Furfrou (XY 114)';
+  public legacyFullName = 'Furfrou XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fur Coat - passive damage reduction

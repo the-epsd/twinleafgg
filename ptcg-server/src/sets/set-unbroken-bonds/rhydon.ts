@@ -37,7 +37,8 @@ export class Rhydon extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rhydon';
-  public fullName: string = 'Rhydon UNB';
+  public fullName: string = 'Rhydon (UNB 94)';
+  public legacyFullName = 'Rhydon UNB';
 
   private readonly GIOVANNIS_EXILE_MARKER = 'RHYDON_GIOVANNIS_EXILE_MARKER';
 

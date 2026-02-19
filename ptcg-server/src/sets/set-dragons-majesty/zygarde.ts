@@ -27,7 +27,7 @@ export class Zygarde extends PokemonCard {
       name: 'Raging Blade',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any damage counters on it, this attack does 60 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Zygarde extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zygarde';
-  public fullName: string = 'Zygarde DRM';
+  public fullName: string = 'Zygarde (DRM 49)';
+  public legacyFullName = 'Zygarde DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rumble

@@ -35,7 +35,8 @@ export class Zekrom extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zekrom';
-  public fullName: string = 'Zekrom DRM';
+  public fullName: string = 'Zekrom (DRM 46)';
+  public legacyFullName = 'Zekrom DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shred

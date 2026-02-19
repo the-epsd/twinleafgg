@@ -36,7 +36,8 @@ export class Volcanionex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '31';
   public name: string = 'Volcanion ex';
-  public fullName: string = 'Volcanion ex JTG';
+  public fullName: string = 'Volcanion ex (JTG 31)';
+  public legacyFullName = 'Volcanion ex JTG';
 
   public readonly SCORCHING_STEAM = 'SCORCHING_STEAM';
 

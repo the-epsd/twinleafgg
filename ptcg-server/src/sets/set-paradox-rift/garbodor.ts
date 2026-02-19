@@ -40,7 +40,8 @@ export class Garbodor extends PokemonCard {
 
   public name: string = 'Garbodor';
 
-  public fullName: string = 'Garbodor PAR';
+  public fullName: string = 'Garbodor (PAR 117)';
+  public legacyFullName = 'Garbodor PAR';
 
   public cardImage: string = 'assets/cardback.png';
 

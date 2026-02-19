@@ -39,7 +39,8 @@ export class FirefighterPikachu extends PokemonCard {
 
   public name: string = 'Firefighter Pikachu';
 
-  public fullName: string = 'Firefighter Pikachu SMP';
+  public fullName: string = 'Firefighter Pikachu (SMP 209)';
+  public legacyFullName = 'Firefighter Pikachu SMP';
 
   public cardImage: string = 'assets/cardback.png';
 

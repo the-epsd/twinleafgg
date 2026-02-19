@@ -30,7 +30,8 @@ export class NidokingBreak extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoking BREAK';
-  public fullName: string = 'Nidoking BREAK EVO';
+  public fullName: string = 'Nidoking BREAK (EVO 46)';
+  public legacyFullName = 'Nidoking BREAK EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Toxic Drill

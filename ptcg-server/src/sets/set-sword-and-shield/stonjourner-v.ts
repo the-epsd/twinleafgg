@@ -34,7 +34,8 @@ export class StonjournerV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '115';
   public name: string = 'Stonjourner V';
-  public fullName: string = 'Stonjourner V SSH';
+  public fullName: string = 'Stonjourner V (SSH 115)';
+  public legacyFullName = 'Stonjourner V SSH';
 
   public readonly GUARD_PRESS_MARKER = 'GUARD_PRESS_MARKER';
   public readonly CLEAR_GUARD_PRESS_MARKER = 'CLEAR_GUARD_PRESS_MARKER';

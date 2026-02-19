@@ -28,7 +28,8 @@ export class Onix extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '95';
   public name: string = 'Onix';
-  public fullName: string = 'Onix MEW';
+  public fullName: string = 'Onix (MEW 95)';
+  public legacyFullName = 'Onix MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

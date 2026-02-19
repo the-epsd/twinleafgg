@@ -42,7 +42,8 @@ export class RadiantVenusaur extends PokemonCard {
 
   public name: string = 'Radiant Venusaur';
 
-  public fullName: string = 'Radiant Venusaur PGO';
+  public fullName: string = 'Radiant Venusaur (PGO 4)';
+  public legacyFullName = 'Radiant Venusaur PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

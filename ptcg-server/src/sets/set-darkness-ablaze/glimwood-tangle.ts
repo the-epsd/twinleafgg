@@ -14,7 +14,8 @@ export class GlimwoodTangle extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'DAA';
   public name = 'Glimwood Tangle';
-  public fullName = 'Glimwood Tangle DAA';
+  public fullName = 'Glimwood Tangle (DAA 166)';
+  public legacyFullName = 'Glimwood Tangle DAA';
 
   public text = 'Once during each player\'s turn, after that player flips any coins for an attack, they may ignore all results of those coin flips and begin flipping those coins again.';
 

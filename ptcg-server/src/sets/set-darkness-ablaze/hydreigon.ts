@@ -38,7 +38,8 @@ export class Hydreigon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '110';
   public name: string = 'Hydreigon';
-  public fullName: string = 'Hydreigon DAA';
+  public fullName: string = 'Hydreigon (DAA 110)';
+  public legacyFullName = 'Hydreigon DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

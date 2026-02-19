@@ -39,7 +39,8 @@ export class Wigglytuff extends PokemonCard {
   public setNumber: string = '135';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wigglytuff';
-  public fullName: string = 'Wigglytuff UNB';
+  public fullName: string = 'Wigglytuff (UNB 135)';
+  public legacyFullName = 'Wigglytuff UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Orb Polish

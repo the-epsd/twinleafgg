@@ -34,7 +34,8 @@ export class Electivire extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electivire';
-  public fullName: string = 'Electivire UPR';
+  public fullName: string = 'Electivire (UPR 44)';
+  public legacyFullName = 'Electivire UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Steel Short

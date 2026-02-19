@@ -45,7 +45,8 @@ export class ChiYu extends PokemonCard {
 
   public name: string = 'Chi-Yu';
 
-  public fullName: string = 'Chi-Yu TWM';
+  public fullName: string = 'Chi-Yu (TWM 39)';
+  public legacyFullName = 'Chi-Yu TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

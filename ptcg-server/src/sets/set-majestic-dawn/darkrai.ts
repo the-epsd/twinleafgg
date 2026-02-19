@@ -37,7 +37,8 @@ export class Darkrai extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Darkrai';
-  public fullName: string = 'Darkrai MD';
+  public fullName: string = 'Darkrai (MD 3)';
+  public legacyFullName = 'Darkrai MD';
 
   public readonly PUT_SLEEP_MARKER = 'PUT_SLEEP_MARKER';
   public readonly CLEAR_PUT_SLEEP_MARKER = 'CLEAR_PUT_SLEEP_MARKER';

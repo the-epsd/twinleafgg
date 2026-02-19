@@ -29,7 +29,8 @@ export class Tentacool extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tentacool';
-  public fullName: string = 'Tentacool TEU';
+  public fullName: string = 'Tentacool (TEU 60)';
+  public legacyFullName = 'Tentacool TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wrap

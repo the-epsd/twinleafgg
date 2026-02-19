@@ -75,7 +75,8 @@ export class LevelBall extends TrainerCard {
 
   public name: string = 'Level Ball';
 
-  public fullName: string = 'Level Ball BST';
+  public fullName: string = 'Level Ball (BST 129)';
+  public legacyFullName = 'Level Ball BST';
 
   public text: string =
     'Search your deck for a Pokemon with 90 HP or less, reveal it, ' +

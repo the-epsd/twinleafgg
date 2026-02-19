@@ -21,7 +21,7 @@ export class Entei extends PokemonCard {
       name: 'Angry Fang',
       cost: [R, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 10 damage for each damage counter on all of your Benched Single Strike Pokémon.'
     },
     {
@@ -37,7 +37,8 @@ export class Entei extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Entei';
-  public fullName: string = 'Entei EVS';
+  public fullName: string = 'Entei (EVS 19)';
+  public legacyFullName = 'Entei EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Angry Fang

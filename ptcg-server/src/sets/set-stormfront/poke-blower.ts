@@ -101,7 +101,8 @@ export class PokeBlower extends TrainerCard {
 
   public name: string = 'Poke Blower +';
 
-  public fullName: string = 'Poke Blower SF';
+  public fullName: string = 'Poke Blower + (SF 88)';
+  public legacyFullName = 'Poke Blower SF';
 
   public cardImage: string = 'assets/cardback.png';
 

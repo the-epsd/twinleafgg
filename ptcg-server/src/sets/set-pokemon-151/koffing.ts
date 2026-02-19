@@ -22,7 +22,8 @@ export class Koffing extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
   public name: string = 'Koffing';
-  public fullName: string = 'Koffing MEW';
+  public fullName: string = 'Koffing (MEW 109)';
+  public legacyFullName = 'Koffing MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

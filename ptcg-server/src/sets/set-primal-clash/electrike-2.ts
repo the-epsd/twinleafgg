@@ -30,7 +30,8 @@ export class Electrike2 extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electrike';
-  public fullName: string = 'Electrike PRC 60';
+  public fullName: string = 'Electrike (PRC 60)';
+  public legacyFullName = 'Electrike PRC 60';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Fang

@@ -82,7 +82,8 @@ export class AaronsCollection extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
   public name: string = 'Aaron\'s Collection';
-  public fullName: string = 'Aaron\'s Collection RR';
+  public fullName: string = 'Aaron\'s Collection (RR 88)';
+  public legacyFullName = 'Aaron\'s Collection RR';
 
   public text: string =
     'Search your discard pile for up to 2 in any combination of Pokémon SP and basic Energy cards, show them to your opponent, and put them into your hand.';

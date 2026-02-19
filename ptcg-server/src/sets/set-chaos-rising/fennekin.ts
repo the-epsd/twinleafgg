@@ -58,7 +58,8 @@ export class Fennekin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
   public name: string = 'Fennekin';
-  public fullName: string = 'Fennekin M4';
+  public fullName: string = 'Fennekin (M4 11)';
+  public legacyFullName = 'Fennekin M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -29,7 +29,7 @@ export class Hypno extends PokemonCard {
       name: 'Wake-Up Slap',
       cost: [P],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 90 more damage. Then, that Pokémon recovers from all Special Conditions.'
     }
   ];
@@ -39,7 +39,8 @@ export class Hypno extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hypno';
-  public fullName: string = 'Hypno EVS';
+  public fullName: string = 'Hypno (EVS 62)';
+  public legacyFullName = 'Hypno EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hypnosis

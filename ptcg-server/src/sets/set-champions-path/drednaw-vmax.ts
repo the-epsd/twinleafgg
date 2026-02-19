@@ -31,7 +31,7 @@ export class DrednawVmax extends PokemonCard {
       name: 'G-Max Headbutt',
       cost: [W, W, C],
       damage: 160,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 80 more damage.'
     }
   ];
@@ -41,7 +41,8 @@ export class DrednawVmax extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drednaw VMAX';
-  public fullName: string = 'Drednaw VMAX CPA';
+  public fullName: string = 'Drednaw VMAX (CPA 15)';
+  public legacyFullName = 'Drednaw VMAX CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Solid Shell (passive - reduce damage taken by 30)

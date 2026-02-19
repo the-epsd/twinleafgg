@@ -36,7 +36,8 @@ export class CharizardGx2 extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charizard-GX';
-  public fullName: string = 'Charizard-GX HIF 9';
+  public fullName: string = 'Charizard-GX (HIF 9)';
+  public legacyFullName = 'Charizard-GX HIF 9';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Flare Blitz-GX

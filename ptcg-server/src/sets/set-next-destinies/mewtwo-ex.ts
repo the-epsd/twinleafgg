@@ -41,7 +41,8 @@ export class MewtwoEx extends PokemonCard {
 
   public name: string = 'Mewtwo-EX';
 
-  public fullName: string = 'Mewtwo EX NXD';
+  public fullName: string = 'Mewtwo-EX (NXD 54)';
+  public legacyFullName = 'Mewtwo EX NXD';
 
   public cardImage: string = 'assets/cardback.png';
 

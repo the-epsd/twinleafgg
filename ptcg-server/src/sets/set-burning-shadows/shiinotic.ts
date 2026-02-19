@@ -38,7 +38,8 @@ export class Shiinotic extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shiinotic';
-  public fullName: string = 'Shiinotic BUS';
+  public fullName: string = 'Shiinotic (BUS 98)';
+  public legacyFullName = 'Shiinotic BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Strength Sap

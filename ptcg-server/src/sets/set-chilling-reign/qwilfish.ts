@@ -37,7 +37,8 @@ export class Qwilfish extends PokemonCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Qwilfish';
-  public fullName: string = 'Qwilfish CRE';
+  public fullName: string = 'Qwilfish (CRE 101)';
+  public legacyFullName = 'Qwilfish CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Bursting Needles

@@ -35,7 +35,8 @@ export class Celebi extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celebi';
-  public fullName: string = 'Celebi UNM';
+  public fullName: string = 'Celebi (UNM 4)';
+  public legacyFullName = 'Celebi UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Time Spiral

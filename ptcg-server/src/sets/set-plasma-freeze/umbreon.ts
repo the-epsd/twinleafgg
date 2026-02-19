@@ -34,7 +34,8 @@ export class Umbreon extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Umbreon';
-  public fullName: string = 'Umbreon PLF';
+  public fullName: string = 'Umbreon (PLF 64)';
+  public legacyFullName = 'Umbreon PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Dark Shade (passive - HP boost)

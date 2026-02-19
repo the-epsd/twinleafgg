@@ -25,7 +25,8 @@ export class Yamask extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yamask';
-  public fullName: string = 'Yamask PLF';
+  public fullName: string = 'Yamask (PLF 54)';
+  public legacyFullName = 'Yamask PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Transfer Pain

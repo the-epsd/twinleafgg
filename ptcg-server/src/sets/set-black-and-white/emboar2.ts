@@ -32,7 +32,8 @@ export class Emboar2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '19';
   public name: string = 'Emboar';
-  public fullName: string = 'Emboar BLW 19';
+  public fullName: string = 'Emboar (BLW 19)';
+  public legacyFullName = 'Emboar BLW 19';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

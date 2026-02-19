@@ -20,5 +20,6 @@ export class Staryu extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name: string = 'Staryu';
-  public fullName: string = 'Staryu M3';
+  public fullName: string = 'Staryu (M3 20)';
+  public legacyFullName = 'Staryu M3';
 }

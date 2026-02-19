@@ -37,7 +37,8 @@ export class LucarioV extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lucario V';
-  public fullName: string = 'Lucario V CPA';
+  public fullName: string = 'Lucario V (CPA 27)';
+  public legacyFullName = 'Lucario V CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Aura Sphere

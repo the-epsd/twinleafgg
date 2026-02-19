@@ -38,7 +38,8 @@ export class Bellossom extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bellossom';
-  public fullName: string = 'Bellossom BCR';
+  public fullName: string = 'Bellossom (BCR 4)';
+  public legacyFullName = 'Bellossom BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Grass Knot

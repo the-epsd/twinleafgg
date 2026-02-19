@@ -1,20 +1,20 @@
 import { setupGame, padDeck } from './test-helpers';
 import { useAttack, getDamage } from './card-test-helpers';
 
-describe('Raichu SIT — Ambushing Spark', () => {
+describe('Raichu (SIT 50) — Ambushing Spark', () => {
 
   it('should deal 40 base damage normally', () => {
     const game = setupGame({
       turn: 2,
       player1: {
         active: {
-          card: 'Raichu SIT',
-          energy: ['Lightning Energy SVE']
+          card: 'Raichu (SIT 50)',
+          energy: ['Lightning Energy (SVE 4)']
         },
         deck: padDeck(10),
       },
       player2: {
-        active: { card: 'Ralts SIT' },
+        active: { card: 'Ralts (SIT 67)' },
         deck: padDeck(10),
       }
     });
@@ -32,14 +32,14 @@ describe('Raichu SIT — Ambushing Spark', () => {
       turn: 2,
       player1: {
         active: {
-          card: 'Raichu SIT',
-          energy: ['Lightning Energy SVE']
+          card: 'Raichu (SIT 50)',
+          energy: ['Lightning Energy (SVE 4)']
         },
         deck: padDeck(10),
       },
       player2: {
         // Use Arceus V (220 HP) so it survives 140 damage
-        active: { card: 'Arceus V BRS' },
+        active: { card: 'Arceus V (BRS 122)' },
         deck: padDeck(10),
       }
     });

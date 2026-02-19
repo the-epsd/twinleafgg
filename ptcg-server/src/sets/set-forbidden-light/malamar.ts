@@ -38,7 +38,8 @@ export class Malamar extends PokemonCard {
 
   public set: string = 'FLI';
   public name: string = 'Malamar';
-  public fullName: string = 'Malamar FLI';
+  public fullName: string = 'Malamar (FLI 51)';
+  public legacyFullName = 'Malamar FLI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '51';
 

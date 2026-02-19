@@ -34,7 +34,8 @@ export class Gastly extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gastly';
-  public fullName: string = 'Gastly SSH';
+  public fullName: string = 'Gastly (SSH 83)';
+  public legacyFullName = 'Gastly SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fade Out

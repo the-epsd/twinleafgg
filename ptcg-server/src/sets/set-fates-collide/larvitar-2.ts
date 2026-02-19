@@ -34,7 +34,8 @@ export class Larvitar2 extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Larvitar';
-  public fullName: string = 'Larvitar FCO 41';
+  public fullName: string = 'Larvitar (FCO 41)';
+  public legacyFullName = 'Larvitar FCO 41';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mountain Munch

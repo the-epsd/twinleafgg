@@ -45,7 +45,8 @@ export class VolcanionPrismStar extends PokemonCard {
 
   public name: string = 'Volcanion Prism Star';
 
-  public fullName: string = 'Volcanion Prism Star FLI';
+  public fullName: string = 'Volcanion Prism Star (FLI 31)';
+  public legacyFullName = 'Volcanion Prism Star FLI';
 
   public readonly JET_GEYSER_MARKER = 'JET_GEYSER_MARKER';
 

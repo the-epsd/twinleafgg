@@ -33,7 +33,8 @@ export class Simisage extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '2';
   public name: string = 'Simisage';
-  public fullName: string = 'Simisage EPO';
+  public fullName: string = 'Simisage (EPO 2)';
+  public legacyFullName = 'Simisage EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

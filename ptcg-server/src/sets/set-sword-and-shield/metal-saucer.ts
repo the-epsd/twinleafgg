@@ -22,7 +22,8 @@ export class MetalSaucer extends TrainerCard {
 
   public name: string = 'Metal Saucer';
 
-  public fullName: string = 'Metal Saucer SSH';
+  public fullName: string = 'Metal Saucer (SSH 170)';
+  public legacyFullName = 'Metal Saucer SSH';
 
   public cardImage: string = 'assets/cardback.png';
 

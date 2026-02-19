@@ -36,7 +36,8 @@ export class Kecleon2 extends PokemonCard {
   public setNumber: string = '162';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kecleon';
-  public fullName: string = 'Kecleon LOT 162';
+  public fullName: string = 'Kecleon (LOT 162)';
+  public legacyFullName = 'Kecleon LOT 162';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Unit Color 3 (passive - type change)

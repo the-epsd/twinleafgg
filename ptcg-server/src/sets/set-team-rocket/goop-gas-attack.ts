@@ -16,7 +16,8 @@ export class GoopGasAttack extends TrainerCard {
   public set: string = 'TR';
   public setNumber = '78';
   public name: string = 'Goop Gas Attack';
-  public fullName: string = 'Goop Gas Attack TR';
+  public fullName: string = 'Goop Gas Attack (TR 78)';
+  public legacyFullName = 'Goop Gas Attack TR';
   public cardImage: string = 'assets/cardback.png';
   public text: string = 'All Pokémon Powers stop working until the end of your opponent\'s next turn.';
 

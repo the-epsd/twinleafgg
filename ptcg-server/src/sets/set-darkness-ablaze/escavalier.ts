@@ -22,7 +22,7 @@ export class Escavalier extends PokemonCard {
       name: 'Fury Cutter',
       cost: [M],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 3 coins. If 1 of them is heads, this attack does 20 more damage. If 2 of them are heads, this attack does 70 more damage. If all of them are heads, this attack does 140 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Escavalier extends PokemonCard {
   public setNumber: string = '124';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Escavalier';
-  public fullName: string = 'Escavalier DAA';
+  public fullName: string = 'Escavalier (DAA 124)';
+  public legacyFullName = 'Escavalier DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Cutter

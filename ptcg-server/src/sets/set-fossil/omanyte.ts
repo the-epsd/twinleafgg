@@ -25,5 +25,6 @@ export class Omanyte extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Omanyte';
-  public fullName: string = 'Omanyte FO';
+  public fullName: string = 'Omanyte (FO 52)';
+  public legacyFullName = 'Omanyte FO';
 }

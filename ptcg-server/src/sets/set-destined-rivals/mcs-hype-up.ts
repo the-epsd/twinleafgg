@@ -17,7 +17,8 @@ export class EmceesHype extends TrainerCard {
   public cardImage = 'assets/cardback.png';
   public regulationMark: string = 'H';
   public name: string = 'Emcee\'s Hype';
-  public fullName: string = 'Emcee\'s Hype DRI';
+  public fullName: string = 'Emcee\'s Hype (DRI 163)';
+  public legacyFullName = 'Emcee\'s Hype DRI';
   public text: string = 'Draw 2 cards. If your opponent has 3 or fewer Prize cards remaining, draw 2 more cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

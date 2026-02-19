@@ -79,7 +79,8 @@ export class StevensMetagrossex extends PokemonCard {
   public setNumber: string = '145';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steven\'s Metagross ex';
-  public fullName: string = 'Steven\'s Metagross ex DRI';
+  public fullName: string = 'Steven\'s Metagross ex (DRI 145)';
+  public legacyFullName = 'Steven\'s Metagross ex DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

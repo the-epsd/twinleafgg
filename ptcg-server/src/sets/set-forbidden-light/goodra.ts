@@ -31,7 +31,8 @@ export class Goodra extends PokemonCard {
 
   public set: string = 'FLI';
   public name: string = 'Goodra';
-  public fullName: string = 'Goodra FLI';
+  public fullName: string = 'Goodra (FLI 94)';
+  public legacyFullName = 'Goodra FLI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '94';
 

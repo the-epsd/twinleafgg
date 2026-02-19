@@ -47,7 +47,8 @@ export class LeafeonVMAX extends PokemonCard {
 
   public name: string = 'Leafeon VMAX';
 
-  public fullName: string = 'Leafeon VMAX EVS';
+  public fullName: string = 'Leafeon VMAX (EVS 8)';
+  public legacyFullName = 'Leafeon VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -17,7 +17,8 @@ export class Vulpix extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Vulpix BS';
+  public fullName = 'Vulpix (BS 68)';
+  public legacyFullName = 'Vulpix BS';
 
   public cardType = CardType.FIRE;
 

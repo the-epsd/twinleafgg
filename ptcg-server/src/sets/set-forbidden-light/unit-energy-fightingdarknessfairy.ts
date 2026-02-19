@@ -16,7 +16,8 @@ export class UnitEnergyFightingdarknessfairy extends EnergyCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Unit Energy FightingDarknessFairy';
-  public fullName: string = 'Unit Energy FightingDarknessFairy FLI';
+  public fullName: string = 'Unit Energy FightingDarknessFairy (FLI 118)';
+  public legacyFullName = 'Unit Energy FightingDarknessFairy FLI';
   public text: string = 'This card provides [C] Energy. While this card is attached to a Pokémon, it provides Fighting, Darkness, and [Y] Energy but provides only 1 Energy at a time.';
 
   public blendedEnergies = [CardType.FIGHTING, CardType.DARK, CardType.FAIRY];

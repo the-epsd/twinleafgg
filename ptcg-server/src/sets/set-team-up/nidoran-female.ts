@@ -60,7 +60,8 @@ export class NidoranFemale extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoran F';
-  public fullName: string = 'Nidoran F TEU';
+  public fullName: string = 'Nidoran F (TEU 54)';
+  public legacyFullName = 'Nidoran F TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

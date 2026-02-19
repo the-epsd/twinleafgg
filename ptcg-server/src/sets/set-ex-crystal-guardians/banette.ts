@@ -34,7 +34,8 @@ export class Banette extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
   public name: string = 'Banette';
-  public fullName: string = 'Banette CG';
+  public fullName: string = 'Banette (CG 1)';
+  public legacyFullName = 'Banette CG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

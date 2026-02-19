@@ -37,7 +37,8 @@ export class Butterfree extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Butterfree';
-  public fullName: string = 'Butterfree SUM';
+  public fullName: string = 'Butterfree (SUM 3)';
+  public legacyFullName = 'Butterfree SUM';
 
   public usedWhirlwind = false;
 

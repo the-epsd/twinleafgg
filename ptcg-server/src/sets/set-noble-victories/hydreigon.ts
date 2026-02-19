@@ -34,7 +34,8 @@ export class Hydreigon extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hydreigon';
-  public fullName: string = 'Hydreigon NVI';
+  public fullName: string = 'Hydreigon (NVI 79)';
+  public legacyFullName = 'Hydreigon NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Dark Aura - convert all basic energy to Dark

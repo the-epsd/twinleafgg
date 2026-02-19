@@ -23,7 +23,8 @@ export class Floragato extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Floragato';
-  public fullName: string = 'Floragato JTG';
+  public fullName: string = 'Floragato (JTG 17)';
+  public legacyFullName = 'Floragato JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -47,7 +47,8 @@ export class TingLu extends PokemonCard {
 
   public name: string = 'Ting-Lu';
 
-  public fullName: string = 'Ting-Lu TWM';
+  public fullName: string = 'Ting-Lu (TWM 110)';
+  public legacyFullName = 'Ting-Lu TWM';
 
   public discardedStadiumCard: boolean = false;
 

@@ -40,7 +40,8 @@ export class Whismur extends PokemonCard {
 
   public name: string = 'Whismur';
 
-  public fullName: string = 'Whismur CES';
+  public fullName: string = 'Whismur (CES 116)';
+  public legacyFullName = 'Whismur CES';
 
   public readonly SUDDEN_SHRIEK_MARKER = 'SUDDEN_SHRIEK_MARKER';
 

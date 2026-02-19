@@ -13,7 +13,8 @@ export class Archie extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'MA';
   public name: string = 'Archie';
-  public fullName: string = 'Archie MA';
+  public fullName: string = 'Archie (MA 71)';
+  public legacyFullName = 'Archie MA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
 

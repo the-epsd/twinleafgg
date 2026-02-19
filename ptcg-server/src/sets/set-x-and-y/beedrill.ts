@@ -39,7 +39,8 @@ export class Beedrill extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beedrill';
-  public fullName: string = 'Beedrill XY';
+  public fullName: string = 'Beedrill (XY 5)';
+  public legacyFullName = 'Beedrill XY';
 
   private readonly PREVENT_ALL_DAMAGE_AND_EFFECTS_MARKER = 'BEEDRILL_PREVENT_ALL_DAMAGE_AND_EFFECTS_MARKER';
   private readonly CLEAR_PREVENT_ALL_MARKER = 'BEEDRILL_CLEAR_PREVENT_ALL_MARKER';

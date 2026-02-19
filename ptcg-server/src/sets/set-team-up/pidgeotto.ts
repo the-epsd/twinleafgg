@@ -50,7 +50,8 @@ export class Pidgeotto extends PokemonCard {
 
   public name: string = 'Pidgeotto';
 
-  public fullName: string = 'Pidgeotto TEU';
+  public fullName: string = 'Pidgeotto (TEU 123)';
+  public legacyFullName = 'Pidgeotto TEU';
 
   public readonly AIR_MAIL_MARKER = 'AIR_MAIL_MARKER';
 

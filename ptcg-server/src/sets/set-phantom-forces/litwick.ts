@@ -33,7 +33,8 @@ export class Litwick extends PokemonCard {
 
   public name: string = 'Litwick';
 
-  public fullName: string = 'Litwick PHF';
+  public fullName: string = 'Litwick (PHF 41)';
+  public legacyFullName = 'Litwick PHF';
 
   public cardImage: string = 'assets/cardback.png';
 

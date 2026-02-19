@@ -41,7 +41,8 @@ export class Electrode extends PokemonCard implements EnergyCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electrode';
-  public fullName: string = 'Electrode EVO';
+  public fullName: string = 'Electrode (EVO 40)';
+  public legacyFullName = 'Electrode EVO';
 
   // EnergyCard interface properties
   public provides: CardType[] = [CardType.LIGHTNING, CardType.LIGHTNING];

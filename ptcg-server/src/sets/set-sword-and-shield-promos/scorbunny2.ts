@@ -31,7 +31,8 @@ export class Scorbunny2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '244';
   public name = 'Scorbunny';
-  public fullName = 'Scorbunny SWSH 244';
+  public fullName = 'Scorbunny (SWSH 244)';
+  public legacyFullName = 'Scorbunny SWSH 244';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -34,7 +34,8 @@ export class BronzongG extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Bronzong G';
-  public fullName: string = 'Bronzong G PL';
+  public fullName: string = 'Bronzong G (PL 41)';
+  public legacyFullName = 'Bronzong G PL';
 
   public readonly GALACTIC_SWITCH_MARKER = 'GALACTIC_SWITCH_MARKER';
 

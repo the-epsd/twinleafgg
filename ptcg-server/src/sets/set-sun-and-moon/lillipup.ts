@@ -39,7 +39,8 @@ export class Lillipup extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lillipup';
-  public fullName: string = 'Lillipup SUM';
+  public fullName: string = 'Lillipup (SUM 103)';
+  public legacyFullName = 'Lillipup SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Check for bonus damage on ANY attack from this Pokemon

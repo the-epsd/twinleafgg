@@ -32,7 +32,8 @@ export class GarchompC extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';
   public name: string = 'Garchomp C';
-  public fullName: string = 'Garchomp C SV';
+  public fullName: string = 'Garchomp C (SV 60)';
+  public legacyFullName = 'Garchomp C SV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

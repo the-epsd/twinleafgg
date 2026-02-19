@@ -13,7 +13,8 @@ export class CursedShovel extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'RCL';
   public name: string = 'Cursed Shovel';
-  public fullName: string = 'Cursed Shovel RCL';
+  public fullName: string = 'Cursed Shovel (RCL 157)';
+  public legacyFullName = 'Cursed Shovel RCL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '157';
 

@@ -33,7 +33,8 @@ export class Arbolivaex extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arboliva ex';
-  public fullName: string = 'Arboliva ex DRI';
+  public fullName: string = 'Arboliva ex (DRI 23)';
+  public legacyFullName = 'Arboliva ex DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Oil Machine Gun

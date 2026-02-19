@@ -25,7 +25,8 @@ export class Kricketot extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '9';
   public name: string = 'Kricketot';
-  public fullName: string = 'Kricketot ASR';
+  public fullName: string = 'Kricketot (ASR 9)';
+  public legacyFullName = 'Kricketot ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

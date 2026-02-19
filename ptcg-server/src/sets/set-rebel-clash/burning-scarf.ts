@@ -15,7 +15,8 @@ export class BurningScarf extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '155';
   public name: string = 'Burning Scarf';
-  public fullName: string = 'Burning Scarf RCL';
+  public fullName: string = 'Burning Scarf (RCL 155)';
+  public legacyFullName = 'Burning Scarf RCL';
 
   public text: string =
     'If the [R] Pokémon this card is attached to is in the Active Spot and is damaged by an opponent\'s attack (even if it is Knocked Out), the Attacking Pokémon is now Burned.';

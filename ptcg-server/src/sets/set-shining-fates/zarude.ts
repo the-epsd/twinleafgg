@@ -36,7 +36,8 @@ export class Zarude extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zarude';
-  public fullName: string = 'Zarude SHF';
+  public fullName: string = 'Zarude (SHF 16)';
+  public legacyFullName = 'Zarude SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Suctioning Vines

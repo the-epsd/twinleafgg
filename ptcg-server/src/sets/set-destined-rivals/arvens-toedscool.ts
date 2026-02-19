@@ -26,7 +26,8 @@ export class ArvensToedscool extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
   public name: string = 'Arven\'s Toedscool';
-  public fullName: string = 'Arven\'s Toedscool DRI';
+  public fullName: string = 'Arven\'s Toedscool (DRI 109)';
+  public legacyFullName = 'Arven\'s Toedscool DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

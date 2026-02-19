@@ -35,7 +35,8 @@ export class Glameow extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Glameow';
-  public fullName: string = 'Glameow BKP';
+  public fullName: string = 'Glameow (BKP 93)';
+  public legacyFullName = 'Glameow BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Act Cute

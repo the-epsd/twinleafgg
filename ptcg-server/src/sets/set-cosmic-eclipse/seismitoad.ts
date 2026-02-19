@@ -69,7 +69,7 @@ export class Seismitoad extends PokemonCard {
       name: 'Tremulous Fist',
       cost: [F, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each of your Benched Pokémon that has any damage counters on it.'
     }
   ];
@@ -78,7 +78,8 @@ export class Seismitoad extends PokemonCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Seismitoad';
-  public fullName: string = 'Seismitoad CEC';
+  public fullName: string = 'Seismitoad (CEC 117)';
+  public legacyFullName = 'Seismitoad CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Bulldoze

@@ -38,7 +38,8 @@ export class Bruxish extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bruxish';
-  public fullName: string = 'Bruxish SUM';
+  public fullName: string = 'Bruxish (SUM 48)';
+  public legacyFullName = 'Bruxish SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Vivid Charge

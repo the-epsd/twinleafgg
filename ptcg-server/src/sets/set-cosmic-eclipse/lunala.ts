@@ -41,7 +41,8 @@ export class Lunala extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lunala';
-  public fullName: string = 'Lunala CEC';
+  public fullName: string = 'Lunala (CEC 102)';
+  public legacyFullName = 'Lunala CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Blessing of the Moone

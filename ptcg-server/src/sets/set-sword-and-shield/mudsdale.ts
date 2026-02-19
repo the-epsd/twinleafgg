@@ -21,7 +21,7 @@ export class Mudsdale extends PokemonCard {
       name: 'Double Impact',
       cost: [F, F, F],
       damage: 120,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 120 damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Mudsdale extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mudsdale';
-  public fullName: string = 'Mudsdale SSH';
+  public fullName: string = 'Mudsdale (SSH 106)';
+  public legacyFullName = 'Mudsdale SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Impact

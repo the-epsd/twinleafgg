@@ -39,7 +39,8 @@ export class Xerneas extends PokemonCard {
   public setNumber: string = '144';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Xerneas \u25C7';
-  public fullName: string = 'Xerneas \u25C7 LOT';
+  public fullName: string = 'Xerneas \u25C7 (LOT 144)';
+  public legacyFullName = 'Xerneas \u25C7 LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Path of Life

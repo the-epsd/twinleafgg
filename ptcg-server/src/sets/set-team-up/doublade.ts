@@ -22,7 +22,7 @@ export class Doublade extends PokemonCard {
       name: 'Tool Drop',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 30 damage for each Pokémon Tool card attached to all Pokémon.'
     }
   ];
@@ -31,7 +31,8 @@ export class Doublade extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Doublade';
-  public fullName: string = 'Doublade TEU';
+  public fullName: string = 'Doublade (TEU 108)';
+  public legacyFullName = 'Doublade TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tool Drop

@@ -40,7 +40,8 @@ export class ZarudeV extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zarude V';
-  public fullName: string = 'Zarude V VIV';
+  public fullName: string = 'Zarude V (VIV 22)';
+  public legacyFullName = 'Zarude V VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bind Down

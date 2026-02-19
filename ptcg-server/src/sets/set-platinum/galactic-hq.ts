@@ -14,7 +14,8 @@ export class GalacticHQ extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '106';
   public name: string = 'Galactic HQ';
-  public fullName: string = 'Galactic HQ PL';
+  public fullName: string = 'Galactic HQ (PL 106)';
+  public legacyFullName = 'Galactic HQ PL';
 
   public text: string = 'Whenever any player plays any Pokémon from his or her hand to evolve his or her Pokémon, put 2 damage counters on that Pokémon.';
 

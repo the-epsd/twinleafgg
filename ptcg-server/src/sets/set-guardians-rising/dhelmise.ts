@@ -32,7 +32,8 @@ export class Dhelmise extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '59';
   public name: string = 'Dhelmise';
-  public fullName: string = 'Dhelmise GRI';
+  public fullName: string = 'Dhelmise (GRI 59)';
+  public legacyFullName = 'Dhelmise GRI';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER: string = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

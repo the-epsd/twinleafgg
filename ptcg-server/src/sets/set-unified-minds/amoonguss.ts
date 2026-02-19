@@ -28,7 +28,7 @@ export class Amoonguss extends PokemonCard {
       name: 'Venoshock',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 70 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Amoonguss extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Amoonguss';
-  public fullName: string = 'Amoonguss UNM';
+  public fullName: string = 'Amoonguss (UNM 14)';
+  public legacyFullName = 'Amoonguss UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Bursting Spores (passive - intercept PlayPokemonEffect)

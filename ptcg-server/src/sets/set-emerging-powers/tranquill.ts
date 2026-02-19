@@ -33,7 +33,8 @@ export class Tranquill extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
   public name: string = 'Tranquill';
-  public fullName: string = 'Tranquill EPO';
+  public fullName: string = 'Tranquill (EPO 81)';
+  public legacyFullName = 'Tranquill EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

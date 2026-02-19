@@ -30,7 +30,8 @@ export class Luxray extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '27';
   public name: string = 'Luxray';
-  public fullName: string = 'Luxray M3';
+  public fullName: string = 'Luxray (M3 27)';
+  public legacyFullName = 'Luxray M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Pressure - 70x damage per prize card taken

@@ -29,7 +29,8 @@ export class Venomoth extends PokemonCard {
   public setNumber = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Venomoth';
-  public fullName = 'Venomoth UNB';
+  public fullName = 'Venomoth (UNB 11)';
+  public legacyFullName = 'Venomoth UNB';
 
   public usedPoisonPowder = false;
 

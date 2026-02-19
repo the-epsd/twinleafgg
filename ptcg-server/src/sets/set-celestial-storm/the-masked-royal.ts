@@ -16,7 +16,8 @@ export class TheMaskedRoyal extends TrainerCard {
   public setNumber: string = '139';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'The Masked Royal';
-  public fullName: string = 'The Masked Royal CES';
+  public fullName: string = 'The Masked Royal (CES 139)';
+  public legacyFullName = 'The Masked Royal CES';
   public text: string = 'Attach a basic Energy card from your hand to one of your Stage 2 Grass, Fire, or Water Pokémon. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

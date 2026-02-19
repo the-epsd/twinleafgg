@@ -17,7 +17,8 @@ export class GutsyPickaxe extends TrainerCard {
 
   public name: string = 'Gutsy Pickaxe';
 
-  public fullName: string = 'Gutsy Pickaxe ASR';
+  public fullName: string = 'Gutsy Pickaxe (ASR 145)';
+  public legacyFullName = 'Gutsy Pickaxe ASR';
 
   public text: string =
     'Reveal the top card of your deck. If that card is a [F] Energy card, attach it to 1 of your Benched Pokémon. If it is not a [F] Energy card, put it into your hand.';

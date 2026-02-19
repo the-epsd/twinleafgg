@@ -23,7 +23,8 @@ export class Sandygast extends PokemonCard {
 
   public name: string = 'Sandygast';
 
-  public fullName: string = 'Sandygast SSP';
+  public fullName: string = 'Sandygast (SSP 90)';
+  public legacyFullName = 'Sandygast SSP';
 
   public regulationMark = 'H';
 

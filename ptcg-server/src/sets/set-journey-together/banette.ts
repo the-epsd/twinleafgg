@@ -33,7 +33,8 @@ export class Banette extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';
   public name: string = 'Banette';
-  public fullName: string = 'Banette JTG';
+  public fullName: string = 'Banette (JTG 60)';
+  public legacyFullName = 'Banette JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Cursed Speech

@@ -79,7 +79,8 @@ export class Bombirdierex extends PokemonCard {
 
   public name: string = 'Bombirdier ex';
 
-  public fullName: string = 'Bombirdier ex PAR';
+  public fullName: string = 'Bombirdier ex (PAR 156)';
+  public legacyFullName = 'Bombirdier ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

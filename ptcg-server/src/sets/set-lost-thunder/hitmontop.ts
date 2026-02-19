@@ -29,7 +29,8 @@ export class Hitmontop extends PokemonCard {
 
   public set: string = 'LOT';
   public name: string = 'Hitmontop';
-  public fullName: string = 'Hitmontop LOT';
+  public fullName: string = 'Hitmontop (LOT 113)';
+  public legacyFullName = 'Hitmontop LOT';
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
 

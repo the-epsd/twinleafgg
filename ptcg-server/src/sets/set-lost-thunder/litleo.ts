@@ -35,7 +35,8 @@ export class Litleo extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Litleo';
-  public fullName: string = 'Litleo LOT';
+  public fullName: string = 'Litleo (LOT 50)';
+  public legacyFullName = 'Litleo LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Wild Dash (passive - no retreat cost if opponent has GX/EX)

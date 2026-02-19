@@ -28,7 +28,7 @@ export class Togedemaru extends PokemonCard {
       name: 'Electrosmash',
       cost: [L, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Togedemaru extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togedemaru';
-  public fullName: string = 'Togedemaru BUS';
+  public fullName: string = 'Togedemaru (BUS 47)';
+  public legacyFullName = 'Togedemaru BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Electrosmash

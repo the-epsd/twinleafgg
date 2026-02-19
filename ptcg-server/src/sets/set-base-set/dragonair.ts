@@ -14,7 +14,8 @@ export class Dragonair extends PokemonCard {
 
   public name = 'Dragonair';
 
-  public fullName = 'Dragonair BS';
+  public fullName = 'Dragonair (BS 18)';
+  public legacyFullName = 'Dragonair BS';
 
   public stage: Stage = Stage.STAGE_1;
 

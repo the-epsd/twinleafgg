@@ -37,7 +37,8 @@ export class Liepard extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Liepard';
-  public fullName: string = 'Liepard CPA';
+  public fullName: string = 'Liepard (CPA 40)';
+  public legacyFullName = 'Liepard CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Limber (passive - block Paralyzed status condition)

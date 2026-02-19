@@ -34,7 +34,8 @@ export class Shelgon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '113';
   public name: string = 'Shelgon';
-  public fullName: string = 'Shelgon JTG';
+  public fullName: string = 'Shelgon (JTG 113)';
+  public legacyFullName = 'Shelgon JTG';
 
   public readonly GUARD_PRESS = 'GUARD_PRESS';
   public readonly CLEAR_GUARD_PRESS = 'CLEAR_GUARD_PRESS';

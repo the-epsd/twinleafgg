@@ -13,7 +13,8 @@ export class AmpharosSpiritLink extends TrainerCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ampharos Spirit Link';
-  public fullName: string = 'Ampharos Spirit Link AOR';
+  public fullName: string = 'Ampharos Spirit Link (AOR 70)';
+  public legacyFullName = 'Ampharos Spirit Link AOR';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Ampharos-EX.';
 
   // Ref: set-phantom-forces/manectric-spirit-link.ts (Spirit Link - no-op, handled by engine)

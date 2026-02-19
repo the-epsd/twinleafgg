@@ -26,7 +26,7 @@ export class AltariaEx extends PokemonCard {
       name: 'Powerful Gain',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon was healed during this turn, this attack does 60 more damage and heal 30 damage from this Pokémon.'
     },
     {
@@ -41,7 +41,8 @@ export class AltariaEx extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Altaria-EX';
-  public fullName: string = 'Altaria-EX FCO';
+  public fullName: string = 'Altaria-EX (FCO 83)';
+  public legacyFullName = 'Altaria-EX FCO';
 
   public readonly HEALED_MARKER = 'ALTARIA_EX_FCO_HEALED_MARKER';
   public readonly SHINING_WIND_MARKER = 'ALTARIA_EX_FCO_SHINING_WIND_MARKER';

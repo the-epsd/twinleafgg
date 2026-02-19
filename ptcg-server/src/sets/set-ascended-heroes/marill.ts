@@ -30,7 +30,8 @@ export class Marill extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
   public name: string = 'Marill';
-  public fullName: string = 'Marill MC';
+  public fullName: string = 'Marill (ASC 83)';
+  public legacyFullName = 'Marill MC';
 
   public readonly PREVENT_DAMAGE_MARKER = 'PREVENT_DAMAGE_MARKER';
 

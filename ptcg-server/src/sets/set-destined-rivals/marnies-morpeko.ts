@@ -24,7 +24,8 @@ export class MarniesMorpeko extends PokemonCard {
   public setNumber: string = '137';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marnie\'s Morpeko';
-  public fullName: string = 'Marnie\'s Morpeko DRI';
+  public fullName: string = 'Marnie\'s Morpeko (DRI 137)';
+  public legacyFullName = 'Marnie\'s Morpeko DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

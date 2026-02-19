@@ -18,6 +18,7 @@ export class Riolu extends PokemonCard {
   public setNumber: string = '78';
 
   public name: string = 'Riolu';
-  public fullName: string = 'Riolu BRS';
+  public fullName: string = 'Riolu (BRS 78)';
+  public legacyFullName = 'Riolu BRS';
   
 }

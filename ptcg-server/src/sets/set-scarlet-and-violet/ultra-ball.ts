@@ -82,7 +82,8 @@ export class UltraBall extends TrainerCard {
 
   public name: string = 'Ultra Ball';
 
-  public fullName: string = 'Ultra Ball SVI';
+  public fullName: string = 'Ultra Ball (SVI 196)';
+  public legacyFullName = 'Ultra Ball SVI';
 
   public text: string =
     `You can use this card only if you discard 2 other cards from your hand.

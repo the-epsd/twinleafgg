@@ -31,7 +31,8 @@ export class Ralts extends PokemonCard {
 
   public name: string = 'Ralts';
 
-  public fullName: string = 'Ralts PLS';
+  public fullName: string = 'Ralts (PLS 59)';
+  public legacyFullName = 'Ralts PLS';
 
   public cardImage: string = 'assets/cardback.png';
 

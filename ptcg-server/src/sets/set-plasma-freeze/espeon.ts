@@ -33,7 +33,8 @@ export class Espeon extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Espeon';
-  public fullName: string = 'Espeon PLF';
+  public fullName: string = 'Espeon (PLF 48)';
+  public legacyFullName = 'Espeon PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psy Alert

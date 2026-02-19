@@ -34,7 +34,8 @@ export class Metagross extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metagross';
-  public fullName: string = 'Metagross DX';
+  public fullName: string = 'Metagross (DX 11)';
+  public legacyFullName = 'Metagross DX';
 
   public readonly SUPER_CONNECTIVITY_MARKER = 'SUPER_CONNECTIVITY_MARKER';
 

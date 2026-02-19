@@ -27,5 +27,6 @@ export class SurfingPikachuV extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Surfing Pikachu V';
-  public fullName: string = 'Surfing Pikachu V CEL';
+  public fullName: string = 'Surfing Pikachu V (CEL 8)';
+  public legacyFullName = 'Surfing Pikachu V CEL';
 }

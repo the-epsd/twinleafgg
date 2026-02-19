@@ -27,7 +27,7 @@ export class GalarianMeowth extends PokemonCard {
       name: 'Fury Swipes',
       cost: [M, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 20 damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class GalarianMeowth extends PokemonCard {
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Meowth';
-  public fullName: string = 'Galarian Meowth VIV';
+  public fullName: string = 'Galarian Meowth (VIV 112)';
+  public legacyFullName = 'Galarian Meowth VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Fury Swipes

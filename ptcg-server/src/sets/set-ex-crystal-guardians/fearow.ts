@@ -35,7 +35,8 @@ export class Fearow extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
   public name: string = 'Fearow';
-  public fullName: string = 'Fearow CG';
+  public fullName: string = 'Fearow (CG 18)';
+  public legacyFullName = 'Fearow CG';
 
   public readonly DELTA_SIGN_MARKER = 'DELTA_SIGN_MARKER';
 

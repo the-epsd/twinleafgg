@@ -30,6 +30,7 @@ export class Torchic extends PokemonCard {
 
   public name: string = 'Torchic';
 
-  public fullName: string = 'Torchic JTG';
+  public fullName: string = 'Torchic (JTG 22)';
+  public legacyFullName = 'Torchic JTG';
 
 }

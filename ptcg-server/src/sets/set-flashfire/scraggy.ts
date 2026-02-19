@@ -30,7 +30,8 @@ export class Scraggy extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scraggy';
-  public fullName: string = 'Scraggy FLF';
+  public fullName: string = 'Scraggy (FLF 58)';
+  public legacyFullName = 'Scraggy FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/beedrill.ts (Flash Needle - multiple coin flips)

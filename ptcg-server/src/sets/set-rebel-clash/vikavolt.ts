@@ -21,7 +21,7 @@ export class Vikavolt extends PokemonCard {
       name: 'Powerful Storm',
       cost: [L, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each Energy attached to all of your Pokémon.'
     },
     {
@@ -37,7 +37,8 @@ export class Vikavolt extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vikavolt';
-  public fullName: string = 'Vikavolt RCL';
+  public fullName: string = 'Vikavolt (RCL 66)';
+  public legacyFullName = 'Vikavolt RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Powerful Storm

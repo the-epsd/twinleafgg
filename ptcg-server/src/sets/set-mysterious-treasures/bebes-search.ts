@@ -13,7 +13,8 @@ export class BebesSearch extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
   public name: string = 'Bebe\'s Search';
-  public fullName: string = 'Bebe\'s Search MT';
+  public fullName: string = 'Bebe\'s Search (MT 109)';
+  public legacyFullName = 'Bebe\'s Search MT';
 
   public text: string =
     'Choose a card from your hand and put it on top of your deck. Search your deck for a Pokémon, show it to your opponent, and put it into your hand. Shuffle your deck afterward. (If this is the only card in your hand, you can\'t play this card.)';

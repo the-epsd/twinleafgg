@@ -18,7 +18,8 @@ export class RedAndBlue extends TrainerCard {
   public setNumber: string = '202';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Red & Blue';
-  public fullName: string = 'Red & Blue CEC';
+  public fullName: string = 'Red & Blue (CEC 202)';
+  public legacyFullName = 'Red & Blue CEC';
   public text: string = 'Search your deck for a Pokémon-GX that evolves from 1 of your Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck. (You can\'t use this card during your first turn or on a Pokémon that was put into play this turn.) When you play this card, you may discard 2 other cards from your hand. If you do, search your deck for up to 2 basic Energy cards and attach them to the Pokémon you evolved in this way. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -31,7 +31,8 @@ export class Hoothoot extends PokemonCard {
   public setNumber: string = '119';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hoothoot';
-  public fullName: string = 'Hoothoot BKT';
+  public fullName: string = 'Hoothoot (BKT 119)';
+  public legacyFullName = 'Hoothoot BKT';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'HOOTHOOT_BKT_ITEM_LOCK_MARKER';
 

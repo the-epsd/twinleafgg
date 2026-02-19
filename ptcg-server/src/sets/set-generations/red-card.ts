@@ -15,7 +15,8 @@ export class RedCard extends TrainerCard {
 
   public name: string = 'Red Card';
 
-  public fullName: string = 'Red Card GEN';
+  public fullName: string = 'Red Card (GEN 71)';
+  public legacyFullName = 'Red Card GEN';
 
   public cardImage: string = 'assets/cardback.png';
 

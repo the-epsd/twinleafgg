@@ -31,7 +31,8 @@ export class Golurk extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golurk';
-  public fullName: string = 'Golurk PLB';
+  public fullName: string = 'Golurk (PLB 46)';
+  public legacyFullName = 'Golurk PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Iron Fist of Justice

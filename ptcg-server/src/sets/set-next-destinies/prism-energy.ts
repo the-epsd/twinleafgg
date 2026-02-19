@@ -16,7 +16,8 @@ export class PrismEnergy extends EnergyCard {
 
   public name = 'Prism Energy';
 
-  public fullName = 'Prism Energy NXD';
+  public fullName = 'Prism Energy (NXD 93)';
+  public legacyFullName = 'Prism Energy NXD';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -29,7 +29,7 @@ export class Gourgeist extends PokemonCard {
       name: 'Pumpkin Bomb',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Before doing damage, you may discard any number of Pokémon Tool cards from your Pokémon. This attack does 40 more damage for each card you discarded in this way.'
     }
   ];
@@ -38,7 +38,8 @@ export class Gourgeist extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gourgeist';
-  public fullName: string = 'Gourgeist CIN';
+  public fullName: string = 'Gourgeist (CIN 45)';
+  public legacyFullName = 'Gourgeist CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Confuse Ray

@@ -31,5 +31,6 @@ export class Dartrix extends PokemonCard {
 
   public name: string = 'Dartrix';
 
-  public fullName: string = 'Dartrix SHF';
+  public fullName: string = 'Dartrix (SHF 7)';
+  public legacyFullName = 'Dartrix SHF';
 }

@@ -16,7 +16,8 @@ export class DesertRuins extends TrainerCard {
   public setNumber = '88';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Desert Ruins';
-  public fullName: string = 'Desert Ruins HL';
+  public fullName: string = 'Desert Ruins (HL 88)';
+  public legacyFullName = 'Desert Ruins HL';
 
   public text: string =
     'At any time between turns, each player puts 1 damage counter on his or her Pokémon-ex with maximum HP of at least 100.';

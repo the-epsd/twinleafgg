@@ -32,7 +32,8 @@ export class HisuianDecidueyeV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
   public name: string = 'Hisuian Decidueye V';
-  public fullName: string = 'Hisuian Decidueye V ASR';
+  public fullName: string = 'Hisuian Decidueye V (ASR 83)';
+  public legacyFullName = 'Hisuian Decidueye V ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

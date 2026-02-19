@@ -20,7 +20,7 @@ export class Magikarp extends PokemonCard {
       name: 'Flail',
       cost: [W],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 10 damage times the number of damage counters on this Pok\u00e9mon.'
     }
   ];
@@ -29,7 +29,8 @@ export class Magikarp extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magikarp';
-  public fullName: string = 'Magikarp EVO';
+  public fullName: string = 'Magikarp (EVO 33)';
+  public legacyFullName = 'Magikarp EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flail

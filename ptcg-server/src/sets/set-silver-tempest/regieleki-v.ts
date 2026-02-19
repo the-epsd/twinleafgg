@@ -45,7 +45,8 @@ export class RegielekiV extends PokemonCard {
 
   public name: string = 'Regieleki V';
 
-  public fullName: string = 'Regieleki V SIT';
+  public fullName: string = 'Regieleki V (SIT 57)';
+  public legacyFullName = 'Regieleki V SIT';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

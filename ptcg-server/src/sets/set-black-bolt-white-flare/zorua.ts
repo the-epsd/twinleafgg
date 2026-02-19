@@ -21,7 +21,8 @@ export class Zorua extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zorua';
-  public fullName: string = 'Zorua SV11W';
+  public fullName: string = 'Zorua (WHT 61)';
+  public legacyFullName = 'Zorua SV11W';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

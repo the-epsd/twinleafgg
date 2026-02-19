@@ -30,7 +30,8 @@ export class Duosion extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '56';
   public name: string = 'Duosion';
-  public fullName: string = 'Duosion BLW';
+  public fullName: string = 'Duosion (BLW 56)';
+  public legacyFullName = 'Duosion BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

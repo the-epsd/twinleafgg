@@ -29,7 +29,8 @@ export class Sentret extends PokemonCard {
   public setNumber: string = '135';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sentret';
-  public fullName: string = 'Sentret DAA';
+  public fullName: string = 'Sentret (DAA 135)';
+  public legacyFullName = 'Sentret DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Family

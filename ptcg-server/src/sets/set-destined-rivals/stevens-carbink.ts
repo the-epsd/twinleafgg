@@ -36,7 +36,8 @@ export class StevensCarbink extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
   public name: string = 'Steven\'s Carbink';
-  public fullName: string = 'Steven\'s Carbink DRI';
+  public fullName: string = 'Steven\'s Carbink (DRI 86)';
+  public legacyFullName = 'Steven\'s Carbink DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

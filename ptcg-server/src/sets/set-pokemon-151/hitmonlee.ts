@@ -43,7 +43,8 @@ export class Hitmonlee extends PokemonCard {
 
   public name: string = 'Hitmonlee';
 
-  public fullName: string = 'Hitmonlee MEW';
+  public fullName: string = 'Hitmonlee (MEW 106)';
+  public legacyFullName = 'Hitmonlee MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Twister Kick

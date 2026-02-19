@@ -15,7 +15,8 @@ export class MoonAndSunBadge extends TrainerCard {
   public setNumber: string = '151';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Moon & Sun Badge';
-  public fullName: string = 'Moon & Sun Badge EVS';
+  public fullName: string = 'Moon & Sun Badge (EVS 151)';
+  public legacyFullName = 'Moon & Sun Badge EVS';
   public text: string = 'If the Pokémon V this card is attached to has "Espeon" or "Umbreon" in its name, whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to that Pokémon. You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

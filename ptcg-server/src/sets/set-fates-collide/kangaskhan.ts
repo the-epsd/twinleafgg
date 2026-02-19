@@ -31,5 +31,6 @@ export class Kangaskhan extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kangaskhan';
-  public fullName: string = 'Kangaskhan FCO';
+  public fullName: string = 'Kangaskhan (FCO 75)';
+  public legacyFullName = 'Kangaskhan FCO';
 }

@@ -42,7 +42,8 @@ export class Venusaur extends PokemonCard {
 
   public name: string = 'Venusaur';
 
-  public fullName: string = 'Venusaur SLG';
+  public fullName: string = 'Venusaur (SLG 3)';
+  public legacyFullName = 'Venusaur SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

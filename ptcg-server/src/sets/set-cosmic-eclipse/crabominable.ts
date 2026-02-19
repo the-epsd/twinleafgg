@@ -29,7 +29,7 @@ export class Crabominable extends PokemonCard {
       name: 'Freezing Punch',
       cost: [F, F, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any [W] Energy attached to it, this attack does 80 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Crabominable extends PokemonCard {
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crabominable';
-  public fullName: string = 'Crabominable CEC';
+  public fullName: string = 'Crabominable (CEC 122)';
+  public legacyFullName = 'Crabominable CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Solid Shell (passive - reduce damage taken)

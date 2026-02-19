@@ -35,7 +35,8 @@ export class Azumarill extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '74';
   public name: string = 'Azumarill';
-  public fullName: string = 'Azumarill SSP';
+  public fullName: string = 'Azumarill (SSP 74)';
+  public legacyFullName = 'Azumarill SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

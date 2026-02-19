@@ -27,7 +27,7 @@ export class Thwackey extends PokemonCard {
       name: 'Double Hit',
       cost: [G, G, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 60 damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Thwackey extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Thwackey';
-  public fullName: string = 'Thwackey SSH';
+  public fullName: string = 'Thwackey (SSH 12)';
+  public legacyFullName = 'Thwackey SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Taunt

@@ -177,7 +177,8 @@ export class GuzmaAndHala extends TrainerCard {
 
   public name: string = 'Guzma & Hala';
 
-  public fullName: string = 'Guzma & Hala CEC';
+  public fullName: string = 'Guzma & Hala (CEC 193)';
+  public legacyFullName = 'Guzma & Hala CEC';
 
   public text: string =
     `Search your deck for a Stadium card, reveal it, and put it into your hand. Then, shuffle your deck.

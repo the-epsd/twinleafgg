@@ -14,7 +14,8 @@ export class JetEnergy extends EnergyCard {
   public setNumber: string = '190';
   public regulationMark = 'G';
   public name = 'Jet Energy';
-  public fullName = 'Jet Energy PAL';
+  public fullName = 'Jet Energy (PAL 190)';
+  public legacyFullName = 'Jet Energy PAL';
 
   public text = `As long as this card is attached to a Pokémon, it provides [C] Energy.
 

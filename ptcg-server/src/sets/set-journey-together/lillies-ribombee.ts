@@ -29,7 +29,8 @@ export class LilliesRibombee extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public name: string = 'Lillie\'s Ribombee';
-  public fullName: string = 'Lillie\'s Ribombee JTG';
+  public fullName: string = 'Lillie\'s Ribombee (JTG 67)';
+  public legacyFullName = 'Lillie\'s Ribombee JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Inviting Wink

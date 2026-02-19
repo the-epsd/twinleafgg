@@ -38,7 +38,8 @@ export class Solgaleo extends PokemonCard {
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solgaleo';
-  public fullName: string = 'Solgaleo CEC';
+  public fullName: string = 'Solgaleo (CEC 142)';
+  public legacyFullName = 'Solgaleo CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Armor of the Sunne (passive - reduce damage to Solgaleo/Lunala if Lunala in play)

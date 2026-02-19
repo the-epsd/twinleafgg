@@ -29,7 +29,8 @@ export class Spoink extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spoink';
-  public fullName: string = 'Spoink BCR';
+  public fullName: string = 'Spoink (BCR 59)';
+  public legacyFullName = 'Spoink BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flail Around

@@ -123,7 +123,8 @@ export class Jirachi extends PokemonCard {
 
   public set: string = 'HL';
   public name: string = 'Jirachi';
-  public fullName: string = 'Jirachi HL';
+  public fullName: string = 'Jirachi (HL 8)';
+  public legacyFullName = 'Jirachi HL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
 

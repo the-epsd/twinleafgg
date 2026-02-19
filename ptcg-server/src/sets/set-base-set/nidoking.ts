@@ -16,7 +16,8 @@ export class Nidoking extends PokemonCard {
 
   public name = 'Nidoking';
 
-  public fullName = 'Nidoking BS';
+  public fullName = 'Nidoking (BS 11)';
+  public legacyFullName = 'Nidoking BS';
 
   public cardImage: string = 'assets/cardback.png';
 

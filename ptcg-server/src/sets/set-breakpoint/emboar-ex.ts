@@ -23,7 +23,7 @@ export class EmboarEx extends PokemonCard {
       name: 'Spiral Punch',
       cost: [R, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 20 more damage for each heads.'
     },
     {
@@ -38,7 +38,8 @@ export class EmboarEx extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Emboar-EX';
-  public fullName: string = 'Emboar-EX BKP';
+  public fullName: string = 'Emboar-EX (BKP 14)';
+  public legacyFullName = 'Emboar-EX BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spiral Punch

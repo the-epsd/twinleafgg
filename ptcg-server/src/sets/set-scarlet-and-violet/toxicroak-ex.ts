@@ -44,7 +44,8 @@ export class Toxicroakex extends PokemonCard {
 
   public name: string = 'Toxicroak ex';
 
-  public fullName: string = 'Toxicroak ex SVI';
+  public fullName: string = 'Toxicroak ex (SVI 130)';
+  public legacyFullName = 'Toxicroak ex SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

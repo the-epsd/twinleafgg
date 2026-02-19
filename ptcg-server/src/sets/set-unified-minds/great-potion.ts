@@ -15,7 +15,8 @@ export class GreatPotion extends TrainerCard {
   public setNumber: string = '198';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Great Potion';
-  public fullName: string = 'Great Potion UNM';
+  public fullName: string = 'Great Potion (UNM 198)';
+  public legacyFullName = 'Great Potion UNM';
   public text: string = 'Heal 50 damage from your Active Pokemon-GX.';
 
   // Ref: set-boundaries-crossed/gold-potion.ts (Gold Potion - heal active Pokemon item pattern)

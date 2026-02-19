@@ -37,7 +37,8 @@ export class MegaGreninjaex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '22';
   public name: string = 'Mega Greninja ex';
-  public fullName: string = 'Mega Greninja ex M4';
+  public fullName: string = 'Mega Greninja ex (M4 22)';
+  public legacyFullName = 'Mega Greninja ex M4';
 
   public readonly MORTAL_SHURIKEN_MARKER = 'MORTAL_SHURIKEN_MARKER';
 

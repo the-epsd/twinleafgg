@@ -39,7 +39,8 @@ export class CrobatVmax extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crobat VMAX';
-  public fullName: string = 'Crobat VMAX SHF';
+  public fullName: string = 'Crobat VMAX (SHF 45)';
+  public legacyFullName = 'Crobat VMAX SHF';
 
   public usedStealthPoison = false;
 

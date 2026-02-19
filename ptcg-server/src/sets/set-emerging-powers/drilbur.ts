@@ -33,7 +33,8 @@ export class Drilbur extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '54';
   public name: string = 'Drilbur';
-  public fullName: string = 'Drilbur EPO';
+  public fullName: string = 'Drilbur (EPO 54)';
+  public legacyFullName = 'Drilbur EPO';
 
   public readonly HONE_CLAWS_MARKER = 'HONE_CLAWS_MARKER';
 

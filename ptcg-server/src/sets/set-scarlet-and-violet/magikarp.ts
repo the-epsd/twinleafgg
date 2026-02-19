@@ -36,7 +36,8 @@ export class Magikarp extends PokemonCard {
 
   public name: string = 'Magikarp';
 
-  public fullName: string = 'Magikarp SVI';
+  public fullName: string = 'Magikarp (SVI 44)';
+  public legacyFullName = 'Magikarp SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

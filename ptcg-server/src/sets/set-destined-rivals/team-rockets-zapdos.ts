@@ -34,7 +34,8 @@ export class TeamRocketsZapdos extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Zapdos';
-  public fullName: string = 'Team Rocket\'s Zapdos DRI';
+  public fullName: string = 'Team Rocket\'s Zapdos (DRI 70)';
+  public legacyFullName = 'Team Rocket\'s Zapdos DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Jamming Wave

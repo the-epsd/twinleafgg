@@ -30,7 +30,8 @@ export class Corsola extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Corsola';
-  public fullName: string = 'Corsola DRM';
+  public fullName: string = 'Corsola (DRM 27)';
+  public legacyFullName = 'Corsola DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble Shoot

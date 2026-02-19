@@ -25,7 +25,8 @@ export class Reshiram extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Reshiram';
-  public fullName: string = 'Reshiram SHF';
+  public fullName: string = 'Reshiram (SHF 17)';
+  public legacyFullName = 'Reshiram SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -90,552 +90,644 @@ import { SabrinasSuggestion } from '../set-team-up/sabrinas-suggestion';
 import { JessieAndJames } from './jessie-and-james';
 
 export class BrocksGritHIF extends BrocksGrit {
-  public fullName = 'Brock\'s Grit HIF';
+  public fullName = 'Brock\'s Grit (HIF 53)';
+  public legacyFullName = 'Brock\'s Grit HIF';
   public set = 'HIF';
   public setNumber = '53';
 }
 
 export class GuzmaHIF extends Guzma {
-  public fullName = 'Guzma HIF';
+  public fullName = 'Guzma (HIF SV84)';
+  public legacyFullName = 'Guzma HIF';
   public set = 'HIF';
   public setNumber = 'SV84';
 }
 export class SlowpokeHIF extends Slowpoke {
   public setNumber = '12';
-  public fullName: string = 'Slowpoke HIF';
+  public fullName: string = 'Slowpoke (HIF 12)';
+  public legacyFullName = 'Slowpoke HIF';
   public set = 'HIF';
 }
 
 export class BillsAnalysisHIF extends BillsAnalysis {
   public setNumber = '51';
-  public fullName: string = 'Bill\'s Analysis HIF';
+  public fullName: string = 'Bill\'s Analysis (HIF 51)';
+  public legacyFullName = 'Bill\'s Analysis HIF';
   public set = 'HIF';
 }
 
 export class LtSurgesStrategyHIF extends LtSurgesStrategy {
   public setNumber = '60';
-  public fullName: string = 'Lt. Surge\'s Strategy HIF';
+  public fullName: string = 'Lt. Surge\'s Strategy (HIF 60)';
+  public legacyFullName = 'Lt. Surge\'s Strategy HIF';
   public set = 'HIF';
 }
 
 export class MoltresZapdosArticunoGX2HIF extends MoltresZapdosArticunoGXHIF44 {
   public setNumber = '66';
-  public fullName: string = 'Moltres & Zapdos & Articuno-GX2 HIF';
+  public fullName: string = 'Moltres & Zapdos & Articuno-GX (HIF 66)';
+  public legacyFullName = 'Moltres & Zapdos & Articuno-GX2 HIF';
   public set = 'HIF';
 }
 
 export class MoltresZapdosArticunoGX3HIF extends MoltresZapdosArticunoGXHIF44 {
   public setNumber = '69';
-  public fullName: string = 'Moltres & Zapdos & Articuno-GX3 HIF';
+  public fullName: string = 'Moltres & Zapdos & Articuno-GX (HIF 69)';
+  public legacyFullName = 'Moltres & Zapdos & Articuno-GX3 HIF';
   public set = 'HIF';
 }
 
 export class RowletHIF extends Rowlet {
   public setNumber = 'SV2';
-  public fullName: string = 'Rowlet HIF';
+  public fullName: string = 'Rowlet (HIF SV2)';
+  public legacyFullName = 'Rowlet HIF';
   public set = 'HIF';
 }
 
 export class DartrixHIF extends Dartrix {
   public setNumber = 'SV3';
-  public fullName: string = 'Dartrix HIF';
+  public fullName: string = 'Dartrix (HIF SV3)';
+  public legacyFullName = 'Dartrix HIF';
   public set = 'HIF';
 }
 
 export class FroakieFrubblesHIF extends FroakieFrubbles {
   public setNumber = 'SV11';
-  public fullName: string = 'Froakie HIF';
+  public fullName: string = 'Froakie (HIF SV11)';
+  public legacyFullName = 'Froakie HIF';
   public set = 'HIF';
 }
 
 export class FrogadierHIF extends Frogadier {
   public setNumber = 'SV12';
-  public fullName: string = 'Frogadier HIF';
+  public fullName: string = 'Frogadier (HIF SV12)';
+  public legacyFullName = 'Frogadier HIF';
   public set = 'HIF';
 }
 
 export class ShuppetHIF extends Shuppet {
   public setNumber = 'SV16';
-  public fullName: string = 'Shuppet HIF';
+  public fullName: string = 'Shuppet (HIF SV16)';
+  public legacyFullName = 'Shuppet HIF';
   public set = 'HIF';
 }
 
 export class InkayHIF extends Inkay {
   public setNumber = 'SV17';
-  public fullName: string = 'Inkay HIF';
+  public fullName: string = 'Inkay (HIF SV17)';
+  public legacyFullName = 'Inkay HIF';
   public set = 'HIF';
 }
 
 export class MalamarHIF extends Malamar {
   public setNumber = 'SV18';
-  public fullName: string = 'Malamar HIF';
+  public fullName: string = 'Malamar (HIF SV18)';
+  public legacyFullName = 'Malamar HIF';
   public set = 'HIF';
 }
 
 export class PoipoleHIF extends Poipole {
   public setNumber = 'SV19';
-  public fullName: string = 'Poipole HIF';
+  public fullName: string = 'Poipole (HIF SV19)';
+  public legacyFullName = 'Poipole HIF';
   public set = 'HIF';
 }
 
 export class SudowoodoHIF extends Sudowoodo {
   public setNumber = 'SV20';
-  public fullName: string = 'Sudowoodo HIF';
+  public fullName: string = 'Sudowoodo (HIF SV20)';
+  public legacyFullName = 'Sudowoodo HIF';
   public set = 'HIF';
 }
 
 export class RioluHIF extends Riolu {
   public setNumber = 'SV21';
-  public fullName: string = 'Riolu HIF';
+  public fullName: string = 'Riolu (HIF SV21)';
+  public legacyFullName = 'Riolu HIF';
   public set = 'HIF';
 }
 
 export class LucarioHIF extends Lucario {
   public setNumber = 'SV22';
-  public fullName: string = 'Lucario HIF';
+  public fullName: string = 'Lucario (HIF SV22)';
+  public legacyFullName = 'Lucario HIF';
   public set = 'HIF';
 }
 
 export class RockruffHIF extends Rockruff {
   public setNumber = 'SV23';
-  public fullName: string = 'Rockruff HIF';
+  public fullName: string = 'Rockruff (HIF SV23)';
+  public legacyFullName = 'Rockruff HIF';
   public set = 'HIF';
 }
 
 export class BuzzwoleHIF extends Buzzwole {
   public setNumber = 'SV24';
-  public fullName: string = 'Buzzwole HIF';
+  public fullName: string = 'Buzzwole (HIF SV24)';
+  public legacyFullName = 'Buzzwole HIF';
   public set = 'HIF';
 }
 
 export class ZoruaHIF extends Zorua {
   public setNumber = 'SV25';
-  public fullName: string = 'Zorua HIF';
+  public fullName: string = 'Zorua (HIF SV25)';
+  public legacyFullName = 'Zorua HIF';
   public set = 'HIF';
 }
 
 export class MagnezoneHIF extends Magnezone {
   public setNumber = 'SV29';
-  public fullName: string = 'Magnezone HIF';
+  public fullName: string = 'Magnezone (HIF SV29)';
+  public legacyFullName = 'Magnezone HIF';
   public set = 'HIF';
 }
 
 export class RaltsHIF extends Ralts {
   public setNumber = 'SV34';
-  public fullName: string = 'Ralts HIF';
+  public fullName: string = 'Ralts (HIF SV34)';
+  public legacyFullName = 'Ralts HIF';
   public set = 'HIF';
 }
 
 export class DiancieHIF extends Diancie {
   public setNumber = 'SV36';
-  public fullName: string = 'Diancie HIF';
+  public fullName: string = 'Diancie (HIF SV36)';
+  public legacyFullName = 'Diancie HIF';
   public set = 'HIF';
 }
 
 export class GibleHIF extends Gible {
   public setNumber = 'SV38';
-  public fullName: string = 'Gible HIF';
+  public fullName: string = 'Gible (HIF SV38)';
+  public legacyFullName = 'Gible HIF';
   public set = 'HIF';
 }
 
 export class GabiteHIF extends Gabite {
   public setNumber = 'SV39';
-  public fullName: string = 'Gabite HIF';
+  public fullName: string = 'Gabite (HIF SV39)';
+  public legacyFullName = 'Gabite HIF';
   public set = 'HIF';
 }
 
 export class GarchompHIF extends Garchomp {
   public setNumber = 'SV40';
-  public fullName: string = 'Garchomp HIF';
+  public fullName: string = 'Garchomp (HIF SV40)';
+  public legacyFullName = 'Garchomp HIF';
   public set = 'HIF';
 }
 
 export class Eevee3HIF extends EeveeSUM101 {
   public setNumber = 'SV41';
-  public fullName: string = 'Eevee3 HIF';
+  public fullName: string = 'Eevee (HIF SV41)';
+  public legacyFullName = 'Eevee3 HIF';
   public set = 'HIF';
 }
 
 export class NoibatHIF extends Noibat {
   public setNumber = 'SV43';
-  public fullName: string = 'Noibat HIF';
+  public fullName: string = 'Noibat (HIF SV43)';
+  public legacyFullName = 'Noibat HIF';
   public set = 'HIF';
 }
 
 export class OranguruHIF extends Oranguru {
   public setNumber = 'SV44';
-  public fullName: string = 'Oranguru HIF';
+  public fullName: string = 'Oranguru (HIF SV44)';
+  public legacyFullName = 'Oranguru HIF';
   public set = 'HIF';
 }
 
 export class DecidueyeGXHIF extends DecidueyeGX {
   public setNumber = 'SV47';
-  public fullName: string = 'Decidueye-GX HIF';
+  public fullName: string = 'Decidueye-GX (HIF SV47)';
+  public legacyFullName = 'Decidueye-GX HIF';
   public set = 'HIF';
 }
 
 export class AlolanNinetalesGXHIF extends AlolanNinetalesGX {
   public setNumber = 'SV53';
-  public fullName: string = 'Alolan Ninetales-GX HIF';
+  public fullName: string = 'Alolan Ninetales-GX (HIF SV53)';
+  public legacyFullName = 'Alolan Ninetales-GX HIF';
   public set = 'HIF';
 }
 
 export class ArticunoGXHIF extends ArticunoGX {
   public setNumber = 'SV54';
-  public fullName: string = 'Articuno-GX HIF';
+  public fullName: string = 'Articuno-GX (HIF SV54)';
+  public legacyFullName = 'Articuno-GX HIF';
   public set = 'HIF';
 }
 
 export class GlaceonGXHIF extends GlaceonGX {
   public setNumber = 'SV55';
-  public fullName: string = 'Glaceon-GX HIF';
+  public fullName: string = 'Glaceon-GX (HIF SV55)';
+  public legacyFullName = 'Glaceon-GX HIF';
   public set = 'HIF';
 }
 
 export class GreninjaGXHIF extends GreninjaGX {
   public setNumber = 'SV56';
-  public fullName: string = 'Greninja-GX HIF';
+  public fullName: string = 'Greninja-GX (HIF SV56)';
+  public legacyFullName = 'Greninja-GX HIF';
   public set = 'HIF';
 }
 
 export class ElectrodeGXHIF extends ElectrodeGX {
   public setNumber = 'SV57';
-  public fullName: string = 'Electrode-GX HIF';
+  public fullName: string = 'Electrode-GX (HIF SV57)';
+  public legacyFullName = 'Electrode-GX HIF';
   public set = 'HIF';
 }
 
 export class MewtwoGX2HIF extends MewtwoGXSLG39 {
   public setNumber = 'SV59';
-  public fullName: string = 'Mewtwo-GX2 HIF';
+  public fullName: string = 'Mewtwo-GX (HIF SV59)';
+  public legacyFullName = 'Mewtwo-GX2 HIF';
   public set = 'HIF';
 }
 
 export class EspeonGXHIF extends EspeonGX {
   public setNumber = 'SV60';
-  public fullName: string = 'Espeon-GX HIF';
+  public fullName: string = 'Espeon-GX (HIF SV60)';
+  public legacyFullName = 'Espeon-GX HIF';
   public set = 'HIF';
 }
 
 export class BanetteGXHIF extends BanetteGX {
   public setNumber = 'SV61';
-  public fullName: string = 'Banette-GX HIF';
+  public fullName: string = 'Banette-GX (HIF SV61)';
+  public legacyFullName = 'Banette-GX HIF';
   public set = 'HIF';
 }
 
 export class NaganadelGXHIF extends NaganadelGX {
   public setNumber = 'SV63';
-  public fullName: string = 'Naganadel-GX HIF';
+  public fullName: string = 'Naganadel-GX (HIF SV63)';
+  public legacyFullName = 'Naganadel-GX HIF';
   public set = 'HIF';
 }
 
 export class LucarioGXHIF extends LucarioGX {
   public setNumber = 'SV64';
-  public fullName: string = 'Lucario-GX HIF';
+  public fullName: string = 'Lucario-GX (HIF SV64)';
+  public legacyFullName = 'Lucario-GX HIF';
   public set = 'HIF';
 }
 
 export class LycanrocGXHIF extends LycanrocGX {
   public setNumber = 'SV66';
-  public fullName: string = 'Lycanroc-GX HIF';
+  public fullName: string = 'Lycanroc-GX (HIF SV66)';
+  public legacyFullName = 'Lycanroc-GX HIF';
   public set = 'HIF';
 }
 
 export class BuzzwoleGXHIF extends BuzzwoleGX {
   public setNumber = 'SV68';
-  public fullName: string = 'Buzzwole-GX HIF';
+  public fullName: string = 'Buzzwole-GX (HIF SV68)';
+  public legacyFullName = 'Buzzwole-GX HIF';
   public set = 'HIF';
 }
 
 export class DarkraiGXHIF extends DarkraiGX {
   public setNumber = 'SV70';
-  public fullName: string = 'Darkrai-GX HIF';
+  public fullName: string = 'Darkrai-GX (HIF SV70)';
+  public legacyFullName = 'Darkrai-GX HIF';
   public set = 'HIF';
 }
 
 export class GuzzlordGXHIF extends GuzzlordGX {
   public setNumber = 'SV71';
-  public fullName: string = 'Guzzlord-GX HIF';
+  public fullName: string = 'Guzzlord-GX (HIF SV71)';
+  public legacyFullName = 'Guzzlord-GX HIF';
   public set = 'HIF';
 }
 
 export class KartanaGXHIF extends KartanaGX {
   public setNumber = 'SV73';
-  public fullName: string = 'Kartana-GX HIF';
+  public fullName: string = 'Kartana-GX (HIF SV73)';
+  public legacyFullName = 'Kartana-GX HIF';
   public set = 'HIF';
 }
 
 export class GardevoirGXHIF extends GardevoirGX {
   public setNumber = 'SV75';
-  public fullName: string = 'Gardevoir-GX HIF';
+  public fullName: string = 'Gardevoir-GX (HIF SV75)';
+  public legacyFullName = 'Gardevoir-GX HIF';
   public set = 'HIF';
 }
 
 export class SylveonGXHIF extends SylveonGX {
   public setNumber = 'SV76';
-  public fullName: string = 'Sylveon-GX HIF';
+  public fullName: string = 'Sylveon-GX (HIF SV76)';
+  public legacyFullName = 'Sylveon-GX HIF';
   public set = 'HIF';
 }
 
 export class NoivernGXHIF extends NoivernGX {
   public setNumber = 'SV78';
-  public fullName: string = 'Noivern-GX HIF';
+  public fullName: string = 'Noivern-GX (HIF SV78)';
+  public legacyFullName = 'Noivern-GX HIF';
   public set = 'HIF';
 }
 
 export class SilvallyGXHIF extends SilvallyGX {
   public setNumber = 'SV79';
-  public fullName: string = 'Silvally-GX HIF';
+  public fullName: string = 'Silvally-GX (HIF SV79)';
+  public legacyFullName = 'Silvally-GX HIF';
   public set = 'HIF';
 }
 
 export class DrampaGXHIF extends DrampaGX {
   public setNumber = 'SV80';
-  public fullName: string = 'Drampa-GX HIF';
+  public fullName: string = 'Drampa-GX (HIF SV80)';
+  public legacyFullName = 'Drampa-GX HIF';
   public set = 'HIF';
 }
 
 export class CynthiaHIF extends Cynthia {
   public setNumber = 'SV82';
-  public fullName: string = 'Cynthia HIF';
+  public fullName: string = 'Cynthia (HIF SV82)';
+  public legacyFullName = 'Cynthia HIF';
   public set = 'HIF';
 }
 
 export class FishermanHSHIF extends FishermanHS {
   public setNumber = 'SV83';
-  public fullName: string = 'Fisherman HIF';
+  public fullName: string = 'Fisherman (HIF SV83)';
+  public legacyFullName = 'Fisherman HIF';
   public set = 'HIF';
 }
 
 export class LadyFLIHIF extends LadyFLI {
   public setNumber = 'SV86';
-  public fullName: string = 'Lady HIF';
+  public fullName: string = 'Lady (HIF SV86)';
+  public legacyFullName = 'Lady HIF';
   public set = 'HIF';
 }
 
 export class AetherParadiseConvserationAreaHIF extends AetherParadiseConvserationArea {
   public setNumber = 'SV87';
-  public fullName: string = 'Aether Paradise Conservation Area HIF';
+  public fullName: string = 'Aether Paradise Conservation Area (HIF SV87)';
+  public legacyFullName = 'Aether Paradise Conservation Area HIF';
   public set = 'HIF';
 }
 
 export class BrookletHillHIF extends BrookletHill {
   public setNumber = 'SV88';
-  public fullName: string = 'Brooklet Hill HIF';
+  public fullName: string = 'Brooklet Hill (HIF SV88)';
+  public legacyFullName = 'Brooklet Hill HIF';
   public set = 'HIF';
 }
 
 export class MtCoronetHIF extends MtCoronet {
   public setNumber = 'SV89';
-  public fullName: string = 'Mt. Coronet HIF';
+  public fullName: string = 'Mt. Coronet (HIF SV89)';
+  public legacyFullName = 'Mt. Coronet HIF';
   public set = 'HIF';
 }
 
 export class ShrineOfPunishmentHIF extends ShrineOfPunishment {
   public setNumber = 'SV90';
-  public fullName: string = 'Shrine of Punishment HIF';
+  public fullName: string = 'Shrine of Punishment (HIF SV90)';
+  public legacyFullName = 'Shrine of Punishment HIF';
   public set = 'HIF';
 }
 
 export class TapuBuluGXHIF extends TapuBuluGX {
   public setNumber = 'SV91';
-  public fullName: string = 'Tapu Bulu-GX HIF';
+  public fullName: string = 'Tapu Bulu-GX (HIF SV91)';
+  public legacyFullName = 'Tapu Bulu-GX HIF';
   public set = 'HIF';
 }
 
 export class TapuFiniGXHIF extends TapuFiniGX {
   public setNumber = 'SV92';
-  public fullName: string = 'Tapu Fini-GX HIF';
+  public fullName: string = 'Tapu Fini-GX (HIF SV92)';
+  public legacyFullName = 'Tapu Fini-GX HIF';
   public set = 'HIF';
 }
 
 export class TapuKokoGXHIF extends TapuKokoGX {
   public setNumber = 'SV93';
-  public fullName: string = 'Tapu Koko-GX HIF';
+  public fullName: string = 'Tapu Koko-GX (HIF SV93)';
+  public legacyFullName = 'Tapu Koko-GX HIF';
   public set = 'HIF';
 }
 
 export class TapuLeleGXHIF extends TapuLeleGX {
   public setNumber = 'SV94';
-  public fullName: string = 'Tapu Lele-GX HIF';
+  public fullName: string = 'Tapu Lele-GX (HIF SV94)';
+  public legacyFullName = 'Tapu Lele-GX HIF';
   public set = 'HIF';
 }
 
 export class CharizardGXHIF extends CharizardGXBUS {
   public setNumber = 'SV49';
-  public fullName: string = 'Charizard-GX HIF SV49';
+  public fullName: string = 'Charizard-GX (HIF SV49)';
+  public legacyFullName = 'Charizard-GX HIF SV49';
   public set = 'HIF';
 }
 
 export class ScytherHIF extends Scyther {
   public set: string = 'HIF';
   public setNumber: string = 'SV1';
-  public fullName: string = 'Scyther HIF';
+  public fullName: string = 'Scyther (HIF SV1)';
+  public legacyFullName = 'Scyther HIF';
 }
 
 export class PheromosaHIF extends Pheromosa {
   public set: string = 'HIF';
   public setNumber: string = 'SV5';
-  public fullName: string = 'Pheromosa HIF';
+  public fullName: string = 'Pheromosa (HIF SV5)';
+  public legacyFullName = 'Pheromosa HIF';
 }
 
 export class XurkitreeHIF extends Xurkitree {
   public set: string = 'HIF';
   public setNumber: string = 'SV14';
-  public fullName: string = 'Xurkitree HIF';
+  public fullName: string = 'Xurkitree (HIF SV14)';
+  public legacyFullName = 'Xurkitree HIF';
 }
 
 export class GuzzlordHIF extends Guzzlord {
   public set: string = 'HIF';
   public setNumber: string = 'SV26';
-  public fullName: string = 'Guzzlord HIF';
+  public fullName: string = 'Guzzlord (HIF SV26)';
+  public legacyFullName = 'Guzzlord HIF';
 }
 
 export class MagnemiteHIF extends Magnemite {
   public set: string = 'HIF';
   public setNumber: string = 'SV27';
-  public fullName: string = 'Magnemite HIF';
+  public fullName: string = 'Magnemite (HIF SV27)';
+  public legacyFullName = 'Magnemite HIF';
 }
 
 export class MagnetonHIF extends Magneton {
   public set: string = 'HIF';
   public setNumber: string = 'SV28';
-  public fullName: string = 'Magneton HIF';
+  public fullName: string = 'Magneton (HIF SV28)';
+  public legacyFullName = 'Magneton HIF';
 }
 
 export class BeldumHIF extends Beldum {
   public set: string = 'HIF';
   public setNumber: string = 'SV30';
-  public fullName: string = 'Beldum HIF';
+  public fullName: string = 'Beldum (HIF SV30)';
+  public legacyFullName = 'Beldum HIF';
 }
 
 export class MetangHIF extends Metang {
   public set: string = 'HIF';
   public setNumber: string = 'SV31';
-  public fullName: string = 'Metang HIF';
+  public fullName: string = 'Metang (HIF SV31)';
+  public legacyFullName = 'Metang HIF';
 }
 
 export class CelesteelaHIF extends Celesteela {
   public set: string = 'HIF';
   public setNumber: string = 'SV32';
-  public fullName: string = 'Celesteela HIF';
+  public fullName: string = 'Celesteela (HIF SV32)';
+  public legacyFullName = 'Celesteela HIF';
 }
 
 export class KartanaHIF extends Kartana {
   public set: string = 'HIF';
   public setNumber: string = 'SV33';
-  public fullName: string = 'Kartana HIF';
+  public fullName: string = 'Kartana (HIF SV33)';
+  public legacyFullName = 'Kartana HIF';
 }
 
 export class SwabluHIF extends Swablu {
   public set: string = 'HIF';
   public setNumber: string = 'SV42';
-  public fullName: string = 'Swablu HIF';
+  public fullName: string = 'Swablu (HIF SV42)';
+  public legacyFullName = 'Swablu HIF';
 }
 
 export class TypeNullHIF extends TypeNull {
   public set: string = 'HIF';
   public setNumber: string = 'SV45';
-  public fullName: string = 'Type: Null HIF';
+  public fullName: string = 'Type: Null (HIF SV45)';
+  public legacyFullName = 'Type: Null HIF';
 }
 
 export class GolisopodGxHIF extends GolisopodGx {
   public set: string = 'HIF';
   public setNumber: string = 'SV48';
-  public fullName: string = 'Golisopod-GX HIF';
+  public fullName: string = 'Golisopod-GX (HIF SV48)';
+  public legacyFullName = 'Golisopod-GX HIF';
 }
 
 export class TurtonatorGxHIF extends TurtonatorGx {
   public set: string = 'HIF';
   public setNumber: string = 'SV52';
-  public fullName: string = 'Turtonator-GX HIF';
+  public fullName: string = 'Turtonator-GX (HIF SV52)';
+  public legacyFullName = 'Turtonator-GX HIF';
 }
 
 export class ZygardeGxHIF extends ZygardeGx {
   public set: string = 'HIF';
   public setNumber: string = 'SV65';
-  public fullName: string = 'Zygarde-GX HIF';
+  public fullName: string = 'Zygarde-GX (HIF SV65)';
+  public legacyFullName = 'Zygarde-GX HIF';
 }
 
 export class UmbreonGxHIF extends UmbreonGx {
   public set: string = 'HIF';
   public setNumber: string = 'SV69';
-  public fullName: string = 'Umbreon-GX HIF';
+  public fullName: string = 'Umbreon-GX (HIF SV69)';
+  public legacyFullName = 'Umbreon-GX HIF';
 }
 
 export class AetherFoundationEmployeeHIF extends AetherFoundationEmployee {
   public set: string = 'HIF';
   public setNumber: string = 'SV81';
-  public fullName: string = 'Aether Foundation Employee HIF';
+  public fullName: string = 'Aether Foundation Employee (HIF SV81)';
+  public legacyFullName = 'Aether Foundation Employee HIF';
 }
 
 export class HikerHIF extends Hiker {
   public set: string = 'HIF';
   public setNumber: string = 'SV85';
-  public fullName: string = 'Hiker HIF';
+  public fullName: string = 'Hiker (HIF SV85)';
+  public legacyFullName = 'Hiker HIF';
 }
 
 export class CharmeleonHIF extends Charmeleon {
   public set: string = 'HIF';
   public setNumber: string = '8';
-  public fullName: string = 'Charmeleon HIF 8';
+  public fullName: string = 'Charmeleon (HIF 8)';
+  public legacyFullName = 'Charmeleon HIF 8';
 }
 
 export class StaryuHIF extends Staryu {
   public set: string = 'HIF';
   public setNumber: string = '13';
-  public fullName: string = 'Staryu HIF';
+  public fullName: string = 'Staryu (HIF 13)';
+  public legacyFullName = 'Staryu HIF';
 }
 
 export class PikachuHIF extends Pikachu {
   public set: string = 'HIF';
   public setNumber: string = '19';
-  public fullName: string = 'Pikachu HIF';
+  public fullName: string = 'Pikachu (HIF 19)';
+  public legacyFullName = 'Pikachu HIF';
 }
 
 export class BlainesLastStandHIF extends BlaineSLastStand {
   public set: string = 'HIF';
   public setNumber: string = '52';
-  public fullName: string = 'Blaine\'s Last Stand HIF';
+  public fullName: string = 'Blaine\'s Last Stand (HIF 52)';
+  public legacyFullName = 'Blaine\'s Last Stand HIF';
 }
 
 export class GiovannisExileHIF extends GiovannisExile {
   public set: string = 'HIF';
   public setNumber: string = '57';
-  public fullName: string = 'Giovanni\'s Exile HIF';
+  public fullName: string = 'Giovanni\'s Exile (HIF 57)';
+  public legacyFullName = 'Giovanni\'s Exile HIF';
 }
 
 export class KogasTrapHIF extends KogasTrap {
   public set: string = 'HIF';
   public setNumber: string = '59';
-  public fullName: string = 'Koga\'s Trap HIF';
+  public fullName: string = 'Koga\'s Trap (HIF 59)';
+  public legacyFullName = 'Koga\'s Trap HIF';
 }
 
 export class MistysDeterminationHIF extends MistysDetermination {
   public set: string = 'HIF';
   public setNumber: string = '62';
-  public fullName: string = 'Misty\'s Determination HIF';
+  public fullName: string = 'Misty\'s Determination (HIF 62)';
+  public legacyFullName = 'Misty\'s Determination HIF';
 }
 
 export class PokemonCenterLadyHIF extends PokemonCenterLady {
   public set: string = 'HIF';
   public setNumber: string = '64';
-  public fullName: string = 'Pokémon Center Lady HIF';
+  public fullName: string = 'Pokémon Center Lady (HIF 64)';
+  public legacyFullName = 'Pokémon Center Lady HIF';
 }
 
 export class SabrinasSuggestionHIF extends SabrinasSuggestion {
   public set: string = 'HIF';
   public setNumber: string = '65';
-  public fullName: string = 'Sabrina\'s Suggestion HIF';
+  public fullName: string = 'Sabrina\'s Suggestion (HIF 65)';
+  public legacyFullName = 'Sabrina\'s Suggestion HIF';
 }
 
 export class GiovannisExile2 extends GiovannisExile {
   public set: string = 'HIF';
   public setNumber: string = '67';
-  public fullName: string = 'Giovanni\'s Exile HIF 67';
+  public fullName: string = 'Giovanni\'s Exile (HIF 67)';
+  public legacyFullName = 'Giovanni\'s Exile HIF 67';
 }
 
 export class JessieAndJames2 extends JessieAndJames {
   public set: string = 'HIF';
   public setNumber: string = '68';
-  public fullName: string = 'Jessie & James HIF 68';
+  public fullName: string = 'Jessie & James (HIF 68)';
+  public legacyFullName = 'Jessie & James HIF 68';
 }

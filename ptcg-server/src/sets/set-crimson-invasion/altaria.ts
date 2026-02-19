@@ -41,7 +41,8 @@ export class Altaria extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Altaria';
-  public fullName: string = 'Altaria CIN';
+  public fullName: string = 'Altaria (CIN 80)';
+  public legacyFullName = 'Altaria CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Draco Melody

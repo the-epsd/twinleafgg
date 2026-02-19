@@ -28,7 +28,8 @@ export class Feebas extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Feebas';
-  public fullName: string = 'Feebas FLF';
+  public fullName: string = 'Feebas (FLF 22)';
+  public legacyFullName = 'Feebas FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-cosmic-eclipse/woobat.ts (Surprise Attack)

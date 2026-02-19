@@ -29,7 +29,8 @@ export class Fennekin extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fennekin';
-  public fullName: string = 'Fennekin FLI';
+  public fullName: string = 'Fennekin (FLI 14)';
+  public legacyFullName = 'Fennekin FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ember

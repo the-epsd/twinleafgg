@@ -37,7 +37,8 @@ export class Nidoking extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoking';
-  public fullName: string = 'Nidoking EVO';
+  public fullName: string = 'Nidoking (EVO 45)';
+  public legacyFullName = 'Nidoking EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rumble

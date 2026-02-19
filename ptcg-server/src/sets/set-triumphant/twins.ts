@@ -63,7 +63,8 @@ export class Twins extends TrainerCard {
 
   public name: string = 'Twins';
 
-  public fullName: string = 'Twins TM';
+  public fullName: string = 'Twins (TM 89)';
+  public legacyFullName = 'Twins TM';
 
   public cardImage: string = 'assets/cardback.png';
 

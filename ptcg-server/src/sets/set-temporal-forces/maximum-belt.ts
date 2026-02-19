@@ -24,7 +24,8 @@ export class MaximumBelt extends TrainerCard {
 
   public name: string = 'Maximum Belt';
 
-  public fullName: string = 'Maximum Belt TEF';
+  public fullName: string = 'Maximum Belt (TEF 154)';
+  public legacyFullName = 'Maximum Belt TEF';
 
   public text: string =
     'The attacks of the Pokémon this card is attached to do 50 more damage to your opponent\'s Active Pokémon ex.';

@@ -22,7 +22,7 @@ export class ToxtricityVmax extends PokemonCard {
       name: 'G-Max Riot',
       cost: [L, L, C],
       damage: 160,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 80 more damage.'
     }
   ];
@@ -32,7 +32,8 @@ export class ToxtricityVmax extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toxtricity VMAX';
-  public fullName: string = 'Toxtricity VMAX RCL';
+  public fullName: string = 'Toxtricity VMAX (RCL 71)';
+  public legacyFullName = 'Toxtricity VMAX RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: G-Max Riot

@@ -36,7 +36,8 @@ export class Shedinja extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shedinja';
-  public fullName: string = 'Shedinja VIV';
+  public fullName: string = 'Shedinja (VIV 66)';
+  public legacyFullName = 'Shedinja VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Shell Survival

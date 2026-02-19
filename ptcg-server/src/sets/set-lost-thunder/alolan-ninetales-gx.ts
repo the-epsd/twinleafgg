@@ -53,7 +53,8 @@ export class AlolanNinetalesGX extends PokemonCard {
 
   public name: string = 'Alolan Ninetales-GX';
 
-  public fullName: string = 'Alolan Ninetales-GX LOT';
+  public fullName: string = 'Alolan Ninetales-GX (LOT 132)';
+  public legacyFullName = 'Alolan Ninetales-GX LOT';
 
   public cardImage: string = 'assets/cardback.png';
 

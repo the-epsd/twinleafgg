@@ -12,7 +12,8 @@ export class Seel extends PokemonCard {
 
   public setNumber = '41';
 
-  public fullName = 'Seel BS';
+  public fullName = 'Seel (BS 41)';
+  public legacyFullName = 'Seel BS';
 
   public cardType = CardType.WATER;
 

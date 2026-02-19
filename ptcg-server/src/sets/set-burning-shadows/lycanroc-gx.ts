@@ -45,7 +45,8 @@ export class LycanrocGx extends PokemonCard {
   public setNumber: string = '136';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lycanroc-GX';
-  public fullName: string = 'Lycanroc-GX BUS';
+  public fullName: string = 'Lycanroc-GX (BUS 136)';
+  public legacyFullName = 'Lycanroc-GX BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Crunch

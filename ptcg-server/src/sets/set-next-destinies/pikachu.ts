@@ -31,7 +31,8 @@ export class Pikachu extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikachu';
-  public fullName: string = 'Pikachu NXD';
+  public fullName: string = 'Pikachu (NXD 39)';
+  public legacyFullName = 'Pikachu NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Thundershock

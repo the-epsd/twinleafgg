@@ -33,5 +33,6 @@ export class Aron extends PokemonCard {
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aron';
-  public fullName: string = 'Aron CRE';
+  public fullName: string = 'Aron (CRE 109)';
+  public legacyFullName = 'Aron CRE';
 }

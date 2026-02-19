@@ -28,7 +28,7 @@ export class Ledian extends PokemonCard {
       name: 'Comet Punch',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 40 damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Ledian extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ledian';
-  public fullName: string = 'Ledian BUS';
+  public fullName: string = 'Ledian (BUS 10)';
+  public legacyFullName = 'Ledian BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swift

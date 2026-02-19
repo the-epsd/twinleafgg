@@ -21,7 +21,7 @@ export class Litten extends PokemonCard {
       name: 'Fasten Claws',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Litten extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Litten';
-  public fullName: string = 'Litten TEU';
+  public fullName: string = 'Litten (TEU 20)';
+  public legacyFullName = 'Litten TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fasten Claws

@@ -33,7 +33,8 @@ export class Jolteon extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jolteon';
-  public fullName: string = 'Jolteon DEX';
+  public fullName: string = 'Jolteon (DEX 37)';
+  public legacyFullName = 'Jolteon DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Electrigun - may discard Lightning energy for +40

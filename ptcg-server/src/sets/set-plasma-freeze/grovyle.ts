@@ -33,5 +33,6 @@ export class Grovyle extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grovyle';
-  public fullName: string = 'Grovyle PLF';
+  public fullName: string = 'Grovyle (PLF 7)';
+  public legacyFullName = 'Grovyle PLF';
 }

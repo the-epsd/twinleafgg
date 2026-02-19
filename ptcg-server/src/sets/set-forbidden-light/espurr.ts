@@ -22,7 +22,8 @@ export class Espurr extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
   public name: string = 'Espurr';
-  public fullName: string = 'Espurr FLI';
+  public fullName: string = 'Espurr (FLI 44)';
+  public legacyFullName = 'Espurr FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

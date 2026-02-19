@@ -21,7 +21,7 @@ export class Snorunt extends PokemonCard {
       name: 'Continuous Headbutt',
       cost: [W],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 20 damage for each heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Snorunt extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snorunt';
-  public fullName: string = 'Snorunt CEC';
+  public fullName: string = 'Snorunt (CEC 47)';
+  public legacyFullName = 'Snorunt CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Headbutt

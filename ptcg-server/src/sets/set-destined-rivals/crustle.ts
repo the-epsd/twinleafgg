@@ -37,7 +37,8 @@ export class Crustle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Crustle';
-  public fullName: string = 'Crustle DRI';
+  public fullName: string = 'Crustle (DRI 12)';
+  public legacyFullName = 'Crustle DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Mysterious Stone House

@@ -29,5 +29,6 @@ export class Piloswine extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '78';
   public name: string = 'Piloswine';
-  public fullName: string = 'Piloswine JTG';
+  public fullName: string = 'Piloswine (JTG 78)';
+  public legacyFullName = 'Piloswine JTG';
 }

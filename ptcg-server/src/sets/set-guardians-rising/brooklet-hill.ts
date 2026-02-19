@@ -69,7 +69,8 @@ export class BrookletHill extends TrainerCard {
 
   public name = 'Brooklet Hill';
 
-  public fullName = 'Brooklet Hill GRI';
+  public fullName = 'Brooklet Hill (GRI 120)';
+  public legacyFullName = 'Brooklet Hill GRI';
 
   public text = 'Once during each player\'s turn, that player may search their deck for a Basic [W] Pokémon or Basic [F] Pokémon, put it onto their Bench, and shuffle their deck.';
 

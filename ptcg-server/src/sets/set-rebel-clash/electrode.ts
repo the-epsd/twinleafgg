@@ -37,7 +37,8 @@ export class Electrode extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electrode';
-  public fullName: string = 'Electrode RCL';
+  public fullName: string = 'Electrode (RCL 57)';
+  public legacyFullName = 'Electrode RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Orb Collector

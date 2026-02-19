@@ -33,5 +33,6 @@ export class Lairon extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lairon';
-  public fullName: string = 'Lairon CIN';
+  public fullName: string = 'Lairon (CIN 66)';
+  public legacyFullName = 'Lairon CIN';
 }

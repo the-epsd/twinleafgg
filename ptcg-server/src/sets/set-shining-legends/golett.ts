@@ -26,5 +26,6 @@ export class Golett extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golett';
-  public fullName: string = 'Golett SLG';
+  public fullName: string = 'Golett (SLG 43)';
+  public legacyFullName = 'Golett SLG';
 }

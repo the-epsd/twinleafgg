@@ -29,7 +29,8 @@ export class Honedge2 extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Honedge';
-  public fullName: string = 'Honedge UNM 93';
+  public fullName: string = 'Honedge (UNM 93)';
+  public legacyFullName = 'Honedge UNM 93';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Slashing Cutter

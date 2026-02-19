@@ -38,7 +38,8 @@ export class Exeggcute extends PokemonCard {
 
   public name: string = 'Exeggcute';
 
-  public fullName: string = 'Exeggcute JU';
+  public fullName: string = 'Exeggcute (JU 52)';
+  public legacyFullName = 'Exeggcute JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

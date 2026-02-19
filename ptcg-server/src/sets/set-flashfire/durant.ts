@@ -37,7 +37,8 @@ export class Durant extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Durant';
-  public fullName: string = 'Durant FLF';
+  public fullName: string = 'Durant (FLF 61)';
+  public legacyFullName = 'Durant FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/honchkrow.ts (random discard from hand)

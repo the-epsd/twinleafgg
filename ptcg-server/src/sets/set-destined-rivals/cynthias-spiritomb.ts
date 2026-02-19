@@ -27,7 +27,8 @@ export class CynthiasSpiritomb extends PokemonCard {
   public setNumber: string = '129';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cynthia\'s Spiritomb';
-  public fullName: string = 'Cynthia\'s Spiritomb DRI';
+  public fullName: string = 'Cynthia\'s Spiritomb (DRI 129)';
+  public legacyFullName = 'Cynthia\'s Spiritomb DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

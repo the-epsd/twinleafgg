@@ -34,7 +34,8 @@ export class Marowak extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marowak';
-  public fullName: string = 'Marowak DRX';
+  public fullName: string = 'Marowak (DRX 61)';
+  public legacyFullName = 'Marowak DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Bone Lock - prevent retreat

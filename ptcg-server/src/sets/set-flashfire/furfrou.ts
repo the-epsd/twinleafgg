@@ -35,7 +35,8 @@ export class Furfrou extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Furfrou';
-  public fullName: string = 'Furfrou FLF';
+  public fullName: string = 'Furfrou (FLF 87)';
+  public legacyFullName = 'Furfrou FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/dunsparce.ts (Glare)

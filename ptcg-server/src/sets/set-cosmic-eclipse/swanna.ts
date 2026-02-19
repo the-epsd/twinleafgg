@@ -37,7 +37,8 @@ export class Swanna extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swanna';
-  public fullName: string = 'Swanna CEC';
+  public fullName: string = 'Swanna (CEC 60)';
+  public legacyFullName = 'Swanna CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tailwind

@@ -30,7 +30,8 @@ export class Latias extends PokemonCard {
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Latias \u25c7';
-  public fullName: string = 'Latias \u25c7 CES';
+  public fullName: string = 'Latias \u25c7 (CES 107)';
+  public legacyFullName = 'Latias \u25c7 CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dreamy Mist

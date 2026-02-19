@@ -28,7 +28,8 @@ export class NidoranM extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoran ♂';
-  public fullName: string = 'Nidoran ♂ PLF';
+  public fullName: string = 'Nidoran ♂ (PLF 43)';
+  public legacyFullName = 'Nidoran ♂ PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

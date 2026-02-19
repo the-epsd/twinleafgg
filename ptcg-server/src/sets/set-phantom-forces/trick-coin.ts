@@ -13,7 +13,8 @@ export class TrickCoin extends TrainerCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trick Coin';
-  public fullName: string = 'Trick Coin PHF';
+  public fullName: string = 'Trick Coin (PHF 108)';
+  public legacyFullName = 'Trick Coin PHF';
   public text: string = 'Once during your turn, after you flip any coins for an attack of the Pokémon this card is attached to, you may ignore all effects of those coin flips and begin flipping those coins again. (You may only use effects that let you flip coins again, including effects from other cards, once during your turn.)';
 
   // TODO: Coin-flip sequence re-rolls are not currently implementable in the engine.

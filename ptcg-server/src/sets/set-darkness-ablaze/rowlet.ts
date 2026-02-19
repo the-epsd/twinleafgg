@@ -49,7 +49,8 @@ export class Rowlet extends PokemonCard {
 
   public name: string = 'Rowlet';
 
-  public fullName: string = 'Rowlet DAA';
+  public fullName: string = 'Rowlet (DAA 11)';
+  public legacyFullName = 'Rowlet DAA';
 
   private readonly ROWLET_SKY_CIRCUS_MARKER = 'ROWLET_SKY_CIRCUS_MARKER';
 

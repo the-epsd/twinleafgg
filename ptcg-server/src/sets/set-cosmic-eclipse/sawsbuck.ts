@@ -32,7 +32,8 @@ export class Sawsbuck extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name = 'Sawsbuck';
-  public fullName = 'Sawsbuck CEC';
+  public fullName = 'Sawsbuck (CEC 16)';
+  public legacyFullName = 'Sawsbuck CEC';
 
   public bounceMarker = false;
 

@@ -34,7 +34,8 @@ export class Huntail extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '55';
   public name: string = 'Huntail';
-  public fullName: string = 'Huntail DRI';
+  public fullName: string = 'Huntail (DRI 55)';
+  public legacyFullName = 'Huntail DRI';
 
   public readonly DIVER_CATCH_MARKER = 'DIVER_CATCH_MARKER';
 

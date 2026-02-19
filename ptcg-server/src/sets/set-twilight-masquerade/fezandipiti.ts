@@ -45,7 +45,8 @@ export class Fezandipiti extends PokemonCard {
 
   public name: string = 'Fezandipiti';
 
-  public fullName: string = 'Fezandipiti TWM';
+  public fullName: string = 'Fezandipiti (TWM 96)';
+  public legacyFullName = 'Fezandipiti TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Adrena-Pheromone

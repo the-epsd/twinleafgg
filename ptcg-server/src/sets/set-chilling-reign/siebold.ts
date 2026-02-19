@@ -18,7 +18,8 @@ export class Siebold extends TrainerCard {
   public setNumber: string = '153';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Siebold';
-  public fullName: string = 'Siebold CRE';
+  public fullName: string = 'Siebold (CRE 153)';
+  public legacyFullName = 'Siebold CRE';
   public text: string = 'Choose up to 2 of your Rapid Strike Pokémon and heal 60 damage from each of them. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -40,7 +40,8 @@ export class Nidorina extends PokemonCard {
 
   public name: string = 'Nidorina';
 
-  public fullName: string = 'Nidorina JU';
+  public fullName: string = 'Nidorina (JU 40)';
+  public legacyFullName = 'Nidorina JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

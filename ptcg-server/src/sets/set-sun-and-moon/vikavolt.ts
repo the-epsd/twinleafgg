@@ -69,7 +69,8 @@ export class Vikavolt extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vikavolt';
-  public fullName: string = 'Vikavolt SUM';
+  public fullName: string = 'Vikavolt (SUM 52)';
+  public legacyFullName = 'Vikavolt SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {

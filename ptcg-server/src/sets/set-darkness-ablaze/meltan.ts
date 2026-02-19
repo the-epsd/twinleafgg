@@ -33,5 +33,6 @@ export class Meltan extends PokemonCard {
   public setNumber: string = '129';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meltan';
-  public fullName: string = 'Meltan DAA';
+  public fullName: string = 'Meltan (DAA 129)';
+  public legacyFullName = 'Meltan DAA';
 }

@@ -34,7 +34,8 @@ export class Eevee2 extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eevee';
-  public fullName: string = 'Eevee HIF 48';
+  public fullName: string = 'Eevee (HIF 48)';
+  public legacyFullName = 'Eevee HIF 48';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Curiosity

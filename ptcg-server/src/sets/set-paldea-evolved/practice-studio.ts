@@ -23,7 +23,8 @@ export class PracticeStudio extends TrainerCard {
 
   public name: string = 'Practice Studio';
 
-  public fullName: string = 'Practice Studio PAL';
+  public fullName: string = 'Practice Studio (PAL 186)';
+  public legacyFullName = 'Practice Studio PAL';
 
   public text: string =
     'The attacks of Stage 1 Pokémon (both yours and your opponent\'s) do 10 more damage to the opponent\'s Active Pokémon (before applying Weakness and Resistance).';

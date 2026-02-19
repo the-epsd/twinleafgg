@@ -112,7 +112,8 @@ export class Flannery extends TrainerCard {
 
   public name: string = 'Flannery';
 
-  public fullName: string = 'Flannery CRE';
+  public fullName: string = 'Flannery (CRE 139)';
+  public legacyFullName = 'Flannery CRE';
 
   public text: string =
     'Discard a Special Energy attached to 1 of your opponent\'s Pokémon, and discard a Stadium in play.';

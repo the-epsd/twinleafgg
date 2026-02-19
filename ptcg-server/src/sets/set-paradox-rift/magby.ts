@@ -24,7 +24,8 @@ export class Magby extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '19';
   public name: string = 'Magby';
-  public fullName: string = 'Magby PAR';
+  public fullName: string = 'Magby (PAR 19)';
+  public legacyFullName = 'Magby PAR';
 
   public readonly SCORCHING_HEATER_MARKER = 'SCORCHING_HEATER_MARKER';
   public readonly CLEAR_SCORCHING_HEATER_MARKER = 'CLEAR_SCORCHING_HEATER_MARKER';

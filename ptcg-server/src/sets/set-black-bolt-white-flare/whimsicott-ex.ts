@@ -67,7 +67,8 @@ export class Whimsicottex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
   public name: string = 'Whimsicott ex';
-  public fullName: string = 'Whimsicott ex SV11W';
+  public fullName: string = 'Whimsicott ex (WHT 5)';
+  public legacyFullName = 'Whimsicott ex SV11W';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Energy Gift

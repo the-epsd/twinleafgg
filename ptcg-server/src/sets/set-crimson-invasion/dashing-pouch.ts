@@ -15,7 +15,8 @@ export class DashingPouch extends TrainerCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dashing Pouch';
-  public fullName: string = 'Dashing Pouch CIN';
+  public fullName: string = 'Dashing Pouch (CIN 92)';
+  public legacyFullName = 'Dashing Pouch CIN';
   public text: string = 'If the Pokémon this card is attached to discards Energy for its Retreat Cost, put that Energy into your hand instead of the discard pile.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -38,7 +38,8 @@ export class Deoxys3 extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Deoxys';
-  public fullName: string = 'Deoxys CES 69';
+  public fullName: string = 'Deoxys (CES 69)';
+  public legacyFullName = 'Deoxys CES 69';
 
   public usedTeleportationBurst: boolean = false;
 

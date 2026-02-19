@@ -41,7 +41,8 @@ export class Volcanion extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Volcanion \u25C7';
-  public fullName: string = 'Volcanion \u25C7 FLI';
+  public fullName: string = 'Volcanion \u25C7 (FLI 31)';
+  public legacyFullName = 'Volcanion \u25C7 FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Jet Geyser

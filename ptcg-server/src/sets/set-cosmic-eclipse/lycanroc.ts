@@ -28,7 +28,7 @@ export class Lycanroc extends PokemonCard {
       name: 'Voltage Claw',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon has any Special Energy attached to it, this attack does 70 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Lycanroc extends PokemonCard {
   public setNumber: string = '124';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lycanroc';
-  public fullName: string = 'Lycanroc CEC';
+  public fullName: string = 'Lycanroc (CEC 124)';
+  public legacyFullName = 'Lycanroc CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Boiling Blood (passive - CheckAttackCostEffect)

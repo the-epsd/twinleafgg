@@ -49,7 +49,8 @@ export class Aegislashex extends PokemonCard {
 
   public name: string = 'Aegislash ex';
 
-  public fullName: string = 'Aegislash ex PAR';
+  public fullName: string = 'Aegislash ex (PAR 135)';
+  public legacyFullName = 'Aegislash ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Peerless Edge

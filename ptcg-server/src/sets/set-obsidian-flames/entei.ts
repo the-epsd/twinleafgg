@@ -45,7 +45,8 @@ export class Entei extends PokemonCard {
 
   public name: string = 'Entei';
 
-  public fullName: string = 'Entei OBF';
+  public fullName: string = 'Entei (OBF 30)';
+  public legacyFullName = 'Entei OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

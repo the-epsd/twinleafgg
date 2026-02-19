@@ -33,7 +33,8 @@ export class Slugma extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public name: string = 'Slugma';
-  public fullName: string = 'Slugma UD';
+  public fullName: string = 'Slugma (UD 67)';
+  public legacyFullName = 'Slugma UD';
 
   public readonly ACTIVE_VOLCANO_MARKER = 'ACTIVE_VOLCANO_MARKER';
 

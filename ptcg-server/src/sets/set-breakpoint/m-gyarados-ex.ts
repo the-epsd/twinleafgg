@@ -23,7 +23,7 @@ export class MGyaradosEx extends PokemonCard {
       name: 'Blast Geyser',
       cost: [C, C, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 20 more damage for each [W] Energy attached to this Pokémon. If you do, discard the top 2 cards of your deck.'
     }
   ];
@@ -32,7 +32,8 @@ export class MGyaradosEx extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Gyarados-EX';
-  public fullName: string = 'M Gyarados-EX BKP';
+  public fullName: string = 'M Gyarados-EX (BKP 27)';
+  public legacyFullName = 'M Gyarados-EX BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Blast Geyser

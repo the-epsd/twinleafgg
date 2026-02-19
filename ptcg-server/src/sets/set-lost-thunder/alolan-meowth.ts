@@ -36,7 +36,8 @@ export class AlolanMeowth extends PokemonCard {
 
   public name: string = 'Alolan Meowth';
 
-  public fullName: string = 'Alolan Meowth LOT';
+  public fullName: string = 'Alolan Meowth (LOT 118)';
+  public legacyFullName = 'Alolan Meowth LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -31,7 +31,8 @@ export class Girafarig extends PokemonCard {
   public setNumber: string = '154';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Girafarig';
-  public fullName: string = 'Girafarig PAL';
+  public fullName: string = 'Girafarig (PAL 154)';
+  public legacyFullName = 'Girafarig PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Psy Bolt

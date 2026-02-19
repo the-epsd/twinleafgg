@@ -37,7 +37,8 @@ export class XerneasEx extends PokemonCard {
   public setNumber: string = '97A';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Xerneas EX';
-  public fullName: string = 'Xerneas EX CEL';
+  public fullName: string = 'Xerneas EX (CEL 97A)';
+  public legacyFullName = 'Xerneas EX CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Break Through

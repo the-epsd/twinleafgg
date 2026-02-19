@@ -36,7 +36,8 @@ export class AlolanNinetales extends PokemonCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Ninetales';
-  public fullName: string = 'Alolan Ninetales TEU';
+  public fullName: string = 'Alolan Ninetales (TEU 111)';
+  public legacyFullName = 'Alolan Ninetales TEU';
 
   // Ref: set-cosmic-eclipse/alolan-persian-gx.ts (Smug Face - AbstractAttackEffect prevention for GX/EX)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

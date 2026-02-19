@@ -24,7 +24,8 @@ export class Gothita extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothita';
-  public fullName: string = 'Gothita DRX';
+  public fullName: string = 'Gothita (DRX 55)';
+  public legacyFullName = 'Gothita DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Future Sight - look at top 5, reorder

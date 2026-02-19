@@ -42,7 +42,8 @@ export class Gardevoir extends PokemonCard {
 
   public name: string = 'Gardevoir';
 
-  public fullName: string = 'Gardevoir NXD';
+  public fullName: string = 'Gardevoir (NXD 57)';
+  public legacyFullName = 'Gardevoir NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

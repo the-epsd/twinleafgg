@@ -30,7 +30,8 @@ export class Jynx extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jynx';
-  public fullName: string = 'Jynx DF';
+  public fullName: string = 'Jynx (DF 17)';
+  public legacyFullName = 'Jynx DF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

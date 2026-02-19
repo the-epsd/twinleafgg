@@ -35,7 +35,8 @@ export class Clefairy extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clefairy';
-  public fullName: string = 'Clefairy HIF';
+  public fullName: string = 'Clefairy (HIF 38)';
+  public legacyFullName = 'Clefairy HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lead

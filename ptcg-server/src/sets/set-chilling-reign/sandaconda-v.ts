@@ -38,7 +38,8 @@ export class SandacondaV extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandaconda V';
-  public fullName: string = 'Sandaconda V CRE';
+  public fullName: string = 'Sandaconda V (CRE 89)';
+  public legacyFullName = 'Sandaconda V CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Wall of Sand (passive - reduce damage to this Pokemon by 30)

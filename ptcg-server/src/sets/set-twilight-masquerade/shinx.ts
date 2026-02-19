@@ -44,7 +44,8 @@ export class Shinx extends PokemonCard {
   
   public name: string = 'Shinx';
   
-  public fullName: string = 'Shinx TWM';
+  public fullName: string = 'Shinx (TWM 66)';
+  public legacyFullName = 'Shinx TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

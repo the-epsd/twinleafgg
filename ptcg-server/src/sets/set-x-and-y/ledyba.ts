@@ -25,5 +25,6 @@ export class Ledyba extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ledyba';
-  public fullName: string = 'Ledyba XY';
+  public fullName: string = 'Ledyba (XY 6)';
+  public legacyFullName = 'Ledyba XY';
 }

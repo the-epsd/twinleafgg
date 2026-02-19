@@ -22,7 +22,7 @@ export class LuxrayBreak extends PokemonCard {
       name: 'Wild Fury',
       cost: [L, L, C, C],
       damage: 130,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 40 more damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class LuxrayBreak extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luxray BREAK';
-  public fullName: string = 'Luxray BREAK BKP';
+  public fullName: string = 'Luxray BREAK (BKP 47)';
+  public legacyFullName = 'Luxray BREAK BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wild Fury

@@ -31,7 +31,8 @@ export class Empoleon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Empoleon';
-  public fullName: string = 'Empoleon MD';
+  public fullName: string = 'Empoleon (MD 17)';
+  public legacyFullName = 'Empoleon MD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -26,7 +26,8 @@ export class Chansey2 extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chansey';
-  public fullName: string = 'Chansey DEX 81';
+  public fullName: string = 'Chansey (DEX 81)';
+  public legacyFullName = 'Chansey DEX 81';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Continuous Tumble - flip until tails, damage = 30 x heads

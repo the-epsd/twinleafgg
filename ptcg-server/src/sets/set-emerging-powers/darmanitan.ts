@@ -33,7 +33,8 @@ export class Darmanitan extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
   public name: string = 'Darmanitan';
-  public fullName: string = 'Darmanitan EPO';
+  public fullName: string = 'Darmanitan (EPO 21)';
+  public legacyFullName = 'Darmanitan EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

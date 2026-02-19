@@ -26,7 +26,8 @@ export class SingleStrikeStyleMustard extends TrainerCard {
 
   public name: string = 'Single Strike Style Mustard';
 
-  public fullName: string = 'Single Strike Style Mustard BST';
+  public fullName: string = 'Single Strike Style Mustard (BST 134)';
+  public legacyFullName = 'Single Strike Style Mustard BST';
 
   public text: string =
     `You can play this card only when it is the last card in your hand.

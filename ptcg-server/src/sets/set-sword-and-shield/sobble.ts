@@ -40,7 +40,8 @@ export class Sobble extends PokemonCard {
 
   public name: string = 'Sobble';
 
-  public fullName: string = 'Sobble SSH';
+  public fullName: string = 'Sobble (SSH 55)';
+  public legacyFullName = 'Sobble SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;

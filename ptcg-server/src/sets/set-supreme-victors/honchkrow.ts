@@ -41,7 +41,8 @@ export class Honchkrow extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Honchkrow';
-  public fullName: string = 'Honchkrow SV';
+  public fullName: string = 'Honchkrow (SV 29)';
+  public legacyFullName = 'Honchkrow SV';
 
   public readonly DARKNESS_RESTORE_MARKER: string = 'DARKNESS_RESTORE_MARKER';
 

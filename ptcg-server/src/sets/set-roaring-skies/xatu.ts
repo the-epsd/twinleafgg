@@ -37,7 +37,8 @@ export class Xatu extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Xatu';
-  public fullName: string = 'Xatu ROS';
+  public fullName: string = 'Xatu (ROS 29)';
+  public legacyFullName = 'Xatu ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Future Sight

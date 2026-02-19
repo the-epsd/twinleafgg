@@ -38,7 +38,8 @@ export class Cascoon extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cascoon';
-  public fullName: string = 'Cascoon ROS';
+  public fullName: string = 'Cascoon (ROS 6)';
+  public legacyFullName = 'Cascoon ROS';
 
   private readonly PREVENT_DAMAGE_MARKER = 'CASCOON_ROS_PREVENT_DAMAGE_MARKER';
   private readonly CLEAR_PREVENT_DAMAGE_MARKER = 'CASCOON_ROS_CLEAR_PREVENT_DAMAGE_MARKER';

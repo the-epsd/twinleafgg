@@ -38,7 +38,8 @@ export class Solgaleo extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solgaleo ◇';
-  public fullName: string = 'Solgaleo ◇ UPR';
+  public fullName: string = 'Solgaleo ◇ (UPR 89)';
+  public legacyFullName = 'Solgaleo ◇ UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Radiant Star

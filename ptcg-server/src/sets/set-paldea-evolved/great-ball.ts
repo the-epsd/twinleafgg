@@ -20,7 +20,8 @@ export class GreatBall extends TrainerCard {
 
   public name: string = 'Great Ball';
 
-  public fullName: string = 'Great Ball PAL';
+  public fullName: string = 'Great Ball (PAL 183)';
+  public legacyFullName = 'Great Ball PAL';
 
   public text: string =
     'Look at the top 7 cards of your deck. You may reveal a Pokémon you find there and put it into your hand. Shuffle the other cards back into your deck.';

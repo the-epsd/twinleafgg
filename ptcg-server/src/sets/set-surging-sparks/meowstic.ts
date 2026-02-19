@@ -49,7 +49,8 @@ export class Meowstic extends PokemonCard {
 
   public name: string = 'Meowstic';
 
-  public fullName: string = 'Meowstic SSP';
+  public fullName: string = 'Meowstic (SSP 85)';
+  public legacyFullName = 'Meowstic SSP';
 
   public readonly BECKONING_TAIL_MARKER = 'BECKONING_TAIL_MARKER';
 

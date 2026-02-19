@@ -34,7 +34,8 @@ export class Escavalier extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Escavalier';
-  public fullName: string = 'Escavalier PLB';
+  public fullName: string = 'Escavalier (PLB 61)';
+  public legacyFullName = 'Escavalier PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

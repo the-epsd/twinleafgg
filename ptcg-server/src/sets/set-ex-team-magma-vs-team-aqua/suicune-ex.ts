@@ -34,7 +34,8 @@ export class Suicuneex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '94';
   public name: string = 'Suicune ex';
-  public fullName: string = 'Suicune ex MA';
+  public fullName: string = 'Suicune ex (MA 94)';
+  public legacyFullName = 'Suicune ex MA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

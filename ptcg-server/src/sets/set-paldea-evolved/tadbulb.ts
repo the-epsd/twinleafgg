@@ -36,7 +36,8 @@ export class Tadbulb extends PokemonCard {
 
   public name: string = 'Tadbulb';
 
-  public fullName: string = 'Tadbulb PAL';
+  public fullName: string = 'Tadbulb (PAL 77)';
+  public legacyFullName = 'Tadbulb PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

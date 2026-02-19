@@ -38,7 +38,8 @@ export class Boltund extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Boltund';
-  public fullName: string = 'Boltund BST';
+  public fullName: string = 'Boltund (BST 53)';
+  public legacyFullName = 'Boltund BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Corner

@@ -32,7 +32,8 @@ export class Psyduck extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
   public name: string = 'Psyduck';
-  public fullName: string = 'Psyduck FO';
+  public fullName: string = 'Psyduck (FO 53)';
+  public legacyFullName = 'Psyduck FO';
 
   public readonly OPPONENT_CANNOT_PLAY_TRAINERS_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_TRAINERS_CARDS_MARKER';
 

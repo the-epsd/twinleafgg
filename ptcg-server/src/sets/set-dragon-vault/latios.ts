@@ -31,7 +31,8 @@ export class Latios extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Latios';
-  public fullName: string = 'Latios DRV';
+  public fullName: string = 'Latios (DRV 10)';
+  public legacyFullName = 'Latios DRV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sky Blade - +20 if Latias on bench

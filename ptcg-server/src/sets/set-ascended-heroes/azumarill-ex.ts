@@ -32,7 +32,8 @@ export class Azumarillex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
   public name: string = 'Azumarill ex';
-  public fullName: string = 'Azumarill ex MC';
+  public fullName: string = 'Azumarill ex (ASC 84)';
+  public legacyFullName = 'Azumarill ex MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Bubble Bundle ability

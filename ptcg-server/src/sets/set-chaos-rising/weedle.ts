@@ -22,7 +22,8 @@ export class Weedle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
   public name: string = 'Weedle';
-  public fullName: string = 'Weedle M4';
+  public fullName: string = 'Weedle (M4 1)';
+  public legacyFullName = 'Weedle M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

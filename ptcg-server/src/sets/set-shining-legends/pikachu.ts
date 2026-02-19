@@ -22,7 +22,7 @@ export class Pikachu extends PokemonCard {
       name: 'Iron Tail',
       cost: [L],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 20 damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Pikachu extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikachu';
-  public fullName: string = 'Pikachu SLG';
+  public fullName: string = 'Pikachu (SLG 28)';
+  public legacyFullName = 'Pikachu SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Iron Tail

@@ -29,7 +29,8 @@ export class Pidove extends PokemonCard {
   public setNumber: string = '123';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pidove';
-  public fullName: string = 'Pidove BCR';
+  public fullName: string = 'Pidove (BCR 123)';
+  public legacyFullName = 'Pidove BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Razor Wind

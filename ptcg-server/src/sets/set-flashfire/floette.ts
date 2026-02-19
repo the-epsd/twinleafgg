@@ -38,7 +38,8 @@ export class Floette extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Floette';
-  public fullName: string = 'Floette FLF';
+  public fullName: string = 'Floette (FLF 64)';
+  public legacyFullName = 'Floette FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-plasma-freeze/umbreon.ts (Dark Shade)

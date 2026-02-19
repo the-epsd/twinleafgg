@@ -31,7 +31,8 @@ export class RegirockEx extends PokemonCard {
 
   public set: string = 'FCO';
   public name: string = 'Regirock-EX';
-  public fullName: string = 'Regirock EX FCO';
+  public fullName: string = 'Regirock-EX (FCO 43)';
+  public legacyFullName = 'Regirock EX FCO';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '43';
 

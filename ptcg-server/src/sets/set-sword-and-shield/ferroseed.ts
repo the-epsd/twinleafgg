@@ -21,5 +21,6 @@ export class Ferroseed extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '130';
   public name = 'Ferroseed';
-  public fullName = 'Ferroseed SSH';
+  public fullName = 'Ferroseed (SSH 130)';
+  public legacyFullName = 'Ferroseed SSH';
 }

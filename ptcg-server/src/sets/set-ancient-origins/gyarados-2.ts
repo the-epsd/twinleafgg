@@ -21,14 +21,14 @@ export class Gyarados2 extends PokemonCard {
       name: 'Full Retaliation',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each damage counter on each of your Benched Magikarp.'
     },
     {
       name: 'Thrash',
       cost: [W, W, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, this Pokémon does 30 damage to itself.'
     }
   ];
@@ -37,7 +37,8 @@ export class Gyarados2 extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gyarados';
-  public fullName: string = 'Gyarados AOR 21';
+  public fullName: string = 'Gyarados (AOR 21)';
+  public legacyFullName = 'Gyarados AOR 21';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Full Retaliation

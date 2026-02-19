@@ -53,7 +53,8 @@ export class Revive extends TrainerCard {
 
   public name: string = 'Revive';
 
-  public fullName: string = 'Revive BLW';
+  public fullName: string = 'Revive (BLW 102)';
+  public legacyFullName = 'Revive BLW';
 
   public cardImage: string = 'assets/cardback.png';
 

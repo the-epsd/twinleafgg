@@ -20,7 +20,8 @@ export class AquaPatch extends TrainerCard {
 
   public name: string = 'Aqua Patch';
 
-  public fullName: string = 'Aqua Patch GRI';
+  public fullName: string = 'Aqua Patch (GRI 119)';
+  public legacyFullName = 'Aqua Patch GRI';
 
   public cardImage: string = 'assets/cardback.png';
 

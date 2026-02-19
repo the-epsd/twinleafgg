@@ -43,7 +43,8 @@ export class Palafin extends PokemonCard {
 
   public name: string = 'Palafin';
 
-  public fullName: string = 'Palafin OBF';
+  public fullName: string = 'Palafin (OBF 62)';
+  public legacyFullName = 'Palafin OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

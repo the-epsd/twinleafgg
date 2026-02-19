@@ -32,7 +32,8 @@ export class Skiploom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Skiploom';
-  public fullName: string = 'Skiploom EVS';
+  public fullName: string = 'Skiploom (EVS 3)';
+  public legacyFullName = 'Skiploom EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

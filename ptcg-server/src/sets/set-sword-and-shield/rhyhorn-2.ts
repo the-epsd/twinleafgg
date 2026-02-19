@@ -35,7 +35,8 @@ export class Rhyhorn2 extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rhyhorn';
-  public fullName: string = 'Rhyhorn SSH 97';
+  public fullName: string = 'Rhyhorn (SSH 97)';
+  public legacyFullName = 'Rhyhorn SSH 97';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stomp Off

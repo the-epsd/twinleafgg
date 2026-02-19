@@ -7,13 +7,15 @@ import { Reshiram } from '../set-black-and-white/reshiram';
 import { Zekrom } from '../set-black-and-white/zekrom';
 
 export class ProfessorsResearchCEL extends ProfessorsResearch {
-  public fullName = 'Professor\'s Research CEL';
+  public fullName = 'Professor\'s Research (CEL 23)';
+  public legacyFullName = 'Professor\'s Research CEL';
   public set = 'CEL';
   public setNumber = '23';
 }
 
 export class ProfessorsResearchCELFA extends ProfessorsResearch {
-  public fullName = 'Professor\'s Research CEL FA';
+  public fullName = 'Professor\'s Research (CEL 24)';
+  public legacyFullName = 'Professor\'s Research CEL FA';
   public set = 'CEL';
   public setNumber = '24';
 }
@@ -21,35 +23,41 @@ export class ProfessorsResearchCELFA extends ProfessorsResearch {
 export class PikachuCEL extends Pikachu {
   public set: string = 'CEL';
   public setNumber: string = '5';
-  public fullName: string = 'Pikachu CEL';
+  public fullName: string = 'Pikachu (CEL 5)';
+  public legacyFullName = 'Pikachu CEL';
 }
 
 export class HereComesTeamRocketCEL extends HereComesTeamRocket {
   public set: string = 'CEL';
   public setNumber: string = '15A2';
-  public fullName: string = 'Here Comes Team Rocket! CEL';
+  public fullName: string = 'Here Comes Team Rocket! (CEL 15A2)';
+  public legacyFullName = 'Here Comes Team Rocket! CEL';
 }
 
 export class Mew2 extends Mew {
   public set: string = 'CEL';
   public setNumber: string = '25';
-  public fullName: string = 'Mew CEL 25';
+  public fullName: string = 'Mew (CEL 25)';
+  public legacyFullName = 'Mew CEL 25';
 }
 
 export class RocketsAdminCEL extends RocketsAdmin {
   public set: string = 'CEL';
   public setNumber: string = '86A';
-  public fullName: string = 'Rocket\'s Admin. CEL';
+  public fullName: string = 'Rocket\'s Admin. (CEL 86A)';
+  public legacyFullName = 'Rocket\'s Admin. CEL';
 }
 
 export class ReshiramCEL extends Reshiram {
   public set: string = 'CEL';
   public setNumber: string = '113A';
-  public fullName: string = 'Reshiram CEL';
+  public fullName: string = 'Reshiram (CEL 113A)';
+  public legacyFullName = 'Reshiram CEL';
 }
 
 export class ZekromCEL extends Zekrom {
   public set: string = 'CEL';
   public setNumber: string = '114A';
-  public fullName: string = 'Zekrom CEL';
+  public fullName: string = 'Zekrom (CEL 114A)';
+  public legacyFullName = 'Zekrom CEL';
 }

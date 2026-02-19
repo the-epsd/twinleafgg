@@ -34,7 +34,8 @@ export class Horsea extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Horsea';
-  public fullName: string = 'Horsea BST';
+  public fullName: string = 'Horsea (BST 31)';
+  public legacyFullName = 'Horsea BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Smokescreen

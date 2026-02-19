@@ -31,7 +31,8 @@ export class BronzongBREAK extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '62';
   public name: string = 'Bronzong BREAK';
-  public fullName: string = 'Bronzong BREAK FCO';
+  public fullName: string = 'Bronzong BREAK (FCO 62)';
+  public legacyFullName = 'Bronzong BREAK FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Life Stream

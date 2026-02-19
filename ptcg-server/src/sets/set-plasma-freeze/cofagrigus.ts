@@ -35,7 +35,8 @@ export class Cofagrigus extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '56';
   public name: string = 'Cofagrigus';
-  public fullName: string = 'Cofagrigus PLF';
+  public fullName: string = 'Cofagrigus (PLF 56)';
+  public legacyFullName = 'Cofagrigus PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {

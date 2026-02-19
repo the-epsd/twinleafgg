@@ -35,7 +35,8 @@ export class Zebstrika extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zebstrika';
-  public fullName: string = 'Zebstrika NXD';
+  public fullName: string = 'Zebstrika (NXD 48)';
+  public legacyFullName = 'Zebstrika NXD';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 

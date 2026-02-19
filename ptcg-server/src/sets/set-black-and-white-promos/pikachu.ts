@@ -28,7 +28,8 @@ export class Pikachu extends PokemonCard {
   ];
 
   public set: string = 'BWP';
-  public fullName: string = 'Pikachu BWP';
+  public fullName: string = 'Pikachu (BWP 54)';
+  public legacyFullName = 'Pikachu BWP';
   public name: string = 'Pikachu';
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';

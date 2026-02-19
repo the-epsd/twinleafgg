@@ -92,7 +92,8 @@ export class ColresssObsession extends TrainerCard {
 
   public name: string = 'Colress\'s Tenacity';
 
-  public fullName: string = 'Colress\'s Tenacity SFA';
+  public fullName: string = 'Colress\'s Tenacity (SFA 57)';
+  public legacyFullName = 'Colress\'s Tenacity SFA';
 
   public text: string =
     'Search your deck for a Stadium card and an Energy card, reveal them, and put them into your hand. Then, shuffle your deck.';

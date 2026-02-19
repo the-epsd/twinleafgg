@@ -39,7 +39,8 @@ export class Deoxysex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Deoxys ex';
-  public fullName: string = 'Deoxys ex P4';
+  public fullName: string = 'Deoxys ex (P4 17)';
+  public legacyFullName = 'Deoxys ex P4';
 
   public readonly FORME_CHANGE_MARKER = 'FORME_CHANGE_MARKER';
 

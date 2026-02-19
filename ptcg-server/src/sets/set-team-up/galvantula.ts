@@ -29,7 +29,8 @@ export class Galvantula extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';
   public name: string = 'Galvantula';
-  public fullName: string = 'Galvantula TEU';
+  public fullName: string = 'Galvantula (TEU 48)';
+  public legacyFullName = 'Galvantula TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Unnerve

@@ -17,7 +17,8 @@ export class CounterEnergy extends EnergyCard {
 
   public name = 'Counter Energy';
 
-  public fullName = 'Counter Energy CIN';
+  public fullName = 'Counter Energy (CIN 100)';
+  public legacyFullName = 'Counter Energy CIN';
 
   public cardImage: string = 'assets/cardback.png';
 

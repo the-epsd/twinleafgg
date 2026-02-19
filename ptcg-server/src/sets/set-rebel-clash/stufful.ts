@@ -27,7 +27,7 @@ export class Stufful extends PokemonCard {
       name: 'Jump On',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Stufful extends PokemonCard {
   public setNumber: string = '149';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stufful';
-  public fullName: string = 'Stufful RCL';
+  public fullName: string = 'Stufful (RCL 149)';
+  public legacyFullName = 'Stufful RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Jump On

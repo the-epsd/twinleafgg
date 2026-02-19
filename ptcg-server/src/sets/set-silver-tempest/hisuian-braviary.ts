@@ -50,7 +50,8 @@ export class HisuianBraviary extends PokemonCard {
 
   public name: string = 'Hisuian Braviary';
 
-  public fullName: string = 'Hisuian Braviary SIT';
+  public fullName: string = 'Hisuian Braviary (SIT 149)';
+  public legacyFullName = 'Hisuian Braviary SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

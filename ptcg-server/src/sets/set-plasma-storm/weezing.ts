@@ -39,7 +39,8 @@ export class Weezing extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weezing';
-  public fullName: string = 'Weezing PLS';
+  public fullName: string = 'Weezing (PLS 58)';
+  public legacyFullName = 'Weezing PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Aftermath (passive - on KO)

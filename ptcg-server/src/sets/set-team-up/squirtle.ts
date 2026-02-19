@@ -35,7 +35,8 @@ export class Squirtle extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Squirtle';
-  public fullName: string = 'Squirtle TEU';
+  public fullName: string = 'Squirtle (TEU 22)';
+  public legacyFullName = 'Squirtle TEU';
 
   // Ref: set-shining-fates/thwackey.ts (Lay of the Land - stadium-based retreat reduction)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

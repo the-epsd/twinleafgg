@@ -16,7 +16,8 @@ export class PlasmaFrigate extends TrainerCard {
   public setNumber: string = '124';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Plasma Frigate';
-  public fullName: string = 'Plasma Frigate PLS';
+  public fullName: string = 'Plasma Frigate (PLS 124)';
+  public legacyFullName = 'Plasma Frigate PLS';
   public text: string = 'Each Pokémon that has any Plasma Energy attached to it (both yours and your opponent\'s) has no Weakness.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

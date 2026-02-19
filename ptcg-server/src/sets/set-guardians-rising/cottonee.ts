@@ -22,7 +22,7 @@ export class Cottonee extends PokemonCard {
       name: 'Continuous Tumble',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 10 damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Cottonee extends PokemonCard {
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cottonee';
-  public fullName: string = 'Cottonee GRI';
+  public fullName: string = 'Cottonee (GRI 90)';
+  public legacyFullName = 'Cottonee GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Tumble

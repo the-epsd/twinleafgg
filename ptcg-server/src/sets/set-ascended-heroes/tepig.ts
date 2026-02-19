@@ -20,5 +20,6 @@ export class Tepig extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
   public name: string = 'Tepig';
-  public fullName: string = 'Tepig MC';
+  public fullName: string = 'Tepig (ASC 29)';
+  public legacyFullName = 'Tepig MC';
 }

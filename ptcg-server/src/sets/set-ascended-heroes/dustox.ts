@@ -38,7 +38,8 @@ export class Dustox extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '15';
   public name: string = 'Dustox';
-  public fullName: string = 'Dustox M2a';
+  public fullName: string = 'Dustox (ASC 15)';
+  public legacyFullName = 'Dustox M2a';
 
   public readonly RUSTLING_WIND_MARKER = 'RUSTLING_WIND_MARKER';
 

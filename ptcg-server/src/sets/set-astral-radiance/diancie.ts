@@ -41,7 +41,8 @@ export class Diancie extends PokemonCard {
 
   public name: string = 'Diancie';
 
-  public fullName: string = 'Diancie ASR';
+  public fullName: string = 'Diancie (ASR 68)';
+  public legacyFullName = 'Diancie ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

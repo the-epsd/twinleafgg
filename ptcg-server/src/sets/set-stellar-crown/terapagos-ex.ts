@@ -46,7 +46,8 @@ export class Terapagosex extends PokemonCard {
 
   public name: string = 'Terapagos ex';
 
-  public fullName: string = 'Terapagos ex SCR';
+  public fullName: string = 'Terapagos ex (SCR 128)';
+  public legacyFullName = 'Terapagos ex SCR';
 
   public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
   public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';

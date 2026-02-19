@@ -28,7 +28,8 @@ export class Lycanroc extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
   public name: string = 'Lycanroc';
-  public fullName: string = 'Lycanroc FLI';
+  public fullName: string = 'Lycanroc (FLI 76)';
+  public legacyFullName = 'Lycanroc FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -26,5 +26,6 @@ export class Starly extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Starly';
-  public fullName: string = 'Starly PLF';
+  public fullName: string = 'Starly (PLF 95)';
+  public legacyFullName = 'Starly PLF';
 }

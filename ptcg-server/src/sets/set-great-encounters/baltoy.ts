@@ -28,7 +28,8 @@ export class Baltoy extends PokemonCard {
   public set: string = 'GE';
   public setNumber: string = '60';
   public name: string = 'Baltoy';
-  public fullName: string = 'Baltoy GE';
+  public fullName: string = 'Baltoy (GE 60)';
+  public legacyFullName = 'Baltoy GE';
   public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

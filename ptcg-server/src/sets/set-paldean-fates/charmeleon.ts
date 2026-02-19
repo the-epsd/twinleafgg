@@ -46,7 +46,8 @@ export class Charmeleon extends PokemonCard {
 
   public name: string = 'Charmeleon';
 
-  public fullName: string = 'Charmeleon PAF';
+  public fullName: string = 'Charmeleon (PAF 8)';
+  public legacyFullName = 'Charmeleon PAF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

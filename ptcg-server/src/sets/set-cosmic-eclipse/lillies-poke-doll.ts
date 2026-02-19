@@ -37,7 +37,8 @@ export class LilliesPokeDoll extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '197';
   public name: string = 'Lillie\'s Poké Doll';
-  public fullName: string = 'Lillie\'s Poké Doll CEC';
+  public fullName: string = 'Lillie\'s Poké Doll (CEC 197)';
+  public legacyFullName = 'Lillie\'s Poké Doll CEC';
 
   public powers: Power[] = [
     {

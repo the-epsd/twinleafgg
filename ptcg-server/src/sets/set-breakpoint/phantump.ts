@@ -66,7 +66,8 @@ export class Phantump extends PokemonCard {
 
   public name: string = 'Phantump';
 
-  public fullName: string = 'Phantump BKP';
+  public fullName: string = 'Phantump (BKP 64)';
+  public legacyFullName = 'Phantump BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

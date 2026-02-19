@@ -26,7 +26,8 @@ export class Vanillish extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanillish';
-  public fullName: string = 'Vanillish PLF';
+  public fullName: string = 'Vanillish (PLF 28)';
+  public legacyFullName = 'Vanillish PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Surefire Spin - flip 2 coins, +40 if both heads

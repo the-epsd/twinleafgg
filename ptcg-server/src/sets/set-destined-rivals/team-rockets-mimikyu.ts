@@ -90,7 +90,8 @@ export class TeamRocketsMimikyu extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Team Rocket\'s Mimikyu';
-  public fullName: string = 'Team Rocket\'s Mimikyu DRI';
+  public fullName: string = 'Team Rocket\'s Mimikyu (DRI 87)';
+  public legacyFullName = 'Team Rocket\'s Mimikyu DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

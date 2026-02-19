@@ -30,7 +30,8 @@ export class Vanillite extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanillite';
-  public fullName: string = 'Vanillite DAA';
+  public fullName: string = 'Vanillite (DAA 45)';
+  public legacyFullName = 'Vanillite DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ice Over

@@ -29,7 +29,8 @@ export class Kartana extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kartana';
-  public fullName: string = 'Kartana UNB';
+  public fullName: string = 'Kartana (UNB 19)';
+  public legacyFullName = 'Kartana UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -40,7 +40,8 @@ export class PokedexHandy extends TrainerCard {
 
   public name: string = 'Pokedex HANDY910is';
 
-  public fullName: string = 'Pokedex HANDY910is DP';
+  public fullName: string = 'Pokedex HANDY910is (DP 111)';
+  public legacyFullName = 'Pokedex HANDY910is DP';
 
   public cardImage: string = 'assets/cardback.png';
 

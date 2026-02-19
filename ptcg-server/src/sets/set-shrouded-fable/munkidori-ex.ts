@@ -33,7 +33,8 @@ export class Munkidoriex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '37';
   public name: string = 'Munkidori ex';
-  public fullName: string = 'Munkidori ex SFA';
+  public fullName: string = 'Munkidori ex (SFA 37)';
+  public legacyFullName = 'Munkidori ex SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -34,7 +34,8 @@ export class Reuniclus extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '52';
   public name: string = 'Reuniclus';
-  public fullName: string = 'Reuniclus NVI 52';
+  public fullName: string = 'Reuniclus (NVI 52)';
+  public legacyFullName = 'Reuniclus NVI 52';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -23,7 +23,8 @@ export class HandyFan extends TrainerCard {
 
   public name = 'Handheld Fan';
 
-  public fullName = 'Handheld Fan TWM';
+  public fullName = 'Handheld Fan (TWM 150)';
+  public legacyFullName = 'Handheld Fan TWM';
 
   public text: string =
     'Whenever the Active Pokémon this card is attached to takes damage from an opponent\'s attack, move an Energy from the attacking Pokémon to 1 of your opponent\'s Benched Pokémon.';

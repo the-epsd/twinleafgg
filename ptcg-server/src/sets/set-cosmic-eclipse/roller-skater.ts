@@ -14,7 +14,8 @@ export class RollerSkater extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '203';
   public name: string = 'Roller Skater';
-  public fullName: string = 'Roller Skater CEC';
+  public fullName: string = 'Roller Skater (CEC 203)';
+  public legacyFullName = 'Roller Skater CEC';
   public text: string = 'Discard a card from your hand. If you do, draw 2 cards. If you discarded an Energy card in this way, draw 2 more cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

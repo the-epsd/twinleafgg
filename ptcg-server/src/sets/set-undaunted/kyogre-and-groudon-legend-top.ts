@@ -8,6 +8,7 @@ import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/pr
 
 export class KyogreAndGroudonLegendTop extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
+  public multiPartPosition: 'Top' | 'Bottom' | 'Top Left' | 'Top Right' | 'Bottom Left' | 'Bottom Right' = 'Top';
   public tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
   public cardType = W;
   public additionalCardTypes = [F];
@@ -45,7 +46,8 @@ export class KyogreAndGroudonLegendTop extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Kyogre & Groudon LEGEND';
-  public fullName: string = 'Kyogre & Groudon LEGEND (Top) UD';
+  public fullName: string = 'Kyogre & Groudon LEGEND (UD 87)';
+  public legacyFullName = 'Kyogre & Groudon LEGEND (Top) UD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the avengers

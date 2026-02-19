@@ -17,7 +17,8 @@ export class LuckyEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '158';
   public name = 'Lucky Energy';
-  public fullName = 'Lucky Energy CRE';
+  public fullName = 'Lucky Energy (CRE 158)';
+  public legacyFullName = 'Lucky Energy CRE';
 
   public text =
     `As long as this card is attached to a Pokémon, it provides [C] Energy. 

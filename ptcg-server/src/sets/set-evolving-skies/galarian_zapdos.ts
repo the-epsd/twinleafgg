@@ -34,7 +34,8 @@ export class GalarianZapdos extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
   public name: string = 'Galarian Zapdos';
-  public fullName: string = 'Galarian Zapdos EVS';
+  public fullName: string = 'Galarian Zapdos (EVS 82)';
+  public legacyFullName = 'Galarian Zapdos EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

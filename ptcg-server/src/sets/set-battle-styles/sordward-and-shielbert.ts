@@ -69,7 +69,8 @@ export class SordwardAndShielbert extends TrainerCard {
   public setNumber: string = '135';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sordward & Shielbert';
-  public fullName: string = 'Sordward & Shielbert BST';
+  public fullName: string = 'Sordward & Shielbert (BST 135)';
+  public legacyFullName = 'Sordward & Shielbert BST';
   public text: string = 'Choose a Trainer card from your discard pile. Then, ask your opponent if you may put it into your hand. If yes, put that card into your hand. If no, draw 3 cards. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

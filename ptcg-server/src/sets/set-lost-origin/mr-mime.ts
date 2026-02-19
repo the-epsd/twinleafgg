@@ -32,7 +32,8 @@ export class MrMime extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public name: string = 'Mr. Mime';
-  public fullName: string = 'Mr. Mime LOR';
+  public fullName: string = 'Mr. Mime (LOR 67)';
+  public legacyFullName = 'Mr. Mime LOR';
 
   public readonly TRICKY_SLAP_MARKER = 'TRICKY_SLAP_MARKER';
   public readonly CLEAR_TRICKY_SLAP_MARKER = 'CLEAR_TRICKY_SLAP_MARKER';

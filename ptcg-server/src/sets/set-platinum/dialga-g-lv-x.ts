@@ -41,7 +41,8 @@ export class DialgaGLVX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '122';
   public name: string = 'Dialga G';
-  public fullName: string = 'Dialga G LV.X PL';
+  public fullName: string = 'Dialga G (PL 122)';
+  public legacyFullName = 'Dialga G LV.X PL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Time Crystal

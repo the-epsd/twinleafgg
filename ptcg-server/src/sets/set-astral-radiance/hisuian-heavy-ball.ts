@@ -17,7 +17,8 @@ export class HisuianHeavyBall extends TrainerCard {
 
   public setNumber: string = '146';
 
-  public fullName: string = 'Hisuian Heavy Ball ASR';
+  public fullName: string = 'Hisuian Heavy Ball (ASR 146)';
+  public legacyFullName = 'Hisuian Heavy Ball ASR';
 
   public text: string =
     'Look at your face-down Prize cards. You may reveal a Basic Pokémon you find there, put it into your hand, and put this Hisuian Heavy Ball in its place as a face-down Prize card. (If you don\'t reveal a Basic Pokémon, put this card in the discard pile.) Then, shuffle your face-down Prize cards.';

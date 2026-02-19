@@ -38,7 +38,8 @@ export class Jynx extends PokemonCard {
 
   public set: string = 'UNM';
   public name: string = 'Jynx';
-  public fullName: string = 'Jynx UNM';
+  public fullName: string = 'Jynx (UNM 76)';
+  public legacyFullName = 'Jynx UNM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
 

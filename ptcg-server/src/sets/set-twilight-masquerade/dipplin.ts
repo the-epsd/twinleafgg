@@ -36,7 +36,8 @@ export class Dipplin extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dipplin';
-  public fullName: string = 'Dipplin TWM1';
+  public fullName: string = 'Dipplin (TWM 18)';
+  public legacyFullName = 'Dipplin TWM1';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle the Do the Wave attack

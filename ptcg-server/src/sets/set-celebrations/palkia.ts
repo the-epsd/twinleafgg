@@ -37,7 +37,8 @@ export class Palkia extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Palkia';
-  public fullName: string = 'Palkia CEL';
+  public fullName: string = 'Palkia (CEL 4)';
+  public legacyFullName = 'Palkia CEL';
 
   public readonly OVERDRIVE_SMASH_BONUS_MARKER = 'PALKIA_CEL_OVERDRIVE_SMASH_BONUS_MARKER';
   public readonly OVERDRIVE_SMASH_CLEAR_MARKER = 'PALKIA_CEL_OVERDRIVE_SMASH_CLEAR_MARKER';

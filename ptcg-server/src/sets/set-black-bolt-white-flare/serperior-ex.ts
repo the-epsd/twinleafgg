@@ -31,7 +31,8 @@ export class Serperiorex extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Serperior ex';
-  public fullName: string = 'Serperior ex SV11B';
+  public fullName: string = 'Serperior ex (BLK 3)';
+  public legacyFullName = 'Serperior ex SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Royal Cheer ability - increase damage by 20

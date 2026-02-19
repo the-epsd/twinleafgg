@@ -38,7 +38,8 @@ export class Sceptileex extends PokemonCard {
 
   public set: string = 'CG';
   public name: string = 'Sceptile ex';
-  public fullName: string = 'Sceptile ex CG';
+  public fullName: string = 'Sceptile ex (CG 96)';
+  public legacyFullName = 'Sceptile ex CG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
 

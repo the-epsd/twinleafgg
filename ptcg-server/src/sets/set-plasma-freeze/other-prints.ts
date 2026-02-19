@@ -14,84 +14,98 @@ import { LatiosEx } from './latios-ex';
 import { TornadusEx } from './tornadus-ex';
 
 export class MaxPotionPLF extends MaxPotion {
-  public fullName = 'Max Potion PLF';
+  public fullName = 'Max Potion (PLF 121)';
+  public legacyFullName = 'Max Potion PLF';
   public set = 'PLF';
   public setNumber = '121';
 }
 
 export class ProfessorJuniperPLF extends ProfessorJuniper {
-  public fullName = 'Professor Juniper PLF';
+  public fullName = 'Professor Juniper (PLF 116)';
+  public legacyFullName = 'Professor Juniper PLF';
   public set = 'PLF';
   public setNumber = '116';
 }
 export class PlasmaEnergyPLF extends PlasmaEnergy {
   public setNumber = '106';
-  public fullName: string = 'Plasma Energy PLF';
+  public fullName: string = 'Plasma Energy (PLF 106)';
+  public legacyFullName = 'Plasma Energy PLF';
   public set = 'PLF';
 }
 
 export class ThundurusEX2PLF extends ThundurusEXPLF38 {
   public setNumber = '110';
-  public fullName: string = 'Thundurus EX2 PLF';
+  public fullName: string = 'Thundurus-EX (PLF 110)';
+  public legacyFullName = 'Thundurus EX2 PLF';
   public set = 'PLF';
 }
 
 export class DeoxysEX2PLF extends DeoxysEXPLF53 {
   public setNumber = '111';
-  public fullName: string = 'Deoxys EX2 PLF';
+  public fullName: string = 'Deoxys-EX (PLF 111)';
+  public legacyFullName = 'Deoxys EX2 PLF';
   public set = 'PLF';
 }
 
 export class LatiasEX2PLF extends LatiasEXPLF85 {
   public setNumber = '112';
-  public fullName: string = 'Latias EX2 PLF';
+  public fullName: string = 'Latias-EX (PLF 112)';
+  public legacyFullName = 'Latias EX2 PLF';
   public set = 'PLF';
 }
 
 export class Ghetsis2PLF extends GhetsisPLF101 {
   public setNumber = '115';
-  public fullName: string = 'Ghetsis2 PLF';
+  public fullName: string = 'Ghetsis (PLF 115)';
+  public legacyFullName = 'Ghetsis2 PLF';
   public set = 'PLF';
 }
 
 export class EmpoleonPLF extends Empoleon {
   public setNumber = '117';
-  public fullName: string = 'Empoleon PLF';
+  public fullName: string = 'Empoleon (PLF 117)';
+  public legacyFullName = 'Empoleon PLF';
   public set = 'PLF';
 }
 
 export class SigilyphPLF extends Sigilyph {
   public setNumber = '118';
-  public fullName: string = 'Sigilyph PLF';
+  public fullName: string = 'Sigilyph (PLF 118)';
+  public legacyFullName = 'Sigilyph PLF';
   public set = 'PLF';
 }
 
 export class GarbodorPLF extends Garbodor {
   public setNumber = '119';
-  public fullName: string = 'Garbodor PLF';
+  public fullName: string = 'Garbodor (PLF 119)';
+  public legacyFullName = 'Garbodor PLF';
   public set = 'PLF';
 }
 
 export class UltraBallPLF extends UltraBall {
   public setNumber = '122';
-  public fullName: string = 'Ultra Ball PLF';
+  public fullName: string = 'Ultra Ball (PLF 122)';
+  public legacyFullName = 'Ultra Ball PLF';
   public set = 'PLF';
 }
 
 export class HeatranEx2 extends HeatranEx {
   public set: string = 'PLF';
   public setNumber: string = '109';
-  public fullName: string = 'Heatran-EX PLF 109';
+  public fullName: string = 'Heatran-EX (PLF 109)';
+  public legacyFullName = 'Heatran-EX PLF 109';
 }
 
 export class LatiosEx2 extends LatiosEx {
   public set: string = 'PLF';
   public setNumber: string = '113';
-  public fullName: string = 'Latios-EX PLF 113';
+  public fullName: string = 'Latios-EX (PLF 113)';
+  public legacyFullName = 'Latios-EX PLF 113';
 }
 
 export class TornadusEx2 extends TornadusEx {
   public set: string = 'PLF';
   public setNumber: string = '114';
-  public fullName: string = 'Tornadus-EX PLF 114';
+  public fullName: string = 'Tornadus-EX (PLF 114)';
+  public legacyFullName = 'Tornadus-EX PLF 114';
 }

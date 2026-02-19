@@ -44,7 +44,8 @@ export class Bisharp extends PokemonCard {
 
   public name: string = 'Bisharp';
 
-  public fullName: string = 'Bisharp SVI';
+  public fullName: string = 'Bisharp (SVI 133)';
+  public legacyFullName = 'Bisharp SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){

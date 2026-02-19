@@ -35,7 +35,8 @@ export class Mesprit extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mesprit';
-  public fullName: string = 'Mesprit SSP';
+  public fullName: string = 'Mesprit (SSP 79)';
+  public legacyFullName = 'Mesprit SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

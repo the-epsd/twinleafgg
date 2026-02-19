@@ -31,7 +31,8 @@ export class Garganacl extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
   public name: string = 'Garganacl';
-  public fullName: string = 'Garganacl M1L';
+  public fullName: string = 'Garganacl (MEG 84)';
+  public legacyFullName = 'Garganacl M1L';
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

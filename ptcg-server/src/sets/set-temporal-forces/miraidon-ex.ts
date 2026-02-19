@@ -33,7 +33,8 @@ export class Miraidonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '122';
   public name: string = 'Miraidon ex';
-  public fullName: string = 'Miraidon ex TEF';
+  public fullName: string = 'Miraidon ex (TEF 122)';
+  public legacyFullName = 'Miraidon ex TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

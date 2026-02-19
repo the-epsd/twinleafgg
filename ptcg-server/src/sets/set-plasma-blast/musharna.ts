@@ -32,7 +32,8 @@ export class Musharna extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Musharna';
-  public fullName: string = 'Musharna PLB';
+  public fullName: string = 'Musharna (PLB 40)';
+  public legacyFullName = 'Musharna PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

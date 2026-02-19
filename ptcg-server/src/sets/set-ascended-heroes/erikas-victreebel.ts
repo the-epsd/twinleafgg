@@ -31,7 +31,8 @@ export class ErikasVictreebel extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
   public name: string = 'Erika\'s Victreebel';
-  public fullName: string = 'Erika\'s Victreebel MC';
+  public fullName: string = 'Erika\'s Victreebel (ASC 6)';
+  public legacyFullName = 'Erika\'s Victreebel MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

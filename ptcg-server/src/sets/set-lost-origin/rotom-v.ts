@@ -49,7 +49,8 @@ export class RotomV extends PokemonCard {
 
   public name: string = 'Rotom V';
 
-  public fullName: string = 'Rotom V LOR';
+  public fullName: string = 'Rotom V (LOR 58)';
+  public legacyFullName = 'Rotom V LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

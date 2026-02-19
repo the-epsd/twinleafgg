@@ -34,7 +34,8 @@ export class Kingambit extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '150';
   public name: string = 'Kingambit';
-  public fullName: string = 'Kingambit OBF';
+  public fullName: string = 'Kingambit (OBF 150)';
+  public legacyFullName = 'Kingambit OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Strike Down

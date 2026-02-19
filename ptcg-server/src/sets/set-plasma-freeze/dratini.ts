@@ -30,7 +30,8 @@ export class Dratini extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dratini';
-  public fullName: string = 'Dratini PLF';
+  public fullName: string = 'Dratini (PLF 81)';
+  public legacyFullName = 'Dratini PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shed Skin - heal 20 from this Pokemon

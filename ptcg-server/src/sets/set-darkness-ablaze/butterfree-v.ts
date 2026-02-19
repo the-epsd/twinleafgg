@@ -40,7 +40,8 @@ export class ButterfreeV extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Butterfree V';
-  public fullName: string = 'Butterfree V DAA';
+  public fullName: string = 'Butterfree V (DAA 1)';
+  public legacyFullName = 'Butterfree V DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dizzying Poison

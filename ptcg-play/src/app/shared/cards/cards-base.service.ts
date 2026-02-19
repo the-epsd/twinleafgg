@@ -73,9 +73,8 @@ export class CardsBaseService implements OnDestroy {
     this.cardIndex.clear();
     for (const card of this.cards) {
       this.cardIndex.set(card.fullName, card);
-      const p = card as any;
-      if (p.legacyFullName) {
-        this.cardIndex.set(p.legacyFullName, card);
+      if (card.legacyFullName) {
+        this.cardIndex.set(card.legacyFullName, card);
       }
     }
   }

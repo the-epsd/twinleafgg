@@ -25,5 +25,6 @@ export class Poliwag extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poliwag';
-  public fullName: string = 'Poliwag EVO';
+  public fullName: string = 'Poliwag (EVO 23)';
+  public legacyFullName = 'Poliwag EVO';
 }

@@ -31,7 +31,8 @@ export class Drampa extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '159';
   public name = 'Drampa';
-  public fullName = 'Drampa CEC';
+  public fullName = 'Drampa (CEC 159)';
+  public legacyFullName = 'Drampa CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

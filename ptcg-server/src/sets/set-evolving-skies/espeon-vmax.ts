@@ -50,7 +50,8 @@ export class EspeonVMAX extends PokemonCard {
 
   public name: string = 'Espeon VMAX';
 
-  public fullName: string = 'Espeon VMAX EVS';
+  public fullName: string = 'Espeon VMAX (EVS 65)';
+  public legacyFullName = 'Espeon VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

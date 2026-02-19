@@ -17,7 +17,8 @@ export class WeedingGloves extends TrainerCard {
   public setNumber: string = '155';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weeding Gloves';
-  public fullName: string = 'Weeding Gloves CRE';
+  public fullName: string = 'Weeding Gloves (CRE 155)';
+  public legacyFullName = 'Weeding Gloves CRE';
   public text: string = 'Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached. The attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Active Grass Pokémon (before applying Weakness and Resistance). You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

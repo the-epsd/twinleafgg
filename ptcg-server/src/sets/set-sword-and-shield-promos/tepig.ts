@@ -26,7 +26,8 @@ export class Tepig extends PokemonCard {
   public regulationMark = 'E';
   public set: string = 'SWSH';
   public name: string = 'Tepig';
-  public fullName: string = 'Tepig SWSH';
+  public fullName: string = 'Tepig (SWSH 172)';
+  public legacyFullName = 'Tepig SWSH';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '172';
 }

@@ -30,7 +30,8 @@ export class Clobbopus extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clobbopus';
-  public fullName: string = 'Clobbopus SSH';
+  public fullName: string = 'Clobbopus (SSH 106)';
+  public legacyFullName = 'Clobbopus SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bind

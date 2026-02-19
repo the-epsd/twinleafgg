@@ -37,7 +37,8 @@ export class Yanmega extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yanmega';
-  public fullName: string = 'Yanmega UPR';
+  public fullName: string = 'Yanmega (UPR 3)';
+  public legacyFullName = 'Yanmega UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Supersonic

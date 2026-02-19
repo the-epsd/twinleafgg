@@ -37,7 +37,8 @@ export class BlastoiseEx extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blastoise-EX';
-  public fullName: string = 'Blastoise-EX XY';
+  public fullName: string = 'Blastoise-EX (XY 29)';
+  public legacyFullName = 'Blastoise-EX XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: AGENTS-patterns.md (post-damage switching), CLAUDE-effects.md (AfterAttackEffect pattern)

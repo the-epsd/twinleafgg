@@ -38,7 +38,8 @@ export class Marowak extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marowak';
-  public fullName: string = 'Marowak BKT';
+  public fullName: string = 'Marowak (BKT 78)';
+  public legacyFullName = 'Marowak BKT';
 
   public usedBoneWindmill = false;
 

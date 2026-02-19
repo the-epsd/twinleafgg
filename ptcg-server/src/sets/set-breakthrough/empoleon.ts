@@ -36,7 +36,8 @@ export class Empoleon extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Empoleon';
-  public fullName: string = 'Empoleon BKT';
+  public fullName: string = 'Empoleon (BKT 38)';
+  public legacyFullName = 'Empoleon BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Dignified Fighter (passive)

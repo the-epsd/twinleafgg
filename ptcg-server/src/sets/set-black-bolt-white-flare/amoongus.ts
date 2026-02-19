@@ -31,7 +31,8 @@ export class Amoongus extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Amoongus';
-  public fullName: string = 'Amoongus SV11B';
+  public fullName: string = 'Amoongus (BLK 11)';
+  public legacyFullName = 'Amoongus SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Dangerous Reaction

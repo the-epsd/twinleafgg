@@ -31,7 +31,8 @@ export class Kyurem extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kyurem';
-  public fullName: string = 'Kyurem DRV';
+  public fullName: string = 'Kyurem (DRV 21)';
+  public legacyFullName = 'Kyurem DRV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Blizzard - 90 to active + 10 to each benched

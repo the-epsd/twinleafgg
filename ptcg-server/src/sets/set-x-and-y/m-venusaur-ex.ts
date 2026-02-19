@@ -25,7 +25,8 @@ export class MVenusaurEX extends PokemonCard {
 
   public set: string = 'XY';
   public name: string = 'M Venusaur-EX';
-  public fullName: string = 'M Venusaur-EX XY';
+  public fullName: string = 'M Venusaur-EX (XY 2)';
+  public legacyFullName = 'M Venusaur-EX XY';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '2';
 

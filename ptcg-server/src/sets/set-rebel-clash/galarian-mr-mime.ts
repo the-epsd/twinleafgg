@@ -27,7 +27,7 @@ export class GalarianMrMime extends PokemonCard {
       name: 'Triple Spin',
       cost: [W, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 20 damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class GalarianMrMime extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Mr. Mime';
-  public fullName: string = 'Galarian Mr. Mime RCL';
+  public fullName: string = 'Galarian Mr. Mime (RCL 37)';
+  public legacyFullName = 'Galarian Mr. Mime RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Icy Wind

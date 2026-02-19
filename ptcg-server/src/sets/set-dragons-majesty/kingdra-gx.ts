@@ -25,7 +25,7 @@ export class KingdraGx extends PokemonCard {
       name: 'Hydro Pump',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 50 more damage times the amount of [W] Energy attached to this Pokémon.'
     },
     {
@@ -46,7 +46,8 @@ export class KingdraGx extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kingdra GX';
-  public fullName: string = 'Kingdra GX DRM';
+  public fullName: string = 'Kingdra GX (DRM 18)';
+  public legacyFullName = 'Kingdra GX DRM';
 
   public usedReverseThrust = false;
 

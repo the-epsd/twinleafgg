@@ -37,7 +37,8 @@ export class Unfezant extends PokemonCard {
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Unfezant';
-  public fullName: string = 'Unfezant BCR';
+  public fullName: string = 'Unfezant (BCR 125)';
+  public legacyFullName = 'Unfezant BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wing Flick

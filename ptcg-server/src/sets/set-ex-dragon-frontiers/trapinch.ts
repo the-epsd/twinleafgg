@@ -24,7 +24,8 @@ export class Trapinch extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';
   public name: string = 'Trapinch';
-  public fullName: string = 'Trapinch DF 69';
+  public fullName: string = 'Trapinch (DF 69)';
+  public legacyFullName = 'Trapinch DF 69';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

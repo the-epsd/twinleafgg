@@ -82,7 +82,8 @@ export class Zinnia extends TrainerCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zinnia';
-  public fullName: string = 'Zinnia DRM';
+  public fullName: string = 'Zinnia (DRM 64)';
+  public legacyFullName = 'Zinnia DRM';
   public text: string = 'You can play this card only if 1 of your Pokémon was Knocked Out during your opponent\'s last turn.\n\nAttach up to 2 basic Energy cards from your hand to 1 of your Dragon Pokémon.';
 
   public readonly ZINNIA_MARKER = 'ZINNIA_MARKER';

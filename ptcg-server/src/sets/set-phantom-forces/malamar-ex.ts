@@ -31,7 +31,7 @@ export class MalamarEx extends PokemonCard {
       name: 'MAXamar',
       cost: [D, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 60 damage times the number of heads.'
     }
   ];
@@ -40,7 +40,8 @@ export class MalamarEx extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Malamar-EX';
-  public fullName: string = 'Malamar-EX PHF';
+  public fullName: string = 'Malamar-EX (PHF 58)';
+  public legacyFullName = 'Malamar-EX PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Hyper Hypnosis (triggered on energy attach)

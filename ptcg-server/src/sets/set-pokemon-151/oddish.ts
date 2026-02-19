@@ -29,6 +29,7 @@ export class Oddish extends PokemonCard {
 
   public name: string = 'Oddish';
 
-  public fullName: string = 'Oddish MEW';
+  public fullName: string = 'Oddish (MEW 43)';
+  public legacyFullName = 'Oddish MEW';
 
 }

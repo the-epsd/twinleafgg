@@ -16,7 +16,8 @@ export class DeluxeBomb extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '134';
   public name = 'Deluxe Bomb';
-  public fullName = 'Deluxe Bomb SCR';
+  public fullName = 'Deluxe Bomb (SCR 134)';
+  public legacyFullName = 'Deluxe Bomb SCR';
 
   public text: string =
     'If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if this Pokémon is Knocked Out), put 12 damage counters on the Attacking Pokémon. If you placed any damage counters in this way, discard this card.';

@@ -29,7 +29,8 @@ export class Koffing extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Koffing';
-  public fullName: string = 'Koffing UNB';
+  public fullName: string = 'Koffing (UNB 73)';
+  public legacyFullName = 'Koffing UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Foul Odor

@@ -25,5 +25,6 @@ export class Shellos extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shellos';
-  public fullName: string = 'Shellos STS';
+  public fullName: string = 'Shellos (STS 28)';
+  public legacyFullName = 'Shellos STS';
 }

@@ -30,7 +30,8 @@ export class RotasWeavile extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'Rota\'s Weavile';
-  public fullName: string = 'Rota\'s Weavile PCGP';
+  public fullName: string = 'Rota\'s Weavile (PCGP 89)';
+  public legacyFullName = 'Rota\'s Weavile PCGP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '89';
 

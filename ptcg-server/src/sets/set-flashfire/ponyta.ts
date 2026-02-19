@@ -38,7 +38,8 @@ export class Ponyta extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public name: string = 'Ponyta';
-  public fullName: string = 'Ponyta FLF';
+  public fullName: string = 'Ponyta (FLF 14)';
+  public legacyFullName = 'Ponyta FLF';
 
   public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
   public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';

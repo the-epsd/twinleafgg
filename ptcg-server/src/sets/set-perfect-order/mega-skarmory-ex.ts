@@ -25,7 +25,8 @@ export class MegaSkarmoryex extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Skarmory ex';
-  public fullName: string = 'Mega Skarmory ex M3';
+  public fullName: string = 'Mega Skarmory ex (M3 54)';
+  public legacyFullName = 'Mega Skarmory ex M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

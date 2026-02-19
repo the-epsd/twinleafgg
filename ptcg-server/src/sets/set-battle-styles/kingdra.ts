@@ -33,7 +33,7 @@ export class Kingdra extends PokemonCard {
       name: 'Aqua Burst',
       cost: [W],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 40 damage for each [W] Energy attached to this Pokémon.'
     }
   ];
@@ -43,7 +43,8 @@ export class Kingdra extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kingdra';
-  public fullName: string = 'Kingdra BST';
+  public fullName: string = 'Kingdra (BST 33)';
+  public legacyFullName = 'Kingdra BST';
 
   public readonly DEEP_SEA_KING_MARKER = 'KINGDRA_BST_DEEP_SEA_KING_MARKER';
 

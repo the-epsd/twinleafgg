@@ -37,7 +37,8 @@ export class Chatot extends PokemonCard {
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chatot';
-  public fullName: string = 'Chatot RCL';
+  public fullName: string = 'Chatot (RCL 142)';
+  public legacyFullName = 'Chatot RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Lucky Match

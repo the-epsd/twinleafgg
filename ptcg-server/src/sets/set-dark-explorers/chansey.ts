@@ -31,7 +31,8 @@ export class Chansey extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chansey';
-  public fullName: string = 'Chansey DEX 80';
+  public fullName: string = 'Chansey (DEX 80)';
+  public legacyFullName = 'Chansey DEX 80';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sing

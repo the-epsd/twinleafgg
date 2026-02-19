@@ -31,7 +31,8 @@ export class Tranquill extends PokemonCard {
   public setNumber: string = '124';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tranquill';
-  public fullName: string = 'Tranquill BCR';
+  public fullName: string = 'Tranquill (BCR 124)';
+  public legacyFullName = 'Tranquill BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Air Slash

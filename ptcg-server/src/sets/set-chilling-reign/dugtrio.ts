@@ -27,7 +27,7 @@ export class Dugtrio extends PokemonCard {
       name: 'Triple Heads',
       cost: [F, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 60 damage for each heads. If all of them are heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class Dugtrio extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dugtrio';
-  public fullName: string = 'Dugtrio CRE';
+  public fullName: string = 'Dugtrio (CRE 77)';
+  public legacyFullName = 'Dugtrio CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Triple Heads

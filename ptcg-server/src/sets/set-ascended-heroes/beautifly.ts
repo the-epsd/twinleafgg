@@ -38,7 +38,8 @@ export class Beautifly extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '13';
   public name: string = 'Beautifly';
-  public fullName: string = 'Beautifly M2a';
+  public fullName: string = 'Beautifly (ASC 13)';
+  public legacyFullName = 'Beautifly M2a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Stun Spore - coin flip for paralysis

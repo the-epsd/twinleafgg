@@ -30,7 +30,8 @@ export class Herdier extends PokemonCard {
 
   public set = 'SUM'; // Replace with the appropriate set abbreviation
   public name = 'Herdier';
-  public fullName = 'Herdier SUM'; // Replace with the appropriate set abbreviation
+  public fullName = 'Herdier (SUM 104)';
+  public legacyFullName = 'Herdier SUM'; // Replace with the appropriate set abbreviation
   public setNumber = '104';
   public cardImage: string = 'assets/cardback.png';
 

@@ -86,7 +86,8 @@ export class SuperiorEnergyRetrieval extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '189';
   public name: string = 'Superior Energy Retrieval';
-  public fullName: string = 'Superior Energy Retrieval PAL';
+  public fullName: string = 'Superior Energy Retrieval (PAL 189)';
+  public legacyFullName = 'Superior Energy Retrieval PAL';
 
   public text: string =
     `You can use this card only if you discard 2 other cards from your hand. 

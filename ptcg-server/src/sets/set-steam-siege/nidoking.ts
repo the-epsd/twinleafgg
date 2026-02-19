@@ -28,7 +28,7 @@ export class Nidoking extends PokemonCard {
       name: 'Power Lariat',
       cost: [P, P, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each Evolution Pokémon on your Bench.'
     }
   ];
@@ -37,7 +37,8 @@ export class Nidoking extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoking';
-  public fullName: string = 'Nidoking STS';
+  public fullName: string = 'Nidoking (STS 45)';
+  public legacyFullName = 'Nidoking STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: King's Palace (passive - boost Nidoqueen's damage)

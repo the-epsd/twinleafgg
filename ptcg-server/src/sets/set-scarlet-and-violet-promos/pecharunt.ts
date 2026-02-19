@@ -32,7 +32,8 @@ export class Pecharunt extends PokemonCard {
   public regulationMark = 'H';
   public set: string = 'SVP';
   public name: string = 'Pecharunt';
-  public fullName: string = 'Pecharunt SVP';
+  public fullName: string = 'Pecharunt (SVP 149)';
+  public legacyFullName = 'Pecharunt SVP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '149';
 

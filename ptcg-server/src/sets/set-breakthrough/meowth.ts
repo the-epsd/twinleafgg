@@ -28,7 +28,8 @@ export class Meowth extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meowth';
-  public fullName: string = 'Meowth BKT';
+  public fullName: string = 'Meowth (BKT 114)';
+  public legacyFullName = 'Meowth BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Exhausted Tackle

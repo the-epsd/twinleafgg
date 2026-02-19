@@ -35,7 +35,8 @@ export class CastformRainyForm extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '33';
   public name: string = 'Castform Rainy Form';
-  public fullName: string = 'Castform Rainy Form CRE';
+  public fullName: string = 'Castform Rainy Form (CRE 33)';
+  public legacyFullName = 'Castform Rainy Form CRE';
 
   public getColorlessReduction(state: State): number {
     const player = state.players[state.activePlayer];

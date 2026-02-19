@@ -22,7 +22,7 @@ export class Tangrowth extends PokemonCard {
       name: 'Hefty Whip',
       cost: [G, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon was healed during this turn, this attack does 130 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Tangrowth extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tangrowth';
-  public fullName: string = 'Tangrowth LOT';
+  public fullName: string = 'Tangrowth (LOT 2)';
+  public legacyFullName = 'Tangrowth LOT';
 
   public readonly HEALED_MARKER = 'TANGROWTH_LOT_HEALED_MARKER';
 

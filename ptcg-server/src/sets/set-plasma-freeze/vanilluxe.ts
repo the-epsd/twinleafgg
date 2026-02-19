@@ -35,7 +35,8 @@ export class Vanilluxe extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanilluxe';
-  public fullName: string = 'Vanilluxe PLF';
+  public fullName: string = 'Vanilluxe (PLF 29)';
+  public legacyFullName = 'Vanilluxe PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: ChillMAX - flip coin per energy, 60x heads

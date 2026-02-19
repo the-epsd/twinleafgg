@@ -20,14 +20,14 @@ export class Volbeat extends PokemonCard {
       name: 'Acrobatics',
       cost: [G],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     },
     {
       name: 'Pester',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 30 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Volbeat extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Volbeat';
-  public fullName: string = 'Volbeat PRC';
+  public fullName: string = 'Volbeat (PRC 17)';
+  public legacyFullName = 'Volbeat PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Acrobatics

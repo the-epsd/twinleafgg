@@ -34,7 +34,8 @@ export class Poliwrath extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '43';
   public name: string = 'Poliwrath';
-  public fullName: string = 'Poliwrath TWM';
+  public fullName: string = 'Poliwrath (TWM 43)';
+  public legacyFullName = 'Poliwrath TWM';
 
   public shuffleIntoDeck: boolean = false;
 

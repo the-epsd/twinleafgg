@@ -25,7 +25,8 @@ export class Houndour extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '54';
   public name: string = 'Houndour';
-  public fullName: string = 'Houndour UD';
+  public fullName: string = 'Houndour (UD 54)';
+  public legacyFullName = 'Houndour UD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

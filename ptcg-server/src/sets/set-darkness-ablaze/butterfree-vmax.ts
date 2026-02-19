@@ -32,7 +32,8 @@ export class ButterfreeVmax extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Butterfree VMAX';
-  public fullName: string = 'Butterfree VMAX DAA';
+  public fullName: string = 'Butterfree VMAX (DAA 2)';
+  public legacyFullName = 'Butterfree VMAX DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: G-Max Toxbreeze

@@ -22,7 +22,8 @@ export class RecycleEnergy extends EnergyCard {
 
   public name = 'Recycle Energy';
 
-  public fullName = 'Recycle Energy UNM';
+  public fullName = 'Recycle Energy (UNM 212)';
+  public legacyFullName = 'Recycle Energy UNM';
 
   public text =
     `This card provides [C] Energy.

@@ -32,5 +32,6 @@ export class Ralts2 extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ralts';
-  public fullName: string = 'Ralts BKT 100';
+  public fullName: string = 'Ralts (BKT 100)';
+  public legacyFullName = 'Ralts BKT 100';
 }

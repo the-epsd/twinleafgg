@@ -43,27 +43,31 @@ import { Tulip } from './tulip';
 
 export class ToedscruelIR extends Toedscruel {
   public setNumber = '185';
-  public fullName: string = 'ToedscruelIR PAR';
+  public fullName: string = 'Toedscruel (PAR 185)';
+  public legacyFullName = 'ToedscruelIR PAR';
 }
 
 export class MagbyIR extends Magby {
   public setNumber = '186';
-  public fullName: string = 'MagbyIR PAR';
+  public fullName: string = 'Magby (PAR 186)';
+  public legacyFullName = 'MagbyIR PAR';
 }
 
 // export class IronMothIR extends IronMoth {
 //   public setNumber = '187';
-//   public fullName: string = 'IronMothIR PAR';
+//   public fullName: string = 'Magby (PAR 187)';
 // }
 
 export class SnoruntIR extends Snorunt {
   public setNumber = '188';
-  public fullName: string = 'SnoruntIR PAR';
+  public fullName: string = 'Snorunt (PAR 188)';
+  public legacyFullName = 'SnoruntIR PAR';
 }
 
 export class MantykeIR extends Mantyke {
   public setNumber = '189';
-  public fullName: string = 'MantykeIR PAR';
+  public fullName: string = 'Mantyke (PAR 189)';
+  public legacyFullName = 'MantykeIR PAR';
 }
 
 // export class VanillishIR extends Vanillish {
@@ -103,57 +107,65 @@ export class MantykeIR extends Mantyke {
 
 // export class EspathrIR extends Espathra {
 //   public setNumber = '197';
-//   public fullName: string = 'EspathrIR PAR';
+//   public fullName: string = 'Mantyke (PAR 197)';
 // }
 
 export class GimmighoulIR extends Gimmighoul2 {
   public setNumber = '198';
-  public fullName: string = 'GimmighoulIR PAR';
+  public fullName: string = 'Gimmighoul (PAR 198)';
+  public legacyFullName = 'GimmighoulIR PAR';
 }
 
 export class GroudonIR extends Groudon {
   public setNumber = '199';
-  public fullName: string = 'GroudonIR PAR';
+  public fullName: string = 'Groudon (PAR 199)';
+  public legacyFullName = 'GroudonIR PAR';
 }
 
 // export class MienshaoIR extends Mienshao {
 //   public setNumber = '200';
-//   public fullName: string = 'MienshaoIR PAR';
+//   public fullName: string = 'Groudon (PAR 200)';
 // }
 
 export class MiniorIR extends Minior {
   public setNumber = '201';
-  public fullName: string = 'MiniorIR PAR';
+  public fullName: string = 'Minior (PAR 201)';
+  public legacyFullName = 'MiniorIR PAR';
 }
 
 export class GarganacIR extends Garganacl {
   public setNumber = '202';
-  public fullName: string = 'GarganacIR PAR';
+  public fullName: string = 'Garganacl (PAR 202)';
+  public legacyFullName = 'GarganacIR PAR';
 }
 
 export class SlitherWingIR extends SlitherWing {
   public setNumber = '203';
-  public fullName: string = 'SlitherWingIR PAR';
+  public fullName: string = 'Slither Wing (PAR 203)';
+  public legacyFullName = 'SlitherWingIR PAR';
 }
 
 export class GarbodorIR extends Garbodor {
   public setNumber = '204';
-  public fullName: string = 'GarbodorIR PAR';
+  public fullName: string = 'Garbodor (PAR 204)';
+  public legacyFullName = 'GarbodorIR PAR';
 }
 
 // export class YveltalIR extends Yveltal {
 //   public setNumber = '205';
-//   public fullName: string = 'YveltalIR PAR';
+//   public fullName: string = 'Garbodor (PAR 205)';
 // }
 
 export class MorpekoIR extends Morpeko {
   public setNumber = '206';
-  public fullName: string = 'MorpekoIR PAR';
+  public fullName: string = 'Morpeko (PAR 206)';
+  public legacyFullName = 'MorpekoIR PAR';
 }
 
 export class BruteBonnetIR extends BruteBonnet {
   public setNumber = '207';
-  public fullName: string = 'BruteBonnetIR PAR';
+  public fullName: string = 'Brute Bonnet (PAR 207)';
+  public legacyFullName = 'BruteBonnetIR PAR';
 }
 
 // export class SteelixIR extends Steelix {
@@ -188,92 +200,104 @@ export class BruteBonnetIR extends BruteBonnet {
 
 // export class PorygonZIR extends PorygonZ {
 //   public setNumber = '214';
-//   public fullName: string = 'PorygonZIR PAR';
+//   public fullName: string = 'Brute Bonnet (PAR 214)';
 // }
 
 export class CyclizarIR extends Cyclizar {
   public setNumber = '215';
-  public fullName: string = 'CyclizarIR PAR';
+  public fullName: string = 'Cyclizar (PAR 215)';
+  public legacyFullName = 'CyclizarIR PAR';
 }
 
 export class IronJugulisIR extends IronJugulis {
   public setNumber = '216';
-  public fullName: string = 'IronJugulisIR PAR';
+  public fullName: string = 'Iron Jugulis (PAR 216)';
+  public legacyFullName = 'IronJugulisIR PAR';
 }
 
 export class FroslassexFA extends Froslassex {
   public setNumber = '217';
-  public fullName: string = 'FroslassexFA PAR';
+  public fullName: string = 'Froslass ex (PAR 217)';
+  public legacyFullName = 'FroslassexFA PAR';
 }
 
 // export class ArmarougeexFA extends Armarougeex {
 //   public setNumber = '218';
-//   public fullName: string = 'ArmarougeexFA PAR';
+//   public fullName: string = 'Froslass ex (PAR 218)';
 // }
 
 export class GarchompexFA extends Garchompex {
   public setNumber = '219';
-  public fullName: string = 'GarchompexFA PAR';
+  public fullName: string = 'Garchomp ex (PAR 219)';
+  public legacyFullName = 'GarchompexFA PAR';
 }
 
 export class TsareenaexFA extends Tsareenaex {
   public setNumber = '220';
-  public fullName: string = 'TsareenaexFA PAR';
+  public fullName: string = 'Tsareena ex (PAR 220)';
+  public legacyFullName = 'TsareenaexFA PAR';
 }
 
 // export class GolisopodexFA extends Golisopodex {
 //   public setNumber = '221';
-//   public fullName: string = 'GolisopodexFA PAR';
+//   public fullName: string = 'Tsareena ex (PAR 221)';
 // }
 
 export class TapuKokoexFA extends TapuKokoex {
   public setNumber = '222';
-  public fullName: string = 'TapuKokoexFA PAR';
+  public fullName: string = 'Tapu Koko ex (PAR 222)';
+  public legacyFullName = 'TapuKokoexFA PAR';
 }
 
 export class IronHandsexFA extends IronHandsex {
   public setNumber = '223';
-  public fullName: string = 'IronHandsexFA PAR';
+  public fullName: string = 'Iron Hands ex (PAR 223)';
+  public legacyFullName = 'IronHandsexFA PAR';
 }
 
 // export class CofagrigusexFA extends Cofagrigusex {
 //   public setNumber = '224';
-//   public fullName: string = 'CofagrigusexFA PAR';
+//   public fullName: string = 'Iron Hands ex (PAR 224)';
 // }
 
 export class IronValiantexFA extends IronValiantex {
   public setNumber = '225';
-  public fullName: string = 'IronValiantexFA PAR';
+  public fullName: string = 'Iron Valiant ex (PAR 225)';
+  public legacyFullName = 'IronValiantexFA PAR';
 }
 
 export class HoopaexFA extends Hoopaex {
   public setNumber = '226';
-  public fullName: string = 'HoopaexFA PAR';
+  public fullName: string = 'Hoopa ex (PAR 226)';
+  public legacyFullName = 'HoopaexFA PAR';
 }
 
 // export class ToxtricityexFA extends Toxtricityex {
 //   public setNumber = '227';
-//   public fullName: string = 'ToxtricityexFA PAR';
+//   public fullName: string = 'Hoopa ex (PAR 227)';
 // }
 
 export class SandyShocksexFA extends SandyShocksex {
   public setNumber = '228';
-  public fullName: string = 'SandyShocksexFA PAR';
+  public fullName: string = 'Sandy Shocks ex (PAR 228)';
+  public legacyFullName = 'SandyShocksexFA PAR';
 }
 
 export class RoaringMoonexFA extends RoaringMoonex {
   public setNumber = '229';
-  public fullName: string = 'RoaringMoonexFA PAR';
+  public fullName: string = 'Roaring Moon ex (PAR 229)';
+  public legacyFullName = 'RoaringMoonexFA PAR';
 }
 
 // export class AegislashexFA extends Aegislashex {
 //   public setNumber = '230';
-//   public fullName: string = 'AegislashexFA PAR';
+//   public fullName: string = 'Roaring Moon ex (PAR 230)';
 // }
 
 export class GholdengoexFA extends Gholdengoex {
   public setNumber = '231';
-  public fullName: string = 'GholdengoexFA PAR';
+  public fullName: string = 'Gholdengo ex (PAR 231)';
+  public legacyFullName = 'GholdengoexFA PAR';
 }
 
 // export class AltariaexFA extends Altariaex {
@@ -293,12 +317,13 @@ export class GholdengoexFA extends Gholdengoex {
 
 // export class LarryFA extends Larry {
 //   public setNumber = '235';
-//   public fullName: string = 'LarryFA PAR';
+//   public fullName: string = 'Gholdengo ex (PAR 235)';
 // }
 
 export class MelaFA extends Mela {
   public setNumber = '236';
-  public fullName: string = 'MelaFA PAR';
+  public fullName: string = 'Mela (PAR 236)';
+  public legacyFullName = 'MelaFA PAR';
 }
 
 // export class NormanFA extends Norman {
@@ -308,17 +333,19 @@ export class MelaFA extends Mela {
 
 // export class ParasolLadyFA extends ParasolLady {
 //   public setNumber = '238';
-//   public fullName: string = 'ParasolLadyFA PAR';
+//   public fullName: string = 'Mela (PAR 238)';
 // }
 
 export class ProfessorSadasVitalityFA extends ProfessorSadasVitality {
   public setNumber = '239';
-  public fullName: string = 'ProfessorSadasVitalityFA PAR';
+  public fullName: string = 'Professor Sada\'s Vitality (PAR 239)';
+  public legacyFullName = 'ProfessorSadasVitalityFA PAR';
 }
 
 export class ProfessorTurosScenarioFA extends ProfessorTurosScenario {
   public setNumber = '240';
-  public fullName: string = 'ProfessorTurosScenarioFA PAR';
+  public fullName: string = 'Professor Turo\'s Scenario (PAR 240)';
+  public legacyFullName = 'ProfessorTurosScenarioFA PAR';
 }
 
 // export class RikaFA extends Rika {
@@ -333,122 +360,141 @@ export class ProfessorTurosScenarioFA extends ProfessorTurosScenario {
 
 // export class ShauntalFA extends Shauntal {
 //   public setNumber = '243';
-//   public fullName: string = 'ShauntalFA PAR';
+//   public fullName: string = 'Professor Turo\'s Scenario (PAR 243)';
 // }
 
 export class TulipFA extends Tulip {
   public setNumber = '244';
-  public fullName: string = 'TulipFA PAR';
+  public fullName: string = 'Tulip (PAR 244)';
+  public legacyFullName = 'TulipFA PAR';
 }
 
 export class GarchompexSIR extends Garchompex {
   public setNumber = '245';
-  public fullName: string = 'GarchompexSIR PAR';
+  public fullName: string = 'Garchomp ex (PAR 245)';
+  public legacyFullName = 'GarchompexSIR PAR';
 }
 
 // export class GolisopodexSIR extends Golisopodex {
 //   public setNumber = '246';
-//   public fullName: string = 'GolisopodexSIR PAR';
+//   public fullName: string = 'Garchomp ex (PAR 246)';
 // }
 
 export class TapuKokoexSIR extends TapuKokoex {
   public setNumber = '247';
-  public fullName: string = 'TapuKokoexSIR PAR';
+  public fullName: string = 'Tapu Koko ex (PAR 247)';
+  public legacyFullName = 'TapuKokoexSIR PAR';
 }
 
 export class IronHandsexSIR extends IronHandsex {
   public setNumber = '248';
-  public fullName: string = 'IronHandsexSIR PAR';
+  public fullName: string = 'Iron Hands ex (PAR 248)';
+  public legacyFullName = 'IronHandsexSIR PAR';
 }
 
 export class IronValiantexSIR extends IronValiantex {
   public setNumber = '249';
-  public fullName: string = 'IronValiantexSIR PAR';
+  public fullName: string = 'Iron Valiant ex (PAR 249)';
+  public legacyFullName = 'IronValiantexSIR PAR';
 }
 
 export class SandyShocksexSIR extends SandyShocksex {
   public setNumber = '250';
-  public fullName: string = 'SandyShocksexSIR PAR';
+  public fullName: string = 'Sandy Shocks ex (PAR 250)';
+  public legacyFullName = 'SandyShocksexSIR PAR';
 }
 
 export class RoaringMoonexSIR extends RoaringMoonex {
   public setNumber = '251';
-  public fullName: string = 'RoaringMoonexSIR PAR';
+  public fullName: string = 'Roaring Moon ex (PAR 251)';
+  public legacyFullName = 'RoaringMoonexSIR PAR';
 }
 
 export class GholdengoexSIR extends Gholdengoex {
   public setNumber = '252';
-  public fullName: string = 'GholdengoexSIR PAR';
+  public fullName: string = 'Gholdengo ex (PAR 252)';
+  public legacyFullName = 'GholdengoexSIR PAR';
 }
 
 // export class AltariaexSIR extends Altariaex {
 //   public setNumber = '253';
-//   public fullName: string = 'AltariaexSIR PAR';
+//   public fullName: string = 'Gholdengo ex (PAR 253)';
 // }
 
 export class MelaSIR extends Mela {
   public setNumber = '254';
-  public fullName: string = 'MelaSIR PAR';
+  public fullName: string = 'Mela (PAR 254)';
+  public legacyFullName = 'MelaSIR PAR';
 }
 
 // export class ParasolLadySIR extends ParasolLady {
 //   public setNumber = '255';
-//   public fullName: string = 'ParasolLadySIR PAR';
+//   public fullName: string = 'Mela (PAR 255)';
 // }
 
 export class ProfessorSadasVitalitySIR extends ProfessorSadasVitality {
   public setNumber = '256';
-  public fullName: string = 'ProfessorSadasVitalitySIR PAR';
+  public fullName: string = 'Professor Sada\'s Vitality (PAR 256)';
+  public legacyFullName = 'ProfessorSadasVitalitySIR PAR';
 }
 
 export class ProfessorTurosScenarioSIR extends ProfessorTurosScenario {
   public setNumber = '257';
-  public fullName: string = 'ProfessorTurosScenarioSIR PAR';
+  public fullName: string = 'Professor Turo\'s Scenario (PAR 257)';
+  public legacyFullName = 'ProfessorTurosScenarioSIR PAR';
 }
 
 // export class RikaSIR extends Rika {
 //   public setNumber = '258';
-//   public fullName: string = 'RikaSIR PAR';
+//   public fullName: string = 'Professor Turo\'s Scenario (PAR 258)';
 // }
 
 export class TulipSIR extends Tulip {
   public setNumber = '259';
-  public fullName: string = 'TulipSIR PAR';
+  public fullName: string = 'Tulip (PAR 259)';
+  public legacyFullName = 'TulipSIR PAR';
 }
 
 export class GarchompexHR extends Garchompex {
   public setNumber = '260';
-  public fullName: string = 'GarchompexHR PAR';
+  public fullName: string = 'Garchomp ex (PAR 260)';
+  public legacyFullName = 'GarchompexHR PAR';
 }
 
 export class IronValiantexHR extends IronValiantex {
   public setNumber = '261';
-  public fullName: string = 'IronValiantexHR PAR';
+  public fullName: string = 'Iron Valiant ex (PAR 261)';
+  public legacyFullName = 'IronValiantexHR PAR';
 }
 
 export class RoaringMoonexHR extends RoaringMoonex {
   public setNumber = '262';
-  public fullName: string = 'RoaringMoonexHR PAR';
+  public fullName: string = 'Roaring Moon ex (PAR 262)';
+  public legacyFullName = 'RoaringMoonexHR PAR';
 }
 
 export class BeachCourtHR extends BeachCourt {
   public setNumber = '263';
-  public fullName: string = 'BeachCourtHR PAR';
+  public fullName: string = 'Beach Court (PAR 263)';
+  public legacyFullName = 'BeachCourtHR PAR';
   public set = 'PAR';
 }
 
 export class CounterCatcherHR extends CounterCatcher {
   public setNumber = '264';
-  public fullName: string = 'CounterCatcherHR PAR';
+  public fullName: string = 'Counter Catcher (PAR 264)';
+  public legacyFullName = 'CounterCatcherHR PAR';
 }
 
 export class LuxuriousCapeHR extends LuxuriousCape {
   public setNumber = '265';
-  public fullName: string = 'LuxuriousCapeHR PAR';
+  public fullName: string = 'Luxurious Cape (PAR 265)';
+  public legacyFullName = 'LuxuriousCapeHR PAR';
 }
 
 export class ReversalEnergyHR extends ReversalEnergy {
   public setNumber = '266';
-  public fullName: string = 'ReversalEnergyHR PAR';
+  public fullName: string = 'Reversal Energy (PAR 266)';
+  public legacyFullName = 'ReversalEnergyHR PAR';
   public set = 'PAR';
 }

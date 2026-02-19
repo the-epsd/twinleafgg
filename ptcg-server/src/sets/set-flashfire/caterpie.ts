@@ -36,7 +36,8 @@ export class Caterpie extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Caterpie';
-  public fullName: string = 'Caterpie FLF';
+  public fullName: string = 'Caterpie (FLF 1)';
+  public legacyFullName = 'Caterpie FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-cosmic-eclipse/clamperl.ts (Evolutionary Advantage)

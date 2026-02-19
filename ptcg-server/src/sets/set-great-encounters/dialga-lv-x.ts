@@ -42,7 +42,8 @@ export class DialgaLVX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '105';
   public name: string = 'Dialga';
-  public fullName: string = 'Dialga LV.X GE';
+  public fullName: string = 'Dialga (GE 105)';
+  public legacyFullName = 'Dialga LV.X GE';
 
   public readonly TIME_SKIP_EFFECT_MARKER = 'TIME_SKIP_EFFECT_MARKER';
   public readonly TIME_SKIP_USED_MARKER = 'TIME_SKIP_USED_MARKER';

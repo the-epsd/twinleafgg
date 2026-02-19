@@ -32,7 +32,8 @@ export class Sawk extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sawk';
-  public fullName: string = 'Sawk DRX';
+  public fullName: string = 'Sawk (DRX 69)';
+  public legacyFullName = 'Sawk DRX';
 
   public usedDefensiveStance = false;
 

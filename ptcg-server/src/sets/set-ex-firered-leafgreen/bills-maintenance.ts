@@ -13,7 +13,8 @@ export class BillsMaintenance extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Bill\'s Maintenance';
-  public fullName: string = 'Bill\'s Maintenance RG';
+  public fullName: string = 'Bill\'s Maintenance (RG 87)';
+  public legacyFullName = 'Bill\'s Maintenance RG';
 
   public text: string =
     'If you have any cards in your hand, shuffle 1 of them into your deck, then draw 3 cards.';

@@ -40,7 +40,8 @@ export class Goodra extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Goodra';
-  public fullName: string = 'Goodra FLF';
+  public fullName: string = 'Goodra (FLF 74)';
+  public legacyFullName = 'Goodra FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Refs: set-dragons-majesty/feraligatr.ts (as-often-as-you-like discard energy), set-x-and-y/starmie.ts (discard energy + heal)

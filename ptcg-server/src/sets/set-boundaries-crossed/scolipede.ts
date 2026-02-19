@@ -39,7 +39,8 @@ export class Scolipede extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scolipede';
-  public fullName: string = 'Scolipede BCR';
+  public fullName: string = 'Scolipede (BCR 74)';
+  public legacyFullName = 'Scolipede BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Poison Point

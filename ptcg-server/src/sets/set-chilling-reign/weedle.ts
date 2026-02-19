@@ -24,7 +24,8 @@ export class WeedleCRE extends PokemonCard {
 
   public name = 'Weedle';
 
-  public fullName = 'Weedle CRE';
+  public fullName = 'Weedle (CRE 1)';
+  public legacyFullName = 'Weedle CRE';
 
   public attacks = [{ name: 'Pierce', cost: [CardType.GRASS], damage: 20, text: '' }];
 }

@@ -36,7 +36,8 @@ export class GalarianMeowth extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '126';
   public name = 'Galarian Meowth';
-  public fullName = 'Galarian Meowth RCL';
+  public fullName = 'Galarian Meowth (RCL 126)';
+  public legacyFullName = 'Galarian Meowth RCL';
 
   public readonly EVOLUTION_ROAR_MARKER = 'EVOLUTION_ROAR_MARKER';
 

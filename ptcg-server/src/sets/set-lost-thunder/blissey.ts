@@ -29,7 +29,7 @@ export class Blissey extends PokemonCard {
       name: 'Powerful Slap',
       cost: [C, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 80 damage for each heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class Blissey extends PokemonCard {
   public setNumber: string = '153';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blissey';
-  public fullName: string = 'Blissey LOT';
+  public fullName: string = 'Blissey (LOT 153)';
+  public legacyFullName = 'Blissey LOT';
 
   public readonly HAPPINESS_MARKER = 'BLISSEY_LOT_HAPPINESS_MARKER';
 

@@ -24,7 +24,8 @@ export class Cryogonal extends PokemonCard {
   public setNumber = '46';
   public cardImage = 'assets/cardback.png';
   public name = 'Cryogonal';
-  public fullName = 'Cryogonal UNM';
+  public fullName = 'Cryogonal (UNM 46)';
+  public legacyFullName = 'Cryogonal UNM';
 
   private readonly FROZEN_LOCK_MARKER = 'FROZEN_LOCK_MARKER';
 

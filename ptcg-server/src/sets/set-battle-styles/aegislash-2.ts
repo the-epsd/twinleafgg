@@ -44,7 +44,8 @@ export class Aegislash2 extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aegislash';
-  public fullName: string = 'Aegislash BST 108';
+  public fullName: string = 'Aegislash (BST 108)';
+  public legacyFullName = 'Aegislash BST 108';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Stance Change

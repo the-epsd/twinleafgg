@@ -17,7 +17,8 @@ export class Defender extends TrainerCard {
 
   public name: string = 'Defender';
 
-  public fullName: string = 'Defender BS';
+  public fullName: string = 'Defender (BS 80)';
+  public legacyFullName = 'Defender BS';
 
   public cardImage: string = 'assets/cardback.png';
 

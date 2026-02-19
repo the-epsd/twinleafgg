@@ -33,7 +33,8 @@ export class Manaphy extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Manaphy';
-  public fullName: string = 'Manaphy UPR';
+  public fullName: string = 'Manaphy (UPR 42)';
+  public legacyFullName = 'Manaphy UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Deep Currents

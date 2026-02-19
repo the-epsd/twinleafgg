@@ -25,5 +25,6 @@ export class Remoraid extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Remoraid';
-  public fullName: string = 'Remoraid CIN';
+  public fullName: string = 'Remoraid (CIN 22)';
+  public legacyFullName = 'Remoraid CIN';
 }

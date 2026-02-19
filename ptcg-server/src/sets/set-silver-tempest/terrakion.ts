@@ -26,7 +26,8 @@ export class Terrakion extends PokemonCard {
   public regulationMark: string = 'F';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Terrakion';
-  public fullName: string = 'Terrakion SIT';
+  public fullName: string = 'Terrakion (SIT 97)';
+  public legacyFullName = 'Terrakion SIT';
 
   public readonly CAVERN_TACKLE_MARKER = 'CAVERN_TACKLE_MARKER';
 

@@ -32,7 +32,8 @@ export class Dusclops extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '52';
   public name: string = 'Dusclops';
-  public fullName: string = 'Dusclops BUS';
+  public fullName: string = 'Dusclops (BUS 52)';
+  public legacyFullName = 'Dusclops BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

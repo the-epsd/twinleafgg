@@ -35,7 +35,8 @@ export class Vigoroth extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vigoroth';
-  public fullName: string = 'Vigoroth FFI';
+  public fullName: string = 'Vigoroth (FFI 82)';
+  public legacyFullName = 'Vigoroth FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Reckless Charge

@@ -86,7 +86,8 @@ export class Sonia extends TrainerCard {
 
   public name: string = 'Sonia';
 
-  public fullName: string = 'Sonia CPA';
+  public fullName: string = 'Sonia (CPA 65)';
+  public legacyFullName = 'Sonia CPA';
 
   public text: string =
     'Search your deck for up to 2 Basic Pokémon or up to 2 basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.';

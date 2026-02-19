@@ -36,7 +36,8 @@ export class DarkAmpharos extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dark Ampharos';
-  public fullName: string = 'Dark Ampharos TRR';
+  public fullName: string = 'Dark Ampharos (TRR 2)';
+  public legacyFullName = 'Dark Ampharos TRR';
   public evolvesFrom: string = 'Dark Flaaffy';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -39,7 +39,8 @@ export class Rhyhorn extends PokemonCard {
 
   public name: string = 'Rhyhorn';
 
-  public fullName: string = 'Rhyhorn JU';
+  public fullName: string = 'Rhyhorn (JU 61)';
+  public legacyFullName = 'Rhyhorn JU';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
 

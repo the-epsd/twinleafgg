@@ -31,7 +31,8 @@ export class RegisteelStar extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Registeel Star';
-  public fullName: string = 'Registeel Star LM';
+  public fullName: string = 'Registeel Star (LM 92)';
+  public legacyFullName = 'Registeel Star LM';
 
   public readonly BARRIER_ATTACK_MARKER = 'BARRIER_ATTACK_MARKER';
 

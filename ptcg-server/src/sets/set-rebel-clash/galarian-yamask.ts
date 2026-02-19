@@ -26,7 +26,8 @@ export class GalarianYamask extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '101';
   public name: string = 'Galarian Yamask';
-  public fullName: string = 'Galarian Yamask RCL';
+  public fullName: string = 'Galarian Yamask (RCL 101)';
+  public legacyFullName = 'Galarian Yamask RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -12,7 +12,8 @@ export class MistysWrath extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '114';
   public name: string = 'Misty\'s Wrath';
-  public fullName: string = 'Misty\'s Wrath G1';
+  public fullName: string = 'Misty\'s Wrath (G1 114)';
+  public legacyFullName = 'Misty\'s Wrath G1';
 
   public text: string = 'Look at the top 7 cards of your deck. Choose 2 of those cards and put them into your hand. Discard the rest.';
 

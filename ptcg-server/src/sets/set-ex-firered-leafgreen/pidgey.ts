@@ -31,7 +31,8 @@ export class Pidgey extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';
   public name: string = 'Pidgey';
-  public fullName: string = 'Pidgey RG';
+  public fullName: string = 'Pidgey (RG 73)';
+  public legacyFullName = 'Pidgey RG';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

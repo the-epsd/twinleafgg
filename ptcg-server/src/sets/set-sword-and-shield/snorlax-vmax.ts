@@ -22,7 +22,7 @@ export class SnorlaxVmax extends PokemonCard {
       name: 'G-Max Fall',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each of your Benched Pokémon.'
     }
   ];
@@ -32,7 +32,8 @@ export class SnorlaxVmax extends PokemonCard {
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snorlax VMAX';
-  public fullName: string = 'Snorlax VMAX SSH';
+  public fullName: string = 'Snorlax VMAX (SSH 142)';
+  public legacyFullName = 'Snorlax VMAX SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: G-Max Fall

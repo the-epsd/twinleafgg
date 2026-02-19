@@ -25,5 +25,6 @@ export class Grimer extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grimer';
-  public fullName: string = 'Grimer TEU';
+  public fullName: string = 'Grimer (TEU 62)';
+  public legacyFullName = 'Grimer TEU';
 }

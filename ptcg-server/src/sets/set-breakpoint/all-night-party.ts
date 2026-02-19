@@ -14,7 +14,8 @@ export class AllNightParty extends TrainerCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'All-Night Party';
-  public fullName: string = 'All-Night Party BKP';
+  public fullName: string = 'All-Night Party (BKP 96)';
+  public legacyFullName = 'All-Night Party BKP';
   public text: string = 'Once during each player\'s turn, if that player\'s Active Pokémon is Asleep, he or she may remove that Special Condition and heal 30 damage from that Pokémon.';
 
   // Ref: set-primal-clash/rough-seas.ts (stadium heal pattern)

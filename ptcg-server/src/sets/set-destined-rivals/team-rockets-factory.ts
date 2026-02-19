@@ -14,7 +14,8 @@ export class TeamRocketsFactory extends TrainerCard {
   public set: string = 'DRI';
   public regulationMark = 'I';
   public name: string = 'Team Rocket\'s Factory';
-  public fullName: string = 'Team Rocket\'s Factory DRI';
+  public fullName: string = 'Team Rocket\'s Factory (DRI 173)';
+  public legacyFullName = 'Team Rocket\'s Factory DRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '173';
   public text: string = 'Once during either player\'s turn, if a player plays a Supporter with Team Rocket in its name from their hand, they may draw 2 cards.';

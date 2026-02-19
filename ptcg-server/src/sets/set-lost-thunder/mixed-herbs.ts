@@ -15,7 +15,8 @@ export class MixedHerbs extends TrainerCard {
   public setNumber: string = '184';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mixed Herbs';
-  public fullName: string = 'Mixed Herbs LOT';
+  public fullName: string = 'Mixed Herbs (LOT 184)';
+  public legacyFullName = 'Mixed Herbs LOT';
   public text: string = 'You may play 2 Mixed Herbs cards at once.\n\u2022 If you played 1 card, remove a Special Condition from your Active Pok\u00e9mon.\n\u2022 If you played 2 cards, heal 90 damage and remove all Special Conditions from your Active Pok\u00e9mon. (This effects works one time for 2 cards.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

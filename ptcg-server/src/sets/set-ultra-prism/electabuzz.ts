@@ -35,7 +35,8 @@ export class Electabuzz extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electabuzz';
-  public fullName: string = 'Electabuzz UPR';
+  public fullName: string = 'Electabuzz (UPR 43)';
+  public legacyFullName = 'Electabuzz UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Thunder

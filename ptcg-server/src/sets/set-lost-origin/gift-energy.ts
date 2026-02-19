@@ -24,7 +24,8 @@ export class GiftEnergy extends EnergyCard {
 
   public name = 'Gift Energy';
 
-  public fullName = 'Gift Energy LOR';
+  public fullName = 'Gift Energy (LOR 171)';
+  public legacyFullName = 'Gift Energy LOR';
 
   public readonly GIFT_ENERGY_MARKER = 'GIFT_ENERGY_MARKER';
 

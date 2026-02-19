@@ -29,7 +29,7 @@ export class Marowak extends PokemonCard {
       name: 'Bonemerang',
       cost: [F, C],
       damage: 90,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 90 damage for each heads.'
     }
   ];
@@ -39,7 +39,8 @@ export class Marowak extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marowak';
-  public fullName: string = 'Marowak BST';
+  public fullName: string = 'Marowak (BST 70)';
+  public legacyFullName = 'Marowak BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Battle Armor (passive - take 30 less damage from attacks)

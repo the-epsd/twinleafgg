@@ -40,7 +40,8 @@ export class CelebiVmax extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celebi VMAX';
-  public fullName: string = 'Celebi VMAX CRE';
+  public fullName: string = 'Celebi VMAX (CRE 8)';
+  public legacyFullName = 'Celebi VMAX CRE';
 
   public readonly CURATIVE_FOREST_MARKER = 'CELEBI_VMAX_CRE_CURATIVE_FOREST_MARKER';
 

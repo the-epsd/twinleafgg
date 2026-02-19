@@ -13,7 +13,8 @@ export class RocketsMission extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
   public name: string = 'Rocket\'s Mission';
-  public fullName: string = 'Rocket\'s Mission TRR';
+  public fullName: string = 'Rocket\'s Mission (TRR 88)';
+  public legacyFullName = 'Rocket\'s Mission TRR';
 
   public text: string =
     'Discard a card from your hand. Then, draw 3 cards. If you discarded a Pokémon that has Dark or Rocket\'s in its name, draw 4 cards instead.';

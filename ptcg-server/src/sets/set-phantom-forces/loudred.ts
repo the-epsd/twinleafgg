@@ -28,7 +28,7 @@ export class Loudred extends PokemonCard {
       name: 'Energy Press',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class Loudred extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Loudred';
-  public fullName: string = 'Loudred PHF';
+  public fullName: string = 'Loudred (PHF 84)';
+  public legacyFullName = 'Loudred PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Energy Press

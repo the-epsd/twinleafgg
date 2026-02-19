@@ -17,7 +17,8 @@ export class EnergySpinner extends TrainerCard {
   public setNumber: string = '170';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Energy Spinner';
-  public fullName: string = 'Energy Spinner UNB';
+  public fullName: string = 'Energy Spinner (UNB 170)';
+  public legacyFullName = 'Energy Spinner UNB';
   public text: string = 'Search your deck for a basic Energy card, reveal it, and put it into your hand. If you go second and it\'s your first turn, search for up to 3 basic Energy cards instead of 1. Then, shuffle your deck.';
 
   // Ref: set-lost-thunder/magearna.ts (Minor Errand-Running - search deck for basic energy)

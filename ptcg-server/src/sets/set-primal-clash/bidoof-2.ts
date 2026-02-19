@@ -21,7 +21,7 @@ export class Bidoof2 extends PokemonCard {
       name: 'Drench',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any [W] Energy attached to it, this attack does 20 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Bidoof2 extends PokemonCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bidoof';
-  public fullName: string = 'Bidoof PRC 117';
+  public fullName: string = 'Bidoof (PRC 117)';
+  public legacyFullName = 'Bidoof PRC 117';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Drench

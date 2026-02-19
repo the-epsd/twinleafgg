@@ -32,5 +32,6 @@ export class Electivire extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electivire';
-  public fullName: string = 'Electivire BKP';
+  public fullName: string = 'Electivire (BKP 43)';
+  public legacyFullName = 'Electivire BKP';
 }

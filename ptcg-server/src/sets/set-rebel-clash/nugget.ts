@@ -14,7 +14,8 @@ export class Nugget extends TrainerCard {
   public setNumber: string = '162';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nugget';
-  public fullName: string = 'Nugget RCL';
+  public fullName: string = 'Nugget (RCL 162)';
+  public legacyFullName = 'Nugget RCL';
   public text: string = 'You can play this card only if you drew it from your deck at the beginning of your turn, before you put it into your hand. Draw 3 cards. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

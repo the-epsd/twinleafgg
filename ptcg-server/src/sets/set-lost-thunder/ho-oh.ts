@@ -22,7 +22,7 @@ export class HoOh extends PokemonCard {
       name: 'Rainbow Burn',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each type of basic Energy attached to this Pokémon.'
     }
   ];
@@ -31,7 +31,8 @@ export class HoOh extends PokemonCard {
   public setNumber: string = '160';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ho-Oh';
-  public fullName: string = 'Ho-Oh LOT';
+  public fullName: string = 'Ho-Oh (LOT 160)';
+  public legacyFullName = 'Ho-Oh LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rainbow Burn

@@ -38,7 +38,8 @@ export class Inkay extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Inkay';
-  public fullName: string = 'Inkay XY';
+  public fullName: string = 'Inkay (XY 74)';
+  public legacyFullName = 'Inkay XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Upside-Down Evolution

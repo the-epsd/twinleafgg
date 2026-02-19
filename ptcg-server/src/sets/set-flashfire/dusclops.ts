@@ -37,7 +37,8 @@ export class Dusclops extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dusclops';
-  public fullName: string = 'Dusclops FLF';
+  public fullName: string = 'Dusclops (FLF 39)';
+  public legacyFullName = 'Dusclops FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: AGENTS-patterns.md (Confused)

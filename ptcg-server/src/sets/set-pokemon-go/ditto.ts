@@ -106,7 +106,8 @@ export class Ditto extends PokemonCard {
 
   public name: string = 'Ditto';
 
-  public fullName: string = 'Ditto PGO';
+  public fullName: string = 'Ditto (PGO 53)';
+  public legacyFullName = 'Ditto PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

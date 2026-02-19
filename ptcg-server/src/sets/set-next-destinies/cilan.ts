@@ -22,7 +22,8 @@ export class Cilan extends TrainerCard {
 
   public name: string = 'Cilan';
 
-  public fullName: string = 'Cilan NXD';
+  public fullName: string = 'Cilan (NXD 86)';
+  public legacyFullName = 'Cilan NXD';
 
   public text: string =
     'Search your deck for up to 3 basic Energy cards, reveal them, and put them into your hand. Shuffle your deck afterward.';

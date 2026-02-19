@@ -33,7 +33,8 @@ export class Samurott2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '32';
   public name: string = 'Samurott';
-  public fullName: string = 'Samurott BLW 32';
+  public fullName: string = 'Samurott (BLW 32)';
+  public legacyFullName = 'Samurott BLW 32';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Hydro Pump - Extra damage for Water Energy

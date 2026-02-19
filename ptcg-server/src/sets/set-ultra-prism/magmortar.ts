@@ -27,7 +27,7 @@ export class Magmortar extends PokemonCard {
       name: 'Fire Blaster',
       cost: [R, R, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard 2 Energy from this Pokémon. If you do, this attack does 80 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Magmortar extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magmortar';
-  public fullName: string = 'Magmortar UPR';
+  public fullName: string = 'Magmortar (UPR 19)';
+  public legacyFullName = 'Magmortar UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Incandescent Body (passive - burn attacker when damaged)

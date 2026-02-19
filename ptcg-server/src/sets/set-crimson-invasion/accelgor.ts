@@ -36,7 +36,8 @@ export class Accelgor extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Accelgor';
-  public fullName: string = 'Accelgor CIN';
+  public fullName: string = 'Accelgor (CIN 9)';
+  public legacyFullName = 'Accelgor CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Recover

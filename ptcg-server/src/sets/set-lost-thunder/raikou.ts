@@ -24,7 +24,8 @@ export class Raikou extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '79';
   public name: string = 'Raikou';
-  public fullName: string = 'Raikou LOT';
+  public fullName: string = 'Raikou (LOT 79)';
+  public legacyFullName = 'Raikou LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

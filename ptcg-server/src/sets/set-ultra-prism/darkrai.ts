@@ -39,7 +39,8 @@ export class Darkrai extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Darkrai \u25C7';
-  public fullName: string = 'Darkrai \u25C7 UPR';
+  public fullName: string = 'Darkrai \u25C7 (UPR 77)';
+  public legacyFullName = 'Darkrai \u25C7 UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Nightmare Star (on-play-from-hand)

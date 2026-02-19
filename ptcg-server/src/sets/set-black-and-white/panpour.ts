@@ -24,7 +24,8 @@ export class Panpour extends PokemonCard {
 
   public name: string = 'Panpour';
 
-  public fullName: string = 'Panpour BLW';
+  public fullName: string = 'Panpour (BLW 33)';
+  public legacyFullName = 'Panpour BLW';
 
   public cardImage: string = 'assets/cardback.png';
 

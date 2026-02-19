@@ -27,7 +27,7 @@ export class Dwebble extends PokemonCard {
       name: 'Sharp Claws',
       cost: [G, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Dwebble extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dwebble';
-  public fullName: string = 'Dwebble EVS';
+  public fullName: string = 'Dwebble (EVS 11)';
+  public legacyFullName = 'Dwebble EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Sharp Claws

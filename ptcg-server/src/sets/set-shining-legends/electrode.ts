@@ -31,7 +31,8 @@ export class Electrode extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electrode';
-  public fullName: string = 'Electrode SLG';
+  public fullName: string = 'Electrode (SLG 31)';
+  public legacyFullName = 'Electrode SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swift

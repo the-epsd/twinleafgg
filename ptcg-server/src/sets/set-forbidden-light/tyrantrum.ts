@@ -37,7 +37,8 @@ export class Tyrantrum extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tyrantrum';
-  public fullName: string = 'Tyrantrum FLI';
+  public fullName: string = 'Tyrantrum (FLI 69)';
+  public legacyFullName = 'Tyrantrum FLI';
 
   private countPokemonInPlay(player: any): number {
     let count = 1; // active

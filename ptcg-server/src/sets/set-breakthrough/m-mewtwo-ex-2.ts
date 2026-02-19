@@ -23,7 +23,7 @@ export class MMewtwoEx2 extends PokemonCard {
       name: 'Psychic Infinity',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage times the amount of Energy attached to both Active Pokémon. This attack\'s damage isn\'t affected by Weakness.'
     }
   ];
@@ -32,7 +32,8 @@ export class MMewtwoEx2 extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Mewtwo-EX';
-  public fullName: string = 'M Mewtwo-EX BKT 64';
+  public fullName: string = 'M Mewtwo-EX (BKT 64)';
+  public legacyFullName = 'M Mewtwo-EX BKT 64';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psychic Infinity

@@ -36,7 +36,8 @@ export class Krabby extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Krabby';
-  public fullName: string = 'Krabby SSH';
+  public fullName: string = 'Krabby (SSH 42)';
+  public legacyFullName = 'Krabby SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Aqua Shower

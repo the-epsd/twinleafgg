@@ -27,7 +27,8 @@ export class Kakuna extends PokemonCard {
 
   public set: string = 'CRE';
   public name: string = 'Kakuna';
-  public fullName: string = 'Kakuna CRE';
+  public fullName: string = 'Kakuna (CRE 2)';
+  public legacyFullName = 'Kakuna CRE';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '2';
   public regulationMark: string = 'E';

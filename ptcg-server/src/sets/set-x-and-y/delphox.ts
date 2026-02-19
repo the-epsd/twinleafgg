@@ -31,7 +31,8 @@ export class Delphox extends PokemonCard {
 
   public set: string = 'XY';
   public name: string = 'Delphox';
-  public fullName: string = 'Delphox XY';
+  public fullName: string = 'Delphox (XY 26)';
+  public legacyFullName = 'Delphox XY';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '26';
 

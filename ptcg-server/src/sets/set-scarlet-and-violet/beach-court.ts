@@ -23,7 +23,8 @@ export class BeachCourt extends TrainerCard {
 
   public name: string = 'Beach Court';
 
-  public fullName: string = 'Beach Court SVI';
+  public fullName: string = 'Beach Court (SVI 167)';
+  public legacyFullName = 'Beach Court SVI';
 
   public text: string =
     'The Retreat Cost of each Basic Pokémon in play (both yours and your opponent\'s) is [C] less.';

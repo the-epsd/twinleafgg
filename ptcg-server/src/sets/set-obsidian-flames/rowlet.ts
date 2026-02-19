@@ -27,6 +27,7 @@ export class Rowlet extends PokemonCard {
 
   public name: string = 'Rowlet';
 
-  public fullName: string = 'Rowlet OBF';
+  public fullName: string = 'Rowlet (OBF 13)';
+  public legacyFullName = 'Rowlet OBF';
 
 }

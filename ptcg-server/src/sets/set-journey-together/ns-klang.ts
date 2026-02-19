@@ -29,7 +29,8 @@ export class NsKlang extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '104';
   public name: string = 'N\'s Klang';
-  public fullName: string = 'N\'s Klang JTG';
+  public fullName: string = 'N\'s Klang (JTG 104)';
+  public legacyFullName = 'N\'s Klang JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

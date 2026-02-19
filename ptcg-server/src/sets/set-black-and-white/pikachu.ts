@@ -32,7 +32,8 @@ export class Pikachu extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '115';
   public name: string = 'Pikachu';
-  public fullName: string = 'Pikachu BLW';
+  public fullName: string = 'Pikachu (BLW 115)';
+  public legacyFullName = 'Pikachu BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Energize - Search discard for Lightning Energy, attach to self

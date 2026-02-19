@@ -18,7 +18,8 @@ export class Mina extends TrainerCard {
 
   public name: string = 'Mina';
 
-  public fullName: string = 'Mina LOT';
+  public fullName: string = 'Mina (LOT 183)';
+  public legacyFullName = 'Mina LOT';
 
   public text: string =
     'Search your deck for a [Y] Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck.';

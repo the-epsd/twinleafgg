@@ -33,7 +33,8 @@ export class ArceusFighting extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'AR8';
   public name: string = 'Arceus';
-  public fullName: string = 'Arceus Fighting AR';
+  public fullName: string = 'Arceus (AR AR8)';
+  public legacyFullName = 'Arceus Fighting AR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

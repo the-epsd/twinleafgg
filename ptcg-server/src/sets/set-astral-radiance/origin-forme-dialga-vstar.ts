@@ -55,7 +55,8 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
 
   public name: string = 'Origin Forme Dialga VSTAR';
 
-  public fullName: string = 'Origin Forme Dialga VSTAR ASR';
+  public fullName: string = 'Origin Forme Dialga VSTAR (ASR 114)';
+  public legacyFullName = 'Origin Forme Dialga VSTAR ASR';
 
   public readonly STAR_CHRONOS_MARKER = 'STAR_CHRONOS_MARKER';
 

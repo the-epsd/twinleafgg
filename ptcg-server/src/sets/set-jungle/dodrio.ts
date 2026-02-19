@@ -44,7 +44,8 @@ export class Dodrio extends PokemonCard {
 
   public name: string = 'Dodrio';
 
-  public fullName: string = 'Dodrio JU';
+  public fullName: string = 'Dodrio (JU 34)';
+  public legacyFullName = 'Dodrio JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

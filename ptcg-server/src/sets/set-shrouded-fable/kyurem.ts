@@ -34,7 +34,8 @@ export class Kyurem extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kyurem';
-  public fullName: string = 'Kyurem SFA';
+  public fullName: string = 'Kyurem (SFA 47)';
+  public legacyFullName = 'Kyurem SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -44,7 +44,8 @@ export class MagnezoneVSTAR extends PokemonCard {
 
   public name: string = 'Magnezone VSTAR';
 
-  public fullName: string = 'Magnezone VSTAR LOR';
+  public fullName: string = 'Magnezone VSTAR (LOR 57)';
+  public legacyFullName = 'Magnezone VSTAR LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

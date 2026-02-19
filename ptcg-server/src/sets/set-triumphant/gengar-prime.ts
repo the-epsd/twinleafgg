@@ -40,7 +40,8 @@ export class Gengar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '94';
   public name: string = 'Gengar';
-  public fullName: string = 'Gengar TM';
+  public fullName: string = 'Gengar (TM 94)';
+  public legacyFullName = 'Gengar TM';
 
   public readonly LOST_CITY_MARKER = 'LOST_CITY_MARKER';
 

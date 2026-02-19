@@ -40,7 +40,8 @@ export class Stoutland extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stoutland';
-  public fullName: string = 'Stoutland SUM';
+  public fullName: string = 'Stoutland (SUM 105)';
+  public legacyFullName = 'Stoutland SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ferocious Bellow

@@ -11,7 +11,8 @@ export class LookerWhistle extends TrainerCard {
   public setNumber: string = '127';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Looker Whistle';
-  public fullName: string = 'Looker Whistle UPR';
+  public fullName: string = 'Looker Whistle (UPR 127)';
+  public legacyFullName = 'Looker Whistle UPR';
   public text: string = 'Search your deck for up to 2 cards named Looker, reveal them, and put them into your hand. Then, shuffle your deck.';
 
   // Ref: set-breakpoint/lapras.ts (Errand-Running - SEARCH_DECK_FOR_CARDS_TO_HAND)

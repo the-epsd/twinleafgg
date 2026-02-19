@@ -32,7 +32,8 @@ export class Slowpoke extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slowpoke';
-  public fullName: string = 'Slowpoke DEX';
+  public fullName: string = 'Slowpoke (DEX 23)';
+  public legacyFullName = 'Slowpoke DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Big Yawn - both Pokémon fall asleep

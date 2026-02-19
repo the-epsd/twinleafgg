@@ -59,7 +59,8 @@ export class Potion extends TrainerCard {
 
   public name: string = 'Potion';
 
-  public fullName: string = 'Potion BS'; // Replace with the appropriate set abbreviation
+  public fullName: string = 'Potion (BS 94)';
+  public legacyFullName = 'Potion BS'; // Replace with the appropriate set abbreviation
 
   public cardImage: string = 'assets/cardback.png'; // Replace with the appropriate card image path
 

@@ -30,7 +30,8 @@ export class Dewgong extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
   public name: string = 'Dewgong';
-  public fullName: string = 'Dewgong UNB';
+  public fullName: string = 'Dewgong (UNB 45)';
+  public legacyFullName = 'Dewgong UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

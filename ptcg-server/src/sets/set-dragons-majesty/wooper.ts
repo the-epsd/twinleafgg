@@ -22,7 +22,8 @@ export class Wooper extends PokemonCard {
   }];
 
   public set: string = 'DRM';
-  public fullName: string = 'Wooper DRM';
+  public fullName: string = 'Wooper (DRM 25)';
+  public legacyFullName = 'Wooper DRM';
   public name: string = 'Wooper';
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';

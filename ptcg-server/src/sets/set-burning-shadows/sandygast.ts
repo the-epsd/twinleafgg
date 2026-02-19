@@ -29,7 +29,8 @@ export class Sandygast extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandygast';
-  public fullName: string = 'Sandygast BUS';
+  public fullName: string = 'Sandygast (BUS 61)';
+  public legacyFullName = 'Sandygast BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Absorb Life

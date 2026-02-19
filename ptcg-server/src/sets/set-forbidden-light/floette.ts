@@ -79,7 +79,8 @@ export class Floette extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public name: string = 'Floette';
-  public fullName: string = 'Floette FLI';
+  public fullName: string = 'Floette (FLI 85)';
+  public legacyFullName = 'Floette FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

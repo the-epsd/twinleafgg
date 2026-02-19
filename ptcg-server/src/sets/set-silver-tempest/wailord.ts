@@ -36,7 +36,8 @@ export class Wailord extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '38';
   public name: string = 'Wailord';
-  public fullName: string = 'Wailord SIT';
+  public fullName: string = 'Wailord (SIT 38)';
+  public legacyFullName = 'Wailord SIT';
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {

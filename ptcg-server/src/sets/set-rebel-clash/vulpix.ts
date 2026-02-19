@@ -30,7 +30,8 @@ export class Vulpix extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
   public name = 'Vulpix';
-  public fullName = 'Vulpix RCL';
+  public fullName = 'Vulpix (RCL 24)';
+  public legacyFullName = 'Vulpix RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

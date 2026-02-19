@@ -35,7 +35,8 @@ export class Piloswine extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Piloswine';
-  public fullName: string = 'Piloswine CIN';
+  public fullName: string = 'Piloswine (CIN 20)';
+  public legacyFullName = 'Piloswine CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Rest

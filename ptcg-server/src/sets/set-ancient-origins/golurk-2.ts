@@ -28,7 +28,7 @@ export class Golurk2 extends PokemonCard {
       name: 'Double Lariat',
       cost: [F, C, C, C],
       damage: 90,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 90 damage times the number of heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Golurk2 extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golurk';
-  public fullName: string = 'Golurk AOR 41';
+  public fullName: string = 'Golurk (AOR 41)';
+  public legacyFullName = 'Golurk AOR 41';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dig Out

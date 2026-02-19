@@ -31,7 +31,8 @@ export class Aron extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '123';
   public name = 'Aron';
-  public fullName = 'Aron UNB';
+  public fullName = 'Aron (UNB 123)';
+  public legacyFullName = 'Aron UNB';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

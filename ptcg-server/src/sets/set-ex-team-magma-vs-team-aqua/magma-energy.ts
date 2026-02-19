@@ -20,7 +20,8 @@ export class MagmaEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name = 'Magma Energy';
-  public fullName = 'Magma Energy MA';
+  public fullName = 'Magma Energy (MA 87)';
+  public legacyFullName = 'Magma Energy MA';
 
   public text = 'Magma Energy can be attached only to a Pokémon with Team Magma in its name. Magma Energy provides [F] and/or [D] Energy but provides 2 Energy at a time. (Doesn\'t count as a basic Energy card when not in play and has no effect other than providing Energy.) At the end of your turn, discard Magma Energy.';
 

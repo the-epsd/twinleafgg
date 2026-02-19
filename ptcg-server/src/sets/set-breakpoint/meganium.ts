@@ -38,7 +38,8 @@ export class Meganium extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meganium';
-  public fullName: string = 'Meganium BKP';
+  public fullName: string = 'Meganium (BKP 3)';
+  public legacyFullName = 'Meganium BKP';
 
   // Ref: AGENTS-patterns.md (passive ability - no useWhenInPlay)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -39,7 +39,8 @@ export class GalarianCursolaV extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Cursola V';
-  public fullName: string = 'Galarian Cursola V CPA';
+  public fullName: string = 'Galarian Cursola V (CPA 21)';
+  public legacyFullName = 'Galarian Cursola V CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Gnawing Aura (passive - put 3 damage counters when opponent attaches energy from hand)

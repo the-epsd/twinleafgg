@@ -30,7 +30,7 @@ export class Raichu extends PokemonCard {
       name: 'Electrosmash',
       cost: [L, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Raichu extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raichu';
-  public fullName: string = 'Raichu BKT';
+  public fullName: string = 'Raichu (BKT 49)';
+  public legacyFullName = 'Raichu BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunderclap Shot

@@ -13,7 +13,8 @@ export class Kadabra extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Kadabra BS';
+  public fullName = 'Kadabra (BS 32)';
+  public legacyFullName = 'Kadabra BS';
 
   public cardType = CardType.PSYCHIC;
 

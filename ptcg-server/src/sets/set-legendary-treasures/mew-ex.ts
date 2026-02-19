@@ -45,7 +45,8 @@ export class MewEx extends PokemonCard {
 
   public name: string = 'Mew-EX';
 
-  public fullName: string = 'Mew EX LTR';
+  public fullName: string = 'Mew-EX (LTR RC24)';
+  public legacyFullName = 'Mew EX LTR';
 
   public cardImage: string = 'assets/cardback.png';
 

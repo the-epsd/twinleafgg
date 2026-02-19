@@ -16,7 +16,8 @@ export class MemoryEnergy extends EnergyCard {
   public setNumber: string = '194';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Memory Energy';
-  public fullName: string = 'Memory Energy LOT';
+  public fullName: string = 'Memory Energy (LOT 194)';
+  public legacyFullName = 'Memory Energy LOT';
   public text: string = 'This card provides [C] Energy. The Pokémon this card is attached to can use any attack from its previous Evolutions. (You still need the necessary Energy to use each attack.)';
 
   // Ref: set-temporal-forces/relicanth.ts (Memory Dive - CheckPokemonAttacksEffect)

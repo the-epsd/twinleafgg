@@ -89,7 +89,8 @@ export class Klara extends TrainerCard {
   public setNumber: string = '145';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klara';
-  public fullName: string = 'Klara CRE';
+  public fullName: string = 'Klara (CRE 145)';
+  public legacyFullName = 'Klara CRE';
 
   public text: string = `Choose 1 or both:
 

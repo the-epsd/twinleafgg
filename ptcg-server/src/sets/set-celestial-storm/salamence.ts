@@ -36,7 +36,8 @@ export class Salamence extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salamence';
-  public fullName: string = 'Salamence CES';
+  public fullName: string = 'Salamence (CES 106)';
+  public legacyFullName = 'Salamence CES';
 
   public readonly DRAGON_WIND_MARKER = 'SALAMENCE_CES_DRAGON_WIND_MARKER';
 

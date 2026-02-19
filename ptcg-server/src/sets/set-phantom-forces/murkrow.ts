@@ -22,7 +22,7 @@ export class Murkrow extends PokemonCard {
       name: 'Ambush',
       cost: [D],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Murkrow extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Murkrow';
-  public fullName: string = 'Murkrow PHF';
+  public fullName: string = 'Murkrow (PHF 51)';
+  public legacyFullName = 'Murkrow PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ambush

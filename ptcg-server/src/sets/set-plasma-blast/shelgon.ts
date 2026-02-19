@@ -33,7 +33,8 @@ export class Shelgon extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shelgon';
-  public fullName: string = 'Shelgon PLB';
+  public fullName: string = 'Shelgon (PLB 63)';
+  public legacyFullName = 'Shelgon PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

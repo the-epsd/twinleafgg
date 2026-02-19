@@ -36,7 +36,8 @@ export class Lotad extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lotad';
-  public fullName: string = 'Lotad RCL';
+  public fullName: string = 'Lotad (RCL 7)';
+  public legacyFullName = 'Lotad RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mini Drain

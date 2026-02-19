@@ -35,7 +35,8 @@ export class Blaziken extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
   public name = 'Blaziken';
-  public fullName = 'Blaziken DRM';
+  public fullName = 'Blaziken (DRM 6)';
+  public legacyFullName = 'Blaziken DRM';
 
   public readonly FIRESTARTER_MARKER = 'PSYCHIC_RECHARGE_MARKER';
 

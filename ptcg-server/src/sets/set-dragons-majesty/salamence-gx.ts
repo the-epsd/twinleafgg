@@ -45,7 +45,8 @@ export class SalamenceGx extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salamence GX';
-  public fullName: string = 'Salamence GX DRM';
+  public fullName: string = 'Salamence GX (DRM 44)';
+  public legacyFullName = 'Salamence GX DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Dragon Lift (passive - free retreat except GX/EX)

@@ -13,7 +13,8 @@ export class PowerPlant extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'UNB';
   public name: string = 'Power Plant';
-  public fullName: string = 'Power Plant UNB';
+  public fullName: string = 'Power Plant (UNB 183)';
+  public legacyFullName = 'Power Plant UNB';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '183';
 

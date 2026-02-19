@@ -40,7 +40,8 @@ export class Aegislash2 extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aegislash';
-  public fullName: string = 'Aegislash XY 86';
+  public fullName: string = 'Aegislash (XY 86)';
+  public legacyFullName = 'Aegislash XY 86';
 
   public readonly STANCE_CHANGE_MARKER = 'AEGISLASH2_XY_STANCE_CHANGE_MARKER';
   private readonly PREVENT_DAMAGE_MARKER = 'AEGISLASH2_PREVENT_DAMAGE_MARKER';

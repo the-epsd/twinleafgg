@@ -48,7 +48,8 @@ export class Metagross extends PokemonCard {
 
   public name: string = 'Metagross';
 
-  public fullName: string = 'Metagross SIT';
+  public fullName: string = 'Metagross (SIT 119)';
+  public legacyFullName = 'Metagross SIT';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
   public readonly ATTACK_USED_2_MARKER = 'ATTACK_USED_2_MARKER';

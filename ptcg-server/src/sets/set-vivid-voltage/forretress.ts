@@ -38,7 +38,8 @@ export class Forretress extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Forretress';
-  public fullName: string = 'Forretress VIV';
+  public fullName: string = 'Forretress (VIV 114)';
+  public legacyFullName = 'Forretress VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Take Down

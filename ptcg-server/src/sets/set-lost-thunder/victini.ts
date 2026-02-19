@@ -20,7 +20,7 @@ export class Victini extends PokemonCard {
       name: 'V-Beatdown',
       cost: [R, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage for each of your Basic Pokémon in play.'
     }
   ];
@@ -29,7 +29,8 @@ export class Victini extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Victini';
-  public fullName: string = 'Victini LOT';
+  public fullName: string = 'Victini (LOT 49)';
+  public legacyFullName = 'Victini LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: V-Beatdown

@@ -99,7 +99,8 @@ export class TechnoRadar extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '180';
   public name: string = 'Techno Radar';
-  public fullName: string = 'Techno Radar PAR';
+  public fullName: string = 'Techno Radar (PAR 180)';
+  public legacyFullName = 'Techno Radar PAR';
 
   public text: string =
     `You can play this card only if you discard another card from your hand.

@@ -45,7 +45,8 @@ export class Archeops extends PokemonCard {
 
   public name: string = 'Archeops';
 
-  public fullName: string = 'Archeops NVI';
+  public fullName: string = 'Archeops (NVI 67)';
+  public legacyFullName = 'Archeops NVI';
 
   public cardImage: string = 'assets/cardback.png';
 

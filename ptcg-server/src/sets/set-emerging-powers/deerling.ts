@@ -32,7 +32,8 @@ export class Deerling extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '15';
   public name: string = 'Deerling';
-  public fullName: string = 'Deerling EPO';
+  public fullName: string = 'Deerling (EPO 15)';
+  public legacyFullName = 'Deerling EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

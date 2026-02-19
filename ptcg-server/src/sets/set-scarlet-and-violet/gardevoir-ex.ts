@@ -42,7 +42,8 @@ export class Gardevoirex extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gardevoir ex';
-  public fullName: string = 'Gardevoir ex SVI';
+  public fullName: string = 'Gardevoir ex (SVI 86)';
+  public legacyFullName = 'Gardevoir ex SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

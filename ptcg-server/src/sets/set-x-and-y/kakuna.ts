@@ -33,7 +33,8 @@ export class Kakuna extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kakuna';
-  public fullName: string = 'Kakuna XY';
+  public fullName: string = 'Kakuna (XY 4)';
+  public legacyFullName = 'Kakuna XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Harden

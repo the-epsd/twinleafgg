@@ -39,7 +39,8 @@ export class Jynx extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jynx';
-  public fullName: string = 'Jynx FFI';
+  public fullName: string = 'Jynx (FFI 37)';
+  public legacyFullName = 'Jynx FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Victory Kiss

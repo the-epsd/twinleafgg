@@ -31,7 +31,8 @@ export class ArceusPsychic extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'AR7';
   public name: string = 'Arceus';
-  public fullName: string = 'Arceus Psychic AR';
+  public fullName: string = 'Arceus (AR AR7)';
+  public legacyFullName = 'Arceus Psychic AR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

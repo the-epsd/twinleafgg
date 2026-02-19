@@ -20,7 +20,7 @@ export class Mareanie extends PokemonCard {
       name: 'Spike Cannon',
       cost: [W],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage for each heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class Mareanie extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mareanie';
-  public fullName: string = 'Mareanie LOT';
+  public fullName: string = 'Mareanie (LOT 68)';
+  public legacyFullName = 'Mareanie LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spike Cannon

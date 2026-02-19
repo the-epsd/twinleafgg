@@ -30,7 +30,8 @@ export class Gastly extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gastly';
-  public fullName: string = 'Gastly BKT';
+  public fullName: string = 'Gastly (BKT 58)';
+  public legacyFullName = 'Gastly BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sleep Poison

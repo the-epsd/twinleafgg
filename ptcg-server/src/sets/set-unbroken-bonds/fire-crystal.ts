@@ -55,7 +55,8 @@ export class FireCrystal extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '173';
   public name: string = 'Fire Crystal';
-  public fullName: string = 'Fire Crystal UNB';
+  public fullName: string = 'Fire Crystal (UNB 173)';
+  public legacyFullName = 'Fire Crystal UNB';
 
   public text: string =
     'Put 3 [R] Energy cards from your discard pile into your hand.';

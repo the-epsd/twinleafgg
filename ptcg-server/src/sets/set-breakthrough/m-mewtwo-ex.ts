@@ -22,7 +22,7 @@ export class MMewtwoEx extends PokemonCard {
       name: 'Vanishing Strike',
       cost: [P, F, F, C],
       damage: 150,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 50 more damage, and this attack\'s damage isn\'t affected by Resistance or any effects on your opponent\'s Active Pokémon.'
     }
   ];
@@ -31,7 +31,8 @@ export class MMewtwoEx extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Mewtwo-EX';
-  public fullName: string = 'M Mewtwo-EX BKT';
+  public fullName: string = 'M Mewtwo-EX (BKT 63)';
+  public legacyFullName = 'M Mewtwo-EX BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Vanishing Strike

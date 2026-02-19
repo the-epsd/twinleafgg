@@ -38,7 +38,8 @@ export class CelebiEx extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celebi-EX';
-  public fullName: string = 'Celebi-EX BCR';
+  public fullName: string = 'Celebi-EX (BCR 9)';
+  public legacyFullName = 'Celebi-EX BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Time Recall

@@ -33,7 +33,8 @@ export class Ariados extends PokemonCard {
 
   public set: string = 'AOR';
   public name: string = 'Ariados';
-  public fullName: string = 'Ariados AOR';
+  public fullName: string = 'Ariados (AOR 6)';
+  public legacyFullName = 'Ariados AOR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
 

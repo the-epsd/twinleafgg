@@ -27,7 +27,8 @@ export class Excadrill extends PokemonCard {
 
   public name: string = 'Excadrill';
 
-  public fullName: string = 'Excadrill CEC';
+  public fullName: string = 'Excadrill (CEC 115)';
+  public legacyFullName = 'Excadrill CEC';
 
   public setNumber: string = '115';
 

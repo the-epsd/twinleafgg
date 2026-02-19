@@ -41,7 +41,8 @@ export class Marowak extends PokemonCard {
 
   public name: string = 'Marowak';
 
-  public fullName: string = 'Marowak JU';
+  public fullName: string = 'Marowak (JU 39)';
+  public legacyFullName = 'Marowak JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

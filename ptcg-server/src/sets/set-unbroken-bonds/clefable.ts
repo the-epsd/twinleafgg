@@ -23,7 +23,7 @@ export class Clefable extends PokemonCard {
       name: 'Moon-Watching Dance',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each of your Pokémon that has any [Y] Energy attached to it.'
     }
   ];
@@ -32,7 +32,8 @@ export class Clefable extends PokemonCard {
   public setNumber: string = '133';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clefable';
-  public fullName: string = 'Clefable UNB';
+  public fullName: string = 'Clefable (UNB 133)';
+  public legacyFullName = 'Clefable UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Moon-Watching Dance

@@ -32,7 +32,8 @@ export class GreninjaBREAK extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Greninja BREAK';
-  public fullName: string = 'Greninja BREAK BKP';
+  public fullName: string = 'Greninja BREAK (BKP 41)';
+  public legacyFullName = 'Greninja BREAK BKP';
 
   public readonly GIANT_WATER_SHURIKEN_MARKER = 'GIANT_WATER_SHURIKEN_MARKER';
 

@@ -40,7 +40,8 @@ export class MrMime extends PokemonCard {
 
   public name: string = 'Mr. Mime';
 
-  public fullName: string = 'Mr. Mime PLF';
+  public fullName: string = 'Mr. Mime (PLF 47)';
+  public legacyFullName = 'Mr. Mime PLF';
 
   public cardImage: string = 'assets/cardback.png';
 

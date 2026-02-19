@@ -18,7 +18,8 @@ export class Koffing extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Koffing BS';
+  public fullName = 'Koffing (BS 51)';
+  public legacyFullName = 'Koffing BS';
 
   public stage = Stage.BASIC;
 

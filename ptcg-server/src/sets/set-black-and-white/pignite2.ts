@@ -28,7 +28,8 @@ export class Pignite2 extends PokemonCard {
 
   public set: string = 'BLW';
   public name: string = 'Pignite';
-  public fullName: string = 'Pignite BLW 18';
+  public fullName: string = 'Pignite (BLW 18)';
+  public legacyFullName = 'Pignite BLW 18';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
 

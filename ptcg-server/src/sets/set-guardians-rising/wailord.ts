@@ -38,7 +38,8 @@ export class Wailord extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wailord';
-  public fullName: string = 'Wailord GRI';
+  public fullName: string = 'Wailord (GRI 30)';
+  public legacyFullName = 'Wailord GRI';
 
   public readonly PREVENT_ALL_MARKER = 'WAILORD_GRI_PREVENT_ALL_MARKER';
   public readonly CLEAR_PREVENT_ALL_MARKER = 'WAILORD_GRI_CLEAR_PREVENT_ALL_MARKER';

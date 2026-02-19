@@ -35,7 +35,8 @@ export class Shuckle extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shuckle';
-  public fullName: string = 'Shuckle FCO';
+  public fullName: string = 'Shuckle (FCO 1)';
+  public legacyFullName = 'Shuckle FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hide a Berry

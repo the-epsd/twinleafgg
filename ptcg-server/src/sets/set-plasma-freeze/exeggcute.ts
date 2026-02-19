@@ -42,7 +42,8 @@ export class Exeggcute extends PokemonCard {
 
   public name: string = 'Exeggcute';
 
-  public fullName: string = 'Exeggcute PLF';
+  public fullName: string = 'Exeggcute (PLF 4)';
+  public legacyFullName = 'Exeggcute PLF';
 
   public cardImage: string = 'assets/cardback.png';
 

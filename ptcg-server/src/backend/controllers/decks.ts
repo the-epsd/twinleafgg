@@ -513,9 +513,8 @@ export class Decks extends Controller {
 
     cardManager.getAllCards().forEach(c => {
       validNames.add(c.fullName);
-      const p = c as any;
-      if (p.legacyFullName) {
-        validNames.add(p.legacyFullName);
+      if (c.legacyFullName) {
+        validNames.add(c.legacyFullName);
       }
     });
 

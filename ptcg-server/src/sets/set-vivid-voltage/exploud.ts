@@ -26,7 +26,8 @@ export class Exploud extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '137';
   public name: string = 'Exploud';
-  public fullName: string = 'Exploud VIV';
+  public fullName: string = 'Exploud (VIV 137)';
+  public legacyFullName = 'Exploud VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

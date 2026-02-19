@@ -20,5 +20,6 @@ export class Charmander extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name: string = 'Charmander';
-  public fullName: string = 'Charmander MC';
+  public fullName: string = 'Charmander (ASC 20)';
+  public legacyFullName = 'Charmander MC';
 }

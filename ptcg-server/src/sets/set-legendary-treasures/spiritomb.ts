@@ -28,7 +28,8 @@ export class Spiritomb extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Spiritomb';
-  public fullName: string = 'Spiritomb LTR';
+  public fullName: string = 'Spiritomb (LTR 87)';
+  public legacyFullName = 'Spiritomb LTR';
 
   public readonly OPPONENT_CANNOT_PLAY_ACE_SPECS_MARKER = 'OPPONENT_CANNOT_PLAY_ACE_SPECS_MARKER';
 

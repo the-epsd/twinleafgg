@@ -29,7 +29,7 @@ export class Anorith extends PokemonCard {
       name: 'X-Scissor',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Anorith extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Anorith';
-  public fullName: string = 'Anorith STS';
+  public fullName: string = 'Anorith (STS 56)';
+  public legacyFullName = 'Anorith STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Restored Barrier (passive - remove weakness from Restored Pokemon)

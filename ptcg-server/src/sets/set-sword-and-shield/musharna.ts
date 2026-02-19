@@ -29,7 +29,7 @@ export class Musharna extends PokemonCard {
       name: 'Super Hypnoblast',
       cost: [P, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Asleep, this attack does 120 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Musharna extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Musharna';
-  public fullName: string = 'Musharna SSH';
+  public fullName: string = 'Musharna (SSH 88)';
+  public legacyFullName = 'Musharna SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sleepy Pulse

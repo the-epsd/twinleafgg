@@ -32,7 +32,8 @@ export class Giratina extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '9';
   public name: string = 'Giratina';
-  public fullName: string = 'Giratina PL';
+  public fullName: string = 'Giratina (PL 9)';
+  public legacyFullName = 'Giratina PL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

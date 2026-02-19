@@ -38,7 +38,8 @@ export class Luxray extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luxray';
-  public fullName: string = 'Luxray BKP';
+  public fullName: string = 'Luxray (BKP 46)';
+  public legacyFullName = 'Luxray BKP';
 
   public readonly SNARL_MARKER = 'LUXRAY_BKP_SNARL_MARKER';
   public readonly CLEAR_SNARL_MARKER = 'LUXRAY_BKP_CLEAR_SNARL_MARKER';

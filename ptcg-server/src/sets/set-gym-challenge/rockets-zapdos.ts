@@ -30,7 +30,8 @@ export class RocketsZapdos extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '15';
   public name: string = 'Rocket\'s Zapdos';
-  public fullName: string = 'Rocket\'s Zapdos G2';
+  public fullName: string = 'Rocket\'s Zapdos (G2 15)';
+  public legacyFullName = 'Rocket\'s Zapdos G2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

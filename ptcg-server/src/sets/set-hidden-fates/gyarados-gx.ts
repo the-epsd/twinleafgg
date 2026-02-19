@@ -36,7 +36,8 @@ export class GyaradosGx extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gyarados-GX';
-  public fullName: string = 'Gyarados-GX HIF';
+  public fullName: string = 'Gyarados-GX (HIF 16)';
+  public legacyFullName = 'Gyarados-GX HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Hyper Beam-GX

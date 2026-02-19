@@ -14,7 +14,8 @@ export class BrocksTraining extends TrainerCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Brock\'s Training';
-  public fullName: string = 'Brock\'s Training HIF';
+  public fullName: string = 'Brock\'s Training (HIF 55)';
+  public legacyFullName = 'Brock\'s Training HIF';
   public text: string = 'Attach an Energy card from your hand to 1 of your Geodude, Graveler, Golem, Onix-GX, Cubone, Rhyhorn, Rhydon, or Sudowoodo. You may play only 1 Supporter card during your turn (before your attack).';
 
   private readonly VALID_POKEMON_NAMES = [

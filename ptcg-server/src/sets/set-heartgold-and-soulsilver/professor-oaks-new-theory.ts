@@ -42,7 +42,8 @@ export class ProfessorOaksNewTheory extends TrainerCard {
 
   public name: string = 'Professor Oak\'s New Theory';
 
-  public fullName: string = 'Professor Oaks New Theory HS';
+  public fullName: string = 'Professor Oak\'s New Theory (HS 101)';
+  public legacyFullName = 'Professor Oaks New Theory HS';
 
   public cardImage: string = 'assets/cardback.png';
 

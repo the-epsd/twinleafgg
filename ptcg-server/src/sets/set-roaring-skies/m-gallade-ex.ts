@@ -31,7 +31,8 @@ export class MGalladeEx extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Gallade-EX';
-  public fullName: string = 'M Gallade-EX ROS';
+  public fullName: string = 'M Gallade-EX (ROS 35)';
+  public legacyFullName = 'M Gallade-EX ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Unwavering Blade

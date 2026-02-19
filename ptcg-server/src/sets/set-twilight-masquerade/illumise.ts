@@ -33,7 +33,8 @@ export class Illumise extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '10';
   public name: string = 'Illumise';
-  public fullName: string = 'Illumise TWM';
+  public fullName: string = 'Illumise (TWM 10)';
+  public legacyFullName = 'Illumise TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

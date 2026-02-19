@@ -36,7 +36,8 @@ export class Zigzagoon extends PokemonCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zigzagoon';
-  public fullName: string = 'Zigzagoon PRC';
+  public fullName: string = 'Zigzagoon (PRC 111)';
+  public legacyFullName = 'Zigzagoon PRC';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER_ZIGZAGOON';
   public readonly SAND_ATTACK_MARKER = 'SAND_ATTACK_MARKER_ZIGZAGOON';

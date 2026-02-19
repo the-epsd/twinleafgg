@@ -37,7 +37,8 @@ export class Klinklang extends PokemonCard {
   public setNumber: string = '127';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klinklang';
-  public fullName: string = 'Klinklang DAA';
+  public fullName: string = 'Klinklang (DAA 127)';
+  public legacyFullName = 'Klinklang DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Clockwork

@@ -32,5 +32,6 @@ export class Sneasel extends PokemonCard {
 
   public name: string = 'Sneasel';
 
-  public fullName: string = 'Sneasel PRE';
+  public fullName: string = 'Sneasel (PRE 61)';
+  public legacyFullName = 'Sneasel PRE';
 }

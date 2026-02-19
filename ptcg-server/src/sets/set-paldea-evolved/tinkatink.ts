@@ -61,7 +61,8 @@ export class Tinkatink extends PokemonCard {
   public regulationMark: string = 'G';
   public set: string = 'PAL';
   public name: string = 'Tinkatink';
-  public fullName: string = 'Tinkatink PAL';
+  public fullName: string = 'Tinkatink (PAL 101)';
+  public legacyFullName = 'Tinkatink PAL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '101';
 

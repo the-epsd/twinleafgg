@@ -45,7 +45,8 @@ export class Gurdurr extends PokemonCard {
 
   public name: string = 'Gurdurr';
 
-  public fullName: string = 'Gurdurr TWM';
+  public fullName: string = 'Gurdurr (TWM 104)';
+  public legacyFullName = 'Gurdurr TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Superpower

@@ -68,7 +68,8 @@ export class Cyrano extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '170';
   public name: string = 'Cyrano';
-  public fullName: string = 'Cyrano SSP';
+  public fullName: string = 'Cyrano (SSP 170)';
+  public legacyFullName = 'Cyrano SSP';
 
   public text: string =
     'Search your deck for up to 3 Pokémon ex, reveal them, and put them into your hand. Then, shuffle your deck.';

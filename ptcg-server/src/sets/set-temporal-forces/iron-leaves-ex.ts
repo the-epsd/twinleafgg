@@ -33,7 +33,8 @@ export class IronLeavesex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '25';
   public name: string = 'Iron Leaves ex';
-  public fullName: string = 'Iron Leaves ex TEF';
+  public fullName: string = 'Iron Leaves ex (TEF 25)';
+  public legacyFullName = 'Iron Leaves ex TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

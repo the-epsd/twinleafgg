@@ -16,7 +16,8 @@ export class FairyCharmPsychic extends TrainerCard {
   public setNumber: string = '175';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fairy Charm Psychic';
-  public fullName: string = 'Fairy Charm Psychic LOT';
+  public fullName: string = 'Fairy Charm Psychic (LOT 175)';
+  public legacyFullName = 'Fairy Charm Psychic LOT';
   public text: string = 'Prevent all damage done to the Fairy Pokémon this card is attached to by attacks from your opponent\'s Psychic Pokémon-GX and Psychic Pokémon-EX.';
 
   // Ref: set-x-and-y/hard-charm.ts (Tool damage intercept), set-dragons-majesty/altaria-gx.ts (GX/EX type check)

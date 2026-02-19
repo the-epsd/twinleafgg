@@ -36,7 +36,8 @@ export class Hydreigonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public name: string = 'Hydreigon ex';
-  public fullName: string = 'Hydreigon ex SV11W';
+  public fullName: string = 'Hydreigon ex (WHT 67)';
+  public legacyFullName = 'Hydreigon ex SV11W';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER: string = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

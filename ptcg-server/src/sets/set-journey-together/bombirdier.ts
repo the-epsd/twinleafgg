@@ -30,7 +30,8 @@ export class Bombirdier extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '101';
   public name = 'Bombirdier';
-  public fullName = 'Bombirdier JTG';
+  public fullName = 'Bombirdier (JTG 101)';
+  public legacyFullName = 'Bombirdier JTG';
   public regulationMark = 'H';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

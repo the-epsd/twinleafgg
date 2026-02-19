@@ -22,7 +22,7 @@ export class Jellicent extends PokemonCard {
       name: 'Sediment Sink',
       cost: [W, W],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 10 damage for each [W] Energy card in your discard pile.'
     }
   ];
@@ -32,7 +32,8 @@ export class Jellicent extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jellicent';
-  public fullName: string = 'Jellicent BST';
+  public fullName: string = 'Jellicent (BST 42)';
+  public legacyFullName = 'Jellicent BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sediment Sink

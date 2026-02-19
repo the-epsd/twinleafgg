@@ -11,7 +11,8 @@ export class Repel extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'SUM';
   public name: string = 'Repel';
-  public fullName: string = 'Repel SUM';
+  public fullName: string = 'Repel (SUM 130)';
+  public legacyFullName = 'Repel SUM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '130';
   public text: string = 'Your opponent switches their Active Pokémon with 1 of their Benched Pokémon.';

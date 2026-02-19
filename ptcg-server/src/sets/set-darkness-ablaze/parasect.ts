@@ -37,7 +37,8 @@ export class Parasect extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Parasect';
-  public fullName: string = 'Parasect DAA';
+  public fullName: string = 'Parasect (DAA 4)';
+  public legacyFullName = 'Parasect DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mushroom Tackle

@@ -21,7 +21,8 @@ export class EnergyLoto extends TrainerCard {
 
   public name: string = 'Energy Loto';
 
-  public fullName: string = 'Energy Loto ASR';
+  public fullName: string = 'Energy Loto (ASR 140)';
+  public legacyFullName = 'Energy Loto ASR';
 
   public text: string =
     'Look at the top 7 cards of your deck. You may reveal an Energy card you find there and put it into your hand. Shuffle the other cards back into your deck.';

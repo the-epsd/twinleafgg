@@ -29,7 +29,8 @@ export class Croagunk extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Croagunk';
-  public fullName: string = 'Croagunk UPR';
+  public fullName: string = 'Croagunk (UPR 56)';
+  public legacyFullName = 'Croagunk UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swagger

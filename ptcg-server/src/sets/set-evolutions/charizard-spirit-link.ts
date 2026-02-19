@@ -13,7 +13,8 @@ export class CharizardSpiritLink extends TrainerCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charizard Spirit Link';
-  public fullName: string = 'Charizard Spirit Link EVO';
+  public fullName: string = 'Charizard Spirit Link (EVO 75)';
+  public legacyFullName = 'Charizard Spirit Link EVO';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Charizard-EX.';
 
   // Ref: set-primal-clash/gardevoir-spirit-link.ts (Spirit Link)

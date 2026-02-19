@@ -30,7 +30,7 @@ export class Togedemaru extends PokemonCard {
       name: 'Discharge',
       cost: [L],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard all [L] Energy from this Pokémon. This attack does 30 damage for each card you discarded in this way.'
     }
   ];
@@ -39,7 +39,8 @@ export class Togedemaru extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togedemaru';
-  public fullName: string = 'Togedemaru SUM';
+  public fullName: string = 'Togedemaru (SUM 53)';
+  public legacyFullName = 'Togedemaru SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Defense Curl

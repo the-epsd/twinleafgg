@@ -37,7 +37,8 @@ export class Morgrem extends PokemonCard {
   public setNumber: string = '124';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Morgrem';
-  public fullName: string = 'Morgrem RCL';
+  public fullName: string = 'Morgrem (RCL 124)';
+  public legacyFullName = 'Morgrem RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: False Surrender

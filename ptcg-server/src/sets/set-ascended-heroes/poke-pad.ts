@@ -32,7 +32,8 @@ export class PokePad extends TrainerCard {
   public setNumber: string = '198';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poké Pad';
-  public fullName: string = 'Poké Pad MC';
+  public fullName: string = 'Poké Pad (ASC 198)';
+  public legacyFullName = 'Poké Pad MC';
   public text: string = 'Search your deck for a Pokémon that doesn\'t have a Rule Box, reveal it, and put it into your hand. Then, shuffle your deck. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

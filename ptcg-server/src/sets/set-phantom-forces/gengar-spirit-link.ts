@@ -8,7 +8,8 @@ export class GengarSpiritLink extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'PHF';
   public name: string = 'Gengar Spirit Link';
-  public fullName: string = 'Gengar Spirit Link PHF';
+  public fullName: string = 'Gengar Spirit Link (PHF 95)';
+  public legacyFullName = 'Gengar Spirit Link PHF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '95';
 

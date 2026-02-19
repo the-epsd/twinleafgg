@@ -34,7 +34,8 @@ export class Shellos extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shellos';
-  public fullName: string = 'Shellos CIN';
+  public fullName: string = 'Shellos (CIN 29)';
+  public legacyFullName = 'Shellos CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Regeneration

@@ -54,7 +54,8 @@ export class Cinccino extends PokemonCard {
 
   public name: string = 'Cinccino';
 
-  public fullName: string = 'Cinccino SSH';
+  public fullName: string = 'Cinccino (SSH 147)';
+  public legacyFullName = 'Cinccino SSH';
 
   public readonly REFINEMENT_MARKER = 'REFINEMENT_MARKER';
 

@@ -37,7 +37,8 @@ export class WashRotom extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wash Rotom';
-  public fullName: string = 'Wash Rotom UPR';
+  public fullName: string = 'Wash Rotom (UPR 40)';
+  public legacyFullName = 'Wash Rotom UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Roto Motor (passive - ignore energy cost if 9+ tools in discard)

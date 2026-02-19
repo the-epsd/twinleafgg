@@ -34,7 +34,8 @@ export class TornadusEx extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tornadus-EX';
-  public fullName: string = 'Tornadus-EX PLF';
+  public fullName: string = 'Tornadus-EX (PLF 98)';
+  public legacyFullName = 'Tornadus-EX PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Windfall - shuffle hand into deck, draw 6

@@ -48,7 +48,8 @@ export class Copycat extends TrainerCard {
 
   public name: string = 'Copycat';
 
-  public fullName: string = 'Copycat EVS';
+  public fullName: string = 'Copycat (EVS 143)';
+  public legacyFullName = 'Copycat EVS';
 
   public text: string =
     'Shuffle your hand into your deck. Then, draw a card for each card in ' +

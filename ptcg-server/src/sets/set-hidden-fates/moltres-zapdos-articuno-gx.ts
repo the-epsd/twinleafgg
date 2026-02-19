@@ -36,7 +36,8 @@ export class MoltresZapdosArticunoGX extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Moltres & Zapdos & Articuno-GX';
-  public fullName: string = 'Moltres & Zapdos & Articuno-GX HIF';
+  public fullName: string = 'Moltres & Zapdos & Articuno-GX (HIF 44)';
+  public legacyFullName = 'Moltres & Zapdos & Articuno-GX HIF';
 
   private usedSkyLegends = false;
 

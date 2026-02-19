@@ -28,7 +28,7 @@ export class Pyukumuku extends PokemonCard {
       name: 'Continuous Tumble',
       cost: [W],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 30 damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Pyukumuku extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pyukumuku';
-  public fullName: string = 'Pyukumuku SUM';
+  public fullName: string = 'Pyukumuku (SUM 47)';
+  public legacyFullName = 'Pyukumuku SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Innards Out (passive - damage attacker when KO'd by attack)

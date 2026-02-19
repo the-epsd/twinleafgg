@@ -31,7 +31,7 @@ export class WhimsicottGx extends PokemonCard {
       name: 'Energy Blow',
       cost: [Y],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage times the amount of Energy attached to this Pokémon.'
     },
     {
@@ -46,7 +46,8 @@ export class WhimsicottGx extends PokemonCard {
   public setNumber: string = '140';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whimsicott-GX';
-  public fullName: string = 'Whimsicott-GX UNB';
+  public fullName: string = 'Whimsicott-GX (UNB 140)';
+  public legacyFullName = 'Whimsicott-GX UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fluffy Cotton (passive - coin flip to prevent damage)

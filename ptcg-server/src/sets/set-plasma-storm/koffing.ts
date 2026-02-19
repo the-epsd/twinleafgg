@@ -35,7 +35,8 @@ export class Koffing extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Koffing';
-  public fullName: string = 'Koffing PLS';
+  public fullName: string = 'Koffing (PLS 56)';
+  public legacyFullName = 'Koffing PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Double Spin

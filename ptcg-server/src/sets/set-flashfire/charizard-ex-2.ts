@@ -35,7 +35,8 @@ export class CharizardEx2 extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charizard-EX';
-  public fullName: string = 'Charizard-EX FLF 12';
+  public fullName: string = 'Charizard-EX (FLF 12)';
+  public legacyFullName = 'Charizard-EX FLF 12';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/wailord.ts (Giant Wave)

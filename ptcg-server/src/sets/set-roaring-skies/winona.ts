@@ -76,7 +76,8 @@ export class Winona extends TrainerCard {
 
   public name: string = 'Winona';
 
-  public fullName: string = 'Winona ROS';
+  public fullName: string = 'Winona (ROS 96)';
+  public legacyFullName = 'Winona ROS';
 
   public text: string =
     'Search your deck for up to 3 [C] Pokémon, reveal them, and put them into your hand. Shuffle your deck afterward.';

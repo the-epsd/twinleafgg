@@ -30,7 +30,8 @@ export class MespritLVX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '143';
   public name: string = 'Mesprit';
-  public fullName: string = 'Mesprit Lv. X LA';
+  public fullName: string = 'Mesprit (LA 143)';
+  public legacyFullName = 'Mesprit Lv. X LA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

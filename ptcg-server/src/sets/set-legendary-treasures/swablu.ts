@@ -30,7 +30,8 @@ export class Swablu extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swablu';
-  public fullName: string = 'Swablu LTR';
+  public fullName: string = 'Swablu (LTR 103)';
+  public legacyFullName = 'Swablu LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Glare and Peck

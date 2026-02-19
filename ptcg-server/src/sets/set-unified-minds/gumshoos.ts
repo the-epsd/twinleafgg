@@ -24,7 +24,8 @@ export class Gumshoos extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '181';
   public name: string = 'Gumshoos';
-  public fullName: string = 'Gumshoos UNM';
+  public fullName: string = 'Gumshoos (UNM 181)';
+  public legacyFullName = 'Gumshoos UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

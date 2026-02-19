@@ -20,7 +20,7 @@ export class NidoranM extends PokemonCard {
       name: 'Double Stab',
       cost: [P],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class NidoranM extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoran ♂';
-  public fullName: string = 'Nidoran ♂ EVO';
+  public fullName: string = 'Nidoran ♂ (EVO 43)';
+  public legacyFullName = 'Nidoran ♂ EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Stab

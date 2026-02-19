@@ -39,7 +39,8 @@ export class Bouffalant extends PokemonCard {
 
   public name: string = 'Bouffalant';
 
-  public fullName: string = 'Bouffalant DRX';
+  public fullName: string = 'Bouffalant (DRX 110)';
+  public legacyFullName = 'Bouffalant DRX';
 
   public cardImage: string = 'assets/cardback.png';
 

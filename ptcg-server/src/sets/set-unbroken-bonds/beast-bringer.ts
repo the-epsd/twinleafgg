@@ -15,7 +15,8 @@ export class BeastBringer extends TrainerCard {
   public setNumber: string = '164';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beast Bringer';
-  public fullName: string = 'Beast Bringer UNB';
+  public fullName: string = 'Beast Bringer (UNB 164)';
+  public legacyFullName = 'Beast Bringer UNB';
   public text: string = 'If you have exactly 6 Prize cards remaining, and if your opponent\'s Active Pokémon-GX or Pokémon-EX is Knocked Out by damage from an attack of the Ultra Beast this card is attached to, take 1 more Prize card.';
 
   // Ref: set-team-up/black-market.ts (Black Market - KnockOutEffect prize modification)

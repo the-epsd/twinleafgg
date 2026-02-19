@@ -20,7 +20,7 @@ export class Roggenrola extends PokemonCard {
       name: 'Smack Down',
       cost: [F, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon has Fighting Resistance, this attack does 50 more damage.'
     }
   ];
@@ -29,7 +29,8 @@ export class Roggenrola extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Roggenrola';
-  public fullName: string = 'Roggenrola SUM';
+  public fullName: string = 'Roggenrola (SUM 69)';
+  public legacyFullName = 'Roggenrola SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Smack Down

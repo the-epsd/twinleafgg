@@ -35,6 +35,7 @@ export class Pidgeotto extends PokemonCard {
 
   public name: string = 'Pidgeotto';
 
-  public fullName: string = 'Pidgeotto MEW';
+  public fullName: string = 'Pidgeotto (MEW 17)';
+  public legacyFullName = 'Pidgeotto MEW';
 
 }

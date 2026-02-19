@@ -36,7 +36,8 @@ export class AlolanNinetales extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Ninetales';
-  public fullName: string = 'Alolan Ninetales BUS';
+  public fullName: string = 'Alolan Ninetales (BUS 28)';
+  public legacyFullName = 'Alolan Ninetales BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Luminous Barrier (passive - prevent all effects from GX/EX)

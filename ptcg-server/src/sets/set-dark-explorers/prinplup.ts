@@ -38,7 +38,8 @@ export class Prinplup extends PokemonCard {
 
   public name: string = 'Prinplup';
 
-  public fullName: string = 'Prinplup DEX';
+  public fullName: string = 'Prinplup (DEX 28)';
+  public legacyFullName = 'Prinplup DEX';
 
   public cardImage: string = 'assets/cardback.png';
 

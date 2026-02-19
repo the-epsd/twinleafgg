@@ -19,7 +19,8 @@ export class JammingNetTeamFlareHyperGear extends TrainerCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jamming Net';
-  public fullName: string = 'Jamming Net Team Flare Hyper Gear PHF';
+  public fullName: string = 'Jamming Net (PHF 98)';
+  public legacyFullName = 'Jamming Net Team Flare Hyper Gear PHF';
   public text: string = 'Attach this Pokemon Tool to 1 of your opponent\'s Pokemon-EX that doesn\'t already have a Pokemon Tool attached to it. The attacks of the Pokémon this card is attached to do 20 less damage to all Defending Pokémon (before applying Weakness and Resistance). (Don\'t apply Weakness and Resistance for Benched Pokémon.) When this card is removed from a Pokémon for any reason, put this card in its owner\'s discard pile.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

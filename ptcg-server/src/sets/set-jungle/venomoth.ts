@@ -40,7 +40,8 @@ export class Venomoth extends PokemonCard {
 
   public name: string = 'Venomoth';
 
-  public fullName: string = 'Venomoth JU';
+  public fullName: string = 'Venomoth (JU 13)';
+  public legacyFullName = 'Venomoth JU';
 
   public readonly SHIFT_MARKER = 'SHIFT_MARKER';
 

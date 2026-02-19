@@ -37,7 +37,8 @@ export class Manectric extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Manectric';
-  public fullName: string = 'Manectric ROS';
+  public fullName: string = 'Manectric (ROS 25)';
+  public legacyFullName = 'Manectric ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Random Spark

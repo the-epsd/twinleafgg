@@ -89,7 +89,8 @@ export class SuperiorEnergyRetrieval extends TrainerCard {
 
   public name: string = 'Superior Energy Retrieval';
 
-  public fullName: string = 'Superior Energy Retrieval PLF';
+  public fullName: string = 'Superior Energy Retrieval (PLF 103)';
+  public legacyFullName = 'Superior Energy Retrieval PLF';
 
   public cardImage: string = 'assets/cardback.png';
 

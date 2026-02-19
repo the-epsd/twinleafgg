@@ -71,7 +71,8 @@ export class Emolga extends PokemonCard {
 
   public name: string = 'Emolga';
 
-  public fullName: string = 'Emolga DRX';
+  public fullName: string = 'Emolga (DRX 45)';
+  public legacyFullName = 'Emolga DRX';
 
   public cardImage: string = 'assets/cardback.png';
 

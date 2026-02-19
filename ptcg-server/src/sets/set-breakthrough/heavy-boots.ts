@@ -16,7 +16,8 @@ export class HeavyBoots extends TrainerCard {
   public setNumber: string = '141';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heavy Boots';
-  public fullName: string = 'Heavy Boots BKT';
+  public fullName: string = 'Heavy Boots (BKT 141)';
+  public legacyFullName = 'Heavy Boots BKT';
   public text: string = 'If the Retreat Cost of the Pokémon this card is attached to is 3 or more, that Pokémon gets +20 HP and can\'t be Confused. (If that Pokémon is currently Confused, remove that Special Condition.)';
 
   private isToolActive(store: StoreLike, state: State, target: any): boolean {

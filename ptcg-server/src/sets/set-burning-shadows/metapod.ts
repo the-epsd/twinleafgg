@@ -35,7 +35,8 @@ export class Metapod extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metapod';
-  public fullName: string = 'Metapod BUS';
+  public fullName: string = 'Metapod (BUS 2)';
+  public legacyFullName = 'Metapod BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Shed Skin

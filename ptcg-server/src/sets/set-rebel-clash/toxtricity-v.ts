@@ -28,7 +28,7 @@ export class ToxtricityV extends PokemonCard {
       name: 'Electric Riot',
       cost: [L, L, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 90 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class ToxtricityV extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toxtricity V';
-  public fullName: string = 'Toxtricity V RCL';
+  public fullName: string = 'Toxtricity V (RCL 70)';
+  public legacyFullName = 'Toxtricity V RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Jab

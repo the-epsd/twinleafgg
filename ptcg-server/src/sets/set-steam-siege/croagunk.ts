@@ -28,7 +28,8 @@ export class Croagunk extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Croagunk';
-  public fullName: string = 'Croagunk STS';
+  public fullName: string = 'Croagunk (STS 58)';
+  public legacyFullName = 'Croagunk STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Up

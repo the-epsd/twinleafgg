@@ -34,7 +34,8 @@ export class AurasLucario3 extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aura\'s Lucario';
-  public fullName: string = 'Aura\'s Lucario PCGP 93';
+  public fullName: string = 'Aura\'s Lucario (PCGP 93)';
+  public legacyFullName = 'Aura\'s Lucario PCGP 93';
 
   public readonly DETECT_MARKER = 'DETECT_MARKER';
 

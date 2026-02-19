@@ -29,7 +29,8 @@ export class PokeParksLatios extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'PokéPark\'s Latios';
-  public fullName: string = 'PokéPark\'s Latios PCGP';
+  public fullName: string = 'PokéPark\'s Latios (PCGP 45)';
+  public legacyFullName = 'PokéPark\'s Latios PCGP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
 

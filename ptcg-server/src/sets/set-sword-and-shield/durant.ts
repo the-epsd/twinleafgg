@@ -20,7 +20,7 @@ export class Durant extends PokemonCard {
       name: 'Bite Together',
       cost: [G, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Durant is on your Bench, this attack does 60 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Durant extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Durant';
-  public fullName: string = 'Durant SSH';
+  public fullName: string = 'Durant (SSH 8)';
+  public legacyFullName = 'Durant SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bite Together

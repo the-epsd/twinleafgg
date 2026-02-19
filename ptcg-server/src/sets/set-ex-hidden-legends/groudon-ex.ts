@@ -36,7 +36,8 @@ export class Groudonex extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Groudon ex';
-  public fullName: string = 'Groudon ex HL';
+  public fullName: string = 'Groudon ex (HL 93)';
+  public legacyFullName = 'Groudon ex HL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

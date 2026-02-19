@@ -14,7 +14,8 @@ export class FullHeal extends TrainerCard {
 
   public name: string = 'Full Heal';
 
-  public fullName: string = 'Full Heal BS'; // Replace with the appropriate set abbreviation
+  public fullName: string = 'Full Heal (BS 82)';
+  public legacyFullName = 'Full Heal BS'; // Replace with the appropriate set abbreviation
 
   public cardImage: string = 'assets/cardback.png'; // Replace with the appropriate card image path
 

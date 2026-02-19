@@ -34,7 +34,8 @@ export class Ursaring extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ursaring';
-  public fullName: string = 'Ursaring PLB';
+  public fullName: string = 'Ursaring (PLB 76)';
+  public legacyFullName = 'Ursaring PLB';
 
   public readonly ADRENALASH_MARKER = 'ADRENALASH_MARKER';
   public readonly CLEAR_ADRENALASH_MARKER = 'CLEAR_ADRENALASH_MARKER';

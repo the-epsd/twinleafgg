@@ -36,7 +36,8 @@ export class Goomy extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Goomy';
-  public fullName: string = 'Goomy AOR';
+  public fullName: string = 'Goomy (AOR 58)';
+  public legacyFullName = 'Goomy AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Water Down

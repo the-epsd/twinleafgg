@@ -18,7 +18,8 @@ export class Diantha extends TrainerCard {
 
   public name: string = 'Diantha';
 
-  public fullName: string = 'Diantha FLI';
+  public fullName: string = 'Diantha (FLI 105)';
+  public legacyFullName = 'Diantha FLI';
 
   public text: string =
     'You can play this card only if 1 of your [Y] Pokémon was Knocked Out during your opponent\'s last turn.' +

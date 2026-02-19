@@ -34,7 +34,8 @@ export class Rockruff extends PokemonCard {
 
   public name: string = 'Rockruff';
 
-  public fullName: string = 'Rockruff FLI';
+  public fullName: string = 'Rockruff (FLI 75)';
+  public legacyFullName = 'Rockruff FLI';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -121,7 +121,8 @@ export class BoostShake extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'EVS';
   public name: string = 'Boost Shake';
-  public fullName: string = 'Boost Shake EVS';
+  public fullName: string = 'Boost Shake (EVS 142)';
+  public legacyFullName = 'Boost Shake EVS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '142';
   public text: string = 'Search your deck for a card that evolves from 1 of your Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck. You can use this card during your first turn or on a Pokémon that was put into play this turn. Your turn ends.';

@@ -36,7 +36,8 @@ export class Prinplup extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Prinplup';
-  public fullName: string = 'Prinplup UPR';
+  public fullName: string = 'Prinplup (UPR 33)';
+  public legacyFullName = 'Prinplup UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble Beam

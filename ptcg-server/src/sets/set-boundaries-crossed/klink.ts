@@ -29,7 +29,8 @@ export class Klink extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klink';
-  public fullName: string = 'Klink BCR';
+  public fullName: string = 'Klink (BCR 97)';
+  public legacyFullName = 'Klink BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Reckless Charge

@@ -22,7 +22,8 @@ export class Cheryl extends TrainerCard {
 
   public name: string = 'Cheryl';
 
-  public fullName: string = 'Cheryl BST';
+  public fullName: string = 'Cheryl (BST 123)';
+  public legacyFullName = 'Cheryl BST';
 
   public text: string = 'Heal all damage from each of your Evolution Pokémon. If you do, discard all Energy from the Pokémon that were healed in this way.';
 

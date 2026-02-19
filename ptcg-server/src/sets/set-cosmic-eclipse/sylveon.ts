@@ -36,7 +36,7 @@ export class Sylveon extends PokemonCard {
       name: 'Beloved Pulse',
       cost: [Y, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you played a TAG TEAM Supporter card from your hand during this turn, this attack does 80 more damage.'
     }
   ];
@@ -45,7 +45,8 @@ export class Sylveon extends PokemonCard {
   public setNumber: string = '155';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sylveon';
-  public fullName: string = 'Sylveon CEC';
+  public fullName: string = 'Sylveon (CEC 155)';
+  public legacyFullName = 'Sylveon CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track when a TAG TEAM Supporter is played

@@ -25,7 +25,8 @@ export class Sawk extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '52';
   public name: string = 'Sawk';
-  public fullName: string = 'Sawk PLB';
+  public fullName: string = 'Sawk (PLB 52)';
+  public legacyFullName = 'Sawk PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

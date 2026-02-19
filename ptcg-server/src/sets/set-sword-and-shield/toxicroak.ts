@@ -33,7 +33,8 @@ export class Toxicroak extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '124';
   public name: string = 'Toxicroak';
-  public fullName: string = 'Toxicroak SSH';
+  public fullName: string = 'Toxicroak (SSH 124)';
+  public legacyFullName = 'Toxicroak SSH';
 
   // private POISON_MODIFIER_MARKER = 'POISON_MODIFIER_MARKER';
 

@@ -49,7 +49,8 @@ export class GalarianMoltres extends PokemonCard {
 
   public name: string = 'Galarian Moltres';
 
-  public fullName: string = 'Galarian Moltres EVS';
+  public fullName: string = 'Galarian Moltres (EVS 93)';
+  public legacyFullName = 'Galarian Moltres EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

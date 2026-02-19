@@ -30,7 +30,8 @@ export class Misdreavus extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Misdreavus';
-  public fullName: string = 'Misdreavus BKT';
+  public fullName: string = 'Misdreavus (BKT 65)';
+  public legacyFullName = 'Misdreavus BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Haunt

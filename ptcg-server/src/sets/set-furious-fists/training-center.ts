@@ -17,7 +17,8 @@ export class TrainingCenter extends TrainerCard {
 
   public name: string = 'Training Center';
 
-  public fullName: string = 'Training Center FFI';
+  public fullName: string = 'Training Center (FFI 102)';
+  public legacyFullName = 'Training Center FFI';
 
   public cardImage: string = 'assets/cardback.png';
 

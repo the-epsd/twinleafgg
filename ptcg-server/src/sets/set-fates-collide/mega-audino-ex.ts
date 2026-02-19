@@ -35,7 +35,8 @@ export class MAudinoEx extends PokemonCard {
 
   public set: string = 'FCO';
   public name: string = 'M Audino-EX';
-  public fullName: string = 'M Audino-EX FCO';
+  public fullName: string = 'M Audino-EX (FCO 85)';
+  public legacyFullName = 'M Audino-EX FCO';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
 

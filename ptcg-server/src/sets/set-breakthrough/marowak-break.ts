@@ -21,7 +21,7 @@ export class MarowakBreak extends PokemonCard {
       name: 'Bone Revenge',
       cost: [F, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 40 more damage for each Prize card your opponent has taken.'
     }
   ];
@@ -30,7 +30,8 @@ export class MarowakBreak extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marowak BREAK';
-  public fullName: string = 'Marowak BREAK BKT';
+  public fullName: string = 'Marowak BREAK (BKT 79)';
+  public legacyFullName = 'Marowak BREAK BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bone Revenge

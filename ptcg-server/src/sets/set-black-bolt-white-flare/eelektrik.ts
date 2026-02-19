@@ -38,7 +38,8 @@ export class Eelektrik extends PokemonCard {
   public set: string = 'BLK';
   public setNumber: string = '31';
   public name: string = 'Eelektrik';
-  public fullName: string = 'Eelektrik SV11B';
+  public fullName: string = 'Eelektrik (BLK 31)';
+  public legacyFullName = 'Eelektrik SV11B';
   public cardImage: string = 'assets/cardback.png';
 
   public readonly DYNAMOTOR_MAREKER = 'DYNAMOTOR_MAREKER';

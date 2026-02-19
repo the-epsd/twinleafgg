@@ -28,7 +28,8 @@ export class Lillipup extends PokemonCard {
 
   public set: string = 'CEC';
   public name: string = 'Lillipup';
-  public fullName: string = 'Lillipup CEC';
+  public fullName: string = 'Lillipup (CEC 174)';
+  public legacyFullName = 'Lillipup CEC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '174';
 

@@ -21,7 +21,7 @@ export class Machoke extends PokemonCard {
       name: 'Karate Chop',
       cost: [F, F],
       damage: 60,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-' as const,
       text: 'This attack does 60 damage minus 10 damage for each damage counter on this Pokémon.'
     },
     {
@@ -36,7 +36,8 @@ export class Machoke extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machoke';
-  public fullName: string = 'Machoke EVO';
+  public fullName: string = 'Machoke (EVO 58)';
+  public legacyFullName = 'Machoke EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Karate Chop

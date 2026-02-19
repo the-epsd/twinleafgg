@@ -18,7 +18,8 @@ export class Zapdos extends PokemonCard {
   
   public name = 'Zapdos';
   
-  public fullName = 'Zapdos BS';
+  public fullName = 'Zapdos (BS 16)';
+  public legacyFullName = 'Zapdos BS';
 
   public cardImage: string = 'assets/cardback.png';
 

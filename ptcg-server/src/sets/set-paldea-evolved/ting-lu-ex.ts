@@ -46,7 +46,8 @@ export class TingLuex extends PokemonCard {
 
   public name: string = 'Ting-Lu ex';
 
-  public fullName: string = 'Ting-Lu ex PAL';
+  public fullName: string = 'Ting-Lu ex (PAL 127)';
+  public legacyFullName = 'Ting-Lu ex PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -32,7 +32,8 @@ export class Arcanine2 extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arcanine';
-  public fullName: string = 'Arcanine NXD 12';
+  public fullName: string = 'Arcanine (NXD 12)';
+  public legacyFullName = 'Arcanine NXD 12';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Blazing Mane - burn attacker when hit

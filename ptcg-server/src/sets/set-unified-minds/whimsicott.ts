@@ -66,7 +66,8 @@ export class Whimsicott extends PokemonCard {
 
   public set: string = 'UNM';
   public name: string = 'Whimsicott';
-  public fullName: string = 'Whimsicott UNM';
+  public fullName: string = 'Whimsicott (UNM 144)';
+  public legacyFullName = 'Whimsicott UNM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '144';
 

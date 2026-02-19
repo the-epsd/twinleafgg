@@ -19,7 +19,8 @@ export class AuroraEnergy extends EnergyCard {
 
   public name = 'Aurora Energy';
 
-  public fullName = 'Aurora Energy SSH';
+  public fullName = 'Aurora Energy (SSH 186)';
+  public legacyFullName = 'Aurora Energy SSH';
 
   public cardImage: string = 'assets/cardback.png';
 

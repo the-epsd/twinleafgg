@@ -37,7 +37,8 @@ export class MGardevoirEx extends PokemonCard {
 
   public set: string = 'STS';
   public name: string = 'M Gardevoir-EX';
-  public fullName: string = 'M Gardevoir-EX STS';
+  public fullName: string = 'M Gardevoir-EX (STS 79)';
+  public legacyFullName = 'M Gardevoir-EX STS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '79';
 

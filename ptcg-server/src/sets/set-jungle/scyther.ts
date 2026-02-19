@@ -42,7 +42,8 @@ export class Scyther extends PokemonCard {
 
   public name: string = 'Scyther';
 
-  public fullName: string = 'Scyther JU';
+  public fullName: string = 'Scyther (JU 10)';
+  public legacyFullName = 'Scyther JU';
 
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';

@@ -23,7 +23,7 @@ export class Unfezant extends PokemonCard {
       name: 'Quick Attack',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Unfezant extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Unfezant';
-  public fullName: string = 'Unfezant ROS';
+  public fullName: string = 'Unfezant (ROS 80)';
+  public legacyFullName = 'Unfezant ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Quick Attack

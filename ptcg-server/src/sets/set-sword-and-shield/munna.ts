@@ -37,7 +37,8 @@ export class Munna extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Munna';
-  public fullName: string = 'Munna SSH';
+  public fullName: string = 'Munna (SSH 87)';
+  public legacyFullName = 'Munna SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Moonlight

@@ -7,7 +7,8 @@ export class Dratini extends PokemonCard {
   
   public set = 'BS';
   
-  public fullName = 'Dratini BS';
+  public fullName = 'Dratini (BS 26)';
+  public legacyFullName = 'Dratini BS';
 
   public stage = Stage.BASIC;
 

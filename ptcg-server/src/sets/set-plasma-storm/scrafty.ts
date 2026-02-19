@@ -39,7 +39,8 @@ export class Scrafty extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scrafty';
-  public fullName: string = 'Scrafty PLS';
+  public fullName: string = 'Scrafty (PLS 86)';
+  public legacyFullName = 'Scrafty PLS';
 
   public usedKickAway = false;
 

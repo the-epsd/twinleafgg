@@ -21,7 +21,7 @@ export class Thundurus extends PokemonCard {
       name: 'Raging Thunder Punch',
       cost: [L, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon has a Pokémon Tool card attached to it, this attack does 30 more damage.'
     },
     {
@@ -36,7 +36,8 @@ export class Thundurus extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Thundurus';
-  public fullName: string = 'Thundurus FFI';
+  public fullName: string = 'Thundurus (FFI 33)';
+  public legacyFullName = 'Thundurus FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Raging Thunder Punch

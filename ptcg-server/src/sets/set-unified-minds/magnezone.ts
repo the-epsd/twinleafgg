@@ -37,7 +37,8 @@ export class Magnezone extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magnezone';
-  public fullName: string = 'Magnezone UNM';
+  public fullName: string = 'Magnezone (UNM 60)';
+  public legacyFullName = 'Magnezone UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Double Type (passive - add Metal type)

@@ -64,7 +64,8 @@ export class ClawFossilAnorith extends TrainerCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Claw Fossil Anorith';
-  public fullName: string = 'Claw Fossil Anorith STS';
+  public fullName: string = 'Claw Fossil Anorith (STS 100)';
+  public legacyFullName = 'Claw Fossil Anorith STS';
   public text: string = 'Look at the bottom 7 cards of your deck. You may reveal an Anorith you find there and put it onto your Bench. Shuffle the other cards back into your deck.';
 
   // Ref: set-fates-collide/dome-fossil-kabuto.ts (bottom 7 fossil pattern)

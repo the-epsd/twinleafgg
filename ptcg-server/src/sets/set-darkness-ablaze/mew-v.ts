@@ -23,7 +23,7 @@ export class MewV extends PokemonCard {
       name: 'X Ball',
       cost: [P, P],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 30 damage for each Energy attached to both Active Pokémon.'
     }
   ];
@@ -33,7 +33,8 @@ export class MewV extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mew V';
-  public fullName: string = 'Mew V DAA';
+  public fullName: string = 'Mew V (DAA 69)';
+  public legacyFullName = 'Mew V DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: X Ball

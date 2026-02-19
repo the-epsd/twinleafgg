@@ -37,7 +37,8 @@ export class Luxio extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luxio';
-  public fullName: string = 'Luxio RCL';
+  public fullName: string = 'Luxio (RCL 61)';
+  public legacyFullName = 'Luxio RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Top Entry

@@ -35,7 +35,8 @@ export class Cacturne extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cacturne';
-  public fullName: string = 'Cacturne PLF';
+  public fullName: string = 'Cacturne (PLF 10)';
+  public legacyFullName = 'Cacturne PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

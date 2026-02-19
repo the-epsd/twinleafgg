@@ -28,7 +28,7 @@ export class OrbeetleV extends PokemonCard {
       name: 'Mysterious Wave',
       cost: [G, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -38,7 +38,8 @@ export class OrbeetleV extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Orbeetle V';
-  public fullName: string = 'Orbeetle V VIV';
+  public fullName: string = 'Orbeetle V (VIV 20)';
+  public legacyFullName = 'Orbeetle V VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Strafe

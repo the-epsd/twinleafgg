@@ -15,7 +15,8 @@ export class Ether extends TrainerCard {
 
   public name: string = 'Ether';
 
-  public fullName: string = 'Ether PLS';
+  public fullName: string = 'Ether (PLS 121)';
+  public legacyFullName = 'Ether PLS';
 
   public text = 'Reveal the top card of your deck. If that card is a basic Energy card, attach it to 1 of your Pokémon. If it is not a basic Energy card, return it to the top of your deck.';
 

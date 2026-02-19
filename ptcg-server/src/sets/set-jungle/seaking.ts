@@ -35,5 +35,6 @@ export class Seaking extends PokemonCard {
 
   public name: string = 'Seaking';
 
-  public fullName: string = 'Seaking JU';
+  public fullName: string = 'Seaking (JU 46)';
+  public legacyFullName = 'Seaking JU';
 }

@@ -37,7 +37,8 @@ export class Butterfree extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Butterfree';
-  public fullName: string = 'Butterfree FLF';
+  public fullName: string = 'Butterfree (FLF 3)';
+  public legacyFullName = 'Butterfree FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Refs: set-next-destinies/cilan.ts (basic energy search), AGENTS.md (conditional attach heal)

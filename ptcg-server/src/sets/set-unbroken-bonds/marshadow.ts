@@ -47,7 +47,8 @@ export class Marshadow extends PokemonCard {
 
   public name: string = 'Marshadow';
 
-  public fullName: string = 'Marshadow UNB';
+  public fullName: string = 'Marshadow (UNB 81)';
+  public legacyFullName = 'Marshadow UNB';
 
   public readonly REFRIGERATED_STREAM_MARKER = 'REFRIGERATED_STREAM_MARKER';
 

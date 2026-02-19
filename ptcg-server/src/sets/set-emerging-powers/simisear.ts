@@ -33,7 +33,8 @@ export class Simisear extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '19';
   public name: string = 'Simisear';
-  public fullName: string = 'Simisear EPO';
+  public fullName: string = 'Simisear (EPO 19)';
+  public legacyFullName = 'Simisear EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

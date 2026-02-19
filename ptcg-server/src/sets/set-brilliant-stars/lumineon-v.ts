@@ -40,7 +40,8 @@ export class LumineonV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
   public name: string = 'Lumineon V';
-  public fullName: string = 'Lumineon V BRS';
+  public fullName: string = 'Lumineon V (BRS 40)';
+  public legacyFullName = 'Lumineon V BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

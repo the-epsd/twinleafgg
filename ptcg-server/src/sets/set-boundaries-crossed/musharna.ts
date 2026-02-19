@@ -39,7 +39,8 @@ export class Musharna extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Musharna';
-  public fullName: string = 'Musharna BCR';
+  public fullName: string = 'Musharna (BCR 69)';
+  public legacyFullName = 'Musharna BCR';
   public readonly DREAM_WALTZ_ASLEEP_MARKER = 'DREAM_WALTZ_ASLEEP_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

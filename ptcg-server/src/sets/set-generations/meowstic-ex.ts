@@ -31,7 +31,8 @@ export class MeowsticEX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '37';
   public name: string = 'Meowstic-EX';
-  public fullName: string = 'Meowstic-EX GEN';
+  public fullName: string = 'Meowstic-EX (GEN 37)';
+  public legacyFullName = 'Meowstic-EX GEN';
 
   public readonly SHADOW_EAR_MARKER = 'SHADOW_EAR_MARKER';
 

@@ -33,7 +33,8 @@ export class VolcaronaV extends PokemonCard {
 
   public set: string = 'EVS';
   public name: string = 'Volcarona V';
-  public fullName: string = 'Volcarona V EVS';
+  public fullName: string = 'Volcarona V (EVS 21)';
+  public legacyFullName = 'Volcarona V EVS';
   public setNumber: string = '21';
   public regulationMark: string = 'E';
   public cardImage: string = 'assets/cardback.png';

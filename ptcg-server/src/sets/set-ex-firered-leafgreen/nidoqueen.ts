@@ -39,7 +39,8 @@ export class Nidoqueen extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '9';
   public name: string = 'Nidoqueen';
-  public fullName: string = 'Nidoqueen RG';
+  public fullName: string = 'Nidoqueen (RG 9)';
+  public legacyFullName = 'Nidoqueen RG';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 

@@ -18,7 +18,8 @@ export class Hapu extends TrainerCard {
 
   public name: string = 'Hapu';
 
-  public fullName: string = 'Hapu UNM';
+  public fullName: string = 'Hapu (UNM 200)';
+  public legacyFullName = 'Hapu UNM';
 
   public text: string = 'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
 

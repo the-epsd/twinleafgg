@@ -46,7 +46,8 @@ export class Roserade extends PokemonCard {
 
   public name: string = 'Roserade';
 
-  public fullName: string = 'Roserade DRX';
+  public fullName: string = 'Roserade (DRX 15)';
+  public legacyFullName = 'Roserade DRX';
 
   public cardImage: string = 'assets/cardback.png';
 

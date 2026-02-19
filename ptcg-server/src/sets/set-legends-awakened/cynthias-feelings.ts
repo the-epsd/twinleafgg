@@ -15,7 +15,8 @@ export class CynthiasFeelings extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '131';
   public name: string = 'Cynthia\'s Feelings';
-  public fullName: string = 'Cynthia\'s Feelings LA';
+  public fullName: string = 'Cynthia\'s Feelings (LA 131)';
+  public legacyFullName = 'Cynthia\'s Feelings LA';
 
   public text: string =
     'Shuffle your hand into your deck. Then, draw 4 cards. If any of your Pokémon were Knocked Out during your opponent\'s last turn, draw 4 more cards.';

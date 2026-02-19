@@ -37,7 +37,8 @@ export class Pelipper extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pelipper';
-  public fullName: string = 'Pelipper RCL';
+  public fullName: string = 'Pelipper (RCL 42)';
+  public legacyFullName = 'Pelipper RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Power Cyclone

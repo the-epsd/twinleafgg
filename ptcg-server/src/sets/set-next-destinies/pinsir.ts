@@ -32,7 +32,8 @@ export class Pinsir extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pinsir';
-  public fullName: string = 'Pinsir NXD';
+  public fullName: string = 'Pinsir (NXD 1)';
+  public legacyFullName = 'Pinsir NXD';
 
   public readonly GRIP_AND_SQUEEZE_MARKER = 'GRIP_AND_SQUEEZE_MARKER';
 

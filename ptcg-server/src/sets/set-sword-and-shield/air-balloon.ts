@@ -21,7 +21,8 @@ export class AirBalloon extends TrainerCard {
 
   public name: string = 'Air Balloon';
 
-  public fullName: string = 'Air Balloon SSH';
+  public fullName: string = 'Air Balloon (SSH 156)';
+  public legacyFullName = 'Air Balloon SSH';
 
   public text: string = 'The Retreat Cost of the Pokémon this card is attached to is [C][C] less.';
 

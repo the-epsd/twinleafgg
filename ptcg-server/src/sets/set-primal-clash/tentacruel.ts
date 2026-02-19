@@ -40,7 +40,8 @@ export class Tentacruel extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tentacruel';
-  public fullName: string = 'Tentacruel PRC';
+  public fullName: string = 'Tentacruel (PRC 72)';
+  public legacyFullName = 'Tentacruel PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dancing Tentacles

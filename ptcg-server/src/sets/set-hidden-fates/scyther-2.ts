@@ -31,5 +31,6 @@ export class Scyther2 extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scyther';
-  public fullName: string = 'Scyther HIF 5';
+  public fullName: string = 'Scyther (HIF 5)';
+  public legacyFullName = 'Scyther HIF 5';
 }

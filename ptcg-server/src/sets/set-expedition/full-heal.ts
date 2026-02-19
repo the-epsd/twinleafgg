@@ -11,7 +11,8 @@ export class FullHeal extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '154';
   public name: string = 'Full Heal';
-  public fullName: string = 'Full Heal EX';
+  public fullName: string = 'Full Heal (EX 154)';
+  public legacyFullName = 'Full Heal EX';
 
   public text: string = 'Remove all Special Conditions from your Active Pokémon.';
 

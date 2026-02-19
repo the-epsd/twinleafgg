@@ -46,7 +46,8 @@ export class Haxorus extends PokemonCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Haxorus';
-  public fullName: string = 'Haxorus BKT';
+  public fullName: string = 'Haxorus (BKT 111)';
+  public legacyFullName = 'Haxorus BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Check for Dragon Dance bonus on ANY attack from this Pokemon

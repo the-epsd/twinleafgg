@@ -30,7 +30,8 @@ export class Ariados extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
   public name: string = 'Ariados';
-  public fullName: string = 'Ariados TWM';
+  public fullName: string = 'Ariados (TWM 5)';
+  public legacyFullName = 'Ariados TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

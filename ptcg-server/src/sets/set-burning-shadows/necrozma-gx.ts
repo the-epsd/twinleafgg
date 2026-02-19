@@ -54,7 +54,8 @@ export class NecrozmaGX extends PokemonCard {
 
   public name: string = 'Necrozma-GX';
 
-  public fullName: string = 'Necrozma-GX BUS';
+  public fullName: string = 'Necrozma-GX (BUS 63)';
+  public legacyFullName = 'Necrozma-GX BUS';
 
   public cardImage: string = 'assets/cardback.png';
 

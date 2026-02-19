@@ -68,7 +68,8 @@ export class Roxanne extends TrainerCard {
 
   public name: string = 'Roxanne';
 
-  public fullName: string = 'Roxanne ASR';
+  public fullName: string = 'Roxanne (ASR 150)';
+  public legacyFullName = 'Roxanne ASR';
 
   public text: string =
     `You can use this card only if your opponent has 3 or fewer Prize cards remaining.

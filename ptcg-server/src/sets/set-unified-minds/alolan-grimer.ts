@@ -32,7 +32,8 @@ export class AlolanGrimer extends PokemonCard {
   
   public name: string = 'Alolan Grimer';
   
-  public fullName: string = 'Alolan Grimer UNM';
+  public fullName: string = 'Alolan Grimer (UNM 127)';
+  public legacyFullName = 'Alolan Grimer UNM';
 
   public cardImage: string = 'assets/cardback.png';
 

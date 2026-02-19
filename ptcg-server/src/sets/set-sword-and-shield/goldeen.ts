@@ -26,5 +26,6 @@ export class Goldeen extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Goldeen';
-  public fullName: string = 'Goldeen SSH';
+  public fullName: string = 'Goldeen (SSH 45)';
+  public legacyFullName = 'Goldeen SSH';
 }

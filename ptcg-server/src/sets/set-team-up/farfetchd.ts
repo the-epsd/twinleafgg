@@ -32,7 +32,8 @@ export class Farfetchd extends PokemonCard {
   public setNumber = '127';
   public cardImage = 'assets/cardback.png';
   public name = 'Farfetch\'d';
-  public fullName = 'Farfetch\'d TEU';
+  public fullName = 'Farfetch\'d (TEU 127)';
+  public legacyFullName = 'Farfetch\'d TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Collect

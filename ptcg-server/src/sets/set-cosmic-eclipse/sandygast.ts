@@ -34,7 +34,8 @@ export class Sandygast extends PokemonCard {
   public setNumber: string = '126';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandygast';
-  public fullName: string = 'Sandygast CEC';
+  public fullName: string = 'Sandygast (CEC 126)';
+  public legacyFullName = 'Sandygast CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Astonish

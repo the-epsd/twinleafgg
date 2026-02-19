@@ -20,5 +20,6 @@ export class Tarountula extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Tarountula';
-  public fullName: string = 'Tarountula PAL';
+  public fullName: string = 'Tarountula (PAL 17)';
+  public legacyFullName = 'Tarountula PAL';
 }

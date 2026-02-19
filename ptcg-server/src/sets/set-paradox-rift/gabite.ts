@@ -38,7 +38,8 @@ export class Gabite extends PokemonCard {
 
   public name: string = 'Gabite';
 
-  public fullName: string = 'Gabite PAR';
+  public fullName: string = 'Gabite (PAR 95)';
+  public legacyFullName = 'Gabite PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

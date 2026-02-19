@@ -32,7 +32,8 @@ export class MagearnaEX extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magearna-EX';
-  public fullName: string = 'Magearna-EX STS';
+  public fullName: string = 'Magearna-EX (STS 75)';
+  public legacyFullName = 'Magearna-EX STS';
 
   public readonly SOUL_BLASER_MARKER = 'SOUL_BLASER_MARKER';
   public readonly SOUL_BLASER_CLEAR_MARKER = 'SOUL_BLASER_CLEAR_MARKER';

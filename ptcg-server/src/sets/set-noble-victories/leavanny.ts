@@ -32,7 +32,8 @@ export class Leavanny extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Leavanny';
-  public fullName: string = 'Leavanny NVI';
+  public fullName: string = 'Leavanny (NVI 3)';
+  public legacyFullName = 'Leavanny NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Leaf Tailor - remove weakness from Pokémon with energy attached

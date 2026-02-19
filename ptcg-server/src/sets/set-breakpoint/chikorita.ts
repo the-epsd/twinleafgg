@@ -35,7 +35,8 @@ export class Chikorita extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chikorita';
-  public fullName: string = 'Chikorita BKP';
+  public fullName: string = 'Chikorita (BKP 1)';
+  public legacyFullName = 'Chikorita BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Blot

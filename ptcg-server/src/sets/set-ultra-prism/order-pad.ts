@@ -71,7 +71,8 @@ export class OrderPad extends TrainerCard {
 
   public name: string = 'Order Pad';
 
-  public fullName: string = 'Order Pad UPR';
+  public fullName: string = 'Order Pad (UPR 131)';
+  public legacyFullName = 'Order Pad UPR';
 
   public text: string = 'Flip a coin. If heads, search your deck for an Item card, reveal it, and put it into your hand. Shuffle your deck afterward.';
 

@@ -35,7 +35,8 @@ export class Haxorus extends PokemonCard {
   public regulationMark: string = 'H';
   public set: string = 'SFA';
   public name: string = 'Haxorus';
-  public fullName: string = 'Haxorus SFA';
+  public fullName: string = 'Haxorus (SFA 46)';
+  public legacyFullName = 'Haxorus SFA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
 

@@ -22,7 +22,7 @@ export class Trevenant extends PokemonCard {
       name: 'Poltergeist',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Your opponent reveals their hand. This attack does 30 damage for each Trainer card you find there.'
     },
     {
@@ -37,7 +37,8 @@ export class Trevenant extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trevenant';
-  public fullName: string = 'Trevenant GRI';
+  public fullName: string = 'Trevenant (GRI 7)';
+  public legacyFullName = 'Trevenant GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poltergeist

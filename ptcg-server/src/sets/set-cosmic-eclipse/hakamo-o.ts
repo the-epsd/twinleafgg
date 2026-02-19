@@ -36,7 +36,8 @@ export class HakamoO extends PokemonCard {
   public setNumber: string = '162';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hakamo-o';
-  public fullName: string = 'Hakamo-o CEC';
+  public fullName: string = 'Hakamo-o (CEC 162)';
+  public legacyFullName = 'Hakamo-o CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fighter's Roar

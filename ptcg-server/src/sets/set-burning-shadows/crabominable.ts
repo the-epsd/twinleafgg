@@ -27,7 +27,7 @@ export class Crabominable extends PokemonCard {
       name: 'Double Stomp',
       cost: [F, F, F],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Crabominable extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crabominable';
-  public fullName: string = 'Crabominable BUS';
+  public fullName: string = 'Crabominable (BUS 74)';
+  public legacyFullName = 'Crabominable BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Gutsy Hammer

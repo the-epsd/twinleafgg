@@ -36,7 +36,8 @@ export class Suicune extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Suicune';
-  public fullName: string = 'Suicune DAA';
+  public fullName: string = 'Suicune (DAA 37)';
+  public legacyFullName = 'Suicune DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Aurora Loop

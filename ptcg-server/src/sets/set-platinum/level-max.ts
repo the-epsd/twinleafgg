@@ -137,7 +137,8 @@ export class LevelMax extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'PL';
   public name: string = 'Level Max';
-  public fullName: string = 'Level Max PL';
+  public fullName: string = 'Level Max (PL 107)';
+  public legacyFullName = 'Level Max PL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '107';
   public text: string = 'Flip a coin. If heads, search your deck for a Pokémon LV.X that levels up from 1 of your Pokémon, and put it onto that Pokémon. (This counts as leveling up that Pokémon.) Shuffle your deck afterward.';

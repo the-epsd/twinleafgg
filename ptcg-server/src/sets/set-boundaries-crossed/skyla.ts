@@ -38,7 +38,8 @@ export class Skyla extends TrainerCard {
 
   public name: string = 'Skyla';
 
-  public fullName: string = 'Skyla BCR';
+  public fullName: string = 'Skyla (BCR 134)';
+  public legacyFullName = 'Skyla BCR';
 
   public cardImage: string = 'assets/cardback.png';
 

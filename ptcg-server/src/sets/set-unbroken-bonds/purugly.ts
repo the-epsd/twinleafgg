@@ -35,7 +35,8 @@ export class Purugly extends PokemonCard {
   public setNumber: string = '160';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Purugly';
-  public fullName: string = 'Purugly UNB';
+  public fullName: string = 'Purugly (UNB 160)';
+  public legacyFullName = 'Purugly UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stray Cat Dash

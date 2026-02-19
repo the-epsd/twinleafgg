@@ -35,7 +35,8 @@ export class Luvdisc extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luvdisc';
-  public fullName: string = 'Luvdisc CES';
+  public fullName: string = 'Luvdisc (CES 44)';
+  public legacyFullName = 'Luvdisc CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Even Game

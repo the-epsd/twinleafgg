@@ -29,7 +29,7 @@ export class Meowstic extends PokemonCard {
       name: 'Psychic',
       cost: [P, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -38,7 +38,8 @@ export class Meowstic extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meowstic';
-  public fullName: string = 'Meowstic FLI';
+  public fullName: string = 'Meowstic (FLI 45)';
+  public legacyFullName = 'Meowstic FLI';
 
   public usedTeleportationBurst = false;
 

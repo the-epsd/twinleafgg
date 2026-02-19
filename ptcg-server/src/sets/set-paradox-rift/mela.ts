@@ -88,7 +88,8 @@ export class Mela extends TrainerCard {
   public setNumber: string = '167';
   public regulationMark = 'G';
   public name: string = 'Mela';
-  public fullName: string = 'Mela PAR';
+  public fullName: string = 'Mela (PAR 167)';
+  public legacyFullName = 'Mela PAR';
 
   public text: string = `You can use this card only if any of your Pokémon were Knocked Out during your opponent's last turn.
 

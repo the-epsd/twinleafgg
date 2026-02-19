@@ -37,7 +37,8 @@ export class Drapion extends PokemonCard {
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drapion';
-  public fullName: string = 'Drapion SSH';
+  public fullName: string = 'Drapion (SSH 122)';
+  public legacyFullName = 'Drapion SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hard Press

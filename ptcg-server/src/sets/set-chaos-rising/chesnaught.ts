@@ -36,7 +36,8 @@ export class Chesnaught extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Chesnaught';
-  public fullName: string = 'Chesnaught M4';
+  public fullName: string = 'Chesnaught (M4 7)';
+  public legacyFullName = 'Chesnaught M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AfterDamageEffect && effect.target.cards.includes(this)) {

@@ -58,7 +58,8 @@ export class LuxuryBall extends TrainerCard {
 
   public name: string = 'Luxury Ball';
 
-  public fullName: string = 'Luxury Ball SF';
+  public fullName: string = 'Luxury Ball (SF 86)';
+  public legacyFullName = 'Luxury Ball SF';
 
   public cardImage: string = 'assets/cardback.png';
 

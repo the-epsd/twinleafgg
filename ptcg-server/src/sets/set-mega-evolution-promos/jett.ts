@@ -12,7 +12,8 @@ export class Jett extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'MEP';
   public name: string = 'Jett';
-  public fullName: string = 'Jett MEP';
+  public fullName: string = 'Jett (MEP 75)';
+  public legacyFullName = 'Jett MEP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '75';
 

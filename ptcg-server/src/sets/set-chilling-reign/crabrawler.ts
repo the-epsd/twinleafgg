@@ -26,7 +26,7 @@ export class Crabrawler extends PokemonCard {
       name: 'Double Lariat',
       cost: [F, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 40 damage for each heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Crabrawler extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crabrawler';
-  public fullName: string = 'Crabrawler CRE';
+  public fullName: string = 'Crabrawler (CRE 84)';
+  public legacyFullName = 'Crabrawler CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Double Lariat

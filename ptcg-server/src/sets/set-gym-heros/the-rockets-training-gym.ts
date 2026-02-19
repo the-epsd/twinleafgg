@@ -12,7 +12,8 @@ export class TheRocketsTrainingGym extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '104';
   public name: string = 'The Rocket\'s Training Gym';
-  public fullName: string = 'The Rocket\'s Training Gym G1';
+  public fullName: string = 'The Rocket\'s Training Gym (G1 104)';
+  public legacyFullName = 'The Rocket\'s Training Gym G1';
 
   public text: string =
     'Each player pays [C] more to retreat his or her Active Pokémon.';

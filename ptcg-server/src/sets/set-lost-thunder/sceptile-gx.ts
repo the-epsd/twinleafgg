@@ -44,7 +44,8 @@ export class SceptileGx extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sceptile-GX';
-  public fullName: string = 'Sceptile-GX LOT';
+  public fullName: string = 'Sceptile-GX (LOT 22)';
+  public legacyFullName = 'Sceptile-GX LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mach Cut

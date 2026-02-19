@@ -14,7 +14,8 @@ export class CrystalEdge extends TrainerCard {
   public setNumber: string = '138';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crystal Edge';
-  public fullName: string = 'Crystal Edge BCR';
+  public fullName: string = 'Crystal Edge (BCR 138)';
+  public legacyFullName = 'Crystal Edge BCR';
   public text: string = 'If this card is attached to White Kyurem-EX, each of its attacks does 50 more damage to the Active Pokémon (before applying Weakness and Resistance). You can\'t have more than 1 ACE SPEC card in your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

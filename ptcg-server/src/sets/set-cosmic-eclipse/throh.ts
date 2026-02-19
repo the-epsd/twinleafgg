@@ -20,7 +20,7 @@ export class Throh extends PokemonCard {
       name: 'Reverse Shoulder Throw',
       cost: [F, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your Benched Pokémon have any damage counters on them, this attack does 90 more damage.'
     }
   ];
@@ -29,7 +29,8 @@ export class Throh extends PokemonCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Throh';
-  public fullName: string = 'Throh CEC';
+  public fullName: string = 'Throh (CEC 118)';
+  public legacyFullName = 'Throh CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Reverse Shoulder Throw

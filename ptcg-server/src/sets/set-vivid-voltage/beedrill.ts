@@ -24,7 +24,8 @@ export class Beedrill extends PokemonCard {
 
   public name = 'Beedrill';
 
-  public fullName = 'Beedrill VIV';
+  public fullName = 'Beedrill (VIV 3)';
+  public legacyFullName = 'Beedrill VIV';
 
   public regulationMark: string = 'D';
 

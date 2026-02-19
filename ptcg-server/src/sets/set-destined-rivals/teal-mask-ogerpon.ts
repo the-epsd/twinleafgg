@@ -27,7 +27,8 @@ export class TealMaskOgerpon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '26';
   public name: string = 'Teal Mask Ogerpon';
-  public fullName: string = 'Teal Mask Ogerpon DRI';
+  public fullName: string = 'Teal Mask Ogerpon (DRI 26)';
+  public legacyFullName = 'Teal Mask Ogerpon DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

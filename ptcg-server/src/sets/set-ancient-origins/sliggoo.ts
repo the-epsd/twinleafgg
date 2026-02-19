@@ -36,7 +36,8 @@ export class Sliggoo extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sliggoo';
-  public fullName: string = 'Sliggoo AOR';
+  public fullName: string = 'Sliggoo (AOR 59)';
+  public legacyFullName = 'Sliggoo AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble

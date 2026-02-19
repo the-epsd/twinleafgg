@@ -30,7 +30,8 @@ export class Marshtomp extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
   public name: string = 'Marshtomp';
-  public fullName: string = 'Marshtomp RS';
+  public fullName: string = 'Marshtomp (RS 40)';
+  public legacyFullName = 'Marshtomp RS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

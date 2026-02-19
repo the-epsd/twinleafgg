@@ -22,7 +22,8 @@ export class VitalityBand extends TrainerCard {
 
   public name: string = 'Vitality Band';
 
-  public fullName: string = 'Vitality Band SVI';
+  public fullName: string = 'Vitality Band (SVI 197)';
+  public legacyFullName = 'Vitality Band SVI';
 
   public text: string =
     'The attacks of the Pokémon this card is attached to do 10 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';

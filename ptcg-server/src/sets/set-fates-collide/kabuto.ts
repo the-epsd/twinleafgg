@@ -26,5 +26,6 @@ export class Kabuto extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kabuto';
-  public fullName: string = 'Kabuto FCO';
+  public fullName: string = 'Kabuto (FCO 38)';
+  public legacyFullName = 'Kabuto FCO';
 }

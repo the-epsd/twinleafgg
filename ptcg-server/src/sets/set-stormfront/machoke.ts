@@ -35,7 +35,8 @@ export class Machoke extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Machoke';
-  public fullName: string = 'Machoke SF';
+  public fullName: string = 'Machoke (SF 41)';
+  public legacyFullName = 'Machoke SF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Steady Punch

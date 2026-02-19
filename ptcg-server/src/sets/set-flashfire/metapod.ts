@@ -42,7 +42,8 @@ export class Metapod extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metapod';
-  public fullName: string = 'Metapod FLF';
+  public fullName: string = 'Metapod (FLF 2)';
+  public legacyFullName = 'Metapod FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-cosmic-eclipse/clamperl.ts (Evolutionary Advantage)

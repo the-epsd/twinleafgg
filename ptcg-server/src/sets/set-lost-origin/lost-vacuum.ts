@@ -22,7 +22,8 @@ export class LostVacuum extends TrainerCard {
 
   public name: string = 'Lost Vacuum';
 
-  public fullName: string = 'Lost Vacuum LOR';
+  public fullName: string = 'Lost Vacuum (LOR 162)';
+  public legacyFullName = 'Lost Vacuum LOR';
 
   public text: string = `You can use this card only if you put another card from your hand in the Lost Zone.
 

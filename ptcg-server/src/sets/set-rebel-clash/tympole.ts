@@ -30,7 +30,8 @@ export class Tympole extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tympole';
-  public fullName: string = 'Tympole RCL';
+  public fullName: string = 'Tympole (RCL 44)';
+  public legacyFullName = 'Tympole RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spiral Attack

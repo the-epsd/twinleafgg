@@ -34,7 +34,8 @@ export class Manectric extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Manectric';
-  public fullName: string = 'Manectric DRX';
+  public fullName: string = 'Manectric (DRX 43)';
+  public legacyFullName = 'Manectric DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Energy Crush

@@ -100,7 +100,8 @@ export class Clefairy extends PokemonCard {
 
   public name: string = 'Clefairy';
 
-  public fullName: string = 'Clefairy BS';
+  public fullName: string = 'Clefairy (BS 5)';
+  public legacyFullName = 'Clefairy BS';
 
   public REDUCE_DAMAGE_MARKER = 'REDUCE_DAMAGE_MARKER';
 

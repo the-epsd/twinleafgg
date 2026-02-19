@@ -47,7 +47,8 @@ export class Lairon extends PokemonCard {
 
   public name: string = 'Lairon';
 
-  public fullName: string = 'Lairon TWM';
+  public fullName: string = 'Lairon (TWM 121)';
+  public legacyFullName = 'Lairon TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

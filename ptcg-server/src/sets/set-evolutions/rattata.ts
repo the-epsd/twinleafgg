@@ -35,7 +35,8 @@ export class Rattata extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rattata';
-  public fullName: string = 'Rattata EVO';
+  public fullName: string = 'Rattata (EVO 66)';
+  public legacyFullName = 'Rattata EVO';
 
   // Ref: set-steam-siege/foongus.ts (Play Ball - PlayPokemonEffect trigger)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

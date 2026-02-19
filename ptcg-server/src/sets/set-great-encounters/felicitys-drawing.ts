@@ -13,7 +13,8 @@ export class FelicitysDrawing extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '98';
   public name: string = 'Felicity\'s Drawing';
-  public fullName: string = 'Felicity\'s Drawing GE';
+  public fullName: string = 'Felicity\'s Drawing (GE 98)';
+  public legacyFullName = 'Felicity\'s Drawing GE';
 
   public text: string =
     'Discard up to 2 cards from your hand. If you discard 1 card, draw 3 cards. If you discard 2 cards, draw 4 cards.';

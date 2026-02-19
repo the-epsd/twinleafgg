@@ -13,7 +13,8 @@ export class VentureBomb extends TrainerCard {
   public tags = [CardTag.ROCKETS_SECRET_MACHINE];
   public set: string = 'TRR';
   public name: string = 'Venture Bomb';
-  public fullName: string = 'Venture Bomb TRR';
+  public fullName: string = 'Venture Bomb (TRR 93)';
+  public legacyFullName = 'Venture Bomb TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
 

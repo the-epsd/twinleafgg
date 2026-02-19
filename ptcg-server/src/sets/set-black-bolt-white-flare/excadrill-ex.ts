@@ -34,7 +34,8 @@ export class Excadrillex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
   public name: string = 'Excadrill ex';
-  public fullName: string = 'Excadrill ex SV11B';
+  public fullName: string = 'Excadrill ex (BLK 46)';
+  public legacyFullName = 'Excadrill ex SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

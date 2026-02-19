@@ -33,7 +33,8 @@ export class Charizard extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
   public name: string = 'Charizard';
-  public fullName: string = 'Charizard EX';
+  public fullName: string = 'Charizard (EX 40)';
+  public legacyFullName = 'Charizard EX';
 
   public readonly BURNING_ENERGY_MARKER = 'BURNING_ENERGY_MARKER';
   public readonly BURNING_ENERGY_USED_MARKER = 'BURNING_ENERGY_USED_MARKER';

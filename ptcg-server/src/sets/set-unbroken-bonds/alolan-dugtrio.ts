@@ -38,7 +38,8 @@ export class AlolanDugtrio extends PokemonCard {
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Dugtrio';
-  public fullName: string = 'Alolan Dugtrio UNB';
+  public fullName: string = 'Alolan Dugtrio (UNB 122)';
+  public legacyFullName = 'Alolan Dugtrio UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Hair Wall (passive - reduce damage to Metal Pokemon)

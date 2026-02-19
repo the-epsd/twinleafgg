@@ -71,7 +71,8 @@ export class TagSwitch extends TrainerCard {
 
   public name: string = 'Tag Switch';
 
-  public fullName: string = 'Tag Switch UNM';
+  public fullName: string = 'Tag Switch (UNM 209)';
+  public legacyFullName = 'Tag Switch UNM';
 
   public text: string =
     'Move up to 2 Energy from 1 of your TAG TEAM Pokémon to another of your Pokémon. ';

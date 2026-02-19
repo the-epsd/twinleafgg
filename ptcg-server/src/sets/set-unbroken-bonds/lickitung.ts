@@ -23,7 +23,8 @@ export class Lickitung extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '152';
   public name = 'Lickitung';
-  public fullName = 'Lickitung UNB';
+  public fullName = 'Lickitung (UNB 152)';
+  public legacyFullName = 'Lickitung UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

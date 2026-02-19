@@ -31,7 +31,8 @@ export class MewtwoLVX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '144';
   public name: string = 'Mewtwo';
-  public fullName: string = 'Mewtwo Lv. X LA';
+  public fullName: string = 'Mewtwo (LA 144)';
+  public legacyFullName = 'Mewtwo Lv. X LA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

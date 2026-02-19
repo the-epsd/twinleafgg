@@ -25,7 +25,8 @@ export class Gorebyss extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '56';
   public name: string = 'Gorebyss';
-  public fullName: string = 'Gorebyss DRI';
+  public fullName: string = 'Gorebyss (DRI 56)';
+  public legacyFullName = 'Gorebyss DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

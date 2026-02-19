@@ -36,7 +36,8 @@ export class Omastar extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Omastar';
-  public fullName: string = 'Omastar FCO';
+  public fullName: string = 'Omastar (FCO 18)';
+  public legacyFullName = 'Omastar FCO';
 
   public readonly RESTORING_BEAM_MARKER = 'RESTORING_BEAM_MARKER';
 

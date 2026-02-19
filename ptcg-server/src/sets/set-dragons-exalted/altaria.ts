@@ -29,7 +29,8 @@ export class Altaria extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Altaria';
-  public fullName: string = 'Altaria DRX';
+  public fullName: string = 'Altaria (DRX 84)';
+  public legacyFullName = 'Altaria DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && StateUtils.isPokemonInPlay(effect.player, this)) {

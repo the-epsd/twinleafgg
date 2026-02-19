@@ -29,7 +29,7 @@ export class Steenee extends PokemonCard {
       name: 'Stomp',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Steenee extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steenee';
-  public fullName: string = 'Steenee SUM';
+  public fullName: string = 'Steenee (SUM 19)';
+  public legacyFullName = 'Steenee SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sweet Scent

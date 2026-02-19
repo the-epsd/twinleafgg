@@ -30,7 +30,8 @@ export class Shelmet extends PokemonCard {
 
   public name: string = 'Shelmet';
 
-  public fullName: string = 'Shelmet DEX';
+  public fullName: string = 'Shelmet (DEX 10)';
+  public legacyFullName = 'Shelmet DEX';
 
   public cardImage: string = 'assets/cardback.png';
 

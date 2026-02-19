@@ -21,7 +21,7 @@ export class Dugtrio extends PokemonCard {
       name: 'Home Ground',
       cost: [F],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have any Stadium card in play, this attack does 60 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Dugtrio extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dugtrio';
-  public fullName: string = 'Dugtrio UNB';
+  public fullName: string = 'Dugtrio (UNB 86)';
+  public legacyFullName = 'Dugtrio UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Home Ground

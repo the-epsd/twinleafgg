@@ -35,7 +35,8 @@ export class Mareep extends PokemonCard {
   }];
 
   public set: string = 'LOT';
-  public fullName: string = 'Mareep LOT';
+  public fullName: string = 'Mareep (LOT 75)';
+  public legacyFullName = 'Mareep LOT';
   public name: string = 'Mareep';
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';

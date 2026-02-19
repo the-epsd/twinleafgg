@@ -46,7 +46,8 @@ export class LuxrayV extends PokemonCard {
 
   public name: string = 'Luxray V';
 
-  public fullName: string = 'Luxray V ASR';
+  public fullName: string = 'Luxray V (ASR 50)';
+  public legacyFullName = 'Luxray V ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

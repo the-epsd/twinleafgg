@@ -35,7 +35,8 @@ export class Haunter extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '59';
   public name: string = 'Haunter';
-  public fullName: string = 'Haunter BKT';
+  public fullName: string = 'Haunter (BKT 59)';
+  public legacyFullName = 'Haunter BKT';
 
   public readonly POISON_RING_MARKER: string = 'POISON_RING_MARKER';
 

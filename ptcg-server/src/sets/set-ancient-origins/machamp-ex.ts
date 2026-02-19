@@ -21,14 +21,14 @@ export class MachampEx extends PokemonCard {
       name: 'Steaming Mad',
       cost: [F, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage times the number of damage counters on this Pokémon. This Pokémon is now Confused.'
     },
     {
       name: 'Crazy Hammer',
       cost: [F, F, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon is affected by a Special Condition, this attack does 80 more damage. Then, remove all Special Conditions from this Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class MachampEx extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machamp-EX';
-  public fullName: string = 'Machamp-EX AOR';
+  public fullName: string = 'Machamp-EX (AOR 37)';
+  public legacyFullName = 'Machamp-EX AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Steaming Mad

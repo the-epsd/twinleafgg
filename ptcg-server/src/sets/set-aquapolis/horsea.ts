@@ -22,7 +22,8 @@ export class Horsea extends PokemonCard {
 
   public set: string = 'AQ';
   public name: string = 'Horsea';
-  public fullName: string = 'Horsea AQ';
+  public fullName: string = 'Horsea (AQ 84)';
+  public legacyFullName = 'Horsea AQ';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
 

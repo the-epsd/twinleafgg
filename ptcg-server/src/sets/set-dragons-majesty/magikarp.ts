@@ -21,7 +21,7 @@ export class Magikarp extends PokemonCard {
       name: 'Water Splash',
       cost: [W],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Magikarp extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magikarp';
-  public fullName: string = 'Magikarp DRM';
+  public fullName: string = 'Magikarp (DRM 19)';
+  public legacyFullName = 'Magikarp DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Water Splash

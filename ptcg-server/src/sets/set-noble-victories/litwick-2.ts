@@ -31,7 +31,8 @@ export class Litwick2 extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Litwick';
-  public fullName: string = 'Litwick NVI 58';
+  public fullName: string = 'Litwick (NVI 58)';
+  public legacyFullName = 'Litwick NVI 58';
 
   private shouldSwitch: boolean = false;
 

@@ -52,7 +52,8 @@ export class MysteryGarden extends TrainerCard {
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mystery Garden';
-  public fullName: string = 'Mystery Garden M1S';
+  public fullName: string = 'Mystery Garden (MEG 122)';
+  public legacyFullName = 'Mystery Garden M1S';
   public text: string = 'Once during each player\'s turn, that player may discard 1 Energy card from their hand. If they do, that player draws cards until they have as many cards in hand as they have Psychic Pokémon in play.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

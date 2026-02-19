@@ -23,7 +23,7 @@ export class MTyranitarEx extends PokemonCard {
       name: 'Destroyer King',
       cost: [D, D, C, C],
       damage: 110,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 60 more damage for each damage counter on your opponent\'s Active Pokémon.'
     }
   ];
@@ -32,7 +32,8 @@ export class MTyranitarEx extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Tyranitar-EX';
-  public fullName: string = 'M Tyranitar-EX AOR';
+  public fullName: string = 'M Tyranitar-EX (AOR 43)';
+  public legacyFullName = 'M Tyranitar-EX AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Destroyer King

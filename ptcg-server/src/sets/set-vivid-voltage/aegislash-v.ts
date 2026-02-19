@@ -38,7 +38,8 @@ export class AegislashV extends PokemonCard {
   public setNumber: string = '126';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aegislash V';
-  public fullName: string = 'Aegislash V VIV';
+  public fullName: string = 'Aegislash V (VIV 126)';
+  public legacyFullName = 'Aegislash V VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Sonic Edge

@@ -31,5 +31,6 @@ export class Salandit2 extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salandit';
-  public fullName: string = 'Salandit UNM 98';
+  public fullName: string = 'Salandit (UNM 98)';
+  public legacyFullName = 'Salandit UNM 98';
 }

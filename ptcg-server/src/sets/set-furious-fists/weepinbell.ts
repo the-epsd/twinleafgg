@@ -36,7 +36,8 @@ export class Weepinbell extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weepinbell';
-  public fullName: string = 'Weepinbell FFI';
+  public fullName: string = 'Weepinbell (FFI 2)';
+  public legacyFullName = 'Weepinbell FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Spit Poison

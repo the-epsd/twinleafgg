@@ -23,7 +23,8 @@ export class Blitzle extends PokemonCard {
 
   public set: string = 'NVI';
   public name: string = 'Blitzle';
-  public fullName: string = 'Blitzle NVI';
+  public fullName: string = 'Blitzle (NVI 35)';
+  public legacyFullName = 'Blitzle NVI';
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
 

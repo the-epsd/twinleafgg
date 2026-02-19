@@ -34,7 +34,8 @@ export class Dratini extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dratini';
-  public fullName: string = 'Dratini SUM';
+  public fullName: string = 'Dratini (SUM 94)';
+  public legacyFullName = 'Dratini SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Signs of Evolution

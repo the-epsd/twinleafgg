@@ -37,7 +37,8 @@ export class Sylveon extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sylveon';
-  public fullName: string = 'Sylveon FFI';
+  public fullName: string = 'Sylveon (FFI 72)';
+  public legacyFullName = 'Sylveon FFI';
 
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'SYLVEON_NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'SYLVEON_NEXT_TURN_MORE_DAMAGE_MARKER_2';

@@ -39,7 +39,8 @@ export class Garbodor2 extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Garbodor';
-  public fullName: string = 'Garbodor PLS 67';
+  public fullName: string = 'Garbodor (PLS 67)';
+  public legacyFullName = 'Garbodor PLS 67';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ensnarl

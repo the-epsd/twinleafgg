@@ -35,7 +35,8 @@ export class Golisopodex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '50';
   public name: string = 'Golisopod ex';
-  public fullName: string = 'Golisopod ex PAR';
+  public fullName: string = 'Golisopod ex (PAR 50)';
+  public legacyFullName = 'Golisopod ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Swing and Skedaddle

@@ -32,7 +32,8 @@ export class Copperajah extends PokemonCard {
   public regulationMark: string = 'H';
   public set: string = 'SFA';
   public name: string = 'Copperajah';
-  public fullName: string = 'Copperajah SFA';
+  public fullName: string = 'Copperajah (SFA 42)';
+  public legacyFullName = 'Copperajah SFA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
 

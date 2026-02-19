@@ -33,7 +33,8 @@ export class MScizorEx extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Scizor-EX';
-  public fullName: string = 'M Scizor-EX BKP';
+  public fullName: string = 'M Scizor-EX (BKP 77)';
+  public legacyFullName = 'M Scizor-EX BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Iron Crusher

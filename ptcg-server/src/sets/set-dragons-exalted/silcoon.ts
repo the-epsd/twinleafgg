@@ -33,7 +33,8 @@ export class Silcoon extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Silcoon';
-  public fullName: string = 'Silcoon DRX';
+  public fullName: string = 'Silcoon (DRX 7)';
+  public legacyFullName = 'Silcoon DRX';
 
   public readonly HARDEN_MARKER = 'SILCOON_HARDEN_MARKER';
   public readonly CLEAR_HARDEN_MARKER = 'SILCOON_CLEAR_HARDEN_MARKER';

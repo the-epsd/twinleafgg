@@ -36,7 +36,8 @@ export class Sealeo extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sealeo';
-  public fullName: string = 'Sealeo FLF';
+  public fullName: string = 'Sealeo (FLF 25)';
+  public legacyFullName = 'Sealeo FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/corsola.ts (heal + self condition)

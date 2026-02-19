@@ -36,7 +36,8 @@ export class Crabominable extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crabominable';
-  public fullName: string = 'Crabominable SUM';
+  public fullName: string = 'Crabominable (SUM 43)';
+  public legacyFullName = 'Crabominable SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Avalanche

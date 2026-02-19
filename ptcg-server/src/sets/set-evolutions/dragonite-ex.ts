@@ -34,7 +34,8 @@ export class DragoniteEX extends PokemonCard {
 
   public name: string = 'Dragonite-EX';
 
-  public fullName: string = 'Dragonite EX EVO';
+  public fullName: string = 'Dragonite-EX (EVO 72)';
+  public legacyFullName = 'Dragonite EX EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

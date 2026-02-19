@@ -36,7 +36,8 @@ export class Cloyster extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cloyster';
-  public fullName: string = 'Cloyster BKP';
+  public fullName: string = 'Cloyster (BKP 24)';
+  public legacyFullName = 'Cloyster BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sudden Grip

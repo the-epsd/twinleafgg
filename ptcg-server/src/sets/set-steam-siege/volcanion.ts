@@ -40,7 +40,8 @@ export class Volcanion extends PokemonCard {
 
   public name: string = 'Volcanion';
 
-  public fullName: string = 'Volcanion STS';
+  public fullName: string = 'Volcanion (STS 25)';
+  public legacyFullName = 'Volcanion STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

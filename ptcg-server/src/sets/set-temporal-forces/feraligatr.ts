@@ -34,7 +34,8 @@ export class Feraligatr extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Feraligatr';
-  public fullName: string = 'Feraligatr TEF';
+  public fullName: string = 'Feraligatr (TEF 41)';
+  public legacyFullName = 'Feraligatr TEF';
 
   public readonly TORRENTIAL_HEART_MARKER = 'TORRENTIAL_HEART_MARKER';
 

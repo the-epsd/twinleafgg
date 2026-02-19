@@ -33,7 +33,8 @@ export class Hitmonchan extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '107';
   public name: string = 'Hitmonchan';
-  public fullName: string = 'Hitmonchan MEW';
+  public fullName: string = 'Hitmonchan (MEW 107)';
+  public legacyFullName = 'Hitmonchan MEW';
 
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';

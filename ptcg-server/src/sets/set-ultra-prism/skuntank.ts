@@ -42,7 +42,8 @@ export class Skuntank extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skuntank';
-  public fullName: string = 'Skuntank UPR';
+  public fullName: string = 'Skuntank (UPR 76)';
+  public legacyFullName = 'Skuntank UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sticky Smokescreen

@@ -62,7 +62,8 @@ export class ProfessorBurnet extends TrainerCard {
 
   public name: string = 'Professor Burnet';
 
-  public fullName: string = 'Professor Burnet SWSH';
+  public fullName: string = 'Professor Burnet (SWSH 167)';
+  public legacyFullName = 'Professor Burnet SWSH';
 
   public text: string =
     'Search your deck for up to 2 cards and discard them. ' +

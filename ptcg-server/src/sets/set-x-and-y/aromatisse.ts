@@ -32,7 +32,8 @@ export class Aromatisse extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
   public name: string = 'Aromatisse';
-  public fullName: string = 'Aromatisse XY';
+  public fullName: string = 'Aromatisse (XY 93)';
+  public legacyFullName = 'Aromatisse XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

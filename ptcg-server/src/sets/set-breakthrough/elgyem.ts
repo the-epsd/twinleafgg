@@ -28,7 +28,8 @@ export class Elgyem extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Elgyem';
-  public fullName: string = 'Elgyem BKT';
+  public fullName: string = 'Elgyem (BKT 73)';
+  public legacyFullName = 'Elgyem BKT';
 
   public readonly PSYCH_UP_MARKER = 'ELGYEM_BKT_PSYCH_UP_MARKER';
   public readonly PSYCH_UP_MARKER_2 = 'ELGYEM_BKT_PSYCH_UP_MARKER_2';

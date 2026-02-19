@@ -30,7 +30,8 @@ export class HisuianGrowlithe extends PokemonCard {
 
   public set: string = 'TWM';
   public name: string = 'Hisuian Growlithe';
-  public fullName: string = 'Hisuian Growlithe TWM';
+  public fullName: string = 'Hisuian Growlithe (TWM 99)';
+  public legacyFullName = 'Hisuian Growlithe TWM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '99';
   public regulationMark = 'H';

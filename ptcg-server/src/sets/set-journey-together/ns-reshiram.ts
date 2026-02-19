@@ -34,7 +34,8 @@ export class NsReshiram extends PokemonCard {
   public set: string = 'JTG';
   public setNumber = '116';
   public name: string = 'N\'s Reshiram';
-  public fullName: string = 'N\'s Reshiram JTG';
+  public fullName: string = 'N\'s Reshiram (JTG 116)';
+  public legacyFullName = 'N\'s Reshiram JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

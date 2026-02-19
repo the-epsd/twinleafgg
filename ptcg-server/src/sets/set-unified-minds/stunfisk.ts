@@ -18,7 +18,7 @@ export class Stunfisk extends PokemonCard {
       name: 'Trap Bolt',
       cost: [F],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If, before doing damage, your opponent\'s Active Pokémon has more remaining HP than this Pokémon, this attack does 30 more damage.'
     }
   ];
@@ -27,7 +27,8 @@ export class Stunfisk extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stunfisk';
-  public fullName: string = 'Stunfisk UNM';
+  public fullName: string = 'Stunfisk (UNM 67)';
+  public legacyFullName = 'Stunfisk UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Trap Bolt

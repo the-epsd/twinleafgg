@@ -21,7 +21,8 @@ export class HandTrimmer extends TrainerCard {
 
   public name: string = 'Hand Trimmer';
 
-  public fullName: string = 'Hand Trimmer TEF';
+  public fullName: string = 'Hand Trimmer (TEF 150)';
+  public legacyFullName = 'Hand Trimmer TEF';
 
   public text: string =
     'Both players discard cards from their hand until they each have 5 cards in hand. (Your opponent discards first. Any player with 5 cards or less in their hands do not discard any cards.)';

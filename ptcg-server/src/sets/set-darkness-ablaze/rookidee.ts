@@ -30,7 +30,8 @@ export class Rookidee extends PokemonCard {
   public setNumber: string = '154';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rookidee';
-  public fullName: string = 'Rookidee DAA';
+  public fullName: string = 'Rookidee (DAA 154)';
+  public legacyFullName = 'Rookidee DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pluck

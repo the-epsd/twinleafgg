@@ -16,7 +16,8 @@ export class SilverBangle extends TrainerCard {
 
   public name: string = 'Silver Bangle';
 
-  public fullName: string = 'Silver Bangle PLB';
+  public fullName: string = 'Silver Bangle (PLB 88)';
+  public legacyFullName = 'Silver Bangle PLB';
 
   public cardImage: string = 'assets/cardback.png';
 

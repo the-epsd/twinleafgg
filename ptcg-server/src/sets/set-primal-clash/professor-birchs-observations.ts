@@ -41,7 +41,8 @@ export class ProfessorBirchsObservations extends TrainerCard {
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Professor Birch\'s Observations';
-  public fullName: string = 'Professor Birch\'s Observations PRC';
+  public fullName: string = 'Professor Birch\'s Observations (PRC 134)';
+  public legacyFullName = 'Professor Birch\'s Observations PRC';
   public text: string = 'Shuffle your hand into your deck and flip a coin. If heads, draw 7 cards. If tails, draw 4 cards. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

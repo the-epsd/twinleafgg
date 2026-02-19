@@ -10,7 +10,8 @@ export class BrokenTimeSpace extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'PL';
   public name = 'Broken Time-Space';
-  public fullName = 'Broken Time-Space PL';
+  public fullName = 'Broken Time-Space (PL 104)';
+  public legacyFullName = 'Broken Time-Space PL';
 
   public text = 'Each player may evolve a Pokémon that he or she just played or evolved during that turn.';
 

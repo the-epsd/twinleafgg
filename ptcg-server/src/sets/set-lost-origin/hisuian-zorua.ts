@@ -43,7 +43,8 @@ export class HisuianZorua extends PokemonCard {
 
   public name: string = 'Hisuian Zorua';
 
-  public fullName: string = 'Hisuian Zorua LOR';
+  public fullName: string = 'Hisuian Zorua (LOR 75)';
+  public legacyFullName = 'Hisuian Zorua LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

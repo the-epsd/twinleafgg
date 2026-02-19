@@ -24,7 +24,8 @@ export class EmergencyJelly extends TrainerCard {
 
   public name = 'Emergency Jelly';
 
-  public fullName = 'Emergency Jelly SIT';
+  public fullName = 'Emergency Jelly (SIT 155)';
+  public legacyFullName = 'Emergency Jelly SIT';
 
   public text: string =
     'At the end of each turn, if the Pokémon this card is attached to has 30 HP or less remaining and has any damage counters on it, heal 120 damage from it. If you healed any damage in this way, discard this card.';

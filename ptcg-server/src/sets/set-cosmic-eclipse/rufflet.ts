@@ -21,7 +21,7 @@ export class Rufflet extends PokemonCard {
       name: 'Fury Attack',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 10 damage for each heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Rufflet extends PokemonCard {
   public setNumber: string = '177';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rufflet';
-  public fullName: string = 'Rufflet CEC';
+  public fullName: string = 'Rufflet (CEC 177)';
+  public legacyFullName = 'Rufflet CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Attack

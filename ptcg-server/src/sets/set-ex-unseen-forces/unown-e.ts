@@ -36,7 +36,8 @@ export class UnownE extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'E';
   public name: string = 'Unown';
-  public fullName: string = 'Unown UF';
+  public fullName: string = 'Unown (UF E)';
+  public legacyFullName = 'Unown UF';
 
   public readonly SHUFFLE_MARKER = 'SHUFFLE_MARKER';
 

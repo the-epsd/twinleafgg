@@ -59,7 +59,8 @@ export class RadiantAlakazam extends PokemonCard {
 
   public name: string = 'Radiant Alakazam';
 
-  public fullName: string = 'Radiant Alakazam SIT';
+  public fullName: string = 'Radiant Alakazam (SIT 59)';
+  public legacyFullName = 'Radiant Alakazam SIT';
 
   public readonly PAINFUL_SPOONS_MARKER = 'PAINFUL_SPOONS_MARKER';
 

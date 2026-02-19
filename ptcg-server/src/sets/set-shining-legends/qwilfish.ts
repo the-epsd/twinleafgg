@@ -27,7 +27,7 @@ export class Qwilfish extends PokemonCard {
       name: 'Shocking Sting',
       cost: [W, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokemon is affected by a Special Condition, this attack does 50 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Qwilfish extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Qwilfish';
-  public fullName: string = 'Qwilfish SLG';
+  public fullName: string = 'Qwilfish (SLG 21)';
+  public legacyFullName = 'Qwilfish SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Sting

@@ -37,7 +37,8 @@ export class Luvdisc extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luvdisc';
-  public fullName: string = 'Luvdisc FLF';
+  public fullName: string = 'Luvdisc (FLF 27)';
+  public legacyFullName = 'Luvdisc FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: DrawCardForTurnEffect throw pattern (blocks draw-for-turn without affecting other begin-turn effects)

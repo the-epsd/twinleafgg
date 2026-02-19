@@ -35,7 +35,8 @@ export class Exeggcute extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Exeggcute';
-  public fullName: string = 'Exeggcute CIN';
+  public fullName: string = 'Exeggcute (CIN 4)';
+  public legacyFullName = 'Exeggcute CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hypnosis

@@ -87,7 +87,8 @@ export class SuperPotion extends TrainerCard {
 
   public name: string = 'Super Potion';
 
-  public fullName: string = 'Super Potion BS';
+  public fullName: string = 'Super Potion (BS 90)';
+  public legacyFullName = 'Super Potion BS';
 
   public text: string =
     'Discard 1 Energy card attached to 1 of your own Pokémon in order to remove up to 4 damage counters from that Pokémon.';

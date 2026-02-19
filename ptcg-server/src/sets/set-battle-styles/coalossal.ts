@@ -22,7 +22,7 @@ export class Coalossal extends PokemonCard {
       name: 'Coal Cannon',
       cost: [C],
       damage: 90,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 90 damage for each heads.'
     },
     {
@@ -38,7 +38,8 @@ export class Coalossal extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Coalossal';
-  public fullName: string = 'Coalossal BST';
+  public fullName: string = 'Coalossal (BST 80)';
+  public legacyFullName = 'Coalossal BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Coal Cannon

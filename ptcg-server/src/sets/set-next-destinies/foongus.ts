@@ -33,7 +33,8 @@ export class Foongus extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Foongus';
-  public fullName: string = 'Foongus NXD';
+  public fullName: string = 'Foongus (NXD 8)';
+  public legacyFullName = 'Foongus NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Find a Friend

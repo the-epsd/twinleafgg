@@ -31,7 +31,7 @@ export class Clefable extends PokemonCard {
       name: 'Tumbling Attack',
       cost: [Y, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -40,7 +40,8 @@ export class Clefable extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clefable';
-  public fullName: string = 'Clefable BKP';
+  public fullName: string = 'Clefable (BKP 82)';
+  public legacyFullName = 'Clefable BKP';
 
   public readonly MOON_BARRIER_MARKER = 'MOON_BARRIER_MARKER';
   public readonly CLEAR_MOON_BARRIER_MARKER = 'CLEAR_MOON_BARRIER_MARKER';

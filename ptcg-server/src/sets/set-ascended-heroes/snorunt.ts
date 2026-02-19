@@ -21,5 +21,6 @@ export class Snorunt extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
   public name: string = 'Snorunt';
-  public fullName: string = 'Snorunt M2a';
+  public fullName: string = 'Snorunt (ASC 46)';
+  public legacyFullName = 'Snorunt M2a';
 }

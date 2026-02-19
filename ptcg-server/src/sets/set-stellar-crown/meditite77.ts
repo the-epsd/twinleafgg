@@ -23,5 +23,6 @@ export class MedititeSCR77 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '77';
   public name: string = 'Meditite';
-  public fullName: string = 'Meditite SCR 77';
+  public fullName: string = 'Meditite (SCR 77)';
+  public legacyFullName = 'Meditite SCR 77';
 }

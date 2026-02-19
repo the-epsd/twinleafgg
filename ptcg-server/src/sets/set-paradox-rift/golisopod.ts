@@ -33,7 +33,8 @@ export class Golisopod extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '49';
   public name: string = 'Golisopod';
-  public fullName: string = 'Golisopod PAR';
+  public fullName: string = 'Golisopod (PAR 49)';
+  public legacyFullName = 'Golisopod PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Powerful Cross

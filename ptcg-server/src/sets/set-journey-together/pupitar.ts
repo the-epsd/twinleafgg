@@ -27,7 +27,8 @@ export class Pupitar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
   public name: string = 'Pupitar';
-  public fullName: string = 'Pupitar JTG';
+  public fullName: string = 'Pupitar (JTG 81)';
+  public legacyFullName = 'Pupitar JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

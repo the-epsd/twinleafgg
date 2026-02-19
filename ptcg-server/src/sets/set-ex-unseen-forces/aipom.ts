@@ -31,7 +31,8 @@ export class Aipom extends PokemonCard {
 
   public set: string = 'UF';
   public name: string = 'Aipom';
-  public fullName: string = 'Aipom UF';
+  public fullName: string = 'Aipom (UF 34)';
+  public legacyFullName = 'Aipom UF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '34';
 

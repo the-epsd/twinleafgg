@@ -14,7 +14,8 @@ export class MultiSwitch extends TrainerCard {
   public setNumber: string = '129';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Multi Switch';
-  public fullName: string = 'Multi Switch GRI';
+  public fullName: string = 'Multi Switch (GRI 129)';
+  public legacyFullName = 'Multi Switch GRI';
   public text: string = 'Move an Energy from 1 of your Benched Pokémon to your Active Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

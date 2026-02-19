@@ -22,6 +22,7 @@ export class Sharpedo extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
   public name: string = 'Sharpedo';
-  public fullName: string = 'Sharpedo GRI';
+  public fullName: string = 'Sharpedo (GRI 28)';
+  public legacyFullName = 'Sharpedo GRI';
 
 }

@@ -48,7 +48,8 @@ export class Kilowattrel extends PokemonCard {
 
   public name: string = 'Kilowattrel';
 
-  public fullName: string = 'Kilowattrel PAF';
+  public fullName: string = 'Kilowattrel (PAF 22)';
+  public legacyFullName = 'Kilowattrel PAF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -35,7 +35,8 @@ export class Horsea extends PokemonCard {
 
   public name: string = 'Horsea';
 
-  public fullName: string = 'Horsea DRM';
+  public fullName: string = 'Horsea (DRM 16)';
+  public legacyFullName = 'Horsea DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

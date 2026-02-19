@@ -18,5 +18,6 @@ export class Weedle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '13';
   public name: string = 'Weedle';
-  public fullName: string = 'Weedle MEW';
+  public fullName: string = 'Weedle (MEW 13)';
+  public legacyFullName = 'Weedle MEW';
 }

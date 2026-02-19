@@ -35,7 +35,8 @@ export class RareFossil extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '167';
   public name: string = 'Rare Fossil';
-  public fullName: string = 'Rare Fossil DAA';
+  public fullName: string = 'Rare Fossil (DAA 167)';
+  public legacyFullName = 'Rare Fossil DAA';
   public regulationMark = 'D';
 
   public powers: Power[] = [

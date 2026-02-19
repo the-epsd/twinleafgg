@@ -23,7 +23,7 @@ export class GlaceonEx extends PokemonCard {
       name: 'Second Bite',
       cost: [W, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
     },
     {
@@ -38,7 +38,8 @@ export class GlaceonEx extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Glaceon-EX';
-  public fullName: string = 'Glaceon-EX FCO';
+  public fullName: string = 'Glaceon-EX (FCO 20)';
+  public legacyFullName = 'Glaceon-EX FCO';
 
   public readonly CRYSTAL_RAY_MARKER = 'CRYSTAL_RAY_MARKER';
 

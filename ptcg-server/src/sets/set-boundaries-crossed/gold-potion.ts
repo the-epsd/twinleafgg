@@ -15,7 +15,8 @@ export class GoldPotion extends TrainerCard {
   public setNumber: string = '140';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gold Potion';
-  public fullName: string = 'Gold Potion BCR';
+  public fullName: string = 'Gold Potion (BCR 140)';
+  public legacyFullName = 'Gold Potion BCR';
   public text: string = 'Heal 90 damage from your Active Pokémon. You can\'t have more than 1 ACE SPEC card in your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

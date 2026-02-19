@@ -51,7 +51,8 @@ export class EnergyRetrieval extends TrainerCard {
 
   public name: string = 'Energy Retrieval';
 
-  public fullName: string = 'Energy Retrieval SUM';
+  public fullName: string = 'Energy Retrieval (SUM 116)';
+  public legacyFullName = 'Energy Retrieval SUM';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -20,7 +20,7 @@ export class Cubchoo extends PokemonCard {
       name: 'Fury Swipes',
       cost: [W],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
     },
     {
@@ -35,7 +35,8 @@ export class Cubchoo extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cubchoo';
-  public fullName: string = 'Cubchoo FFI';
+  public fullName: string = 'Cubchoo (FFI 21)';
+  public legacyFullName = 'Cubchoo FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Swipes

@@ -27,7 +27,8 @@ export class Spritzee extends PokemonCard {
 
   public set: string = 'XY';
   public name: string = 'Spritzee';
-  public fullName: string = 'Spritzee XY';
+  public fullName: string = 'Spritzee (XY 92)';
+  public legacyFullName = 'Spritzee XY';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
 

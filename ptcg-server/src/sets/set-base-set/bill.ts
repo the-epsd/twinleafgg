@@ -20,7 +20,8 @@ export class Bill extends TrainerCard {
 
   public name: string = 'Bill';
 
-  public fullName: string = 'Bill BS';
+  public fullName: string = 'Bill (BS 91)';
+  public legacyFullName = 'Bill BS';
 
   public text: string =
     'Draw 2 cards.';

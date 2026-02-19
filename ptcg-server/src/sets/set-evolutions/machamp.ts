@@ -35,7 +35,8 @@ export class Machamp extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machamp';
-  public fullName: string = 'Machamp EVO';
+  public fullName: string = 'Machamp (EVO 59)';
+  public legacyFullName = 'Machamp EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Counterattack (passive - put 3 damage counters on attacker when damaged)

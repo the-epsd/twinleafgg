@@ -33,7 +33,8 @@ export class Sceptile extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name: string = 'Sceptile';
-  public fullName: string = 'Sceptile RS';
+  public fullName: string = 'Sceptile (RS 20)';
+  public legacyFullName = 'Sceptile RS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

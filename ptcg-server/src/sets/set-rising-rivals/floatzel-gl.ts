@@ -32,7 +32,8 @@ export class FloatzelGL extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
   public name: string = 'Floatzel GL';
-  public fullName: string = 'Floatzel GL RR';
+  public fullName: string = 'Floatzel GL (RR 4)';
+  public legacyFullName = 'Floatzel GL RR';
 
   public readonly GIANT_WAVE_MARKER = 'GIANT_WAVE_MARKER';
   public readonly CLEAR_GIANT_WAVE_MARKER = 'CLEAR_GIANT_WAVE_MARKER';

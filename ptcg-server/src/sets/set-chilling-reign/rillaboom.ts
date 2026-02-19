@@ -31,7 +31,7 @@ export class Rillaboom extends PokemonCard {
       name: 'Raging Repeated Strike',
       cost: [G, G, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Discard any amount of Energy from your Pokémon. This attack does 30 more damage for each card you discarded in this way.'
     }
   ];
@@ -41,7 +41,8 @@ export class Rillaboom extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rillaboom';
-  public fullName: string = 'Rillaboom CRE';
+  public fullName: string = 'Rillaboom (CRE 18)';
+  public legacyFullName = 'Rillaboom CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wood Drain

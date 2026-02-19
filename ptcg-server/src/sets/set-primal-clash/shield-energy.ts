@@ -19,7 +19,8 @@ export class ShieldEnergy extends EnergyCard {
 
   public name = 'Shield Energy';
 
-  public fullName = 'Shield Energy PRC';
+  public fullName = 'Shield Energy (PRC 143)';
+  public legacyFullName = 'Shield Energy PRC';
 
   public cardImage: string = 'assets/cardback.png';
 

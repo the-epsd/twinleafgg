@@ -20,7 +20,8 @@ export class TempleofSinnoh extends TrainerCard {
 
   public name = 'Temple of Sinnoh';
 
-  public fullName = 'Temple of Sinnoh ASR';
+  public fullName = 'Temple of Sinnoh (ASR 155)';
+  public legacyFullName = 'Temple of Sinnoh ASR';
 
   public text = 'All Special Energy attached to Pokémon (both yours and your opponent\'s) provide [C] Energy and have no other effect.';
 

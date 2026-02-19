@@ -35,7 +35,8 @@ export class AlakazamStar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '99';
   public name: string = 'Alakazam Star';
-  public fullName: string = 'Alakazam Star CG';
+  public fullName: string = 'Alakazam Star (CG 99)';
+  public legacyFullName = 'Alakazam Star CG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

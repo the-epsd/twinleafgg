@@ -16,7 +16,8 @@ export class UnitEnergyLightningpsychicmetal extends EnergyCard {
   public setNumber: string = '138';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Unit Energy LightningPsychicMetal';
-  public fullName: string = 'Unit Energy LightningPsychicMetal UPR';
+  public fullName: string = 'Unit Energy LightningPsychicMetal (UPR 138)';
+  public legacyFullName = 'Unit Energy LightningPsychicMetal UPR';
   public text: string = 'This card provides [C] Energy. While this card is attached to a Pokémon, it provides Lightning, Psychic, and [M] Energy but provides only 1 Energy at a time.';
 
   public blendedEnergies = [CardType.LIGHTNING, CardType.PSYCHIC, CardType.METAL];

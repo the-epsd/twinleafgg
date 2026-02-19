@@ -42,7 +42,8 @@ export class Gengar extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gengar';
-  public fullName: string = 'Gengar SF';
+  public fullName: string = 'Gengar (SF 18)';
+  public legacyFullName = 'Gengar SF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

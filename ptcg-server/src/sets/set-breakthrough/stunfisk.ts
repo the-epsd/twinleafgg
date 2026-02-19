@@ -25,7 +25,7 @@ export class Stunfisk extends PokemonCard {
       name: 'Revenge',
       cost: [L, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If any of your Pokémon were Knocked Out by damage from an opponent\'s attack during his or her last turn, this attack does 80 more damage.'
     },
     {
@@ -40,7 +40,8 @@ export class Stunfisk extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stunfisk';
-  public fullName: string = 'Stunfisk BKT';
+  public fullName: string = 'Stunfisk (BKT 56)';
+  public legacyFullName = 'Stunfisk BKT';
 
   public readonly REVENGE_MARKER = 'STUNFISK_BKT_REVENGE_MARKER';
 

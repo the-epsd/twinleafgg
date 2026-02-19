@@ -15,7 +15,8 @@ export class MysteriousShard extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'CG';
   public name: string = 'Mysterious Shard';
-  public fullName: string = 'Mysterious Shard CG';
+  public fullName: string = 'Mysterious Shard (CG 81)';
+  public legacyFullName = 'Mysterious Shard CG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
 

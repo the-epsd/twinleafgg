@@ -25,7 +25,8 @@ export class Remoraid extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Remoraid';
-  public fullName: string = 'Remoraid PLB';
+  public fullName: string = 'Remoraid (PLB 18)';
+  public legacyFullName = 'Remoraid PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

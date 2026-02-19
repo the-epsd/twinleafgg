@@ -35,7 +35,8 @@ export class Cofagrigus extends PokemonCard {
   public cardImage = 'assets/cardback.png';
   public regulationMark: string = 'H';
   public name: string = 'Cofagrigus';
-  public fullName: string = 'Cofagrigus SSP';
+  public fullName: string = 'Cofagrigus (SSP 83)';
+  public legacyFullName = 'Cofagrigus SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Law of the Underworld

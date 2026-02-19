@@ -85,7 +85,8 @@ export class Starmie extends PokemonCard {
 
   public evolvesFrom: string = 'Staryu';
 
-  public fullName = 'Starmie EVO';
+  public fullName = 'Starmie (EVO 31)';
+  public legacyFullName = 'Starmie EVO';
 
   public setNumber = '31';
 

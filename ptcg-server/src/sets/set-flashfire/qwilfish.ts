@@ -36,7 +36,8 @@ export class Qwilfish extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Qwilfish';
-  public fullName: string = 'Qwilfish FLF';
+  public fullName: string = 'Qwilfish (FLF 21)';
+  public legacyFullName = 'Qwilfish FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-noble-victories/druddigon.ts (Rough Skin - damage retaliation)

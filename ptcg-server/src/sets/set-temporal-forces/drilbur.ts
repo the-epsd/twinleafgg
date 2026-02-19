@@ -42,7 +42,8 @@ export class Drilbur extends PokemonCard {
 
   public name: string = 'Drilbur';
 
-  public fullName: string = 'Drilbur TEF';
+  public fullName: string = 'Drilbur (TEF 85)';
+  public legacyFullName = 'Drilbur TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

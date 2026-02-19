@@ -30,7 +30,8 @@ export class Helioptile extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Helioptile';
-  public fullName: string = 'Helioptile GRI';
+  public fullName: string = 'Helioptile (GRI 43)';
+  public legacyFullName = 'Helioptile GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Shock

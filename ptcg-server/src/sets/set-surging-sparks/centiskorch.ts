@@ -24,7 +24,8 @@ export class Centiskorch extends PokemonCard {
   public setNumber: string = '28';
 
   public name: string = 'Centiskorch';
-  public fullName: string = 'Centiskorch SSP';
+  public fullName: string = 'Centiskorch (SSP 28)';
+  public legacyFullName = 'Centiskorch SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Billowing Heat Wave

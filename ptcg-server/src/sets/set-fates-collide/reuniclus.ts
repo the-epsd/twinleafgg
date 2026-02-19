@@ -21,7 +21,7 @@ export class Reuniclus extends PokemonCard {
       name: 'Link Fusion',
       cost: [P, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Solosis is on your Bench, this attack does 30 more damage. If Duosion is on your Bench, this attack does 60 more damage. If Reuniclus is on your Bench, this attack does 90 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Reuniclus extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Reuniclus';
-  public fullName: string = 'Reuniclus FCO';
+  public fullName: string = 'Reuniclus (FCO 35)';
+  public legacyFullName = 'Reuniclus FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Link Fusion

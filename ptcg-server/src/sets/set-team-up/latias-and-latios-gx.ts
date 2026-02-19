@@ -42,7 +42,8 @@ export class LatiasAndLatiosGx extends PokemonCard {
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Latias & Latios-GX';
-  public fullName: string = 'Latias & Latios-GX TEU';
+  public fullName: string = 'Latias & Latios-GX (TEU 113)';
+  public legacyFullName = 'Latias & Latios-GX TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Buster Purge

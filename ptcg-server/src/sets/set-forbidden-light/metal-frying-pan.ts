@@ -23,7 +23,8 @@ export class MetalFryingPan extends TrainerCard {
 
   public name: string = 'Metal Frying Pan';
 
-  public fullName: string = 'Metal Frying Pan FLI';
+  public fullName: string = 'Metal Frying Pan (FLI 112)';
+  public legacyFullName = 'Metal Frying Pan FLI';
 
   public text: string =
     'The [M] Pokémon this card is attached to takes 30 less damage from your opponent\'s attacks (after applying Weakness and Resistance) and has no Weakness.';

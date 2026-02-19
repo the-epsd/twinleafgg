@@ -145,7 +145,8 @@ export class CynthiaAndCaitlin extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '189';
   public name: string = 'Cynthia & Caitlin';
-  public fullName: string = 'Cynthia & Caitlin CEC';
+  public fullName: string = 'Cynthia & Caitlin (CEC 189)';
+  public legacyFullName = 'Cynthia & Caitlin CEC';
 
   public text: string =
     `Put a Supporter card from your discard pile into your hand. You can't choose Cynthia & Caitlin or a card you discarded with the effect of this card.

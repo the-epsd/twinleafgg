@@ -49,7 +49,8 @@ export class Okidogi extends PokemonCard {
 
   public name: string = 'Okidogi';
 
-  public fullName: string = 'Okidogi TWM';
+  public fullName: string = 'Okidogi (TWM 111)';
+  public legacyFullName = 'Okidogi TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

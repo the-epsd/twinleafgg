@@ -38,7 +38,8 @@ export class SalamenceVmax extends PokemonCard {
   public setNumber: string = '144';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salamence VMAX';
-  public fullName: string = 'Salamence VMAX DAA';
+  public fullName: string = 'Salamence VMAX (DAA 144)';
+  public legacyFullName = 'Salamence VMAX DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sonic Double

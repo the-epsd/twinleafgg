@@ -36,7 +36,8 @@ export class Keldeo2 extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Keldeo';
-  public fullName: string = 'Keldeo BCR 48';
+  public fullName: string = 'Keldeo (BCR 48)';
+  public legacyFullName = 'Keldeo BCR 48';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rising Lunge

@@ -41,7 +41,8 @@ export class Absol extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Absol';
-  public fullName: string = 'Absol GRI';
+  public fullName: string = 'Absol (GRI 81)';
+  public legacyFullName = 'Absol GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Future Sight

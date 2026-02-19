@@ -76,7 +76,8 @@ export class TrainingCourt extends TrainerCard {
 
   public name = 'Training Court';
 
-  public fullName = 'Training Court RCL';
+  public fullName = 'Training Court (RCL 169)';
+  public legacyFullName = 'Training Court RCL';
 
   public text = 'Once during each player\'s turn, that player may put a basic Energy card from their discard pile into their hand.';
 

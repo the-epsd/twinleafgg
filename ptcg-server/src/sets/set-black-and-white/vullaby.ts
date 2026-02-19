@@ -32,7 +32,8 @@ export class Vullaby extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '72';
   public name: string = 'Vullaby';
-  public fullName: string = 'Vullaby BLW';
+  public fullName: string = 'Vullaby (BLW 72)';
+  public legacyFullName = 'Vullaby BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

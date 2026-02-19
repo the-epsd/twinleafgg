@@ -29,7 +29,8 @@ export class Nidoking extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '34';
   public name: string = 'Nidoking';
-  public fullName: string = 'Nidoking MEW';
+  public fullName: string = 'Nidoking (MEW 34)';
+  public legacyFullName = 'Nidoking MEW';
 
   public getColorlessReduction(state: State): number {
     const player = StateUtils.findOwner(state, this.cards);

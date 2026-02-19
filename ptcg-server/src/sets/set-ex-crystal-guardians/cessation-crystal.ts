@@ -14,7 +14,8 @@ export class CessationCrystal extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'CG';
   public name: string = 'Cessation Crystal';
-  public fullName: string = 'Cessation Crystal CG';
+  public fullName: string = 'Cessation Crystal (CG 74)';
+  public legacyFullName = 'Cessation Crystal CG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '74';
   public text: string = 'Attach Cessation Crystal to 1 of your Pokémon (excluding Pokémon-ex) that doesn\'t already have a Pokémon Tool attached to it. If the Pokémon Cessation Crystal is attached to is a Pokémon-ex, discard this card.\n\nAs long as Cessation Crystal is attached to an Active Pokémon, each player\'s Pokémon(both yours and your opponent\'s) can\'t use any Poké-Powers or Poké-Bodies.';

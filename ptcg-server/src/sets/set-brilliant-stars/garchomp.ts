@@ -46,7 +46,8 @@ export class Garchomp extends PokemonCard {
 
   public name: string = 'Garchomp';
 
-  public fullName: string = 'Garchomp BRS';
+  public fullName: string = 'Garchomp (BRS 109)';
+  public legacyFullName = 'Garchomp BRS';
 
   public readonly PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
   public readonly CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';

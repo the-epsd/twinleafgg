@@ -27,7 +27,7 @@ export class Skarmory extends PokemonCard {
       name: 'Blow Through',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 30 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Skarmory extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skarmory';
-  public fullName: string = 'Skarmory ROS';
+  public fullName: string = 'Skarmory (ROS 69)';
+  public legacyFullName = 'Skarmory ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Family

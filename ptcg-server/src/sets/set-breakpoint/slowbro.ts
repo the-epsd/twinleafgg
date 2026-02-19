@@ -38,7 +38,8 @@ export class Slowbro extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slowbro';
-  public fullName: string = 'Slowbro BKP';
+  public fullName: string = 'Slowbro (BKP 20)';
+  public legacyFullName = 'Slowbro BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Careless Head

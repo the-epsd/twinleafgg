@@ -30,7 +30,8 @@ export class Yanma extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yanma';
-  public fullName: string = 'Yanma PHF';
+  public fullName: string = 'Yanma (PHF 3)';
+  public legacyFullName = 'Yanma PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Air Slash

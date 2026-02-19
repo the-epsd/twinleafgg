@@ -27,7 +27,7 @@ export class Lombre extends PokemonCard {
       name: 'Fury Swipes',
       cost: [G, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 40 damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Lombre extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lombre';
-  public fullName: string = 'Lombre RCL';
+  public fullName: string = 'Lombre (RCL 8)';
+  public legacyFullName = 'Lombre RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // TODO: Ability: Top Entry fires before drawing to hand, intercepting the draw step.

@@ -27,7 +27,8 @@ export class RebootPod extends TrainerCard {
 
   public setNumber: string = '158';
 
-  public fullName: string = 'Reboot Pod TEF';
+  public fullName: string = 'Reboot Pod (TEF 158)';
+  public legacyFullName = 'Reboot Pod TEF';
 
   public text: string =
     'Attach a Basic Energy card from your discard pile to each of your Future Pokémon in play.';

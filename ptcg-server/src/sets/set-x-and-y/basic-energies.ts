@@ -15,7 +15,8 @@ export class GrassEnergy extends EnergyCard {
 
   public name = 'Grass Energy';
 
-  public fullName = 'Grass Energy XY';
+  public fullName = 'Grass Energy (XY 132)';
+  public legacyFullName = 'Grass Energy XY';
 
 }
 
@@ -33,7 +34,8 @@ export class FireEnergy extends EnergyCard {
 
   public name = 'Fire Energy';
 
-  public fullName = 'Fire Energy XY';
+  public fullName = 'Fire Energy (XY 133)';
+  public legacyFullName = 'Fire Energy XY';
 
 }
 
@@ -51,7 +53,8 @@ export class WaterEnergy extends EnergyCard {
 
   public name = 'Water Energy';
 
-  public fullName = 'Water Energy XY';
+  public fullName = 'Water Energy (XY 134)';
+  public legacyFullName = 'Water Energy XY';
 
 }
 
@@ -69,7 +72,8 @@ export class LightningEnergy extends EnergyCard {
 
   public name = 'Lightning Energy';
 
-  public fullName = 'Lightning Energy XY';
+  public fullName = 'Lightning Energy (XY 135)';
+  public legacyFullName = 'Lightning Energy XY';
 
 }
 
@@ -87,7 +91,8 @@ export class PsychicEnergy extends EnergyCard {
 
   public name = 'Psychic Energy';
 
-  public fullName = 'Psychic Energy XY';
+  public fullName = 'Psychic Energy (XY 136)';
+  public legacyFullName = 'Psychic Energy XY';
 
 }
 
@@ -105,7 +110,8 @@ export class FightingEnergy extends EnergyCard {
 
   public name = 'Fighting Energy';
 
-  public fullName = 'Fighting Energy XY';
+  public fullName = 'Fighting Energy (XY 137)';
+  public legacyFullName = 'Fighting Energy XY';
 
 }
 
@@ -123,7 +129,8 @@ export class DarknessEnergy extends EnergyCard {
 
   public name = 'Darkness Energy';
 
-  public fullName = 'Darkness Energy XY';
+  public fullName = 'Darkness Energy (XY 138)';
+  public legacyFullName = 'Darkness Energy XY';
 
 }
 
@@ -141,7 +148,8 @@ export class MetalEnergy extends EnergyCard {
 
   public name = 'Metal Energy';
 
-  public fullName = 'Metal Energy XY';
+  public fullName = 'Metal Energy (XY 139)';
+  public legacyFullName = 'Metal Energy XY';
 
 }
 
@@ -159,6 +167,7 @@ export class FairyEnergy extends EnergyCard {
 
   public name = 'Fairy Energy';
 
-  public fullName = 'Fairy Energy XY';
+  public fullName = 'Fairy Energy (XY 140)';
+  public legacyFullName = 'Fairy Energy XY';
 
 }

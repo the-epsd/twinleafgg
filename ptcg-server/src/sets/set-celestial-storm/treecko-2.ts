@@ -31,5 +31,6 @@ export class Treecko2 extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Treecko';
-  public fullName: string = 'Treecko CES 8';
+  public fullName: string = 'Treecko (CES 8)';
+  public legacyFullName = 'Treecko CES 8';
 }

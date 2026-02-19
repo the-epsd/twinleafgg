@@ -40,7 +40,8 @@ export class Rhyperior extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rhyperior';
-  public fullName: string = 'Rhyperior UNB';
+  public fullName: string = 'Rhyperior (UNB 95)';
+  public legacyFullName = 'Rhyperior UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hefty Cannon

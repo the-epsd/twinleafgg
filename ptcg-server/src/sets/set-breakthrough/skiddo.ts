@@ -27,7 +27,7 @@ export class Skiddo extends PokemonCard {
       name: 'Rising Lunge',
       cost: [G, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Skiddo extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skiddo';
-  public fullName: string = 'Skiddo BKT';
+  public fullName: string = 'Skiddo (BKT 16)';
+  public legacyFullName = 'Skiddo BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Rising Lunge

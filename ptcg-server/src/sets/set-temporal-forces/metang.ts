@@ -47,7 +47,8 @@ export class Metang extends PokemonCard {
 
   public name: string = 'Metang';
 
-  public fullName: string = 'Metang TEF';
+  public fullName: string = 'Metang (TEF 114)';
+  public legacyFullName = 'Metang TEF';
 
   public readonly METAL_MAKER_MARKER = 'METAL_MAKER_MARKER';
 

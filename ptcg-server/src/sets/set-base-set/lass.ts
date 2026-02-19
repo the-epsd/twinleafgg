@@ -20,7 +20,8 @@ export class Lass extends TrainerCard {
 
   public name: string = 'Lass';
 
-  public fullName: string = 'Lass BS';
+  public fullName: string = 'Lass (BS 75)';
+  public legacyFullName = 'Lass BS';
 
   public text: string =
     'You and your opponent show each other your hands, then shuffle all the Trainer cards from your hands into your decks.';

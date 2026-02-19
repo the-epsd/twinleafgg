@@ -44,7 +44,8 @@ export class Blaziken extends PokemonCard {
 
   public name: string = 'Blaziken';
 
-  public fullName: string = 'Blaziken DEX';
+  public fullName: string = 'Blaziken (DEX 17)';
+  public legacyFullName = 'Blaziken DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Blaze Kick attack

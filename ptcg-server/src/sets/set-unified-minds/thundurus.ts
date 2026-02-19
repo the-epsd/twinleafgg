@@ -34,7 +34,8 @@ export class Thundurus extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Thundurus';
-  public fullName: string = 'Thundurus UNM';
+  public fullName: string = 'Thundurus (UNM 68)';
+  public legacyFullName = 'Thundurus UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Thunderous Gale

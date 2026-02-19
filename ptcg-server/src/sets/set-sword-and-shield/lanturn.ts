@@ -38,7 +38,8 @@ export class Lanturn extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lanturn';
-  public fullName: string = 'Lanturn SSH';
+  public fullName: string = 'Lanturn (SSH 69)';
+  public legacyFullName = 'Lanturn SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Strobe Shock

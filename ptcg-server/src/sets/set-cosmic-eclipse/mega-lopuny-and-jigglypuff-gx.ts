@@ -33,7 +33,8 @@ export class MegaLopunnyJigglypuffGX extends PokemonCard {
   public setNumber = '165';
   public cardImage = 'assets/cardback.png';
   public name = 'Mega Lopunny & Jigglypuff-GX';
-  public fullName = 'Mega Lopunny & Jigglypuff-GX CEC';
+  public fullName = 'Mega Lopunny & Jigglypuff-GX (CEC 165)';
+  public legacyFullName = 'Mega Lopunny & Jigglypuff-GX CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Jumping Balloon

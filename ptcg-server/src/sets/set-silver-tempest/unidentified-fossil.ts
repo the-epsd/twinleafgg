@@ -30,7 +30,8 @@ export class UnidentifiedFossil extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '165';
   public name: string = 'Unidentified Fossil';
-  public fullName: string = 'Unidentified Fossil SIT';
+  public fullName: string = 'Unidentified Fossil (SIT 165)';
+  public legacyFullName = 'Unidentified Fossil SIT';
   public regulationMark = 'F';
   public maxTools: number = 1;
 

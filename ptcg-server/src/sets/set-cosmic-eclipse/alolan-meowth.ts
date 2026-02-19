@@ -36,7 +36,8 @@ export class AlolanMeowth extends PokemonCard {
   public setNumber: string = '128';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Meowth';
-  public fullName: string = 'Alolan Meowth CEC';
+  public fullName: string = 'Alolan Meowth (CEC 128)';
+  public legacyFullName = 'Alolan Meowth CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swagger

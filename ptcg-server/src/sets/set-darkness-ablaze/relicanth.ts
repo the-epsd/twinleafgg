@@ -36,7 +36,8 @@ export class Relicanth extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Relicanth';
-  public fullName: string = 'Relicanth DAA';
+  public fullName: string = 'Relicanth (DAA 40)';
+  public legacyFullName = 'Relicanth DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fossil Search

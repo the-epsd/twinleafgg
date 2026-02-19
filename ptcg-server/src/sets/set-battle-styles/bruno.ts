@@ -22,7 +22,8 @@ export class Bruno extends TrainerCard {
 
   public name: string = 'Bruno';
 
-  public fullName: string = 'Bruno BST';
+  public fullName: string = 'Bruno (BST 121)';
+  public legacyFullName = 'Bruno BST';
 
   public text: string =
     'Shuffle your hand into your deck. Then, draw 4 cards. If any of your Pokémon were Knocked Out during your opponent\'s last turn, draw 7 cards instead.';

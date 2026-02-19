@@ -32,7 +32,8 @@ export class ArceusGrass extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'AR2';
   public name: string = 'Arceus';
-  public fullName: string = 'Arceus Grass AR';
+  public fullName: string = 'Arceus (AR AR2)';
+  public legacyFullName = 'Arceus Grass AR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

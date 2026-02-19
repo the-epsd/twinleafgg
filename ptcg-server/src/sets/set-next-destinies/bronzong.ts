@@ -32,7 +32,8 @@ export class Bronzong extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bronzong';
-  public fullName: string = 'Bronzong NXD';
+  public fullName: string = 'Bronzong (NXD 76)';
+  public legacyFullName = 'Bronzong NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Heal Block - prevent all healing

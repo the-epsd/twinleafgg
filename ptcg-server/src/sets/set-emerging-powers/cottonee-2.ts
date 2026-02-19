@@ -27,7 +27,8 @@ export class Cottonee2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '10';
   public name: string = 'Cottonee';
-  public fullName: string = 'Cottonee EPO 10';
+  public fullName: string = 'Cottonee (EPO 10)';
+  public legacyFullName = 'Cottonee EPO 10';
 
   public readonly COTTON_GUARD_MARKER = 'COTTON_GUARD_MARKER';
 

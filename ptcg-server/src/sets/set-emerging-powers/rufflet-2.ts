@@ -32,7 +32,8 @@ export class Rufflet2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Rufflet';
-  public fullName: string = 'Rufflet EPO 87';
+  public fullName: string = 'Rufflet (EPO 87)';
+  public legacyFullName = 'Rufflet EPO 87';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

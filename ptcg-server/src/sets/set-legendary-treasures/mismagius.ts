@@ -36,7 +36,8 @@ export class Mismagius extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mismagius';
-  public fullName: string = 'Mismagius LTR';
+  public fullName: string = 'Mismagius (LTR 58)';
+  public legacyFullName = 'Mismagius LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Absorb Life

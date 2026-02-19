@@ -17,7 +17,7 @@ export class Gumshoos extends PokemonCard {
       name: 'Identify',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Your opponent reveals their hand. If you find a Pokémon there, this attack does 80 more damage.'
     },
     {
@@ -32,7 +32,8 @@ export class Gumshoos extends PokemonCard {
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gumshoos';
-  public fullName: string = 'Gumshoos UPR';
+  public fullName: string = 'Gumshoos (UPR 113)';
+  public legacyFullName = 'Gumshoos UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Identify

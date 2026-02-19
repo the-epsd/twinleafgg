@@ -32,7 +32,8 @@ export class Bagon extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bagon';
-  public fullName: string = 'Bagon CES';
+  public fullName: string = 'Bagon (CES 103)';
+  public legacyFullName = 'Bagon CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Head

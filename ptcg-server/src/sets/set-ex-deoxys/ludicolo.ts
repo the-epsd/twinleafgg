@@ -38,7 +38,8 @@ export class Ludicolo extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ludicolo';
-  public fullName: string = 'Ludicolo DX';
+  public fullName: string = 'Ludicolo (DX 10)';
+  public legacyFullName = 'Ludicolo DX';
 
   public readonly SWING_DANCE_MARKER = 'SWING_DANCE_MARKER';
 

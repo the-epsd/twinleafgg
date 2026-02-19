@@ -28,7 +28,7 @@ export class Toxicroak extends PokemonCard {
       name: 'Poison Boost',
       cost: [P, P, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon is Poisoned, this attack does 80 more damage. Then, remove that Special Condition from this Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class Toxicroak extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toxicroak';
-  public fullName: string = 'Toxicroak BUS';
+  public fullName: string = 'Toxicroak (BUS 55)';
+  public legacyFullName = 'Toxicroak BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Jab

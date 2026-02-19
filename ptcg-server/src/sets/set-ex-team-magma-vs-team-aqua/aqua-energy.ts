@@ -20,7 +20,8 @@ export class AquaEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
   public name = 'Aqua Energy';
-  public fullName = 'Aqua Energy MA';
+  public fullName = 'Aqua Energy (MA 86)';
+  public legacyFullName = 'Aqua Energy MA';
 
   public text = 'Aqua Energy can be attached only to a Pokémon with Team Aqua in its name. Aqua Energy provides [W] and [D] Energy but provides 2 Energy at a time. (Doesn\'t count as a basic Energy card when not in play and has no other effect than providing Energy.) At the end of your turn, discard Aqua Energy.';
 

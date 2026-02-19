@@ -35,7 +35,8 @@ export class Pansear extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pansear';
-  public fullName: string = 'Pansear PLS';
+  public fullName: string = 'Pansear (PLS 19)';
+  public legacyFullName = 'Pansear PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Double Fire

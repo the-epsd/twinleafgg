@@ -37,7 +37,8 @@ export class Kricketune extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kricketune';
-  public fullName: string = 'Kricketune BKP';
+  public fullName: string = 'Kricketune (BKP 6)';
+  public legacyFullName = 'Kricketune BKP';
 
   public readonly SCREECH_MARKER = 'KRICKETUNE_BKP_SCREECH_MARKER';
   public readonly CLEAR_SCREECH_MARKER = 'KRICKETUNE_BKP_CLEAR_SCREECH_MARKER';

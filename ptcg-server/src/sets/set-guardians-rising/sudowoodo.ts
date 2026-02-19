@@ -40,7 +40,8 @@ export class Sudowoodo extends PokemonCard {
 
   public name: string = 'Sudowoodo';
 
-  public fullName: string = 'Sudowoodo GRI';
+  public fullName: string = 'Sudowoodo (GRI 66)';
+  public legacyFullName = 'Sudowoodo GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckTableStateEffect) {

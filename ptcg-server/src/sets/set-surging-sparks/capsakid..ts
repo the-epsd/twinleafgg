@@ -21,7 +21,8 @@ export class Capsakid extends PokemonCard {
 
   public name: string = 'Capsakid';
 
-  public fullName: string = 'Capsakid SSP';
+  public fullName: string = 'Capsakid (SSP 12)';
+  public legacyFullName = 'Capsakid SSP';
 
   public regulationMark = 'H';
 

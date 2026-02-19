@@ -21,7 +21,7 @@ export class Whismur extends PokemonCard {
       name: 'Continuous Tumble',
       cost: [C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 40 damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Whismur extends PokemonCard {
   public setNumber: string = '135';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whismur';
-  public fullName: string = 'Whismur VIV';
+  public fullName: string = 'Whismur (VIV 135)';
+  public legacyFullName = 'Whismur VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Tumble

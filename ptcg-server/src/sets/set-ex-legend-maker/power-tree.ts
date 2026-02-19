@@ -18,7 +18,8 @@ export class PowerTree extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'LM';
   public name = 'Power Tree';
-  public fullName = 'Power Tree LM';
+  public fullName = 'Power Tree (LM 76)';
+  public legacyFullName = 'Power Tree LM';
 
   public text = 'Once during each player\'s turn, if the player has no Special Energy cards in his or her discard pile, that player searches his or her discard pile for a basic Energy card, show it to the opponent, and put it into his or her hand.';
 

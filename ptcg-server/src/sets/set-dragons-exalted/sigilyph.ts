@@ -41,7 +41,8 @@ export class Sigilyph extends PokemonCard {
 
   public name: string = 'Sigilyph';
 
-  public fullName: string = 'Sigilyph DRX';
+  public fullName: string = 'Sigilyph (DRX 52)';
+  public legacyFullName = 'Sigilyph DRX';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -30,7 +30,8 @@ export class Dedenne extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dedenne';
-  public fullName: string = 'Dedenne BKT';
+  public fullName: string = 'Dedenne (BKT 57)';
+  public legacyFullName = 'Dedenne BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Shock

@@ -28,7 +28,8 @@ export class Riolu extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Riolu';
-  public fullName: string = 'Riolu UNB';
+  public fullName: string = 'Riolu (UNB 102)';
+  public legacyFullName = 'Riolu UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Feint

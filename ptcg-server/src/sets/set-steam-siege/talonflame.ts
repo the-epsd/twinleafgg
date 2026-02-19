@@ -40,7 +40,8 @@ export class Talonflame extends PokemonCard {
 
   public name: string = 'Talonflame';
 
-  public fullName: string = 'Talonflame STS';
+  public fullName: string = 'Talonflame (STS 96)';
+  public legacyFullName = 'Talonflame STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -21,7 +21,7 @@ export class Crabominable extends PokemonCard {
       name: 'Double Lariat',
       cost: [F, C, C],
       damage: 90,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 90 damage for each heads.'
     },
     {
@@ -37,7 +37,8 @@ export class Crabominable extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crabominable';
-  public fullName: string = 'Crabominable CRE';
+  public fullName: string = 'Crabominable (CRE 85)';
+  public legacyFullName = 'Crabominable CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Lariat

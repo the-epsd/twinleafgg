@@ -27,7 +27,7 @@ export class Garchomp extends PokemonCard {
       name: 'Bite Off',
       cost: [F, F],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, this attack does 80 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Garchomp extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Garchomp';
-  public fullName: string = 'Garchomp BKP';
+  public fullName: string = 'Garchomp (BKP 70)';
+  public legacyFullName = 'Garchomp BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Turbo Assault

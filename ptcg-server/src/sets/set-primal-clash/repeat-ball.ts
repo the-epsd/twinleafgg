@@ -72,7 +72,8 @@ export class RepeatBall extends TrainerCard {
   public setNumber: string = '136';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Repeat Ball';
-  public fullName: string = 'Repeat Ball PRC';
+  public fullName: string = 'Repeat Ball (PRC 136)';
+  public legacyFullName = 'Repeat Ball PRC';
   public text: string = 'Search your deck for a Pokémon with the same name as 1 of your Pokémon in play, reveal it, and put it into your hand. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

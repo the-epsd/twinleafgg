@@ -46,7 +46,8 @@ export class Mimikyuex extends PokemonCard {
 
   public name: string = 'Mimikyu ex';
 
-  public fullName: string = 'Mimikyu ex SVP';
+  public fullName: string = 'Mimikyu ex (SVP 4)';
+  public legacyFullName = 'Mimikyu ex SVP';
 
   public voidReturn: boolean = false;
 

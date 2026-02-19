@@ -68,7 +68,8 @@ export class EnergySwitch extends TrainerCard {
 
   public name: string = 'Energy Switch';
 
-  public fullName: string = 'Energy Switch SVI';
+  public fullName: string = 'Energy Switch (SVI 173)';
+  public legacyFullName = 'Energy Switch SVI';
 
   public text: string =
     'Move a basic Energy from 1 of your Pokemon to another of your Pokemon.';

@@ -14,7 +14,8 @@ export class StrangeTimepiece extends TrainerCard {
   public setNumber = '128';
   public set = 'MEG';
   public regulationMark = 'I';
-  public fullName = 'Strange Timepiece MEG';
+  public fullName = 'Strange Timepiece (MEG 128)';
+  public legacyFullName = 'Strange Timepiece MEG';
   public superType = SuperType.TRAINER;
   public trainerType = TrainerType.ITEM;
 

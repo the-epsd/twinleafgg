@@ -67,7 +67,8 @@ export class EnergySearchPro extends TrainerCard {
 
   public name: string = 'Energy Search Pro';
 
-  public fullName: string = 'Energy Search Pro SSP';
+  public fullName: string = 'Energy Search Pro (SSP 176)';
+  public legacyFullName = 'Energy Search Pro SSP';
 
   public cardImage: string = 'assets/cardback.png';
 

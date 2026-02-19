@@ -53,7 +53,8 @@ export class Lacey extends TrainerCard {
 
   public name: string = 'Lacey';
 
-  public fullName: string = 'Lacey SCR';
+  public fullName: string = 'Lacey (SCR 139)';
+  public legacyFullName = 'Lacey SCR';
 
   public text: string =
     'Shuffle your hand into your deck. Then, draw 4 cards. If your opponent has 3 or fewer Prize cards remaining, draw 8 cards instead.';

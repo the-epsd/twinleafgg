@@ -38,7 +38,8 @@ export class HopsCramorant extends PokemonCard {
 
   public name: string = 'Hop\'s Cramorant';
 
-  public fullName: string = 'Hop\'s Cramorant JTG';
+  public fullName: string = 'Hop\'s Cramorant (JTG 138)';
+  public legacyFullName = 'Hop\'s Cramorant JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

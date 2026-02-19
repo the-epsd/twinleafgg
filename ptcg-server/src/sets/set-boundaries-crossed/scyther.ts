@@ -31,5 +31,6 @@ export class Scyther extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scyther';
-  public fullName: string = 'Scyther BCR';
+  public fullName: string = 'Scyther (BCR 7)';
+  public legacyFullName = 'Scyther BCR';
 }

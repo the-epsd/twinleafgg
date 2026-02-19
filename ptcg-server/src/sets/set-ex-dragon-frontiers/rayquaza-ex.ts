@@ -36,7 +36,8 @@ export class Rayquazaex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '97';
   public name: string = 'Rayquaza ex';
-  public fullName: string = 'Rayquaza ex DF';
+  public fullName: string = 'Rayquaza ex (DF 97)';
+  public legacyFullName = 'Rayquaza ex DF';
 
   public getColorlessReduction(state: State): number {
     const player = StateUtils.findOwner(state, this.cards);

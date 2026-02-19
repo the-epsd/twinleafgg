@@ -28,7 +28,8 @@ export class Froakie extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name: string = 'Froakie';
-  public fullName: string = 'Froakie M4';
+  public fullName: string = 'Froakie (M4 20)';
+  public legacyFullName = 'Froakie M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

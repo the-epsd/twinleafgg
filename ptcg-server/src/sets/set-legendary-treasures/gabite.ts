@@ -36,7 +36,8 @@ export class Gabite extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gabite';
-  public fullName: string = 'Gabite LTR';
+  public fullName: string = 'Gabite (LTR 95)';
+  public legacyFullName = 'Gabite LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Shred

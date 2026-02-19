@@ -38,6 +38,7 @@ export class Croagunk extends PokemonCard {
 
   public name: string = 'Croagunk';
 
-  public fullName: string = 'Croagunk SVI';
+  public fullName: string = 'Croagunk (SVI 130)';
+  public legacyFullName = 'Croagunk SVI';
 
 }

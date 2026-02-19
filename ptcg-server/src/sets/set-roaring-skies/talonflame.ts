@@ -35,7 +35,8 @@ export class Talonflame extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Talonflame';
-  public fullName: string = 'Talonflame ROS';
+  public fullName: string = 'Talonflame (ROS 15)';
+  public legacyFullName = 'Talonflame ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Grand Loop

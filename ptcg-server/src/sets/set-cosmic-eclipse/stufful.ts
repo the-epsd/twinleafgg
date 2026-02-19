@@ -21,7 +21,7 @@ export class Stufful extends PokemonCard {
       name: 'Continuous Tumble',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Stufful extends PokemonCard {
   public setNumber: string = '181';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stufful';
-  public fullName: string = 'Stufful CEC';
+  public fullName: string = 'Stufful (CEC 181)';
+  public legacyFullName = 'Stufful CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Tumble

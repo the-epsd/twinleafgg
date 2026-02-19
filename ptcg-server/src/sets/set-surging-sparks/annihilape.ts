@@ -22,7 +22,8 @@ export class Annihilape extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '100';
   public name: string = 'Annihilape';
-  public fullName: string = 'Annihilape SSP';
+  public fullName: string = 'Annihilape (SSP 100)';
+  public legacyFullName = 'Annihilape SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

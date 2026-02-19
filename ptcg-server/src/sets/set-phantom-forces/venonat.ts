@@ -29,7 +29,8 @@ export class Venonat extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Venonat';
-  public fullName: string = 'Venonat PHF';
+  public fullName: string = 'Venonat (PHF 1)';
+  public legacyFullName = 'Venonat PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stun Spore

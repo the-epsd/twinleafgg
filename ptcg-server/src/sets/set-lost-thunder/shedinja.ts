@@ -120,7 +120,8 @@ export class Shedinja extends PokemonCard {
 
   public name: string = 'Shedinja';
 
-  public fullName: string = 'Shedinja LOT';
+  public fullName: string = 'Shedinja (LOT 95)';
+  public legacyFullName = 'Shedinja LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

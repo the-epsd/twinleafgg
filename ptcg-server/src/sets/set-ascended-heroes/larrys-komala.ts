@@ -33,7 +33,8 @@ export class LarrysKomala extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '175';
   public name: string = 'Larry\'s Komala';
-  public fullName: string = 'Larry\'s Komala MC';
+  public fullName: string = 'Larry\'s Komala (ASC 175)';
+  public legacyFullName = 'Larry\'s Komala MC';
 
   public readonly LETHARGIC_CHARGE_MARKER = 'LETHARGIC_CHARGE_MARKER';
 

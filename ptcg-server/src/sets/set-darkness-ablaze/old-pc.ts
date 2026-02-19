@@ -51,7 +51,8 @@ export class OldPc extends TrainerCard {
   public setNumber: string = '164';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Old PC';
-  public fullName: string = 'Old PC DAA';
+  public fullName: string = 'Old PC (DAA 164)';
+  public legacyFullName = 'Old PC DAA';
   public text: string = 'Flip 2 coins. If both are heads, put a card from your discard pile into your hand. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

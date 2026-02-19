@@ -36,7 +36,8 @@ export class Magneton extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magneton';
-  public fullName: string = 'Magneton PLS';
+  public fullName: string = 'Magneton (PLS 44)';
+  public legacyFullName = 'Magneton PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Metal Sound

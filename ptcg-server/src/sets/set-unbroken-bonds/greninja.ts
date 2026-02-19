@@ -39,7 +39,8 @@ export class Greninja extends PokemonCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Greninja';
-  public fullName: string = 'Greninja UNB';
+  public fullName: string = 'Greninja (UNB 117)';
+  public legacyFullName = 'Greninja UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bring Down

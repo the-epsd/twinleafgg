@@ -43,7 +43,8 @@ export class Combusken extends PokemonCard {
 
   public name: string = 'Combusken';
 
-  public fullName: string = 'Combusken DEX';
+  public fullName: string = 'Combusken (DEX 16)';
+  public legacyFullName = 'Combusken DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Double Kick attack

@@ -47,7 +47,8 @@ export class RoaringMoon extends PokemonCard {
 
   public name: string = 'Roaring Moon';
 
-  public fullName: string = 'Roaring Moon TEF';
+  public fullName: string = 'Roaring Moon (TEF 109)';
+  public legacyFullName = 'Roaring Moon TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

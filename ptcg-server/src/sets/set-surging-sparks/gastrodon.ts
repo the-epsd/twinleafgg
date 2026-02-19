@@ -35,7 +35,8 @@ export class Gastrodon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '107';
   public name: string = 'Gastrodon';
-  public fullName: string = 'Gastrodon SSP';
+  public fullName: string = 'Gastrodon (SSP 107)';
+  public legacyFullName = 'Gastrodon SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

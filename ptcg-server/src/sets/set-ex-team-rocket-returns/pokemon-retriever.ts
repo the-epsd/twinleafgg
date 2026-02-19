@@ -22,7 +22,8 @@ export class PokemonRetriever extends TrainerCard {
 
   public name: string = 'Pokémon Retriever';
 
-  public fullName: string = 'Pokémon Retriever TRR';
+  public fullName: string = 'Pokémon Retriever (TRR 84)';
+  public legacyFullName = 'Pokémon Retriever TRR';
 
   public text: string = 'Search your discard pile for Basic Pokémon and Evolution cards. You may either show 1 Basic Pokémon or Evolution card to your opponent and put it into your hand, or show a combination of 3 Basic Pokémon or Evolution cards to your opponent and shuffle them into your deck.';
 

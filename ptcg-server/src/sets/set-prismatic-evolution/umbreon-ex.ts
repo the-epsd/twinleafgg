@@ -34,7 +34,8 @@ export class Umbreonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';
   public name: string = 'Umbreon ex';
-  public fullName: string = 'Umbreon ex PRE';
+  public fullName: string = 'Umbreon ex (PRE 60)';
+  public legacyFullName = 'Umbreon ex PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -29,7 +29,8 @@ export class Baltoy extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Baltoy';
-  public fullName: string = 'Baltoy CES';
+  public fullName: string = 'Baltoy (CES 78)';
+  public legacyFullName = 'Baltoy CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psy Bolt

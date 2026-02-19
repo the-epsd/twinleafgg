@@ -36,7 +36,8 @@ export class Mawile extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mawile';
-  public fullName: string = 'Mawile CIN';
+  public fullName: string = 'Mawile (CIN 64)';
+  public legacyFullName = 'Mawile CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Family

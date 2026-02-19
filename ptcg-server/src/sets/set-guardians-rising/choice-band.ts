@@ -13,7 +13,8 @@ export class ChoiceBand extends TrainerCard {
   public setNumber = '121';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Choice Band';
-  public fullName: string = 'Choice Band GRI';
+  public fullName: string = 'Choice Band (GRI 121)';
+  public legacyFullName = 'Choice Band GRI';
   public text: string = 'The attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Active Pokémon-GX or Active Pokémon-EX (before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

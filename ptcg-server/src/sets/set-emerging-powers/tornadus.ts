@@ -39,7 +39,8 @@ export class Tornadus extends PokemonCard {
 
   public name: string = 'Tornadus';
 
-  public fullName: string = 'Tornadus EPO';
+  public fullName: string = 'Tornadus (EPO 89)';
+  public legacyFullName = 'Tornadus EPO';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -36,7 +36,8 @@ export class Gogoat extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gogoat';
-  public fullName: string = 'Gogoat BKT';
+  public fullName: string = 'Gogoat (BKT 17)';
+  public legacyFullName = 'Gogoat BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Overrun

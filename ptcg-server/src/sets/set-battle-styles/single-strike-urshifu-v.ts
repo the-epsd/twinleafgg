@@ -32,7 +32,8 @@ export class SingleStrikeUrshifuV extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Single Strike Urshifu V';
-  public fullName: string = 'Single Strike Urshifu V BST';
+  public fullName: string = 'Single Strike Urshifu V (BST 85)';
+  public legacyFullName = 'Single Strike Urshifu V BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

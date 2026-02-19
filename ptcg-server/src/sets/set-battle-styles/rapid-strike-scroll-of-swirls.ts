@@ -26,7 +26,8 @@ export class RapidStrikeScrollOfSwirls extends TrainerCard {
 
   public name: string = 'Rapid Strike Scroll of Swirls';
 
-  public fullName: string = 'Rapid Strike Scroll of Swirls BST';
+  public fullName: string = 'Rapid Strike Scroll of Swirls (BST 131)';
+  public legacyFullName = 'Rapid Strike Scroll of Swirls BST';
 
   public attacks: Attack[] = [{
     name: 'Matchless Maelstrom',

@@ -37,7 +37,8 @@ export class Ralts extends PokemonCard {
 
   public name: string = 'Ralts';
 
-  public fullName: string = 'Ralts ASR';
+  public fullName: string = 'Ralts (ASR 60)';
+  public legacyFullName = 'Ralts ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

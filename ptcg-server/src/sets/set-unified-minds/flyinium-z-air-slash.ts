@@ -23,7 +23,8 @@ export class FlyiniumZAirSlash extends TrainerCard {
 
   public name: string = 'Flyinium Z: Air Slash';
 
-  public fullName: string = 'Flyinium Z: Air Slash UNM';
+  public fullName: string = 'Flyinium Z: Air Slash (UNM 195)';
+  public legacyFullName = 'Flyinium Z: Air Slash UNM';
 
   public attacks: Attack[] = [{
     name: 'Speeding Skystrike-GX',

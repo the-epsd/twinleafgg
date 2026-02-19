@@ -30,7 +30,8 @@ export class Galvantula extends PokemonCard {
   public setNumber = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galvantula';
-  public fullName = 'Galvantula STS';
+  public fullName = 'Galvantula (STS 42)';
+  public legacyFullName = 'Galvantula STS';
 
   public readonly ELECTROWEB_MARKER: string = 'ELECTROWEB_MARKER';
 

@@ -38,7 +38,8 @@ export class RoboSubstituteTeamFlareGear extends TrainerCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Robo Substitute';
-  public fullName: string = 'Robo Substitute Team Flare Gear PHF';
+  public fullName: string = 'Robo Substitute (PHF 102)';
+  public legacyFullName = 'Robo Substitute Team Flare Gear PHF';
   public text: string = 'Play this card as if it were a 30 HP Colorless Basic Pokémon. At any time during your turn (before your attack), you may discard this card from play. This card can\'t retreat. If this card is Knocked Out, your opponent can\'t take any Prize Cards for it.';
 
   public powers: Power[] = [

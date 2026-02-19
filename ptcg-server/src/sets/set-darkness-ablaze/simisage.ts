@@ -36,7 +36,8 @@ export class Simisage extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Simisage';
-  public fullName: string = 'Simisage DAA';
+  public fullName: string = 'Simisage (DAA 7)';
+  public legacyFullName = 'Simisage DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Giga Impact

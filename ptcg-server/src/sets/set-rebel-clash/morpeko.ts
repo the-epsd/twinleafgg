@@ -42,7 +42,8 @@ export class Morpeko extends PokemonCard {
 
   public name: string = 'Morpeko';
 
-  public fullName: string = 'Morpeko RCL';
+  public fullName: string = 'Morpeko (RCL 73)';
+  public legacyFullName = 'Morpeko RCL';
   
   public readonly TORMENT_MARKER = 'TORMENT_MARKER';
   public DISABLED_ATTACK: Attack | undefined;

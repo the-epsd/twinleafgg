@@ -29,7 +29,8 @@ export class Porygon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '47';
   public name: string = 'Porygon';
-  public fullName: string = 'Porygon RG';
+  public fullName: string = 'Porygon (RG 47)';
+  public legacyFullName = 'Porygon RG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

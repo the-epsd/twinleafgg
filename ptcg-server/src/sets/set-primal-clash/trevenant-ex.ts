@@ -31,7 +31,7 @@ export class TrevenantEx extends PokemonCard {
       name: 'Wood Blast',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each [G] Energy attached to this Pokémon.'
     }
   ];
@@ -40,7 +40,8 @@ export class TrevenantEx extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trevenant-EX';
-  public fullName: string = 'Trevenant-EX PRC';
+  public fullName: string = 'Trevenant-EX (PRC 19)';
+  public legacyFullName = 'Trevenant-EX PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dark Forest

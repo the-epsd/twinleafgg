@@ -36,7 +36,8 @@ export class DarkIvysaur extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name = 'Dark Ivysaur';
-  public fullName = 'Dark Ivysaur BP';
+  public fullName = 'Dark Ivysaur (BP 6)';
+  public legacyFullName = 'Dark Ivysaur BP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

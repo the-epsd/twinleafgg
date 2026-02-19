@@ -23,7 +23,8 @@ export class Tinkatink extends PokemonCard {
   public setNumber = '83';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Tinkatink';
-  public fullName: string = 'Tinkatink PAR';
+  public fullName: string = 'Tinkatink (PAR 83)';
+  public legacyFullName = 'Tinkatink PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Boundless Power

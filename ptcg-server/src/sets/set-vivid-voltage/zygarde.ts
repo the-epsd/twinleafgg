@@ -26,7 +26,7 @@ export class Zygarde extends PokemonCard {
       name: 'Core Avenger',
       cost: [F, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have more Prize cards remaining than your opponent, this attack does 80 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Zygarde extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zygarde';
-  public fullName: string = 'Zygarde VIV';
+  public fullName: string = 'Zygarde (VIV 93)';
+  public legacyFullName = 'Zygarde VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Core Avenger

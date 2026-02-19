@@ -36,7 +36,8 @@ export class TapuKokoV extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tapu Koko V';
-  public fullName: string = 'Tapu Koko V SSH';
+  public fullName: string = 'Tapu Koko V (SSH 72)';
+  public legacyFullName = 'Tapu Koko V SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spike Draw

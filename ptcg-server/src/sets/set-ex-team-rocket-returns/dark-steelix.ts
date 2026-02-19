@@ -32,7 +32,8 @@ export class DarkSteelix extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '10';
   public name: string = 'Dark Steelix';
-  public fullName: string = 'Dark Steelix TRR';
+  public fullName: string = 'Dark Steelix (TRR 10)';
+  public legacyFullName = 'Dark Steelix TRR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

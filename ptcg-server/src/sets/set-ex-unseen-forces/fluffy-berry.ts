@@ -13,7 +13,8 @@ export class FluffyBerry extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'UF';
   public name: string = 'Fluffy Berry';
-  public fullName: string = 'Fluffy Berry UF';
+  public fullName: string = 'Fluffy Berry (UF 85)';
+  public legacyFullName = 'Fluffy Berry UF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
 

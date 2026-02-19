@@ -34,7 +34,8 @@ export class Drifblim extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '35';
   public name: string = 'Drifblim';
-  public fullName: string = 'Drifblim PLB';
+  public fullName: string = 'Drifblim (PLB 35)';
+  public legacyFullName = 'Drifblim PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -31,7 +31,8 @@ export class Seadra extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '58';
   public name: string = 'Seadra';
-  public fullName: string = 'Seadra AQ';
+  public fullName: string = 'Seadra (AQ 58)';
+  public legacyFullName = 'Seadra AQ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

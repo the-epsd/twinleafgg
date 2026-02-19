@@ -13,7 +13,8 @@ export class RocketsPokeBall extends TrainerCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rocket\'s Poké Ball';
-  public fullName: string = 'Rocket\'s Poké Ball TRR';
+  public fullName: string = 'Rocket\'s Poké Ball (TRR 89)';
+  public legacyFullName = 'Rocket\'s Poké Ball TRR';
 
   public text: string = 'Search your deck for a Pokémon with Dark in its name, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
 

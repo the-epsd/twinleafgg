@@ -26,5 +26,6 @@ export class Riolu extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '112';
   public name: string = 'Riolu';
-  public fullName: string = 'Riolu SVI';
+  public fullName: string = 'Riolu (SVI 112)';
+  public legacyFullName = 'Riolu SVI';
 }

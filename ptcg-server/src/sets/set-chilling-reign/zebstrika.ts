@@ -29,14 +29,14 @@ export class Zebstrika extends PokemonCard {
       name: 'Coordinated Bolt',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If 1 of your other Rapid Strike Pokémon used an attack during your last turn, this attack does 90 more damage.'
     },
     {
       name: 'Spark Rush',
       cost: [L, C, C],
       damage: 90,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 90 damage for each heads.'
     }
   ];
@@ -46,7 +46,8 @@ export class Zebstrika extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zebstrika';
-  public fullName: string = 'Zebstrika CRE';
+  public fullName: string = 'Zebstrika (CRE 51)';
+  public legacyFullName = 'Zebstrika CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track when another Rapid Strike Pokemon uses an attack (for the "last turn" bonus)

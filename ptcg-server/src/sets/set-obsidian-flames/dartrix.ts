@@ -39,7 +39,8 @@ export class Dartrix extends PokemonCard {
 
   public name: string = 'Dartrix';
 
-  public fullName: string = 'Dartrix OBF';
+  public fullName: string = 'Dartrix (OBF 14)';
+  public legacyFullName = 'Dartrix OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Shoot Through

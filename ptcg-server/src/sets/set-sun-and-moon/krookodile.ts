@@ -22,7 +22,7 @@ export class Krookodile extends PokemonCard {
       name: 'False Accusation',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each card in your opponent\'s hand.'
     },
     {
@@ -37,7 +37,8 @@ export class Krookodile extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Krookodile';
-  public fullName: string = 'Krookodile SUM';
+  public fullName: string = 'Krookodile (SUM 85)';
+  public legacyFullName = 'Krookodile SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: False Accusation

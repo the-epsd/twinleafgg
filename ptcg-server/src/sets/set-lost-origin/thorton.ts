@@ -21,7 +21,8 @@ export class Thorton extends TrainerCard {
 
   public name: string = 'Thorton';
 
-  public fullName: string = 'Thorton LOR';
+  public fullName: string = 'Thorton (LOR 167)';
+  public legacyFullName = 'Thorton LOR';
 
   public text: string =
     'Choose a Basic Pokémon in your discard pile and switch it with 1 of your Basic Pokémon in play. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon. You may play only 1 Supporter card during your turn.';

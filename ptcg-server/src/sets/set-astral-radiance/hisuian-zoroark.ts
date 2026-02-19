@@ -47,7 +47,8 @@ export class HisuianZoroark extends PokemonCard {
 
   public name: string = 'Hisuian Zoroark';
 
-  public fullName: string = 'Hisuian Zoroark ASR';
+  public fullName: string = 'Hisuian Zoroark (ASR 76)';
+  public legacyFullName = 'Hisuian Zoroark ASR';
 
   public CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
   public KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';

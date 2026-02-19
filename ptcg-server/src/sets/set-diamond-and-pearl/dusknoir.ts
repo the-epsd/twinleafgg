@@ -32,7 +32,8 @@ export class Dusknoir extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '2';
   public name: string = 'Dusknoir';
-  public fullName: string = 'Dusknoir DP';
+  public fullName: string = 'Dusknoir (DP 2)';
+  public legacyFullName = 'Dusknoir DP';
 
   public readonly DARK_PALM_MARKER = 'DARK_PALM_MARKER';
 

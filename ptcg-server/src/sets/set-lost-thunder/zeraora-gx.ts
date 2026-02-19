@@ -38,7 +38,8 @@ export class ZeraoraGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '201';
   public name = 'Zeraora-GX';
-  public fullName = 'Zeraora GX LOT';
+  public fullName = 'Zeraora-GX (LOT 201)';
+  public legacyFullName = 'Zeraora GX LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

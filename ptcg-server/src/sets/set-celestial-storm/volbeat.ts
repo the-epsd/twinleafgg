@@ -20,7 +20,7 @@ export class Volbeat extends PokemonCard {
       name: 'Pheromone Catch',
       cost: [G],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your Illumise used Pheromone Signals during your last turn, this attack does 100 more damage.'
     }
   ];
@@ -29,7 +29,8 @@ export class Volbeat extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Volbeat';
-  public fullName: string = 'Volbeat CES';
+  public fullName: string = 'Volbeat (CES 17)';
+  public legacyFullName = 'Volbeat CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pheromone Catch

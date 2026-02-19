@@ -47,7 +47,8 @@ export class Squirtle extends PokemonCard {
 
   public name = 'Squirtle';
 
-  public fullName = 'Squirtle MEW';
+  public fullName = 'Squirtle (MEW 7)';
+  public legacyFullName = 'Squirtle MEW';
 
   public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
   public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';

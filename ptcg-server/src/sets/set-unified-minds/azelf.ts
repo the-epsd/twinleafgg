@@ -29,7 +29,8 @@ export class Azelf extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Azelf';
-  public fullName: string = 'Azelf UNM';
+  public fullName: string = 'Azelf (UNM 85)';
+  public legacyFullName = 'Azelf UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psypower

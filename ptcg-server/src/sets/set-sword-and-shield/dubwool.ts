@@ -41,7 +41,8 @@ export class Dubwool extends PokemonCard {
   public setNumber: string = '154';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dubwool';
-  public fullName: string = 'Dubwool SSH';
+  public fullName: string = 'Dubwool (SSH 154)';
+  public legacyFullName = 'Dubwool SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Cotton Guard

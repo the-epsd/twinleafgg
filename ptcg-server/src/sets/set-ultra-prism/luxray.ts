@@ -35,7 +35,8 @@ export class Luxray extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luxray';
-  public fullName: string = 'Luxray UPR';
+  public fullName: string = 'Luxray (UPR 48)';
+  public legacyFullName = 'Luxray UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Intimidating Fang (passive - reduce opponent's attack damage by 30)

@@ -39,7 +39,8 @@ export class Aurorus extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aurorus';
-  public fullName: string = 'Aurorus FFI';
+  public fullName: string = 'Aurorus (FFI 26)';
+  public legacyFullName = 'Aurorus FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Ice Shield (passive - reduce damage to Water Pokemon with Water Energy)

@@ -29,7 +29,8 @@ export class GolduckBreak extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golduck BREAK';
-  public fullName: string = 'Golduck BREAK BKP';
+  public fullName: string = 'Golduck BREAK (BKP 18)';
+  public legacyFullName = 'Golduck BREAK BKP';
 
   // Ref: set-primal-clash/eelektross.ts (Energy Connect)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

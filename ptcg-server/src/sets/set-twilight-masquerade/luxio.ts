@@ -26,7 +26,8 @@ export class Luxio extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public name: string = 'Luxio';
-  public fullName: string = 'Luxio TWM';
+  public fullName: string = 'Luxio (TWM 67)';
+  public legacyFullName = 'Luxio TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

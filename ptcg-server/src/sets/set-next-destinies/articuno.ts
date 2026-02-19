@@ -32,7 +32,8 @@ export class Articuno extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Articuno';
-  public fullName: string = 'Articuno NXD';
+  public fullName: string = 'Articuno (NXD 27)';
+  public legacyFullName = 'Articuno NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ice Beam

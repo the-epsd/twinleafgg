@@ -38,7 +38,8 @@ export class SalamenceV extends PokemonCard {
   public setNumber: string = '143';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salamence V';
-  public fullName: string = 'Salamence V DAA';
+  public fullName: string = 'Salamence V (DAA 143)';
+  public legacyFullName = 'Salamence V DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swoop Across

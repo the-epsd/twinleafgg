@@ -26,7 +26,8 @@ export class Wailord extends PokemonCard {
   public set: string = 'JTG';
   public setNumber: string = '41';
   public name: string = 'Wailord';
-  public fullName: string = 'Wailord JTG';
+  public fullName: string = 'Wailord (JTG 41)';
+  public legacyFullName = 'Wailord JTG';
   public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

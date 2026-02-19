@@ -28,7 +28,8 @@ export class Slakoth extends PokemonCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slakoth';
-  public fullName: string = 'Slakoth DRX';
+  public fullName: string = 'Slakoth (DRX 101)';
+  public legacyFullName = 'Slakoth DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

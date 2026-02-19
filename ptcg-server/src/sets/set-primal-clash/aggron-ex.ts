@@ -23,14 +23,14 @@ export class AggronEx extends PokemonCard {
       name: 'Steel Headbutt',
       cost: [M, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {
       name: 'Raging Hammer',
       cost: [M, M, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     }
   ];
@@ -39,7 +39,8 @@ export class AggronEx extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aggron-EX';
-  public fullName: string = 'Aggron-EX PRC';
+  public fullName: string = 'Aggron-EX (PRC 93)';
+  public legacyFullName = 'Aggron-EX PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Steel Headbutt

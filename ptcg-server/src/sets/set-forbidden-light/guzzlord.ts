@@ -30,7 +30,8 @@ export class Guzzlord extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Guzzlord';
-  public fullName: string = 'Guzzlord FLI';
+  public fullName: string = 'Guzzlord (FLI 80)';
+  public legacyFullName = 'Guzzlord FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lord's Valley

@@ -24,7 +24,7 @@ export class MAmpharosEx extends PokemonCard {
       name: 'Exavolt',
       cost: [L, L, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 50 more damage and leave your opponent\'s Active Pokémon Paralyzed. If you do, this Pokémon does 30 damage to itself.'
     }
   ];
@@ -33,7 +33,8 @@ export class MAmpharosEx extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Ampharos-EX';
-  public fullName: string = 'M Ampharos-EX AOR';
+  public fullName: string = 'M Ampharos-EX (AOR 28)';
+  public legacyFullName = 'M Ampharos-EX AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Exavolt

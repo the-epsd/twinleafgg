@@ -94,7 +94,8 @@ export class FieryFlint extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';
   public name: string = 'Fiery Flint';
-  public fullName: string = 'Fiery Flint DRM';
+  public fullName: string = 'Fiery Flint (DRM 60)';
+  public legacyFullName = 'Fiery Flint DRM';
 
   public text: string =
     `You can play this card only if you discard 2 other cards from your hand.

@@ -36,7 +36,8 @@ export class Gyarados extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gyarados';
-  public fullName: string = 'Gyarados DRM';
+  public fullName: string = 'Gyarados (DRM 20)';
+  public legacyFullName = 'Gyarados DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Commotion (passive - damaged by opponent's attack -> damage own bench)

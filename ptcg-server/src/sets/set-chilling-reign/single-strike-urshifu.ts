@@ -28,7 +28,7 @@ export class SingleStrikeUrshifu extends PokemonCard {
       name: 'Fists of Strife',
       cost: [D, D, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any damage counters on it, this attack does 100 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class SingleStrikeUrshifu extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Single Strike Urshifu';
-  public fullName: string = 'Single Strike Urshifu CRE';
+  public fullName: string = 'Single Strike Urshifu (CRE 108)';
+  public legacyFullName = 'Single Strike Urshifu CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Field Crush

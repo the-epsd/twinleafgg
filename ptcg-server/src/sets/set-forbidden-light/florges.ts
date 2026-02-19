@@ -32,7 +32,8 @@ export class Florges extends PokemonCard {
 
   public set: string = 'FLI';
   public name: string = 'Florges';
-  public fullName: string = 'Florges FLI';
+  public fullName: string = 'Florges (FLI 86)';
+  public legacyFullName = 'Florges FLI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
 

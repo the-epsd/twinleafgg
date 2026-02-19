@@ -22,7 +22,7 @@ export class Vanillish extends PokemonCard {
       name: 'Ice Edge',
       cost: [W],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Vanillish extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanillish';
-  public fullName: string = 'Vanillish BKT';
+  public fullName: string = 'Vanillish (BKT 44)';
+  public legacyFullName = 'Vanillish BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ice Edge

@@ -29,7 +29,8 @@ export class Sandile extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandile';
-  public fullName: string = 'Sandile FLF';
+  public fullName: string = 'Sandile (FLF 56)';
+  public legacyFullName = 'Sandile FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/bidoof.ts (Hyper Fang)

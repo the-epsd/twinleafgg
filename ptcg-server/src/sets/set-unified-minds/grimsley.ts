@@ -21,7 +21,8 @@ export class Grimsley extends TrainerCard {
 
   public name: string = 'Grimsley';
 
-  public fullName: string = 'Grimsley UNM';
+  public fullName: string = 'Grimsley (UNM 199)';
+  public legacyFullName = 'Grimsley UNM';
 
   public text: string =
     'Move up to 3 damage counters from 1 of your opponent\'s Pokémon to another of their Pokémon.';

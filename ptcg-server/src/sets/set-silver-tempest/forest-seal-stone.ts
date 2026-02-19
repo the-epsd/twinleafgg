@@ -17,7 +17,8 @@ export class ForestSealStone extends TrainerCard {
   public setNumber: string = '156';
   public regulationMark = 'F';
   public name: string = 'Forest Seal Stone';
-  public fullName: string = 'Forest Seal Stone SIT';
+  public fullName: string = 'Forest Seal Stone (SIT 156)';
+  public legacyFullName = 'Forest Seal Stone SIT';
 
   public text: string = 'The Pokémon V this card is attached to can use the VSTAR Power on this card.';
 

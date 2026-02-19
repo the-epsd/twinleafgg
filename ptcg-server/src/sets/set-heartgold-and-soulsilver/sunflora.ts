@@ -32,7 +32,8 @@ export class Sunflora extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '31';
   public name: string = 'Sunflora';
-  public fullName: string = 'Sunflora HS';
+  public fullName: string = 'Sunflora (HS 31)';
+  public legacyFullName = 'Sunflora HS';
 
   public readonly SUNSHINE_GRACE_MARKER = 'SUNSHINE_GRACE_MARKER';
 

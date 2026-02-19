@@ -37,7 +37,8 @@ export class Golurk extends PokemonCard {
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golurk';
-  public fullName: string = 'Golurk CEC';
+  public fullName: string = 'Golurk (CEC 90)';
+  public legacyFullName = 'Golurk CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Tumble

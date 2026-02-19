@@ -40,7 +40,8 @@ export class Phione extends PokemonCard {
 
   public name: string = 'Phione';
 
-  public fullName: string = 'Phione TWM';
+  public fullName: string = 'Phione (TWM 55)';
+  public legacyFullName = 'Phione TWM';
 
   public cardImage: string = 'assets/cardback.png';
 

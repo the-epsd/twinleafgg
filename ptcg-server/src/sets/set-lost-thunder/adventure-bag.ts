@@ -67,7 +67,8 @@ export class AdventureBag extends TrainerCard {
 
   public name: string = 'Adventure Bag';
 
-  public fullName: string = 'Adventure Bag LOT';
+  public fullName: string = 'Adventure Bag (LOT 167)';
+  public legacyFullName = 'Adventure Bag LOT';
 
   public text: string =
     'Search your deck for up to 2 Pokémon Tool cards, reveal them, and put them into your hand. Then, shuffle your deck.';

@@ -28,6 +28,7 @@ export class Pawniard extends PokemonCard {
 
   public name: string = 'Pawniard';
 
-  public fullName: string = 'Pawniard SVI';
+  public fullName: string = 'Pawniard (SVI 132)';
+  public legacyFullName = 'Pawniard SVI';
 
 }

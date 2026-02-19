@@ -20,7 +20,7 @@ export class JangmoO extends PokemonCard {
       name: 'Raging Claws',
       cost: [L, F],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     }
   ];
@@ -29,7 +29,8 @@ export class JangmoO extends PokemonCard {
   public setNumber: string = '160';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jangmo-o';
-  public fullName: string = 'Jangmo-o CEC';
+  public fullName: string = 'Jangmo-o (CEC 160)';
+  public legacyFullName = 'Jangmo-o CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Raging Claws

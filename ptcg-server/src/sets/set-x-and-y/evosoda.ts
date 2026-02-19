@@ -117,7 +117,8 @@ export class Evosoda extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'XY';
   public name: string = 'Evosoda';
-  public fullName: string = 'Evosoda XY';
+  public fullName: string = 'Evosoda (XY 116)';
+  public legacyFullName = 'Evosoda XY';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '116';
   public text: string = 'Search your deck for a card that evolves from 1 of your Pokémon and put it onto that Pokémon. (This counts as evolving that Pokémon.) Shuffle your deck afterward. You can\'t use this card during your first turn or on a Pokémon that was put into play this turn.';

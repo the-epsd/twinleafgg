@@ -32,5 +32,6 @@ export class Dewott extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dewott';
-  public fullName: string = 'Dewott BCR';
+  public fullName: string = 'Dewott (BCR 40)';
+  public legacyFullName = 'Dewott BCR';
 }

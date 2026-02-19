@@ -35,7 +35,8 @@ export class Cubchoo extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cubchoo';
-  public fullName: string = 'Cubchoo LOT';
+  public fullName: string = 'Cubchoo (LOT 61)';
+  public legacyFullName = 'Cubchoo LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Secondary Chills

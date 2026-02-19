@@ -32,7 +32,8 @@ export class Muk extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Muk';
-  public fullName: string = 'Muk NXD';
+  public fullName: string = 'Muk (NXD 53)';
+  public legacyFullName = 'Muk NXD';
 
   public readonly GENTLE_WRAP_MARKER = 'GENTLE_WRAP_MARKER';
 

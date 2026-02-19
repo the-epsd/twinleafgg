@@ -39,7 +39,8 @@ export class MoltresEx extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Moltres-EX';
-  public fullName: string = 'Moltres-EX PLS';
+  public fullName: string = 'Moltres-EX (PLS 14)';
+  public legacyFullName = 'Moltres-EX PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Destructive Flame

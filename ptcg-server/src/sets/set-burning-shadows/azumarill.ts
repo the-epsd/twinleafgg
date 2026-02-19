@@ -37,7 +37,8 @@ export class Azumarill extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Azumarill';
-  public fullName: string = 'Azumarill BUS';
+  public fullName: string = 'Azumarill (BUS 35)';
+  public legacyFullName = 'Azumarill BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Thick Fat (passive - reduce damage from Fire/Water Pokemon)

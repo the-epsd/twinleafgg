@@ -33,7 +33,8 @@ export class Staraptor extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Staraptor';
-  public fullName: string = 'Staraptor PLF';
+  public fullName: string = 'Staraptor (PLF 97)';
+  public legacyFullName = 'Staraptor PLF';
 
   public usedStrongBreeze = false;
 

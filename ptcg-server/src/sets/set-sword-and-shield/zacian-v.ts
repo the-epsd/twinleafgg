@@ -34,7 +34,8 @@ export class ZacianV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '138';
   public name: string = 'Zacian V';
-  public fullName: string = 'Zacian V SSH';
+  public fullName: string = 'Zacian V (SSH 138)';
+  public legacyFullName = 'Zacian V SSH';
 
   public readonly BRAVE_BLADE_MARKER = 'BRAVE_BLADE_MARKER';
   public readonly BRAVE_BLADE_MARKER_2 = 'BRAVE_BLADE_MARKER_2';

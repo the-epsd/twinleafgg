@@ -46,7 +46,8 @@ export class Greninja extends PokemonCard {
 
   public name: string = 'Greninja';
 
-  public fullName: string = 'Greninja DET';
+  public fullName: string = 'Greninja (DET 9)';
+  public legacyFullName = 'Greninja DET';
 
   public usedMirageBarrage: boolean = false;
   public blockDamage: boolean = false;

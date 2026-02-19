@@ -34,7 +34,8 @@ export class Gallade extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
   public name: string = 'Gallade';
-  public fullName: string = 'Gallade SW';
+  public fullName: string = 'Gallade (SW 6)';
+  public legacyFullName = 'Gallade SW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -22,7 +22,7 @@ export class RayquazaEx2 extends PokemonCard {
       name: 'Intensifying Burn',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, this attack does 50 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class RayquazaEx2 extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rayquaza-EX';
-  public fullName: string = 'Rayquaza-EX ROS 75';
+  public fullName: string = 'Rayquaza-EX (ROS 75)';
+  public legacyFullName = 'Rayquaza-EX ROS 75';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Intensifying Burn

@@ -74,7 +74,8 @@ export class Lady extends TrainerCard {
 
   public name: string = 'Lady';
 
-  public fullName: string = 'Lady LOR';
+  public fullName: string = 'Lady (LOR 159)';
+  public legacyFullName = 'Lady LOR';
 
   public text: string =
     'Search your deck for up to 4 basic Energy cards, reveal ' +

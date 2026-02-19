@@ -34,7 +34,8 @@ export class Weezing extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weezing';
-  public fullName: string = 'Weezing HIF';
+  public fullName: string = 'Weezing (HIF 29)';
+  public legacyFullName = 'Weezing HIF';
 
   // Ref: Ability "Surrender Now" is implemented in jessie-and-james.ts
   // It triggers when this card is discarded by Jessie & James's effect.

@@ -23,7 +23,7 @@ export class Rayquaza extends PokemonCard {
       name: 'Amazing Burst',
       cost: [G, L, F],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard all basic Energy from this Pokémon. This attack does 80 damage for each type of basic Energy you discarded in this way.'
     }
   ];
@@ -33,7 +33,8 @@ export class Rayquaza extends PokemonCard {
   public setNumber: string = '138';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rayquaza';
-  public fullName: string = 'Rayquaza VIV';
+  public fullName: string = 'Rayquaza (VIV 138)';
+  public legacyFullName = 'Rayquaza VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Amazing Burst

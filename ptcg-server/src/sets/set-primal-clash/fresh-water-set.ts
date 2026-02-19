@@ -15,7 +15,8 @@ export class FreshWaterSet extends TrainerCard {
   public setNumber: string = '129';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fresh Water Set';
-  public fullName: string = 'Fresh Water Set PRC';
+  public fullName: string = 'Fresh Water Set (PRC 129)';
+  public legacyFullName = 'Fresh Water Set PRC';
   public text: string = 'Heal 20 damage from each of your Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -26,7 +26,7 @@ export class Meowth extends PokemonCard {
       name: 'Fury Swipes',
       cost: [C, C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 20 damage times the number of heads.'
     }
   ];
@@ -35,7 +35,8 @@ export class Meowth extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meowth';
-  public fullName: string = 'Meowth ROS';
+  public fullName: string = 'Meowth (ROS 67)';
+  public legacyFullName = 'Meowth ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Feelin' Fine

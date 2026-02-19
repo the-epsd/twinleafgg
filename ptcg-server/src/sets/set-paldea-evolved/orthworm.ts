@@ -34,7 +34,8 @@ export class Orthworm extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '151';
   public name: string = 'Orthworm';
-  public fullName: string = 'Orthworm PAL';
+  public fullName: string = 'Orthworm (PAL 151)';
+  public legacyFullName = 'Orthworm PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

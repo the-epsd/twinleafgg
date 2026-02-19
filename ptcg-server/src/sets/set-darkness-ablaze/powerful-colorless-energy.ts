@@ -24,7 +24,8 @@ export class PowerfulColorlessEnergy extends EnergyCard {
 
   public name = 'Powerful Colorless Energy';
 
-  public fullName = 'Powerful Colorless Energy DAA';
+  public fullName = 'Powerful Colorless Energy (DAA 176)';
+  public legacyFullName = 'Powerful Colorless Energy DAA';
 
   public text =
     `As long as this card is attached to a Pokémon, it provides [C] Energy.

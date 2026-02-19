@@ -14,7 +14,8 @@ export class AromaticGrassEnergy extends EnergyCard {
   public setNumber: string = '162';
   public regulationMark = 'D';
   public name = 'Aromatic Grass Energy';
-  public fullName = 'Aromatic Grass Energy VIV';
+  public fullName = 'Aromatic Grass Energy (VIV 162)';
+  public legacyFullName = 'Aromatic Grass Energy VIV';
 
   public text = `As long as this card is attached to a Pokémon, it provides[G] Energy.
     

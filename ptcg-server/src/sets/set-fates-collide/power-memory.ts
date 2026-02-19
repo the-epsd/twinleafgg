@@ -20,7 +20,8 @@ export class PowerMemory extends TrainerCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Power Memory';
-  public fullName: string = 'Power Memory FCO';
+  public fullName: string = 'Power Memory (FCO 108)';
+  public legacyFullName = 'Power Memory FCO';
 
   public attacks: Attack[] = [{
     name: 'All Cells Burn',

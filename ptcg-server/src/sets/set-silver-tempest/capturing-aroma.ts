@@ -22,7 +22,8 @@ export class CapturingAroma extends TrainerCard {
 
   public name: string = 'Capturing Aroma';
 
-  public fullName: string = 'Capturing Aroma SIT';
+  public fullName: string = 'Capturing Aroma (SIT 153)';
+  public legacyFullName = 'Capturing Aroma SIT';
 
   public text: string =
     'Flip a coin. If heads, search your deck for an Evolution Pokémon, reveal it, and put it into your hand. If tails, search your deck for a Basic Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';

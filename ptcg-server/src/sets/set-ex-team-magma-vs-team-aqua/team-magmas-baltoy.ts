@@ -30,7 +30,8 @@ export class TeamMagmasBaltoy extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';
   public name: string = 'Team Magma\'s Baltoy';
-  public fullName: string = 'Team Magma\'s Baltoy MA';
+  public fullName: string = 'Team Magma\'s Baltoy (MA 60)';
+  public legacyFullName = 'Team Magma\'s Baltoy MA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

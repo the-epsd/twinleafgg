@@ -10,7 +10,8 @@ export class GiantCape extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'DRX';
   public name: string = 'Giant Cape';
-  public fullName: string = 'Giant Cape DRX';
+  public fullName: string = 'Giant Cape (DRX 114)';
+  public legacyFullName = 'Giant Cape DRX';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '114';
 

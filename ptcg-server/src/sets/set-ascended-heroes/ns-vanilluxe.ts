@@ -33,7 +33,8 @@ export class NsVanilluxe extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '51';
   public name: string = 'N\'s Vanilluxe';
-  public fullName: string = 'N\'s Vanilluxe M2a';
+  public fullName: string = 'N\'s Vanilluxe (ASC 51)';
+  public legacyFullName = 'N\'s Vanilluxe M2a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Layered Snow - double damage counters on each opponent's Pokémon

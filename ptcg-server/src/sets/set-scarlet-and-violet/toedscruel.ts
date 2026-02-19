@@ -29,7 +29,8 @@ export class Toedscruel extends PokemonCard {
   public set: string = 'SVI';
   public regulationMark = 'G';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Toedscruel SVI';
+  public fullName: string = 'Toedscruel (SVI 26)';
+  public legacyFullName = 'Toedscruel SVI';
   public name: string = 'Toedscruel';
   public setNumber: string = '26';
 

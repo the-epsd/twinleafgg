@@ -30,7 +30,8 @@ export class Weedle extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weedle';
-  public fullName: string = 'Weedle XY';
+  public fullName: string = 'Weedle (XY 3)';
+  public legacyFullName = 'Weedle XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-legendary-treasures/ninetales.ts (type check pattern)

@@ -47,7 +47,8 @@ export class Hoopa extends PokemonCard {
 
   public name: string = 'Hoopa';
 
-  public fullName: string = 'Hoopa SLG';
+  public fullName: string = 'Hoopa (SLG 55)';
+  public legacyFullName = 'Hoopa SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Scoundrel Guard

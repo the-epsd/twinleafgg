@@ -28,7 +28,8 @@ export class MegaSlowbroex extends PokemonCard {
   public setNumber = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Slowbro ex';
-  public fullName: string = 'Mega Slowbro ex MEP';
+  public fullName: string = 'Mega Slowbro ex (MEP 71)';
+  public legacyFullName = 'Mega Slowbro ex MEP';
 
   public readonly SHELLNADO_SPIN_MARKER = 'SHELLNADO_SPIN_MARKER';
   public readonly CLEAR_SHELLNADO_SPIN_MARKER = 'CLEAR_SHELLNADO_SPIN_MARKER';

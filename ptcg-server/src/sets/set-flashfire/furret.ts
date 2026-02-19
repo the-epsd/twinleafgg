@@ -37,7 +37,8 @@ export class Furret extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Furret';
-  public fullName: string = 'Furret FLF';
+  public fullName: string = 'Furret (FLF 82)';
+  public legacyFullName = 'Furret FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-legendary-treasures/phione.ts (card selection pattern)

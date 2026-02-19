@@ -35,7 +35,8 @@ export class Kabuto extends PokemonCard {
 
   public name: string = 'Kabuto';
 
-  public fullName: string = 'Kabuto FO';
+  public fullName: string = 'Kabuto (FO 50)';
+  public legacyFullName = 'Kabuto FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

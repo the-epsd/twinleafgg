@@ -42,7 +42,8 @@ export class PidgeotEx extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pidgeot-EX';
-  public fullName: string = 'Pidgeot-EX EVO';
+  public fullName: string = 'Pidgeot-EX (EVO 64)';
+  public legacyFullName = 'Pidgeot-EX EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mirror Move

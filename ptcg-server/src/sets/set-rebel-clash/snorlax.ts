@@ -35,7 +35,8 @@ export class Snorlax extends PokemonCard {
   public setNumber: string = '141';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snorlax';
-  public fullName: string = 'Snorlax RCL';
+  public fullName: string = 'Snorlax (RCL 141)';
+  public legacyFullName = 'Snorlax RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Collect

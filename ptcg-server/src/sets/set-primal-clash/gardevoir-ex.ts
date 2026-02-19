@@ -32,7 +32,8 @@ export class GardevoirEx extends PokemonCard {
 
   public set: string = 'PRC';
   public name: string = 'Gardevoir-EX';
-  public fullName: string = 'Gardevoir EX PRC';
+  public fullName: string = 'Gardevoir-EX (PRC 105)';
+  public legacyFullName = 'Gardevoir EX PRC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '105';
 

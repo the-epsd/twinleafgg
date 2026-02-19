@@ -29,7 +29,8 @@ export class AlolanGeodude extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Geodude';
-  public fullName: string = 'Alolan Geodude TEU';
+  public fullName: string = 'Alolan Geodude (TEU 34)';
+  public legacyFullName = 'Alolan Geodude TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Self-Destruct

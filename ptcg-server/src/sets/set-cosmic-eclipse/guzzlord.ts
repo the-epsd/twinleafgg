@@ -32,7 +32,8 @@ export class Guzzlord extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '136';
   public name: string = 'Guzzlord';
-  public fullName: string = 'Guzzlord CEC';
+  public fullName: string = 'Guzzlord (CEC 136)';
+  public legacyFullName = 'Guzzlord CEC';
 
   private usedRedBanquet = false;
 

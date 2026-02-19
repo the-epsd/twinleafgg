@@ -15,7 +15,8 @@ export class Mary extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Mary';
-  public fullName: string = 'Mary N1';
+  public fullName: string = 'Mary (N1 87)';
+  public legacyFullName = 'Mary N1';
 
   public text: string =
     'Draw 2 cards. Then, shuffle 2 cards from your hand into your deck.';

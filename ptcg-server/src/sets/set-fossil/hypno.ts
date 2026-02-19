@@ -38,7 +38,8 @@ export class Hypno extends PokemonCard {
 
   public name: string = 'Hypno';
 
-  public fullName: string = 'Hypno FO';
+  public fullName: string = 'Hypno (FO 8)';
+  public legacyFullName = 'Hypno FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

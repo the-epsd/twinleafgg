@@ -29,7 +29,7 @@ export class Azumarill extends PokemonCard {
       name: 'Superpower',
       cost: [Y, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 30 more damage. If you do, this Pokémon does 30 damage to itself.'
     }
   ];
@@ -38,7 +38,8 @@ export class Azumarill extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Azumarill';
-  public fullName: string = 'Azumarill PRC';
+  public fullName: string = 'Azumarill (PRC 103)';
+  public legacyFullName = 'Azumarill PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble Beam

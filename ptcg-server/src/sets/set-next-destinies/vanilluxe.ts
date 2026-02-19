@@ -33,7 +33,8 @@ export class Vanilluxe extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanilluxe';
-  public fullName: string = 'Vanilluxe NXD';
+  public fullName: string = 'Vanilluxe (NXD 33)';
+  public legacyFullName = 'Vanilluxe NXD';
 
   public readonly SLIPPERY_SOLES_MARKER = 'SLIPPERY_SOLES_MARKER';
 

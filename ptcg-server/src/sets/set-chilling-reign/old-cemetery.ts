@@ -20,7 +20,8 @@ export class OldCemetery extends TrainerCard {
 
   public name = 'Old Cemetery';
 
-  public fullName = 'Old Cemetery CRE 147';
+  public fullName = 'Old Cemetery (CRE 147)';
+  public legacyFullName = 'Old Cemetery CRE 147';
 
   public text = 'Whenever any player attaches an Energy card from their hand to 1 of their non-[P] Pokémon, put 2 damage counters on that Pokémon.';
 

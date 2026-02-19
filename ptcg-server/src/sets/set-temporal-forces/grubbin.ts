@@ -74,7 +74,8 @@ export class Grubbin extends PokemonCard {
 
   public name: string = 'Grubbin';
 
-  public fullName: string = 'Grubbin TEF';
+  public fullName: string = 'Grubbin (TEF 18)';
+  public legacyFullName = 'Grubbin TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

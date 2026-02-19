@@ -34,7 +34,8 @@ export class Mankey extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mankey';
-  public fullName: string = 'Mankey STS';
+  public fullName: string = 'Mankey (STS 52)';
+  public legacyFullName = 'Mankey STS';
 
   public readonly FOCUS_ENERGY_MARKER = 'FOCUS_ENERGY_MARKER';
   public readonly FOCUS_ENERGY_CLEAR_MARKER = 'FOCUS_ENERGY_CLEAR_MARKER';

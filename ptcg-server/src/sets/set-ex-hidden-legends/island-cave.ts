@@ -11,7 +11,8 @@ export class IslandCave extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'HL';
   public name = 'Island Cave';
-  public fullName = 'Island Cave HL';
+  public fullName = 'Island Cave (HL 89)';
+  public legacyFullName = 'Island Cave HL';
 
   public text = 'Whenever any player attaches an Energy card from his or hand to [W] Pokémon, [F] Pokémon, or [M] Pokémon, remove any Special Conditions from that Pokémon.';
 

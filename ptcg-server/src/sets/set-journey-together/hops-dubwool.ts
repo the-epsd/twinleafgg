@@ -48,7 +48,8 @@ export class HopsDubwool extends PokemonCard {
 
   public name: string = 'Hop\'s Dubwool';
 
-  public fullName: string = 'Hop\'s Dubwool JTG';
+  public fullName: string = 'Hop\'s Dubwool (JTG 136)';
+  public legacyFullName = 'Hop\'s Dubwool JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

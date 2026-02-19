@@ -26,7 +26,7 @@ export class Zangoose extends PokemonCard {
       name: 'Brutal Edge',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
     }
   ];
@@ -35,7 +35,8 @@ export class Zangoose extends PokemonCard {
   public setNumber: string = '173';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zangoose';
-  public fullName: string = 'Zangoose CEC';
+  public fullName: string = 'Zangoose (CEC 173)';
+  public legacyFullName = 'Zangoose CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Brutal Edge

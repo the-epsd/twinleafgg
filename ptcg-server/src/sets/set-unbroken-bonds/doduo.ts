@@ -27,7 +27,7 @@ export class Doduo extends PokemonCard {
       name: 'Double Peck',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 20 damage for each heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Doduo extends PokemonCard {
   public setNumber: string = '150';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Doduo';
-  public fullName: string = 'Doduo UNB';
+  public fullName: string = 'Doduo (UNB 150)';
+  public legacyFullName = 'Doduo UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Double Peck

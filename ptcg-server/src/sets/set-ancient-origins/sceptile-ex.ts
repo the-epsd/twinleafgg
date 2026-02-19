@@ -29,7 +29,7 @@ export class SceptileEx extends PokemonCard {
       name: 'Unseen Claw',
       cost: [G, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 70 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class SceptileEx extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sceptile-EX';
-  public fullName: string = 'Sceptile-EX AOR';
+  public fullName: string = 'Sceptile-EX (AOR 7)';
+  public legacyFullName = 'Sceptile-EX AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sleep Poison

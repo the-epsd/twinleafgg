@@ -13,7 +13,8 @@ export class LifeDew extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '107';
   public name = 'Life Dew';
-  public fullName = 'Life Dew PLF';
+  public fullName = 'Life Dew (PLF 107)';
+  public legacyFullName = 'Life Dew PLF';
 
   public text: string = 'If the Pokémon this card is attached to is Knocked Out, your opponent takes 1 fewer Prize card.';
 

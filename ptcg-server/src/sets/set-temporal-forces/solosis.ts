@@ -37,7 +37,8 @@ export class Solosis extends PokemonCard {
 
   public name: string = 'Solosis';
 
-  public fullName: string = 'Solosis TEF';
+  public fullName: string = 'Solosis (TEF 70)';
+  public legacyFullName = 'Solosis TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -28,7 +28,8 @@ export class Magikarp extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magikarp';
-  public fullName: string = 'Magikarp LTR';
+  public fullName: string = 'Magikarp (LTR 30)';
+  public legacyFullName = 'Magikarp LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flailing Flop

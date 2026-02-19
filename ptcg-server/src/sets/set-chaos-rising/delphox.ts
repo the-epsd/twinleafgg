@@ -37,7 +37,8 @@ export class Delphox extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '13';
   public name: string = 'Delphox';
-  public fullName: string = 'Delphox M4';
+  public fullName: string = 'Delphox (M4 13)';
+  public legacyFullName = 'Delphox M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {

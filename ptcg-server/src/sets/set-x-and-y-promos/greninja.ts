@@ -29,7 +29,8 @@ export class Greninja extends PokemonCard {
   public setNumber: string = '162';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Greninja';
-  public fullName: string = 'Greninja XYP';
+  public fullName: string = 'Greninja (XYP 162)';
+  public legacyFullName = 'Greninja XYP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

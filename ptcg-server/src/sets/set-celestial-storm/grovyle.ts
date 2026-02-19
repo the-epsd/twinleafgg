@@ -22,7 +22,7 @@ export class Grovyle extends PokemonCard {
       name: 'Leaf Blade',
       cost: [G],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];
@@ -31,7 +31,8 @@ export class Grovyle extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grovyle';
-  public fullName: string = 'Grovyle CES';
+  public fullName: string = 'Grovyle (CES 9)';
+  public legacyFullName = 'Grovyle CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Leaf Blade

@@ -35,7 +35,8 @@ export class Slugma extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slugma';
-  public fullName: string = 'Slugma LOT';
+  public fullName: string = 'Slugma (LOT 43)';
+  public legacyFullName = 'Slugma LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Flamethrower

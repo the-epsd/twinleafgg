@@ -38,7 +38,8 @@ export class Jumpluff extends PokemonCard {
 
   public name: string = 'Jumpluff';
 
-  public fullName: string = 'Jumpluff LOT';
+  public fullName: string = 'Jumpluff (LOT 14)';
+  public legacyFullName = 'Jumpluff LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

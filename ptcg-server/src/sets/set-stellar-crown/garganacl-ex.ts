@@ -45,7 +45,8 @@ export class Garganaclex extends PokemonCard {
 
   public name: string = 'Garganacl ex';
 
-  public fullName: string = 'Garganacl ex SCR';
+  public fullName: string = 'Garganacl ex (SCR 89)';
+  public legacyFullName = 'Garganacl ex SCR';
 
   public readonly BLOCK_HAMMER_MARKER = 'BLOCK_HAMMER_MARKER';
   public readonly CLEAR_BLOCK_HAMMER_MARKER = 'CLEAR_BLOCK_HAMMER_MARKER';

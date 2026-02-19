@@ -35,7 +35,8 @@ export class Galvantula extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '56';
   public name: string = 'Galvantula';
-  public fullName: string = 'Galvantula VIV';
+  public fullName: string = 'Galvantula (VIV 56)';
+  public legacyFullName = 'Galvantula VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Stun Needle

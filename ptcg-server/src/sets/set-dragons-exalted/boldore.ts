@@ -34,7 +34,8 @@ export class Boldore extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Boldore';
-  public fullName: string = 'Boldore DRX';
+  public fullName: string = 'Boldore (DRX 66)';
+  public legacyFullName = 'Boldore DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Rock Cannon

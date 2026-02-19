@@ -46,7 +46,8 @@ export class SolgaleoGx extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solgaleo-GX';
-  public fullName: string = 'Solgaleo-GX SUM';
+  public fullName: string = 'Solgaleo-GX (SUM 89)';
+  public legacyFullName = 'Solgaleo-GX SUM';
 
   public readonly ULTRA_ROAD_MARKER = 'ULTRA_ROAD_MARKER';
 

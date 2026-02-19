@@ -34,7 +34,8 @@ export class Grubbin extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grubbin';
-  public fullName: string = 'Grubbin UNB';
+  public fullName: string = 'Grubbin (UNB 18)';
+  public legacyFullName = 'Grubbin UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Electrical Signal

@@ -34,7 +34,8 @@ export class Makuhita extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Makuhita';
-  public fullName: string = 'Makuhita SUM';
+  public fullName: string = 'Makuhita (SUM 67)';
+  public legacyFullName = 'Makuhita SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Surprise Attack

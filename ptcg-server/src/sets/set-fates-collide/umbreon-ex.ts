@@ -38,7 +38,8 @@ export class UmbreonEx extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Umbreon-EX';
-  public fullName: string = 'Umbreon-EX FCO';
+  public fullName: string = 'Umbreon-EX (FCO 55)';
+  public legacyFullName = 'Umbreon-EX FCO';
 
   private usedEndgame = false;
 

@@ -9,6 +9,7 @@ import { MewtwoVUNIONBottomLeft } from './mewtwo-v-union-bl';
 
 export class MewtwoVUNIONBottomRight extends PokemonCard {
   public stage: Stage = Stage.VUNION;
+  public multiPartPosition: 'Top' | 'Bottom' | 'Top Left' | 'Top Right' | 'Bottom Left' | 'Bottom Right' = 'Bottom Right';
   public tags = [CardTag.POKEMON_VUNION];
   public cardType: CardType = P;
   public hp: number = 310;
@@ -47,7 +48,8 @@ export class MewtwoVUNIONBottomRight extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '162';
   public name: string = 'Mewtwo V-UNION';
-  public fullName: string = 'Mewtwo V-UNION (Bottom Right) SWSH';
+  public fullName: string = 'Mewtwo V-UNION (SWSH 162)';
+  public legacyFullName = 'Mewtwo V-UNION (Bottom Right) SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union

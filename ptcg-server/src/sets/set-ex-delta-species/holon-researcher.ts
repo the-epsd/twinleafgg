@@ -16,7 +16,8 @@ export class HolonResearcher extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '95';
   public name: string = 'Holon Researcher';
-  public fullName: string = 'Holon Researcher DS';
+  public fullName: string = 'Holon Researcher (DS 95)';
+  public legacyFullName = 'Holon Researcher DS';
 
   public text: string =
     `Discard a card from your hand. If you can't discard a card from your hand, you can't play this card.

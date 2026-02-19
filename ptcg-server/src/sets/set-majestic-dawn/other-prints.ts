@@ -7,7 +7,8 @@ import { MetalEnergyN1 } from '../set-neo-genesis/other-prints';
 import { EscapeRope } from '../set-plasma-storm/escape-rope';
 
 export class WarpPointMD extends EscapeRope {
-  public fullName = 'Warp Point MD';
+  public fullName = 'Warp Point (MD 88)';
+  public legacyFullName = 'Warp Point MD';
   public name = 'Warp Point';
   public set = 'MD';
   public setNumber = '88';
@@ -15,36 +16,42 @@ export class WarpPointMD extends EscapeRope {
 }
 export class DuskBallMD extends DuskBall {
   public setNumber = '80';
-  public fullName: string = 'Dusk Ball MD';
+  public fullName: string = 'Dusk Ball (MD 80)';
+  public legacyFullName = 'Dusk Ball MD';
   public set = 'MD';
 }
 
 export class PokeBallMD extends PokeBall {
   public setNumber = '85';
-  public fullName: string = 'Poké Ball MD';
+  public fullName: string = 'Poké Ball (MD 85)';
+  public legacyFullName = 'Poké Ball MD';
   public set = 'MD';
 }
 
 export class SuperScoopUpMD extends SuperScoopUp {
   public setNumber = '87';
-  public fullName: string = 'Super Scoop Up MD';
+  public fullName: string = 'Super Scoop Up (MD 87)';
+  public legacyFullName = 'Super Scoop Up MD';
   public set = 'MD';
 }
 
 export class EnergySearchMD extends EnergySearch {
   public setNumber = '90';
-  public fullName: string = 'Energy Search MD';
+  public fullName: string = 'Energy Search (MD 90)';
+  public legacyFullName = 'Energy Search MD';
   public set = 'MD';
 }
 
 export class DarknessEnergySpecialMD extends DarknessEnergySpecial {
   public setNumber = '93';
-  public fullName: string = 'Darkness Energy MD';
+  public fullName: string = 'Darkness Energy (MD 93)';
+  public legacyFullName = 'Darkness Energy MD';
   public set = 'MD';
 }
 
 export class MetalEnergyN1MD extends MetalEnergyN1 {
   public setNumber = '95';
-  public fullName: string = 'Metal Energy MD';
+  public fullName: string = 'Metal Energy (MD 95)';
+  public legacyFullName = 'Metal Energy MD';
   public set = 'MD';
 }

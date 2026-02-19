@@ -38,7 +38,8 @@ export class Copycat extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';
   public name: string = 'Copycat';
-  public fullName: string = 'Copycat DF';
+  public fullName: string = 'Copycat (DF 73)';
+  public legacyFullName = 'Copycat DF';
 
   public text: string =
     'Shuffle your hand into your deck. Then, count the number of cards in your opponent\'s hand and draw that many cards.';

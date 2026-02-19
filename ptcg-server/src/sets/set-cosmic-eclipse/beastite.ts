@@ -15,7 +15,8 @@ export class Beastite extends TrainerCard {
   public setNumber: string = '185';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beastite';
-  public fullName: string = 'Beastite CEC';
+  public fullName: string = 'Beastite (CEC 185)';
+  public legacyFullName = 'Beastite CEC';
   public text: string = 'The attacks of the Ultra Beast this card is attached to do 10 more damage to your opponent\'s Active Pokémon for each Prize card you have taken (before applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

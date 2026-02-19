@@ -22,7 +22,7 @@ export class Seviper extends PokemonCard {
       name: 'Strong Tail',
       cost: [D, D, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you played a Single Strike Supporter card from your hand during this turn, this attack does 90 more damage.'
     }
   ];
@@ -32,7 +32,8 @@ export class Seviper extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Seviper';
-  public fullName: string = 'Seviper CRE';
+  public fullName: string = 'Seviper (CRE 102)';
+  public legacyFullName = 'Seviper CRE';
 
   public readonly SINGLE_STRIKE_SUPPORTER_MARKER = 'SEVIPER_CRE_SINGLE_STRIKE_SUPPORTER_MARKER';
 

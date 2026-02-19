@@ -42,7 +42,8 @@ export class Passimian extends PokemonCard {
 
   public name: string = 'Passimian';
 
-  public fullName: string = 'Passimian SUM';
+  public fullName: string = 'Passimian (SUM 73)';
+  public legacyFullName = 'Passimian SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

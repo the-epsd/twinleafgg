@@ -37,7 +37,8 @@ export class Lurantis extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lurantis';
-  public fullName: string = 'Lurantis BST';
+  public fullName: string = 'Lurantis (BST 15)';
+  public legacyFullName = 'Lurantis BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Leaf Drain

@@ -48,7 +48,8 @@ export class TurtonatorGx extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Turtonator-GX';
-  public fullName: string = 'Turtonator-GX GRI';
+  public fullName: string = 'Turtonator-GX (GRI 18)';
+  public legacyFullName = 'Turtonator-GX GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shell Trap

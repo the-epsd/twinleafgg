@@ -11,7 +11,8 @@ export class Machamp extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Machamp BS';
+  public fullName = 'Machamp (BS 8)';
+  public legacyFullName = 'Machamp BS';
 
   public name = 'Machamp';
 

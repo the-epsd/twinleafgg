@@ -37,7 +37,8 @@ export class CinderaceV extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cinderace V';
-  public fullName: string = 'Cinderace V RCL';
+  public fullName: string = 'Cinderace V (RCL 35)';
+  public legacyFullName = 'Cinderace V RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Field Runner (passive - no retreat cost if stadium in play)

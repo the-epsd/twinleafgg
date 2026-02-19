@@ -26,7 +26,7 @@ export class Virizion extends PokemonCard {
       name: 'Prize Count',
       cost: [G, G],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have more Prize cards left than your opponent, this attack does 80 more damage.'
     }
   ];
@@ -35,7 +35,8 @@ export class Virizion extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Virizion';
-  public fullName: string = 'Virizion AOR';
+  public fullName: string = 'Virizion (AOR 12)';
+  public legacyFullName = 'Virizion AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bail Out

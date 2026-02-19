@@ -33,7 +33,8 @@ export class CharizardBraixenGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '22';
   public name: string = 'Charizard & Braixen-GX';
-  public fullName: string = 'Charizard & Braixen-GX CEC';
+  public fullName: string = 'Charizard & Braixen-GX (CEC 22)';
+  public legacyFullName = 'Charizard & Braixen-GX CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Brilliant Flare

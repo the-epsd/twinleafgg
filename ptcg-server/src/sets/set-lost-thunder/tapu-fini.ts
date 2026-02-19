@@ -37,7 +37,8 @@ export class TapuFini extends PokemonCard {
   public setNumber: string = '151';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tapu Fini';
-  public fullName: string = 'Tapu Fini LOT';
+  public fullName: string = 'Tapu Fini (LOT 151)';
+  public legacyFullName = 'Tapu Fini LOT';
 
   public usedDreamAway = false;
 

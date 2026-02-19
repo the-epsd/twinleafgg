@@ -90,7 +90,8 @@ export class Rose extends TrainerCard {
   public setNumber: string = '168';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rose';
-  public fullName: string = 'Rose DAA';
+  public fullName: string = 'Rose (DAA 168)';
+  public legacyFullName = 'Rose DAA';
   public text: string = 'Attach up to 2 basic Energy cards from your discard pile to 1 of your Pokémon VMAX. If you attached any Energy cards in this way, discard your hand. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

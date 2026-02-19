@@ -37,7 +37,8 @@ export class Scovillainex extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scovillain ex';
-  public fullName: string = 'Scovillain ex TEF';
+  public fullName: string = 'Scovillain ex (TEF 22)';
+  public legacyFullName = 'Scovillain ex TEF';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

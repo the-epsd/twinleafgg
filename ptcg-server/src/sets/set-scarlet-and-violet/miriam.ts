@@ -81,7 +81,8 @@ export class Miriam extends TrainerCard {
 
   public name: string = 'Miriam';
 
-  public fullName: string = 'Miriam SVI';
+  public fullName: string = 'Miriam (SVI 179)';
+  public legacyFullName = 'Miriam SVI';
 
   public text: string =
     'Shuffle up to 5 Pokémon from your discard pile into your deck. If you shuffled any cards into your deck in this way, draw 3 cards.';

@@ -44,7 +44,8 @@ export class Eevee extends PokemonCard {
   public set = 'SCR';
   public setNumber = '113';
   public name = 'Eevee';
-  public fullName = 'Eevee SCR';
+  public fullName = 'Eevee (SCR 113)';
+  public legacyFullName = 'Eevee SCR';
   public regulationMark = 'H';
   public cardImage = 'assets/cardback.png';
   public attacks = [

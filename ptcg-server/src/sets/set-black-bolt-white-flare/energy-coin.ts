@@ -63,7 +63,8 @@ export class EnergyCoin extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
   public name = 'Energy Coin';
-  public fullName: string = 'Energy Coin SV11B';
+  public fullName: string = 'Energy Coin (BLK 81)';
+  public legacyFullName = 'Energy Coin SV11B';
   
   public text: string = 'Flip 2 coins. If both of them are heads, search your deck for a Basic Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck.';
 

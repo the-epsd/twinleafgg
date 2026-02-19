@@ -32,5 +32,6 @@ export class Cubone extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cubone';
-  public fullName: string = 'Cubone BST';
+  public fullName: string = 'Cubone (BST 69)';
+  public legacyFullName = 'Cubone BST';
 }

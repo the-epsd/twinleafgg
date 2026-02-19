@@ -22,7 +22,7 @@ export class Ferroseed extends PokemonCard {
       name: 'Continuous Tumble',
       cost: [M],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 20 damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Ferroseed extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ferroseed';
-  public fullName: string = 'Ferroseed TEU';
+  public fullName: string = 'Ferroseed (TEU 102)';
+  public legacyFullName = 'Ferroseed TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Tumble

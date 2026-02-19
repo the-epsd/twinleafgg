@@ -35,7 +35,8 @@ export class Swanna extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '27';
   public name: string = 'Swanna';
-  public fullName: string = 'Swanna EPO';
+  public fullName: string = 'Swanna (EPO 27)';
+  public legacyFullName = 'Swanna EPO';
 
   public readonly WING_DANCE_MARKER = 'WING_DANCE_MARKER';
 

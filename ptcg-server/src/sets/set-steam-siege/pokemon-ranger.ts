@@ -14,7 +14,8 @@ export class PokemonRanger extends TrainerCard {
 
   public name: string = 'Pokémon Ranger';
 
-  public fullName: string = 'Pokemon Ranger STS';
+  public fullName: string = 'Pokémon Ranger (STS 104)';
+  public legacyFullName = 'Pokemon Ranger STS';
 
   public cardImage: string = 'assets/cardback.png';
 

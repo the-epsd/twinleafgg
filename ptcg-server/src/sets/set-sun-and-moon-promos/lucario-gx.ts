@@ -51,7 +51,8 @@ export class LucarioGX extends PokemonCard {
 
   public name: string = 'Lucario-GX';
 
-  public fullName: string = 'Lucario-GX SMP';
+  public fullName: string = 'Lucario-GX (SMP 100)';
+  public legacyFullName = 'Lucario-GX SMP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Aura Strike

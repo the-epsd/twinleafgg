@@ -95,7 +95,8 @@ export class Hiker extends TrainerCard {
   public setNumber: string = '133';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hiker';
-  public fullName: string = 'Hiker CES';
+  public fullName: string = 'Hiker (CES 133)';
+  public legacyFullName = 'Hiker CES';
   public text: string = 'Look at the top 5 cards of either player\'s deck and choose 1 of them. That player shuffles the other cards back into their deck. Then, put the card you chose on top of that deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-roaring-skies/xatu.ts (Future Sight - choose either player's deck)

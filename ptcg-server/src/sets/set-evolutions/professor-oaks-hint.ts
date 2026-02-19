@@ -15,7 +15,8 @@ export class ProfessorOaksHint extends TrainerCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Professor Oak\'s Hint';
-  public fullName: string = 'Professor Oak\'s Hint EVO';
+  public fullName: string = 'Professor Oak\'s Hint (EVO 84)';
+  public legacyFullName = 'Professor Oak\'s Hint EVO';
   public text: string = 'Draw cards until you have 7 cards in your hand. Your turn ends. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-phantom-forces/tierno.ts (Supporter pattern), set-noble-victories/cofagrigus-2.ts (end turn via GamePhase.BETWEEN_TURNS)

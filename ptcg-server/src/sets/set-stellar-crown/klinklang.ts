@@ -35,7 +35,8 @@ export class Klinklang extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '101';
   public name: string = 'Klinklang';
-  public fullName: string = 'Klinklang SCR';
+  public fullName: string = 'Klinklang (SCR 101)';
+  public legacyFullName = 'Klinklang SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

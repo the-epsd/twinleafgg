@@ -34,7 +34,8 @@ export class Klang extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '75';
   public name: string = 'Klang';
-  public fullName: string = 'Klang BLW';
+  public fullName: string = 'Klang (BLW 75)';
+  public legacyFullName = 'Klang BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

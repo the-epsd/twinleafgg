@@ -30,7 +30,7 @@ export class Excadrill extends PokemonCard {
       name: 'Straight Claw',
       cost: [M, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard an Energy attached to this Pokémon. If you do, this attack does 30 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Excadrill extends PokemonCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Excadrill';
-  public fullName: string = 'Excadrill PRC';
+  public fullName: string = 'Excadrill (PRC 96)';
+  public legacyFullName = 'Excadrill PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Drill Run

@@ -12,6 +12,7 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class PikachuVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
+  public multiPartPosition: 'Top' | 'Bottom' | 'Top Left' | 'Top Right' | 'Bottom Left' | 'Bottom Right' = 'Top Left';
   public tags = [CardTag.POKEMON_VUNION];
   public cardType: CardType = L;
   public hp: number = 300;
@@ -60,7 +61,8 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '139';
   public name: string = 'Pikachu V-UNION';
-  public fullName: string = 'Pikachu V-UNION (Top Left) SWSH';
+  public fullName: string = 'Pikachu V-UNION (SWSH 139)';
+  public legacyFullName = 'Pikachu V-UNION (Top Left) SWSH';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 

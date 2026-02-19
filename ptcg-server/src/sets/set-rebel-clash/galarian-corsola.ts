@@ -31,7 +31,8 @@ export class GalarianCorsola extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Corsola';
-  public fullName: string = 'Galarian Corsola RCL';
+  public fullName: string = 'Galarian Corsola (RCL 78)';
+  public legacyFullName = 'Galarian Corsola RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Cursed Drop

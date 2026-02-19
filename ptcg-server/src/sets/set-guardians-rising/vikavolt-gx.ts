@@ -46,7 +46,8 @@ export class VikavoltGx extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vikavolt-GX';
-  public fullName: string = 'Vikavolt-GX GRI';
+  public fullName: string = 'Vikavolt-GX (GRI 45)';
+  public legacyFullName = 'Vikavolt-GX GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Charge Beam

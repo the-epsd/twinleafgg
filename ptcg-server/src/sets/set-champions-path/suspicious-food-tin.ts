@@ -94,7 +94,8 @@ export class SuspiciousFoodTin extends TrainerCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Suspicious Food Tin';
-  public fullName: string = 'Suspicious Food Tin CPA';
+  public fullName: string = 'Suspicious Food Tin (CPA 66)';
+  public legacyFullName = 'Suspicious Food Tin CPA';
   public text: string = 'Heal 80 damage from 1 of your Pokémon that has at least 1 [P] Energy attached. If you healed any damage in this way, discard a [P] Energy from it.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {

@@ -44,7 +44,8 @@ export class Latios extends PokemonCard {
 
   public name: string = 'Latios';
 
-  public fullName: string = 'Latios SLG';
+  public fullName: string = 'Latios (SLG 41)';
+  public legacyFullName = 'Latios SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Break Through

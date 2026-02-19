@@ -33,7 +33,8 @@ export class Cyndaquil extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cyndaquil';
-  public fullName: string = 'Cyndaquil LOT';
+  public fullName: string = 'Cyndaquil (LOT 39)';
+  public legacyFullName = 'Cyndaquil LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Smokescreen

@@ -25,5 +25,6 @@ export class Snivy extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snivy';
-  public fullName: string = 'Snivy SV11B';
+  public fullName: string = 'Snivy (BLK 1)';
+  public legacyFullName = 'Snivy SV11B';
 }

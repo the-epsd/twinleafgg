@@ -34,7 +34,8 @@ export class Raichu extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raichu';
-  public fullName: string = 'Raichu BUS';
+  public fullName: string = 'Raichu (BUS 41)';
+  public legacyFullName = 'Raichu BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (JUST_EVOLVED(effect, this) && !IS_ABILITY_BLOCKED(store, state, effect.player, this))

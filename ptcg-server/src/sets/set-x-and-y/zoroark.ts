@@ -38,7 +38,8 @@ export class Zoroark extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zoroark';
-  public fullName: string = 'Zoroark XY';
+  public fullName: string = 'Zoroark (XY 73)';
+  public legacyFullName = 'Zoroark XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-noble-victories/druddigon.ts (Clutch - retreat block)

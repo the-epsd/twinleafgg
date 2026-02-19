@@ -123,7 +123,8 @@ export class Duosion extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Duosion';
-  public fullName: string = 'Duosion SV11B';
+  public fullName: string = 'Duosion (BLK 38)';
+  public legacyFullName = 'Duosion SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Cellular Evolution

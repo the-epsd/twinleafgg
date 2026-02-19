@@ -26,7 +26,7 @@ export class Bronzong extends PokemonCard {
       name: 'Psychic Resonance',
       cost: [M, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent has any Psychic Pokémon in play, this attack does 60 more damage.'
     }
   ];
@@ -35,7 +35,8 @@ export class Bronzong extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bronzong';
-  public fullName: string = 'Bronzong UPR';
+  public fullName: string = 'Bronzong (UPR 87)';
+  public legacyFullName = 'Bronzong UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psy Bolt

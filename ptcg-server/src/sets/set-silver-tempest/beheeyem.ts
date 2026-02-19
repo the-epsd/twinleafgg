@@ -46,7 +46,8 @@ export class Beheeyem extends PokemonCard {
 
   public name: string = 'Beheeyem';
 
-  public fullName: string = 'Beheeyem PAR';
+  public fullName: string = 'Beheeyem (SIT 80)';
+  public legacyFullName = 'Beheeyem PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -36,7 +36,8 @@ export class Illumise extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Illumise';
-  public fullName: string = 'Illumise XY';
+  public fullName: string = 'Illumise (XY 9)';
+  public legacyFullName = 'Illumise XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pheromotion

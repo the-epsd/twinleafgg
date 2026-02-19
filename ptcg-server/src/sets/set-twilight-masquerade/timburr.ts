@@ -35,7 +35,8 @@ export class Timburr extends PokemonCard {
 
   public name: string = 'Timburr';
 
-  public fullName: string = 'Timburr TWM';
+  public fullName: string = 'Timburr (TWM 103)';
+  public legacyFullName = 'Timburr TWM';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

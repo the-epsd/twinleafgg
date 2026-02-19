@@ -21,7 +21,7 @@ export class Shellder extends PokemonCard {
       name: 'Razor Shell',
       cost: [W],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Shellder extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shellder';
-  public fullName: string = 'Shellder BKP';
+  public fullName: string = 'Shellder (BKP 22)';
+  public legacyFullName = 'Shellder BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Razor Shell

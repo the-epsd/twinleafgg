@@ -23,7 +23,8 @@ export class Rattata extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '104';
   public name: string = 'Rattata';
-  public fullName: string = 'Rattata BCR';
+  public fullName: string = 'Rattata (BCR 104)';
+  public legacyFullName = 'Rattata BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

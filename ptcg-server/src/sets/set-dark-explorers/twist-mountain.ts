@@ -68,7 +68,8 @@ export class TwistMountain extends TrainerCard {
 
   public name: string = 'Twist Mountain';
 
-  public fullName: string = 'Twist Mountain DEX';
+  public fullName: string = 'Twist Mountain (DEX 101)';
+  public legacyFullName = 'Twist Mountain DEX';
 
   public cardImage: string = 'assets/cardback.png';
 

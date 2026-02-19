@@ -21,7 +21,8 @@ export class SuperBoostEnergy extends EnergyCard {
 
   public name = 'Super Boost Energy';
 
-  public fullName = 'Super Boost Energy UPR';
+  public fullName = 'Super Boost Energy (UPR 136)';
+  public legacyFullName = 'Super Boost Energy UPR';
 
   public text =
     'This card provides [C] Energy.' +

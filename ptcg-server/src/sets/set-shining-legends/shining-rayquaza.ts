@@ -35,7 +35,8 @@ export class ShiningRayquaza extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shining Rayquaza';
-  public fullName: string = 'Shining Rayquaza SLG';
+  public fullName: string = 'Shining Rayquaza (SLG 56)';
+  public legacyFullName = 'Shining Rayquaza SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dragon Pulse

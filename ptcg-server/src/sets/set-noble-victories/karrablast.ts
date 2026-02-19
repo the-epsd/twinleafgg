@@ -32,7 +32,8 @@ export class Karrablast extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
   public name: string = 'Karrablast';
-  public fullName: string = 'Karrablast NVI';
+  public fullName: string = 'Karrablast (NVI 8)';
+  public legacyFullName = 'Karrablast NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -47,7 +47,8 @@ export class HearthflameMaskOgerponex extends PokemonCard {
 
   public name: string = 'Hearthflame Mask Ogerpon ex';
 
-  public fullName: string = 'Hearthflame Mask Ogerpon ex TWM';
+  public fullName: string = 'Hearthflame Mask Ogerpon ex (TWM 40)';
+  public legacyFullName = 'Hearthflame Mask Ogerpon ex TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

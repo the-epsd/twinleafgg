@@ -30,7 +30,8 @@ export class Cosmog extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cosmog';
-  public fullName: string = 'Cosmog CEL';
+  public fullName: string = 'Cosmog (CEL 13)';
+  public legacyFullName = 'Cosmog CEL';
 
   public readonly STAR_PROTECTION_MARKER = 'COSMOG_CEL_STAR_PROTECTION_MARKER';
   public readonly CLEAR_STAR_PROTECTION_MARKER = 'COSMOG_CEL_CLEAR_STAR_PROTECTION_MARKER';

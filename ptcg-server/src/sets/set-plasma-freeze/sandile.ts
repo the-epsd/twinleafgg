@@ -31,7 +31,8 @@ export class Sandile extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandile';
-  public fullName: string = 'Sandile PLF';
+  public fullName: string = 'Sandile (PLF 68)';
+  public legacyFullName = 'Sandile PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

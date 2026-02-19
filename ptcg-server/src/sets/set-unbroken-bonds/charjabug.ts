@@ -33,7 +33,8 @@ export class Charjabug extends PokemonCard implements EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '58';
   public name: string = 'Charjabug';
-  public fullName: string = 'Charjabug UNB';
+  public fullName: string = 'Charjabug (UNB 58)';
+  public legacyFullName = 'Charjabug UNB';
 
   public provides: CardType[] = [CardType.LIGHTNING, CardType.LIGHTNING];
   public energyType = EnergyType.SPECIAL;

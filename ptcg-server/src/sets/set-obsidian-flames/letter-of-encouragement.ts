@@ -58,7 +58,8 @@ export class LetterOfEncouragement extends TrainerCard {
   public setNumber: string = '189';
   public regulationMark = 'G';
   public name: string = 'Letter of Encouragement';
-  public fullName: string = 'Letter of Encouragement OBF';
+  public fullName: string = 'Letter of Encouragement (OBF 189)';
+  public legacyFullName = 'Letter of Encouragement OBF';
   public text: string = `You can use this card only if any of your Pokémon were Knocked Out during your opponent's last turn.
 
 Search your deck for up to 3 Basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.`;

@@ -26,5 +26,6 @@ export class Pikachu extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikachu';
-  public fullName: string = 'Pikachu UNB';
+  public fullName: string = 'Pikachu (UNB 54)';
+  public legacyFullName = 'Pikachu UNB';
 }

@@ -21,7 +21,7 @@ export class Staryu extends PokemonCard {
       name: 'Quick Blow',
       cost: [W],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Staryu extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Staryu';
-  public fullName: string = 'Staryu EVO';
+  public fullName: string = 'Staryu (EVO 30)';
+  public legacyFullName = 'Staryu EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Quick Blow

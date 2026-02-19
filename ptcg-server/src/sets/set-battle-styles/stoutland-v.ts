@@ -44,7 +44,8 @@ export class StoutlandV extends PokemonCard {
 
   public name: string = 'Stoutland V';
 
-  public fullName: string = 'Stoutland V BST';
+  public fullName: string = 'Stoutland V (BST 117)';
+  public legacyFullName = 'Stoutland V BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -35,7 +35,8 @@ export class LatiosEx extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Latios-EX';
-  public fullName: string = 'Latios-EX PLF';
+  public fullName: string = 'Latios-EX (PLF 86)';
+  public legacyFullName = 'Latios-EX PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mach Flight - defending can't retreat

@@ -20,7 +20,8 @@ export class Froakie extends PokemonCard {
 
   public set: string = 'BKP';
   public name: string = 'Froakie';
-  public fullName: string = 'Froakie BKP';
+  public fullName: string = 'Froakie (BKP 38)';
+  public legacyFullName = 'Froakie BKP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '38';
 

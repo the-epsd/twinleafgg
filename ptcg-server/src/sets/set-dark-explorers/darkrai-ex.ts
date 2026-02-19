@@ -47,7 +47,8 @@ export class DarkraiEx extends PokemonCard {
 
   public name: string = 'Darkrai-EX';
 
-  public fullName: string = 'Darkrai EX DEX';
+  public fullName: string = 'Darkrai-EX (DEX 63)';
+  public legacyFullName = 'Darkrai EX DEX';
 
   public cardImage: string = 'assets/cardback.png';
 

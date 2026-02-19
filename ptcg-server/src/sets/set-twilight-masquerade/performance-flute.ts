@@ -23,7 +23,8 @@ export class PerformanceFlute extends TrainerCard {
 
   public name: string = 'Accompanying Flute';
 
-  public fullName: string = 'Accompanying Flute TWM';
+  public fullName: string = 'Accompanying Flute (TWM 142)';
+  public legacyFullName = 'Accompanying Flute TWM';
 
   public text: string =
     'Reveal the top 5 cards of your opponent\'s deck, and put any number of Basic Pokémon you find there onto your opponent\'s Bench. Then, they shuffle the remaining cards back into their deck.';

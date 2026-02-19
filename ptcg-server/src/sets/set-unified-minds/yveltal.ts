@@ -18,7 +18,7 @@ export class Yveltal extends PokemonCard {
       name: 'Blow Through',
       cost: [D],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 20 more damage.'
     },
     {
@@ -33,7 +33,8 @@ export class Yveltal extends PokemonCard {
   public setNumber: string = '139';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yveltal';
-  public fullName: string = 'Yveltal UNM';
+  public fullName: string = 'Yveltal (UNM 139)';
+  public legacyFullName = 'Yveltal UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Blow Through

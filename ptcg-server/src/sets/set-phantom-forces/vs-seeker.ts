@@ -16,7 +16,8 @@ export class VsSeeker extends TrainerCard {
 
   public name: string = 'VS Seeker';
 
-  public fullName: string = 'VS Seeker PHF';
+  public fullName: string = 'VS Seeker (PHF 109)';
+  public legacyFullName = 'VS Seeker PHF';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -34,7 +34,8 @@ export class Silcoon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Silcoon';
-  public fullName: string = 'Silcoon M2a';
+  public fullName: string = 'Silcoon (ASC 12)';
+  public legacyFullName = 'Silcoon M2a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Multiplying Cocoon ability - triggers when played from hand to evolve

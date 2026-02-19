@@ -17,7 +17,8 @@ export class Steven extends TrainerCard {
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steven';
-  public fullName: string = 'Steven ROS';
+  public fullName: string = 'Steven (ROS 90)';
+  public legacyFullName = 'Steven ROS';
   public text: string = 'Search your deck for a Supporter card and a basic Energy card, reveal them, and put them into your hand. Shuffle your deck afterward. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

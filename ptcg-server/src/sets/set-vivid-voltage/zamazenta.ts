@@ -40,7 +40,8 @@ export class Zamazenta extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zamazenta';
-  public fullName: string = 'Zamazenta VIV';
+  public fullName: string = 'Zamazenta (VIV 102)';
+  public legacyFullName = 'Zamazenta VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Metal Armament

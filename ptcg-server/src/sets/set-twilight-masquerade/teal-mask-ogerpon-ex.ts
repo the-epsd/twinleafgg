@@ -49,7 +49,8 @@ export class TealMaskOgerponex extends PokemonCard {
 
   public name: string = 'Teal Mask Ogerpon ex';
 
-  public fullName: string = 'Teal Mask Ogerpon ex TWM';
+  public fullName: string = 'Teal Mask Ogerpon ex (TWM 25)';
+  public legacyFullName = 'Teal Mask Ogerpon ex TWM';
 
   public readonly TEAL_DANCE_MARKER = 'TEAL_DANCE_MARKER';
 

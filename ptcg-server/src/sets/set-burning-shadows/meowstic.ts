@@ -27,7 +27,7 @@ export class Meowstic extends PokemonCard {
       name: 'Hand Kinesis',
       cost: [C, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 10 damage for each card in your hand.'
     }
   ];
@@ -36,7 +36,8 @@ export class Meowstic extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meowstic';
-  public fullName: string = 'Meowstic BUS';
+  public fullName: string = 'Meowstic (BUS 60)';
+  public legacyFullName = 'Meowstic BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Allure

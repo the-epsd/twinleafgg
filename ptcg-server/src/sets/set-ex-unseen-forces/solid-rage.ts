@@ -14,7 +14,8 @@ export class SolidRage extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'UF';
   public name: string = 'Solid Rage';
-  public fullName: string = 'Solid Rage UF';
+  public fullName: string = 'Solid Rage (UF 92)';
+  public legacyFullName = 'Solid Rage UF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
 

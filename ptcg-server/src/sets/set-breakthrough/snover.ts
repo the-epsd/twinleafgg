@@ -27,7 +27,7 @@ export class Snover extends PokemonCard {
       name: 'Double Smash',
       cost: [W, C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Snover extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snover';
-  public fullName: string = 'Snover BKT';
+  public fullName: string = 'Snover (BKT 39)';
+  public legacyFullName = 'Snover BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Powder Snow

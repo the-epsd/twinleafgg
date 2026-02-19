@@ -29,7 +29,8 @@ export class Lapras extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
   public name: string = 'Lapras';
-  public fullName: string = 'Lapras SK';
+  public fullName: string = 'Lapras (SK 71)';
+  public legacyFullName = 'Lapras SK';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

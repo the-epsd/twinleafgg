@@ -29,7 +29,7 @@ export class GlalieEx extends PokemonCard {
       name: 'Instant Freeze',
       cost: [W, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have the same number of cards in your hand as your opponent, this attack does 100 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class GlalieEx extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Glalie-EX';
-  public fullName: string = 'Glalie-EX BKT';
+  public fullName: string = 'Glalie-EX (BKT 34)';
+  public legacyFullName = 'Glalie-EX BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ice Breath

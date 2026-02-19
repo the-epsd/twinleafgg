@@ -36,7 +36,8 @@ export class Spewpa extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spewpa';
-  public fullName: string = 'Spewpa XY';
+  public fullName: string = 'Spewpa (XY 16)';
+  public legacyFullName = 'Spewpa XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/mareep.ts (Stun Spore pattern)

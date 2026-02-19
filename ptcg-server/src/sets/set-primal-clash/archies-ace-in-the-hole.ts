@@ -18,7 +18,8 @@ export class ArchiesAceInTheHole extends TrainerCard {
   public setNumber: string = '124';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Archie\'s Ace in the Hole';
-  public fullName: string = 'Archie\'s Ace in the Hole PRC';
+  public fullName: string = 'Archie\'s Ace in the Hole (PRC 124)';
+  public legacyFullName = 'Archie\'s Ace in the Hole PRC';
   public text: string = 'You can play this card only when it is the last card in your hand. Put a Water Pokémon from your discard pile onto your Bench. Then, draw 5 cards. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

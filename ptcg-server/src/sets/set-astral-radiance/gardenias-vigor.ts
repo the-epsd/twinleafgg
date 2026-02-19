@@ -19,7 +19,8 @@ export class GardeniasVigor extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '143';
   public name: string = 'Gardenia\'s Vigor';
-  public fullName: string = 'Gardenia\'s Vigor ASR';
+  public fullName: string = 'Gardenia\'s Vigor (ASR 143)';
+  public legacyFullName = 'Gardenia\'s Vigor ASR';
   public text: string = 'Draw 2 cards. If you drew any cards in this way, attach up to 2 [G] Energy cards from your hand to 1 of your Benched Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

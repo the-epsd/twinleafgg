@@ -39,7 +39,8 @@ export class ToxicroakEx extends PokemonCard {
 
   public name: string = 'Toxicroak-EX';
 
-  public fullName: string = 'Toxicroak EX FLF';
+  public fullName: string = 'Toxicroak-EX (FLF 41)';
+  public legacyFullName = 'Toxicroak EX FLF';
 
   public cardImage: string = 'assets/cardback.png';
 

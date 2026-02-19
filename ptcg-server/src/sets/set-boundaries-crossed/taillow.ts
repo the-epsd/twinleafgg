@@ -26,5 +26,6 @@ export class Taillow extends PokemonCard {
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Taillow';
-  public fullName: string = 'Taillow BCR';
+  public fullName: string = 'Taillow (BCR 112)';
+  public legacyFullName = 'Taillow BCR';
 }

@@ -37,7 +37,8 @@ export class Flareon extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flareon';
-  public fullName: string = 'Flareon CEC';
+  public fullName: string = 'Flareon (CEC 25)';
+  public legacyFullName = 'Flareon CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Power Cheer (passive - boost GX Eeveelution attacks)

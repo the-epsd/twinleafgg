@@ -66,7 +66,8 @@ export class Zarude extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '19';
   public name: string = 'Zarude';
-  public fullName: string = 'Zarude CRE';
+  public fullName: string = 'Zarude (CRE 19)';
+  public legacyFullName = 'Zarude CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -37,7 +37,8 @@ export class Shaymin extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shaymin';
-  public fullName: string = 'Shaymin LOT';
+  public fullName: string = 'Shaymin (LOT 33)';
+  public legacyFullName = 'Shaymin LOT';
 
   public readonly FLORAL_HEAL_MARKER = 'SHAYMIN_LOT_FLORAL_HEAL_MARKER';
 

@@ -40,7 +40,8 @@ export class Vaporeon extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vaporeon';
-  public fullName: string = 'Vaporeon VIV';
+  public fullName: string = 'Vaporeon (VIV 30)';
+  public legacyFullName = 'Vaporeon VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Torrential Awakening (passive - block Fire Pokemon abilities if Memory Capsule attached)

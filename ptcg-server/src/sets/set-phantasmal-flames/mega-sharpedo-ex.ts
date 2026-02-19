@@ -30,7 +30,8 @@ export class MegaSharpedoex extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Sharpedo ex';
-  public fullName: string = 'Mega Sharpedo ex M2';
+  public fullName: string = 'Mega Sharpedo ex (PFL 61)';
+  public legacyFullName = 'Mega Sharpedo ex M2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -12,7 +12,8 @@ export class LumBerry extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'EM';
   public name: string = 'Lum Berry';
-  public fullName: string = 'Lum Berry EM';
+  public fullName: string = 'Lum Berry (EM 78)';
+  public legacyFullName = 'Lum Berry EM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '78';
 

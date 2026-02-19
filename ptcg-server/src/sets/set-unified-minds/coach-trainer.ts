@@ -15,7 +15,8 @@ export class CoachTrainer extends TrainerCard {
   public setNumber: string = '192';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Coach Trainer';
-  public fullName: string = 'Coach Trainer UNM';
+  public fullName: string = 'Coach Trainer (UNM 192)';
+  public legacyFullName = 'Coach Trainer UNM';
   public text: string = 'Draw 2 cards. If your Active Pokémon is a TAG TEAM Pokémon, draw 2 more cards. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

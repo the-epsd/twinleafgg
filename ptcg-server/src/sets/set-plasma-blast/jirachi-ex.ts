@@ -84,7 +84,8 @@ export class JirachiEX extends PokemonCard {
 
   public name: string = 'Jirachi-EX';
 
-  public fullName: string = 'Jirachi EX PLB';
+  public fullName: string = 'Jirachi-EX (PLB 60)';
+  public legacyFullName = 'Jirachi EX PLB';
 
   public cardImage: string = 'assets/cardback.png';
 

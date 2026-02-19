@@ -33,7 +33,8 @@ export class Decidueye extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
   public name: string = 'Decidueye';
-  public fullName: string = 'Decidueye SFA';
+  public fullName: string = 'Decidueye (SFA 5)';
+  public legacyFullName = 'Decidueye SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

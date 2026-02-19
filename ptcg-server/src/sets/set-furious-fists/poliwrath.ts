@@ -36,7 +36,8 @@ export class Poliwrath extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poliwrath';
-  public fullName: string = 'Poliwrath FFI';
+  public fullName: string = 'Poliwrath (FFI 17)';
+  public legacyFullName = 'Poliwrath FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Steamroll

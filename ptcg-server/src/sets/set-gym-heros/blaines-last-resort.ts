@@ -15,7 +15,8 @@ export class BlainesLastResort extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '105';
   public name: string = 'Blaine\'s Last Resort';
-  public fullName: string = 'Blaine\'s Last Resort G1';
+  public fullName: string = 'Blaine\'s Last Resort (G1 105)';
+  public legacyFullName = 'Blaine\'s Last Resort G1';
 
   public text: string =
     'You can\'t play this card if you have any cards in your hand other than Blaine\'s Last Resort. Show your hand to your opponent, then draw 5 cards.';

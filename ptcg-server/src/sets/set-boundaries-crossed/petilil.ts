@@ -30,7 +30,8 @@ export class Petilil extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Petilil';
-  public fullName: string = 'Petilil BCR';
+  public fullName: string = 'Petilil (BCR 16)';
+  public legacyFullName = 'Petilil BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sleep Powder

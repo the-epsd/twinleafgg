@@ -33,7 +33,8 @@ export class Klink extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '74';
   public name: string = 'Klink';
-  public fullName: string = 'Klink EPO';
+  public fullName: string = 'Klink (EPO 74)';
+  public legacyFullName = 'Klink EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

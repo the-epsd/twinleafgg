@@ -15,7 +15,8 @@ export class HardCharm extends TrainerCard {
   public setNumber: string = '119';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hard Charm';
-  public fullName: string = 'Hard Charm XY';
+  public fullName: string = 'Hard Charm (XY 119)';
+  public legacyFullName = 'Hard Charm XY';
   public text: string = 'Any damage done to the Pokémon this card is attached to by an opponent\'s attack is reduced by 20 (after applying Weakness and Resistance).';
 
   // Ref: set-x-and-y/muscle-band.ts (Tool damage modifier pattern)

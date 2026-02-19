@@ -32,7 +32,8 @@ export class Pikachuex extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikachu ex';
-  public fullName: string = 'Pikachu ex SSP';
+  public fullName: string = 'Pikachu ex (SSP 57)';
+  public legacyFullName = 'Pikachu ex SSP';
 
   public damageDealt = false;
 

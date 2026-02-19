@@ -48,7 +48,8 @@ export class Altaria extends PokemonCard {
 
   public name: string = 'Altaria';
 
-  public fullName: string = 'Altaria EVS';
+  public fullName: string = 'Altaria (EVS 106)';
+  public legacyFullName = 'Altaria EVS';
 
   public readonly FOREWARN_MARKER = 'FOREWARN_MARKER';
 

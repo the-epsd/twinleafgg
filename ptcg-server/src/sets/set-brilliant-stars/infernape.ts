@@ -31,7 +31,8 @@ export class Infernape extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '26';
   public name = 'Infernape';
-  public fullName = 'Infernape BRS';
+  public fullName = 'Infernape (BRS 26)';
+  public legacyFullName = 'Infernape BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -28,7 +28,8 @@ export class Mienshao extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mienshao';
-  public fullName: string = 'Mienshao NVI';
+  public fullName: string = 'Mienshao (NVI 70)';
+  public legacyFullName = 'Mienshao NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

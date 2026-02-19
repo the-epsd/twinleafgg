@@ -30,7 +30,8 @@ export class CornerstoneMaskOgerpon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '111';
   public name: string = 'Cornerstone Mask Ogerpon';
-  public fullName: string = 'Cornerstone Mask Ogerpon DRI';
+  public fullName: string = 'Cornerstone Mask Ogerpon (DRI 111)';
+  public legacyFullName = 'Cornerstone Mask Ogerpon DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

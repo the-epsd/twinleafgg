@@ -29,7 +29,8 @@ export class Rowlet extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '10';
   public name: string = 'Rowlet';
-  public fullName: string = 'Rowlet M3';
+  public fullName: string = 'Rowlet (M3 10)';
+  public legacyFullName = 'Rowlet M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -30,7 +30,7 @@ export class Raticate extends PokemonCard {
       name: 'Shadowy Bite',
       cost: [C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 60 damage times the number of Special Energy cards in your opponent\'s discard pile.'
     }
   ];
@@ -39,7 +39,8 @@ export class Raticate extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raticate';
-  public fullName: string = 'Raticate EVO';
+  public fullName: string = 'Raticate (EVO 67)';
+  public legacyFullName = 'Raticate EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Crunch

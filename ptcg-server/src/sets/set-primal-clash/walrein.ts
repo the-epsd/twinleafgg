@@ -28,7 +28,7 @@ export class Walrein extends PokemonCard {
       name: 'Frozen Splash',
       cost: [W, W, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Fighting Pokémon, this attack does 70 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Walrein extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Walrein';
-  public fullName: string = 'Walrein PRC';
+  public fullName: string = 'Walrein (PRC 48)';
+  public legacyFullName = 'Walrein PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Knock Over

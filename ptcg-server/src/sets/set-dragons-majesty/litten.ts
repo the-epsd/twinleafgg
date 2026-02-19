@@ -20,7 +20,7 @@ export class Litten extends PokemonCard {
       name: 'Fury Swipes',
       cost: [R],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 10 damage for each heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class Litten extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Litten';
-  public fullName: string = 'Litten DRM';
+  public fullName: string = 'Litten (DRM 12)';
+  public legacyFullName = 'Litten DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Swipes

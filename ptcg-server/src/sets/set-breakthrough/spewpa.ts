@@ -37,7 +37,8 @@ export class Spewpa extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spewpa';
-  public fullName: string = 'Spewpa BKT';
+  public fullName: string = 'Spewpa (BKT 14)';
+  public legacyFullName = 'Spewpa BKT';
 
   public readonly PREVENT_ALL_MARKER = 'SPEWPA_BKT_PREVENT_ALL';
   public readonly CLEAR_PREVENT_ALL_MARKER = 'SPEWPA_BKT_CLEAR_PREVENT_ALL';

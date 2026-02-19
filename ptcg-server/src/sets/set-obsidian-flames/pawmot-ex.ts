@@ -30,7 +30,8 @@ export class Pawmotex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';
   public name: string = 'Pawmot ex';
-  public fullName: string = 'Pawmot ex OBF';
+  public fullName: string = 'Pawmot ex (OBF 73)';
+  public legacyFullName = 'Pawmot ex OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

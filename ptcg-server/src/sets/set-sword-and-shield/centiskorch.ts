@@ -33,7 +33,8 @@ export class Centiskorch extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Centiskorch';
-  public fullName: string = 'Centiskorch SSH';
+  public fullName: string = 'Centiskorch (SSH 39)';
+  public legacyFullName = 'Centiskorch SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

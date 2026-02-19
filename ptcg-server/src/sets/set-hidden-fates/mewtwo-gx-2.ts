@@ -37,7 +37,8 @@ export class MewtwoGx2 extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mewtwo-GX';
-  public fullName: string = 'Mewtwo-GX HIF 31';
+  public fullName: string = 'Mewtwo-GX (HIF 31)';
+  public legacyFullName = 'Mewtwo-GX HIF 31';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Psycrush-GX

@@ -81,7 +81,8 @@ export class MaxRod extends TrainerCard {
 
   public name: string = 'Max Rod';
 
-  public fullName: string = 'Max Rod PRE';
+  public fullName: string = 'Max Rod (PRE 116)';
+  public legacyFullName = 'Max Rod PRE';
 
   public text: string =
     'Choose up to 5 in any combination of Pokémon and Basic Energy cards from your discard pile and put them into your hand.';

@@ -34,7 +34,8 @@ export class Durant extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Durant';
-  public fullName: string = 'Durant BKP';
+  public fullName: string = 'Durant (BKP 9)';
+  public legacyFullName = 'Durant BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mountain Munch

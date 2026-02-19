@@ -48,7 +48,8 @@ export class CrobatV extends PokemonCard {
 
   public name: string = 'Crobat V';
 
-  public fullName: string = 'Crobat V DAA';
+  public fullName: string = 'Crobat V (DAA 104)';
+  public legacyFullName = 'Crobat V DAA';
 
   public readonly DARK_ASSET_MARKER = 'DARK_ASSET_MARKER';
 

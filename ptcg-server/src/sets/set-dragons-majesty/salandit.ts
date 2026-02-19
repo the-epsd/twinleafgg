@@ -71,7 +71,8 @@ export class Salandit extends PokemonCard {
 
   public name: string = 'Salandit';
 
-  public fullName: string = 'Salandit DRM';
+  public fullName: string = 'Salandit (DRM 13)';
+  public legacyFullName = 'Salandit DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

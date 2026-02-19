@@ -21,7 +21,7 @@ export class Clefairy extends PokemonCard {
       name: 'Double Slap',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 10 damage for each heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Clefairy extends PokemonCard {
   public setNumber: string = '132';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clefairy';
-  public fullName: string = 'Clefairy UNB';
+  public fullName: string = 'Clefairy (UNB 132)';
+  public legacyFullName = 'Clefairy UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Slap

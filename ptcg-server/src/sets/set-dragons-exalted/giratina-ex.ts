@@ -32,7 +32,8 @@ export class GiratinaEx extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Giratina-EX';
-  public fullName: string = 'Giratina-EX DRX';
+  public fullName: string = 'Giratina-EX (DRX 92)';
+  public legacyFullName = 'Giratina-EX DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shred - ignore effects on defending Pokemon

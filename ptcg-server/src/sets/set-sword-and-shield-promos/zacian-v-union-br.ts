@@ -9,6 +9,7 @@ import {ZacianVUNIONBottomLeft} from './zacian-v-union-bl';
 
 export class ZacianVUNIONBottomRight extends PokemonCard {
   public stage: Stage = Stage.VUNION;
+  public multiPartPosition: 'Top' | 'Bottom' | 'Top Left' | 'Top Right' | 'Bottom Left' | 'Bottom Right' = 'Bottom Right';
   public tags = [ CardTag.POKEMON_VUNION ];
   public cardType: CardType = M;
   public hp: number = 320;
@@ -40,7 +41,8 @@ export class ZacianVUNIONBottomRight extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '166';
   public name: string = 'Zacian V-UNION';
-  public fullName: string = 'Zacian V-UNION (Bottom Right) SWSH';
+  public fullName: string = 'Zacian V-UNION (SWSH 166)';
+  public legacyFullName = 'Zacian V-UNION (Bottom Right) SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union

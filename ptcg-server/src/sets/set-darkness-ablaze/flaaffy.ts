@@ -27,5 +27,6 @@ export class Flaaffy extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flaaffy';
-  public fullName: string = 'Flaaffy DAA';
+  public fullName: string = 'Flaaffy (DAA 56)';
+  public legacyFullName = 'Flaaffy DAA';
 }

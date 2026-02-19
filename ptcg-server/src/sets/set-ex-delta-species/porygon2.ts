@@ -30,7 +30,8 @@ export class Porygon2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '25';
   public name: string = 'Porygon2';
-  public fullName: string = 'Porygon2 DS';
+  public fullName: string = 'Porygon2 (DS 25)';
+  public legacyFullName = 'Porygon2 DS';
 
   public readonly BACKUP_MARKER = 'BACKUP_MARKER';
 

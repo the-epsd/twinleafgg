@@ -21,7 +21,8 @@ export class Grusha extends TrainerCard {
 
   public name: string = 'Grusha';
 
-  public fullName: string = 'Grusha PAL';
+  public fullName: string = 'Grusha (PAL 184)';
+  public legacyFullName = 'Grusha PAL';
 
   public text: string =
     'Draw cards until you have 5 cards in your hand. If none of your Pokémon have any Energy attached, draw cards until you have 7 cards in your hand instead.';

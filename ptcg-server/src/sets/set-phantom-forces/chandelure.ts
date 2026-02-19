@@ -38,7 +38,8 @@ export class Chandelure extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chandelure';
-  public fullName: string = 'Chandelure PHF';
+  public fullName: string = 'Chandelure (PHF 43)';
+  public legacyFullName = 'Chandelure PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fainting Spell (passive - triggers on KO)

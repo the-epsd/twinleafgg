@@ -37,7 +37,8 @@ export class Bouffalant extends PokemonCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bouffalant';
-  public fullName: string = 'Bouffalant BST';
+  public fullName: string = 'Bouffalant (BST 118)';
+  public legacyFullName = 'Bouffalant BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sap Sipper (passive - do 60 more damage to Grass Pokemon)

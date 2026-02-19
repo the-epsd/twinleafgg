@@ -34,7 +34,8 @@ export class Leafeon extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Leafeon';
-  public fullName: string = 'Leafeon DEX';
+  public fullName: string = 'Leafeon (DEX 6)';
+  public legacyFullName = 'Leafeon DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Quick Attack - flip for +30

@@ -47,7 +47,8 @@ export class Octillery extends PokemonCard {
 
   public name: string = 'Octillery';
 
-  public fullName: string = 'Octillery BKT';
+  public fullName: string = 'Octillery (BKT 33)';
+  public legacyFullName = 'Octillery BKT';
 
   public readonly ABYSSAL_HAND_MARKER = 'ABYSSAL_HAND_MARKER';
 

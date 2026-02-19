@@ -31,7 +31,8 @@ export class StevensClaydol extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steven\'s Claydol';
-  public fullName: string = 'Steven\'s Claydol DRI';
+  public fullName: string = 'Steven\'s Claydol (DRI 84)';
+  public legacyFullName = 'Steven\'s Claydol DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -26,7 +26,7 @@ export class Volcanion extends PokemonCard {
       name: 'Dynamite Steam',
       cost: [W, W, W, C],
       damage: 120,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 120 damage for each heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Volcanion extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Volcanion';
-  public fullName: string = 'Volcanion SHF';
+  public fullName: string = 'Volcanion (SHF 25)';
+  public legacyFullName = 'Volcanion SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Dynamite Steam

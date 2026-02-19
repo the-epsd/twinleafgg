@@ -27,7 +27,7 @@ export class Metagross2 extends PokemonCard {
       name: 'Machine Gun Stomp',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each card in your hand.'
     },
     {
@@ -42,7 +42,8 @@ export class Metagross2 extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metagross';
-  public fullName: string = 'Metagross AOR 50';
+  public fullName: string = 'Metagross (AOR 50)';
+  public legacyFullName = 'Metagross AOR 50';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Machine Gun Stomp

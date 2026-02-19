@@ -34,7 +34,8 @@ export class Sawsbuck extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public name: string = 'Sawsbuck';
-  public fullName: string = 'Sawsbuck BLW';
+  public fullName: string = 'Sawsbuck (BLW 14)';
+  public legacyFullName = 'Sawsbuck BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

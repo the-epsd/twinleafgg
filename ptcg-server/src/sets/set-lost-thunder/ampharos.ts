@@ -30,7 +30,8 @@ export class Ampharos extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name = 'Ampharos';
-  public fullName = 'Ampharos LOT';
+  public fullName = 'Ampharos (LOT 78)';
+  public legacyFullName = 'Ampharos LOT';
 
   public readonly UNSEEN_FLASH_MARKER = 'UNSEEN_FLASH_MARKER';
 

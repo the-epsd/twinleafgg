@@ -28,7 +28,8 @@ export class Greavard extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '100';
   public name: string = 'Greavard';
-  public fullName: string = 'Greavard OBF';
+  public fullName: string = 'Greavard (OBF 100)';
+  public legacyFullName = 'Greavard OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)){

@@ -13,7 +13,8 @@ export class MoonlightStadium extends TrainerCard {
 
   public set: string = 'GE';
   public name: string = 'Moonlight Stadium';
-  public fullName: string = 'Moonlight Stadium GE';
+  public fullName: string = 'Moonlight Stadium (GE 100)';
+  public legacyFullName = 'Moonlight Stadium GE';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '100';
 

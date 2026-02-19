@@ -28,7 +28,7 @@ export class Electabuzz extends PokemonCard {
       name: 'Ambush',
       cost: [L, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Electabuzz extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electabuzz';
-  public fullName: string = 'Electabuzz FFI';
+  public fullName: string = 'Electabuzz (FFI 29)';
+  public legacyFullName = 'Electabuzz FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Ambush

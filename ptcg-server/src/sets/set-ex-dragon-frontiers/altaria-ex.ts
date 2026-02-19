@@ -35,7 +35,8 @@ export class Altariaex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
   public name: string = 'Altaria ex';
-  public fullName: string = 'Altaria ex DF';
+  public fullName: string = 'Altaria ex (DF 90)';
+  public legacyFullName = 'Altaria ex DF';
 
   public readonly EXTRA_BOOST_MARKER = 'EXTRA_BOOST_MARKER';
 

@@ -65,7 +65,8 @@ export class ArmorFossilShieldon extends TrainerCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Armor Fossil Shieldon';
-  public fullName: string = 'Armor Fossil Shieldon STS';
+  public fullName: string = 'Armor Fossil Shieldon (STS 98)';
+  public legacyFullName = 'Armor Fossil Shieldon STS';
   public text: string = 'Look at the bottom 7 cards of your deck. You may reveal a Shieldon you find there and put it onto your Bench. Shuffle the other cards back into your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

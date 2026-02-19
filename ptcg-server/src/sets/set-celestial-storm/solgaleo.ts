@@ -37,7 +37,8 @@ export class Solgaleo extends PokemonCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solgaleo';
-  public fullName: string = 'Solgaleo CES';
+  public fullName: string = 'Solgaleo (CES 99)';
+  public legacyFullName = 'Solgaleo CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Full Metal Body (passive - no Weakness if [M] Energy attached)

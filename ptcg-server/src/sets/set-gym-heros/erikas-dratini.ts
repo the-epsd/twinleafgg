@@ -33,7 +33,8 @@ export class ErikasDratini extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
   public name: string = 'Erika\'s Dratini';
-  public fullName: string = 'Erika\'s Dratini G1';
+  public fullName: string = 'Erika\'s Dratini (G1 42)';
+  public legacyFullName = 'Erika\'s Dratini G1';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {

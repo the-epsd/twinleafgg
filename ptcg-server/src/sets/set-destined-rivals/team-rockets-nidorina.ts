@@ -134,7 +134,8 @@ export class TeamRocketsNidorina extends PokemonCard {
   public setNumber: string = '115';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Nidorina';
-  public fullName: string = 'Team Rocket\'s Nidorina DRI';
+  public fullName: string = 'Team Rocket\'s Nidorina (DRI 115)';
+  public legacyFullName = 'Team Rocket\'s Nidorina DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

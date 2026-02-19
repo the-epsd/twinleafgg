@@ -34,5 +34,6 @@ export class Metang extends PokemonCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metang';
-  public fullName: string = 'Metang VIV';
+  public fullName: string = 'Metang (VIV 117)';
+  public legacyFullName = 'Metang VIV';
 }

@@ -26,5 +26,6 @@ export class Litleo extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Litleo';
-  public fullName: string = 'Litleo EVS';
+  public fullName: string = 'Litleo (EVS 22)';
+  public legacyFullName = 'Litleo EVS';
 }

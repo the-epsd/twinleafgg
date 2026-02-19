@@ -18,7 +18,8 @@ export class SupereffectiveGlasses extends TrainerCard {
 
   public name: string = 'Supereffective Glasses';
 
-  public fullName: string = 'Supereffective Glasses ASR';
+  public fullName: string = 'Supereffective Glasses (ASR 152)';
+  public legacyFullName = 'Supereffective Glasses ASR';
 
   public text: string =
     'When applying Weakness to damage from the attacks of the Pokémon this card is attached to done to your opponent\'s Active Pokémon, apply it as ×3.';

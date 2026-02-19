@@ -29,7 +29,8 @@ export class Fraxure extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fraxure';
-  public fullName: string = 'Fraxure NVI';
+  public fullName: string = 'Fraxure (NVI 87)';
+  public legacyFullName = 'Fraxure NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

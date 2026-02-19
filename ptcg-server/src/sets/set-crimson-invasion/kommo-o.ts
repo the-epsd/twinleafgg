@@ -26,7 +26,7 @@ export class KommoO extends PokemonCard {
       name: 'War Cry',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have fewer Pokémon in play than your opponent, this attack does 90 more damage.'
     },
     {
@@ -41,7 +41,8 @@ export class KommoO extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kommo-o';
-  public fullName: string = 'Kommo-o CIN';
+  public fullName: string = 'Kommo-o (CIN 77)';
+  public legacyFullName = 'Kommo-o CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: War Cry

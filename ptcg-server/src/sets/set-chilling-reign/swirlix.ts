@@ -30,7 +30,8 @@ export class Swirlix extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swirlix';
-  public fullName: string = 'Swirlix CRE';
+  public fullName: string = 'Swirlix (CRE 67)';
+  public legacyFullName = 'Swirlix CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Draining Kiss

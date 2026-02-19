@@ -32,7 +32,8 @@ export class Cofagrigus2 extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cofagrigus';
-  public fullName: string = 'Cofagrigus NVI 47';
+  public fullName: string = 'Cofagrigus (NVI 47)';
+  public legacyFullName = 'Cofagrigus NVI 47';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Chuck into the Chest

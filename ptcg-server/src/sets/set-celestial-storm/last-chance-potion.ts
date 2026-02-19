@@ -76,7 +76,8 @@ export class LastChancePotion extends TrainerCard {
 
   public name: string = 'Last Chance Potion';
 
-  public fullName: string = 'Last Chance Potion CES';
+  public fullName: string = 'Last Chance Potion (CES 135)';
+  public legacyFullName = 'Last Chance Potion CES';
 
   public cardImage: string = 'assets/cardback.png';
 

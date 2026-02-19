@@ -29,7 +29,7 @@ export class Honchkrow extends PokemonCard {
       name: 'Raven\'s Claw',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on all of your opponent\'s Pokémon.'
     }
   ];
@@ -38,7 +38,8 @@ export class Honchkrow extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Honchkrow';
-  public fullName: string = 'Honchkrow GRI';
+  public fullName: string = 'Honchkrow (GRI 79)';
+  public legacyFullName = 'Honchkrow GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Feint Attack

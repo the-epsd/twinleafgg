@@ -38,7 +38,8 @@ export class Charjabug extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charjabug';
-  public fullName: string = 'Charjabug RCL';
+  public fullName: string = 'Charjabug (RCL 65)';
+  public legacyFullName = 'Charjabug RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Charge

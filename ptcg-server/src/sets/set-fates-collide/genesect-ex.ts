@@ -33,7 +33,7 @@ export class GenesectEx extends PokemonCard {
       name: 'Rapid Blaster',
       cost: [M, M, M],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Discard as many [M] Energy attached to this Pokémon as you like. This attack does 20 more damage for each Energy card discarded in this way.'
     }
   ];
@@ -42,7 +42,8 @@ export class GenesectEx extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Genesect-EX';
-  public fullName: string = 'Genesect-EX FCO';
+  public fullName: string = 'Genesect-EX (FCO 64)';
+  public legacyFullName = 'Genesect-EX FCO';
 
   public readonly DRIVE_CHANGE_MARKER = 'DRIVE_CHANGE_MARKER';
 

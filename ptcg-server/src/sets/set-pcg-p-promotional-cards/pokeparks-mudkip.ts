@@ -29,7 +29,8 @@ export class PokeParksMudkip extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'PokéPark\'s Mudkip';
-  public fullName: string = 'PokéPark\'s Mudkip PCGP';
+  public fullName: string = 'PokéPark\'s Mudkip (PCGP 48)';
+  public legacyFullName = 'PokéPark\'s Mudkip PCGP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';
 

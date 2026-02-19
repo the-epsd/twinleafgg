@@ -42,7 +42,8 @@ export class CobalionGX extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cobalion-GX';
-  public fullName: string = 'Cobalion-GX TEU';
+  public fullName: string = 'Cobalion-GX (TEU 106)';
+  public legacyFullName = 'Cobalion-GX TEU';
 
   public readonly IRON_RULE_MARKER = 'IRON_RULE_MARKER';
 

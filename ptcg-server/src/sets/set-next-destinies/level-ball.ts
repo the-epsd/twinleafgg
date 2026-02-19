@@ -63,7 +63,8 @@ export class LevelBall extends TrainerCard {
 
   public name: string = 'Level Ball';
 
-  public fullName: string = 'Level Ball NXD';
+  public fullName: string = 'Level Ball (NXD 89)';
+  public legacyFullName = 'Level Ball NXD';
 
   public cardImage: string = 'assets/cardback.png';
 

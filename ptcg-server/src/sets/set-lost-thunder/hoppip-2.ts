@@ -26,5 +26,6 @@ export class Hoppip2 extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hoppip';
-  public fullName: string = 'Hoppip LOT 12';
+  public fullName: string = 'Hoppip (LOT 12)';
+  public legacyFullName = 'Hoppip LOT 12';
 }

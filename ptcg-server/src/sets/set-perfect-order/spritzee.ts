@@ -28,7 +28,8 @@ export class Spritzee extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '34';
   public name: string = 'Spritzee';
-  public fullName: string = 'Spritzee M3';
+  public fullName: string = 'Spritzee (M3 34)';
+  public legacyFullName = 'Spritzee M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sweet Scent - Heal 30 from 1 Pokemon

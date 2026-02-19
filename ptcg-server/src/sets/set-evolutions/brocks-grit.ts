@@ -17,7 +17,8 @@ export class BrocksGrit extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'EVO';
   public name: string = 'Brock\'s Grit';
-  public fullName: string = 'Brock\'s Grit EVO';
+  public fullName: string = 'Brock\'s Grit (EVO 74)';
+  public legacyFullName = 'Brock\'s Grit EVO';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '74';
 

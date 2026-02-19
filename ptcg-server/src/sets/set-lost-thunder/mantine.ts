@@ -36,7 +36,8 @@ export class Mantine extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mantine';
-  public fullName: string = 'Mantine LOT';
+  public fullName: string = 'Mantine (LOT 58)';
+  public legacyFullName = 'Mantine LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Mantine Surf (passive - free retreat if any Energy attached)

@@ -28,7 +28,7 @@ export class Steenee extends PokemonCard {
       name: 'Stomp',
       cost: [G, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Steenee extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steenee';
-  public fullName: string = 'Steenee CRE';
+  public fullName: string = 'Steenee (CRE 14)';
+  public legacyFullName = 'Steenee CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Stomp

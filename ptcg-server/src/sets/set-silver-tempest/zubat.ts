@@ -20,6 +20,7 @@ export class Zubat extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '103';
   public name: string = 'Zubat';
-  public fullName: string = 'Zubat SIT';
+  public fullName: string = 'Zubat (SIT 103)';
+  public legacyFullName = 'Zubat SIT';
 
 }

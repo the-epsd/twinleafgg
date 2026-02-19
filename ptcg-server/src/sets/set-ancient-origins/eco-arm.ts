@@ -72,7 +72,8 @@ export class EcoArm extends TrainerCard {
 
   public name: string = 'Eco Arm';
 
-  public fullName: string = 'Eco Arm AOR';
+  public fullName: string = 'Eco Arm (AOR 71)';
+  public legacyFullName = 'Eco Arm AOR';
 
   public text: string =
     'Shuffle 3 Pokémon Tool cards from your discard pile into your deck.';

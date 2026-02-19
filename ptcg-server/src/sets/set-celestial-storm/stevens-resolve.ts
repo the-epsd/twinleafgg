@@ -52,7 +52,8 @@ export class StevensResolve extends TrainerCard {
 
   public name: string = 'Steven\'s Resolve';
 
-  public fullName: string = 'Steven\'s Resolve CES';
+  public fullName: string = 'Steven\'s Resolve (CES 145)';
+  public legacyFullName = 'Steven\'s Resolve CES';
 
   public text: string =
     'Search your deck for up to 3 cards and put them into your hand. Then, shuffle your deck. Your turn ends.';

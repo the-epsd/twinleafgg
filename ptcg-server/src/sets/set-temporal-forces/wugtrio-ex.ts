@@ -30,7 +30,8 @@ export class Wugtrioex extends PokemonCard {
 
   public set: string = 'TEF';
   public name: string = 'Wugtrio ex';
-  public fullName: string = 'Wugtrio ex TEF';
+  public fullName: string = 'Wugtrio ex (TEF 60)';
+  public legacyFullName = 'Wugtrio ex TEF';
   public regulationMark = 'H';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';

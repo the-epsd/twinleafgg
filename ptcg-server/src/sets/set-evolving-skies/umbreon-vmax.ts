@@ -49,7 +49,8 @@ export class UmbreonVMAX extends PokemonCard {
 
   public name: string = 'Umbreon VMAX';
 
-  public fullName: string = 'Umbreon VMAX EVS';
+  public fullName: string = 'Umbreon VMAX (EVS 95)';
+  public legacyFullName = 'Umbreon VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

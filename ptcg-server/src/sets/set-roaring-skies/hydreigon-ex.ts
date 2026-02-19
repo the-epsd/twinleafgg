@@ -37,7 +37,8 @@ export class HydreigonEx extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hydreigon-EX';
-  public fullName: string = 'Hydreigon-EX ROS';
+  public fullName: string = 'Hydreigon-EX (ROS 62)';
+  public legacyFullName = 'Hydreigon-EX ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Dragon Road (passive - retreat cost reduction)

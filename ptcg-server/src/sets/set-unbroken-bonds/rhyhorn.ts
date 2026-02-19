@@ -29,7 +29,8 @@ export class Rhyhorn extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rhyhorn';
-  public fullName: string = 'Rhyhorn UNB';
+  public fullName: string = 'Rhyhorn (UNB 92)';
+  public legacyFullName = 'Rhyhorn UNB';
 
   public usedPushDown = false;
 

@@ -30,7 +30,8 @@ export class Noctowl extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name = 'Noctowl';
-  public fullName = 'Noctowl N1';
+  public fullName = 'Noctowl (N1 42)';
+  public legacyFullName = 'Noctowl N1';
 
   public readonly GAZE_MARKER = 'GAZE_MARKER';
 

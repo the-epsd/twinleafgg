@@ -29,7 +29,8 @@ export class Shellder2 extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shellder';
-  public fullName: string = 'Shellder BKP 23';
+  public fullName: string = 'Shellder (BKP 23)';
+  public legacyFullName = 'Shellder BKP 23';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Clamp

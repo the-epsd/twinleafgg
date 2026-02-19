@@ -47,7 +47,8 @@ export class ShiningGenesect extends PokemonCard {
 
   public name: string = 'Shining Genesect';
 
-  public fullName: string = 'Shining Genesect SLG';
+  public fullName: string = 'Shining Genesect (SLG 9)';
+  public legacyFullName = 'Shining Genesect SLG';
 
   public cardImage: string = 'assets/cardback.png';
 

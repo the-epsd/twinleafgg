@@ -34,7 +34,8 @@ export class Simisage extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
   public name: string = 'Simisage';
-  public fullName: string = 'Simisage BLW';
+  public fullName: string = 'Simisage (BLW 8)';
+  public legacyFullName = 'Simisage BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

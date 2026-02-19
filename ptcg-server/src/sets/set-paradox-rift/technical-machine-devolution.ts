@@ -27,7 +27,8 @@ export class TechnicalMachineDevolution extends TrainerCard {
 
   public name: string = 'Technical Machine: Devolution';
 
-  public fullName: string = 'Technical Machine: Devolution PAR';
+  public fullName: string = 'Technical Machine: Devolution (PAR 177)';
+  public legacyFullName = 'Technical Machine: Devolution PAR';
 
   public attacks: Attack[] = [{
     name: 'Devolution',

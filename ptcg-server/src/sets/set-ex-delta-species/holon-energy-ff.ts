@@ -16,7 +16,8 @@ export class HolonEnergyFF extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '104';
   public name = 'Holon Energy FF';
-  public fullName = 'Holon Energy FF DS';
+  public fullName = 'Holon Energy FF (DS 104)';
+  public legacyFullName = 'Holon Energy FF DS';
 
   public text =
     'Holon Energy FF provides [C] Energy.' +

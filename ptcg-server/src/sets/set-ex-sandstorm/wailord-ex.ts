@@ -34,7 +34,8 @@ export class Wailordex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '100';
   public name: string = 'Wailord ex';
-  public fullName: string = 'Wailord ex SS';
+  public fullName: string = 'Wailord ex (SS 100)';
+  public legacyFullName = 'Wailord ex SS';
 
   public usedSuperDeepDive = false;
 

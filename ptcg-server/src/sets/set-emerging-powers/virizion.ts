@@ -35,7 +35,8 @@ export class Virizion extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Virizion';
-  public fullName: string = 'Virizion EPO';
+  public fullName: string = 'Virizion (EPO 17)';
+  public legacyFullName = 'Virizion EPO';
 
   public readonly SACRED_SWORD_MARKER = 'SACRED_SWORD_MARKER';
 

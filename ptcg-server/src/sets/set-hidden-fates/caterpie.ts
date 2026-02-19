@@ -25,5 +25,6 @@ export class Caterpie extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Caterpie';
-  public fullName: string = 'Caterpie HIF';
+  public fullName: string = 'Caterpie (HIF 1)';
+  public legacyFullName = 'Caterpie HIF';
 }

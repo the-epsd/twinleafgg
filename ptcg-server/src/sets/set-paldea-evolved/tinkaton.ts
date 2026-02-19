@@ -35,7 +35,8 @@ export class Tinkaton extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '105';
   public name: string = 'Tinkaton';
-  public fullName: string = 'Tinkaton PAL';
+  public fullName: string = 'Tinkaton (PAL 105)';
+  public legacyFullName = 'Tinkaton PAL';
 
   public readonly GATHER_MATERIALS_MARKER = 'GATHER_MATERIALS_MARKER';
 

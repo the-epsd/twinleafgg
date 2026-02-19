@@ -52,7 +52,8 @@ export class NecrozmaV extends PokemonCard {
 
   public name: string = 'Necrozma V';
 
-  public fullName: string = 'Necrozma V BST';
+  public fullName: string = 'Necrozma V (BST 63)';
+  public legacyFullName = 'Necrozma V BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -37,7 +37,8 @@ export class AlolanMuk extends PokemonCard {
   public setNumber: string = '131';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Muk';
-  public fullName: string = 'Alolan Muk CEC';
+  public fullName: string = 'Alolan Muk (CEC 131)';
+  public legacyFullName = 'Alolan Muk CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Panic Poison

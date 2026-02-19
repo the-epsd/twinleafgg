@@ -32,5 +32,6 @@ export class GalarianDarumaka extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Darumaka';
-  public fullName: string = 'Galarian Darumaka DAA';
+  public fullName: string = 'Galarian Darumaka (DAA 43)';
+  public legacyFullName = 'Galarian Darumaka DAA';
 }

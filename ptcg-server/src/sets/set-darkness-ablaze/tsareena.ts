@@ -37,7 +37,8 @@ export class Tsareena extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tsareena';
-  public fullName: string = 'Tsareena DAA';
+  public fullName: string = 'Tsareena (DAA 16)';
+  public legacyFullName = 'Tsareena DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Power Whip

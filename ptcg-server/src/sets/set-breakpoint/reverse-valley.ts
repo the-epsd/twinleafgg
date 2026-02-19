@@ -24,7 +24,8 @@ export class ReverseValley extends TrainerCard {
 
   public name: string = 'Reverse Valley';
 
-  public fullName: string = 'Reverse Valley BKP';
+  public fullName: string = 'Reverse Valley (BKP 110)';
+  public legacyFullName = 'Reverse Valley BKP';
 
   public text: string =
     'Choose which way this card faces before you play it. The attacks of this â†“ player\'s [D] Pokémon do 10 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).' +

@@ -29,7 +29,8 @@ export class Salazzle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
   public name: string = 'Salazzle';
-  public fullName: string = 'Salazzle BST';
+  public fullName: string = 'Salazzle (BST 28)';
+  public legacyFullName = 'Salazzle BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

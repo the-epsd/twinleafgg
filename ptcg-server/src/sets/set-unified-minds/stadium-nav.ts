@@ -20,7 +20,8 @@ export class StadiumNav extends TrainerCard {
 
   public name: string = 'Stadium Nav';
 
-  public fullName: string = 'Stadium Nav UNM';
+  public fullName: string = 'Stadium Nav (UNM 208)';
+  public legacyFullName = 'Stadium Nav UNM';
 
   public cardImage: string = 'assets/cardback.png';
 

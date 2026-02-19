@@ -31,7 +31,7 @@ export class Klefki extends PokemonCard {
       name: 'Play Rough',
       cost: [Y, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -40,7 +40,8 @@ export class Klefki extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klefki';
-  public fullName: string = 'Klefki ROS';
+  public fullName: string = 'Klefki (ROS 48)';
+  public legacyFullName = 'Klefki ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Look for Keys

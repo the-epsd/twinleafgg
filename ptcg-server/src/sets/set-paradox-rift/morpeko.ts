@@ -44,7 +44,8 @@ export class Morpeko extends PokemonCard {
 
   public name: string = 'Morpeko';
 
-  public fullName: string = 'Morpeko PAR';
+  public fullName: string = 'Morpeko (PAR 121)';
+  public legacyFullName = 'Morpeko PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

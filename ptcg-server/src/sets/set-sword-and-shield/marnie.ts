@@ -21,7 +21,8 @@ export class Marnie extends TrainerCard {
 
   public name: string = 'Marnie';
 
-  public fullName: string = 'Marnie SSH';
+  public fullName: string = 'Marnie (SSH 169)';
+  public legacyFullName = 'Marnie SSH';
 
   public text: string =
     'Each player shuffles their hand and puts it on the bottom of their deck. If either player put any cards on the bottom of their deck in this way, you draw 5 cards, and your opponent draws 4 cards.';

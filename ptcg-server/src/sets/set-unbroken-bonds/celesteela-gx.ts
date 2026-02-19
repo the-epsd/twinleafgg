@@ -43,7 +43,8 @@ export class CelesteelaGx extends PokemonCard {
   public setNumber: string = '163';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celesteela-GX';
-  public fullName: string = 'Celesteela-GX UNB';
+  public fullName: string = 'Celesteela-GX (UNB 163)';
+  public legacyFullName = 'Celesteela-GX UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Force Canceler (passive - prevent GX attack effects while active)

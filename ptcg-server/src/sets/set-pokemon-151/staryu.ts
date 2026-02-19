@@ -39,7 +39,8 @@ export class Staryu extends PokemonCard {
 
   public name: string = 'Staryu';
 
-  public fullName: string = 'Staryu MEW';
+  public fullName: string = 'Staryu (MEW 120)';
+  public legacyFullName = 'Staryu MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

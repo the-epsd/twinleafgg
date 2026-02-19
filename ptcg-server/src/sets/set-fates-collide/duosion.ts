@@ -21,7 +21,7 @@ export class Duosion extends PokemonCard {
       name: 'Double Link',
       cost: [P, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Solosis is on your Bench, this attack does 30 more damage. If Duosion is on your Bench, this attack does 60 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Duosion extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Duosion';
-  public fullName: string = 'Duosion FCO';
+  public fullName: string = 'Duosion (FCO 34)';
+  public legacyFullName = 'Duosion FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Link

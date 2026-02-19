@@ -15,6 +15,7 @@ export class MetalEnergy extends EnergyCard {
 
   public name = 'Metal Energy';
 
-  public fullName = 'Metal Energy HS';
+  public fullName = 'Metal Energy (HS 122)';
+  public legacyFullName = 'Metal Energy HS';
 
 }

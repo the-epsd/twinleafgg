@@ -22,7 +22,7 @@ export class AlolanRaticate extends PokemonCard {
       name: 'Enhanced Fang',
       cost: [],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 50 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class AlolanRaticate extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Raticate';
-  public fullName: string = 'Alolan Raticate BUS';
+  public fullName: string = 'Alolan Raticate (BUS 82)';
+  public legacyFullName = 'Alolan Raticate BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Enhanced Fang

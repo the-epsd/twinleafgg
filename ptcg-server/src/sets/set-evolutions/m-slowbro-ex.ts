@@ -22,7 +22,7 @@ export class MSlowbroEx extends PokemonCard {
       name: 'Loll Roll Spin',
       cost: [W, W, W],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This Pokémon is now Confused. During your next turn, this Pokémon\'s Loll Roll Spin attack does 100 more damage (before applying Weakness and Resistance).'
     }
   ];
@@ -31,7 +31,8 @@ export class MSlowbroEx extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Slowbro-EX';
-  public fullName: string = 'M Slowbro-EX EVO';
+  public fullName: string = 'M Slowbro-EX (EVO 27)';
+  public legacyFullName = 'M Slowbro-EX EVO';
 
   public readonly LOLL_ROLL_SPIN_MARKER = 'M_SLOWBRO_EX_EVO_LOLL_ROLL_SPIN';
   public readonly LOLL_ROLL_SPIN_MARKER_2 = 'M_SLOWBRO_EX_EVO_LOLL_ROLL_SPIN_2';

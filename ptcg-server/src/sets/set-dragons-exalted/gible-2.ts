@@ -34,7 +34,8 @@ export class Gible2 extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gible';
-  public fullName: string = 'Gible DRX 87';
+  public fullName: string = 'Gible (DRX 87)';
+  public legacyFullName = 'Gible DRX 87';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'GIBLE2_DEFENDING_CANNOT_ATTACK_MARKER';
   public readonly SAND_ATTACK_MARKER = 'GIBLE2_SAND_ATTACK_MARKER';

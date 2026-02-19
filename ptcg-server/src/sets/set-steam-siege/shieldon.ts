@@ -38,7 +38,8 @@ export class Shieldon extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shieldon';
-  public fullName: string = 'Shieldon STS';
+  public fullName: string = 'Shieldon (STS 69)';
+  public legacyFullName = 'Shieldon STS';
 
   public readonly REDUCE_DAMAGE_MARKER = 'SHIELDON_STS_REDUCE_DAMAGE';
   public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'SHIELDON_STS_CLEAR_REDUCE_DAMAGE';

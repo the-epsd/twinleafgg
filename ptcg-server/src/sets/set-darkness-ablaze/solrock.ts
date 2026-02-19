@@ -36,7 +36,8 @@ export class Solrock extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solrock';
-  public fullName: string = 'Solrock DAA';
+  public fullName: string = 'Solrock (DAA 92)';
+  public legacyFullName = 'Solrock DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Resistance Shade (passive - remove resistance from opponent's Pokemon if Lunatone in play)

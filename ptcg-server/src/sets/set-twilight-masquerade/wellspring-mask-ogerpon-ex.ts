@@ -48,7 +48,8 @@ export class WellspringMaskOgerponex extends PokemonCard {
 
   public name: string = 'Wellspring Mask Ogerpon ex';
 
-  public fullName: string = 'Wellspring Mask Ogerpon ex TWM';
+  public fullName: string = 'Wellspring Mask Ogerpon ex (TWM 64)';
+  public legacyFullName = 'Wellspring Mask Ogerpon ex TWM';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

@@ -35,7 +35,8 @@ export class Beldum extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beldum';
-  public fullName: string = 'Beldum PLF';
+  public fullName: string = 'Beldum (PLF 50)';
+  public legacyFullName = 'Beldum PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

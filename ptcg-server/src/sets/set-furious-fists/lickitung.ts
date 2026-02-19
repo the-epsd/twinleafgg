@@ -28,7 +28,8 @@ export class Lickitung extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lickitung';
-  public fullName: string = 'Lickitung FFI';
+  public fullName: string = 'Lickitung (FFI 78)';
+  public legacyFullName = 'Lickitung FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lunge

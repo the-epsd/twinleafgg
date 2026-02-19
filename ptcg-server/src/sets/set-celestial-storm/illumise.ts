@@ -29,7 +29,8 @@ export class Illumise extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Illumise';
-  public fullName: string = 'Illumise CES';
+  public fullName: string = 'Illumise (CES 18)';
+  public legacyFullName = 'Illumise CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pheromone Signals

@@ -33,5 +33,6 @@ export class Raichu extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raichu';
-  public fullName: string = 'Raichu SSH';
+  public fullName: string = 'Raichu (SSH 66)';
+  public legacyFullName = 'Raichu SSH';
 }

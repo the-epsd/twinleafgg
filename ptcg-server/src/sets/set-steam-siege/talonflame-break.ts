@@ -29,7 +29,8 @@ export class TalonflameBreak extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Talonflame BREAK';
-  public fullName: string = 'Talonflame BREAK STS';
+  public fullName: string = 'Talonflame BREAK (STS 21)';
+  public legacyFullName = 'Talonflame BREAK STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flare Blitz

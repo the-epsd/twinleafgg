@@ -35,7 +35,8 @@ export class Electivireex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';
   public name: string = 'Electivire ex';
-  public fullName: string = 'Electivire ex DRI';
+  public fullName: string = 'Electivire ex (DRI 69)';
+  public legacyFullName = 'Electivire ex DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Dual Bolt

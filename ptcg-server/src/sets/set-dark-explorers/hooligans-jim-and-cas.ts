@@ -20,7 +20,8 @@ export class HooligansJimAndCas extends TrainerCard {
 
   public name: string = 'Hooligans Jim & Cas';
 
-  public fullName: string = 'Hooligans Jim & Cas DEX';
+  public fullName: string = 'Hooligans Jim & Cas (DEX 95)';
+  public legacyFullName = 'Hooligans Jim & Cas DEX';
 
   public text: string =
     'Flip a coin. If heads, choose 3 random cards from your opponent\'s hand. ' +

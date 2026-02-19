@@ -30,7 +30,8 @@ export class Zacian extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '136';
   public name: string = 'Zacian';
-  public fullName: string = 'Zacian PAR';
+  public fullName: string = 'Zacian (PAR 136)';
+  public legacyFullName = 'Zacian PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -28,7 +28,8 @@ export class Corsola extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '37';
   public name: string = 'Corsola';
-  public fullName: string = 'Corsola UF';
+  public fullName: string = 'Corsola (UF 37)';
+  public legacyFullName = 'Corsola UF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

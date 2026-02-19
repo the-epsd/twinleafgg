@@ -15,7 +15,8 @@ export class TeamRocketsWatchtower extends TrainerCard {
   public set: string = 'DRI';
   public regulationMark = 'I';
   public name: string = 'Team Rocket\'s Watchtower';
-  public fullName: string = 'Team Rocket\'s Watchtower DRI';
+  public fullName: string = 'Team Rocket\'s Watchtower (DRI 180)';
+  public legacyFullName = 'Team Rocket\'s Watchtower DRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '180';
 

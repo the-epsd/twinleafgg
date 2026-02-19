@@ -22,7 +22,7 @@ export class Aromatisse extends PokemonCard {
       name: 'Dizzying Cologne',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, this attack does 40 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Aromatisse extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aromatisse';
-  public fullName: string = 'Aromatisse BKP';
+  public fullName: string = 'Aromatisse (BKP 85)';
+  public legacyFullName = 'Aromatisse BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dizzying Cologne

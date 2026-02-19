@@ -33,7 +33,8 @@ export class Chimchar extends PokemonCard {
 
   public name: string = 'Chimchar';
 
-  public fullName: string = 'Chimchar TWM';
+  public fullName: string = 'Chimchar (TWM 31)';
+  public legacyFullName = 'Chimchar TWM';
 
   public cardImage: string = 'assets/cardback.png';
 

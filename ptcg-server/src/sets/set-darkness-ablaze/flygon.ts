@@ -42,7 +42,8 @@ export class Flygon extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flygon';
-  public fullName: string = 'Flygon DAA';
+  public fullName: string = 'Flygon (DAA 91)';
+  public legacyFullName = 'Flygon DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Labyrinth of Sand (passive - block opponent retreat while in active spot)

@@ -41,7 +41,8 @@ export class GalarianSlowkingV extends PokemonCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Slowking V';
-  public fullName: string = 'Galarian Slowking V CRE';
+  public fullName: string = 'Galarian Slowking V (CRE 99)';
+  public legacyFullName = 'Galarian Slowking V CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Concoction

@@ -45,7 +45,8 @@ export class FlyingPikachuVMAX extends PokemonCard {
 
   public name: string = 'Flying Pikachu VMAX';
 
-  public fullName: string = 'Flying Pikachu VMAX CEL';
+  public fullName: string = 'Flying Pikachu VMAX (CEL 7)';
+  public legacyFullName = 'Flying Pikachu VMAX CEL';
 
   public readonly MAX_BALLOON_MARKER: string = 'MAX_BALLOON_MARKER';
 

@@ -24,7 +24,8 @@ export class Eevee extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eevee';
-  public fullName: string = 'Eevee DEX 83';
+  public fullName: string = 'Eevee (DEX 83)';
+  public legacyFullName = 'Eevee DEX 83';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Surprise Attack - if tails, does nothing

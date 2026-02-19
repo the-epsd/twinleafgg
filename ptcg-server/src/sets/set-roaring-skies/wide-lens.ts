@@ -10,7 +10,8 @@ export class WideLens extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'ROS';
   public name: string = 'Wide Lens';
-  public fullName: string = 'Muscle Band ROS';
+  public fullName: string = 'Wide Lens (ROS 95)';
+  public legacyFullName = 'Muscle Band ROS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '95';
 

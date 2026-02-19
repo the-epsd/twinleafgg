@@ -47,7 +47,8 @@ export class Polteageist extends PokemonCard {
 
   public name: string = 'Polteageist';
 
-  public fullName: string = 'Polteageist DAA';
+  public fullName: string = 'Polteageist (DAA 83)';
+  public legacyFullName = 'Polteageist DAA';
 
   public cardImage: string = 'assets/cardback.png';
 

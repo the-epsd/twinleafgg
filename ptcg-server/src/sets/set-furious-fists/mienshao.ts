@@ -36,7 +36,8 @@ export class Mienshao extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mienshao';
-  public fullName: string = 'Mienshao FFI';
+  public fullName: string = 'Mienshao (FFI 57)';
+  public legacyFullName = 'Mienshao FFI';
 
   private usedAeroTurn: boolean = false;
 

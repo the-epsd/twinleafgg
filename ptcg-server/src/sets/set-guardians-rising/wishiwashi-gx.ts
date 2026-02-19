@@ -44,7 +44,8 @@ export class WishiwashiGx extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wishiwashi-GX';
-  public fullName: string = 'Wishiwashi-GX GRI';
+  public fullName: string = 'Wishiwashi-GX (GRI 38)';
+  public legacyFullName = 'Wishiwashi-GX GRI';
 
   private usedBlueSurge = false;
 

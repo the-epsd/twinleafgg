@@ -35,7 +35,8 @@ export class AlolanRattata extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Rattata';
-  public fullName: string = 'Alolan Rattata CES';
+  public fullName: string = 'Alolan Rattata (CES 84)';
+  public legacyFullName = 'Alolan Rattata CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for the Boss

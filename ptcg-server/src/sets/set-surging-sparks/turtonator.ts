@@ -36,7 +36,8 @@ export class Turtonator extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '137'; // Assign correct number if known
   public name: string = 'Turtonator';
-  public fullName: string = 'Turtonator SSP';
+  public fullName: string = 'Turtonator (SSP 137)';
+  public legacyFullName = 'Turtonator SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

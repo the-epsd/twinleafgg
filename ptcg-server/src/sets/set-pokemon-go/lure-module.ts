@@ -20,7 +20,8 @@ export class LureModule extends TrainerCard {
 
   public name: string = 'Lure Module';
 
-  public fullName: string = 'Lure Module PGO';
+  public fullName: string = 'Lure Module (PGO 67)';
+  public legacyFullName = 'Lure Module PGO';
 
   public text: string =
     'Each player reveals the top 3 cards of their deck and puts all Pokémon they find there into their hand. Then, each player shuffles the other cards back into their deck.';

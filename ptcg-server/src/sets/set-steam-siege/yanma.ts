@@ -35,7 +35,8 @@ export class Yanma extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yanma';
-  public fullName: string = 'Yanma STS';
+  public fullName: string = 'Yanma (STS 6)';
+  public legacyFullName = 'Yanma STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Scout

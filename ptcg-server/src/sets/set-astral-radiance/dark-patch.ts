@@ -24,7 +24,8 @@ export class DarkPatch extends TrainerCard {
 
   public setNumber: string = '139';
 
-  public fullName: string = 'Dark Patch ASR';
+  public fullName: string = 'Dark Patch (ASR 139)';
+  public legacyFullName = 'Dark Patch ASR';
 
   public text: string =
     'Attach a basic [D] Energy card from your discard pile to 1 of your ' +

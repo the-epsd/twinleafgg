@@ -44,7 +44,8 @@ export class ReshiramGx extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Reshiram GX';
-  public fullName: string = 'Reshiram GX DRM';
+  public fullName: string = 'Reshiram GX (DRM 11)';
+  public legacyFullName = 'Reshiram GX DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flame Charge

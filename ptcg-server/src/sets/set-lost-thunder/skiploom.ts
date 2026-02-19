@@ -46,7 +46,8 @@ export class Skiploom extends PokemonCard {
 
   public name: string = 'Skiploom';
 
-  public fullName: string = 'Skiploom LOT';
+  public fullName: string = 'Skiploom (LOT 13)';
+  public legacyFullName = 'Skiploom LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

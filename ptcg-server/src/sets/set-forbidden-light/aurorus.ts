@@ -37,7 +37,8 @@ export class Aurorus extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aurorus';
-  public fullName: string = 'Aurorus FLI';
+  public fullName: string = 'Aurorus (FLI 28)';
+  public legacyFullName = 'Aurorus FLI';
 
   public readonly FROST_WALL_MARKER = 'FROST_WALL_MARKER';
   public readonly CLEAR_FROST_WALL_MARKER = 'CLEAR_FROST_WALL_MARKER';

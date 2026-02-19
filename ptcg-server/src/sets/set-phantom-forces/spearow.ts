@@ -30,7 +30,8 @@ export class Spearow extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spearow';
-  public fullName: string = 'Spearow PHF';
+  public fullName: string = 'Spearow (PHF 78)';
+  public legacyFullName = 'Spearow PHF';
 
   public usedWhirlwind = false;
 

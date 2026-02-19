@@ -31,7 +31,8 @@ export class Shiinotic extends PokemonCard {
 
   public set: string = 'UPR';
   public name: string = 'Shiinotic';
-  public fullName: string = 'Shiinotic UPR';
+  public fullName: string = 'Shiinotic (UPR 93)';
+  public legacyFullName = 'Shiinotic UPR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
 

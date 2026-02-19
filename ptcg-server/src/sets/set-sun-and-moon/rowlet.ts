@@ -26,6 +26,7 @@ export class Rowlet extends PokemonCard {
 
   public name: string = 'Rowlet';
 
-  public fullName: string = 'Rowlet SUM';
+  public fullName: string = 'Rowlet (SUM 9)';
+  public legacyFullName = 'Rowlet SUM';
 
 }

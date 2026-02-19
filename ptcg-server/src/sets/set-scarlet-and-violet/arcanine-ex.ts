@@ -46,7 +46,8 @@ export class Arcanineex extends PokemonCard {
 
   public name: string = 'Arcanine ex';
 
-  public fullName: string = 'Arcanine ex SVI';
+  public fullName: string = 'Arcanine ex (SVI 32)';
+  public legacyFullName = 'Arcanine ex SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -36,7 +36,8 @@ export class Braixen extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Braixen';
-  public fullName: string = 'Braixen FCO';
+  public fullName: string = 'Braixen (FCO 12)';
+  public legacyFullName = 'Braixen FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Destructive Flame

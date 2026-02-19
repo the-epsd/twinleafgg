@@ -35,7 +35,8 @@ export class Magneton extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '59';
   public name: string = 'Magneton';
-  public fullName: string = 'Magneton SSP';
+  public fullName: string = 'Magneton (SSP 59)';
+  public legacyFullName = 'Magneton SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

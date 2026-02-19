@@ -29,7 +29,8 @@ export class Mareanie extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mareanie';
-  public fullName: string = 'Mareanie SUM';
+  public fullName: string = 'Mareanie (SUM 62)';
+  public legacyFullName = 'Mareanie SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Sting

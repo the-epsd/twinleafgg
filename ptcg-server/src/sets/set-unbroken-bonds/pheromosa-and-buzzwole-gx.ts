@@ -41,7 +41,8 @@ export class PheromosaAndBuzzwoleGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
   public name = 'Pheromosa & Buzzwole-GX';
-  public fullName = 'Pheromosa & Buzzwole-GX UNB';
+  public fullName = 'Pheromosa & Buzzwole-GX (UNB 1)';
+  public legacyFullName = 'Pheromosa & Buzzwole-GX UNB';
 
   public readonly ELEGANT_SOLE_MARKER = 'ELEGANT_SOLE_MARKER';
   public readonly ELEGANT_SOLE_MARKER_2 = 'ELEGANT_SOLE_MARKER_2';

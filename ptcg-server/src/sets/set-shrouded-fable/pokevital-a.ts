@@ -65,7 +65,8 @@ export class PokeVitalA extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '62';
   public name: string = 'Poké Vital A';
-  public fullName: string = 'PokéVital A SFA';
+  public fullName: string = 'Poké Vital A (SFA 62)';
+  public legacyFullName = 'PokéVital A SFA';
 
   public text: string =
     `Heal 150 damage from 1 of your Pokémon.

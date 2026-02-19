@@ -23,7 +23,7 @@ export class ThundurusEx extends PokemonCard {
       name: 'Headlock',
       cost: [L, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
     },
     {
@@ -38,7 +38,8 @@ export class ThundurusEx extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Thundurus-EX';
-  public fullName: string = 'Thundurus-EX ROS';
+  public fullName: string = 'Thundurus-EX (ROS 26)';
+  public legacyFullName = 'Thundurus-EX ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Headlock

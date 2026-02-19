@@ -48,7 +48,8 @@ export class SlitherWing extends PokemonCard {
 
   public name: string = 'Slither Wing';
 
-  public fullName: string = 'Slither Wing SFA';
+  public fullName: string = 'Slither Wing (SFA 26)';
+  public legacyFullName = 'Slither Wing SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -21,7 +21,7 @@ export class Pupitar extends PokemonCard {
       name: 'Thrash',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage. If tails, this Pokémon does 20 damage to itself.'
     }
   ];
@@ -30,7 +30,8 @@ export class Pupitar extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pupitar';
-  public fullName: string = 'Pupitar FCO';
+  public fullName: string = 'Pupitar (FCO 42)';
+  public legacyFullName = 'Pupitar FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thrash

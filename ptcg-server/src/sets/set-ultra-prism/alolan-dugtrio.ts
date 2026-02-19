@@ -24,7 +24,7 @@ export class AlolanDugtrio extends PokemonCard {
       name: 'Gold Rush',
       cost: [],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard any number of [M] Energy cards from your hand. This attack does 30 damage for each card you discarded in this way.'
     }
   ];
@@ -33,7 +33,8 @@ export class AlolanDugtrio extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Dugtrio';
-  public fullName: string = 'Alolan Dugtrio UPR';
+  public fullName: string = 'Alolan Dugtrio (UPR 79)';
+  public legacyFullName = 'Alolan Dugtrio UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Gold Rush

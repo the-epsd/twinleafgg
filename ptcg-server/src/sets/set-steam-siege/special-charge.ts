@@ -71,7 +71,8 @@ export class SpecialCharge extends TrainerCard {
 
   public name: string = 'Special Charge';
 
-  public fullName: string = 'Special Charge STS';
+  public fullName: string = 'Special Charge (STS 105)';
+  public legacyFullName = 'Special Charge STS';
 
   public text: string =
     'Shuffle 2 Special Energy cards from your discard pile into your deck.';

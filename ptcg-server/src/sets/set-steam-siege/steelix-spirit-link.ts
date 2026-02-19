@@ -13,7 +13,8 @@ export class SteelixSpiritLink extends TrainerCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steelix Spirit Link';
-  public fullName: string = 'Steelix Spirit Link STS';
+  public fullName: string = 'Steelix Spirit Link (STS 106)';
+  public legacyFullName = 'Steelix Spirit Link STS';
   public text: string = 'Your turn does not end if the Pok\u00e9mon this card is attached to becomes M Steelix-EX.';
 
   // Ref: set-breakthrough/houndoom-spirit-link.ts (Spirit Link - no-op, handled by engine)

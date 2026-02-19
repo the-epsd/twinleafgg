@@ -71,7 +71,8 @@ export class Lance extends TrainerCard {
 
   public name: string = 'Lance';
 
-  public fullName: string = 'Lance SIT';
+  public fullName: string = 'Lance (SIT 159)';
+  public legacyFullName = 'Lance SIT';
 
   public text: string =
     'Search your deck for up to 3 [N] Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';

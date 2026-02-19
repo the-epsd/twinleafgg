@@ -57,7 +57,8 @@ export class PokeTurn extends TrainerCard {
 
   public name: string = 'Team Galactic\'s Invention G-105 Poke Turn';
 
-  public fullName: string = 'Poke Turn PL';
+  public fullName: string = 'Team Galactic\'s Invention G-105 Poke Turn (PL 118)';
+  public legacyFullName = 'Poke Turn PL';
 
   public cardImage: string = 'assets/cardback.png';
 

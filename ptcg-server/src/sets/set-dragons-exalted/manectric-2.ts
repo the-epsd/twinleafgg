@@ -36,7 +36,8 @@ export class Manectric2 extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Manectric';
-  public fullName: string = 'Manectric DRX 44';
+  public fullName: string = 'Manectric (DRX 44)';
+  public legacyFullName = 'Manectric DRX 44';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Energy Assist - attach 2 basic Energy from discard to 1 Benched Pokemon

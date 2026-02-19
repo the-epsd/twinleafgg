@@ -29,7 +29,7 @@ export class Honchkrow extends PokemonCard {
       name: 'Nightmare Mambo',
       cost: [D, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Asleep, this attack does 60 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Honchkrow extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Honchkrow';
-  public fullName: string = 'Honchkrow PHF';
+  public fullName: string = 'Honchkrow (PHF 52)';
+  public legacyFullName = 'Honchkrow PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hypnoblast

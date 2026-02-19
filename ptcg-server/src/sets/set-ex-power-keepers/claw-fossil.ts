@@ -36,7 +36,8 @@ export class ClawFossil extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
   public name: string = 'Claw Fossil';
-  public fullName: string = 'Claw Fossil PK';
+  public fullName: string = 'Claw Fossil (PK 84)';
+  public legacyFullName = 'Claw Fossil PK';
 
   public powers: Power[] = [{
     name: 'Claw Fossil',

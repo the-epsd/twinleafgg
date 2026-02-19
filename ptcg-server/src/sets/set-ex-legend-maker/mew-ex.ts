@@ -38,7 +38,8 @@ export class Mewex extends PokemonCard {
 
   public set: string = 'LM';
   public name: string = 'Mew ex';
-  public fullName: string = 'Mew ex LM';
+  public fullName: string = 'Mew ex (LM 88)';
+  public legacyFullName = 'Mew ex LM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
 

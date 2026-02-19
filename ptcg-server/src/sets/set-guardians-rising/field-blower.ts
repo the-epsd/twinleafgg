@@ -17,7 +17,8 @@ export class FieldBlower extends TrainerCard {
 
   public name: string = 'Field Blower';
 
-  public fullName: string = 'Field Blower GRI';
+  public fullName: string = 'Field Blower (GRI 125)';
+  public legacyFullName = 'Field Blower GRI';
 
   public cardImage: string = 'assets/cardback.png';
 

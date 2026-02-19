@@ -30,7 +30,8 @@ export class Combusken extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '23';
   public name = 'Combusken';
-  public fullName = 'Combusken DAA';
+  public fullName = 'Combusken (DAA 23)';
+  public legacyFullName = 'Combusken DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

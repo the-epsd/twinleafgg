@@ -37,7 +37,8 @@ export class RillaboomV extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rillaboom V';
-  public fullName: string = 'Rillaboom V RCL';
+  public fullName: string = 'Rillaboom V (RCL 17)';
+  public legacyFullName = 'Rillaboom V RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Forest Feast

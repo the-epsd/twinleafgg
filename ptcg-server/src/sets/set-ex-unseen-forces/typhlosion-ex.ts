@@ -32,7 +32,8 @@ export class Typhlosionex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '110';
   public name: string = 'Typhlosion ex';
-  public fullName: string = 'Typhlosion ex UF';
+  public fullName: string = 'Typhlosion ex (UF 110)';
+  public legacyFullName = 'Typhlosion ex UF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

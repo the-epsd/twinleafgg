@@ -26,7 +26,8 @@ export class Litwick extends PokemonCard {
 
   public set: string = 'BWP';
   public name: string = 'Litwick';
-  public fullName: string = 'Litwick BWP';
+  public fullName: string = 'Litwick (BWP 27)';
+  public legacyFullName = 'Litwick BWP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '27';
 

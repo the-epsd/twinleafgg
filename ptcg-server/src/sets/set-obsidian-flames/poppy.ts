@@ -21,7 +21,8 @@ export class Poppy extends TrainerCard {
 
   public name: string = 'Poppy';
 
-  public fullName: string = 'Poppy OBF';
+  public fullName: string = 'Poppy (OBF 193)';
+  public legacyFullName = 'Poppy OBF';
 
   public text: string =
     'Move up to 2 Energy from 1 of your Pokémon to another ' +

@@ -17,7 +17,8 @@ export class AncientTechnicalMachineRock extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public name: string = 'Ancient Technical Machine [Rock]';
-  public fullName: string = 'Ancient Technical Machine [Rock] HL';
+  public fullName: string = 'Ancient Technical Machine [Rock] (HL 85)';
+  public legacyFullName = 'Ancient Technical Machine [Rock] HL';
 
   public attacks: Attack[] = [{
     name: 'Stone Generator',

@@ -33,7 +33,8 @@ export class Clamperl extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clamperl';
-  public fullName: string = 'Clamperl PRC';
+  public fullName: string = 'Clamperl (PRC 49)';
+  public legacyFullName = 'Clamperl PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shell Protection

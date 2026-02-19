@@ -32,7 +32,8 @@ export class Petilil extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '13';
   public name: string = 'Petilil';
-  public fullName: string = 'Petilil EPO';
+  public fullName: string = 'Petilil (EPO 13)';
+  public legacyFullName = 'Petilil EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

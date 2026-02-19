@@ -38,7 +38,8 @@ export class Simisear extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Simisear';
-  public fullName: string = 'Simisear PLS';
+  public fullName: string = 'Simisear (PLS 20)';
+  public legacyFullName = 'Simisear PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Searing Flame

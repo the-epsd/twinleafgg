@@ -31,7 +31,8 @@ export class Tyrogue extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '33';
   public name: string = 'Tyrogue';
-  public fullName: string = 'Tyrogue UF';
+  public fullName: string = 'Tyrogue (UF 33)';
+  public legacyFullName = 'Tyrogue UF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

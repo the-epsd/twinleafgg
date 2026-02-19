@@ -22,7 +22,7 @@ export class Deoxys extends PokemonCard {
       name: 'Psychic',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     },
     {
@@ -37,7 +37,8 @@ export class Deoxys extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Deoxys';
-  public fullName: string = 'Deoxys CES';
+  public fullName: string = 'Deoxys (CES 67)';
+  public legacyFullName = 'Deoxys CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psychic

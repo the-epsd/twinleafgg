@@ -11,7 +11,8 @@ export class MagneticStorm extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'HL';
   public name = 'Magnetic Storm';
-  public fullName = 'Magnetic Storm HL';
+  public fullName = 'Magnetic Storm (HL 91)';
+  public legacyFullName = 'Magnetic Storm HL';
 
   public text = 'Any damage done by attacks from [P] Pokémon and [F] Pokémon (both yours and your opponent\'s) is not affected by Resistance.';
 

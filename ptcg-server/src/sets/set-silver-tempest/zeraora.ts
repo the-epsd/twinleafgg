@@ -42,7 +42,8 @@ export class Zeraora extends PokemonCard {
 
   public name: string = 'Zeraora';
 
-  public fullName: string = 'Zeraora SIT';
+  public fullName: string = 'Zeraora (SIT 56)';
+  public legacyFullName = 'Zeraora SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

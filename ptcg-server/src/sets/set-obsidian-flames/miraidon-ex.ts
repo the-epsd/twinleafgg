@@ -30,7 +30,8 @@ export class Miraidonex extends PokemonCard {
   public setNumber: string = '79';
   public set = 'OBF';
   public name: string = 'Miraidon ex';
-  public fullName: string = 'Miraidon ex OBF';
+  public fullName: string = 'Miraidon ex (OBF 79)';
+  public legacyFullName = 'Miraidon ex OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -78,7 +78,8 @@ export class TeamYellGrunt extends TrainerCard {
   public setNumber: string = '184';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Yell Grunt';
-  public fullName: string = 'Team Yell Grunt SSH';
+  public fullName: string = 'Team Yell Grunt (SSH 184)';
+  public legacyFullName = 'Team Yell Grunt SSH';
   public text: string = 'Put an Energy attached to 1 of your opponent\'s Pokémon into their hand. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

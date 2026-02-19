@@ -25,7 +25,8 @@ export class Patrat extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '78';
   public name: string = 'Patrat';
-  public fullName: string = 'Patrat EPO';
+  public fullName: string = 'Patrat (EPO 78)';
+  public legacyFullName = 'Patrat EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

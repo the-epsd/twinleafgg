@@ -36,7 +36,8 @@ export class Sableye extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sableye';
-  public fullName: string = 'Sableye AOR';
+  public fullName: string = 'Sableye (AOR 44)';
+  public legacyFullName = 'Sableye AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bewitching Eyes

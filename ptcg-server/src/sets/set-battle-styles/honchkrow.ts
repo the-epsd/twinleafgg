@@ -31,7 +31,7 @@ export class Honchkrow extends PokemonCard {
       name: 'Voltage Dive',
       cost: [D, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon has any Special Energy attached, this attack does 80 more damage.'
     }
   ];
@@ -41,7 +41,8 @@ export class Honchkrow extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Honchkrow';
-  public fullName: string = 'Honchkrow BST';
+  public fullName: string = 'Honchkrow (BST 94)';
+  public legacyFullName = 'Honchkrow BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Insomnia (passive - prevents this Pokemon from being Asleep)

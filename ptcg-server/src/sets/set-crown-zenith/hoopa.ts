@@ -36,7 +36,8 @@ export class Hoopa extends PokemonCard {
 
   public name: string = 'Hoopa';
 
-  public fullName: string = 'Hoopa CRZ';
+  public fullName: string = 'Hoopa (CRZ 83)';
+  public legacyFullName = 'Hoopa CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

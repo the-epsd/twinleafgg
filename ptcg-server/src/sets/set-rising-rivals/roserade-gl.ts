@@ -34,7 +34,8 @@ export class RoseradeGL extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Roserade GL';
-  public fullName: string = 'Roserade GL RR';
+  public fullName: string = 'Roserade GL (RR 12)';
+  public legacyFullName = 'Roserade GL RR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Poison Bind

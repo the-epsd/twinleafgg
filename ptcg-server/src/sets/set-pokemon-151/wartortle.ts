@@ -33,7 +33,8 @@ export class Wartortle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
   public name: string = 'Wartortle';
-  public fullName: string = 'Wartortle MEW';
+  public fullName: string = 'Wartortle (MEW 8)';
+  public legacyFullName = 'Wartortle MEW';
 
   reduceEffect(store: StoreLike, state: State, effect: Effect) {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -32,7 +32,8 @@ export class Mimikyu extends PokemonCard {
 
   public name: string = 'Mimikyu';
 
-  public fullName: string = 'Mimikyu TEU';
+  public fullName: string = 'Mimikyu (TEU 112)';
+  public legacyFullName = 'Mimikyu TEU';
 
   public cardImage: string = 'assets/cardback.png';
 

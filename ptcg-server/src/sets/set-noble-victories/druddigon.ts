@@ -29,7 +29,8 @@ export class Druddigon extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Druddigon';
-  public fullName: string = 'Druddigon NVI';
+  public fullName: string = 'Druddigon (NVI 89)';
+  public legacyFullName = 'Druddigon NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Rough Skin - damage attacker when hit

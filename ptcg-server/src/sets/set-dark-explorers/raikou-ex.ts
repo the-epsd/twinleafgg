@@ -36,7 +36,8 @@ export class RaikouEx extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raikou-EX';
-  public fullName: string = 'Raikou EX DEX';
+  public fullName: string = 'Raikou-EX (DEX 38)';
+  public legacyFullName = 'Raikou EX DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

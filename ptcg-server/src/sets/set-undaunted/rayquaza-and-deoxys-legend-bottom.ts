@@ -7,6 +7,7 @@ import { RayquazaAndDeoxysLegendTop } from './rayquaza-and-deoxys-legend-top';
 
 export class RayquazaAndDeoxysLegendBottom extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
+  public multiPartPosition: 'Top' | 'Bottom' | 'Top Left' | 'Top Right' | 'Bottom Left' | 'Bottom Right' = 'Bottom';
   public tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
   public cardType = C;
   public additionalCardTypes = [P];
@@ -38,7 +39,8 @@ export class RayquazaAndDeoxysLegendBottom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
   public name: string = 'Rayquaza & Deoxys LEGEND';
-  public fullName: string = 'Rayquaza & Deoxys LEGEND (Bottom) UD';
+  public fullName: string = 'Rayquaza & Deoxys LEGEND (UD 90)';
+  public legacyFullName = 'Rayquaza & Deoxys LEGEND (Bottom) UD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the avengers

@@ -37,7 +37,8 @@ export class Diancie extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Diancie ◇';
-  public fullName: string = 'Diancie ◇ FLI';
+  public fullName: string = 'Diancie ◇ (FLI 74)';
+  public legacyFullName = 'Diancie ◇ FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Princess's Cheers (passive - boost Fighting Pokemon damage from bench)

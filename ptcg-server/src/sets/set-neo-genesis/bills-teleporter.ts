@@ -15,7 +15,8 @@ export class BillsTeleporter extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public name: string = 'Bill\'s Teleporter';
-  public fullName: string = 'Bill\'s Teleporter N1';
+  public fullName: string = 'Bill\'s Teleporter (N1 91)';
+  public legacyFullName = 'Bill\'s Teleporter N1';
 
   public text: string =
     'Flip a coin. If heads, draw 4 cards.';

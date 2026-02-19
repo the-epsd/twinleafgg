@@ -33,7 +33,8 @@ export class ArceusDark extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'AR1';
   public name: string = 'Arceus';
-  public fullName: string = 'Arceus Dark AR';
+  public fullName: string = 'Arceus (AR AR1)';
+  public legacyFullName = 'Arceus Dark AR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

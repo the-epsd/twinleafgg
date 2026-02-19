@@ -36,7 +36,8 @@ export class Servine extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Servine';
-  public fullName: string = 'Servine FCO';
+  public fullName: string = 'Servine (FCO 6)';
+  public legacyFullName = 'Servine FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Serpentine Strangle

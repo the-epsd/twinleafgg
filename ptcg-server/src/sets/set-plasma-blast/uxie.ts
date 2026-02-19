@@ -25,7 +25,8 @@ export class Uxie extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Uxie';
-  public fullName: string = 'Uxie PLB';
+  public fullName: string = 'Uxie (PLB 36)';
+  public legacyFullName = 'Uxie PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

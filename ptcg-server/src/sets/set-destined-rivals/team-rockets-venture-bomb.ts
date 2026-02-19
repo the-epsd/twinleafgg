@@ -14,7 +14,8 @@ export class TeamRocketsVentureBomb extends TrainerCard {
   public set: string = 'DRI';
   public regulationMark = 'I';
   public name: string = 'Team Rocket\'s Venture Bomb';
-  public fullName: string = 'Team Rocket\'s Venture Bomb DRI';
+  public fullName: string = 'Team Rocket\'s Venture Bomb (DRI 179)';
+  public legacyFullName = 'Team Rocket\'s Venture Bomb DRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '179';
 

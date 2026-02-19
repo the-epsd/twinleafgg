@@ -20,7 +20,8 @@ export class Giacomo extends TrainerCard {
 
   public name: string = 'Giacomo';
 
-  public fullName: string = 'Giacomo PAL';
+  public fullName: string = 'Giacomo (PAL 182)';
+  public legacyFullName = 'Giacomo PAL';
 
   public text: string =
     'Discard a Special Energy from each of your opponent\'s Pokémon.';

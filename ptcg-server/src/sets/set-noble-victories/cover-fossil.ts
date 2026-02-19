@@ -62,7 +62,8 @@ export class CoverFossil extends TrainerCard {
 
   public name: string = 'Cover Fossil';
 
-  public fullName: string = 'Cover Fossil NVI';
+  public fullName: string = 'Cover Fossil (NVI 90)';
+  public legacyFullName = 'Cover Fossil NVI';
 
   public cardImage: string = 'assets/cardback.png';
 

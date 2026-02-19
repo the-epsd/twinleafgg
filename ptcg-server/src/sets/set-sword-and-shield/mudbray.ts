@@ -32,5 +32,6 @@ export class Mudbray extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mudbray';
-  public fullName: string = 'Mudbray SSH';
+  public fullName: string = 'Mudbray (SSH 105)';
+  public legacyFullName = 'Mudbray SSH';
 }

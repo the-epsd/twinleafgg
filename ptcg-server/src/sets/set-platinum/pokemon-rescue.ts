@@ -44,7 +44,8 @@ export class PokemonRescue extends TrainerCard {
 
   public name: string = 'Pokemon Rescue';
 
-  public fullName: string = 'Pokemon Rescue PL';
+  public fullName: string = 'Pokemon Rescue (PL 115)';
+  public legacyFullName = 'Pokemon Rescue PL';
 
   public cardImage: string = 'assets/cardback.png';
 

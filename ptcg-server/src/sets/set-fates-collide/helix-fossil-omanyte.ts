@@ -61,7 +61,8 @@ export class HelixFossilOmanyte extends TrainerCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Helix Fossil Omanyte';
-  public fullName: string = 'Helix Fossil Omanyte FCO';
+  public fullName: string = 'Helix Fossil Omanyte (FCO 102)';
+  public legacyFullName = 'Helix Fossil Omanyte FCO';
   public text: string = 'Look at the bottom 7 cards of your deck. You may reveal an Omanyte you find there and put it onto your Bench. Shuffle the other cards back into your deck.';
 
   // Ref: set-furious-fists/jaw-fossil.ts (bottom 7 fossil pattern)

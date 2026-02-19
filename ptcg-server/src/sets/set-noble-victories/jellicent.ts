@@ -33,7 +33,8 @@ export class Jellicent extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jellicent';
-  public fullName: string = 'Jellicent NVI';
+  public fullName: string = 'Jellicent (NVI 31)';
+  public legacyFullName = 'Jellicent NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Cursed Body - discard energy when damaged

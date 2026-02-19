@@ -15,7 +15,8 @@ export class HolonRuins extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'DS';
   public name = 'Holon Ruins';
-  public fullName = 'Holon Ruins DS';
+  public fullName = 'Holon Ruins (DS 96)';
+  public legacyFullName = 'Holon Ruins DS';
 
   public text = 'Each player that has any Pokémon in play that has delta on its card may draw a card once during his or her turn. If the player does, he or she discards a card from his or her hand.';
 

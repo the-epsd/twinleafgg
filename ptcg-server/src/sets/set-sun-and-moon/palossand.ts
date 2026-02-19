@@ -36,7 +36,8 @@ export class Palossand extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Palossand';
-  public fullName: string = 'Palossand SUM';
+  public fullName: string = 'Palossand (SUM 75)';
+  public legacyFullName = 'Palossand SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Wall of Sand (passive - reduce damage by 20)

@@ -20,7 +20,7 @@ export class AlolanSandshrew extends PokemonCard {
       name: 'Fury Swipes',
       cost: [],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 10 damage for each heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class AlolanSandshrew extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Sandshrew';
-  public fullName: string = 'Alolan Sandshrew UPR';
+  public fullName: string = 'Alolan Sandshrew (UPR 28)';
+  public legacyFullName = 'Alolan Sandshrew UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Swipes

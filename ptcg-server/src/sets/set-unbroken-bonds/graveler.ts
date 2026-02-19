@@ -35,7 +35,8 @@ export class Graveler extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Graveler';
-  public fullName: string = 'Graveler UNB';
+  public fullName: string = 'Graveler (UNB 88)';
+  public legacyFullName = 'Graveler UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Double-Edge

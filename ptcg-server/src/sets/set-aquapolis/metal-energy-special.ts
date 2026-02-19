@@ -11,7 +11,8 @@ export class MetalEnergySpecial extends EnergyCard {
   public energyType = EnergyType.SPECIAL;
   public set: string = 'AQ';
   public name = 'Metal Energy';
-  public fullName = 'Metal Energy AQ';
+  public fullName = 'Metal Energy (AQ 143)';
+  public legacyFullName = 'Metal Energy AQ';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '143';
   public text = 'Damage done to the Pokémon Metal Energy is attached to is reduced by 10 (after applying Weakness and Resistance). If the Pokémon Metal Energy is attached to isn\'t [M], whenever it damages a Pokémon, reduce that damage by 10 (before applying Weakness and Resistance). Metal Energy provides [M] Energy. (Doesn\'t count as a basic Energy card.)';

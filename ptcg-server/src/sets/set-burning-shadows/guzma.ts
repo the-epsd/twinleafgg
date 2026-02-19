@@ -127,7 +127,8 @@ export class Guzma extends TrainerCard {
 
   public name: string = 'Guzma';
 
-  public fullName: string = 'Guzma BUS';
+  public fullName: string = 'Guzma (BUS 115)';
+  public legacyFullName = 'Guzma BUS';
 
   public text: string =
     'Switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.';

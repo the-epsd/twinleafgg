@@ -35,7 +35,8 @@ export class Floatzel extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Floatzel';
-  public fullName: string = 'Floatzel SLG';
+  public fullName: string = 'Floatzel (SLG 23)';
+  public legacyFullName = 'Floatzel SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Aqua Bomb

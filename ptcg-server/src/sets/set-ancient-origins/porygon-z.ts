@@ -38,7 +38,8 @@ export class PorygonZ extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Porygon-Z';
-  public fullName: string = 'Porygon-Z AOR';
+  public fullName: string = 'Porygon-Z (AOR 66)';
+  public legacyFullName = 'Porygon-Z AOR';
 
   public readonly SLOWING_BEAM_MARKER = 'PORYGON_Z_AOR_SLOWING_BEAM_MARKER';
 

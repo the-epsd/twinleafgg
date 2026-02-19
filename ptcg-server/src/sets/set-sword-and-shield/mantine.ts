@@ -36,7 +36,8 @@ export class Mantine extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mantine';
-  public fullName: string = 'Mantine SSH';
+  public fullName: string = 'Mantine (SSH 52)';
+  public legacyFullName = 'Mantine SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Water Reserve

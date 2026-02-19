@@ -32,7 +32,8 @@ export class Magmar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '39';
   public name: string = 'Magmar';
-  public fullName: string = 'Magmar FO';
+  public fullName: string = 'Magmar (FO 39)';
+  public legacyFullName = 'Magmar FO';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
   public readonly SMOKESCREEN_MARKER = 'SMOKESCREEN_MARKER';

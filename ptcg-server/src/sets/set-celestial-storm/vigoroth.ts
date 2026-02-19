@@ -21,14 +21,14 @@ export class Vigoroth extends PokemonCard {
       name: 'Fury Swipes',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 20 damage for each heads.'
     },
     {
       name: 'Rage',
       cost: [C, C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class Vigoroth extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vigoroth';
-  public fullName: string = 'Vigoroth CES';
+  public fullName: string = 'Vigoroth (CES 114)';
+  public legacyFullName = 'Vigoroth CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Swipes

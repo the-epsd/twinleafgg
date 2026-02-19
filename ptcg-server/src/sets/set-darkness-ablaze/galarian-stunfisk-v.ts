@@ -42,7 +42,8 @@ export class GalarianStunfiskV extends PokemonCard {
   public setNumber: string = '128';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Stunfisk V';
-  public fullName: string = 'Galarian Stunfisk V DAA';
+  public fullName: string = 'Galarian Stunfisk V (DAA 128)';
+  public legacyFullName = 'Galarian Stunfisk V DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Metal Skin (passive - HP boost per Metal Energy attached)

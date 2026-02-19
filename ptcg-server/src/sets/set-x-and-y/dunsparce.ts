@@ -36,7 +36,8 @@ export class Dunsparce extends PokemonCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dunsparce';
-  public fullName: string = 'Dunsparce XY';
+  public fullName: string = 'Dunsparce (XY 101)';
+  public legacyFullName = 'Dunsparce XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/mareep.ts (coin flip paralyze pattern)

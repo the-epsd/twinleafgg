@@ -18,7 +18,8 @@ export class GalarMine extends TrainerCard {
 
   public name: string = 'Galar Mine';
 
-  public fullName: string = 'Galar Mine RCL';
+  public fullName: string = 'Galar Mine (RCL 160)';
+  public legacyFullName = 'Galar Mine RCL';
 
   public text: string = 'The Retreat Cost of both Active Pokémon is [C][C] more.';
 

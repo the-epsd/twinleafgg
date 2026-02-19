@@ -42,7 +42,8 @@ export class GroudonEx extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Groudon-EX';
-  public fullName: string = 'Groudon EX DEX';
+  public fullName: string = 'Groudon-EX (DEX 54)';
+  public legacyFullName = 'Groudon EX DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

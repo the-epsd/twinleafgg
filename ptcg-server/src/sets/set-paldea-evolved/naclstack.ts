@@ -24,7 +24,8 @@ export class Naclstack extends PokemonCard {
 
   public set: string = 'PAL';
   public name: string = 'Naclstack';
-  public fullName: string = 'Naclstack PAL';
+  public fullName: string = 'Naclstack (PAL 122)';
+  public legacyFullName = 'Naclstack PAL';
   public setNumber: string = '122';
   public regulationMark: string = 'G';
   public cardImage: string = 'assets/cardback.png';

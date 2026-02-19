@@ -29,7 +29,8 @@ export class Slakoth extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slakoth';
-  public fullName: string = 'Slakoth FFI';
+  public fullName: string = 'Slakoth (FFI 81)';
+  public legacyFullName = 'Slakoth FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Big Yawn

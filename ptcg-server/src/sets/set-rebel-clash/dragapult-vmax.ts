@@ -37,7 +37,8 @@ export class DragapultVMAX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
   public name: string = 'Dragapult VMAX';
-  public fullName: string = 'Dragapult VMAX RCL';
+  public fullName: string = 'Dragapult VMAX (RCL 93)';
+  public legacyFullName = 'Dragapult VMAX RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -37,7 +37,8 @@ export class SkarmoryEx extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skarmory-EX';
-  public fullName: string = 'Skarmory-EX XY';
+  public fullName: string = 'Skarmory-EX (XY 80)';
+  public legacyFullName = 'Skarmory-EX XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Joust

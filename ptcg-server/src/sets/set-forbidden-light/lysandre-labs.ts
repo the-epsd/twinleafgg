@@ -17,7 +17,8 @@ export class LysandreLabs extends TrainerCard {
 
   public name: string = 'Lysandre Labs';
 
-  public fullName: string = 'Lysandre Labs FLI';
+  public fullName: string = 'Lysandre Labs (FLI 111)';
+  public legacyFullName = 'Lysandre Labs FLI';
 
   public text: string =
     'Pokémon Tool cards in play (both yours and your opponent\'s) have no effect.';

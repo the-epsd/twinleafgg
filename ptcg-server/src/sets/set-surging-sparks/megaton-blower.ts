@@ -21,7 +21,8 @@ export class MegatonBlower extends TrainerCard {
 
   public name: string = 'Megaton Blower';
 
-  public fullName: string = 'Megaton Blower SSP';
+  public fullName: string = 'Megaton Blower (SSP 182)';
+  public legacyFullName = 'Megaton Blower SSP';
 
   public text: string =
     'Discard all Pokémon Tools and Special Energy from all of your opponent\'s Pokémon, and discard a Stadium in play.';

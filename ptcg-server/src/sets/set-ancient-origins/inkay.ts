@@ -31,7 +31,8 @@ export class Inkay extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Inkay';
-  public fullName: string = 'Inkay AOR';
+  public fullName: string = 'Inkay (AOR 45)';
+  public legacyFullName = 'Inkay AOR';
 
   public readonly INK_SPIT_MARKER = 'INKAY_AOR_INK_SPIT_MARKER';
   public readonly CLEAR_INK_SPIT_MARKER = 'INKAY_AOR_CLEAR_INK_SPIT_MARKER';

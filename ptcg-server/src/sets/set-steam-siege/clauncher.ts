@@ -20,7 +20,7 @@ export class Clauncher extends PokemonCard {
       name: 'Double Pincers',
       cost: [W],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class Clauncher extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clauncher';
-  public fullName: string = 'Clauncher STS';
+  public fullName: string = 'Clauncher (STS 33)';
+  public legacyFullName = 'Clauncher STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Pincers

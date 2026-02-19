@@ -36,7 +36,8 @@ export class Simisear extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Simisear';
-  public fullName: string = 'Simisear DAA';
+  public fullName: string = 'Simisear (DAA 27)';
+  public legacyFullName = 'Simisear DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Giga Impact

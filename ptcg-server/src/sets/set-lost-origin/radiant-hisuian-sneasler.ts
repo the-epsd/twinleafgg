@@ -43,7 +43,8 @@ export class RadiantHisuianSneasler extends PokemonCard {
 
   public name: string = 'Radiant Hisuian Sneasler';
 
-  public fullName: string = 'Radiant Hisuian Sneasler LOR';
+  public fullName: string = 'Radiant Hisuian Sneasler (LOR 123)';
+  public legacyFullName = 'Radiant Hisuian Sneasler LOR';
 
   // private POISON_MODIFIER_MARKER = 'POISON_MODIFIER_MARKER';
 

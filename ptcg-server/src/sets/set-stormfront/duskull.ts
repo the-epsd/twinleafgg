@@ -36,7 +36,8 @@ export class Duskull extends PokemonCard {
 
   public set: string = 'SF';
   public name: string = 'Duskull';
-  public fullName: string = 'Duskull SF';
+  public fullName: string = 'Duskull (SF SH2)';
+  public legacyFullName = 'Duskull SF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'SH2';
 

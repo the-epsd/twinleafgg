@@ -31,7 +31,8 @@ export class PokeParksMunchlax extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'PokéPark\'s Munchlax';
-  public fullName: string = 'PokéPark\'s Munchlax PCGP';
+  public fullName: string = 'PokéPark\'s Munchlax (PCGP 40)';
+  public legacyFullName = 'PokéPark\'s Munchlax PCGP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
 

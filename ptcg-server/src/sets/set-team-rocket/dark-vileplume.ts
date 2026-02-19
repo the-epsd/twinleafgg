@@ -33,7 +33,8 @@ export class DarkVileplume extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name = 'Dark Vileplume';
-  public fullName = 'Dark Vileplume TR';
+  public fullName = 'Dark Vileplume (TR 13)';
+  public legacyFullName = 'Dark Vileplume TR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

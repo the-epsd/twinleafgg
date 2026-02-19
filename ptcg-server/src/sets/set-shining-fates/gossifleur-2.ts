@@ -26,5 +26,6 @@ export class Gossifleur2 extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gossifleur';
-  public fullName: string = 'Gossifleur SHF 14';
+  public fullName: string = 'Gossifleur (SHF 14)';
+  public legacyFullName = 'Gossifleur SHF 14';
 }

@@ -42,7 +42,8 @@ export class Naganadel extends PokemonCard {
 
   public name: string = 'Naganadel';
 
-  public fullName: string = 'Naganadel LOT';
+  public fullName: string = 'Naganadel (LOT 108)';
+  public legacyFullName = 'Naganadel LOT';
 
   public cardImage: string = 'assets/cardback.png';
 

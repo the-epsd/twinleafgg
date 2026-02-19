@@ -36,7 +36,8 @@ export class Weepinbell extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weepinbell';
-  public fullName: string = 'Weepinbell UNB';
+  public fullName: string = 'Weepinbell (UNB 14)';
+  public legacyFullName = 'Weepinbell UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Burning Venom

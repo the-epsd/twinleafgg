@@ -81,7 +81,8 @@ export class Magcargo extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magcargo';
-  public fullName: string = 'Magcargo DX';
+  public fullName: string = 'Magcargo (DX 20)';
+  public legacyFullName = 'Magcargo DX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

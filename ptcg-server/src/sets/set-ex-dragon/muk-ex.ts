@@ -41,7 +41,8 @@ export class Mukex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
   public name: string = 'Muk ex';
-  public fullName: string = 'Muk ex DR';
+  public fullName: string = 'Muk ex (DR 96)';
+  public legacyFullName = 'Muk ex DR';
 
   public usedPoisonSpurt = false;
 

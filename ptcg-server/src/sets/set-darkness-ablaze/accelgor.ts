@@ -27,5 +27,6 @@ export class Accelgor extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Accelgor';
-  public fullName: string = 'Accelgor DAA';
+  public fullName: string = 'Accelgor (DAA 10)';
+  public legacyFullName = 'Accelgor DAA';
 }

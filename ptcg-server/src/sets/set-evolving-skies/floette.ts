@@ -28,7 +28,7 @@ export class Floette extends PokemonCard {
       name: 'Double Spin',
       cost: [P, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 50 damage for each heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class Floette extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Floette';
-  public fullName: string = 'Floette EVS';
+  public fullName: string = 'Floette (EVS 72)';
+  public legacyFullName = 'Floette EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Double Spin

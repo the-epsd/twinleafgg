@@ -103,7 +103,8 @@ export class EarthenVessel extends TrainerCard {
 
   public name: string = 'Earthen Vessel';
 
-  public fullName: string = 'Earthen Vessel PAR';
+  public fullName: string = 'Earthen Vessel (PAR 163)';
+  public legacyFullName = 'Earthen Vessel PAR';
 
   public text: string =
     `You can use this card only if you discard another card from your hand.

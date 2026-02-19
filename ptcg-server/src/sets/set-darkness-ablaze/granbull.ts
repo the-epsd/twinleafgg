@@ -37,7 +37,8 @@ export class Granbull extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Granbull';
-  public fullName: string = 'Granbull DAA';
+  public fullName: string = 'Granbull (DAA 71)';
+  public legacyFullName = 'Granbull DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Jaw Lock

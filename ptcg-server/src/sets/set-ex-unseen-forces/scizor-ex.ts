@@ -42,7 +42,8 @@ export class Scizorex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '108';
   public name: string = 'Scizor ex';
-  public fullName: string = 'Scizor ex UF';
+  public fullName: string = 'Scizor ex (UF 108)';
+  public legacyFullName = 'Scizor ex UF';
 
   public readonly STEEL_WING_MARKER = 'STEEL_WING_MARKER';
 

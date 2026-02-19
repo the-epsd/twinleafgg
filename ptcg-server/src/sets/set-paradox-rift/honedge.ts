@@ -33,6 +33,7 @@ export class Honedge extends PokemonCard {
 
   public name: string = 'Honedge';
 
-  public fullName: string = 'Honedge PAR';
+  public fullName: string = 'Honedge (PAR 130)';
+  public legacyFullName = 'Honedge PAR';
 
 }

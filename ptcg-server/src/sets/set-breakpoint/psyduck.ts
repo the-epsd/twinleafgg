@@ -25,5 +25,6 @@ export class Psyduck extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Psyduck';
-  public fullName: string = 'Psyduck BKP';
+  public fullName: string = 'Psyduck (BKP 16)';
+  public legacyFullName = 'Psyduck BKP';
 }

@@ -37,7 +37,8 @@ export class Milotic extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Milotic';
-  public fullName: string = 'Milotic HL';
+  public fullName: string = 'Milotic (HL 12)';
+  public legacyFullName = 'Milotic HL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

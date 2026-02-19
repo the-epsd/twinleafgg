@@ -33,7 +33,8 @@ export class Jigglypuff extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jigglypuff';
-  public fullName: string = 'Jigglypuff NXD';
+  public fullName: string = 'Jigglypuff (NXD 78)';
+  public legacyFullName = 'Jigglypuff NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sing

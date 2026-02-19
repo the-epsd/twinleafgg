@@ -32,7 +32,8 @@ export class Arboliva extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '23';
   public name: string = 'Arboliva';
-  public fullName: string = 'Arboliva SVI';
+  public fullName: string = 'Arboliva (SVI 23)';
+  public legacyFullName = 'Arboliva SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

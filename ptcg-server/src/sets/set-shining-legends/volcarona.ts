@@ -38,7 +38,8 @@ export class Volcarona extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Volcarona';
-  public fullName: string = 'Volcarona SLG';
+  public fullName: string = 'Volcarona (SLG 13)';
+  public legacyFullName = 'Volcarona SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Heat Cyclone

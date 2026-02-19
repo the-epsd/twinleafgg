@@ -28,7 +28,7 @@ export class Wigglytuff extends PokemonCard {
       name: 'Double Smash',
       cost: [C, C, C],
       damage: 90,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 90 damage for each heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class Wigglytuff extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wigglytuff';
-  public fullName: string = 'Wigglytuff DAA';
+  public fullName: string = 'Wigglytuff (DAA 68)';
+  public legacyFullName = 'Wigglytuff DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sleep Pulse

@@ -17,7 +17,8 @@ export class DiggingGloves extends TrainerCard {
   public setNumber: string = '145';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Digging Gloves';
-  public fullName: string = 'Digging Gloves EVS';
+  public fullName: string = 'Digging Gloves (EVS 145)';
+  public legacyFullName = 'Digging Gloves EVS';
   public text: string = 'The attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Active Fighting Pokémon (before applying Weakness and Resistance). You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

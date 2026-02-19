@@ -30,7 +30,7 @@ export class AlolanMarowak extends PokemonCard {
       name: 'Burning Bonemerang',
       cost: [R, R, C],
       damage: 70,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 70 damage for each heads. If either of them is heads, your opponent\'s Active Pokémon is now Burned.'
     }
   ];
@@ -39,7 +39,8 @@ export class AlolanMarowak extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Marowak';
-  public fullName: string = 'Alolan Marowak CIN';
+  public fullName: string = 'Alolan Marowak (CIN 12)';
+  public legacyFullName = 'Alolan Marowak CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dance of Flames

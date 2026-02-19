@@ -15,7 +15,8 @@ export class Whitney extends TrainerCard {
   public setNumber: string = '193';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whitney';
-  public fullName: string = 'Whitney LOT';
+  public fullName: string = 'Whitney (LOT 193)';
+  public legacyFullName = 'Whitney LOT';
   public text: string = 'Draw a card. Then, draw 2 cards for each other Whitney in your discard pile. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

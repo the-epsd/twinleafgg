@@ -51,7 +51,8 @@ export class Gardevoir extends PokemonCard {
 
   public name: string = 'Gardevoir';
 
-  public fullName: string = 'Gardevoir CRE';
+  public fullName: string = 'Gardevoir (CRE 61)';
+  public legacyFullName = 'Gardevoir CRE';
 
   public readonly SHINING_ARCANA_MARKER = 'SHINING_ARCANA_MARKER';
 

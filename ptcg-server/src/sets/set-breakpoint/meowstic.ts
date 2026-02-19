@@ -36,7 +36,8 @@ export class Meowstic extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meowstic';
-  public fullName: string = 'Meowstic BKP';
+  public fullName: string = 'Meowstic (BKP 59)';
+  public legacyFullName = 'Meowstic BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Energy Present

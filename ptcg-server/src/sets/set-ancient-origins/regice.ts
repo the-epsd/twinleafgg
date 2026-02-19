@@ -37,7 +37,8 @@ export class Regice extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Regice';
-  public fullName: string = 'Regice AOR';
+  public fullName: string = 'Regice (AOR 24)';
+  public legacyFullName = 'Regice AOR';
 
   public readonly RESISTANCE_BLIZZARD_MARKER = 'REGICE_AOR_RESISTANCE_BLIZZARD_MARKER';
   public readonly CLEAR_RESISTANCE_BLIZZARD_MARKER = 'REGICE_AOR_CLEAR_RESISTANCE_BLIZZARD_MARKER';

@@ -31,7 +31,8 @@ export class MistysGyarados extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '49';
   public name: string = 'Misty\'s Gyarados';
-  public fullName: string = 'Misty\'s Gyarados DRI';
+  public fullName: string = 'Misty\'s Gyarados (DRI 49)';
+  public legacyFullName = 'Misty\'s Gyarados DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

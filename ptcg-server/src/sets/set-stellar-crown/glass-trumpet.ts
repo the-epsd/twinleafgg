@@ -16,7 +16,8 @@ export class GlassTrumpet extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '135';
   public name: string = 'Glass Trumpet';
-  public fullName: string = 'Glass Trumpet SCR';
+  public fullName: string = 'Glass Trumpet (SCR 135)';
+  public legacyFullName = 'Glass Trumpet SCR';
 
   public text: string =
     `You can use this card only if you have any Tera Pokémon in play.

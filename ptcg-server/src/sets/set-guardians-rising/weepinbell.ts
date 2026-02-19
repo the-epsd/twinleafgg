@@ -30,7 +30,8 @@ export class Weepinbell extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weepinbell';
-  public fullName: string = 'Weepinbell GRI';
+  public fullName: string = 'Weepinbell (GRI 2)';
+  public legacyFullName = 'Weepinbell GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Muddy Acid

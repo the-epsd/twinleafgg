@@ -10,7 +10,8 @@ export class Staryu extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Staryu BS';
+  public fullName = 'Staryu (BS 65)';
+  public legacyFullName = 'Staryu BS';
 
   public setNumber = '65';
 

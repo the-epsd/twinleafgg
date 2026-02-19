@@ -40,7 +40,8 @@ export class Metagross extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metagross';
-  public fullName: string = 'Metagross PLF';
+  public fullName: string = 'Metagross (PLF 52)';
+  public legacyFullName = 'Metagross PLF';
 
   public readonly PLASMA_SEARCH_MARKER = 'PLASMA_SEARCH_MARKER';
 

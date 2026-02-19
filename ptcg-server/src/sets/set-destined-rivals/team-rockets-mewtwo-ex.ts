@@ -34,7 +34,8 @@ export class TeamRocketsMewtwoex extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Mewtwo ex';
-  public fullName: string = 'Team Rocket\'s Mewtwo ex DRI';
+  public fullName: string = 'Team Rocket\'s Mewtwo ex (DRI 81)';
+  public legacyFullName = 'Team Rocket\'s Mewtwo ex DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

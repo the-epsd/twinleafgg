@@ -34,7 +34,8 @@ export class Excadrill2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '57';
   public name: string = 'Excadrill';
-  public fullName: string = 'Excadrill EPO 57';
+  public fullName: string = 'Excadrill (EPO 57)';
+  public legacyFullName = 'Excadrill EPO 57';
 
   public readonly DIG_MARKER = 'DIG_MARKER';
 

@@ -29,7 +29,8 @@ export class Sandile extends PokemonCard {
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandile';
-  public fullName: string = 'Sandile VIV';
+  public fullName: string = 'Sandile (VIV 107)';
+  public legacyFullName = 'Sandile VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dredge Up

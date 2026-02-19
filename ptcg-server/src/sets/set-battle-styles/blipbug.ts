@@ -21,6 +21,7 @@ export class Blipbug extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Blipbug';
-  public fullName: string = 'Blipbug BST';
+  public fullName: string = 'Blipbug (BST 17)';
+  public legacyFullName = 'Blipbug BST';
 
 }

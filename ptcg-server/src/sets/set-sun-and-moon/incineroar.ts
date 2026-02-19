@@ -28,7 +28,7 @@ export class Incineroar extends PokemonCard {
       name: 'Darkest Lariat',
       cost: [R, R, C],
       damage: 100,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 100 damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Incineroar extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Incineroar';
-  public fullName: string = 'Incineroar SUM';
+  public fullName: string = 'Incineroar (SUM 26)';
+  public legacyFullName = 'Incineroar SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fire Fang

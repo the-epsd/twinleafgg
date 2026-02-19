@@ -49,7 +49,8 @@ export class IronBundle extends PokemonCard {
 
   public name: string = 'Iron Bundle';
 
-  public fullName: string = 'Iron Bundle PAR';
+  public fullName: string = 'Iron Bundle (PAR 56)';
+  public legacyFullName = 'Iron Bundle PAR';
 
   public readonly REFRIGERATED_STREAM_MARKER = 'REFRIGERATED_STREAM_MARKER';
 

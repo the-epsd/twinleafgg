@@ -18,7 +18,8 @@ export class RescueEnergy extends EnergyCard {
 
   public name = 'Rescue Energy';
 
-  public fullName = 'Rescue Energy TM';
+  public fullName = 'Rescue Energy (TM 90)';
+  public legacyFullName = 'Rescue Energy TM';
 
   public cardImage: string = 'assets/cardback.png';
 

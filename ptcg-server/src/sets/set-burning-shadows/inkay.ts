@@ -36,7 +36,8 @@ export class Inkay extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Inkay';
-  public fullName: string = 'Inkay BUS';
+  public fullName: string = 'Inkay (BUS 89)';
+  public legacyFullName = 'Inkay BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Constrict

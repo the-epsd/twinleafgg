@@ -30,7 +30,8 @@ export class Purrloin extends PokemonCard {
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Purrloin';
-  public fullName: string = 'Purrloin BCR';
+  public fullName: string = 'Purrloin (BCR 90)';
+  public legacyFullName = 'Purrloin BCR';
   public usedCaptivate = false;
   public captivateHeads = false;
 

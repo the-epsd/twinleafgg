@@ -44,7 +44,8 @@ export class Cinccino extends PokemonCard {
 
   public name: string = 'Cinccino';
 
-  public fullName: string = 'Cinccino TEF';
+  public fullName: string = 'Cinccino (TEF 137)';
+  public legacyFullName = 'Cinccino TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

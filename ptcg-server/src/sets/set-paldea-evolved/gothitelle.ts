@@ -34,7 +34,8 @@ export class Gothitelle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
   public name: string = 'Gothitelle';
-  public fullName: string = 'Gothitelle PAL';
+  public fullName: string = 'Gothitelle (PAL 92)';
+  public legacyFullName = 'Gothitelle PAL';
 
   public readonly READ_THE_STARS_MARKER = 'READ_THE_STARS_MARKER';
 

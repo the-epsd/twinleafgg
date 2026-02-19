@@ -30,7 +30,8 @@ export class Chatot extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '55';
   public name: string = 'Chatot';
-  public fullName: string = 'Chatot MD';
+  public fullName: string = 'Chatot (MD 55)';
+  public legacyFullName = 'Chatot MD';
 
   public readonly CHATTER_MARKER: string = 'CHATTER_MARKER';
 

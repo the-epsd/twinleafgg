@@ -17,7 +17,8 @@ export class LuckyIcePop extends TrainerCard {
   public setNumber: string = '150';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lucky Ice Pop';
-  public fullName: string = 'Lucky Ice Pop EVS';
+  public fullName: string = 'Lucky Ice Pop (EVS 150)';
+  public legacyFullName = 'Lucky Ice Pop EVS';
   public text: string = 'Heal 20 damage from your Active Pokémon. If you healed any damage in this way, flip a coin. If heads, put this Lucky Ice Pop into your hand instead of the discard pile. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

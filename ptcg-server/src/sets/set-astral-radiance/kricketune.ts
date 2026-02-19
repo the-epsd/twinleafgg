@@ -33,7 +33,8 @@ export class Kricketune extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '10';
   public name: string = 'Kricketune';
-  public fullName: string = 'Kricketune ASR';
+  public fullName: string = 'Kricketune (ASR 10)';
+  public legacyFullName = 'Kricketune ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

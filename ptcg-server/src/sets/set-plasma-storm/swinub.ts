@@ -29,7 +29,8 @@ export class Swinub extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swinub';
-  public fullName: string = 'Swinub PLS';
+  public fullName: string = 'Swinub (PLS 26)';
+  public legacyFullName = 'Swinub PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Headbutt

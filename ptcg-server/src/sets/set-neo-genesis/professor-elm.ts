@@ -15,7 +15,8 @@ export class ProfessorElm extends TrainerCard {
   public setNumber: string = '96';
   public set = 'N1';
   public name = 'Professor Elm';
-  public fullName = 'Professor Elm N1';
+  public fullName = 'Professor Elm (N1 96)';
+  public legacyFullName = 'Professor Elm N1';
 
   public text: string = 'Shuffle your hand into your deck. Then, draw 7 cards. You can\'t play any more Trainer cards this turn.';
   

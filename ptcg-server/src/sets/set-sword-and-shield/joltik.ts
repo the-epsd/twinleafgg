@@ -19,5 +19,6 @@ export class Joltik extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '70';
   public name: string = 'Joltik';
-  public fullName: string = 'Joltik SSH';
+  public fullName: string = 'Joltik (SSH 70)';
+  public legacyFullName = 'Joltik SSH';
 }

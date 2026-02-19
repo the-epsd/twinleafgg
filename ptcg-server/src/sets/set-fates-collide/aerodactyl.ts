@@ -38,7 +38,8 @@ export class Aerodactyl extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aerodactyl';
-  public fullName: string = 'Aerodactyl FCO';
+  public fullName: string = 'Aerodactyl (FCO 76)';
+  public legacyFullName = 'Aerodactyl FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Jet Draft

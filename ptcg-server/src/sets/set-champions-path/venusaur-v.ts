@@ -37,7 +37,8 @@ export class VenusaurV extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Venusaur V';
-  public fullName: string = 'Venusaur V CPA';
+  public fullName: string = 'Venusaur V (CPA 1)';
+  public legacyFullName = 'Venusaur V CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pollen Bomb

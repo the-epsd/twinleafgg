@@ -30,7 +30,8 @@ export class Doduo extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Doduo';
-  public fullName: string = 'Doduo XY';
+  public fullName: string = 'Doduo (XY 98)';
+  public legacyFullName = 'Doduo XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Hit

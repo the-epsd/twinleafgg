@@ -13,7 +13,8 @@ export class BrocksTrainingMethod extends TrainerCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Brock\'s Training Method';
-  public fullName: string = 'Brock\'s Training Method G1';
+  public fullName: string = 'Brock\'s Training Method (G1 106)';
+  public legacyFullName = 'Brock\'s Training Method G1';
 
   public text: string = 'Search your deck for a Basic Pokémon or Evolution card with Brock in its name. Show that card to your opponent, then put it into your hand. Shuffle your deck afterward.';
 

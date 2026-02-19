@@ -34,7 +34,8 @@ export class Amoonguss extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Amoonguss';
-  public fullName: string = 'Amoonguss NVI';
+  public fullName: string = 'Amoonguss (NVI 10)';
+  public legacyFullName = 'Amoonguss NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Toxic - double poison

@@ -9,7 +9,8 @@ export class NormaliumZTackle extends TrainerCard {
   public setNumber: string = '203';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Normalium Z: Tackle';
-  public fullName: string = 'Normalium Z: Tackle UNM';
+  public fullName: string = 'Normalium Z: Tackle (UNM 203)';
+  public legacyFullName = 'Normalium Z: Tackle UNM';
   public text: string = 'If the Pokémon this card is attached to has the Tackle attack, it can use the GX attack on this card. (You still need the necessary Energy to use this attack.)';
 
   // TODO: Z-Crystal GX attack mechanic is not currently implementable in the engine.

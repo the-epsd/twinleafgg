@@ -35,7 +35,8 @@ export class Shuckle extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shuckle';
-  public fullName: string = 'Shuckle VIV';
+  public fullName: string = 'Shuckle (VIV 85)';
+  public legacyFullName = 'Shuckle VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Deck Distiller

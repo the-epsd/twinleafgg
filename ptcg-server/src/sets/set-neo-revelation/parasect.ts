@@ -33,7 +33,8 @@ export class Parasect extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '35';
   public name: string = 'Parasect';
-  public fullName: string = 'Parasect N3';
+  public fullName: string = 'Parasect (N3 35)';
+  public legacyFullName = 'Parasect N3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

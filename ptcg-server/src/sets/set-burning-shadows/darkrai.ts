@@ -28,7 +28,7 @@ export class Darkrai extends PokemonCard {
       name: 'Dark Raid',
       cost: [D, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent has already used their GX attack, this attack does 80 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Darkrai extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Darkrai';
-  public fullName: string = 'Darkrai BUS';
+  public fullName: string = 'Darkrai (BUS 87)';
+  public legacyFullName = 'Darkrai BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hypnoblast

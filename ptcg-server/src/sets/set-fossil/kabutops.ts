@@ -37,7 +37,8 @@ export class Kabutops extends PokemonCard {
 
   public name: string = 'Kabutops';
 
-  public fullName: string = 'Kabutops FO';
+  public fullName: string = 'Kabutops (FO 9)';
+  public legacyFullName = 'Kabutops FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

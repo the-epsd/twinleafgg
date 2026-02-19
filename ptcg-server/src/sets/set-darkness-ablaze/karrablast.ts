@@ -21,7 +21,7 @@ export class Karrablast extends PokemonCard {
       name: 'Continuous Headbutt',
       cost: [C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 20 damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Karrablast extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Karrablast';
-  public fullName: string = 'Karrablast DAA';
+  public fullName: string = 'Karrablast (DAA 8)';
+  public legacyFullName = 'Karrablast DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Headbutt

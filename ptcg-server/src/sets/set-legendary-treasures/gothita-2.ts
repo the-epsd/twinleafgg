@@ -30,7 +30,8 @@ export class Gothita2 extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothita';
-  public fullName: string = 'Gothita LTR 70';
+  public fullName: string = 'Gothita (LTR 70)';
+  public legacyFullName = 'Gothita LTR 70';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Trip Over

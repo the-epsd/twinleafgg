@@ -39,7 +39,8 @@ export class GalarianLinoone extends PokemonCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Linoone';
-  public fullName: string = 'Galarian Linoone SSH';
+  public fullName: string = 'Galarian Linoone (SSH 118)';
+  public legacyFullName = 'Galarian Linoone SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Night Slash

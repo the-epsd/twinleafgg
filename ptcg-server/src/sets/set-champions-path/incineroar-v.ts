@@ -37,7 +37,8 @@ export class IncineroarV extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Incineroar V';
-  public fullName: string = 'Incineroar V CPA';
+  public fullName: string = 'Incineroar V (CPA 8)';
+  public legacyFullName = 'Incineroar V CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Grand Flame

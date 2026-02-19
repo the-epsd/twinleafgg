@@ -29,7 +29,8 @@ export class Igglybuff extends PokemonCard {
   public setNumber: string = '168';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Igglybuff';
-  public fullName: string = 'Igglybuff CEC';
+  public fullName: string = 'Igglybuff (CEC 168)';
+  public legacyFullName = 'Igglybuff CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sleepy Voice

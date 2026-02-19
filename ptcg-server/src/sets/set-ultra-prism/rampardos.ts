@@ -22,7 +22,7 @@ export class Rampardos extends PokemonCard {
       name: 'Clean Hit',
       cost: [F],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 60 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Rampardos extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rampardos';
-  public fullName: string = 'Rampardos UPR';
+  public fullName: string = 'Rampardos (UPR 65)';
+  public legacyFullName = 'Rampardos UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Clean Hit

@@ -34,7 +34,8 @@ export class HolonsMagnemite extends PokemonCard implements EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '70';
   public name: string = 'Holon\'s Magnemite';
-  public fullName: string = 'Holon\'s Magnemite DS';
+  public fullName: string = 'Holon\'s Magnemite (DS 70)';
+  public legacyFullName = 'Holon\'s Magnemite DS';
 
   // EnergyCard interface properties
   public provides: CardType[] = [CardType.COLORLESS];

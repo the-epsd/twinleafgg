@@ -49,7 +49,8 @@ export class FastBall extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'SK';
   public name: string = 'Fast Ball';
-  public fullName: string = 'Fast Ball SK';
+  public fullName: string = 'Fast Ball (SK 124)';
+  public legacyFullName = 'Fast Ball SK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '124';
 

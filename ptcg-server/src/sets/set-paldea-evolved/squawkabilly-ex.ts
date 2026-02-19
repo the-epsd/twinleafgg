@@ -51,7 +51,8 @@ export class Squawkabillyex extends PokemonCard {
 
   public name: string = 'Squawkabilly ex';
 
-  public fullName: string = 'Squawkabilly ex PAL';
+  public fullName: string = 'Squawkabilly ex (PAL 169)';
+  public legacyFullName = 'Squawkabilly ex PAL';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -32,7 +32,8 @@ export class Durant extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '10';
   public name: string = 'Durant';
-  public fullName: string = 'Durant BST';
+  public fullName: string = 'Durant (BST 10)';
+  public legacyFullName = 'Durant BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

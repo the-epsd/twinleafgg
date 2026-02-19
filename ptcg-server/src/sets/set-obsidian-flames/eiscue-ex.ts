@@ -32,7 +32,8 @@ export class Eiscueex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
   public name: string = 'Eiscue ex';
-  public fullName: string = 'Eiscue ex OBF';
+  public fullName: string = 'Eiscue ex (OBF 42)';
+  public legacyFullName = 'Eiscue ex OBF';
 
   public readonly SCALDING_BLOCK_MARKER = 'SCALDING_BLOCK_MARKER';
 

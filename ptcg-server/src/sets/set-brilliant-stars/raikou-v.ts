@@ -50,7 +50,8 @@ export class RaikouV extends PokemonCard {
 
   public name: string = 'Raikou V';
 
-  public fullName: string = 'Raikou V BRS';
+  public fullName: string = 'Raikou V (BRS 48)';
+  public legacyFullName = 'Raikou V BRS';
 
   public readonly FLEET_FOOTED_MARKER = 'FLEET_FOOTED_MARKER';
 

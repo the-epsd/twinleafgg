@@ -29,7 +29,7 @@ export class AlakazamV extends PokemonCard {
       name: 'Mind Ruler',
       cost: [P, P],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 30 damage for each card in your opponent\'s hand.'
     }
   ];
@@ -39,7 +39,8 @@ export class AlakazamV extends PokemonCard {
   public setNumber: string = '172';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alakazam V';
-  public fullName: string = 'Alakazam V VIV';
+  public fullName: string = 'Alakazam V (VIV 172)';
+  public legacyFullName = 'Alakazam V VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Zen Spoon

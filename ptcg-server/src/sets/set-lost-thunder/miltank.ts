@@ -23,7 +23,7 @@ export class Miltank extends PokemonCard {
       name: 'Milk Cannon',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Reveal any number of Moomoo Milk cards in your hand. This attack does 60 damage for each card you revealed in this way.'
     }
   ];
@@ -32,7 +32,8 @@ export class Miltank extends PokemonCard {
   public setNumber: string = '158';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Miltank';
-  public fullName: string = 'Miltank LOT';
+  public fullName: string = 'Miltank (LOT 158)';
+  public legacyFullName = 'Miltank LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Milk Cannon

@@ -64,7 +64,8 @@ export class FightingAuLait extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '181';
   public name: string = 'Fighting Au Lait';
-  public fullName: string = 'Fighting Au Lait PAL';
+  public fullName: string = 'Fighting Au Lait (PAL 181)';
+  public legacyFullName = 'Fighting Au Lait PAL';
 
   public text: string =
     `You can use this card only if you have more Prize cards remaining than your opponent.

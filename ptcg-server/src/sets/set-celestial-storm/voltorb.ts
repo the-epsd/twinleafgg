@@ -37,7 +37,8 @@ export class Voltorb extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Voltorb';
-  public fullName: string = 'Voltorb CES';
+  public fullName: string = 'Voltorb (CES 47)';
+  public legacyFullName = 'Voltorb CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Floating Electrons (passive - free retreat if any Energy attached)

@@ -33,7 +33,8 @@ export class Flygon extends PokemonCard {
   public setNumber = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flygon';
-  public fullName = 'Flygon HP';
+  public fullName = 'Flygon (HP 7)';
+  public legacyFullName = 'Flygon HP';
 
   public readonly DELTA_SUPPLY_MARKER = 'DELTA_SUPPLY_MARKER';
 

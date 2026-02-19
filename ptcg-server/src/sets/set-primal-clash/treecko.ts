@@ -21,7 +21,7 @@ export class Treecko extends PokemonCard {
       name: 'Quick Attack',
       cost: [G],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Treecko extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Treecko';
-  public fullName: string = 'Treecko PRC';
+  public fullName: string = 'Treecko (PRC 6)';
+  public legacyFullName = 'Treecko PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Quick Attack

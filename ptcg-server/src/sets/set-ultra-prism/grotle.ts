@@ -36,7 +36,8 @@ export class Grotle extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grotle';
-  public fullName: string = 'Grotle UPR';
+  public fullName: string = 'Grotle (UPR 8)';
+  public legacyFullName = 'Grotle UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mega Drain

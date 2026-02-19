@@ -38,7 +38,8 @@ export class Giratina extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Giratina';
-  public fullName: string = 'Giratina UNM';
+  public fullName: string = 'Giratina (UNM 86)';
+  public legacyFullName = 'Giratina UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Dimension Breach (on-play-from-hand)

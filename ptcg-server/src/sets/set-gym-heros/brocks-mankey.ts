@@ -29,7 +29,8 @@ export class BrocksMankey extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public name: string = 'Brock\'s Mankey';
-  public fullName: string = 'Brock\'s Mankey G1';
+  public fullName: string = 'Brock\'s Mankey (G1 67)';
+  public legacyFullName = 'Brock\'s Mankey G1';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

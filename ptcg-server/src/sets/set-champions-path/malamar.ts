@@ -28,7 +28,7 @@ export class Malamar extends PokemonCard {
       name: 'Random Peck',
       cost: [D, D, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class Malamar extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Malamar';
-  public fullName: string = 'Malamar CPA';
+  public fullName: string = 'Malamar (CPA 45)';
+  public legacyFullName = 'Malamar CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Eerie Wave

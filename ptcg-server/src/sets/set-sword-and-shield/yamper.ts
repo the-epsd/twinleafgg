@@ -35,7 +35,8 @@ export class Yamper extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yamper';
-  public fullName: string = 'Yamper SSH';
+  public fullName: string = 'Yamper (SSH 73)';
+  public legacyFullName = 'Yamper SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Roar

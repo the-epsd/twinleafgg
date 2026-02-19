@@ -47,7 +47,8 @@ export class NsDarmanitan extends PokemonCard {
 
   public name: string = 'N\'s Darmanitan';
 
-  public fullName: string = 'N\'s Darmanitan JTG';
+  public fullName: string = 'N\'s Darmanitan (JTG 27)';
+  public legacyFullName = 'N\'s Darmanitan JTG';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

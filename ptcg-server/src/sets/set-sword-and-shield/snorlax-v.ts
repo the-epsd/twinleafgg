@@ -37,7 +37,8 @@ export class SnorlaxV extends PokemonCard {
   public setNumber: string = '141';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snorlax V';
-  public fullName: string = 'Snorlax V SSH';
+  public fullName: string = 'Snorlax V (SSH 141)';
+  public legacyFullName = 'Snorlax V SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swallow

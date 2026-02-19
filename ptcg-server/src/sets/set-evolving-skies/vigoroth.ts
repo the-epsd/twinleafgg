@@ -30,7 +30,8 @@ export class Vigoroth extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '130';
   public name: string = 'Vigoroth';
-  public fullName: string = 'Vigoroth EVS';
+  public fullName: string = 'Vigoroth (EVS 130)';
+  public legacyFullName = 'Vigoroth EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

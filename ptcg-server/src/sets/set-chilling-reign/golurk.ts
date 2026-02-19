@@ -30,7 +30,8 @@ export class Golurk extends PokemonCard {
   public set: string = 'CRE';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golurk';
-  public fullName: string = 'Golurk CRE';
+  public fullName: string = 'Golurk (CRE 66)';
+  public legacyFullName = 'Golurk CRE';
   public setNumber: string = '66';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

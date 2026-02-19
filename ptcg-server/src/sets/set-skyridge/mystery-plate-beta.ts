@@ -18,7 +18,8 @@ export class MysteryPlateBeta extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '134';
   public name: string = 'Mystery Plate β';
-  public fullName: string = 'Mystery Plate β SK';
+  public fullName: string = 'Mystery Plate β (SK 134)';
+  public legacyFullName = 'Mystery Plate β SK';
 
   public attacks: Attack[] = [{
     name: 'Stone Crush',

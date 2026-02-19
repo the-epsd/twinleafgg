@@ -36,7 +36,8 @@ export class Simipour extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Simipour';
-  public fullName: string = 'Simipour DAA';
+  public fullName: string = 'Simipour (DAA 42)';
+  public legacyFullName = 'Simipour DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Giga Impact

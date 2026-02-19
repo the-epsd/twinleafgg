@@ -29,7 +29,8 @@ export class Numel extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '23';
   public name: string = 'Numel';
-  public fullName: string = 'Numel UNM';
+  public fullName: string = 'Numel (UNM 23)';
+  public legacyFullName = 'Numel UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

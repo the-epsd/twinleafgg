@@ -23,7 +23,8 @@ export class FullFaceGuard extends TrainerCard {
 
   public name: string = 'Full Face Guard';
 
-  public fullName: string = 'Full Face Guard EVS';
+  public fullName: string = 'Full Face Guard (EVS 148)';
+  public legacyFullName = 'Full Face Guard EVS';
 
   public text: string =
     'If the Pokémon this card is attached to has no Abilities, it takes 20 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance).';

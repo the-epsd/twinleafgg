@@ -44,7 +44,8 @@ export class Greninja extends PokemonCard {
 
   public name: string = 'Greninja';
 
-  public fullName: string = 'Greninja BKP';
+  public fullName: string = 'Greninja (BKP 40)';
+  public legacyFullName = 'Greninja BKP';
 
   // ability locking gaming
   public readonly SHADOW_STITCHING_MARKER = 'SHADOW_STITCHING_MARKER';

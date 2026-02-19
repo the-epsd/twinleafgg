@@ -41,7 +41,8 @@ export class Snorlax extends PokemonCard {
 
   public name: string = 'Snorlax';
 
-  public fullName: string = 'Snorlax VIV';
+  public fullName: string = 'Snorlax (VIV 131)';
+  public legacyFullName = 'Snorlax VIV';
 
   public cardImage: string = 'assets/cardback.png';
 

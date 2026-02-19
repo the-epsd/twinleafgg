@@ -41,7 +41,8 @@ export class Florges extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Florges';
-  public fullName: string = 'Florges EVS';
+  public fullName: string = 'Florges (EVS 73)';
+  public legacyFullName = 'Florges EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Rapid Strike Connection

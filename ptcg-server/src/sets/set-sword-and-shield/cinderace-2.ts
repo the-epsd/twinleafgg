@@ -37,7 +37,8 @@ export class Cinderace2 extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cinderace';
-  public fullName: string = 'Cinderace SSH 35';
+  public fullName: string = 'Cinderace (SSH 35)';
+  public legacyFullName = 'Cinderace SSH 35';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pyro Ball

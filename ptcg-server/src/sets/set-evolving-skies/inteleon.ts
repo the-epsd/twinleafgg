@@ -7,5 +7,6 @@ import { Inteleon as InteleonCRE } from '../set-chilling-reign/inteleon';
 export class Inteleon extends InteleonCRE {
   public set: string = 'EVS';
   public setNumber: string = '227';
-  public fullName: string = 'Inteleon EVS';
+  public fullName: string = 'Inteleon (EVS 227)';
+  public legacyFullName = 'Inteleon EVS';
 }

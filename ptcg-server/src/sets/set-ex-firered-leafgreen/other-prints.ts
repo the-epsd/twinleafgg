@@ -5,33 +5,38 @@ import { VsSeeker } from '../set-phantom-forces/vs-seeker';
 import { Switch } from '../set-scarlet-and-violet/switch';
 
 export class EnergyRemoval2RG extends EnergyRemoval2 {
-  public fullName = 'Energy Removal 2 RG';
+  public fullName = 'Energy Removal 2 (RG 89)';
+  public legacyFullName = 'Energy Removal 2 RG';
   public set = 'RG';
   public setNumber = '89';
 }
 
 export class MultiEnergyRG extends MultiEnergy {
-  public fullName = 'Multi Energy RG';
+  public fullName = 'Multi Energy (RG 103)';
+  public legacyFullName = 'Multi Energy RG';
   public set = 'RG';
   public setNumber = '103';
 }
 
 export class PokemonReversalRG extends PokemonReversal {
-  public fullName = 'Pokémon Reversal RG';
+  public fullName = 'Pokemon Reversal (RG 97)';
+  public legacyFullName = 'Pokémon Reversal RG';
   public set = 'RG';
   public setNumber = '97';
   public text = 'Flip a coin. If heads, choose 1 of your opponent\'s Benched Pokémon and switch it with 1 of the Defending Pokémon. Your opponent chooses the Defending Pokémon to switch.';
 }
 
 export class VsSeekerRG extends VsSeeker {
-  public fullName = 'VS Seeker RG';
+  public fullName = 'VS Seeker (RG 100)';
+  public legacyFullName = 'VS Seeker RG';
   public set = 'RG';
   public setNumber = '100';
   public text = 'Search your discard pile for a Supporter card, show it to your opponent, and put it into your hand.';
 }
 
 export class SwitchRG extends Switch {
-  public fullName = 'Switch RG';
+  public fullName = 'Switch (RG 102)';
+  public legacyFullName = 'Switch RG';
   public set = 'RG';
   public setNumber = '102';
   public text = 'Switch your Active Pokémon with 1 of your Benched Pokémon.';

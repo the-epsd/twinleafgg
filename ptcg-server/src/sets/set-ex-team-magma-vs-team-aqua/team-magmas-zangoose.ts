@@ -30,7 +30,8 @@ export class TeamMagmasZangoose extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '23';
   public name: string = 'Team Magma\'s Zangoose';
-  public fullName: string = 'Team Magma\'s Zangoose MA';
+  public fullName: string = 'Team Magma\'s Zangoose (MA 23)';
+  public legacyFullName = 'Team Magma\'s Zangoose MA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

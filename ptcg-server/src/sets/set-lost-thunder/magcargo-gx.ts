@@ -57,7 +57,8 @@ export class MagcargoGX extends PokemonCard {
 
   public name: string = 'Magcargo-GX';
 
-  public fullName: string = 'Magcargo-GX LOT';
+  public fullName: string = 'Magcargo-GX (LOT 44)';
+  public legacyFullName = 'Magcargo-GX LOT';
 
   public readonly CRUSHING_CHARGE_MARKER = 'CRUSHING_CHARGE_MARKER';
 

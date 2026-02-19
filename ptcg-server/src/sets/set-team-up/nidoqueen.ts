@@ -37,7 +37,8 @@ export class Nidoqueen extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoqueen';
-  public fullName: string = 'Nidoqueen TEU';
+  public fullName: string = 'Nidoqueen (TEU 56)';
+  public legacyFullName = 'Nidoqueen TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Queen's Call Ability

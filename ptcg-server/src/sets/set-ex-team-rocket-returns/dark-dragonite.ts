@@ -41,7 +41,8 @@ export class DarkDragonite extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '15';
   public name: string = 'Dark Dragonite';
-  public fullName: string = 'Dark Dragonite TRR';
+  public fullName: string = 'Dark Dragonite (TRR 15)';
+  public legacyFullName = 'Dark Dragonite TRR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

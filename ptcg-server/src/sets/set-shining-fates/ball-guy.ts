@@ -84,7 +84,8 @@ export class BallGuy extends TrainerCard {
 
   public name: string = 'Ball Guy';
 
-  public fullName: string = 'Ball Guy SHF';
+  public fullName: string = 'Ball Guy (SHF 57)';
+  public legacyFullName = 'Ball Guy SHF';
 
   public text: string =
     'Search your deck for up to 3 different Item cards that have the word "Ball" in their name, reveal them, and put them into your hand. Then, shuffle your deck.';

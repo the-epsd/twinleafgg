@@ -27,7 +27,8 @@ export class TechnicalMachineBlindside extends TrainerCard {
 
   public name: string = 'Technical Machine: Blindside';
 
-  public fullName: string = 'Technical Machine: Blindside PAR';
+  public fullName: string = 'Technical Machine: Blindside (PAR 176)';
+  public legacyFullName = 'Technical Machine: Blindside PAR';
 
   public attacks: Attack[] = [{
     name: 'Blindside',

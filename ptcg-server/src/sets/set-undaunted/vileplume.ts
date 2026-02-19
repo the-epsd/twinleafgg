@@ -44,7 +44,8 @@ export class Vileplume extends PokemonCard {
 
   public name: string = 'Vileplume';
 
-  public fullName: string = 'Vileplume UD';
+  public fullName: string = 'Vileplume (UD 24)';
+  public legacyFullName = 'Vileplume UD';
 
   public cardImage: string = 'assets/cardback.png';
 

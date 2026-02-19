@@ -13,7 +13,8 @@ export class Poliwag extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Poliwag BS';
+  public fullName = 'Poliwag (BS 59)';
+  public legacyFullName = 'Poliwag BS';
 
   public cardType = CardType.WATER;
 

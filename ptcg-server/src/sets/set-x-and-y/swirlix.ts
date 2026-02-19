@@ -32,5 +32,6 @@ export class Swirlix extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swirlix';
-  public fullName: string = 'Swirlix XY';
+  public fullName: string = 'Swirlix (XY 94)';
+  public legacyFullName = 'Swirlix XY';
 }

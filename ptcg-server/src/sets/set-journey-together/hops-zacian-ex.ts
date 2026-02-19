@@ -33,7 +33,8 @@ export class HopsZacianex extends PokemonCard {
   public set: string = 'JTG';
   public setNumber = '111';
   public name: string = 'Hop\'s Zacian ex';
-  public fullName: string = 'Hop\'s Zacian ex JTG';
+  public fullName: string = 'Hop\'s Zacian ex (JTG 111)';
+  public legacyFullName = 'Hop\'s Zacian ex JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

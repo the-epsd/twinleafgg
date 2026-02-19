@@ -22,7 +22,8 @@ export class Salandit extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
   public name: string = 'Salandit';
-  public fullName: string = 'Salandit CIN';
+  public fullName: string = 'Salandit (CIN 46)';
+  public legacyFullName = 'Salandit CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

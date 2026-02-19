@@ -21,7 +21,7 @@ export class Doduo2 extends PokemonCard {
       name: 'Double Stab',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
     },
     {
@@ -36,7 +36,8 @@ export class Doduo2 extends PokemonCard {
   public setNumber: string = '116';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Doduo';
-  public fullName: string = 'Doduo BKT 116';
+  public fullName: string = 'Doduo (BKT 116)';
+  public legacyFullName = 'Doduo BKT 116';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Stab

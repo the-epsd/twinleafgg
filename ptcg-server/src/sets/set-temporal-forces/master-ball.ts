@@ -70,7 +70,8 @@ export class MasterBall extends TrainerCard {
 
   public name: string = 'Master Ball';
 
-  public fullName: string = 'Master Ball TEF';
+  public fullName: string = 'Master Ball (TEF 153)';
+  public legacyFullName = 'Master Ball TEF';
 
   public text: string =
     'Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';

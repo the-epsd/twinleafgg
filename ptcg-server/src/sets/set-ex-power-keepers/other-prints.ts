@@ -2,14 +2,16 @@ import { Delcatty } from '../set-ex-ruby-and-sapphire/delcatty';
 import { EnergySwitch } from '../set-scarlet-and-violet/energy-switch';
 
 export class DelcattyPK extends Delcatty {
-  public fullName = 'Delcatty PK';
+  public fullName = 'Delcatty (PK 8)';
+  public legacyFullName = 'Delcatty PK';
   public name = 'Delcatty';
   public set = 'PK';
   public setNumber = '8';
 }
 
 export class EnergySwitchPK extends EnergySwitch {
-  public fullName = 'Energy Switch PK';
+  public fullName = 'Energy Switch (PK 75)';
+  public legacyFullName = 'Energy Switch PK';
   public name = 'Energy Switch';
   public set = 'PK';
   public setNumber = '75';

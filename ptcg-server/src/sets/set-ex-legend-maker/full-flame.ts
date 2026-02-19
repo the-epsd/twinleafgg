@@ -14,7 +14,8 @@ export class FullFlame extends TrainerCard {
 
   public set: string = 'LM';
   public name: string = 'Full Flame';
-  public fullName: string = 'Full Flame LM';
+  public fullName: string = 'Full Flame (LM 74)';
+  public legacyFullName = 'Full Flame LM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '74';
 

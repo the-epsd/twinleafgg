@@ -33,7 +33,7 @@ export class Kangaskhan extends PokemonCard {
       name: 'One-Two Punch',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -42,7 +42,8 @@ export class Kangaskhan extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kangaskhan';
-  public fullName: string = 'Kangaskhan DRM';
+  public fullName: string = 'Kangaskhan (DRM 55)';
+  public legacyFullName = 'Kangaskhan DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fetch

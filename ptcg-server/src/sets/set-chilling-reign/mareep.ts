@@ -39,7 +39,8 @@ export class Mareep extends PokemonCard {
 
   public name: string = 'Mareep';
 
-  public fullName: string = 'Mareep CRE 47';
+  public fullName: string = 'Mareep (CRE 47)';
+  public legacyFullName = 'Mareep CRE 47';
 
   public readonly GROWL_MARKER = 'GROWL_MARKER';
 

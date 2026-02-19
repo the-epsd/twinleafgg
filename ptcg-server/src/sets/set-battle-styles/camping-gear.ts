@@ -12,7 +12,8 @@ export class CampingGear extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '122';
   public name: string = 'Camping Gear';
-  public fullName: string = 'Camping Gear BST';
+  public fullName: string = 'Camping Gear (BST 122)';
+  public legacyFullName = 'Camping Gear BST';
   public regulationMark = 'E';
 
   public text = 'Search your deck for a card and put it into your hand. Then, shuffle your deck. Your turn ends.';

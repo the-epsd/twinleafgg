@@ -26,7 +26,8 @@ export class MistysStaryu extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
   public name: string = 'Misty\'s Staryu';
-  public fullName: string = 'Misty\'s Staryu DRI';
+  public fullName: string = 'Misty\'s Staryu (DRI 46)';
+  public legacyFullName = 'Misty\'s Staryu DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Bubble Beam

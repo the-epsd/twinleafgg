@@ -34,6 +34,7 @@ export class Cherubi extends PokemonCard {
 
   public name: string = 'Cherubi';
 
-  public fullName: string = 'Cherubi BRS';
+  public fullName: string = 'Cherubi (BRS 12)';
+  public legacyFullName = 'Cherubi BRS';
 
 }

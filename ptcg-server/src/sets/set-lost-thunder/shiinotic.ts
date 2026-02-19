@@ -37,7 +37,8 @@ export class Shiinotic extends PokemonCard {
   public setNumber: string = '148';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shiinotic';
-  public fullName: string = 'Shiinotic LOT';
+  public fullName: string = 'Shiinotic (LOT 148)';
+  public legacyFullName = 'Shiinotic LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Effect Spore (passive - damaged by opponent's attack)

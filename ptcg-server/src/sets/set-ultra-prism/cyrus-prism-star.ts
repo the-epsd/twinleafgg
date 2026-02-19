@@ -17,7 +17,8 @@ export class CyrusPrismStar extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '120';
   public name: string = 'Cyrus Prism Star';
-  public fullName: string = 'Cyrus Prism Star UPR';
+  public fullName: string = 'Cyrus Prism Star (UPR 120)';
+  public legacyFullName = 'Cyrus Prism Star UPR';
 
   public text: string =
     'You can play this card only if your Active Pokémon is a [W] or [M] Pokémon.\n\nYour opponent chooses 2 Benched Pokémon and shuffles the others, and all cards attached to them, into their deck.';

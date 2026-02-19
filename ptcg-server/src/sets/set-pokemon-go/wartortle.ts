@@ -31,7 +31,8 @@ export class Wartortle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Wartortle';
-  public fullName: string = 'Wartortle PGO';
+  public fullName: string = 'Wartortle (PGO 16)';
+  public legacyFullName = 'Wartortle PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

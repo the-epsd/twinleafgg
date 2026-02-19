@@ -17,7 +17,8 @@ export class MistEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '161';
   public name = 'Mist Energy';
-  public fullName = 'Mist Energy TEF';
+  public fullName = 'Mist Energy (TEF 161)';
+  public legacyFullName = 'Mist Energy TEF';
 
   public text =
     `As long as this card is attached to a Pokémon, it provides [C] Energy.

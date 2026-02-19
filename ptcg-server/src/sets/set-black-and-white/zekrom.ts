@@ -38,7 +38,8 @@ export class Zekrom extends PokemonCard {
 
   public name: string = 'Zekrom';
 
-  public fullName: string = 'Zekrom BLW';
+  public fullName: string = 'Zekrom (BLW 47)';
+  public legacyFullName = 'Zekrom BLW';
 
   public cardImage: string = 'assets/cardback.png';
 

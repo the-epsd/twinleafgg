@@ -30,7 +30,7 @@ export class DuraludonV extends PokemonCard {
       name: 'Gatling Slug',
       cost: [C, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 40 more damage for each [M] Energy attached to this Pokémon.'
     }
   ];
@@ -40,7 +40,8 @@ export class DuraludonV extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Duraludon V';
-  public fullName: string = 'Duraludon V CPA';
+  public fullName: string = 'Duraludon V (CPA 47)';
+  public legacyFullName = 'Duraludon V CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Hard Coat (passive - permanent damage reduction)

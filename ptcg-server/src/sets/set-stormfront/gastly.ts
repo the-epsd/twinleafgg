@@ -32,7 +32,8 @@ export class Gastly extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '62';
   public name: string = 'Gastly';
-  public fullName: string = 'Gastly SF';
+  public fullName: string = 'Gastly (SF 62)';
+  public legacyFullName = 'Gastly SF';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 

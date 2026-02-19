@@ -31,7 +31,8 @@ export class Pansage extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
   public name: string = 'Pansage';
-  public fullName: string = 'Pansage EPO';
+  public fullName: string = 'Pansage (EPO 1)';
+  public legacyFullName = 'Pansage EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

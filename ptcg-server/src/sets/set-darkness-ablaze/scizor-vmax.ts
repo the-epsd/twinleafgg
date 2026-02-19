@@ -43,7 +43,8 @@ export class ScizorVmax extends PokemonCard {
   public setNumber: string = '119';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scizor VMAX';
-  public fullName: string = 'Scizor VMAX DAA';
+  public fullName: string = 'Scizor VMAX (DAA 119)';
+  public legacyFullName = 'Scizor VMAX DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hard Scissors

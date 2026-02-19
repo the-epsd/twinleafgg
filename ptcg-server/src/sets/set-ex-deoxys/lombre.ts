@@ -31,7 +31,8 @@ export class Lombre extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lombre';
-  public fullName: string = 'Lombre DX';
+  public fullName: string = 'Lombre (DX 33)';
+  public legacyFullName = 'Lombre DX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle Aqua Lift Poké-Body

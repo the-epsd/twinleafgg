@@ -37,7 +37,8 @@ export class Lucario extends PokemonCard {
   public setNumber: string = '120';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lucario';
-  public fullName: string = 'Lucario VIV';
+  public fullName: string = 'Lucario (VIV 120)';
+  public legacyFullName = 'Lucario VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spike Draw

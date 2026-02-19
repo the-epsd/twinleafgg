@@ -29,7 +29,8 @@ export class Aipom extends PokemonCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aipom';
-  public fullName: string = 'Aipom DRX';
+  public fullName: string = 'Aipom (DRX 99)';
+  public legacyFullName = 'Aipom DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

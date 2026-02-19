@@ -17,7 +17,8 @@ export class Ninetales extends PokemonCard {
 
   public evolvesFrom = 'Vulpix';
 
-  public fullName = 'Ninetales BS';
+  public fullName = 'Ninetales (BS 12)';
+  public legacyFullName = 'Ninetales BS';
 
   public stage: Stage = Stage.STAGE_1;
 

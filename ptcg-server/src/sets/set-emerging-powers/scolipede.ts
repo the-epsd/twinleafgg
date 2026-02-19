@@ -33,7 +33,8 @@ export class Scolipede extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
   public name: string = 'Scolipede';
-  public fullName: string = 'Scolipede EPO';
+  public fullName: string = 'Scolipede (EPO 40)';
+  public legacyFullName = 'Scolipede EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -13,7 +13,8 @@ export class MedicalEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '182';
   public name = 'Medical Energy';
-  public fullName = 'Medical Energy PAR';
+  public fullName = 'Medical Energy (PAR 182)';
+  public legacyFullName = 'Medical Energy PAR';
   public regulationMark = 'G';
 
   public text = 'As long as this card is attached to a Pokémon, it provides [C] Energy.\n\nWhen you attach this card from your hand to 1 of your Pokémon, heal 30 damage from that Pokémon.';

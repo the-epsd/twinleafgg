@@ -17,7 +17,8 @@ export class SingleStrikeScrollOfTheFangedDragon extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '158';
   public name: string = 'Single Strike Scroll of the Fanged Dragon';
-  public fullName: string = 'Single Strike Scroll of the Fanged Dragon EVS';
+  public fullName: string = 'Single Strike Scroll of the Fanged Dragon (EVS 158)';
+  public legacyFullName = 'Single Strike Scroll of the Fanged Dragon EVS';
 
   public attacks: Attack[] = [{
     name: 'Superstrong Slash',

@@ -108,7 +108,8 @@ export class MysteriousTreasure extends TrainerCard {
 
   public name: string = 'Mysterious Treasure';
 
-  public fullName: string = 'Mysterious Treasure FLI';
+  public fullName: string = 'Mysterious Treasure (FLI 113)';
+  public legacyFullName = 'Mysterious Treasure FLI';
 
   public text: string =
     'Discard a card from your hand. If you do, search your deck for a [P] or [N] Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';

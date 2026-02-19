@@ -14,7 +14,8 @@ export class Ghetsis extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '101';
   public name: string = 'Ghetsis';
-  public fullName: string = 'Ghetsis PLF';
+  public fullName: string = 'Ghetsis (PLF 101)';
+  public legacyFullName = 'Ghetsis PLF';
 
   public text: string =
     'Your opponent reveals his or her hand and shuffles all Item cards found there into his or her deck. Then, draw a number of cards equal to the number of Item cards your opponent shuffled into his or her deck.';

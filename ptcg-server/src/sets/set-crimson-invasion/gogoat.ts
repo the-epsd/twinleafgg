@@ -37,7 +37,8 @@ export class Gogoat extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gogoat';
-  public fullName: string = 'Gogoat CIN';
+  public fullName: string = 'Gogoat (CIN 11)';
+  public legacyFullName = 'Gogoat CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sap Sipper (passive - extra damage to Grass Pokemon)

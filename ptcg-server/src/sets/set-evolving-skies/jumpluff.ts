@@ -31,7 +31,8 @@ export class Jumpluff extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
   public name: string = 'Jumpluff';
-  public fullName: string = 'Jumpluff EVS';
+  public fullName: string = 'Jumpluff (EVS 4)';
+  public legacyFullName = 'Jumpluff EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

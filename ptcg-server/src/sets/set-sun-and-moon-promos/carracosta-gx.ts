@@ -39,7 +39,8 @@ export class CarracostaGX extends PokemonCard {
   public setNumber = '239';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Carracosta-GX';
-  public fullName: string = 'Carracosta-GX SMP';
+  public fullName: string = 'Carracosta-GX (SMP 239)';
+  public legacyFullName = 'Carracosta-GX SMP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Crimson Armor

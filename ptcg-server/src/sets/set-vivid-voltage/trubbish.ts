@@ -36,7 +36,8 @@ export class Trubbish extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trubbish';
-  public fullName: string = 'Trubbish VIV';
+  public fullName: string = 'Trubbish (VIV 110)';
+  public legacyFullName = 'Trubbish VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lucky Find

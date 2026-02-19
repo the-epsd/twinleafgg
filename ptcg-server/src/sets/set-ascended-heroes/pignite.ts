@@ -24,7 +24,8 @@ export class Pignite extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '30';
   public name: string = 'Pignite';
-  public fullName: string = 'Pignite MC';
+  public fullName: string = 'Pignite (ASC 30)';
+  public legacyFullName = 'Pignite MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

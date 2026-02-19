@@ -37,7 +37,8 @@ export class Scrafty extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scrafty';
-  public fullName: string = 'Scrafty FLF';
+  public fullName: string = 'Scrafty (FLF 59)';
+  public legacyFullName = 'Scrafty FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/zoroark.ts (Corner - retreat block)

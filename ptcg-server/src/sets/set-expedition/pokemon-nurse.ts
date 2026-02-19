@@ -70,7 +70,8 @@ export class PokemonNurse extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'EX';
   public name: string = 'Pokémon Nurse';
-  public fullName: string = 'Pokémon Nurse EX';
+  public fullName: string = 'Pokémon Nurse (EX 145)';
+  public legacyFullName = 'Pokémon Nurse EX';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '145';
 

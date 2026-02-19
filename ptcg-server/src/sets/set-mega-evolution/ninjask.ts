@@ -29,7 +29,8 @@ export class Ninjask extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Ninjask';
-  public fullName: string = 'Ninjask M1S';
+  public fullName: string = 'Ninjask (MEG 17)';
+  public legacyFullName = 'Ninjask M1S';
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

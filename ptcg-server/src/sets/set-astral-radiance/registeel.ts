@@ -45,7 +45,8 @@ export class Registeel extends PokemonCard {
 
   public name: string = 'Registeel';
 
-  public fullName: string = 'Registeel ASR';
+  public fullName: string = 'Registeel (ASR 108)';
+  public legacyFullName = 'Registeel ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

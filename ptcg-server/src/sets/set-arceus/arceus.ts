@@ -38,7 +38,8 @@ export class Arceus extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'AR5';
   public name: string = 'Arceus';
-  public fullName: string = 'Arceus AR';
+  public fullName: string = 'Arceus (AR AR5)';
+  public legacyFullName = 'Arceus AR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ripple Swell

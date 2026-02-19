@@ -11,7 +11,8 @@ export class LookersInvestigation extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'PL';
   public name: string = 'Looker\'s Investigation';
-  public fullName: string = 'Looker\'s Investigation PL';
+  public fullName: string = 'Looker\'s Investigation (PL 109)';
+  public legacyFullName = 'Looker\'s Investigation PL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
 

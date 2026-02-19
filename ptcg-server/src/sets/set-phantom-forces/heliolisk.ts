@@ -29,7 +29,7 @@ export class Heliolisk extends PokemonCard {
       name: 'Parabolic Spark',
       cost: [L, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard as many [L] Energy attached to your Pokémon as you like. This attack does 30 damage times the number of Energy cards you discarded.'
     }
   ];
@@ -38,7 +38,8 @@ export class Heliolisk extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heliolisk';
-  public fullName: string = 'Heliolisk PHF';
+  public fullName: string = 'Heliolisk (PHF 30)';
+  public legacyFullName = 'Heliolisk PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Parabolic Spark

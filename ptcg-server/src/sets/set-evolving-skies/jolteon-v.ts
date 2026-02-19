@@ -28,7 +28,7 @@ export class JolteonV extends PokemonCard {
       name: 'Pin Missile',
       cost: [L, C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 60 damage for each heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class JolteonV extends PokemonCard {
   public setNumber: string = '177';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jolteon V';
-  public fullName: string = 'Jolteon V EVS';
+  public fullName: string = 'Jolteon V (EVS 177)';
+  public legacyFullName = 'Jolteon V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Spear

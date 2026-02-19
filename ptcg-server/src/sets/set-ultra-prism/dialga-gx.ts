@@ -57,7 +57,8 @@ export class DialgaGX extends PokemonCard {
 
   public name: string = 'Dialga-GX';
 
-  public fullName: string = 'Dialga-GX UPR';
+  public fullName: string = 'Dialga-GX (UPR 100)';
+  public legacyFullName = 'Dialga-GX UPR';
 
   public readonly TIMELESS_GX_MARKER = 'TIMELESS_GX_MARKER';
 

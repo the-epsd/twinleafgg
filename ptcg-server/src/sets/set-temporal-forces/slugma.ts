@@ -27,7 +27,8 @@ export class Slugma extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
   public name: string = 'Slugma';
-  public fullName: string = 'Slugma TEF';
+  public fullName: string = 'Slugma (TEF 28)';
+  public legacyFullName = 'Slugma TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

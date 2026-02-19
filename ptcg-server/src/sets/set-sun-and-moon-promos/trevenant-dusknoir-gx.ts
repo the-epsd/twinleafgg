@@ -35,7 +35,8 @@ export class TrevenantDusknoirGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '217';
   public name: string = 'Trevenant & Dusknoir-GX';
-  public fullName: string = 'Trevenant & Dusknoir-GX SMP';
+  public fullName: string = 'Trevenant & Dusknoir-GX (SMP 217)';
+  public legacyFullName = 'Trevenant & Dusknoir-GX SMP';
 
   public readonly PALE_MOON_MARKER = 'PALE_MOON_MARKER';
   public readonly PALE_MOON_ACTIVATION_MARKER = 'PALE_MOON_ACTIVATION_MARKER';

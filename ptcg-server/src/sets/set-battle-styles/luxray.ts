@@ -31,7 +31,7 @@ export class Luxray extends PokemonCard {
       name: 'Scar Strikes',
       cost: [L, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 100 more damage.'
     }
   ];
@@ -41,7 +41,8 @@ export class Luxray extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luxray';
-  public fullName: string = 'Luxray BST';
+  public fullName: string = 'Luxray (BST 48)';
+  public legacyFullName = 'Luxray BST';
 
   private usedElectrostep: boolean = false;
 

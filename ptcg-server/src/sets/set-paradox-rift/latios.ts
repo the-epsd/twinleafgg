@@ -45,7 +45,8 @@ export class Latios extends PokemonCard {
 
   public name: string = 'Latios';
 
-  public fullName: string = 'Latios PAR';
+  public fullName: string = 'Latios (PAR 73)';
+  public legacyFullName = 'Latios PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

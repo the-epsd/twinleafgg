@@ -36,7 +36,8 @@ export class Comfey extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Comfey';
-  public fullName: string = 'Comfey GRI';
+  public fullName: string = 'Comfey (GRI 93)';
+  public legacyFullName = 'Comfey GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Flower Shield (passive)

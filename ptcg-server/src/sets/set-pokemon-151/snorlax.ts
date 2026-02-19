@@ -78,7 +78,8 @@ export class Snorlax extends PokemonCard {
 
   public name: string = 'Snorlax';
 
-  public fullName: string = 'Snorlax MEW';
+  public fullName: string = 'Snorlax (MEW 143)';
+  public legacyFullName = 'Snorlax MEW';
 
   public readonly ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';
 

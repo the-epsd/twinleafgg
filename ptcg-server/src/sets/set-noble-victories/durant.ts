@@ -39,7 +39,8 @@ export class Durant extends PokemonCard {
 
   public name: string = 'Durant';
 
-  public fullName: string = 'Durant NVI';
+  public fullName: string = 'Durant (NVI 83)';
+  public legacyFullName = 'Durant NVI';
 
   public cardImage: string = 'assets/cardback.png';
 

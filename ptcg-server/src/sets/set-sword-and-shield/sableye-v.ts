@@ -27,7 +27,7 @@ export class SableyeV extends PokemonCard {
       name: 'Crazy Claws',
       cost: [D, D],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 60 more damage for each damage counter on your opponent\'s Active Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class SableyeV extends PokemonCard {
   public setNumber: string = '120';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sableye V';
-  public fullName: string = 'Sableye V SSH';
+  public fullName: string = 'Sableye V (SSH 120)';
+  public legacyFullName = 'Sableye V SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lode Search

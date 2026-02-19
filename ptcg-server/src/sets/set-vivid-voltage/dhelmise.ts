@@ -28,7 +28,8 @@ export class Dhelmise extends PokemonCard {
   public set: string = 'VIV';
   public regulationMark = 'D';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Dhelmise VIV';
+  public fullName: string = 'Dhelmise (VIV 19)';
+  public legacyFullName = 'Dhelmise VIV';
   public name: string = 'Dhelmise';
   public setNumber: string = '19';
 

@@ -63,7 +63,8 @@ export class LoveBall extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '156';
   public name: string = 'Love Ball';
-  public fullName: string = 'Love Ball TWM';
+  public fullName: string = 'Love Ball (TWM 156)';
+  public legacyFullName = 'Love Ball TWM';
 
   public text =
     'Search your deck for a Pokémon with the same name as 1 of your opponent\'s Pokémon in play, reveal it, and put it into your hand. Then, shuffle your deck.';

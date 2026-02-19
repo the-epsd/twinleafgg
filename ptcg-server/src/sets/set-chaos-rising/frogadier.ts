@@ -53,7 +53,8 @@ export class Frogadier extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
   public name: string = 'Frogadier';
-  public fullName: string = 'Frogadier M4';
+  public fullName: string = 'Frogadier (M4 21)';
+  public legacyFullName = 'Frogadier M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

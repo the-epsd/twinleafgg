@@ -16,7 +16,8 @@ export class AltarOfTheSunne extends TrainerCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Altar of the Sunne';
-  public fullName: string = 'Altar of the Sunne GRI';
+  public fullName: string = 'Altar of the Sunne (GRI 118)';
+  public legacyFullName = 'Altar of the Sunne GRI';
   public text: string = 'Fire Pokémon and Metal Pokémon (both yours and your opponent\'s) have no Weakness.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

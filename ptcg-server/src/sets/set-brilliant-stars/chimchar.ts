@@ -24,7 +24,8 @@ export class Chimchar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
   public name = 'Chimchar';
-  public fullName = 'Chimchar BRS';
+  public fullName = 'Chimchar (BRS 24)';
+  public legacyFullName = 'Chimchar BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

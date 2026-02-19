@@ -36,7 +36,8 @@ export class Landorus extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Landorus';
-  public fullName: string = 'Landorus FFI';
+  public fullName: string = 'Landorus (FFI 58)';
+  public legacyFullName = 'Landorus FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shout of Power

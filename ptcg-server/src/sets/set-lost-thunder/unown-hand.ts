@@ -37,7 +37,8 @@ export class UnownHAND extends PokemonCard {
 
   public name: string = 'Unown';
 
-  public fullName: string = 'Unown LOT';
+  public fullName: string = 'Unown (LOT 91)';
+  public legacyFullName = 'Unown LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // HAND

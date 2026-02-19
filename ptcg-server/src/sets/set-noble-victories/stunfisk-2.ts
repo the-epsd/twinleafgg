@@ -28,7 +28,8 @@ export class Stunfisk2 extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stunfisk';
-  public fullName: string = 'Stunfisk NVI 42';
+  public fullName: string = 'Stunfisk (NVI 42)';
+  public legacyFullName = 'Stunfisk NVI 42';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

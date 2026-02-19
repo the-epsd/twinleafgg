@@ -35,7 +35,8 @@ export class Pikachu extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikachu';
-  public fullName: string = 'Pikachu BCR';
+  public fullName: string = 'Pikachu (BCR 50)';
+  public legacyFullName = 'Pikachu BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Double Voltage

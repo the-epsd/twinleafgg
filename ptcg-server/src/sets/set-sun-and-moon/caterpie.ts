@@ -35,7 +35,8 @@ export class Caterpie extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Caterpie';
-  public fullName: string = 'Caterpie SUM';
+  public fullName: string = 'Caterpie (SUM 1)';
+  public legacyFullName = 'Caterpie SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Nap

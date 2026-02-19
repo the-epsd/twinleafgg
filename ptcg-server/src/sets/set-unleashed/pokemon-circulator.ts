@@ -13,7 +13,8 @@ export class PokemonCirculator extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
   public name: string = 'Pokémon Circulator';
-  public fullName: string = 'Pokémon Circulator UL';
+  public fullName: string = 'Pokémon Circulator (UL 81)';
+  public legacyFullName = 'Pokémon Circulator UL';
 
   public text: string = 'Your opponent switches his or her Active Pokémon with 1 of his or her Benched Pokémon.';
 

@@ -37,7 +37,8 @@ export class Luxio extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luxio';
-  public fullName: string = 'Luxio FLF';
+  public fullName: string = 'Luxio (FLF 33)';
+  public legacyFullName = 'Luxio FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-shrouded-fable/pecharunt-ex.ts (prizes taken damage)

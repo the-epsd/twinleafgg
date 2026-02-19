@@ -15,7 +15,8 @@ export class Gladion extends TrainerCard {
 
   public setNumber: string = '95';
 
-  public fullName: string = 'Gladion CIN';
+  public fullName: string = 'Gladion (CIN 95)';
+  public legacyFullName = 'Gladion CIN';
 
   public text: string =
     'Look at your face-down Prize cards and put 1 of them into your hand. Then, shuffle this Gladion into your remaining Prize cards and put them back face down. If you didn\'t play this Gladion from your hand, it does nothing.';

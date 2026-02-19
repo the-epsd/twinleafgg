@@ -29,7 +29,8 @@ export class SamiyasBuizel2 extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'Samiya\'s Buizel';
-  public fullName: string = 'Samiya\'s Buizel PCGP 151';
+  public fullName: string = 'Samiya\'s Buizel (PCGP 151)';
+  public legacyFullName = 'Samiya\'s Buizel PCGP 151';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '151';
 

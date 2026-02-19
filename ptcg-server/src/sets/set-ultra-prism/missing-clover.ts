@@ -10,7 +10,8 @@ export class MissingClover extends TrainerCard {
   public setNumber: string = '129';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Missing Clover';
-  public fullName: string = 'Missing Clover UPR';
+  public fullName: string = 'Missing Clover (UPR 129)';
+  public legacyFullName = 'Missing Clover UPR';
   public text: string = 'You may play 4 Missing Clover cards at once.\n\u2022 If you played 1 card, look at the top card of your deck.\n\u2022 If you played 4 cards, take a Prize card. (This effect works one time for 4 cards.)';
 
   // TODO: Missing Clover requires playing 4 cards at once, which is not supported by the current trainer card play system.

@@ -45,7 +45,8 @@ export class HisuianSamurottV extends PokemonCard {
 
   public name: string = 'Hisuian Samurott V';
 
-  public fullName: string = 'Hisuian Samurott V ASR';
+  public fullName: string = 'Hisuian Samurott V (ASR 101)';
+  public legacyFullName = 'Hisuian Samurott V ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

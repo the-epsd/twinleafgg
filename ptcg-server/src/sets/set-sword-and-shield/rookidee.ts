@@ -29,5 +29,6 @@ export class Rookidee extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '150';
   public name: string = 'Rookidee';
-  public fullName: string = 'Rookidee SSH';
+  public fullName: string = 'Rookidee (SSH 150)';
+  public legacyFullName = 'Rookidee SSH';
 }

@@ -50,444 +50,518 @@ import { RuggedHelmet } from './rugged-helmet';
 import { WelcomingLantern } from './welcoming-lantern';
 
 export class BronzongCRE extends Bronzong {
-  public fullName = 'Bronzong CRE 223';
+  public fullName = 'Bronzong (CRE 223)';
+  public legacyFullName = 'Bronzong CRE 223';
   public set = 'CRE';
   public setNumber = '223';
 }
 export class BlazikenV2CRE extends BlazikenVCRE20 {
   public setNumber = '161';
-  public fullName: string = 'Blaziken V2 CRE';
+  public fullName: string = 'Blaziken V (CRE 161)';
+  public legacyFullName = 'Blaziken V2 CRE';
   public set = 'CRE';
 }
 
 export class IceRiderCalyrexV2CRE extends IceRiderCalyrexVCRE45 {
   public setNumber = '163';
-  public fullName: string = 'Ice Rider Calyrex V2 CRE';
+  public fullName: string = 'Ice Rider Calyrex V (CRE 163)';
+  public legacyFullName = 'Ice Rider Calyrex V2 CRE';
   public set = 'CRE';
 }
 
 export class IceRiderCalyrexV3CRE extends IceRiderCalyrexVCRE45 {
   public setNumber = '164';
-  public fullName: string = 'Ice Rider Calyrex V3 CRE';
+  public fullName: string = 'Ice Rider Calyrex V (CRE 164)';
+  public legacyFullName = 'Ice Rider Calyrex V3 CRE';
   public set = 'CRE';
 }
 
 export class GalarianArticunoV2CRE extends GalarianArticunoVCRE58 {
   public setNumber = '169';
-  public fullName: string = 'Galarian Articuno V2 CRE';
+  public fullName: string = 'Galarian Articuno V (CRE 169)';
+  public legacyFullName = 'Galarian Articuno V2 CRE';
   public set = 'CRE';
 }
 
 export class GalarianArticunoV3CRE extends GalarianArticunoVCRE58 {
   public setNumber = '170';
-  public fullName: string = 'Galarian Articuno V3 CRE';
+  public fullName: string = 'Galarian Articuno V (CRE 170)';
+  public legacyFullName = 'Galarian Articuno V3 CRE';
   public set = 'CRE';
 }
 
 export class ShadowRiderCalyrexV2CRE extends ShadowRiderCalyrexVCRE74 {
   public setNumber = '171';
-  public fullName: string = 'Shadow Rider Calyrex V2 CRE';
+  public fullName: string = 'Shadow Rider Calyrex V (CRE 171)';
+  public legacyFullName = 'Shadow Rider Calyrex V2 CRE';
   public set = 'CRE';
 }
 
 export class ShadowRiderCalyrexV3CRE extends ShadowRiderCalyrexVCRE74 {
   public setNumber = '172';
-  public fullName: string = 'Shadow Rider Calyrex V3 CRE';
+  public fullName: string = 'Shadow Rider Calyrex V (CRE 172)';
+  public legacyFullName = 'Shadow Rider Calyrex V3 CRE';
   public set = 'CRE';
 }
 
 export class GalarianZapdosV2CRE extends GalarianZapdosVCRE80 {
   public setNumber = '173';
-  public fullName: string = 'Galarian Zapdos V2 CRE';
+  public fullName: string = 'Galarian Zapdos V (CRE 173)';
+  public legacyFullName = 'Galarian Zapdos V2 CRE';
   public set = 'CRE';
 }
 
 export class GalarianZapdosV3CRE extends GalarianZapdosVCRE80 {
   public setNumber = '174';
-  public fullName: string = 'Galarian Zapdos V3 CRE';
+  public fullName: string = 'Galarian Zapdos V (CRE 174)';
+  public legacyFullName = 'Galarian Zapdos V3 CRE';
   public set = 'CRE';
 }
 
 export class GalarianMoltresV2CRE extends GalarianMoltresVCRE97 {
   public setNumber = '176';
-  public fullName: string = 'Galarian Moltres V2 CRE';
+  public fullName: string = 'Galarian Moltres V (CRE 176)';
+  public legacyFullName = 'Galarian Moltres V2 CRE';
   public set = 'CRE';
 }
 
 export class GalarianMoltresV3CRE extends GalarianMoltresVCRE97 {
   public setNumber = '177';
-  public fullName: string = 'Galarian Moltres V3 CRE';
+  public fullName: string = 'Galarian Moltres V (CRE 177)';
+  public legacyFullName = 'Galarian Moltres V3 CRE';
   public set = 'CRE';
 }
 
 export class BlisseyV2CRE extends BlisseyVCRE119 {
   public setNumber = '182';
-  public fullName: string = 'Blissey V2 CRE';
+  public fullName: string = 'Blissey V (CRE 182)';
+  public legacyFullName = 'Blissey V2 CRE';
   public set = 'CRE';
 }
 
 export class BlisseyV3CRE extends BlisseyVCRE119 {
   public setNumber = '183';
-  public fullName: string = 'Blissey V3 CRE';
+  public fullName: string = 'Blissey V (CRE 183)';
+  public legacyFullName = 'Blissey V3 CRE';
   public set = 'CRE';
 }
 
 export class Agatha2CRE extends AgathaCRE129 {
   public setNumber = '186';
-  public fullName: string = 'Agatha2 CRE';
+  public fullName: string = 'Agatha (CRE 186)';
+  public legacyFullName = 'Agatha2 CRE';
   public set = 'CRE';
 }
 
 export class Avery2CRE extends AveryCRE130 {
   public setNumber = '187';
-  public fullName: string = 'Avery2 CRE';
+  public fullName: string = 'Avery (CRE 187)';
+  public legacyFullName = 'Avery2 CRE';
   public set = 'CRE';
 }
 
 export class Brawly2CRE extends BrawlyCRE131 {
   public setNumber = '188';
-  public fullName: string = 'Brawly2 CRE';
+  public fullName: string = 'Brawly (CRE 188)';
+  public legacyFullName = 'Brawly2 CRE';
   public set = 'CRE';
 }
 
 export class Caitlin2CRE extends CaitlinCRE132 {
   public setNumber = '189';
-  public fullName: string = 'Caitlin2 CRE';
+  public fullName: string = 'Caitlin (CRE 189)';
+  public legacyFullName = 'Caitlin2 CRE';
   public set = 'CRE';
 }
 
 export class Flannery2CRE extends FlanneryCRE139 {
   public setNumber = '191';
-  public fullName: string = 'Flannery2 CRE';
+  public fullName: string = 'Flannery (CRE 191)';
+  public legacyFullName = 'Flannery2 CRE';
   public set = 'CRE';
 }
 
 export class KarensConviction2CRE extends KarensConvictionCRE144 {
   public setNumber = '193';
-  public fullName: string = 'Karen\'s Conviction2 CRE';
+  public fullName: string = 'Karen\'s Conviction (CRE 193)';
+  public legacyFullName = 'Karen\'s Conviction2 CRE';
   public set = 'CRE';
 }
 
 export class Klara2CRE extends KlaraCRE145 {
   public setNumber = '194';
-  public fullName: string = 'Klara2 CRE';
+  public fullName: string = 'Klara (CRE 194)';
+  public legacyFullName = 'Klara2 CRE';
   public set = 'CRE';
 }
 
 export class Melony2CRE extends MelonyCRE146 {
   public setNumber = '195';
-  public fullName: string = 'Melony2 CRE';
+  public fullName: string = 'Melony (CRE 195)';
+  public legacyFullName = 'Melony2 CRE';
   public set = 'CRE';
 }
 
 export class Peonia2CRE extends PeoniaCRE149 {
   public setNumber = '196';
-  public fullName: string = 'Peonia2 CRE';
+  public fullName: string = 'Peonia (CRE 196)';
+  public legacyFullName = 'Peonia2 CRE';
   public set = 'CRE';
 }
 
 export class Peony2CRE extends PeonyCRE150 {
   public setNumber = '197';
-  public fullName: string = 'Peony2 CRE';
+  public fullName: string = 'Peony (CRE 197)';
+  public legacyFullName = 'Peony2 CRE';
   public set = 'CRE';
 }
 
 export class BlazikenVMAX2CRE extends BlazikenVMAXCRE21 {
   public setNumber = '200';
-  public fullName: string = 'Blaziken VMAX2 CRE';
+  public fullName: string = 'Blaziken VMAX (CRE 200)';
+  public legacyFullName = 'Blaziken VMAX2 CRE';
   public set = 'CRE';
 }
 
 export class BlazikenVMAX3CRE extends BlazikenVMAXCRE21 {
   public setNumber = '201';
-  public fullName: string = 'Blaziken VMAX3 CRE';
+  public fullName: string = 'Blaziken VMAX (CRE 201)';
+  public legacyFullName = 'Blaziken VMAX3 CRE';
   public set = 'CRE';
 }
 
 export class IceRiderCalyrexVMAX2CRE extends IceRiderCalyrexVMAXCRE46 {
   public setNumber = '202';
-  public fullName: string = 'Ice Rider Calyrex VMAX2 CRE';
+  public fullName: string = 'Ice Rider Calyrex VMAX (CRE 202)';
+  public legacyFullName = 'Ice Rider Calyrex VMAX2 CRE';
   public set = 'CRE';
 }
 
 export class IceRiderCalyrexVMAX3CRE extends IceRiderCalyrexVMAXCRE46 {
   public setNumber = '203';
-  public fullName: string = 'Ice Rider Calyrex VMAX3 CRE';
+  public fullName: string = 'Ice Rider Calyrex VMAX (CRE 203)';
+  public legacyFullName = 'Ice Rider Calyrex VMAX3 CRE';
   public set = 'CRE';
 }
 
 export class ShadowRiderCalyrexVMAX2CRE extends ShadowRiderCalyrexVMAXCRE75 {
   public setNumber = '204';
-  public fullName: string = 'Shadow Rider Calyrex VMAX2 CRE';
+  public fullName: string = 'Shadow Rider Calyrex VMAX (CRE 204)';
+  public legacyFullName = 'Shadow Rider Calyrex VMAX2 CRE';
   public set = 'CRE';
 }
 
 export class ShadowRiderCalyrexVMAX3CRE extends ShadowRiderCalyrexVMAXCRE75 {
   public setNumber = '205';
-  public fullName: string = 'Shadow Rider Calyrex VMAX3 CRE';
+  public fullName: string = 'Shadow Rider Calyrex VMAX (CRE 205)';
+  public legacyFullName = 'Shadow Rider Calyrex VMAX3 CRE';
   public set = 'CRE';
 }
 
 export class Agatha3CRE extends AgathaCRE129 {
   public setNumber = '210';
-  public fullName: string = 'Agatha3 CRE';
+  public fullName: string = 'Agatha (CRE 210)';
+  public legacyFullName = 'Agatha3 CRE';
   public set = 'CRE';
 }
 
 export class Avery3CRE extends AveryCRE130 {
   public setNumber = '211';
-  public fullName: string = 'Avery3 CRE';
+  public fullName: string = 'Avery (CRE 211)';
+  public legacyFullName = 'Avery3 CRE';
   public set = 'CRE';
 }
 
 export class Brawly3CRE extends BrawlyCRE131 {
   public setNumber = '212';
-  public fullName: string = 'Brawly3 CRE';
+  public fullName: string = 'Brawly (CRE 212)';
+  public legacyFullName = 'Brawly3 CRE';
   public set = 'CRE';
 }
 
 export class Caitlin3CRE extends CaitlinCRE132 {
   public setNumber = '213';
-  public fullName: string = 'Caitlin3 CRE';
+  public fullName: string = 'Caitlin (CRE 213)';
+  public legacyFullName = 'Caitlin3 CRE';
   public set = 'CRE';
 }
 
 export class Flannery3CRE extends FlanneryCRE139 {
   public setNumber = '215';
-  public fullName: string = 'Flannery3 CRE';
+  public fullName: string = 'Flannery (CRE 215)';
+  public legacyFullName = 'Flannery3 CRE';
   public set = 'CRE';
 }
 
 export class KarensConviction3CRE extends KarensConvictionCRE144 {
   public setNumber = '216';
-  public fullName: string = 'Karen\'s Conviction3 CRE';
+  public fullName: string = 'Karen\'s Conviction (CRE 216)';
+  public legacyFullName = 'Karen\'s Conviction3 CRE';
   public set = 'CRE';
 }
 
 export class Klara3CRE extends KlaraCRE145 {
   public setNumber = '217';
-  public fullName: string = 'Klara3 CRE';
+  public fullName: string = 'Klara (CRE 217)';
+  public legacyFullName = 'Klara3 CRE';
   public set = 'CRE';
 }
 
 export class Melony3CRE extends MelonyCRE146 {
   public setNumber = '218';
-  public fullName: string = 'Melony3 CRE';
+  public fullName: string = 'Melony (CRE 218)';
+  public legacyFullName = 'Melony3 CRE';
   public set = 'CRE';
 }
 
 export class Peonia3CRE extends PeoniaCRE149 {
   public setNumber = '219';
-  public fullName: string = 'Peonia3 CRE';
+  public fullName: string = 'Peonia (CRE 219)';
+  public legacyFullName = 'Peonia3 CRE';
   public set = 'CRE';
 }
 
 export class Peony3CRE extends PeonyCRE150 {
   public setNumber = '220';
-  public fullName: string = 'Peony3 CRE';
+  public fullName: string = 'Peony (CRE 220)';
+  public legacyFullName = 'Peony3 CRE';
   public set = 'CRE';
 }
 
 export class SnorlaxCRE extends Snorlax {
   public setNumber = '224';
-  public fullName: string = 'Snorlax CRE';
+  public fullName: string = 'Snorlax (CRE 224)';
+  public legacyFullName = 'Snorlax CRE';
   public set = 'CRE';
 }
 
 export class EchoingHorn2CRE extends EchoingHornCRE136 {
   public setNumber = '225';
-  public fullName: string = 'Echoing Horn2 CRE';
+  public fullName: string = 'Echoing Horn (CRE 225)';
+  public legacyFullName = 'Echoing Horn2 CRE';
   public set = 'CRE';
 }
 
 export class FanOfWavesCRE extends FanOfWaves {
   public setNumber = '226';
-  public fullName: string = 'Fan of Waves CRE';
+  public fullName: string = 'Fan of Waves (CRE 226)';
+  public legacyFullName = 'Fan of Waves CRE';
   public set = 'CRE';
 }
 
 export class FogCrystal2CRE extends FogCrystalCRE140 {
   public setNumber = '227';
-  public fullName: string = 'Fog Crystal2 CRE';
+  public fullName: string = 'Fog Crystal (CRE 227)';
+  public legacyFullName = 'Fog Crystal2 CRE';
   public set = 'CRE';
 }
 
 export class UrnOfVitalityCRE extends UrnOfVitality {
   public setNumber = '229';
-  public fullName: string = 'Urn of Vitality CRE';
+  public fullName: string = 'Urn of Vitality (CRE 229)';
+  public legacyFullName = 'Urn of Vitality CRE';
   public set = 'CRE';
 }
 
 export class WaterEnergyCRE extends WaterEnergy {
   public setNumber = '231';
-  public fullName: string = 'Water Energy CRE';
+  public fullName: string = 'Water Energy (CRE 231)';
+  public legacyFullName = 'Water Energy CRE';
   public set = 'CRE';
 }
 
 export class PsychicEnergyCRE extends PsychicEnergy {
   public setNumber = '232';
-  public fullName: string = 'Psychic Energy CRE';
+  public fullName: string = 'Psychic Energy (CRE 232)';
+  public legacyFullName = 'Psychic Energy CRE';
   public set = 'CRE';
 }
 
 export class FightingEnergyCRE extends FightingEnergy {
   public setNumber = '233';
-  public fullName: string = 'Fighting Energy CRE';
+  public fullName: string = 'Fighting Energy (CRE 233)';
+  public legacyFullName = 'Fighting Energy CRE';
   public set = 'CRE';
 }
 
 export class KoffingCRE extends Koffing {
   public set: string = 'CRE';
   public setNumber: string = '94';
-  public fullName: string = 'Koffing CRE';
+  public fullName: string = 'Koffing (CRE 94)';
+  public legacyFullName = 'Koffing CRE';
 }
 
 export class VenipedeCRE extends Venipede {
   public set: string = 'CRE';
   public setNumber: string = '105';
-  public fullName: string = 'Venipede CRE';
+  public fullName: string = 'Venipede (CRE 105)';
+  public legacyFullName = 'Venipede CRE';
 }
 
 export class CelebiV2 extends CelebiV {
   public set: string = 'CRE';
   public setNumber: string = '160';
-  public fullName: string = 'Celebi V CRE 160';
+  public fullName: string = 'Celebi V (CRE 160)';
+  public legacyFullName = 'Celebi V CRE 160';
 }
 
 export class VolcanionV2 extends VolcanionV {
   public set: string = 'CRE';
   public setNumber: string = '162';
-  public fullName: string = 'Volcanion V CRE 162';
+  public fullName: string = 'Volcanion V (CRE 162)';
+  public legacyFullName = 'Volcanion V CRE 162';
 }
 
 export class ZeraoraV2 extends ZeraoraV {
   public set: string = 'CRE';
   public setNumber: string = '165';
-  public fullName: string = 'Zeraora V CRE 165';
+  public fullName: string = 'Zeraora V (CRE 165)';
+  public legacyFullName = 'Zeraora V CRE 165';
 }
 
 export class ZeraoraV3 extends ZeraoraV {
   public set: string = 'CRE';
   public setNumber: string = '166';
-  public fullName: string = 'Zeraora V CRE 166';
+  public fullName: string = 'Zeraora V (CRE 166)';
+  public legacyFullName = 'Zeraora V CRE 166';
 }
 
 export class GalarianRapidashV2 extends GalarianRapidashV {
   public set: string = 'CRE';
   public setNumber: string = '168';
-  public fullName: string = 'Galarian Rapidash V CRE 168';
+  public fullName: string = 'Galarian Rapidash V (CRE 168)';
+  public legacyFullName = 'Galarian Rapidash V CRE 168';
 }
 
 export class SandacondaV2 extends SandacondaV {
   public set: string = 'CRE';
   public setNumber: string = '175';
-  public fullName: string = 'Sandaconda V CRE 175';
+  public fullName: string = 'Sandaconda V (CRE 175)';
+  public legacyFullName = 'Sandaconda V CRE 175';
 }
 
 export class GalarianSlowkingV2 extends GalarianSlowkingV {
   public set: string = 'CRE';
   public setNumber: string = '178';
-  public fullName: string = 'Galarian Slowking V CRE 178';
+  public fullName: string = 'Galarian Slowking V (CRE 178)';
+  public legacyFullName = 'Galarian Slowking V CRE 178';
 }
 
 export class GalarianSlowkingV3 extends GalarianSlowkingV {
   public set: string = 'CRE';
   public setNumber: string = '179';
-  public fullName: string = 'Galarian Slowking V CRE 179';
+  public fullName: string = 'Galarian Slowking V (CRE 179)';
+  public legacyFullName = 'Galarian Slowking V CRE 179';
 }
 
 export class LiepardV2 extends LiepardV {
   public set: string = 'CRE';
   public setNumber: string = '180';
-  public fullName: string = 'Liepard V CRE 180';
+  public fullName: string = 'Liepard V (CRE 180)';
+  public legacyFullName = 'Liepard V CRE 180';
 }
 
 export class MetagrossV2 extends MetagrossV {
   public set: string = 'CRE';
   public setNumber: string = '181';
-  public fullName: string = 'Metagross V CRE 181';
+  public fullName: string = 'Metagross V (CRE 181)';
+  public legacyFullName = 'Metagross V CRE 181';
 }
 
 export class TornadusV2 extends TornadusV {
   public set: string = 'CRE';
   public setNumber: string = '184';
-  public fullName: string = 'Tornadus V CRE 184';
+  public fullName: string = 'Tornadus V (CRE 184)';
+  public legacyFullName = 'Tornadus V CRE 184';
 }
 
 export class TornadusV3 extends TornadusV {
   public set: string = 'CRE';
   public setNumber: string = '185';
-  public fullName: string = 'Tornadus V CRE 185';
+  public fullName: string = 'Tornadus V (CRE 185)';
+  public legacyFullName = 'Tornadus V CRE 185';
 }
 
 export class Doctor2 extends Doctor {
   public set: string = 'CRE';
   public setNumber: string = '190';
-  public fullName: string = 'Doctor CRE 190';
+  public fullName: string = 'Doctor (CRE 190)';
+  public legacyFullName = 'Doctor CRE 190';
 }
 
 export class Honey2 extends Honey {
   public set: string = 'CRE';
   public setNumber: string = '192';
-  public fullName: string = 'Honey CRE 192';
+  public fullName: string = 'Honey (CRE 192)';
+  public legacyFullName = 'Honey CRE 192';
 }
 
 export class Siebold2 extends Siebold {
   public set: string = 'CRE';
   public setNumber: string = '198';
-  public fullName: string = 'Siebold CRE 198';
+  public fullName: string = 'Siebold (CRE 198)';
+  public legacyFullName = 'Siebold CRE 198';
 }
 
 export class CelebiVmax2 extends CelebiVmax {
   public set: string = 'CRE';
   public setNumber: string = '199';
-  public fullName: string = 'Celebi VMAX CRE 199';
+  public fullName: string = 'Celebi VMAX (CRE 199)';
+  public legacyFullName = 'Celebi VMAX CRE 199';
 }
 
 export class SandacondaVmax2 extends SandacondaVmax {
   public set: string = 'CRE';
   public setNumber: string = '206';
-  public fullName: string = 'Sandaconda VMAX CRE 206';
+  public fullName: string = 'Sandaconda VMAX (CRE 206)';
+  public legacyFullName = 'Sandaconda VMAX CRE 206';
 }
 
 export class GalarianSlowkingVmax2 extends GalarianSlowkingVmax {
   public set: string = 'CRE';
   public setNumber: string = '207';
-  public fullName: string = 'Galarian Slowking VMAX CRE 207';
+  public fullName: string = 'Galarian Slowking VMAX (CRE 207)';
+  public legacyFullName = 'Galarian Slowking VMAX CRE 207';
 }
 
 export class MetagrossVmax2 extends MetagrossVmax {
   public set: string = 'CRE';
   public setNumber: string = '208';
-  public fullName: string = 'Metagross VMAX CRE 208';
+  public fullName: string = 'Metagross VMAX (CRE 208)';
+  public legacyFullName = 'Metagross VMAX CRE 208';
 }
 
 export class TornadusVmax2 extends TornadusVmax {
   public set: string = 'CRE';
   public setNumber: string = '209';
-  public fullName: string = 'Tornadus VMAX CRE 209';
+  public fullName: string = 'Tornadus VMAX (CRE 209)';
+  public legacyFullName = 'Tornadus VMAX CRE 209';
 }
 
 export class Doctor3 extends Doctor {
   public set: string = 'CRE';
   public setNumber: string = '214';
-  public fullName: string = 'Doctor CRE 214';
+  public fullName: string = 'Doctor (CRE 214)';
+  public legacyFullName = 'Doctor CRE 214';
 }
 
 export class Siebold3 extends Siebold {
   public set: string = 'CRE';
   public setNumber: string = '221';
-  public fullName: string = 'Siebold CRE 221';
+  public fullName: string = 'Siebold (CRE 221)';
+  public legacyFullName = 'Siebold CRE 221';
 }
 
 export class RuggedHelmet2 extends RuggedHelmet {
   public set: string = 'CRE';
   public setNumber: string = '228';
-  public fullName: string = 'Rugged Helmet CRE 228';
+  public fullName: string = 'Rugged Helmet (CRE 228)';
+  public legacyFullName = 'Rugged Helmet CRE 228';
 }
 
 export class WelcomingLantern2 extends WelcomingLantern {
   public set: string = 'CRE';
   public setNumber: string = '230';
-  public fullName: string = 'Welcoming Lantern CRE 230';
+  public fullName: string = 'Welcoming Lantern (CRE 230)';
+  public legacyFullName = 'Welcoming Lantern CRE 230';
 }

@@ -29,7 +29,8 @@ export class MistysPoliwag extends PokemonCard {
 
   public set: string = 'G2';
   public name: string = 'Misty\'s Poliwag';
-  public fullName: string = 'Misty\'s Poliwag G2';
+  public fullName: string = 'Misty\'s Poliwag (G2 89)';
+  public legacyFullName = 'Misty\'s Poliwag G2';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '89';
 

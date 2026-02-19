@@ -17,7 +17,8 @@ export class CafeMaster extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '133';
   public name: string = 'Café Master';
-  public fullName: string = 'Café Master BRS';
+  public fullName: string = 'Café Master (BRS 133)';
+  public legacyFullName = 'Café Master BRS';
 
   public text: string =
     'Choose up to 3 of your Benched Pokémon. For each of those Pokémon, search your deck for a different type of basic Energy card and attach it to that Pokémon. Then, shuffle your deck. Your turn ends.';

@@ -4,27 +4,31 @@ import { ProfessorElmsTrainingMethod } from '../set-ex-unseen-forces/professors-
 import { Smeargle } from '../set-undaunted/smeargle';
 
 export class CleffaCL extends Cleffa {
-  public fullName = 'Cleffa CL';
+  public fullName = 'Cleffa (CL 24)';
+  public legacyFullName = 'Cleffa CL';
   public set = 'CL';
   public setNumber = '24';
 }
 
 export class CopycatCL extends Copycat {
-  public fullName = 'Copycat CL';
+  public fullName = 'Copycat (CL 77)';
+  public legacyFullName = 'Copycat CL';
   public set = 'CL';
   public setNumber = '77';
   public text = 'Shuffle your hand into your deck. Then, draw a card for each card in your opponent\'s hand.';
 }
 
 export class ProfessorElmsTrainingMethodCL extends ProfessorElmsTrainingMethod {
-  public fullName = 'Professor Elm\'s Training Method CL';
+  public fullName = 'Professor Elm\'s Training Method (CL 82)';
+  public legacyFullName = 'Professor Elm\'s Training Method CL';
   public set = 'CL';
   public setNumber = '82';
   public text = 'Search your deck for an Evolution card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
 }
 
 export class SmeargleCL extends Smeargle {
-  public fullName = 'Smeargle CL';
+  public fullName = 'Smeargle (CL 21)';
+  public legacyFullName = 'Smeargle CL';
   public set = 'CL';
   public setNumber = '21';
 }

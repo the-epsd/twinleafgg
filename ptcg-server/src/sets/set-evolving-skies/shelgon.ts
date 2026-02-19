@@ -31,7 +31,8 @@ export class Shelgon extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shelgon';
-  public fullName: string = 'Shelgon EVS';
+  public fullName: string = 'Shelgon (EVS 108)';
+  public legacyFullName = 'Shelgon EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hard Roll

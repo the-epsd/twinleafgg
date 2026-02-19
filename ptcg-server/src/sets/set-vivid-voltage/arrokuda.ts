@@ -35,7 +35,8 @@ export class Arrokuda extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arrokuda';
-  public fullName: string = 'Arrokuda VIV';
+  public fullName: string = 'Arrokuda (VIV 41)';
+  public legacyFullName = 'Arrokuda VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flock

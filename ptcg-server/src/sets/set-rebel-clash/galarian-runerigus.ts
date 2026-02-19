@@ -34,7 +34,8 @@ export class GalarianRunerigus extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '102';
   public name: string = 'Galarian Runerigus';
-  public fullName: string = 'Galarian Runerigus RCL';
+  public fullName: string = 'Galarian Runerigus (RCL 102)';
+  public legacyFullName = 'Galarian Runerigus RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

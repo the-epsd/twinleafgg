@@ -37,7 +37,8 @@ export class Regirock extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Regirock';
-  public fullName: string = 'Regirock LA';
+  public fullName: string = 'Regirock (LA 38)';
+  public legacyFullName = 'Regirock LA';
 
   public readonly REGI_CYCLE_MARKER = 'REGI_CYCLE_MARKER';
 

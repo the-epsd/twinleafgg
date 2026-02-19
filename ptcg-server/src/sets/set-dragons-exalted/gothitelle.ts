@@ -33,7 +33,8 @@ export class Gothitelle extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothitelle';
-  public fullName: string = 'Gothitelle DRX';
+  public fullName: string = 'Gothitelle (DRX 57)';
+  public legacyFullName = 'Gothitelle DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Doom Decree - Flip 2 coins, if both heads KO defending

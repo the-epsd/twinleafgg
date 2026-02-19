@@ -41,7 +41,8 @@ export class GalarianObstagoon extends PokemonCard {
   public regulationMark = 'D';
   public set: string = 'CPA';
   public name: string = 'Galarian Obstagoon';
-  public fullName: string = 'Galarian Obstagoon CPA';
+  public fullName: string = 'Galarian Obstagoon (CPA 37)';
+  public legacyFullName = 'Galarian Obstagoon CPA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '37';
 

@@ -12,7 +12,8 @@ export class MeddlingMemo extends TrainerCard {
   public setNumber: string = '181';
   public regulationMark = 'H';
   public name: string = 'Meddling Memo';
-  public fullName: string = 'Meddling Memo SSP';
+  public fullName: string = 'Meddling Memo (SSP 181)';
+  public legacyFullName = 'Meddling Memo SSP';
 
   public text: string = 'Your opponent counts the cards in their hand, shuffles those cards, and puts them on the bottom of their deck. If they do, they draw that many cards.';
 

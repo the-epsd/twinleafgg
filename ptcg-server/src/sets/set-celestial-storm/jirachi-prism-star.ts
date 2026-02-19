@@ -46,7 +46,8 @@ export class JirachiPrismStar extends PokemonCard {
 
   public name: string = 'Jirachi Prism Star';
 
-  public fullName: string = 'Jirachi Prism Star CES';
+  public fullName: string = 'Jirachi Prism Star (CES 97)';
+  public legacyFullName = 'Jirachi Prism Star CES';
 
   public readonly KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
   public readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';

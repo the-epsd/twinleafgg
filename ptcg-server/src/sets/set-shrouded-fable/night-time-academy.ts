@@ -23,7 +23,8 @@ export class NightTimeAcademy extends TrainerCard {
 
   public name = 'Academy at Night';
 
-  public fullName = 'Academy at Night SFA';
+  public fullName = 'Academy at Night (SFA 54)';
+  public legacyFullName = 'Academy at Night SFA';
 
   public text = 'Once during each player\'s turn, that player may put a card from their hand on top of their deck.';
 

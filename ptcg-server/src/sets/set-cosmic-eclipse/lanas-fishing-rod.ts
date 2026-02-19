@@ -79,7 +79,8 @@ export class LanasFishingRod extends TrainerCard {
 
   public name: string = 'Lana\'s Fishing Rod';
 
-  public fullName: string = 'Lana\'s Fishing Rod CEC';
+  public fullName: string = 'Lana\'s Fishing Rod (CEC 195)';
+  public legacyFullName = 'Lana\'s Fishing Rod CEC';
 
   public text: string =
     'Shuffle a Pokémon and a Pokémon Tool card from your discard pile into your deck.';

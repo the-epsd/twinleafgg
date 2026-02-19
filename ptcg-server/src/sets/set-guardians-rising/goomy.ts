@@ -35,7 +35,8 @@ export class Goomy extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Goomy';
-  public fullName: string = 'Goomy GRI';
+  public fullName: string = 'Goomy (GRI 94)';
+  public legacyFullName = 'Goomy GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble

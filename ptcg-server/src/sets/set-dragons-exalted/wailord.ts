@@ -37,7 +37,8 @@ export class Wailord extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wailord';
-  public fullName: string = 'Wailord DRX';
+  public fullName: string = 'Wailord (DRX 26)';
+  public legacyFullName = 'Wailord DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Refs: set-destined-rivals/gorebyss.ts (energy counting), set-paradox-rift/brute-bonnet.ts (coin-gated damage)

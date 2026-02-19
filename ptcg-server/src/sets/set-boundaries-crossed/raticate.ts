@@ -34,7 +34,8 @@ export class Raticate extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '105';
   public name: string = 'Raticate';
-  public fullName: string = 'Raticate BCR';
+  public fullName: string = 'Raticate (BCR 105)';
+  public legacyFullName = 'Raticate BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

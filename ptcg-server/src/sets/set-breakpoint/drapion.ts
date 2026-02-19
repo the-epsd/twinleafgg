@@ -36,7 +36,8 @@ export class Drapion extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drapion';
-  public fullName: string = 'Drapion BKP';
+  public fullName: string = 'Drapion (BKP 54)';
+  public legacyFullName = 'Drapion BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Claws

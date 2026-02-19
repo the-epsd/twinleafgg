@@ -24,7 +24,7 @@ export class WigglytuffGx extends PokemonCard {
       name: 'Rolling Rush',
       cost: [Y, Y, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     },
     {
@@ -39,7 +39,8 @@ export class WigglytuffGx extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wigglytuff-GX';
-  public fullName: string = 'Wigglytuff-GX HIF';
+  public fullName: string = 'Wigglytuff-GX (HIF 42)';
+  public legacyFullName = 'Wigglytuff-GX HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rolling Rush

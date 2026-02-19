@@ -32,7 +32,8 @@ export class Genesect extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Genesect';
-  public fullName: string = 'Genesect PLB';
+  public fullName: string = 'Genesect (PLB 10)';
+  public legacyFullName = 'Genesect PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

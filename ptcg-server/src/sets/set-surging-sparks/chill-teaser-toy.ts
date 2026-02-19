@@ -79,7 +79,8 @@ export class ChillTeaserToy extends TrainerCard {
 
   public name: string = 'Chill Teaser Toy';
 
-  public fullName: string = 'Chill Teaser Toy SSP';
+  public fullName: string = 'Chill Teaser Toy (SSP 166)';
+  public legacyFullName = 'Chill Teaser Toy SSP';
 
   public text: string =
     'You can use this card only if you go second, and only during your first turn. \n Put an Energy attached to 1 of your opponent\'s Pokemon into your hand.';

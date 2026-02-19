@@ -48,7 +48,8 @@ export class Crobat extends PokemonCard {
 
   public name: string = 'Crobat';
 
-  public fullName: string = 'Crobat PHF';
+  public fullName: string = 'Crobat (PHF 33)';
+  public legacyFullName = 'Crobat PHF';
 
   public cardImage: string = 'assets/cardback.png';
 

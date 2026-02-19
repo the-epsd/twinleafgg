@@ -11,7 +11,8 @@ export class UpperEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '102';
   public name = 'Upper Energy';
-  public fullName = 'Upper Energy RR';
+  public fullName = 'Upper Energy (RR 102)';
+  public legacyFullName = 'Upper Energy RR';
 
   public text: string = 'Upper Energy provides [C] Energy. If you have more Prize cards left than your opponent and this card is attached to a Pokémon (excluding Pokémon LV.X), Upper Energy provides [C][C].';
 

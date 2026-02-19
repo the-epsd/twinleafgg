@@ -26,7 +26,8 @@ export class Larvitar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '80';
   public name: string = 'Larvitar';
-  public fullName: string = 'Larvitar JTG';
+  public fullName: string = 'Larvitar (JTG 80)';
+  public legacyFullName = 'Larvitar JTG';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

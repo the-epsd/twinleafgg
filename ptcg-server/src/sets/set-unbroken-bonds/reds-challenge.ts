@@ -15,7 +15,8 @@ export class RedsChallenge extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '184';
   public name: string = 'Red\'s Challenge';
-  public fullName: string = 'Red\'s Challenge UNB';
+  public fullName: string = 'Red\'s Challenge (UNB 184)';
+  public legacyFullName = 'Red\'s Challenge UNB';
 
   public text: string =
     'You can play this card only if you discard 2 other cards from your hand.\n\nSearch your deck for a card and put it into your hand.Then, shuffle your deck.';

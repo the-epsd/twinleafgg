@@ -23,14 +23,14 @@ export class AlolanGolem extends PokemonCard {
       name: 'Electromagnetic Rock Wrecker',
       cost: [L, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin for each [L] Energy attached to this Pokémon. This attack does 80 damage for each heads.'
     },
     {
       name: 'Heavy Slam',
       cost: [L, C, C, C],
       damage: 200,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-' as const,
       text: 'This attack does 30 less damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];
@@ -39,7 +39,8 @@ export class AlolanGolem extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Golem';
-  public fullName: string = 'Alolan Golem GRI';
+  public fullName: string = 'Alolan Golem (GRI 42)';
+  public legacyFullName = 'Alolan Golem GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Electromagnetic Rock Wrecker

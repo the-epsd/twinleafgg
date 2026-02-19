@@ -30,7 +30,8 @@ export class IronMoth extends PokemonCard {
   public regulationMark = 'G';
   public set: string = 'PAR';
   public name: string = 'Iron Moth';
-  public fullName: string = 'Iron Moth PAR';
+  public fullName: string = 'Iron Moth (PAR 28)';
+  public legacyFullName = 'Iron Moth PAR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
 

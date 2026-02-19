@@ -31,7 +31,8 @@ export class Lillipup2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
   public name: string = 'Lillipup';
-  public fullName: string = 'Lillipup BLW 81';
+  public fullName: string = 'Lillipup (BLW 81)';
+  public legacyFullName = 'Lillipup BLW 81';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

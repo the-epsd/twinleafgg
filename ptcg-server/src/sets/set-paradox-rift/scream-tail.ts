@@ -44,7 +44,8 @@ export class ScreamTail extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
   public name: string = 'Scream Tail';
-  public fullName: string = 'Scream Tail PAR';
+  public fullName: string = 'Scream Tail (PAR 86)';
+  public legacyFullName = 'Scream Tail PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

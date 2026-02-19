@@ -35,7 +35,8 @@ export class AlolanRattata extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Rattata';
-  public fullName: string = 'Alolan Rattata BUS';
+  public fullName: string = 'Alolan Rattata (BUS 81)';
+  public legacyFullName = 'Alolan Rattata BUS';
 
   public readonly FOCUS_ENERGY_MARKER = 'ALOLAN_RATTATA_FOCUS_ENERGY_MARKER';
   public readonly FOCUS_ENERGY_CLEAR_MARKER = 'ALOLAN_RATTATA_FOCUS_ENERGY_CLEAR_MARKER';

@@ -30,7 +30,7 @@ export class Mamoswine extends PokemonCard {
       name: 'Primordial Boom',
       cost: [F, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have a Stadium card in play, this attack does 40 more damage. If your opponent has a Stadium card in play, heal 40 damage from this Pokémon.'
     }
   ];
@@ -39,7 +39,8 @@ export class Mamoswine extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mamoswine';
-  public fullName: string = 'Mamoswine BKT';
+  public fullName: string = 'Mamoswine (BKT 82)';
+  public legacyFullName = 'Mamoswine BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Thick Fat (passive - reduce damage from Fire/Water by 30)

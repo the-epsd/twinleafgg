@@ -12,7 +12,8 @@ export class TeamAquaHideout extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '78';
   public name: string = 'Team Aqua Hideout';
-  public fullName: string = 'Team Aqua Hideout MA';
+  public fullName: string = 'Team Aqua Hideout (MA 78)';
+  public legacyFullName = 'Team Aqua Hideout MA';
 
   public text: string =
     'Each Pokémon that does not have Team Aqua in its name pays [C] more to retreat.';

@@ -31,7 +31,8 @@ export class Kangaskhan extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kangaskhan';
-  public fullName: string = 'Kangaskhan PLB';
+  public fullName: string = 'Kangaskhan (PLB 71)';
+  public legacyFullName = 'Kangaskhan PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

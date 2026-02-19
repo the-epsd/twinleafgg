@@ -37,7 +37,8 @@ export class CharizardV extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charizard V';
-  public fullName: string = 'Charizard V DAA';
+  public fullName: string = 'Charizard V (DAA 19)';
+  public legacyFullName = 'Charizard V DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Fire Spin

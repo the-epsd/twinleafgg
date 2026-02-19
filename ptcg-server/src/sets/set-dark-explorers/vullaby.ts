@@ -26,7 +26,8 @@ export class Vullaby extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vullaby';
-  public fullName: string = 'Vullaby DEX';
+  public fullName: string = 'Vullaby (DEX 73)';
+  public legacyFullName = 'Vullaby DEX';
 
   public usedWhirlwind = false;
 

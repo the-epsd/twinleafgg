@@ -22,7 +22,8 @@ export class Blacephalon extends PokemonCard {
 
   public set: string = 'CEC';
   public name: string = 'Blacephalon';
-  public fullName: string = 'Blacephalon CEC';
+  public fullName: string = 'Blacephalon (CEC 104)';
+  public legacyFullName = 'Blacephalon CEC';
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
 

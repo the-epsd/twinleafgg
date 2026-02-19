@@ -34,7 +34,8 @@ export class ErikasVileplumeex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Erika\'s Vileplume ex';
-  public fullName: string = 'Erika\'s Vileplume ex MC';
+  public fullName: string = 'Erika\'s Vileplume ex (ASC 3)';
+  public legacyFullName = 'Erika\'s Vileplume ex MC';
 
   public readonly ENVIOUS_SCENT_MARKER = 'ENVIOUS_SCENT_MARKER';
 

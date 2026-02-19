@@ -36,7 +36,8 @@ export class Morpeko2 extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Morpeko';
-  public fullName: string = 'Morpeko SHF 35';
+  public fullName: string = 'Morpeko (SHF 35)';
+  public legacyFullName = 'Morpeko SHF 35';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Famished

@@ -25,7 +25,8 @@ export class Applin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Applin';
-  public fullName: string = 'Applin DRI';
+  public fullName: string = 'Applin (DRI 16)';
+  public legacyFullName = 'Applin DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Mini Drain

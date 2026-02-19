@@ -42,7 +42,8 @@ export class EmolgaEx extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Emolga-EX';
-  public fullName: string = 'Emolga-EX XY';
+  public fullName: string = 'Emolga-EX (XY 46)';
+  public legacyFullName = 'Emolga-EX XY';
 
   public usedEnergyGlide = false;
 

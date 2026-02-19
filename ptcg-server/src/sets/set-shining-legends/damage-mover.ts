@@ -15,7 +15,8 @@ export class DamageMover extends TrainerCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Damage Mover';
-  public fullName: string = 'Damage Mover SLG';
+  public fullName: string = 'Damage Mover (SLG 58)';
+  public legacyFullName = 'Damage Mover SLG';
   public text: string = 'Move 3 damage counters from 1 of your Pokémon to another of your Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

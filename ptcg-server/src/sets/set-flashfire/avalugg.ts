@@ -37,7 +37,8 @@ export class Avalugg extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Avalugg';
-  public fullName: string = 'Avalugg FLF';
+  public fullName: string = 'Avalugg (FLF 31)';
+  public legacyFullName = 'Avalugg FLF';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER_AVALUGG';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER_AVALUGG';

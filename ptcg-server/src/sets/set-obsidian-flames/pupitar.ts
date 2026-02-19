@@ -34,7 +34,8 @@ export class Pupitar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '106';
   public name: string = 'Pupitar';
-  public fullName: string = 'Pupitar OBF';
+  public fullName: string = 'Pupitar (OBF 106)';
+  public legacyFullName = 'Pupitar OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Blasting Tackle

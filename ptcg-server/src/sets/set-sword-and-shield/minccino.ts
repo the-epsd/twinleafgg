@@ -27,7 +27,7 @@ export class Minccino extends PokemonCard {
       name: 'Tail Slap',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 20 damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Minccino extends PokemonCard {
   public setNumber: string = '145';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Minccino';
-  public fullName: string = 'Minccino SSH';
+  public fullName: string = 'Minccino (SSH 145)';
+  public legacyFullName = 'Minccino SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Glance

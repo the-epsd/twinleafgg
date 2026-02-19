@@ -25,5 +25,6 @@ export class Mew extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mew';
-  public fullName: string = 'Mew HIF';
+  public fullName: string = 'Mew (HIF 32)';
+  public legacyFullName = 'Mew HIF';
 }

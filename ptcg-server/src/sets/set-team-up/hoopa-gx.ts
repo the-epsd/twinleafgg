@@ -43,7 +43,8 @@ export class HoopaGx extends PokemonCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hoopa-GX';
-  public fullName: string = 'Hoopa-GX TEU';
+  public fullName: string = 'Hoopa-GX (TEU 96)';
+  public legacyFullName = 'Hoopa-GX TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rogue Ring

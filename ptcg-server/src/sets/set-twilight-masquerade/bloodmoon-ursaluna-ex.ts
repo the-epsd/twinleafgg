@@ -32,7 +32,8 @@ export class BloodmoonUrsalunaex extends PokemonCard {
   public setNumber: string = '141';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bloodmoon Ursaluna ex';
-  public fullName: string = 'Bloodmoon Ursaluna ex TWM';
+  public fullName: string = 'Bloodmoon Ursaluna ex (TWM 141)';
+  public legacyFullName = 'Bloodmoon Ursaluna ex TWM';
 
   // public getColorlessReduction(state: State): number {
   //   const player = state.players[state.activePlayer];

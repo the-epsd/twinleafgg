@@ -29,7 +29,8 @@ export class Fomantis extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public name = 'Fomantis';
-  public fullName = 'Fomantis SUM';
+  public fullName = 'Fomantis (SUM 14)';
+  public legacyFullName = 'Fomantis SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

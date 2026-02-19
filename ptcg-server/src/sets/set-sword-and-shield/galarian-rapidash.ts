@@ -29,7 +29,7 @@ export class GalarianRapidash extends PokemonCard {
       name: 'Psychic',
       cost: [P, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -39,7 +39,8 @@ export class GalarianRapidash extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Rapidash';
-  public fullName: string = 'Galarian Rapidash SSH';
+  public fullName: string = 'Galarian Rapidash (SSH 82)';
+  public legacyFullName = 'Galarian Rapidash SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Pastel Veil (passive - all your Pokemon immune to Special Conditions)

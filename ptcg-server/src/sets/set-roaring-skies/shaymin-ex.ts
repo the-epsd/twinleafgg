@@ -43,7 +43,8 @@ export class ShayminEx extends PokemonCard {
 
   public name: string = 'Shaymin-EX';
 
-  public fullName: string = 'Shaymin EX ROS';
+  public fullName: string = 'Shaymin-EX (ROS 77)';
+  public legacyFullName = 'Shaymin EX ROS';
 
   public cardImage: string = 'assets/cardback.png';
 

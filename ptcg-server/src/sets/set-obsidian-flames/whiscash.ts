@@ -32,7 +32,8 @@ export class Whiscash extends PokemonCard {
   public regulationMark = 'G';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whiscash';
-  public fullName: string = 'Whiscash OBF';
+  public fullName: string = 'Whiscash (OBF 109)';
+  public legacyFullName = 'Whiscash OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

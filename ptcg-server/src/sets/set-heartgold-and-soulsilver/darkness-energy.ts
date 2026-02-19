@@ -15,6 +15,7 @@ export class DarknessEnergy extends EnergyCard {
 
   public name = 'Darkness Energy';
 
-  public fullName = 'Darkness Energy HS';
+  public fullName = 'Darkness Energy (HS 121)';
+  public legacyFullName = 'Darkness Energy HS';
 
 }

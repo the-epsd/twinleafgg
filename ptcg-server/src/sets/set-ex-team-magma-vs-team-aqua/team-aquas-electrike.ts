@@ -30,7 +30,8 @@ export class TeamAquasElectrike extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
   public name: string = 'Team Aqua\'s Electrike';
-  public fullName: string = 'Team Aqua\'s Electrike MA';
+  public fullName: string = 'Team Aqua\'s Electrike (MA 53)';
+  public legacyFullName = 'Team Aqua\'s Electrike MA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

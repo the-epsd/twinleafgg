@@ -59,7 +59,8 @@ export class Katy extends TrainerCard {
 
   public name: string = 'Katy';
 
-  public fullName: string = 'Katy SVI';
+  public fullName: string = 'Katy (SVI 177)';
+  public legacyFullName = 'Katy SVI';
 
   public text: string =
     'Shuffle your hand into your deck. Then, draw 8 cards. Your turn ends.';

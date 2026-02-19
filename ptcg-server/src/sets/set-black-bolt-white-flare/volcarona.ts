@@ -38,7 +38,8 @@ export class Volcarona extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Volcarona';
-  public fullName: string = 'Volcarona SV11B';
+  public fullName: string = 'Volcarona (BLK 16)';
+  public legacyFullName = 'Volcarona SV11B';
 
   public readonly HEAT_WAVE_SCALES_MARKER = 'HEAT_WAVE_SCALES_MARKER';
 

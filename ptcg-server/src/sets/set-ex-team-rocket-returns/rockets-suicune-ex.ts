@@ -36,7 +36,8 @@ export class RocketsSuicuneex extends PokemonCard {
 
   public set: string = 'TRR';
   public name: string = 'Rocket\'s Suicune ex';
-  public fullName: string = 'Rocket\'s Suicune ex TRR';
+  public fullName: string = 'Rocket\'s Suicune ex (TRR 105)';
+  public legacyFullName = 'Rocket\'s Suicune ex TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '105';
 

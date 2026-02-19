@@ -21,7 +21,8 @@ export class Cassius extends TrainerCard {
 
   public name: string = 'Cassius';
 
-  public fullName: string = 'Cassius XY';
+  public fullName: string = 'Cassius (XY 115)';
+  public legacyFullName = 'Cassius XY';
 
   public text: string =
     'Shuffle 1 of your Pokémon and all cards attached to it into your deck.';

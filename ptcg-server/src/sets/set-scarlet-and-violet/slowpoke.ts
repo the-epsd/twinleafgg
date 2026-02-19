@@ -26,7 +26,8 @@ export class Slowpoke extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
   public name: string = 'Slowpoke';
-  public fullName: string = 'Slowpoke SVI';
+  public fullName: string = 'Slowpoke (SVI 42)';
+  public legacyFullName = 'Slowpoke SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

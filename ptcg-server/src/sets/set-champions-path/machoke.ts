@@ -28,7 +28,7 @@ export class Machoke extends PokemonCard {
       name: 'Pummel',
       cost: [F, F, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 70 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Machoke extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machoke';
-  public fullName: string = 'Machoke CPA';
+  public fullName: string = 'Machoke (CPA 25)';
+  public legacyFullName = 'Machoke CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Pummel

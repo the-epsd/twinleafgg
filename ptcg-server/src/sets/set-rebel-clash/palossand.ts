@@ -39,7 +39,8 @@ export class Palossand extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Palossand';
-  public fullName: string = 'Palossand RCL';
+  public fullName: string = 'Palossand (RCL 82)';
+  public legacyFullName = 'Palossand RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sand Sink

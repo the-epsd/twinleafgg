@@ -28,7 +28,8 @@ export class Woobat extends PokemonCard {
 
   public name: string = 'Woobat';
 
-  public fullName: string = 'Woobat BLW';
+  public fullName: string = 'Woobat (BLW 50)';
+  public legacyFullName = 'Woobat BLW';
 
   public cardImage: string = 'assets/cardback.png';
 

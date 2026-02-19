@@ -35,7 +35,8 @@ export class Skorupi extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skorupi';
-  public fullName: string = 'Skorupi FFI';
+  public fullName: string = 'Skorupi (FFI 38)';
+  public legacyFullName = 'Skorupi FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Sting

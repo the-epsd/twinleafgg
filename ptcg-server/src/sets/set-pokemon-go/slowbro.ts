@@ -42,7 +42,8 @@ export class Slowbro extends PokemonCard {
 
   public name: string = 'Slowbro';
 
-  public fullName: string = 'Slowbro PGO';
+  public fullName: string = 'Slowbro (PGO 20)';
+  public legacyFullName = 'Slowbro PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

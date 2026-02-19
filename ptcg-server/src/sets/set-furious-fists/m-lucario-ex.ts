@@ -31,7 +31,8 @@ export class MLucarioEx extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Lucario-EX';
-  public fullName: string = 'M Lucario-EX FFI';
+  public fullName: string = 'M Lucario-EX (FFI 55)';
+  public legacyFullName = 'M Lucario-EX FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rising Fist

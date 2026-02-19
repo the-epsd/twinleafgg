@@ -29,7 +29,7 @@ export class Probopass extends PokemonCard {
       name: 'Triple Nose',
       cost: [M, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 3 coins. This attack does 40 more damage for each heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class Probopass extends PokemonCard {
   public setNumber: string = '141';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Probopass';
-  public fullName: string = 'Probopass CEC';
+  public fullName: string = 'Probopass (CEC 141)';
+  public legacyFullName = 'Probopass CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hard Press

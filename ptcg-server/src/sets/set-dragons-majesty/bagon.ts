@@ -35,7 +35,8 @@ export class Bagon extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bagon';
-  public fullName: string = 'Bagon DRM';
+  public fullName: string = 'Bagon (DRM 42)';
+  public legacyFullName = 'Bagon DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Risky Kick

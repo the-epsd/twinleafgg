@@ -32,7 +32,8 @@ export class Vanillish extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanillish';
-  public fullName: string = 'Vanillish DEX';
+  public fullName: string = 'Vanillish (DEX 34)';
+  public legacyFullName = 'Vanillish DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

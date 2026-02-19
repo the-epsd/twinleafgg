@@ -35,7 +35,8 @@ export class Poochyena extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poochyena';
-  public fullName: string = 'Poochyena PHF';
+  public fullName: string = 'Poochyena (PHF 53)';
+  public legacyFullName = 'Poochyena PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Lunge

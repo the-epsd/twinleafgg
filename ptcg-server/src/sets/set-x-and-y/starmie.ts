@@ -38,7 +38,8 @@ export class Starmie extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Starmie';
-  public fullName: string = 'Starmie XY';
+  public fullName: string = 'Starmie (XY 34)';
+  public legacyFullName = 'Starmie XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/magmortar.ts (discard energy), AGENTS-patterns.md (heal all)

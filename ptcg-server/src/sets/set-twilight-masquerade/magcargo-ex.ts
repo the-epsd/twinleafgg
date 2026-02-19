@@ -34,7 +34,8 @@ export class Magcargoex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
   public name: string = 'Magcargo ex';
-  public fullName: string = 'Magcargo ex TWM';
+  public fullName: string = 'Magcargo ex (TWM 29)';
+  public legacyFullName = 'Magcargo ex TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Hot Magma

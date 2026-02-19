@@ -36,7 +36,8 @@ export class Exploud extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Exploud';
-  public fullName: string = 'Exploud PHF';
+  public fullName: string = 'Exploud (PHF 85)';
+  public legacyFullName = 'Exploud PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Boomburst

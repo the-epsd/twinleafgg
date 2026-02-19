@@ -38,7 +38,8 @@ export class Castform extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Castform';
-  public fullName: string = 'Castform GRI';
+  public fullName: string = 'Castform (GRI 105)';
+  public legacyFullName = 'Castform GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Weather Teller

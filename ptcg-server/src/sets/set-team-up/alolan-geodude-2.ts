@@ -35,7 +35,8 @@ export class AlolanGeodude2 extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Geodude';
-  public fullName: string = 'Alolan Geodude TEU 35';
+  public fullName: string = 'Alolan Geodude (TEU 35)';
+  public legacyFullName = 'Alolan Geodude TEU 35';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Charge

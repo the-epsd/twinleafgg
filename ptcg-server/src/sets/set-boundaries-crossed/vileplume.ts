@@ -39,7 +39,8 @@ export class Vileplume extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vileplume';
-  public fullName: string = 'Vileplume BCR';
+  public fullName: string = 'Vileplume (BCR 3)';
+  public legacyFullName = 'Vileplume BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Allergy Panic

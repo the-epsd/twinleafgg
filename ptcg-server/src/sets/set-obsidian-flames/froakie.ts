@@ -36,7 +36,8 @@ export class Froakie extends PokemonCard {
 
   public name: string = 'Froakie';
 
-  public fullName: string = 'Froakie OBF';
+  public fullName: string = 'Froakie (OBF 56)';
+  public legacyFullName = 'Froakie OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

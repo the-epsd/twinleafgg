@@ -13,7 +13,8 @@ export class Maxie extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'MA';
   public name: string = 'Maxie';
-  public fullName: string = 'Maxie MA';
+  public fullName: string = 'Maxie (MA 73)';
+  public legacyFullName = 'Maxie MA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';
 

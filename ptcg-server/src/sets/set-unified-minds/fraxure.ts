@@ -40,7 +40,8 @@ export class Fraxure extends PokemonCard {
   public setNumber: string = '155';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fraxure';
-  public fullName: string = 'Fraxure UNM';
+  public fullName: string = 'Fraxure (UNM 155)';
+  public legacyFullName = 'Fraxure UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Guard Press

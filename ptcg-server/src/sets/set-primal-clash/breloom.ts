@@ -22,7 +22,7 @@ export class Breloom extends PokemonCard {
       name: 'Dynamic Punch',
       cost: [F, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage and your opponent\'s Active Pokémon is now Confused.'
     },
     {
@@ -37,7 +37,8 @@ export class Breloom extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Breloom';
-  public fullName: string = 'Breloom PRC';
+  public fullName: string = 'Breloom (PRC 16)';
+  public legacyFullName = 'Breloom PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dynamic Punch

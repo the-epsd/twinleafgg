@@ -34,7 +34,8 @@ export class Kyogre extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kyogre';
-  public fullName: string = 'Kyogre CES';
+  public fullName: string = 'Kyogre (CES 46)';
+  public legacyFullName = 'Kyogre CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dual Splash

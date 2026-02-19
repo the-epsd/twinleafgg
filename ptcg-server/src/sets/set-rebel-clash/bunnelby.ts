@@ -35,7 +35,8 @@ export class Bunnelby extends PokemonCard {
   public setNumber: string = '146';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bunnelby';
-  public fullName: string = 'Bunnelby RCL';
+  public fullName: string = 'Bunnelby (RCL 146)';
+  public legacyFullName = 'Bunnelby RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Burrow

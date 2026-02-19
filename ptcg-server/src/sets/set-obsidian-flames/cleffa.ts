@@ -37,7 +37,8 @@ export class Cleffa extends PokemonCard {
 
   public name: string = 'Cleffa';
 
-  public fullName: string = 'Cleffa OBF';
+  public fullName: string = 'Cleffa (OBF 80)';
+  public legacyFullName = 'Cleffa OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

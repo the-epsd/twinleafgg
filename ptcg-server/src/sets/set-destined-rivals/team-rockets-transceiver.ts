@@ -76,7 +76,8 @@ export class TeamRocketsTransceiver extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '178';
   public name: string = 'Team Rocket\'s Transceiver';
-  public fullName: string = 'Team Rocket\'s Transceiver DRI';
+  public fullName: string = 'Team Rocket\'s Transceiver (DRI 178)';
+  public legacyFullName = 'Team Rocket\'s Transceiver DRI';
 
   public text: string =
     'Search your deck for a Supporter card that has "Team Rocket" in its name, reveal it, and put it into your hand. Then, shuffle your deck.';

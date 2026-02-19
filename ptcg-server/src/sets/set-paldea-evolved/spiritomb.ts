@@ -48,7 +48,8 @@ export class Spiritomb extends PokemonCard {
 
   public name: string = 'Spiritomb';
 
-  public fullName: string = 'Spiritomb PAL';
+  public fullName: string = 'Spiritomb (PAL 89)';
+  public legacyFullName = 'Spiritomb PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

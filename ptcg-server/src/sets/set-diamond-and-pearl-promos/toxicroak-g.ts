@@ -33,7 +33,8 @@ export class ToxicroakG extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Toxicroak G';
-  public fullName: string = 'Toxicroak G DPP';
+  public fullName: string = 'Toxicroak G (DPP 41)';
+  public legacyFullName = 'Toxicroak G DPP';
 
   public LEAP_AWAY_MARKER = 'LEAP_AWAY_MARKER';
 

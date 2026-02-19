@@ -28,7 +28,8 @@ export class Sneasel extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';
   public name: string = 'Sneasel';
-  public fullName: string = 'Sneasel NXD';
+  public fullName: string = 'Sneasel (NXD 69)';
+  public legacyFullName = 'Sneasel NXD';
 
   public readonly CORNER_MARKER: string = 'CORNER_MARKER';
 

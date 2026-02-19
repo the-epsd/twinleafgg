@@ -44,7 +44,8 @@ export class AlolanMuk extends PokemonCard {
 
   public name: string = 'Alolan Muk';
 
-  public fullName: string = 'Alolan Muk SUM';
+  public fullName: string = 'Alolan Muk (SUM 58)';
+  public legacyFullName = 'Alolan Muk SUM';
 
   public cardImage: string = 'assets/cardback.png';
 

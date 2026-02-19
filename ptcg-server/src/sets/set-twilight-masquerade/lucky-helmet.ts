@@ -22,7 +22,8 @@ export class LuckyHelmet extends TrainerCard {
 
   public name = 'Lucky Helmet';
 
-  public fullName = 'Lucky Helmet TWM';
+  public fullName = 'Lucky Helmet (TWM 158)';
+  public legacyFullName = 'Lucky Helmet TWM';
 
   public text: string =
     'If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if it is Knocked Out), draw 2 cards.';

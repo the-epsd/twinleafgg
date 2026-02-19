@@ -83,7 +83,8 @@ export class TornadusEx extends PokemonCard {
 
   public name: string = 'Tornadus-EX';
 
-  public fullName: string = 'Tornadus EX DEX';
+  public fullName: string = 'Tornadus-EX (DEX 90)';
+  public legacyFullName = 'Tornadus EX DEX';
 
   public cardImage: string = 'assets/cardback.png';
 

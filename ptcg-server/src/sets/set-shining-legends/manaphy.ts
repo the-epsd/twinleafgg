@@ -39,7 +39,8 @@ export class Manaphy extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Manaphy';
-  public fullName: string = 'Manaphy SLG';
+  public fullName: string = 'Manaphy (SLG 25)';
+  public legacyFullName = 'Manaphy SLG';
 
   public readonly BLESSINGS_MARKER = 'MANAPHY_BLESSINGS_MARKER';
 

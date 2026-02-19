@@ -4,13 +4,15 @@ import { ScrambleSwitch } from '../set-plasma-storm/scramble-switch';
 export class ScrambleSwitchSSP extends ScrambleSwitch {
   public set = 'SSP';
   public setNumber = '186';
-  public fullName = 'Scramble Switch SSP';
+  public fullName = 'Scramble Switch (SSP 186)';
+  public legacyFullName = 'Scramble Switch SSP';
   public regulationMark = 'H';
 }
 
 export class CounterGainSSP extends CounterGain {
   public set = 'SSP';
   public setNumber = '169';
-  public fullName = 'Counter Gain SSP';
+  public fullName = 'Counter Gain (SSP 169)';
+  public legacyFullName = 'Counter Gain SSP';
   public regulationMark = 'H';
 }

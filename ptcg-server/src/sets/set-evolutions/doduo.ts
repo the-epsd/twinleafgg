@@ -21,7 +21,7 @@ export class Doduo extends PokemonCard {
       name: 'Fury Attack',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Doduo extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Doduo';
-  public fullName: string = 'Doduo EVO';
+  public fullName: string = 'Doduo (EVO 69)';
+  public legacyFullName = 'Doduo EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Attack

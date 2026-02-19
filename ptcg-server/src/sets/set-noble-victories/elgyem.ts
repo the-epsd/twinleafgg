@@ -30,7 +30,8 @@ export class Elgyem extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '54';
   public name: string = 'Elgyem';
-  public fullName: string = 'Elgyem NVI';
+  public fullName: string = 'Elgyem (NVI 54)';
+  public legacyFullName = 'Elgyem NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

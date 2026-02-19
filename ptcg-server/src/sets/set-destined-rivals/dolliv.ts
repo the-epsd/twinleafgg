@@ -33,7 +33,8 @@ export class Dolliv extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dolliv';
-  public fullName: string = 'Dolliv DRI';
+  public fullName: string = 'Dolliv (DRI 22)';
+  public legacyFullName = 'Dolliv DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Nutrients

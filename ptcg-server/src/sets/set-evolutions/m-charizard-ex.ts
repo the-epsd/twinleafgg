@@ -30,7 +30,8 @@ export class MCharizardEx extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Charizard-EX';
-  public fullName: string = 'M Charizard-EX EVO';
+  public fullName: string = 'M Charizard-EX (EVO 13)';
+  public legacyFullName = 'M Charizard-EX EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Crimson Dive

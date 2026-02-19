@@ -33,7 +33,8 @@ export class Cutiefly extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cutiefly';
-  public fullName: string = 'Cutiefly SUM';
+  public fullName: string = 'Cutiefly (SUM 92)';
+  public legacyFullName = 'Cutiefly SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fly Around

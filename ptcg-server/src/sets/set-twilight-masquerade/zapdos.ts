@@ -43,7 +43,8 @@ export class Zapdos extends PokemonCard {
 
   public name: string = 'Zapdos';
 
-  public fullName: string = 'Zapdos TWM';
+  public fullName: string = 'Zapdos (TWM 65)';
+  public legacyFullName = 'Zapdos TWM';
 
   public regulationMark: string = 'H';
 

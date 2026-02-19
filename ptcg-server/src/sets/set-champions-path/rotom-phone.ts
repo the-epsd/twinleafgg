@@ -65,7 +65,8 @@ export class RotomPhone extends TrainerCard {
 
   public name: string = 'Rotom Phone';
 
-  public fullName: string = 'Rotom Phone CPA';
+  public fullName: string = 'Rotom Phone (CPA 64)';
+  public legacyFullName = 'Rotom Phone CPA';
 
   public text: string =
     'Look at the top 5 cards of your deck, choose 1 of them, and shuffle the other cards back into your deck. Then, put the card you chose on top of your deck.';

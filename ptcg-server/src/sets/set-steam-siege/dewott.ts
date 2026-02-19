@@ -22,7 +22,7 @@ export class Dewott extends PokemonCard {
       name: 'Razor Shell',
       cost: [W, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -31,7 +31,8 @@ export class Dewott extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dewott';
-  public fullName: string = 'Dewott STS';
+  public fullName: string = 'Dewott (STS 31)';
+  public legacyFullName = 'Dewott STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Razor Shell

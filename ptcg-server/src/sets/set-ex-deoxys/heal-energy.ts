@@ -13,7 +13,8 @@ export class HealEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '94';
   public name = 'Heal Energy';
-  public fullName = 'Heal Energy DX';
+  public fullName = 'Heal Energy (DX 94)';
+  public legacyFullName = 'Heal Energy DX';
 
   public text = 'Heal Energy provides [C] Energy. When you attach this card from your hand to 1 of your Pokémon, remove 1 damage counter and all Special Conditions from that Pokémon. If Heal Energy is attached to Pokémon-ex, Heal Energy has no effect other than providing Energy.';
 

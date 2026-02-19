@@ -21,7 +21,7 @@ export class Mudbray extends PokemonCard {
       name: 'Stomp',
       cost: [F, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Mudbray extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mudbray';
-  public fullName: string = 'Mudbray BUS';
+  public fullName: string = 'Mudbray (BUS 77)';
+  public legacyFullName = 'Mudbray BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stomp

@@ -25,5 +25,6 @@ export class Popplio extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '39';
   public name: string = 'Popplio';
-  public fullName: string = 'Popplio SUM';
+  public fullName: string = 'Popplio (SUM 39)';
+  public legacyFullName = 'Popplio SUM';
 }

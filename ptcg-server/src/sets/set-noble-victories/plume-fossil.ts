@@ -62,7 +62,8 @@ export class PlumeFossil extends TrainerCard {
 
   public name: string = 'Plume Fossil';
 
-  public fullName: string = 'Plume Fossil NVI';
+  public fullName: string = 'Plume Fossil (NVI 93)';
+  public legacyFullName = 'Plume Fossil NVI';
 
   public cardImage: string = 'assets/cardback.png';
 

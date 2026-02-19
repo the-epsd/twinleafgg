@@ -22,7 +22,7 @@ export class Swellow extends PokemonCard {
       name: 'Quick Attack',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Swellow extends PokemonCard {
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swellow';
-  public fullName: string = 'Swellow VIV';
+  public fullName: string = 'Swellow (VIV 134)';
+  public legacyFullName = 'Swellow VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Quick Attack

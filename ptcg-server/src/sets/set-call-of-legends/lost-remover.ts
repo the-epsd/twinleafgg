@@ -18,7 +18,8 @@ export class LostRemover extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '80';
   public name: string = 'Lost Remover';
-  public fullName: string = 'Lost Remover CL';
+  public fullName: string = 'Lost Remover (CL 80)';
+  public legacyFullName = 'Lost Remover CL';
 
   public text: string =
     'Put 1 Special Energy card attached to 1 of your opponent\'s Pokémon in the Lost Zone.';

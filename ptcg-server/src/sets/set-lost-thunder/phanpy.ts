@@ -28,7 +28,8 @@ export class Phanpy extends PokemonCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Phanpy';
-  public fullName: string = 'Phanpy LOT';
+  public fullName: string = 'Phanpy (LOT 111)';
+  public legacyFullName = 'Phanpy LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Last Resort

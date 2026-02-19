@@ -22,7 +22,8 @@ export class ChoiceBelt extends TrainerCard {
 
   public name: string = 'Choice Belt';
 
-  public fullName: string = 'Choice Belt PAL';
+  public fullName: string = 'Choice Belt (PAL 176)';
+  public legacyFullName = 'Choice Belt PAL';
 
   public text: string =
     'The attacks of the Pokémon this card is attached to do 30 more damage to your opponent\'s Active Pokémon V (before applying Weakness and Resistance).';

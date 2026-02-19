@@ -29,7 +29,8 @@ export class Pikipek extends PokemonCard {
   public setNumber: string = '163';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikipek';
-  public fullName: string = 'Pikipek LOT';
+  public fullName: string = 'Pikipek (LOT 163)';
+  public legacyFullName = 'Pikipek LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Peck Off

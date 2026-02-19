@@ -29,7 +29,8 @@ export class Aron extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aron';
-  public fullName: string = 'Aron DRX';
+  public fullName: string = 'Aron (DRX 78)';
+  public legacyFullName = 'Aron DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/minccino.ts (self-damage attack)

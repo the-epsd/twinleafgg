@@ -15,7 +15,8 @@ export class Weedle extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Weedle BS';
+  public fullName = 'Weedle (BS 69)';
+  public legacyFullName = 'Weedle BS';
 
   public setNumber = '69';
 

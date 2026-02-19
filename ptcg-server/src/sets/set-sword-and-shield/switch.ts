@@ -52,7 +52,8 @@ export class Switch extends TrainerCard {
 
   public name: string = 'Switch';
 
-  public fullName: string = 'Switch SSH';
+  public fullName: string = 'Switch (SSH 183)';
+  public legacyFullName = 'Switch SSH';
 
   public setNumber: string = '183';
 

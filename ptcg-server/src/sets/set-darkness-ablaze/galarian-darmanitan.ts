@@ -29,7 +29,7 @@ export class GalarianDarmanitan extends PokemonCard {
       name: 'Frozen Heat',
       cost: [W, W, C],
       damage: 110,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard all [W] Energy from this Pokémon. If you do, this attack does 60 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class GalarianDarmanitan extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Darmanitan';
-  public fullName: string = 'Galarian Darmanitan DAA';
+  public fullName: string = 'Galarian Darmanitan (DAA 28)';
+  public legacyFullName = 'Galarian Darmanitan DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Frozen Heat

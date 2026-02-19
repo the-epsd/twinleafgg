@@ -31,5 +31,6 @@ export class Squirtle2 extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Squirtle';
-  public fullName: string = 'Squirtle TEU 23';
+  public fullName: string = 'Squirtle (TEU 23)';
+  public legacyFullName = 'Squirtle TEU 23';
 }

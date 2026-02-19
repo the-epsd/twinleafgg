@@ -47,7 +47,8 @@ export class Articuno extends PokemonCard {
 
   public name: string = 'Articuno';
 
-  public fullName: string = 'Articuno ROS';
+  public fullName: string = 'Articuno (ROS 17)';
+  public legacyFullName = 'Articuno ROS';
 
   public cardImage: string = 'assets/cardback.png';
 

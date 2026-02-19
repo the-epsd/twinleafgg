@@ -30,7 +30,8 @@ export class Beldum extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beldum';
-  public fullName: string = 'Beldum GRI';
+  public fullName: string = 'Beldum (GRI 83)';
+  public legacyFullName = 'Beldum GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Core Beam

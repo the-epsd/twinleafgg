@@ -44,7 +44,8 @@ export class GarbodorVmax extends PokemonCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Garbodor VMAX';
-  public fullName: string = 'Garbodor VMAX EVS';
+  public fullName: string = 'Garbodor VMAX (EVS 101)';
+  public legacyFullName = 'Garbodor VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Rubbish Collecting

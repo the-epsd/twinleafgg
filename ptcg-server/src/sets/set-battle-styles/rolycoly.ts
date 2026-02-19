@@ -26,7 +26,8 @@ export class Rolycoly extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '78';
   public name: string = 'Rolycoly';
-  public fullName: string = 'Rolycoly BST';
+  public fullName: string = 'Rolycoly (BST 78)';
+  public legacyFullName = 'Rolycoly BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

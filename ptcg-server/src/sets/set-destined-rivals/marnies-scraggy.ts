@@ -25,7 +25,8 @@ export class MarniesScraggy extends PokemonCard {
   public setNumber = '132';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marnie\'s Scraggy';
-  public fullName: string = 'Marnie\'s Scraggy DRI';
+  public fullName: string = 'Marnie\'s Scraggy (DRI 132)';
+  public legacyFullName = 'Marnie\'s Scraggy DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

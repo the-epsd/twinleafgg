@@ -26,5 +26,6 @@ export class Rolycoly extends PokemonCard {
   public setNumber: string = 'SV067';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rolycoly';
-  public fullName: string = 'Rolycoly SHF';
+  public fullName: string = 'Rolycoly (SHF SV067)';
+  public legacyFullName = 'Rolycoly SHF';
 }

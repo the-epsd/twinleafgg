@@ -23,7 +23,7 @@ export class GrimmsnarlVmax extends PokemonCard {
       name: 'G-Max Drill',
       cost: [D, D, D],
       damage: 170,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 50 more damage for each extra [D] Energy attached to this Pokémon (in addition to this attack\'s cost). You can\'t add more than 100 damage in this way.'
     }
   ];
@@ -33,7 +33,8 @@ export class GrimmsnarlVmax extends PokemonCard {
   public setNumber: string = '115';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grimmsnarl VMAX';
-  public fullName: string = 'Grimmsnarl VMAX DAA';
+  public fullName: string = 'Grimmsnarl VMAX (DAA 115)';
+  public legacyFullName = 'Grimmsnarl VMAX DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: G-Max Drill

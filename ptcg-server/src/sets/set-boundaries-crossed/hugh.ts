@@ -20,7 +20,8 @@ export class Hugh extends TrainerCard {
 
   public name: string = 'Hugh';
 
-  public fullName: string = 'Hugh BCR';
+  public fullName: string = 'Hugh (BCR 130)';
+  public legacyFullName = 'Hugh BCR';
 
   public text: string =
     'Both players discard cards from their hand until they each have 5 cards in hand. (Your opponent discards first. Any player with 5 cards or less in their hands do not discard any cards.)';

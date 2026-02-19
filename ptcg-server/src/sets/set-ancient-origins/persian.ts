@@ -28,7 +28,7 @@ export class Persian extends PokemonCard {
       name: 'Ambush',
       cost: [C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Persian extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Persian';
-  public fullName: string = 'Persian AOR';
+  public fullName: string = 'Persian (AOR 62)';
+  public legacyFullName = 'Persian AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fake Out

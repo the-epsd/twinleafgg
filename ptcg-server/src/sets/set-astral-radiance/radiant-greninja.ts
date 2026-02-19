@@ -42,7 +42,8 @@ export class RadiantGreninja extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
   public name: string = 'Radiant Greninja';
-  public fullName: string = 'Radiant Greninja ASR';
+  public fullName: string = 'Radiant Greninja (ASR 46)';
+  public legacyFullName = 'Radiant Greninja ASR';
 
   public readonly CONCEALED_CARDS_MARKER = 'CONCEALED_CARDS_MARKER';
 

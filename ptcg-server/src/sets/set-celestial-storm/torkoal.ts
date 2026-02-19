@@ -36,7 +36,8 @@ export class Torkoal extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Torkoal';
-  public fullName: string = 'Torkoal CES';
+  public fullName: string = 'Torkoal (CES 29)';
+  public legacyFullName = 'Torkoal CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flaming Honk

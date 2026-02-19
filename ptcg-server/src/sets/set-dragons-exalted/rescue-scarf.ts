@@ -16,7 +16,8 @@ export class RescueScarf extends TrainerCard {
 
   public name: string = 'Rescue Scarf';
 
-  public fullName: string = 'Rescue Scarf DRX';
+  public fullName: string = 'Rescue Scarf (DRX 115)';
+  public legacyFullName = 'Rescue Scarf DRX';
 
   public cardImage: string = 'assets/cardback.png';
 

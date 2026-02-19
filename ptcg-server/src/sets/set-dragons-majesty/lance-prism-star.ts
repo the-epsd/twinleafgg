@@ -15,7 +15,8 @@ export class LancePrismStar extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '61';
   public name: string = 'Lance Prism Star';
-  public fullName: string = 'Lance Prism Star DRM';
+  public fullName: string = 'Lance Prism Star (DRM 61)';
+  public legacyFullName = 'Lance Prism Star DRM';
 
   public text: string = 'You can play this card only if 1 of your Pokémon was Knocked Out during your opponent\'s last turn.\n\nSearch your deck for up to 2 [N] Pokémon and put them onto your Bench.Then, shuffle your deck.';
 

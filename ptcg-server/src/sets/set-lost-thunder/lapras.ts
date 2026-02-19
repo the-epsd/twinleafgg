@@ -37,7 +37,8 @@ export class Lapras extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lapras';
-  public fullName: string = 'Lapras LOT';
+  public fullName: string = 'Lapras (LOT 56)';
+  public legacyFullName = 'Lapras LOT';
 
   public readonly GO_FOR_A_SWIM_MARKER = 'LAPRAS_LOT_GO_FOR_A_SWIM_MARKER';
 

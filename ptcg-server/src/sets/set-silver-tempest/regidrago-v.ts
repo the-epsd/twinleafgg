@@ -42,7 +42,8 @@ export class RegidragoV extends PokemonCard {
 
   public name: string = 'Regidrago V';
 
-  public fullName: string = 'Regidrago V SIT';
+  public fullName: string = 'Regidrago V (SIT 135)';
+  public legacyFullName = 'Regidrago V SIT';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -21,7 +21,7 @@ export class Gligar extends PokemonCard {
       name: 'Rock Cannon',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 20 damage times the number of heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Gligar extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gligar';
-  public fullName: string = 'Gligar PHF';
+  public fullName: string = 'Gligar (PHF 46)';
+  public legacyFullName = 'Gligar PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Cannon

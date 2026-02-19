@@ -43,7 +43,8 @@ export class Heliolisk extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heliolisk';
-  public fullName: string = 'Heliolisk TEU';
+  public fullName: string = 'Heliolisk (TEU 50)';
+  public legacyFullName = 'Heliolisk TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Random Spark

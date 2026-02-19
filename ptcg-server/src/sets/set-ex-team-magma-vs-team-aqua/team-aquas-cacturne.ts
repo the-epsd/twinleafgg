@@ -33,7 +33,8 @@ export class TeamAquasCacturne extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
   public name: string = 'Team Aqua\'s Cacturne';
-  public fullName: string = 'Team Aqua\'s Cacturne MA';
+  public fullName: string = 'Team Aqua\'s Cacturne (MA 1)';
+  public legacyFullName = 'Team Aqua\'s Cacturne MA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

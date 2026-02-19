@@ -14,7 +14,8 @@ export class Voltorb extends PokemonCard {
 
   public cardType = CardType.LIGHTNING;
 
-  public fullName = 'Voltorb BS';
+  public fullName = 'Voltorb (BS 67)';
+  public legacyFullName = 'Voltorb BS';
 
   public stage = Stage.BASIC;
 

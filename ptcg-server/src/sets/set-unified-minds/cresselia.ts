@@ -35,7 +35,8 @@ export class Cresselia extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cresselia';
-  public fullName: string = 'Cresselia UNM';
+  public fullName: string = 'Cresselia (UNM 87)';
+  public legacyFullName = 'Cresselia UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Aurora Gain

@@ -38,7 +38,8 @@ export class Salazzle extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salazzle';
-  public fullName: string = 'Salazzle SSH';
+  public fullName: string = 'Salazzle (SSH 28)';
+  public legacyFullName = 'Salazzle SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Searing Flame

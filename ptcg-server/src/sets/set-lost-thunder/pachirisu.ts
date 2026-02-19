@@ -22,7 +22,7 @@ export class Pachirisu extends PokemonCard {
       name: 'Overshort',
       cost: [L],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Before doing damage, discard all Pok\u00e9mon Tool cards from your opponent\'s Active Pok\u00e9mon. If you discarded a Pok\u00e9mon Tool card in this way, this attack does 40 more damage, and your opponent\'s Active Pok\u00e9mon is now Paralyzed.'
     }
   ];
@@ -31,7 +31,8 @@ export class Pachirisu extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pachirisu';
-  public fullName: string = 'Pachirisu LOT';
+  public fullName: string = 'Pachirisu (LOT 80)';
+  public legacyFullName = 'Pachirisu LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Overshort

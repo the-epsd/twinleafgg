@@ -44,7 +44,8 @@ export class WyrdeerV extends PokemonCard {
 
   public name: string = 'Wyrdeer V';
 
-  public fullName: string = 'Wyrdeer V ASR';
+  public fullName: string = 'Wyrdeer V (ASR 134)';
+  public legacyFullName = 'Wyrdeer V ASR';
 
   public ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';
 

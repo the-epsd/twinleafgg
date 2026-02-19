@@ -36,7 +36,8 @@ export class Golem extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golem';
-  public fullName: string = 'Golem HIF';
+  public fullName: string = 'Golem (HIF 35)';
+  public legacyFullName = 'Golem HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Slide

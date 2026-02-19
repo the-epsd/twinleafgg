@@ -48,7 +48,8 @@ export class AlolanGolemGx extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Golem-GX';
-  public fullName: string = 'Alolan Golem-GX CIN';
+  public fullName: string = 'Alolan Golem-GX (CIN 34)';
+  public legacyFullName = 'Alolan Golem-GX CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Super Electromagnetic Tackle

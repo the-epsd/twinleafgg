@@ -47,7 +47,8 @@ export class OnixGx extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Onix-GX';
-  public fullName: string = 'Onix-GX HIF';
+  public fullName: string = 'Onix-GX (HIF 36)';
+  public legacyFullName = 'Onix-GX HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bind

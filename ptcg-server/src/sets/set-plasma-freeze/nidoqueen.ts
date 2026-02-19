@@ -33,7 +33,8 @@ export class Nidoqueen extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoqueen';
-  public fullName: string = 'Nidoqueen PLF';
+  public fullName: string = 'Nidoqueen (PLF 42)';
+  public legacyFullName = 'Nidoqueen PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Horn

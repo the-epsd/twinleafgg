@@ -13,7 +13,8 @@ export class AreaZeroUnderdepths extends TrainerCard {
   public setNumber: string = '131';
   public regulationMark = 'H';
   public name: string = 'Area Zero Underdepths';
-  public fullName: string = 'Area Zero Underdepths SCR';
+  public fullName: string = 'Area Zero Underdepths (SCR 131)';
+  public legacyFullName = 'Area Zero Underdepths SCR';
 
   public text =
     `Each player who has any Tera Pokémon in play can have up to 8 Pokémon on their Bench.

@@ -17,7 +17,7 @@ export class Snover extends PokemonCard {
       name: 'Ice Shard',
       cost: [W, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Fighting Pokémon, this attack does 40 more damage.'
     }
   ];
@@ -26,7 +26,8 @@ export class Snover extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snover';
-  public fullName: string = 'Snover UPR';
+  public fullName: string = 'Snover (UPR 37)';
+  public legacyFullName = 'Snover UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ice Shard

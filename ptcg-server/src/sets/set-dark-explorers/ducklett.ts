@@ -26,7 +26,8 @@ export class Ducklett extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ducklett';
-  public fullName: string = 'Ducklett DEX';
+  public fullName: string = 'Ducklett (DEX 35)';
+  public legacyFullName = 'Ducklett DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

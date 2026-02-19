@@ -49,7 +49,8 @@ export class Regidrago extends PokemonCard {
 
   public name: string = 'Regidrago';
 
-  public fullName: string = 'Regidrago ASR';
+  public fullName: string = 'Regidrago (ASR 118)';
+  public legacyFullName = 'Regidrago ASR';
 
   public readonly DRAGONS_HOARD_MARKER = 'DRAGONS_HOARD_MARKER';
 

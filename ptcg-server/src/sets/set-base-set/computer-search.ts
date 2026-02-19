@@ -84,7 +84,8 @@ export class ComputerSearch extends TrainerCard {
 
   public name: string = 'Computer Search';
 
-  public fullName: string = 'Computer Search BS';
+  public fullName: string = 'Computer Search (BS 71)';
+  public legacyFullName = 'Computer Search BS';
 
   public text: string =
     'Discard 2 of the other cards from your hand in order to search your deck for any card and put it into your hand. Shuffle your deck afterward.';

@@ -39,7 +39,8 @@ export class Ariados extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ariados';
-  public fullName: string = 'Ariados DAA';
+  public fullName: string = 'Ariados (DAA 103)';
+  public legacyFullName = 'Ariados DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Spider Net (on-evolve - switch opponent's benched evolution with active)

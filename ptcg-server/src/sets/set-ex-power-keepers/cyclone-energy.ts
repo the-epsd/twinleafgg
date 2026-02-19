@@ -12,7 +12,8 @@ export class CycloneEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
   public name = 'Cyclone Energy';
-  public fullName = 'Cyclone Energy PK';
+  public fullName = 'Cyclone Energy (PK 90)';
+  public legacyFullName = 'Cyclone Energy PK';
 
   public text = 'Cyclone Energy provides [C] Energy. When you attach this card from your hand to your Active Pokémon, switch 1 of the Defending Pokémon with 1 of your opponent\'s Benched Pokémon. Your opponent chooses the Benched Pokémon to switch.';
 

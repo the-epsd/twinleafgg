@@ -33,7 +33,8 @@ export class Cryogonal2 extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cryogonal';
-  public fullName: string = 'Cryogonal NVI 33';
+  public fullName: string = 'Cryogonal (NVI 33)';
+  public legacyFullName = 'Cryogonal NVI 33';
 
   private usedIceChain: boolean = false;
 

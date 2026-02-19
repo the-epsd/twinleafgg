@@ -48,7 +48,8 @@ export class NaganadelGx extends PokemonCard {
   public setNumber: string = '160';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Naganadel-GX';
-  public fullName: string = 'Naganadel-GX UNM';
+  public fullName: string = 'Naganadel-GX (UNM 160)';
+  public legacyFullName = 'Naganadel-GX UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Ultra Conversion

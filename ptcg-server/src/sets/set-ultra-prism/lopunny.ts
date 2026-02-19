@@ -21,7 +21,7 @@ export class Lopunny extends PokemonCard {
       name: 'Stompy Stomp',
       cost: [C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 40 damage for each heads.'
     },
     {
@@ -36,7 +36,8 @@ export class Lopunny extends PokemonCard {
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lopunny';
-  public fullName: string = 'Lopunny UPR';
+  public fullName: string = 'Lopunny (UPR 107)';
+  public legacyFullName = 'Lopunny UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stompy Stomp

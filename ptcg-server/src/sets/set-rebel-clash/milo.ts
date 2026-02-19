@@ -16,7 +16,8 @@ export class Milo extends TrainerCard {
   public setNumber: string = '161';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Milo';
-  public fullName: string = 'Milo RCL';
+  public fullName: string = 'Milo (RCL 161)';
+  public legacyFullName = 'Milo RCL';
   public text: string = 'Discard up to 2 cards from your hand, and draw 2 cards for each card you discarded in this way. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -32,7 +32,8 @@ export class Basculin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
   public name: string = 'Basculin';
-  public fullName: string = 'Basculin EPO';
+  public fullName: string = 'Basculin (EPO 24)';
+  public legacyFullName = 'Basculin EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

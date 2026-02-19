@@ -20,7 +20,7 @@ export class Totodile extends PokemonCard {
       name: 'Fury Strikes',
       cost: [W],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class Totodile extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Totodile';
-  public fullName: string = 'Totodile PHF';
+  public fullName: string = 'Totodile (PHF 15)';
+  public legacyFullName = 'Totodile PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Strikes

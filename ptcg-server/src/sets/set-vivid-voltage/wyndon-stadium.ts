@@ -15,7 +15,8 @@ export class WyndonStadium extends TrainerCard {
   public setNumber: string = '161';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wyndon Stadium';
-  public fullName: string = 'Wyndon Stadium VIV';
+  public fullName: string = 'Wyndon Stadium (VIV 161)';
+  public legacyFullName = 'Wyndon Stadium VIV';
   public text: string = 'Whenever either player plays a Pokémon VMAX from their hand to evolve a Pokémon V during their turn, heal 100 damage from that Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

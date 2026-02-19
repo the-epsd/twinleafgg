@@ -25,7 +25,8 @@ export class TeamRocketsFlaaffy extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';
   public name: string = 'Team Rocket\'s Flaaffy';
-  public fullName: string = 'Team Rocket\'s Flaaffy DRI';
+  public fullName: string = 'Team Rocket\'s Flaaffy (DRI 73)';
+  public legacyFullName = 'Team Rocket\'s Flaaffy DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Thunder Shock

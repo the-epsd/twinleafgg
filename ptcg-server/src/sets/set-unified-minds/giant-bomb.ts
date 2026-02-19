@@ -17,7 +17,8 @@ export class GiantBomb extends TrainerCard {
   public setNumber: string = '196';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Giant Bomb';
-  public fullName: string = 'Giant Bomb UNM';
+  public fullName: string = 'Giant Bomb (UNM 196)';
+  public legacyFullName = 'Giant Bomb UNM';
   public text: string = 'If this card is attached to 1 of your Pokemon, discard it at the end of your opponent\'s turn. If the Pokemon this card is attached to is your Active Pokemon and takes 180 or more damage from an opponent\'s attack (even if this Pokemon is Knocked Out), put 10 damage counters on the Attacking Pokemon.';
 
   // Ref: set-stellar-crown/deluxe-bomb.ts (tool AfterDamageEffect + damage retaliation + discard), set-dragons-majesty/dragon-talon.ts (tool ToolEffect pattern)

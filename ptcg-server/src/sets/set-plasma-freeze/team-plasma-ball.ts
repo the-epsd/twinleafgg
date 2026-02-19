@@ -15,7 +15,8 @@ export class TeamPlasmaBall extends TrainerCard {
   public tags: string[] = [CardTag.TEAM_PLASMA];
   public set: string = 'PLF';
   public name: string = 'Team Plasma Ball';
-  public fullName: string = 'Team Plasma Ball PLF';
+  public fullName: string = 'Team Plasma Ball (PLF 105)';
+  public legacyFullName = 'Team Plasma Ball PLF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '105';
 

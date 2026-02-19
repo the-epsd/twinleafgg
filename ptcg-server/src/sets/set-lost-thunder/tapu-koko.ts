@@ -37,7 +37,8 @@ export class TapuKoko extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tapu Koko';
-  public fullName: string = 'Tapu Koko LOT';
+  public fullName: string = 'Tapu Koko (LOT 85)';
+  public legacyFullName = 'Tapu Koko LOT';
 
   public usedStrafe: boolean = false;
 

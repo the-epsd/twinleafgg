@@ -33,7 +33,8 @@ export class Feebas extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Feebas';
-  public fullName: string = 'Feebas EM';
+  public fullName: string = 'Feebas (EM 49)';
+  public legacyFullName = 'Feebas EM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

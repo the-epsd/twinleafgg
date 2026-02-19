@@ -13,7 +13,8 @@ export class ProfessorElmsTrainingMethod extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '89';
   public name: string = 'Professor Elm\'s Training Method';
-  public fullName: string = 'Professor Elm\'s Training Method UF';
+  public fullName: string = 'Professor Elm\'s Training Method (UF 89)';
+  public legacyFullName = 'Professor Elm\'s Training Method UF';
 
   public text: string =
     'Search your deck for an Evolution card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';

@@ -24,7 +24,7 @@ export class Togekiss extends PokemonCard {
       name: 'Powerful Slap',
       cost: [C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 50 damage times the number of heads.'
     },
     {
@@ -39,7 +39,8 @@ export class Togekiss extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togekiss';
-  public fullName: string = 'Togekiss ROS';
+  public fullName: string = 'Togekiss (ROS 45)';
+  public legacyFullName = 'Togekiss ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Powerful Slap

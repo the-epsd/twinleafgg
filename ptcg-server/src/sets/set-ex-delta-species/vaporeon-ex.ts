@@ -36,7 +36,8 @@ export class Vaporeonex extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vaporeon ex';
-  public fullName: string = 'Vaporeon ex DS';
+  public fullName: string = 'Vaporeon ex (DS 110)';
+  public legacyFullName = 'Vaporeon ex DS';
 
   public readonly FLAME_SCREEN_MARKER = 'FLAME_SCREEN_MARKER';
 

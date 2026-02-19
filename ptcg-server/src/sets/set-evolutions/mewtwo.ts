@@ -23,7 +23,7 @@ export class Mewtwo extends PokemonCard {
       name: 'Psychic',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each Energy attached to your opponent\'s Active Pok\u00e9mon.'
     },
     {
@@ -38,7 +38,8 @@ export class Mewtwo extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mewtwo';
-  public fullName: string = 'Mewtwo EVO';
+  public fullName: string = 'Mewtwo (EVO 51)';
+  public legacyFullName = 'Mewtwo EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psychic

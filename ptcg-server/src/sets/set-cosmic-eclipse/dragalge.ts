@@ -35,7 +35,8 @@ export class Dragalge extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragalge';
-  public fullName: string = 'Dragalge CEC';
+  public fullName: string = 'Dragalge (CEC 92)';
+  public legacyFullName = 'Dragalge CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Cultivation

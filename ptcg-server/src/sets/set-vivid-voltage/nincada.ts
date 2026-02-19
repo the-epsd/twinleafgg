@@ -30,7 +30,8 @@ export class Nincada extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nincada';
-  public fullName: string = 'Nincada VIV';
+  public fullName: string = 'Nincada (VIV 13)';
+  public legacyFullName = 'Nincada VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Absorb

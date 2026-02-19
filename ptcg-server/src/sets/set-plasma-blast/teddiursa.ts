@@ -25,7 +25,8 @@ export class Teddiursa extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Teddiursa';
-  public fullName: string = 'Teddiursa PLB';
+  public fullName: string = 'Teddiursa (PLB 75)';
+  public legacyFullName = 'Teddiursa PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

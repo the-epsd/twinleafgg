@@ -32,7 +32,8 @@ export class Cobalion extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '77';
   public name: string = 'Cobalion';
-  public fullName: string = 'Cobalion EPO';
+  public fullName: string = 'Cobalion (EPO 77)';
+  public legacyFullName = 'Cobalion EPO';
 
   public usedMetalHorns = false;
 

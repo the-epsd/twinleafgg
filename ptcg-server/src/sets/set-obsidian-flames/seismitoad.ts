@@ -43,7 +43,8 @@ export class Seismitoad extends PokemonCard {
 
   public name: string = 'Seismitoad';
 
-  public fullName: string = 'Seismitoad OBF';
+  public fullName: string = 'Seismitoad (OBF 52)';
+  public legacyFullName = 'Seismitoad OBF';
 
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';

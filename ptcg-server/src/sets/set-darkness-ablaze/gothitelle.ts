@@ -38,7 +38,8 @@ export class Gothitelle extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothitelle';
-  public fullName: string = 'Gothitelle DAA';
+  public fullName: string = 'Gothitelle (DAA 75)';
+  public legacyFullName = 'Gothitelle DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mind Bend

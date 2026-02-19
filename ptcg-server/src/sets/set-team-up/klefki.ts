@@ -36,7 +36,8 @@ export class Klefki extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klefki';
-  public fullName: string = 'Klefki TEU';
+  public fullName: string = 'Klefki (TEU 110)';
+  public legacyFullName = 'Klefki TEU';
 
   // Ref: set-furious-fists/klefki.ts (Secret Key - CheckPokemonStatsEffect resistance modification)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

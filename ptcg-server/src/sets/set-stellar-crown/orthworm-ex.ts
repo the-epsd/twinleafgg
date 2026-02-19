@@ -39,7 +39,8 @@ export class Orthwormex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '110';
   public name: string = 'Orthworm ex';
-  public fullName: string = 'Orthworm ex SCR';
+  public fullName: string = 'Orthworm ex (SCR 110)';
+  public legacyFullName = 'Orthworm ex SCR';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

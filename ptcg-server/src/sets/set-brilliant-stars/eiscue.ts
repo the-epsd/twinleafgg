@@ -45,7 +45,8 @@ export class Eiscue extends PokemonCard {
 
   public name: string = 'Eiscue';
 
-  public fullName: string = 'Eiscue BRS';
+  public fullName: string = 'Eiscue (BRS 44)';
+  public legacyFullName = 'Eiscue BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

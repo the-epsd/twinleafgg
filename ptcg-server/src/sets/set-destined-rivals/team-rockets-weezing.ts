@@ -28,7 +28,8 @@ export class TeamRocketsWeezing extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '126';
   public name: string = 'Team Rocket\'s Weezing';
-  public fullName: string = 'Team Rocket\'s Weezing DRI';
+  public fullName: string = 'Team Rocket\'s Weezing (DRI 126)';
+  public legacyFullName = 'Team Rocket\'s Weezing DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

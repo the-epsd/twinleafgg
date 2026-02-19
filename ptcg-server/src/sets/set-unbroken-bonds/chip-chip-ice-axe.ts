@@ -16,7 +16,8 @@ export class ChipChipIceAxe extends TrainerCard {
   public setNumber: string = '165';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chip-Chip Ice Axe';
-  public fullName: string = 'Chip-Chip Ice Axe UNB';
+  public fullName: string = 'Chip-Chip Ice Axe (UNB 165)';
+  public legacyFullName = 'Chip-Chip Ice Axe UNB';
   public text: string = 'Look at the top 3 cards of your opponent\'s deck and choose 1 of them. Your opponent shuffles the other cards back into their deck. Then, put the card you chose on top of their deck.';
 
   // Ref: set-guardians-rising/watchog.ts (Scrutinize - look at top cards, choose, rearrange)

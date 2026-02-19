@@ -36,7 +36,8 @@ export class Toxtricity extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toxtricity';
-  public fullName: string = 'Toxtricity DAA';
+  public fullName: string = 'Toxtricity (DAA 63)';
+  public legacyFullName = 'Toxtricity DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Risk Taker

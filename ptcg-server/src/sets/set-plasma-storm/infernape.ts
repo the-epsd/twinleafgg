@@ -38,7 +38,8 @@ export class Infernape extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Infernape';
-  public fullName: string = 'Infernape PLS';
+  public fullName: string = 'Infernape (PLS 17)';
+  public legacyFullName = 'Infernape PLS';
 
   public tormentAttack: Attack | null = null;
 

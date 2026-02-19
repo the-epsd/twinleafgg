@@ -38,7 +38,8 @@ export class Charizard extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charizard';
-  public fullName: string = 'Charizard DRM';
+  public fullName: string = 'Charizard (DRM 3)';
+  public legacyFullName = 'Charizard DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Resolute Flame (passive - damage boost)

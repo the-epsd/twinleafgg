@@ -26,7 +26,8 @@ export class FutureBoosterEnergyCapsule extends TrainerCard {
 
   public name: string = 'Future Booster Energy Capsule';
 
-  public fullName: string = 'Future Booster Energy Capsule PAR';
+  public fullName: string = 'Future Booster Energy Capsule (PAR 164)';
+  public legacyFullName = 'Future Booster Energy Capsule PAR';
 
   public text: string =
     'The Future Pokémon this card is attached to has no Retreat Cost, and the attacks it uses do 20 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';

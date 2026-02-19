@@ -38,7 +38,8 @@ export class Indeedee extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Indeedee';
-  public fullName: string = 'Indeedee RCL';
+  public fullName: string = 'Indeedee (RCL 88)';
+  public legacyFullName = 'Indeedee RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Replenish Time

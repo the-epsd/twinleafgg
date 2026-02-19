@@ -30,7 +30,8 @@ export class Sinistea extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sinistea';
-  public fullName: string = 'Sinistea SSH';
+  public fullName: string = 'Sinistea (SSH 89)';
+  public legacyFullName = 'Sinistea SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Teatime

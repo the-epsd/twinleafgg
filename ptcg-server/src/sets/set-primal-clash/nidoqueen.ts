@@ -22,7 +22,7 @@ export class Nidoqueen extends PokemonCard {
       name: 'Double Kick',
       cost: [P, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
     },
     {
@@ -37,7 +37,8 @@ export class Nidoqueen extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoqueen';
-  public fullName: string = 'Nidoqueen PRC';
+  public fullName: string = 'Nidoqueen (PRC 68)';
+  public legacyFullName = 'Nidoqueen PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Kick

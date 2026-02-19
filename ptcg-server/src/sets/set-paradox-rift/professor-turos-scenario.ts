@@ -20,7 +20,8 @@ export class ProfessorTurosScenario extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '171';
   public name: string = 'Professor Turo\'s Scenario';
-  public fullName: string = 'Professor Turo\'s Scenario PAR';
+  public fullName: string = 'Professor Turo\'s Scenario (PAR 171)';
+  public legacyFullName = 'Professor Turo\'s Scenario PAR';
 
   public text: string =
     'Put 1 of your Pokémon in play into your hand. (Discard all cards attached to that Pokémon.)';

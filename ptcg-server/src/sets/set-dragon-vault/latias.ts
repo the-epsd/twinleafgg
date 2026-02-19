@@ -31,7 +31,8 @@ export class Latias extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Latias';
-  public fullName: string = 'Latias DRV';
+  public fullName: string = 'Latias (DRV 9)';
+  public legacyFullName = 'Latias DRV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Energy Assist

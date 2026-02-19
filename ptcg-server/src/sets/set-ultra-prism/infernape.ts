@@ -33,7 +33,8 @@ export class Infernape extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Infernape';
-  public fullName: string = 'Infernape UPR';
+  public fullName: string = 'Infernape (UPR 23)';
+  public legacyFullName = 'Infernape UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Flaming Fighter (passive - increase burn damage between turns)

@@ -26,7 +26,8 @@ export class Surskit extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Surskit';
-  public fullName: string = 'Surskit PLB';
+  public fullName: string = 'Surskit (PLB 1)';
+  public legacyFullName = 'Surskit PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

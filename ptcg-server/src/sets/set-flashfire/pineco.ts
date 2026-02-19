@@ -25,5 +25,6 @@ export class Pineco extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pineco';
-  public fullName: string = 'Pineco FLF';
+  public fullName: string = 'Pineco (FLF 4)';
+  public legacyFullName = 'Pineco FLF';
 }

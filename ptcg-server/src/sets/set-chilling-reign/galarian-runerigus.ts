@@ -28,7 +28,7 @@ export class GalarianRunerigus extends PokemonCard {
       name: 'Energy Press',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -38,7 +38,8 @@ export class GalarianRunerigus extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Runerigus';
-  public fullName: string = 'Galarian Runerigus CRE';
+  public fullName: string = 'Galarian Runerigus (CRE 83)';
+  public legacyFullName = 'Galarian Runerigus CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Spiteful Slate

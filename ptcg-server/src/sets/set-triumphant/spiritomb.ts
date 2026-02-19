@@ -32,7 +32,8 @@ export class Spiritomb extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '10';
   public name: string = 'Spiritomb';
-  public fullName: string = 'Spiritomb TM';
+  public fullName: string = 'Spiritomb (TM 10)';
+  public legacyFullName = 'Spiritomb TM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

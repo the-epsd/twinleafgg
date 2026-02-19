@@ -30,7 +30,8 @@ export class Quilladin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
   public name: string = 'Quilladin';
-  public fullName: string = 'Quilladin M4';
+  public fullName: string = 'Quilladin (M4 6)';
+  public legacyFullName = 'Quilladin M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -32,7 +32,8 @@ export class Abomasnow extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Abomasnow';
-  public fullName: string = 'Abomasnow PLB';
+  public fullName: string = 'Abomasnow (PLB 26)';
+  public legacyFullName = 'Abomasnow PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

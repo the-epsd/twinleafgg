@@ -40,7 +40,8 @@ export class MrMimeGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public name: string = 'Mr. Mime-GX';
-  public fullName: string = 'Mr. Mime-GX TEU';
+  public fullName: string = 'Mr. Mime-GX (TEU 67)';
+  public legacyFullName = 'Mr. Mime-GX TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

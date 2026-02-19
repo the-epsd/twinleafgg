@@ -28,7 +28,7 @@ export class Sigilyph extends PokemonCard {
       name: 'Psychic Assault',
       cost: [P, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
     }
   ];
@@ -38,7 +38,8 @@ export class Sigilyph extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sigilyph';
-  public fullName: string = 'Sigilyph RCL';
+  public fullName: string = 'Sigilyph (RCL 80)';
+  public legacyFullName = 'Sigilyph RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Counterattack (passive - put 3 damage counters on attacker when damaged as Active)

@@ -22,7 +22,7 @@ export class Zekrom extends PokemonCard {
       name: 'Outrage',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     },
     {
@@ -37,7 +37,8 @@ export class Zekrom extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zekrom';
-  public fullName: string = 'Zekrom SLG';
+  public fullName: string = 'Zekrom (SLG 35)';
+  public legacyFullName = 'Zekrom SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Outrage

@@ -43,7 +43,8 @@ export class RadiantEternatus extends PokemonCard {
 
   public name: string = 'Radiant Eternatus';
 
-  public fullName: string = 'Radiant Eternatus CRZ';
+  public fullName: string = 'Radiant Eternatus (CRZ 105)';
+  public legacyFullName = 'Radiant Eternatus CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

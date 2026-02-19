@@ -33,7 +33,7 @@ export class Salamence extends PokemonCard {
       name: 'Fierce Dragon',
       cost: [R, W],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 120 more damage.'
     }
   ];
@@ -43,7 +43,8 @@ export class Salamence extends PokemonCard {
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salamence';
-  public fullName: string = 'Salamence EVS';
+  public fullName: string = 'Salamence (EVS 109)';
+  public legacyFullName = 'Salamence EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Intimidating Roar

@@ -36,7 +36,8 @@ export class Amaura extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Amaura';
-  public fullName: string = 'Amaura FLI';
+  public fullName: string = 'Amaura (FLI 27)';
+  public legacyFullName = 'Amaura FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Powder Snow

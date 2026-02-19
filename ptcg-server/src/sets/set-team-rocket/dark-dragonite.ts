@@ -31,7 +31,8 @@ export class DarkDragonite extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
   public name: string = 'Dark Dragonite';
-  public fullName: string = 'Dark Dragonite TR';
+  public fullName: string = 'Dark Dragonite (TR 5)';
+  public legacyFullName = 'Dark Dragonite TR';
 
   public readonly EVOLUTIONARY_LIGHT_MARKER = 'EVOLUTIONARY_LIGHT_MARKER';
 

@@ -10,7 +10,8 @@ export class RoseannesResearch extends TrainerCard {
   public set = 'SW';
   public setNumber: string = '125';
   public name = 'Roseanne\'s Research';
-  public fullName = 'Roseanne\'s Research SW';
+  public fullName = 'Roseanne\'s Research (SW 125)';
+  public legacyFullName = 'Roseanne\'s Research SW';
 
   public text = 'Search your deck for up to 2 in any combination of Basic Pokémon and basic Energy cards, show them to your opponent, and put them into your hand. Shuffle your deck afterward.';
 

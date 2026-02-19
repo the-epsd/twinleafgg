@@ -36,7 +36,8 @@ export class Ponyta extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ponyta';
-  public fullName: string = 'Ponyta STS';
+  public fullName: string = 'Ponyta (STS 16)';
+  public legacyFullName = 'Ponyta STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Returning Flames

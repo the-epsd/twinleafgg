@@ -20,7 +20,8 @@ export class Swablu extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '104';
   public name: string = 'Swablu';
-  public fullName: string = 'Swablu DRX';
+  public fullName: string = 'Swablu (DRX 104)';
+  public legacyFullName = 'Swablu DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

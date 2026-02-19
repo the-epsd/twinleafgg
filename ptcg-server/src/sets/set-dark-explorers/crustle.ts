@@ -42,7 +42,8 @@ export class Crustle extends PokemonCard {
 
   public name: string = 'Crustle';
 
-  public fullName: string = 'Crustle DEX';
+  public fullName: string = 'Crustle (DEX 8)';
+  public legacyFullName = 'Crustle DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Heavy Bullet attack

@@ -34,7 +34,8 @@ export class Cinderace extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '34';
   public name: string = 'Cinderace';
-  public fullName: string = 'Cinderace SSH';
+  public fullName: string = 'Cinderace (SSH 34)';
+  public legacyFullName = 'Cinderace SSH';
 
   public ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';
 

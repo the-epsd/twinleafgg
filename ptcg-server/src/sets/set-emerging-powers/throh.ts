@@ -26,7 +26,8 @@ export class Throh extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '58';
   public name: string = 'Throh';
-  public fullName: string = 'Throh EPO';
+  public fullName: string = 'Throh (EPO 58)';
+  public legacyFullName = 'Throh EPO';
 
   public readonly SCARF_HOLD_MARKER = 'SCARF_HOLD_MARKER';
 

@@ -37,7 +37,8 @@ export class Watchog extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Watchog';
-  public fullName: string = 'Watchog FFI';
+  public fullName: string = 'Watchog (FFI 85)';
+  public legacyFullName = 'Watchog FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Held-Item Inspection

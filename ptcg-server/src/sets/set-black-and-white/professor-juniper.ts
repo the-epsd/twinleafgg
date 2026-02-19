@@ -16,7 +16,8 @@ export class ProfessorJuniper extends TrainerCard {
 
   public name: string = 'Professor Juniper';
 
-  public fullName: string = 'Professor Juniper BLW';
+  public fullName: string = 'Professor Juniper (BLW 101)';
+  public legacyFullName = 'Professor Juniper BLW';
 
   public cardImage: string = 'assets/cardback.png';
 

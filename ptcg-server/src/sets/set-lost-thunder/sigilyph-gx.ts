@@ -36,7 +36,7 @@ export class SigilyphGx extends PokemonCard {
       name: 'Intercept-GX',
       cost: [P, C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 60 damage times the amount of Energy attached to your opponent\'s Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];
@@ -45,7 +45,8 @@ export class SigilyphGx extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sigilyph-GX';
-  public fullName: string = 'Sigilyph-GX LOT';
+  public fullName: string = 'Sigilyph-GX (LOT 98)';
+  public legacyFullName = 'Sigilyph-GX LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Mirror Counter (passive - reflect damage from GX/EX)

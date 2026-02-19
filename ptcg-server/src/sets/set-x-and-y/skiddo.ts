@@ -34,7 +34,8 @@ export class Skiddo extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skiddo';
-  public fullName: string = 'Skiddo XY';
+  public fullName: string = 'Skiddo (XY 18)';
+  public legacyFullName = 'Skiddo XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-cosmic-eclipse/magneton.ts (Supporter search pattern)

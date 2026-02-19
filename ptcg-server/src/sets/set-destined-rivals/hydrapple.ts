@@ -35,7 +35,8 @@ export class Hydrapple extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
   public name: string = 'Hydrapple';
-  public fullName: string = 'Hydrapple DRI';
+  public fullName: string = 'Hydrapple (DRI 18)';
+  public legacyFullName = 'Hydrapple DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Hydra Breath

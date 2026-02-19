@@ -72,7 +72,8 @@ export class MiraculousIntercom extends TrainerCard {
 
   public name: string = 'Miracle Headset';
 
-  public fullName: string = 'Miraculous Intercom SSP';
+  public fullName: string = 'Miracle Headset (SSP 183)';
+  public legacyFullName = 'Miraculous Intercom SSP';
 
   public cardImage: string = 'assets/cardback.png';
 

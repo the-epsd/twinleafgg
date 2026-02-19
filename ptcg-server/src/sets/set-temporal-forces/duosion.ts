@@ -41,7 +41,8 @@ export class Duosion extends PokemonCard {
 
   public name: string = 'Duosion';
 
-  public fullName: string = 'Duosion TEF';
+  public fullName: string = 'Duosion (TEF 71)';
+  public legacyFullName = 'Duosion TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

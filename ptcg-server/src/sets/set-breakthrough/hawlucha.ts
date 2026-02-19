@@ -35,7 +35,8 @@ export class Hawlucha extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hawlucha';
-  public fullName: string = 'Hawlucha BKT';
+  public fullName: string = 'Hawlucha (BKT 87)';
+  public legacyFullName = 'Hawlucha BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Skyward Kick

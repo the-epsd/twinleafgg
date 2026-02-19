@@ -49,7 +49,8 @@ export class Dragapultex extends PokemonCard {
 
   public name: string = 'Dragapult ex';
 
-  public fullName: string = 'Dragapult ex TWM';
+  public fullName: string = 'Dragapult ex (TWM 130)';
+  public legacyFullName = 'Dragapult ex TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -26,5 +26,6 @@ export class HisuianQwilfish extends PokemonCard {
   public regulationMark: string = 'F';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hisuian Qwilfish';
-  public fullName: string = 'Hisuian Qwilfish ASR';
+  public fullName: string = 'Hisuian Qwilfish (ASR 88)';
+  public legacyFullName = 'Hisuian Qwilfish ASR';
 }

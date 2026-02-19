@@ -36,7 +36,8 @@ export class Pyroar extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pyroar';
-  public fullName: string = 'Pyroar STS';
+  public fullName: string = 'Pyroar (STS 23)';
+  public legacyFullName = 'Pyroar STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flame Charge

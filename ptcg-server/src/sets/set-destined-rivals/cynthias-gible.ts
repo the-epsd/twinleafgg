@@ -26,7 +26,8 @@ export class CynthiasGible extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cynthia\'s Gible';
-  public fullName: string = 'Cynthia\'s Gible DRI';
+  public fullName: string = 'Cynthia\'s Gible (DRI 102)';
+  public legacyFullName = 'Cynthia\'s Gible DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

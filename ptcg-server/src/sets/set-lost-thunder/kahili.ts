@@ -15,7 +15,8 @@ export class Kahili extends TrainerCard {
   public setNumber: string = '179';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kahili';
-  public fullName: string = 'Kahili LOT';
+  public fullName: string = 'Kahili (LOT 179)';
+  public legacyFullName = 'Kahili LOT';
   public text: string = 'Draw 2 cards. Then, flip a coin. If heads, if you played this Kahili from your hand, put this card into your hand instead of the discard pile. If you have no cards in your deck, you can\'t play this card. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-celestial-storm/life-herb.ts (coin flip with callback)

@@ -19,7 +19,8 @@ export class SpeedLightningEnergy extends EnergyCard {
 
   public name = 'Speed Lightning Energy';
 
-  public fullName = 'Speed Lightning Energy RCL';
+  public fullName = 'Speed Lightning Energy (RCL 173)';
+  public legacyFullName = 'Speed Lightning Energy RCL';
 
   public cardImage: string = 'assets/cardback.png';
 

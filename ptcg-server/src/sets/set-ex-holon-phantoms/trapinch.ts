@@ -28,7 +28,8 @@ export class Trapinch extends PokemonCard {
   public setNumber = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trapinch';
-  public fullName = 'Trapinch HP';
+  public fullName = 'Trapinch (HP 84)';
+  public legacyFullName = 'Trapinch HP';
 
   public readonly BIG_BITE_MARKER: string = 'BIG_BITE_MARKER';
 

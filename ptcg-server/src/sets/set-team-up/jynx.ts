@@ -35,7 +35,8 @@ export class Jynx extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jynx';
-  public fullName: string = 'Jynx TEU';
+  public fullName: string = 'Jynx (TEU 68)';
+  public legacyFullName = 'Jynx TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dazzle Dance

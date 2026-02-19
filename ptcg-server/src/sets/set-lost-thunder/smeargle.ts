@@ -34,7 +34,8 @@ export class Smeargle extends PokemonCard {
   public setNumber: string = '157';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Smeargle';
-  public fullName: string = 'Smeargle LOT';
+  public fullName: string = 'Smeargle (LOT 157)';
+  public legacyFullName = 'Smeargle LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stunning Likeness

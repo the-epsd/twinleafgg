@@ -98,7 +98,8 @@ export class ElectromagneticRadar extends TrainerCard {
 
   public name: string = 'Electromagnetic Radar';
 
-  public fullName: string = 'Electromagnetic Radar UNB';
+  public fullName: string = 'Electromagnetic Radar (UNB 169)';
+  public legacyFullName = 'Electromagnetic Radar UNB';
 
   public text: string = 'You can play this card only if you discard 2 other cards from your hand.' +
     'Search your deck for up to 2 in any combination of[L] Pokémon - GX and[L] Pokémon - EX, '

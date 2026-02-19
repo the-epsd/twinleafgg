@@ -25,5 +25,6 @@ export class Dwebble extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dwebble';
-  public fullName: string = 'Dwebble LTR';
+  public fullName: string = 'Dwebble (LTR 13)';
+  public legacyFullName = 'Dwebble LTR';
 }

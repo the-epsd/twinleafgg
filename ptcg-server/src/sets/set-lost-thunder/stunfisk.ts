@@ -22,7 +22,7 @@ export class Stunfisk extends PokemonCard {
       name: 'Flail',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 10 damage for each damage counter on this Pok\u00e9mon.'
     },
     {
@@ -37,7 +37,8 @@ export class Stunfisk extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stunfisk';
-  public fullName: string = 'Stunfisk LOT';
+  public fullName: string = 'Stunfisk (LOT 83)';
+  public legacyFullName = 'Stunfisk LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flail

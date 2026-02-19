@@ -32,5 +32,6 @@ export class Jigglypuff extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jigglypuff';
-  public fullName: string = 'Jigglypuff HIF';
+  public fullName: string = 'Jigglypuff (HIF 41)';
+  public legacyFullName = 'Jigglypuff HIF';
 }

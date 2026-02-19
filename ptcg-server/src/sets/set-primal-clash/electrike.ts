@@ -34,7 +34,8 @@ export class Electrike extends PokemonCard {
   public setNumber = '60';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Electrike';
-  public fullName: string = 'Electrike PRC';
+  public fullName: string = 'Electrike (PRC 60)';
+  public legacyFullName = 'Electrike PRC';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

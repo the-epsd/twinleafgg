@@ -39,7 +39,8 @@ export class Jynx extends PokemonCard {
 
   public name: string = 'Jynx';
 
-  public fullName: string = 'Jynx LOR';
+  public fullName: string = 'Jynx (LOR 68)';
+  public legacyFullName = 'Jynx LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

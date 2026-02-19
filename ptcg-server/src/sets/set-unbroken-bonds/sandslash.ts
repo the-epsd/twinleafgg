@@ -22,7 +22,7 @@ export class Sandslash extends PokemonCard {
       name: 'Continuous Scratch',
       cost: [C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 30 damage for each heads.'
     },
     {
@@ -37,7 +37,8 @@ export class Sandslash extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandslash';
-  public fullName: string = 'Sandslash UNB';
+  public fullName: string = 'Sandslash (UNB 84)';
+  public legacyFullName = 'Sandslash UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Scratch

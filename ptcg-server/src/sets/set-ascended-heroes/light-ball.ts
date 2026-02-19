@@ -14,7 +14,8 @@ export class LightBall extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '191';
   public name: string = 'Light Ball';
-  public fullName: string = 'Light Ball M2a';
+  public fullName: string = 'Light Ball (ASC 191)';
+  public legacyFullName = 'Light Ball M2a';
   public regulationMark = 'I';
   public text: string = 'Attacks used by the Pikachu ex this card is attached to do 50 more damage to your opponent\'s Active Pokémon ex (before applying Weakness and Resistance).';
 

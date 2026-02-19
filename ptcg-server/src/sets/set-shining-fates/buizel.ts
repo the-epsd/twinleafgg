@@ -24,7 +24,8 @@ export class Buizel extends PokemonCard {
   public set: string = 'SHF';
   public name: string = 'Buizel';
   public setNumber = '22';
-  public fullName: string = 'Buizel SHF';
+  public fullName: string = 'Buizel (SHF 22)';
+  public legacyFullName = 'Buizel SHF';
   public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

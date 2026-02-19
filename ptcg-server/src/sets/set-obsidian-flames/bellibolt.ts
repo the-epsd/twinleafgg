@@ -46,7 +46,8 @@ export class Bellibolt extends PokemonCard {
 
   public name: string = 'Bellibolt';
 
-  public fullName: string = 'Bellibolt OBF';
+  public fullName: string = 'Bellibolt (OBF 78)';
+  public legacyFullName = 'Bellibolt OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

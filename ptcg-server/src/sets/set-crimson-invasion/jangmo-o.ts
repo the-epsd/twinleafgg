@@ -31,5 +31,6 @@ export class JangmoO extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jangmo-o';
-  public fullName: string = 'Jangmo-o CIN';
+  public fullName: string = 'Jangmo-o (CIN 75)';
+  public legacyFullName = 'Jangmo-o CIN';
 }

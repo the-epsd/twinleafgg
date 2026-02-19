@@ -35,7 +35,8 @@ export class KeldeoEx extends PokemonCard {
   public set: string = 'BCR';
   public setNumber: string = '49';
   public name: string = 'Keldeo-EX';
-  public fullName: string = 'Keldeo EX BCR';
+  public fullName: string = 'Keldeo-EX (BCR 49)';
+  public legacyFullName = 'Keldeo EX BCR';
   public cardImage: string = 'assets/cardback.png';
 
   public readonly RUSH_IN_MARKER = 'RUSH_IN_MARKER';

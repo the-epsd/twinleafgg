@@ -45,7 +45,8 @@ export class Luxray extends PokemonCard {
 
   public name: string = 'Luxray';
 
-  public fullName: string = 'Luxray CRZ';
+  public fullName: string = 'Luxray (CRZ 44)';
+  public legacyFullName = 'Luxray CRZ';
 
 
 

@@ -28,7 +28,8 @@ export class ErikasWeepinbell extends PokemonCard {
 
   public set: string = 'G1';
   public name: string = 'Erika\'s Weepinbell';
-  public fullName: string = 'Erika\'s Weepinbell G1';
+  public fullName: string = 'Erika\'s Weepinbell (G1 48)';
+  public legacyFullName = 'Erika\'s Weepinbell G1';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';
 

@@ -32,7 +32,8 @@ export class Lairon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '124';
   public name = 'Lairon';
-  public fullName = 'Lairon UNB';
+  public fullName = 'Lairon (UNB 124)';
+  public legacyFullName = 'Lairon UNB';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

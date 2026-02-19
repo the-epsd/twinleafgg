@@ -30,7 +30,8 @@ export class Dartrix extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
   public name: string = 'Dartrix';
-  public fullName: string = 'Dartrix M3';
+  public fullName: string = 'Dartrix (M3 11)';
+  public legacyFullName = 'Dartrix M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

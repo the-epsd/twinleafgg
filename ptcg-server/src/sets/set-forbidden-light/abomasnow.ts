@@ -38,7 +38,8 @@ export class Abomasnow extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Abomasnow';
-  public fullName: string = 'Abomasnow FLI';
+  public fullName: string = 'Abomasnow (FLI 4)';
+  public legacyFullName = 'Abomasnow FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Blessings of the Frost (on-evolve)

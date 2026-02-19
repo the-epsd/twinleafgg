@@ -10,7 +10,8 @@ export class StevensAdvice extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
   public name: string = 'Steven\'s Advice';
-  public fullName: string = 'Steven\'s Advice PK';
+  public fullName: string = 'Steven\'s Advice (PK 83)';
+  public legacyFullName = 'Steven\'s Advice PK';
   public text = 'Draw a number of cards up to the number of your opponent\'s Pokémon in play. If you have 7 or more cards (including this one) in your hand, you can\'t play this card.';
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

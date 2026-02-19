@@ -29,7 +29,8 @@ export class Annihilape extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
   public name: string = 'Annihilape';
-  public fullName: string = 'Annihilape DRI';
+  public fullName: string = 'Annihilape (DRI 92)';
+  public legacyFullName = 'Annihilape DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Vessel of Rage

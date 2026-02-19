@@ -44,7 +44,8 @@ export class ReshiramGx extends PokemonCard {
   public setNumber: string = 'SV51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Reshiram-GX';
-  public fullName: string = 'Reshiram-GX HIF';
+  public fullName: string = 'Reshiram-GX (HIF SV51)';
+  public legacyFullName = 'Reshiram-GX HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flame Charge

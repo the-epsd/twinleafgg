@@ -28,7 +28,7 @@ export class Snorlax extends PokemonCard {
       name: 'Knock Away',
       cost: [C, C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Snorlax extends PokemonCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snorlax';
-  public fullName: string = 'Snorlax BKT';
+  public fullName: string = 'Snorlax (BKT 118)';
+  public legacyFullName = 'Snorlax BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Plump Body (passive - reduce damage by 30)

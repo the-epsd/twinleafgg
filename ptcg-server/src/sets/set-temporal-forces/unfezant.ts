@@ -31,7 +31,8 @@ export class Unfezant extends PokemonCard {
   public setNumber = '135';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Unfezant';
-  public fullName: string = 'Unfezant TEF';
+  public fullName: string = 'Unfezant (TEF 135)';
+  public legacyFullName = 'Unfezant TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Opposing Winds

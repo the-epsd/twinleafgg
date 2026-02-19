@@ -35,7 +35,8 @@ export class Cyndaquil extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cyndaquil';
-  public fullName: string = 'Cyndaquil BKT';
+  public fullName: string = 'Cyndaquil (BKT 18)';
+  public legacyFullName = 'Cyndaquil BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Ember

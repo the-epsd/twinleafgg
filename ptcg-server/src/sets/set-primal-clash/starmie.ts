@@ -22,7 +22,7 @@ export class Starmie extends PokemonCard {
       name: 'Synchro Star',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon and your opponent\'s Active Pokémon have the same amount of Energy attached to them, this attack does 60 more damage.'
     }
   ];
@@ -31,7 +31,8 @@ export class Starmie extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Starmie';
-  public fullName: string = 'Starmie PRC';
+  public fullName: string = 'Starmie (PRC 73)';
+  public legacyFullName = 'Starmie PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Synchro Star

@@ -40,7 +40,8 @@ export class Scrafty extends PokemonCard {
 
   public name: string = 'Scrafty';
 
-  public fullName: string = 'Scrafty DEX';
+  public fullName: string = 'Scrafty (DEX 68)';
+  public legacyFullName = 'Scrafty DEX';
 
   public cardImage: string = 'assets/cardback.png';
 

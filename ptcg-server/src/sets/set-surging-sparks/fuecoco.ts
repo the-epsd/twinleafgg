@@ -23,7 +23,8 @@ export class Fuecoco extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fuecoco';
-  public fullName: string = 'Fuecoco SSP';
+  public fullName: string = 'Fuecoco (SSP 29)';
+  public legacyFullName = 'Fuecoco SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

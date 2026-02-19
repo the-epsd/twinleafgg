@@ -42,332 +42,534 @@ import { Piers } from '../set-champions-path/piers';
 import { IceRiderCalyrexVMAX as IceRiderCalyrexVMAXCRE46 } from '../set-chilling-reign/ice-rider-calyrex-vmax';
 import { ShadowRiderCalyrexVMAX as ShadowRiderCalyrexVMAXCRE75 } from '../set-chilling-reign/shadow-rider-calyrex-vmax';
 import { Bronzong } from '../set-battle-styles/bronzong';
+import { Barboach } from '../set-primal-clash/barboach';
+import { Dewott } from '../set-steam-siege/dewott';
+import { BeedrillV } from './beedrill-v';
+import { HisuianLilligantV } from './hisuian-lilligant-v';
+import { HeatranV } from './heatran-v';
+import { HisuianTyphlosionV } from './hisuian-typhlosion-v';
+import { MachampV } from './machamp-v';
+import { HisuianSneaslerV } from './hisuian-sneasler-v';
+import { Choy } from './choy';
+import { Kamado } from './kamado';
+import { Zisu } from './zisu';
+import { HisuianLilligantVstar } from './hisuian-lilligant-vstar';
+import { HeatranVmax } from './heatran-vmax';
+import { HisuianTyphlosionVstar } from './hisuian-typhlosion-vstar';
+import { MachampVmax } from './machamp-vmax';
 
 export class BronzongASR extends Bronzong {
-  public fullName = 'Bronzong ASR TG11';
+  public fullName = 'Bronzong (ASR TG11)';
+  public legacyFullName = 'Bronzong ASR TG11';
   public set = 'ASR';
   public setNumber = 'TG11';
 }
 export class UnidentifiedFossilASR extends UnidentifiedFossil {
   public setNumber = '157';
-  public fullName: string = 'Unidentified Fossil ASR';
+  public fullName: string = 'Unidentified Fossil (ASR 157)';
+  public legacyFullName = 'Unidentified Fossil ASR';
   public set = 'ASR';
 }
 
 export class StarmieV2ASR extends StarmieVASR30 {
   public setNumber = '166';
-  public fullName: string = 'Starmie V2 ASR';
+  public fullName: string = 'Starmie V (ASR 166)';
+  public legacyFullName = 'Starmie V2 ASR';
   public set = 'ASR';
 }
 
 export class OriginFormePalkiaV2ASR extends OriginFormePalkiaVASR39 {
   public setNumber = '167';
-  public fullName: string = 'Origin Forme Palkia V2 ASR';
+  public fullName: string = 'Origin Forme Palkia V (ASR 167)';
+  public legacyFullName = 'Origin Forme Palkia V2 ASR';
   public set = 'ASR';
 }
 
 export class LuxrayV2ASR extends LuxrayVASR50 {
   public setNumber = '168';
-  public fullName: string = 'Luxray V2 ASR';
+  public fullName: string = 'Luxray V (ASR 168)';
+  public legacyFullName = 'Luxray V2 ASR';
   public set = 'ASR';
 }
 
 export class HisuianDecidueyeV2ASR extends HisuianDecidueyeVASR83 {
   public setNumber = '173';
-  public fullName: string = 'Hisuian Decidueye V2 ASR';
+  public fullName: string = 'Hisuian Decidueye V (ASR 173)';
+  public legacyFullName = 'Hisuian Decidueye V2 ASR';
   public set = 'ASR';
 }
 
 export class HisuianSamurottV2ASR extends HisuianSamurottVASR101 {
   public setNumber = '176';
-  public fullName: string = 'Hisuian Samurott V2 ASR';
+  public fullName: string = 'Hisuian Samurott V (ASR 176)';
+  public legacyFullName = 'Hisuian Samurott V2 ASR';
   public set = 'ASR';
 }
 
 export class OriginFormeDialgaV2ASR extends OriginFormeDialgaVASR113 {
   public setNumber = '177';
-  public fullName: string = 'Origin Forme Dialga V2 ASR';
+  public fullName: string = 'Origin Forme Dialga V (ASR 177)';
+  public legacyFullName = 'Origin Forme Dialga V2 ASR';
   public set = 'ASR';
 }
 
 export class GarchompV2ASR extends GarchompVASR117 {
   public setNumber = '178';
-  public fullName: string = 'Garchomp V2 ASR';
+  public fullName: string = 'Garchomp V (ASR 178)';
+  public legacyFullName = 'Garchomp V2 ASR';
   public set = 'ASR';
 }
 
 export class OranguruV2ASR extends OranguruVASR133 {
   public setNumber = '179';
-  public fullName: string = 'Oranguru V2 ASR';
+  public fullName: string = 'Oranguru V (ASR 179)';
+  public legacyFullName = 'Oranguru V2 ASR';
   public set = 'ASR';
 }
 
 export class WyrdeerV2ASR extends WyrdeerVASR134 {
   public setNumber = '180';
-  public fullName: string = 'Wyrdeer V2 ASR';
+  public fullName: string = 'Wyrdeer V (ASR 180)';
+  public legacyFullName = 'Wyrdeer V2 ASR';
   public set = 'ASR';
 }
 
 export class Adaman2ASR extends AdamanASR135 {
   public setNumber = '181';
-  public fullName: string = 'Adaman2 ASR';
+  public fullName: string = 'Adaman (ASR 181)';
+  public legacyFullName = 'Adaman2 ASR';
   public set = 'ASR';
 }
 
 export class Cyllene2ASR extends CylleneASR138 {
   public setNumber = '183';
-  public fullName: string = 'Cyllene2 ASR';
+  public fullName: string = 'Cyllene (ASR 183)';
+  public legacyFullName = 'Cyllene2 ASR';
   public set = 'ASR';
 }
 
 export class GardeniasVigor2ASR extends GardeniasVigorASR143 {
   public setNumber = '184';
-  public fullName: string = 'Gardenia\'s Vigor2 ASR';
+  public fullName: string = 'Gardenia\'s Vigor (ASR 184)';
+  public legacyFullName = 'Gardenia\'s Vigor2 ASR';
   public set = 'ASR';
 }
 
 export class Grant2ASR extends GrantASR144 {
   public setNumber = '185';
-  public fullName: string = 'Grant2 ASR';
+  public fullName: string = 'Grant (ASR 185)';
+  public legacyFullName = 'Grant2 ASR';
   public set = 'ASR';
 }
 
 export class Irida2ASR extends IridaASR147 {
   public setNumber = '186';
-  public fullName: string = 'Irida2 ASR';
+  public fullName: string = 'Irida (ASR 186)';
+  public legacyFullName = 'Irida2 ASR';
   public set = 'ASR';
 }
 
 export class Roxanne2ASR extends RoxanneASR150 {
   public setNumber = '188';
-  public fullName: string = 'Roxanne2 ASR';
+  public fullName: string = 'Roxanne (ASR 188)';
+  public legacyFullName = 'Roxanne2 ASR';
   public set = 'ASR';
 }
 
 export class OriginFormePalkiaVSTAR2ASR extends OriginFormePalkiaVSTARASR40 {
   public setNumber = '192';
-  public fullName: string = 'Origin Forme Palkia VSTAR2 ASR';
+  public fullName: string = 'Origin Forme Palkia VSTAR (ASR 192)';
+  public legacyFullName = 'Origin Forme Palkia VSTAR2 ASR';
   public set = 'ASR';
 }
 
 export class HisuianDecidueyeVSTAR2ASR extends HisuianDecidueyeVSTARASR84 {
   public setNumber = '195';
-  public fullName: string = 'Hisuian Decidueye VSTAR2 ASR';
+  public fullName: string = 'Hisuian Decidueye VSTAR (ASR 195)';
+  public legacyFullName = 'Hisuian Decidueye VSTAR2 ASR';
   public set = 'ASR';
 }
 
 export class HisuianSamurottVSTAR2ASR extends HisuianSamurottVSTARASR102 {
   public setNumber = '197';
-  public fullName: string = 'Hisuian Samurott VSTAR2 ASR';
+  public fullName: string = 'Hisuian Samurott VSTAR (ASR 197)';
+  public legacyFullName = 'Hisuian Samurott VSTAR2 ASR';
   public set = 'ASR';
 }
 
 export class OriginFormeDialgaVSTAR2ASR extends OriginFormeDialgaVSTARASR114 {
   public setNumber = '198';
-  public fullName: string = 'Origin Forme Dialga VSTAR2 ASR';
+  public fullName: string = 'Origin Forme Dialga VSTAR (ASR 198)';
+  public legacyFullName = 'Origin Forme Dialga VSTAR2 ASR';
   public set = 'ASR';
 }
 
 export class Adaman3ASR extends AdamanASR135 {
   public setNumber = '199';
-  public fullName: string = 'Adaman3 ASR';
+  public fullName: string = 'Adaman (ASR 199)';
+  public legacyFullName = 'Adaman3 ASR';
   public set = 'ASR';
 }
 
 export class Cyllene3ASR extends CylleneASR138 {
   public setNumber = '201';
-  public fullName: string = 'Cyllene3 ASR';
+  public fullName: string = 'Cyllene (ASR 201)';
+  public legacyFullName = 'Cyllene3 ASR';
   public set = 'ASR';
 }
 
 export class GardeniasVigor3ASR extends GardeniasVigorASR143 {
   public setNumber = '202';
-  public fullName: string = 'Gardenia\'s Vigor3 ASR';
+  public fullName: string = 'Gardenia\'s Vigor (ASR 202)';
+  public legacyFullName = 'Gardenia\'s Vigor3 ASR';
   public set = 'ASR';
 }
 
 export class Grant3ASR extends GrantASR144 {
   public setNumber = '203';
-  public fullName: string = 'Grant3 ASR';
+  public fullName: string = 'Grant (ASR 203)';
+  public legacyFullName = 'Grant3 ASR';
   public set = 'ASR';
 }
 
 export class Irida3ASR extends IridaASR147 {
   public setNumber = '204';
-  public fullName: string = 'Irida3 ASR';
+  public fullName: string = 'Irida (ASR 204)';
+  public legacyFullName = 'Irida3 ASR';
   public set = 'ASR';
 }
 
 export class Roxanne3ASR extends RoxanneASR150 {
   public setNumber = '206';
-  public fullName: string = 'Roxanne3 ASR';
+  public fullName: string = 'Roxanne (ASR 206)';
+  public legacyFullName = 'Roxanne3 ASR';
   public set = 'ASR';
 }
 
 export class OriginFormePalkiaVSTAR3ASR extends OriginFormePalkiaVSTARASR40 {
   public setNumber = '208';
-  public fullName: string = 'Origin Forme Palkia VSTAR3 ASR';
+  public fullName: string = 'Origin Forme Palkia VSTAR (ASR 208)';
+  public legacyFullName = 'Origin Forme Palkia VSTAR3 ASR';
   public set = 'ASR';
 }
 
 export class HisuianSamurottVSTAR3ASR extends HisuianSamurottVSTARASR102 {
   public setNumber = '209';
-  public fullName: string = 'Hisuian Samurott VSTAR3 ASR';
+  public fullName: string = 'Hisuian Samurott VSTAR (ASR 209)';
+  public legacyFullName = 'Hisuian Samurott VSTAR3 ASR';
   public set = 'ASR';
 }
 
 export class OriginFormeDialgaVSTAR3ASR extends OriginFormeDialgaVSTARASR114 {
   public setNumber = '210';
-  public fullName: string = 'Origin Forme Dialga VSTAR3 ASR';
+  public fullName: string = 'Origin Forme Dialga VSTAR (ASR 210)';
+  public legacyFullName = 'Origin Forme Dialga VSTAR3 ASR';
   public set = 'ASR';
 }
 
 export class ChoiceBeltASR extends ChoiceBelt {
   public setNumber = '211';
-  public fullName: string = 'Choice Belt ASR';
+  public fullName: string = 'Choice Belt (ASR 211)';
+  public legacyFullName = 'Choice Belt ASR';
   public set = 'ASR';
 }
 
 export class JubilifeVillage2ASR extends JubilifeVillageASR148 {
   public setNumber = '212';
-  public fullName: string = 'Jubilife Village2 ASR';
+  public fullName: string = 'Jubilife Village (ASR 212)';
+  public legacyFullName = 'Jubilife Village2 ASR';
   public set = 'ASR';
 }
 
 export class PathToThePeakASR extends PathToThePeak {
   public setNumber = '213';
-  public fullName: string = 'Path to the Peak ASR';
+  public fullName: string = 'Path to the Peak (ASR 213)';
+  public legacyFullName = 'Path to the Peak ASR';
   public set = 'ASR';
 }
 
 export class TempleofSinnoh2ASR extends TempleofSinnohASR155 {
   public setNumber = '214';
-  public fullName: string = 'Temple of Sinnoh2 ASR';
+  public fullName: string = 'Temple of Sinnoh (ASR 214)';
+  public legacyFullName = 'Temple of Sinnoh2 ASR';
   public set = 'ASR';
 }
 
 export class TrekkingShoes2ASR extends TrekkingShoesASR156 {
   public setNumber = '215';
-  public fullName: string = 'Trekking Shoes2 ASR';
+  public fullName: string = 'Trekking Shoes (ASR 215)';
+  public legacyFullName = 'Trekking Shoes2 ASR';
   public set = 'ASR';
 }
 
 export class DoubleTurboEnergyASR extends DoubleTurboEnergy {
   public setNumber = '216';
-  public fullName: string = 'Double Turbo Energy ASR';
+  public fullName: string = 'Double Turbo Energy (ASR 216)';
+  public legacyFullName = 'Double Turbo Energy ASR';
   public set = 'ASR';
 }
 
 export class FlappleASR extends Flapple {
   public setNumber = 'TG2';
-  public fullName: string = 'Flapple ASR';
+  public fullName: string = 'Flapple (ASR TG2)';
+  public legacyFullName = 'Flapple ASR';
   public set = 'ASR';
 }
 
 export class FrosmothASR extends Frosmoth {
   public setNumber = 'TG4';
-  public fullName: string = 'Frosmoth ASR';
+  public fullName: string = 'Frosmoth (ASR TG4)';
+  public legacyFullName = 'Frosmoth ASR';
   public set = 'ASR';
 }
 
 export class GardevoirASR extends Gardevoir {
   public setNumber = 'TG5';
-  public fullName: string = 'Gardevoir ASR';
+  public fullName: string = 'Gardevoir (ASR TG5)';
+  public legacyFullName = 'Gardevoir ASR';
   public set = 'ASR';
 }
 
 export class FalinksASR extends Falinks {
   public setNumber = 'TG7';
-  public fullName: string = 'Falinks ASR';
+  public fullName: string = 'Falinks (ASR TG7)';
+  public legacyFullName = 'Falinks ASR';
   public set = 'ASR';
 }
 
 export class Mightyena2ASR extends MightyenaASR96 {
   public setNumber = 'TG9';
-  public fullName: string = 'Mightyena2 ASR';
+  public fullName: string = 'Mightyena (ASR TG9)';
+  public legacyFullName = 'Mightyena2 ASR';
   public set = 'ASR';
 }
 
 export class StarmieV3ASR extends StarmieVASR30 {
   public setNumber = 'TG13';
-  public fullName: string = 'Starmie V3 ASR';
+  public fullName: string = 'Starmie V (ASR TG13)';
+  public legacyFullName = 'Starmie V3 ASR';
   public set = 'ASR';
 }
 
 export class IceRiderCalyrexVASR extends IceRiderCalyrexV {
   public setNumber = 'TG14';
-  public fullName: string = 'Ice Rider Calyrex V ASR';
+  public fullName: string = 'Ice Rider Calyrex V (ASR TG14)';
+  public legacyFullName = 'Ice Rider Calyrex V ASR';
   public set = 'ASR';
 }
 
 export class IceRiderCalyrexVMAXASR extends IceRiderCalyrexVMAX {
   public setNumber = 'TG15';
-  public fullName: string = 'Ice Rider Calyrex VMAX ASR';
+  public fullName: string = 'Ice Rider Calyrex VMAX (ASR TG15)';
+  public legacyFullName = 'Ice Rider Calyrex VMAX ASR';
   public set = 'ASR';
 }
 
 export class GalarianArticunoVASR extends GalarianArticunoV {
   public setNumber = 'TG16';
-  public fullName: string = 'Galarian Articuno V ASR';
+  public fullName: string = 'Galarian Articuno V (ASR TG16)';
+  public legacyFullName = 'Galarian Articuno V ASR';
   public set = 'ASR';
 }
 
 export class ShadowRiderCalyrexVASR extends ShadowRiderCalyrexV {
   public setNumber = 'TG17';
-  public fullName: string = 'Shadow Rider Calyrex V ASR';
+  public fullName: string = 'Shadow Rider Calyrex V (ASR TG17)';
+  public legacyFullName = 'Shadow Rider Calyrex V ASR';
   public set = 'ASR';
 }
 
 export class ShadowRiderCalyrexVMAXASR extends ShadowRiderCalyrexVMAX {
   public setNumber = 'TG18';
-  public fullName: string = 'Shadow Rider Calyrex VMAX ASR';
+  public fullName: string = 'Shadow Rider Calyrex VMAX (ASR TG18)';
+  public legacyFullName = 'Shadow Rider Calyrex VMAX ASR';
   public set = 'ASR';
 }
 
 export class GalarianZapdosVASR extends GalarianZapdosV {
   public setNumber = 'TG19';
-  public fullName: string = 'Galarian Zapdos V ASR';
+  public fullName: string = 'Galarian Zapdos V (ASR TG19)';
+  public legacyFullName = 'Galarian Zapdos V ASR';
   public set = 'ASR';
 }
 
 export class GalarianMoltresVASR extends GalarianMoltresV {
   public setNumber = 'TG20';
-  public fullName: string = 'Galarian Moltres V ASR';
+  public fullName: string = 'Galarian Moltres V (ASR TG20)';
+  public legacyFullName = 'Galarian Moltres V ASR';
   public set = 'ASR';
 }
 
 export class ZacianVASR extends ZacianV {
   public setNumber = 'TG21';
-  public fullName: string = 'Zacian V ASR';
+  public fullName: string = 'Zacian V (ASR TG21)';
+  public legacyFullName = 'Zacian V ASR';
   public set = 'ASR';
 }
 
 export class GarchompV3ASR extends GarchompVASR117 {
   public setNumber = 'TG23';
-  public fullName: string = 'Garchomp V3 ASR';
+  public fullName: string = 'Garchomp V (ASR TG23)';
+  public legacyFullName = 'Garchomp V3 ASR';
   public set = 'ASR';
 }
 
 export class MelonyASR extends Melony {
   public setNumber = 'TG26';
-  public fullName: string = 'Melony ASR';
+  public fullName: string = 'Melony (ASR TG26)';
+  public legacyFullName = 'Melony ASR';
   public set = 'ASR';
 }
 
 export class PiersASR extends Piers {
   public setNumber = 'TG28';
-  public fullName: string = 'Piers ASR';
+  public fullName: string = 'Piers (ASR TG28)';
+  public legacyFullName = 'Piers ASR';
   public set = 'ASR';
 }
 
 export class IceRiderCalyrexVMAX2ASR extends IceRiderCalyrexVMAXCRE46 {
   public setNumber = 'TG29';
-  public fullName: string = 'Ice Rider Calyrex VMAX2 ASR';
+  public fullName: string = 'Ice Rider Calyrex VMAX (ASR TG29)';
+  public legacyFullName = 'Ice Rider Calyrex VMAX2 ASR';
   public set = 'ASR';
 }
 
 export class ShadowRiderCalyrexVMAX2ASR extends ShadowRiderCalyrexVMAXCRE75 {
   public setNumber = 'TG30';
-  public fullName: string = 'Shadow Rider Calyrex VMAX2 ASR';
+  public fullName: string = 'Shadow Rider Calyrex VMAX (ASR TG30)';
+  public legacyFullName = 'Shadow Rider Calyrex VMAX2 ASR';
   public set = 'ASR';
+}
+
+export class BarboachASR extends Barboach {
+  public set: string = 'ASR';
+  public setNumber: string = '35';
+  public fullName: string = 'Barboach (ASR 35)';
+}
+
+export class DewottASR extends Dewott {
+  public set: string = 'ASR';
+  public setNumber: string = '42';
+  public fullName: string = 'Dewott (ASR 42)';
+}
+
+export class BeedrillV2 extends BeedrillV {
+  public set: string = 'ASR';
+  public setNumber: string = '160';
+  public fullName: string = 'Beedrill V (ASR 160)';
+}
+
+export class BeedrillV3 extends BeedrillV {
+  public set: string = 'ASR';
+  public setNumber: string = '161';
+  public fullName: string = 'Beedrill V (ASR 161)';
+}
+
+export class HisuianLilligantV2 extends HisuianLilligantV {
+  public set: string = 'ASR';
+  public setNumber: string = '162';
+  public fullName: string = 'Hisuian Lilligant V (ASR 162)';
+}
+
+export class HisuianLilligantV3 extends HisuianLilligantV {
+  public set: string = 'ASR';
+  public setNumber: string = '163';
+  public fullName: string = 'Hisuian Lilligant V (ASR 163)';
+}
+
+export class HeatranV2 extends HeatranV {
+  public set: string = 'ASR';
+  public setNumber: string = '165';
+  public fullName: string = 'Heatran V (ASR 165)';
+}
+
+export class HisuianTyphlosionV2 extends HisuianTyphlosionV {
+  public set: string = 'ASR';
+  public setNumber: string = '169';
+  public fullName: string = 'Hisuian Typhlosion V (ASR 169)';
+}
+
+export class MachampV2 extends MachampV {
+  public set: string = 'ASR';
+  public setNumber: string = '171';
+  public fullName: string = 'Machamp V (ASR 171)';
+}
+
+export class MachampV3 extends MachampV {
+  public set: string = 'ASR';
+  public setNumber: string = '172';
+  public fullName: string = 'Machamp V (ASR 172)';
+}
+
+export class HisuianSneaslerV2 extends HisuianSneaslerV {
+  public set: string = 'ASR';
+  public setNumber: string = '174';
+  public fullName: string = 'Hisuian Sneasler V (ASR 174)';
+}
+
+export class HisuianSneaslerV3 extends HisuianSneaslerV {
+  public set: string = 'ASR';
+  public setNumber: string = '175';
+  public fullName: string = 'Hisuian Sneasler V (ASR 175)';
+}
+
+export class Choy2 extends Choy {
+  public set: string = 'ASR';
+  public setNumber: string = '182';
+  public fullName: string = 'Choy (ASR 182)';
+}
+
+export class Kamado2 extends Kamado {
+  public set: string = 'ASR';
+  public setNumber: string = '187';
+  public fullName: string = 'Kamado (ASR 187)';
+}
+
+export class Zisu2 extends Zisu {
+  public set: string = 'ASR';
+  public setNumber: string = '189';
+  public fullName: string = 'Zisu (ASR 189)';
+}
+
+export class HisuianLilligantVstar2 extends HisuianLilligantVstar {
+  public set: string = 'ASR';
+  public setNumber: string = '190';
+  public fullName: string = 'Hisuian Lilligant VSTAR (ASR 190)';
+}
+
+export class HeatranVmax2 extends HeatranVmax {
+  public set: string = 'ASR';
+  public setNumber: string = '191';
+  public fullName: string = 'Heatran VMAX (ASR 191)';
+}
+
+export class HisuianTyphlosionVstar2 extends HisuianTyphlosionVstar {
+  public set: string = 'ASR';
+  public setNumber: string = '193';
+  public fullName: string = 'Hisuian Typhlosion VSTAR (ASR 193)';
+}
+
+export class MachampVmax2 extends MachampVmax {
+  public set: string = 'ASR';
+  public setNumber: string = '194';
+  public fullName: string = 'Machamp VMAX (ASR 194)';
+}
+
+export class Choy3 extends Choy {
+  public set: string = 'ASR';
+  public setNumber: string = '200';
+  public fullName: string = 'Choy (ASR 200)';
+}
+
+export class Kamado3 extends Kamado {
+  public set: string = 'ASR';
+  public setNumber: string = '205';
+  public fullName: string = 'Kamado (ASR 205)';
+}
+
+export class Zisu3 extends Zisu {
+  public set: string = 'ASR';
+  public setNumber: string = '207';
+  public fullName: string = 'Zisu (ASR 207)';
 }

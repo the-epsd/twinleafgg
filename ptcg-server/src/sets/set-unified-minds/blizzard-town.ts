@@ -15,7 +15,8 @@ export class BlizzardTown extends TrainerCard {
   public setNumber: string = '187';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blizzard Town';
-  public fullName: string = 'Blizzard Town UNM';
+  public fullName: string = 'Blizzard Town (UNM 187)';
+  public legacyFullName = 'Blizzard Town UNM';
   public text: string = 'Pokémon with 40 HP or less remaining (both yours and your opponent\'s) can\'t attack.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

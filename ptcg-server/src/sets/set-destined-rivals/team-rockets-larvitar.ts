@@ -26,7 +26,8 @@ export class TeamRocketsLarvitar extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Larvitar';
-  public fullName: string = 'Team Rocket\'s Larvitar DRI';
+  public fullName: string = 'Team Rocket\'s Larvitar (DRI 94)';
+  public legacyFullName = 'Team Rocket\'s Larvitar DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {

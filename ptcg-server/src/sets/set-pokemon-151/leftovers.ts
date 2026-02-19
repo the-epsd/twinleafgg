@@ -22,7 +22,8 @@ export class Leftovers extends TrainerCard {
 
   public name: string = 'Leftovers';
 
-  public fullName: string = 'Leftovers MEW';
+  public fullName: string = 'Leftovers (MEW 163)';
+  public legacyFullName = 'Leftovers MEW';
 
   public text: string = 'At the end of your turn, if the Pokémon this card is attached to is in the Active Spot, heal 20 damage from it.';
 

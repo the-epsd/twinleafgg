@@ -27,5 +27,6 @@ export class LarrysStaravia extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '169';
   public name: string = 'Larry\'s Staravia';
-  public fullName: string = 'Larry\'s Staravia MC';
+  public fullName: string = 'Larry\'s Staravia (ASC 169)';
+  public legacyFullName = 'Larry\'s Staravia MC';
 }

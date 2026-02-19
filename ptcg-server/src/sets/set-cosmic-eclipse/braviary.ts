@@ -38,7 +38,8 @@ export class Braviary extends PokemonCard {
   public setNumber: string = '178';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Braviary';
-  public fullName: string = 'Braviary CEC';
+  public fullName: string = 'Braviary (CEC 178)';
+  public legacyFullName = 'Braviary CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Clutch

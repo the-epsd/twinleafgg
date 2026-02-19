@@ -35,7 +35,8 @@ export class Doduo extends PokemonCard {
 
   public name: string = 'Doduo';
 
-  public fullName: string = 'Doduo BS';
+  public fullName: string = 'Doduo (BS 48)';
+  public legacyFullName = 'Doduo BS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

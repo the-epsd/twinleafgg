@@ -28,7 +28,8 @@ export class ChienPao extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
   public name: string = 'Chien-Pao';
-  public fullName: string = 'Chien-Pao M3';
+  public fullName: string = 'Chien-Pao (M3 53)';
+  public legacyFullName = 'Chien-Pao M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Strafe - optional switch

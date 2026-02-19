@@ -11,7 +11,8 @@ export class Hop extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'SSH';
   public name: string = 'Hop';
-  public fullName: string = 'Hop SSH';
+  public fullName: string = 'Hop (SSH 165)';
+  public legacyFullName = 'Hop SSH';
   public regulationMark = 'D';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '165';

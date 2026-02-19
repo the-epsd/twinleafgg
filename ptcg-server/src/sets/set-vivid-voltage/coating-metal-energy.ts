@@ -18,7 +18,8 @@ export class CoatingMetalEnergy extends EnergyCard {
 
   public name = 'Coating Metal Energy';
 
-  public fullName = 'Coating Metal Energy VIV';
+  public fullName = 'Coating Metal Energy (VIV 163)';
+  public legacyFullName = 'Coating Metal Energy VIV';
 
   public cardImage: string = 'assets/cardback.png';
 

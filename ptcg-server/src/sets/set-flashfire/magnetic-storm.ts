@@ -15,7 +15,8 @@ export class MagneticStorm extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public name: string = 'Magnetic Storm';
-  public fullName: string = 'Magnetic Storm FLF';
+  public fullName: string = 'Magnetic Storm (FLF 91)';
+  public legacyFullName = 'Magnetic Storm FLF';
 
   public text: string = 'Each Pokémon in play has no Resistance.';
 

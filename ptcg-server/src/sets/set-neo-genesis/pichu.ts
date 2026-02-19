@@ -32,7 +32,8 @@ export class Pichu extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Pichu';
-  public fullName: string = 'Pichu N1';
+  public fullName: string = 'Pichu (N1 12)';
+  public legacyFullName = 'Pichu N1';
 
   public readonly BABY_MARKER = 'BABY_MARKER';
 

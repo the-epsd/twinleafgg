@@ -81,7 +81,8 @@ export class EnergyExchanger extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'UD';
   public name: string = 'Energy Exchanger';
-  public fullName: string = 'Energy Exchanger UD';
+  public fullName: string = 'Energy Exchanger (UD 73)';
+  public legacyFullName = 'Energy Exchanger UD';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';
 

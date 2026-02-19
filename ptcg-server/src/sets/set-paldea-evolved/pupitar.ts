@@ -23,5 +23,6 @@ export class Pupitar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '111';
   public name: string = 'Pupitar';
-  public fullName: string = 'Pupitar PAL';
+  public fullName: string = 'Pupitar (PAL 111)';
+  public legacyFullName = 'Pupitar PAL';
 }

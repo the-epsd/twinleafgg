@@ -23,7 +23,8 @@ export class Mudkip extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '59';
   public name: string = 'Mudkip';
-  public fullName: string = 'Mudkip RS';
+  public fullName: string = 'Mudkip (RS 59)';
+  public legacyFullName = 'Mudkip RS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

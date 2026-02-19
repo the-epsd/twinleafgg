@@ -27,7 +27,7 @@ export class Croagunk extends PokemonCard {
       name: 'Frog Hop',
       cost: [P, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Croagunk extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Croagunk';
-  public fullName: string = 'Croagunk BUS';
+  public fullName: string = 'Croagunk (BUS 54)';
+  public legacyFullName = 'Croagunk BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Frog Hop

@@ -35,7 +35,8 @@ export class Yveltal extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '95';
   public name: string = 'Yveltal';
-  public fullName: string = 'Yveltal TEU';
+  public fullName: string = 'Yveltal (TEU 95)';
+  public legacyFullName = 'Yveltal TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Derail

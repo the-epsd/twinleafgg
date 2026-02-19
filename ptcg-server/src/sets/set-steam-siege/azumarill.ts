@@ -23,7 +23,7 @@ export class Azumarill extends PokemonCard {
       name: 'Play Rough',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Azumarill extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Azumarill';
-  public fullName: string = 'Azumarill STS';
+  public fullName: string = 'Azumarill (STS 77)';
+  public legacyFullName = 'Azumarill STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Play Rough

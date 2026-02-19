@@ -19,7 +19,8 @@ export class GravityGemstone extends TrainerCard {
 
   public name: string = 'Gravity Gemstone';
 
-  public fullName: string = 'Gravity Gemstone SCR';
+  public fullName: string = 'Gravity Gemstone (SCR 137)';
+  public legacyFullName = 'Gravity Gemstone SCR';
 
   public cardImage: string = 'assets/cardback.png';
 

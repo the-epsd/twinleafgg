@@ -22,7 +22,8 @@ export class Pansage extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pansage';
-  public fullName: string = 'Pansage NXD';
+  public fullName: string = 'Pansage (NXD 6)';
+  public legacyFullName = 'Pansage NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;

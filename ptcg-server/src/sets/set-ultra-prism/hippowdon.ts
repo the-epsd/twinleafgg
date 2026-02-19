@@ -25,7 +25,7 @@ export class Hippowdon extends PokemonCard {
       name: 'Dust Cannon',
       cost: [F, F, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];
@@ -34,7 +34,8 @@ export class Hippowdon extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hippowdon';
-  public fullName: string = 'Hippowdon UPR';
+  public fullName: string = 'Hippowdon (UPR 69)';
+  public legacyFullName = 'Hippowdon UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sand Tomb

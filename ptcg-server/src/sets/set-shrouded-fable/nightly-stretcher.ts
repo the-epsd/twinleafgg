@@ -82,7 +82,8 @@ export class NightlyStretcher extends TrainerCard {
 
   public name: string = 'Night Stretcher';
 
-  public fullName: string = 'Night Stretcher SFA';
+  public fullName: string = 'Night Stretcher (SFA 61)';
+  public legacyFullName = 'Night Stretcher SFA';
 
   public text: string =
     'Put a Pokémon or a Basic Energy Card from your discard pile into your hand.';

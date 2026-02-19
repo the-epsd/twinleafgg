@@ -29,7 +29,7 @@ export class Slaking extends PokemonCard {
       name: 'Rout',
       cost: [C, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each of your opponent\'s Benched Pokémon.'
     }
   ];
@@ -39,7 +39,8 @@ export class Slaking extends PokemonCard {
   public setNumber: string = '131';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slaking';
-  public fullName: string = 'Slaking EVS';
+  public fullName: string = 'Slaking (EVS 131)';
+  public legacyFullName = 'Slaking EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Act Freely

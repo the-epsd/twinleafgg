@@ -78,7 +78,8 @@ export class ApricornMaker extends TrainerCard {
 
   public name: string = 'Apricorn Maker';
 
-  public fullName: string = 'Apricorn Maker CES';
+  public fullName: string = 'Apricorn Maker (CES 124)';
+  public legacyFullName = 'Apricorn Maker CES';
 
   public text: string =
     'Search your deck for up to 2 Item cards that have the word "Ball" in their name, reveal them, and put them into your hand. Then, shuffle your deck.';

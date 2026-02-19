@@ -27,5 +27,6 @@ export class Timburr extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Timburr';
-  public fullName: string = 'Timburr DEX';
+  public fullName: string = 'Timburr (DEX 58)';
+  public legacyFullName = 'Timburr DEX';
 }

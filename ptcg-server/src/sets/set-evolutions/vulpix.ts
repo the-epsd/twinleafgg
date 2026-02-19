@@ -29,7 +29,8 @@ export class Vulpix extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vulpix';
-  public fullName: string = 'Vulpix EVO';
+  public fullName: string = 'Vulpix (EVO 14)';
+  public legacyFullName = 'Vulpix EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Confuse Ray

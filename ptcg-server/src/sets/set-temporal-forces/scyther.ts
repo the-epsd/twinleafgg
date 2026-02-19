@@ -28,7 +28,8 @@ export class Scyther extends PokemonCard {
   public regulationMark: string = 'H';
   public set: string = 'TEF';
   public name: string = 'Scyther';
-  public fullName: string = 'Scyther TEF';
+  public fullName: string = 'Scyther (TEF 1)';
+  public legacyFullName = 'Scyther TEF';
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
 

@@ -15,7 +15,8 @@ export class BigMalasada extends TrainerCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Big Malasada';
-  public fullName: string = 'Big Malasada SUM';
+  public fullName: string = 'Big Malasada (SUM 114)';
+  public legacyFullName = 'Big Malasada SUM';
   public text: string = 'Heal 20 damage and remove a Special Condition from your Active Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

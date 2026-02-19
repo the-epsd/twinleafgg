@@ -15,7 +15,8 @@ export class BurstingBalloon extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '97';
   public name = 'Bursting Balloon';
-  public fullName = 'Bursting Balloon BKP';
+  public fullName = 'Bursting Balloon (BKP 97)';
+  public legacyFullName = 'Bursting Balloon BKP';
 
   public text: string =
     'If this card is attached to 1 of your Pokémon, discard it at the end of your opponent\'s turn.\n\nIf the Pokémon this card is attached to is your Active Pokémon and is damaged by an opponent\'s attack (even if that Pokémon is Knocked Out), put 6 damage counters on the Attacking Pokémon.';

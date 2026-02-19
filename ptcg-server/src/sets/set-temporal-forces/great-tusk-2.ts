@@ -34,7 +34,8 @@ export class GreatTusk2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
   public name: string = 'Great Tusk';
-  public fullName: string = 'Great Tusk TEF2';
+  public fullName: string = 'Great Tusk (TEF 96)';
+  public legacyFullName = 'Great Tusk TEF2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Wrathful Charge

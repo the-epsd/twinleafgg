@@ -39,7 +39,8 @@ export class Electivire extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electivire';
-  public fullName: string = 'Electivire LOT';
+  public fullName: string = 'Electivire (LOT 72)';
+  public legacyFullName = 'Electivire LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Electrocharge

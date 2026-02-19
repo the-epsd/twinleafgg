@@ -40,7 +40,8 @@ export class Raichu extends PokemonCard {
 
   public name: string = 'Raichu';
 
-  public fullName: string = 'Raichu HP';
+  public fullName: string = 'Raichu (HP 15)';
+  public legacyFullName = 'Raichu HP';
 
   public setNumber: string = '15';
 

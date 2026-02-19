@@ -30,7 +30,8 @@ export class Vespiquen extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vespiquen';
-  public fullName: string = 'Vespiquen LOT';
+  public fullName: string = 'Vespiquen (LOT 32)';
+  public legacyFullName = 'Vespiquen LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Commanding Queen

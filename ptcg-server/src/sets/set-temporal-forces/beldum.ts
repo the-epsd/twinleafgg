@@ -44,7 +44,8 @@ export class Beldum extends PokemonCard {
 
   public name: string = 'Beldum';
 
-  public fullName: string = 'Beldum TEF';
+  public fullName: string = 'Beldum (TEF 113)';
+  public legacyFullName = 'Beldum TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

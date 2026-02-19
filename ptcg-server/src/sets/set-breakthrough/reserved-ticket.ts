@@ -17,7 +17,8 @@ export class ReservedTicket extends TrainerCard {
   public setNumber: string = '147';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Reserved Ticket';
-  public fullName: string = 'Reserved Ticket BKT';
+  public fullName: string = 'Reserved Ticket (BKT 147)';
+  public legacyFullName = 'Reserved Ticket BKT';
   public text: string = 'Flip a coin. If heads, search your deck for a card, shuffle your deck, then put that card on top of it.';
 
   // Ref: set-silver-tempest/beldum.ts (Magnetic Lift - search deck, shuffle, put on top)

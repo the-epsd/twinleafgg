@@ -40,7 +40,8 @@ export class Primarina extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Primarina';
-  public fullName: string = 'Primarina LOT';
+  public fullName: string = 'Primarina (LOT 67)';
+  public legacyFullName = 'Primarina LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Harmonics (passive - intercept manual energy attachment)

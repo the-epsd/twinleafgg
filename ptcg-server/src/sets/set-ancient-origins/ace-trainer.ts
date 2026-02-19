@@ -16,7 +16,8 @@ export class AceTrainer extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';
   public name: string = 'Ace Trainer';
-  public fullName: string = 'Ace Trainer AOR';
+  public fullName: string = 'Ace Trainer (AOR 69)';
+  public legacyFullName = 'Ace Trainer AOR';
 
   public text: string =
     'You can play this card only if you have more Prize cards left than your opponent.\n\nEach player shuffles his or her hand into his or her deck. Then, draw 6 cards. Your opponent draws 3 cards.';

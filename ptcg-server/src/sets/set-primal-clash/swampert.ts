@@ -36,7 +36,8 @@ export class Swampert extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swampert';
-  public fullName: string = 'Swampert PRC';
+  public fullName: string = 'Swampert (PRC 35)';
+  public legacyFullName = 'Swampert PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Water Arrow

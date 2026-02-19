@@ -31,7 +31,8 @@ export class Staryu extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Staryu';
-  public fullName: string = 'Staryu NXD';
+  public fullName: string = 'Staryu (NXD 23)';
+  public legacyFullName = 'Staryu NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Recover

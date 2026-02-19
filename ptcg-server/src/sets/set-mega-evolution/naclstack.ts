@@ -23,7 +23,8 @@ export class Naclstack extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
   public name: string = 'Naclstack';
-  public fullName: string = 'Naclstack M1L';
+  public fullName: string = 'Naclstack (MEG 83)';
+  public legacyFullName = 'Naclstack M1L';
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

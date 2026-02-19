@@ -20,7 +20,7 @@ export class Zeraora extends PokemonCard {
       name: 'Fighting Lightning',
       cost: [L, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Pokémon V or Pokémon-GX, this attack does 80 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Zeraora extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zeraora';
-  public fullName: string = 'Zeraora VIV';
+  public fullName: string = 'Zeraora (VIV 61)';
+  public legacyFullName = 'Zeraora VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fighting Lightning

@@ -33,7 +33,8 @@ export class Magikarp extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magikarp';
-  public fullName: string = 'Magikarp BUS';
+  public fullName: string = 'Magikarp (BUS 32)';
+  public legacyFullName = 'Magikarp BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Splashing Dodge

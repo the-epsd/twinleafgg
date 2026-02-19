@@ -36,7 +36,8 @@ export class Servine extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Servine';
-  public fullName: string = 'Servine BCR';
+  public fullName: string = 'Servine (BCR 12)';
+  public legacyFullName = 'Servine BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Double Slash

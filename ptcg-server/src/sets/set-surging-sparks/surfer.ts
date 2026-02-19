@@ -21,7 +21,8 @@ export class Surfer extends TrainerCard {
   
   public name: string = 'Surfer';
 
-  public fullName: string = 'Surfer SSP';
+  public fullName: string = 'Surfer (SSP 187)';
+  public legacyFullName = 'Surfer SSP';
 
   public text: string =
     'Switch your Active Pokémon with 1 of your Benched Pokémon. If you do, draw cards until you have 5 cards in your hand.';

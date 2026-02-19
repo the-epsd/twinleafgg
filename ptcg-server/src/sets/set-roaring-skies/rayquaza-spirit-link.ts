@@ -8,7 +8,8 @@ export class RayquazaSpiritLink extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'ROS';
   public name: string = 'Rayquaza Spirit Link';
-  public fullName: string = 'Rayquaza Spirit Link ROS';
+  public fullName: string = 'Rayquaza Spirit Link (ROS 87)';
+  public legacyFullName = 'Rayquaza Spirit Link ROS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
 

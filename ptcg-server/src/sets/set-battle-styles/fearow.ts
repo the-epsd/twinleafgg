@@ -28,5 +28,6 @@ export class Fearow extends PokemonCard {
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fearow';
-  public fullName: string = 'Fearow BST';
+  public fullName: string = 'Fearow (BST 112)';
+  public legacyFullName = 'Fearow BST';
 }

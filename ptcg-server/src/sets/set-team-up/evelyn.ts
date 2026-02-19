@@ -15,7 +15,8 @@ export class Evelyn extends TrainerCard {
   public setNumber: string = '141';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Evelyn';
-  public fullName: string = 'Evelyn TEU';
+  public fullName: string = 'Evelyn (TEU 141)';
+  public legacyFullName = 'Evelyn TEU';
   public text: string = 'You can play this card only if your opponent\'s Active Pokémon is a Stage 1 Pokémon. Draw 4 cards. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-lost-thunder/whitney.ts (simple supporter with draw)

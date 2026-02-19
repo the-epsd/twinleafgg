@@ -33,7 +33,8 @@ export class MegaStarmieex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
   public name: string = 'Mega Starmie ex';
-  public fullName: string = 'Mega Starmie ex M3';
+  public fullName: string = 'Mega Starmie ex (M3 21)';
+  public legacyFullName = 'Mega Starmie ex M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

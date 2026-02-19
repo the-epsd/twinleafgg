@@ -34,7 +34,8 @@ export class Charmander extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charmander';
-  public fullName: string = 'Charmander BCR';
+  public fullName: string = 'Charmander (BCR 18)';
+  public legacyFullName = 'Charmander BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Draw In

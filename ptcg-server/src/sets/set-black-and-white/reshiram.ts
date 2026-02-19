@@ -33,7 +33,8 @@ export class Reshiram extends PokemonCard {
 
   public set: string = 'BLW';
   public name: string = 'Reshiram';
-  public fullName: string = 'Reshiram BLW';
+  public fullName: string = 'Reshiram (BLW 26)';
+  public legacyFullName = 'Reshiram BLW';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '26';
 

@@ -25,7 +25,8 @@ export class TeamRocketsZubat extends PokemonCard {
   public setNumber: string = '120';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Zubat';
-  public fullName: string = 'Team Rocket\'s Zubat DRI';
+  public fullName: string = 'Team Rocket\'s Zubat (DRI 120)';
+  public legacyFullName = 'Team Rocket\'s Zubat DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {

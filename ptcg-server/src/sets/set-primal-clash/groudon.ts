@@ -22,7 +22,7 @@ export class Groudon extends PokemonCard {
       name: 'Rock Smash',
       cost: [F, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Groudon extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Groudon';
-  public fullName: string = 'Groudon PRC';
+  public fullName: string = 'Groudon (PRC 84)';
+  public legacyFullName = 'Groudon PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Smash

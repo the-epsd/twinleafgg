@@ -26,7 +26,7 @@ export class Falinks extends PokemonCard {
       name: 'Team Attack',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 30 damage for each of your Benched Pokémon that has "Falinks" in its name.'
     }
   ];
@@ -36,7 +36,8 @@ export class Falinks extends PokemonCard {
   public setNumber: string = 'SV074';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Falinks';
-  public fullName: string = 'Falinks SHF';
+  public fullName: string = 'Falinks (SHF SV074)';
+  public legacyFullName = 'Falinks SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Family

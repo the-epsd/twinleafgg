@@ -15,7 +15,8 @@ export class StartlingMegaphone extends TrainerCard {
 
   public name: string = 'Startling Megaphone';
 
-  public fullName: string = 'Startling Megaphone FLF';
+  public fullName: string = 'Startling Megaphone (FLF 97)';
+  public legacyFullName = 'Startling Megaphone FLF';
 
   public cardImage: string = 'assets/cardback.png';
 

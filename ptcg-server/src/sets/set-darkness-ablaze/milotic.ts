@@ -37,7 +37,8 @@ export class Milotic extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Milotic';
-  public fullName: string = 'Milotic DAA';
+  public fullName: string = 'Milotic (DAA 39)';
+  public legacyFullName = 'Milotic DAA';
 
   public readonly BRIGHT_HEAL_MARKER = 'MILOTIC_DAA_BRIGHT_HEAL_MARKER';
 

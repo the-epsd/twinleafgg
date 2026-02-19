@@ -30,7 +30,8 @@ export class Cramorant2 extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cramorant';
-  public fullName: string = 'Cramorant SHF 28';
+  public fullName: string = 'Cramorant (SHF 28)';
+  public legacyFullName = 'Cramorant SHF 28';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spit-Out Shot

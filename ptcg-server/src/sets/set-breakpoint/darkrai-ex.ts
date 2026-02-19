@@ -23,14 +23,14 @@ export class DarkraiEx extends PokemonCard {
       name: 'Dark Pulse',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each [D] Energy attached to all of your Pokémon.'
     },
     {
       name: 'Dark Head',
       cost: [D, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Asleep, this attack does 80 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class DarkraiEx extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Darkrai-EX';
-  public fullName: string = 'Darkrai-EX BKP';
+  public fullName: string = 'Darkrai-EX (BKP 74)';
+  public legacyFullName = 'Darkrai-EX BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dark Pulse

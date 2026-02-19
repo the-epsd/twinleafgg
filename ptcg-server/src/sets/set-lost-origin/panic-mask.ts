@@ -22,7 +22,8 @@ export class PanicMask extends TrainerCard {
 
   public name = 'Panic Mask';
 
-  public fullName = 'Panic Mask LOR';
+  public fullName = 'Panic Mask (LOR 165)';
+  public legacyFullName = 'Panic Mask LOR';
 
   public text: string =
     'Prevent all damage done to the Pokémon this card is attached to by attacks from your opponent\'s Pokémon that have 40 HP or less remaining.';

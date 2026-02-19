@@ -30,7 +30,8 @@ export class Palafinex extends PokemonCard {
   public setNumber: string = '61';
   public regulationMark = 'H';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Palafin ex TWM';
+  public fullName: string = 'Palafin ex (TWM 61)';
+  public legacyFullName = 'Palafin ex TWM';
   public name: string = 'Palafin ex';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

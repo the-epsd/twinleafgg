@@ -35,7 +35,8 @@ export class NsVanillish extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '50';
   public name: string = 'N\'s Vanillish';
-  public fullName: string = 'N\'s Vanillish M2a';
+  public fullName: string = 'N\'s Vanillish (ASC 50)';
+  public legacyFullName = 'N\'s Vanillish M2a';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
 

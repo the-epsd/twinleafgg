@@ -27,7 +27,7 @@ export class Mesprit extends PokemonCard {
       name: 'Mind Splash',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Uxie is on your Bench, this attack does 50 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Mesprit extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mesprit';
-  public fullName: string = 'Mesprit FLI';
+  public fullName: string = 'Mesprit (FLI 42)';
+  public legacyFullName = 'Mesprit FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Silent Waves (passive - remove resistance from opponent's Pokemon if Azelf in play)

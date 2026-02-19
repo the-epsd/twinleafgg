@@ -22,7 +22,7 @@ export class Lickitung extends PokemonCard {
       name: 'Slam',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 50 damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Lickitung extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lickitung';
-  public fullName: string = 'Lickitung UPR';
+  public fullName: string = 'Lickitung (UPR 102)';
+  public legacyFullName = 'Lickitung UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lap Up

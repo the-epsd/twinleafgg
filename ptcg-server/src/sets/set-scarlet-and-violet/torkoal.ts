@@ -29,7 +29,8 @@ export class Torkoal extends PokemonCard {
 
   public set: string = 'SVI';
   public name: string = 'Torkoal';
-  public fullName: string = 'Torkoal SVI';
+  public fullName: string = 'Torkoal (SVI 35)';
+  public legacyFullName = 'Torkoal SVI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '35';
   public regulationMark: string = 'G';

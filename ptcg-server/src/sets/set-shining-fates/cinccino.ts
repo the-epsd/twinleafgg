@@ -37,7 +37,8 @@ export class Cinccino extends PokemonCard {
   public setNumber: string = 'SV094';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cinccino';
-  public fullName: string = 'Cinccino SHF';
+  public fullName: string = 'Cinccino (SHF SV094)';
+  public legacyFullName = 'Cinccino SHF';
 
   public readonly MAKE_DO_MARKER = 'CINCCINO_SHF_MAKE_DO_MARKER';
 

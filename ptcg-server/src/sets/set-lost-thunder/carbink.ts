@@ -42,7 +42,8 @@ export class Carbink extends PokemonCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carbink';
-  public fullName: string = 'Carbink LOT';
+  public fullName: string = 'Carbink (LOT 117)';
+  public legacyFullName = 'Carbink LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Diamond Gate

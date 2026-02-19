@@ -36,7 +36,8 @@ export class Kingler extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kingler';
-  public fullName: string = 'Kingler UNB';
+  public fullName: string = 'Kingler (UNB 47)';
+  public legacyFullName = 'Kingler UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble Beam

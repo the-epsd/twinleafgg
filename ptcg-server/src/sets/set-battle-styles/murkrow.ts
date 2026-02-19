@@ -36,7 +36,8 @@ export class Murkrow extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Murkrow';
-  public fullName: string = 'Murkrow BST';
+  public fullName: string = 'Murkrow (BST 93)';
+  public legacyFullName = 'Murkrow BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Scout

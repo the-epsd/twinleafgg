@@ -8,7 +8,8 @@ export class GrassEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'G';
   public name = 'Grass Energy';
-  public fullName = 'Grass Energy SSH';
+  public fullName = 'Grass Energy (SSH G)';
+  public legacyFullName = 'Grass Energy SSH';
 }
 
 export class FireEnergy extends EnergyCard {
@@ -18,7 +19,8 @@ export class FireEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'R';
   public name = 'Fire Energy';
-  public fullName = 'Fire Energy SSH';
+  public fullName = 'Fire Energy (SSH R)';
+  public legacyFullName = 'Fire Energy SSH';
 }
 
 export class WaterEnergy extends EnergyCard {
@@ -28,7 +30,8 @@ export class WaterEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'W';
   public name = 'Water Energy';
-  public fullName = 'Water Energy SSH';
+  public fullName = 'Water Energy (SSH W)';
+  public legacyFullName = 'Water Energy SSH';
 }
 
 export class LightningEnergy extends EnergyCard {
@@ -38,7 +41,8 @@ export class LightningEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'L';
   public name = 'Lightning Energy';
-  public fullName = 'Lightning Energy SSH';
+  public fullName = 'Lightning Energy (SSH L)';
+  public legacyFullName = 'Lightning Energy SSH';
 }
 
 export class PsychicEnergy extends EnergyCard {
@@ -48,7 +52,8 @@ export class PsychicEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'P';
   public name = 'Psychic Energy';
-  public fullName = 'Psychic Energy SSH';
+  public fullName = 'Psychic Energy (SSH P)';
+  public legacyFullName = 'Psychic Energy SSH';
 }
 
 export class FightingEnergy extends EnergyCard {
@@ -58,7 +63,8 @@ export class FightingEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'F';
   public name = 'Fighting Energy';
-  public fullName = 'Fighting Energy SSH';
+  public fullName = 'Fighting Energy (SSH F)';
+  public legacyFullName = 'Fighting Energy SSH';
 }
 
 export class DarknessEnergy extends EnergyCard {
@@ -68,7 +74,8 @@ export class DarknessEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'D';
   public name = 'Darkness Energy';
-  public fullName = 'Darkness Energy SSH';
+  public fullName = 'Darkness Energy (SSH D)';
+  public legacyFullName = 'Darkness Energy SSH';
 }
 
 export class MetalEnergy extends EnergyCard {
@@ -78,5 +85,6 @@ export class MetalEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'M';
   public name = 'Metal Energy';
-  public fullName = 'Metal Energy SSH';
+  public fullName = 'Metal Energy (SSH M)';
+  public legacyFullName = 'Metal Energy SSH';
 }

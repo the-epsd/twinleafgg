@@ -39,7 +39,8 @@ export class SharpedoEx extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sharpedo-EX';
-  public fullName: string = 'Sharpedo-EX PRC';
+  public fullName: string = 'Sharpedo-EX (PRC 91)';
+  public legacyFullName = 'Sharpedo-EX PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hunt

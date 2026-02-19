@@ -30,7 +30,8 @@ export class Meditite extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meditite';
-  public fullName: string = 'Meditite RCL';
+  public fullName: string = 'Meditite (RCL 97)';
+  public legacyFullName = 'Meditite RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Yoga Shock

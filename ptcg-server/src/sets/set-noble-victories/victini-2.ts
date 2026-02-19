@@ -31,7 +31,8 @@ export class Victini2 extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Victini';
-  public fullName: string = 'Victini NVI 14';
+  public fullName: string = 'Victini (NVI 14)';
+  public legacyFullName = 'Victini NVI 14';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // TODO: Implement Victory Star once coin-flip sequence rerolls are supported cleanly via CoinFlipEffect.

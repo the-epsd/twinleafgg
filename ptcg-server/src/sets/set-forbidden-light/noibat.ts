@@ -36,7 +36,8 @@ export class Noibat extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Noibat';
-  public fullName: string = 'Noibat FLI';
+  public fullName: string = 'Noibat (FLI 100)';
+  public legacyFullName = 'Noibat FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Destructive Sound

@@ -32,7 +32,8 @@ export class Crabominable extends PokemonCard {
   public regulationMark = 'H';
   public set: string = 'SCR';
   public name: string = 'Crabominable';
-  public fullName: string = 'Crabominable SCR';
+  public fullName: string = 'Crabominable (SCR 42)';
+  public legacyFullName = 'Crabominable SCR';
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
 

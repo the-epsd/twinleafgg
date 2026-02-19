@@ -32,7 +32,8 @@ export class Eelektrik extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eelektrik';
-  public fullName: string = 'Eelektrik PLB';
+  public fullName: string = 'Eelektrik (PLB 32)';
+  public legacyFullName = 'Eelektrik PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

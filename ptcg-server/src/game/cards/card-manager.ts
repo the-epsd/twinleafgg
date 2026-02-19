@@ -25,12 +25,11 @@ export class CardManager {
       this.cards.push(card);
       this.cardIndex[card.fullName] = index;
 
-      const p = card as any;
-      if (p.legacyFullName) {
-        if (this.cardIndex[p.legacyFullName] !== undefined) {
-          throw new Error('Multiple cards with the same name: ' + p.legacyFullName);
+      if (card.legacyFullName) {
+        if (this.cardIndex[card.legacyFullName] !== undefined) {
+          throw new Error('Multiple cards with the same name: ' + card.legacyFullName);
         }
-        this.cardIndex[p.legacyFullName] = index;
+        this.cardIndex[card.legacyFullName] = index;
       }
     }
   }
@@ -40,6 +39,9 @@ export class CardManager {
     this.cards = cardsInfo.cards;
     for (let i = 0; i < this.cards.length; i++) {
       this.cardIndex[this.cards[i].fullName] = i;
+      if (this.cards[i].legacyFullName) {
+        this.cardIndex[this.cards[i].legacyFullName!] = i;
+      }
     }
   }
 

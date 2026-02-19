@@ -25,7 +25,8 @@ export class Tympole extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '33';
   public name: string = 'Tympole';
-  public fullName: string = 'Tympole BKP';
+  public fullName: string = 'Tympole (BKP 33)';
+  public legacyFullName = 'Tympole BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

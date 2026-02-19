@@ -119,7 +119,8 @@ export class SecretBox extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '163';
   public name: string = 'Secret Box';
-  public fullName: string = 'Secret Box TWM';
+  public fullName: string = 'Secret Box (TWM 163)';
+  public legacyFullName = 'Secret Box TWM';
 
   public text: string =
     `You can use this card only if you discard 3 other cards from your hand.

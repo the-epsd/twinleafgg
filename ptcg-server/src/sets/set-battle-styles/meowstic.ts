@@ -41,7 +41,8 @@ export class Meowstic extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meowstic';
-  public fullName: string = 'Meowstic BST';
+  public fullName: string = 'Meowstic (BST 61)';
+  public legacyFullName = 'Meowstic BST';
 
   public readonly EAR_MOVES_MARKER = 'MEOWSTIC_BST_EAR_MOVES_MARKER';
 

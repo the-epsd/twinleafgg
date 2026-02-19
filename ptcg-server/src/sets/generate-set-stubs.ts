@@ -780,9 +780,7 @@ function main() {
       fileName += `-${count}`;
     }
 
-    const fullName = count > 1
-      ? `${baseName} ${setCode} ${card.number}`
-      : `${baseName} ${setCode}`;
+    const fullName = `${baseName} (${setCode} ${card.number})`;
 
     const category: 'pokemon' | 'trainer' | 'energy' =
       card.supertype === 'Pokémon' ? 'pokemon' :
@@ -931,7 +929,6 @@ function main() {
 
       if (ca.action === 'intra-reprint') {
         reprintClassName = ca.className;
-        reprintFullName = `${ca.card.name} ${setCode} ${ca.card.number}`;
       } else {
         reprintClassName = toPascalCase(ca.card.name) + setCode;
         // Avoid collision
@@ -939,12 +936,8 @@ function main() {
             newOtherPrints.some(e => e.className === reprintClassName)) {
           reprintClassName += ca.card.number;
         }
-        reprintFullName = `${ca.card.name} ${setCode}`;
-        // Check if another cross-set reprint for same card already exists
-        if (newOtherPrints.some(e => e.fullName === reprintFullName)) {
-          reprintFullName = `${ca.card.name} ${setCode} ${ca.card.number}`;
-        }
       }
+      reprintFullName = `${ca.card.name} (${setCode} ${ca.card.number})`;
 
       newOtherPrints.push({
         className: reprintClassName,

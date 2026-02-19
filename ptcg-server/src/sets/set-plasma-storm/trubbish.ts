@@ -36,7 +36,8 @@ export class Trubbish extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trubbish';
-  public fullName: string = 'Trubbish PLS';
+  public fullName: string = 'Trubbish (PLS 63)';
+  public legacyFullName = 'Trubbish PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pile Up

@@ -37,7 +37,8 @@ export class Swadloon extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swadloon';
-  public fullName: string = 'Swadloon PLS';
+  public fullName: string = 'Swadloon (PLS 9)';
+  public legacyFullName = 'Swadloon PLS';
 
   public readonly SWADDLE_GUARD_MARKER = 'SWADDLE_GUARD_MARKER';
   public readonly CLEAR_SWADDLE_GUARD_MARKER = 'CLEAR_SWADDLE_GUARD_MARKER';

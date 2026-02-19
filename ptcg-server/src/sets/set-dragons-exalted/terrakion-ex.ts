@@ -32,7 +32,8 @@ export class TerrakionEx extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Terrakion-EX';
-  public fullName: string = 'Terrakion-EX DRX';
+  public fullName: string = 'Terrakion-EX (DRX 71)';
+  public legacyFullName = 'Terrakion-EX DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Tumble - ignore Resistance

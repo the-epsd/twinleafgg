@@ -38,7 +38,8 @@ export class Lucario extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '79';
   public name: string = 'Lucario';
-  public fullName: string = 'Lucario BRS';
+  public fullName: string = 'Lucario (BRS 79)';
+  public legacyFullName = 'Lucario BRS';
 
   public readonly ROARING_RESOLVE_MARKER = 'ROARING_RESOLVE_MARKER';
 

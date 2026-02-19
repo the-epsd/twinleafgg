@@ -37,7 +37,8 @@ export class Florges extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Florges';
-  public fullName: string = 'Florges FLF';
+  public fullName: string = 'Florges (FLF 66)';
+  public legacyFullName = 'Florges FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-primal-clash/teammates.ts (generic card search)

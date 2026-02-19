@@ -35,7 +35,8 @@ export class Stoutland extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '176';
   public name = 'Stoutland';
-  public fullName = 'Stoutland CEC';
+  public fullName = 'Stoutland (CEC 176)';
+  public legacyFullName = 'Stoutland CEC';
 
   public damageDealt = false;
 

@@ -21,7 +21,7 @@ export class Chandelure extends PokemonCard {
       name: 'Spirit Burner',
       cost: [R],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Discard the top 5 cards of your deck. This attack does 60 more damage for each Pokémon you discarded in this way. Then, put any number of Fire Pokémon you discarded in this way onto your Bench.'
     }
   ];
@@ -30,7 +30,8 @@ export class Chandelure extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chandelure';
-  public fullName: string = 'Chandelure UNM';
+  public fullName: string = 'Chandelure (UNM 30)';
+  public legacyFullName = 'Chandelure UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spirit Burner

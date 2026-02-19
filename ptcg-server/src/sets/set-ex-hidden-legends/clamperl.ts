@@ -29,7 +29,8 @@ export class Clamperl extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '58';
   public name: string = 'Clamperl';
-  public fullName: string = 'Clamperl HL';
+  public fullName: string = 'Clamperl (HL 58)';
+  public legacyFullName = 'Clamperl HL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

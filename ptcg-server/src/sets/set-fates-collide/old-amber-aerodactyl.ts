@@ -64,7 +64,8 @@ export class OldAmberAerodactyl extends TrainerCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Old Amber Aerodactyl';
-  public fullName: string = 'Old Amber Aerodactyl FCO';
+  public fullName: string = 'Old Amber Aerodactyl (FCO 106)';
+  public legacyFullName = 'Old Amber Aerodactyl FCO';
   public text: string = 'Look at the bottom 7 cards of your deck. You may reveal an Aerodactyl you find there and put it onto your Bench. Shuffle the other cards back into your deck.';
 
   // Ref: set-furious-fists/jaw-fossil.ts (bottom 7 fossil pattern)

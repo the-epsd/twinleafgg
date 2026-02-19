@@ -10,7 +10,8 @@ export class JudgeWhistle extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'TEU';
   public name: string = 'Judge Whistle';
-  public fullName: string = 'Judge Whistle TEU';
+  public fullName: string = 'Judge Whistle (TEU 146)';
+  public legacyFullName = 'Judge Whistle TEU';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '146';
 

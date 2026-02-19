@@ -41,7 +41,8 @@ export class Passimian extends PokemonCard {
 
   public name: string = 'Passimian';
 
-  public fullName: string = 'Passimian UPR';
+  public fullName: string = 'Passimian (UPR 70)';
+  public legacyFullName = 'Passimian UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect && StateUtils.isPokemonInPlay(effect.player, this, SlotType.BENCH)) {

@@ -43,7 +43,8 @@ export class Ludicolo extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ludicolo';
-  public fullName: string = 'Ludicolo PRC';
+  public fullName: string = 'Ludicolo (PRC 12)';
+  public legacyFullName = 'Ludicolo PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Captivating Rhythm

@@ -27,7 +27,8 @@ export class WashRotom extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wash Rotom';
-  public fullName: string = 'Wash Rotom DRI';
+  public fullName: string = 'Wash Rotom (DRI 61)';
+  public legacyFullName = 'Wash Rotom DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

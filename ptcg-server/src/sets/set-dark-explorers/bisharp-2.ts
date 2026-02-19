@@ -34,7 +34,8 @@ export class Bisharp2 extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bisharp';
-  public fullName: string = 'Bisharp DEX 79';
+  public fullName: string = 'Bisharp (DEX 79)';
+  public legacyFullName = 'Bisharp DEX 79';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Aerial Ace - flip a coin, if heads +20 damage

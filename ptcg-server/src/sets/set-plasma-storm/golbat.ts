@@ -31,7 +31,8 @@ export class Golbat extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golbat';
-  public fullName: string = 'Golbat PLS';
+  public fullName: string = 'Golbat (PLS 54)';
+  public legacyFullName = 'Golbat PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spiral Drain

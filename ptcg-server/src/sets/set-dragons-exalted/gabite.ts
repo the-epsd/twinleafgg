@@ -53,7 +53,8 @@ export class Gabite extends PokemonCard {
 
   public name: string = 'Gabite';
 
-  public fullName: string = 'Gabite DRX';
+  public fullName: string = 'Gabite (DRX 89)';
+  public legacyFullName = 'Gabite DRX';
 
   public readonly DRAGON_CALL_MARKER = 'DRAGON_CALL_MARKER';
 

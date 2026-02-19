@@ -21,7 +21,8 @@ export class IrisFightingSpirit extends TrainerCard {
 
   public name: string = 'Iris\'s Fighting Spirit';
 
-  public fullName: string = 'Iris\'s Fighting Spirit JTG';
+  public fullName: string = 'Iris\'s Fighting Spirit (JTG 149)';
+  public legacyFullName = 'Iris\'s Fighting Spirit JTG';
 
   public text: string =
     'You can use this card only if you discard another card from your hand.' +

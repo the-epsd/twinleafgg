@@ -37,7 +37,8 @@ export class Roselia2 extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Roselia';
-  public fullName: string = 'Roselia SSH 3';
+  public fullName: string = 'Roselia (SSH 3)';
+  public legacyFullName = 'Roselia SSH 3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sweet Scent

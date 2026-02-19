@@ -30,7 +30,7 @@ export class Sharpedo extends PokemonCard {
       name: 'Bad Fangs',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage times the amount of [D] Energy attached to this Pokémon.'
     }
   ];
@@ -39,7 +39,8 @@ export class Sharpedo extends PokemonCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sharpedo';
-  public fullName: string = 'Sharpedo UNB';
+  public fullName: string = 'Sharpedo (UNB 111)';
+  public legacyFullName = 'Sharpedo UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Greedy Evolution (on-evolve - attach D energy from top 6 cards)

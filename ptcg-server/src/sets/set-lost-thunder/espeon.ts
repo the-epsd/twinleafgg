@@ -28,7 +28,7 @@ export class Espeon extends PokemonCard {
       name: 'Energy Crush',
       cost: [P],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage times the amount of Energy attached to all of your opponent\'s Pok\u00e9mon.'
     }
   ];
@@ -37,7 +37,8 @@ export class Espeon extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Espeon';
-  public fullName: string = 'Espeon LOT';
+  public fullName: string = 'Espeon (LOT 89)';
+  public legacyFullName = 'Espeon LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Allure

@@ -36,7 +36,8 @@ export class Kabutops extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kabutops';
-  public fullName: string = 'Kabutops TEU';
+  public fullName: string = 'Kabutops (TEU 78)';
+  public legacyFullName = 'Kabutops TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fossilized Memories (passive - block opponent's supporters while active)

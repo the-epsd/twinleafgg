@@ -36,7 +36,8 @@ export class Rapidash extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rapidash';
-  public fullName: string = 'Rapidash CEC';
+  public fullName: string = 'Rapidash (CEC 24)';
+  public legacyFullName = 'Rapidash CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Overrun

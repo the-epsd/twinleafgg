@@ -15,7 +15,8 @@ export class Lisia extends TrainerCard {
   public setNumber: string = '137';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lisia';
-  public fullName: string = 'Lisia CES';
+  public fullName: string = 'Lisia (CES 137)';
+  public legacyFullName = 'Lisia CES';
   public text: string = 'Search your deck for up to 2 ◇ (Prism Star) cards, reveal them, and put them into your hand. Then, shuffle your deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-celestial-storm/beast-ball.ts (blocked filter by CardTag for ChooseCardsPrompt)

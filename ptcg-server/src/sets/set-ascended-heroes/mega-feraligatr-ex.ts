@@ -25,7 +25,8 @@ export class MegaFeraligatrex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '43';
   public name: string = 'Mega Feraligatr ex';
-  public fullName: string = 'Mega Feraligatr ex MC';
+  public fullName: string = 'Mega Feraligatr ex (ASC 43)';
+  public legacyFullName = 'Mega Feraligatr ex MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

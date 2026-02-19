@@ -32,7 +32,8 @@ export class Forretress extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
   public name: string = 'Forretress';
-  public fullName: string = 'Forretress UF';
+  public fullName: string = 'Forretress (UF 6)';
+  public legacyFullName = 'Forretress UF';
 
   public readonly COUNTERS_MARKER = 'COUNTERS_MARKER';
   public readonly CLEAR_COUNTERS_MARKER = 'CLEAR_COUNTERS_MARKER';

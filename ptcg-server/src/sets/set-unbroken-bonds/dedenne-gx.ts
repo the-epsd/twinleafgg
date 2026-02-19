@@ -42,7 +42,8 @@ export class DedenneGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '195';
   public name = 'Dedenne-GX';
-  public fullName = 'Dedenne GX UNB';
+  public fullName = 'Dedenne-GX (UNB 195)';
+  public legacyFullName = 'Dedenne GX UNB';
 
   public readonly DEDECHANGE_MARKER = 'DEDECHANGE_MARKER';
 

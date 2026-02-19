@@ -35,7 +35,8 @@ export class Skitty extends PokemonCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skitty';
-  public fullName: string = 'Skitty XY';
+  public fullName: string = 'Skitty (XY 104)';
+  public legacyFullName = 'Skitty XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/beautifly.ts (Drainpour - heal each Pokemon pattern)

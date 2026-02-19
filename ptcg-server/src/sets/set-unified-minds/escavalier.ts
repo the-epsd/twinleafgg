@@ -36,7 +36,8 @@ export class Escavalier extends PokemonCard {
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Escavalier';
-  public fullName: string = 'Escavalier UNM';
+  public fullName: string = 'Escavalier (UNM 142)';
+  public legacyFullName = 'Escavalier UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Discerning Spear

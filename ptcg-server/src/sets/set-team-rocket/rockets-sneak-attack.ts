@@ -12,7 +12,8 @@ export class RocketsSneakAttack extends TrainerCard {
   public set: string = 'TR';
   public setNumber = '16';
   public name: string = 'Rocket\'s Sneak Attack';
-  public fullName: string = 'Rocket\'s Sneak Attack TR';
+  public fullName: string = 'Rocket\'s Sneak Attack (TR 16)';
+  public legacyFullName = 'Rocket\'s Sneak Attack TR';
   public cardImage: string = 'assets/cardback.png';
 
   public text: string = 'Look at your opponent\'s hand. If he or she has any Trainer cards, choose 1 of them. Your opponent shuffles that card into his or her deck.';

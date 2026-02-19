@@ -35,7 +35,8 @@ export class Skitty extends PokemonCard {
   public setNumber: string = '141';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skitty';
-  public fullName: string = 'Skitty DAA';
+  public fullName: string = 'Skitty (DAA 141)';
+  public legacyFullName = 'Skitty DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Drawup Power

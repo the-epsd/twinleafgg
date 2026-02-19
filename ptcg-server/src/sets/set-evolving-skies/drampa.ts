@@ -40,7 +40,8 @@ export class Drampa extends PokemonCard {
 
   public name: string = 'Drampa';
 
-  public fullName: string = 'Drampa EVS';
+  public fullName: string = 'Drampa (EVS 119)';
+  public legacyFullName = 'Drampa EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

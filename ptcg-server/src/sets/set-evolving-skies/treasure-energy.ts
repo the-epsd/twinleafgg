@@ -21,7 +21,8 @@ export class TreasureEnergy extends EnergyCard {
   public setNumber: string = '165';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Treasure Energy';
-  public fullName: string = 'Treasure Energy EVS';
+  public fullName: string = 'Treasure Energy (EVS 165)';
+  public legacyFullName = 'Treasure Energy EVS';
   public text: string = 'As long as this card is attached to a Pokémon, it provides [C] Energy. If you took this card as a face-down Prize card during your turn, before you put it into your hand, you may attach this card to 1 of your Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

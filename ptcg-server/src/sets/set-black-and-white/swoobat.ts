@@ -32,7 +32,8 @@ export class Swoobat extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '51';
   public name: string = 'Swoobat';
-  public fullName: string = 'Swoobat BLW';
+  public fullName: string = 'Swoobat (BLW 51)';
+  public legacyFullName = 'Swoobat BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

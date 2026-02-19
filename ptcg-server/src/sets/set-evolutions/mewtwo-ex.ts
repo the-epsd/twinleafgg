@@ -42,7 +42,8 @@ export class MewtwoEx extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mewtwo-EX';
-  public fullName: string = 'Mewtwo-EX EVO';
+  public fullName: string = 'Mewtwo-EX (EVO 52)';
+  public legacyFullName = 'Mewtwo-EX EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Energy Absorption

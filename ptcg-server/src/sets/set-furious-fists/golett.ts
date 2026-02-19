@@ -28,7 +28,7 @@ export class Golett extends PokemonCard {
       name: 'Rock Smash',
       cost: [P, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Golett extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golett';
-  public fullName: string = 'Golett FFI';
+  public fullName: string = 'Golett (FFI 42)';
+  public legacyFullName = 'Golett FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Rock Smash

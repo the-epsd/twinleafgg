@@ -35,7 +35,8 @@ export class RocketsScytherex extends PokemonCard {
 
   public set: string = 'TRR';
   public name: string = 'Rocket\'s Scyther ex';
-  public fullName: string = 'Rocket\'s Scyther ex TRR';
+  public fullName: string = 'Rocket\'s Scyther ex (TRR 102)';
+  public legacyFullName = 'Rocket\'s Scyther ex TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '102';
 

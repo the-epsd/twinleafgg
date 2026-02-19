@@ -18,7 +18,8 @@ export class ExpertBelt extends TrainerCard {
 
   public name: string = 'Expert Belt';
 
-  public fullName: string = 'Expert Belt AR';
+  public fullName: string = 'Expert Belt (AR 87)';
+  public legacyFullName = 'Expert Belt AR';
 
   public cardImage: string = 'assets/cardback.png';
 

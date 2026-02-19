@@ -36,7 +36,8 @@ export class Lunatone extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lunatone';
-  public fullName: string = 'Lunatone PLS';
+  public fullName: string = 'Lunatone (PLS 73)';
+  public legacyFullName = 'Lunatone PLS';
   public readonly PREMONITION_MARKER = 'PREMONITION_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

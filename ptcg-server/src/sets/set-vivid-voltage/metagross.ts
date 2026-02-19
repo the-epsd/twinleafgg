@@ -42,7 +42,8 @@ export class Metagross extends PokemonCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metagross';
-  public fullName: string = 'Metagross VIV';
+  public fullName: string = 'Metagross (VIV 118)';
+  public legacyFullName = 'Metagross VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Levitation Field (passive - all your Pokemon have no retreat cost)

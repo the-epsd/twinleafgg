@@ -3,5 +3,6 @@ import { RocketsZapdos as RocketsZapdosG2 } from '../set-gym-challenge/rockets-z
 export class RocketsZapdos extends RocketsZapdosG2 {
   public set: string = 'CEL';
   public setNumber: string = '15A3';
-  public fullName: string = 'Rocket\'s Zapdos CEL';
+  public fullName: string = 'Rocket\'s Zapdos (CEL 15A3)';
+  public legacyFullName = 'Rocket\'s Zapdos CEL';
 }

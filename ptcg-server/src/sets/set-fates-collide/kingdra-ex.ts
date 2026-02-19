@@ -28,7 +28,7 @@ export class KingdraEx extends PokemonCard {
       name: 'Dragon Trail',
       cost: [W, C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each basic [L] Energy attached to this Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class KingdraEx extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kingdra-EX';
-  public fullName: string = 'Kingdra-EX FCO';
+  public fullName: string = 'Kingdra-EX (FCO 73)';
+  public legacyFullName = 'Kingdra-EX FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Big Storm

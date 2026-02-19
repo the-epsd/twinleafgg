@@ -49,7 +49,8 @@ export class AggronVMAX extends PokemonCard {
 
   public name: string = 'Aggron VMAX';
 
-  public fullName: string = 'Aggron VMAX BRS';
+  public fullName: string = 'Aggron VMAX (BRS 97)';
+  public legacyFullName = 'Aggron VMAX BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

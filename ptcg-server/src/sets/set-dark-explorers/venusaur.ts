@@ -53,7 +53,8 @@ export class Venusaur extends PokemonCard {
 
   public name: string = 'Venusaur';
 
-  public fullName: string = 'Venusaur DEX';
+  public fullName: string = 'Venusaur (DEX 3)';
+  public legacyFullName = 'Venusaur DEX';
 
   public readonly FLORAL_FRAGRANCE_MARKER = 'FLORAL_FRAGRANCE_MARKER';
 

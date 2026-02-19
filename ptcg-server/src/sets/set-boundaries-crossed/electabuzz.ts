@@ -31,5 +31,6 @@ export class Electabuzz extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electabuzz';
-  public fullName: string = 'Electabuzz BCR';
+  public fullName: string = 'Electabuzz (BCR 53)';
+  public legacyFullName = 'Electabuzz BCR';
 }

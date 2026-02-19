@@ -30,7 +30,8 @@ export class Palpitoad extends PokemonCard {
   public setNumber: string = '116';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Palpitoad';
-  public fullName: string = 'Palpitoad CEC';
+  public fullName: string = 'Palpitoad (CEC 116)';
+  public legacyFullName = 'Palpitoad CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mini Earthquake

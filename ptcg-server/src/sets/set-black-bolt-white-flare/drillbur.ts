@@ -26,5 +26,6 @@ export class Drillbur extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
   public name: string = 'Drillbur';
-  public fullName: string = 'Drillbur SV11B';
+  public fullName: string = 'Drillbur (BLK 45)';
+  public legacyFullName = 'Drillbur SV11B';
 } 

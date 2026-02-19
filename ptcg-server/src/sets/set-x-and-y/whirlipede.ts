@@ -31,7 +31,8 @@ export class Whirlipede extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whirlipede';
-  public fullName: string = 'Whirlipede XY';
+  public fullName: string = 'Whirlipede (XY 52)';
+  public legacyFullName = 'Whirlipede XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/magikarp.ts (Soggy Rush)

@@ -20,7 +20,8 @@ export class HexManiac extends TrainerCard {
 
   public name: string = 'Hex Maniac';
 
-  public fullName: string = 'Hex Maniac AOR';
+  public fullName: string = 'Hex Maniac (AOR 75)';
+  public legacyFullName = 'Hex Maniac AOR';
 
   public cardImage: string = 'assets/cardback.png';
 

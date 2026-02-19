@@ -32,7 +32,7 @@ export class Eelektross extends PokemonCard {
       name: 'Electricannon',
       cost: [L, L, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard all [L] Energy attached to this Pokémon. If you do, this attack does 50 more damage.'
     }
   ];
@@ -41,7 +41,8 @@ export class Eelektross extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eelektross';
-  public fullName: string = 'Eelektross PRC';
+  public fullName: string = 'Eelektross (PRC 65)';
+  public legacyFullName = 'Eelektross PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Energy Connect

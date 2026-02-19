@@ -29,7 +29,8 @@ export class Kecleon extends PokemonCard {
 
   public set: string = 'CRE';
   public name: string = 'Kecleon';
-  public fullName: string = 'Kecleon CRE';
+  public fullName: string = 'Kecleon (CRE 122)';
+  public legacyFullName = 'Kecleon CRE';
   public setNumber: string = '122';
   public regulationMark: string = 'E';
   public cardImage: string = 'assets/cardback.png';

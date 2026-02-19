@@ -20,7 +20,8 @@ export class Bonsly extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '110';
   public name: string = 'Bonsly';
-  public fullName: string = 'Bonsly OBF';
+  public fullName: string = 'Bonsly (OBF 110)';
+  public legacyFullName = 'Bonsly OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

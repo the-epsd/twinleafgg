@@ -35,7 +35,8 @@ export class Exeggcute extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Exeggcute';
-  public fullName: string = 'Exeggcute ROS';
+  public fullName: string = 'Exeggcute (ROS 1)';
+  public legacyFullName = 'Exeggcute ROS';
 
   public usedLoathe = false;
   public loatheHeads = false;

@@ -35,7 +35,8 @@ export class Solosis2 extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solosis';
-  public fullName: string = 'Solosis LTR 74';
+  public fullName: string = 'Solosis (LTR 74)';
+  public legacyFullName = 'Solosis LTR 74';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Nap

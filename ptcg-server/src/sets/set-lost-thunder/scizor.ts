@@ -30,7 +30,7 @@ export class Scizor extends PokemonCard {
       name: 'Special Blow',
       cost: [M, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon has any Special Energy attached to it, this attack does 70 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Scizor extends PokemonCard {
   public setNumber: string = '126';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scizor';
-  public fullName: string = 'Scizor LOT';
+  public fullName: string = 'Scizor (LOT 126)';
+  public legacyFullName = 'Scizor LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Exoskeleton (passive - damage reduction)

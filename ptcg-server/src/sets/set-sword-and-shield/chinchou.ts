@@ -26,5 +26,6 @@ export class Chinchou extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chinchou';
-  public fullName: string = 'Chinchou SSH';
+  public fullName: string = 'Chinchou (SSH 67)';
+  public legacyFullName = 'Chinchou SSH';
 }

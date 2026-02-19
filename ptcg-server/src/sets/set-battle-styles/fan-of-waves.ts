@@ -25,7 +25,8 @@ export class FanOfWaves extends TrainerCard {
 
   public name: string = 'Fan of Waves';
 
-  public fullName: string = 'Fan of Waves BST';
+  public fullName: string = 'Fan of Waves (BST 127)';
+  public legacyFullName = 'Fan of Waves BST';
 
   public text: string =
     'Put a Special Energy attached to 1 of your opponent\'s Pokémon on the bottom of their deck.';

@@ -17,7 +17,8 @@ export class WelcomingLantern extends TrainerCard {
   public setNumber: string = '156';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Welcoming Lantern';
-  public fullName: string = 'Welcoming Lantern CRE';
+  public fullName: string = 'Welcoming Lantern (CRE 156)';
+  public legacyFullName = 'Welcoming Lantern CRE';
   public text: string = 'Put a Single Strike Supporter card from your discard pile into your hand. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

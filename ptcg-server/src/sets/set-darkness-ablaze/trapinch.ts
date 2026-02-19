@@ -20,7 +20,7 @@ export class Trapinch extends PokemonCard {
       name: 'Land\'s Pulse',
       cost: [F],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If a Stadium is in play, this attack does 10 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Trapinch extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trapinch';
-  public fullName: string = 'Trapinch DAA';
+  public fullName: string = 'Trapinch (DAA 89)';
+  public legacyFullName = 'Trapinch DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Land's Pulse

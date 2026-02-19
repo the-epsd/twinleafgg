@@ -10,7 +10,8 @@ export class TrickShovel extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '98';
   public name: string = 'Trick Shovel';
-  public fullName: string = 'Trick Shovel FLF';
+  public fullName: string = 'Trick Shovel (FLF 98)';
+  public legacyFullName = 'Trick Shovel FLF';
   public text: string = 'Look at the top card of either player\'s deck. You may discard that card or return it to the top of the deck.';
 
 

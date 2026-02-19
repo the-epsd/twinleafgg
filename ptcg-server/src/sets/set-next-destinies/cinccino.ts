@@ -31,7 +31,8 @@ export class Cinccino extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cinccino';
-  public fullName: string = 'Cinccino NXD';
+  public fullName: string = 'Cinccino (NXD 85)';
+  public legacyFullName = 'Cinccino NXD';
 
   public readonly ECHOED_VOICE_MARKER = 'ECHOED_VOICE_MARKER';
   public readonly ECHOED_VOICE_CLEAR_MARKER = 'ECHOED_VOICE_CLEAR_MARKER';

@@ -32,7 +32,8 @@ export class PalkiaEX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
   public name: string = 'Palkia-EX';
-  public fullName: string = 'Palkia EX PLB';
+  public fullName: string = 'Palkia-EX (PLB 66)';
+  public legacyFullName = 'Palkia EX PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

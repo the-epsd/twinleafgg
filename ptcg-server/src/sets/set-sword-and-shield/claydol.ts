@@ -38,7 +38,8 @@ export class Claydol extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Claydol';
-  public fullName: string = 'Claydol SSH';
+  public fullName: string = 'Claydol (SSH 103)';
+  public legacyFullName = 'Claydol SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psybeam

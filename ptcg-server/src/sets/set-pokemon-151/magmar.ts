@@ -42,7 +42,8 @@ export class Magmar extends PokemonCard {
 
   public name: string = 'Magmar';
 
-  public fullName: string = 'Magmar MEW';
+  public fullName: string = 'Magmar (MEW 126)';
+  public legacyFullName = 'Magmar MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

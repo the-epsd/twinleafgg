@@ -21,7 +21,7 @@ export class Pincurchin extends PokemonCard {
       name: 'Shocking Needles',
       cost: [L, L],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 30 damage for each heads. If at least 2 of them are heads, your opponent\'s Active Pokémon is now Paralyzed.'
     }
   ];
@@ -31,7 +31,8 @@ export class Pincurchin extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pincurchin';
-  public fullName: string = 'Pincurchin SSH';
+  public fullName: string = 'Pincurchin (SSH 77)';
+  public legacyFullName = 'Pincurchin SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shocking Needles

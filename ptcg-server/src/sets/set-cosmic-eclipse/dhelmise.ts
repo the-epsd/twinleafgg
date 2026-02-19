@@ -35,7 +35,8 @@ export class Dhelmise extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dhelmise';
-  public fullName: string = 'Dhelmise CEC';
+  public fullName: string = 'Dhelmise (CEC 98)';
+  public legacyFullName = 'Dhelmise CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Seaweed Grab

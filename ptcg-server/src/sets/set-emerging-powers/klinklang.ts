@@ -35,7 +35,8 @@ export class Klinklang extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
   public name: string = 'Klinklang';
-  public fullName: string = 'Klinklang EPO';
+  public fullName: string = 'Klinklang (EPO 76)';
+  public legacyFullName = 'Klinklang EPO';
 
   public readonly ZAP_CANNON_MARKER = 'ZAP_CANNON_MARKER';
 

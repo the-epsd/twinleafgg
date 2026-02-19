@@ -37,7 +37,8 @@ export class Pinsir extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pinsir';
-  public fullName: string = 'Pinsir EVS';
+  public fullName: string = 'Pinsir (EVS 1)';
+  public legacyFullName = 'Pinsir EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Vise Coach

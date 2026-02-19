@@ -31,5 +31,6 @@ export class Sentret extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sentret';
-  public fullName: string = 'Sentret FLF';
+  public fullName: string = 'Sentret (FLF 81)';
+  public legacyFullName = 'Sentret FLF';
 }

@@ -14,7 +14,8 @@ export class ImposterOaksRevenge extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
   public name: string = 'Imposter Oak\'s Revenge';
-  public fullName: string = 'Imposter Oak\'s Revenge TR';
+  public fullName: string = 'Imposter Oak\'s Revenge (TR 76)';
+  public legacyFullName = 'Imposter Oak\'s Revenge TR';
 
   public text: string =
     'Discard a card from your hand in order to play this card. Your opponent shuffles his or her hand into his or her deck, then draws 4 cards.';

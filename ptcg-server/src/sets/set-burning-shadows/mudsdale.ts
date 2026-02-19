@@ -39,7 +39,8 @@ export class Mudsdale extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mudsdale';
-  public fullName: string = 'Mudsdale BUS';
+  public fullName: string = 'Mudsdale (BUS 78)';
+  public legacyFullName = 'Mudsdale BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Kick Away

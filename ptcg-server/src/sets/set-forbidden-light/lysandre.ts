@@ -17,7 +17,8 @@ export class Lysandre extends TrainerCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lysandre \u25C7';
-  public fullName: string = 'Lysandre \u25C7 FLI';
+  public fullName: string = 'Lysandre \u25C7 (FLI 110)';
+  public legacyFullName = 'Lysandre \u25C7 FLI';
   public text: string = 'For each of your Fire Pokémon in play, put a card from your opponent\'s discard pile in the Lost Zone. You may play only 1 Supporter card during your turn (before your attack). \u25C7 (Prism Star) Rule: You can\'t have more than 1 \u25C7 card with the same name in your deck. If a \u25C7 card would go to the discard pile, put it in the Lost Zone instead.';
 
   // Ref: set-forbidden-light/lysandre-prism-star.ts (Lysandre Prism Star)

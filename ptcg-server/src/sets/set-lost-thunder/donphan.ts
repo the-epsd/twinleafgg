@@ -30,7 +30,8 @@ export class Donphan extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '112';
   public name: string = 'Donphan';
-  public fullName: string = 'Donphan LOT';
+  public fullName: string = 'Donphan (LOT 112)';
+  public legacyFullName = 'Donphan LOT';
 
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';

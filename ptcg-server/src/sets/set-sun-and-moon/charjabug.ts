@@ -34,7 +34,8 @@ export class Charjabug extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '51';
   public name: string = 'Charjabug';
-  public fullName: string = 'Charjabug SUM';
+  public fullName: string = 'Charjabug (SUM 51)';
+  public legacyFullName = 'Charjabug SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

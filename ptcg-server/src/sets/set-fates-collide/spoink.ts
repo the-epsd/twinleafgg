@@ -28,7 +28,8 @@ export class Spoink extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spoink';
-  public fullName: string = 'Spoink FCO';
+  public fullName: string = 'Spoink (FCO 30)';
+  public legacyFullName = 'Spoink FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rocket Jump

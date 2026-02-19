@@ -25,7 +25,8 @@ export class Frillish extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
   public name: string = 'Frillish';
-  public fullName: string = 'Frillish SV11W';
+  public fullName: string = 'Frillish (WHT 44)';
+  public legacyFullName = 'Frillish SV11W';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 

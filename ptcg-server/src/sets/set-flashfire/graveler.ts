@@ -35,7 +35,8 @@ export class Graveler extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Graveler';
-  public fullName: string = 'Graveler FLF';
+  public fullName: string = 'Graveler (FLF 46)';
+  public legacyFullName = 'Graveler FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/tauros.ts (Take Down)

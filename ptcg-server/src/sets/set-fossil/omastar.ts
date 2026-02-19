@@ -32,7 +32,8 @@ export class Omastar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
   public name: string = 'Omastar';
-  public fullName: string = 'Omastar FO';
+  public fullName: string = 'Omastar (FO 40)';
+  public legacyFullName = 'Omastar FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

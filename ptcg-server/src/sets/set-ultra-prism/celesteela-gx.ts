@@ -23,7 +23,7 @@ export class CelesteelaGx extends PokemonCard {
       name: 'Rocket Fall',
       cost: [M, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     },
     {
@@ -44,7 +44,8 @@ export class CelesteelaGx extends PokemonCard {
   public setNumber: string = '144';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celesteela-GX';
-  public fullName: string = 'Celesteela-GX UPR';
+  public fullName: string = 'Celesteela-GX (UPR 144)';
+  public legacyFullName = 'Celesteela-GX UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rocket Fall

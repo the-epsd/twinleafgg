@@ -34,7 +34,8 @@ export class Passimian extends PokemonCard {
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Passimian';
-  public fullName: string = 'Passimian CEC';
+  public fullName: string = 'Passimian (CEC 125)';
+  public legacyFullName = 'Passimian CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spike Draw

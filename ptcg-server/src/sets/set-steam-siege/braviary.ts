@@ -24,14 +24,14 @@ export class Braviary extends PokemonCard {
       name: 'Ambush',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 50 more damage.'
     },
     {
       name: 'Sky Drop',
       cost: [C, C, C],
       damage: 120,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-' as const,
       text: 'This attack does 120 damage minus 20 damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];
@@ -40,7 +40,8 @@ export class Braviary extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Braviary';
-  public fullName: string = 'Braviary STS';
+  public fullName: string = 'Braviary (STS 93)';
+  public legacyFullName = 'Braviary STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ambush

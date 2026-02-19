@@ -37,7 +37,8 @@ export class Beartic extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beartic';
-  public fullName: string = 'Beartic PLS';
+  public fullName: string = 'Beartic (PLS 41)';
+  public legacyFullName = 'Beartic PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Powerful Rage

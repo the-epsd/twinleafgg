@@ -28,7 +28,8 @@ export class Swirlix extends PokemonCard {
 
   public set: string = 'PHF';
   public name: string = 'Swirlix';
-  public fullName: string = 'Swirlix PHF';
+  public fullName: string = 'Swirlix (PHF 68)';
+  public legacyFullName = 'Swirlix PHF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '68';
 

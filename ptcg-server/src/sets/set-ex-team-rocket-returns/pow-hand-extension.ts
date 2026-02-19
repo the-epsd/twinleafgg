@@ -11,7 +11,8 @@ export class PowHandExtension extends TrainerCard {
   public tags = [CardTag.ROCKETS_SECRET_MACHINE];
   public set: string = 'TRR';
   public name: string = 'Pow! Hand Extension';
-  public fullName: string = 'Pow! Hand Extension TRR';
+  public fullName: string = 'Pow! Hand Extension (TRR 85)';
+  public legacyFullName = 'Pow! Hand Extension TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public text = `You may use this card only if you have more Prize cards left than your opponent.

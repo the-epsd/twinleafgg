@@ -36,7 +36,8 @@ export class Gliscor extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gliscor';
-  public fullName: string = 'Gliscor ROS';
+  public fullName: string = 'Gliscor (ROS 37)';
+  public legacyFullName = 'Gliscor ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Slide

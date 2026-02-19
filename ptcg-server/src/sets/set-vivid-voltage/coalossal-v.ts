@@ -37,7 +37,8 @@ export class CoalossalV extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Coalossal V';
-  public fullName: string = 'Coalossal V VIV';
+  public fullName: string = 'Coalossal V (VIV 98)';
+  public legacyFullName = 'Coalossal V VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Searing Flame

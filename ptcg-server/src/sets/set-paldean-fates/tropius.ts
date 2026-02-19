@@ -28,7 +28,8 @@ export class Tropius extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Tropius';
-  public fullName: string = 'Tropius PAL';
+  public fullName: string = 'Tropius (PAL 7)';
+  public legacyFullName = 'Tropius PAL';
   public regulationMark = 'G';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

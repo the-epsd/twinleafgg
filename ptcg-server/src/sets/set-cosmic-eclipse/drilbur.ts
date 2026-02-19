@@ -35,7 +35,8 @@ export class Drilbur extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drilbur';
-  public fullName: string = 'Drilbur CEC';
+  public fullName: string = 'Drilbur (CEC 114)';
+  public legacyFullName = 'Drilbur CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rototiller

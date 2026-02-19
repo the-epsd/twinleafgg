@@ -39,7 +39,8 @@ export class Slurpuff extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slurpuff';
-  public fullName: string = 'Slurpuff XY';
+  public fullName: string = 'Slurpuff (XY 95)';
+  public legacyFullName = 'Slurpuff XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-paradox-rift/ancient-booster-energy-capsule.ts (PREVENT_AND_CLEAR_SPECIAL_CONDITIONS pattern)

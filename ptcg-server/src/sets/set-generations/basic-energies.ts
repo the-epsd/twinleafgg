@@ -15,7 +15,8 @@ export class GrassEnergy extends EnergyCard {
 
   public name = 'Grass Energy';
 
-  public fullName = 'Grass Energy GEN';
+  public fullName = 'Grass Energy (GEN 75)';
+  public legacyFullName = 'Grass Energy GEN';
 
 }
 
@@ -33,7 +34,8 @@ export class FireEnergy extends EnergyCard {
 
   public name = 'Fire Energy';
 
-  public fullName = 'Fire Energy GEN';
+  public fullName = 'Fire Energy (GEN 76)';
+  public legacyFullName = 'Fire Energy GEN';
 
 }
 
@@ -51,7 +53,8 @@ export class WaterEnergy extends EnergyCard {
 
   public name = 'Water Energy';
 
-  public fullName = 'Water Energy GEN';
+  public fullName = 'Water Energy (GEN 77)';
+  public legacyFullName = 'Water Energy GEN';
 
 }
 
@@ -69,7 +72,8 @@ export class LightningEnergy extends EnergyCard {
 
   public name = 'Lightning Energy';
 
-  public fullName = 'Lightning Energy GEN';
+  public fullName = 'Lightning Energy (GEN 78)';
+  public legacyFullName = 'Lightning Energy GEN';
 
 }
 
@@ -87,7 +91,8 @@ export class PsychicEnergy extends EnergyCard {
 
   public name = 'Psychic Energy';
 
-  public fullName = 'Psychic Energy GEN';
+  public fullName = 'Psychic Energy (GEN 79)';
+  public legacyFullName = 'Psychic Energy GEN';
 
 }
 
@@ -105,7 +110,8 @@ export class FightingEnergy extends EnergyCard {
 
   public name = 'Fighting Energy';
 
-  public fullName = 'Fighting Energy GEN';
+  public fullName = 'Fighting Energy (GEN 80)';
+  public legacyFullName = 'Fighting Energy GEN';
 
 }
 
@@ -123,7 +129,8 @@ export class DarknessEnergy extends EnergyCard {
 
   public name = 'Darkness Energy';
 
-  public fullName = 'Darkness Energy GEN';
+  public fullName = 'Darkness Energy (GEN 81)';
+  public legacyFullName = 'Darkness Energy GEN';
 
 }
 
@@ -141,7 +148,8 @@ export class MetalEnergy extends EnergyCard {
 
   public name = 'Metal Energy';
 
-  public fullName = 'Metal Energy GEN';
+  public fullName = 'Metal Energy (GEN 82)';
+  public legacyFullName = 'Metal Energy GEN';
 
 }
 
@@ -159,6 +167,7 @@ export class FairyEnergy extends EnergyCard {
 
   public name = 'Fairy Energy';
 
-  public fullName = 'Fairy Energy GEN';
+  public fullName = 'Fairy Energy (GEN 83)';
+  public legacyFullName = 'Fairy Energy GEN';
 
 }

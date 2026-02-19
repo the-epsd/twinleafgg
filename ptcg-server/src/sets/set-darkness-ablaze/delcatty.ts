@@ -37,7 +37,8 @@ export class Delcatty extends PokemonCard {
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Delcatty';
-  public fullName: string = 'Delcatty DAA';
+  public fullName: string = 'Delcatty (DAA 142)';
+  public legacyFullName = 'Delcatty DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Captivating Tail

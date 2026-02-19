@@ -32,7 +32,8 @@ export class RegigigasLVX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '100';
   public name: string = 'Regigigas';
-  public fullName: string = 'Regigigas Lv. X SF';
+  public fullName: string = 'Regigigas (SF 100)';
+  public legacyFullName = 'Regigigas Lv. X SF';
 
   public readonly SACRIFICE_MARKER = 'SACRIFICE_MARKER';
 

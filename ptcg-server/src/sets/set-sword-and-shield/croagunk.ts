@@ -32,5 +32,6 @@ export class Croagunk extends PokemonCard {
   public setNumber: string = '123';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Croagunk';
-  public fullName: string = 'Croagunk SSH';
+  public fullName: string = 'Croagunk (SSH 123)';
+  public legacyFullName = 'Croagunk SSH';
 }

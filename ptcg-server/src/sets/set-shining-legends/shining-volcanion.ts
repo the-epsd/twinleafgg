@@ -29,7 +29,8 @@ export class ShiningVolcanion extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '27';
   public name: string = 'Shining Volcanion';
-  public fullName: string = 'Shining Volcanion SLG';
+  public fullName: string = 'Shining Volcanion (SLG 27)';
+  public legacyFullName = 'Shining Volcanion SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

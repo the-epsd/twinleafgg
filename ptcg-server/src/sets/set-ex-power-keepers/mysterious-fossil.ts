@@ -35,7 +35,8 @@ export class MysteriousFossil extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public name: string = 'Mysterious Fossil';
-  public fullName: string = 'Mysterious Fossil PK';
+  public fullName: string = 'Mysterious Fossil (PK 85)';
+  public legacyFullName = 'Mysterious Fossil PK';
 
   public powers: Power[] = [
     {

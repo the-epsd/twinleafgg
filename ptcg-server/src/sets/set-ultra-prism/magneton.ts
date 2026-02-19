@@ -32,7 +32,8 @@ export class Magneton extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magneton';
-  public fullName: string = 'Magneton UPR';
+  public fullName: string = 'Magneton (UPR 82)';
+  public legacyFullName = 'Magneton UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Zap Cannon

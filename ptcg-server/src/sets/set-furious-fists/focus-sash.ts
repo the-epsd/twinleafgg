@@ -19,7 +19,8 @@ export class FocusSash extends TrainerCard {
 
   public name = 'Focus Sash';
 
-  public fullName = 'Focus Sash FFI';
+  public fullName = 'Focus Sash (FFI 91)';
+  public legacyFullName = 'Focus Sash FFI';
 
   public text: string =
     'If the [F] Pokémon this card is attached to has full HP and would be Knocked Out by damage from an opponent\'s attack, that Pokémon is not Knocked Out and its remaining HP becomes 10 instead. Then, discard this card.';

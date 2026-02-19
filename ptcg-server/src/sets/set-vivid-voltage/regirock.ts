@@ -35,7 +35,8 @@ export class Regirock extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Regirock';
-  public fullName: string = 'Regirock VIV';
+  public fullName: string = 'Regirock (VIV 89)';
+  public legacyFullName = 'Regirock VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Tumble

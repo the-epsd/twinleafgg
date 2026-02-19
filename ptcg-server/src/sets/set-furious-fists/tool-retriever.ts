@@ -71,7 +71,8 @@ export class ToolRetriever extends TrainerCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tool Retriever';
-  public fullName: string = 'Tool Retriever FFI';
+  public fullName: string = 'Tool Retriever (FFI 101)';
+  public legacyFullName = 'Tool Retriever FFI';
   public text: string = 'Choose up to 2 Pok\u00e9mon Tool cards attached to your Pok\u00e9mon and put them into your hand.';
 
   // Ref: set-dragons-exalted/tool-scrapper.ts (tool removal from Pokemon)

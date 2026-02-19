@@ -11,7 +11,8 @@ export class MrBrineysCompassion extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Mr. Briney\'s Compassion';
-  public fullName: string = 'Mr. Briney\'s Compassion DR';
+  public fullName: string = 'Mr. Briney\'s Compassion (DR 87)';
+  public legacyFullName = 'Mr. Briney\'s Compassion DR';
   public text = 'Choose 1 of your Pokémon in play (excluding Pokémon-ex). Return that Pokémon and all cards attached to it to your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

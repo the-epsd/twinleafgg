@@ -31,7 +31,8 @@ export class Clefable extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Clefable';
-  public fullName: string = 'Clefable EX';
+  public fullName: string = 'Clefable (EX 41)';
+  public legacyFullName = 'Clefable EX';
 
   public readonly MOONLIGHT_MARKER = 'MOONLIGHT_MARKER';
 

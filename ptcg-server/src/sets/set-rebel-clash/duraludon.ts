@@ -43,7 +43,8 @@ export class Duraludon extends PokemonCard {
 
   public name: string = 'Duraludon';
 
-  public fullName: string = 'Duraludon RCL';
+  public fullName: string = 'Duraludon (RCL 138)';
+  public legacyFullName = 'Duraludon RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

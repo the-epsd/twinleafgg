@@ -1,7 +1,8 @@
 import { EscapeRope } from '../set-battle-styles/escape-rope';
 
 export class WarpPointG2 extends EscapeRope {
-  public fullName = 'Warp Point G2';
+  public fullName = 'Warp Point (G2 126)';
+  public legacyFullName = 'Warp Point G2';
   public name = 'Warp Point';
   public set = 'G2';
   public setNumber = '126';

@@ -19,6 +19,7 @@ export class Sizzlipede extends PokemonCard {
   public setNumber: string = '27';
 
   public name: string = 'Sizzlipede';
-  public fullName: string = 'Sizzlipede SSP';
+  public fullName: string = 'Sizzlipede (SSP 27)';
+  public legacyFullName = 'Sizzlipede SSP';
   
 }

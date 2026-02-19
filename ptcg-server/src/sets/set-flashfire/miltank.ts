@@ -38,7 +38,8 @@ export class Miltank extends PokemonCard {
 
   public name: string = 'Miltank';
 
-  public fullName: string = 'Miltank FLF';
+  public fullName: string = 'Miltank (FLF 83)';
+  public legacyFullName = 'Miltank FLF';
 
   public cardImage: string = 'assets/cardback.png';
 

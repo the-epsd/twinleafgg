@@ -27,7 +27,7 @@ export class Electrode extends PokemonCard {
       name: 'Continuous Tumble',
       cost: [C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 20 damage times the number of heads.'
     },
     {
@@ -42,7 +42,8 @@ export class Electrode extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electrode';
-  public fullName: string = 'Electrode ROS';
+  public fullName: string = 'Electrode (ROS 22)';
+  public legacyFullName = 'Electrode ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Tumble

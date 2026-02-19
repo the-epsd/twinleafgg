@@ -35,7 +35,8 @@ export class Regice extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Regice';
-  public fullName: string = 'Regice CIN';
+  public fullName: string = 'Regice (CIN 28)';
+  public legacyFullName = 'Regice CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Iceberg Shield (passive - prevent all effects from Stage 2 Pokemon)

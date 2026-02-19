@@ -31,7 +31,8 @@ export class Cinccino extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '89';
   public name: string = 'Cinccino';
-  public fullName: string = 'Cinccino BLW';
+  public fullName: string = 'Cinccino (BLW 89)';
+  public legacyFullName = 'Cinccino BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

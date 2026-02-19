@@ -12,7 +12,8 @@ export class ComputerError extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Computer Error';
-  public fullName: string = 'Computer Error PR';
+  public fullName: string = 'Computer Error (PR 16)';
+  public legacyFullName = 'Computer Error PR';
 
   public text = 'You may draw up to 5 cards, then your opponent may draw up to 5 cards. Your turn is over now (you don\'t get to attack).';
 

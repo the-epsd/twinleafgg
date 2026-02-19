@@ -26,7 +26,8 @@ export class Blitzle2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Blitzle';
-  public fullName: string = 'Blitzle BLW 41';
+  public fullName: string = 'Blitzle (BLW 41)';
+  public legacyFullName = 'Blitzle BLW 41';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -18,7 +18,8 @@ export class NsPPUp extends TrainerCard {
 
   public setNumber: string = '153';
 
-  public fullName: string = 'N\'s PP Up JTG';
+  public fullName: string = 'N\'s PP Up (JTG 153)';
+  public legacyFullName = 'N\'s PP Up JTG';
 
   public text: string =
     'Attach 1 Basic Energy from your discard pile to 1 of your Benched N\'s Pokémon.';

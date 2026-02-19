@@ -36,7 +36,8 @@ export class Volcarona extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Volcarona';
-  public fullName: string = 'Volcarona DEX';
+  public fullName: string = 'Volcarona (DEX 22)';
+  public legacyFullName = 'Volcarona DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Scorching Scales - increase burn damage

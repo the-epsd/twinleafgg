@@ -16,7 +16,8 @@ export class TeamYellTowel extends TrainerCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Yell Towel';
-  public fullName: string = 'Team Yell Towel SHF';
+  public fullName: string = 'Team Yell Towel (SHF 63)';
+  public legacyFullName = 'Team Yell Towel SHF';
   public text: string = 'Heal 50 damage from both Active Pokémon. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

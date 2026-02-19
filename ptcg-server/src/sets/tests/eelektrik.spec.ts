@@ -1,21 +1,21 @@
 import { setupGame, padDeck } from './test-helpers';
 import { useAbility, getEnergyCount } from './card-test-helpers';
 
-describe('Eelektrik NVI — Dynamotor', () => {
+describe('Eelektrik (NVI 40) — Dynamotor', () => {
 
   it('should attach Lightning Energy from discard to bench', () => {
     const game = setupGame({
       player1: {
-        active: { card: 'Ralts SIT' },
+        active: { card: 'Ralts (SIT 67)' },
         bench: [
-          { card: 'Eelektrik NVI' },
-          { card: 'Ralts SIT' }
+          { card: 'Eelektrik (NVI 40)' },
+          { card: 'Ralts (SIT 67)' }
         ],
-        discard: ['Lightning Energy SVE'],
+        discard: ['Lightning Energy (SVE 4)'],
         deck: padDeck(10),
       },
       player2: {
-        active: { card: 'Ralts SIT' },
+        active: { card: 'Ralts (SIT 67)' },
         deck: padDeck(10),
       }
     });
@@ -31,16 +31,16 @@ describe('Eelektrik NVI — Dynamotor', () => {
   it('should throw error when used twice in the same turn', () => {
     const game = setupGame({
       player1: {
-        active: { card: 'Ralts SIT' },
+        active: { card: 'Ralts (SIT 67)' },
         bench: [
-          { card: 'Eelektrik NVI' },
-          { card: 'Ralts SIT' }
+          { card: 'Eelektrik (NVI 40)' },
+          { card: 'Ralts (SIT 67)' }
         ],
-        discard: ['Lightning Energy SVE', 'Lightning Energy SVE'],
+        discard: ['Lightning Energy (SVE 4)', 'Lightning Energy (SVE 4)'],
         deck: padDeck(10),
       },
       player2: {
-        active: { card: 'Ralts SIT' },
+        active: { card: 'Ralts (SIT 67)' },
         deck: padDeck(10),
       }
     });

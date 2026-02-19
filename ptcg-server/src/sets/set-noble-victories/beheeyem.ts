@@ -33,7 +33,8 @@ export class Beheeyem extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beheeyem';
-  public fullName: string = 'Beheeyem NVI';
+  public fullName: string = 'Beheeyem (NVI 56)';
+  public legacyFullName = 'Beheeyem NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Synchronoise - damage benched Pokémon of same type as active

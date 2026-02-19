@@ -20,5 +20,6 @@ export class Arrokuda extends PokemonCard {
   public regulationMark = 'D';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arrokuda';
-  public fullName: string = 'Arrokuda RCL';
+  public fullName: string = 'Arrokuda (RCL 52)';
+  public legacyFullName = 'Arrokuda RCL';
 }

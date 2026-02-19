@@ -32,7 +32,8 @@ export class Raticate extends PokemonCard {
   public setNumber: string = '144';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raticate';
-  public fullName: string = 'Raticate UNB';
+  public fullName: string = 'Raticate (UNB 144)';
+  public legacyFullName = 'Raticate UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Escaping Incisors

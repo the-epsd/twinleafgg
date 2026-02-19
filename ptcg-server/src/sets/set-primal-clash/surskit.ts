@@ -25,5 +25,6 @@ export class Surskit extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Surskit';
-  public fullName: string = 'Surskit PRC';
+  public fullName: string = 'Surskit (PRC 13)';
+  public legacyFullName = 'Surskit PRC';
 }

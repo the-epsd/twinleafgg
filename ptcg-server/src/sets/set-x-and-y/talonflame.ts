@@ -38,7 +38,8 @@ export class Talonflame extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Talonflame';
-  public fullName: string = 'Talonflame XY';
+  public fullName: string = 'Talonflame (XY 28)';
+  public legacyFullName = 'Talonflame XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/baltoy.ts (Reverse Spin - opponent shuffles hand draws 4)

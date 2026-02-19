@@ -35,7 +35,8 @@ export class Yveltal extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yveltal';
-  public fullName: string = 'Yveltal SLG';
+  public fullName: string = 'Yveltal (SLG 54)';
+  public legacyFullName = 'Yveltal SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Strafe

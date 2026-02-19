@@ -41,7 +41,8 @@ export class DhelmiseVmax extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dhelmise VMAX';
-  public fullName: string = 'Dhelmise VMAX SHF';
+  public fullName: string = 'Dhelmise VMAX (SHF 10)';
+  public legacyFullName = 'Dhelmise VMAX SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swinging Chain

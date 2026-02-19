@@ -38,7 +38,8 @@ export class Grumpig extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grumpig';
-  public fullName: string = 'Grumpig BST';
+  public fullName: string = 'Grumpig (BST 56)';
+  public legacyFullName = 'Grumpig BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dazzle Dance

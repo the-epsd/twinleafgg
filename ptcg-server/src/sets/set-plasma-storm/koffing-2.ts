@@ -30,7 +30,8 @@ export class Koffing2 extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Koffing';
-  public fullName: string = 'Koffing PLS 57';
+  public fullName: string = 'Koffing (PLS 57)';
+  public legacyFullName = 'Koffing PLS 57';
 
   public readonly SMOKESCREEN_MARKER = 'SMOKESCREEN_MARKER';
   public readonly SMOKESCREEN_USED_MARKER = 'SMOKESCREEN_USED_MARKER';

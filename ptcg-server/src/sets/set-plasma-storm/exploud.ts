@@ -37,7 +37,8 @@ export class Exploud extends PokemonCard {
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Exploud';
-  public fullName: string = 'Exploud PLS';
+  public fullName: string = 'Exploud (PLS 107)';
+  public legacyFullName = 'Exploud PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Destructive Sound

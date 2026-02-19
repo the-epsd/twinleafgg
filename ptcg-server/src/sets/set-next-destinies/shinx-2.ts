@@ -24,7 +24,8 @@ export class Shinx2 extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shinx';
-  public fullName: string = 'Shinx NXD 43';
+  public fullName: string = 'Shinx (NXD 43)';
+  public legacyFullName = 'Shinx NXD 43';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Reckless Charge

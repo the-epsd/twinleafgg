@@ -27,7 +27,7 @@ export class Sawsbuck extends PokemonCard {
       name: 'Winter Horn',
       cost: [G, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have a Stadium in play, this attack does 80 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Sawsbuck extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sawsbuck';
-  public fullName: string = 'Sawsbuck CRE';
+  public fullName: string = 'Sawsbuck (CRE 12)';
+  public legacyFullName = 'Sawsbuck CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Winter Horn

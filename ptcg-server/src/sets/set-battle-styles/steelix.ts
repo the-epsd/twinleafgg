@@ -22,7 +22,7 @@ export class Steelix extends PokemonCard {
       name: 'Steel Swing',
       cost: [C, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 80 damage for each heads.'
     },
     {
@@ -38,7 +38,8 @@ export class Steelix extends PokemonCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steelix';
-  public fullName: string = 'Steelix BST';
+  public fullName: string = 'Steelix (BST 99)';
+  public legacyFullName = 'Steelix BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Steel Swing

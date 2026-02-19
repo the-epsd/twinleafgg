@@ -17,7 +17,8 @@ export class ChaosTower extends TrainerCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chaos Tower';
-  public fullName: string = 'Chaos Tower FCO';
+  public fullName: string = 'Chaos Tower (FCO 94)';
+  public legacyFullName = 'Chaos Tower FCO';
   public text: string = 'Choose which way this card faces before you play it. This \u2193 player\'s Pok\u00e9mon can\'t be Confused or Poisoned. (If those Pok\u00e9mon are already Confused or Poisoned, remove those Special Conditions.) Choose which way this card faces before you play it. This \u2193 player\'s Pok\u00e9mon can\'t be Asleep or Paralyzed. (If those Pok\u00e9mon are already Asleep or Paralyzed, remove those Special Conditions.)';
 
   // orientation: 0 = player gets Confused/Poison immunity, opponent gets Asleep/Paralyzed immunity

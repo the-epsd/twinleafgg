@@ -21,7 +21,8 @@ export class BossOrders extends TrainerCard {
 
   public name: string = 'Boss\'s Orders';
 
-  public fullName: string = 'Boss\'s Orders PAL';
+  public fullName: string = 'Boss\'s Orders (PAL 172)';
+  public legacyFullName = 'Boss\'s Orders PAL';
 
   public text: string =
     'Switch 1 of your opponent\'s Benched Pokemon with his or her ' +

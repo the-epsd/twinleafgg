@@ -20,7 +20,8 @@ export class Charcadet extends PokemonCard {
   public regulationMark = 'H';
   public set: string = 'SSP';
   public name: string = 'Charcadet';
-  public fullName: string = 'Charcadet SSP';
+  public fullName: string = 'Charcadet (SSP 32)';
+  public legacyFullName = 'Charcadet SSP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '32';
 }

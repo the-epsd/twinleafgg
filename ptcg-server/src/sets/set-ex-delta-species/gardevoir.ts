@@ -47,7 +47,8 @@ export class Gardevoir extends PokemonCard {
 
   public name: string = 'Gardevoir';
 
-  public fullName: string = 'Gardevoir DS';
+  public fullName: string = 'Gardevoir (DS 6)';
+  public legacyFullName = 'Gardevoir DS';
 
   public readonly ENERGY_JUMP_MARKER = 'ENERGY_JUMP_MARKER';
 

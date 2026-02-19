@@ -29,7 +29,8 @@ export class Leafeon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Leafeon';
-  public fullName: string = 'Leafeon UD';
+  public fullName: string = 'Leafeon (UD 17)';
+  public legacyFullName = 'Leafeon UD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

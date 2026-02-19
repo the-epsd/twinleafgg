@@ -36,7 +36,8 @@ export class Whirlipede extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whirlipede';
-  public fullName: string = 'Whirlipede BUS';
+  public fullName: string = 'Whirlipede (BUS 57)';
+  public legacyFullName = 'Whirlipede BUS';
 
   public usedSpinTurn = false;
 

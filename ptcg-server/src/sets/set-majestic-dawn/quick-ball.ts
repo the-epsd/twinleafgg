@@ -54,7 +54,8 @@ export class QuickBall extends TrainerCard {
 
   public name: string = 'Quick Ball';
 
-  public fullName: string = 'Quick Ball MD';
+  public fullName: string = 'Quick Ball (MD 86)';
+  public legacyFullName = 'Quick Ball MD';
 
   public cardImage: string = 'assets/cardback.png';
 

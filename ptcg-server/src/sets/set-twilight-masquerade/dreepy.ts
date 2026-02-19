@@ -40,6 +40,7 @@ export class Dreepy extends PokemonCard {
 
   public name: string = 'Dreepy';
 
-  public fullName: string = 'Dreepy TWM';
+  public fullName: string = 'Dreepy (TWM 128)';
+  public legacyFullName = 'Dreepy TWM';
 
 }

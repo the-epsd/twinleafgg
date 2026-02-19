@@ -28,7 +28,8 @@ export class Growlithe extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Growlithe';
-  public fullName: string = 'Growlithe SUM';
+  public fullName: string = 'Growlithe (SUM 21)';
+  public legacyFullName = 'Growlithe SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Take Down

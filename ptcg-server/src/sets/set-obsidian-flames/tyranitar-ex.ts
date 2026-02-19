@@ -37,7 +37,8 @@ export class Tyranitarex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
   public name: string = 'Tyranitar ex';
-  public fullName: string = 'Tyranitar ex OBF';
+  public fullName: string = 'Tyranitar ex (OBF 66)';
+  public legacyFullName = 'Tyranitar ex OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Mountain Hurl

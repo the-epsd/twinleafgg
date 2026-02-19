@@ -34,7 +34,8 @@ export class Zangoose extends PokemonCard {
   public setNumber: string = '132';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zangoose';
-  public fullName: string = 'Zangoose TEU';
+  public fullName: string = 'Zangoose (TEU 132)';
+  public legacyFullName = 'Zangoose TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Head Hunt

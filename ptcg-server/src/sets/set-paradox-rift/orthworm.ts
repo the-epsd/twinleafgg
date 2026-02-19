@@ -27,7 +27,8 @@ export class Orthworm extends PokemonCard {
 
   public name: string = 'Orthworm';
 
-  public fullName: string = 'Orthworm PAR';
+  public fullName: string = 'Orthworm (PAR 138)';
+  public legacyFullName = 'Orthworm PAR';
 
   public setNumber: string = '138';
 

@@ -18,6 +18,7 @@ export class Shroomish extends PokemonCard {
   public setNumber: string = '3';
 
   public name: string = 'Shroomish';
-  public fullName: string = 'Shroomish BRS';
+  public fullName: string = 'Shroomish (BRS 3)';
+  public legacyFullName = 'Shroomish BRS';
 
 }

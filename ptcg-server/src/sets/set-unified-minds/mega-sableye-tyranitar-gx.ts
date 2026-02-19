@@ -34,7 +34,8 @@ export class MegaSableyeTyranitarGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '126';
   public name: string = 'Mega Sableye & Tyranitar-GX';
-  public fullName: string = 'Mega Sableye & Tyranitar-GX UNM';
+  public fullName: string = 'Mega Sableye & Tyranitar-GX (UNM 126)';
+  public legacyFullName = 'Mega Sableye & Tyranitar-GX UNM';
 
   private usedGreedyCrush = false;
 

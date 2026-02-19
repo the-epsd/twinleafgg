@@ -33,5 +33,6 @@ export class Arbok extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arbok';
-  public fullName: string = 'Arbok CPA';
+  public fullName: string = 'Arbok (CPA 34)';
+  public legacyFullName = 'Arbok CPA';
 }

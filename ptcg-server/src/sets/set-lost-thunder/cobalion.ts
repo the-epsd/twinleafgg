@@ -32,7 +32,7 @@ export class Cobalion extends PokemonCard {
       name: 'Metal Arms',
       cost: [M, M, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pok\u00e9mon has a Pok\u00e9mon Tool card attached to it, this attack does 40 more damage.'
     }
   ];
@@ -41,7 +41,8 @@ export class Cobalion extends PokemonCard {
   public setNumber: string = '129';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cobalion';
-  public fullName: string = 'Cobalion LOT';
+  public fullName: string = 'Cobalion (LOT 129)';
+  public legacyFullName = 'Cobalion LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Guard Press

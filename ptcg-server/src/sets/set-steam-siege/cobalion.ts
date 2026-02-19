@@ -45,7 +45,8 @@ export class Cobalion extends PokemonCard {
 
   public name: string = 'Cobalion';
 
-  public fullName: string = 'Cobalion STS';
+  public fullName: string = 'Cobalion (STS 74)';
+  public legacyFullName = 'Cobalion STS';
 
   public QUICK_GUARD_MARKER = 'QUICK_GUARD_MARKER';
   public CLEAR_QUICK_GUARD_MARKER = 'CLEAR_QUICK_GUARD_MARKER';

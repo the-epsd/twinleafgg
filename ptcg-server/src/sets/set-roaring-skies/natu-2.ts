@@ -21,7 +21,7 @@ export class Natu2 extends PokemonCard {
       name: 'Psywave',
       cost: [P, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 10 damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -30,7 +30,8 @@ export class Natu2 extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Natu';
-  public fullName: string = 'Natu ROS 28';
+  public fullName: string = 'Natu (ROS 28)';
+  public legacyFullName = 'Natu ROS 28';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psywave

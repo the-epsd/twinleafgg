@@ -32,7 +32,8 @@ export class Klang extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klang';
-  public fullName: string = 'Klang DEX';
+  public fullName: string = 'Klang (DEX 76)';
+  public legacyFullName = 'Klang DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Charge Beam - flip a coin, if heads attach energy from discard

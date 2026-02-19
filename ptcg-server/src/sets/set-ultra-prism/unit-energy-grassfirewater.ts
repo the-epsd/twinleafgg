@@ -16,7 +16,8 @@ export class UnitEnergyGrassfirewater extends EnergyCard {
   public setNumber: string = '137';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Unit Energy GrassFireWater';
-  public fullName: string = 'Unit Energy GrassFireWater UPR';
+  public fullName: string = 'Unit Energy GrassFireWater (UPR 137)';
+  public legacyFullName = 'Unit Energy GrassFireWater UPR';
   public text: string = 'This card provides [C] Energy. While this card is attached to a Pokémon, it provides Grass, Fire, and [W] Energy but provides only 1 Energy at a time.';
 
   public blendedEnergies = [CardType.GRASS, CardType.FIRE, CardType.WATER];

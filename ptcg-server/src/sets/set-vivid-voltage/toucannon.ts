@@ -38,7 +38,8 @@ export class Toucannon extends PokemonCard {
   public setNumber: string = '145';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toucannon';
-  public fullName: string = 'Toucannon VIV';
+  public fullName: string = 'Toucannon (VIV 145)';
+  public legacyFullName = 'Toucannon VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Energy Cutoff

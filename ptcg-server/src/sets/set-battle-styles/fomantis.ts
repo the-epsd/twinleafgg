@@ -21,7 +21,7 @@ export class Fomantis extends PokemonCard {
       name: 'Continuous Slash',
       cost: [G],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 20 damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Fomantis extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fomantis';
-  public fullName: string = 'Fomantis BST';
+  public fullName: string = 'Fomantis (BST 14)';
+  public legacyFullName = 'Fomantis BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Slash

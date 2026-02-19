@@ -37,7 +37,8 @@ export class Noivern extends PokemonCard {
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Noivern';
-  public fullName: string = 'Noivern BKT';
+  public fullName: string = 'Noivern (BKT 112)';
+  public legacyFullName = 'Noivern BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tuning

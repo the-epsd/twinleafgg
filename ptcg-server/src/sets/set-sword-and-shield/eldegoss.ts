@@ -36,7 +36,8 @@ export class Eldegoss extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eldegoss';
-  public fullName: string = 'Eldegoss SSH';
+  public fullName: string = 'Eldegoss (SSH 21)';
+  public legacyFullName = 'Eldegoss SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Blessing of Fluff

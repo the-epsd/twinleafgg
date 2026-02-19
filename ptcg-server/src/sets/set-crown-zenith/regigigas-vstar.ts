@@ -33,7 +33,8 @@ export class RegigigasVSTAR extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '114';
   public name: string = 'Regigigas VSTAR';
-  public fullName: string = 'Regigigas VSTAR CRZ';
+  public fullName: string = 'Regigigas VSTAR (CRZ 114)';
+  public legacyFullName = 'Regigigas VSTAR CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

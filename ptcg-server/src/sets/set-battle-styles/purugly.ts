@@ -37,7 +37,8 @@ export class Purugly extends PokemonCard {
   public setNumber: string = '116';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Purugly';
-  public fullName: string = 'Purugly BST';
+  public fullName: string = 'Purugly (BST 116)';
+  public legacyFullName = 'Purugly BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Caturday

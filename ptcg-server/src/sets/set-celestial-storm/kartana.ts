@@ -22,7 +22,7 @@ export class Kartana extends PokemonCard {
       name: 'Divine Paper',
       cost: [M, M],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent has exactly 6 Prize cards remaining, this attack does 90 more damage.'
     }
   ];
@@ -31,7 +31,8 @@ export class Kartana extends PokemonCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kartana';
-  public fullName: string = 'Kartana CES';
+  public fullName: string = 'Kartana (CES 101)';
+  public legacyFullName = 'Kartana CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Divine Paper

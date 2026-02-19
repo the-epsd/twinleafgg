@@ -28,7 +28,7 @@ export class Ninjask extends PokemonCard {
       name: 'X-Scissor',
       cost: [G],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Ninjask extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ninjask';
-  public fullName: string = 'Ninjask LOT';
+  public fullName: string = 'Ninjask (LOT 30)';
+  public legacyFullName = 'Ninjask LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Molting (on-evolve - put Shedinja from discard onto bench)

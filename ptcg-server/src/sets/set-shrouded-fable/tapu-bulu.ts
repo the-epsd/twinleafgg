@@ -36,7 +36,8 @@ export class TapuBulu extends PokemonCard {
 
   public name: string = 'Tapu Bulu';
 
-  public fullName: string = 'Tapu Bulu SFA';
+  public fullName: string = 'Tapu Bulu (SFA 6)';
+  public legacyFullName = 'Tapu Bulu SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

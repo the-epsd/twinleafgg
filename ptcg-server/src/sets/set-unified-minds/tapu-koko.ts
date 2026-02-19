@@ -24,7 +24,7 @@ export class TapuKoko extends PokemonCard {
       name: 'Nature Dive',
       cost: [L, L, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is an Ultra Beast, this attack does 100 more damage, and discard 2 Energy from this Pokémon.'
     }
   ];
@@ -33,7 +33,8 @@ export class TapuKoko extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tapu Koko';
-  public fullName: string = 'Tapu Koko UNM';
+  public fullName: string = 'Tapu Koko (UNM 69)';
+  public legacyFullName = 'Tapu Koko UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Nature Dive

@@ -25,5 +25,6 @@ export class Buizel extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Buizel';
-  public fullName: string = 'Buizel UPR';
+  public fullName: string = 'Buizel (UPR 35)';
+  public legacyFullName = 'Buizel UPR';
 }

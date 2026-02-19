@@ -36,7 +36,8 @@ export class Beldum extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beldum';
-  public fullName: string = 'Beldum CES';
+  public fullName: string = 'Beldum (CES 92)';
+  public legacyFullName = 'Beldum CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Conductive Body (passive - reduce retreat cost)

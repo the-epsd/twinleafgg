@@ -39,7 +39,8 @@ export class Crobat extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crobat';
-  public fullName: string = 'Crobat UNB';
+  public fullName: string = 'Crobat (UNB 66)';
+  public legacyFullName = 'Crobat UNB';
 
   public readonly SOUND_VEIL_MARKER = 'CROBAT_SOUND_VEIL_MARKER';
   public readonly CLEAR_SOUND_VEIL_MARKER = 'CROBAT_CLEAR_SOUND_VEIL_MARKER';

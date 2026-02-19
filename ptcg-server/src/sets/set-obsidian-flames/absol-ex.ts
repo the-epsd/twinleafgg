@@ -50,7 +50,8 @@ export class Absolex extends PokemonCard {
 
   public name: string = 'Absol ex';
 
-  public fullName: string = 'Absol ex OBF';
+  public fullName: string = 'Absol ex (OBF 135)';
+  public legacyFullName = 'Absol ex OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

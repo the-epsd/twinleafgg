@@ -34,7 +34,8 @@ export class Cloyster extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public name: string = 'Cloyster';
-  public fullName: string = 'Cloyster DF';
+  public fullName: string = 'Cloyster (DF 14)';
+  public legacyFullName = 'Cloyster DF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

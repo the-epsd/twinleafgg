@@ -44,7 +44,8 @@ export class UltraNecrozma extends PokemonCard {
 
   public name: string = 'Ultra Necrozma';
 
-  public fullName: string = 'Ultra Necrozma CEC';
+  public fullName: string = 'Ultra Necrozma (CEC 164)';
+  public legacyFullName = 'Ultra Necrozma CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

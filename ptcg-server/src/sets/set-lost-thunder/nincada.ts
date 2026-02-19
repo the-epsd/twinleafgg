@@ -29,7 +29,8 @@ export class Nincada extends PokemonCard {
 
   public name: string = 'Nincada';
 
-  public fullName: string = 'Nincada LOT';
+  public fullName: string = 'Nincada (LOT 29)';
+  public legacyFullName = 'Nincada LOT';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -38,7 +38,8 @@ export class DrednawV extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drednaw V';
-  public fullName: string = 'Drednaw V CPA';
+  public fullName: string = 'Drednaw V (CPA 14)';
+  public legacyFullName = 'Drednaw V CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Solid Shell (passive - permanent damage reduction)

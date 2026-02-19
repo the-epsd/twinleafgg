@@ -36,7 +36,8 @@ export class Dunsparce extends PokemonCard {
   public setNumber: string = '137';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dunsparce';
-  public fullName: string = 'Dunsparce DAA';
+  public fullName: string = 'Dunsparce (DAA 137)';
+  public legacyFullName = 'Dunsparce DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Final Dig (passive - when KO'd by opponent's attack, discard top 2 from opponent's deck)

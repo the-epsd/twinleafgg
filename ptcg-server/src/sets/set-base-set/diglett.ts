@@ -12,7 +12,8 @@ export class Diglett extends PokemonCard {
 
   public setNumber = '47';
 
-  public fullName = 'Diglett BS';
+  public fullName = 'Diglett (BS 47)';
+  public legacyFullName = 'Diglett BS';
 
   public cardType = CardType.FIGHTING;
 

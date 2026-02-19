@@ -27,7 +27,8 @@ export class SpiralEnergy extends EnergyCard {
 
   public name = 'Spiral Energy';
 
-  public fullName = 'Spiral Energy CRE';
+  public fullName = 'Spiral Energy (CRE 159)';
+  public legacyFullName = 'Spiral Energy CRE';
 
   public text = 'This card can only be attached to a Rapid Strike Pokémon. If this card is attached to anything other than a Rapid Strike Pokémon, discard this card.' +
     '\n\n' +

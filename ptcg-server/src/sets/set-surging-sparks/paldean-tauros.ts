@@ -29,7 +29,8 @@ export class PaldeanTauros extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
   public name: string = 'Paldean Tauros';
-  public fullName: string = 'Paldean Tauros SSP';
+  public fullName: string = 'Paldean Tauros (SSP 18)';
+  public legacyFullName = 'Paldean Tauros SSP';
   public regulationMark = 'H';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

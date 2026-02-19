@@ -38,5 +38,6 @@ export class Grookey extends PokemonCard {
 
   public name: string = 'Grookey';
 
-  public fullName: string = 'Grookey TWM';
+  public fullName: string = 'Grookey (TWM 14)';
+  public legacyFullName = 'Grookey TWM';
 }

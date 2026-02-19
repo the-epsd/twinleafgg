@@ -16,7 +16,8 @@ export class Elesa extends TrainerCard {
   public setNumber: string = 'RC20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Elesa';
-  public fullName: string = 'Elesa LTR';
+  public fullName: string = 'Elesa (LTR RC20)';
+  public legacyFullName = 'Elesa LTR';
   public text: string = 'Search your deck for 3 Pokémon Tool cards, reveal them, and put them into your hand. Shuffle your deck afterward. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

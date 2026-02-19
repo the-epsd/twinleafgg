@@ -16,7 +16,8 @@ export class BattleFrontier extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'PK';
   public name: string = 'Battle Frontier';
-  public fullName: string = 'Battle Frontier PK';
+  public fullName: string = 'Battle Frontier (PK 71)';
+  public legacyFullName = 'Battle Frontier PK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
 

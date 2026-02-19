@@ -32,5 +32,6 @@ export class Chewtle extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chewtle';
-  public fullName: string = 'Chewtle SSH';
+  public fullName: string = 'Chewtle (SSH 60)';
+  public legacyFullName = 'Chewtle SSH';
 }

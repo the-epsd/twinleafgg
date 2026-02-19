@@ -36,7 +36,8 @@ export class Beedrill extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beedrill';
-  public fullName: string = 'Beedrill CIN';
+  public fullName: string = 'Beedrill (CIN 3)';
+  public legacyFullName = 'Beedrill CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sudden Sting

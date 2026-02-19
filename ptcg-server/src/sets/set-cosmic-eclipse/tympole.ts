@@ -20,7 +20,7 @@ export class Tympole extends PokemonCard {
       name: 'Flail Around',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 10 damage for each heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class Tympole extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tympole';
-  public fullName: string = 'Tympole CEC';
+  public fullName: string = 'Tympole (CEC 58)';
+  public legacyFullName = 'Tympole CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flail Around

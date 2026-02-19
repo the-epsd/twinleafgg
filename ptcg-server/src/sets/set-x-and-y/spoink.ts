@@ -25,5 +25,6 @@ export class Spoink extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spoink';
-  public fullName: string = 'Spoink XY';
+  public fullName: string = 'Spoink (XY 49)';
+  public legacyFullName = 'Spoink XY';
 }

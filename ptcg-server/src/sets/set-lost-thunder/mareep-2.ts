@@ -30,7 +30,8 @@ export class Mareep2 extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mareep';
-  public fullName: string = 'Mareep LOT 76';
+  public fullName: string = 'Mareep (LOT 76)';
+  public legacyFullName = 'Mareep LOT 76';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Shock

@@ -21,14 +21,14 @@ export class Sneasel extends PokemonCard {
       name: 'Fury Swipes',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 10 damage for each heads.'
     },
     {
       name: 'Beat Up',
       cost: [D, D],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin for each Pokémon you have in play. This attack does 30 damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Sneasel extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sneasel';
-  public fullName: string = 'Sneasel CES';
+  public fullName: string = 'Sneasel (CES 86)';
+  public legacyFullName = 'Sneasel CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Swipes

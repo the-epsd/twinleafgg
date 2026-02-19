@@ -26,6 +26,7 @@ export class Shuppet extends PokemonCard {
 
   public name: string = 'Shuppet';
 
-  public fullName: string = 'Shuppet CES';
+  public fullName: string = 'Shuppet (CES 63)';
+  public legacyFullName = 'Shuppet CES';
 
 }

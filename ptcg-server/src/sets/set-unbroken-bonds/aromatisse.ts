@@ -40,7 +40,8 @@ export class Aromatisse extends PokemonCard {
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aromatisse';
-  public fullName: string = 'Aromatisse UNB';
+  public fullName: string = 'Aromatisse (UNB 142)';
+  public legacyFullName = 'Aromatisse UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pungent Aroma

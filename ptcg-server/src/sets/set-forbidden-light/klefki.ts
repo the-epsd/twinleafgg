@@ -30,7 +30,8 @@ export class Klefki extends PokemonCard {
 
   public set: string = 'FLI';
   public name: string = 'Klefki';
-  public fullName: string = 'Klefki FLI';
+  public fullName: string = 'Klefki (FLI 89)';
+  public legacyFullName = 'Klefki FLI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '89';
 

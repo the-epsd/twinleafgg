@@ -34,7 +34,8 @@ export class DarkGloom extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name = 'Dark Gloom';
-  public fullName = 'Dark Gloom TR';
+  public fullName = 'Dark Gloom (TR 36)';
+  public legacyFullName = 'Dark Gloom TR';
 
   public readonly POLLEN_STENCH_MARKER = 'POLLEN_STENCH_MARKER';
 

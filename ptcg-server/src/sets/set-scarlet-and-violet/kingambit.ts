@@ -43,7 +43,8 @@ export class Kingambit extends PokemonCard {
 
   public name: string = 'Kingambit';
 
-  public fullName: string = 'Kingambit SVI';
+  public fullName: string = 'Kingambit (SVI 134)';
+  public legacyFullName = 'Kingambit SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Leadership

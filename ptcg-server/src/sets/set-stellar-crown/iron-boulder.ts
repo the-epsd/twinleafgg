@@ -19,7 +19,8 @@ export class IronBoulder extends PokemonCard {
   public regulationMark = 'H';
   public set: string = 'SCR';
   public name: string = 'Iron Boulder';
-  public fullName: string = 'Iron Boulder SCR';
+  public fullName: string = 'Iron Boulder (SCR 71)';
+  public legacyFullName = 'Iron Boulder SCR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
 

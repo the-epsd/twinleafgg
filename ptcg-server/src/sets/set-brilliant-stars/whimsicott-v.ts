@@ -32,7 +32,8 @@ export class WhimsicottV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '64';
   public name: string = 'Whimsicott V';
-  public fullName: string = 'Whimsicott V BRS';
+  public fullName: string = 'Whimsicott V (BRS 64)';
+  public legacyFullName = 'Whimsicott V BRS';
   public regulationMark = 'F';
 
   public readonly COTTON_GUARD_MARKER = 'COTTON_GUARD_MARKER';

@@ -37,7 +37,8 @@ export class Noctowl extends PokemonCard {
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Noctowl';
-  public fullName: string = 'Noctowl BUS';
+  public fullName: string = 'Noctowl (BUS 107)';
+  public legacyFullName = 'Noctowl BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hypnoblast

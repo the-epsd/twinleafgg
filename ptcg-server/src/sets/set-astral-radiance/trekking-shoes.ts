@@ -24,7 +24,8 @@ export class TrekkingShoes extends TrainerCard {
 
   public name: string = 'Trekking Shoes';
 
-  public fullName: string = 'Trekking Shoes ASR';
+  public fullName: string = 'Trekking Shoes (ASR 156)';
+  public legacyFullName = 'Trekking Shoes ASR';
 
   public text: string =
     'Look at the top card of your deck. You may put that card into your hand. If you don\'t, discard that card and draw a card.';

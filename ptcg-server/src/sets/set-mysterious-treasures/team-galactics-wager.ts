@@ -12,7 +12,8 @@ export class TeamGalacticsWager extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '115';
   public name: string = 'Team Galactic\'s Wager';
-  public fullName: string = 'Team Galactic\'s Wager MT';
+  public fullName: string = 'Team Galactic\'s Wager (MT 115)';
+  public legacyFullName = 'Team Galactic\'s Wager MT';
   public text = 'Each player shuffles his or her hand into his or her deck, and you and your opponent play "Rock-Paper-Scissors." The player who wins draws up to 6 cards. The player who loses draws up to 3 cards. (You draw your cards first.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

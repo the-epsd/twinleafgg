@@ -37,7 +37,8 @@ export class Grumpig extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grumpig';
-  public fullName: string = 'Grumpig FCO';
+  public fullName: string = 'Grumpig (FCO 31)';
+  public legacyFullName = 'Grumpig FCO';
 
   public usedKnockBack = false;
 

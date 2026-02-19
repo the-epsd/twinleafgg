@@ -21,14 +21,14 @@ export class Blissey extends PokemonCard {
       name: 'Tender Vengeance',
       cost: [C, C, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin. If heads, this attack does 10 damage times the number of damage counters on each of your Benched Pokémon.'
     },
     {
       name: 'Charge Dash',
       cost: [C, C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 20 more damage. If you do, this Pokémon does 20 damage to itself.'
     }
   ];
@@ -37,7 +37,8 @@ export class Blissey extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blissey';
-  public fullName: string = 'Blissey PHF';
+  public fullName: string = 'Blissey (PHF 81)';
+  public legacyFullName = 'Blissey PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tender Vengeance

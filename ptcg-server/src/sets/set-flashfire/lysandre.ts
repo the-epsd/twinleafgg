@@ -66,7 +66,8 @@ export class Lysandre extends TrainerCard {
 
   public name: string = 'Lysandre';
 
-  public fullName: string = 'Lysandre FLF';
+  public fullName: string = 'Lysandre (FLF 90)';
+  public legacyFullName = 'Lysandre FLF';
 
   public cardImage: string = 'assets/cardback.png';
 

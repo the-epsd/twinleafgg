@@ -14,7 +14,8 @@ export class ShadowTriad extends TrainerCard {
   public tags: string[] = [CardTag.TEAM_PLASMA];
   public set: string = 'PLF';
   public name: string = 'Shadow Triad';
-  public fullName: string = 'Shadow Triad PLF';
+  public fullName: string = 'Shadow Triad (PLF 102)';
+  public legacyFullName = 'Shadow Triad PLF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '102';
   public text: string = 'Put a Team Plasma card from your discard pile into your hand.';

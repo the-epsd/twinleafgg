@@ -30,7 +30,8 @@ export class Azumarill extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Azumarill';
-  public fullName: string = 'Azumarill TRR';
+  public fullName: string = 'Azumarill (TRR 1)';
+  public legacyFullName = 'Azumarill TRR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

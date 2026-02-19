@@ -48,7 +48,8 @@ export class ShadowRiderCalyrexV extends PokemonCard {
 
   public name: string = 'Shadow Rider Calyrex V';
 
-  public fullName: string = 'Shadow Rider Calyrex V CRE';
+  public fullName: string = 'Shadow Rider Calyrex V (CRE 74)';
+  public legacyFullName = 'Shadow Rider Calyrex V CRE';
 
   public readonly SHADOW_MIST_MARKER = 'SHADOW_MIST_MARKER';
 

@@ -32,7 +32,7 @@ export class KommoO extends PokemonCard {
       name: 'Raging Uppercut',
       cost: [F, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pok\u00e9mon has 8 or more damage counters on it, this attack does 120 more damage.'
     }
   ];
@@ -41,7 +41,8 @@ export class KommoO extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kommo-o';
-  public fullName: string = 'Kommo-o DRM';
+  public fullName: string = 'Kommo-o (DRM 54)';
+  public legacyFullName = 'Kommo-o DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Guard Press

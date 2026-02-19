@@ -25,7 +25,7 @@ export class Snorlax extends PokemonCard {
       name: 'Toss and Turn',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack can be used even if this Pokémon is Asleep. If it is, this attack does 90 more damage.'
     },
     {
@@ -40,7 +40,8 @@ export class Snorlax extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snorlax';
-  public fullName: string = 'Snorlax FCO';
+  public fullName: string = 'Snorlax (FCO 77)';
+  public legacyFullName = 'Snorlax FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Toss and Turn - can attack while Asleep

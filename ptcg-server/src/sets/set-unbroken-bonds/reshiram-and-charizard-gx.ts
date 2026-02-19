@@ -43,7 +43,8 @@ export class ReshiramCharizardGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name = 'Reshiram & Charizard-GX';
-  public fullName = 'Reshiram & Charizard-GX UNB';
+  public fullName = 'Reshiram & Charizard-GX (UNB 20)';
+  public legacyFullName = 'Reshiram & Charizard-GX UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Outrage

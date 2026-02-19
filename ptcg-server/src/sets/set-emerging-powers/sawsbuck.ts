@@ -33,7 +33,8 @@ export class Sawsbuck extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Sawsbuck';
-  public fullName: string = 'Sawsbuck EPO';
+  public fullName: string = 'Sawsbuck (EPO 16)';
+  public legacyFullName = 'Sawsbuck EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

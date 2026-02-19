@@ -94,7 +94,8 @@ export class Dusknoir extends PokemonCard {
 
   public name: string = 'Dusknoir';
 
-  public fullName: string = 'Dusknoir BCR';
+  public fullName: string = 'Dusknoir (BCR 63)';
+  public legacyFullName = 'Dusknoir BCR';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -17,5 +17,6 @@ export class Bramblin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name: string = 'Bramblin';
-  public fullName: string = 'Bramblin TEF';
+  public fullName: string = 'Bramblin (TEF 20)';
+  public legacyFullName = 'Bramblin TEF';
 }

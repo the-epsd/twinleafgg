@@ -49,7 +49,8 @@ export class SuicuneGx extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Suicune-GX';
-  public fullName: string = 'Suicune-GX LOT';
+  public fullName: string = 'Suicune-GX (LOT 60)';
+  public legacyFullName = 'Suicune-GX LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Phantom Winds

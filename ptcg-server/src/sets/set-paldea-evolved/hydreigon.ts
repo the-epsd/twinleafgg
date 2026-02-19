@@ -33,7 +33,8 @@ export class Hydreigon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '140';
   public name = 'Hydreigon';
-  public fullName = 'Hydreigon PAL';
+  public fullName = 'Hydreigon (PAL 140)';
+  public legacyFullName = 'Hydreigon PAL';
 
   public readonly TRI_HOWL_MARKER = 'TRI_HOWL_MARKER';
 

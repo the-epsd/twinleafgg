@@ -60,7 +60,8 @@ export class Axew extends PokemonCard {
   public regulationMark: string = 'F';
   public set: string = 'BRS';
   public name: string = 'Axew';
-  public fullName: string = 'Axew BRS';
+  public fullName: string = 'Axew (BRS 110)';
+  public legacyFullName = 'Axew BRS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '110';
 

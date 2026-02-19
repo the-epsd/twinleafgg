@@ -29,5 +29,6 @@ export class Crocalor extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '36';
   public name: string = 'Crocalor';
-  public fullName: string = 'Crocalor PAL';
+  public fullName: string = 'Crocalor (PAL 36)';
+  public legacyFullName = 'Crocalor PAL';
 }

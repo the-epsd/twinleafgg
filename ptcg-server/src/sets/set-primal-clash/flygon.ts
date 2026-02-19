@@ -44,7 +44,8 @@ export class Flygon extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flygon';
-  public fullName: string = 'Flygon PRC';
+  public fullName: string = 'Flygon (PRC 110)';
+  public legacyFullName = 'Flygon PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sand Flap

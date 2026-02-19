@@ -33,7 +33,8 @@ export class Jirachi extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '99';
   public name: string = 'Jirachi';
-  public fullName: string = 'Jirachi TEU';
+  public fullName: string = 'Jirachi (TEU 99)';
+  public legacyFullName = 'Jirachi TEU';
 
   public readonly STELLAR_WISH_MARKER = 'STELLAR_WISH_MARKER';
 

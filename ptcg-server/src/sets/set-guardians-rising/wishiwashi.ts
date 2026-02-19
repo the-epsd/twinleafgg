@@ -37,7 +37,8 @@ export class Wishiwashi extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wishiwashi';
-  public fullName: string = 'Wishiwashi GRI';
+  public fullName: string = 'Wishiwashi (GRI 37)';
+  public legacyFullName = 'Wishiwashi GRI';
 
   public readonly SCHOOLING_MARKER = 'WISHIWASHI_GRI_SCHOOLING_MARKER';
 

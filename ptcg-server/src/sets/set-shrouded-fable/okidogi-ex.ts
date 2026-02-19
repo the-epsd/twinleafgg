@@ -36,7 +36,8 @@ export class Okidogiex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '36';
   public name: string = 'Okidogi ex';
-  public fullName: string = 'Okidogi ex SFA';
+  public fullName: string = 'Okidogi ex (SFA 36)';
+  public legacyFullName = 'Okidogi ex SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

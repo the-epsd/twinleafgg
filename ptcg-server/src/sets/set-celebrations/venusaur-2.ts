@@ -25,5 +25,6 @@ export class Venusaur2 extends PokemonCard {
   public setNumber: string = '15A1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Venusaur';
-  public fullName: string = 'Venusaur CEL 15A1';
+  public fullName: string = 'Venusaur (CEL 15A1)';
+  public legacyFullName = 'Venusaur CEL 15A1';
 }

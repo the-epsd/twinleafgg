@@ -41,7 +41,8 @@ export class DarkraiGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
   public name: string = 'Darkrai-GX';
-  public fullName: string = 'Darkrai-GX BUS';
+  public fullName: string = 'Darkrai-GX (BUS 88)';
+  public legacyFullName = 'Darkrai-GX BUS';
 
   public readonly NETHERWORLD_GATE_MARKER = 'NETHERWORLD_GATE_MARKER';
 

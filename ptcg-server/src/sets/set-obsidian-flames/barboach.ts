@@ -31,7 +31,8 @@ export class Barboach extends PokemonCard {
   public regulationMark = 'G';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Barboach';
-  public fullName: string = 'Barboach OBF';
+  public fullName: string = 'Barboach (OBF 108)';
+  public legacyFullName = 'Barboach OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

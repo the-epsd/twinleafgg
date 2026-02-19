@@ -30,7 +30,8 @@ export class Drapion extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drapion';
-  public fullName: string = 'Drapion UPR';
+  public fullName: string = 'Drapion (UPR 55)';
+  public legacyFullName = 'Drapion UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dangerous Stinger

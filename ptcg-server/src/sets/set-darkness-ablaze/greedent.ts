@@ -41,7 +41,8 @@ export class Greedent extends PokemonCard {
   public setNumber: string = '153';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Greedent';
-  public fullName: string = 'Greedent DAA';
+  public fullName: string = 'Greedent (DAA 153)';
+  public legacyFullName = 'Greedent DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Scrape Off

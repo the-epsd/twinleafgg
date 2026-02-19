@@ -50,7 +50,8 @@ export class SuicuneV extends PokemonCard {
 
   public name: string = 'Suicune V';
 
-  public fullName: string = 'Suicune V EVS';
+  public fullName: string = 'Suicune V (EVS 31)';
+  public legacyFullName = 'Suicune V EVS';
 
   public readonly FLEET_FOOTED_MARKER = 'FLEET_FOOTED_MARKER';
 

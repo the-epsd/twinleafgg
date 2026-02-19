@@ -48,7 +48,8 @@ export class IronThornsex extends PokemonCard {
 
   public name: string = 'Iron Thorns ex';
 
-  public fullName: string = 'Iron Thorns ex TWM';
+  public fullName: string = 'Iron Thorns ex (TWM 77)';
+  public legacyFullName = 'Iron Thorns ex TWM';
 
   private readonly BOLT_CYCLONE_MARKER = 'BOLT_CYCLONE_MARKER';
 

@@ -35,7 +35,8 @@ export class Passimian extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Passimian';
-  public fullName: string = 'Passimian DAA';
+  public fullName: string = 'Passimian (DAA 97)';
+  public legacyFullName = 'Passimian DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Family

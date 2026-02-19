@@ -28,7 +28,8 @@ export class Ivysaur extends PokemonCard {
   public set: string = 'PGO';
   public regulationMark = 'F';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Ivysaur PGO';
+  public fullName: string = 'Ivysaur (PGO 2)';
+  public legacyFullName = 'Ivysaur PGO';
   public name: string = 'Ivysaur';
   public setNumber: string = '2';
 

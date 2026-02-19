@@ -22,7 +22,7 @@ export class Zebstrika extends PokemonCard {
       name: 'Raid',
       cost: [L, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon evolved from Blitzle during this turn, this attack does 90 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Zebstrika extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zebstrika';
-  public fullName: string = 'Zebstrika TEU';
+  public fullName: string = 'Zebstrika (TEU 45)';
+  public legacyFullName = 'Zebstrika TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Raid

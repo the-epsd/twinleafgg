@@ -33,7 +33,8 @@ export class Delcatty extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '166';
   public name: string = 'Delcatty';
-  public fullName: string = 'Delcatty ASC';
+  public fullName: string = 'Delcatty (ASC 166)';
+  public legacyFullName = 'Delcatty ASC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

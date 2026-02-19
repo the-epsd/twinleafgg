@@ -29,7 +29,8 @@ export class LarrysStarly extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '168';
   public name: string = 'Larry\'s Starly';
-  public fullName: string = 'Larry\'s Starly MC';
+  public fullName: string = 'Larry\'s Starly (ASC 168)';
+  public legacyFullName = 'Larry\'s Starly MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

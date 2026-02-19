@@ -32,7 +32,8 @@ export class SnorlaxDoll extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '175';
   public name: string = 'Snorlax Doll';
-  public fullName: string = 'Snorlax Doll PAR';
+  public fullName: string = 'Snorlax Doll (PAR 175)';
+  public legacyFullName = 'Snorlax Doll PAR';
   public regulationMark = 'G';
   public maxTools: number = 1;
   public powers: Power[] = [

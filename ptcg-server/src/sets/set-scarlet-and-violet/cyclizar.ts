@@ -41,7 +41,8 @@ export class Cyclizar extends PokemonCard {
 
   public name: string = 'Cyclizar';
 
-  public fullName: string = 'Cyclizar SVI';
+  public fullName: string = 'Cyclizar (SVI 164)';
+  public legacyFullName = 'Cyclizar SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

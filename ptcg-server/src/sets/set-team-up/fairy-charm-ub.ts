@@ -16,7 +16,8 @@ export class FairyCharmUb extends TrainerCard {
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fairy Charm UB';
-  public fullName: string = 'Fairy Charm UB TEU';
+  public fullName: string = 'Fairy Charm UB (TEU 142)';
+  public legacyFullName = 'Fairy Charm UB TEU';
   public text: string = 'Prevent all damage done to the Fairy Pokémon this card is attached to by attacks from your opponent\'s Ultra Beast Pokémon-GX and Ultra Beast Pokémon-EX.';
 
   // Ref: set-lost-thunder/fairy-charm-psychic.ts (Fairy Charm tool damage prevention pattern)

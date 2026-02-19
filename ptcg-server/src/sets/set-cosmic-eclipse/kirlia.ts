@@ -36,7 +36,8 @@ export class Kirlia extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kirlia';
-  public fullName: string = 'Kirlia CEC';
+  public fullName: string = 'Kirlia (CEC 81)';
+  public legacyFullName = 'Kirlia CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hypnosis

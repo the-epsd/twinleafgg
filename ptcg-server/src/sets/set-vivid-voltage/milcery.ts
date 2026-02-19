@@ -36,7 +36,8 @@ export class Milcery extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Milcery';
-  public fullName: string = 'Milcery VIV';
+  public fullName: string = 'Milcery (VIV 80)';
+  public legacyFullName = 'Milcery VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sweet Scent

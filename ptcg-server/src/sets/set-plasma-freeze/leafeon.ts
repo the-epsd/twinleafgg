@@ -37,7 +37,8 @@ export class Leafeon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
   public name: string = 'Leafeon';
-  public fullName: string = 'Leafeon PLF';
+  public fullName: string = 'Leafeon (PLF 11)';
+  public legacyFullName = 'Leafeon PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Energy Crush

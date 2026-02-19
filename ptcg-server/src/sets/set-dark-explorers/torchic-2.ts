@@ -36,6 +36,7 @@ export class Torchic2 extends PokemonCard {
 
   public name: string = 'Torchic';
 
-  public fullName: string = 'Torchic DEX 15';
+  public fullName: string = 'Torchic (DEX 15)';
+  public legacyFullName = 'Torchic DEX 15';
 
 }

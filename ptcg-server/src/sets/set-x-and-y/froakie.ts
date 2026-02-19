@@ -29,7 +29,8 @@ export class Froakie extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Froakie';
-  public fullName: string = 'Froakie XY';
+  public fullName: string = 'Froakie (XY 39)';
+  public legacyFullName = 'Froakie XY';
 
   public usedBounce = false;
 

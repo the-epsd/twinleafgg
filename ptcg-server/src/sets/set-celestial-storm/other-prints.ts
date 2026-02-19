@@ -34,288 +34,336 @@ import { LifeHerb } from './life-herb';
 import { RainbowBrush } from './rainbow-brush';
 
 export class AcroBikeCES extends AcroBike {
-  public fullName = 'Acro Bike CES';
+  public fullName = 'Acro Bike (CES 123)';
+  public legacyFullName = 'Acro Bike CES';
   public set = 'CES';
   public setNumber = '123';
 }
 
 export class AcroBikeCESAlt extends AcroBike {
-  public fullName = 'Acro Bike CES Alt';
+  public fullName = 'Acro Bike (CES 123a)';
+  public legacyFullName = 'Acro Bike CES Alt';
   public set = 'CES';
   public setNumber = '123a';
 }
 
 export class AcroBikeCESSR extends AcroBike {
-  public fullName = 'Acro Bike CES SR';
+  public fullName = 'Acro Bike (CES 178)';
+  public legacyFullName = 'Acro Bike CES SR';
   public set = 'CES';
   public setNumber = '178';
 }
 
 export class SuperScoopUpCES extends SuperScoopUp {
-  public fullName = 'Super Scoop Up CES';
+  public fullName = 'Super Scoop Up (CES 146)';
+  public legacyFullName = 'Super Scoop Up CES';
   public set = 'CES';
   public setNumber = '146';
 }
 
 export class SwitchCES extends Switch {
-  public fullName = 'Switch CES';
+  public fullName = 'Switch (CES 147)';
+  public legacyFullName = 'Switch CES';
   public set = 'CES';
   public setNumber = '147';
 }
 export class BillsMaintenanceCES extends BillsMaintenance {
   public setNumber = '126';
-  public fullName: string = 'Bill\'s Maintenance CES';
+  public fullName: string = 'Bill\'s Maintenance (CES 126)';
+  public legacyFullName = 'Bill\'s Maintenance CES';
   public set = 'CES';
 }
 
 export class EnergySwitchPKCES extends EnergySwitchPK {
   public setNumber = '129';
-  public fullName: string = 'Energy Switch CES';
+  public fullName: string = 'Energy Switch (CES 129)';
+  public legacyFullName = 'Energy Switch CES';
   public set = 'CES';
 }
 
 export class PokeNavCES extends PokeNav {
   public setNumber = '140';
-  public fullName: string = 'PokéNav CES';
+  public fullName: string = 'PokéNav (CES 140)';
+  public legacyFullName = 'PokéNav CES';
   public set = 'CES';
 }
 
 export class RareCandyCES extends RareCandy {
   public setNumber = '142';
-  public fullName: string = 'Rare Candy CES';
+  public fullName: string = 'Rare Candy (CES 142)';
+  public legacyFullName = 'Rare Candy CES';
   public set = 'CES';
 }
 
 export class TvReporterCES extends TvReporter {
   public setNumber = '149';
-  public fullName: string = 'TV Reporter CES';
+  public fullName: string = 'TV Reporter (CES 149)';
+  public legacyFullName = 'TV Reporter CES';
   public set = 'CES';
 }
 
 export class RainbowEnergyPLCES extends RainbowEnergyPL {
   public setNumber = '151';
-  public fullName: string = 'Rainbow Energy CES';
+  public fullName: string = 'Rainbow Energy (CES 151)';
+  public legacyFullName = 'Rainbow Energy CES';
   public set = 'CES';
 }
 
 export class ArticunoGX2CES extends ArticunoGXCES31 {
   public setNumber = '154';
-  public fullName: string = 'Articuno-GX2 CES';
+  public fullName: string = 'Articuno-GX (CES 154)';
+  public legacyFullName = 'Articuno-GX2 CES';
   public set = 'CES';
 }
 
 export class ElectrodeGX2CES extends ElectrodeGXCES48 {
   public setNumber = '155';
-  public fullName: string = 'Electrode-GX2 CES';
+  public fullName: string = 'Electrode-GX (CES 155)';
+  public legacyFullName = 'Electrode-GX2 CES';
   public set = 'CES';
 }
 
 export class BanetteGX2CES extends BanetteGXCES66 {
   public setNumber = '157';
-  public fullName: string = 'Banette-GX2 CES';
+  public fullName: string = 'Banette-GX (CES 157)';
+  public legacyFullName = 'Banette-GX2 CES';
   public set = 'CES';
 }
 
 export class RayquazaGX2CES extends RayquazaGXCES109 {
   public setNumber = '160';
-  public fullName: string = 'Rayquaza-GX2 CES';
+  public fullName: string = 'Rayquaza-GX (CES 160)';
+  public legacyFullName = 'Rayquaza-GX2 CES';
   public set = 'CES';
 }
 
 export class ApricornMaker2CES extends ApricornMakerCES124 {
   public setNumber = '161';
-  public fullName: string = 'Apricorn Maker2 CES';
+  public fullName: string = 'Apricorn Maker (CES 161)';
+  public legacyFullName = 'Apricorn Maker2 CES';
   public set = 'CES';
 }
 
 export class BillsMaintenance2CES extends BillsMaintenanceRG87 {
   public setNumber = '162';
-  public fullName: string = 'Bill\'s Maintenance2 CES';
+  public fullName: string = 'Bill\'s Maintenance (CES 162)';
+  public legacyFullName = 'Bill\'s Maintenance2 CES';
   public set = 'CES';
 }
 
 export class Copycat2CES extends CopycatDF73 {
   public setNumber = '163';
-  public fullName: string = 'Copycat2 CES';
+  public fullName: string = 'Copycat (CES 163)';
+  public legacyFullName = 'Copycat2 CES';
   public set = 'CES';
 }
 
 export class StevensResolve2CES extends StevensResolveCES145 {
   public setNumber = '165';
-  public fullName: string = 'Steven\'s Resolve2 CES';
+  public fullName: string = 'Steven\'s Resolve (CES 165)';
+  public legacyFullName = 'Steven\'s Resolve2 CES';
   public set = 'CES';
 }
 
 export class TateAndLiza3CES extends TateAndLizaCES148 {
   public setNumber = '166';
-  public fullName: string = 'Tate & Liza3 CES';
+  public fullName: string = 'Tate & Liza (CES 166)';
+  public legacyFullName = 'Tate & Liza3 CES';
   public set = 'CES';
 }
 
 export class TvReporter2CES extends TvReporterDR88 {
   public setNumber = '167';
-  public fullName: string = 'TV Reporter2 CES';
+  public fullName: string = 'TV Reporter (CES 167)';
+  public legacyFullName = 'TV Reporter2 CES';
   public set = 'CES';
 }
 
 export class ArticunoGX3CES extends ArticunoGXCES31 {
   public setNumber = '171';
-  public fullName: string = 'Articuno-GX3 CES';
+  public fullName: string = 'Articuno-GX (CES 171)';
+  public legacyFullName = 'Articuno-GX3 CES';
   public set = 'CES';
 }
 
 export class ElectrodeGX3CES extends ElectrodeGXCES48 {
   public setNumber = '172';
-  public fullName: string = 'Electrode-GX3 CES';
+  public fullName: string = 'Electrode-GX (CES 172)';
+  public legacyFullName = 'Electrode-GX3 CES';
   public set = 'CES';
 }
 
 export class BanetteGX3CES extends BanetteGXCES66 {
   public setNumber = '174';
-  public fullName: string = 'Banette-GX3 CES';
+  public fullName: string = 'Banette-GX (CES 174)';
+  public legacyFullName = 'Banette-GX3 CES';
   public set = 'CES';
 }
 
 export class RayquazaGX3CES extends RayquazaGXCES109 {
   public setNumber = '177';
-  public fullName: string = 'Rayquaza-GX3 CES';
+  public fullName: string = 'Rayquaza-GX (CES 177)';
+  public legacyFullName = 'Rayquaza-GX3 CES';
   public set = 'CES';
 }
 
 export class HustleBelt2CES extends HustleBeltCES134 {
   public setNumber = '179';
-  public fullName: string = 'Hustle Belt2 CES';
+  public fullName: string = 'Hustle Belt (CES 179)';
+  public legacyFullName = 'Hustle Belt2 CES';
   public set = 'CES';
 }
 
 export class PokeNav2CES extends PokeNavRS88 {
   public setNumber = '181';
-  public fullName: string = 'PokéNav2 CES';
+  public fullName: string = 'PokéNav (CES 181)';
+  public legacyFullName = 'PokéNav2 CES';
   public set = 'CES';
 }
 
 export class RainbowEnergyPL2CES extends RainbowEnergyPLPL121 {
   public setNumber = '183';
-  public fullName: string = 'Rainbow Energy2 CES';
+  public fullName: string = 'Rainbow Energy (CES 183)';
+  public legacyFullName = 'Rainbow Energy2 CES';
   public set = 'CES';
 }
 
 export class Sceptile2CES extends SceptileCES10 {
   public setNumber = '10a';
-  public fullName: string = 'Sceptile2 CES';
+  public fullName: string = 'Sceptile (CES 10a)';
+  public legacyFullName = 'Sceptile2 CES';
   public set = 'CES';
 }
 
 export class TateAndLiza2CES extends TateAndLizaCES148 {
   public setNumber = '148a';
-  public fullName: string = 'Tate & Liza2 CES';
+  public fullName: string = 'Tate & Liza (CES 148a)';
+  public legacyFullName = 'Tate & Liza2 CES';
   public set = 'CES';
 }
 
 export class RayquazaGX4CES extends RayquazaGXCES109 {
   public setNumber = '177a';
-  public fullName: string = 'Rayquaza-GX4 CES';
+  public fullName: string = 'Rayquaza-GX (CES 177a)';
+  public legacyFullName = 'Rayquaza-GX4 CES';
   public set = 'CES';
 }
 
 export class CombuskenCES extends Combusken {
   public set: string = 'CES';
   public setNumber: string = '27';
-  public fullName: string = 'Combusken CES';
+  public fullName: string = 'Combusken (CES 27)';
+  public legacyFullName = 'Combusken CES';
 }
 
 export class FriendBallCES extends FriendBall {
   public set: string = 'CES';
   public setNumber: string = '131';
-  public fullName: string = 'Friend Ball CES';
+  public fullName: string = 'Friend Ball (CES 131)';
+  public legacyFullName = 'Friend Ball CES';
 }
 
 export class UndergroundExpeditionCES extends UndergroundExpedition {
   public set: string = 'CES';
   public setNumber: string = '150';
-  public fullName: string = 'Underground Expedition CES';
+  public fullName: string = 'Underground Expedition (CES 150)';
+  public legacyFullName = 'Underground Expedition CES';
 }
 
 export class ShiftryGx2 extends ShiftryGx {
   public set: string = 'CES';
   public setNumber: string = '152';
-  public fullName: string = 'Shiftry-GX CES 152';
+  public fullName: string = 'Shiftry-GX (CES 152)';
+  public legacyFullName = 'Shiftry-GX CES 152';
 }
 
 export class BlazikenGx2 extends BlazikenGx {
   public set: string = 'CES';
   public setNumber: string = '153';
-  public fullName: string = 'Blaziken-GX CES 153';
+  public fullName: string = 'Blaziken-GX (CES 153)';
+  public legacyFullName = 'Blaziken-GX CES 153';
 }
 
 export class MrMimeGx2 extends MrMimeGX {
   public set: string = 'CES';
   public setNumber: string = '156';
-  public fullName: string = 'Mr. Mime-GX CES 156';
+  public fullName: string = 'Mr. Mime-GX (CES 156)';
+  public legacyFullName = 'Mr. Mime-GX CES 156';
 }
 
 export class ScizorGx2 extends ScizorGx {
   public set: string = 'CES';
   public setNumber: string = '158';
-  public fullName: string = 'Scizor-GX CES 158';
+  public fullName: string = 'Scizor-GX (CES 158)';
+  public legacyFullName = 'Scizor-GX CES 158';
 }
 
 export class StakatakaGx2 extends StakatakaGx {
   public set: string = 'CES';
   public setNumber: string = '159';
-  public fullName: string = 'Stakataka-GX CES 159';
+  public fullName: string = 'Stakataka-GX (CES 159)';
+  public legacyFullName = 'Stakataka-GX CES 159';
 }
 
 export class Lisia2 extends Lisia {
   public set: string = 'CES';
   public setNumber: string = '164';
-  public fullName: string = 'Lisia CES 164';
+  public fullName: string = 'Lisia (CES 164)';
+  public legacyFullName = 'Lisia CES 164';
 }
 
 export class UndergroundExpedition2 extends UndergroundExpedition {
   public set: string = 'CES';
   public setNumber: string = '168';
-  public fullName: string = 'Underground Expedition CES 168';
+  public fullName: string = 'Underground Expedition (CES 168)';
+  public legacyFullName = 'Underground Expedition CES 168';
 }
 
 export class ShiftryGx3 extends ShiftryGx {
   public set: string = 'CES';
   public setNumber: string = '169';
-  public fullName: string = 'Shiftry-GX CES 169';
+  public fullName: string = 'Shiftry-GX (CES 169)';
+  public legacyFullName = 'Shiftry-GX CES 169';
 }
 
 export class BlazikenGx3 extends BlazikenGx {
   public set: string = 'CES';
   public setNumber: string = '170';
-  public fullName: string = 'Blaziken-GX CES 170';
+  public fullName: string = 'Blaziken-GX (CES 170)';
+  public legacyFullName = 'Blaziken-GX CES 170';
 }
 
 export class MrMimeGx3 extends MrMimeGX {
   public set: string = 'CES';
   public setNumber: string = '173';
-  public fullName: string = 'Mr. Mime-GX CES 173';
+  public fullName: string = 'Mr. Mime-GX (CES 173)';
+  public legacyFullName = 'Mr. Mime-GX CES 173';
 }
 
 export class ScizorGx3 extends ScizorGx {
   public set: string = 'CES';
   public setNumber: string = '175';
-  public fullName: string = 'Scizor-GX CES 175';
+  public fullName: string = 'Scizor-GX (CES 175)';
+  public legacyFullName = 'Scizor-GX CES 175';
 }
 
 export class StakatakaGx3 extends StakatakaGx {
   public set: string = 'CES';
   public setNumber: string = '176';
-  public fullName: string = 'Stakataka-GX CES 176';
+  public fullName: string = 'Stakataka-GX (CES 176)';
+  public legacyFullName = 'Stakataka-GX CES 176';
 }
 
 export class LifeHerb2 extends LifeHerb {
   public set: string = 'CES';
   public setNumber: string = '180';
-  public fullName: string = 'Life Herb CES 180';
+  public fullName: string = 'Life Herb (CES 180)';
+  public legacyFullName = 'Life Herb CES 180';
 }
 
 export class RainbowBrush2 extends RainbowBrush {
   public set: string = 'CES';
   public setNumber: string = '182';
-  public fullName: string = 'Rainbow Brush CES 182';
+  public fullName: string = 'Rainbow Brush (CES 182)';
+  public legacyFullName = 'Rainbow Brush CES 182';
 }

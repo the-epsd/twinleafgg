@@ -36,7 +36,8 @@ export class Kyurem extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kyurem';
-  public fullName: string = 'Kyurem UNB';
+  public fullName: string = 'Kyurem (UNB 50)';
+  public legacyFullName = 'Kyurem UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call Forth Cold

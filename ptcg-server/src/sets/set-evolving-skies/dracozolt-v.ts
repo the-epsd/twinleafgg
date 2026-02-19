@@ -42,7 +42,8 @@ export class DracozoltV extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dracozolt V';
-  public fullName: string = 'Dracozolt V EVS';
+  public fullName: string = 'Dracozolt V (EVS 58)';
+  public legacyFullName = 'Dracozolt V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Primeval Beak

@@ -30,7 +30,8 @@ export class Basculin extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Basculin';
-  public fullName: string = 'Basculin NXD';
+  public fullName: string = 'Basculin (NXD 30)';
+  public legacyFullName = 'Basculin NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Bared Fangs - only works if defender has damage

@@ -20,7 +20,7 @@ export class Vanillite extends PokemonCard {
       name: 'Triple Spin',
       cost: [W],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 10 damage for each heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class Vanillite extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanillite';
-  public fullName: string = 'Vanillite GRI';
+  public fullName: string = 'Vanillite (GRI 33)';
+  public legacyFullName = 'Vanillite GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Triple Spin

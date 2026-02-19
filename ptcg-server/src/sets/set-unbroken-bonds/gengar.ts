@@ -39,7 +39,8 @@ export class Gengar extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gengar';
-  public fullName: string = 'Gengar UNB';
+  public fullName: string = 'Gengar (UNB 70)';
+  public legacyFullName = 'Gengar UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Shadow Pain (on-evolve - put 6 damage counters on GX/EX)

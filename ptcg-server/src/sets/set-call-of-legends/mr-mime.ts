@@ -29,7 +29,8 @@ export class MrMime extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name = 'Mr. Mime';
-  public fullName = 'Mr. Mime CL';
+  public fullName = 'Mr. Mime (CL 29)';
+  public legacyFullName = 'Mr. Mime CL';
 
   public readonly TRICK_REVEAL_MARKER = 'TRICK_REVEAL_MARKER';
 

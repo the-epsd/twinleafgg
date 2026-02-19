@@ -31,7 +31,8 @@ export class Haxorus extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Haxorus';
-  public fullName: string = 'Haxorus NVI';
+  public fullName: string = 'Haxorus (NVI 88)';
+  public legacyFullName = 'Haxorus NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Dual Chop - flip 2 coins, 50x heads

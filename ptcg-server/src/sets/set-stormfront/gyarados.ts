@@ -38,7 +38,8 @@ export class Gyarados extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '19';
   public name: string = 'Gyarados';
-  public fullName: string = 'Gyarados SF';
+  public fullName: string = 'Gyarados (SF 19)';
+  public legacyFullName = 'Gyarados SF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

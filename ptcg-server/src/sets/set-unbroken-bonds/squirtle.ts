@@ -29,7 +29,8 @@ export class Squirtle extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Squirtle';
-  public fullName: string = 'Squirtle UNB';
+  public fullName: string = 'Squirtle (UNB 33)';
+  public legacyFullName = 'Squirtle UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble

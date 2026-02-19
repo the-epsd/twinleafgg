@@ -37,7 +37,8 @@ export class Avalugg extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Avalugg';
-  public fullName: string = 'Avalugg STS';
+  public fullName: string = 'Avalugg (STS 37)';
+  public legacyFullName = 'Avalugg STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Crunch

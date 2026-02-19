@@ -40,7 +40,8 @@ export class Araquanid extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Araquanid';
-  public fullName: string = 'Araquanid UNM';
+  public fullName: string = 'Araquanid (UNM 49)';
+  public legacyFullName = 'Araquanid UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tangle Drag

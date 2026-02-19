@@ -82,7 +82,8 @@ export class PrimeCatcher extends TrainerCard {
 
   public name: string = 'Prime Catcher';
 
-  public fullName: string = 'Prime Catcher TEF';
+  public fullName: string = 'Prime Catcher (TEF 157)';
+  public legacyFullName = 'Prime Catcher TEF';
 
   public text: string =
     'Switch in 1 of your opponent\'s Benched Pokémon to the Active Spot. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.';

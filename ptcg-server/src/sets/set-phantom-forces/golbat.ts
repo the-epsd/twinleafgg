@@ -49,7 +49,8 @@ export class Golbat extends PokemonCard {
 
   public name: string = 'Golbat';
 
-  public fullName: string = 'Golbat PHF';
+  public fullName: string = 'Golbat (PHF 32)';
+  public legacyFullName = 'Golbat PHF';
 
   public cardImage: string = 'assets/cardback.png';
 

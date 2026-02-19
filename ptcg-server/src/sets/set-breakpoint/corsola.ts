@@ -20,7 +20,7 @@ export class Corsola extends PokemonCard {
       name: 'Spike Cannon',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
     },
     {
@@ -35,7 +35,8 @@ export class Corsola extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Corsola';
-  public fullName: string = 'Corsola BKP';
+  public fullName: string = 'Corsola (BKP 29)';
+  public legacyFullName = 'Corsola BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spike Cannon

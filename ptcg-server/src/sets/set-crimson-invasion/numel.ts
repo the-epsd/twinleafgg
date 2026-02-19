@@ -21,7 +21,7 @@ export class Numel extends PokemonCard {
       name: 'Continuous Headbutt',
       cost: [R, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 30 damage for each heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Numel extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Numel';
-  public fullName: string = 'Numel CIN';
+  public fullName: string = 'Numel (CIN 13)';
+  public legacyFullName = 'Numel CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Headbutt

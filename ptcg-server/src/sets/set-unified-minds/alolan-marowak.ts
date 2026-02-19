@@ -36,7 +36,8 @@ export class AlolanMarowak extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Marowak';
-  public fullName: string = 'Alolan Marowak UNM';
+  public fullName: string = 'Alolan Marowak (UNM 75)';
+  public legacyFullName = 'Alolan Marowak UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spirit Smash

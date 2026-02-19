@@ -34,7 +34,8 @@ export class Turtonator extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Turtonator';
-  public fullName: string = 'Turtonator BUS';
+  public fullName: string = 'Turtonator (BUS 26)';
+  public legacyFullName = 'Turtonator BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flame Cloak

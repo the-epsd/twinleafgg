@@ -40,7 +40,8 @@ export class TypeNull extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Type: Null';
-  public fullName: string = 'Type: Null CIN';
+  public fullName: string = 'Type: Null (CIN 89)';
+  public legacyFullName = 'Type: Null CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Armor Press

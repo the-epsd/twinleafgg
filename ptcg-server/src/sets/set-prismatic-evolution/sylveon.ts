@@ -34,7 +34,8 @@ export class Sylveon extends PokemonCard {
   public setNumber = '40';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Sylveon';
-  public fullName: string = 'Sylveon PRE';
+  public fullName: string = 'Sylveon (PRE 40)';
+  public legacyFullName = 'Sylveon PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {

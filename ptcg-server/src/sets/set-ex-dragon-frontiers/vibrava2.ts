@@ -34,7 +34,8 @@ export class Vibrava2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
   public name: string = 'Vibrava';
-  public fullName: string = 'Vibrava DF 24';
+  public fullName: string = 'Vibrava (DF 24)';
+  public legacyFullName = 'Vibrava DF 24';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

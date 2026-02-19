@@ -28,7 +28,8 @@ export class Tynamo extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tynamo';
-  public fullName: string = 'Tynamo UNM';
+  public fullName: string = 'Tynamo (UNM 63)';
+  public legacyFullName = 'Tynamo UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wild River

@@ -21,7 +21,8 @@ export class Shroodle extends PokemonCard {
 
   public name: string = 'Shroodle';
 
-  public fullName: string = 'Shroodle SSP';
+  public fullName: string = 'Shroodle (SSP 120)';
+  public legacyFullName = 'Shroodle SSP';
 
   public regulationMark = 'H';
 

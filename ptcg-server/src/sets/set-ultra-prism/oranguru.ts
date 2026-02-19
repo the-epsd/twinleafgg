@@ -42,7 +42,8 @@ export class Oranguru extends PokemonCard {
 
   public name: string = 'Oranguru';
 
-  public fullName: string = 'Oranguru UPR';
+  public fullName: string = 'Oranguru (UPR 114)';
+  public legacyFullName = 'Oranguru UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Resource Management

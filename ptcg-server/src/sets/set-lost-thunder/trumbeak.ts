@@ -47,7 +47,8 @@ export class Trumbeak extends PokemonCard {
 
   public name: string = 'Trumbeak';
 
-  public fullName: string = 'Trumbeak LOT';
+  public fullName: string = 'Trumbeak (LOT 165)';
+  public legacyFullName = 'Trumbeak LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

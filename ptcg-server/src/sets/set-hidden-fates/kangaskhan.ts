@@ -21,7 +21,7 @@ export class Kangaskhan extends PokemonCard {
       name: 'Parental Fury',
       cost: [C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 40 damage for each heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Kangaskhan extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kangaskhan';
-  public fullName: string = 'Kangaskhan HIF';
+  public fullName: string = 'Kangaskhan (HIF 47)';
+  public legacyFullName = 'Kangaskhan HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Parental Fury

@@ -28,7 +28,8 @@ export class Popplio2 extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Popplio';
-  public fullName: string = 'Popplio LOT 65';
+  public fullName: string = 'Popplio (LOT 65)';
+  public legacyFullName = 'Popplio LOT 65';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Blot

@@ -17,7 +17,8 @@ export class EnergyStadium extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'N4';
   public name = 'Energy Stadium';
-  public fullName = 'Energy Stadium N4';
+  public fullName = 'Energy Stadium (N4 99)';
+  public legacyFullName = 'Energy Stadium N4';
 
   public text = 'Once during each player\'s turn (before attacking), that player may flip a coin. If heads, that player puts a basic Energy card from his or her discard pile into his or her hand.';
 

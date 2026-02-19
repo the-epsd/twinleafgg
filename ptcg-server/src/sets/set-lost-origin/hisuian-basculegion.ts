@@ -32,7 +32,8 @@ export class HisuianBasculegion extends PokemonCard {
   public regulationMark: string = 'F';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hisuian Basculegion';
-  public fullName: string = 'Hisuian Basculegion LOR';
+  public fullName: string = 'Hisuian Basculegion (LOR 45)';
+  public legacyFullName = 'Hisuian Basculegion LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

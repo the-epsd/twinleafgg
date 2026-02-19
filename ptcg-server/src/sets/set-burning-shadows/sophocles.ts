@@ -48,7 +48,8 @@ export class Sophocles extends TrainerCard {
 
   public name: string = 'Sophocles';
 
-  public fullName: string = 'Sophocles BUS';
+  public fullName: string = 'Sophocles (BUS 123)';
+  public legacyFullName = 'Sophocles BUS';
 
   public text: string =
     'Discard 2 cards from your hand. If you do, draw 4 cards.';

@@ -35,7 +35,8 @@ export class Virizion extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Virizion';
-  public fullName: string = 'Virizion SLG';
+  public fullName: string = 'Virizion (SLG 8)';
+  public legacyFullName = 'Virizion SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wrapped in Wind

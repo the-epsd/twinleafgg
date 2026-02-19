@@ -14,7 +14,8 @@ export class ResistanceGym extends TrainerCard {
   public setNumber = '109';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Resistance Gym';
-  public fullName: string = 'Resistance Gym G2';
+  public fullName: string = 'Resistance Gym (G2 109)';
+  public legacyFullName = 'Resistance Gym G2';
 
   public text: string =
     'Each Pokémon\'s Resistance is reduced by 20. (If a Pokémon\'s Resistance is -30, it becomes -10.)';

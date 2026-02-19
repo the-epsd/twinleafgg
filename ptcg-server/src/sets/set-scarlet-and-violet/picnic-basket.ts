@@ -17,7 +17,8 @@ export class PicnicBasket extends TrainerCard {
 
   public name: string = 'Picnic Basket';
 
-  public fullName: string = 'Picnic Basket SVI';
+  public fullName: string = 'Picnic Basket (SVI 184)';
+  public legacyFullName = 'Picnic Basket SVI';
 
   public text: string =
     'Heal 30 damage from each Pokémon (both yours and your opponent\'s).';

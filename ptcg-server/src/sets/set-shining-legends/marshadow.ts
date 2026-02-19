@@ -40,7 +40,8 @@ export class Marshadow extends PokemonCard {
 
   public name: string = 'Marshadow';
 
-  public fullName: string = 'Marshadow SLG';
+  public fullName: string = 'Marshadow (SLG 45)';
+  public legacyFullName = 'Marshadow SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

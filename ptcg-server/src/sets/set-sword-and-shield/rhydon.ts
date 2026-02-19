@@ -36,7 +36,8 @@ export class Rhydon extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rhydon';
-  public fullName: string = 'Rhydon SSH';
+  public fullName: string = 'Rhydon (SSH 98)';
+  public legacyFullName = 'Rhydon SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Rock Slide

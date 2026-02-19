@@ -15,7 +15,8 @@ export class LtSurgesStrategy extends TrainerCard {
 
   public name: string = 'Lt. Surge\'s Strategy';
 
-  public fullName: string = 'Lt. Surge\'s Strategy UNB';
+  public fullName: string = 'Lt. Surge\'s Strategy (UNB 178)';
+  public legacyFullName = 'Lt. Surge\'s Strategy UNB';
 
   public cardImage: string = 'assets/cardback.png';
 

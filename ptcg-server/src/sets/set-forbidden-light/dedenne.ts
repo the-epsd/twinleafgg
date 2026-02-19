@@ -28,7 +28,7 @@ export class Dedenne extends PokemonCard {
       name: 'Electrichain',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have any Lightning Pokémon on your Bench, this attack does 30 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Dedenne extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dedenne';
-  public fullName: string = 'Dedenne FLI';
+  public fullName: string = 'Dedenne (FLI 88)';
+  public legacyFullName = 'Dedenne FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Find a Friend

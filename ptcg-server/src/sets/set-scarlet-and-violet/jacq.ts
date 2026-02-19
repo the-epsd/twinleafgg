@@ -81,7 +81,8 @@ export class Jacq extends TrainerCard {
 
   public name: string = 'Jacq';
 
-  public fullName: string = 'Jacq SVI';
+  public fullName: string = 'Jacq (SVI 175)';
+  public legacyFullName = 'Jacq SVI';
 
   public text: string =
     'Search your deck for up to 2 Evolution Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';

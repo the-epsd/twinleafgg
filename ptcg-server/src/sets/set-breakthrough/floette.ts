@@ -30,7 +30,7 @@ export class Floette extends PokemonCard {
       name: 'Magical Leaf',
       cost: [Y, Y],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage and heal 20 damage from this Pokémon.'
     }
   ];
@@ -39,7 +39,8 @@ export class Floette extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Floette';
-  public fullName: string = 'Floette BKT';
+  public fullName: string = 'Floette (BKT 102)';
+  public legacyFullName = 'Floette BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Aromatherapy

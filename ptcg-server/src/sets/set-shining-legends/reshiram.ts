@@ -20,7 +20,7 @@ export class Reshiram extends PokemonCard {
       name: 'Outrage',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     },
     {
@@ -35,7 +35,8 @@ export class Reshiram extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Reshiram';
-  public fullName: string = 'Reshiram SLG';
+  public fullName: string = 'Reshiram (SLG 14)';
+  public legacyFullName = 'Reshiram SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Outrage

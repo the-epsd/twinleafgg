@@ -25,7 +25,8 @@ export class Archen extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '120';
   public name: string = 'Archen';
-  public fullName: string = 'Archen UNM';
+  public fullName: string = 'Archen (UNM 120)';
+  public legacyFullName = 'Archen UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

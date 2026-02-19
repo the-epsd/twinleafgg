@@ -36,7 +36,8 @@ export class Fletchling extends PokemonCard {
   public setNumber: string = '138';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fletchling';
-  public fullName: string = 'Fletchling EVS';
+  public fullName: string = 'Fletchling (EVS 138)';
+  public legacyFullName = 'Fletchling EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tailwind Draw

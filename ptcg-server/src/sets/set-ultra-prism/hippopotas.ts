@@ -20,7 +20,7 @@ export class Hippopotas extends PokemonCard {
       name: 'Eleventh Hour Tackle',
       cost: [F, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there are 3 or fewer cards in your deck, this attack does 130 more damage.'
     }
   ];
@@ -29,7 +29,8 @@ export class Hippopotas extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hippopotas';
-  public fullName: string = 'Hippopotas UPR';
+  public fullName: string = 'Hippopotas (UPR 68)';
+  public legacyFullName = 'Hippopotas UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Eleventh Hour Tackle

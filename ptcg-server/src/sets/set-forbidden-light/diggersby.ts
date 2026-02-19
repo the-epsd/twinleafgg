@@ -22,14 +22,14 @@ export class Diggersby extends PokemonCard {
       name: 'Mountaintop Mining',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 40 more damage. If you do, discard the top 2 cards of your deck.'
     },
     {
       name: 'Rock Cannon',
       cost: [C, C, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 80 damage for each heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class Diggersby extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Diggersby';
-  public fullName: string = 'Diggersby FLI';
+  public fullName: string = 'Diggersby (FLI 98)';
+  public legacyFullName = 'Diggersby FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mountaintop Mining

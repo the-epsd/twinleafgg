@@ -22,7 +22,7 @@ export class NinetalesBreak extends PokemonCard {
       name: 'Explosive Fireball',
       cost: [R, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Discard all [R] Energy attached to this Pok\u00e9mon. This attack does 60 more damage for each Energy card discarded in this way.'
     }
   ];
@@ -31,7 +31,8 @@ export class NinetalesBreak extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ninetales BREAK';
-  public fullName: string = 'Ninetales BREAK EVO';
+  public fullName: string = 'Ninetales BREAK (EVO 16)';
+  public legacyFullName = 'Ninetales BREAK EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Explosive Fireball

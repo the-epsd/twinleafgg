@@ -30,7 +30,7 @@ export class Bastiodon extends PokemonCard {
       name: 'Fortress of Rage',
       cost: [M, M, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each of your Benched Pokémon that has any damage counters on it.'
     }
   ];
@@ -39,7 +39,8 @@ export class Bastiodon extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bastiodon';
-  public fullName: string = 'Bastiodon STS';
+  public fullName: string = 'Bastiodon (STS 70)';
+  public legacyFullName = 'Bastiodon STS';
 
   public readonly COUNTER_HEAD_MARKER = 'COUNTER_HEAD_MARKER';
 

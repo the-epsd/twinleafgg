@@ -43,7 +43,8 @@ export class ArceusLvX2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '95';
   public name: string = 'Arceus';
-  public fullName: string = 'Arceus LV.X 2 AR';
+  public fullName: string = 'Arceus (AR 95)';
+  public legacyFullName = 'Arceus LV.X 2 AR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Multitype

@@ -16,7 +16,8 @@ export class AncientTomb extends TrainerCard {
   public setNumber = '87';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Ancient Tomb';
-  public fullName: string = 'Ancient Tomb HL';
+  public fullName: string = 'Ancient Tomb (HL 87)';
+  public legacyFullName = 'Ancient Tomb HL';
 
   public text: string =
     'Don\'t apply Weakness for all Pokémon in play (excluding Pokémon-ex and Pokémon that has an owner in its name).';

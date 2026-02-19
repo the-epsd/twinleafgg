@@ -13,7 +13,8 @@ export class AltariaSpiritLink extends TrainerCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Altaria Spirit Link';
-  public fullName: string = 'Altaria Spirit Link FCO';
+  public fullName: string = 'Altaria Spirit Link (FCO 91)';
+  public legacyFullName = 'Altaria Spirit Link FCO';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Altaria-EX.';
 
   // Ref: set-breakthrough/houndoom-spirit-link.ts (Spirit Link - no-op, handled by engine)

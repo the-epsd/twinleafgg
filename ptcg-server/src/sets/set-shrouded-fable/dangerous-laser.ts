@@ -22,7 +22,8 @@ export class DangerousLaser extends TrainerCard {
 
   public name: string = 'Dangerous Laser';
 
-  public fullName: string = 'Dangerous Laser SFA';
+  public fullName: string = 'Dangerous Laser (SFA 58)';
+  public legacyFullName = 'Dangerous Laser SFA';
 
   public text: string =
     'Your opponent\'s Active Pokémon is now Burned and Confused.';

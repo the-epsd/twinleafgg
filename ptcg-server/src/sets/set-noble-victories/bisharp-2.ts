@@ -35,7 +35,8 @@ export class Bisharp2 extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bisharp';
-  public fullName: string = 'Bisharp NVI 76';
+  public fullName: string = 'Bisharp (NVI 76)';
+  public legacyFullName = 'Bisharp NVI 76';
 
   private usedNightSlash: boolean = false;
   private usedMetalClaw: boolean = false;

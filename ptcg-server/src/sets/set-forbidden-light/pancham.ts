@@ -21,7 +21,7 @@ export class Pancham extends PokemonCard {
       name: 'Act Tough',
       cost: [F],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any [D] Energy attached to it, this attack does 30 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Pancham extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pancham';
-  public fullName: string = 'Pancham FLI';
+  public fullName: string = 'Pancham (FLI 65)';
+  public legacyFullName = 'Pancham FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Act Tough

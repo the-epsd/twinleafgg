@@ -116,7 +116,8 @@ export class ZoroarkGX extends PokemonCard {
 
   public name: string = 'Zoroark-GX';
 
-  public fullName: string = 'Zoroark GX SLG';
+  public fullName: string = 'Zoroark-GX (SLG 53)';
+  public legacyFullName = 'Zoroark GX SLG';
 
   public readonly TRADE_MARKER = 'TRADE_MARKER';
 

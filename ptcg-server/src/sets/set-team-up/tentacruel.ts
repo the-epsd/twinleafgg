@@ -41,7 +41,8 @@ export class Tentacruel extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tentacruel';
-  public fullName: string = 'Tentacruel TEU';
+  public fullName: string = 'Tentacruel (TEU 61)';
+  public legacyFullName = 'Tentacruel TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Void Tentacles

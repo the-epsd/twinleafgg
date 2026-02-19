@@ -14,7 +14,8 @@ export class LanettesNetSearch extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Lanette\'s Net Search';
-  public fullName: string = 'Lanette\'s Net Search SS';
+  public fullName: string = 'Lanette\'s Net Search (SS 87)';
+  public legacyFullName = 'Lanette\'s Net Search SS';
 
   public text: string =
     'Search your deck for up to 3 different types of Basic Pokémon cards (excluding Baby Pokémon), show them to your opponent, and put them into your hand. Shuffle your deck afterward.';

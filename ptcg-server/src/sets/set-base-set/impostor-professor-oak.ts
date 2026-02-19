@@ -14,7 +14,8 @@ export class ImpostorProfessorOak extends TrainerCard {
 
   public name: string = 'Impostor Professor Oak';
 
-  public fullName: string = 'Impostor Professor Oak BS';
+  public fullName: string = 'Impostor Professor Oak (BS 73)';
+  public legacyFullName = 'Impostor Professor Oak BS';
 
   public cardImage: string = 'assets/cardback.png';
 

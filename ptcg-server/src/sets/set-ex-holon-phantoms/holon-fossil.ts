@@ -15,7 +15,8 @@ export class HolonFossil extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
   public name: string = 'Holon Fossil';
-  public fullName: string = 'Holon Fossil HP';
+  public fullName: string = 'Holon Fossil (HP 86)';
+  public legacyFullName = 'Holon Fossil HP';
 
   public text: string =
     'Flip a coin. If heads, search your deck for an Omanyte, Kabuto, Aerodactyl, Aerodactyl ex, Lileep, or Anorith and put it onto your Bench. Shuffle your deck afterward. If tails, put an Omanyte, Kabuto, Aerodactyl, Aerodactyl ex, Lileep, or Anorith from your hand onto your Bench. Treat the new Benched Pokémon as a Basic Pokémon.';

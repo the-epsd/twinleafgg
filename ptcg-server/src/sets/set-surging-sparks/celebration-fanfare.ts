@@ -15,7 +15,8 @@ export class CelebrationFanfare extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '174';
   public name = 'Celebration Fanfare';
-  public fullName = 'Celebration Fanfare SVP';
+  public fullName = 'Celebration Fanfare (SVP 174)';
+  public legacyFullName = 'Celebration Fanfare SVP';
 
   public text = 'Once during each player\'s turn, that player may heal 10 damage from each of their Pokémon. If they do, that player\'s turn ends.';
 

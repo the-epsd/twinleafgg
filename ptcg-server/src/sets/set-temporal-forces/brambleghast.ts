@@ -32,7 +32,8 @@ export class Brambleghast extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
   public name: string = 'Brambleghast';
-  public fullName: string = 'Brambleghast TEF';
+  public fullName: string = 'Brambleghast (TEF 21)';
+  public legacyFullName = 'Brambleghast TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

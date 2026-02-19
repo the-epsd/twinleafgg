@@ -49,7 +49,8 @@ export class Raichu extends PokemonCard {
 
   public name: string = 'Raichu';
 
-  public fullName: string = 'Raichu TEF';
+  public fullName: string = 'Raichu (TEF 52)';
+  public legacyFullName = 'Raichu TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

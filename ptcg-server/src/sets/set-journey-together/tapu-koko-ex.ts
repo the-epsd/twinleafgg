@@ -27,7 +27,8 @@ export class TapuKokoex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '51';
   public name: string = 'Tapu Koko ex';
-  public fullName: string = 'Tapu Koko ex JTG';
+  public fullName: string = 'Tapu Koko ex (JTG 51)';
+  public legacyFullName = 'Tapu Koko ex JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

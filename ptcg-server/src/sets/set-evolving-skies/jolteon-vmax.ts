@@ -35,7 +35,8 @@ export class JolteonVmax extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jolteon VMAX';
-  public fullName: string = 'Jolteon VMAX EVS';
+  public fullName: string = 'Jolteon VMAX (EVS 51)';
+  public legacyFullName = 'Jolteon VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Max Thunder Rumble

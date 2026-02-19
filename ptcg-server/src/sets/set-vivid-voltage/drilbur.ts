@@ -35,7 +35,8 @@ export class Drilbur extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drilbur';
-  public fullName: string = 'Drilbur VIV';
+  public fullName: string = 'Drilbur (VIV 91)';
+  public legacyFullName = 'Drilbur VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Focus Fist

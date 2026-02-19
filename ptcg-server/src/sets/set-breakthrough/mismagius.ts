@@ -38,7 +38,8 @@ export class Mismagius extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mismagius';
-  public fullName: string = 'Mismagius BKT';
+  public fullName: string = 'Mismagius (BKT 66)';
+  public legacyFullName = 'Mismagius BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Twisted Incantation (on-evolve trigger)

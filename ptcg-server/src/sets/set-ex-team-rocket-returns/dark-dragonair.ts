@@ -35,7 +35,8 @@ export class DarkDragonair extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '31';
   public name: string = 'Dark Dragonair';
-  public fullName: string = 'Dark Dragonair TRR';
+  public fullName: string = 'Dark Dragonair (TRR 31)';
+  public legacyFullName = 'Dark Dragonair TRR';
 
   public readonly EVOLUTIONARY_LIGHT_MARKER = 'EVOLUTIONARY_LIGHT_MARKER';
 

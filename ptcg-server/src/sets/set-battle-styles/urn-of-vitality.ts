@@ -62,7 +62,8 @@ export class UrnOfVitality extends TrainerCard {
 
   public name: string = 'Urn of Vitality';
 
-  public fullName: string = 'Urn of Vitality BST';
+  public fullName: string = 'Urn of Vitality (BST 139)';
+  public legacyFullName = 'Urn of Vitality BST';
 
   public text: string =
     'Shuffle up to 2 Single Strike Energy cards from your discard pile into' +

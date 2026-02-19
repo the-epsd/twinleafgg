@@ -25,7 +25,8 @@ export class Swirlix extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '153';
   public name: string = 'Swirlix';
-  public fullName: string = 'Swirlix CEC';
+  public fullName: string = 'Swirlix (CEC 153)';
+  public legacyFullName = 'Swirlix CEC';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

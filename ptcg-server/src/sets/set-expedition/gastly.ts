@@ -25,7 +25,8 @@ export class Gastly extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
   public name: string = 'Gastly';
-  public fullName: string = 'Gastly EX';
+  public fullName: string = 'Gastly (EX 109)';
+  public legacyFullName = 'Gastly EX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

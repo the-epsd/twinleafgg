@@ -32,5 +32,6 @@ export class Toxel extends PokemonCard {
   public setNumber: string = 'SV041';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toxel';
-  public fullName: string = 'Toxel SHF';
+  public fullName: string = 'Toxel (SHF SV041)';
+  public legacyFullName = 'Toxel SHF';
 }

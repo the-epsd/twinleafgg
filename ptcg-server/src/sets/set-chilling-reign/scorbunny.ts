@@ -27,5 +27,6 @@ export class Scorbunny extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scorbunny';
-  public fullName: string = 'Scorbunny CRE';
+  public fullName: string = 'Scorbunny (CRE 26)';
+  public legacyFullName = 'Scorbunny CRE';
 }

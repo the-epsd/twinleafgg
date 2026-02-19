@@ -32,7 +32,8 @@ export class Spiritomb extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
   public name: string = 'Spiritomb';
-  public fullName: string = 'Spiritomb UPR';
+  public fullName: string = 'Spiritomb (UPR 53)';
+  public legacyFullName = 'Spiritomb UPR';
 
   public readonly TERRIFY_MARKER = 'TERRIFY_MARKER';
 

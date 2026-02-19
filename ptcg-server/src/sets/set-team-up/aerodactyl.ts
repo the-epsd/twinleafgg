@@ -29,7 +29,7 @@ export class Aerodactyl extends PokemonCard {
       name: 'Fossil Fangs',
       cost: [C, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you don\'t have any Pokémon-GX or Pokémon-EX on your Bench, this attack does 90 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Aerodactyl extends PokemonCard {
   public setNumber: string = '130';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aerodactyl';
-  public fullName: string = 'Aerodactyl TEU';
+  public fullName: string = 'Aerodactyl (TEU 130)';
+  public legacyFullName = 'Aerodactyl TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Supersonic

@@ -32,5 +32,6 @@ export class Helioptile extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Helioptile';
-  public fullName: string = 'Helioptile TEU';
+  public fullName: string = 'Helioptile (TEU 49)';
+  public legacyFullName = 'Helioptile TEU';
 }

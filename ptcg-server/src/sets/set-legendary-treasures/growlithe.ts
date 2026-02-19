@@ -35,7 +35,8 @@ export class Growlithe extends PokemonCard {
   public setNumber: string = 'RC4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Growlithe';
-  public fullName: string = 'Growlithe LTR';
+  public fullName: string = 'Growlithe (LTR RC4)';
+  public legacyFullName = 'Growlithe LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rest

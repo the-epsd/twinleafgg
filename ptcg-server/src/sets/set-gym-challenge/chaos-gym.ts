@@ -14,7 +14,8 @@ export class ChaosGym extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '102';
   public name: string = 'Chaos Gym';
-  public fullName: string = 'Chaos Gym G2';
+  public fullName: string = 'Chaos Gym (G2 102)';
+  public legacyFullName = 'Chaos Gym G2';
 
   public text: string =
     'Whenever a player plays a Trainer card other than a Stadium card, he or she flips a coin. If heads, that player plays that card normally. If tails, the player can\'t play that card. If the card isn\'t put into play, the player\'s opponent may use that card instead, if he or she does everything required in order to play that card (like discarding cards).Either way, the card goes to its owner\'s discard pile.';
@@ -84,7 +85,7 @@ export class ChaosGym extends TrainerCard {
 //   public cardImage: string = 'assets/cardback.png';
 //   public setNumber: string = '102';
 //   public name: string = 'Chaos Gym';
-//   public fullName: string = 'Chaos Gym G2';
+//   public fullName: string = 'Chaos Gym (G2 102)';
 
 //   public text: string =
 //     'Whenever a player plays a Trainer card other than a Stadium card, he or she flips a coin. If heads, that player plays that card normally. If tails, the player can\'t play that card. If the card isn\'t put into play, the player\'s opponent may use that card instead, if he or she does everything required in order to play that card (like discarding cards).Either way, the card goes to its owner\'s discard pile.';

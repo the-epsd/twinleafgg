@@ -23,7 +23,8 @@ export class TowerOfDarkness extends TrainerCard {
 
   public name: string = 'Tower of Darkness';
 
-  public fullName: string = 'Tower of Darkness BST';
+  public fullName: string = 'Tower of Darkness (BST 137)';
+  public legacyFullName = 'Tower of Darkness BST';
 
   public text: string =
     'Once during each playe\'s turn, that player may draw 2 cards. In order to use this effect, that player must discard a Single Strike card from their hand.';

@@ -15,7 +15,8 @@ export class FireMemory extends TrainerCard {
   public setNumber: string = '123';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fire Memory';
-  public fullName: string = 'Fire Memory UPR';
+  public fullName: string = 'Fire Memory (UPR 123)';
+  public legacyFullName = 'Fire Memory UPR';
   public text: string = 'The Silvally-GX this card is attached to is a Fire Pokémon.';
 
   // Ref: set-crimson-invasion/psychic-memory.ts (Memory tool - CheckPokemonTypeEffect)

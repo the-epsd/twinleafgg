@@ -37,7 +37,8 @@ export class Golurk extends PokemonCard {
   public setNumber: string = '150';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golurk';
-  public fullName: string = 'Golurk BCR';
+  public fullName: string = 'Golurk (BCR 150)';
+  public legacyFullName = 'Golurk BCR';
   public readonly GHOST_HAMMER_MARKER = 'GHOST_HAMMER_MARKER';
   public readonly CLEAR_GHOST_HAMMER_MARKER = 'CLEAR_GHOST_HAMMER_MARKER';
 

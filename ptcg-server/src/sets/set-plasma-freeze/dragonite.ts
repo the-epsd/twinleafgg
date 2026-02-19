@@ -43,7 +43,8 @@ export class Dragonite extends PokemonCard {
 
   public name: string = 'Dragonite';
 
-  public fullName: string = 'Dragonite PLF';
+  public fullName: string = 'Dragonite (PLF 83)';
+  public legacyFullName = 'Dragonite PLF';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 

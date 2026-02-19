@@ -17,7 +17,8 @@ export class Bede extends TrainerCard {
   public setNumber: string = '157';
   public regulationMark = 'D';
   public name: string = 'Bede';
-  public fullName: string = 'Bede SSH';
+  public fullName: string = 'Bede (SSH 157)';
+  public legacyFullName = 'Bede SSH';
   public text: string = 'Attach a basic Energy card from your hand to 1 of your Benched Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

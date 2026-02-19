@@ -101,7 +101,8 @@ export class Drayton extends TrainerCard {
 
   public name: string = 'Drayton';
 
-  public fullName: string = 'Drayton SSP';
+  public fullName: string = 'Drayton (SSP 174)';
+  public legacyFullName = 'Drayton SSP';
 
   public text: string =
     'Look at the top 7 cards of your deck. Choose a Pokémon and a Trainer card from those cards, reveal them, and put them into your hand. Shuffle the other cards back into your deck.';

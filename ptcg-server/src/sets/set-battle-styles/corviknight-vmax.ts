@@ -39,7 +39,8 @@ export class CorviknightVmax extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Corviknight VMAX';
-  public fullName: string = 'Corviknight VMAX BST';
+  public fullName: string = 'Corviknight VMAX (BST 110)';
+  public legacyFullName = 'Corviknight VMAX BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Lustrous Body (passive - prevent effects of opponent's abilities on this Pokemon)

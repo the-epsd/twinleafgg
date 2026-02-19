@@ -13,7 +13,8 @@ export class PokeDexHANDY909 extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
   public name: string = 'PokéDex HANDY909';
-  public fullName: string = 'PokéDex HANDY909 RG';
+  public fullName: string = 'PokéDex HANDY909 (RG 96)';
+  public legacyFullName = 'PokéDex HANDY909 RG';
 
   public text: string =
     'Shuffle your deck. Look at 6 cards from the top of your deck, then put them back on top of your deck in any order.';

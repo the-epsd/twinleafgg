@@ -37,7 +37,8 @@ export class Bibarel extends PokemonCard {
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bibarel';
-  public fullName: string = 'Bibarel XY';
+  public fullName: string = 'Bibarel (XY 107)';
+  public legacyFullName = 'Bibarel XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Headbutt

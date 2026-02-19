@@ -18,7 +18,8 @@ export class TeamRocketsProton extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '177';
   public name: string = 'Team Rocket\'s Proton';
-  public fullName: string = 'Team Rocket\'s Proton DRI';
+  public fullName: string = 'Team Rocket\'s Proton (DRI 177)';
+  public legacyFullName = 'Team Rocket\'s Proton DRI';
   public firstTurn = true;
 
   public text: string =

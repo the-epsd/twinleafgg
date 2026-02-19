@@ -33,7 +33,8 @@ export class Kyogreex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '95';
   public name: string = 'Kyogre ex';
-  public fullName: string = 'Kyogre ex CG';
+  public fullName: string = 'Kyogre ex (CG 95)';
+  public legacyFullName = 'Kyogre ex CG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

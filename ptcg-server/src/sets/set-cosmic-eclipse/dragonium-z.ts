@@ -25,7 +25,8 @@ export class DragoniumZDragonClaw extends TrainerCard {
 
   public name: string = 'Dragonium Z: Dragon Claw';
 
-  public fullName: string = 'Dragonium Z: Dragon Claw CEC';
+  public fullName: string = 'Dragonium Z: Dragon Claw (CEC 190)';
+  public legacyFullName = 'Dragonium Z: Dragon Claw CEC';
 
   public attacks: Attack[] = [{
     name: 'Destructive Drake',

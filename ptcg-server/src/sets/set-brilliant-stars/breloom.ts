@@ -34,7 +34,8 @@ export class Breloom extends PokemonCard {
   public setNumber: string = '4';
 
   public name: string = 'Breloom';
-  public fullName: string = 'Breloom BRS';
+  public fullName: string = 'Breloom (BRS 4)';
+  public legacyFullName = 'Breloom BRS';
 
   public sporeBallTurn = -10;
 

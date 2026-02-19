@@ -35,7 +35,8 @@ export class Komala extends PokemonCard {
   public setNumber: string = '185';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Komala';
-  public fullName: string = 'Komala UNM';
+  public fullName: string = 'Komala (UNM 185)';
+  public legacyFullName = 'Komala UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Drowsing (passive - triggers between turns if remains Asleep)

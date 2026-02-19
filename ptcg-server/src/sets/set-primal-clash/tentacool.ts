@@ -29,7 +29,8 @@ export class Tentacool extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tentacool';
-  public fullName: string = 'Tentacool PRC';
+  public fullName: string = 'Tentacool (PRC 70)';
+  public legacyFullName = 'Tentacool PRC';
 
   private usedLostInTheWaves = false;
 

@@ -25,5 +25,6 @@ export class Stufful extends PokemonCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stufful';
-  public fullName: string = 'Stufful SUM';
+  public fullName: string = 'Stufful (SUM 111)';
+  public legacyFullName = 'Stufful SUM';
 }

@@ -16,7 +16,8 @@ export class HeatFactory extends TrainerCard {
   public setNumber: string = '178';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heat Factory \u25c7';
-  public fullName: string = 'Heat Factory \u25c7 LOT';
+  public fullName: string = 'Heat Factory \u25c7 (LOT 178)';
+  public legacyFullName = 'Heat Factory \u25c7 LOT';
   public text: string = 'Once during each player\'s turn, that player may discard a [R] Energy card from their hand. If they do, they draw 3 cards. Whenever any player plays an Item or Supporter card from their hand, prevent all effects of that card done to this Stadium card. \u25c7 (Prism Star) Rule: You can\'t have more than 1 \u25c7 card with the same name in your deck. If a \u25c7 card would go to the discard pile, put it in the Lost Zone instead.';
 
   // Ref: set-lost-thunder/heat-factory-prism-star.ts (existing implementation)

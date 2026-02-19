@@ -26,7 +26,7 @@ export class Dratini extends PokemonCard {
       name: 'Slam',
       cost: [L, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
     }
   ];
@@ -35,7 +35,8 @@ export class Dratini extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dratini';
-  public fullName: string = 'Dratini ROS';
+  public fullName: string = 'Dratini (ROS 49)';
+  public legacyFullName = 'Dratini ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Slam

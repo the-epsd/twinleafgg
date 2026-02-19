@@ -34,7 +34,8 @@ export class EspeonDeoxysGX extends PokemonCard {
   public setNumber = '72';
   public cardImage = 'assets/cardback.png';
   public name = 'Espeon & Deoxys-GX';
-  public fullName = 'Espeon & Deoxys-GX UNM';
+  public fullName = 'Espeon & Deoxys-GX (UNM 72)';
+  public legacyFullName = 'Espeon & Deoxys-GX UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Psychic Club

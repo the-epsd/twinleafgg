@@ -46,7 +46,8 @@ export class Vibrava extends PokemonCard {
 
   public name: string = 'Vibrava';
 
-  public fullName: string = 'Vibrava SSP';
+  public fullName: string = 'Vibrava (SSP 105)';
+  public legacyFullName = 'Vibrava SSP';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER';

@@ -21,5 +21,6 @@ export class Cubchoo2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
   public name: string = 'Cubchoo';
-  public fullName: string = 'Cubchoo EPO 29';
+  public fullName: string = 'Cubchoo (EPO 29)';
+  public legacyFullName = 'Cubchoo EPO 29';
 }

@@ -32,5 +32,6 @@ export class Ekans extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ekans';
-  public fullName: string = 'Ekans CPA';
+  public fullName: string = 'Ekans (CPA 33)';
+  public legacyFullName = 'Ekans CPA';
 }

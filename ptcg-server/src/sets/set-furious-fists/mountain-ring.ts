@@ -14,7 +14,8 @@ export class MountainRing extends TrainerCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mountain Ring';
-  public fullName: string = 'Mountain Ring FFI';
+  public fullName: string = 'Mountain Ring (FFI 97)';
+  public legacyFullName = 'Mountain Ring FFI';
   public text: string = 'Prevent all damage done to Benched Pokémon by attacks (both yours and your opponent\'s).';
 
   // Ref: set-brilliant-stars/manaphy.ts (bench damage prevention via PutDamageEffect interception)

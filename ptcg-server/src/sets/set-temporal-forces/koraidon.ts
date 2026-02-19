@@ -48,7 +48,8 @@ export class Koraidon extends PokemonCard {
 
   public name: string = 'Koraidon';
 
-  public fullName: string = 'Koraidon TEF';
+  public fullName: string = 'Koraidon (TEF 119)';
+  public legacyFullName = 'Koraidon TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

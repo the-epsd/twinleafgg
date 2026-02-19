@@ -29,7 +29,8 @@ export class Riolu extends PokemonCard {
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Riolu';
-  public fullName: string = 'Riolu VIV';
+  public fullName: string = 'Riolu (VIV 90)';
+  public legacyFullName = 'Riolu VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Best Punch

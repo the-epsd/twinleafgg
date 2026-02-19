@@ -41,7 +41,8 @@ export class BlazikenV extends PokemonCard {
 
   public name: string = 'Blaziken V';
 
-  public fullName: string = 'Blaziken V CRE';
+  public fullName: string = 'Blaziken V (CRE 20)';
+  public legacyFullName = 'Blaziken V CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

@@ -39,7 +39,8 @@ export class Arbok extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arbok';
-  public fullName: string = 'Arbok XY';
+  public fullName: string = 'Arbok (XY 48)';
+  public legacyFullName = 'Arbok XY';
 
   public readonly GASTRO_ACID_MARKER = 'GASTRO_ACID_MARKER';
   public readonly GASTRO_ACID_TURN1_MARKER = 'GASTRO_ACID_TURN1_MARKER';

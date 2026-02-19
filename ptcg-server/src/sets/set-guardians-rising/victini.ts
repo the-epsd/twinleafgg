@@ -34,7 +34,8 @@ export class Victini extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Victini';
-  public fullName: string = 'Victini GRI';
+  public fullName: string = 'Victini (GRI 10)';
+  public legacyFullName = 'Victini GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // TODO: Victory Star ability requires coin-flip sequence rerolls which are not currently

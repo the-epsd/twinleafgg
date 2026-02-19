@@ -37,7 +37,8 @@ export class GalarianSirfetchd extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Sirfetch\'d';
-  public fullName: string = 'Galarian Sirfetch\'d RCL';
+  public fullName: string = 'Galarian Sirfetch\'d (RCL 95)';
+  public legacyFullName = 'Galarian Sirfetch\'d RCL';
 
   public readonly METEOR_ASSAULT_MARKER = 'GALARIAN_SIRFETCHD_RCL_METEOR_ASSAULT_MARKER';
 

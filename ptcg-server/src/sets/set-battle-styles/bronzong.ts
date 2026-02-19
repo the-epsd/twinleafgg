@@ -85,7 +85,8 @@ export class Bronzong extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name = 'Bronzong';
-  public fullName: string = 'Bronzong BST';
+  public fullName: string = 'Bronzong (BST 102)';
+  public legacyFullName = 'Bronzong BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

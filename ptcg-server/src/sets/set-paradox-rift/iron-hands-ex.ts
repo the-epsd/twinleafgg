@@ -45,7 +45,8 @@ export class IronHandsex extends PokemonCard {
 
   public name: string = 'Iron Hands ex';
 
-  public fullName: string = 'Iron Hands ex PAR';
+  public fullName: string = 'Iron Hands ex (PAR 70)';
+  public legacyFullName = 'Iron Hands ex PAR';
 
   private usedAmpYouVeryMuch = false;
 

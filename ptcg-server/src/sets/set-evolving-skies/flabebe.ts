@@ -31,7 +31,8 @@ export class Flabebe extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flabébé';
-  public fullName: string = 'Flabébé EVS';
+  public fullName: string = 'Flabébé (EVS 71)';
+  public legacyFullName = 'Flabébé EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hypnotic Gaze

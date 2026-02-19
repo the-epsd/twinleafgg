@@ -25,7 +25,8 @@ export class Litwick extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '57';
   public name: string = 'Litwick';
-  public fullName: string = 'Litwick NVI';
+  public fullName: string = 'Litwick (NVI 57)';
+  public legacyFullName = 'Litwick NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -36,7 +36,8 @@ export class AlolanExeggutor extends PokemonCard {
 
   public name: string = 'Alolan Exeggutor';
 
-  public fullName: string = 'Alolan Exeggutor FLI';
+  public fullName: string = 'Alolan Exeggutor (FLI 2)';
+  public legacyFullName = 'Alolan Exeggutor FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

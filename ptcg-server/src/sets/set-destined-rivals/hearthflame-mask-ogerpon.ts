@@ -30,7 +30,8 @@ export class HearthflameMaskOgerpon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
   public name: string = 'Hearthflame Mask Ogerpon';
-  public fullName: string = 'Hearthflame Mask Ogerpon DRI';
+  public fullName: string = 'Hearthflame Mask Ogerpon (DRI 44)';
+  public legacyFullName = 'Hearthflame Mask Ogerpon DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

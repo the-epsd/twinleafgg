@@ -32,5 +32,6 @@ export class Larvitar extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Larvitar';
-  public fullName: string = 'Larvitar DAA';
+  public fullName: string = 'Larvitar (DAA 86)';
+  public legacyFullName = 'Larvitar DAA';
 }

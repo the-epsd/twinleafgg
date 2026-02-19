@@ -39,7 +39,8 @@ export class Regigigas extends PokemonCard {
 
   public name: string = 'Regigigas';
 
-  public fullName: string = 'Regigigas PRE';
+  public fullName: string = 'Regigigas (PRE 86)';
+  public legacyFullName = 'Regigigas PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

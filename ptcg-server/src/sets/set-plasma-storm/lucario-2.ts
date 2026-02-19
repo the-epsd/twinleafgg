@@ -38,7 +38,8 @@ export class Lucario2 extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lucario';
-  public fullName: string = 'Lucario PLS 78';
+  public fullName: string = 'Lucario (PLS 78)';
+  public legacyFullName = 'Lucario PLS 78';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Dual Armor (passive - type change)

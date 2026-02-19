@@ -36,7 +36,8 @@ export class Skiddo extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skiddo';
-  public fullName: string = 'Skiddo FLI';
+  public fullName: string = 'Skiddo (FLI 9)';
+  public legacyFullName = 'Skiddo FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Growth

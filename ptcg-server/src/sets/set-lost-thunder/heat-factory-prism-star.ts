@@ -17,7 +17,8 @@ export class HeatFactoryPrismStar extends TrainerCard {
   public set: string = 'LOT';
   public setNumber: string = '178';
   public name: string = 'Heat Factory Prism Star';
-  public fullName: string = 'Heat Factory Prism Star LOT';
+  public fullName: string = 'Heat Factory Prism Star (LOT 178)';
+  public legacyFullName = 'Heat Factory Prism Star LOT';
   public cardImage: string = 'assets/cardback.png';
 
   public text: string =

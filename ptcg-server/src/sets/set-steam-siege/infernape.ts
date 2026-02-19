@@ -38,7 +38,8 @@ export class Infernape extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Infernape';
-  public fullName: string = 'Infernape STS';
+  public fullName: string = 'Infernape (STS 20)';
+  public legacyFullName = 'Infernape STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flare Blitz

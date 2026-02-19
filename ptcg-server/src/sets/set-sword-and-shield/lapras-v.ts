@@ -40,7 +40,8 @@ export class LaprasV extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lapras V';
-  public fullName: string = 'Lapras V SSH';
+  public fullName: string = 'Lapras V (SSH 49)';
+  public legacyFullName = 'Lapras V SSH';
 
   public bodySurfAttached = false;
 

@@ -68,7 +68,8 @@ export class EnergyRecycler extends TrainerCard {
 
   public name: string = 'Energy Recycler';
 
-  public fullName: string = 'Energy Recycler BST';
+  public fullName: string = 'Energy Recycler (BST 124)';
+  public legacyFullName = 'Energy Recycler BST';
 
   public text: string =
     'Shuffle up to 5 basic Energy cards from your discard pile into your deck.';

@@ -18,7 +18,8 @@ export class DoubleColorlessEnergy extends EnergyCard {
 
   public name = 'Double Colorless Energy';
 
-  public fullName = 'Double Colorless Energy BS';
+  public fullName = 'Double Colorless Energy (BS 96)';
+  public legacyFullName = 'Double Colorless Energy BS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

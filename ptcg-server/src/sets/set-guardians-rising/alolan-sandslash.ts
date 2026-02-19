@@ -39,7 +39,8 @@ export class AlolanSandslash extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Sandslash';
-  public fullName: string = 'Alolan Sandslash GRI';
+  public fullName: string = 'Alolan Sandslash (GRI 20)';
+  public legacyFullName = 'Alolan Sandslash GRI';
 
   public usedSmashTurn = false;
 

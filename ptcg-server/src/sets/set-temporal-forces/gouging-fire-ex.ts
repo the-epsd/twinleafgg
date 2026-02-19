@@ -43,7 +43,8 @@ export class GougingFireex extends PokemonCard {
 
   public name: string = 'Gouging Fire ex';
 
-  public fullName: string = 'Gouging Fire ex TEF';
+  public fullName: string = 'Gouging Fire ex (TEF 38)';
+  public legacyFullName = 'Gouging Fire ex TEF';
 
   public readonly ATTACK_USED_MARKER = 'ATTACK_USED_MARKER';
 

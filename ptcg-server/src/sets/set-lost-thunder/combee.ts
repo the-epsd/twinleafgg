@@ -28,7 +28,8 @@ export class Combee extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Combee';
-  public fullName: string = 'Combee LOT';
+  public fullName: string = 'Combee (LOT 31)';
+  public legacyFullName = 'Combee LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bee March

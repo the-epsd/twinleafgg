@@ -37,7 +37,8 @@ export class Politoed extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Politoed';
-  public fullName: string = 'Politoed FFI';
+  public fullName: string = 'Politoed (FFI 18)';
+  public legacyFullName = 'Politoed FFI';
 
   private static readonly AFFECTED_NAMES = ['Poliwag', 'Poliwhirl', 'Poliwrath'];
 

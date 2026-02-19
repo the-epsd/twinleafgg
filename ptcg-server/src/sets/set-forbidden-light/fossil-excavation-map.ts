@@ -14,7 +14,8 @@ export class FossilExcavationMap extends TrainerCard {
 
   public name: string = 'Fossil Excavation Map';
 
-  public fullName: string = 'Fossil Excavation Map FLI';
+  public fullName: string = 'Fossil Excavation Map (FLI 107)';
+  public legacyFullName = 'Fossil Excavation Map FLI';
 
   public text: string =
     'Choose 1:\n' +

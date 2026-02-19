@@ -20,7 +20,8 @@ export class Ralts extends PokemonCard {
   public set: string = 'BUS';
   public setNumber: string = '91';
   public name: string = 'Ralts';
-  public fullName: string = 'Ralts BUS';
+  public fullName: string = 'Ralts (BUS 91)';
+  public legacyFullName = 'Ralts BUS';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

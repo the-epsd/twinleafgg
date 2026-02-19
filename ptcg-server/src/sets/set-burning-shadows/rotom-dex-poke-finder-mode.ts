@@ -14,7 +14,8 @@ export class RotomDexPokeFinderMode extends TrainerCard {
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rotom Dex Poké Finder Mode';
-  public fullName: string = 'Rotom Dex Poké Finder Mode BUS';
+  public fullName: string = 'Rotom Dex Poké Finder Mode (BUS 122)';
+  public legacyFullName = 'Rotom Dex Poké Finder Mode BUS';
   public text: string = 'Look at the top 4 cards of your deck and put them back in any order or shuffle them into your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

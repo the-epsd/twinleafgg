@@ -33,5 +33,6 @@ export class Gurdurr extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gurdurr';
-  public fullName: string = 'Gurdurr BST';
+  public fullName: string = 'Gurdurr (BST 74)';
+  public legacyFullName = 'Gurdurr BST';
 }

@@ -29,7 +29,8 @@ export class Aron extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Aron';
-  public fullName: string = 'Aron CRZ';
+  public fullName: string = 'Aron (CRZ 87)';
+  public legacyFullName = 'Aron CRZ';
   public regulationMark = 'F';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

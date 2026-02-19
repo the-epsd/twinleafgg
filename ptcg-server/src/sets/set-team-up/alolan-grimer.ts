@@ -21,7 +21,7 @@ export class AlolanGrimer extends PokemonCard {
       name: 'Chemical Breath',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 50 more damage for each Special Condition affecting your opponent\'s Active Pokémon.'
     }
   ];
@@ -30,7 +30,8 @@ export class AlolanGrimer extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Grimer';
-  public fullName: string = 'Alolan Grimer TEU';
+  public fullName: string = 'Alolan Grimer (TEU 83)';
+  public legacyFullName = 'Alolan Grimer TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Chemical Breath

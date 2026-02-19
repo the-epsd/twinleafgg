@@ -32,7 +32,8 @@ export class Kecleon extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kecleon';
-  public fullName: string = 'Kecleon PLF';
+  public fullName: string = 'Kecleon (PLF 94)';
+  public legacyFullName = 'Kecleon PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Color Change (passive - type change when active)

@@ -50,7 +50,8 @@ export class AlolanVulpixVSTAR extends PokemonCard {
 
   public name = 'Alolan Vulpix VSTAR';
 
-  public fullName = 'Alolan Vulpix VSTAR SIT';
+  public fullName = 'Alolan Vulpix VSTAR (SIT 34)';
+  public legacyFullName = 'Alolan Vulpix VSTAR SIT';
 
   public readonly PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER = 'PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';
   public readonly CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER = 'CLEAR_PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER';

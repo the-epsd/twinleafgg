@@ -29,7 +29,8 @@ export class Koffing extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Koffing';
-  public fullName: string = 'Koffing EVO';
+  public fullName: string = 'Koffing (EVO 50)';
+  public legacyFullName = 'Koffing EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Foul Gas

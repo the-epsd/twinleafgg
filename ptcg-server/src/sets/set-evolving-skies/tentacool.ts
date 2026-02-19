@@ -26,5 +26,6 @@ export class Tentacool extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tentacool';
-  public fullName: string = 'Tentacool EVS';
+  public fullName: string = 'Tentacool (EVS 26)';
+  public legacyFullName = 'Tentacool EVS';
 }

@@ -22,7 +22,7 @@ export class Tyrantrum extends PokemonCard {
       name: 'Chew Up',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pok\u00e9mon has any Special Energy attached to it, this attack does 90 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Tyrantrum extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tyrantrum';
-  public fullName: string = 'Tyrantrum FFI';
+  public fullName: string = 'Tyrantrum (FFI 62)';
+  public legacyFullName = 'Tyrantrum FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Chew Up

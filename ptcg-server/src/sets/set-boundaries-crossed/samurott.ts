@@ -36,7 +36,8 @@ export class Samurott extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Samurott';
-  public fullName: string = 'Samurott BCR';
+  public fullName: string = 'Samurott (BCR 41)';
+  public legacyFullName = 'Samurott BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Destructive Whirlpool

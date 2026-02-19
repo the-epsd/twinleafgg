@@ -29,7 +29,7 @@ export class Mantine extends PokemonCard {
       name: 'Dwindling Wave',
       cost: [W, W, W],
       damage: 90,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-' as const,
       text: 'This attack does 90 damage minus 10 damage for each damage counter on this Pokémon.'
     }
   ];
@@ -38,7 +38,8 @@ export class Mantine extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mantine';
-  public fullName: string = 'Mantine STS';
+  public fullName: string = 'Mantine (STS 27)';
+  public legacyFullName = 'Mantine STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Healing Wave

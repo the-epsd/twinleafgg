@@ -32,7 +32,8 @@ export class Teddiursa extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Teddiursa';
-  public fullName: string = 'Teddiursa UF';
+  public fullName: string = 'Teddiursa (UF 77)';
+  public legacyFullName = 'Teddiursa UF';
 
   public readonly TEARY_EYES_MARKER = 'TEARY_EYES_MARKER';
 

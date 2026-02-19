@@ -33,7 +33,8 @@ export class Weavile extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weavile';
-  public fullName: string = 'Weavile PLF';
+  public fullName: string = 'Weavile (PLF 66)';
+  public legacyFullName = 'Weavile PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

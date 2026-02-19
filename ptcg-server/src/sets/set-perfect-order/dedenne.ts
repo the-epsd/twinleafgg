@@ -30,7 +30,8 @@ export class Dedenne extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
   public name: string = 'Dedenne';
-  public fullName: string = 'Dedenne M3';
+  public fullName: string = 'Dedenne (M3 28)';
+  public legacyFullName = 'Dedenne M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Tail Generation - attach Basic Lightning Energy from discard for each energy on opponent's Pokemon

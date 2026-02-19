@@ -28,7 +28,8 @@ export class Xerneas extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '64';
   public name: string = 'Xerneas';
-  public fullName: string = 'Xerneas M1S';
+  public fullName: string = 'Xerneas (MEG 64)';
+  public legacyFullName = 'Xerneas M1S';
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

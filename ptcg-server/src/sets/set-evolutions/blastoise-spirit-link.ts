@@ -13,7 +13,8 @@ export class BlastoiseSpiritLink extends TrainerCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blastoise Spirit Link';
-  public fullName: string = 'Blastoise Spirit Link EVO';
+  public fullName: string = 'Blastoise Spirit Link (EVO 73)';
+  public legacyFullName = 'Blastoise Spirit Link EVO';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Blastoise-EX.';
 
   // Ref: set-primal-clash/gardevoir-spirit-link.ts (Spirit Link)

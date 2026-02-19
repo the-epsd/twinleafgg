@@ -11,7 +11,8 @@ export class Hitmontop extends PokemonCard {
 
   public set = 'UNB';
 
-  public fullName = 'Hitmontop UNB';
+  public fullName = 'Hitmontop (UNB 101)';
+  public legacyFullName = 'Hitmontop UNB';
 
   public stage = Stage.BASIC;
 

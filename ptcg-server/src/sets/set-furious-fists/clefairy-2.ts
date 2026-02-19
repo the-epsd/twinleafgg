@@ -31,7 +31,8 @@ export class Clefairy2 extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clefairy';
-  public fullName: string = 'Clefairy FFI 70';
+  public fullName: string = 'Clefairy (FFI 70)';
+  public legacyFullName = 'Clefairy FFI 70';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER_CLEFAIRY2';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER_CLEFAIRY2';

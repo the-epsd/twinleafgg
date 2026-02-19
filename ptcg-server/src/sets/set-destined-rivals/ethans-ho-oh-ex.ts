@@ -46,7 +46,8 @@ export class EthansHoOhex extends PokemonCard {
 
   public name: string = 'Ethan\'s Ho-Oh ex';
 
-  public fullName: string = 'Ethan\'s Ho-Oh ex DRI';
+  public fullName: string = 'Ethan\'s Ho-Oh ex (DRI 39)';
+  public legacyFullName = 'Ethan\'s Ho-Oh ex DRI';
 
   public readonly SHINING_FEATHER_MARKER = 'SHINING_FEATHER_MARKER';
 

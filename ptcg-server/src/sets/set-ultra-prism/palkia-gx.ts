@@ -29,7 +29,7 @@ export class PalkiaGx extends PokemonCard {
       name: 'Hydro Pressure',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage times the amount of [W] Energy attached to this Pokémon.'
     },
     {
@@ -44,7 +44,8 @@ export class PalkiaGx extends PokemonCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Palkia-GX';
-  public fullName: string = 'Palkia-GX UPR';
+  public fullName: string = 'Palkia-GX (UPR 101)';
+  public legacyFullName = 'Palkia-GX UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spatial Control

@@ -29,7 +29,7 @@ export class Lurantis extends PokemonCard {
       name: 'Sol Slice',
       cost: [G],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any [R] Energy attached to it, this attack does 50 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Lurantis extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lurantis';
-  public fullName: string = 'Lurantis UNM';
+  public fullName: string = 'Lurantis (UNM 16)';
+  public legacyFullName = 'Lurantis UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Petal Blizzard

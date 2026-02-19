@@ -22,7 +22,7 @@ export class Ludicolo extends PokemonCard {
       name: 'Spirited Rushdown',
       cost: [C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 60 damage for each Prize card you have taken.'
     },
     {
@@ -38,7 +38,8 @@ export class Ludicolo extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ludicolo';
-  public fullName: string = 'Ludicolo RCL';
+  public fullName: string = 'Ludicolo (RCL 9)';
+  public legacyFullName = 'Ludicolo RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spirited Rushdown

@@ -32,7 +32,8 @@ export class Oranguru extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '113';
   public name: string = 'Oranguru';
-  public fullName: string = 'Oranguru SUM';
+  public fullName: string = 'Oranguru (SUM 113)';
+  public legacyFullName = 'Oranguru SUM';
 
   public readonly INSTRUCT_MARKER = 'INSTRUCT_MARKER';
 

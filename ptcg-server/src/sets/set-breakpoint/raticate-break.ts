@@ -31,7 +31,8 @@ export class RaticateBreak extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raticate BREAK';
-  public fullName: string = 'Raticate BREAK BKP';
+  public fullName: string = 'Raticate BREAK (BKP 89)';
+  public legacyFullName = 'Raticate BREAK BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Super Fang

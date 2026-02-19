@@ -32,7 +32,8 @@ export class Golduck extends PokemonCard {
   public setNumber = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golduck';
-  public fullName: string = 'Golduck MEP';
+  public fullName: string = 'Golduck (MEP 8)';
+  public legacyFullName = 'Golduck MEP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Damp') {

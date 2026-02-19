@@ -37,7 +37,8 @@ export class Stoutland extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stoutland';
-  public fullName: string = 'Stoutland XY';
+  public fullName: string = 'Stoutland (XY 110)';
+  public legacyFullName = 'Stoutland XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-plasma-blast/sawk.ts (Kick of Righteousness - EX tag check)

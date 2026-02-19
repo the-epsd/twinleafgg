@@ -41,7 +41,8 @@ export class Veluza extends PokemonCard {
 
   public name: string = 'Veluza';
 
-  public fullName: string = 'Veluza SCR';
+  public fullName: string = 'Veluza (SCR 45)';
+  public legacyFullName = 'Veluza SCR';
 
   public setNumber: string = '45';
 

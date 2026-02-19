@@ -22,7 +22,7 @@ export class Cufant extends PokemonCard {
       name: 'Stomp',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -32,7 +32,8 @@ export class Cufant extends PokemonCard {
   public setNumber: string = '131';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cufant';
-  public fullName: string = 'Cufant SSH';
+  public fullName: string = 'Cufant (SSH 131)';
+  public legacyFullName = 'Cufant SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stomp

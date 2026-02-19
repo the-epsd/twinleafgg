@@ -82,7 +82,8 @@ export class TeamAquasGreatBall extends TrainerCard {
 
   public name: string = 'Team Aqua\'s Great Ball';
 
-  public fullName: string = 'Team Aqua\'s Great Ball DCR';
+  public fullName: string = 'Team Aqua\'s Great Ball (DCR 27)';
+  public legacyFullName = 'Team Aqua\'s Great Ball DCR';
 
   public cardImage: string = 'assets/cardback.png';
 

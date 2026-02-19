@@ -29,7 +29,8 @@ export class Frillish extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Frillish';
-  public fullName: string = 'Frillish PHF';
+  public fullName: string = 'Frillish (PHF 20)';
+  public legacyFullName = 'Frillish PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Confuse Ray

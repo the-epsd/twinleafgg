@@ -35,7 +35,8 @@ export class Regirock extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Regirock';
-  public fullName: string = 'Regirock CIN';
+  public fullName: string = 'Regirock (CIN 53)';
+  public legacyFullName = 'Regirock CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Rock Peak Growl (passive - boost Registeel's attacks)

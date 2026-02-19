@@ -66,7 +66,8 @@ export class TrainersMail extends TrainerCard {
 
   public name: string = 'Trainers\' Mail';
 
-  public fullName: string = 'Trainers\' Mail ROS';
+  public fullName: string = 'Trainers\' Mail (ROS 92)';
+  public legacyFullName = 'Trainers\' Mail ROS';
 
   public cardImage: string = 'assets/cardback.png';
 

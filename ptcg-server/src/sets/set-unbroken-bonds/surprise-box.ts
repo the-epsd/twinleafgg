@@ -15,7 +15,8 @@ export class SurpriseBox extends TrainerCard {
   public setNumber: string = '187';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Surprise Box';
-  public fullName: string = 'Surprise Box UNB';
+  public fullName: string = 'Surprise Box (UNB 187)';
+  public legacyFullName = 'Surprise Box UNB';
   public text: string = 'Put a card from your opponent\'s discard pile into their hand.';
 
   // Ref: set-team-up/return-label.ts (choose from opponent's discard)

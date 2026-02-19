@@ -36,7 +36,8 @@ export class Sandile extends PokemonCard {
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandile';
-  public fullName: string = 'Sandile UNB';
+  public fullName: string = 'Sandile (UNB 113)';
+  public legacyFullName = 'Sandile UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Intimidating Fang (passive - damage reduction while active)

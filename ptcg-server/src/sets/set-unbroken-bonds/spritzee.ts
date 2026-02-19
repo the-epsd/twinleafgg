@@ -36,7 +36,8 @@ export class Spritzee extends PokemonCard {
   public setNumber: string = '141';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spritzee';
-  public fullName: string = 'Spritzee UNB';
+  public fullName: string = 'Spritzee (UNB 141)';
+  public legacyFullName = 'Spritzee UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Nap

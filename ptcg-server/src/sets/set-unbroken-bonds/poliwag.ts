@@ -54,7 +54,8 @@ export class Poliwag extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '37';
   public name: string = 'Poliwag';
-  public fullName: string = 'Poliwag UNB';
+  public fullName: string = 'Poliwag (UNB 37)';
+  public legacyFullName = 'Poliwag UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

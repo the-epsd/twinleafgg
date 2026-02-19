@@ -21,5 +21,6 @@ export class Sandile extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';
   public name: string = 'Sandile';
-  public fullName: string = 'Sandile EPO';
+  public fullName: string = 'Sandile (EPO 60)';
+  public legacyFullName = 'Sandile EPO';
 }

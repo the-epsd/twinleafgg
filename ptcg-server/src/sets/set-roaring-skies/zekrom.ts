@@ -34,7 +34,8 @@ export class Zekrom extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zekrom';
-  public fullName: string = 'Zekrom ROS';
+  public fullName: string = 'Zekrom (ROS 64)';
+  public legacyFullName = 'Zekrom ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Energy Stream

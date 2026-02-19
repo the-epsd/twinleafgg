@@ -46,7 +46,8 @@ export class TeamRocketsSpidops extends PokemonCard {
 
   public name: string = 'Team Rocket\'s Spidops';
 
-  public fullName: string = 'Team Rocket\'s Spidops DRI';
+  public fullName: string = 'Team Rocket\'s Spidops (DRI 20)';
+  public legacyFullName = 'Team Rocket\'s Spidops DRI';
 
   public readonly CHARGE_UP_MARKER = 'CHARGE_UP_MARKER';
 

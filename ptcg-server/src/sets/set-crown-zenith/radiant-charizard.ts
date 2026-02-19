@@ -44,7 +44,8 @@ export class RadiantCharizard extends PokemonCard {
 
   public name: string = 'Radiant Charizard';
 
-  public fullName: string = 'Radiant Charizard CRZ';
+  public fullName: string = 'Radiant Charizard (CRZ 20)';
+  public legacyFullName = 'Radiant Charizard CRZ';
 
   // public getColorlessReduction(state: State): number {
   //   const player = state.players[state.activePlayer];

@@ -36,7 +36,8 @@ export class Cryogonal extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cryogonal';
-  public fullName: string = 'Cryogonal PLF';
+  public fullName: string = 'Cryogonal (PLF 30)';
+  public legacyFullName = 'Cryogonal PLF';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'CRYOGONAL_DEFENDING_CANNOT_ATTACK_MARKER';
 

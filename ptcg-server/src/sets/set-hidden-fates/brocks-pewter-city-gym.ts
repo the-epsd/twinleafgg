@@ -15,7 +15,8 @@ export class BrocksPewterCityGym extends TrainerCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Brock\'s Pewter City Gym';
-  public fullName: string = 'Brock\'s Pewter City Gym HIF';
+  public fullName: string = 'Brock\'s Pewter City Gym (HIF 54)';
+  public legacyFullName = 'Brock\'s Pewter City Gym HIF';
   public text: string = 'Onix-GX (both yours and your opponent\'s) take 40 less damage from the opponent\'s attacks (after applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

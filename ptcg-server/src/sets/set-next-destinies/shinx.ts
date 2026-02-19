@@ -32,7 +32,8 @@ export class Shinx extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shinx';
-  public fullName: string = 'Shinx NXD';
+  public fullName: string = 'Shinx (NXD 42)';
+  public legacyFullName = 'Shinx NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Jump On

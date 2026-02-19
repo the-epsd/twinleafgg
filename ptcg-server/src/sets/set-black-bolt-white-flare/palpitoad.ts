@@ -33,7 +33,8 @@ export class Palpitoad extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name: string = 'Palpitoad';
-  public fullName: string = 'Palpitoad SV11B';
+  public fullName: string = 'Palpitoad (BLK 20)';
+  public legacyFullName = 'Palpitoad SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

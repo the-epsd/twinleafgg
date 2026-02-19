@@ -14,7 +14,8 @@ export class RollerSkates extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '125';
   public name: string = 'Roller Skates';
-  public fullName: string = 'Roller Skates XY';
+  public fullName: string = 'Roller Skates (XY 125)';
+  public legacyFullName = 'Roller Skates XY';
 
   public text: string =
     'Flip a coin. If heads, draw 3 cards.';

@@ -18,7 +18,8 @@ export class Machop extends PokemonCard {
   public regulationMark: string = 'f';
   public set: string = 'LOR';
   public name: string = 'Machop';
-  public fullName: string = 'Machop LOR';
+  public fullName: string = 'Machop (LOR 86)';
+  public legacyFullName = 'Machop LOR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
 

@@ -31,7 +31,8 @@ export class TeamAquasChinchou extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '49';
   public name: string = 'Team Aqua\'s Chinchou';
-  public fullName: string = 'Team Aqua\'s Chinchou MA';
+  public fullName: string = 'Team Aqua\'s Chinchou (MA 49)';
+  public legacyFullName = 'Team Aqua\'s Chinchou MA';
 
   public usedConfuseRay = false;
 

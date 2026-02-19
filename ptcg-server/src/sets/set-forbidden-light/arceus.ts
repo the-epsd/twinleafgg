@@ -37,7 +37,8 @@ export class Arceus extends PokemonCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arceus ◇';
-  public fullName: string = 'Arceus ◇ FLI';
+  public fullName: string = 'Arceus ◇ (FLI 96)';
+  public legacyFullName = 'Arceus ◇ FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: First Law (passive - prevent effects except damage)

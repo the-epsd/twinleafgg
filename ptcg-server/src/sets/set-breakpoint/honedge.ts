@@ -30,7 +30,8 @@ export class Honedge extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Honedge';
-  public fullName: string = 'Honedge BKP';
+  public fullName: string = 'Honedge (BKP 60)';
+  public legacyFullName = 'Honedge BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stab

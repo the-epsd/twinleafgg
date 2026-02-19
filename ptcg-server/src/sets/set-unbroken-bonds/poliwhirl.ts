@@ -36,7 +36,8 @@ export class Poliwhirl extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poliwhirl';
-  public fullName: string = 'Poliwhirl UNB';
+  public fullName: string = 'Poliwhirl (UNB 38)';
+  public legacyFullName = 'Poliwhirl UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble

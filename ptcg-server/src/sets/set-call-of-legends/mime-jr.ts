@@ -26,7 +26,8 @@ export class MimeJr extends PokemonCard {
 
   public set: string = 'CL';
   public name: string = 'Mime Jr.';
-  public fullName: string = 'Mime Jr. CL';
+  public fullName: string = 'Mime Jr. (CL 47)';
+  public legacyFullName = 'Mime Jr. CL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '47';
 

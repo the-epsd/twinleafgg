@@ -28,7 +28,7 @@ export class Fraxure extends PokemonCard {
       name: 'Dragon Slayer',
       cost: [F, M, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Dragon Pokémon, this attack does 40 more damage (before applying Weakness and Resistance).'
     }
   ];
@@ -37,7 +37,8 @@ export class Fraxure extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fraxure';
-  public fullName: string = 'Fraxure BKT';
+  public fullName: string = 'Fraxure (BKT 110)';
+  public legacyFullName = 'Fraxure BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Dragon Slayer

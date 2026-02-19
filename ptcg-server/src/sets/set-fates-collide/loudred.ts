@@ -28,7 +28,7 @@ export class Loudred extends PokemonCard {
       name: 'Stomp',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Loudred extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Loudred';
-  public fullName: string = 'Loudred FCO';
+  public fullName: string = 'Loudred (FCO 81)';
+  public legacyFullName = 'Loudred FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Stomp

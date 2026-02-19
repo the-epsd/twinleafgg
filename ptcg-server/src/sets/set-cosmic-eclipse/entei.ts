@@ -30,7 +30,8 @@ export class Entei extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
   public name: string = 'Entei';
-  public fullName: string = 'Entei CEC';
+  public fullName: string = 'Entei (CEC 28)';
+  public legacyFullName = 'Entei CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

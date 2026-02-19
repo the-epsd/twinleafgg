@@ -29,7 +29,8 @@ export class Purrloin extends PokemonCard {
 
   public name: string = 'Purrloin';
 
-  public fullName: string = 'Purrloin BLW';
+  public fullName: string = 'Purrloin (BLW 66)';
+  public legacyFullName = 'Purrloin BLW';
 
   public cardImage: string = 'assets/cardback.png';
 

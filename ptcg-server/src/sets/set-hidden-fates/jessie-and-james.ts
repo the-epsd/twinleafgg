@@ -16,7 +16,8 @@ export class JessieAndJames extends TrainerCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jessie & James';
-  public fullName: string = 'Jessie & James HIF';
+  public fullName: string = 'Jessie & James (HIF 58)';
+  public legacyFullName = 'Jessie & James HIF';
   public text: string = 'Each player discards 2 cards from their hand. Your opponent discards first. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

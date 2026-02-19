@@ -32,7 +32,8 @@ export class TeamMagmasCamerupt extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '19';
   public name: string = 'Team Magma\'s Camerupt';
-  public fullName: string = 'Team Magma\'s Camerupt MA';
+  public fullName: string = 'Team Magma\'s Camerupt (MA 19)';
+  public legacyFullName = 'Team Magma\'s Camerupt MA';
 
   public readonly OVERHEAT_MARKER = 'OVERHEAT_MARKER';
 

@@ -24,7 +24,8 @@ export class AcerolasPremonition extends TrainerCard {
 
   public name: string = 'Acerola\'s Premonition';
 
-  public fullName: string = 'Acerola\'s Premonition BRS';
+  public fullName: string = 'Acerola\'s Premonition (BRS 129)';
+  public legacyFullName = 'Acerola\'s Premonition BRS';
 
   public text: string =
     'Your opponent reveals their hand, and you draw a card for each Trainer card you find there.';

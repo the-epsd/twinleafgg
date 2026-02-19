@@ -36,7 +36,8 @@ export class Pancham extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pancham';
-  public fullName: string = 'Pancham FFI';
+  public fullName: string = 'Pancham (FFI 59)';
+  public legacyFullName = 'Pancham FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bad-Influence Evolution

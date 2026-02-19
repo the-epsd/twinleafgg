@@ -17,7 +17,8 @@ export class Cassiopeia extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '56';
   public name: string = 'Cassiopeia';
-  public fullName: string = 'Cassiopeia SFA';
+  public fullName: string = 'Cassiopeia (SFA 56)';
+  public legacyFullName = 'Cassiopeia SFA';
 
   public text: string =
     `You can play this card only when it is the last card in your hand.

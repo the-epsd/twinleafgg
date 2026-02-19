@@ -36,7 +36,8 @@ export class Unown2 extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Unown';
-  public fullName: string = 'Unown LOT 91';
+  public fullName: string = 'Unown (LOT 91)';
+  public legacyFullName = 'Unown LOT 91';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: HAND

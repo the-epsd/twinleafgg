@@ -31,7 +31,8 @@ export class WellspringMaskOgerpon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public name: string = 'Wellspring Mask Ogerpon';
-  public fullName: string = 'Wellspring Mask Ogerpon DRI';
+  public fullName: string = 'Wellspring Mask Ogerpon (DRI 67)';
+  public legacyFullName = 'Wellspring Mask Ogerpon DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

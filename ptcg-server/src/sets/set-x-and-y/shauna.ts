@@ -33,7 +33,8 @@ export class Shauna extends TrainerCard {
 
   public name: string = 'Shauna';
 
-  public fullName: string = 'Shauna XY';
+  public fullName: string = 'Shauna (XY 127)';
+  public legacyFullName = 'Shauna XY';
 
   public cardImage: string = 'assets/cardback.png';
 

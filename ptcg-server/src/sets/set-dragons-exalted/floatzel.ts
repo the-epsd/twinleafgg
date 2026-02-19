@@ -32,5 +32,6 @@ export class Floatzel extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Floatzel';
-  public fullName: string = 'Floatzel DRX';
+  public fullName: string = 'Floatzel (DRX 33)';
+  public legacyFullName = 'Floatzel DRX';
 }

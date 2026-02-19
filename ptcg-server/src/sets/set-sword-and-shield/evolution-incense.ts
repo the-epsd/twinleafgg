@@ -75,7 +75,8 @@ export class EvolutionIncense extends TrainerCard {
 
   public name: string = 'Evolution Incense';
 
-  public fullName: string = 'Evolution Incense SSH';
+  public fullName: string = 'Evolution Incense (SSH 163)';
+  public legacyFullName = 'Evolution Incense SSH';
 
   public cardImage: string = 'assets/cardback.png';
 

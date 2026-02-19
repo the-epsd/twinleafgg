@@ -31,7 +31,8 @@ export class Uxie extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Uxie';
-  public fullName: string = 'Uxie UNM';
+  public fullName: string = 'Uxie (UNM 83)';
+  public legacyFullName = 'Uxie UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Secret Territory (passive - modify weakness to x4)

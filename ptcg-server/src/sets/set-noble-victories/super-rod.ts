@@ -81,7 +81,8 @@ export class SuperRod extends TrainerCard {
 
   public name: string = 'Super Rod';
 
-  public fullName: string = 'Super Rod NVI';
+  public fullName: string = 'Super Rod (NVI 95)';
+  public legacyFullName = 'Super Rod NVI';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -21,7 +21,7 @@ export class Mudsdale extends PokemonCard {
       name: 'Enhanced Stomp',
       cost: [F, F, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 60 more damage.'
     },
     {
@@ -36,7 +36,8 @@ export class Mudsdale extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mudsdale';
-  public fullName: string = 'Mudsdale GRI';
+  public fullName: string = 'Mudsdale (GRI 76)';
+  public legacyFullName = 'Mudsdale GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Enhanced Stomp

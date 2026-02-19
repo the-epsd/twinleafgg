@@ -42,7 +42,8 @@ export class Cherrim extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cherrim';
-  public fullName: string = 'Cherrim PLS';
+  public fullName: string = 'Cherrim (PLS 7)';
+  public legacyFullName = 'Cherrim PLS';
 
   public readonly FAIR_WEATHER_HEAL_MARKER = 'FAIR_WEATHER_HEAL_MARKER';
 

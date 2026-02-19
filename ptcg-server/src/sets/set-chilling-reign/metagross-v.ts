@@ -23,14 +23,14 @@ export class MetagrossV extends PokemonCard {
       name: 'Bullet Punch',
       cost: [M],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     },
     {
       name: 'Synchro Hammer',
       cost: [M, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon and your opponent\'s Active Pokémon have the same amount of Energy attached, this attack does 90 more damage.'
     }
   ];
@@ -40,7 +40,8 @@ export class MetagrossV extends PokemonCard {
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metagross V';
-  public fullName: string = 'Metagross V CRE';
+  public fullName: string = 'Metagross V (CRE 112)';
+  public legacyFullName = 'Metagross V CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bullet Punch

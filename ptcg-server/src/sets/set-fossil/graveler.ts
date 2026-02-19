@@ -31,7 +31,8 @@ export class Graveler extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '37';
   public name: string = 'Graveler';
-  public fullName: string = 'Graveler FO';
+  public fullName: string = 'Graveler (FO 37)';
+  public legacyFullName = 'Graveler FO';
 
   public readonly HARDEN_MARKER = 'HARDEN_MARKER';
 

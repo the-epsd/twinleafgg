@@ -37,7 +37,8 @@ export class TyranitarEx extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tyranitar-EX';
-  public fullName: string = 'Tyranitar-EX AOR';
+  public fullName: string = 'Tyranitar-EX (AOR 42)';
+  public legacyFullName = 'Tyranitar-EX AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Break Ground

@@ -20,5 +20,6 @@ export class Vanillite extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '43';
   public name: string = 'Vanillite';
-  public fullName: string = 'Vanillite PAR';
+  public fullName: string = 'Vanillite (PAR 43)';
+  public legacyFullName = 'Vanillite PAR';
 }

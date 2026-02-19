@@ -38,7 +38,8 @@ export class Walrein extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Walrein';
-  public fullName: string = 'Walrein CRE';
+  public fullName: string = 'Walrein (CRE 39)';
+  public legacyFullName = 'Walrein CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Hail Prison

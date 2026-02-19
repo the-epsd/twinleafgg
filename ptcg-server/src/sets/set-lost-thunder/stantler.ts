@@ -27,7 +27,7 @@ export class Stantler extends PokemonCard {
       name: 'Enhanced Horns',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 60 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Stantler extends PokemonCard {
   public setNumber: string = '156';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stantler';
-  public fullName: string = 'Stantler LOT';
+  public fullName: string = 'Stantler (LOT 156)';
+  public legacyFullName = 'Stantler LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mystifying Horns

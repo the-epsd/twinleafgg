@@ -42,7 +42,8 @@ export class Carnivine extends PokemonCard {
 
   public name: string = 'Carnivine';
 
-  public fullName: string = 'Carnivine DEX';
+  public fullName: string = 'Carnivine (DEX 5)';
+  public legacyFullName = 'Carnivine DEX';
 
   private usedLurePoison: boolean = false;
   private usedSpitSquall: boolean = false;

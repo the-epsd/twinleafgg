@@ -37,7 +37,8 @@ export class Hoothoot extends PokemonCard {
   public setNumber: string = '143';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hoothoot';
-  public fullName: string = 'Hoothoot SSH';
+  public fullName: string = 'Hoothoot (SSH 143)';
+  public legacyFullName = 'Hoothoot SSH';
 
   public usedSendBack = false;
 

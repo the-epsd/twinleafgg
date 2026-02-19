@@ -35,7 +35,8 @@ export class Heatmor extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heatmor';
-  public fullName: string = 'Heatmor BUS';
+  public fullName: string = 'Heatmor (BUS 24)';
+  public legacyFullName = 'Heatmor BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Odor Sleuth

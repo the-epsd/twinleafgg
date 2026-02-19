@@ -43,7 +43,8 @@ export class Rapidash extends PokemonCard {
 
   public name: string = 'Rapidash';
 
-  public fullName: string = 'Rapidash SIT';
+  public fullName: string = 'Rapidash (SIT 22)';
+  public legacyFullName = 'Rapidash SIT';
 
   public readonly HEAT_BOOST_MARKER = 'HEAT_BOOST_MARKER';
 

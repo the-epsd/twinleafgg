@@ -33,7 +33,8 @@ export class Skitty extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '62';
   public name: string = 'Skitty';
-  public fullName: string = 'Skitty PK';
+  public fullName: string = 'Skitty (PK 62)';
+  public legacyFullName = 'Skitty PK';
 
   public readonly TAIL_WHIP_MARKER = 'TAIL_WHIP_MARKER';
 

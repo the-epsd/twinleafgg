@@ -16,7 +16,8 @@ export class GreensExploration extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '175';
   public name: string = 'Green\'s Exploration';
-  public fullName: string = 'Green\'s Exploration UNB';
+  public fullName: string = 'Green\'s Exploration (UNB 175)';
+  public legacyFullName = 'Green\'s Exploration UNB';
 
   public text: string =
     `You can play this card only if you have no Pokémon with Abilities in play.

@@ -34,7 +34,8 @@ export class Yveltal extends PokemonCard {
   public setNumber = '35';
   public cardImage = 'assets/cardback.png';
   public name = 'Yveltal';
-  public fullName = 'Yveltal SFA';
+  public fullName = 'Yveltal (SFA 35)';
+  public legacyFullName = 'Yveltal SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Corrosive Winds

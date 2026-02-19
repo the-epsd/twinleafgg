@@ -37,7 +37,8 @@ export class Gallade extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gallade';
-  public fullName: string = 'Gallade CEC';
+  public fullName: string = 'Gallade (CEC 82)';
+  public legacyFullName = 'Gallade CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Double Type (passive - adds Fighting type)

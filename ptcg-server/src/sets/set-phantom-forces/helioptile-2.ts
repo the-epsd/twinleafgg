@@ -22,7 +22,7 @@ export class Helioptile2 extends PokemonCard {
       name: 'Quick Attack',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Helioptile2 extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Helioptile';
-  public fullName: string = 'Helioptile PHF 29';
+  public fullName: string = 'Helioptile (PHF 29)';
+  public legacyFullName = 'Helioptile PHF 29';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Quick Attack

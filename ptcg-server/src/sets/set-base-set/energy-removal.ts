@@ -79,7 +79,8 @@ export class EnergyRemoval extends TrainerCard {
 
   public name: string = 'Energy Removal';
 
-  public fullName: string = 'Energy Removal BS';
+  public fullName: string = 'Energy Removal (BS 92)';
+  public legacyFullName = 'Energy Removal BS';
 
   public text: string =
     'Choose 1 Energy card attached to 1 of your opponent\'s Pokémon and discard it.';

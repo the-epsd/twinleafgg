@@ -103,7 +103,8 @@ export class Lanturn extends PokemonCard {
 
   public name: string = 'Lanturn';
 
-  public fullName: string = 'Lanturn SCR';
+  public fullName: string = 'Lanturn (SCR 49)';
+  public legacyFullName = 'Lanturn SCR';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

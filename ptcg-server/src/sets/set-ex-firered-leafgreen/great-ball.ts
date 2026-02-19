@@ -13,7 +13,8 @@ export class GreatBall extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
   public name: string = 'Great Ball';
-  public fullName: string = 'Great Ball RG';
+  public fullName: string = 'Great Ball (RG 92)';
+  public legacyFullName = 'Great Ball RG';
   public text: string = 'Search your deck for a Basic Pokémon (excluding Pokémon-ex) and put it onto your Bench. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

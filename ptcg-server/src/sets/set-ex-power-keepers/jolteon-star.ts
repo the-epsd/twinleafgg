@@ -32,7 +32,8 @@ export class JolteonStar extends PokemonCard {
 
   public set: string = 'PK';
   public name: string = 'Jolteon Star';
-  public fullName: string = 'Jolteon Star PK';
+  public fullName: string = 'Jolteon Star (PK 101)';
+  public legacyFullName = 'Jolteon Star PK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '101';
 

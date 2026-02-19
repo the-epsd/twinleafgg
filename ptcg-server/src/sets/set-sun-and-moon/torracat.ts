@@ -22,7 +22,7 @@ export class Torracat extends PokemonCard {
       name: 'Fury Swipes',
       cost: [R],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 20 damage for each heads.'
     },
     {
@@ -37,7 +37,8 @@ export class Torracat extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Torracat';
-  public fullName: string = 'Torracat SUM';
+  public fullName: string = 'Torracat (SUM 25)';
+  public legacyFullName = 'Torracat SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Swipes

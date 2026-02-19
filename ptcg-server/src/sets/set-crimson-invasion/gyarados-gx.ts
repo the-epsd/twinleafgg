@@ -29,7 +29,7 @@ export class GyaradosGx extends PokemonCard {
       name: 'Draconic Disaster',
       cost: [W, C, C, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 100 more damage. Then, discard that Stadium card.'
     },
     {
@@ -44,7 +44,8 @@ export class GyaradosGx extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gyarados-GX';
-  public fullName: string = 'Gyarados-GX CIN';
+  public fullName: string = 'Gyarados-GX (CIN 18)';
+  public legacyFullName = 'Gyarados-GX CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Draconic Disaster

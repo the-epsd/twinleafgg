@@ -41,7 +41,8 @@ export class Lugia extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '149';
   public name: string = 'Lugia';
-  public fullName: string = 'Lugia AQ';
+  public fullName: string = 'Lugia (AQ 149)';
+  public legacyFullName = 'Lugia AQ';
 
   public readonly R_CRYSTAL_MARKER = 'R_CRYSTAL_MARKER';
   public readonly W_CRYSTAL_MARKER = 'W_CRYSTAL_MARKER';

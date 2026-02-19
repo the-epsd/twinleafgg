@@ -35,7 +35,8 @@ export class Rhydon extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rhydon';
-  public fullName: string = 'Rhydon XY';
+  public fullName: string = 'Rhydon (XY 61)';
+  public legacyFullName = 'Rhydon XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Mad Mountain

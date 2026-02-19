@@ -29,5 +29,6 @@ export class ArvensMaschiff extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '138';
   public name: string = 'Arven\'s Maschiff';
-  public fullName: string = 'Arven\'s Maschiff DRI';
+  public fullName: string = 'Arven\'s Maschiff (DRI 138)';
+  public legacyFullName = 'Arven\'s Maschiff DRI';
 }

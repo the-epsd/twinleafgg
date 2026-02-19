@@ -31,7 +31,8 @@ export class SamiyasChatot extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '143';
   public name: string = 'Samiya\'s Chatot';
-  public fullName: string = 'Samiya\'s Chatot PCGP';
+  public fullName: string = 'Samiya\'s Chatot (PCGP 143)';
+  public legacyFullName = 'Samiya\'s Chatot PCGP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

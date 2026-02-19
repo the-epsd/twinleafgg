@@ -1,7 +1,8 @@
 import { VsSeeker } from '../set-phantom-forces/vs-seeker';
 
 export class VsSeekerSV extends VsSeeker {
-  public fullName = 'VS Seeker SV';
+  public fullName = 'VS Seeker (SV 140)';
+  public legacyFullName = 'VS Seeker SV';
   public name = 'VS Seeker';
   public set = 'SV';
   public setNumber = '140';

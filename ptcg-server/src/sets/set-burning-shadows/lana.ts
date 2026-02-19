@@ -16,7 +16,8 @@ export class Lana extends TrainerCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lana';
-  public fullName: string = 'Lana BUS';
+  public fullName: string = 'Lana (BUS 117)';
+  public legacyFullName = 'Lana BUS';
   public text: string = 'Heal 50 damage from each of your Pokémon that has any [W] Energy attached to it. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -40,7 +40,8 @@ export class Jolteon extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jolteon';
-  public fullName: string = 'Jolteon VIV';
+  public fullName: string = 'Jolteon (VIV 47)';
+  public legacyFullName = 'Jolteon VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Thunderous Awakening (passive - block Water Pokemon abilities if Memory Capsule attached)

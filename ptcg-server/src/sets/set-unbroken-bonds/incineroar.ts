@@ -37,7 +37,8 @@ export class Incineroar extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Incineroar';
-  public fullName: string = 'Incineroar UNB';
+  public fullName: string = 'Incineroar (UNB 29)';
+  public legacyFullName = 'Incineroar UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Strong Cheer (passive - boost all your Pokemon's damage by 30)

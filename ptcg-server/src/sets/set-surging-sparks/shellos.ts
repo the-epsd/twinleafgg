@@ -20,5 +20,6 @@ export class Shellos extends PokemonCard {
   public setNumber: string = '46';
   public regulationMark = 'H';
   public name: string = 'Shellos';
-  public fullName: string = 'Shellos SSP';
+  public fullName: string = 'Shellos (SSP 46)';
+  public legacyFullName = 'Shellos SSP';
 }

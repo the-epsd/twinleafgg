@@ -17,7 +17,7 @@ export class Beedrillex extends PokemonCard {
     name: 'Bee Rumble',
     cost: [G],
     damage: 110,
-    damageCalculation: 'x' as 'x',
+    damageCalculation: 'x' as const,
     text: 'This attack does 110 damage for each Beedrill you have in play (including Beedrill ex).'
   }];
 
@@ -26,7 +26,8 @@ export class Beedrillex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Beedrill ex';
-  public fullName: string = 'Beedrill ex M4';
+  public fullName: string = 'Beedrill ex (M4 3)';
+  public legacyFullName = 'Beedrill ex M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

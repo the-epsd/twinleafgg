@@ -33,7 +33,8 @@ export class Magmar extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magmar';
-  public fullName: string = 'Magmar UNM';
+  public fullName: string = 'Magmar (UNM 21)';
+  public legacyFullName = 'Magmar UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Smoke Bomb

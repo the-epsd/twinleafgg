@@ -35,7 +35,8 @@ export class Inkay2 extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Inkay';
-  public fullName: string = 'Inkay XY 75';
+  public fullName: string = 'Inkay (XY 75)';
+  public legacyFullName = 'Inkay XY 75';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Puncture

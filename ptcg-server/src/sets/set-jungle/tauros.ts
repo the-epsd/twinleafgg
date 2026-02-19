@@ -38,7 +38,8 @@ export class Tauros extends PokemonCard {
 
   public name: string = 'Tauros';
 
-  public fullName: string = 'Tauros JU';
+  public fullName: string = 'Tauros (JU 47)';
+  public legacyFullName = 'Tauros JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

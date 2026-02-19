@@ -35,7 +35,8 @@ export class Tropius extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tropius';
-  public fullName: string = 'Tropius CEC';
+  public fullName: string = 'Tropius (CEC 12)';
+  public legacyFullName = 'Tropius CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Synthesis

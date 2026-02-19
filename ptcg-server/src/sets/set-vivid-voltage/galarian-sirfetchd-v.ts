@@ -39,7 +39,8 @@ export class GalarianSirfetchdV extends PokemonCard {
   public setNumber: string = '174';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Sirfetch\'d V';
-  public fullName: string = 'Galarian Sirfetch\'d V VIV';
+  public fullName: string = 'Galarian Sirfetch\'d V (VIV 174)';
+  public legacyFullName = 'Galarian Sirfetch\'d V VIV';
 
   public ABILITY_USED_MARKER = 'GALARIAN_SIRFETCHD_V_ABILITY_USED_MARKER';
 

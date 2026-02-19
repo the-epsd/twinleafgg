@@ -36,7 +36,8 @@ export class Honedge extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Honedge';
-  public fullName: string = 'Honedge UNM';
+  public fullName: string = 'Honedge (UNM 92)';
+  public legacyFullName = 'Honedge UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lucky Find

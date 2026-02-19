@@ -30,7 +30,8 @@ export class Teddiursa extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '138';
   public name: string = 'Teddiursa';
-  public fullName: string = 'Teddiursa DAA';
+  public fullName: string = 'Teddiursa (DAA 138)';
+  public legacyFullName = 'Teddiursa DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

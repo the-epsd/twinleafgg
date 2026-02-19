@@ -31,7 +31,8 @@ export class Pidove extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pidove';
-  public fullName: string = 'Pidove NXD';
+  public fullName: string = 'Pidove (NXD 83)';
+  public legacyFullName = 'Pidove NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Scout

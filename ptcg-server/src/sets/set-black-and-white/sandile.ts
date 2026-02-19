@@ -32,7 +32,8 @@ export class Sandile extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '63';
   public name: string = 'Sandile';
-  public fullName: string = 'Sandile BLW';
+  public fullName: string = 'Sandile (BLW 63)';
+  public legacyFullName = 'Sandile BLW';
 
   public readonly SAND_ATTACK_MARKER = 'SAND_ATTACK_MARKER';
 

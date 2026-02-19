@@ -38,7 +38,8 @@ export class Shuppet extends PokemonCard {
 
   public name: string = 'Shuppet';
 
-  public fullName: string = 'Shuppet SVI';
+  public fullName: string = 'Shuppet (SVI 87)';
+  public legacyFullName = 'Shuppet SVI';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 

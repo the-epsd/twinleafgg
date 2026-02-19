@@ -32,7 +32,8 @@ export class Armaldo extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Armaldo';
-  public fullName: string = 'Armaldo SS';
+  public fullName: string = 'Armaldo (SS 1)';
+  public legacyFullName = 'Armaldo SS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

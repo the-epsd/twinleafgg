@@ -35,7 +35,8 @@ export class Dusknoir extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name: string = 'Dusknoir';
-  public fullName: string = 'Dusknoir SFA';
+  public fullName: string = 'Dusknoir (SFA 20)';
+  public legacyFullName = 'Dusknoir SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Cursed Blast

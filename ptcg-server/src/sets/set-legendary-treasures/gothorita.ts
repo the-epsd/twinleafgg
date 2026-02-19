@@ -39,7 +39,8 @@ export class Gothorita extends PokemonCard {
 
   public name: string = 'Gothorita';
 
-  public fullName: string = 'Gothorita LTR';
+  public fullName: string = 'Gothorita (LTR 71)';
+  public legacyFullName = 'Gothorita LTR';
 
   public cardImage: string = 'assets/cardback.png';
 

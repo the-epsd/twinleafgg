@@ -44,7 +44,8 @@ export class RayquazaV extends PokemonCard {
 
   public name: string = 'Rayquaza V';
 
-  public fullName: string = 'Rayquaza V EVS';
+  public fullName: string = 'Rayquaza V (EVS 110)';
+  public legacyFullName = 'Rayquaza V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

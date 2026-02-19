@@ -8,12 +8,12 @@ describe('Test Harness Prompt Resolution', () => {
     const game = setupGame({
       turn: 2,
       player1: {
-        active: { card: 'Ralts SIT', energy: ['Psychic Energy SVE', 'Water Energy SVE'] },
-        bench: [{ card: 'Manaphy BRS' }],
+        active: { card: 'Ralts (SIT 67)', energy: ['Psychic Energy (SVE 5)', 'Water Energy (SVE 3)'] },
+        bench: [{ card: 'Manaphy (BRS 41)' }],
         deck: padDeck(10)
       },
       player2: {
-        active: { card: 'Ralts SIT' },
+        active: { card: 'Ralts (SIT 67)' },
         deck: padDeck(10)
       }
     });
@@ -22,31 +22,31 @@ describe('Test Harness Prompt Resolution', () => {
     game.store.dispatch(new RetreatAction(player.id, 0));
 
     expect(player.discard.cards.length).toBe(1);
-    expect(player.active.getPokemonCard()?.fullName).toBe('Manaphy BRS');
+    expect(player.active.getPokemonCard()?.fullName).toBe('Manaphy (BRS 41)');
   });
 
   it('should respect different energy type constraints for Mirage Gate', () => {
     const game = setupGame({
       turn: 2,
       player1: {
-        active: { card: 'Ralts SIT' },
-        bench: [{ card: 'Ralts SIT' }],
-        hand: ['Mirage Gate LOR'],
-        deck: ['Lightning Energy SVE', 'Lightning Energy SVE', 'Water Energy SVE', ...padDeck(7)]
+        active: { card: 'Ralts (SIT 67)' },
+        bench: [{ card: 'Ralts (SIT 67)' }],
+        hand: ['Mirage Gate (LOR 163)'],
+        deck: ['Lightning Energy (SVE 4)', 'Lightning Energy (SVE 4)', 'Water Energy (SVE 3)', ...padDeck(7)]
       },
       player2: {
-        active: { card: 'Ralts SIT' },
+        active: { card: 'Ralts (SIT 67)' },
         deck: padDeck(10)
       }
     });
 
     for (let i = 0; i < 7; i++) {
-      const card = getCardByName('Water Energy SVE');
+      const card = getCardByName('Water Energy (SVE 3)');
       card.id = 9000 + i;
       game.state.players[0].lostzone.cards.push(card);
     }
 
-    playTrainerCard(game.store, game.state, 0, 'Mirage Gate LOR');
+    playTrainerCard(game.store, game.state, 0, 'Mirage Gate (LOR 163)');
 
     const attachedEnergy = [game.state.players[0].active, ...game.state.players[0].bench]
       .flatMap(slot => slot.energies.cards)

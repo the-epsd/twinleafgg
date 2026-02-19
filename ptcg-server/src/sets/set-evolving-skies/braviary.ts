@@ -22,7 +22,7 @@ export class Braviary extends PokemonCard {
       name: 'Valiant Talons',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 60 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Braviary extends PokemonCard {
   public setNumber: string = '137';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Braviary';
-  public fullName: string = 'Braviary EVS';
+  public fullName: string = 'Braviary (EVS 137)';
+  public legacyFullName = 'Braviary EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Valiant Talons

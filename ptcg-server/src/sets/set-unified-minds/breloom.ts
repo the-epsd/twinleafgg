@@ -28,7 +28,7 @@ export class Breloom extends PokemonCard {
       name: 'Pre-Dawn Strike',
       cost: [G],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Asleep, this attack does 90 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Breloom extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Breloom';
-  public fullName: string = 'Breloom UNM';
+  public fullName: string = 'Breloom (UNM 108)';
+  public legacyFullName = 'Breloom UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spore

@@ -36,7 +36,8 @@ export class Mawile extends PokemonCard {
   public setNumber: string = '140';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mawile';
-  public fullName: string = 'Mawile CEC';
+  public fullName: string = 'Mawile (CEC 140)';
+  public legacyFullName = 'Mawile CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dual Calling

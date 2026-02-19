@@ -33,7 +33,8 @@ export class Kingdra extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kingdra';
-  public fullName: string = 'Kingdra PLF';
+  public fullName: string = 'Kingdra (PLF 84)';
+  public legacyFullName = 'Kingdra PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dragon Vortex

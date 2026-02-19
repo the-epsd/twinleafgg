@@ -37,7 +37,8 @@ export class Pupitar extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pupitar';
-  public fullName: string = 'Pupitar CES';
+  public fullName: string = 'Pupitar (CES 75)';
+  public legacyFullName = 'Pupitar CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Dust Devil

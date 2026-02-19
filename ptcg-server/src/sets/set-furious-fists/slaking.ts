@@ -38,7 +38,8 @@ export class Slaking extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slaking';
-  public fullName: string = 'Slaking FFI';
+  public fullName: string = 'Slaking (FFI 83)';
+  public legacyFullName = 'Slaking FFI';
 
   public amnesiaAttack: Attack | null = null;
 

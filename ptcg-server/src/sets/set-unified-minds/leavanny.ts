@@ -29,7 +29,8 @@ export class Leavanny extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '9';
   public name: string = 'Leavanny';
-  public fullName: string = 'Leavanny UNM';
+  public fullName: string = 'Leavanny (UNM 9)';
+  public legacyFullName = 'Leavanny UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

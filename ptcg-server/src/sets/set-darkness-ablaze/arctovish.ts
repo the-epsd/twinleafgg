@@ -39,7 +39,8 @@ export class Arctovish extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arctovish';
-  public fullName: string = 'Arctovish DAA';
+  public fullName: string = 'Arctovish (DAA 54)';
+  public legacyFullName = 'Arctovish DAA';
 
   public readonly REDUCE_DAMAGE_MARKER = 'ARCTOVISH_DAA_REDUCE_DAMAGE_MARKER';
   public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'ARCTOVISH_DAA_CLEAR_REDUCE_DAMAGE_MARKER';

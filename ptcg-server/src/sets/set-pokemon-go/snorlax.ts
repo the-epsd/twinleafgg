@@ -43,7 +43,8 @@ export class Snorlax extends PokemonCard {
 
   public name: string = 'Snorlax';
 
-  public fullName: string = 'Snorlax PGO';
+  public fullName: string = 'Snorlax (PGO 55)';
+  public legacyFullName = 'Snorlax PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -17,7 +17,8 @@ export class RainbowEnergy extends EnergyCard {
 
   public name = 'Rainbow Energy';
 
-  public fullName = 'Rainbow Energy SUM';
+  public fullName = 'Rainbow Energy (SUM 137)';
+  public legacyFullName = 'Rainbow Energy SUM';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -50,7 +50,8 @@ export class MarshadowGX extends PokemonCard {
 
   public name: string = 'Marshadow-GX';
 
-  public fullName: string = 'Marshadow-GX BUS';
+  public fullName: string = 'Marshadow-GX (BUS 80)';
+  public legacyFullName = 'Marshadow-GX BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

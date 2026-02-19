@@ -37,7 +37,8 @@ export class Garbodor extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Garbodor';
-  public fullName: string = 'Garbodor PLS';
+  public fullName: string = 'Garbodor (PLS 66)';
+  public legacyFullName = 'Garbodor PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Biosmog

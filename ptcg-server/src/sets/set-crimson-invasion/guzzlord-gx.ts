@@ -38,7 +38,8 @@ export class GuzzlordGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '63';
   public name: string = 'Guzzlord-GX';
-  public fullName: string = 'Guzzlord-GX CIN';
+  public fullName: string = 'Guzzlord-GX (CIN 63)';
+  public legacyFullName = 'Guzzlord-GX CIN';
 
   private usedGluttonGX = false;
 

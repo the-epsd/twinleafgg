@@ -21,7 +21,7 @@ export class Pupitar extends PokemonCard {
       name: 'Payback',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent has exactly 1 Prize card remaining, this attack does 90 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Pupitar extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pupitar';
-  public fullName: string = 'Pupitar TEU';
+  public fullName: string = 'Pupitar (TEU 80)';
+  public legacyFullName = 'Pupitar TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Payback

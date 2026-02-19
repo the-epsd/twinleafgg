@@ -15,7 +15,8 @@ export class ImposterProfessorOak extends TrainerCard {
   public setNumber: string = '73A';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Imposter Professor Oak';
-  public fullName: string = 'Imposter Professor Oak CEL';
+  public fullName: string = 'Imposter Professor Oak (CEL 73A)';
+  public legacyFullName = 'Imposter Professor Oak CEL';
   public text: string = 'Your opponent shuffles his or her hand into his or her deck, then draws 7 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

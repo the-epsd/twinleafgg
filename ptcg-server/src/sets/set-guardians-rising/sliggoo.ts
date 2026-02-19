@@ -35,7 +35,8 @@ export class Sliggoo extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sliggoo';
-  public fullName: string = 'Sliggoo GRI';
+  public fullName: string = 'Sliggoo (GRI 95)';
+  public legacyFullName = 'Sliggoo GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Division

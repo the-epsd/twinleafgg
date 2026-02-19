@@ -34,7 +34,8 @@ export class HoopaEX extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hoopa-EX';
-  public fullName: string = 'Hoopa EX AOR';
+  public fullName: string = 'Hoopa-EX (AOR 36)';
+  public legacyFullName = 'Hoopa EX AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Scoundrel Ring

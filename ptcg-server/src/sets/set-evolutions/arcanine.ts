@@ -38,7 +38,8 @@ export class Arcanine extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arcanine';
-  public fullName: string = 'Arcanine EVO';
+  public fullName: string = 'Arcanine (EVO 18)';
+  public legacyFullName = 'Arcanine EVO';
 
   public readonly BURNING_ROAD_MARKER = 'ARCANINE_EVO_BURNING_ROAD';
 

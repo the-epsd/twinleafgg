@@ -39,7 +39,8 @@ export class CresseliaEx extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cresselia-EX';
-  public fullName: string = 'Cresselia-EX BCR';
+  public fullName: string = 'Cresselia-EX (BCR 67)';
+  public legacyFullName = 'Cresselia-EX BCR';
   public readonly PSYCHIC_PROTECTION_MARKER = 'PSYCHIC_PROTECTION_MARKER';
   public readonly CLEAR_PSYCHIC_PROTECTION_MARKER = 'CLEAR_PSYCHIC_PROTECTION_MARKER';
 

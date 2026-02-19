@@ -35,7 +35,7 @@ export class PheromosaGx extends PokemonCard {
       name: 'Beauty-GX',
       cost: [G, G],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 50 damage for each Prize card your opponent has taken. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];
@@ -44,7 +44,8 @@ export class PheromosaGx extends PokemonCard {
   public setNumber: string = '140';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pheromosa-GX';
-  public fullName: string = 'Pheromosa-GX UPR';
+  public fullName: string = 'Pheromosa-GX (UPR 140)';
+  public legacyFullName = 'Pheromosa-GX UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fast Raid

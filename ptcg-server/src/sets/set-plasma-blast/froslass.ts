@@ -35,7 +35,8 @@ export class Froslass extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Froslass';
-  public fullName: string = 'Froslass PLB';
+  public fullName: string = 'Froslass (PLB 23)';
+  public legacyFullName = 'Froslass PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Cursed Glare - Block opponent's special energy attachment

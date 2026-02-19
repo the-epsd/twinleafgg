@@ -35,7 +35,8 @@ export class Zeraora extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '57';
   public name: string = 'Zeraora';
-  public fullName: string = 'Zeraora TEF';
+  public fullName: string = 'Zeraora (TEF 57)';
+  public legacyFullName = 'Zeraora TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

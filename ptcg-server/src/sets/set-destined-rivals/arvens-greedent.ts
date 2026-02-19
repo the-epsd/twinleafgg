@@ -33,7 +33,8 @@ export class ArvensGreedent extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '159';
   public name: string = 'Arven\'s Greedent';
-  public fullName: string = 'Arven\'s Greedent DRI';
+  public fullName: string = 'Arven\'s Greedent (DRI 159)';
+  public legacyFullName = 'Arven\'s Greedent DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

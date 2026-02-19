@@ -32,7 +32,8 @@ export class Mudkip extends PokemonCard {
 
   public name: string = 'Mudkip';
 
-  public fullName: string = 'Mudkip CES';
+  public fullName: string = 'Mudkip (CES 32)';
+  public legacyFullName = 'Mudkip CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

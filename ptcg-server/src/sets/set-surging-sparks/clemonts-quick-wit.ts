@@ -18,7 +18,8 @@ export class ClemontsQuickWit extends TrainerCard {
   public cardImage = 'assets/cardback.png';
   public regulationMark: string = 'H';
   public name: string = 'Clemont\'s Quick Wit';
-  public fullName: string = 'Clemont\'s Quick Wit SSP';
+  public fullName: string = 'Clemont\'s Quick Wit (SSP 167)';
+  public legacyFullName = 'Clemont\'s Quick Wit SSP';
   public text: string = 'Heal 60 damage from each of your [L] Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

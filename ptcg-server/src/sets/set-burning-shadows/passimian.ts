@@ -34,7 +34,8 @@ export class Passimian extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Passimian';
-  public fullName: string = 'Passimian BUS';
+  public fullName: string = 'Passimian (BUS 79)';
+  public legacyFullName = 'Passimian BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Intentional Grounding

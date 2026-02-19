@@ -35,7 +35,8 @@ export class Pikachu extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikachu';
-  public fullName: string = 'Pikachu EVO';
+  public fullName: string = 'Pikachu (EVO 35)';
+  public legacyFullName = 'Pikachu EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Thunder Jolt

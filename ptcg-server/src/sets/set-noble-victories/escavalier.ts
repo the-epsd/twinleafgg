@@ -35,7 +35,8 @@ export class Escavalier extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Escavalier';
-  public fullName: string = 'Escavalier NVI';
+  public fullName: string = 'Escavalier (NVI 80)';
+  public legacyFullName = 'Escavalier NVI';
 
   public readonly GUARD_PRESS_MARKER = 'GUARD_PRESS_MARKER';
 

@@ -36,7 +36,8 @@ export class Mienshao extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mienshao';
-  public fullName: string = 'Mienshao BCR';
+  public fullName: string = 'Mienshao (BCR 88)';
+  public legacyFullName = 'Mienshao BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Knock Off

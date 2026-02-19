@@ -34,7 +34,8 @@ export class Jynxex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '124';
   public name: string = 'Jynx ex';
-  public fullName: string = 'Jynx ex MEW';
+  public fullName: string = 'Jynx ex (MEW 124)';
+  public legacyFullName = 'Jynx ex MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Heart-Stopping Kiss

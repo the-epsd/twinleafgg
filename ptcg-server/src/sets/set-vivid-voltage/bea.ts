@@ -20,7 +20,8 @@ export class Bea extends TrainerCard {
   public setNumber: string = '147';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bea';
-  public fullName: string = 'Bea VIV';
+  public fullName: string = 'Bea (VIV 147)';
+  public legacyFullName = 'Bea VIV';
   public text: string = 'Discard the top 5 cards of your deck, and attach any Energy cards you discarded in this way to your Benched Fighting Pokémon in any way you like. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

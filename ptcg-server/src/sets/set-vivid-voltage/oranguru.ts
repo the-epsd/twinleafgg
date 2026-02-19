@@ -38,7 +38,8 @@ export class Oranguru extends PokemonCard {
   public setNumber: string = '199';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Oranguru';
-  public fullName: string = 'Oranguru VIV';
+  public fullName: string = 'Oranguru (VIV 199)';
+  public legacyFullName = 'Oranguru VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Primate Wisdom

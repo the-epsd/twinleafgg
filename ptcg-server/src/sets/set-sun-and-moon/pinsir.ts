@@ -35,7 +35,8 @@ export class Pinsir extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pinsir';
-  public fullName: string = 'Pinsir SUM';
+  public fullName: string = 'Pinsir (SUM 6)';
+  public legacyFullName = 'Pinsir SUM';
 
   public usedRoofFling = false;
 

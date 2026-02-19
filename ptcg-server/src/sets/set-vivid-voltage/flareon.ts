@@ -37,7 +37,8 @@ export class Flareon extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flareon';
-  public fullName: string = 'Flareon VIV';
+  public fullName: string = 'Flareon (VIV 26)';
+  public legacyFullName = 'Flareon VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Incandescent Awakening (passive - block Grass Pokemon abilities if Memory Capsule attached)

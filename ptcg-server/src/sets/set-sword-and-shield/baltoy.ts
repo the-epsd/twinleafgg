@@ -24,7 +24,8 @@ export class Baltoy extends PokemonCard {
 
   public set: string = 'SSH';
   public name: string = 'Baltoy';
-  public fullName: string = 'Baltoy SSH';
+  public fullName: string = 'Baltoy (SSH 101)';
+  public legacyFullName = 'Baltoy SSH';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '101';
 }

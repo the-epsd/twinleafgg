@@ -23,7 +23,7 @@ export class Tyranitar extends PokemonCard {
       name: 'Slam',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 60 damage for each heads.'
     },
     {
@@ -38,7 +38,8 @@ export class Tyranitar extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tyranitar';
-  public fullName: string = 'Tyranitar CES';
+  public fullName: string = 'Tyranitar (CES 87)';
+  public legacyFullName = 'Tyranitar CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Slam

@@ -31,7 +31,8 @@ export class Zoroark extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zoroark';
-  public fullName: string = 'Zoroark SV11W';
+  public fullName: string = 'Zoroark (WHT 62)';
+  public legacyFullName = 'Zoroark SV11W';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Mind Jack

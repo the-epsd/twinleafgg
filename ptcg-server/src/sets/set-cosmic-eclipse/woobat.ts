@@ -33,7 +33,8 @@ export class Woobat extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Woobat';
-  public fullName: string = 'Woobat CEC';
+  public fullName: string = 'Woobat (CEC 87)';
+  public legacyFullName = 'Woobat CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Nasal Suction

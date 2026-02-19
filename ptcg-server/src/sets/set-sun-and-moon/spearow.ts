@@ -22,7 +22,7 @@ export class Spearow extends PokemonCard {
       name: 'Peck Bugs',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Grass Pokémon, this attack does 30 more damage.'
     }
   ];
@@ -31,7 +31,8 @@ export class Spearow extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spearow';
-  public fullName: string = 'Spearow SUM';
+  public fullName: string = 'Spearow (SUM 97)';
+  public legacyFullName = 'Spearow SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Peck Bugs

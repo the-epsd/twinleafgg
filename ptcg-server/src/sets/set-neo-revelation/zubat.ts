@@ -30,7 +30,8 @@ export class Zubat extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '59';
   public name: string = 'Zubat';
-  public fullName: string = 'Zubat N3';
+  public fullName: string = 'Zubat (N3 59)';
+  public legacyFullName = 'Zubat N3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

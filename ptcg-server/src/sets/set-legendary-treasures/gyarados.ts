@@ -36,7 +36,8 @@ export class Gyarados extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gyarados';
-  public fullName: string = 'Gyarados LTR';
+  public fullName: string = 'Gyarados (LTR 31)';
+  public legacyFullName = 'Gyarados LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Howling Rampage

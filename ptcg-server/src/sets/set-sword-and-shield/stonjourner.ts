@@ -29,7 +29,8 @@ export class Stonjourner extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stonjourner';
-  public fullName: string = 'Stonjourner SSH';
+  public fullName: string = 'Stonjourner (SSH 114)';
+  public legacyFullName = 'Stonjourner SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wild Tackle

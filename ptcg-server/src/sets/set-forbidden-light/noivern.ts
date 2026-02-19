@@ -29,7 +29,7 @@ export class Noivern extends PokemonCard {
       name: 'Resonance',
       cost: [C, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Confused, this attack does 70 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Noivern extends PokemonCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Noivern';
-  public fullName: string = 'Noivern FLI';
+  public fullName: string = 'Noivern (FLI 101)';
+  public legacyFullName = 'Noivern FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Supersonic

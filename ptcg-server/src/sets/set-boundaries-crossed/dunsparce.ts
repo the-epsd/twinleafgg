@@ -36,7 +36,8 @@ export class Dunsparce extends PokemonCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dunsparce';
-  public fullName: string = 'Dunsparce BCR';
+  public fullName: string = 'Dunsparce (BCR 111)';
+  public legacyFullName = 'Dunsparce BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Draw

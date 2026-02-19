@@ -31,7 +31,8 @@ export class Gengarex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '104';
   public name: string = 'Gengar ex';
-  public fullName: string = 'Gengar ex TEF';
+  public fullName: string = 'Gengar ex (TEF 104)';
+  public legacyFullName = 'Gengar ex TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 

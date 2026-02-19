@@ -39,7 +39,8 @@ export class SilvallyGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '116';
   public name: string = 'Silvally-GX';
-  public fullName: string = 'Silvally-GX UPR';
+  public fullName: string = 'Silvally-GX (UPR 116)';
+  public legacyFullName = 'Silvally-GX UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Gyro Unit

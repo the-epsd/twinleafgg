@@ -11,7 +11,8 @@ export class ProfessorBirch extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'EM';
   public name: string = 'Professor Birch';
-  public fullName: string = 'Professor Birch EM';
+  public fullName: string = 'Professor Birch (EM 82)';
+  public legacyFullName = 'Professor Birch EM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
 

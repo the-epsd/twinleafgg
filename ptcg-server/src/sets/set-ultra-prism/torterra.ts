@@ -37,7 +37,8 @@ export class Torterra extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Torterra';
-  public fullName: string = 'Torterra UPR';
+  public fullName: string = 'Torterra (UPR 9)';
+  public legacyFullName = 'Torterra UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Giga Drain

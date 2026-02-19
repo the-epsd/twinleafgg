@@ -56,7 +56,8 @@ export class DeliveryDrone extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '178';
   public name = 'Delivery Drone';
-  public fullName: string = 'Delivery Drone PAL';
+  public fullName: string = 'Delivery Drone (PAL 178)';
+  public legacyFullName = 'Delivery Drone PAL';
   public text: string = 'Flip 2 coins. If both of them are heads, search your deck for a card and put it into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

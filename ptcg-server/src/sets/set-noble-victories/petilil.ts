@@ -42,7 +42,8 @@ export class Petilil extends PokemonCard {
 
   public name: string = 'Petilil';
 
-  public fullName: string = 'Petilil NVI';
+  public fullName: string = 'Petilil (NVI 23)';
+  public legacyFullName = 'Petilil NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

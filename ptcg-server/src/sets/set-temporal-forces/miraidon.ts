@@ -46,7 +46,8 @@ export class Miraidon extends PokemonCard {
 
   public name: string = 'Miraidon';
 
-  public fullName: string = 'Miraidon TEF';
+  public fullName: string = 'Miraidon (TEF 121)';
+  public legacyFullName = 'Miraidon TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

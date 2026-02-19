@@ -23,5 +23,6 @@ export class CynthiasRoselia extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cynthia\'s Roselia';
-  public fullName: string = 'Cynthia\'s Roselia DRI';
+  public fullName: string = 'Cynthia\'s Roselia (DRI 7)';
+  public legacyFullName = 'Cynthia\'s Roselia DRI';
 }

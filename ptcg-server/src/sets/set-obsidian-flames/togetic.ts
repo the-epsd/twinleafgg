@@ -32,7 +32,8 @@ export class Togetic extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
   public name: string = 'Togetic';
-  public fullName: string = 'Togetic OBF';
+  public fullName: string = 'Togetic (OBF 84)';
+  public legacyFullName = 'Togetic OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Shared Peace

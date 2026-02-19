@@ -17,7 +17,8 @@ export class CaraLiss extends TrainerCard {
   public setNumber: string = '149';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cara Liss';
-  public fullName: string = 'Cara Liss VIV';
+  public fullName: string = 'Cara Liss (VIV 149)';
+  public legacyFullName = 'Cara Liss VIV';
   public text: string = 'Search your deck for up to 2 Rare Fossil cards and put them onto your Bench. Then, shuffle your deck. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

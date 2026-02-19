@@ -83,7 +83,8 @@ export class TeamGalacticsInventionG109SPRadar extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'RR';
   public name: string = 'Team Galactic\'s Invention G-109 SP Radar';
-  public fullName: string = 'Team Galactic\'s Invention G-109 SP Radar RR';
+  public fullName: string = 'Team Galactic\'s Invention G-109 SP Radar (RR 96)';
+  public legacyFullName = 'Team Galactic\'s Invention G-109 SP Radar RR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
 

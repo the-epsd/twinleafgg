@@ -43,7 +43,8 @@ export class OricorioGX extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name = 'Oricorio-GX';
-  public fullName = 'Oricorio GX CEC';
+  public fullName = 'Oricorio-GX (CEC 95)';
+  public legacyFullName = 'Oricorio GX CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     //Dance of Tribute

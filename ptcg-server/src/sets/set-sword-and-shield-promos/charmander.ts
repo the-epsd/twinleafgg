@@ -29,7 +29,8 @@ export class Charmander extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
   public name = 'Charmander';
-  public fullName = 'Charmander SWSH';
+  public fullName = 'Charmander (SWSH 92)';
+  public legacyFullName = 'Charmander SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

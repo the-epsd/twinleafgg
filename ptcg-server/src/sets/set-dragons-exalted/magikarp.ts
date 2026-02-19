@@ -26,7 +26,8 @@ export class Magikarp extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magikarp';
-  public fullName: string = 'Magikarp DRX';
+  public fullName: string = 'Magikarp (DRX 23)';
+  public legacyFullName = 'Magikarp DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

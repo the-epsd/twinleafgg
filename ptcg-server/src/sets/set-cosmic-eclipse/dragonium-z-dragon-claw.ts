@@ -13,7 +13,8 @@ export class DragoniumZDragonClaw extends TrainerCard {
   public setNumber: string = '190';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragonium Z: Dragon Claw';
-  public fullName: string = 'Dragonium Z: Dragon Claw CEC';
+  public fullName: string = 'Dragonium Z: Dragon Claw (CEC 190)';
+  public legacyFullName = 'Dragonium Z: Dragon Claw CEC';
   public text: string = 'If the Pokémon this card is attached to has the Dragon Claw attack, it can use the GX attack on this card. (You still need the necessary Energy to use this attack.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

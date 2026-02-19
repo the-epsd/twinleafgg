@@ -22,7 +22,8 @@ export class Petilil extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '15';
   public name: string = 'Petilil';
-  public fullName: string = 'Petilil ASR';
+  public fullName: string = 'Petilil (ASR 15)';
+  public legacyFullName = 'Petilil ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

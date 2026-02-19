@@ -36,7 +36,8 @@ export class Lunatone extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lunatone';
-  public fullName: string = 'Lunatone BUS';
+  public fullName: string = 'Lunatone (BUS 68)';
+  public legacyFullName = 'Lunatone BUS';
 
   private hasSolrockInPlay(state: State, player: any): boolean {
     let found = false;

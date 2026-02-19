@@ -14,7 +14,8 @@ export class DangerousDrill extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '138';
   public name: string = 'Dangerous Drill';
-  public fullName: string = 'Dangerous Drill TEU';
+  public fullName: string = 'Dangerous Drill (TEU 138)';
+  public legacyFullName = 'Dangerous Drill TEU';
 
   public text: string =
     'You can play this card only if you discard a [D] Pokémon from your hand.\n\nDiscard a Pokémon Tool or Special Energy card from 1 of your opponent\'s Pokémon, or discard any Stadium card in play.';

@@ -13,7 +13,8 @@ export class WondrousLabyrinthPrismStar extends TrainerCard {
   public set: string = 'TEU';
   public setNumber: string = '158';
   public name: string = 'Wondrous Labyrinth Prism Star';
-  public fullName: string = 'Wondrous Labyrinth Prism Star TEU';
+  public fullName: string = 'Wondrous Labyrinth Prism Star (TEU 158)';
+  public legacyFullName = 'Wondrous Labyrinth Prism Star TEU';
   public cardImage: string = 'assets/cardback.png';
 
   public text: string =

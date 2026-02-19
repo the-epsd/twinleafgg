@@ -12,7 +12,8 @@ export class TrashExchange extends TrainerCard {
   public setNumber: string = '126';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trash Exchange';
-  public fullName: string = 'Trash Exchange G1';
+  public fullName: string = 'Trash Exchange (G1 126)';
+  public legacyFullName = 'Trash Exchange G1';
 
   public text: string = 'Count the number of cards in your discard pile and shuffle them into your deck. Then discard that many cards from the top of your deck.';
 

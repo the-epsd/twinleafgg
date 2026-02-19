@@ -42,7 +42,8 @@ export class Machamp extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machamp';
-  public fullName: string = 'Machamp FFI';
+  public fullName: string = 'Machamp (FFI 46)';
+  public legacyFullName = 'Machamp FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fighting Fury (passive - boost Fighting Pokemon damage)

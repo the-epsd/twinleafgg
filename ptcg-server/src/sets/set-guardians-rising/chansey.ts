@@ -36,7 +36,8 @@ export class Chansey extends PokemonCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chansey';
-  public fullName: string = 'Chansey GRI';
+  public fullName: string = 'Chansey (GRI 101)';
+  public legacyFullName = 'Chansey GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bind Wound

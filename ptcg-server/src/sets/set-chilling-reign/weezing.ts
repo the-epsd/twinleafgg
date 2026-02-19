@@ -29,7 +29,7 @@ export class Weezing extends PokemonCard {
       name: 'Smog Burst',
       cost: [D, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each [D] Energy attached to all of your Pokémon.'
     }
   ];
@@ -39,7 +39,8 @@ export class Weezing extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weezing';
-  public fullName: string = 'Weezing CRE';
+  public fullName: string = 'Weezing (CRE 95)';
+  public legacyFullName = 'Weezing CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mixin' Toxin

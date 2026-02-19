@@ -36,7 +36,8 @@ export class Herdier extends PokemonCard {
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Herdier';
-  public fullName: string = 'Herdier EVS';
+  public fullName: string = 'Herdier (EVS 134)';
+  public legacyFullName = 'Herdier EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Take Down

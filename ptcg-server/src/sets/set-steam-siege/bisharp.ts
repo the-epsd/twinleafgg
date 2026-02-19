@@ -23,7 +23,7 @@ export class Bisharp extends PokemonCard {
       name: 'Retaliate',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If any of your Pokémon were Knocked Out by damage from an opponent\'s attack during his or her last turn, this attack does 60 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Bisharp extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bisharp';
-  public fullName: string = 'Bisharp STS';
+  public fullName: string = 'Bisharp (STS 64)';
+  public legacyFullName = 'Bisharp STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Retaliate

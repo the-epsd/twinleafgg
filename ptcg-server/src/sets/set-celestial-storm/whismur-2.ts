@@ -30,7 +30,8 @@ export class Whismur2 extends PokemonCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whismur';
-  public fullName: string = 'Whismur CES 117';
+  public fullName: string = 'Whismur (CES 117)';
+  public legacyFullName = 'Whismur CES 117';
 
   public usedWail = false;
 

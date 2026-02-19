@@ -14,7 +14,8 @@ export class SagesTraining extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public name: string = 'Sage\'s Training';
-  public fullName: string = 'Sage\'s Training CL';
+  public fullName: string = 'Sage\'s Training (CL 85)';
+  public legacyFullName = 'Sage\'s Training CL';
 
   public text: string = 'Look at the top 5 cards of your deck. Choose any 2 cards you find there and put them into your hand. Discard the other cards.';
 

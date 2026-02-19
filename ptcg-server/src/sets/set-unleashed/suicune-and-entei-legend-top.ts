@@ -9,6 +9,7 @@ import { SuicuneAndEnteiLegendBottom } from './suicune-and-entei-legend-bottom';
 
 export class SuicuneAndEnteiLegendTop extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
+  public multiPartPosition: 'Top' | 'Bottom' | 'Top Left' | 'Top Right' | 'Bottom Left' | 'Bottom Right' = 'Top';
   public tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
   public cardType = R;
   public additionalCardTypes = [W];
@@ -41,7 +42,8 @@ export class SuicuneAndEnteiLegendTop extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '94';
   public name: string = 'Suicune & Entei LEGEND';
-  public fullName: string = 'Suicune & Entei LEGEND (Top) UL';
+  public fullName: string = 'Suicune & Entei LEGEND (UL 94)';
+  public legacyFullName = 'Suicune & Entei LEGEND (Top) UL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the avengers

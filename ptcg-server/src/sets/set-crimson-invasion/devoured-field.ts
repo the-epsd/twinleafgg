@@ -20,7 +20,8 @@ export class DevouredField extends TrainerCard {
 
   public name = 'Devoured Field';
 
-  public fullName = 'Devoured Field CIN';
+  public fullName = 'Devoured Field (CIN 93)';
+  public legacyFullName = 'Devoured Field CIN';
   
   public  text = 'The attacks of [D] Pokémon and [N] Pokémon (both yours and your opponent\'s) do 10 more damage to the opponent\'s Active Pokémon (before applying Weakness and Resistance).';
     

@@ -29,7 +29,8 @@ export class Rowlet2 extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rowlet';
-  public fullName: string = 'Rowlet CEC 18';
+  public fullName: string = 'Rowlet (CEC 18)';
+  public legacyFullName = 'Rowlet CEC 18';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Skill Dive

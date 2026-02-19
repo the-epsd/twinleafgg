@@ -20,7 +20,7 @@ export class Druddigon extends PokemonCard {
       name: 'Proud Fang',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent has any Pokémon BREAK in play, this attack does 60 more damage.'
     },
     {
@@ -35,7 +35,8 @@ export class Druddigon extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Druddigon';
-  public fullName: string = 'Druddigon STS';
+  public fullName: string = 'Druddigon (STS 83)';
+  public legacyFullName = 'Druddigon STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Proud Fang

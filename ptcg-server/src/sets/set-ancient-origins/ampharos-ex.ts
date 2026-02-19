@@ -37,7 +37,8 @@ export class AmpharosEx extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ampharos-EX';
-  public fullName: string = 'Ampharos-EX AOR';
+  public fullName: string = 'Ampharos-EX (AOR 27)';
+  public legacyFullName = 'Ampharos-EX AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Rod

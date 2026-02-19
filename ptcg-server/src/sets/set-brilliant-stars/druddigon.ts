@@ -40,7 +40,8 @@ export class Druddigon extends PokemonCard {
 
   public name: string = 'Druddigon';
 
-  public fullName: string = 'Druddigon BRS';
+  public fullName: string = 'Druddigon (BRS 113)';
+  public legacyFullName = 'Druddigon BRS';
 
   // public damageDealt = false;
 

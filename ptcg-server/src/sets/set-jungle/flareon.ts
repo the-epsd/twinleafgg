@@ -40,7 +40,8 @@ export class Flareon extends PokemonCard {
 
   public name: string = 'Flareon';
 
-  public fullName: string = 'Flareon JU';
+  public fullName: string = 'Flareon (JU 3)';
+  public legacyFullName = 'Flareon JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -33,7 +33,8 @@ export class PrimalKyogreEx extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Primal Kyogre-EX';
-  public fullName: string = 'Primal Kyogre-EX PRC';
+  public fullName: string = 'Primal Kyogre-EX (PRC 55)';
+  public legacyFullName = 'Primal Kyogre-EX PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tidal Storm

@@ -34,7 +34,8 @@ export class Durant extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Durant';
-  public fullName: string = 'Durant DRX';
+  public fullName: string = 'Durant (DRX 83)';
+  public legacyFullName = 'Durant DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pull Out - put a card from discard on top of deck

@@ -29,7 +29,8 @@ export class Luxio extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '26';
   public name: string = 'Luxio';
-  public fullName: string = 'Luxio M3';
+  public fullName: string = 'Luxio (M3 26)';
+  public legacyFullName = 'Luxio M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Roar of the Tiger - can evolve on first turn if opponent's Active is ex

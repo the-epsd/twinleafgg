@@ -30,7 +30,8 @@ export class Minccino extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Minccino';
-  public fullName: string = 'Minccino NXD';
+  public fullName: string = 'Minccino (NXD 84)';
+  public legacyFullName = 'Minccino NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Call for Family - search for a Basic Pokémon and put onto bench

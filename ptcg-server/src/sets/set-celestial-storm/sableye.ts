@@ -31,7 +31,8 @@ export class Sableye extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sableye';
-  public fullName: string = 'Sableye CES';
+  public fullName: string = 'Sableye (CES 88)';
+  public legacyFullName = 'Sableye CES';
 
   public readonly EXCAVATE_MARKER = 'EXCAVATE_MARKER';
   public DISABLED_ATTACK: Attack | undefined;

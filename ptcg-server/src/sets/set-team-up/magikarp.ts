@@ -28,7 +28,8 @@ export class Magikarp extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magikarp';
-  public fullName: string = 'Magikarp TEU';
+  public fullName: string = 'Magikarp (TEU 29)';
+  public legacyFullName = 'Magikarp TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Enter the Dragon

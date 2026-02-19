@@ -30,7 +30,8 @@ export class Uxie extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Uxie';
-  public fullName: string = 'Uxie FLI';
+  public fullName: string = 'Uxie (FLI 41)';
+  public legacyFullName = 'Uxie FLI';
 
   public readonly MEMORY_SKIP_MARKER = 'UXIE_FLI_MEMORY_SKIP_MARKER';
   public readonly CLEAR_MEMORY_SKIP_MARKER = 'UXIE_FLI_CLEAR_MEMORY_SKIP_MARKER';

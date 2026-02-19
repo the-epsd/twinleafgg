@@ -38,7 +38,8 @@ export class PorygonZ extends PokemonCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Porygon-Z';
-  public fullName: string = 'Porygon-Z CRE';
+  public fullName: string = 'Porygon-Z (CRE 118)';
+  public legacyFullName = 'Porygon-Z CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Bug Transmission (passive - when energy attached from hand to this Pokemon)

@@ -40,7 +40,8 @@ export class Corviknight extends PokemonCard {
   public setNumber: string = '156';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Corviknight';
-  public fullName: string = 'Corviknight DAA';
+  public fullName: string = 'Corviknight (DAA 156)';
+  public legacyFullName = 'Corviknight DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Flying Taxi

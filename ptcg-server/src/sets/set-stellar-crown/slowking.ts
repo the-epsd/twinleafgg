@@ -114,7 +114,8 @@ export class Slowking extends PokemonCard {
 
   public name: string = 'Slowking';
 
-  public fullName: string = 'Slowking SCR';
+  public fullName: string = 'Slowking (SCR 58)';
+  public legacyFullName = 'Slowking SCR';
 
   public setNumber: string = '58';
 

@@ -33,7 +33,8 @@ export class Poliwhirl extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
   public name: string = 'Poliwhirl';
-  public fullName: string = 'Poliwhirl TWM';
+  public fullName: string = 'Poliwhirl (TWM 42)';
+  public legacyFullName = 'Poliwhirl TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

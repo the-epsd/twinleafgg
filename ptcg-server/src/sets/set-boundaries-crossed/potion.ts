@@ -68,7 +68,8 @@ export class Potion extends TrainerCard {
 
   public name: string = 'Potion';
 
-  public fullName: string = 'Potion BCR';
+  public fullName: string = 'Potion (BCR 132)';
+  public legacyFullName = 'Potion BCR';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -36,7 +36,8 @@ export class Chatot extends PokemonCard {
   public setNumber: string = '139';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chatot';
-  public fullName: string = 'Chatot VIV';
+  public fullName: string = 'Chatot (VIV 139)';
+  public legacyFullName = 'Chatot VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Minor Errand-Running

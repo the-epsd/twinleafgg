@@ -37,7 +37,8 @@ export class Luxray extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luxray';
-  public fullName: string = 'Luxray FLF';
+  public fullName: string = 'Luxray (FLF 34)';
+  public legacyFullName = 'Luxray FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-plasma-storm/exploud.ts (Destructive Sound - reveal hand, discard trainers)

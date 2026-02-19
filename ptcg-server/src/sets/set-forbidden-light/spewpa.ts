@@ -30,7 +30,8 @@ export class Spewpa extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spewpa';
-  public fullName: string = 'Spewpa FLI';
+  public fullName: string = 'Spewpa (FLI 7)';
+  public legacyFullName = 'Spewpa FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: String Shot

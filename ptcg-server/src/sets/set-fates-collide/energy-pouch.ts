@@ -16,7 +16,8 @@ export class EnergyPouch extends TrainerCard {
 
   public name: string = 'Energy Pouch';
 
-  public fullName: string = 'Energy Pouch FCO';
+  public fullName: string = 'Energy Pouch (FCO 97)';
+  public legacyFullName = 'Energy Pouch FCO';
 
   public cardImage: string = 'assets/cardback.png';
 

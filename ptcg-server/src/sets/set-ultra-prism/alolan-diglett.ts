@@ -22,7 +22,7 @@ export class AlolanDiglett extends PokemonCard {
       name: 'Iron Head',
       cost: [],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 10 damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class AlolanDiglett extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Diglett';
-  public fullName: string = 'Alolan Diglett UPR';
+  public fullName: string = 'Alolan Diglett (UPR 78)';
+  public legacyFullName = 'Alolan Diglett UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Iron Head

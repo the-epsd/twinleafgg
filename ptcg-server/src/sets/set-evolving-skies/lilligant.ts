@@ -31,7 +31,8 @@ export class Lilligant extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lilligant';
-  public fullName: string = 'Lilligant EVS';
+  public fullName: string = 'Lilligant (EVS 10)';
+  public legacyFullName = 'Lilligant EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dizzying Flower

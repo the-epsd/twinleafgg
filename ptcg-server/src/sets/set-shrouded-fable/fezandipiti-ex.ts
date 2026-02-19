@@ -46,7 +46,8 @@ export class Fezandipitiex extends PokemonCard {
 
   public name: string = 'Fezandipiti ex';
 
-  public fullName: string = 'Fezandipiti ex SFA';
+  public fullName: string = 'Fezandipiti ex (SFA 38)';
+  public legacyFullName = 'Fezandipiti ex SFA';
 
   public readonly OPPONENT_KNOCKOUT_MARKER = 'OPPONENT_KNOCKOUT_MARKER';
 

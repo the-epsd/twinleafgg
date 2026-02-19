@@ -30,7 +30,8 @@ export class Marill extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marill';
-  public fullName: string = 'Marill STS';
+  public fullName: string = 'Marill (STS 76)';
+  public legacyFullName = 'Marill STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble Drain

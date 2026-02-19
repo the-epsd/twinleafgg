@@ -38,7 +38,8 @@ export class Bronzong extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bronzong';
-  public fullName: string = 'Bronzong FCO';
+  public fullName: string = 'Bronzong (FCO 61)';
+  public legacyFullName = 'Bronzong FCO';
 
   public readonly GUARD_PRESS_MARKER = 'BRONZONG_FCO_GUARD_PRESS_MARKER';
   public readonly CLEAR_GUARD_PRESS_MARKER = 'BRONZONG_FCO_CLEAR_GUARD_PRESS_MARKER';

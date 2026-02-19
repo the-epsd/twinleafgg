@@ -83,7 +83,8 @@ export class Korrina extends TrainerCard {
 
   public name: string = 'Korrina';
 
-  public fullName: string = 'Korrina FFI';
+  public fullName: string = 'Korrina (FFI 95)';
+  public legacyFullName = 'Korrina FFI';
 
   public cardImage: string = 'assets/cardback.png';
 

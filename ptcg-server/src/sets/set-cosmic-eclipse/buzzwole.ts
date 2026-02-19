@@ -31,7 +31,8 @@ export class Buzzwole extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
   public name = 'Buzzwole';
-  public fullName = 'Buzzwole CEC';
+  public fullName = 'Buzzwole (CEC 21)';
+  public legacyFullName = 'Buzzwole CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

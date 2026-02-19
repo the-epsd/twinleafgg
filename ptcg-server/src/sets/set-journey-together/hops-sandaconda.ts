@@ -34,7 +34,8 @@ export class HopsSandaconda extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Hop\'s Sandaconda';
-  public fullName: string = 'Hop\'s Sandaconda JTG';
+  public fullName: string = 'Hop\'s Sandaconda (JTG 87)';
+  public legacyFullName = 'Hop\'s Sandaconda JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -34,7 +34,8 @@ export class Weavile extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weavile';
-  public fullName: string = 'Weavile NXD';
+  public fullName: string = 'Weavile (NXD 70)';
+  public legacyFullName = 'Weavile NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Dark Penalty

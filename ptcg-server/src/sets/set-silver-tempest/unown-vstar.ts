@@ -38,7 +38,8 @@ export class UnownVSTAR extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
   public name: string = 'Unown VSTAR';
-  public fullName: string = 'Unown VSTAR SIT';
+  public fullName: string = 'Unown VSTAR (SIT 66)';
+  public legacyFullName = 'Unown VSTAR SIT';
 
   public readonly STAR_CIPHER_MARKER = 'STAR_CIPHER_MARKER';
 

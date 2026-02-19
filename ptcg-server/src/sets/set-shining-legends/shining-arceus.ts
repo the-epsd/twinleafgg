@@ -35,7 +35,8 @@ export class ShiningArceus extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shining Arceus';
-  public fullName: string = 'Shining Arceus SLG';
+  public fullName: string = 'Shining Arceus (SLG 57)';
+  public legacyFullName = 'Shining Arceus SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fabled Defense (passive)

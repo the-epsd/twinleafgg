@@ -35,7 +35,8 @@ export class Swanna extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swanna';
-  public fullName: string = 'Swanna DEX';
+  public fullName: string = 'Swanna (DEX 36)';
+  public legacyFullName = 'Swanna DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Healing Dance - heal 30 from each of your Pokémon

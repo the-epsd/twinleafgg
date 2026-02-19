@@ -26,7 +26,8 @@ export class Cryogonal extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '43';
   public name: string = 'Cryogonal';
-  public fullName: string = 'Cryogonal EVS';
+  public fullName: string = 'Cryogonal (EVS 43)';
+  public legacyFullName = 'Cryogonal EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

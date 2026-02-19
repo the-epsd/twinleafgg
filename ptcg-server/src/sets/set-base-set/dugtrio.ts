@@ -13,7 +13,8 @@ export class Dugtrio extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Dugtrio BS';
+  public fullName = 'Dugtrio (BS 19)';
+  public legacyFullName = 'Dugtrio BS';
 
   public stage: Stage = Stage.STAGE_1;
 

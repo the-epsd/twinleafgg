@@ -33,7 +33,8 @@ export class Hitmonlee extends PokemonCard {
 
   public set: string = 'UF';
   public name: string = 'Hitmonlee';
-  public fullName: string = 'Hitmonlee UF';
+  public fullName: string = 'Hitmonlee (UF 25)';
+  public legacyFullName = 'Hitmonlee UF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '25';
 

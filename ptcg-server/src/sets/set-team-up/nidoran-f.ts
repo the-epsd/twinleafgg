@@ -34,7 +34,8 @@ export class NidoranF extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoran \u2640';
-  public fullName: string = 'Nidoran \u2640 TEU';
+  public fullName: string = 'Nidoran \u2640 (TEU 54)';
+  public legacyFullName = 'Nidoran \u2640 TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Family

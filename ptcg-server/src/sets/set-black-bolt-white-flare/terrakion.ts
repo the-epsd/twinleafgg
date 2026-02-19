@@ -28,7 +28,8 @@ export class Terrakion extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Terrakion';
-  public fullName: string = 'Terrakion SV11W';
+  public fullName: string = 'Terrakion (WHT 54)';
+  public legacyFullName = 'Terrakion SV11W';
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -22,7 +22,8 @@ export class RotasMimeJr extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'Rota\'s Mime Jr.';
-  public fullName: string = 'Rota\'s Mime Jr. PCGP 86';
+  public fullName: string = 'Rota\'s Mime Jr. (PCGP 86)';
+  public legacyFullName = 'Rota\'s Mime Jr. PCGP 86';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
 

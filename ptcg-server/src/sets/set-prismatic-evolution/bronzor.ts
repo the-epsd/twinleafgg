@@ -21,5 +21,6 @@ export class Bronzor extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
   public name: string = 'Bronzor';
-  public fullName: string = 'Bronzor PRE';
+  public fullName: string = 'Bronzor (PRE 66)';
+  public legacyFullName = 'Bronzor PRE';
 }

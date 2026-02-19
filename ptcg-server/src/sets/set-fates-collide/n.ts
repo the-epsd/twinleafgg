@@ -20,7 +20,8 @@ export class N extends TrainerCard {
 
   public name: string = 'N';
 
-  public fullName: string = 'N FCO';
+  public fullName: string = 'N (FCO 105)';
+  public legacyFullName = 'N FCO';
 
   public text: string =
     'Each player shuffles his or her hand into his or her deck. Then, each player draws a card for each of his or her remaining Prize cards.';

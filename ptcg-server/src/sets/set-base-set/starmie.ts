@@ -21,7 +21,8 @@ export class Starmie extends PokemonCard {
 
   public cardType = CardType.WATER;
 
-  public fullName = 'Starmie';
+  public fullName = 'Starmie (BS 64)';
+  public legacyFullName = 'Starmie';
 
   public stage = Stage.STAGE_1;
 

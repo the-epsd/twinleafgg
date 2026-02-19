@@ -37,7 +37,8 @@ export class Regice extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Regice';
-  public fullName: string = 'Regice LA';
+  public fullName: string = 'Regice (LA 36)';
+  public legacyFullName = 'Regice LA';
 
   public readonly REGI_MOVE_MARKER = 'REGI_MOVE_MARKER';
   public readonly ICE_REFLECT_MARKER = 'ICE_REFLECT_MARKER';

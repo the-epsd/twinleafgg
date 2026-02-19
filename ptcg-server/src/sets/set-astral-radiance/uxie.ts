@@ -30,7 +30,8 @@ export class Uxie extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
   public name: string = 'Uxie';
-  public fullName: string = 'Uxie ASR';
+  public fullName: string = 'Uxie (ASR 65)';
+  public legacyFullName = 'Uxie ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -32,5 +32,6 @@ export class Impidimp extends PokemonCard {
   public setNumber: string = 'SV083';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Impidimp';
-  public fullName: string = 'Impidimp SHF';
+  public fullName: string = 'Impidimp (SHF SV083)';
+  public legacyFullName = 'Impidimp SHF';
 }

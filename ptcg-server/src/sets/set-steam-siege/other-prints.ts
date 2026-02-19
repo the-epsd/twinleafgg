@@ -11,64 +11,75 @@ import { MSteelixEx } from './m-steelix-ex';
 export class MagearnaEXSTS extends MagearnaEX {
   public set: string = 'STS';
   public setNumber: string = '110';
-  public fullName: string = 'Magearna-EX STS 110';
+  public fullName: string = 'Magearna-EX (STS 110)';
+  public legacyFullName = 'Magearna-EX STS 110';
 }
 export class GardevoirSpiritLinkSTS extends GardevoirSpiritLink {
   public setNumber = '101';
-  public fullName: string = 'Gardevoir Spirit Link STS';
+  public fullName: string = 'Gardevoir Spirit Link (STS 101)';
+  public legacyFullName = 'Gardevoir Spirit Link STS';
   public set = 'STS';
 }
 
 export class VolcanionEX2STS extends VolcanionEXSTS26 {
   public setNumber = '107';
-  public fullName: string = 'Volcanion EX2 STS';
+  public fullName: string = 'Volcanion-EX (STS 107)';
+  public legacyFullName = 'Volcanion EX2 STS';
   public set = 'STS';
 }
 
 export class GardevoirEx2STS extends GardevoirExSTS78 {
   public setNumber = '111';
-  public fullName: string = 'Gardevoir EX2 STS';
+  public fullName: string = 'Gardevoir-EX (STS 111)';
+  public legacyFullName = 'Gardevoir EX2 STS';
   public set = 'STS';
 }
 
 export class MGardevoirEx2STS extends MGardevoirExSTS79 {
   public setNumber = '112';
-  public fullName: string = 'M Gardevoir-EX2 STS';
+  public fullName: string = 'M Gardevoir-EX (STS 112)';
+  public legacyFullName = 'M Gardevoir-EX2 STS';
   public set = 'STS';
 }
 
 export class PokemonRanger2STS extends PokemonRangerSTS104 {
   public setNumber = '113';
-  public fullName: string = 'Pokémon Ranger2 STS';
+  public fullName: string = 'Pokémon Ranger (STS 113)';
+  public legacyFullName = 'Pokémon Ranger2 STS';
   public set = 'STS';
 }
 
 export class ProfessorSycamoreXYSTS extends ProfessorSycamoreXY {
   public setNumber = '114';
-  public fullName: string = 'Professor Sycamore STS';
+  public fullName: string = 'Professor Sycamore (STS 114)';
+  public legacyFullName = 'Professor Sycamore STS';
   public set = 'STS';
 }
 
 export class VolcanionEX3STS extends VolcanionEXSTS26 {
   public setNumber = '115';
-  public fullName: string = 'Volcanion EX3 STS';
+  public fullName: string = 'Volcanion-EX (STS 115)';
+  public legacyFullName = 'Volcanion EX3 STS';
   public set = 'STS';
 }
 
 export class GardevoirEx3STS extends GardevoirExSTS78 {
   public setNumber = '116';
-  public fullName: string = 'Gardevoir EX3 STS';
+  public fullName: string = 'Gardevoir-EX (STS 116)';
+  public legacyFullName = 'Gardevoir EX3 STS';
   public set = 'STS';
 }
 
 export class SteelixEx2 extends SteelixEx {
   public set: string = 'STS';
   public setNumber: string = '108';
-  public fullName: string = 'Steelix-EX STS 108';
+  public fullName: string = 'Steelix-EX (STS 108)';
+  public legacyFullName = 'Steelix-EX STS 108';
 }
 
 export class MSteelixEx2 extends MSteelixEx {
   public set: string = 'STS';
   public setNumber: string = '109';
-  public fullName: string = 'M Steelix-EX STS 109';
+  public fullName: string = 'M Steelix-EX (STS 109)';
+  public legacyFullName = 'M Steelix-EX STS 109';
 }

@@ -36,7 +36,8 @@ export class MCharizardEX extends PokemonCard {
 
   public name: string = 'M Charizard-EX';
 
-  public fullName: string = 'M Charizard EX FLF';
+  public fullName: string = 'M Charizard-EX (FLF 69)';
+  public legacyFullName = 'M Charizard EX FLF';
 
   public cardImage: string = 'assets/cardback.png';
 

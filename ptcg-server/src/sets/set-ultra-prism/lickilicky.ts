@@ -18,7 +18,7 @@ export class Lickilicky extends PokemonCard {
       name: 'Dangerous Lick',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 50 more damage for each heads. If the first flip is tails, your opponent\'s Active Pokémon is now Paralyzed.'
     },
     {
@@ -33,7 +33,8 @@ export class Lickilicky extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lickilicky';
-  public fullName: string = 'Lickilicky UPR';
+  public fullName: string = 'Lickilicky (UPR 103)';
+  public legacyFullName = 'Lickilicky UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dangerous Lick

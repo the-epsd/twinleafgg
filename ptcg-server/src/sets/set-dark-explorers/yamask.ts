@@ -64,7 +64,8 @@ export class Yamask extends PokemonCard {
 
   public set: string = 'DEX';
   public name: string = 'Yamask';
-  public fullName: string = 'Yamask DEX';
+  public fullName: string = 'Yamask (DEX 51)';
+  public legacyFullName = 'Yamask DEX';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '51';
 

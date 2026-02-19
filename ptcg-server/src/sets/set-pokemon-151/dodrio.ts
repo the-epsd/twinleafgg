@@ -49,7 +49,8 @@ export class Dodrio extends PokemonCard {
 
   public name: string = 'Dodrio';
 
-  public fullName: string = 'Dodrio MEW';
+  public fullName: string = 'Dodrio (MEW 85)';
+  public legacyFullName = 'Dodrio MEW';
 
   public readonly ZOOMING_DRAW_MARKER = 'ZOOMING_DRAW_MARKER';
 

@@ -17,7 +17,8 @@ export class SpiritMask extends TrainerCard {
   public setNumber: string = '160';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spirit Mask';
-  public fullName: string = 'Spirit Mask EVS';
+  public fullName: string = 'Spirit Mask (EVS 160)';
+  public legacyFullName = 'Spirit Mask EVS';
   public text: string = 'If the Pokémon this card is attached to is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if it is Knocked Out), your opponent discards a card from their hand. You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

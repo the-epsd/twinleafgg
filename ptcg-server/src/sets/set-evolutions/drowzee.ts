@@ -35,7 +35,8 @@ export class Drowzee extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drowzee';
-  public fullName: string = 'Drowzee EVO';
+  public fullName: string = 'Drowzee (EVO 49)';
+  public legacyFullName = 'Drowzee EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Confuse Ray

@@ -18,7 +18,8 @@ export class NidoranMale extends PokemonCard {
 
   public setNumber = '55';
 
-  public fullName = 'Nidoran M BS';
+  public fullName = 'Nidoran M (BS 55)';
+  public legacyFullName = 'Nidoran M BS';
 
   public cardType = CardType.GRASS;
 

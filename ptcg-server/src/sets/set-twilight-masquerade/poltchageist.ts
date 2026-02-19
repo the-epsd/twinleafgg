@@ -27,7 +27,8 @@ export class Poltchageist extends PokemonCard {
 
   public set: string = 'TWM';
   public name: string = 'Poltchageist';
-  public fullName: string = 'Poltchageist TWM';
+  public fullName: string = 'Poltchageist (TWM 20)';
+  public legacyFullName = 'Poltchageist TWM';
   public regulationMark = 'H';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';

@@ -46,7 +46,8 @@ export class Espurr extends PokemonCard {
 
   public name: string = 'Espurr';
 
-  public fullName: string = 'Espurr SSP';
+  public fullName: string = 'Espurr (SSP 84)';
+  public legacyFullName = 'Espurr SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // See Through

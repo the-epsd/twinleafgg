@@ -37,7 +37,8 @@ export class LysandresTrumpCard extends TrainerCard {
 
   public name: string = 'Lysandre\'s Trump Card';
 
-  public fullName: string = 'Lysandres Trump Card PHF';
+  public fullName: string = 'Lysandre\'s Trump Card (PHF 99)';
+  public legacyFullName = 'Lysandres Trump Card PHF';
 
   public cardImage: string = 'assets/cardback.png';
 

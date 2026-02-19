@@ -42,7 +42,8 @@ export class Azelf extends PokemonCard {
 
   public name: string = 'Azelf';
 
-  public fullName: string = 'Azelf LA';
+  public fullName: string = 'Azelf (LA 19)';
+  public legacyFullName = 'Azelf LA';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

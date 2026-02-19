@@ -31,7 +31,8 @@ export class Cetitanex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
   public name: string = 'Cetitan ex';
-  public fullName: string = 'Cetitan ex DRI';
+  public fullName: string = 'Cetitan ex (DRI 65)';
+  public legacyFullName = 'Cetitan ex DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Snow Cover

@@ -28,180 +28,210 @@ import { SalamenceVmax } from './salamence-vmax';
 import { TurboPatch } from './turbo-patch';
 
 export class CrobatVDAA extends CrobatV {
-  public fullName = 'Crobat V DAA 182';
+  public fullName = 'Crobat V (DAA 182)';
+  public legacyFullName = 'Crobat V DAA 182';
   public set = 'DAA';
   public setNumber = '182';
 }
 export class DartrixDAA extends Dartrix {
   public setNumber = '12';
-  public fullName: string = 'Dartrix DAA';
+  public fullName: string = 'Dartrix (DAA 12)';
+  public legacyFullName = 'Dartrix DAA';
   public set = 'DAA';
 }
 
 export class HoopaDAA extends Hoopa {
   public setNumber = '111';
-  public fullName: string = 'Hoopa DAA';
+  public fullName: string = 'Hoopa (DAA 111)';
+  public legacyFullName = 'Hoopa DAA';
   public set = 'DAA';
 }
 
 export class PiersDAA extends Piers {
   public setNumber = '165';
-  public fullName: string = 'Piers DAA';
+  public fullName: string = 'Piers (DAA 165)';
+  public legacyFullName = 'Piers DAA';
   public set = 'DAA';
 }
 
 export class VikavoltV2DAA extends VikavoltVDAA60 {
   public setNumber = '180';
-  public fullName: string = 'Vikavolt V2 DAA';
+  public fullName: string = 'Vikavolt V (DAA 180)';
+  public legacyFullName = 'Vikavolt V2 DAA';
   public set = 'DAA';
 }
 
 export class Piers2DAA extends PiersCPA58 {
   public setNumber = '187';
-  public fullName: string = 'Piers2 DAA';
+  public fullName: string = 'Piers (DAA 187)';
+  public legacyFullName = 'Piers2 DAA';
   public set = 'DAA';
 }
 
 export class PokemonBreedersNurturing2DAA extends PokemonBreedersNurturingDAA166 {
   public setNumber = '188';
-  public fullName: string = 'Pokémon Breeder\'s Nurturing2 DAA';
+  public fullName: string = 'Pokémon Breeder\'s Nurturing (DAA 188)';
+  public legacyFullName = 'Pokémon Breeder\'s Nurturing2 DAA';
   public set = 'DAA';
 }
 
 export class EternatusVMAX2DAA extends EternatusVMAXDAA117 {
   public setNumber = '192';
-  public fullName: string = 'Eternatus VMAX2 DAA';
+  public fullName: string = 'Eternatus VMAX (DAA 192)';
+  public legacyFullName = 'Eternatus VMAX2 DAA';
   public set = 'DAA';
 }
 
 export class PokemonBreedersNurturing3DAA extends PokemonBreedersNurturingDAA166 {
   public setNumber = '195';
-  public fullName: string = 'Pokémon Breeder\'s Nurturing3 DAA';
+  public fullName: string = 'Pokémon Breeder\'s Nurturing (DAA 195)';
+  public legacyFullName = 'Pokémon Breeder\'s Nurturing3 DAA';
   public set = 'DAA';
 }
 
 export class RillaboomDAA extends Rillaboom {
   public setNumber = '197';
-  public fullName: string = 'Rillaboom DAA';
+  public fullName: string = 'Rillaboom (DAA 197)';
+  public legacyFullName = 'Rillaboom DAA';
   public set = 'DAA';
 }
 
 export class CoalossalDAA extends Coalossal {
   public setNumber = '198';
-  public fullName: string = 'Coalossal DAA';
+  public fullName: string = 'Coalossal (DAA 198)';
+  public legacyFullName = 'Coalossal DAA';
   public set = 'DAA';
 }
 
 export class BigParasol2DAA extends BigParasolDAA157 {
   public setNumber = '199';
-  public fullName: string = 'Big Parasol2 DAA';
+  public fullName: string = 'Big Parasol (DAA 199)';
+  public legacyFullName = 'Big Parasol2 DAA';
   public set = 'DAA';
 }
 
 export class CaptureEnergyDAA extends CaptureEnergy {
   public setNumber = '201';
-  public fullName: string = 'Capture Energy DAA';
+  public fullName: string = 'Capture Energy (DAA 201)';
+  public legacyFullName = 'Capture Energy DAA';
   public set = 'DAA';
 }
 
 export class GalarianDarmanitanDAA extends GalarianDarmanitan {
   public set: string = 'DAA';
   public setNumber: string = '44';
-  public fullName: string = 'Galarian Darmanitan DAA';
+  public fullName: string = 'Galarian Darmanitan (DAA 44)';
+  public legacyFullName = 'Galarian Darmanitan DAA';
 }
 
 export class GalarianSirfetchdDAA extends GalarianSirfetchd {
   public set: string = 'DAA';
   public setNumber: string = '98';
-  public fullName: string = 'Galarian Sirfetch\'d DAA';
+  public fullName: string = 'Galarian Sirfetch\'d (DAA 98)';
+  public legacyFullName = 'Galarian Sirfetch\'d DAA';
 }
 
 export class ButterfreeV2 extends ButterfreeV {
   public set: string = 'DAA';
   public setNumber: string = '177';
-  public fullName: string = 'Butterfree V DAA 177';
+  public fullName: string = 'Butterfree V (DAA 177)';
+  public legacyFullName = 'Butterfree V DAA 177';
 }
 
 export class HoundoomV2 extends HoundoomV {
   public set: string = 'DAA';
   public setNumber: string = '178';
-  public fullName: string = 'Houndoom V DAA 178';
+  public fullName: string = 'Houndoom V (DAA 178)';
+  public legacyFullName = 'Houndoom V DAA 178';
 }
 
 export class CentiskorchV2 extends CentiskorchV {
   public set: string = 'DAA';
   public setNumber: string = '179';
-  public fullName: string = 'Centiskorch V DAA 179';
+  public fullName: string = 'Centiskorch V (DAA 179)';
+  public legacyFullName = 'Centiskorch V DAA 179';
 }
 
 export class RhyperiorV2 extends RhyperiorV {
   public set: string = 'DAA';
   public setNumber: string = '181';
-  public fullName: string = 'Rhyperior V DAA 181';
+  public fullName: string = 'Rhyperior V (DAA 181)';
+  public legacyFullName = 'Rhyperior V DAA 181';
 }
 
 export class ScizorV2 extends ScizorV {
   public set: string = 'DAA';
   public setNumber: string = '183';
-  public fullName: string = 'Scizor V DAA 183';
+  public fullName: string = 'Scizor V (DAA 183)';
+  public legacyFullName = 'Scizor V DAA 183';
 }
 
 export class GalarianStunfiskV2 extends GalarianStunfiskV {
   public set: string = 'DAA';
   public setNumber: string = '184';
-  public fullName: string = 'Galarian Stunfisk V DAA 184';
+  public fullName: string = 'Galarian Stunfisk V (DAA 184)';
+  public legacyFullName = 'Galarian Stunfisk V DAA 184';
 }
 
 export class SalamenceV2 extends SalamenceV {
   public set: string = 'DAA';
   public setNumber: string = '185';
-  public fullName: string = 'Salamence V DAA 185';
+  public fullName: string = 'Salamence V (DAA 185)';
+  public legacyFullName = 'Salamence V DAA 185';
 }
 
 export class Kabu2 extends Kabu {
   public set: string = 'DAA';
   public setNumber: string = '186';
-  public fullName: string = 'Kabu DAA 186';
+  public fullName: string = 'Kabu (DAA 186)';
+  public legacyFullName = 'Kabu DAA 186';
 }
 
 export class Rose2 extends Rose {
   public set: string = 'DAA';
   public setNumber: string = '189';
-  public fullName: string = 'Rose DAA 189';
+  public fullName: string = 'Rose (DAA 189)';
+  public legacyFullName = 'Rose DAA 189';
 }
 
 export class ButterfreeVmax2 extends ButterfreeVmax {
   public set: string = 'DAA';
   public setNumber: string = '190';
-  public fullName: string = 'Butterfree VMAX DAA 190';
+  public fullName: string = 'Butterfree VMAX (DAA 190)';
+  public legacyFullName = 'Butterfree VMAX DAA 190';
 }
 
 export class CentiskorchVmax2 extends CentiskorchVmax {
   public set: string = 'DAA';
   public setNumber: string = '191';
-  public fullName: string = 'Centiskorch VMAX DAA 191';
+  public fullName: string = 'Centiskorch VMAX (DAA 191)';
+  public legacyFullName = 'Centiskorch VMAX DAA 191';
 }
 
 export class ScizorVmax2 extends ScizorVmax {
   public set: string = 'DAA';
   public setNumber: string = '193';
-  public fullName: string = 'Scizor VMAX DAA 193';
+  public fullName: string = 'Scizor VMAX (DAA 193)';
+  public legacyFullName = 'Scizor VMAX DAA 193';
 }
 
 export class SalamenceVmax2 extends SalamenceVmax {
   public set: string = 'DAA';
   public setNumber: string = '194';
-  public fullName: string = 'Salamence VMAX DAA 194';
+  public fullName: string = 'Salamence VMAX (DAA 194)';
+  public legacyFullName = 'Salamence VMAX DAA 194';
 }
 
 export class Rose3 extends Rose {
   public set: string = 'DAA';
   public setNumber: string = '196';
-  public fullName: string = 'Rose DAA 196';
+  public fullName: string = 'Rose (DAA 196)';
+  public legacyFullName = 'Rose DAA 196';
 }
 
 export class TurboPatch2 extends TurboPatch {
   public set: string = 'DAA';
   public setNumber: string = '200';
-  public fullName: string = 'Turbo Patch DAA 200';
+  public fullName: string = 'Turbo Patch (DAA 200)';
+  public legacyFullName = 'Turbo Patch DAA 200';
 }

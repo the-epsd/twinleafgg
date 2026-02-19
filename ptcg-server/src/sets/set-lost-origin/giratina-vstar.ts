@@ -47,7 +47,8 @@ export class GiratinaVSTAR extends PokemonCard {
 
   public name: string = 'Giratina VSTAR';
 
-  public fullName: string = 'Giratina VSTAR LOR';
+  public fullName: string = 'Giratina VSTAR (LOR 131)';
+  public legacyFullName = 'Giratina VSTAR LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

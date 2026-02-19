@@ -33,7 +33,8 @@ export class TeamRocketsGolbat extends PokemonCard {
   public setNumber: string = '121';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Golbat';
-  public fullName: string = 'Team Rocket\'s Golbat DRI';
+  public fullName: string = 'Team Rocket\'s Golbat (DRI 121)';
+  public legacyFullName = 'Team Rocket\'s Golbat DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sneaky Bite

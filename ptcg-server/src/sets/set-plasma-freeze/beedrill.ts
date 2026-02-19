@@ -36,7 +36,8 @@ export class Beedrill extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beedrill';
-  public fullName: string = 'Beedrill PLF';
+  public fullName: string = 'Beedrill (PLF 3)';
+  public legacyFullName = 'Beedrill PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swift Sting - if full HP, +40 damage, confuse and poison

@@ -29,7 +29,7 @@ export class Cramorant extends PokemonCard {
       name: 'Hydro Pump',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each [W] Energy attached to this Pokémon.'
     }
   ];
@@ -39,7 +39,8 @@ export class Cramorant extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cramorant';
-  public fullName: string = 'Cramorant RCL';
+  public fullName: string = 'Cramorant (RCL 51)';
+  public legacyFullName = 'Cramorant RCL';
 
   public readonly DIVE_MARKER = 'CRAMORANT_RCL_DIVE_MARKER';
   public readonly CLEAR_DIVE_MARKER = 'CRAMORANT_RCL_CLEAR_DIVE_MARKER';

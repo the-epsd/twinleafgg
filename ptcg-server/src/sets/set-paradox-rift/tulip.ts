@@ -82,7 +82,8 @@ export class Tulip extends TrainerCard {
 
   public name: string = 'Tulip';
 
-  public fullName: string = 'Tulip PAR';
+  public fullName: string = 'Tulip (PAR 181)';
+  public legacyFullName = 'Tulip PAR';
 
   public text: string =
     'Put up to 4 in any combination of [P] Pokémon and Basic [P] Energy cards from your discard pile into your hand.';

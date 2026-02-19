@@ -29,7 +29,8 @@ export class Slowking extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '55';
   public name: string = 'Slowking';
-  public fullName: string = 'Slowking LOT';
+  public fullName: string = 'Slowking (LOT 55)';
+  public legacyFullName = 'Slowking LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -29,7 +29,8 @@ export class Noibat extends PokemonCard {
   public setNumber: string = '158';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Noibat';
-  public fullName: string = 'Noibat UNM';
+  public fullName: string = 'Noibat (UNM 158)';
+  public legacyFullName = 'Noibat UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Air Slash

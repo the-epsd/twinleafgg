@@ -30,7 +30,8 @@ export class Stunky extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stunky';
-  public fullName: string = 'Stunky RCL';
+  public fullName: string = 'Stunky (RCL 114)';
+  public legacyFullName = 'Stunky RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Gas

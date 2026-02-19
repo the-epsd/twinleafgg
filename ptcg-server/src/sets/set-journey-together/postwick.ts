@@ -17,7 +17,8 @@ export class Postwick extends TrainerCard {
 
   public name: string = 'Postwick';
 
-  public fullName: string = 'Postwick JTG';
+  public fullName: string = 'Postwick (JTG 154)';
+  public legacyFullName = 'Postwick JTG';
 
   public regulationMark = 'I';
 

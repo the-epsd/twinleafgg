@@ -37,7 +37,8 @@ export class Shiftry extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shiftry';
-  public fullName: string = 'Shiftry EVS';
+  public fullName: string = 'Shiftry (EVS 97)';
+  public legacyFullName = 'Shiftry EVS';
 
   private usedShiftadieu: boolean = false;
 

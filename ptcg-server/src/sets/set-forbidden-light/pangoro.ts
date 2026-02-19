@@ -23,14 +23,14 @@ export class Pangoro extends PokemonCard {
       name: 'Untamed Punch',
       cost: [D, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any damage counters on it, this attack does 50 more damage, and both Active Pokémon are now Confused.'
     },
     {
       name: 'Double Stomp',
       cost: [D, D, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
     }
   ];
@@ -39,7 +39,8 @@ export class Pangoro extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pangoro';
-  public fullName: string = 'Pangoro FLI';
+  public fullName: string = 'Pangoro (FLI 78)';
+  public legacyFullName = 'Pangoro FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Untamed Punch

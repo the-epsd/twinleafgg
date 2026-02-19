@@ -41,7 +41,8 @@ export class Heracross extends PokemonCard {
 
   public name: string = 'Heracross';
 
-  public fullName: string = 'Heracross BRS';
+  public fullName: string = 'Heracross (BRS 12)';
+  public legacyFullName = 'Heracross BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

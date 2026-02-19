@@ -37,7 +37,8 @@ export class Haunter extends PokemonCard {
 
   public name: string = 'Haunter';
 
-  public fullName: string = 'Haunter PAF';
+  public fullName: string = 'Haunter (PAF 56)';
+  public legacyFullName = 'Haunter PAF';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
 

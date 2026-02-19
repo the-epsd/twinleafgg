@@ -18,7 +18,8 @@ export class Sneasel extends PokemonCard {
 
   public set: string = 'UNM';
   public name: string = 'Sneasel';
-  public fullName: string = 'Sneasel UNM';
+  public fullName: string = 'Sneasel (UNM 131)';
+  public legacyFullName = 'Sneasel UNM';
   public setNumber: string = '131';
   public cardImage: string = 'assets/cardback.png';
 }

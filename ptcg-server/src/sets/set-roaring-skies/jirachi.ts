@@ -37,7 +37,8 @@ export class Jirachi extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jirachi';
-  public fullName: string = 'Jirachi ROS';
+  public fullName: string = 'Jirachi (ROS 42)';
+  public legacyFullName = 'Jirachi ROS';
 
   public readonly DOOM_DESIRE_MARKER = 'JIRACHI_ROS_DOOM_DESIRE_MARKER';
 

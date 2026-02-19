@@ -12,7 +12,8 @@ export class SuperEnergyRemoval2 extends TrainerCard {
   public set: string = 'AQ';
   public setNumber = '134';
   public name: string = 'Super Energy Removal 2';
-  public fullName: string = 'Super Energy Removal 2 AQ';
+  public fullName: string = 'Super Energy Removal 2 (AQ 134)';
+  public legacyFullName = 'Super Energy Removal 2 AQ';
   public cardImage: string = 'assets/cardback.png';
 
   public text: string = 'Flip 2 coins. If both are heads, discard all Energy cards attached to the Defending Pokémon. If both are tails, discard all Energy cards attached to your Active Pokémon. If 1 is heads and 1 is tails, this card does nothing.';

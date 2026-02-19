@@ -45,7 +45,8 @@ export class Dolliv extends PokemonCard {
 
   public name = 'Dolliv';
 
-  public fullName = 'Dolliv SVI';
+  public fullName = 'Dolliv (SVI 22)';
+  public legacyFullName = 'Dolliv SVI';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

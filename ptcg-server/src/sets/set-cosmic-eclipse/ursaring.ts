@@ -39,7 +39,8 @@ export class Ursaring extends PokemonCard {
   public setNumber: string = '172';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ursaring';
-  public fullName: string = 'Ursaring CEC';
+  public fullName: string = 'Ursaring (CEC 172)';
+  public legacyFullName = 'Ursaring CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Heavy Hold

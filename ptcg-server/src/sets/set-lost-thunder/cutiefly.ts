@@ -18,7 +18,8 @@ export class Cutiefly extends PokemonCard {
 
   public set: string = 'LOT';
   public name: string = 'Cutiefly';
-  public fullName: string = 'Cutiefly LOT';
+  public fullName: string = 'Cutiefly (LOT 145)';
+  public legacyFullName = 'Cutiefly LOT';
   public setNumber: string = '145';
   public cardImage: string = 'assets/cardback.png';
 

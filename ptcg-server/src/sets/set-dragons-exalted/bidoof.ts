@@ -29,7 +29,8 @@ export class Bidoof extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bidoof';
-  public fullName: string = 'Bidoof DRX';
+  public fullName: string = 'Bidoof (DRX 106)';
+  public legacyFullName = 'Bidoof DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Refs: set-dragons-exalted/skuntank.ts (add condition to opponent), set-neo-revelation/tentacruel.ts (self confusion)

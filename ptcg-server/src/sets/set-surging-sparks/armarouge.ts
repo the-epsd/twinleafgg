@@ -34,7 +34,8 @@ export class Armarouge extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Armarouge';
-  public fullName: string = 'Armarouge SSP';
+  public fullName: string = 'Armarouge (SSP 34)';
+  public legacyFullName = 'Armarouge SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)){

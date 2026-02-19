@@ -25,5 +25,6 @@ export class Piplup extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Piplup';
-  public fullName: string = 'Piplup BKT';
+  public fullName: string = 'Piplup (BKT 36)';
+  public legacyFullName = 'Piplup BKT';
 }

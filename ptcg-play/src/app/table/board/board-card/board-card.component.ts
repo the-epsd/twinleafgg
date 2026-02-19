@@ -596,12 +596,12 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     const topCard = cardList.cards.find(card =>
       card.superType === SuperType.POKEMON &&
       card.tags?.includes(CardTag.LEGEND) &&
-      card.fullName.includes('(Top)')
+      (card as PokemonCard).multiPartPosition === 'Top'
     );
     const bottomCard = cardList.cards.find(card =>
       card.superType === SuperType.POKEMON &&
       card.tags?.includes(CardTag.LEGEND) &&
-      card.fullName.includes('(Bottom)')
+      (card as PokemonCard).multiPartPosition === 'Bottom'
     );
     this.legendTopCard = topCard;
     this.legendBottomCard = bottomCard;
@@ -611,22 +611,22 @@ export class BoardCardComponent implements OnInit, OnDestroy {
     const topLeftCard = cardList.cards.find(card =>
       card.superType === SuperType.POKEMON &&
       card.tags?.includes(CardTag.POKEMON_VUNION) &&
-      card.fullName.includes('(Top Left)')
+      (card as PokemonCard).multiPartPosition === 'Top Left'
     );
     const topRightCard = cardList.cards.find(card =>
       card.superType === SuperType.POKEMON &&
       card.tags?.includes(CardTag.POKEMON_VUNION) &&
-      card.fullName.includes('(Top Right)')
+      (card as PokemonCard).multiPartPosition === 'Top Right'
     );
     const bottomLeftCard = cardList.cards.find(card =>
       card.superType === SuperType.POKEMON &&
       card.tags?.includes(CardTag.POKEMON_VUNION) &&
-      card.fullName.includes('(Bottom Left)')
+      (card as PokemonCard).multiPartPosition === 'Bottom Left'
     );
     const bottomRightCard = cardList.cards.find(card =>
       card.superType === SuperType.POKEMON &&
       card.tags?.includes(CardTag.POKEMON_VUNION) &&
-      card.fullName.includes('(Bottom Right)')
+      (card as PokemonCard).multiPartPosition === 'Bottom Right'
     );
     this.vunionTopLeftCard = topLeftCard;
     this.vunionTopRightCard = topRightCard;

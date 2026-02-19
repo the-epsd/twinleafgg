@@ -36,7 +36,8 @@ export class TapuLele extends PokemonCard {
   public setNumber: string = '150';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tapu Lele';
-  public fullName: string = 'Tapu Lele LOT';
+  public fullName: string = 'Tapu Lele (LOT 150)';
+  public legacyFullName = 'Tapu Lele LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Charmed Charm

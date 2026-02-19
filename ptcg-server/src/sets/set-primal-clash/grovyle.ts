@@ -40,7 +40,8 @@ export class Grovyle extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grovyle';
-  public fullName: string = 'Grovyle PRC';
+  public fullName: string = 'Grovyle (PRC 7)';
+  public legacyFullName = 'Grovyle PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Agility

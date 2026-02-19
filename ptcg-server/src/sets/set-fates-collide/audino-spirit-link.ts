@@ -8,7 +8,8 @@ export class AudinoSpiritLink extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'FCO';
   public name: string = 'Audino Spirit Link';
-  public fullName: string = 'Audino Spirit Link FCO';
+  public fullName: string = 'Audino Spirit Link (FCO 92)';
+  public legacyFullName = 'Audino Spirit Link FCO';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
 

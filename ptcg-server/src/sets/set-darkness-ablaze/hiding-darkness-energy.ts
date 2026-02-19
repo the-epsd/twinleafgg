@@ -17,7 +17,8 @@ export class HidingDarknessEnergy extends EnergyCard {
 
   public name = 'Hiding Darkness Energy';
 
-  public fullName = 'Hiding Darkness Energy DAA';
+  public fullName = 'Hiding Darkness Energy (DAA 175)';
+  public legacyFullName = 'Hiding Darkness Energy DAA';
 
   public cardImage: string = 'assets/cardback.png';
 

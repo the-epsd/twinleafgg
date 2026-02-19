@@ -41,7 +41,8 @@ export class Metapod extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metapod';
-  public fullName: string = 'Metapod UNB';
+  public fullName: string = 'Metapod (UNB 3)';
+  public legacyFullName = 'Metapod UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Emerge

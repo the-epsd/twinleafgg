@@ -33,7 +33,8 @@ export class Shedinja extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shedinja';
-  public fullName: string = 'Shedinja DRX';
+  public fullName: string = 'Shedinja (DRX 48)';
+  public legacyFullName = 'Shedinja DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Empty Shell - No prizes when KO'd

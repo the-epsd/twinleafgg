@@ -19,5 +19,6 @@ export class Combee extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '9';
   public name: string = 'Combee';
-  public fullName: string = 'Combee AOR';
+  public fullName: string = 'Combee (AOR 9)';
+  public legacyFullName = 'Combee AOR';
 }

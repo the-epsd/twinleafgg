@@ -31,7 +31,8 @@ export class Ivysaur extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ivysaur';
-  public fullName: string = 'Ivysaur SV';
+  public fullName: string = 'Ivysaur (SV 62)';
+  public legacyFullName = 'Ivysaur SV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (JUST_EVOLVED(effect, this) && !IS_POKEPOWER_BLOCKED(store, state, effect.player, this)) {

@@ -33,5 +33,6 @@ export class Raboot2 extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raboot';
-  public fullName: string = 'Raboot SSH 33';
+  public fullName: string = 'Raboot (SSH 33)';
+  public legacyFullName = 'Raboot SSH 33';
 }

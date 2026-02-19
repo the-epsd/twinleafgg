@@ -24,7 +24,8 @@ export class Toxel extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';
   public name: string = 'Toxel';
-  public fullName: string = 'Toxel PAR';
+  public fullName: string = 'Toxel (PAR 69)';
+  public legacyFullName = 'Toxel PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)){

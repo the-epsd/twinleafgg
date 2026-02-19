@@ -41,7 +41,8 @@ export class Tranquill extends PokemonCard {
 
   public name: string = 'Tranquill';
 
-  public fullName: string = 'Tranquill BLW';
+  public fullName: string = 'Tranquill (BLW 85)';
+  public legacyFullName = 'Tranquill BLW';
 
   public cardImage: string = 'assets/cardback.png';
 

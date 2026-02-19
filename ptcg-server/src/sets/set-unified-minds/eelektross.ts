@@ -36,7 +36,8 @@ export class Eelektross extends PokemonCard {
   public setNumber = '66';
   public cardImage = 'assets/cardback.png';
   public name = 'Eelektross';
-  public fullName = 'Eelektross UNM';
+  public fullName = 'Eelektross (UNM 66)';
+  public legacyFullName = 'Eelektross UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

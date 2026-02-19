@@ -119,7 +119,8 @@ export class Mew extends PokemonCard {
 
   public name: string = 'Mew';
 
-  public fullName: string = 'Mew TM';
+  public fullName: string = 'Mew (TM 97)';
+  public legacyFullName = 'Mew TM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -32,5 +32,6 @@ export class Pansage extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pansage';
-  public fullName: string = 'Pansage DAA';
+  public fullName: string = 'Pansage (DAA 6)';
+  public legacyFullName = 'Pansage DAA';
 }

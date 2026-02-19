@@ -24,7 +24,8 @@ export class Shelmet extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Shelmet';
-  public fullName: string = 'Shelmet JTG';
+  public fullName: string = 'Shelmet (JTG 12)';
+  public legacyFullName = 'Shelmet JTG';
 
   public readonly CLEAR_SHELL_HIT_MARKER = 'CLEAR_SHELL_HIT_MARKER';
   public readonly SHELL_HIT_MARKER = 'SHELL_HIT_MARKER';

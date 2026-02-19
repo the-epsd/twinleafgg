@@ -27,5 +27,6 @@ export class Joltik extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Joltik';
-  public fullName: string = 'Joltik DEX';
+  public fullName: string = 'Joltik (DEX 41)';
+  public legacyFullName = 'Joltik DEX';
 }

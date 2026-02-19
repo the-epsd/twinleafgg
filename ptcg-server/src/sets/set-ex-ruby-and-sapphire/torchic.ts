@@ -23,7 +23,8 @@ export class Torchic extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '74';
   public name: string = 'Torchic';
-  public fullName: string = 'Torchic RS';
+  public fullName: string = 'Torchic (RS 74)';
+  public legacyFullName = 'Torchic RS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

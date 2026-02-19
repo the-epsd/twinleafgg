@@ -32,7 +32,8 @@ export class Gigalith extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gigalith';
-  public fullName: string = 'Gigalith DRX';
+  public fullName: string = 'Gigalith (DRX 67)';
+  public legacyFullName = 'Gigalith DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Revenge Cannon - 10 more damage for each damage counter on Benched Pokemon

@@ -37,7 +37,8 @@ export class DittoV extends PokemonCard {
   public setNumber: string = 'SV118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ditto V';
-  public fullName: string = 'Ditto V SHF';
+  public fullName: string = 'Ditto V (SHF SV118)';
+  public legacyFullName = 'Ditto V SHF';
 
   public readonly V_TRANSFORMATION_MARKER = 'DITTO_V_SHF_V_TRANSFORMATION_MARKER';
 

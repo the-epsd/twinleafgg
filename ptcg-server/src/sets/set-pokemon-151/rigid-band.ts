@@ -22,7 +22,8 @@ export class RigidBand extends TrainerCard {
 
   public name: string = 'Rigid Band';
 
-  public fullName: string = 'Rigid Band MEW';
+  public fullName: string = 'Rigid Band (MEW 165)';
+  public legacyFullName = 'Rigid Band MEW';
 
   public text: string = 'The Stage 1 Pokémon this card is attached to takes 30 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance).';
 

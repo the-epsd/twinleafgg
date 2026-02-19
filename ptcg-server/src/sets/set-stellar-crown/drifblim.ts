@@ -22,7 +22,8 @@ export class Drifblim extends PokemonCard {
   public regulationMark = 'H';
   public set: string = 'SCR';
   public name: string = 'Drifblim';
-  public fullName: string = 'Drifblim SCR';
+  public fullName: string = 'Drifblim (SCR 61)';
+  public legacyFullName = 'Drifblim SCR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '61';
 

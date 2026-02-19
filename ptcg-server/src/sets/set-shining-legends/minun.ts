@@ -36,7 +36,8 @@ export class Minun extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Minun';
-  public fullName: string = 'Minun SLG';
+  public fullName: string = 'Minun (SLG 34)';
+  public legacyFullName = 'Minun SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Collect

@@ -38,6 +38,7 @@ export class Bulbasaur extends PokemonCard {
 
   public name: string = 'Bulbasaur';
 
-  public fullName: string = 'Bulbasaur DEX';
+  public fullName: string = 'Bulbasaur (DEX 1)';
+  public legacyFullName = 'Bulbasaur DEX';
 
 }

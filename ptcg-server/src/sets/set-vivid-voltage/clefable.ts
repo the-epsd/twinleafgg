@@ -41,7 +41,8 @@ export class Clefable extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clefable';
-  public fullName: string = 'Clefable VIV';
+  public fullName: string = 'Clefable (VIV 64)';
+  public legacyFullName = 'Clefable VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Lunar Blessing

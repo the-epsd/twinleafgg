@@ -32,5 +32,6 @@ export class Mudbray extends PokemonCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mudbray';
-  public fullName: string = 'Mudbray VIV';
+  public fullName: string = 'Mudbray (VIV 96)';
+  public legacyFullName = 'Mudbray VIV';
 }

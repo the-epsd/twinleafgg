@@ -39,7 +39,8 @@ export class Banette2 extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Banette';
-  public fullName: string = 'Banette ROS 32';
+  public fullName: string = 'Banette (ROS 32)';
+  public legacyFullName = 'Banette ROS 32';
 
   public readonly BLOCK_EVOLVE_MARKER = 'BANETTE_ROS_BLOCK_EVOLVE_MARKER';
   public readonly CLEAR_BLOCK_EVOLVE_MARKER = 'BANETTE_ROS_CLEAR_BLOCK_EVOLVE_MARKER';

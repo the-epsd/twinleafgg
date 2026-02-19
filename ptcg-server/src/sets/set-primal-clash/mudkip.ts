@@ -31,5 +31,6 @@ export class Mudkip extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mudkip';
-  public fullName: string = 'Mudkip PRC';
+  public fullName: string = 'Mudkip (PRC 33)';
+  public legacyFullName = 'Mudkip PRC';
 }

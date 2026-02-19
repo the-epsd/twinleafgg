@@ -33,7 +33,8 @@ export class FlareonStar extends PokemonCard {
 
   public set: string = 'PK';
   public name: string = 'Flareon Star';
-  public fullName: string = 'Flareon Star PK';
+  public fullName: string = 'Flareon Star (PK 100)';
+  public legacyFullName = 'Flareon Star PK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '100';
 

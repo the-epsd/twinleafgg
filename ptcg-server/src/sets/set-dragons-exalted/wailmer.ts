@@ -35,7 +35,8 @@ export class Wailmer extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wailmer';
-  public fullName: string = 'Wailmer DRX';
+  public fullName: string = 'Wailmer (DRX 25)';
+  public legacyFullName = 'Wailmer DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

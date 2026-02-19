@@ -28,7 +28,8 @@ export class Machop extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
   public name: string = 'Machop';
-  public fullName: string = 'Machop PK';
+  public fullName: string = 'Machop (PK 53)';
+  public legacyFullName = 'Machop PK';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

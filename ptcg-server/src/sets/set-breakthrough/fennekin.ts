@@ -21,7 +21,7 @@ export class Fennekin extends PokemonCard {
       name: 'Firebreathing',
       cost: [R, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Fennekin extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fennekin';
-  public fullName: string = 'Fennekin BKT';
+  public fullName: string = 'Fennekin (BKT 25)';
+  public legacyFullName = 'Fennekin BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Firebreathing

@@ -35,7 +35,8 @@ export class MAlakazamEx extends PokemonCard {
 
   public set: string = 'FCO';
   public name: string = 'M Alakazam-EX';
-  public fullName: string = 'M Alakazam-EX FCO';
+  public fullName: string = 'M Alakazam-EX (FCO 26)';
+  public legacyFullName = 'M Alakazam-EX FCO';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '26';
 

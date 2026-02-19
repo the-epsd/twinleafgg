@@ -36,7 +36,8 @@ export class Pikipek2 extends PokemonCard {
   public setNumber: string = '164';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikipek';
-  public fullName: string = 'Pikipek LOT 164';
+  public fullName: string = 'Pikipek (LOT 164)';
+  public legacyFullName = 'Pikipek LOT 164';
 
   public usedSendBack = false;
 

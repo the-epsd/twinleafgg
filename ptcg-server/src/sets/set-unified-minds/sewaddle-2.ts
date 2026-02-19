@@ -31,7 +31,8 @@ export class Sewaddle2 extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sewaddle';
-  public fullName: string = 'Sewaddle UNM 7';
+  public fullName: string = 'Sewaddle (UNM 7)';
+  public legacyFullName = 'Sewaddle UNM 7';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Swaddling Leaves (passive - reduce damage)

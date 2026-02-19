@@ -47,7 +47,8 @@ export class UmbreonGx extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Umbreon-GX';
-  public fullName: string = 'Umbreon-GX SUM';
+  public fullName: string = 'Umbreon-GX (SUM 80)';
+  public legacyFullName = 'Umbreon-GX SUM';
 
   public usedStrafe = false;
 

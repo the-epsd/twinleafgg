@@ -23,7 +23,7 @@ export class GalarianMrRime extends PokemonCard {
       name: 'Ball Juggling',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Discard any number of Item cards that have the word "Ball" in their name from your hand. This attack does 40 more damage for each card you discarded in this way.'
     },
     {
@@ -39,7 +39,8 @@ export class GalarianMrRime extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Mr. Rime';
-  public fullName: string = 'Galarian Mr. Rime BST';
+  public fullName: string = 'Galarian Mr. Rime (BST 35)';
+  public legacyFullName = 'Galarian Mr. Rime BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ball Juggling

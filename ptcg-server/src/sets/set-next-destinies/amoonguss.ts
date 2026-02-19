@@ -33,7 +33,8 @@ export class Amoonguss extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Amoonguss';
-  public fullName: string = 'Amoonguss NXD';
+  public fullName: string = 'Amoonguss (NXD 9)';
+  public legacyFullName = 'Amoonguss NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sporprise - when evolved, may confuse and poison opponent's active

@@ -49,7 +49,8 @@ export class MrMime extends PokemonCard {
 
   public name: string = 'Mr. Mime';
 
-  public fullName: string = 'Mr. Mime TEF';
+  public fullName: string = 'Mr. Mime (TEF 63)';
+  public legacyFullName = 'Mr. Mime TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -31,7 +31,8 @@ export class Tranquill extends PokemonCard {
   public setNumber = '134';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Tranquill';
-  public fullName: string = 'Tranquill TEF';
+  public fullName: string = 'Tranquill (TEF 134)';
+  public legacyFullName = 'Tranquill TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Jet Wing

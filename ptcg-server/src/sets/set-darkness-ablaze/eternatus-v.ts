@@ -30,7 +30,8 @@ export class EternatusV extends PokemonCard {
 
   public set: string = 'DAA';
   public name: string = 'Eternatus V';
-  public fullName: string = 'Eternatus V DAA';
+  public fullName: string = 'Eternatus V (DAA 116)';
+  public legacyFullName = 'Eternatus V DAA';
   public setNumber: string = '116';
   public regulationMark: string = 'D';
   public cardImage: string = 'assets/cardback.png';

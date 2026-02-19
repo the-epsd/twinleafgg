@@ -27,6 +27,7 @@ export class Froakie extends PokemonCard {
 
   public name: string = 'Froakie';
 
-  public fullName: string = 'Froakie FLI';
+  public fullName: string = 'Froakie (FLI 22)';
+  public legacyFullName = 'Froakie FLI';
 
 }

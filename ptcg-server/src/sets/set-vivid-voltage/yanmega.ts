@@ -29,7 +29,8 @@ export class Yanmega extends PokemonCard {
 
   public set = 'VIV';
   public name = 'Yanmega';
-  public fullName = 'Yanmega VIV';
+  public fullName = 'Yanmega (VIV 7)';
+  public legacyFullName = 'Yanmega VIV';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
 

@@ -31,7 +31,8 @@ export class Ponyta extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ponyta';
-  public fullName: string = 'Ponyta TEU';
+  public fullName: string = 'Ponyta (TEU 17)';
+  public legacyFullName = 'Ponyta TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

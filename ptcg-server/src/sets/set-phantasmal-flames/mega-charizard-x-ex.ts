@@ -25,7 +25,8 @@ export class MegaCharizardXex extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Charizard X ex';
-  public fullName: string = 'Mega Charizard X ex M2';
+  public fullName: string = 'Mega Charizard X ex (PFL 13)';
+  public legacyFullName = 'Mega Charizard X ex M2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

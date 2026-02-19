@@ -29,7 +29,7 @@ export class AlolanRaichu extends PokemonCard {
       name: 'Psychic',
       cost: [C, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -38,7 +38,8 @@ export class AlolanRaichu extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Raichu';
-  public fullName: string = 'Alolan Raichu CIN';
+  public fullName: string = 'Alolan Raichu (CIN 31)';
+  public legacyFullName = 'Alolan Raichu CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Surge Surfer (passive - no retreat cost if stadium in play)

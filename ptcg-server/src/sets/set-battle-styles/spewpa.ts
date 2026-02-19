@@ -37,7 +37,8 @@ export class Spewpa extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spewpa';
-  public fullName: string = 'Spewpa BST';
+  public fullName: string = 'Spewpa (BST 12)';
+  public legacyFullName = 'Spewpa BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Grass Cocooning

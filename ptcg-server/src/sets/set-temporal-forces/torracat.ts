@@ -30,7 +30,8 @@ export class Torracat extends PokemonCard {
   public setNumber = '33';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Torracat';
-  public fullName: string = 'Torracat TEF';
+  public fullName: string = 'Torracat (TEF 33)';
+  public legacyFullName = 'Torracat TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

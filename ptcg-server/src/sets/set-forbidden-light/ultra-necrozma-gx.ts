@@ -46,7 +46,8 @@ export class UltraNecrozmaGX extends PokemonCard {
 
   public name: string = 'Ultra Necrozma-GX';
 
-  public fullName: string = 'Ultra Necrozma-GX FLI';
+  public fullName: string = 'Ultra Necrozma-GX (FLI 95)';
+  public legacyFullName = 'Ultra Necrozma-GX FLI';
 
   public cardImage: string = 'assets/cardback.png';
 

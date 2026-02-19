@@ -32,7 +32,8 @@ export class Dialga extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dialga';
-  public fullName: string = 'Dialga PL';
+  public fullName: string = 'Dialga (PL 5)';
+  public legacyFullName = 'Dialga PL';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

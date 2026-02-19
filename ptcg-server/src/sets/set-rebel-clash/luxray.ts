@@ -21,7 +21,7 @@ export class Luxray extends PokemonCard {
       name: 'Raid',
       cost: [L],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon evolved from Luxio during this turn, this attack does 100 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Luxray extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luxray';
-  public fullName: string = 'Luxray RCL';
+  public fullName: string = 'Luxray (RCL 62)';
+  public legacyFullName = 'Luxray RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Raid

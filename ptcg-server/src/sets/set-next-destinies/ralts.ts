@@ -29,7 +29,8 @@ export class Ralts extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ralts';
-  public fullName: string = 'Ralts NXD';
+  public fullName: string = 'Ralts (NXD 55)';
+  public legacyFullName = 'Ralts NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;

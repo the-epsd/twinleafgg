@@ -84,7 +84,8 @@ export class Klinklang extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
   public name: string = 'Klinklang';
-  public fullName: string = 'Klinklang BLW';
+  public fullName: string = 'Klinklang (BLW 76)';
+  public legacyFullName = 'Klinklang BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Shift Gear ability

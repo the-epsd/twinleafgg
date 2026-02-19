@@ -32,7 +32,7 @@ export class OrbeetleVmax extends PokemonCard {
       name: 'G-Max Wave',
       cost: [G, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 50 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -42,7 +42,8 @@ export class OrbeetleVmax extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Orbeetle VMAX';
-  public fullName: string = 'Orbeetle VMAX VIV';
+  public fullName: string = 'Orbeetle VMAX (VIV 21)';
+  public legacyFullName = 'Orbeetle VMAX VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Eerie Beam

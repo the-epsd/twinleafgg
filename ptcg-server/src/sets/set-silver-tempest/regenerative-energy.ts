@@ -16,7 +16,8 @@ export class RegenerativeEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '168';
   public name = 'Regenerative Energy';
-  public fullName = 'Regenerative Energy SIT';
+  public fullName = 'Regenerative Energy (SIT 168)';
+  public legacyFullName = 'Regenerative Energy SIT';
 
   public text = `As long as this card is attached to a Pokémon, it provides [C] Energy.
 

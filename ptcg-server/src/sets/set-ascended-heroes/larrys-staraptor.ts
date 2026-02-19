@@ -32,7 +32,8 @@ export class LarrysStaraptor extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '170';
   public name: string = 'Larry\'s Staraptor';
-  public fullName: string = 'Larry\'s Staraptor MC';
+  public fullName: string = 'Larry\'s Staraptor (ASC 170)';
+  public legacyFullName = 'Larry\'s Staraptor MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // First attack - bonus damage if Poisoned or Burned

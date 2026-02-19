@@ -34,7 +34,8 @@ export class EthansPinsir extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
   public name: string = 'Ethan\'s Pinsir';
-  public fullName: string = 'Ethan\'s Pinsir DRI';
+  public fullName: string = 'Ethan\'s Pinsir (DRI 1)';
+  public legacyFullName = 'Ethan\'s Pinsir DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

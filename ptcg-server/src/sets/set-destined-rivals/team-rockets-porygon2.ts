@@ -29,7 +29,8 @@ export class TeamRocketsPorygon2 extends PokemonCard {
   public setNumber: string = '154';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Porygon2';
-  public fullName: string = 'Team Rocket\'s Porygon2 DRI';
+  public fullName: string = 'Team Rocket\'s Porygon2 (DRI 154)';
+  public legacyFullName = 'Team Rocket\'s Porygon2 DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

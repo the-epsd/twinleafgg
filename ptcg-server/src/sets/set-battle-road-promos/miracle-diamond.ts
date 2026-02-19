@@ -14,7 +14,8 @@ export class MiracleDiamond extends TrainerCard {
 
   public setNumber: string = '1';
 
-  public fullName: string = 'Miracle Diamond BRP';
+  public fullName: string = 'Miracle Diamond (BRP 1)';
+  public legacyFullName = 'Miracle Diamond BRP';
 
   public text: string =
     'Look at all of your face-down Prize cards. You may choose 1 Trainer, Supporter, or Stadium card you find there, show it to your opponent, and put it into your hand. If you do, put this card as a Prize card face up instead of discarding it.';

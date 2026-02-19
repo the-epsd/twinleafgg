@@ -36,5 +36,6 @@ export class Minccino extends PokemonCard {
 
   public name: string = 'Minccino';
 
-  public fullName: string = 'Minccino BWP';
+  public fullName: string = 'Minccino (BWP 13)';
+  public legacyFullName = 'Minccino BWP';
 }

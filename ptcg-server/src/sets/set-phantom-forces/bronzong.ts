@@ -42,7 +42,8 @@ export class Bronzong extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bronzong';
-  public fullName: string = 'Bronzong PHF';
+  public fullName: string = 'Bronzong (PHF 61)';
+  public legacyFullName = 'Bronzong PHF';
 
   public readonly METAL_LINKS_MARKER = 'METAL_LINKS_MARKER';
 

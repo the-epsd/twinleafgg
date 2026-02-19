@@ -17,102 +17,119 @@ import { MegaKangaskhanex } from '../set-mega-evolution/mega-kangaskhan-ex';
 import { Haunter } from '../set-phantasmal-flames/haunter';
 export class MeganiumMEP extends Meganium {
   public setNumber = '1';
-  public fullName: string = 'Meganium MEP';
+  public fullName: string = 'Meganium (MEP 1)';
+  public legacyFullName = 'Meganium MEP';
   public set = 'MEP';
 }
 
 export class InteleonMEP extends Inteleon {
   public setNumber = '2';
-  public fullName: string = 'Inteleon MEP';
+  public fullName: string = 'Inteleon (MEP 2)';
+  public legacyFullName = 'Inteleon MEP';
   public set = 'MEP';
 }
 
 export class AlakazamMEP extends Alakazam {
   public setNumber = '3';
-  public fullName: string = 'Alakazam MEP';
+  public fullName: string = 'Alakazam (MEP 3)';
+  public legacyFullName = 'Alakazam MEP';
   public set = 'MEP';
 }
 
 export class LunatoneMEP extends Lunatone {
   public setNumber = '4';
-  public fullName: string = 'Lunatone MEP';
+  public fullName: string = 'Lunatone (MEP 4)';
+  public legacyFullName = 'Lunatone MEP';
   public set = 'MEP';
 }
 
 export class Alakazam2MEP extends AlakazamMEG56 {
   public setNumber = '9';
-  public fullName: string = 'Alakazam2 MEP';
+  public fullName: string = 'Alakazam (MEP 9)';
+  public legacyFullName = 'Alakazam2 MEP';
   public set = 'MEP';
 }
 
 export class RioluMEP extends Riolu {
   public setNumber = '10';
-  public fullName: string = 'Riolu MEP';
+  public fullName: string = 'Riolu (MEP 10)';
+  public legacyFullName = 'Riolu MEP';
   public set = 'MEP';
 }
 
 export class MegaLatiasexMEP extends MegaLatiasex {
   public setNumber = '11';
-  public fullName: string = 'Mega Latias ex MEP';
+  public fullName: string = 'Mega Latias ex (MEP 11)';
+  public legacyFullName = 'Mega Latias ex MEP';
   public set = 'MEP';
 }
 
 export class MegaLucarioexMEP extends MegaLucarioex {
   public setNumber = '12';
-  public fullName: string = 'Mega Lucario ex MEP';
+  public fullName: string = 'Mega Lucario ex (MEP 12)';
+  public legacyFullName = 'Mega Lucario ex MEP';
   public set = 'MEP';
 }
 
 export class MegaVenusaurExMEP extends MegaVenusaurEx {
   public setNumber = '13';
-  public fullName: string = 'Mega Venusaur ex MEP';
+  public fullName: string = 'Mega Venusaur ex (MEP 13)';
+  public legacyFullName = 'Mega Venusaur ex MEP';
   public set = 'MEP';
 }
 
 export class CeruledgeMEP extends Ceruledge {
   public setNumber = '14';
-  public fullName: string = 'Ceruledge MEP';
+  public fullName: string = 'Ceruledge (MEP 14)';
+  public legacyFullName = 'Ceruledge MEP';
   public set = 'MEP';
 }
 
 export class ZacianMEP extends Zacian {
   public setNumber = '15';
-  public fullName: string = 'Zacian MEP';
+  public fullName: string = 'Zacian (MEP 15)';
+  public legacyFullName = 'Zacian MEP';
   public set = 'MEP';
 }
 
 export class ToxtricityMEP extends Toxtricity {
   public setNumber = '17';
-  public fullName: string = 'Toxtricity MEP';
+  public fullName: string = 'Toxtricity (MEP 17)';
+  public legacyFullName = 'Toxtricity MEP';
   public set = 'MEP';
 }
 
 export class CharcadetMEP extends Charcadet {
   public setNumber = '22';
-  public fullName: string = 'Charcadet MEP';
+  public fullName: string = 'Charcadet (MEP 22)';
+  public legacyFullName = 'Charcadet MEP';
   public set = 'MEP';
 }
 
 export class MegaCharizardXexMEP extends MegaCharizardXex {
   public setNumber = '23';
-  public fullName: string = 'Mega Charizard X ex MEP';
+  public fullName: string = 'Mega Charizard X ex (MEP 23)';
+  public legacyFullName = 'Mega Charizard X ex MEP';
   public set = 'MEP';
 }
 
 export class OricorioexMEP extends Oricorioex {
   public setNumber = '24';
-  public fullName: string = 'Oricorio ex MEP';
+  public fullName: string = 'Oricorio ex (MEP 24)';
+  public legacyFullName = 'Oricorio ex MEP';
   public set = 'MEP';
 }
 
 export class MegaKangaskhanexMEP extends MegaKangaskhanex {
   public setNumber = '25';
-  public fullName: string = 'Mega Kangaskhan ex MEP';
+  public fullName: string = 'Mega Kangaskhan ex (MEP 25)';
+  public legacyFullName = 'Mega Kangaskhan ex MEP';
   public set = 'MEP';
 }
 
 export class HaunterMEP extends Haunter {
   public setNumber = '27';
-  public fullName: string = 'Haunter MEP';
+  public fullName: string = 'Haunter (MEP 27)';
+  public legacyFullName = 'Haunter MEP';
   public set = 'MEP';
 }

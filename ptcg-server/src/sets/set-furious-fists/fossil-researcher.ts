@@ -80,7 +80,8 @@ export class FossilResearcher extends TrainerCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fossil Researcher';
-  public fullName: string = 'Fossil Researcher FFI';
+  public fullName: string = 'Fossil Researcher (FFI 92)';
+  public legacyFullName = 'Fossil Researcher FFI';
   public text: string = 'Search your deck for up to 2 in any combination of Amaura or Tyrunt and put them onto your bench. Shuffle your deck afterward. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-furious-fists/korrina.ts (Supporter generator pattern with blocked indices)

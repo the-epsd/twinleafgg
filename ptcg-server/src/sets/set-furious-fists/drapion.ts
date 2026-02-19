@@ -23,7 +23,7 @@ export class Drapion extends PokemonCard {
       name: 'Venoshock',
       cost: [D],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pok\u00e9mon is Poisoned, this attack does 40 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Drapion extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drapion';
-  public fullName: string = 'Drapion FFI';
+  public fullName: string = 'Drapion (FFI 65)';
+  public legacyFullName = 'Drapion FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Venoshock

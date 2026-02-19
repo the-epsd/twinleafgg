@@ -27,7 +27,7 @@ export class Porygon2 extends PokemonCard {
       name: 'Tri Attack',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Porygon2 extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Porygon2';
-  public fullName: string = 'Porygon2 AOR';
+  public fullName: string = 'Porygon2 (AOR 65)';
+  public legacyFullName = 'Porygon2 AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Tri Attack

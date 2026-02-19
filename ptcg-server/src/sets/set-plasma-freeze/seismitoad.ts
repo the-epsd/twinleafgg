@@ -34,7 +34,8 @@ export class Seismitoad extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Seismitoad';
-  public fullName: string = 'Seismitoad PLF';
+  public fullName: string = 'Seismitoad (PLF 26)';
+  public legacyFullName = 'Seismitoad PLF';
 
   public usedSplashingTurn = false;
 

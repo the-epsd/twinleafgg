@@ -41,7 +41,8 @@ export class Liepard extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Liepard';
-  public fullName: string = 'Liepard PLS';
+  public fullName: string = 'Liepard (PLS 84)';
+  public legacyFullName = 'Liepard PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Silent Claw

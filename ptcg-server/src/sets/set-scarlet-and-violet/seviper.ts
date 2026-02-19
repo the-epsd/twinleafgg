@@ -42,7 +42,8 @@ export class Seviper extends PokemonCard {
 
   public name: string = 'Seviper';
 
-  public fullName: string = 'Seviper SVI';
+  public fullName: string = 'Seviper (SVI 128)';
+  public legacyFullName = 'Seviper SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

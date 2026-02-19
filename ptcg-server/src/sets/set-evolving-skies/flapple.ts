@@ -40,7 +40,8 @@ export class Flapple extends PokemonCard {
 
   public name: string = 'Flapple';
 
-  public fullName: string = 'Flapple EVS';
+  public fullName: string = 'Flapple (EVS 120)';
+  public legacyFullName = 'Flapple EVS';
 
   public evolvesFrom = 'Applin';
 

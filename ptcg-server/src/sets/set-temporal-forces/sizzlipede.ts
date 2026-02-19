@@ -22,7 +22,8 @@ export class Sizzlipede extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '36';
   public name: string = 'Sizzlipede';
-  public fullName: string = 'Sizzlipede TEF';
+  public fullName: string = 'Sizzlipede (TEF 36)';
+  public legacyFullName = 'Sizzlipede TEF';
   public regulationMark = 'H';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -35,7 +35,8 @@ export class Furfrou extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Furfrou';
-  public fullName: string = 'Furfrou BKP';
+  public fullName: string = 'Furfrou (BKP 95)';
+  public legacyFullName = 'Furfrou BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Collect

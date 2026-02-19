@@ -37,7 +37,8 @@ export class Armaldoex extends PokemonCard {
 
   public set: string = 'LM';
   public name: string = 'Armaldo ex';
-  public fullName: string = 'Armaldo ex LM';
+  public fullName: string = 'Armaldo ex (LM 84)';
+  public legacyFullName = 'Armaldo ex LM';
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
 

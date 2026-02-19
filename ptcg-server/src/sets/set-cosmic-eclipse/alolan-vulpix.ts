@@ -35,7 +35,8 @@ export class AlolanVulpix extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Vulpix';
-  public fullName: string = 'Alolan Vulpix CEC';
+  public fullName: string = 'Alolan Vulpix (CEC 39)';
+  public legacyFullName = 'Alolan Vulpix CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Snowed In (passive - prevent all damage on bench)

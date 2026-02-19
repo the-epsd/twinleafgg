@@ -39,7 +39,8 @@ export class LugiaGX extends PokemonCard {
 
   public name: string = 'Lugia-GX';
 
-  public fullName: string = 'Lugia-GX LOT';
+  public fullName: string = 'Lugia-GX (LOT 159)';
+  public legacyFullName = 'Lugia-GX LOT';
 
   // for preventing the pokemon from attacking on the next turn
   public readonly PELAGIC_BLADE_MARKER = 'PELAGIC_BLADE_MARKER';

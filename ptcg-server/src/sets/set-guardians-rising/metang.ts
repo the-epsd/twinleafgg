@@ -37,7 +37,8 @@ export class Metang extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metang';
-  public fullName: string = 'Metang GRI';
+  public fullName: string = 'Metang (GRI 84)';
+  public legacyFullName = 'Metang GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Core Beam

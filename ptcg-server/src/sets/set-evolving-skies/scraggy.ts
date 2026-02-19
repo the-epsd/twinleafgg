@@ -34,7 +34,8 @@ export class Scraggy extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scraggy';
-  public fullName: string = 'Scraggy EVS';
+  public fullName: string = 'Scraggy (EVS 98)';
+  public legacyFullName = 'Scraggy EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hard Head

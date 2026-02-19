@@ -37,7 +37,8 @@ export class FlareonV extends PokemonCard {
   public setNumber: string = '169';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flareon V';
-  public fullName: string = 'Flareon V EVS';
+  public fullName: string = 'Flareon V (EVS 169)';
+  public legacyFullName = 'Flareon V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flaming Breath

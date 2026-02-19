@@ -36,7 +36,8 @@ export class Chansey extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chansey';
-  public fullName: string = 'Chansey EVO';
+  public fullName: string = 'Chansey (EVO 70)';
+  public legacyFullName = 'Chansey EVO';
 
   public readonly PREVENT_DAMAGE_MARKER = 'CHANSEY_EVO_PREVENT_DAMAGE';
   public readonly CLEAR_PREVENT_DAMAGE_MARKER = 'CHANSEY_EVO_CLEAR_PREVENT_DAMAGE';

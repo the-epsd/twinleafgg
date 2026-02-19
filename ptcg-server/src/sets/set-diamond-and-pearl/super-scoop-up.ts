@@ -67,7 +67,8 @@ export class SuperScoopUp extends TrainerCard {
 
   public name: string = 'Super Scoop Up';
 
-  public fullName: string = 'Super Scoop Up DP';
+  public fullName: string = 'Super Scoop Up (DP 115)';
+  public legacyFullName = 'Super Scoop Up DP';
 
   public cardImage: string = 'assets/cardback.png';
 

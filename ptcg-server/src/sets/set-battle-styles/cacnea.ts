@@ -32,5 +32,6 @@ export class Cacnea extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cacnea';
-  public fullName: string = 'Cacnea BST';
+  public fullName: string = 'Cacnea (BST 4)';
+  public legacyFullName = 'Cacnea BST';
 }

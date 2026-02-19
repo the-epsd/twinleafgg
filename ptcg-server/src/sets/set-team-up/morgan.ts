@@ -15,7 +15,8 @@ export class Morgan extends TrainerCard {
   public setNumber: string = '149';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Morgan';
-  public fullName: string = 'Morgan TEU';
+  public fullName: string = 'Morgan (TEU 149)';
+  public legacyFullName = 'Morgan TEU';
   public text: string = 'You can play this card only if you discard Dana, Evelyn, and Nita from your hand. Look at the top 12 cards of your deck and attach any number of Energy cards you find there to your Pokémon in any way you like. Shuffle the other cards back into your deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-scarlet-and-violet/electric-generator.ts (LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY)

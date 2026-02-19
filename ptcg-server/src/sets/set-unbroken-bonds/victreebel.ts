@@ -27,7 +27,7 @@ export class Victreebel extends PokemonCard {
       name: 'Reactive Poison',
       cost: [G],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 60 more damage for each Special Condition affecting your opponent\'s Active Pokémon.'
     },
     {
@@ -42,7 +42,8 @@ export class Victreebel extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Victreebel';
-  public fullName: string = 'Victreebel UNB';
+  public fullName: string = 'Victreebel (UNB 15)';
+  public legacyFullName = 'Victreebel UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Reactive Poison

@@ -38,13 +38,14 @@ import { Shauna } from './shauna';
 
 export class MewVFA extends MewV {
   public setNumber = '250';
-  public fullName: string = 'MewVFA FST';
+  public fullName: string = 'Mew V (FST 250)';
   public legacyFullName = 'CelebiVFA FST';
 }
 
 export class MewVAA extends MewV {
   public setNumber = '251';
-  public fullName: string = 'MewVAA FST';
+  public fullName: string = 'Mew V (FST 251)';
+  public legacyFullName = 'MewVAA FST';
 }
 
 // export class SandacondaVAA extends SandacondaV {
@@ -66,7 +67,8 @@ export class GenesectVFA extends GenesectV {
 
 export class GenesectVAA extends GenesectV {
   public setNumber = '255';
-  public fullName: string = 'GenesectVAA FST';
+  public fullName: string = 'Genesect V (FST 255)';
+  public legacyFullName = 'GenesectVAA FST';
 }
 
 // export class GreedentVFA extends GreedentV {
@@ -110,7 +112,8 @@ export class SchoolgirlFA extends Schoolgirl {
 
 export class ShaunaFA extends Shauna {
   public setNumber = '263';
-  public fullName: string = 'ShaunaFA FST';
+  public fullName: string = 'Shauna (FST 263)';
+  public legacyFullName = 'ShaunaFA FST';
 }
 
 // export class SidneyFA extends Sidney {
@@ -142,7 +145,8 @@ export class MewVMAXHR extends MewVMAX {
 
 export class MewVMAXAA extends MewVMAX {
   public setNumber = '269';
-  public fullName: string = 'MewVMAXAA FST';
+  public fullName: string = 'Mew VMAX (FST 269)';
+  public legacyFullName = 'MewVMAXAA FST';
 }
 
 // export class EspeonVMAXAA extends EspeonVMAX {

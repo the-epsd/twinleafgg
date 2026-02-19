@@ -28,7 +28,7 @@ export class KommoO extends PokemonCard {
       name: 'Scaly Uppercut',
       cost: [L, F],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard a Pokémon Tool card from this Pokémon. If you do, this attack does 90 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class KommoO extends PokemonCard {
   public setNumber: string = '163';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kommo-o';
-  public fullName: string = 'Kommo-o CEC';
+  public fullName: string = 'Kommo-o (CEC 163)';
+  public legacyFullName = 'Kommo-o CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shout of Power

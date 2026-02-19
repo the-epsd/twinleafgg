@@ -31,7 +31,8 @@ export class Ralts extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
   public name: string = 'Ralts';
-  public fullName: string = 'Ralts DS';
+  public fullName: string = 'Ralts (DS 81)';
+  public legacyFullName = 'Ralts DS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

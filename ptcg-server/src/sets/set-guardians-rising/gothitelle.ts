@@ -30,7 +30,7 @@ export class Gothitelle extends PokemonCard {
       name: 'Link Blast',
       cost: [P, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon and your opponent\'s Active Pokémon have the same amount of Energy attached to them, this attack does 80 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Gothitelle extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothitelle';
-  public fullName: string = 'Gothitelle GRI';
+  public fullName: string = 'Gothitelle (GRI 54)';
+  public legacyFullName = 'Gothitelle GRI';
 
   public usedTractorbeam: boolean = false;
 

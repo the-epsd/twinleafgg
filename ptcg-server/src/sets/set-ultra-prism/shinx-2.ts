@@ -30,7 +30,8 @@ export class Shinx2 extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shinx';
-  public fullName: string = 'Shinx UPR 46';
+  public fullName: string = 'Shinx (UPR 46)';
+  public legacyFullName = 'Shinx UPR 46';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Charge

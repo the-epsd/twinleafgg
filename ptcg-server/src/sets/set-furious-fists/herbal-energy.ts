@@ -21,7 +21,8 @@ export class HerbalEnergy extends EnergyCard {
 
   public name = 'Herbal Energy';
 
-  public fullName = 'Herbal Energy FFI';
+  public fullName = 'Herbal Energy (FFI 103)';
+  public legacyFullName = 'Herbal Energy FFI';
 
   public cardImage: string = 'assets/cardback.png';
 

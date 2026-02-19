@@ -17,7 +17,8 @@ export class Nymble extends PokemonCard {
   public set: string = 'PAR';
   public regulationMark = 'G';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Nymble PAR';
+  public fullName: string = 'Nymble (PAR 13)';
+  public legacyFullName = 'Nymble PAR';
   public name: string = 'Nymble';
   public setNumber: string = '13';
 }

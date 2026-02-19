@@ -47,7 +47,8 @@ export class ScreamTailex extends PokemonCard {
 
   public name: string = 'Scream Tail ex';
 
-  public fullName: string = 'Scream Tail ex TWM';
+  public fullName: string = 'Scream Tail ex (TWM 94)';
+  public legacyFullName = 'Scream Tail ex TWM';
 
   public readonly SUDDEN_SHRIEK_MARKER = 'SUDDEN_SHRIEK_MARKER';
 

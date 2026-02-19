@@ -28,7 +28,7 @@ export class Mudsdale extends PokemonCard {
       name: 'Heavy Slam',
       cost: [F, F, C],
       damage: 180,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-' as const,
       text: 'This attack does 30 less damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];
@@ -38,7 +38,8 @@ export class Mudsdale extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mudsdale';
-  public fullName: string = 'Mudsdale VIV';
+  public fullName: string = 'Mudsdale (VIV 97)';
+  public legacyFullName = 'Mudsdale VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Heavy Slam

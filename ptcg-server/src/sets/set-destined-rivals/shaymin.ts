@@ -34,7 +34,8 @@ export class Shaymin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '10';
   public name: string = 'Shaymin';
-  public fullName: string = 'Shaymin DRI';
+  public fullName: string = 'Shaymin (DRI 10)';
+  public legacyFullName = 'Shaymin DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Flower Curtain

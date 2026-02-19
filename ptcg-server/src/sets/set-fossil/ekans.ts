@@ -29,7 +29,8 @@ export class Ekans extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
   public name: string = 'Ekans';
-  public fullName: string = 'Ekans FO';
+  public fullName: string = 'Ekans (FO 46)';
+  public legacyFullName = 'Ekans FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -28,7 +28,7 @@ export class Toxapex extends PokemonCard {
       name: 'Venoshock',
       cost: [P, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 50 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Toxapex extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toxapex';
-  public fullName: string = 'Toxapex SUM';
+  public fullName: string = 'Toxapex (SUM 63)';
+  public legacyFullName = 'Toxapex SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Toxic Spikes (passive - poison new active when opponent retreats)

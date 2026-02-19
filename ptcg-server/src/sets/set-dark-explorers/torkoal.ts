@@ -30,7 +30,8 @@ export class Torkoal extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Torkoal';
-  public fullName: string = 'Torkoal DEX';
+  public fullName: string = 'Torkoal (DEX 18)';
+  public legacyFullName = 'Torkoal DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Flame Cloak

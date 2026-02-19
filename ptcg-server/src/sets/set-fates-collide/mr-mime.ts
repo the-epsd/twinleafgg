@@ -28,7 +28,7 @@ export class MrMime extends PokemonCard {
       name: 'Juggling',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 20 damage times the number of heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class MrMime extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mr. Mime';
-  public fullName: string = 'Mr. Mime FCO';
+  public fullName: string = 'Mr. Mime (FCO 67)';
+  public legacyFullName = 'Mr. Mime FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mimic

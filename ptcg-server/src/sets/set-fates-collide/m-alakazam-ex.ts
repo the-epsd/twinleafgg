@@ -22,7 +22,7 @@ export class MAlakazamEx extends PokemonCard {
       name: 'Zen Force',
       cost: [P, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each damage counter on your opponent\'s Active Pokémon.'
     }
   ];
@@ -31,7 +31,8 @@ export class MAlakazamEx extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Alakazam-EX';
-  public fullName: string = 'M Alakazam-EX FCO';
+  public fullName: string = 'M Alakazam-EX (FCO 26)';
+  public legacyFullName = 'M Alakazam-EX FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Zen Force

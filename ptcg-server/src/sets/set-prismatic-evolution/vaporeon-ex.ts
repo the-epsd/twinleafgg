@@ -34,7 +34,8 @@ export class Vaporeonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '23';
   public name: string = 'Vaporeon ex';
-  public fullName: string = 'Vaporeon ex PRE';
+  public fullName: string = 'Vaporeon ex (PRE 23)';
+  public legacyFullName = 'Vaporeon ex PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Severe Squall

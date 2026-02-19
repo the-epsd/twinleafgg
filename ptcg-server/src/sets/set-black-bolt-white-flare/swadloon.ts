@@ -35,7 +35,8 @@ export class Swadloon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '2';
   public name: string = 'Swadloon';
-  public fullName: string = 'Swadloon WHT';
+  public fullName: string = 'Swadloon (WHT 2)';
+  public legacyFullName = 'Swadloon WHT';
   public readonly HEALING_LEAVES_MARKER = 'HEALING_LEAVES_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

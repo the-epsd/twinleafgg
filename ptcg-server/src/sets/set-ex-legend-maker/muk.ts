@@ -40,7 +40,8 @@ export class Muk extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
   public name: string = 'Muk';
-  public fullName: string = 'Muk LM';
+  public fullName: string = 'Muk (LM 11)';
+  public legacyFullName = 'Muk LM';
 
   public readonly POISON_RING_MARKER: string = 'POISON_RING_MARKER';
 

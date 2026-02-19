@@ -31,7 +31,8 @@ export class Torterra extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
   public name: string = 'Torterra';
-  public fullName: string = 'Torterra BRS';
+  public fullName: string = 'Torterra (BRS 8)';
+  public legacyFullName = 'Torterra BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

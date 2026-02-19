@@ -42,7 +42,8 @@ export class Masquerain extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Masquerain';
-  public fullName: string = 'Masquerain RCL';
+  public fullName: string = 'Masquerain (RCL 11)';
+  public legacyFullName = 'Masquerain RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Threatening Pattern

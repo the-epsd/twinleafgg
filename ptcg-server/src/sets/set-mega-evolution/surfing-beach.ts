@@ -15,7 +15,8 @@ export class SurfingBeach extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'MEG';
   public name = 'Surfing Beach';
-  public fullName = 'Surfing Beach M1S';
+  public fullName = 'Surfing Beach (MEG 129)';
+  public legacyFullName = 'Surfing Beach M1S';
   public regulationMark = 'I';
 
   public text = 'Once during each player\'s turn, that player may switch their Active [W] Pokémon with 1 of their Benched [W] Pokémon.';

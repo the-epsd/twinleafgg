@@ -36,7 +36,8 @@ export class Shinx extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shinx';
-  public fullName: string = 'Shinx BKP';
+  public fullName: string = 'Shinx (BKP 44)';
+  public legacyFullName = 'Shinx BKP';
 
   public usedRoar = false;
 

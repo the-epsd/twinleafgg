@@ -31,7 +31,8 @@ export class Fearow extends PokemonCard {
   public setNumber: string = '146';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fearow';
-  public fullName: string = 'Fearow UNB';
+  public fullName: string = 'Fearow (UNB 146)';
+  public legacyFullName = 'Fearow UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Drill Run Double

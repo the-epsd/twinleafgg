@@ -15,7 +15,8 @@ export class Bonnie extends TrainerCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bonnie';
-  public fullName: string = 'Bonnie FLI';
+  public fullName: string = 'Bonnie (FLI 103)';
+  public legacyFullName = 'Bonnie FLI';
   public text: string = 'You can play this card only if there is any Stadium card in play. Discard that Stadium card. During this turn, your Zygarde-GX can use its GX attack even if you have used your GX attack. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-forbidden-light/lysandre.ts (Lysandre Prism Star - supporter pattern with stadium check)

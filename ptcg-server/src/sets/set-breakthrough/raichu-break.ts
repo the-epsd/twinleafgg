@@ -29,7 +29,8 @@ export class RaichuBreak extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raichu BREAK';
-  public fullName: string = 'Raichu BREAK BKT';
+  public fullName: string = 'Raichu BREAK (BKT 50)';
+  public legacyFullName = 'Raichu BREAK BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Grand Bolt

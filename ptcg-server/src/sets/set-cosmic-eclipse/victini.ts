@@ -39,7 +39,8 @@ export class Victini extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Victini';
-  public fullName: string = 'Victini CEC';
+  public fullName: string = 'Victini (CEC 30)';
+  public legacyFullName = 'Victini CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Victory Heal

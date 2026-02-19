@@ -29,7 +29,7 @@ export class Swalot extends PokemonCard {
       name: 'Swallow Up',
       cost: [P, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If, before doing damage, your opponent\'s Active Pokémon has fewer remaining HP than this Pokémon, this attack does 50 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Swalot extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swalot';
-  public fullName: string = 'Swalot PHF';
+  public fullName: string = 'Swalot (PHF 38)';
+  public legacyFullName = 'Swalot PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Gas

@@ -30,7 +30,8 @@ export class Axew extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Axew';
-  public fullName: string = 'Axew DRV';
+  public fullName: string = 'Axew (DRV 12)';
+  public legacyFullName = 'Axew DRV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Signs of Evolution - flip heads to search for Fraxure

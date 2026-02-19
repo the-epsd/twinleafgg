@@ -21,7 +21,8 @@ export class Charmander2 extends PokemonCard {
 
   public set: string = 'TEU';
   public name: string = 'Charmander';
-  public fullName: string = 'Charmander TEU2';
+  public fullName: string = 'Charmander (TEU 12)';
+  public legacyFullName = 'Charmander TEU2';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
 

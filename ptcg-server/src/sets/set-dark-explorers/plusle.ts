@@ -29,7 +29,8 @@ export class Plusle extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Plusle';
-  public fullName: string = 'Plusle DEX';
+  public fullName: string = 'Plusle (DEX 39)';
+  public legacyFullName = 'Plusle DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Tag Draw - shuffle hand into deck, draw 4 (or 8 if Minun on Bench)

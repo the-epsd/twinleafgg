@@ -36,7 +36,8 @@ export class Turtwig extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Turtwig';
-  public fullName: string = 'Turtwig PLS';
+  public fullName: string = 'Turtwig (PLS 1)';
+  public legacyFullName = 'Turtwig PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Nap

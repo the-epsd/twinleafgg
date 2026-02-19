@@ -21,7 +21,7 @@ export class Exeggcute extends PokemonCard {
       name: 'Continuous Eggsplosion',
       cost: [G],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 20 damage for each heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Exeggcute extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Exeggcute';
-  public fullName: string = 'Exeggcute UPR';
+  public fullName: string = 'Exeggcute (UPR 1)';
+  public legacyFullName = 'Exeggcute UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Eggsplosion

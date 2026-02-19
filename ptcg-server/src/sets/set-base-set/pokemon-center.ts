@@ -20,7 +20,8 @@ export class PokemonCenter extends TrainerCard {
 
   public name: string = 'Pokémon Center';
 
-  public fullName: string = 'Pokémon Center BS';
+  public fullName: string = 'Pokémon Center (BS 85)';
+  public legacyFullName = 'Pokémon Center BS';
 
   public text: string = 'Remove all damage counters from all of your own Pokémon with damage counters on them, then discard all Energy cards attached to those Pokémon.';
 

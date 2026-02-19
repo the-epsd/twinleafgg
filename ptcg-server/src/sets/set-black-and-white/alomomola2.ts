@@ -33,7 +33,8 @@ export class Alomomola2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '39';
   public name: string = 'Alomomola';
-  public fullName: string = 'Alomomola BLW 39';
+  public fullName: string = 'Alomomola (BLW 39)';
+  public legacyFullName = 'Alomomola BLW 39';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -45,8 +46,8 @@ export class Alomomola2 extends PokemonCard {
       let waterEnergy = 0;
 
       player.active.cards.forEach(card => {
-          if (card.superType === SuperType.ENERGY) {
-            waterEnergy += (card as EnergyCard).provides.filter(e => e === CardType.WATER).length;
+        if (card.superType === SuperType.ENERGY) {
+          waterEnergy += (card as EnergyCard).provides.filter(e => e === CardType.WATER).length;
         }
       });
 

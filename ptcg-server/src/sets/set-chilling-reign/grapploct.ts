@@ -28,7 +28,7 @@ export class Grapploct extends PokemonCard {
       name: 'Synchro Buster',
       cost: [F, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have the same number of cards in your hand as your opponent, this attack does 80 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Grapploct extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grapploct';
-  public fullName: string = 'Grapploct CRE';
+  public fullName: string = 'Grapploct (CRE 92)';
+  public legacyFullName = 'Grapploct CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Stranglehold Master (passive - increase opponent's retreat cost)

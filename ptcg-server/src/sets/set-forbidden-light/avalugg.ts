@@ -36,7 +36,8 @@ export class Avalugg extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Avalugg';
-  public fullName: string = 'Avalugg FLI';
+  public fullName: string = 'Avalugg (FLI 30)';
+  public legacyFullName = 'Avalugg FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Frozen Ground

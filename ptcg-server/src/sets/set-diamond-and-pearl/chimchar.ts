@@ -30,7 +30,8 @@ export class Chimchar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
   public name: string = 'Chimchar';
-  public fullName: string = 'Chimchar DP';
+  public fullName: string = 'Chimchar (DP 76)';
+  public legacyFullName = 'Chimchar DP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

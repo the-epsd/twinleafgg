@@ -96,7 +96,8 @@ export class LunalaGx extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lunala-GX';
-  public fullName: string = 'Lunala-GX SUM';
+  public fullName: string = 'Lunala-GX (SUM 66)';
+  public legacyFullName = 'Lunala-GX SUM';
 
   public readonly CANT_HEAL_MARKER = 'LUNALA_GX_CANT_HEAL_MARKER';
   public readonly CLEAR_CANT_HEAL_MARKER = 'LUNALA_GX_CLEAR_CANT_HEAL_MARKER';

@@ -39,7 +39,8 @@ export class MalamarV extends PokemonCard {
   public setNumber: string = '121';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Malamar V';
-  public fullName: string = 'Malamar V RCL';
+  public fullName: string = 'Malamar V (RCL 121)';
+  public legacyFullName = 'Malamar V RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Drag Off

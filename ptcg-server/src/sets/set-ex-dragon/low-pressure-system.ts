@@ -13,7 +13,8 @@ export class LowPressureSystem extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'DR';
   public name: string = 'Low Pressure System';
-  public fullName: string = 'Low Pressure System DR';
+  public fullName: string = 'Low Pressure System (DR 86)';
+  public legacyFullName = 'Low Pressure System DR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
 

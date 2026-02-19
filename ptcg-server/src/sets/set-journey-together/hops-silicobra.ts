@@ -42,7 +42,8 @@ export class HopsSilicobra extends PokemonCard {
 
   public name: string = 'Hop\'s Silicobra';
 
-  public fullName: string = 'Hop\'s Silicobra JTG';
+  public fullName: string = 'Hop\'s Silicobra (JTG 86)';
+  public legacyFullName = 'Hop\'s Silicobra JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

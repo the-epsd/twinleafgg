@@ -30,7 +30,8 @@ export class Emolga extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
   public name: string = 'Emolga';
-  public fullName: string = 'Emolga SV11B';
+  public fullName: string = 'Emolga (BLK 29)';
+  public legacyFullName = 'Emolga SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

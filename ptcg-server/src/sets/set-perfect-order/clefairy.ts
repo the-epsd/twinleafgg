@@ -27,7 +27,8 @@ export class Clefairy extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
   public name: string = 'Clefairy';
-  public fullName: string = 'Clefairy M3';
+  public fullName: string = 'Clefairy (M3 29)';
+  public legacyFullName = 'Clefairy M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Follow Me - Switch opponent's Benched with Active

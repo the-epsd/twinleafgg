@@ -25,7 +25,8 @@ export class Clobbopus extends PokemonCard {
   public cardImage = 'assets/cardback.png';
   public regulationMark: string = 'H';
   public name: string = 'Clobbopus';
-  public fullName: string = 'Clobbopus SSP';
+  public fullName: string = 'Clobbopus (SSP 112)';
+  public legacyFullName = 'Clobbopus SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Slight Intrusion

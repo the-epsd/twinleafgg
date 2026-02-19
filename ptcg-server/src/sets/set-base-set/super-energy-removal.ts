@@ -125,7 +125,8 @@ export class SuperEnergyRemoval extends TrainerCard {
 
   public name: string = 'Super Energy Removal';
 
-  public fullName: string = 'Super Energy Removal BS';
+  public fullName: string = 'Super Energy Removal (BS 79)';
+  public legacyFullName = 'Super Energy Removal BS';
 
   public text: string =
     'Discard 1 Energy card attached to 1 of your Pokémon in order to choose 1 of your opponent\'s Pokémon and up to 2 Energy cards attached to it. Discard those Energy cards.';

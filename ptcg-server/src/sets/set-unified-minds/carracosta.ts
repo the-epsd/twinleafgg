@@ -29,7 +29,7 @@ export class Carracosta extends PokemonCard {
       name: 'Aqua Impact',
       cost: [F, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];
@@ -38,7 +38,8 @@ export class Carracosta extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carracosta';
-  public fullName: string = 'Carracosta UNM';
+  public fullName: string = 'Carracosta (UNM 45)';
+  public legacyFullName = 'Carracosta UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Ancient Custom (passive - block opponent's tool effects)

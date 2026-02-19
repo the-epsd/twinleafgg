@@ -17,7 +17,8 @@ export class MoomooMilk extends TrainerCard {
   public setNumber: string = '185';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Moomoo Milk';
-  public fullName: string = 'Moomoo Milk LOT';
+  public fullName: string = 'Moomoo Milk (LOT 185)';
+  public legacyFullName = 'Moomoo Milk LOT';
   public text: string = 'Choose 1 of your Pokémon, and then flip 2 coins. For each heads, heal 30 damage from that Pokémon.';
 
   // Ref: set-celestial-storm/life-herb.ts (choose Pokemon + coin flip + heal)

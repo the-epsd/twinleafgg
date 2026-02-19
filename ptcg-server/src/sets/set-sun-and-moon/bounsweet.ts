@@ -36,7 +36,8 @@ export class Bounsweet extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bounsweet';
-  public fullName: string = 'Bounsweet SUM';
+  public fullName: string = 'Bounsweet (SUM 18)';
+  public legacyFullName = 'Bounsweet SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sweet Scent

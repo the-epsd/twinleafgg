@@ -18,7 +18,8 @@ export class CounterCatcher extends TrainerCard {
   public setNumber: string = '160';
   public regulationMark = 'G';
   public name: string = 'Counter Catcher';
-  public fullName: string = 'Counter Catcher PAR';
+  public fullName: string = 'Counter Catcher (PAR 160)';
+  public legacyFullName = 'Counter Catcher PAR';
 
   public text: string =
     `You can play this card only if you have more Prize Cards remaining than your opponent.

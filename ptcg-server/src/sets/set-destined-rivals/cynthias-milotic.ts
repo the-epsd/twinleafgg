@@ -27,7 +27,8 @@ export class CynthiasMilotic extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cynthia\'s Milotic';
-  public fullName: string = 'Cynthia\'s Milotic DRI';
+  public fullName: string = 'Cynthia\'s Milotic (DRI 53)';
+  public legacyFullName = 'Cynthia\'s Milotic DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Aqua Split

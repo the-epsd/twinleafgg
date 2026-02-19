@@ -47,7 +47,8 @@ export class GalarianZapdosV extends PokemonCard {
 
   public name: string = 'Galarian Zapdos V';
 
-  public fullName: string = 'Galarian Zapdos V CRE';
+  public fullName: string = 'Galarian Zapdos V (CRE 80)';
+  public legacyFullName = 'Galarian Zapdos V CRE';
 
   // Implement ability
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

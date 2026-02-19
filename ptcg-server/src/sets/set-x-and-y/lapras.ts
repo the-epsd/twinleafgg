@@ -38,7 +38,8 @@ export class Lapras extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lapras';
-  public fullName: string = 'Lapras XY';
+  public fullName: string = 'Lapras (XY 35)';
+  public legacyFullName = 'Lapras XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Seafaring

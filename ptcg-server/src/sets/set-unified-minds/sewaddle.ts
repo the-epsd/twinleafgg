@@ -30,7 +30,8 @@ export class Sewaddle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Sewaddle';
-  public fullName: string = 'Sewaddle UNM';
+  public fullName: string = 'Sewaddle (UNM 7)';
+  public legacyFullName = 'Sewaddle UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Swaddling Leaves: reduce damage taken by 10 after Weakness/Resistance

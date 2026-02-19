@@ -37,7 +37,8 @@ export class Pawniard extends PokemonCard {
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pawniard';
-  public fullName: string = 'Pawniard CEC';
+  public fullName: string = 'Pawniard (CEC 134)';
+  public legacyFullName = 'Pawniard CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bag Slash

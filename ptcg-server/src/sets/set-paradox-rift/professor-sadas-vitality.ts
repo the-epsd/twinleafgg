@@ -25,7 +25,8 @@ export class ProfessorSadasVitality extends TrainerCard {
 
   public name: string = 'Professor Sada\'s Vitality';
 
-  public fullName: string = 'Professor Sada\'s Vitality PAR';
+  public fullName: string = 'Professor Sada\'s Vitality (PAR 170)';
+  public legacyFullName = 'Professor Sada\'s Vitality PAR';
 
   public text: string =
     'Choose up to 2 of your Ancient Pokémon and attach a Basic Energy card from your discard pile to each of them. If you attached any Energy in this way, draw 3 cards.';

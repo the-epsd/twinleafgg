@@ -36,7 +36,8 @@ export class IonosKilowattrel extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '55';
   public name: string = 'Iono\'s Kilowattrel';
-  public fullName: string = 'Iono\'s Kilowattrel JTG';
+  public fullName: string = 'Iono\'s Kilowattrel (JTG 55)';
+  public legacyFullName = 'Iono\'s Kilowattrel JTG';
 
   public readonly RUMBLING_ENGINE_MARKER = 'RUMBLING_ENGINE_MARKER';
 

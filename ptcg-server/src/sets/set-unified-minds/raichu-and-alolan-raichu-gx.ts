@@ -35,7 +35,8 @@ export class RaichuAlolanRaichuGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '54';
   public name = 'Raichu & Alolan Raichu-GX';
-  public fullName = 'Raichu & Alolan Raichu GX UNM';
+  public fullName = 'Raichu & Alolan Raichu-GX (UNM 54)';
+  public legacyFullName = 'Raichu & Alolan Raichu GX UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

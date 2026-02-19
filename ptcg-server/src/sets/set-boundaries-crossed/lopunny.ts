@@ -36,7 +36,8 @@ export class Lopunny extends PokemonCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lopunny';
-  public fullName: string = 'Lopunny BCR';
+  public fullName: string = 'Lopunny (BCR 117)';
+  public legacyFullName = 'Lopunny BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Healing Melody

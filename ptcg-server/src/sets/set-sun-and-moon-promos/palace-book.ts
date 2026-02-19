@@ -20,7 +20,8 @@ export class PalaceBook extends TrainerCard {
 
   public name: string = 'Palace Book';
 
-  public fullName: string = 'Palace Book SMP';
+  public fullName: string = 'Palace Book (SMP NAN25)';
+  public legacyFullName = 'Palace Book SMP';
 
   public text: string =
     'Draw 3 cards. Your turn ends.';

@@ -30,7 +30,8 @@ export class Timburr extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Timburr';
-  public fullName: string = 'Timburr XY';
+  public fullName: string = 'Timburr (XY 65)';
+  public legacyFullName = 'Timburr XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-undaunted/houndour.ts (Jump On)

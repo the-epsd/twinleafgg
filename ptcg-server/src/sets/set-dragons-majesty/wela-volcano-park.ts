@@ -15,7 +15,8 @@ export class WelaVolcanoPark extends TrainerCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wela Volcano Park';
-  public fullName: string = 'Wela Volcano Park DRM';
+  public fullName: string = 'Wela Volcano Park (DRM 63)';
+  public legacyFullName = 'Wela Volcano Park DRM';
   public text: string = 'Whenever a player flips a coin for the Special Condition Burned between turns, that Special Condition isn\'t removed even if the result is heads.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

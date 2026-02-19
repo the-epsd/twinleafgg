@@ -45,7 +45,8 @@ export class Gardevoir extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gardevoir';
-  public fullName: string = 'Gardevoir AOR';
+  public fullName: string = 'Gardevoir (AOR 54)';
+  public legacyFullName = 'Gardevoir AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Bright Heal

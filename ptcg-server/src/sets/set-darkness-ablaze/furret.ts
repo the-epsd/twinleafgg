@@ -36,7 +36,8 @@ export class Furret extends PokemonCard {
   public setNumber: string = '136';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Furret';
-  public fullName: string = 'Furret DAA';
+  public fullName: string = 'Furret (DAA 136)';
+  public legacyFullName = 'Furret DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Feelin' Fine

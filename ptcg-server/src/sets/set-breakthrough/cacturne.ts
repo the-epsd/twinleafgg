@@ -30,7 +30,7 @@ export class Cacturne extends PokemonCard {
       name: 'Pin Missile',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
     }
   ];
@@ -39,7 +39,8 @@ export class Cacturne extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cacturne';
-  public fullName: string = 'Cacturne BKT';
+  public fullName: string = 'Cacturne (BKT 88)';
+  public legacyFullName = 'Cacturne BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Derail

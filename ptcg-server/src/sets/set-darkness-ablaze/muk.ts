@@ -36,7 +36,8 @@ export class Muk extends PokemonCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Muk';
-  public fullName: string = 'Muk DAA';
+  public fullName: string = 'Muk (DAA 101)';
+  public legacyFullName = 'Muk DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Triple Poison

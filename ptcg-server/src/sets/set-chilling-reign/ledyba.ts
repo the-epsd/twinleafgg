@@ -35,7 +35,8 @@ export class Ledyba extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ledyba';
-  public fullName: string = 'Ledyba CRE';
+  public fullName: string = 'Ledyba (CRE 4)';
+  public legacyFullName = 'Ledyba CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Collect

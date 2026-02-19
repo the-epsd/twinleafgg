@@ -21,7 +21,7 @@ export class WishiwashiGx extends PokemonCard {
       name: 'School Storm',
       cost: [W, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage for each of your Wishiwashi and Wishiwashi-GX in play.'
     },
     {
@@ -36,7 +36,8 @@ export class WishiwashiGx extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wishiwashi-GX';
-  public fullName: string = 'Wishiwashi-GX CEC';
+  public fullName: string = 'Wishiwashi-GX (CEC 63)';
+  public legacyFullName = 'Wishiwashi-GX CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: School Storm

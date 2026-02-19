@@ -82,7 +82,8 @@ export class TapuLele extends PokemonCard {
 
   public name: string = 'Tapu Lele';
 
-  public fullName: string = 'Tapu Lele SMP';
+  public fullName: string = 'Tapu Lele (SMP 45)';
+  public legacyFullName = 'Tapu Lele SMP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

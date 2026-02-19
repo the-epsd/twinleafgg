@@ -38,7 +38,8 @@ export class Meowstic extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meowstic';
-  public fullName: string = 'Meowstic FLF';
+  public fullName: string = 'Meowstic (FLF 43)';
+  public legacyFullName = 'Meowstic FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-temporal-forces/sableye.ts (MOVE_DAMAGE_COUNTERS prefab)

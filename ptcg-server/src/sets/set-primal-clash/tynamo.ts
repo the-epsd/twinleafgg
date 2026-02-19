@@ -22,7 +22,7 @@ export class Tynamo extends PokemonCard {
       name: 'Water Splash',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];
@@ -31,7 +31,8 @@ export class Tynamo extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tynamo';
-  public fullName: string = 'Tynamo PRC';
+  public fullName: string = 'Tynamo (PRC 62)';
+  public legacyFullName = 'Tynamo PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Water Splash

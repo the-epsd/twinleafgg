@@ -48,7 +48,8 @@ export class Metagross extends PokemonCard {
 
   public name: string = 'Metagross';
 
-  public fullName: string = 'Metagross TEF';
+  public fullName: string = 'Metagross (TEF 115)';
+  public legacyFullName = 'Metagross TEF';
 
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';

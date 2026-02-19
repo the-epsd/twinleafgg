@@ -29,7 +29,8 @@ export class Scraggy extends PokemonCard {
   public setNumber = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scraggy';
-  public fullName: string = 'Scraggy SLG';
+  public fullName: string = 'Scraggy (SLG 50)';
+  public legacyFullName = 'Scraggy SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

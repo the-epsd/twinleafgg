@@ -15,7 +15,8 @@ export class Eneporter extends TrainerCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eneporter';
-  public fullName: string = 'Eneporter FLI';
+  public fullName: string = 'Eneporter (FLI 106)';
+  public legacyFullName = 'Eneporter FLI';
   public text: string = 'Move a Special Energy from 1 of your opponent\'s Pokémon to another of their Pokémon.';
 
   // Ref: set-ultra-prism/roserade.ts (Flower Tornado - MoveEnergyPrompt pattern)

@@ -59,7 +59,8 @@ export class TeamFlareGrunt extends TrainerCard {
 
   public name: string = 'Team Flare Grunt';
 
-  public fullName: string = 'Team Flare Grunt GEN';
+  public fullName: string = 'Team Flare Grunt (GEN 73)';
+  public legacyFullName = 'Team Flare Grunt GEN';
 
   public cardImage: string = 'assets/cardback.png';
 

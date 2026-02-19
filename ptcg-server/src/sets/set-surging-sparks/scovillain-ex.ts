@@ -47,7 +47,8 @@ export class Scovillainex extends PokemonCard {
 
   public name: string = 'Scovillain ex';
 
-  public fullName: string = 'Scovillain ex SSP';
+  public fullName: string = 'Scovillain ex (SSP 37)';
+  public legacyFullName = 'Scovillain ex SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

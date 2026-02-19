@@ -13,7 +13,8 @@ export class SlumberingForest extends TrainerCard {
 
   public set: string = 'UNM';
   public name: string = 'Slumbering Forest';
-  public fullName: string = 'Slumbering Forest UNM';
+  public fullName: string = 'Slumbering Forest (UNM 207)';
+  public legacyFullName = 'Slumbering Forest UNM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '207';
 

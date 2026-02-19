@@ -42,7 +42,8 @@ export class GenesectGx extends PokemonCard {
   public setNumber: string = '130';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Genesect-GX';
-  public fullName: string = 'Genesect-GX LOT';
+  public fullName: string = 'Genesect-GX (LOT 130)';
+  public legacyFullName = 'Genesect-GX LOT';
 
   // TODO: Double Drive - "This Pokemon may have up to 2 Pokemon Tool cards attached to it" requires engine-level support for multiple tools. The ability's effect is passive and engine-level.
 

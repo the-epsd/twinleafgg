@@ -55,7 +55,8 @@ export class Seeker extends TrainerCard {
 
   public name: string = 'Seeker';
 
-  public fullName: string = 'Seeker TRM';
+  public fullName: string = 'Seeker (TM 88)';
+  public legacyFullName = 'Seeker TRM';
 
   public cardImage: string = 'assets/cardback.png';
 

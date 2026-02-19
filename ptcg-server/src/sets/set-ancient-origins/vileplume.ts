@@ -30,7 +30,8 @@ export class Vileplume extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vileplume';
-  public fullName: string = 'Vileplume AOR';
+  public fullName: string = 'Vileplume (AOR 3)';
+  public legacyFullName = 'Vileplume AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

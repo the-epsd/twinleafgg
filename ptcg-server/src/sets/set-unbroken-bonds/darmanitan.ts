@@ -36,7 +36,8 @@ export class Darmanitan extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Darmanitan';
-  public fullName: string = 'Darmanitan UNB';
+  public fullName: string = 'Darmanitan (UNB 24)';
+  public legacyFullName = 'Darmanitan UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Find Wildfire

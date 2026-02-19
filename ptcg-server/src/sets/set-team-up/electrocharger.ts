@@ -15,7 +15,8 @@ export class Electrocharger extends TrainerCard {
   public setNumber: string = '139';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electrocharger';
-  public fullName: string = 'Electrocharger TEU';
+  public fullName: string = 'Electrocharger (TEU 139)';
+  public legacyFullName = 'Electrocharger TEU';
   public text: string = 'Flip 2 coins. For each heads, shuffle an Electropower card from your discard pile into your deck.';
 
   // Ref: set-unified-minds/beheeyem.ts (trainer effect pattern), AGENTS-patterns.md (coin flips)

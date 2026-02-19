@@ -66,7 +66,8 @@ export class Agatha extends TrainerCard {
 
   public name: string = 'Agatha';
 
-  public fullName: string = 'Agatha CRE';
+  public fullName: string = 'Agatha (CRE 129)';
+  public legacyFullName = 'Agatha CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

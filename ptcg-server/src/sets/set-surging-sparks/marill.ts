@@ -20,7 +20,8 @@ export class Marill extends PokemonCard {
   public regulationMark = 'H';
   public set: string = 'SSP';
   public name: string = 'Marill';
-  public fullName: string = 'Marill SSP';
+  public fullName: string = 'Marill (SSP 73)';
+  public legacyFullName = 'Marill SSP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';
 }

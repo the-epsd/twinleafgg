@@ -29,7 +29,8 @@ export class Sunflora extends PokemonCard {
 
   public set: string = 'SIT';
 
-  public fullName: string = 'Sunflora SIT';
+  public fullName: string = 'Sunflora (SIT 6)';
+  public legacyFullName = 'Sunflora SIT';
 
   public name: string = 'Sunflora';
 

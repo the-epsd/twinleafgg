@@ -30,7 +30,8 @@ export class Zubat extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zubat';
-  public fullName: string = 'Zubat PHF';
+  public fullName: string = 'Zubat (PHF 31)';
+  public legacyFullName = 'Zubat PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Skill Dive

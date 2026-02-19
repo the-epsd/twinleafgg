@@ -22,7 +22,7 @@ export class Bisharp extends PokemonCard {
       name: 'Charge Order',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each of your Benched Pawniard.'
     },
     {
@@ -38,7 +38,8 @@ export class Bisharp extends PokemonCard {
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bisharp';
-  public fullName: string = 'Bisharp SSH';
+  public fullName: string = 'Bisharp (SSH 134)';
+  public legacyFullName = 'Bisharp SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Charge Order

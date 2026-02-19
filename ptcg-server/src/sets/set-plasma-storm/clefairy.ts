@@ -35,7 +35,8 @@ export class Clefairy extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clefairy';
-  public fullName: string = 'Clefairy PLS';
+  public fullName: string = 'Clefairy (PLS 97)';
+  public legacyFullName = 'Clefairy PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Double Slap

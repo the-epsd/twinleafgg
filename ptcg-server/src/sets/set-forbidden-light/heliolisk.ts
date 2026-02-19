@@ -37,7 +37,8 @@ export class Heliolisk extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heliolisk';
-  public fullName: string = 'Heliolisk FLI';
+  public fullName: string = 'Heliolisk (FLI 38)';
+  public legacyFullName = 'Heliolisk FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Volt Wave

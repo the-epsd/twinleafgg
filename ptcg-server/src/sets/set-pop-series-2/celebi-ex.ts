@@ -32,7 +32,8 @@ export class Celebiex extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celebi ex';
-  public fullName: string = 'Celebi ex P2';
+  public fullName: string = 'Celebi ex (P2 17)';
+  public legacyFullName = 'Celebi ex P2';
 
   public readonly PSYCHIC_SHIELD_MARKER = 'PSYCHIC_SHIELD_MARKER';
 

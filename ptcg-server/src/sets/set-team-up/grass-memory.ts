@@ -15,7 +15,8 @@ export class GrassMemory extends TrainerCard {
   public setNumber: string = '143';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grass Memory';
-  public fullName: string = 'Grass Memory TEU';
+  public fullName: string = 'Grass Memory (TEU 143)';
+  public legacyFullName = 'Grass Memory TEU';
   public text: string = 'The Silvally-GX this card is attached to is a Grass Pokémon.';
 
   // Ref: set-ultra-prism/fire-memory.ts (Memory tool - CheckPokemonTypeEffect)

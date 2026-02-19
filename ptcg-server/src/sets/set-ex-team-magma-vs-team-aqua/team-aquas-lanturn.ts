@@ -32,7 +32,8 @@ export class TeamAquasLanturn extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
   public name: string = 'Team Aqua\'s Lanturn';
-  public fullName: string = 'Team Aqua\'s Lanturn MA';
+  public fullName: string = 'Team Aqua\'s Lanturn (MA 28)';
+  public legacyFullName = 'Team Aqua\'s Lanturn MA';
 
   public readonly AUXILIARY_LIGHT_MARKER = 'AUXILIARY_LIGHT_MARKER';
 

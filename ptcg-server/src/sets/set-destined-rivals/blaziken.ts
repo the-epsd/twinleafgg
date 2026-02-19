@@ -32,7 +32,8 @@ export class Blaziken extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
   public name: string = 'Blaziken';
-  public fullName: string = 'Blaziken DRI';
+  public fullName: string = 'Blaziken (DRI 42)';
+  public legacyFullName = 'Blaziken DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

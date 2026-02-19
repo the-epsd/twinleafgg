@@ -28,7 +28,7 @@ export class Salamence extends PokemonCard {
       name: 'Power Howl',
       cost: [W, C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage times the number of cards in your opponent\'s hand.'
     },
     {
@@ -43,7 +43,8 @@ export class Salamence extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salamence';
-  public fullName: string = 'Salamence ROS';
+  public fullName: string = 'Salamence (ROS 57)';
+  public legacyFullName = 'Salamence ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shatter

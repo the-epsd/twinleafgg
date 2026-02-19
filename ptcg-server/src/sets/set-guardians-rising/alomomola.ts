@@ -34,7 +34,8 @@ export class Alomomola extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alomomola';
-  public fullName: string = 'Alomomola GRI';
+  public fullName: string = 'Alomomola (GRI 36)';
+  public legacyFullName = 'Alomomola GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Borne Ashore

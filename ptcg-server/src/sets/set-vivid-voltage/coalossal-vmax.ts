@@ -24,7 +24,7 @@ export class CoalossalVmax extends PokemonCard {
       name: 'Eruption Shot',
       cost: [F],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Discard the top card of your deck. If that card is an Energy card, this attack does 90 more damage, and attach that card to this Pokémon.'
     },
     {
@@ -40,7 +40,8 @@ export class CoalossalVmax extends PokemonCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Coalossal VMAX';
-  public fullName: string = 'Coalossal VMAX VIV';
+  public fullName: string = 'Coalossal VMAX (VIV 99)';
+  public legacyFullName = 'Coalossal VMAX VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Eruption Shot

@@ -46,7 +46,8 @@ export class WoChienex extends PokemonCard {
 
   public name: string = 'Wo-Chien ex';
 
-  public fullName: string = 'Wo-Chien ex PAL';
+  public fullName: string = 'Wo-Chien ex (PAL 27)';
+  public legacyFullName = 'Wo-Chien ex PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

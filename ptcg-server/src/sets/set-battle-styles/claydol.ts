@@ -40,7 +40,8 @@ export class Claydol extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Claydol';
-  public fullName: string = 'Claydol BST';
+  public fullName: string = 'Claydol (BST 58)';
+  public legacyFullName = 'Claydol BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Power Split

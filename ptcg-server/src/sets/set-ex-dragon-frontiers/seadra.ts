@@ -31,7 +31,8 @@ export class Seadra extends PokemonCard {
 
   public set: string = 'DF';
   public name: string = 'Seadra';
-  public fullName: string = 'Seadra DF';
+  public fullName: string = 'Seadra (DF 22)';
+  public legacyFullName = 'Seadra DF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '22';
 

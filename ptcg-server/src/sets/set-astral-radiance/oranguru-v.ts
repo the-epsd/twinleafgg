@@ -50,7 +50,8 @@ export class OranguruV extends PokemonCard {
 
   public name: string = 'Oranguru V';
 
-  public fullName: string = 'Oranguru V ASR';
+  public fullName: string = 'Oranguru V (ASR 133)';
+  public legacyFullName = 'Oranguru V ASR';
 
   public readonly BACK_ORDER_MARKER = 'BACK_ORDER_MARKER';
 

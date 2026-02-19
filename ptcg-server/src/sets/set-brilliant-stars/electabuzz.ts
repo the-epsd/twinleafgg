@@ -25,7 +25,8 @@ export class Electabuzz extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
   public name: string = 'Electabuzz';
-  public fullName: string = 'Electabuzz BST';
+  public fullName: string = 'Electabuzz (BST 44)';
+  public legacyFullName = 'Electabuzz BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

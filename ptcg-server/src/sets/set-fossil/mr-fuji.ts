@@ -19,7 +19,8 @@ export class MrFuji extends TrainerCard {
 
   public name: string = 'Mr. Fuji';
 
-  public fullName: string = 'Mr. Fuji FO';
+  public fullName: string = 'Mr. Fuji (FO 58)';
+  public legacyFullName = 'Mr. Fuji FO';
 
   public text: string =
     'Choose a Pokémon on your Bench. Shuffle it and any cards attached to it into your deck.';

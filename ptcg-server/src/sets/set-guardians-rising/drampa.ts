@@ -34,7 +34,8 @@ export class Drampa extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drampa';
-  public fullName: string = 'Drampa GRI';
+  public fullName: string = 'Drampa (GRI 97)';
+  public legacyFullName = 'Drampa GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Amass

@@ -34,7 +34,8 @@ export class ShiningCelebi extends PokemonCard {
 
   public name: string = 'Shining Celebi';
 
-  public fullName: string = 'Shining Celebi SMP';
+  public fullName: string = 'Shining Celebi (SMP 79)';
+  public legacyFullName = 'Shining Celebi SMP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

@@ -65,7 +65,8 @@ export class BirdKeeper extends TrainerCard {
 
   public name: string = 'Bird Keeper';
 
-  public fullName: string = 'Bird Keeper DAA';
+  public fullName: string = 'Bird Keeper (DAA 159)';
+  public legacyFullName = 'Bird Keeper DAA';
 
   public text: string =
     'Switch your Active Pokemon with 1 of your Benched Pokemon.';

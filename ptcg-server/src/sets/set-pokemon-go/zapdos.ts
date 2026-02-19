@@ -43,7 +43,8 @@ export class Zapdos extends PokemonCard {
 
   public name: string = 'Zapdos';
 
-  public fullName: string = 'Zapdos PGO';
+  public fullName: string = 'Zapdos (PGO 29)';
+  public legacyFullName = 'Zapdos PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect) {

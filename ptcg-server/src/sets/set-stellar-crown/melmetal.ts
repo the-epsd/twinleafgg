@@ -31,7 +31,8 @@ export class Melmetal extends PokemonCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Melmetal';
-  public fullName: string = 'Melmetal SCR';
+  public fullName: string = 'Melmetal (SCR 104)';
+  public legacyFullName = 'Melmetal SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

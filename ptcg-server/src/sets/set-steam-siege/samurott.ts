@@ -38,7 +38,8 @@ export class Samurott extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Samurott';
-  public fullName: string = 'Samurott STS';
+  public fullName: string = 'Samurott (STS 32)';
+  public legacyFullName = 'Samurott STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ultimate Blade

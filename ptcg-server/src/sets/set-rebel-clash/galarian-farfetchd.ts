@@ -37,7 +37,8 @@ export class GalarianFarfetchd extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Farfetch\'d';
-  public fullName: string = 'Galarian Farfetch\'d RCL';
+  public fullName: string = 'Galarian Farfetch\'d (RCL 94)';
+  public legacyFullName = 'Galarian Farfetch\'d RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Smash

@@ -90,7 +90,8 @@ export class DowsingMachine extends TrainerCard {
 
   public name: string = 'Dowsing Machine';
 
-  public fullName: string = 'Dowsing Machine PLS';
+  public fullName: string = 'Dowsing Machine (PLS 128)';
+  public legacyFullName = 'Dowsing Machine PLS';
 
   public cardImage: string = 'assets/cardback.png';
 

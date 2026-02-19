@@ -20,7 +20,7 @@ export class Kyurem extends PokemonCard {
       name: 'Extreme Freeze',
       cost: [W, W, M],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard any amount of [W] Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way.'
     }
   ];
@@ -30,7 +30,8 @@ export class Kyurem extends PokemonCard {
   public setNumber: string = '116';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kyurem';
-  public fullName: string = 'Kyurem EVS';
+  public fullName: string = 'Kyurem (EVS 116)';
+  public legacyFullName = 'Kyurem EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Extreme Freeze

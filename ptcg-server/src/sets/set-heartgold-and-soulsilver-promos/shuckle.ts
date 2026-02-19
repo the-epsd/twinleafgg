@@ -41,7 +41,8 @@ export class Shuckle extends PokemonCard {
 
   public name: string = 'Shuckle';
 
-  public fullName: string = 'Shuckle HSP';
+  public fullName: string = 'Shuckle (HSP 15)';
+  public legacyFullName = 'Shuckle HSP';
 
   public cardImage: string = 'assets/cardback.png';
 

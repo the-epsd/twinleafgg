@@ -23,7 +23,7 @@ export class MRayquazaEx2 extends PokemonCard {
       name: 'Emerald Break',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 30 damage times the number of your Benched Pok\u00e9mon.'
     }
   ];
@@ -32,7 +32,8 @@ export class MRayquazaEx2 extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Rayquaza-EX';
-  public fullName: string = 'M Rayquaza-EX ROS 76';
+  public fullName: string = 'M Rayquaza-EX (ROS 76)';
+  public legacyFullName = 'M Rayquaza-EX ROS 76';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Emerald Break

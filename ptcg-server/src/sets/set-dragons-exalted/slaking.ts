@@ -34,7 +34,8 @@ export class Slaking extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slaking';
-  public fullName: string = 'Slaking DRX';
+  public fullName: string = 'Slaking (DRX 103)';
+  public legacyFullName = 'Slaking DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Unobservant - Can't attack if opponent's active is Basic

@@ -25,7 +25,7 @@ export class MGardevoirEx extends PokemonCard {
       name: 'Despair Ray',
       cost: [Y, C],
       damage: 110,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Discard as many of your Benched Pok\u00e9mon as you like. This attack does 10 more damage for each Benched Pok\u00e9mon you discarded in this way.'
     }
   ];
@@ -34,7 +34,8 @@ export class MGardevoirEx extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Gardevoir-EX';
-  public fullName: string = 'M Gardevoir-EX STS';
+  public fullName: string = 'M Gardevoir-EX (STS 79)';
+  public legacyFullName = 'M Gardevoir-EX STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Mega Evolution Rule: end turn when evolving (unless Spirit Link attached)

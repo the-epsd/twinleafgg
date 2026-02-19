@@ -28,7 +28,8 @@ export class Weezing extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weezing';
-  public fullName: string = 'Weezing CEC';
+  public fullName: string = 'Weezing (CEC 77)';
+  public legacyFullName = 'Weezing CEC';
 
   public usedBalloonBurst = false;
 

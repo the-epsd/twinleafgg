@@ -21,7 +21,7 @@ export class Golisopod extends PokemonCard {
       name: 'Hard Times Slash',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 50 more damage for each of your opponent\'s Pokémon V and Pokémon-GX in play.'
     },
     {
@@ -37,7 +37,8 @@ export class Golisopod extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golisopod';
-  public fullName: string = 'Golisopod DAA';
+  public fullName: string = 'Golisopod (DAA 18)';
+  public legacyFullName = 'Golisopod DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hard Times Slash

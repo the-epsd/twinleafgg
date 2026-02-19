@@ -24,7 +24,8 @@ export class ParallelCity extends TrainerCard {
 
   public name: string = 'Parallel City';
 
-  public fullName: string = 'Parallel City BKT';
+  public fullName: string = 'Parallel City (BKT 145)';
+  public legacyFullName = 'Parallel City BKT';
   
   public text: string =
     'Choose which way this card faces before you play it. This â†“ player can\'t have more than 3 Benched Pokémon. (When this card comes into play, this â†“ player discards Benched Pokémon until he or she has 3 Pokémon on the Bench.)' +

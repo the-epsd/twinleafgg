@@ -33,5 +33,6 @@ export class Zweilous extends PokemonCard {
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zweilous';
-  public fullName: string = 'Zweilous DAA';
+  public fullName: string = 'Zweilous (DAA 109)';
+  public legacyFullName = 'Zweilous DAA';
 }

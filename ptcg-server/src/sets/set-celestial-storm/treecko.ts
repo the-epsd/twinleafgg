@@ -29,7 +29,8 @@ export class Treecko extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Treecko';
-  public fullName: string = 'Treecko CES';
+  public fullName: string = 'Treecko (CES 7)';
+  public legacyFullName = 'Treecko CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sleep Poison

@@ -21,7 +21,7 @@ export class Wailord extends PokemonCard {
       name: 'Dwindling Wave',
       cost: [W, W, W, W],
       damage: 200,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-' as const,
       text: 'This attack does 40 less damage for each damage counter on this Pokémon.'
     }
   ];
@@ -30,7 +30,8 @@ export class Wailord extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wailord';
-  public fullName: string = 'Wailord CES';
+  public fullName: string = 'Wailord (CES 40)';
+  public legacyFullName = 'Wailord CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dwindling Wave

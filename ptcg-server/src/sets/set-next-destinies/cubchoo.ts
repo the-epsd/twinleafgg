@@ -30,7 +30,8 @@ export class Cubchoo extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cubchoo';
-  public fullName: string = 'Cubchoo NXD';
+  public fullName: string = 'Cubchoo (NXD 36)';
+  public legacyFullName = 'Cubchoo NXD';
 
   public readonly SNIFFLE_MARKER = 'SNIFFLE_MARKER';
   public readonly SNIFFLE_CLEAR_MARKER = 'SNIFFLE_CLEAR_MARKER';

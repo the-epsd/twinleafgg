@@ -65,7 +65,8 @@ export class SacredAsh extends TrainerCard {
 
   public name: string = 'Sacred Ash';
 
-  public fullName: string = 'Sacred Ash FLF';
+  public fullName: string = 'Sacred Ash (FLF 96)';
+  public legacyFullName = 'Sacred Ash FLF';
 
   public cardImage: string = 'assets/cardback.png';
 

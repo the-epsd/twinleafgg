@@ -33,7 +33,8 @@ export class Boldore extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '51';
   public name: string = 'Boldore';
-  public fullName: string = 'Boldore EPO';
+  public fullName: string = 'Boldore (EPO 51)';
+  public legacyFullName = 'Boldore EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

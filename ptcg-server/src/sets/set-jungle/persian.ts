@@ -40,7 +40,8 @@ export class Persian extends PokemonCard {
 
   public name: string = 'Persian';
 
-  public fullName: string = 'Persian JU';
+  public fullName: string = 'Persian (JU 42)';
+  public legacyFullName = 'Persian JU';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

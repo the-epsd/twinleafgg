@@ -40,7 +40,8 @@ export class Diggersby extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Diggersby';
-  public fullName: string = 'Diggersby CIN';
+  public fullName: string = 'Diggersby (CIN 88)';
+  public legacyFullName = 'Diggersby CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dig

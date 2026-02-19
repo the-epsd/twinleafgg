@@ -22,7 +22,7 @@ export class Gyarados extends PokemonCard {
       name: 'Venting Anger',
       cost: [C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 50 damage for each Magikarp in your discard pile.'
     },
     {
@@ -37,7 +37,8 @@ export class Gyarados extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gyarados';
-  public fullName: string = 'Gyarados BUS';
+  public fullName: string = 'Gyarados (BUS 33)';
+  public legacyFullName = 'Gyarados BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Venting Anger

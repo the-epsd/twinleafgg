@@ -30,7 +30,8 @@ export class OriginFormePalkiaV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '39';
   public name: string = 'Origin Forme Palkia V';
-  public fullName: string = 'Origin Forme Palkia V ASR';
+  public fullName: string = 'Origin Forme Palkia V (ASR 39)';
+  public legacyFullName = 'Origin Forme Palkia V ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

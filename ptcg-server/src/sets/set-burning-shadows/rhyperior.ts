@@ -35,7 +35,8 @@ export class Rhyperior extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rhyperior';
-  public fullName: string = 'Rhyperior BUS';
+  public fullName: string = 'Rhyperior (BUS 67)';
+  public legacyFullName = 'Rhyperior BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Toppling Wind (on-evolve)

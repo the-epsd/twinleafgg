@@ -76,7 +76,8 @@ export class Pokeball extends TrainerCard {
 
   public name = 'Poké Ball';
 
-  public fullName: string = 'Poké Ball SVI';
+  public fullName: string = 'Poké Ball (SVI 185)';
+  public legacyFullName = 'Poké Ball SVI';
 
   public text: string = 'Flip a coin. If heads, search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.';
 

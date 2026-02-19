@@ -21,7 +21,7 @@ export class GalarianYamask extends PokemonCard {
       name: 'Brutal Swing',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -31,7 +31,8 @@ export class GalarianYamask extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Yamask';
-  public fullName: string = 'Galarian Yamask CRE';
+  public fullName: string = 'Galarian Yamask (CRE 82)';
+  public legacyFullName = 'Galarian Yamask CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Brutal Swing

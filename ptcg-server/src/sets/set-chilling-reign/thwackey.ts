@@ -31,7 +31,8 @@ export class Thwackey extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Thwackey';
-  public fullName: string = 'Thwackey CRE';
+  public fullName: string = 'Thwackey (CRE 17)';
+  public legacyFullName = 'Thwackey CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Knock Off

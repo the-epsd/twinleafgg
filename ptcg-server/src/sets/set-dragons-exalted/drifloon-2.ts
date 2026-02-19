@@ -29,7 +29,8 @@ export class Drifloon2 extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drifloon';
-  public fullName: string = 'Drifloon DRX 49';
+  public fullName: string = 'Drifloon (DRX 49)';
+  public legacyFullName = 'Drifloon DRX 49';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-triumphant/gastly.ts (Sneaky Placement)

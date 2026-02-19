@@ -31,7 +31,8 @@ export class Sandygast extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandygast';
-  public fullName: string = 'Sandygast RCL';
+  public fullName: string = 'Sandygast (RCL 81)';
+  public legacyFullName = 'Sandygast RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sneaky Placement

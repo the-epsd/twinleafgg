@@ -30,7 +30,7 @@ export class AlolanExeggutor extends PokemonCard {
       name: 'Draco Meteor Barrage',
       cost: [G, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin for each [G] Energy attached to this Pokémon. This attack does 80 damage for each heads.'
     }
   ];
@@ -39,7 +39,8 @@ export class AlolanExeggutor extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Exeggutor';
-  public fullName: string = 'Alolan Exeggutor UPR';
+  public fullName: string = 'Alolan Exeggutor (UPR 95)';
+  public legacyFullName = 'Alolan Exeggutor UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Exeggutor's Paradise

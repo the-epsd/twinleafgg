@@ -29,7 +29,8 @@ export class Meowth extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meowth';
-  public fullName: string = 'Meowth BCR';
+  public fullName: string = 'Meowth (BCR 106)';
+  public legacyFullName = 'Meowth BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fake Out

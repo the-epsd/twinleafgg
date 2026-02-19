@@ -29,7 +29,8 @@ export class Togepi extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togepi';
-  public fullName: string = 'Togepi ROS';
+  public fullName: string = 'Togepi (ROS 43)';
+  public legacyFullName = 'Togepi ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sweet Kiss

@@ -15,7 +15,8 @@ export class MistysDetermination extends TrainerCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Misty\'s Determination';
-  public fullName: string = 'Misty\'s Determination EVO';
+  public fullName: string = 'Misty\'s Determination (EVO 80)';
+  public legacyFullName = 'Misty\'s Determination EVO';
   public text: string = 'Discard a card from your hand. If you do, look at the top 8 cards of your deck and put 1 of them into your hand. Shuffle the other cards back into your deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Refs: set-phantom-forces/tierno.ts (Supporter pattern), set-celebrations/mew.ts (look at top X, pick 1)

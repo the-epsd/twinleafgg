@@ -16,7 +16,8 @@ export class RedeemableTicket extends TrainerCard {
 
   public setNumber: string = '156';
 
-  public fullName: string = 'Redeemable Ticket JTG';
+  public fullName: string = 'Redeemable Ticket (JTG 156)';
+  public legacyFullName = 'Redeemable Ticket JTG';
 
   public text: string =
     'Count your Prize cards and shuffle them face down, then put them at the bottom of your deck. If you do, add that many cards from the top of your deck to your Prize cards.';

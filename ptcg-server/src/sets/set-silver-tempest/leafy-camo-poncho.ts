@@ -7,7 +7,8 @@ import { TrainerTargetEffect } from '../../game/store/effects/play-card-effects'
 export class LeafyCamoPoncho extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public name: string = 'Leafy Camo Poncho';
-  public fullName: string = 'Leafy Camo Poncho SIT';
+  public fullName: string = 'Leafy Camo Poncho (SIT 160)';
+  public legacyFullName = 'Leafy Camo Poncho SIT';
   public set: string = 'SIT';
   public setNumber: string = '160';
   public cardImage: string = 'assets/cardback.png';

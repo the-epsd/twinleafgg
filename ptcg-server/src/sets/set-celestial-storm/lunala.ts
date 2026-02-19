@@ -30,7 +30,7 @@ export class Lunala extends PokemonCard {
       name: 'Full Moon Ray',
       cost: [P, P, P],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -39,7 +39,8 @@ export class Lunala extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lunala';
-  public fullName: string = 'Lunala CES';
+  public fullName: string = 'Lunala (CES 70)';
+  public legacyFullName = 'Lunala CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Shadow Shield (passive - damage reduction if [P] Energy attached)

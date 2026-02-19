@@ -31,7 +31,8 @@ export class Combusken extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Combusken';
-  public fullName: string = 'Combusken DRI';
+  public fullName: string = 'Combusken (DRI 41)';
+  public legacyFullName = 'Combusken DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

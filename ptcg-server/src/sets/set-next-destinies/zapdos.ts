@@ -33,7 +33,8 @@ export class Zapdos extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zapdos';
-  public fullName: string = 'Zapdos NXD';
+  public fullName: string = 'Zapdos (NXD 41)';
+  public legacyFullName = 'Zapdos NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Thunder Claw - flip for benched damage

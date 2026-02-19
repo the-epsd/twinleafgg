@@ -29,7 +29,7 @@ export class Mismagius extends PokemonCard {
       name: 'Dark Arts',
       cost: [P, C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage for each card in your opponent\'s hand.'
     }
   ];
@@ -38,7 +38,8 @@ export class Mismagius extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mismagius';
-  public fullName: string = 'Mismagius CIN';
+  public fullName: string = 'Mismagius (CIN 40)';
+  public legacyFullName = 'Mismagius CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Chaos Wheel

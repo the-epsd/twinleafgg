@@ -34,7 +34,8 @@ export class Roserade2 extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Roserade';
-  public fullName: string = 'Roserade DRX 14';
+  public fullName: string = 'Roserade (DRX 14)';
+  public legacyFullName = 'Roserade DRX 14';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/ambipom.ts (multiple coin flips for damage)

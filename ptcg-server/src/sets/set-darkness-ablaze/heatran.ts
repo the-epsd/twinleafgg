@@ -27,7 +27,7 @@ export class Heatran extends PokemonCard {
       name: 'Raging Flare',
       cost: [R, R, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class Heatran extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heatran';
-  public fullName: string = 'Heatran DAA';
+  public fullName: string = 'Heatran (DAA 25)';
+  public legacyFullName = 'Heatran DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fire Fang

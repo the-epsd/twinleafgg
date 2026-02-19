@@ -15,7 +15,8 @@ export class CursedStone extends TrainerCard {
   public setNumber = '72';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Cursed Stone';
-  public fullName: string = 'Cursed Stone LM';
+  public fullName: string = 'Cursed Stone (LM 72)';
+  public legacyFullName = 'Cursed Stone LM';
 
   public text: string =
     'At any time between turns, each player puts 1 damage counter on his or her Pokémon that has a Poké-Power.';

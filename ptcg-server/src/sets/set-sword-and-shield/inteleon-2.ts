@@ -37,7 +37,8 @@ export class Inteleon2 extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Inteleon';
-  public fullName: string = 'Inteleon SSH 59';
+  public fullName: string = 'Inteleon (SSH 59)';
+  public legacyFullName = 'Inteleon SSH 59';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Silent Shot

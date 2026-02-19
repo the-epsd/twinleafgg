@@ -34,7 +34,8 @@ export class Zangoose extends PokemonCard {
   public setNumber: string = '120';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zangoose';
-  public fullName: string = 'Zangoose CRE';
+  public fullName: string = 'Zangoose (CRE 120)';
+  public legacyFullName = 'Zangoose CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track when a Rapid Strike Supporter is played this turn

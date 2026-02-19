@@ -35,7 +35,8 @@ export class NsSigilyph extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '64';
   public name: string = 'N\'s Sigilyph';
-  public fullName: string = 'N\'s Sigilyph JTG';
+  public fullName: string = 'N\'s Sigilyph (JTG 64)';
+  public legacyFullName = 'N\'s Sigilyph JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

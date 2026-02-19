@@ -33,7 +33,8 @@ export class Yanma extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yanma';
-  public fullName: string = 'Yanma UPR';
+  public fullName: string = 'Yanma (UPR 2)';
+  public legacyFullName = 'Yanma UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Super Speed

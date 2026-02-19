@@ -41,7 +41,8 @@ export class Raichu extends PokemonCard {
 
   public name: string = 'Raichu';
 
-  public fullName: string = 'Raichu XY';
+  public fullName: string = 'Raichu (XY 43)';
+  public legacyFullName = 'Raichu XY';
 
   public cardImage: string = 'assets/cardback.png';
 

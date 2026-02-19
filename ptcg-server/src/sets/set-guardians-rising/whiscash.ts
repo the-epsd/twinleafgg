@@ -29,7 +29,7 @@ export class Whiscash extends PokemonCard {
       name: 'Landslip',
       cost: [F, C, C, C],
       damage: 100,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard the top 3 cards of your deck. This attack does 100 damage for each Energy card you discarded in this way.'
     }
   ];
@@ -38,7 +38,8 @@ export class Whiscash extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whiscash';
-  public fullName: string = 'Whiscash GRI';
+  public fullName: string = 'Whiscash (GRI 71)';
+  public legacyFullName = 'Whiscash GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Water Pulse

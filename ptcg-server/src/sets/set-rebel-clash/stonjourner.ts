@@ -27,7 +27,7 @@ export class Stonjourner extends PokemonCard {
       name: 'Power Press',
       cost: [F, C, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has at least 1 extra Energy attached (in addition to this attack\'s cost), this attack does 60 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Stonjourner extends PokemonCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stonjourner';
-  public fullName: string = 'Stonjourner RCL';
+  public fullName: string = 'Stonjourner (RCL 111)';
+  public legacyFullName = 'Stonjourner RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Power Press

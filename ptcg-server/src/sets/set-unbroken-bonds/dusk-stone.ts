@@ -133,7 +133,8 @@ export class DuskStone extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'UNB';
   public name: string = 'Dusk Stone';
-  public fullName: string = 'Dusk Stone UNB';
+  public fullName: string = 'Dusk Stone (UNB 167)';
+  public legacyFullName = 'Dusk Stone UNB';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '167';
   public text: string = 'Search your deck for a Mismagius, Honchkrow, Chandelure, or Aegislash, including Pokémon-GX, that evolves from 1 of your Pokémon in play, and put it onto that Pokémon to evolve it. Then, shuffle your deck. You can use this card during your first turn or on a Pokémon that was put into play this turn.';

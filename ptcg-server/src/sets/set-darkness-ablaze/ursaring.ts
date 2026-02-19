@@ -50,7 +50,8 @@ export class Ursaring extends PokemonCard {
 
   public name: string = 'Ursaring';
 
-  public fullName: string = 'Ursaring DAA';
+  public fullName: string = 'Ursaring (DAA 139)';
+  public legacyFullName = 'Ursaring DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -21,7 +21,8 @@ export class Pikachu extends PokemonCard {
 
   public cardType = CardType.LIGHTNING;
 
-  public fullName = 'Pikachu BS';
+  public fullName = 'Pikachu (BS 58)';
+  public legacyFullName = 'Pikachu BS';
 
   public stage = Stage.BASIC;
 

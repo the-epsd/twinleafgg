@@ -39,7 +39,8 @@ export class IonosVoltorb extends PokemonCard {
 
   public name: string = 'Iono\'s Voltorb';
 
-  public fullName: string = 'Iono\'s Voltorb JTG';
+  public fullName: string = 'Iono\'s Voltorb (JTG 47)';
+  public legacyFullName = 'Iono\'s Voltorb JTG';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

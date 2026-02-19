@@ -40,7 +40,8 @@ export class Eiscue extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eiscue';
-  public fullName: string = 'Eiscue EVS';
+  public fullName: string = 'Eiscue (EVS 47)';
+  public legacyFullName = 'Eiscue EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Blockface

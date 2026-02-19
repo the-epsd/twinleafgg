@@ -83,7 +83,8 @@ export class EnergyRemoval2 extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'PK';
   public name: string = 'Energy Removal 2';
-  public fullName: string = 'Energy Removal 2 PK';
+  public fullName: string = 'Energy Removal 2 (PK 74)';
+  public legacyFullName = 'Energy Removal 2 PK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '74';
   public text = 'Flip a coin. If heads, choose 1 Energy card attached to 1 of your opponent\'s Pokémon and discard it.';

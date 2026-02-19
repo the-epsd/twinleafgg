@@ -14,7 +14,8 @@ export class ReturnLabel extends TrainerCard {
   public setNumber: string = '153';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Return Label';
-  public fullName: string = 'Return Label TEU';
+  public fullName: string = 'Return Label (TEU 153)';
+  public legacyFullName = 'Return Label TEU';
   public text: string = 'Put a card from your opponent\'s discard pile on the bottom of their deck.';
 
   // Ref: set-lost-thunder/morty.ts (choose from opponent's zone pattern)

@@ -38,7 +38,8 @@ export class Deoxys extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Deoxys';
-  public fullName: string = 'Deoxys ROS';
+  public fullName: string = 'Deoxys (ROS 33)';
+  public legacyFullName = 'Deoxys ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Close Encounter

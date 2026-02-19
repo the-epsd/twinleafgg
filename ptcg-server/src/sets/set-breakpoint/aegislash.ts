@@ -38,7 +38,8 @@ export class Aegislash extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aegislash';
-  public fullName: string = 'Aegislash BKP';
+  public fullName: string = 'Aegislash (BKP 62)';
+  public legacyFullName = 'Aegislash BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Painful Sword

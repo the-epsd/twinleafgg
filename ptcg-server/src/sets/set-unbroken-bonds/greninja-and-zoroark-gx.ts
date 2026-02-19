@@ -34,7 +34,8 @@ export class GreninjaAndZoroarkGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '107';
   public name: string = 'Greninja & Zoroark-GX';
-  public fullName: string = 'Greninja & Zoroark-GX UNB';
+  public fullName: string = 'Greninja & Zoroark-GX (UNB 107)';
+  public legacyFullName = 'Greninja & Zoroark-GX UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Dark Pulse

@@ -85,7 +85,8 @@ export class PokemonCommunication extends TrainerCard {
 
   public name: string = 'Pokémon Communication';
 
-  public fullName: string = 'Pokemon Communication TEU';
+  public fullName: string = 'Pokémon Communication (TEU 152)';
+  public legacyFullName = 'Pokemon Communication TEU';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -46,7 +46,8 @@ export class HisuianArcanine extends PokemonCard {
 
   public name: string = 'Hisuian Arcanine';
 
-  public fullName: string = 'Hisuian Arcanine TWM';
+  public fullName: string = 'Hisuian Arcanine (TWM 100)';
+  public legacyFullName = 'Hisuian Arcanine TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

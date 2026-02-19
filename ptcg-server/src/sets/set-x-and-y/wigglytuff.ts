@@ -38,7 +38,8 @@ export class Wigglytuff extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wigglytuff';
-  public fullName: string = 'Wigglytuff XY';
+  public fullName: string = 'Wigglytuff (XY 89)';
+  public legacyFullName = 'Wigglytuff XY';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'WIGGLYTUFF_DEFENDING_CANNOT_ATTACK_MARKER';
 

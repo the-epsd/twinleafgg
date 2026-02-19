@@ -30,7 +30,7 @@ export class FlygonGx extends PokemonCard {
       name: 'Desert Hurricane',
       cost: [F, F, F],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 120 more damage. Then, discard that Stadium card.'
     },
     {
@@ -45,7 +45,8 @@ export class FlygonGx extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flygon-GX';
-  public fullName: string = 'Flygon-GX CEC';
+  public fullName: string = 'Flygon-GX (CEC 110)';
+  public legacyFullName = 'Flygon-GX CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Dusty Defense (passive - reduce damage to all your Pokemon)

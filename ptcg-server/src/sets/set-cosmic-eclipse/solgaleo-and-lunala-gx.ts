@@ -33,7 +33,8 @@ export class SolgaleoLunalaGX extends PokemonCard {
   public setNumber = '75';
   public cardImage = 'assets/cardback.png';
   public name = 'Solgaleo & Lunala-GX';
-  public fullName = 'Solgaleo & Lunala-GX CEC';
+  public fullName = 'Solgaleo & Lunala-GX (CEC 75)';
+  public legacyFullName = 'Solgaleo & Lunala-GX CEC';
 
   public readonly COSMIC_BURN_MARKER = 'COSMIC_BURN_MARKER';
   public readonly CLEAR_COSMIC_BURN_MARKER = 'CLEAR_COSMIC_BURN_MARKER';

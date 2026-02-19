@@ -76,7 +76,8 @@ export class NetBall extends TrainerCard {
 
   public name: string = 'Net Ball';
 
-  public fullName: string = 'Net Ball LOT';
+  public fullName: string = 'Net Ball (LOT 187)';
+  public legacyFullName = 'Net Ball LOT';
 
   public cardImage: string = 'assets/cardback.png';
 

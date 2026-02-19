@@ -57,7 +57,8 @@ export class EnergyReset extends TrainerCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Energy Reset';
-  public fullName: string = 'Energy Reset FCO';
+  public fullName: string = 'Energy Reset (FCO 98)';
+  public legacyFullName = 'Energy Reset FCO';
   public text: string = 'Put as many Energy attached to your Pokémon as you like into your hand.';
 
   // Ref: set-phantom-forces/heliolisk.ts (DiscardEnergyPrompt for multi-Pokemon energy selection)

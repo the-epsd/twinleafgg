@@ -27,7 +27,7 @@ export class Poliwhirl extends PokemonCard {
       name: 'Finishing Blow',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 50 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Poliwhirl extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poliwhirl';
-  public fullName: string = 'Poliwhirl FFI';
+  public fullName: string = 'Poliwhirl (FFI 16)';
+  public legacyFullName = 'Poliwhirl FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Finishing Blow

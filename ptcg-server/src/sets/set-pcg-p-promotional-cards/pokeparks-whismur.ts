@@ -28,7 +28,8 @@ export class PokeParksWhismur extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'PokéPark\'s Whismur';
-  public fullName: string = 'PokéPark\'s Whismur PCGP';
+  public fullName: string = 'PokéPark\'s Whismur (PCGP 46)';
+  public legacyFullName = 'PokéPark\'s Whismur PCGP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
 

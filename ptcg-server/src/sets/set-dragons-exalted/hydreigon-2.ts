@@ -32,7 +32,8 @@ export class Hydreigon2 extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hydreigon';
-  public fullName: string = 'Hydreigon DRX 98';
+  public fullName: string = 'Hydreigon (DRX 98)';
+  public legacyFullName = 'Hydreigon DRX 98';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Consume - heal damage equal to damage dealt

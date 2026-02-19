@@ -33,7 +33,8 @@ export class Glimmoraex extends PokemonCard {
 
   public set: string = 'OBF';
   public name: string = 'Glimmora ex';
-  public fullName: string = 'Glimmora ex OBF';
+  public fullName: string = 'Glimmora ex (OBF 123)';
+  public legacyFullName = 'Glimmora ex OBF';
   public setNumber: string = '123';
   public regulationMark: string = 'G';
   public cardImage: string = 'assets/cardback.png';

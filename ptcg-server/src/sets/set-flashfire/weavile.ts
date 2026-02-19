@@ -37,7 +37,8 @@ export class Weavile extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weavile';
-  public fullName: string = 'Weavile FLF';
+  public fullName: string = 'Weavile (FLF 52)';
+  public legacyFullName = 'Weavile FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: AGENTS-patterns.md (search for Basic Pokemon onto bench)

@@ -36,7 +36,8 @@ export class PikachuZekromGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '168';
   public name: string = 'Pikachu & Zekrom-GX';
-  public fullName: string = 'Pikachu & Zekrom GX SMP';
+  public fullName: string = 'Pikachu & Zekrom-GX (SMP 168)';
+  public legacyFullName = 'Pikachu & Zekrom GX SMP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

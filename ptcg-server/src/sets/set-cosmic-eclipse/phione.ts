@@ -32,7 +32,8 @@ export class Phione extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Phione';
-  public fullName: string = 'Phione CEC';
+  public fullName: string = 'Phione (CEC 57)';
+  public legacyFullName = 'Phione CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

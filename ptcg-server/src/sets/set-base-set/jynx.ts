@@ -14,7 +14,8 @@ export class Jynx extends PokemonCard {
   
   public set = 'BS';
   
-  public fullName = 'Jynx BS';
+  public fullName = 'Jynx (BS 31)';
+  public legacyFullName = 'Jynx BS';
 
   public stage = Stage.BASIC;
 

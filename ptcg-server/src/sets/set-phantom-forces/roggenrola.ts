@@ -25,5 +25,6 @@ export class Roggenrola extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Roggenrola';
-  public fullName: string = 'Roggenrola PHF';
+  public fullName: string = 'Roggenrola (PHF 48)';
+  public legacyFullName = 'Roggenrola PHF';
 }

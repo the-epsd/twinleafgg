@@ -29,7 +29,8 @@ export class Stantler extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '32';
   public name: string = 'Stantler';
-  public fullName: string = 'Stantler UF';
+  public fullName: string = 'Stantler (UF 32)';
+  public legacyFullName = 'Stantler UF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

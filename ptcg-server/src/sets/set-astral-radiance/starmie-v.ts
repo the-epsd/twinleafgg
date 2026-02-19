@@ -49,7 +49,8 @@ export class StarmieV extends PokemonCard {
 
   public name: string = 'Starmie V';
 
-  public fullName: string = 'Starmie V ASR';
+  public fullName: string = 'Starmie V (ASR 30)';
+  public legacyFullName = 'Starmie V ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

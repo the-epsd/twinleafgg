@@ -28,7 +28,7 @@ export class Pyroar extends PokemonCard {
       name: 'Dominating Fangs',
       cost: [R, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Lysandre Labs is in play, this attack does 60 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Pyroar extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pyroar';
-  public fullName: string = 'Pyroar FLI';
+  public fullName: string = 'Pyroar (FLI 19)';
+  public legacyFullName = 'Pyroar FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Unnerve (passive - prevent trainer effects targeting this Pokemon)

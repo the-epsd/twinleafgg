@@ -37,7 +37,8 @@ export class Cetoddle extends PokemonCard {
 
   public name: string = 'Cetoddle';
 
-  public fullName: string = 'Cetoddle PAL';
+  public fullName: string = 'Cetoddle (PAL 53)';
+  public legacyFullName = 'Cetoddle PAL';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

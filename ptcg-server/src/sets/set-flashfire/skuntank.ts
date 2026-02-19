@@ -40,7 +40,8 @@ export class Skuntank extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skuntank';
-  public fullName: string = 'Skuntank FLF';
+  public fullName: string = 'Skuntank (FLF 55)';
+  public legacyFullName = 'Skuntank FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-plasma-freeze/seismitoad.ts (Splashing Turn - post-damage switch)

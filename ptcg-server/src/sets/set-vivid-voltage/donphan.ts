@@ -39,7 +39,8 @@ export class Donphan extends PokemonCard {
 
   public name: string = 'Donphan';
 
-  public fullName: string = 'Donphan VIV';
+  public fullName: string = 'Donphan (VIV 87)';
+  public legacyFullName = 'Donphan VIV';
 
   public regulationMark = 'D';
 

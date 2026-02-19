@@ -31,7 +31,8 @@ export class Vanillish extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanillish';
-  public fullName: string = 'Vanillish DAA';
+  public fullName: string = 'Vanillish (DAA 46)';
+  public legacyFullName = 'Vanillish DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Freezing Headbutt

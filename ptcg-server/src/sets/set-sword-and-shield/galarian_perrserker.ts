@@ -33,7 +33,8 @@ export class GalarianPerrserker extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '128';
   public name = 'Galarian Perrserker';
-  public fullName = 'Galarian Perrserker SSH';
+  public fullName = 'Galarian Perrserker (SSH 128)';
+  public legacyFullName = 'Galarian Perrserker SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

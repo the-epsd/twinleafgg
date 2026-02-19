@@ -36,7 +36,8 @@ export class WhiteKyuremEx extends PokemonCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'White Kyurem-EX';
-  public fullName: string = 'White Kyurem-EX PLS';
+  public fullName: string = 'White Kyurem-EX (PLS 96)';
+  public legacyFullName = 'White Kyurem-EX PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: White Inferno

@@ -24,7 +24,7 @@ export class Ferrothorn extends PokemonCard {
       name: 'Swift Swing',
       cost: [M],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 30 damage for each [M] Energy attached to this Pokémon. Switch this Pokémon with 1 of your Benched Pokémon.'
     }
   ];
@@ -36,7 +36,8 @@ export class Ferrothorn extends PokemonCard {
   public setNumber: string = '124';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ferrothorn';
-  public fullName: string = 'Ferrothorn VIV';
+  public fullName: string = 'Ferrothorn (VIV 124)';
+  public legacyFullName = 'Ferrothorn VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swift Swing

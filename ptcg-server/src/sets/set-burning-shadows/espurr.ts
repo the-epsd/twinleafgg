@@ -34,7 +34,8 @@ export class Espurr extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Espurr';
-  public fullName: string = 'Espurr BUS';
+  public fullName: string = 'Espurr (BUS 59)';
+  public legacyFullName = 'Espurr BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Perplexing Eyes

@@ -22,7 +22,8 @@ export class AetherParadiseConvserationArea extends TrainerCard {
 
   public name: string = 'Aether Paradise Conservation Area';
 
-  public fullName: string = 'Aether Paradise Conservation Area GRI';
+  public fullName: string = 'Aether Paradise Conservation Area (GRI 116)';
+  public legacyFullName = 'Aether Paradise Conservation Area GRI';
 
   public text: string =
     'Basic [G] Pokémon and Basic [L] Pokémon (both yours and your opponent\'s) take 30 less damage from the opponent\'s attacks (after applying Weakness and Resistance).';

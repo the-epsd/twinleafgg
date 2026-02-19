@@ -47,7 +47,8 @@ export class Drasna extends TrainerCard {
 
   public name: string = 'Drasna';
 
-  public fullName: string = 'Drasna SSP';
+  public fullName: string = 'Drasna (SSP 173)';
+  public legacyFullName = 'Drasna SSP';
 
   public text: string =
     'Shuffle your hand into your deck. Then, flip a coin. If heads, draw 8 cards. If tails, draw 3 cards.';

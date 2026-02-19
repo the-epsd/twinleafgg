@@ -36,7 +36,8 @@ export class Seviper extends PokemonCard {
   public setNumber: string = 'SV15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Seviper';
-  public fullName: string = 'Seviper HIF';
+  public fullName: string = 'Seviper (HIF SV15)';
+  public legacyFullName = 'Seviper HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: More Poison (passive)

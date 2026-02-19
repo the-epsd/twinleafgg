@@ -13,7 +13,8 @@ export class LatiosSpiritLink extends TrainerCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Latios Spirit Link';
-  public fullName: string = 'Latios Spirit Link ROS';
+  public fullName: string = 'Latios Spirit Link (ROS 85)';
+  public legacyFullName = 'Latios Spirit Link ROS';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Latios-EX.';
 
   // Ref: set-phantom-forces/manectric-spirit-link.ts (Spirit Link - no-op, handled by engine)

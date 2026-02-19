@@ -29,7 +29,7 @@ export class Delphox extends PokemonCard {
       name: 'Psystorm',
       cost: [C, C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage times the amount of Energy attached to all Pokémon in play.'
     }
   ];
@@ -38,7 +38,8 @@ export class Delphox extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Delphox';
-  public fullName: string = 'Delphox FCO';
+  public fullName: string = 'Delphox (FCO 13)';
+  public legacyFullName = 'Delphox FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flickering Flames

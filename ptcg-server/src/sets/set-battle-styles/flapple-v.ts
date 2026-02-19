@@ -48,7 +48,8 @@ export class FlappleV extends PokemonCard {
 
   public name: string = 'Flapple V';
 
-  public fullName: string = 'Flapple V BST';
+  public fullName: string = 'Flapple V (BST 18)';
+  public legacyFullName = 'Flapple V BST';
 
   public readonly FLAPPLE_V_MARKER = 'FLAPPLE_V_MARKER';
 

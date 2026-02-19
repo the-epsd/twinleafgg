@@ -39,7 +39,8 @@ export class Clawitzer extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clawitzer';
-  public fullName: string = 'Clawitzer STS';
+  public fullName: string = 'Clawitzer (STS 34)';
+  public legacyFullName = 'Clawitzer STS';
 
   public readonly MEGA_BOOST_MARKER = 'CLAWITZER_STS_MEGA_BOOST';
 

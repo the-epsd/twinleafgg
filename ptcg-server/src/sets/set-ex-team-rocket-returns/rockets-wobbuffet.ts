@@ -29,7 +29,8 @@ export class RocketsWobbuffet extends PokemonCard {
 
   public set: string = 'TRR';
   public name: string = 'Rocket\'s Wobbuffet';
-  public fullName: string = 'Rocket\'s Wobbuffet TRR';
+  public fullName: string = 'Rocket\'s Wobbuffet (TRR 47)';
+  public legacyFullName = 'Rocket\'s Wobbuffet TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '47';
 

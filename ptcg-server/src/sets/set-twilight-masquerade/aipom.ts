@@ -28,5 +28,6 @@ export class Aipom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '137';
   public name: string = 'Aipom';
-  public fullName: string = 'Aipom TWM';
+  public fullName: string = 'Aipom (TWM 137)';
+  public legacyFullName = 'Aipom TWM';
 }

@@ -32,7 +32,8 @@ export class Aurorus extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '23';
   public name: string = 'Aurorus';
-  public fullName: string = 'Aurorus M3';
+  public fullName: string = 'Aurorus (M3 23)';
+  public legacyFullName = 'Aurorus M3';
 
   public readonly TUNDRA_WALL_MARKER = 'TUNDRA_WALL_MARKER';
 

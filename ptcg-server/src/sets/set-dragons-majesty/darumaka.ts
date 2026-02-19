@@ -21,7 +21,7 @@ export class Darumaka extends PokemonCard {
       name: 'Damage Rush',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Darumaka extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Darumaka';
-  public fullName: string = 'Darumaka DRM';
+  public fullName: string = 'Darumaka (DRM 8)';
+  public legacyFullName = 'Darumaka DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Damage Rush

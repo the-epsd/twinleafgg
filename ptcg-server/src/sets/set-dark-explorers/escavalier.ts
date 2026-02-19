@@ -34,7 +34,8 @@ export class Escavalier extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Escavalier';
-  public fullName: string = 'Escavalier DEX';
+  public fullName: string = 'Escavalier (DEX 74)';
+  public legacyFullName = 'Escavalier DEX';
 
   public readonly NO_WEAKNESS_MARKER = 'ESCAVALIER_NO_WEAKNESS_MARKER';
 

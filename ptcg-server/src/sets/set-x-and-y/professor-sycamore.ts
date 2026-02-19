@@ -15,7 +15,8 @@ export class ProfessorSycamore extends TrainerCard {
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Professor Sycamore';
-  public fullName: string = 'Professor Sycamore XY';
+  public fullName: string = 'Professor Sycamore (XY 122)';
+  public legacyFullName = 'Professor Sycamore XY';
   public text: string = 'Discard your hand and draw 7 cards. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-black-and-white/professor-juniper.ts (Professor Juniper)

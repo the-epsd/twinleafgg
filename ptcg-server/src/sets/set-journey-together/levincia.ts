@@ -18,7 +18,8 @@ export class Levincia extends TrainerCard {
 
   public name: string = 'Levincia';
 
-  public fullName: string = 'Levincia JTG';
+  public fullName: string = 'Levincia (JTG 150)';
+  public legacyFullName = 'Levincia JTG';
 
   public regulationMark = 'I';
 

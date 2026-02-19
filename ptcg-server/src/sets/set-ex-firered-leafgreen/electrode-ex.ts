@@ -39,7 +39,8 @@ export class Electrodeex extends PokemonCard {
 
   public set: string = 'RG';
   public name: string = 'Electrode ex';
-  public fullName: string = 'Electrode ex RG';
+  public fullName: string = 'Electrode ex (RG 107)';
+  public legacyFullName = 'Electrode ex RG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '107';
 

@@ -35,7 +35,8 @@ export class Cubone extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cubone';
-  public fullName: string = 'Cubone CIN';
+  public fullName: string = 'Cubone (CIN 52)';
+  public legacyFullName = 'Cubone CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Leer

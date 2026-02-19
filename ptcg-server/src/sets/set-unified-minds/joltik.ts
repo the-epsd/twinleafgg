@@ -30,7 +30,8 @@ export class Joltik extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Joltik';
-  public fullName: string = 'Joltik UNM';
+  public fullName: string = 'Joltik (UNM 61)';
+  public legacyFullName = 'Joltik UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Jolt

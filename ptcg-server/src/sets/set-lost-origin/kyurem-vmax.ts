@@ -49,7 +49,8 @@ export class KyuremVMAX extends PokemonCard {
 
   public name: string = 'Kyurem VMAX';
 
-  public fullName: string = 'Kyurem VMAX LOR';
+  public fullName: string = 'Kyurem VMAX (LOR 49)';
+  public legacyFullName = 'Kyurem VMAX LOR';
 
   public readonly GLACIATED_WORLD_MARKER = 'GLACIATED_WORLD_MARKER';
 

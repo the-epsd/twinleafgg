@@ -34,7 +34,8 @@ export class Ferrothorn extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '103';
   public name = 'Ferrothorn';
-  public fullName = 'Ferrothorn TEU';
+  public fullName = 'Ferrothorn (TEU 103)';
+  public legacyFullName = 'Ferrothorn TEU';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

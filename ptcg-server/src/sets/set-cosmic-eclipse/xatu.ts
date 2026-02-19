@@ -39,7 +39,8 @@ export class Xatu extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Xatu';
-  public fullName: string = 'Xatu CEC';
+  public fullName: string = 'Xatu (CEC 79)';
+  public legacyFullName = 'Xatu CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Creepy Wind

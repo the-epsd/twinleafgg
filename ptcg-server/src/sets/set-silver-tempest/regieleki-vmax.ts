@@ -53,7 +53,8 @@ export class RegielekiVMAX extends PokemonCard {
 
   public name: string = 'Regieleki VMAX';
 
-  public fullName: string = 'Regieleki VMAX SIT';
+  public fullName: string = 'Regieleki VMAX (SIT 58)';
+  public legacyFullName = 'Regieleki VMAX SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Max Thunder and Lightning

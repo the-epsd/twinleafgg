@@ -36,7 +36,8 @@ export class Stoutland extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stoutland';
-  public fullName: string = 'Stoutland DEX';
+  public fullName: string = 'Stoutland (DEX 88)';
+  public legacyFullName = 'Stoutland DEX';
 
   public readonly FEROCIOUS_BELLOW_MARKER = 'FEROCIOUS_BELLOW_MARKER';
 

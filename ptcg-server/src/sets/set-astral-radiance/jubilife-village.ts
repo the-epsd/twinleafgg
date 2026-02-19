@@ -23,7 +23,8 @@ export class JubilifeVillage extends TrainerCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public fullName: string = 'Jubilife Village ASR';
+  public fullName: string = 'Jubilife Village (ASR 148)';
+  public legacyFullName = 'Jubilife Village ASR';
 
   public setNumber: string = '148';
 

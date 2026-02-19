@@ -32,7 +32,8 @@ export class Lairon extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lairon';
-  public fullName: string = 'Lairon DRX';
+  public fullName: string = 'Lairon (DRX 79)';
+  public legacyFullName = 'Lairon DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

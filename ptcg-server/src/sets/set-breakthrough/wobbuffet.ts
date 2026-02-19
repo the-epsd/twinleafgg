@@ -36,7 +36,8 @@ export class Wobbuffet extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wobbuffet';
-  public fullName: string = 'Wobbuffet BKT';
+  public fullName: string = 'Wobbuffet (BKT 67)';
+  public legacyFullName = 'Wobbuffet BKT';
 
   public readonly PREVENT_DAMAGE_MARKER = 'WOBBUFFET_BKT_PREVENT_DAMAGE';
   public readonly CLEAR_PREVENT_DAMAGE_MARKER = 'WOBBUFFET_BKT_CLEAR_PREVENT_DAMAGE';

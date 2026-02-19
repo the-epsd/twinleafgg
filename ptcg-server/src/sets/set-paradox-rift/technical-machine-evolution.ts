@@ -118,7 +118,8 @@ export class TechnicalMachineEvolution extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '178';
   public name: string = 'Technical Machine: Evolution';
-  public fullName: string = 'Technical Machine: Evolution PAR';
+  public fullName: string = 'Technical Machine: Evolution (PAR 178)';
+  public legacyFullName = 'Technical Machine: Evolution PAR';
 
   public attacks: Attack[] = [{
     name: 'Evolution',

@@ -42,7 +42,8 @@ export class Golisopod extends PokemonCard {
 
   public name: string = 'Golisopod';
 
-  public fullName: string = 'Golisopod UNM';
+  public fullName: string = 'Golisopod (UNM 51)';
+  public legacyFullName = 'Golisopod UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

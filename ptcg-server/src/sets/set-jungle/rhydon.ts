@@ -41,7 +41,8 @@ export class Rhydon extends PokemonCard {
 
   public name: string = 'Rhydon';
 
-  public fullName: string = 'Rhydon JU';
+  public fullName: string = 'Rhydon (JU 45)';
+  public legacyFullName = 'Rhydon JU';
 
   public usedRam: boolean = false;
 

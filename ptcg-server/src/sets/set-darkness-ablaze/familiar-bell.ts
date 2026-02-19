@@ -89,7 +89,8 @@ export class FamiliarBell extends TrainerCard {
   public setNumber: string = '161';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Familiar Bell';
-  public fullName: string = 'Familiar Bell DAA';
+  public fullName: string = 'Familiar Bell (DAA 161)';
+  public legacyFullName = 'Familiar Bell DAA';
   public text: string = 'Search your deck for a Pokémon with the same name as a Pokémon in your discard pile, reveal it, and put it into your hand. Then, shuffle your deck. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

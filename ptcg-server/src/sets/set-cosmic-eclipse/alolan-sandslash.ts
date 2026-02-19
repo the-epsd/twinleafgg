@@ -31,7 +31,7 @@ export class AlolanSandslash extends PokemonCard {
       name: 'Reinforced Needle',
       cost: [M, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 60 more damage.'
     }
   ];
@@ -40,7 +40,8 @@ export class AlolanSandslash extends PokemonCard {
   public setNumber: string = '138';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Sandslash';
-  public fullName: string = 'Alolan Sandslash CEC';
+  public fullName: string = 'Alolan Sandslash (CEC 138)';
+  public legacyFullName = 'Alolan Sandslash CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Curve Strike

@@ -18,7 +18,8 @@ export class RainbowBrush extends TrainerCard {
   public setNumber: string = '141';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rainbow Brush';
-  public fullName: string = 'Rainbow Brush CES';
+  public fullName: string = 'Rainbow Brush (CES 141)';
+  public legacyFullName = 'Rainbow Brush CES';
   public text: string = 'Choose an Energy card attached to 1 of your Pokémon. Search your deck for a basic Energy card and switch it with that card. Shuffle the first Energy card into your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

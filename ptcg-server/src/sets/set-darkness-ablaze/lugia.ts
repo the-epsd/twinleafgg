@@ -40,7 +40,8 @@ export class Lugia extends PokemonCard {
 
   public name: string = 'Lugia';
 
-  public fullName: string = 'Lugia DAA';
+  public fullName: string = 'Lugia (DAA 140)';
+  public legacyFullName = 'Lugia DAA';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -28,7 +28,7 @@ export class Lapras extends PokemonCard {
       name: 'Hydro Pump',
       cost: [C, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage times the amount of [W] Energy attached to this Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class Lapras extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lapras';
-  public fullName: string = 'Lapras DRM';
+  public fullName: string = 'Lapras (DRM 21)';
+  public legacyFullName = 'Lapras DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Aqua Bullet

@@ -43,7 +43,8 @@ export class HoOhGx extends PokemonCard {
   public setNumber: string = 'SV50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ho-Oh-GX';
-  public fullName: string = 'Ho-Oh-GX HIF';
+  public fullName: string = 'Ho-Oh-GX (HIF SV50)';
+  public legacyFullName = 'Ho-Oh-GX HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sacred Fire

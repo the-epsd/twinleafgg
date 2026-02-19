@@ -29,7 +29,8 @@ export class Ambipom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '170';
   public name: string = 'Ambipom';
-  public fullName: string = 'Ambipom CEC';
+  public fullName: string = 'Ambipom (CEC 170)';
+  public legacyFullName = 'Ambipom CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

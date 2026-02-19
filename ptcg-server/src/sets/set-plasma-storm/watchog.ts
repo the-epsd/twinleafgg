@@ -38,7 +38,8 @@ export class Watchog extends PokemonCard {
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Watchog';
-  public fullName: string = 'Watchog PLS';
+  public fullName: string = 'Watchog (PLS 112)';
+  public legacyFullName = 'Watchog PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fast Swipe

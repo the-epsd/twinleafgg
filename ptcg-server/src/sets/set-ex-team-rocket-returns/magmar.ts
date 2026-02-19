@@ -30,7 +30,8 @@ export class Magmar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
   public name: string = 'Magmar';
-  public fullName: string = 'Magmar TRR';
+  public fullName: string = 'Magmar (TRR 44)';
+  public legacyFullName = 'Magmar TRR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -37,7 +37,8 @@ export class Simipour extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Simipour';
-  public fullName: string = 'Simipour BKT';
+  public fullName: string = 'Simipour (BKT 42)';
+  public legacyFullName = 'Simipour BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Green Fling

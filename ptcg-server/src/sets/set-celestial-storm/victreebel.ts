@@ -37,7 +37,8 @@ export class Victreebel extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Victreebel';
-  public fullName: string = 'Victreebel CES';
+  public fullName: string = 'Victreebel (CES 3)';
+  public legacyFullName = 'Victreebel CES';
 
   public readonly FRAGRANCE_TRAP_MARKER = 'VICTREEBEL_FRAGRANCE_TRAP_MARKER';
 

@@ -28,7 +28,8 @@ export class Toedscool extends PokemonCard {
   public set: string = 'SVI';
   public regulationMark = 'G';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Toedscool SVI';
+  public fullName: string = 'Toedscool (SVI 25)';
+  public legacyFullName = 'Toedscool SVI';
   public name: string = 'Toedscool';
   public setNumber: string = '25';
 

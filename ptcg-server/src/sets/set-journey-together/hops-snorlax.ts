@@ -45,7 +45,8 @@ export class HopsSnorlax extends PokemonCard {
 
   public name: string = 'Hop\'s Snorlax';
 
-  public fullName: string = 'Hop\'s Snorlax JTG';
+  public fullName: string = 'Hop\'s Snorlax (JTG 117)';
+  public legacyFullName = 'Hop\'s Snorlax JTG';
 
   public bigBellyApplied: boolean = false;
 

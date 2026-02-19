@@ -12,7 +12,8 @@ export class SeaOfNothingness extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'CIN';
   public name: string = 'Sea of Nothingness';
-  public fullName: string = 'Sea of Nothingness CIN';
+  public fullName: string = 'Sea of Nothingness (CIN 99)';
+  public legacyFullName = 'Sea of Nothingness CIN';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '99';
 

@@ -31,7 +31,7 @@ export class IndeedeeV extends PokemonCard {
       name: 'Psychic',
       cost: [P, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 60 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -41,7 +41,8 @@ export class IndeedeeV extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Indeedee V';
-  public fullName: string = 'Indeedee V SSH';
+  public fullName: string = 'Indeedee V (SSH 91)';
+  public legacyFullName = 'Indeedee V SSH';
 
   public readonly WATCH_OVER_MARKER = 'INDEEDEE_V_WATCH_OVER_MARKER';
 

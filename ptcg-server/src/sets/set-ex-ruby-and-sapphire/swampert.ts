@@ -31,7 +31,8 @@ export class Swampert extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '13';
   public name: string = 'Swampert';
-  public fullName: string = 'Swampert RS';
+  public fullName: string = 'Swampert (RS 13)';
+  public legacyFullName = 'Swampert RS';
 
   public readonly WATER_CALL_MARKER = 'WATER_CALL_MARKER';
 

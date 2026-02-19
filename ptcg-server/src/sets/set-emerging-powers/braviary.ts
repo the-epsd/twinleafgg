@@ -32,7 +32,8 @@ export class Braviary extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
   public name: string = 'Braviary';
-  public fullName: string = 'Braviary EPO';
+  public fullName: string = 'Braviary (EPO 88)';
+  public legacyFullName = 'Braviary EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

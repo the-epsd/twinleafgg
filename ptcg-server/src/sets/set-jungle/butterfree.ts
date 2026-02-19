@@ -40,7 +40,8 @@ export class Butterfree extends PokemonCard {
 
   public name: string = 'Butterfree';
 
-  public fullName: string = 'Butterfree JU';
+  public fullName: string = 'Butterfree (JU 33)';
+  public legacyFullName = 'Butterfree JU';
 
   public USED_WHIRLWIND: boolean = false;
 

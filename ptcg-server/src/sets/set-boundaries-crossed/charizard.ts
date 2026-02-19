@@ -36,7 +36,8 @@ export class Charizard extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charizard';
-  public fullName: string = 'Charizard BCR';
+  public fullName: string = 'Charizard (BCR 20)';
+  public legacyFullName = 'Charizard BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Split Bomb

@@ -38,7 +38,8 @@ export class DarkGyarados extends PokemonCard {
   public setNumber: string = '8A';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dark Gyarados';
-  public fullName: string = 'Dark Gyarados CEL';
+  public fullName: string = 'Dark Gyarados (CEL 8A)';
+  public legacyFullName = 'Dark Gyarados CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Final Beam (Poke-Body - on KO by attack, flip coin, deal damage with W/R)

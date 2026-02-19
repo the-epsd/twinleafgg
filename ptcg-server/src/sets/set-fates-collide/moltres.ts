@@ -27,7 +27,7 @@ export class Moltres extends PokemonCard {
       name: 'Flying Flare',
       cost: [R, R, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 40 more damage. If you do, this Pokémon does 20 damage to itself.'
     }
   ];
@@ -36,7 +36,8 @@ export class Moltres extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Moltres';
-  public fullName: string = 'Moltres FCO';
+  public fullName: string = 'Moltres (FCO 9)';
+  public legacyFullName = 'Moltres FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Flying Flare

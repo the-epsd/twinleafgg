@@ -34,7 +34,8 @@ export class Bellsprout extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bellsprout';
-  public fullName: string = 'Bellsprout FFI';
+  public fullName: string = 'Bellsprout (FFI 1)';
+  public legacyFullName = 'Bellsprout FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Knock Off

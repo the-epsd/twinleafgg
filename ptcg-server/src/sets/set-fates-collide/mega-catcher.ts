@@ -14,7 +14,8 @@ export class MegaCatcher extends TrainerCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Catcher';
-  public fullName: string = 'Mega Catcher FCO';
+  public fullName: string = 'Mega Catcher (FCO 104)';
+  public legacyFullName = 'Mega Catcher FCO';
   public text: string = 'Switch 1 of your opponent\'s Benched Mega Evolution Pokémon with his or her Active Pokémon.';
 
   // Ref: set-surging-sparks/lisias-appeal.ts (blocked CardTarget pattern for filtered bench selection)

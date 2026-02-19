@@ -45,7 +45,8 @@ export class VenusaurVMAX extends PokemonCard {
 
   public name: string = 'Venusaur VMAX';
 
-  public fullName: string = 'Venusaur VMAX SWSH 102';
+  public fullName: string = 'Venusaur VMAX (SWSH 102)';
+  public legacyFullName = 'Venusaur VMAX SWSH 102';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

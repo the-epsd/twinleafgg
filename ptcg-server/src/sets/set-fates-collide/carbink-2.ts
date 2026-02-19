@@ -35,7 +35,8 @@ export class Carbink2 extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carbink';
-  public fullName: string = 'Carbink FCO 50';
+  public fullName: string = 'Carbink (FCO 50)';
+  public legacyFullName = 'Carbink FCO 50';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Safeguard

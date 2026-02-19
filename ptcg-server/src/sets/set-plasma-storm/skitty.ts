@@ -29,7 +29,8 @@ export class Skitty extends PokemonCard {
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skitty';
-  public fullName: string = 'Skitty PLS';
+  public fullName: string = 'Skitty (PLS 109)';
+  public legacyFullName = 'Skitty PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Triple Slap

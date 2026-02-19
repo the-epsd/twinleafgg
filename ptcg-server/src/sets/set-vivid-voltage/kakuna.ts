@@ -37,7 +37,8 @@ export class Kakuna extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kakuna';
-  public fullName: string = 'Kakuna VIV';
+  public fullName: string = 'Kakuna (VIV 2)';
+  public legacyFullName = 'Kakuna VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shed Skin

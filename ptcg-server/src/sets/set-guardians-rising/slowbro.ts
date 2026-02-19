@@ -29,7 +29,7 @@ export class Slowbro extends PokemonCard {
       name: 'Facade',
       cost: [P, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon is Burned or Poisoned, this attack does 80 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Slowbro extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slowbro';
-  public fullName: string = 'Slowbro GRI';
+  public fullName: string = 'Slowbro (GRI 49)';
+  public legacyFullName = 'Slowbro GRI';
 
   public amnesiaAttack: Attack | null = null;
 

@@ -15,7 +15,8 @@ export class LostWorld extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'CL';
   public name = 'Lost World';
-  public fullName = 'Lost World CL';
+  public fullName = 'Lost World (CL 81)';
+  public legacyFullName = 'Lost World CL';
 
   public text = 'Once during each player\'s turn, if that player\'s opponent has 6 or more Pokémon in the Lost Zone, the player may choose to win the game.';
 

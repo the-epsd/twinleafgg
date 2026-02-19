@@ -28,7 +28,8 @@ export class GBooster extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
   public name: string = 'G Booster';
-  public fullName: string = 'G Booster PLB';
+  public fullName: string = 'G Booster (PLB 92)';
+  public legacyFullName = 'G Booster PLB';
 
   public attacks: Attack[] = [{
     name: 'G Booster',

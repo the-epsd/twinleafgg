@@ -29,7 +29,7 @@ export class GolisopodGx extends PokemonCard {
       name: 'First Impression',
       cost: [G],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 90 more damage.'
     },
     {
@@ -50,7 +50,8 @@ export class GolisopodGx extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golisopod-GX';
-  public fullName: string = 'Golisopod-GX BUS';
+  public fullName: string = 'Golisopod-GX (BUS 17)';
+  public legacyFullName = 'Golisopod-GX BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: First Impression

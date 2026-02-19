@@ -47,7 +47,8 @@ export class DrapionV extends PokemonCard {
 
   public name: string = 'Drapion V';
 
-  public fullName: string = 'Drapion V LOR';
+  public fullName: string = 'Drapion V (LOR 118)';
+  public legacyFullName = 'Drapion V LOR';
 
   // Implement ability
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

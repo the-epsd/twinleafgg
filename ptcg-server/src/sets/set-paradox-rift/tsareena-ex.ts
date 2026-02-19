@@ -49,7 +49,8 @@ export class Tsareenaex extends PokemonCard {
 
   public name: string = 'Tsareena ex';
 
-  public fullName: string = 'Tsareena ex PAR';
+  public fullName: string = 'Tsareena ex (PAR 46)';
+  public legacyFullName = 'Tsareena ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -25,5 +25,6 @@ export class Burmy extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Burmy';
-  public fullName: string = 'Burmy FCO';
+  public fullName: string = 'Burmy (FCO 2)';
+  public legacyFullName = 'Burmy FCO';
 }

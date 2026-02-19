@@ -33,7 +33,8 @@ export class Pelipper extends PokemonCard {
   public regulationMark: string = 'G';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pelipper';
-  public fullName: string = 'Pelipper PAL';
+  public fullName: string = 'Pelipper (PAL 159)';
+  public legacyFullName = 'Pelipper PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

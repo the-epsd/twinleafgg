@@ -35,7 +35,8 @@ export class Vespiquenex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
   public name: string = 'Vespiquen ex';
-  public fullName: string = 'Vespiquen ex OBF';
+  public fullName: string = 'Vespiquen ex (OBF 96)';
+  public legacyFullName = 'Vespiquen ex OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

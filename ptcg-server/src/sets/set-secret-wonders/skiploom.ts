@@ -35,7 +35,8 @@ export class Skiploom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
   public name: string = 'Skiploom';
-  public fullName: string = 'Skiploom SW';
+  public fullName: string = 'Skiploom (SW 65)';
+  public legacyFullName = 'Skiploom SW';
 
   private usedSmashTurn = false;
 

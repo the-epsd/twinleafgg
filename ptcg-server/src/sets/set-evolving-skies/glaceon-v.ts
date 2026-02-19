@@ -39,7 +39,8 @@ export class GlaceonV extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Glaceon V';
-  public fullName: string = 'Glaceon V EVS';
+  public fullName: string = 'Glaceon V (EVS 40)';
+  public legacyFullName = 'Glaceon V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Frozen Awakening

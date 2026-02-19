@@ -33,7 +33,8 @@ export class ArceusMetal extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'AR9';
   public name: string = 'Arceus';
-  public fullName: string = 'Arceus Metal AR';
+  public fullName: string = 'Arceus (AR AR9)';
+  public legacyFullName = 'Arceus Metal AR';
 
   public readonly METAL_BARRIER_MARKER = 'METAL_BARRIER_MARKER';
 

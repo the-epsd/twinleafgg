@@ -45,7 +45,8 @@ export class Zoroark extends PokemonCard {
 
   public name: string = 'Zoroark';
 
-  public fullName: string = 'Zoroark EVS';
+  public fullName: string = 'Zoroark (EVS 103)';
+  public legacyFullName = 'Zoroark EVS';
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

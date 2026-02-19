@@ -31,7 +31,8 @@ export class MachampBreak extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machamp BREAK';
-  public fullName: string = 'Machamp BREAK EVO';
+  public fullName: string = 'Machamp BREAK (EVO 60)';
+  public legacyFullName = 'Machamp BREAK EVO';
 
   public readonly BOOMERANG_MARKER = 'MACHAMP_BREAK_EVO_BOOMERANG';
   public readonly CLEAR_BOOMERANG_MARKER = 'MACHAMP_BREAK_EVO_CLEAR_BOOMERANG';

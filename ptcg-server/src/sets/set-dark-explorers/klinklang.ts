@@ -34,7 +34,8 @@ export class Klinklang extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klinklang';
-  public fullName: string = 'Klinklang DEX';
+  public fullName: string = 'Klinklang (DEX 77)';
+  public legacyFullName = 'Klinklang DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Metal Blast - 20 + 20 for each Metal energy

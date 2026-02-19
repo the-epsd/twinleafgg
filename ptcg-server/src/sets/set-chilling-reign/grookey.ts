@@ -21,7 +21,7 @@ export class Grookey extends PokemonCard {
       name: 'Hit Twice',
       cost: [G, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Grookey extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grookey';
-  public fullName: string = 'Grookey CRE';
+  public fullName: string = 'Grookey (CRE 16)';
+  public legacyFullName = 'Grookey CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hit Twice

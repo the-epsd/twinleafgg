@@ -31,7 +31,8 @@ export class Lileep extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '10';
   public name: string = 'Lileep';
-  public fullName: string = 'Lileep CEC';
+  public fullName: string = 'Lileep (CEC 10)';
+  public legacyFullName = 'Lileep CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -29,7 +29,7 @@ export class DiancieEx extends PokemonCard {
       name: 'Wonder Stage',
       cost: [Y, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 50 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class DiancieEx extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Diancie-EX';
-  public fullName: string = 'Diancie-EX FCO';
+  public fullName: string = 'Diancie-EX (FCO 72)';
+  public legacyFullName = 'Diancie-EX FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sparkle Veil

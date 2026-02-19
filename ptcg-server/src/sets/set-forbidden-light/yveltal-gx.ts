@@ -49,7 +49,8 @@ export class YveltalGX extends PokemonCard {
 
   public name: string = 'Yveltal-GX';
 
-  public fullName: string = 'Yveltal-GX FLI';
+  public fullName: string = 'Yveltal-GX (FLI 79)';
+  public legacyFullName = 'Yveltal-GX FLI';
 
   public cardImage: string = 'assets/cardback.png';
 

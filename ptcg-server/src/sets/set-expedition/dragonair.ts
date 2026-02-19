@@ -23,7 +23,8 @@ export class Dragonair extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragonair';
-  public fullName: string = 'Dragonair EX';
+  public fullName: string = 'Dragonair (EX 75)';
+  public legacyFullName = 'Dragonair EX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

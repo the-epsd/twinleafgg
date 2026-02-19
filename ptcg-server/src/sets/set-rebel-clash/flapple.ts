@@ -34,7 +34,8 @@ export class Flapple extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '22';
   public name: string = 'Flapple';
-  public fullName: string = 'Flapple RCL';
+  public fullName: string = 'Flapple (RCL 22)';
+  public legacyFullName = 'Flapple RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

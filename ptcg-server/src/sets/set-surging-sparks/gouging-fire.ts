@@ -34,7 +34,8 @@ export class GougingFire extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '38';
   public name: string = 'Gouging Fire';
-  public fullName: string = 'Gouging Fire SSP';
+  public fullName: string = 'Gouging Fire (SSP 38)';
+  public legacyFullName = 'Gouging Fire SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -35,7 +35,8 @@ export class Phantump extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Phantump';
-  public fullName: string = 'Phantump GRI';
+  public fullName: string = 'Phantump (GRI 6)';
+  public legacyFullName = 'Phantump GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Confuse Ray

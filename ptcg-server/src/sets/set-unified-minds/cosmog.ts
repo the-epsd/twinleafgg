@@ -25,5 +25,6 @@ export class Cosmog extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cosmog';
-  public fullName: string = 'Cosmog UNM';
+  public fullName: string = 'Cosmog (UNM 100)';
+  public legacyFullName = 'Cosmog UNM';
 }

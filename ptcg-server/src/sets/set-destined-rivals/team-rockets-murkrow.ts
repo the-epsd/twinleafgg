@@ -35,7 +35,8 @@ export class TeamRocketsMurkrow extends PokemonCard {
   public setNumber: string = '127';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Murkrow';
-  public fullName: string = 'Team Rocket\'s Murkrow DRI';
+  public fullName: string = 'Team Rocket\'s Murkrow (DRI 127)';
+  public legacyFullName = 'Team Rocket\'s Murkrow DRI';
 
   public DISABLED_ATTACK: Attack | undefined;
 

@@ -31,5 +31,6 @@ export class EthansSlugma extends PokemonCard {
 
   public name: string = 'Ethan\'s Slugma';
 
-  public fullName: string = 'Ethan\'s Slugma DRI';
+  public fullName: string = 'Ethan\'s Slugma (DRI 35)';
+  public legacyFullName = 'Ethan\'s Slugma DRI';
 }

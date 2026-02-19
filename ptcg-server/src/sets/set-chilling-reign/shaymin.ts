@@ -38,7 +38,8 @@ export class Shaymin extends PokemonCard {
   public setNumber: string = '123';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shaymin';
-  public fullName: string = 'Shaymin CRE';
+  public fullName: string = 'Shaymin (CRE 123)';
+  public legacyFullName = 'Shaymin CRE';
 
   public wantsToSkyReturn: boolean = false;
 

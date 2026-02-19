@@ -37,7 +37,8 @@ export class Voltorb extends PokemonCard {
   public setNumber: string = 'SV13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Voltorb';
-  public fullName: string = 'Voltorb HIF';
+  public fullName: string = 'Voltorb (HIF SV13)';
+  public legacyFullName = 'Voltorb HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Floating Electrons (passive - modify retreat cost)

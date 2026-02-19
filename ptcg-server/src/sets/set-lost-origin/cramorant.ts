@@ -43,7 +43,8 @@ export class Cramorant extends PokemonCard {
 
   public name: string = 'Cramorant';
 
-  public fullName: string = 'Cramorant LOR';
+  public fullName: string = 'Cramorant (LOR 50)';
+  public legacyFullName = 'Cramorant LOR';
 
   public getColorlessReduction(state: State): number {
     const player = StateUtils.findOwner(state, this.cards);

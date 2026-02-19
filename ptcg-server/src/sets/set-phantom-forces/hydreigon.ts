@@ -30,7 +30,8 @@ export class Hydreigon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '74';
   public name: string = 'Hydreigon';
-  public fullName: string = 'Hydreigon PHF';
+  public fullName: string = 'Hydreigon (PHF 74)';
+  public legacyFullName = 'Hydreigon PHF';
 
   public readonly DARK_IMPULSE_MARKER = 'DARK_IMPULSE_MARKER';
   public usedCrazyHeadbutt = false;

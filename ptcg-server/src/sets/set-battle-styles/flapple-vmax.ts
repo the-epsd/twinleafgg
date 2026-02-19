@@ -42,7 +42,8 @@ export class FlappleVMAX extends PokemonCard {
 
   public name: string = 'Flapple VMAX';
 
-  public fullName: string = 'Flapple VMAX BST';
+  public fullName: string = 'Flapple VMAX (BST 19)';
+  public legacyFullName = 'Flapple VMAX BST';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

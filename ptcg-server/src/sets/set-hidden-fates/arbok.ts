@@ -29,7 +29,7 @@ export class Arbok extends PokemonCard {
       name: 'Rocket Tail',
       cost: [P, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Jessie & James is in your discard pile, this attack does 80 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Arbok extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arbok';
-  public fullName: string = 'Arbok HIF';
+  public fullName: string = 'Arbok (HIF 27)';
+  public legacyFullName = 'Arbok HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Last Pattern (passive - intercept KnockOutEffect)

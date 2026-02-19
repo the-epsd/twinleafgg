@@ -37,7 +37,8 @@ export class Illumise extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Illumise';
-  public fullName: string = 'Illumise PRC';
+  public fullName: string = 'Illumise (PRC 18)';
+  public legacyFullName = 'Illumise PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Helping Hand

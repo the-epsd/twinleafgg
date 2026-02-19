@@ -40,7 +40,8 @@ export class Amoonguss extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Amoonguss';
-  public fullName: string = 'Amoonguss STS';
+  public fullName: string = 'Amoonguss (STS 13)';
+  public legacyFullName = 'Amoonguss STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Crazy Spore

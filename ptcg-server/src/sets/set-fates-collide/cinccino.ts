@@ -37,7 +37,8 @@ export class Cinccino extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cinccino';
-  public fullName: string = 'Cinccino FCO';
+  public fullName: string = 'Cinccino (FCO 88)';
+  public legacyFullName = 'Cinccino FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Covet

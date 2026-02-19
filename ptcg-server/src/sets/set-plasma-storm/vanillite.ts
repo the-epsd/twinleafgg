@@ -28,7 +28,8 @@ export class Vanillite extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanillite';
-  public fullName: string = 'Vanillite PLS';
+  public fullName: string = 'Vanillite (PLS 35)';
+  public legacyFullName = 'Vanillite PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Snow Squall

@@ -30,7 +30,8 @@ export class Rotom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '70';
   public name: string = 'Rotom';
-  public fullName: string = 'Rotom SVI';
+  public fullName: string = 'Rotom (SVI 70)';
+  public legacyFullName = 'Rotom SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

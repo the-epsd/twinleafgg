@@ -26,7 +26,8 @@ export class Sunkern extends PokemonCard {
 
   public set: string = 'CEC';
 
-  public fullName: string = 'Sunkern CEC';
+  public fullName: string = 'Sunkern (CEC 7)';
+  public legacyFullName = 'Sunkern CEC';
 
   public name: string = 'Sunkern';
 

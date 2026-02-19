@@ -37,7 +37,8 @@ export class Rhyperior extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rhyperior';
-  public fullName: string = 'Rhyperior XY';
+  public fullName: string = 'Rhyperior (XY 62)';
+  public legacyFullName = 'Rhyperior XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Black

@@ -37,7 +37,8 @@ export class Jolteon extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jolteon';
-  public fullName: string = 'Jolteon HIF';
+  public fullName: string = 'Jolteon (HIF 23)';
+  public legacyFullName = 'Jolteon HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Electromagnetic Wall (passive - trigger on opponent's energy attachment)

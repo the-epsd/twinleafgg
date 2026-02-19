@@ -8,7 +8,8 @@ export class PokemonReversal extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'UF';
   public name: string = 'Pokemon Reversal';
-  public fullName: string = 'Pokemon Reversal UF';
+  public fullName: string = 'Pokemon Reversal (UF 88)';
+  public legacyFullName = 'Pokemon Reversal UF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
   public text = 'Flip a coin. If heads, choose 1 of your opponent\'s Benched Pokémon and switch it with your opponent\'s Active Pokémon.';

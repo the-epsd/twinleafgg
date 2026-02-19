@@ -32,5 +32,6 @@ export class Snorlax extends PokemonCard {
   public setNumber: string = '140';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snorlax';
-  public fullName: string = 'Snorlax SSH';
+  public fullName: string = 'Snorlax (SSH 140)';
+  public legacyFullName = 'Snorlax SSH';
 }

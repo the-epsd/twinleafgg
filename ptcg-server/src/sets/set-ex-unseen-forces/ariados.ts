@@ -29,7 +29,8 @@ export class Ariados extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '2';
   public name: string = 'Ariados';
-  public fullName: string = 'Ariados UF';
+  public fullName: string = 'Ariados (UF 2)';
+  public legacyFullName = 'Ariados UF';
 
   public usedSpiderTrap: boolean = false;
 

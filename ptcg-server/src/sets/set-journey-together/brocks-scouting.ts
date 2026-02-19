@@ -97,7 +97,8 @@ export class BrocksScouting extends TrainerCard {
 
   public name: string = 'Brock\'s Scouting';
 
-  public fullName: string = 'Brock\'s Scouting JTG';
+  public fullName: string = 'Brock\'s Scouting (JTG 146)';
+  public legacyFullName = 'Brock\'s Scouting JTG';
 
   public text: string = 'Search your deck for up to 2 Basic Pokémon or 1 Evolution Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
 

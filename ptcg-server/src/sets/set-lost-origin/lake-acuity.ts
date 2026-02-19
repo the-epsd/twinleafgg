@@ -11,7 +11,8 @@ export class LakeAcuity extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '160';
   public name: string = 'Lake Acuity';
-  public fullName: string = 'Lake Acuity LOR';
+  public fullName: string = 'Lake Acuity (LOR 160)';
+  public legacyFullName = 'Lake Acuity LOR';
 
   public text: string = 'All Pokémon that have any [W] or [F] Energy attached (both yours and your opponent\'s) take 20 less damage from attacks from the opponent\'s Pokémon (after applying Weakness and Resistance).';
 

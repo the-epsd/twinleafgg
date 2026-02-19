@@ -15,7 +15,8 @@ export class AncientCrystal extends TrainerCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ancient Crystal';
-  public fullName: string = 'Ancient Crystal UPR';
+  public fullName: string = 'Ancient Crystal (UPR 118)';
+  public legacyFullName = 'Ancient Crystal UPR';
   public text: string = 'The Regirock, Regice, Registeel, or Regigigas this card is attached to takes 30 less damage from your opponent\'s attacks (after applying Weakness and Resistance).';
 
   // Ref: set-x-and-y/hard-charm.ts (Tool damage reduction pattern)

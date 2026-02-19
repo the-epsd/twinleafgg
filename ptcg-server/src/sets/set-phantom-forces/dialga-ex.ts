@@ -42,7 +42,8 @@ export class DialgaEx extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dialga-EX';
-  public fullName: string = 'Dialga-EX PHF';
+  public fullName: string = 'Dialga-EX (PHF 62)';
+  public legacyFullName = 'Dialga-EX PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Chrono Wind

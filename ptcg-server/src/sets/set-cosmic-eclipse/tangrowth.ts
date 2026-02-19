@@ -32,7 +32,8 @@ export class Tangrowth extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
   public name: string = 'Tangrowth';
-  public fullName: string = 'Tangrowth CEC';
+  public fullName: string = 'Tangrowth (CEC 6)';
+  public legacyFullName = 'Tangrowth CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

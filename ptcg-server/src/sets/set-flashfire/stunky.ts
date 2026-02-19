@@ -41,7 +41,8 @@ export class Stunky extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stunky';
-  public fullName: string = 'Stunky FLF';
+  public fullName: string = 'Stunky (FLF 53)';
+  public legacyFullName = 'Stunky FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/malamar-2.ts (Mental Panic - coin-gated attack block)

@@ -21,7 +21,7 @@ export class Surskit extends PokemonCard {
       name: 'Quick Attack',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Surskit extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Surskit';
-  public fullName: string = 'Surskit SUM';
+  public fullName: string = 'Surskit (SUM 7)';
+  public legacyFullName = 'Surskit SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Quick Attack

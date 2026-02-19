@@ -39,7 +39,8 @@ export class Lopunny extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lopunny';
-  public fullName: string = 'Lopunny FLF';
+  public fullName: string = 'Lopunny (FLF 85)';
+  public legacyFullName = 'Lopunny FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Refs: set-legendary-treasures/phione.ts (Aqua Boomerang - return to hand), AGENTS.md (once-per-turn ability)

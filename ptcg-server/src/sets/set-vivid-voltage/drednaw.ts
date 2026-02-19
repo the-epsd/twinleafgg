@@ -40,7 +40,8 @@ export class Drednaw extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drednaw';
-  public fullName: string = 'Drednaw VIV';
+  public fullName: string = 'Drednaw (VIV 39)';
+  public legacyFullName = 'Drednaw VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track if Nessa was played this turn

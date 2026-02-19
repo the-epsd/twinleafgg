@@ -33,5 +33,6 @@ export class Diggersby extends PokemonCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Diggersby';
-  public fullName: string = 'Diggersby DAA';
+  public fullName: string = 'Diggersby (DAA 96)';
+  public legacyFullName = 'Diggersby DAA';
 }

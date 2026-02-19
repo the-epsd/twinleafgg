@@ -38,7 +38,8 @@ export class Manaphy extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Manaphy';
-  public fullName: string = 'Manaphy PLS';
+  public fullName: string = 'Manaphy (PLS 34)';
+  public legacyFullName = 'Manaphy PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Final Wish (passive - on KO)

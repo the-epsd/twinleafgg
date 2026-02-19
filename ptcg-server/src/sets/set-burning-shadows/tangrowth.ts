@@ -28,7 +28,7 @@ export class Tangrowth extends PokemonCard {
       name: 'Crosswise Whip',
       cost: [C, C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 50 damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Tangrowth extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tangrowth';
-  public fullName: string = 'Tangrowth BUS';
+  public fullName: string = 'Tangrowth (BUS 8)';
+  public legacyFullName = 'Tangrowth BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Giga Drain

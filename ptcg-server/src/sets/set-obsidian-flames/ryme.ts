@@ -21,7 +21,8 @@ export class Ryme extends TrainerCard {
 
   public name: string = 'Ryme';
 
-  public fullName: string = 'Ryme OBF';
+  public fullName: string = 'Ryme (OBF 194)';
+  public legacyFullName = 'Ryme OBF';
 
   public text: string =
     'Draw 3 cards. Switch out your opponent\'s Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)';

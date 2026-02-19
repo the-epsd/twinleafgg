@@ -21,7 +21,7 @@ export class Cacnea extends PokemonCard {
       name: 'Sucker Punch',
       cost: [G],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any [D] Energy attached to it, this attack does 30 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Cacnea extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cacnea';
-  public fullName: string = 'Cacnea CIN';
+  public fullName: string = 'Cacnea (CIN 5)';
+  public legacyFullName = 'Cacnea CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sucker Punch

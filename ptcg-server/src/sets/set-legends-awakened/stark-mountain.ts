@@ -16,7 +16,8 @@ export class StarkMountain extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '135';
   public name = 'Stark Mountain';
-  public fullName = 'Stark Mountain LA';
+  public fullName = 'Stark Mountain (LA 135)';
+  public legacyFullName = 'Stark Mountain LA';
 
   public text = 'Once during each player\'s turn, that player may choose a [R] or [F] Energy attached to 1 of his or her Pokémon and move that Energy to 1 of his or her [R] or [F] Pokémon.';
 

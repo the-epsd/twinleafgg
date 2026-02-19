@@ -41,7 +41,8 @@ export class EthansTyphlosion extends PokemonCard {
 
   public name: string = 'Ethan\'s Typhlosion';
 
-  public fullName: string = 'Ethan\'s Typhlosion DRI';
+  public fullName: string = 'Ethan\'s Typhlosion (DRI 34)';
+  public legacyFullName = 'Ethan\'s Typhlosion DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

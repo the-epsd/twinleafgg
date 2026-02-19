@@ -14,7 +14,8 @@ export class Channeler extends TrainerCard {
   public setNumber: string = '190';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Channeler';
-  public fullName: string = 'Channeler UNM';
+  public fullName: string = 'Channeler (UNM 190)';
+  public legacyFullName = 'Channeler UNM';
   public text: string = 'Remove all effects of attacks on you and each of your Pokémon. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -43,7 +43,8 @@ export class Banetteex extends PokemonCard {
   public setNumber: string = '85';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Banette ex';
-  public fullName: string = 'Banette ex LM';
+  public fullName: string = 'Banette ex (LM 85)';
+  public legacyFullName = 'Banette ex LM';
 
   public readonly SHADY_MARKER = 'SHADY_MARKER';
 

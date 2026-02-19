@@ -17,7 +17,8 @@ export class SpicySeasonedCurry extends TrainerCard {
 
   public name: string = 'Spicy Seasoned Curry';
 
-  public fullName: string = 'Spicy Seasoned Curry ASR';
+  public fullName: string = 'Spicy Seasoned Curry (ASR 151)';
+  public legacyFullName = 'Spicy Seasoned Curry ASR';
 
   public text: string = 
     'Your Active Pokémon is now Burned. Heal 40 damage from it.';

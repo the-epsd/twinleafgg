@@ -35,7 +35,8 @@ export class Heatmor extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heatmor';
-  public fullName: string = 'Heatmor DRM';
+  public fullName: string = 'Heatmor (DRM 10)';
+  public legacyFullName = 'Heatmor DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Singe

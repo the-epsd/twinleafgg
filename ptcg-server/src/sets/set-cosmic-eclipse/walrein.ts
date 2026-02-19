@@ -44,7 +44,8 @@ export class Walrein extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Walrein';
-  public fullName: string = 'Walrein CEC';
+  public fullName: string = 'Walrein (CEC 52)';
+  public legacyFullName = 'Walrein CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Block Cold Snap if used last turn (self-restriction via 2-phase marker)

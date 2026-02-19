@@ -16,7 +16,8 @@ export class MistyAndLorelei extends TrainerCard {
   public setNumber: string = '199';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Misty & Lorelei';
-  public fullName: string = 'Misty & Lorelei CEC';
+  public fullName: string = 'Misty & Lorelei (CEC 199)';
+  public legacyFullName = 'Misty & Lorelei CEC';
   public text: string = 'Search your deck for up to 3 [W] Energy cards, reveal them, and put them into your hand. Then, shuffle your deck. When you play this card, you may discard 5 other cards from your hand. If you do, during this turn, your Water Pokémon can use their GX attacks even if you have used your GX attack. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

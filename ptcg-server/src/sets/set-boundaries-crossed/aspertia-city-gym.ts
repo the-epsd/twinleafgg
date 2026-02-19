@@ -14,7 +14,8 @@ export class AspertiaCityGym extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'BCR';
   public name: string = 'Aspertia City Gym';
-  public fullName: string = 'Aspertia City Gym BCR';
+  public fullName: string = 'Aspertia City Gym (BCR 127)';
+  public legacyFullName = 'Aspertia City Gym BCR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '127';
 

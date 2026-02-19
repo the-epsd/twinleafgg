@@ -35,7 +35,8 @@ export class AlolanDiglett extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Diglett';
-  public fullName: string = 'Alolan Diglett SUM';
+  public fullName: string = 'Alolan Diglett (SUM 86)';
+  public legacyFullName = 'Alolan Diglett SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spelunk

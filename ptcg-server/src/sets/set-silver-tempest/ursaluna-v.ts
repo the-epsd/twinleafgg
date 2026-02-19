@@ -43,7 +43,8 @@ export class UrsalunaV extends PokemonCard {
 
   public name: string = 'Ursaluna V';
 
-  public fullName: string = 'Ursaluna V SIT';
+  public fullName: string = 'Ursaluna V (SIT 102)';
+  public legacyFullName = 'Ursaluna V SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

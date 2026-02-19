@@ -20,7 +20,7 @@ export class Tauros extends PokemonCard {
       name: 'Raging Herd',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on all of your Tauros and Tauros-GX.'
     }
   ];
@@ -29,7 +29,8 @@ export class Tauros extends PokemonCard {
   public setNumber: string = '129';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tauros';
-  public fullName: string = 'Tauros TEU';
+  public fullName: string = 'Tauros (TEU 129)';
+  public legacyFullName = 'Tauros TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Raging Herd

@@ -13,7 +13,8 @@ export class BeginningDoor extends TrainerCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beginning Door';
-  public fullName: string = 'Beginning Door AR';
+  public fullName: string = 'Beginning Door (AR 82)';
+  public legacyFullName = 'Beginning Door AR';
 
   public text: string = 'Search your deck for Arceus, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
 

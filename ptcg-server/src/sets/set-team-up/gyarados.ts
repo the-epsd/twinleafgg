@@ -23,7 +23,7 @@ export class Gyarados extends PokemonCard {
       name: 'Distilled Blast',
       cost: [W],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Reveal the top 7 cards of your deck. This attack does 30 more damage times the amount of [W] Energy you find there. Then, shuffle those Energy cards back into your deck and discard the other cards.'
     },
     {
@@ -38,7 +38,8 @@ export class Gyarados extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gyarados';
-  public fullName: string = 'Gyarados TEU';
+  public fullName: string = 'Gyarados (TEU 30)';
+  public legacyFullName = 'Gyarados TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Distilled Blast

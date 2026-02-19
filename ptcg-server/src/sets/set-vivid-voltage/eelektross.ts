@@ -43,7 +43,8 @@ export class Eelektross extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eelektross';
-  public fullName: string = 'Eelektross VIV';
+  public fullName: string = 'Eelektross (VIV 59)';
+  public legacyFullName = 'Eelektross VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Electrified Bite Mark

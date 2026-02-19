@@ -31,7 +31,8 @@ export class Flaaffy extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flaaffy';
-  public fullName: string = 'Flaaffy LOT';
+  public fullName: string = 'Flaaffy (LOT 77)';
+  public legacyFullName = 'Flaaffy LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Signal Beam

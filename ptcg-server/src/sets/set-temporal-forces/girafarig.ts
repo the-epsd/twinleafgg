@@ -26,7 +26,8 @@ export class Girafarig extends PokemonCard {
   public setNumber: string = '66';
 
   public name: string = 'Girafarig';
-  public fullName: string = 'Girafarig TEF';
+  public fullName: string = 'Girafarig (TEF 66)';
+  public legacyFullName = 'Girafarig TEF';
 
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

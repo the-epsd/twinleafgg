@@ -39,7 +39,8 @@ export class AlolanPersianGX extends PokemonCard {
   public setNumber: string = '129';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Persian-GX';
-  public fullName: string = 'Alolan Persian-GX CEC';
+  public fullName: string = 'Alolan Persian-GX (CEC 129)';
+  public legacyFullName = 'Alolan Persian-GX CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

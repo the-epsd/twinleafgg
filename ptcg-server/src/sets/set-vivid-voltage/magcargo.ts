@@ -30,7 +30,8 @@ export class Magcargo extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
   public name: string = 'Magcargo';
-  public fullName: string = 'Magcargo VIV';
+  public fullName: string = 'Magcargo (VIV 28)';
+  public legacyFullName = 'Magcargo VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

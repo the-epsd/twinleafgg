@@ -37,7 +37,8 @@ export class Probopass extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Probopass';
-  public fullName: string = 'Probopass STS';
+  public fullName: string = 'Probopass (STS 55)';
+  public legacyFullName = 'Probopass STS';
 
   public usedBounceBack = false;
 

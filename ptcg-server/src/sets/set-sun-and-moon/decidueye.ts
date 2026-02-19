@@ -22,7 +22,7 @@ export class Decidueye extends PokemonCard {
       name: 'Leaf Blade',
       cost: [G],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Decidueye extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Decidueye';
-  public fullName: string = 'Decidueye SUM';
+  public fullName: string = 'Decidueye (SUM 11)';
+  public legacyFullName = 'Decidueye SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Leaf Blade

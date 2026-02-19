@@ -33,7 +33,8 @@ export class Alomomola extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
   public name: string = 'Alomomola';
-  public fullName: string = 'Alomomola SV11B';
+  public fullName: string = 'Alomomola (BLK 24)';
+  public legacyFullName = 'Alomomola SV11B';
 
   public readonly GENTLE_FINS_MARKER = 'GENTLE_FINS_MARKER';
 

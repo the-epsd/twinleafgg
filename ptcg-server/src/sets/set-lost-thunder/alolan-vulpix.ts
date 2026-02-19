@@ -35,7 +35,8 @@ export class AlolanVulpix extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Vulpix';
-  public fullName: string = 'Alolan Vulpix LOT';
+  public fullName: string = 'Alolan Vulpix (LOT 53)';
+  public legacyFullName = 'Alolan Vulpix LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Secret Alleyway (passive - free retreat if any Fairy Pokemon in play)

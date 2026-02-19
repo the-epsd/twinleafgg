@@ -15,7 +15,8 @@ export class BentSpoon extends TrainerCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bent Spoon';
-  public fullName: string = 'Bent Spoon FCO';
+  public fullName: string = 'Bent Spoon (FCO 93)';
+  public legacyFullName = 'Bent Spoon FCO';
   public text: string = 'Prevent all effects of your opponent\'s attacks, except damage, done to the Pokémon this card is attached to. (Existing effects are not removed.)';
 
   // Ref: set-steam-siege/magearna-ex.ts (Mystic Heart - prevent attack effects except damage)

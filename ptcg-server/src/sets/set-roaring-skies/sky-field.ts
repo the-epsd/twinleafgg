@@ -17,7 +17,8 @@ export class SkyField extends TrainerCard {
 
   public name: string = 'Sky Field';
 
-  public fullName: string = 'Sky Field ROS';
+  public fullName: string = 'Sky Field (ROS 89)';
+  public legacyFullName = 'Sky Field ROS';
 
   public cardImage: string = 'assets/cardback.png';
 

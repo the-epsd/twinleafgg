@@ -37,7 +37,7 @@ export class PersianGx extends PokemonCard {
       name: 'Vengeance',
       cost: [C, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each Pokémon in your discard pile. You can\'t add more than 180 damage in this way.'
     },
     {
@@ -52,7 +52,8 @@ export class PersianGx extends PokemonCard {
   public setNumber: string = '149';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Persian-GX';
-  public fullName: string = 'Persian-GX UNB';
+  public fullName: string = 'Persian-GX (UNB 149)';
+  public legacyFullName = 'Persian-GX UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track GX/EX KO for Cat Walk

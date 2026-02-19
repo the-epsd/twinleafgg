@@ -36,7 +36,8 @@ export class BlackKyuremEx extends PokemonCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Black Kyurem-EX';
-  public fullName: string = 'Black Kyurem-EX BCR';
+  public fullName: string = 'Black Kyurem-EX (BCR 101)';
+  public legacyFullName = 'Black Kyurem-EX BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dragon Fang

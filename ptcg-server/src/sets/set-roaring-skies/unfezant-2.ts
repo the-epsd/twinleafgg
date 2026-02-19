@@ -38,7 +38,8 @@ export class Unfezant2 extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Unfezant';
-  public fullName: string = 'Unfezant ROS 81';
+  public fullName: string = 'Unfezant (ROS 81)';
+  public legacyFullName = 'Unfezant ROS 81';
 
   public readonly FEATHER_DANCE_MARKER = 'FEATHER_DANCE_MARKER';
   public readonly CLEAR_FEATHER_DANCE_MARKER = 'CLEAR_FEATHER_DANCE_MARKER';

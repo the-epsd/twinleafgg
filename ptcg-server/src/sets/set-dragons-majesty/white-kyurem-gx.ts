@@ -28,7 +28,7 @@ export class WhiteKyuremGx extends PokemonCard {
       name: 'Raging Blade',
       cost: [R, W, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pok\u00e9mon has any damage counters on it, this attack does 80 more damage.'
     },
     {
@@ -43,7 +43,8 @@ export class WhiteKyuremGx extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'White Kyurem GX';
-  public fullName: string = 'White Kyurem GX DRM';
+  public fullName: string = 'White Kyurem GX (DRM 48)';
+  public legacyFullName = 'White Kyurem GX DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shred

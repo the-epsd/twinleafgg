@@ -25,5 +25,6 @@ export class Frillish extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Frillish';
-  public fullName: string = 'Frillish BCR';
+  public fullName: string = 'Frillish (BCR 44)';
+  public legacyFullName = 'Frillish BCR';
 }

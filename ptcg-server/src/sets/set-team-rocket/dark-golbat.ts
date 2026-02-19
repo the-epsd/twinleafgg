@@ -34,7 +34,8 @@ export class DarkGolbat extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Dark Golbat';
-  public fullName: string = 'Dark Golbat TR';
+  public fullName: string = 'Dark Golbat (TR 7)';
+  public legacyFullName = 'Dark Golbat TR';
 
   public readonly QUICK_SHOOTING_MARKER = 'QUICK_SHOOTING_MARKER';
 

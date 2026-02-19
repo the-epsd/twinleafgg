@@ -48,7 +48,8 @@ export class Revavroomex extends PokemonCard {
 
   public name: string = 'Revavroom ex';
 
-  public fullName: string = 'Revavroom ex OBF';
+  public fullName: string = 'Revavroom ex (OBF 156)';
+  public legacyFullName = 'Revavroom ex OBF';
 
   public maxTools: number = 4;
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

@@ -34,7 +34,8 @@ export class Slowpoke extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slowpoke';
-  public fullName: string = 'Slowpoke GRI';
+  public fullName: string = 'Slowpoke (GRI 48)';
+  public legacyFullName = 'Slowpoke GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Whimsy Tackle

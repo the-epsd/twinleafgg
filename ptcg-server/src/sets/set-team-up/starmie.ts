@@ -31,7 +31,8 @@ export class Starmie extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Starmie';
-  public fullName: string = 'Starmie TEU';
+  public fullName: string = 'Starmie (TEU 65)';
+  public legacyFullName = 'Starmie TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Strange Wave

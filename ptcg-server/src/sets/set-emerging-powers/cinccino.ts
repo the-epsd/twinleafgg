@@ -33,7 +33,8 @@ export class Cinccino extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public name: string = 'Cinccino';
-  public fullName: string = 'Cinccino EPO';
+  public fullName: string = 'Cinccino (EPO 85)';
+  public legacyFullName = 'Cinccino EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

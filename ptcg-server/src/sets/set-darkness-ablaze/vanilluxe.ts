@@ -37,7 +37,8 @@ export class Vanilluxe extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanilluxe';
-  public fullName: string = 'Vanilluxe DAA';
+  public fullName: string = 'Vanilluxe (DAA 47)';
+  public legacyFullName = 'Vanilluxe DAA';
 
   public readonly BITTER_COLD_MARKER = 'VANILLUXE_DAA_BITTER_COLD_MARKER';
 

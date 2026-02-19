@@ -23,7 +23,7 @@ export class TornadusV extends PokemonCard {
       name: 'Blow Through',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If a Stadium is in play, this attack does 20 more damage.'
     },
     {
@@ -39,7 +39,8 @@ export class TornadusV extends PokemonCard {
   public setNumber: string = '124';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tornadus V';
-  public fullName: string = 'Tornadus V CRE';
+  public fullName: string = 'Tornadus V (CRE 124)';
+  public legacyFullName = 'Tornadus V CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Blow Through

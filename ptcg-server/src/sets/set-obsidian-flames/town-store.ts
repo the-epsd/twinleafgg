@@ -74,7 +74,8 @@ export class TownStore extends TrainerCard {
 
   public name = 'Town Store';
 
-  public fullName = 'Town Store OBF';
+  public fullName = 'Town Store (OBF 196)';
+  public legacyFullName = 'Town Store OBF';
 
   public text = 'Once during each player\'s turn, that player may search their deck for a Pokémon Tool card, reveal it, and put it into their hand. Then, that player shuffles their deck.';
 

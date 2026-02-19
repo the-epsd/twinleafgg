@@ -11,7 +11,8 @@ export class PuzzleOfTime extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'BKP';
   public name: string = 'Puzzle of Time';
-  public fullName: string = 'Puzzle of Time BKP';
+  public fullName: string = 'Puzzle of Time (BKP 109)';
+  public legacyFullName = 'Puzzle of Time BKP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
 

@@ -11,7 +11,8 @@ export class BugCatcher extends TrainerCard {
   public setNumber: string = '189';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bug Catcher';
-  public fullName: string = 'Bug Catcher UNM';
+  public fullName: string = 'Bug Catcher (UNM 189)';
+  public legacyFullName = 'Bug Catcher UNM';
   public text: string = 'Draw 2 cards. Flip a coin. If heads, draw 2 more cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -49,7 +49,8 @@ export class EnteiV extends PokemonCard {
 
   public name: string = 'Entei V';
 
-  public fullName: string = 'Entei V BRS';
+  public fullName: string = 'Entei V (BRS 22)';
+  public legacyFullName = 'Entei V BRS';
 
   public readonly FLEET_FOOTED_MARKER = 'FLEET_FOOTED_MARKER';
 

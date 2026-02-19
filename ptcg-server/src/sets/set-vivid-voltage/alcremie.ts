@@ -37,7 +37,8 @@ export class Alcremie extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alcremie';
-  public fullName: string = 'Alcremie VIV';
+  public fullName: string = 'Alcremie (VIV 81)';
+  public legacyFullName = 'Alcremie VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sharing Sweets

@@ -30,7 +30,8 @@ export class Miltank extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Miltank';
-  public fullName: string = 'Miltank PLF';
+  public fullName: string = 'Miltank (PLF 93)';
+  public legacyFullName = 'Miltank PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

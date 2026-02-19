@@ -27,7 +27,8 @@ export class Ribombee extends PokemonCard {
 
   public set: string = 'LOT';
   public name: string = 'Ribombee';
-  public fullName: string = 'Ribombee LOT';
+  public fullName: string = 'Ribombee (LOT 146)';
+  public legacyFullName = 'Ribombee LOT';
   public setNumber: string = '146';
   public cardImage: string = 'assets/cardback.png';
 

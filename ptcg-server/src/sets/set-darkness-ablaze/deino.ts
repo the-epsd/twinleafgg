@@ -26,5 +26,6 @@ export class Deino extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Deino';
-  public fullName: string = 'Deino DAA';
+  public fullName: string = 'Deino (DAA 108)';
+  public legacyFullName = 'Deino DAA';
 }

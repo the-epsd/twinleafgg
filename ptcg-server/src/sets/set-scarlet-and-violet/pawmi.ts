@@ -18,6 +18,7 @@ export class Pawmi extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '74';
   public name: string = 'Pawmi';
-  public fullName: string = 'Pawmi SVI';
+  public fullName: string = 'Pawmi (SVI 74)';
+  public legacyFullName = 'Pawmi SVI';
 
 }

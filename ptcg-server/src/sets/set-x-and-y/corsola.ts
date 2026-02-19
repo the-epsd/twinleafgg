@@ -36,7 +36,8 @@ export class Corsola extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Corsola';
-  public fullName: string = 'Corsola XY';
+  public fullName: string = 'Corsola (XY 36)';
+  public legacyFullName = 'Corsola XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Refs: set-dragons-exalted/beautifly.ts (heal pattern), AGENTS-patterns.md (remove conditions)

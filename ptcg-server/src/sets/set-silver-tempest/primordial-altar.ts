@@ -24,7 +24,8 @@ export class PrimordialAltar extends TrainerCard {
 
   public name = 'Primordial Altar';
 
-  public fullName = 'Primordial Altar SIT';
+  public fullName = 'Primordial Altar (SIT 161)';
+  public legacyFullName = 'Primordial Altar SIT';
 
   public text = 'Once during each player\'s turn, that player may look at the top card of their deck. They may discard that card.';
 

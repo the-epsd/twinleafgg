@@ -21,7 +21,7 @@ export class Bronzor extends PokemonCard {
       name: 'Payback',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent has only 1 Prize card left, this attack does 60 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Bronzor extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bronzor';
-  public fullName: string = 'Bronzor BKT';
+  public fullName: string = 'Bronzor (BKT 95)';
+  public legacyFullName = 'Bronzor BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Payback

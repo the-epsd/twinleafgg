@@ -48,7 +48,8 @@ export class WalkingWake extends PokemonCard {
 
   public name: string = 'Walking Wake';
 
-  public fullName: string = 'Walking Wake TWM';
+  public fullName: string = 'Walking Wake (TWM 63)';
+  public legacyFullName = 'Walking Wake TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

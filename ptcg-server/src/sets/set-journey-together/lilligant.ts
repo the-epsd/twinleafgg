@@ -32,7 +32,8 @@ export class Lilligant extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Lilligant';
-  public fullName: string = 'Lilligant JTG';
+  public fullName: string = 'Lilligant (JTG 7)';
+  public legacyFullName = 'Lilligant JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

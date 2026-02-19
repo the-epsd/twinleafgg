@@ -37,7 +37,8 @@ export class Graveler extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Graveler';
-  public fullName: string = 'Graveler HIF';
+  public fullName: string = 'Graveler (HIF 34)';
+  public legacyFullName = 'Graveler HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Mudslide

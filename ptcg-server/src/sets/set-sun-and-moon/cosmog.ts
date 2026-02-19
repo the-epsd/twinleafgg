@@ -22,7 +22,8 @@ export class Cosmog extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '64';
   public name: string = 'Cosmog';
-  public fullName: string = 'Cosmog SUM';
+  public fullName: string = 'Cosmog (SUM 64)';
+  public legacyFullName = 'Cosmog SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

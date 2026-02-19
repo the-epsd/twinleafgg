@@ -38,7 +38,8 @@ export class Slakingex extends PokemonCard {
   public cardImage = 'assets/cardback.png';
   public regulationMark: string = 'H';
   public name: string = 'Slaking ex';
-  public fullName: string = 'Slaking ex SSP';
+  public fullName: string = 'Slaking ex (SSP 147)';
+  public legacyFullName = 'Slaking ex SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.player.active.getPokemonCard() === this) {

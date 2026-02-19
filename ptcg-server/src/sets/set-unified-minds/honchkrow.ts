@@ -37,7 +37,8 @@ export class Honchkrow extends PokemonCard {
   public setNumber: string = '130';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Honchkrow';
-  public fullName: string = 'Honchkrow UNM';
+  public fullName: string = 'Honchkrow (UNM 130)';
+  public legacyFullName = 'Honchkrow UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sharpshooting

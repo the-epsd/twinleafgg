@@ -19,7 +19,8 @@ export class NinjaBoy extends TrainerCard {
 
   public name: string = 'Ninja Boy';
 
-  public fullName: string = 'Ninja Boy STS';
+  public fullName: string = 'Ninja Boy (STS 103)';
+  public legacyFullName = 'Ninja Boy STS';
 
   public text: string =
     'Choose 1 of your Basic Pokémon in play. Search your deck for a Basic Pokémon and switch it with that Pokémon. (Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon.) Shuffle the first Pokémon into your deck.';

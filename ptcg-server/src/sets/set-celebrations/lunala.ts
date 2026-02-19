@@ -31,7 +31,8 @@ export class Lunala extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lunala';
-  public fullName: string = 'Lunala CEL';
+  public fullName: string = 'Lunala (CEL 15)';
+  public legacyFullName = 'Lunala CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

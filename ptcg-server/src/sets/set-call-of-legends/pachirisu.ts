@@ -40,7 +40,8 @@ export class Pachirisu extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
   public name: string = 'Pachirisu';
-  public fullName: string = 'Pachirisu CL';
+  public fullName: string = 'Pachirisu (CL 18)';
+  public legacyFullName = 'Pachirisu CL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

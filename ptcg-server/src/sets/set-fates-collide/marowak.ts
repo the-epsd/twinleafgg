@@ -27,7 +27,7 @@ export class Marowak extends PokemonCard {
       name: 'Bonemerang',
       cost: [F, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Marowak extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marowak';
-  public fullName: string = 'Marowak FCO';
+  public fullName: string = 'Marowak (FCO 37)';
+  public legacyFullName = 'Marowak FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Bodyguard

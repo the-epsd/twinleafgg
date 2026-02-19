@@ -34,7 +34,8 @@ export class Yanmega extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yanmega';
-  public fullName: string = 'Yanmega DRX';
+  public fullName: string = 'Yanmega (DRX 5)';
+  public legacyFullName = 'Yanmega DRX';
 
   private readonly PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'YANMEGA_PREVENT_ALL_MARKER';
   private readonly CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'YANMEGA_CLEAR_PREVENT_ALL_MARKER';

@@ -12,7 +12,8 @@ export class StrengthCharm extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'DF';
   public name: string = 'Strength Charm';
-  public fullName: string = 'Strength Charm DF';
+  public fullName: string = 'Strength Charm (DF 81)';
+  public legacyFullName = 'Strength Charm DF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
 

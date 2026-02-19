@@ -37,7 +37,8 @@ export class Rayquaza extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rayquaza';
-  public fullName: string = 'Rayquaza GRI';
+  public fullName: string = 'Rayquaza (GRI 106)';
+  public legacyFullName = 'Rayquaza GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Turbo Storm

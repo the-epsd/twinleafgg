@@ -35,7 +35,8 @@ export class Beautifly extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beautifly';
-  public fullName: string = 'Beautifly DRX';
+  public fullName: string = 'Beautifly (DRX 8)';
+  public legacyFullName = 'Beautifly DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Triple Energy - search deck for 3 different types of basic Energy, attach to your Pokemon

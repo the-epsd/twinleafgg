@@ -34,7 +34,8 @@ export class DusknoirLvX extends PokemonCard {
 
   public name: string = 'Dusknoir';
 
-  public fullName: string = 'DusknLv.X SF';
+  public fullName: string = 'Dusknoir (SF 96)';
+  public legacyFullName = 'DusknLv.X SF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

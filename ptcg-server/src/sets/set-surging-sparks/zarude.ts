@@ -44,7 +44,8 @@ export class Zarude extends PokemonCard {
 
   public name: string = 'Zarude';
 
-  public fullName: string = 'Zarude SSP';
+  public fullName: string = 'Zarude (SSP 11)';
+  public legacyFullName = 'Zarude SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

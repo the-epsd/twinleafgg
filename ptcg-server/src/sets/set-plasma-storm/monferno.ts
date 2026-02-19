@@ -37,7 +37,8 @@ export class Monferno extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Monferno';
-  public fullName: string = 'Monferno PLS';
+  public fullName: string = 'Monferno (PLS 16)';
+  public legacyFullName = 'Monferno PLS';
 
   public usedLoudHowl = false;
 

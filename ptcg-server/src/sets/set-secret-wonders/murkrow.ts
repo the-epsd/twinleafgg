@@ -32,7 +32,8 @@ export class Murkrow extends PokemonCard {
 
   public set: string = 'SW';
   public name: string = 'Murkrow';
-  public fullName: string = 'Murkrow SW';
+  public fullName: string = 'Murkrow (SW 95)';
+  public legacyFullName = 'Murkrow SW';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '95';
 

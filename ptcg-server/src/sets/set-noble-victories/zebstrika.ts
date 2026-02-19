@@ -33,7 +33,8 @@ export class Zebstrika extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '36';
   public name: string = 'Zebstrika';
-  public fullName: string = 'Zebstrika NVI';
+  public fullName: string = 'Zebstrika (NVI 36)';
+  public legacyFullName = 'Zebstrika NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

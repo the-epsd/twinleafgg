@@ -37,7 +37,8 @@ export class Flaaffy extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flaaffy';
-  public fullName: string = 'Flaaffy TEU';
+  public fullName: string = 'Flaaffy (TEU 42)';
+  public legacyFullName = 'Flaaffy TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Shock Bolt

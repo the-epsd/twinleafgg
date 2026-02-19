@@ -47,7 +47,8 @@ export class AggronV extends PokemonCard {
 
   public name: string = 'Aggron V';
 
-  public fullName: string = 'Aggron V BRS';
+  public fullName: string = 'Aggron V (BRS 96)';
+  public legacyFullName = 'Aggron V BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

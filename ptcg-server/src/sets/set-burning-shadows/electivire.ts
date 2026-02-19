@@ -22,7 +22,7 @@ export class Electivire extends PokemonCard {
       name: 'Thunder Punch',
       cost: [L, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 60 more damage. If tails, this Pokémon does 20 damage to itself.'
     },
     {
@@ -37,7 +37,8 @@ export class Electivire extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electivire';
-  public fullName: string = 'Electivire BUS';
+  public fullName: string = 'Electivire (BUS 43)';
+  public legacyFullName = 'Electivire BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Punch

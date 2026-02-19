@@ -32,7 +32,8 @@ export class TogekissVmax extends PokemonCard {
   public setNumber: string = '141';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togekiss VMAX';
-  public fullName: string = 'Togekiss VMAX VIV';
+  public fullName: string = 'Togekiss VMAX (VIV 141)';
+  public legacyFullName = 'Togekiss VMAX VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Max Glide

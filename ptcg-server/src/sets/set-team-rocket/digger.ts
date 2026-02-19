@@ -13,7 +13,8 @@ export class Digger extends TrainerCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Digger';
-  public fullName: string = 'Digger TR';
+  public fullName: string = 'Digger (TR 75)';
+  public legacyFullName = 'Digger TR';
 
   public text: string = 'Flip a coin. If tails, do 10 damage to your Active Pokémon. If heads, your opponent flips a coin. If tails, your opponent does 10 damage to his or her Active Pokémon. If heads, you flip a coin. Keep doing this until a player gets tails.';
 

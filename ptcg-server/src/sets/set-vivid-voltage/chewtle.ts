@@ -30,7 +30,8 @@ export class Chewtle extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chewtle';
-  public fullName: string = 'Chewtle VIV';
+  public fullName: string = 'Chewtle (VIV 38)';
+  public legacyFullName = 'Chewtle VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Jaw Lock

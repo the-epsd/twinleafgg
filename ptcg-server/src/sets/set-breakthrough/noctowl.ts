@@ -23,7 +23,7 @@ export class Noctowl extends PokemonCard {
       name: 'High Flight',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Each player reveals his or her hand. This attack does 20 damage times the number of Item cards revealed.'
     },
     {
@@ -38,7 +38,8 @@ export class Noctowl extends PokemonCard {
   public setNumber: string = '120';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Noctowl';
-  public fullName: string = 'Noctowl BKT';
+  public fullName: string = 'Noctowl (BKT 120)';
+  public legacyFullName = 'Noctowl BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: High Flight

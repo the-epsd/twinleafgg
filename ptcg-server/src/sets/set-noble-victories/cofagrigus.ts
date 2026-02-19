@@ -33,7 +33,8 @@ export class Cofagrigus extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cofagrigus';
-  public fullName: string = 'Cofagrigus NVI';
+  public fullName: string = 'Cofagrigus (NVI 46)';
+  public legacyFullName = 'Cofagrigus NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Damagriiigus - move up to 3 damage counters from your Pokémon to opponent's

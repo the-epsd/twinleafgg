@@ -27,7 +27,7 @@ export class Stantler extends PokemonCard {
       name: 'Big Charge',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have any Mega Evolution Pokémon on your Bench, this attack does 50 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Stantler extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stantler';
-  public fullName: string = 'Stantler BKP';
+  public fullName: string = 'Stantler (BKP 91)';
+  public legacyFullName = 'Stantler BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mystifying Horns

@@ -33,5 +33,6 @@ export class Pawniard extends PokemonCard {
   public setNumber: string = '133';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pawniard';
-  public fullName: string = 'Pawniard SSH';
+  public fullName: string = 'Pawniard (SSH 133)';
+  public legacyFullName = 'Pawniard SSH';
 }

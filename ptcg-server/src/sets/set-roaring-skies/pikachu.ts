@@ -39,7 +39,8 @@ export class Pikachu extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikachu';
-  public fullName: string = 'Pikachu ROS';
+  public fullName: string = 'Pikachu (ROS 20)';
+  public legacyFullName = 'Pikachu ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tail Whip

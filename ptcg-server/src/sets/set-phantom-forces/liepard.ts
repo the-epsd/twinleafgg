@@ -41,7 +41,8 @@ export class Liepard extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Liepard';
-  public fullName: string = 'Liepard PHF';
+  public fullName: string = 'Liepard (PHF 57)';
+  public legacyFullName = 'Liepard PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Gentle Bite

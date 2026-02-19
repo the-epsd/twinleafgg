@@ -27,5 +27,6 @@ export class Lombre extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lombre';
-  public fullName: string = 'Lombre EVS';
+  public fullName: string = 'Lombre (EVS 33)';
+  public legacyFullName = 'Lombre EVS';
 }

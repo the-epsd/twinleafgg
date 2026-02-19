@@ -31,7 +31,8 @@ export class Skeledirge extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skeledirge';
-  public fullName: string = 'Skeledirge SSP';
+  public fullName: string = 'Skeledirge (SSP 31)';
+  public legacyFullName = 'Skeledirge SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

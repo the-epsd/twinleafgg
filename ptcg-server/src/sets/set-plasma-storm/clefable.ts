@@ -39,7 +39,8 @@ export class Clefable extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clefable';
-  public fullName: string = 'Clefable PLS';
+  public fullName: string = 'Clefable (PLS 98)';
+  public legacyFullName = 'Clefable PLS';
   public readonly MOON_GUIDANCE_MARKER = 'MOON_GUIDANCE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

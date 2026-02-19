@@ -30,6 +30,7 @@ export class Bidoof extends PokemonCard {
 
   public name: string = 'Bidoof';
 
-  public fullName: string = 'Bidoof BRS';
+  public fullName: string = 'Bidoof (BRS 120)';
+  public legacyFullName = 'Bidoof BRS';
 
 }

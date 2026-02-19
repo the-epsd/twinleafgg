@@ -38,7 +38,8 @@ export class GarbodorV extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Garbodor V';
-  public fullName: string = 'Garbodor V EVS';
+  public fullName: string = 'Garbodor V (EVS 100)';
+  public legacyFullName = 'Garbodor V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Trash Stench

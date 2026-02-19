@@ -16,7 +16,8 @@ export class CedricJuniper extends TrainerCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cedric Juniper';
-  public fullName: string = 'Cedric Juniper LTR';
+  public fullName: string = 'Cedric Juniper (LTR 110)';
+  public legacyFullName = 'Cedric Juniper LTR';
   public text: string = 'Put a Pokémon from your hand face down in front of you and tell your opponent its name. Your opponent guesses the height of that Pokémon. Reveal that Pokémon. If your opponent guessed right, he or she draws 3 cards. If your opponent guessed wrong, you draw 3 cards. Return the Pokémon to your hand. (You can\'t choose a Pokémon that doesn\'t have the height printed on the card.) You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -28,7 +28,7 @@ export class Entei extends PokemonCard {
       name: 'Eruption',
       cost: [R, R, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Each player discards the top card of their deck. This attack does 60 more damage for each Energy card discarded in this way.'
     }
   ];
@@ -37,7 +37,8 @@ export class Entei extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Entei';
-  public fullName: string = 'Entei LOT';
+  public fullName: string = 'Entei (LOT 47)';
+  public legacyFullName = 'Entei LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fire Fang

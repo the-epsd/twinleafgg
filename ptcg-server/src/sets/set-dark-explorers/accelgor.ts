@@ -39,7 +39,8 @@ export class Accelgor extends PokemonCard {
 
   public name: string = 'Accelgor';
 
-  public fullName: string = 'Accelgor DEX';
+  public fullName: string = 'Accelgor (DEX 11)';
+  public legacyFullName = 'Accelgor DEX';
 
   public cardImage: string = 'assets/cardback.png';
 

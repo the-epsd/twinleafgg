@@ -35,7 +35,8 @@ export class Chansey extends PokemonCard {
   public setNumber: string = '152';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chansey';
-  public fullName: string = 'Chansey LOT';
+  public fullName: string = 'Chansey (LOT 152)';
+  public legacyFullName = 'Chansey LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Healing Pirouette

@@ -31,5 +31,6 @@ export class Hitmonchan extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hitmonchan';
-  public fullName: string = 'Hitmonchan EVO';
+  public fullName: string = 'Hitmonchan (EVO 62)';
+  public legacyFullName = 'Hitmonchan EVO';
 }

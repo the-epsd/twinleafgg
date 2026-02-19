@@ -17,7 +17,8 @@ export class HeadRingerTeamFlareHyperGear extends TrainerCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Head Ringer Team Flare Hyper Gear';
-  public fullName: string = 'Head Ringer Team Flare Hyper Gear PHF';
+  public fullName: string = 'Head Ringer Team Flare Hyper Gear (PHF 97)';
+  public legacyFullName = 'Head Ringer Team Flare Hyper Gear PHF';
   public text: string = 'Attach this Pokemon Tool to 1 of your opponent\'s Pokemon-EX that doesn\'t already have a Pokemon Tool attached to it. The attacks of the Pokémon this card is attached to cost [C][C] more. When this card is removed from a Pokémon for any reason, put this card in its owner\'s discard pile.';
 
   // Refs: set-furious-fists/politoed.ts (CheckAttackCostEffect), set-stellar-crown/gravity-gemstone.ts (tool cost modification)

@@ -45,7 +45,8 @@ export class Blastoise extends PokemonCard {
 
   public name: string = 'Blastoise';
 
-  public fullName: string = 'Blastoise BS';
+  public fullName: string = 'Blastoise (BS 2)';
+  public legacyFullName = 'Blastoise BS';
 
   public cardImage: string = 'assets/cardback.png';
 

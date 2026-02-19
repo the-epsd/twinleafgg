@@ -24,7 +24,8 @@ export class Flabebe2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '150';
   public name: string = 'Flabébé';
-  public fullName: string = 'Flabebe CEC 150';
+  public fullName: string = 'Flabébé (CEC 150)';
+  public legacyFullName = 'Flabebe CEC 150';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

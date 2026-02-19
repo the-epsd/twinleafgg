@@ -101,7 +101,8 @@ export class Arven extends TrainerCard {
 
   public name: string = 'Arven';
 
-  public fullName: string = 'Arven SVI';
+  public fullName: string = 'Arven (SVI 166)';
+  public legacyFullName = 'Arven SVI';
 
   public text: string =
     'Search your deck for an Item card and a Pokémon Tool card, reveal them, and put them into your hand. Then, shuffle your deck.';

@@ -36,7 +36,8 @@ export class Bruxish extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bruxish';
-  public fullName: string = 'Bruxish LOT';
+  public fullName: string = 'Bruxish (LOT 70)';
+  public legacyFullName = 'Bruxish LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mind Bend

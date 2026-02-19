@@ -38,7 +38,8 @@ export class Beautifly extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
   public name: string = 'Beautifly';
-  public fullName: string = 'Beautifly LOR';
+  public fullName: string = 'Beautifly (LOR 8)';
+  public legacyFullName = 'Beautifly LOR';
 
   public readonly STOKED_STRAW_MARKER = 'STOKED_STRAW_MARKER';
 

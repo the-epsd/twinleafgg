@@ -22,7 +22,7 @@ export class MHeracrossEx extends PokemonCard {
       name: 'Big Bang Horn',
       cost: [G, G, C],
       damage: 180,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-' as const,
       text: 'This attack does 180 damage minus 10 damage for each damage counter on this Pok\u00e9mon.'
     }
   ];
@@ -31,7 +31,8 @@ export class MHeracrossEx extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Heracross-EX';
-  public fullName: string = 'M Heracross-EX FFI';
+  public fullName: string = 'M Heracross-EX (FFI 5)';
+  public legacyFullName = 'M Heracross-EX FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Big Bang Horn

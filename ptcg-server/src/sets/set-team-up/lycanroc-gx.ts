@@ -36,7 +36,7 @@ export class LycanrocGx extends PokemonCard {
       name: 'Splintered Shards-GX',
       cost: [F],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 30 damage for each Energy card in your opponent\'s discard pile. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];
@@ -45,7 +45,8 @@ export class LycanrocGx extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lycanroc-GX';
-  public fullName: string = 'Lycanroc-GX TEU';
+  public fullName: string = 'Lycanroc-GX (TEU 82)';
+  public legacyFullName = 'Lycanroc-GX TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Twilight Eyes

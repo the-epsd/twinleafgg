@@ -64,7 +64,8 @@ export class Stoutland extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
   public name: string = 'Stoutland';
-  public fullName: string = 'Stoutland BLW';
+  public fullName: string = 'Stoutland (BLW 83)';
+  public legacyFullName = 'Stoutland BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

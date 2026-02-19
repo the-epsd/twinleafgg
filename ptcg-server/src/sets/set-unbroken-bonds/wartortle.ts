@@ -36,7 +36,8 @@ export class Wartortle extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wartortle';
-  public fullName: string = 'Wartortle UNB';
+  public fullName: string = 'Wartortle (UNB 34)';
+  public legacyFullName = 'Wartortle UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Solid Shell (passive - damage reduction)

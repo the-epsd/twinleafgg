@@ -61,7 +61,8 @@ export class SpikemuthGym extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public regulationMark: string = 'I';
   public name = 'Spikemuth Gym';
-  public fullName = 'Spikemuth Gym DRI';
+  public fullName = 'Spikemuth Gym (DRI 169)';
+  public legacyFullName = 'Spikemuth Gym DRI';
 
   public text = 'Once during each player\'s turn, that player may search their deck for a Marnie\'s Pokémon, ' +
     'reveal it, and put it into their hand. Then, that player shuffles their deck.';

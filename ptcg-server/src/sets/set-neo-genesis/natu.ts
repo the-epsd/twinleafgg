@@ -30,7 +30,8 @@ export class Natu extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public name: string = 'Natu';
-  public fullName: string = 'Natu N1';
+  public fullName: string = 'Natu (N1 67)';
+  public legacyFullName = 'Natu N1';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

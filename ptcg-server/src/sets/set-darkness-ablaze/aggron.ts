@@ -37,7 +37,8 @@ export class Aggron extends PokemonCard {
   public setNumber: string = '123';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aggron';
-  public fullName: string = 'Aggron DAA';
+  public fullName: string = 'Aggron (DAA 123)';
+  public legacyFullName = 'Aggron DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sturdy (passive - survive at 10 HP if at full HP)

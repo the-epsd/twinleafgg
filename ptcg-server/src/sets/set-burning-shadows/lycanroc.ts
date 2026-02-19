@@ -22,7 +22,7 @@ export class Lycanroc extends PokemonCard {
       name: 'Dangerous Claws',
       cost: [F],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, this attack does 30 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Lycanroc extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lycanroc';
-  public fullName: string = 'Lycanroc BUS';
+  public fullName: string = 'Lycanroc (BUS 75)';
+  public legacyFullName = 'Lycanroc BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dangerous Claws

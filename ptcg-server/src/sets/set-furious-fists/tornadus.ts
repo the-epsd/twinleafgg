@@ -28,7 +28,7 @@ export class Tornadus extends PokemonCard {
       name: 'Twister Throw',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have the same number of cards in your hand as your opponent, this attack does 60 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Tornadus extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tornadus';
-  public fullName: string = 'Tornadus FFI';
+  public fullName: string = 'Tornadus (FFI 86)';
+  public legacyFullName = 'Tornadus FFI';
 
   private wantsToSwitch = false;
 

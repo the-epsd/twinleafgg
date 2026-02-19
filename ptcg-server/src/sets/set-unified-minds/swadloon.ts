@@ -32,7 +32,8 @@ export class Swadloon extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swadloon';
-  public fullName: string = 'Swadloon UNM';
+  public fullName: string = 'Swadloon (UNM 8)';
+  public legacyFullName = 'Swadloon UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Swaddling Leaves (passive - reduce damage by 30)

@@ -21,14 +21,14 @@ export class Mamoswine extends PokemonCard {
       name: 'Double Stomp',
       cost: [W, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
     },
     {
       name: 'Forceful Tackle',
       cost: [W, W, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may put up to 9 damage counters on this Pokémon. This attack does 10 more damage for each damage counter you placed in this way.'
     }
   ];
@@ -37,7 +37,8 @@ export class Mamoswine extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mamoswine';
-  public fullName: string = 'Mamoswine CIN';
+  public fullName: string = 'Mamoswine (CIN 21)';
+  public legacyFullName = 'Mamoswine CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Stomp

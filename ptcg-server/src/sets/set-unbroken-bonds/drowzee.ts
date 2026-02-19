@@ -35,7 +35,8 @@ export class Drowzee extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drowzee';
-  public fullName: string = 'Drowzee UNB';
+  public fullName: string = 'Drowzee (UNB 71)';
+  public legacyFullName = 'Drowzee UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hypnosis

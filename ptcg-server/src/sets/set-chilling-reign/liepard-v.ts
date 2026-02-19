@@ -40,7 +40,8 @@ export class LiepardV extends PokemonCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Liepard V';
-  public fullName: string = 'Liepard V CRE';
+  public fullName: string = 'Liepard V (CRE 104)';
+  public legacyFullName = 'Liepard V CRE';
 
   public wantsToShadowRipper: boolean = false;
 

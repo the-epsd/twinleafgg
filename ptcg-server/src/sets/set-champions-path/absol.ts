@@ -26,5 +26,6 @@ export class Absol extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Absol';
-  public fullName: string = 'Absol CPA';
+  public fullName: string = 'Absol (CPA 38)';
+  public legacyFullName = 'Absol CPA';
 }

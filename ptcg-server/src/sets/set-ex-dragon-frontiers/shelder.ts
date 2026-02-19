@@ -23,7 +23,8 @@ export class Shelder extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '63';
   public name: string = 'Shelder';
-  public fullName: string = 'Shelder DF';
+  public fullName: string = 'Shelder (DF 63)';
+  public legacyFullName = 'Shelder DF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

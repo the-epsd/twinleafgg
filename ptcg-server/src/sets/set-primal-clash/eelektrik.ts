@@ -28,7 +28,7 @@ export class Eelektrik extends PokemonCard {
       name: 'Buzz Flip',
       cost: [L, L, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 30 damage times the number of heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Eelektrik extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eelektrik';
-  public fullName: string = 'Eelektrik PRC';
+  public fullName: string = 'Eelektrik (PRC 63)';
+  public legacyFullName = 'Eelektrik PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Buzz Flip

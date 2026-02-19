@@ -31,5 +31,6 @@ export class Wailmer extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wailmer';
-  public fullName: string = 'Wailmer GRI';
+  public fullName: string = 'Wailmer (GRI 29)';
+  public legacyFullName = 'Wailmer GRI';
 }

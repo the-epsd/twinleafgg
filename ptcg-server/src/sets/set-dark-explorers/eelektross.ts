@@ -35,7 +35,8 @@ export class Eelektross extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eelektross';
-  public fullName: string = 'Eelektross DEX';
+  public fullName: string = 'Eelektross (DEX 47)';
+  public legacyFullName = 'Eelektross DEX';
 
   private usedSlurpShakedown: boolean = false;
 

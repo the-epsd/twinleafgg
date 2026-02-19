@@ -31,7 +31,7 @@ export class FlorgesEx extends PokemonCard {
       name: 'Bright Garden',
       cost: [Y, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage times the number of Grass Pokémon and Fairy Pokémon you have in play.'
     }
   ];
@@ -40,7 +40,8 @@ export class FlorgesEx extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Florges-EX';
-  public fullName: string = 'Florges-EX PHF';
+  public fullName: string = 'Florges-EX (PHF 67)';
+  public legacyFullName = 'Florges-EX PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lead

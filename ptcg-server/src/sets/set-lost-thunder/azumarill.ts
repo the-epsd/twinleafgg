@@ -31,7 +31,7 @@ export class Azumarill extends PokemonCard {
       name: 'Play Rough',
       cost: [Y, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -40,7 +40,8 @@ export class Azumarill extends PokemonCard {
   public setNumber: string = '136';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Azumarill';
-  public fullName: string = 'Azumarill LOT';
+  public fullName: string = 'Azumarill (LOT 136)';
+  public legacyFullName = 'Azumarill LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Polka-Dot Search

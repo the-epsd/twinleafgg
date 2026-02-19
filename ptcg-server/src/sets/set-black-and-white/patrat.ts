@@ -24,7 +24,8 @@ export class Patrat extends PokemonCard {
 
   public name: string = 'Patrat';
 
-  public fullName: string = 'Patrat BLW';
+  public fullName: string = 'Patrat (BLW 77)';
+  public legacyFullName = 'Patrat BLW';
 
   public cardImage: string = 'assets/cardback.png';
 

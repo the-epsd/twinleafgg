@@ -33,7 +33,8 @@ export class Dragonair2 extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragonair';
-  public fullName: string = 'Dragonair DRV 4';
+  public fullName: string = 'Dragonair (DRV 4)';
+  public legacyFullName = 'Dragonair DRV 4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Healing Melody - Heal 10 from each of your Pokemon

@@ -15,7 +15,8 @@ export class ForestOfGiantPlants extends TrainerCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Forest of Giant Plants';
-  public fullName: string = 'Forest of Giant Plants AOR';
+  public fullName: string = 'Forest of Giant Plants (AOR 74)';
+  public legacyFullName = 'Forest of Giant Plants AOR';
   public text: string = 'Each player\'s Grass Pokémon can evolve during his or her first turn or the turn he or she plays those Pokémon.';
 
   // Ref: set-flashfire/caterpie.ts (Adaptive Evolution - allow evolution on turn played)

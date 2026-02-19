@@ -30,7 +30,8 @@ export class Cherubi extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cherubi';
-  public fullName: string = 'Cherubi PLS';
+  public fullName: string = 'Cherubi (PLS 6)';
+  public legacyFullName = 'Cherubi PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Leech Seed

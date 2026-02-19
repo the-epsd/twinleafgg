@@ -32,7 +32,8 @@ export class Tynamo extends PokemonCard {
 
   public name: string = 'Tynamo';
 
-  public fullName: string = 'Tynamo DEX';
+  public fullName: string = 'Tynamo (DEX 45)';
+  public legacyFullName = 'Tynamo DEX';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -33,5 +33,6 @@ export class GalarianSlowpoke extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Slowpoke';
-  public fullName: string = 'Galarian Slowpoke CRE';
+  public fullName: string = 'Galarian Slowpoke (CRE 54)';
+  public legacyFullName = 'Galarian Slowpoke CRE';
 }

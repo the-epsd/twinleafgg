@@ -26,5 +26,6 @@ export class Spheal extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spheal';
-  public fullName: string = 'Spheal CRE';
+  public fullName: string = 'Spheal (CRE 37)';
+  public legacyFullName = 'Spheal CRE';
 }

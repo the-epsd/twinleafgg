@@ -14,7 +14,8 @@ export class LilliesFullForce extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '196';
   public name: string = 'Lillie\'s Full Force';
-  public fullName: string = 'Lillie\'s Full Force CEC';
+  public fullName: string = 'Lillie\'s Full Force (CEC 196)';
+  public legacyFullName = 'Lillie\'s Full Force CEC';
   public readonly LILLIES_FORCE_MARKER = 'LILLIES_FORCE_MARKER';
 
   public text: string = `Draw 4 cards.

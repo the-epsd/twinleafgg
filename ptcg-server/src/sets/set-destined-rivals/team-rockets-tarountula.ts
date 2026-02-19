@@ -25,7 +25,8 @@ export class TeamRocketsTarountula extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Tarountula';
-  public fullName: string = 'Team Rocket\'s Tarountula DRI';
+  public fullName: string = 'Team Rocket\'s Tarountula (DRI 19)';
+  public legacyFullName = 'Team Rocket\'s Tarountula DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

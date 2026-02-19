@@ -27,7 +27,7 @@ export class Drampa extends PokemonCard {
       name: 'Spiral Rush',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Drampa extends PokemonCard {
   public setNumber: string = '119';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drampa';
-  public fullName: string = 'Drampa BST';
+  public fullName: string = 'Drampa (BST 119)';
+  public legacyFullName = 'Drampa BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Family

@@ -23,7 +23,8 @@ export class WashWaterEnergy extends EnergyCard {
 
   public name = 'Wash Water Energy';
 
-  public fullName = 'Wash Water Energy VIV';
+  public fullName = 'Wash Water Energy (VIV 165)';
+  public legacyFullName = 'Wash Water Energy VIV';
 
   public text =
     `As long as this card is attached to a Pokémon, it provides [W] Energy.

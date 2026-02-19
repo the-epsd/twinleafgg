@@ -36,7 +36,8 @@ export class Togetic extends PokemonCard {
   public setNumber: string = '137';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togetic';
-  public fullName: string = 'Togetic UNB';
+  public fullName: string = 'Togetic (UNB 137)';
+  public legacyFullName = 'Togetic UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Energy Present

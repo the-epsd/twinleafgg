@@ -50,7 +50,8 @@ export class Hoopaex extends PokemonCard {
 
   public name: string = 'Hoopa ex';
 
-  public fullName: string = 'Hoopa ex PAR';
+  public fullName: string = 'Hoopa ex (PAR 98)';
+  public legacyFullName = 'Hoopa ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

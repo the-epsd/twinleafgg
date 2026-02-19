@@ -48,7 +48,8 @@ export class Raichu extends PokemonCard {
 
   public name: string = 'Raichu';
 
-  public fullName: string = 'Raichu SIT';
+  public fullName: string = 'Raichu (SIT 50)';
+  public legacyFullName = 'Raichu SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

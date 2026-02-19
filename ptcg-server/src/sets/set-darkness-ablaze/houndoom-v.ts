@@ -29,7 +29,7 @@ export class HoundoomV extends PokemonCard {
       name: 'Vengeful Flame',
       cost: [R, R, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your Benched Fire Pokémon have any damage counters on them, this attack does 100 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class HoundoomV extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Houndoom V';
-  public fullName: string = 'Houndoom V DAA';
+  public fullName: string = 'Houndoom V (DAA 21)';
+  public legacyFullName = 'Houndoom V DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Searing Flame

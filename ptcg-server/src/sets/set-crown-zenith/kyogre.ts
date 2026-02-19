@@ -44,7 +44,8 @@ export class Kyogre extends PokemonCard {
 
   public name: string = 'Kyogre';
 
-  public fullName: string = 'Kyogre CRZ';
+  public fullName: string = 'Kyogre (CRZ 36)';
+  public legacyFullName = 'Kyogre CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

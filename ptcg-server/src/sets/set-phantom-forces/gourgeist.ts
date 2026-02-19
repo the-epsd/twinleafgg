@@ -32,7 +32,8 @@ export class Gourgeist extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
   public name: string = 'Gourgeist';
-  public fullName: string = 'Gourgeist PHF';
+  public fullName: string = 'Gourgeist (PHF 45)';
+  public legacyFullName = 'Gourgeist PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

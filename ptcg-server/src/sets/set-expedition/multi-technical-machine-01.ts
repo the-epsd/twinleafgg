@@ -18,7 +18,8 @@ export class MultiTechnicalMachine01 extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '144';
   public name: string = 'Multi Technical Machine 01';
-  public fullName: string = 'Multi Technical Machine 01 EX';
+  public fullName: string = 'Multi Technical Machine 01 (EX 144)';
+  public legacyFullName = 'Multi Technical Machine 01 EX';
 
   public attacks: Attack[] = [{
     name: 'Paralyzing Gaze',

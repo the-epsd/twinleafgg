@@ -40,7 +40,8 @@ export class PaldeanTauros extends PokemonCard {
 
   public name: string = 'Paldean Tauros';
 
-  public fullName: string = 'Paldean Tauros PAL';
+  public fullName: string = 'Paldean Tauros (PAL 28)';
+  public legacyFullName = 'Paldean Tauros PAL';
 
   public cardImage: string = 'assets/cardback.png';
 

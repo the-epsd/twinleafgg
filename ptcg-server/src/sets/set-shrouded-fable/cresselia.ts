@@ -53,7 +53,8 @@ export class Cresselia extends PokemonCard {
 
   public name: string = 'Cresselia';
 
-  public fullName: string = 'Cresselia SFA';
+  public fullName: string = 'Cresselia (SFA 21)';
+  public legacyFullName = 'Cresselia SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

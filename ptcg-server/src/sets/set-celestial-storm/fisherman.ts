@@ -76,7 +76,8 @@ export class Fisherman extends TrainerCard {
 
   public name: string = 'Fisherman';
 
-  public fullName: string = 'Fisherman CES';
+  public fullName: string = 'Fisherman (CES 130)';
+  public legacyFullName = 'Fisherman CES';
 
   public cardImage: string = 'assets/cardback.png';
 

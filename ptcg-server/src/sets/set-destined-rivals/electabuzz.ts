@@ -23,5 +23,6 @@ export class Electabuzz extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '68';
   public name: string = 'Electabuzz';
-  public fullName: string = 'Electabuzz DRI';
+  public fullName: string = 'Electabuzz (DRI 68)';
+  public legacyFullName = 'Electabuzz DRI';
 }

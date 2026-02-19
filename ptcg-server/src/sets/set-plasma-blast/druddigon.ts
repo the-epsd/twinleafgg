@@ -31,7 +31,8 @@ export class Druddigon extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Druddigon';
-  public fullName: string = 'Druddigon PLB';
+  public fullName: string = 'Druddigon (PLB 70)';
+  public legacyFullName = 'Druddigon PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Big Swing - both coins must be heads

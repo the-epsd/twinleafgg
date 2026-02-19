@@ -29,7 +29,8 @@ export class Togepi extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togepi';
-  public fullName: string = 'Togepi PLS';
+  public fullName: string = 'Togepi (PLS 102)';
+  public legacyFullName = 'Togepi PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Yawn

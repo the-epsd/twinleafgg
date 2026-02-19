@@ -13,7 +13,8 @@ export class Jasmine extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'TEU';
   public name: string = 'Jasmine';
-  public fullName: string = 'Jasmine TEU';
+  public fullName: string = 'Jasmine (TEU 145)';
+  public legacyFullName = 'Jasmine TEU';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '145';
 

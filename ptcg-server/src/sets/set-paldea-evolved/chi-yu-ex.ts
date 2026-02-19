@@ -46,7 +46,8 @@ export class ChiYuex extends PokemonCard {
 
   public name: string = 'Chi-Yu ex';
 
-  public fullName: string = 'Chi-Yu ex PAL';
+  public fullName: string = 'Chi-Yu ex (PAL 40)';
+  public legacyFullName = 'Chi-Yu ex PAL';
 
   // Implement power
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

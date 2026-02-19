@@ -40,7 +40,8 @@ export class Heracross extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heracross';
-  public fullName: string = 'Heracross BUS';
+  public fullName: string = 'Heracross (BUS 11)';
+  public legacyFullName = 'Heracross BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Guts (passive - survive KO on coin flip)

@@ -35,7 +35,8 @@ export class Mewtwo extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mewtwo';
-  public fullName: string = 'Mewtwo LTR';
+  public fullName: string = 'Mewtwo (LTR 53)';
+  public legacyFullName = 'Mewtwo LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Psyslash

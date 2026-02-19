@@ -14,7 +14,8 @@ export class TvReporter extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
   public name: string = 'TV Reporter';
-  public fullName: string = 'TV Reporter DR';
+  public fullName: string = 'TV Reporter (DR 88)';
+  public legacyFullName = 'TV Reporter DR';
 
   public text: string =
     'Draw 3 cards. Then discard any 1 card from your hand.';

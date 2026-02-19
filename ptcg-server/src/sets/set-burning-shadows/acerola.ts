@@ -21,7 +21,8 @@ export class Acerola extends TrainerCard {
 
   public name: string = 'Acerola';
 
-  public fullName: string = 'Acerola BUS';
+  public fullName: string = 'Acerola (BUS 112)';
+  public legacyFullName = 'Acerola BUS';
 
   public text: string =
     'Put 1 of your Pokémon that has any damage counters on it and all cards attached to it into your hand.';

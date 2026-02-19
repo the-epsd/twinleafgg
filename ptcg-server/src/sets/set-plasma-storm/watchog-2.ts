@@ -37,7 +37,8 @@ export class Watchog2 extends PokemonCard {
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Watchog';
-  public fullName: string = 'Watchog PLS 113';
+  public fullName: string = 'Watchog (PLS 113)';
+  public legacyFullName = 'Watchog PLS 113';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Second Bite

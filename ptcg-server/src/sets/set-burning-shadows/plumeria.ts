@@ -126,7 +126,8 @@ export class Plumeria extends TrainerCard {
 
   public name: string = 'Plumeria';
 
-  public fullName: string = 'Plumeria BUS';
+  public fullName: string = 'Plumeria (BUS 120)';
+  public legacyFullName = 'Plumeria BUS';
 
   public cardImage: string = 'assets/cardback.png';
 

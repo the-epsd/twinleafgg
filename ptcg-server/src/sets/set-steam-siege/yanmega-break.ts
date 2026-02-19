@@ -30,7 +30,8 @@ export class YanmegaBreak extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yanmega BREAK';
-  public fullName: string = 'Yanmega BREAK STS';
+  public fullName: string = 'Yanmega BREAK (STS 8)';
+  public legacyFullName = 'Yanmega BREAK STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Barrier Break

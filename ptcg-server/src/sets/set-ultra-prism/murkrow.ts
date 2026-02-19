@@ -24,7 +24,8 @@ export class Murkrow extends PokemonCard {
   public setNumber = '71';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Murkrow';
-  public fullName: string = 'Murkrow UPR';
+  public fullName: string = 'Murkrow (UPR 71)';
+  public legacyFullName = 'Murkrow UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Mean Look

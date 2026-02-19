@@ -31,7 +31,8 @@ export class TrevenantBREAK extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
   public name: string = 'Trevenant BREAK';
-  public fullName: string = 'Trevenant BREAK BKP';
+  public fullName: string = 'Trevenant BREAK (BKP 66)';
+  public legacyFullName = 'Trevenant BREAK BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Silent Fear

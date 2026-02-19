@@ -15,7 +15,8 @@ export class RockChestplate extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '192';
   public name = 'Rock Chestplate';
-  public fullName = 'Rock Chestplate SVI';
+  public fullName = 'Rock Chestplate (SVI 192)';
+  public legacyFullName = 'Rock Chestplate SVI';
 
   public text =
     'The [F] Pokémon this card is attached to takes 30 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance).';

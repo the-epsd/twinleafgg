@@ -29,7 +29,7 @@ export class Stunfisk extends PokemonCard {
       name: 'Electric Trap',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 30 damage for each of your Pokémon that has any damage counters on it.'
     }
   ];
@@ -38,7 +38,8 @@ export class Stunfisk extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stunfisk';
-  public fullName: string = 'Stunfisk UNB';
+  public fullName: string = 'Stunfisk (UNB 56)';
+  public legacyFullName = 'Stunfisk UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Raging Thunder

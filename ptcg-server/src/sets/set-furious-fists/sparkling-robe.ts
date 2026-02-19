@@ -15,7 +15,8 @@ export class SparklingRobe extends TrainerCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sparkling Robe';
-  public fullName: string = 'Sparkling Robe FFI';
+  public fullName: string = 'Sparkling Robe (FFI 99)';
+  public legacyFullName = 'Sparkling Robe FFI';
   public text: string = 'The Pok\u00e9mon this card is attached to can\'t be affected by any Special Conditions. (Remove any Special Conditions affecting that Pok\u00e9mon.)';
 
   // Ref: set-paradox-rift/ancient-booster-energy-capsule.ts (PREVENT_AND_CLEAR_SPECIAL_CONDITIONS)

@@ -46,7 +46,8 @@ export class LeafeonGx extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Leafeon-GX';
-  public fullName: string = 'Leafeon-GX UPR';
+  public fullName: string = 'Leafeon-GX (UPR 13)';
+  public legacyFullName = 'Leafeon-GX UPR';
 
   public readonly BREATH_OF_THE_LEAVES_MARKER = 'LEAFEON_GX_BREATH_OF_THE_LEAVES_MARKER';
 

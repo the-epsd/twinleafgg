@@ -19,7 +19,8 @@ export class Psyduck extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Psyduck';
-  public fullName: string = 'Psyduck HIF';
+  public fullName: string = 'Psyduck (HIF 11)';
+  public legacyFullName = 'Psyduck HIF';
 
 
 }

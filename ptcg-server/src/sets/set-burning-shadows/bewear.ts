@@ -35,7 +35,8 @@ export class Bewear extends PokemonCard {
   public setNumber: string = '111';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bewear';
-  public fullName: string = 'Bewear BUS';
+  public fullName: string = 'Bewear (BUS 111)';
+  public legacyFullName = 'Bewear BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mix-Up

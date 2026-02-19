@@ -39,7 +39,8 @@ export class ReshiramEx extends PokemonCard {
 
   public name: string = 'Reshiram-EX';
 
-  public fullName: string = 'Reshiram EX NXD';
+  public fullName: string = 'Reshiram-EX (NXD 22)';
+  public legacyFullName = 'Reshiram EX NXD';
 
   public cardImage: string = 'assets/cardback.png';
 

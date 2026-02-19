@@ -17,7 +17,8 @@ export class VirbankCityGym extends TrainerCard {
 
   public name: string = 'Virbank City Gym';
 
-  public fullName: string = 'Virbank City Gym PLS';
+  public fullName: string = 'Virbank City Gym (PLS 126)';
+  public legacyFullName = 'Virbank City Gym PLS';
 
   public cardImage: string = 'assets/cardback.png';
 

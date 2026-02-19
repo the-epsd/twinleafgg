@@ -37,7 +37,8 @@ export class Solgaleo extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solgaleo';
-  public fullName: string = 'Solgaleo GRI';
+  public fullName: string = 'Solgaleo (GRI 87)';
+  public legacyFullName = 'Solgaleo GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shining Arrow

@@ -39,7 +39,8 @@ export class HeatranGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '25';
   public name: string = 'Heatran-GX';
-  public fullName: string = 'Heatran-GX UNM';
+  public fullName: string = 'Heatran-GX (UNM 25)';
+  public legacyFullName = 'Heatran-GX UNM';
 
   public ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';
 

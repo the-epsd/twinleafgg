@@ -32,6 +32,7 @@ export class Combusken extends PokemonCard {
 
   public name: string = 'Combusken';
 
-  public fullName: string = 'Combusken JTG';
+  public fullName: string = 'Combusken (JTG 23)';
+  public legacyFullName = 'Combusken JTG';
 
 }

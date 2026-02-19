@@ -21,7 +21,7 @@ export class NoivernBreak extends PokemonCard {
       name: 'Synchro Woofer',
       cost: [P, D, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have the same number of cards in your hand as your opponent, this attack does 80 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class NoivernBreak extends PokemonCard {
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Noivern BREAK';
-  public fullName: string = 'Noivern BREAK BKT';
+  public fullName: string = 'Noivern BREAK (BKT 113)';
+  public legacyFullName = 'Noivern BREAK BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Synchro Woofer

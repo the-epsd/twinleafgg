@@ -38,7 +38,8 @@ export class Mamoswine extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mamoswine';
-  public fullName: string = 'Mamoswine PLS';
+  public fullName: string = 'Mamoswine (PLS 28)';
+  public legacyFullName = 'Mamoswine PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Frost Stone

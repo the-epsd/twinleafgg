@@ -38,7 +38,8 @@ export class Ferrothorn extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ferrothorn';
-  public fullName: string = 'Ferrothorn BKP';
+  public fullName: string = 'Ferrothorn (BKP 80)';
+  public legacyFullName = 'Ferrothorn BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Spike Lash

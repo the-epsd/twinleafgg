@@ -30,7 +30,8 @@ export class Kingdra extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '19';
   public name: string = 'Kingdra';
-  public fullName: string = 'Kingdra AQ';
+  public fullName: string = 'Kingdra (AQ 19)';
+  public legacyFullName = 'Kingdra AQ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -30,7 +30,8 @@ export class Cobalion extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cobalion';
-  public fullName: string = 'Cobalion SV11B';
+  public fullName: string = 'Cobalion (BLK 66)';
+  public legacyFullName = 'Cobalion SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

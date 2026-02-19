@@ -11,7 +11,8 @@ export class ReactEnergy extends EnergyCard {
 
   public name = 'React Energy';
 
-  public fullName = 'React Energy LM';
+  public fullName = 'React Energy (LM 82)';
+  public legacyFullName = 'React Energy LM';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -122,7 +122,8 @@ export class RoseannesBackup extends TrainerCard {
 
   public name: string = 'Roseanne\'s Backup';
 
-  public fullName: string = 'Roseanne\'s Backup BRS';
+  public fullName: string = 'Roseanne\'s Backup (BRS 148)';
+  public legacyFullName = 'Roseanne\'s Backup BRS';
 
   public text: string = `Choose 1 or more:
 

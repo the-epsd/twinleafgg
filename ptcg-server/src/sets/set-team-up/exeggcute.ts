@@ -20,7 +20,7 @@ export class Exeggcute extends PokemonCard {
       name: 'Bullet Seed',
       cost: [G],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 10 damage for each heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class Exeggcute extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Exeggcute';
-  public fullName: string = 'Exeggcute TEU';
+  public fullName: string = 'Exeggcute (TEU 8)';
+  public legacyFullName = 'Exeggcute TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bullet Seed

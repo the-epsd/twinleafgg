@@ -45,7 +45,8 @@ export class Banette extends PokemonCard {
 
   public name: string = 'Banette';
 
-  public fullName: string = 'Banette LOR';
+  public fullName: string = 'Banette (LOR 73)';
+  public legacyFullName = 'Banette LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

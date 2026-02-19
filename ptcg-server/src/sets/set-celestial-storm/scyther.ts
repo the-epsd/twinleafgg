@@ -38,7 +38,8 @@ export class Scyther extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scyther';
-  public fullName: string = 'Scyther CES';
+  public fullName: string = 'Scyther (CES 4)';
+  public legacyFullName = 'Scyther CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Twin Play

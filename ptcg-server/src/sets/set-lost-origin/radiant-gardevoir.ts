@@ -47,7 +47,8 @@ export class RadiantGardevoir extends PokemonCard {
 
   public name: string = 'Radiant Gardevoir';
 
-  public fullName: string = 'Radiant Gardevoir LOR';
+  public fullName: string = 'Radiant Gardevoir (LOR 69)';
+  public legacyFullName = 'Radiant Gardevoir LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

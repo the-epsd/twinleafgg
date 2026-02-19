@@ -32,7 +32,8 @@ export class Lucario extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lucario';
-  public fullName: string = 'Lucario NXD';
+  public fullName: string = 'Lucario (NXD 64)';
+  public legacyFullName = 'Lucario NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Reflexive Retaliation - damage attacker when hit

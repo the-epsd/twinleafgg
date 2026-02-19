@@ -15,7 +15,8 @@ export class Lillie extends TrainerCard {
 
   public name: string = 'Lillie';
 
-  public fullName: string = 'Lillie UPR';
+  public fullName: string = 'Lillie (UPR 125)';
+  public legacyFullName = 'Lillie UPR';
 
   public cardImage: string = 'assets/cardback.png';
 

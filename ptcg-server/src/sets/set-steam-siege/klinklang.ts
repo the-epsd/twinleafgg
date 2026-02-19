@@ -38,7 +38,8 @@ export class Klinklang extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klinklang';
-  public fullName: string = 'Klinklang STS';
+  public fullName: string = 'Klinklang (STS 73)';
+  public legacyFullName = 'Klinklang STS';
 
   public readonly GEAR_SPINNER_MARKER = 'KLINKLANG_STS_GEAR_SPINNER';
   public readonly GEAR_SPINNER_MARKER_2 = 'KLINKLANG_STS_GEAR_SPINNER_2';

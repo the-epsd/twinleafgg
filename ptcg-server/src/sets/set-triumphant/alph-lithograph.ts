@@ -44,7 +44,8 @@ export class AlphLithograph extends TrainerCard {
 
   public name: string = 'Alph Lithograph';
 
-  public fullName: string = 'Alph Lithograph TM';
+  public fullName: string = 'Alph Lithograph (TM FOUR)';
+  public legacyFullName = 'Alph Lithograph TM';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -36,7 +36,8 @@ export class Delibird extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Delibird';
-  public fullName: string = 'Delibird CRE';
+  public fullName: string = 'Delibird (CRE 32)';
+  public legacyFullName = 'Delibird CRE';
 
   private usedPackageDelivery: boolean = false;
 

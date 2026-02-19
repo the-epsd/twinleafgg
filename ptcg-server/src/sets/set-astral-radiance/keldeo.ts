@@ -42,7 +42,8 @@ export class Keldeo extends PokemonCard {
 
   public name: string = 'Keldeo';
 
-  public fullName: string = 'Keldeo ASR';
+  public fullName: string = 'Keldeo (ASR 45)';
+  public legacyFullName = 'Keldeo ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

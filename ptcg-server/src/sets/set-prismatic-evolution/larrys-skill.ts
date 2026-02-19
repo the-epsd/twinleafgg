@@ -96,7 +96,8 @@ export class LarrysSkill extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '115';
   public name: string = 'Larry\'s Skill';
-  public fullName: string = 'Larry\'s Skill PRE';
+  public fullName: string = 'Larry\'s Skill (PRE 115)';
+  public legacyFullName = 'Larry\'s Skill PRE';
 
   public text: string =
     'Discard your hand and search your deck for a Pokémon, a Supporter card, and a Basic Energy card, reveal them, and put them into your hand. Then, shuffle your deck.';

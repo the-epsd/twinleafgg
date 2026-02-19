@@ -35,7 +35,7 @@ export class StakatakaGx extends PokemonCard {
       name: 'Assembly-GX',
       cost: [M, M, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 50 more damage for each Prize card you have taken. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];
@@ -44,7 +44,8 @@ export class StakatakaGx extends PokemonCard {
   public setNumber: string = 'SV74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stakataka-GX';
-  public fullName: string = 'Stakataka-GX HIF';
+  public fullName: string = 'Stakataka-GX (HIF SV74)';
+  public legacyFullName = 'Stakataka-GX HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Ultra Wall (passive - reduce damage to Ultra Beasts)

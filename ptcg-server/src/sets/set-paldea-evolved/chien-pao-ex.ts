@@ -39,7 +39,8 @@ export class ChienPaoex extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chien-Pao ex';
-  public fullName: string = 'Chien-Pao ex PAL';
+  public fullName: string = 'Chien-Pao ex (PAL 61)';
+  public legacyFullName = 'Chien-Pao ex PAL';
 
   public readonly SHIVERY_CHILL_MARKER = 'SHIVERY_CHILL_MARKER';
 

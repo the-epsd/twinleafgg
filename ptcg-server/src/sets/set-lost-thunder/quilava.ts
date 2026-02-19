@@ -36,7 +36,8 @@ export class Quilava extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Quilava';
-  public fullName: string = 'Quilava LOT';
+  public fullName: string = 'Quilava (LOT 41)';
+  public legacyFullName = 'Quilava LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Super Singe

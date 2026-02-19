@@ -63,7 +63,8 @@ export class TapuLeleGX extends PokemonCard {
 
   public name: string = 'Tapu Lele-GX';
 
-  public fullName: string = 'Tapu Lele-GX GRI';
+  public fullName: string = 'Tapu Lele-GX (GRI 60)';
+  public legacyFullName = 'Tapu Lele-GX GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

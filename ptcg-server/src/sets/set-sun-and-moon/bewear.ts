@@ -28,7 +28,7 @@ export class Bewear extends PokemonCard {
       name: 'Superpower',
       cost: [C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 40 more damage. If you do, this Pokémon does 20 damage to itself.'
     }
   ];
@@ -37,7 +37,8 @@ export class Bewear extends PokemonCard {
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bewear';
-  public fullName: string = 'Bewear SUM';
+  public fullName: string = 'Bewear (SUM 112)';
+  public legacyFullName = 'Bewear SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bear Hug

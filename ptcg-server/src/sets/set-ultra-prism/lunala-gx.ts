@@ -96,7 +96,8 @@ export class LunalaGx extends PokemonCard {
   public setNumber: string = '172';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lunala-GX';
-  public fullName: string = 'Lunala-GX UPR';
+  public fullName: string = 'Lunala-GX (UPR 172)';
+  public legacyFullName = 'Lunala-GX UPR';
 
   public readonly CANT_HEAL_MARKER = 'LUNALA_GX_UPR_CANT_HEAL_MARKER';
   public readonly CLEAR_CANT_HEAL_MARKER = 'LUNALA_GX_UPR_CLEAR_CANT_HEAL_MARKER';

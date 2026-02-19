@@ -24,7 +24,8 @@ export class JammingTower extends TrainerCard {
 
   public name: string = 'Jamming Tower';
 
-  public fullName: string = 'Jamming Tower TWM';
+  public fullName: string = 'Jamming Tower (TWM 153)';
+  public legacyFullName = 'Jamming Tower TWM';
 
   public text: string =
     'Pokémon Tools attached to each Pokémon (both yours and your opponent\'s) have no effect.';

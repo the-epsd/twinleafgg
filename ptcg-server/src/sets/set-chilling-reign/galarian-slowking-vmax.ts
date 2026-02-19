@@ -32,7 +32,8 @@ export class GalarianSlowkingVmax extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Slowking VMAX';
-  public fullName: string = 'Galarian Slowking VMAX CRE';
+  public fullName: string = 'Galarian Slowking VMAX (CRE 100)';
+  public legacyFullName = 'Galarian Slowking VMAX CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Max Toxify

@@ -26,5 +26,6 @@ export class Cottonee extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cottonee';
-  public fullName: string = 'Cottonee BCR';
+  public fullName: string = 'Cottonee (BCR 14)';
+  public legacyFullName = 'Cottonee BCR';
 }

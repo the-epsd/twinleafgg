@@ -34,7 +34,8 @@ export class Cobalion extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '126';
   public name: string = 'Cobalion';
-  public fullName: string = 'Cobalion SIT';
+  public fullName: string = 'Cobalion (SIT 126)';
+  public legacyFullName = 'Cobalion SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

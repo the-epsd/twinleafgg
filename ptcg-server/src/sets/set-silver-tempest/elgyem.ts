@@ -34,6 +34,7 @@ export class Elgyem extends PokemonCard {
 
   public name: string = 'Elgyem';
 
-  public fullName: string = 'Elgyem SIT';
+  public fullName: string = 'Elgyem (SIT 79)';
+  public legacyFullName = 'Elgyem SIT';
 
 }

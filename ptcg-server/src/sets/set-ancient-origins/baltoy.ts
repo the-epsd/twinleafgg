@@ -27,7 +27,8 @@ export class Baltoy extends PokemonCard {
 
   public set: string = 'AOR';
   public name: string = 'Baltoy';
-  public fullName: string = 'Baltoy AOR';
+  public fullName: string = 'Baltoy (AOR 32)';
+  public legacyFullName = 'Baltoy AOR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '32';
 

@@ -16,7 +16,8 @@ export class Abra extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Abra BS';
+  public fullName = 'Abra (BS 43)';
+  public legacyFullName = 'Abra BS';
 
   public cardType = CardType.PSYCHIC;
 

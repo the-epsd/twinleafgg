@@ -44,7 +44,8 @@ export class Unfezant extends PokemonCard {
   public setNumber: string = '145';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Unfezant';
-  public fullName: string = 'Unfezant RCL';
+  public fullName: string = 'Unfezant (RCL 145)';
+  public legacyFullName = 'Unfezant RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Daunt

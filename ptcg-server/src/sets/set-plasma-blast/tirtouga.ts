@@ -34,7 +34,8 @@ export class Tirtouga extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tirtouga';
-  public fullName: string = 'Tirtouga PLB';
+  public fullName: string = 'Tirtouga (PLB 27)';
+  public legacyFullName = 'Tirtouga PLB';
 
   public readonly PREHISTORIC_CALL_MARKER = 'PREHISTORIC_CALL_MARKER_TIRTOUGA';
 

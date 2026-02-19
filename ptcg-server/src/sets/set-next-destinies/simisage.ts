@@ -33,7 +33,8 @@ export class Simisage extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Simisage';
-  public fullName: string = 'Simisage NXD';
+  public fullName: string = 'Simisage (NXD 7)';
+  public legacyFullName = 'Simisage NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Collect - draw 3 cards

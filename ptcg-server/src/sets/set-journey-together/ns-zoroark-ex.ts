@@ -90,7 +90,8 @@ export class NsZoroarkex extends PokemonCard {
   public set: string = 'JTG';
   public setNumber = '98';
   public name: string = 'N\'s Zoroark ex';
-  public fullName: string = 'N\'s Zoroark ex JTG';
+  public fullName: string = 'N\'s Zoroark ex (JTG 98)';
+  public legacyFullName = 'N\'s Zoroark ex JTG';
 
   public readonly TRADE_MARKER = 'TRADE_MARKER';
 

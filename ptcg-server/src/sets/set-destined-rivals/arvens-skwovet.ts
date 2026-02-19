@@ -23,7 +23,8 @@ export class ArvensSkwovet extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '158';
   public name: string = 'Arven\'s Skwovet';
-  public fullName: string = 'Arven\'s Skwovet DRI';
+  public fullName: string = 'Arven\'s Skwovet (DRI 158)';
+  public legacyFullName = 'Arven\'s Skwovet DRI';
 
   // public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
   //   if (WAS_ATTACK_USED(effect, 0, this)){

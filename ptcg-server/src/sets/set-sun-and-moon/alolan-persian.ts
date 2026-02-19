@@ -28,7 +28,7 @@ export class AlolanPersian extends PokemonCard {
       name: 'Claw Rend',
       cost: [D],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 30 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class AlolanPersian extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Persian';
-  public fullName: string = 'Alolan Persian SUM';
+  public fullName: string = 'Alolan Persian (SUM 79)';
+  public legacyFullName = 'Alolan Persian SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Taunt

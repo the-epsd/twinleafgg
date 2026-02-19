@@ -13,7 +13,8 @@ export class FairyGarden extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'XY';
   public name: string = 'Fairy Garden';
-  public fullName: string = 'Fairy Garden XY';
+  public fullName: string = 'Fairy Garden (XY 117)';
+  public legacyFullName = 'Fairy Garden XY';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '117';
 

@@ -28,7 +28,7 @@ export class GalarianPerrserker extends PokemonCard {
       name: 'Claw Dagger',
       cost: [M, M, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 80 damage for each heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class GalarianPerrserker extends PokemonCard {
   public setNumber: string = '127';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Perrserker';
-  public fullName: string = 'Galarian Perrserker RCL';
+  public fullName: string = 'Galarian Perrserker (RCL 127)';
+  public legacyFullName = 'Galarian Perrserker RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Claw Dagger

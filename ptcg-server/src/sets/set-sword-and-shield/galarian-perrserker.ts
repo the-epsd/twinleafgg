@@ -39,7 +39,8 @@ export class GalarianPerrserker extends PokemonCard {
   public setNumber: string = '128';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Perrserker';
-  public fullName: string = 'Galarian Perrserker SSH';
+  public fullName: string = 'Galarian Perrserker (SSH 128)';
+  public legacyFullName = 'Galarian Perrserker SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Steely Spirit (passive - Metal Pokemon's attacks do 20 more damage each)

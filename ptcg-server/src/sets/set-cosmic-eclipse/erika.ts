@@ -15,7 +15,8 @@ export class Erika extends TrainerCard {
   public setNumber: string = '191';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Erika';
-  public fullName: string = 'Erika CEC';
+  public fullName: string = 'Erika (CEC 191)';
+  public legacyFullName = 'Erika CEC';
   public text: string = 'Each player may draw up to 3 cards. You draw first. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

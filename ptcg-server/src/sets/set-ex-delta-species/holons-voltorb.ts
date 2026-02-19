@@ -32,7 +32,8 @@ export class HolonsVoltorb extends PokemonCard implements EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
   public name: string = 'Holon\'s Voltorb';
-  public fullName: string = 'Holon\'s Voltorb DS';
+  public fullName: string = 'Holon\'s Voltorb (DS 71)';
+  public legacyFullName = 'Holon\'s Voltorb DS';
 
   public provides: CardType[] = [CardType.COLORLESS];
   public energyType = EnergyType.SPECIAL;

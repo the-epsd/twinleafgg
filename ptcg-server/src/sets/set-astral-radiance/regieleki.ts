@@ -44,7 +44,8 @@ export class Regieleki extends PokemonCard {
 
   public name: string = 'Regieleki';
 
-  public fullName: string = 'Regieleki ASR';
+  public fullName: string = 'Regieleki (ASR 51)';
+  public legacyFullName = 'Regieleki ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

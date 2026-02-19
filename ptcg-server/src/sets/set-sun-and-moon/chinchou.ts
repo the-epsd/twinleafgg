@@ -35,7 +35,8 @@ export class Chinchou extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chinchou';
-  public fullName: string = 'Chinchou SUM';
+  public fullName: string = 'Chinchou (SUM 49)';
+  public legacyFullName = 'Chinchou SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Searching Light

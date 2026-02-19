@@ -25,7 +25,7 @@ export class MAltariaEx extends PokemonCard {
       name: 'Mist Purge',
       cost: [Y, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any Special Energy attached to it, this attack does 30 more damage and heal 30 damage from each of your Pokémon.'
     }
   ];
@@ -34,7 +34,8 @@ export class MAltariaEx extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Altaria-EX';
-  public fullName: string = 'M Altaria-EX FCO';
+  public fullName: string = 'M Altaria-EX (FCO 69)';
+  public legacyFullName = 'M Altaria-EX FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mist Purge

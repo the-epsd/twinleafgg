@@ -27,7 +27,8 @@ export class Absol extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public name: string = 'Absol';
-  public fullName: string = 'Absol PLF';
+  public fullName: string = 'Absol (PLF 67)';
+  public legacyFullName = 'Absol PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

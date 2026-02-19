@@ -24,7 +24,7 @@ export class MAggronEx extends PokemonCard {
       name: 'Megaton Slam',
       cost: [M, M, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may flip a coin. If heads, this attack does 120 more damage. If tails, this attack does 20 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
@@ -33,7 +33,8 @@ export class MAggronEx extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Aggron-EX';
-  public fullName: string = 'M Aggron-EX PRC';
+  public fullName: string = 'M Aggron-EX (PRC 94)';
+  public legacyFullName = 'M Aggron-EX PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Megaton Slam

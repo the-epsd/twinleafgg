@@ -31,5 +31,6 @@ export class Yungoos extends PokemonCard {
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yungoos';
-  public fullName: string = 'Yungoos SUM';
+  public fullName: string = 'Yungoos (SUM 109)';
+  public legacyFullName = 'Yungoos SUM';
 }

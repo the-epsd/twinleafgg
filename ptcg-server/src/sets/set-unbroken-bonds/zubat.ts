@@ -27,7 +27,7 @@ export class Zubat extends PokemonCard {
       name: 'Venoshock',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 50 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Zubat extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zubat';
-  public fullName: string = 'Zubat UNB';
+  public fullName: string = 'Zubat (UNB 64)';
+  public legacyFullName = 'Zubat UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Venoshock

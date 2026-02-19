@@ -43,7 +43,8 @@ export class Jigglypuff extends PokemonCard {
 
   public name: string = 'Jigglypuff';
 
-  public fullName: string = 'Jigglypuff JU';
+  public fullName: string = 'Jigglypuff (JU 54)';
+  public legacyFullName = 'Jigglypuff JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

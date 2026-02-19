@@ -38,7 +38,8 @@ export class Metagross extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metagross';
-  public fullName: string = 'Metagross CES';
+  public fullName: string = 'Metagross (CES 95)';
+  public legacyFullName = 'Metagross CES';
 
   public readonly METEOR_MASH_MARKER = 'METAGROSS_CES_METEOR_MASH_MARKER';
   public readonly METEOR_MASH_CLEAR_MARKER = 'METAGROSS_CES_METEOR_MASH_CLEAR_MARKER';

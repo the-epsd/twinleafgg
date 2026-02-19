@@ -8,7 +8,8 @@ import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 export class StealthyHood extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public name: string = 'Stealthy Hood';
-  public fullName: string = 'Stealthy Hood UNB';
+  public fullName: string = 'Stealthy Hood (UNB 186)';
+  public legacyFullName = 'Stealthy Hood UNB';
   public set: string = 'UNB';
   public setNumber: string = '186';
   public cardImage: string = 'assets/cardback.png';

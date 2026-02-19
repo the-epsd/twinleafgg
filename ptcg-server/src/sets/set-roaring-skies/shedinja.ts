@@ -30,7 +30,8 @@ export class Shedinja extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shedinja';
-  public fullName: string = 'Shedinja ROS';
+  public fullName: string = 'Shedinja (ROS 11)';
+  public legacyFullName = 'Shedinja ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

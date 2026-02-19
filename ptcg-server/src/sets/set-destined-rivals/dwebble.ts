@@ -60,7 +60,8 @@ export class Dwebble extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
   public name: string = 'Dwebble';
-  public fullName: string = 'Dwebble DRI';
+  public fullName: string = 'Dwebble (DRI 11)';
+  public legacyFullName = 'Dwebble DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

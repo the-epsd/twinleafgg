@@ -31,7 +31,8 @@ export class ZoroarkBreak extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zoroark BREAK';
-  public fullName: string = 'Zoroark BREAK BKT';
+  public fullName: string = 'Zoroark BREAK (BKT 92)';
+  public legacyFullName = 'Zoroark BREAK BKT';
 
   // Ref: set-black-and-white/zoroark.ts (Foul Play)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

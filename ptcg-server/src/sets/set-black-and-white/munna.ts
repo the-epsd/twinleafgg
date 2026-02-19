@@ -32,7 +32,8 @@ export class Munna extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';
   public name: string = 'Munna';
-  public fullName: string = 'Munna BLW';
+  public fullName: string = 'Munna (BLW 48)';
+  public legacyFullName = 'Munna BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

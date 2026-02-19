@@ -29,7 +29,8 @@ export class Psyduck extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Psyduck';
-  public fullName: string = 'Psyduck SUM';
+  public fullName: string = 'Psyduck (SUM 28)';
+  public legacyFullName = 'Psyduck SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Confusion Wave

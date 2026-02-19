@@ -49,7 +49,8 @@ export class Aggron extends PokemonCard {
 
   public name: string = 'Aggron';
 
-  public fullName: string = 'Aggron TWM';
+  public fullName: string = 'Aggron (TWM 122)';
+  public legacyFullName = 'Aggron TWM';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
 

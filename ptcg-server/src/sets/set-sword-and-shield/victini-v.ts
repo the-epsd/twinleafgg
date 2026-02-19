@@ -30,7 +30,7 @@ export class VictiniV extends PokemonCard {
       name: 'Energy Burst',
       cost: [R, R],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 30 damage for each Energy attached to both Active Pokémon.'
     }
   ];
@@ -40,7 +40,8 @@ export class VictiniV extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Victini V';
-  public fullName: string = 'Victini V SSH';
+  public fullName: string = 'Victini V (SSH 25)';
+  public legacyFullName = 'Victini V SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spreading Flames

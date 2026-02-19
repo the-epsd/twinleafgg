@@ -95,7 +95,8 @@ export class Slowbro extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '43';
   public name: string = 'Slowbro';
-  public fullName: string = 'Slowbro SVI';
+  public fullName: string = 'Slowbro (SVI 43)';
+  public legacyFullName = 'Slowbro SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

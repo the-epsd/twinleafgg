@@ -34,7 +34,7 @@ export class Pachirisu extends PokemonCard {
       name: 'Pachi',
       cost: [L, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -43,7 +43,8 @@ export class Pachirisu extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pachirisu';
-  public fullName: string = 'Pachirisu PHF';
+  public fullName: string = 'Pachirisu (PHF 25)';
+  public legacyFullName = 'Pachirisu PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Trick Sticker

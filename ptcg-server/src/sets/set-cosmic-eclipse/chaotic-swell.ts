@@ -18,7 +18,8 @@ export class ChaoticSwell extends TrainerCard {
 
   public name = 'Chaotic Swell';
 
-  public fullName = 'Chaotic Swell CEC';
+  public fullName = 'Chaotic Swell (CEC 187)';
+  public legacyFullName = 'Chaotic Swell CEC';
   
   public  text = 'Whenever either player plays a Stadium card from their hand, discard that Stadium card after discarding this one. (The new Stadium card has no effect.)';
     

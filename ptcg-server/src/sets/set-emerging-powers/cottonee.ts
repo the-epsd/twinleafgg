@@ -26,7 +26,8 @@ export class Cottonee extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '9';
   public name: string = 'Cottonee';
-  public fullName: string = 'Cottonee EPO';
+  public fullName: string = 'Cottonee (EPO 9)';
+  public legacyFullName = 'Cottonee EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

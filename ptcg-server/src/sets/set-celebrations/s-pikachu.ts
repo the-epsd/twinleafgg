@@ -29,7 +29,8 @@ export class SPikachu extends PokemonCard {
   public setNumber: string = '24A';
   public cardImage: string = 'assets/cardback.png';
   public name: string = '_____\'s Pikachu';
-  public fullName: string = '_____\'s Pikachu CEL';
+  public fullName: string = '_____\'s Pikachu (CEL 24A)';
+  public legacyFullName = '_____\'s Pikachu CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Birthday Surprise

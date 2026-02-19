@@ -15,7 +15,8 @@ export class LasssSpecial extends TrainerCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lass\'s Special';
-  public fullName: string = 'Lass\'s Special FCO';
+  public fullName: string = 'Lass\'s Special (FCO 103)';
+  public legacyFullName = 'Lass\'s Special FCO';
   public text: string = 'Draw a card for each of your opponent\'s Benched Basic Pokémon. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-temporal-forces/mortys-conviction.ts (draw for each opponent's Benched)

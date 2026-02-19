@@ -41,7 +41,8 @@ export class Quilava extends PokemonCard {
 
   public name: string = 'Quilava';
 
-  public fullName: string = 'Quilava HS';
+  public fullName: string = 'Quilava (HS 49)';
+  public legacyFullName = 'Quilava HS';
 
   public cardImage: string = 'assets/cardback.png';
 

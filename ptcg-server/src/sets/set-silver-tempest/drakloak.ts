@@ -37,5 +37,6 @@ export class Drakloak extends PokemonCard {
 
   public name: string = 'Drakloak';
 
-  public fullName: string = 'Drakloak SIT';
+  public fullName: string = 'Drakloak (SIT 88)';
+  public legacyFullName = 'Drakloak SIT';
 }

@@ -18,5 +18,6 @@ export class MarniesMorgrem extends PokemonCard {
   public setNumber: string = '135';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marnie\'s Morgrem';
-  public fullName: string = 'Marnie\'s Morgrem DRI';
+  public fullName: string = 'Marnie\'s Morgrem (DRI 135)';
+  public legacyFullName = 'Marnie\'s Morgrem DRI';
 }

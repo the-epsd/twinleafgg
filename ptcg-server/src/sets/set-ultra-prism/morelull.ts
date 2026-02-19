@@ -28,7 +28,8 @@ export class Morelull extends PokemonCard {
 
   public set: string = 'UPR';
   public name: string = 'Morelull';
-  public fullName: string = 'Morelull UPR';
+  public fullName: string = 'Morelull (UPR 92)';
+  public legacyFullName = 'Morelull UPR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
 

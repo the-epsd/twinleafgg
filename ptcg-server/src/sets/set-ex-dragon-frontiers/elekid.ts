@@ -32,7 +32,8 @@ export class Elekid extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';
   public name: string = 'Elekid';
-  public fullName: string = 'Elekid DF';
+  public fullName: string = 'Elekid (DF 48)';
+  public legacyFullName = 'Elekid DF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

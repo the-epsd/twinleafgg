@@ -27,7 +27,7 @@ export class Bewear extends PokemonCard {
       name: 'Dangerous Blow',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, this attack does 60 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Bewear extends PokemonCard {
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bewear';
-  public fullName: string = 'Bewear GRI';
+  public fullName: string = 'Bewear (GRI 113)';
+  public legacyFullName = 'Bewear GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Rake It In (on-evolve)

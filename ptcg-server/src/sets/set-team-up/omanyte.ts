@@ -30,7 +30,8 @@ export class Omanyte extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Omanyte';
-  public fullName: string = 'Omanyte TEU';
+  public fullName: string = 'Omanyte (TEU 75)';
+  public legacyFullName = 'Omanyte TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tickle

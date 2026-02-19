@@ -5,31 +5,36 @@ import { MetalEnergySpecial } from '../set-undaunted/metal-energy-special';
 import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
 
 export class DarknessEnergySpecialDS extends DarknessEnergySpecial {
-  public fullName = 'Darkness Energy Special DS';
+  public fullName = 'Darkness Energy (DS 103)';
+  public legacyFullName = 'Darkness Energy Special DS';
   public set = 'DS';
   public setNumber = '103';
 }
 
 export class DualBallDS extends DualBall {
-  public fullName = 'Dual Ball DS';
+  public fullName = 'Dual Ball (DS 89)';
+  public legacyFullName = 'Dual Ball DS';
   public set = 'DS';
   public setNumber = '89';
 }
 
 export class GreatBallDS extends GreatBall {
-  public fullName = 'Great Ball DS';
+  public fullName = 'Great Ball (DS 90)';
+  public legacyFullName = 'Great Ball DS';
   public set = 'DS';
   public setNumber = '90';
 }
 
 export class MetalEnergySpecialDS extends MetalEnergySpecial {
-  public fullName = 'Metal Energy Special DS';
+  public fullName = 'Metal Energy (DS 107)';
+  public legacyFullName = 'Metal Energy Special DS';
   public set = 'DS';
   public setNumber = '107';
 }
 
 export class SuperScoopUpDS extends SuperScoopUp {
-  public fullName = 'Super Scoop Up DS';
+  public fullName = 'Super Scoop Up (DS 100)';
+  public legacyFullName = 'Super Scoop Up DS';
   public set = 'DS';
   public setNumber = '100';
 }

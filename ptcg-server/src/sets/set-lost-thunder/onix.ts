@@ -26,6 +26,7 @@ export class Onix extends PokemonCard {
 
   public name: string = 'Onix';
 
-  public fullName: string = 'Onix LOT';
+  public fullName: string = 'Onix (LOT 109)';
+  public legacyFullName = 'Onix LOT';
 
 }

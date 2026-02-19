@@ -31,7 +31,7 @@ export class DragoniteEx extends PokemonCard {
       name: 'Jet Sonic',
       cost: [G, G, L],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard an Energy attached to this Pokémon. If you do, this attack does 40 more damage.'
     }
   ];
@@ -40,7 +40,8 @@ export class DragoniteEx extends PokemonCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragonite-EX';
-  public fullName: string = 'Dragonite-EX FFI';
+  public fullName: string = 'Dragonite-EX (FFI 74)';
+  public legacyFullName = 'Dragonite-EX FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Bust In

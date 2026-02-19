@@ -43,7 +43,8 @@ export class GalarianObstagoon extends PokemonCard {
   public setNumber: string = '198';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Obstagoon';
-  public fullName: string = 'Galarian Obstagoon VIV';
+  public fullName: string = 'Galarian Obstagoon (VIV 198)';
+  public legacyFullName = 'Galarian Obstagoon VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Untamed Shout (on-evolve - put 3 damage counters on 1 opponent's Pokemon)

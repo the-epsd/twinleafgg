@@ -44,7 +44,8 @@ export class Thundurus extends PokemonCard {
 
   public name: string = 'Thundurus';
 
-  public fullName: string = 'Thundurus OBF';
+  public fullName: string = 'Thundurus (OBF 70)';
+  public legacyFullName = 'Thundurus OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

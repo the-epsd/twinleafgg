@@ -101,7 +101,8 @@ export class Arezu extends TrainerCard {
 
   public name: string = 'Arezu';
 
-  public fullName: string = 'Arezu LOR';
+  public fullName: string = 'Arezu (LOR 153)';
+  public legacyFullName = 'Arezu LOR';
 
   public text: string =
     'Search your deck for up to 3 Evolution Pokémon that don\'t have a Rule Box, reveal them, and put them into your hand. Then, shuffle your deck. (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';

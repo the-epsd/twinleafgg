@@ -15,7 +15,8 @@ export class ProtectionCube extends TrainerCard {
 
   public name: string = 'Protection Cube';
 
-  public fullName: string = 'Protection Cube FLF';
+  public fullName: string = 'Protection Cube (FLF 95)';
+  public legacyFullName = 'Protection Cube FLF';
 
   public text: string =
     'Prevent all damage done to the Pokémon this card is attached to by attacks it uses.';

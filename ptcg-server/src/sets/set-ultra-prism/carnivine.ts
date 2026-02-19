@@ -27,7 +27,7 @@ export class Carnivine extends PokemonCard {
       name: 'Loom Over',
       cost: [G, G],
       damage: 90,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-' as const,
       text: 'This attack does 10 less damage for each damage counter on this Pokémon.'
     }
   ];
@@ -36,7 +36,8 @@ export class Carnivine extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carnivine';
-  public fullName: string = 'Carnivine UPR';
+  public fullName: string = 'Carnivine (UPR 12)';
+  public legacyFullName = 'Carnivine UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Chomp Chomp

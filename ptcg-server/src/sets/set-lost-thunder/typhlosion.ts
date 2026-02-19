@@ -38,7 +38,8 @@ export class Typhlosion extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Typhlosion';
-  public fullName: string = 'Typhlosion LOT';
+  public fullName: string = 'Typhlosion (LOT 42)';
+  public legacyFullName = 'Typhlosion LOT';
 
   public readonly BLAZING_ENERGY_MARKER = 'TYPHLOSION_LOT_BLAZING_ENERGY_MARKER';
   public readonly BLAZING_ENERGY_ACTIVE_MARKER = 'TYPHLOSION_LOT_BLAZING_ENERGY_ACTIVE_MARKER';

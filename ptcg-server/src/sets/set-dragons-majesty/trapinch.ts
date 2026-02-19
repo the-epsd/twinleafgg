@@ -29,7 +29,8 @@ export class Trapinch extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trapinch';
-  public fullName: string = 'Trapinch DRM';
+  public fullName: string = 'Trapinch (DRM 32)';
+  public legacyFullName = 'Trapinch DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mini Earthquake

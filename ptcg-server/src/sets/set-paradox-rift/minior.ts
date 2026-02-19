@@ -41,7 +41,8 @@ export class Minior extends PokemonCard {
 
   public name: string = 'Minior';
 
-  public fullName: string = 'Minior PAR';
+  public fullName: string = 'Minior (PAR 99)';
+  public legacyFullName = 'Minior PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

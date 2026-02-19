@@ -12,7 +12,8 @@ export class OranBerry extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'RS';
   public name: string = 'Oran Berry';
-  public fullName: string = 'Oran Berry RS';
+  public fullName: string = 'Oran Berry (RS 85)';
+  public legacyFullName = 'Oran Berry RS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
 

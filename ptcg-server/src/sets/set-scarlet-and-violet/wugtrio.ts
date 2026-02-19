@@ -31,7 +31,8 @@ export class Wugtrio extends PokemonCard {
 
   public set: string = 'SVI';
   public name: string = 'Wugtrio';
-  public fullName: string = 'Wugtrio SVI';
+  public fullName: string = 'Wugtrio (SVI 57)';
+  public legacyFullName = 'Wugtrio SVI';
   public regulationMark = 'G';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '57';

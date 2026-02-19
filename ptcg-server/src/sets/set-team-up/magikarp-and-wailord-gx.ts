@@ -32,7 +32,8 @@ export class MagikarpWailordGX extends PokemonCard {
   public setNumber = '160';
   public cardImage = 'assets/cardback.png';
   public name = 'Magikarp & Wailord-GX';
-  public fullName = 'Magikarp & Wailord-GX TEU';
+  public fullName = 'Magikarp & Wailord-GX (TEU 160)';
+  public legacyFullName = 'Magikarp & Wailord-GX TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Towering Splash-GX

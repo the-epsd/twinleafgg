@@ -39,7 +39,8 @@ export class Emolga extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Emolga';
-  public fullName: string = 'Emolga TEU';
+  public fullName: string = 'Emolga (TEU 46)';
+  public legacyFullName = 'Emolga TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Nuzzly Gathering

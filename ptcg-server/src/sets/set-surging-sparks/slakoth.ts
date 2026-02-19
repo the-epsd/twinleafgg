@@ -37,7 +37,8 @@ export class Slakoth extends PokemonCard {
 
   public name: string = 'Slakoth';
 
-  public fullName: string = 'Slakoth SSP';
+  public fullName: string = 'Slakoth (SSP 145)';
+  public legacyFullName = 'Slakoth SSP';
 
   private readonly CANT_RETREAT_NEXT_TURN_MARKER = 'CANT_RETREAT_NEXT_TURN_MARKER';
 

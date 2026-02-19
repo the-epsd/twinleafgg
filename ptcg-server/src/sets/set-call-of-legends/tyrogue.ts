@@ -26,7 +26,8 @@ export class Tyrogue extends PokemonCard {
 
   public set: string = 'CL';
   public name: string = 'Tyrogue';
-  public fullName: string = 'Tyrogue CL';
+  public fullName: string = 'Tyrogue (CL 36)';
+  public legacyFullName = 'Tyrogue CL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '36';
 

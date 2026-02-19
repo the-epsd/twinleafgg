@@ -43,7 +43,8 @@ export class Gardevoir extends PokemonCard {
 
   public name: string = 'Gardevoir';
 
-  public fullName: string = 'Gardevoir SW';
+  public fullName: string = 'Gardevoir (SW 7)';
+  public legacyFullName = 'Gardevoir SW';
 
   public readonly TELEPASS_MARKER = 'TELEPASS_MARKER';
   public readonly PSCHIC_LOCK_MARKER = 'PSYCHIC_LOCK_MARKER';

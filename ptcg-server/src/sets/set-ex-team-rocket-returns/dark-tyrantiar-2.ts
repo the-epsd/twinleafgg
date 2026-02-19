@@ -43,7 +43,8 @@ export class DarkTyranitar2 extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dark Tyranitar';
-  public fullName: string = 'Dark Tyranitar TRR 19';
+  public fullName: string = 'Dark Tyranitar (TRR 19)';
+  public legacyFullName = 'Dark Tyranitar TRR 19';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

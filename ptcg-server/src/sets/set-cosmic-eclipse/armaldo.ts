@@ -22,7 +22,7 @@ export class Armaldo extends PokemonCard {
       name: 'Ancient Blast',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 50 more damage for each Unidentified Fossil card in your discard pile.'
     },
     {
@@ -37,7 +37,8 @@ export class Armaldo extends PokemonCard {
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Armaldo';
-  public fullName: string = 'Armaldo CEC';
+  public fullName: string = 'Armaldo (CEC 112)';
+  public legacyFullName = 'Armaldo CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ancient Blast

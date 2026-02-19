@@ -78,7 +78,8 @@ export class EnhancedHammer extends TrainerCard {
 
   public name: string = 'Enhanced Hammer';
 
-  public fullName: string = 'Enhanced Hammer TWM';
+  public fullName: string = 'Enhanced Hammer (TWM 148)';
+  public legacyFullName = 'Enhanced Hammer TWM';
 
   public cardImage: string = 'assets/cardback.png';
 

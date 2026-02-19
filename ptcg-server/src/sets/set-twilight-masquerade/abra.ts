@@ -31,7 +31,8 @@ export class Abra extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '80';
   public name: string = 'Abra';
-  public fullName: string = 'Abra TWM';
+  public fullName: string = 'Abra (TWM 80)';
+  public legacyFullName = 'Abra TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Teleport

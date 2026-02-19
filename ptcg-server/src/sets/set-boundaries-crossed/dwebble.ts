@@ -29,7 +29,8 @@ export class Dwebble extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dwebble';
-  public fullName: string = 'Dwebble BCR';
+  public fullName: string = 'Dwebble (BCR 84)';
+  public legacyFullName = 'Dwebble BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flail

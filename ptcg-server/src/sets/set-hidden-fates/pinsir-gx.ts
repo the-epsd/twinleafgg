@@ -35,7 +35,8 @@ export class PinsirGx extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pinsir-GX';
-  public fullName: string = 'Pinsir-GX HIF';
+  public fullName: string = 'Pinsir-GX (HIF 6)';
+  public legacyFullName = 'Pinsir-GX HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Guillotine-GX

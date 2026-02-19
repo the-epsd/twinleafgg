@@ -33,7 +33,8 @@ export class Sceptile extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
   public name: string = 'Sceptile';
-  public fullName: string = 'Sceptile PRC';
+  public fullName: string = 'Sceptile (PRC 8)';
+  public legacyFullName = 'Sceptile PRC';
 
   public readonly NURTURE_AND_HEAL_MARKER = 'NURTURE_AND_HEAL_MARKER';
 

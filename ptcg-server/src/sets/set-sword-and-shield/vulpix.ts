@@ -26,5 +26,6 @@ export class Vulpix extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vulpix';
-  public fullName: string = 'Vulpix SSH';
+  public fullName: string = 'Vulpix (SSH 22)';
+  public legacyFullName = 'Vulpix SSH';
 }

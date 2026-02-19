@@ -29,7 +29,7 @@ export class Miltank extends PokemonCard {
       name: 'Sitdown Splash',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Miltank extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Miltank';
-  public fullName: string = 'Miltank CIN';
+  public fullName: string = 'Miltank (CIN 78)';
+  public legacyFullName = 'Miltank CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Moomoo Malt (passive - heal when attaching energy from hand)

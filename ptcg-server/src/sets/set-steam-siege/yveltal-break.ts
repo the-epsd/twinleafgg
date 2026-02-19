@@ -30,7 +30,8 @@ export class YveltalBreak extends PokemonCard {
   public setNumber: string = '66';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yveltal BREAK';
-  public fullName: string = 'Yveltal BREAK STS';
+  public fullName: string = 'Yveltal BREAK (STS 66)';
+  public legacyFullName = 'Yveltal BREAK STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Baleful Night

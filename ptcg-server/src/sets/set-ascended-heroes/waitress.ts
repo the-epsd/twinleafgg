@@ -9,7 +9,8 @@ export class Waitress extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '215';
   public name: string = 'Waitress';
-  public fullName: string = 'Waitress MC';
+  public fullName: string = 'Waitress (ASC 215)';
+  public legacyFullName = 'Waitress MC';
 
   public text: string = 'Look at the top 6 cards of your deck, and attach a Basic Energy you find there to 1 of your Pokémon. Shuffle the other cards back into your deck.';
 

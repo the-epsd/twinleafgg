@@ -32,5 +32,6 @@ export class Impidimp extends PokemonCard {
   public setNumber: string = '123';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Impidimp';
-  public fullName: string = 'Impidimp RCL';
+  public fullName: string = 'Impidimp (RCL 123)';
+  public legacyFullName = 'Impidimp RCL';
 }

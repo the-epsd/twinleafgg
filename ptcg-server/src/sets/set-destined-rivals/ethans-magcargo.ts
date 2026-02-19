@@ -44,7 +44,8 @@ export class EthansMagcargo extends PokemonCard {
 
   public name: string = 'Ethan\'s Magcargo';
 
-  public fullName: string = 'Ethan\'s Magcargo DRI';
+  public fullName: string = 'Ethan\'s Magcargo (DRI 36)';
+  public legacyFullName = 'Ethan\'s Magcargo DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

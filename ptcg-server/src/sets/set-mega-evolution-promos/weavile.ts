@@ -31,7 +31,8 @@ export class Weavile extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
   public name: string = 'Weavile';
-  public fullName: string = 'Weavile M2';
+  public fullName: string = 'Weavile (MEP 21)';
+  public legacyFullName = 'Weavile M2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

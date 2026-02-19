@@ -24,7 +24,8 @@ export class ExplorersGuidance extends TrainerCard {
 
   public name: string = 'Explorer\'s Guidance';
 
-  public fullName: string = 'Explorer\'s Guidance TEF';
+  public fullName: string = 'Explorer\'s Guidance (TEF 147)';
+  public legacyFullName = 'Explorer\'s Guidance TEF';
 
   public text: string = 'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
 

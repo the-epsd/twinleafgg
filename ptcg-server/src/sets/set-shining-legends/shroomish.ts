@@ -28,7 +28,8 @@ export class Shroomish extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shroomish';
-  public fullName: string = 'Shroomish SLG';
+  public fullName: string = 'Shroomish (SLG 4)';
+  public legacyFullName = 'Shroomish SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Absorb

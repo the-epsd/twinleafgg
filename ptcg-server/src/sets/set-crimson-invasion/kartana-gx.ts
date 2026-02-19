@@ -62,7 +62,8 @@ export class KartanaGX extends PokemonCard {
 
   public name: string = 'Kartana-GX';
 
-  public fullName: string = 'Kartana-GX CIN';
+  public fullName: string = 'Kartana-GX (CIN 70)';
+  public legacyFullName = 'Kartana-GX CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Slice Off

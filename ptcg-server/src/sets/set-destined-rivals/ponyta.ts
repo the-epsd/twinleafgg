@@ -26,7 +26,8 @@ export class Ponyta extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
   public name: string = 'Ponyta';
-  public fullName: string = 'Ponyta DRI';
+  public fullName: string = 'Ponyta (DRI 29)';
+  public legacyFullName = 'Ponyta DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Double Strike

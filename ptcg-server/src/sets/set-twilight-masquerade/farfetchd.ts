@@ -54,7 +54,8 @@ export class Farfetchd extends PokemonCard {
 
   public name: string = 'Farfetch\'d';
 
-  public fullName: string = 'Farfetch\'d TWM';
+  public fullName: string = 'Farfetch\'d (TWM 132)';
+  public legacyFullName = 'Farfetch\'d TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -28,7 +28,7 @@ export class Gigalith extends PokemonCard {
       name: 'Overdrive Smash',
       cost: [F, F, F, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'During your next turn, this Pokémon\'s Overdrive Smash attack does 40 more damage (before applying Weakness and Resistance).'
     }
   ];
@@ -37,7 +37,8 @@ export class Gigalith extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gigalith';
-  public fullName: string = 'Gigalith PHF';
+  public fullName: string = 'Gigalith (PHF 50)';
+  public legacyFullName = 'Gigalith PHF';
 
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'GIGALITH_NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'GIGALITH_NEXT_TURN_MORE_DAMAGE_MARKER_2';

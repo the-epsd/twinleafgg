@@ -37,7 +37,8 @@ export class Cacturne extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cacturne';
-  public fullName: string = 'Cacturne CES';
+  public fullName: string = 'Cacturne (CES 20)';
+  public legacyFullName = 'Cacturne CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Poison Payback (passive - triggered when damaged by opponent's attack)

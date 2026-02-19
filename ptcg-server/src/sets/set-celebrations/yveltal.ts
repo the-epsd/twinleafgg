@@ -44,7 +44,8 @@ export class Yveltal extends PokemonCard {
 
   public name: string = 'Yveltal';
 
-  public fullName: string = 'Yveltal CEL';
+  public fullName: string = 'Yveltal (CEL 19)';
+  public legacyFullName = 'Yveltal CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

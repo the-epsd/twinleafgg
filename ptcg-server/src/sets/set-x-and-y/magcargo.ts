@@ -37,7 +37,8 @@ export class Magcargo extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magcargo';
-  public fullName: string = 'Magcargo XY';
+  public fullName: string = 'Magcargo (XY 21)';
+  public legacyFullName = 'Magcargo XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Magma Mantle

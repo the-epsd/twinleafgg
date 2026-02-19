@@ -71,7 +71,8 @@ export class BillsAnalysis extends TrainerCard {
 
   public name: string = 'Bill\'s Analysis';
 
-  public fullName: string = 'Bill\'s Analysis TEU';
+  public fullName: string = 'Bill\'s Analysis (TEU 133)';
+  public legacyFullName = 'Bill\'s Analysis TEU';
 
   public text: string =
     'Look at the top 7 cards of your deck. You may reveal up to 2 Trainer cards you find there and put them into your hand. Shuffle the other cards back into your deck.';

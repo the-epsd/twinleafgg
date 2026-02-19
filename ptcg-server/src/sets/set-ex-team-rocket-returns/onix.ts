@@ -28,7 +28,8 @@ export class Onix extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Onix';
-  public fullName: string = 'Onix TRR';
+  public fullName: string = 'Onix (TRR 69)';
+  public legacyFullName = 'Onix TRR';
 
   public readonly BARRIER_ATTACK_MARKER = 'BARRIER_ATTACK_MARKER';
 

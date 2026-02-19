@@ -23,7 +23,8 @@ export class Weedle extends PokemonCard {
 
   public name = 'Weedle';
 
-  public fullName = 'Weedle TEU';
+  public fullName = 'Weedle (TEU 3)';
+  public legacyFullName = 'Weedle TEU';
 
   public attacks = [
     {

@@ -31,7 +31,8 @@ export class Reshiramex extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Reshiram ex';
-  public fullName: string = 'Reshiram ex SV11W';
+  public fullName: string = 'Reshiram ex (WHT 20)';
+  public legacyFullName = 'Reshiram ex SV11W';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

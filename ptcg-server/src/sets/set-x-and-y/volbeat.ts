@@ -36,7 +36,8 @@ export class Volbeat extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Volbeat';
-  public fullName: string = 'Volbeat XY';
+  public fullName: string = 'Volbeat (XY 8)';
+  public legacyFullName = 'Volbeat XY';
 
   public usedLuringGlow = false;
 

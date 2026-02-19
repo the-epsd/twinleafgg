@@ -29,7 +29,7 @@ export class Xatu extends PokemonCard {
       name: 'Psychic',
       cost: [P],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -39,7 +39,8 @@ export class Xatu extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Xatu';
-  public fullName: string = 'Xatu RCL';
+  public fullName: string = 'Xatu (RCL 77)';
+  public legacyFullName = 'Xatu RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Energy Warp

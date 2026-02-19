@@ -41,7 +41,8 @@ export class Araquanid extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Araquanid';
-  public fullName: string = 'Araquanid CEC';
+  public fullName: string = 'Araquanid (CEC 65)';
+  public legacyFullName = 'Araquanid CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Liquidation

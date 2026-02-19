@@ -21,7 +21,7 @@ export class Sandshrew extends PokemonCard {
       name: 'Double Scratch',
       cost: [F],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
     },
     {
@@ -36,7 +36,8 @@ export class Sandshrew extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandshrew';
-  public fullName: string = 'Sandshrew BKT';
+  public fullName: string = 'Sandshrew (BKT 75)';
+  public legacyFullName = 'Sandshrew BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Scratch

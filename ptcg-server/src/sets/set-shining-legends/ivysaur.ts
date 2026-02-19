@@ -36,7 +36,8 @@ export class Ivysaur extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ivysaur';
-  public fullName: string = 'Ivysaur SLG';
+  public fullName: string = 'Ivysaur (SLG 2)';
+  public legacyFullName = 'Ivysaur SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Toxic Whip

@@ -62,7 +62,8 @@ export class GardevoirGX extends PokemonCard {
 
   public name: string = 'Gardevoir-GX';
 
-  public fullName: string = 'Gardevoir-GX BUS';
+  public fullName: string = 'Gardevoir-GX (BUS 93)';
+  public legacyFullName = 'Gardevoir-GX BUS';
 
   public cardImage: string = 'assets/cardback.png';
 

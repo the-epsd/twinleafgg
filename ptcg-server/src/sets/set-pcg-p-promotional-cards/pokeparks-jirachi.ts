@@ -31,7 +31,8 @@ export class PokeParksJirachi extends PokemonCard {
 
   public set: string = 'PCGP';
   public name: string = 'PokéPark\'s Jirachi';
-  public fullName: string = 'PokéPark\'s Jirachi PCGP';
+  public fullName: string = 'PokéPark\'s Jirachi (PCGP 50)';
+  public legacyFullName = 'PokéPark\'s Jirachi PCGP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '50';
 

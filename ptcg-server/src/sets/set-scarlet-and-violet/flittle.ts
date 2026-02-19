@@ -21,5 +21,6 @@ export class Flittle extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flittle';
-  public fullName: string = 'Flittle SVI';
+  public fullName: string = 'Flittle (SVI 100)';
+  public legacyFullName = 'Flittle SVI';
 }

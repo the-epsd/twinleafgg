@@ -31,7 +31,8 @@ export class Carnivine extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carnivine';
-  public fullName: string = 'Carnivine LTR';
+  public fullName: string = 'Carnivine (LTR 5)';
+  public legacyFullName = 'Carnivine LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ambush Bite

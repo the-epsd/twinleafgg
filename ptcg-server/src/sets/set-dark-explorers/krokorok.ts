@@ -38,7 +38,8 @@ export class Krokorok extends PokemonCard {
 
   public name: string = 'Krokorok';
 
-  public fullName: string = 'Krokorok DEX';
+  public fullName: string = 'Krokorok (DEX 65)';
+  public legacyFullName = 'Krokorok DEX';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -25,5 +25,6 @@ export class Koffing extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Koffing';
-  public fullName: string = 'Koffing HIF';
+  public fullName: string = 'Koffing (HIF 28)';
+  public legacyFullName = 'Koffing HIF';
 }

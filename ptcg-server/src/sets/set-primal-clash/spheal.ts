@@ -21,7 +21,7 @@ export class Spheal extends PokemonCard {
       name: 'Ball Roll',
       cost: [W, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 30 damage times the number of heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Spheal extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spheal';
-  public fullName: string = 'Spheal PRC';
+  public fullName: string = 'Spheal (PRC 45)';
+  public legacyFullName = 'Spheal PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ball Roll

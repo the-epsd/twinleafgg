@@ -37,7 +37,8 @@ export class Mightyena extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mightyena';
-  public fullName: string = 'Mightyena PHF';
+  public fullName: string = 'Mightyena (PHF 54)';
+  public legacyFullName = 'Mightyena PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Crunch

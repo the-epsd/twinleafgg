@@ -34,7 +34,8 @@ export class Lilligant extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public name: string = 'Lilligant';
-  public fullName: string = 'Lilligant EPO';
+  public fullName: string = 'Lilligant (EPO 14)';
+  public legacyFullName = 'Lilligant EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

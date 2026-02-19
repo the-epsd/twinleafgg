@@ -32,5 +32,6 @@ export class Cranidos extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cranidos';
-  public fullName: string = 'Cranidos UPR';
+  public fullName: string = 'Cranidos (UPR 64)';
+  public legacyFullName = 'Cranidos UPR';
 }

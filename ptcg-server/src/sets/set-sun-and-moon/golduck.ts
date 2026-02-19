@@ -28,7 +28,8 @@ export class Golduck extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golduck';
-  public fullName: string = 'Golduck SUM';
+  public fullName: string = 'Golduck (SUM 29)';
+  public legacyFullName = 'Golduck SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

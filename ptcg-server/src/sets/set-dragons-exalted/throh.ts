@@ -33,7 +33,8 @@ export class Throh extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Throh';
-  public fullName: string = 'Throh DRX';
+  public fullName: string = 'Throh (DRX 68)';
+  public legacyFullName = 'Throh DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Squeeze

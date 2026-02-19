@@ -20,7 +20,8 @@ export class TateAndLiza extends TrainerCard {
 
   public name: string = 'Tate & Liza';
 
-  public fullName: string = 'Tate & Liza CES';
+  public fullName: string = 'Tate & Liza (CES 148)';
+  public legacyFullName = 'Tate & Liza CES';
 
   public text: string =
     'Choose 1:' +

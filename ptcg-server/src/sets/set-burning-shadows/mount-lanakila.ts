@@ -15,7 +15,8 @@ export class MountLanakila extends TrainerCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mount Lanakila';
-  public fullName: string = 'Mount Lanakila BUS';
+  public fullName: string = 'Mount Lanakila (BUS 118)';
+  public legacyFullName = 'Mount Lanakila BUS';
   public text: string = 'The Retreat Cost of each Basic Pokémon in play (both yours and your opponent\'s) is Colorless more.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

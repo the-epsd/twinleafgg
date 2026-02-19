@@ -29,7 +29,8 @@ export class Mimikyu extends PokemonCard {
 
   public set: string = 'CEC';
   public name: string = 'Mimikyu';
-  public fullName: string = 'Mimikyu CEC';
+  public fullName: string = 'Mimikyu (CEC 96)';
+  public legacyFullName = 'Mimikyu CEC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
 

@@ -30,7 +30,7 @@ export class Ursaring extends PokemonCard {
       name: 'Swing Around',
       cost: [C, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
     }
   ];
@@ -39,7 +39,8 @@ export class Ursaring extends PokemonCard {
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ursaring';
-  public fullName: string = 'Ursaring BKT';
+  public fullName: string = 'Ursaring (BKT 122)';
+  public legacyFullName = 'Ursaring BKT';
 
   public usedDragOff = false;
 

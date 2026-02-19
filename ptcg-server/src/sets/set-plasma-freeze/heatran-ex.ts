@@ -34,7 +34,8 @@ export class HeatranEx extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heatran-EX';
-  public fullName: string = 'Heatran-EX PLF';
+  public fullName: string = 'Heatran-EX (PLF 13)';
+  public legacyFullName = 'Heatran-EX PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

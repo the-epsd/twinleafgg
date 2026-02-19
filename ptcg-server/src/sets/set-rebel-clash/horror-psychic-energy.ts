@@ -16,7 +16,8 @@ export class HorrorPsychicEnergy extends EnergyCard {
   public regulationMark = 'D';
   public set: string = 'RCL';
   public name = 'Horror Psychic Energy';
-  public fullName = 'Horror Psychic Energy RCL';
+  public fullName = 'Horror Psychic Energy (RCL 172)';
+  public legacyFullName = 'Horror Psychic Energy RCL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '172';
 

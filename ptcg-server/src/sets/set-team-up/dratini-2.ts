@@ -35,7 +35,8 @@ export class Dratini2 extends PokemonCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dratini';
-  public fullName: string = 'Dratini TEU 117';
+  public fullName: string = 'Dratini (TEU 117)';
+  public legacyFullName = 'Dratini TEU 117';
 
   // Ref: set-dragons-majesty/flygon.ts (Dragon Guard - prevent effects except damage)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

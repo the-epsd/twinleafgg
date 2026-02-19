@@ -26,5 +26,6 @@ export class Machoke extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machoke';
-  public fullName: string = 'Machoke FFI';
+  public fullName: string = 'Machoke (FFI 45)';
+  public legacyFullName = 'Machoke FFI';
 }

@@ -29,7 +29,8 @@ export class Wiglett extends PokemonCard {
 
   public set: string = 'SVI';
   public name: string = 'Wiglett';
-  public fullName: string = 'Wiglett SVI';
+  public fullName: string = 'Wiglett (SVI 56)';
+  public legacyFullName = 'Wiglett SVI';
   public regulationMark = 'G';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '56';

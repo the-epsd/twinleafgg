@@ -28,7 +28,7 @@ export class Doublade extends PokemonCard {
       name: 'Double Slash',
       cost: [M, M, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 80 damage for each heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class Doublade extends PokemonCard {
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Doublade';
-  public fullName: string = 'Doublade RCL';
+  public fullName: string = 'Doublade (RCL 134)';
+  public legacyFullName = 'Doublade RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Double Slash

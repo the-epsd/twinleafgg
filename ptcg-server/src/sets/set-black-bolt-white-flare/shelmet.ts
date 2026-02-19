@@ -29,7 +29,8 @@ export class Shelmet extends PokemonCard {
   public set: string = 'WHT';
   public regulationMark = 'I';
   public name: string = 'Shelmet';
-  public fullName: string = 'Shelmet WHT';
+  public fullName: string = 'Shelmet (WHT 8)';
+  public legacyFullName = 'Shelmet WHT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
 

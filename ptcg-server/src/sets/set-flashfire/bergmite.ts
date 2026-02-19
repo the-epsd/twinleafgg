@@ -35,7 +35,8 @@ export class Bergmite extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bergmite';
-  public fullName: string = 'Bergmite FLF';
+  public fullName: string = 'Bergmite (FLF 30)';
+  public legacyFullName = 'Bergmite FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/gurdurr.ts (Hammer Arm)

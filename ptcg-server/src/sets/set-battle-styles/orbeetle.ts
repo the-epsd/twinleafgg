@@ -33,7 +33,8 @@ export class Orbeetle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
   public name: string = 'Orbeetle';
-  public fullName: string = 'Orbeetle BST';
+  public fullName: string = 'Orbeetle (BST 65)';
+  public legacyFullName = 'Orbeetle BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

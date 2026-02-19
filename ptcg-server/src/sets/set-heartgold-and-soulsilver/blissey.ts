@@ -32,7 +32,8 @@ export class Blissey extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '106';
   public name: string = 'Blissey';
-  public fullName: string = 'Blissey HS';
+  public fullName: string = 'Blissey (HS 106)';
+  public legacyFullName = 'Blissey HS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

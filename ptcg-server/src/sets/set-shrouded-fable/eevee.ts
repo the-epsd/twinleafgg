@@ -64,7 +64,8 @@ export class Eevee extends PokemonCard {
   public regulationMark: string = 'H';
   public set: string = 'SFA';
   public name: string = 'Eevee';
-  public fullName: string = 'Eevee SFA';
+  public fullName: string = 'Eevee (SFA 50)';
+  public legacyFullName = 'Eevee SFA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '50';
 

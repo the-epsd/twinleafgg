@@ -22,7 +22,7 @@ export class Pikipek extends PokemonCard {
       name: 'Rock Smash',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];
@@ -31,7 +31,8 @@ export class Pikipek extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikipek';
-  public fullName: string = 'Pikipek SUM';
+  public fullName: string = 'Pikipek (SUM 106)';
+  public legacyFullName = 'Pikipek SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Smash

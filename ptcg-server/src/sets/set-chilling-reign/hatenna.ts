@@ -27,5 +27,6 @@ export class Hatenna extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hatenna';
-  public fullName: string = 'Hatenna CRE';
+  public fullName: string = 'Hatenna (CRE 71)';
+  public legacyFullName = 'Hatenna CRE';
 }

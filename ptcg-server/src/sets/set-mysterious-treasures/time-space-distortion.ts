@@ -13,7 +13,8 @@ export class TimeSpaceDistortion extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'MT';
   public name: string = 'Time-Space Distortion';
-  public fullName: string = 'Time-Space Distortion MT';
+  public fullName: string = 'Time-Space Distortion (MT 124)';
+  public legacyFullName = 'Time-Space Distortion MT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '124';
 

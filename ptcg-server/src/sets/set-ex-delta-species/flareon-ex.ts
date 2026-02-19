@@ -36,7 +36,8 @@ export class Flareonex extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flareon ex';
-  public fullName: string = 'Flareon ex DS';
+  public fullName: string = 'Flareon ex (DS 108)';
+  public legacyFullName = 'Flareon ex DS';
 
   public readonly FLAME_SCREEN_MARKER = 'FLAME_SCREEN_MARKER';
 

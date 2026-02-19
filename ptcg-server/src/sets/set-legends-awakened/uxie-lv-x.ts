@@ -31,7 +31,8 @@ export class UxieLVX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '146';
   public name: string = 'Uxie';
-  public fullName: string = 'Uxie Lv. X LA';
+  public fullName: string = 'Uxie (LA 146)';
+  public legacyFullName = 'Uxie Lv. X LA';
 
   public readonly TRADE_OFF_MARKER = 'TRADE_OFF_MARKER';
 

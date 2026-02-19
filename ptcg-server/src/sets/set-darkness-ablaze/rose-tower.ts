@@ -22,7 +22,8 @@ export class RoseTower extends TrainerCard {
 
   public name = 'Rose Tower';
 
-  public fullName = 'Rose Tower DAA';
+  public fullName = 'Rose Tower (DAA 169)';
+  public legacyFullName = 'Rose Tower DAA';
 
   public text = 'Once during each player\'s turn, that player may draw cards until they have 3 cards in their hand.';
 

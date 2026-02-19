@@ -107,7 +107,8 @@ export class Adaman extends TrainerCard {
 
   public name: string = 'Adaman';
 
-  public fullName: string = 'Adaman ASR';
+  public fullName: string = 'Adaman (ASR 135)';
+  public legacyFullName = 'Adaman ASR';
 
   public text: string =
     `You can use this card only if you discard 2 [M] Energy cards from your hand.

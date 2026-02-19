@@ -57,7 +57,8 @@ export class Charizardex extends PokemonCard {
 
   public name: string = 'Charizard ex';
 
-  public fullName: string = 'Charizard ex OBF';
+  public fullName: string = 'Charizard ex (OBF 125)';
+  public legacyFullName = 'Charizard ex OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

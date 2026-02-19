@@ -23,7 +23,8 @@ export class Misdreavus extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '39';
   public name: string = 'Misdreavus';
-  public fullName: string = 'Misdreavus CIN';
+  public fullName: string = 'Misdreavus (CIN 39)';
+  public legacyFullName = 'Misdreavus CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

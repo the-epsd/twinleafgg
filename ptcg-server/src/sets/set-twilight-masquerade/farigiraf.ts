@@ -34,7 +34,8 @@ export class Farigiraf extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
   public name: string = 'Farigiraf';
-  public fullName: string = 'Farigiraf TWM';
+  public fullName: string = 'Farigiraf (TWM 84)';
+  public legacyFullName = 'Farigiraf TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // One-derful Rumble

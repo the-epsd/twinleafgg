@@ -41,7 +41,8 @@ export class GalarianMeowth extends PokemonCard {
   public setNumber: string = '127';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Meowth';
-  public fullName: string = 'Galarian Meowth SSH';
+  public fullName: string = 'Galarian Meowth (SSH 127)';
+  public legacyFullName = 'Galarian Meowth SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hone Claws

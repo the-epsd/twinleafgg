@@ -23,14 +23,14 @@ export class LugiaEx extends PokemonCard {
       name: 'Aero Ball',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage times the amount of Energy attached to both Active Pokémon.'
     },
     {
       name: 'Deep Hurricane',
       cost: [C, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 70 more damage. Then, discard that Stadium card.'
     }
   ];
@@ -39,7 +39,8 @@ export class LugiaEx extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lugia-EX';
-  public fullName: string = 'Lugia-EX AOR';
+  public fullName: string = 'Lugia-EX (AOR 68)';
+  public legacyFullName = 'Lugia-EX AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Aero Ball

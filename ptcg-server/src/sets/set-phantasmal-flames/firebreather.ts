@@ -67,7 +67,8 @@ export class Firebreather extends TrainerCard {
   public setNumber: string = '89';
   public regulationMark = 'I';
   public name: string = 'Firebreather';
-  public fullName: string = 'Firebreather M2';
+  public fullName: string = 'Firebreather (PFL 89)';
+  public legacyFullName = 'Firebreather M2';
   public text: string = 'Search your deck for up to 7 Basic [R] Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

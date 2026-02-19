@@ -31,7 +31,8 @@ export class Tynamo extends PokemonCard {
 
   public name: string = 'Tynamo';
 
-  public fullName: string = 'Tynamo NVI 38';
+  public fullName: string = 'Tynamo (NVI 38)';
+  public legacyFullName = 'Tynamo NVI 38';
 
   public cardImage: string = 'assets/cardback.png';
 

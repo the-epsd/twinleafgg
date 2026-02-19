@@ -33,7 +33,8 @@ export class Gurdurr extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '59';
   public name: string = 'Gurdurr';
-  public fullName: string = 'Gurdurr BLW';
+  public fullName: string = 'Gurdurr (BLW 59)';
+  public legacyFullName = 'Gurdurr BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

@@ -28,7 +28,7 @@ export class Scrafty extends PokemonCard {
       name: 'Machine Gun Headbutt',
       cost: [D, D],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 50 damage times the number of heads. This Pok\u00e9mon is now Confused.'
     }
   ];
@@ -37,7 +37,8 @@ export class Scrafty extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scrafty';
-  public fullName: string = 'Scrafty FFI';
+  public fullName: string = 'Scrafty (FFI 67)';
+  public legacyFullName = 'Scrafty FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Machine Gun Headbutt

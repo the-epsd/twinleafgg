@@ -28,7 +28,8 @@ export class Cherubi extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cherubi';
-  public fullName: string = 'Cherubi UPR';
+  public fullName: string = 'Cherubi (UPR 10)';
+  public legacyFullName = 'Cherubi UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Surprise Attack

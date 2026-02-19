@@ -29,7 +29,8 @@ export class Beldum2 extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beldum';
-  public fullName: string = 'Beldum CES 93';
+  public fullName: string = 'Beldum (CES 93)';
+  public legacyFullName = 'Beldum CES 93';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Single Smash

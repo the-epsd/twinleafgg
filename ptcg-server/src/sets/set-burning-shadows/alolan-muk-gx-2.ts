@@ -25,7 +25,7 @@ export class AlolanMukGx2 extends PokemonCard {
       name: 'Chemical Breath',
       cost: [D, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 70 more damage for each Special Condition affecting your opponent\'s Active Pokémon.'
     },
     {
@@ -46,7 +46,8 @@ export class AlolanMukGx2 extends PokemonCard {
   public setNumber: string = '138';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Muk-GX';
-  public fullName: string = 'Alolan Muk-GX BUS 138';
+  public fullName: string = 'Alolan Muk-GX (BUS 138)';
+  public legacyFullName = 'Alolan Muk-GX BUS 138';
 
   public usedTriHazardGx = false;
 

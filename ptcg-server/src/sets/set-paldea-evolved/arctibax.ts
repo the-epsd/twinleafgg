@@ -40,6 +40,7 @@ export class Arctibax extends PokemonCard {
 
   public name: string = 'Arctibax';
 
-  public fullName: string = 'Arctibax PAL';
+  public fullName: string = 'Arctibax (PAL 59)';
+  public legacyFullName = 'Arctibax PAL';
 
 }

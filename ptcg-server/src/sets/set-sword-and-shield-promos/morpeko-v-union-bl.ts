@@ -9,6 +9,7 @@ import { MorpekoVUNIONBottomRight } from './morpeko-v-union-br';
 
 export class MorpekoVUNIONBottomLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
+  public multiPartPosition: 'Top' | 'Bottom' | 'Top Left' | 'Top Right' | 'Bottom Left' | 'Bottom Right' = 'Bottom Left';
   public tags = [CardTag.POKEMON_VUNION];
   public cardType: CardType = L;
   public hp: number = 310;
@@ -40,7 +41,8 @@ export class MorpekoVUNIONBottomLeft extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '217';
   public name: string = 'Morpeko V-UNION';
-  public fullName: string = 'Morpeko V-UNION (Bottom Left) SWSH';
+  public fullName: string = 'Morpeko V-UNION (SWSH 217)';
+  public legacyFullName = 'Morpeko V-UNION (Bottom Left) SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union

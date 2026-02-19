@@ -16,7 +16,8 @@ export class FrozenCity extends TrainerCard {
 
   public name = 'Frozen City';
 
-  public fullName = 'Frozen City PLF';
+  public fullName = 'Frozen City (PLF 100)';
+  public legacyFullName = 'Frozen City PLF';
 
   public text = 'Whenever any player attaches an Energy from his or her hand to 1 of his or her Pokémon (excluding Team Plasma Pokémon), put 2 damage counters on that Pokémon.';
 

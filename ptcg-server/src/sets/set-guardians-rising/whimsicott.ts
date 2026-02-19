@@ -38,7 +38,8 @@ export class Whimsicott extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whimsicott';
-  public fullName: string = 'Whimsicott GRI';
+  public fullName: string = 'Whimsicott (GRI 91)';
+  public legacyFullName = 'Whimsicott GRI';
 
   public readonly WAGES_OF_FLUFF_MARKER = 'WAGES_OF_FLUFF_MARKER';
   public readonly CLEAR_WAGES_OF_FLUFF_MARKER = 'CLEAR_WAGES_OF_FLUFF_MARKER';

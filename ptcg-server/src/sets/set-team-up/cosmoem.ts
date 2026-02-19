@@ -30,7 +30,8 @@ export class Cosmoem extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cosmoem';
-  public fullName: string = 'Cosmoem TEU';
+  public fullName: string = 'Cosmoem (TEU 70)';
+  public legacyFullName = 'Cosmoem TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Nap

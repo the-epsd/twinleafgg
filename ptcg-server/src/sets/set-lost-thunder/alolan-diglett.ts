@@ -29,7 +29,8 @@ export class AlolanDiglett extends PokemonCard {
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Diglett';
-  public fullName: string = 'Alolan Diglett LOT';
+  public fullName: string = 'Alolan Diglett (LOT 122)';
+  public legacyFullName = 'Alolan Diglett LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Family

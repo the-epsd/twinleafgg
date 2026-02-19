@@ -21,7 +21,7 @@ export class Horsea2 extends PokemonCard {
       name: 'Hydro Pump',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage times the amount of [W] Energy attached to this Pokémon.'
     }
   ];
@@ -30,7 +30,8 @@ export class Horsea2 extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Horsea';
-  public fullName: string = 'Horsea DRM 16';
+  public fullName: string = 'Horsea (DRM 16)';
+  public legacyFullName = 'Horsea DRM 16';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hydro Pump

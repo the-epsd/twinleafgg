@@ -29,7 +29,8 @@ export class Ditto extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
   public name: string = 'Ditto';
-  public fullName: string = 'Ditto RG';
+  public fullName: string = 'Ditto (RG 4)';
+  public legacyFullName = 'Ditto RG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

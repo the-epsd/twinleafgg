@@ -36,7 +36,8 @@ export class Fletchinder extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fletchinder';
-  public fullName: string = 'Fletchinder XY';
+  public fullName: string = 'Fletchinder (XY 27)';
+  public legacyFullName = 'Fletchinder XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flame Charge

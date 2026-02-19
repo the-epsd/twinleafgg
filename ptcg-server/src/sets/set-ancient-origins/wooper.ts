@@ -35,7 +35,8 @@ export class Wooper extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wooper';
-  public fullName: string = 'Wooper AOR';
+  public fullName: string = 'Wooper (AOR 38)';
+  public legacyFullName = 'Wooper AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Nap

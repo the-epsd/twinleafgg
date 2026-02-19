@@ -31,5 +31,6 @@ export class Torchic2 extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Torchic';
-  public fullName: string = 'Torchic CES 26';
+  public fullName: string = 'Torchic (CES 26)';
+  public legacyFullName = 'Torchic CES 26';
 }

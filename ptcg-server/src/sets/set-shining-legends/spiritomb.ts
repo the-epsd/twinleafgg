@@ -35,7 +35,8 @@ export class Spiritomb extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spiritomb';
-  public fullName: string = 'Spiritomb SLG';
+  public fullName: string = 'Spiritomb (SLG 47)';
+  public legacyFullName = 'Spiritomb SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Cursed Whirlpool (passive - block opponent retreat)

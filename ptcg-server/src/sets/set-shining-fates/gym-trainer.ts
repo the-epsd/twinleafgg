@@ -16,7 +16,8 @@ export class GymTrainer extends TrainerCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gym Trainer';
-  public fullName: string = 'Gym Trainer SHF';
+  public fullName: string = 'Gym Trainer (SHF 59)';
+  public legacyFullName = 'Gym Trainer SHF';
   public text: string = 'Draw 2 cards. If any of your Pokémon were Knocked Out during your opponent\'s last turn, draw 2 more cards. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

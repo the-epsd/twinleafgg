@@ -87,7 +87,8 @@ export class Oricorio extends PokemonCard {
   public set: string = 'SWSH';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Oricorio';
-  public fullName: string = 'Oricorio SWSH';
+  public fullName: string = 'Oricorio (SWSH 210)';
+  public legacyFullName = 'Oricorio SWSH';
   public setNumber: string = '210';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

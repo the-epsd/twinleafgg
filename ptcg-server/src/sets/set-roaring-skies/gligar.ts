@@ -29,7 +29,8 @@ export class Gligar extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gligar';
-  public fullName: string = 'Gligar ROS';
+  public fullName: string = 'Gligar (ROS 36)';
+  public legacyFullName = 'Gligar ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stun Poison

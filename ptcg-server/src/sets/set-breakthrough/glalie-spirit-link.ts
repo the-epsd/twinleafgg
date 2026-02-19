@@ -13,7 +13,8 @@ export class GlalieSpiritLink extends TrainerCard {
   public setNumber: string = '139';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Glalie Spirit Link';
-  public fullName: string = 'Glalie Spirit Link BKT';
+  public fullName: string = 'Glalie Spirit Link (BKT 139)';
+  public legacyFullName = 'Glalie Spirit Link BKT';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Glalie-EX.';
 
   // Ref: set-ancient-origins/sceptile-spirit-link.ts (Spirit Link - no-op, handled by engine)

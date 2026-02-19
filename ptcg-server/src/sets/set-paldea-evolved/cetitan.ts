@@ -47,7 +47,8 @@ export class Cetitan extends PokemonCard {
 
   public name: string = 'Cetitan';
 
-  public fullName: string = 'Cetitan PAL';
+  public fullName: string = 'Cetitan (PAL 55)';
+  public legacyFullName = 'Cetitan PAL';
 
 
   reduceEffect(store: StoreLike, state: State, effect: Effect) {

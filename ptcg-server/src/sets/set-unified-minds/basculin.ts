@@ -36,7 +36,8 @@ export class Basculin extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Basculin';
-  public fullName: string = 'Basculin UNM';
+  public fullName: string = 'Basculin (UNM 43)';
+  public legacyFullName = 'Basculin UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swarming Bites

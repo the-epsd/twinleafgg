@@ -15,7 +15,8 @@ export class ArvensSandwich extends TrainerCard {
   public setNumber: string = '161';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Arven\'s Sandwich';
-  public fullName: string = 'Arven\'s Sandwich DRI';
+  public fullName: string = 'Arven\'s Sandwich (DRI 161)';
+  public legacyFullName = 'Arven\'s Sandwich DRI';
 
   public text: string = 'Heal 30 damage from your Active Pokémon. If that Pokémon is an Arven\'s Pokémon, heal 100 damage instead.';
 

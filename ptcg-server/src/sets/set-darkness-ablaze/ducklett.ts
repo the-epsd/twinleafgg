@@ -29,6 +29,7 @@ export class Ducklett extends PokemonCard {
   public setNumber: string = '148';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ducklett';
-  public fullName: string = 'Ducklett DAA';
+  public fullName: string = 'Ducklett (DAA 148)';
+  public legacyFullName = 'Ducklett DAA';
 
 }

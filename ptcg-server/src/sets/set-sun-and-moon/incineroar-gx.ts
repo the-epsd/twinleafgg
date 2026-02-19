@@ -24,14 +24,14 @@ export class IncineroarGx extends PokemonCard {
       name: 'Hustling Strike',
       cost: [R],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each of your Benched Fire Pokémon.'
     },
     {
       name: 'Tiger Swing',
       cost: [R, R, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 50 more damage for each heads.'
     },
     {
@@ -46,7 +46,8 @@ export class IncineroarGx extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Incineroar-GX';
-  public fullName: string = 'Incineroar-GX SUM';
+  public fullName: string = 'Incineroar-GX (SUM 27)';
+  public legacyFullName = 'Incineroar-GX SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hustling Strike

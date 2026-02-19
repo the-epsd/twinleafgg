@@ -31,5 +31,6 @@ export class NidoranM extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoran ♂';
-  public fullName: string = 'Nidoran ♂ TEU';
+  public fullName: string = 'Nidoran ♂ (TEU 57)';
+  public legacyFullName = 'Nidoran ♂ TEU';
 }

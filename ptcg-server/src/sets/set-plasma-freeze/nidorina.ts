@@ -37,7 +37,8 @@ export class Nidorina extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidorina';
-  public fullName: string = 'Nidorina PLF';
+  public fullName: string = 'Nidorina (PLF 41)';
+  public legacyFullName = 'Nidorina PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

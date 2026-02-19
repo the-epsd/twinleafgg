@@ -37,7 +37,8 @@ export class Gastrodon extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gastrodon';
-  public fullName: string = 'Gastrodon CIN';
+  public fullName: string = 'Gastrodon (CIN 54)';
+  public legacyFullName = 'Gastrodon CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Eerie Fluid

@@ -41,7 +41,8 @@ export class Magmortar extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magmortar';
-  public fullName: string = 'Magmortar UNM';
+  public fullName: string = 'Magmortar (UNM 22)';
+  public legacyFullName = 'Magmortar UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Smoke Bomb

@@ -30,7 +30,8 @@ export class Skarmory extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '120';
   public name: string = 'Skarmory';
-  public fullName: string = 'Skarmory DAA';
+  public fullName: string = 'Skarmory (DAA 120)';
+  public legacyFullName = 'Skarmory DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

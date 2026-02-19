@@ -36,7 +36,8 @@ export class Aipom extends PokemonCard {
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aipom';
-  public fullName: string = 'Aipom STS';
+  public fullName: string = 'Aipom (STS 90)';
+  public legacyFullName = 'Aipom STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fiddle Around

@@ -47,7 +47,8 @@ export class IronCrown extends PokemonCard {
 
   public name: string = 'Iron Crown';
 
-  public fullName: string = 'Iron Crown SSP';
+  public fullName: string = 'Iron Crown (SSP 132)';
+  public legacyFullName = 'Iron Crown SSP';
 
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

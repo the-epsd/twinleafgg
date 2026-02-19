@@ -24,7 +24,8 @@ export class FestivalGrounds extends TrainerCard {
   
   public name = 'Festival Grounds';
   
-  public fullName = 'Festival Grounds TWM';
+  public fullName = 'Festival Grounds (TWM 149)';
+  public legacyFullName = 'Festival Grounds TWM';
     
   public  text = 'Pokémon with any Energy attached cannot be affected by Special Conditions, and they recover from any Special Conditions.';
 

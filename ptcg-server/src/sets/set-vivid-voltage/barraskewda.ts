@@ -37,7 +37,8 @@ export class Barraskewda extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Barraskewda';
-  public fullName: string = 'Barraskewda VIV';
+  public fullName: string = 'Barraskewda (VIV 42)';
+  public legacyFullName = 'Barraskewda VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Targeted Skewer

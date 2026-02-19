@@ -13,7 +13,8 @@ export class SlowbroSpiritLink extends TrainerCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slowbro Spirit Link';
-  public fullName: string = 'Slowbro Spirit Link EVO';
+  public fullName: string = 'Slowbro Spirit Link (EVO 86)';
+  public legacyFullName = 'Slowbro Spirit Link EVO';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Slowbro-EX.';
 
   // Ref: set-steam-siege/steelix-spirit-link.ts (Spirit Link - no-op, handled by engine)

@@ -35,7 +35,8 @@ export class Spritzee extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spritzee';
-  public fullName: string = 'Spritzee FLF';
+  public fullName: string = 'Spritzee (FLF 67)';
+  public legacyFullName = 'Spritzee FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/bidoof.ts (Hyper Fang)

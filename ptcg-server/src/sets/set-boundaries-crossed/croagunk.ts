@@ -29,7 +29,8 @@ export class Croagunk extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Croagunk';
-  public fullName: string = 'Croagunk BCR';
+  public fullName: string = 'Croagunk (BCR 64)';
+  public legacyFullName = 'Croagunk BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Paralyzing Jab

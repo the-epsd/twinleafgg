@@ -26,7 +26,8 @@ export class Seismitoad extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
   public name: string = 'Seismitoad';
-  public fullName: string = 'Seismitoad NVI';
+  public fullName: string = 'Seismitoad (NVI 24)';
+  public legacyFullName = 'Seismitoad NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

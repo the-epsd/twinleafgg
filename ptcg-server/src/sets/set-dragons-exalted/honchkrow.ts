@@ -33,7 +33,8 @@ export class Honchkrow extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Honchkrow';
-  public fullName: string = 'Honchkrow DRX';
+  public fullName: string = 'Honchkrow (DRX 73)';
+  public legacyFullName = 'Honchkrow DRX';
 
   public usedWhirlwind = false;
   public wantsToSwitch = false;

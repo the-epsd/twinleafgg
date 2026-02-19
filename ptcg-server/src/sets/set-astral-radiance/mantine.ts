@@ -43,7 +43,8 @@ export class Mantine extends PokemonCard {
 
   public name: string = 'Mantine';
 
-  public fullName: string = 'Mantine ASR';
+  public fullName: string = 'Mantine (ASR 34)';
+  public legacyFullName = 'Mantine ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

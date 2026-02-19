@@ -22,7 +22,8 @@ export class Joltik extends PokemonCard {
   public regulationMark = 'I';
   public set: string = 'WHT';
   public name: string = 'Joltik';
-  public fullName: string = 'Joltik SV11W';
+  public fullName: string = 'Joltik (WHT 33)';
+  public legacyFullName = 'Joltik SV11W';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '33';
 

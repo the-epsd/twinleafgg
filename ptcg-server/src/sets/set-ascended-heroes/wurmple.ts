@@ -21,5 +21,6 @@ export class Wurmple extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
   public name: string = 'Wurmple';
-  public fullName: string = 'Wurmple M2a';
+  public fullName: string = 'Wurmple (ASC 11)';
+  public legacyFullName = 'Wurmple M2a';
 }

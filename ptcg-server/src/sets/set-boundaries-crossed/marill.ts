@@ -31,5 +31,6 @@ export class Marill extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marill';
-  public fullName: string = 'Marill BCR';
+  public fullName: string = 'Marill (BCR 36)';
+  public legacyFullName = 'Marill BCR';
 }

@@ -36,7 +36,8 @@ export class Magikarp extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magikarp';
-  public fullName: string = 'Magikarp CIN';
+  public fullName: string = 'Magikarp (CIN 17)';
+  public legacyFullName = 'Magikarp CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Submerge (passive - prevent all damage on bench)

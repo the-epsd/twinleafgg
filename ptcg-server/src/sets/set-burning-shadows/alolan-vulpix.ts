@@ -35,7 +35,8 @@ export class AlolanVulpix extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Vulpix';
-  public fullName: string = 'Alolan Vulpix BUS';
+  public fullName: string = 'Alolan Vulpix (BUS 27)';
+  public legacyFullName = 'Alolan Vulpix BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Powder Snow

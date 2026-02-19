@@ -13,7 +13,8 @@ export class TeamMagmaBall extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'MA';
   public name: string = 'Team Magma Ball';
-  public fullName: string = 'Team Magma Ball MA';
+  public fullName: string = 'Team Magma Ball (MA 80)';
+  public legacyFullName = 'Team Magma Ball MA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '80';
 

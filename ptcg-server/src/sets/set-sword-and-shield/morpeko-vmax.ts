@@ -32,7 +32,8 @@ export class MorpekoVmax extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Morpeko VMAX';
-  public fullName: string = 'Morpeko VMAX SSH';
+  public fullName: string = 'Morpeko VMAX (SSH 80)';
+  public legacyFullName = 'Morpeko VMAX SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Max Discharge

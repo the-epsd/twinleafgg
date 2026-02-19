@@ -27,7 +27,8 @@ export class Deino extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '113';
   public name: string = 'Deino';
-  public fullName: string = 'Deino EVS';
+  public fullName: string = 'Deino (EVS 113)';
+  public legacyFullName = 'Deino EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -30,7 +30,8 @@ export class Ribombee extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ribombee';
-  public fullName: string = 'Ribombee EVS';
+  public fullName: string = 'Ribombee (EVS 79)';
+  public legacyFullName = 'Ribombee EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tricky Steps

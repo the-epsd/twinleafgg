@@ -43,7 +43,8 @@ export class Lampent extends PokemonCard {
 
   public name: string = 'Lampent';
 
-  public fullName: string = 'Lampent PHF';
+  public fullName: string = 'Lampent (PHF 42)';
+  public legacyFullName = 'Lampent PHF';
 
   public cardImage: string = 'assets/cardback.png';
 

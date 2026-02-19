@@ -38,7 +38,8 @@ export class Centiskorch extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Centiskorch';
-  public fullName: string = 'Centiskorch BST';
+  public fullName: string = 'Centiskorch (BST 30)';
+  public legacyFullName = 'Centiskorch BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Overheater (passive - opponent's burned Pokemon can't recover from burn)

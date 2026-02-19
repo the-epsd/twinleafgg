@@ -36,7 +36,8 @@ export class Celebi extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celebi';
-  public fullName: string = 'Celebi SHF';
+  public fullName: string = 'Celebi (SHF 3)';
+  public legacyFullName = 'Celebi SHF';
 
   public readonly WOODLAND_STROLL_MARKER = 'CELEBI_SHF_WOODLAND_STROLL_MARKER';
 

@@ -34,7 +34,8 @@ export class Axew2 extends PokemonCard {
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Axew';
-  public fullName: string = 'Axew BKT 109';
+  public fullName: string = 'Axew (BKT 109)';
+  public legacyFullName = 'Axew BKT 109';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Extra Chop

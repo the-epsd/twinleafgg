@@ -31,7 +31,8 @@ export class Fletchling extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fletchling';
-  public fullName: string = 'Fletchling FLF';
+  public fullName: string = 'Fletchling (FLF 86)';
+  public legacyFullName = 'Fletchling FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/taillow.ts (Aerial Ace)

@@ -36,7 +36,8 @@ import { AlolanMukGx2 } from './alolan-muk-gx-2';
 import { MultiSwitch } from '../set-guardians-rising/multi-switch';
 
 export class EscapeRopeBUS extends EscapeRope {
-  public fullName = 'Escape Rope BUS';
+  public fullName = 'Escape Rope (BUS 114)';
+  public legacyFullName = 'Escape Rope BUS';
   public name = 'Escape Rope';
   public set = 'BUS';
   public setNumber = '114';
@@ -44,25 +45,29 @@ export class EscapeRopeBUS extends EscapeRope {
 }
 
 export class GuzmaBUS extends Guzma {
-  public fullName = 'Guzma BUS 115a';
+  public fullName = 'Guzma (BUS 115a)';
+  public legacyFullName = 'Guzma BUS 115a';
   public set = 'BUS';
   public setNumber = '115a';
 }
 
 export class GuzmaBUS2 extends Guzma {
-  public fullName = 'Guzma BUS 143';
+  public fullName = 'Guzma (BUS 143)';
+  public legacyFullName = 'Guzma BUS 143';
   public set = 'BUS';
   public setNumber = '143';
 }
 
 export class RescueStretcherBUS extends RescueStretcher {
-  public fullName = 'Rescue Stretcher BUS 165';
+  public fullName = 'Rescue Stretcher (BUS 165)';
+  public legacyFullName = 'Rescue Stretcher BUS 165';
   public set = 'BUS';
   public setNumber = '165';
 }
 
 export class WeaknessPolicyBUS extends WeaknessPolicy {
-  public fullName = 'Weakness Policy BUS';
+  public fullName = 'Weakness Policy (BUS 126)';
+  public legacyFullName = 'Weakness Policy BUS';
   public name = 'Weakness Policy';
   public set = 'BUS';
   public setNumber = '126';
@@ -70,270 +75,315 @@ export class WeaknessPolicyBUS extends WeaknessPolicy {
 }
 export class SuperScoopUpBUS extends SuperScoopUp {
   public setNumber = '124';
-  public fullName: string = 'Super Scoop Up BUS';
+  public fullName: string = 'Super Scoop Up (BUS 124)';
+  public legacyFullName = 'Super Scoop Up BUS';
   public set = 'BUS';
 }
 
 export class SalazzleGX2BUS extends SalazzleGXBUS25 {
   public setNumber = '132';
-  public fullName: string = 'Salazzle-GX2 BUS';
+  public fullName: string = 'Salazzle-GX (BUS 132)';
+  public legacyFullName = 'Salazzle-GX2 BUS';
   public set = 'BUS';
 }
 
 export class TapuFiniGX3BUS extends TapuFiniGXBUS39 {
   public setNumber = '133';
-  public fullName: string = 'Tapu Fini-GX3 BUS';
+  public fullName: string = 'Tapu Fini-GX (BUS 133)';
+  public legacyFullName = 'Tapu Fini-GX3 BUS';
   public set = 'BUS';
 }
 
 export class NecrozmaGX2BUS extends NecrozmaGXBUS63 {
   public setNumber = '134';
-  public fullName: string = 'Necrozma-GX2 BUS';
+  public fullName: string = 'Necrozma-GX (BUS 134)';
+  public legacyFullName = 'Necrozma-GX2 BUS';
   public set = 'BUS';
 }
 
 export class MarshadowGX2BUS extends MarshadowGXBUS80 {
   public setNumber = '137';
-  public fullName: string = 'Marshadow-GX2 BUS';
+  public fullName: string = 'Marshadow-GX (BUS 137)';
+  public legacyFullName = 'Marshadow-GX2 BUS';
   public set = 'BUS';
 }
 
 export class DarkraiGX3BUS extends DarkraiGXBUS88 {
   public setNumber = '139';
-  public fullName: string = 'Darkrai-GX3 BUS';
+  public fullName: string = 'Darkrai-GX (BUS 139)';
+  public legacyFullName = 'Darkrai-GX3 BUS';
   public set = 'BUS';
 }
 
 export class GardevoirGX2BUS extends GardevoirGXBUS93 {
   public setNumber = '140';
-  public fullName: string = 'Gardevoir-GX2 BUS';
+  public fullName: string = 'Gardevoir-GX (BUS 140)';
+  public legacyFullName = 'Gardevoir-GX2 BUS';
   public set = 'BUS';
 }
 
 export class NoivernGX2BUS extends NoivernGXBUS99 {
   public setNumber = '141';
-  public fullName: string = 'Noivern-GX2 BUS';
+  public fullName: string = 'Noivern-GX (BUS 141)';
+  public legacyFullName = 'Noivern-GX2 BUS';
   public set = 'BUS';
 }
 
 export class Acerola3BUS extends AcerolaBUS112 {
   public setNumber = '142';
-  public fullName: string = 'Acerola3 BUS';
+  public fullName: string = 'Acerola (BUS 142)';
+  public legacyFullName = 'Acerola3 BUS';
   public set = 'BUS';
 }
 
 export class Kiawe3BUS extends KiaweBUS116 {
   public setNumber = '144';
-  public fullName: string = 'Kiawe3 BUS';
+  public fullName: string = 'Kiawe (BUS 144)';
+  public legacyFullName = 'Kiawe3 BUS';
   public set = 'BUS';
 }
 
 export class Plumeria2BUS extends PlumeriaBUS120 {
   public setNumber = '145';
-  public fullName: string = 'Plumeria2 BUS';
+  public fullName: string = 'Plumeria (BUS 145)';
+  public legacyFullName = 'Plumeria2 BUS';
   public set = 'BUS';
 }
 
 export class Sophocles2BUS extends SophoclesBUS123 {
   public setNumber = '146';
-  public fullName: string = 'Sophocles2 BUS';
+  public fullName: string = 'Sophocles (BUS 146)';
+  public legacyFullName = 'Sophocles2 BUS';
   public set = 'BUS';
 }
 
 export class TapuBuluGX2BUS extends TapuBuluGXBUS130 {
   public setNumber = '149';
-  public fullName: string = 'Tapu Bulu-GX2 BUS';
+  public fullName: string = 'Tapu Bulu-GX (BUS 149)';
+  public legacyFullName = 'Tapu Bulu-GX2 BUS';
   public set = 'BUS';
 }
 
 export class SalazzleGX3BUS extends SalazzleGXBUS25 {
   public setNumber = '151';
-  public fullName: string = 'Salazzle-GX3 BUS';
+  public fullName: string = 'Salazzle-GX (BUS 151)';
+  public legacyFullName = 'Salazzle-GX3 BUS';
   public set = 'BUS';
 }
 
 export class TapuFiniGX4BUS extends TapuFiniGXBUS39 {
   public setNumber = '152';
-  public fullName: string = 'Tapu Fini-GX4 BUS';
+  public fullName: string = 'Tapu Fini-GX (BUS 152)';
+  public legacyFullName = 'Tapu Fini-GX4 BUS';
   public set = 'BUS';
 }
 
 export class NecrozmaGX3BUS extends NecrozmaGXBUS63 {
   public setNumber = '153';
-  public fullName: string = 'Necrozma-GX3 BUS';
+  public fullName: string = 'Necrozma-GX (BUS 153)';
+  public legacyFullName = 'Necrozma-GX3 BUS';
   public set = 'BUS';
 }
 
 export class MarshadowGX3BUS extends MarshadowGXBUS80 {
   public setNumber = '156';
-  public fullName: string = 'Marshadow-GX3 BUS';
+  public fullName: string = 'Marshadow-GX (BUS 156)';
+  public legacyFullName = 'Marshadow-GX3 BUS';
   public set = 'BUS';
 }
 
 export class DarkraiGX4BUS extends DarkraiGXBUS88 {
   public setNumber = '158';
-  public fullName: string = 'Darkrai-GX4 BUS';
+  public fullName: string = 'Darkrai-GX (BUS 158)';
+  public legacyFullName = 'Darkrai-GX4 BUS';
   public set = 'BUS';
 }
 
 export class GardevoirGX3BUS extends GardevoirGXBUS93 {
   public setNumber = '159';
-  public fullName: string = 'Gardevoir-GX3 BUS';
+  public fullName: string = 'Gardevoir-GX (BUS 159)';
+  public legacyFullName = 'Gardevoir-GX3 BUS';
   public set = 'BUS';
 }
 
 export class NoivernGX3BUS extends NoivernGXBUS99 {
   public setNumber = '160';
-  public fullName: string = 'Noivern-GX3 BUS';
+  public fullName: string = 'Noivern-GX (BUS 160)';
+  public legacyFullName = 'Noivern-GX3 BUS';
   public set = 'BUS';
 }
 
 export class BodybuildingDumbbells2BUS extends BodybuildingDumbbellsBUS113 {
   public setNumber = '161';
-  public fullName: string = 'Bodybuilding Dumbbells2 BUS';
+  public fullName: string = 'Bodybuilding Dumbbells (BUS 161)';
+  public legacyFullName = 'Bodybuilding Dumbbells2 BUS';
   public set = 'BUS';
 }
 
 export class ChoiceBandBUS extends ChoiceBand {
   public setNumber = '162';
-  public fullName: string = 'Choice Band BUS';
+  public fullName: string = 'Choice Band (BUS 162)';
+  public legacyFullName = 'Choice Band BUS';
   public set = 'BUS';
 }
 
 export class EscapeRopeBUS2BUS extends EscapeRopeBUSBUS114 {
   public setNumber = '163';
-  public fullName: string = 'Escape Rope2 BUS';
+  public fullName: string = 'Escape Rope (BUS 163)';
+  public legacyFullName = 'Escape Rope2 BUS';
   public set = 'BUS';
 }
 
 export class SuperScoopUp2BUS extends SuperScoopUpDP115 {
   public setNumber = '166';
-  public fullName: string = 'Super Scoop Up2 BUS';
+  public fullName: string = 'Super Scoop Up (BUS 166)';
+  public legacyFullName = 'Super Scoop Up2 BUS';
   public set = 'BUS';
 }
 
 export class FireEnergyBUS extends FireEnergy {
   public setNumber = '167';
-  public fullName: string = 'Fire Energy BUS';
+  public fullName: string = 'Fire Energy (BUS 167)';
+  public legacyFullName = 'Fire Energy BUS';
   public set = 'BUS';
 }
 
 export class DarknessEnergyBUS extends DarknessEnergy {
   public setNumber = '168';
-  public fullName: string = 'Darkness Energy BUS';
+  public fullName: string = 'Darkness Energy (BUS 168)';
+  public legacyFullName = 'Darkness Energy BUS';
   public set = 'BUS';
 }
 
 export class FairyEnergyBUS extends FairyEnergy {
   public setNumber = '169';
-  public fullName: string = 'Fairy Energy BUS';
+  public fullName: string = 'Fairy Energy (BUS 169)';
+  public legacyFullName = 'Fairy Energy BUS';
   public set = 'BUS';
 }
 
 export class TapuFiniGX2BUS extends TapuFiniGXBUS39 {
   public setNumber = '39a';
-  public fullName: string = 'Tapu Fini-GX2 BUS';
+  public fullName: string = 'Tapu Fini-GX (BUS 39a)';
+  public legacyFullName = 'Tapu Fini-GX2 BUS';
   public set = 'BUS';
 }
 
 export class DarkraiGX2BUS extends DarkraiGXBUS88 {
   public setNumber = '88a';
-  public fullName: string = 'Darkrai-GX2 BUS';
+  public fullName: string = 'Darkrai-GX (BUS 88a)';
+  public legacyFullName = 'Darkrai-GX2 BUS';
   public set = 'BUS';
 }
 
 export class Acerola2BUS extends AcerolaBUS112 {
   public setNumber = '112a';
-  public fullName: string = 'Acerola2 BUS';
+  public fullName: string = 'Acerola (BUS 112a)';
+  public legacyFullName = 'Acerola2 BUS';
   public set = 'BUS';
 }
 
 export class Kiawe2BUS extends KiaweBUS116 {
   public setNumber = '116a';
-  public fullName: string = 'Kiawe2 BUS';
+  public fullName: string = 'Kiawe (BUS 116a)';
+  public legacyFullName = 'Kiawe2 BUS';
   public set = 'BUS';
 }
 
 export class CharmanderAlt extends Charmander {
   public setNumber = '18a';
-  public fullName: string = 'CharmanderAlt BUS';
+  public fullName: string = 'Charmander (BUS 18a)';
+  public legacyFullName = 'CharmanderAlt BUS';
   public set = 'BUS';
 }
 
 export class CharizardGXBUS150 extends CharizardGX {
   public setNumber = '150';
-  public fullName: string = 'Charizard-GX BUS 150';
+  public fullName: string = 'Charizard-GX (BUS 150)';
+  public legacyFullName = 'Charizard-GX BUS 150';
   public set = 'BUS';
 }
 
 export class Kirlia2 extends Kirlia {
   public set: string = 'BUS';
   public setNumber: string = '92a';
-  public fullName: string = 'Kirlia BUS 92a';
+  public fullName: string = 'Kirlia (BUS 92a)';
+  public legacyFullName = 'Kirlia BUS 92a';
 }
 
 export class MeowthBUS extends Meowth {
   public set: string = 'BUS';
   public setNumber: string = '101';
-  public fullName: string = 'Meowth BUS';
+  public fullName: string = 'Meowth (BUS 101)';
+  public legacyFullName = 'Meowth BUS';
 }
 
 export class PorygonZ2 extends PorygonZ {
   public set: string = 'BUS';
   public setNumber: string = '105a';
-  public fullName: string = 'Porygon-Z BUS 105a';
+  public fullName: string = 'Porygon-Z (BUS 105a)';
+  public legacyFullName = 'Porygon-Z BUS 105a';
 }
 
 export class GolisopodGx2 extends GolisopodGx {
   public set: string = 'BUS';
   public setNumber: string = '129';
-  public fullName: string = 'Golisopod-GX BUS 129';
+  public fullName: string = 'Golisopod-GX (BUS 129)';
+  public legacyFullName = 'Golisopod-GX BUS 129';
 }
 
 export class HoOhGx2 extends HoOhGx {
   public set: string = 'BUS';
   public setNumber: string = '131';
-  public fullName: string = 'Ho-Oh-GX BUS 131';
+  public fullName: string = 'Ho-Oh-GX (BUS 131)';
+  public legacyFullName = 'Ho-Oh-GX BUS 131';
 }
 
 export class MachampGx2 extends MachampGx {
   public set: string = 'BUS';
   public setNumber: string = '135';
-  public fullName: string = 'Machamp-GX BUS 135';
+  public fullName: string = 'Machamp-GX (BUS 135)';
+  public legacyFullName = 'Machamp-GX BUS 135';
 }
 
 export class Wicke2 extends Wicke {
   public set: string = 'BUS';
   public setNumber: string = '147';
-  public fullName: string = 'Wicke BUS 147';
+  public fullName: string = 'Wicke (BUS 147)';
+  public legacyFullName = 'Wicke BUS 147';
 }
 
 export class GolisopodGx3 extends GolisopodGx {
   public set: string = 'BUS';
   public setNumber: string = '148';
-  public fullName: string = 'Golisopod-GX BUS 148';
+  public fullName: string = 'Golisopod-GX (BUS 148)';
+  public legacyFullName = 'Golisopod-GX BUS 148';
 }
 
 export class MachampGx3 extends MachampGx {
   public set: string = 'BUS';
   public setNumber: string = '154';
-  public fullName: string = 'Machamp-GX BUS 154';
+  public fullName: string = 'Machamp-GX (BUS 154)';
+  public legacyFullName = 'Machamp-GX BUS 154';
 }
 
 export class LycanrocGx2 extends LycanrocGx {
   public set: string = 'BUS';
   public setNumber: string = '155';
-  public fullName: string = 'Lycanroc-GX BUS 155';
+  public fullName: string = 'Lycanroc-GX (BUS 155)';
+  public legacyFullName = 'Lycanroc-GX BUS 155';
 }
 
 export class AlolanMukGx3 extends AlolanMukGx2 {
   public set: string = 'BUS';
   public setNumber: string = '157';
-  public fullName: string = 'Alolan Muk-GX BUS 157';
+  public fullName: string = 'Alolan Muk-GX (BUS 157)';
+  public legacyFullName = 'Alolan Muk-GX BUS 157';
 }
 
 export class MultiSwitchBUS extends MultiSwitch {
   public set: string = 'BUS';
   public setNumber: string = '164';
-  public fullName: string = 'Multi Switch BUS';
+  public fullName: string = 'Multi Switch (BUS 164)';
+  public legacyFullName = 'Multi Switch BUS';
 }

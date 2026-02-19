@@ -22,7 +22,7 @@ export class Voltorb extends PokemonCard {
       name: 'Continuous Tumble',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 10 damage times the number of heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Voltorb extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Voltorb';
-  public fullName: string = 'Voltorb EVO';
+  public fullName: string = 'Voltorb (EVO 39)';
+  public legacyFullName = 'Voltorb EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Tumble

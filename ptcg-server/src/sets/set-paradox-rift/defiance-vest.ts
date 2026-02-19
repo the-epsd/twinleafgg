@@ -22,7 +22,8 @@ export class DefianceVest extends TrainerCard {
 
   public name: string = 'Defiance Vest';
 
-  public fullName: string = 'Defiance Vest PAR';
+  public fullName: string = 'Defiance Vest (PAR 162)';
+  public legacyFullName = 'Defiance Vest PAR';
 
   public text: string =
     'If you have more Prize cards remaining than your opponent, the Pokémon this card is attached to takes 40 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance).';

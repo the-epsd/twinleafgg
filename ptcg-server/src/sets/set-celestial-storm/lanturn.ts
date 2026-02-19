@@ -39,7 +39,8 @@ export class Lanturn extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lanturn';
-  public fullName: string = 'Lanturn CES';
+  public fullName: string = 'Lanturn (CES 50)';
+  public legacyFullName = 'Lanturn CES';
 
   public readonly ENERGY_GROUNDING_MARKER = 'ENERGY_GROUNDING_MARKER';
 

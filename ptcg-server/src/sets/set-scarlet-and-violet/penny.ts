@@ -23,7 +23,8 @@ export class Penny extends TrainerCard {
 
   public name: string = 'Penny';
 
-  public fullName: string = 'Penny SVI';
+  public fullName: string = 'Penny (SVI 183)';
+  public legacyFullName = 'Penny SVI';
 
   public text: string =
     'Put 1 of your Basic Pokémon and all attached cards into your hand.';

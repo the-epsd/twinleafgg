@@ -29,7 +29,8 @@ export class Frillish extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Frillish';
-  public fullName: string = 'Frillish PLS';
+  public fullName: string = 'Frillish (PLS 38)';
+  public legacyFullName = 'Frillish PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Absorb

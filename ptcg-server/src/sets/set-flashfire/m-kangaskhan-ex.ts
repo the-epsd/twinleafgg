@@ -27,7 +27,8 @@ export class MKangaskhanEX extends PokemonCard {
 
   public set: string = 'FLF';
   public name: string = 'M Kangaskhan-EX';
-  public fullName: string = 'M Kangaskhan-EX FLF';
+  public fullName: string = 'M Kangaskhan-EX (FLF 79)';
+  public legacyFullName = 'M Kangaskhan-EX FLF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '79';
 

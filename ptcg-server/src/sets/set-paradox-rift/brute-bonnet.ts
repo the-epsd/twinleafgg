@@ -34,7 +34,8 @@ export class BruteBonnet extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '123';
   public name: string = 'Brute Bonnet';
-  public fullName: string = 'Brute Bonnet PAR';
+  public fullName: string = 'Brute Bonnet (PAR 123)';
+  public legacyFullName = 'Brute Bonnet PAR';
 
   public readonly TOXIC_POWDER_MARKER = 'TOXIC_POWDER_MARKER';
 

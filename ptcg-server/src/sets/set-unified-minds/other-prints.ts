@@ -33,312 +33,364 @@ import { PokeManiac } from './poke-maniac';
 import { GiantBomb } from './giant-bomb';
 export class Riolu2UNM extends RioluUNM115 {
   public setNumber = '116';
-  public fullName: string = 'Riolu2 UNM';
+  public fullName: string = 'Riolu (UNM 116)';
+  public legacyFullName = 'Riolu2 UNM';
   public set = 'UNM';
 }
 
 export class MurkrowUNM extends Murkrow {
   public setNumber = '128';
-  public fullName: string = 'Murkrow UNM';
+  public fullName: string = 'Murkrow (UNM 128)';
+  public legacyFullName = 'Murkrow UNM';
   public set = 'UNM';
 }
 
 export class UnidentifiedFossilUNM extends UnidentifiedFossil {
   public setNumber = '210';
-  public fullName: string = 'Unidentified Fossil UNM';
+  public fullName: string = 'Unidentified Fossil (UNM 210)';
+  public legacyFullName = 'Unidentified Fossil UNM';
   public set = 'UNM';
 }
 
 export class RowletAlolanExeggutorGX2UNM extends RowletAlolanExeggutorGXUNM1 {
   public setNumber = '214';
-  public fullName: string = 'Rowlet & Alolan Exeggutor-GX2 UNM';
+  public fullName: string = 'Rowlet & Alolan Exeggutor-GX (UNM 214)';
+  public legacyFullName = 'Rowlet & Alolan Exeggutor-GX2 UNM';
   public set = 'UNM';
 }
 
 export class RowletAlolanExeggutorGX3UNM extends RowletAlolanExeggutorGXUNM1 {
   public setNumber = '215';
-  public fullName: string = 'Rowlet & Alolan Exeggutor-GX3 UNM';
+  public fullName: string = 'Rowlet & Alolan Exeggutor-GX (UNM 215)';
+  public legacyFullName = 'Rowlet & Alolan Exeggutor-GX3 UNM';
   public set = 'UNM';
 }
 
 export class SlowpokePsyduckGX2UNM extends SlowpokePsyduckGXUNM35 {
   public setNumber = '217';
-  public fullName: string = 'Slowpoke & Psyduck-GX2 UNM';
+  public fullName: string = 'Slowpoke & Psyduck-GX (UNM 217)';
+  public legacyFullName = 'Slowpoke & Psyduck-GX2 UNM';
   public set = 'UNM';
 }
 
 export class SlowpokePsyduckGX3UNM extends SlowpokePsyduckGXUNM35 {
   public setNumber = '218';
-  public fullName: string = 'Slowpoke & Psyduck-GX3 UNM';
+  public fullName: string = 'Slowpoke & Psyduck-GX (UNM 218)';
+  public legacyFullName = 'Slowpoke & Psyduck-GX3 UNM';
   public set = 'UNM';
 }
 
 export class KeldeoGX2UNM extends KeldeoGXUNM47 {
   public setNumber = '219';
-  public fullName: string = 'Keldeo-GX2 UNM';
+  public fullName: string = 'Keldeo-GX (UNM 219)';
+  public legacyFullName = 'Keldeo-GX2 UNM';
   public set = 'UNM';
 }
 
 export class RaichuAlolanRaichuGX2UNM extends RaichuAlolanRaichuGXUNM54 {
   public setNumber = '220';
-  public fullName: string = 'Raichu & Alolan Raichu-GX2 UNM';
+  public fullName: string = 'Raichu & Alolan Raichu-GX (UNM 220)';
+  public legacyFullName = 'Raichu & Alolan Raichu-GX2 UNM';
   public set = 'UNM';
 }
 
 export class RaichuAlolanRaichuGX3UNM extends RaichuAlolanRaichuGXUNM54 {
   public setNumber = '221';
-  public fullName: string = 'Raichu & Alolan Raichu-GX3 UNM';
+  public fullName: string = 'Raichu & Alolan Raichu-GX (UNM 221)';
+  public legacyFullName = 'Raichu & Alolan Raichu-GX3 UNM';
   public set = 'UNM';
 }
 
 export class MewtwoMewGX2UNM extends MewtwoMewGXUNM71 {
   public setNumber = '222';
-  public fullName: string = 'Mewtwo & Mew-GX2 UNM';
+  public fullName: string = 'Mewtwo & Mew-GX (UNM 222)';
+  public legacyFullName = 'Mewtwo & Mew-GX2 UNM';
   public set = 'UNM';
 }
 
 export class MegaSableyeTyranitarGX2UNM extends MegaSableyeTyranitarGXUNM126 {
   public setNumber = '225';
-  public fullName: string = 'Mega Sableye & Tyranitar-GX2 UNM';
+  public fullName: string = 'Mega Sableye & Tyranitar-GX (UNM 225)';
+  public legacyFullName = 'Mega Sableye & Tyranitar-GX2 UNM';
   public set = 'UNM';
 }
 
 export class MegaSableyeTyranitarGX3UNM extends MegaSableyeTyranitarGXUNM126 {
   public setNumber = '226';
-  public fullName: string = 'Mega Sableye & Tyranitar-GX3 UNM';
+  public fullName: string = 'Mega Sableye & Tyranitar-GX (UNM 226)';
+  public legacyFullName = 'Mega Sableye & Tyranitar-GX3 UNM';
   public set = 'UNM';
 }
 
 export class GarchompGiratinaGX2UNM extends GarchompGiratinaGXUNM146 {
   public setNumber = '228';
-  public fullName: string = 'Garchomp & Giratina-GX2 UNM';
+  public fullName: string = 'Garchomp & Giratina-GX (UNM 228)';
+  public legacyFullName = 'Garchomp & Giratina-GX2 UNM';
   public set = 'UNM';
 }
 
 export class Grimsley2UNM extends GrimsleyUNM199 {
   public setNumber = '234';
-  public fullName: string = 'Grimsley2 UNM';
+  public fullName: string = 'Grimsley (UNM 234)';
+  public legacyFullName = 'Grimsley2 UNM';
   public set = 'UNM';
 }
 
 export class MistysFavor2UNM extends MistysFavorUNM202 {
   public setNumber = '235';
-  public fullName: string = 'Misty\'s Favor2 UNM';
+  public fullName: string = 'Misty\'s Favor (UNM 235)';
+  public legacyFullName = 'Misty\'s Favor2 UNM';
   public set = 'UNM';
 }
 
 export class RowletAlolanExeggutorGX4UNM extends RowletAlolanExeggutorGXUNM1 {
   public setNumber = '237';
-  public fullName: string = 'Rowlet & Alolan Exeggutor-GX4 UNM';
+  public fullName: string = 'Rowlet & Alolan Exeggutor-GX (UNM 237)';
+  public legacyFullName = 'Rowlet & Alolan Exeggutor-GX4 UNM';
   public set = 'UNM';
 }
 
 export class SlowpokePsyduckGX4UNM extends SlowpokePsyduckGXUNM35 {
   public setNumber = '239';
-  public fullName: string = 'Slowpoke & Psyduck-GX4 UNM';
+  public fullName: string = 'Slowpoke & Psyduck-GX (UNM 239)';
+  public legacyFullName = 'Slowpoke & Psyduck-GX4 UNM';
   public set = 'UNM';
 }
 
 export class KeldeoGX3UNM extends KeldeoGXUNM47 {
   public setNumber = '240';
-  public fullName: string = 'Keldeo-GX3 UNM';
+  public fullName: string = 'Keldeo-GX (UNM 240)';
+  public legacyFullName = 'Keldeo-GX3 UNM';
   public set = 'UNM';
 }
 
 export class RaichuAlolanRaichuGX4UNM extends RaichuAlolanRaichuGXUNM54 {
   public setNumber = '241';
-  public fullName: string = 'Raichu & Alolan Raichu-GX4 UNM';
+  public fullName: string = 'Raichu & Alolan Raichu-GX (UNM 241)';
+  public legacyFullName = 'Raichu & Alolan Raichu-GX4 UNM';
   public set = 'UNM';
 }
 
 export class MewtwoMewGX3UNM extends MewtwoMewGXUNM71 {
   public setNumber = '242';
-  public fullName: string = 'Mewtwo & Mew-GX3 UNM';
+  public fullName: string = 'Mewtwo & Mew-GX (UNM 242)';
+  public legacyFullName = 'Mewtwo & Mew-GX3 UNM';
   public set = 'UNM';
 }
 
 export class MegaSableyeTyranitarGX4UNM extends MegaSableyeTyranitarGXUNM126 {
   public setNumber = '245';
-  public fullName: string = 'Mega Sableye & Tyranitar-GX4 UNM';
+  public fullName: string = 'Mega Sableye & Tyranitar-GX (UNM 245)';
+  public legacyFullName = 'Mega Sableye & Tyranitar-GX4 UNM';
   public set = 'UNM';
 }
 
 export class GarchompGiratinaGX3UNM extends GarchompGiratinaGXUNM146 {
   public setNumber = '247';
-  public fullName: string = 'Garchomp & Giratina-GX3 UNM';
+  public fullName: string = 'Garchomp & Giratina-GX (UNM 247)';
+  public legacyFullName = 'Garchomp & Giratina-GX3 UNM';
   public set = 'UNM';
 }
 
 export class CherishBall3UNM extends CherishBallUNM191 {
   public setNumber = '250';
-  public fullName: string = 'Cherish Ball3 UNM';
+  public fullName: string = 'Cherish Ball (UNM 250)';
+  public legacyFullName = 'Cherish Ball3 UNM';
   public set = 'UNM';
 }
 
 export class KarateBelt2UNM extends KarateBeltUNM201 {
   public setNumber = '252';
-  public fullName: string = 'Karate Belt2 UNM';
+  public fullName: string = 'Karate Belt (UNM 252)';
+  public legacyFullName = 'Karate Belt2 UNM';
   public set = 'UNM';
 }
 
 export class ResetStamp3UNM extends ResetStampUNM206 {
   public setNumber = '253';
-  public fullName: string = 'Reset Stamp3 UNM';
+  public fullName: string = 'Reset Stamp (UNM 253)';
+  public legacyFullName = 'Reset Stamp3 UNM';
   public set = 'UNM';
 }
 
 export class TagSwitch2UNM extends TagSwitchUNM209 {
   public setNumber = '254';
-  public fullName: string = 'Tag Switch2 UNM';
+  public fullName: string = 'Tag Switch (UNM 254)';
+  public legacyFullName = 'Tag Switch2 UNM';
   public set = 'UNM';
 }
 
 export class UTurnBoard2UNM extends UTurnBoardUNM211 {
   public setNumber = '255';
-  public fullName: string = 'U-Turn Board2 UNM';
+  public fullName: string = 'U-Turn Board (UNM 255)';
+  public legacyFullName = 'U-Turn Board2 UNM';
   public set = 'UNM';
 }
 
 export class ViridianForestUNM extends ViridianForest {
   public setNumber = '256';
-  public fullName: string = 'Viridian Forest UNM';
+  public fullName: string = 'Viridian Forest (UNM 256)';
+  public legacyFullName = 'Viridian Forest UNM';
   public set = 'UNM';
 }
 
 export class RecycleEnergyN12UNM extends RecycleEnergyN1N1105 {
   public setNumber = '257';
-  public fullName: string = 'Recycle Energy2 UNM';
+  public fullName: string = 'Recycle Energy (UNM 257)';
+  public legacyFullName = 'Recycle Energy2 UNM';
   public set = 'UNM';
 }
 
 export class WeaknessGuardEnergy2UNM extends WeaknessGuardEnergyUNM213 {
   public setNumber = '258';
-  public fullName: string = 'Weakness Guard Energy2 UNM';
+  public fullName: string = 'Weakness Guard Energy (UNM 258)';
+  public legacyFullName = 'Weakness Guard Energy2 UNM';
   public set = 'UNM';
 }
 
 export class CherishBall2UNM extends CherishBallUNM191 {
   public setNumber = '191a';
-  public fullName: string = 'Cherish Ball2 UNM';
+  public fullName: string = 'Cherish Ball (UNM 191a)';
+  public legacyFullName = 'Cherish Ball2 UNM';
   public set = 'UNM';
 }
 
 export class ResetStamp2UNM extends ResetStampUNM206 {
   public setNumber = '206a';
-  public fullName: string = 'Reset Stamp2 UNM';
+  public fullName: string = 'Reset Stamp (UNM 206a)';
+  public legacyFullName = 'Reset Stamp2 UNM';
   public set = 'UNM';
 }
 
 export class Litwick2 extends Litwick {
   public set: string = 'UNM';
   public setNumber: string = '28';
-  public fullName: string = 'Litwick UNM 28';
+  public fullName: string = 'Litwick (UNM 28)';
+  public legacyFullName = 'Litwick UNM 28';
 }
 
 export class JirachiGx2 extends JirachiGx {
   public set: string = 'UNM';
   public setNumber: string = '79a';
-  public fullName: string = 'Jirachi-GX UNM 79a';
+  public fullName: string = 'Jirachi-GX (UNM 79a)';
+  public legacyFullName = 'Jirachi-GX UNM 79a';
 }
 
 export class HeatranGx2 extends HeatranGX {
   public set: string = 'UNM';
   public setNumber: string = '216';
-  public fullName: string = 'Heatran-GX UNM 216';
+  public fullName: string = 'Heatran-GX (UNM 216)';
+  public legacyFullName = 'Heatran-GX UNM 216';
 }
 
 export class LatiosGx2 extends LatiosGx {
   public set: string = 'UNM';
   public setNumber: string = '223';
-  public fullName: string = 'Latios-GX UNM 223';
+  public fullName: string = 'Latios-GX (UNM 223)';
+  public legacyFullName = 'Latios-GX UNM 223';
 }
 
 export class AerodactylGx2 extends AerodactylGx {
   public set: string = 'UNM';
   public setNumber: string = '224';
-  public fullName: string = 'Aerodactyl-GX UNM 224';
+  public fullName: string = 'Aerodactyl-GX (UNM 224)';
+  public legacyFullName = 'Aerodactyl-GX UNM 224';
 }
 
 export class MawileGx2 extends MawileGX {
   public set: string = 'UNM';
   public setNumber: string = '227';
-  public fullName: string = 'Mawile-GX UNM 227';
+  public fullName: string = 'Mawile-GX (UNM 227)';
+  public legacyFullName = 'Mawile-GX UNM 227';
 }
 
 export class DragoniteGx2 extends DragoniteGx {
   public set: string = 'UNM';
   public setNumber: string = '229';
-  public fullName: string = 'Dragonite-GX UNM 229';
+  public fullName: string = 'Dragonite-GX (UNM 229)';
+  public legacyFullName = 'Dragonite-GX UNM 229';
 }
 
 export class NaganadelGx2 extends NaganadelGx {
   public set: string = 'UNM';
   public setNumber: string = '230';
-  public fullName: string = 'Naganadel-GX UNM 230';
+  public fullName: string = 'Naganadel-GX (UNM 230)';
+  public legacyFullName = 'Naganadel-GX UNM 230';
 }
 
 export class BluesTactics2 extends BluesTactics {
   public set: string = 'UNM';
   public setNumber: string = '231';
-  public fullName: string = 'Blue\'s Tactics UNM 231';
+  public fullName: string = 'Blue\'s Tactics (UNM 231)';
+  public legacyFullName = 'Blue\'s Tactics UNM 231';
 }
 
 export class Channeler2 extends Channeler {
   public set: string = 'UNM';
   public setNumber: string = '232';
-  public fullName: string = 'Channeler UNM 232';
+  public fullName: string = 'Channeler (UNM 232)';
+  public legacyFullName = 'Channeler UNM 232';
 }
 
 export class CoachTrainer2 extends CoachTrainer {
   public set: string = 'UNM';
   public setNumber: string = '233';
-  public fullName: string = 'Coach Trainer UNM 233';
+  public fullName: string = 'Coach Trainer (UNM 233)';
+  public legacyFullName = 'Coach Trainer UNM 233';
 }
 
 export class PokeManiac2 extends PokeManiac {
   public set: string = 'UNM';
   public setNumber: string = '236';
-  public fullName: string = 'Poké Maniac UNM 236';
+  public fullName: string = 'Pok\u00e9 Maniac (UNM 236)';
+  public legacyFullName = 'Poké Maniac UNM 236';
 }
 
 export class HeatranGx3 extends HeatranGX {
   public set: string = 'UNM';
   public setNumber: string = '238';
-  public fullName: string = 'Heatran-GX UNM 238';
+  public fullName: string = 'Heatran-GX (UNM 238)';
+  public legacyFullName = 'Heatran-GX UNM 238';
 }
 
 export class LatiosGx3 extends LatiosGx {
   public set: string = 'UNM';
   public setNumber: string = '243';
-  public fullName: string = 'Latios-GX UNM 243';
+  public fullName: string = 'Latios-GX (UNM 243)';
+  public legacyFullName = 'Latios-GX UNM 243';
 }
 
 export class AerodactylGx3 extends AerodactylGx {
   public set: string = 'UNM';
   public setNumber: string = '244';
-  public fullName: string = 'Aerodactyl-GX UNM 244';
+  public fullName: string = 'Aerodactyl-GX (UNM 244)';
+  public legacyFullName = 'Aerodactyl-GX UNM 244';
 }
 
 export class MawileGx3 extends MawileGX {
   public set: string = 'UNM';
   public setNumber: string = '246';
-  public fullName: string = 'Mawile-GX UNM 246';
+  public fullName: string = 'Mawile-GX (UNM 246)';
+  public legacyFullName = 'Mawile-GX UNM 246';
 }
 
 export class DragoniteGx3 extends DragoniteGx {
   public set: string = 'UNM';
   public setNumber: string = '248';
-  public fullName: string = 'Dragonite-GX UNM 248';
+  public fullName: string = 'Dragonite-GX (UNM 248)';
+  public legacyFullName = 'Dragonite-GX UNM 248';
 }
 
 export class NaganadelGx3 extends NaganadelGx {
   public set: string = 'UNM';
   public setNumber: string = '249';
-  public fullName: string = 'Naganadel-GX UNM 249';
+  public fullName: string = 'Naganadel-GX (UNM 249)';
+  public legacyFullName = 'Naganadel-GX UNM 249';
 }
 
 export class GiantBomb2 extends GiantBomb {
   public set: string = 'UNM';
   public setNumber: string = '251';
-  public fullName: string = 'Giant Bomb UNM 251';
+  public fullName: string = 'Giant Bomb (UNM 251)';
+  public legacyFullName = 'Giant Bomb UNM 251';
 }

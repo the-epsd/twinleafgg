@@ -28,7 +28,8 @@ export class Cubone extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cubone';
-  public fullName: string = 'Cubone FLI';
+  public fullName: string = 'Cubone (FLI 57)';
+  public legacyFullName = 'Cubone FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Burdensome Bone

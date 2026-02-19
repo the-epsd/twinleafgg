@@ -23,7 +23,8 @@ export class Rapidash extends PokemonCard {
 
   public set: string = 'DRI';
   public name: string = 'Rapidash';
-  public fullName: string = 'Rapidash DRI';
+  public fullName: string = 'Rapidash (DRI 30)';
+  public legacyFullName = 'Rapidash DRI';
   public regulationMark = 'I';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '30';

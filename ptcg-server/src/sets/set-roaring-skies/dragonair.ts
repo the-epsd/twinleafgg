@@ -28,7 +28,7 @@ export class Dragonair extends PokemonCard {
       name: 'Slam',
       cost: [G, L, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Dragonair extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragonair';
-  public fullName: string = 'Dragonair ROS';
+  public fullName: string = 'Dragonair (ROS 50)';
+  public legacyFullName = 'Dragonair ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shed Skin

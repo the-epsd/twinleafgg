@@ -27,7 +27,8 @@ export class Shaymin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Shaymin';
-  public fullName: string = 'Shaymin M3';
+  public fullName: string = 'Shaymin (M3 3)';
+  public legacyFullName = 'Shaymin M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Flower Delivery - search deck for Energy, attach to benched Grass Pokemon

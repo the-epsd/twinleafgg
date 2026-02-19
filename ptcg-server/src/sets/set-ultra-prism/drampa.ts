@@ -16,7 +16,7 @@ export class Drampa extends PokemonCard {
       name: 'Outrage',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     },
     {
@@ -31,7 +31,8 @@ export class Drampa extends PokemonCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drampa';
-  public fullName: string = 'Drampa UPR';
+  public fullName: string = 'Drampa (UPR 117)';
+  public legacyFullName = 'Drampa UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Outrage

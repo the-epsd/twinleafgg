@@ -27,7 +27,8 @@ export class Snivy2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '2';
   public name: string = 'Snivy';
-  public fullName: string = 'Snivy BLW 2';
+  public fullName: string = 'Snivy (BLW 2)';
+  public legacyFullName = 'Snivy BLW 2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

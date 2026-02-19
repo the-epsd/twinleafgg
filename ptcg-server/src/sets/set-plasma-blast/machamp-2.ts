@@ -33,7 +33,8 @@ export class Machamp2 extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machamp';
-  public fullName: string = 'Machamp PLB 50';
+  public fullName: string = 'Machamp (PLB 50)';
+  public legacyFullName = 'Machamp PLB 50';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

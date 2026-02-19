@@ -30,7 +30,8 @@ export class Minun extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
   public name: string = 'Minun';
-  public fullName: string = 'Minun DEX';
+  public fullName: string = 'Minun (DEX 40)';
+  public legacyFullName = 'Minun DEX';
 
 
   public readonly DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER';

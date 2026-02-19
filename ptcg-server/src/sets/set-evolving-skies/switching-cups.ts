@@ -51,7 +51,8 @@ export class SwitchingCups extends TrainerCard {
 
   public name: string = 'Switching Cups';
 
-  public fullName: string = 'Switching Cups EVS';
+  public fullName: string = 'Switching Cups (EVS 162)';
+  public legacyFullName = 'Switching Cups EVS';
 
   public text: string =
     'Switch a card from your hand with the top card of your deck.';

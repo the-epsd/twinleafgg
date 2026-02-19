@@ -41,7 +41,8 @@ export class IronThorns extends PokemonCard {
 
   public name: string = 'Iron Thorns';
 
-  public fullName: string = 'Iron Thorns TEF';
+  public fullName: string = 'Iron Thorns (TEF 62)';
+  public legacyFullName = 'Iron Thorns TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

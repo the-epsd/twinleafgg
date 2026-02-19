@@ -14,7 +14,8 @@ export class PokemonLeagueHeadquarters extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '192';
   public name: string = 'Pokémon League Headquarters';
-  public fullName: string = 'Pokémon League Headquarters OBF';
+  public fullName: string = 'Pokémon League Headquarters (OBF 192)';
+  public legacyFullName = 'Pokémon League Headquarters OBF';
 
   public text: string =
     'Attacks used by each Basic Pokémon in play (both yours and your opponent\'s) cost [C] more.';

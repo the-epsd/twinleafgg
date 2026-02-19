@@ -32,7 +32,8 @@ export class Smoochum extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '31';
   public name: string = 'Smoochum';
-  public fullName: string = 'Smoochum UF';
+  public fullName: string = 'Smoochum (UF 31)';
+  public legacyFullName = 'Smoochum UF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -20,7 +20,7 @@ export class Machop extends PokemonCard {
       name: 'Dual Chop',
       cost: [F, F],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class Machop extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machop';
-  public fullName: string = 'Machop EVO';
+  public fullName: string = 'Machop (EVO 57)';
+  public legacyFullName = 'Machop EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dual Chop

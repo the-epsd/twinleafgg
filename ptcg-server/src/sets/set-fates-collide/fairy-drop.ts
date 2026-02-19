@@ -73,7 +73,8 @@ export class FairyDrop extends TrainerCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fairy Drop';
-  public fullName: string = 'Fairy Drop FCO';
+  public fullName: string = 'Fairy Drop (FCO 99)';
+  public legacyFullName = 'Fairy Drop FCO';
   public text: string = 'Heal 50 damage from 1 of your Pokémon that has any [Y] Energy attached to it.';
 
   // Ref: set-champions-path/hyper-potion.ts (heal with energy requirement), set-x-and-y/slurpuff.ts (Fairy energy check)

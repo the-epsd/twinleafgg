@@ -32,7 +32,8 @@ export class Virizion extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Virizion';
-  public fullName: string = 'Virizion NVI';
+  public fullName: string = 'Virizion (NVI 13)';
+  public legacyFullName = 'Virizion NVI';
 
   public readonly LEAF_WALLOP_MARKER = 'LEAF_WALLOP_MARKER';
   public readonly LEAF_WALLOP_CLEAR_MARKER = 'LEAF_WALLOP_CLEAR_MARKER';

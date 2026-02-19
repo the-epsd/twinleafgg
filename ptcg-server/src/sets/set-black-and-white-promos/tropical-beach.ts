@@ -17,7 +17,8 @@ export class TropicalBeach extends TrainerCard {
 
   public name: string = 'Tropical Beach';
 
-  public fullName: string = 'Tropical Beach BWP';
+  public fullName: string = 'Tropical Beach (BWP 28)';
+  public legacyFullName = 'Tropical Beach BWP';
 
   public cardImage: string = 'assets/cardback.png';
 

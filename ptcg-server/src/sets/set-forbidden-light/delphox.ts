@@ -39,7 +39,8 @@ export class Delphox extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Delphox';
-  public fullName: string = 'Delphox FLI';
+  public fullName: string = 'Delphox (FLI 17)';
+  public legacyFullName = 'Delphox FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Mystical Torch (activated - once per turn, burn opponent's active)

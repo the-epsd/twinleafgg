@@ -33,5 +33,6 @@ export class Swellow2 extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swellow';
-  public fullName: string = 'Swellow ROS 72';
+  public fullName: string = 'Swellow (ROS 72)';
+  public legacyFullName = 'Swellow ROS 72';
 }

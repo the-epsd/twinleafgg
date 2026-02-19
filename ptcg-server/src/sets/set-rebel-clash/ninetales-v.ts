@@ -37,7 +37,8 @@ export class NinetalesV extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ninetales V';
-  public fullName: string = 'Ninetales V RCL';
+  public fullName: string = 'Ninetales V (RCL 26)';
+  public legacyFullName = 'Ninetales V RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Nine-Tailed Shapeshifter

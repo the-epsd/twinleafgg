@@ -22,7 +22,7 @@ export class Pidgey2 extends PokemonCard {
       name: 'Quick Attack',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];
@@ -31,7 +31,8 @@ export class Pidgey2 extends PokemonCard {
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pidgey';
-  public fullName: string = 'Pidgey TEU 122';
+  public fullName: string = 'Pidgey (TEU 122)';
+  public legacyFullName = 'Pidgey TEU 122';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Quick Attack

@@ -43,7 +43,8 @@ export class DarkraiV extends PokemonCard {
 
   public name: string = 'Darkrai V';
 
-  public fullName: string = 'Darkrai V ASR';
+  public fullName: string = 'Darkrai V (ASR 98)';
+  public legacyFullName = 'Darkrai V ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

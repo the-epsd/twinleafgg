@@ -37,7 +37,8 @@ export class Snorlax extends PokemonCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snorlax';
-  public fullName: string = 'Snorlax PLS';
+  public fullName: string = 'Snorlax (PLS 101)';
+  public legacyFullName = 'Snorlax PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Block (passive - intercept retreat)

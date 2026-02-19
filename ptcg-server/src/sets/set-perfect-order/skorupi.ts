@@ -21,7 +21,8 @@ export class Skorupi extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '50';
   public name: string = 'Skorupi';
-  public fullName: string = 'Skorupi M3';
+  public fullName: string = 'Skorupi (M3 50)';
+  public legacyFullName = 'Skorupi M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Poison Jab - poison opponent's Active Pokemon

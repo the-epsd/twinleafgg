@@ -28,7 +28,8 @@ export class Greedent extends PokemonCard {
 
   public set: string = 'SVI';
   public name: string = 'Greedent';
-  public fullName: string = 'Greedent SVI';
+  public fullName: string = 'Greedent (SVI 152)';
+  public legacyFullName = 'Greedent SVI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '152';
 

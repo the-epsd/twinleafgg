@@ -34,7 +34,8 @@ export class Gothorita extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public name: string = 'Gothorita';
-  public fullName: string = 'Gothorita PAL';
+  public fullName: string = 'Gothorita (PAL 91)';
+  public legacyFullName = 'Gothorita PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Mind Bend

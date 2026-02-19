@@ -81,7 +81,8 @@ export class Artazon extends TrainerCard {
 
   public name = 'Artazon';
 
-  public fullName = 'Artazon PAL';
+  public fullName = 'Artazon (PAL 171)';
+  public legacyFullName = 'Artazon PAL';
 
   public text = 'Once during each player\'s turn, that player may search their ' +
     'deck for a Basic Pokémon that doesn\'t have a Rule Box ' +

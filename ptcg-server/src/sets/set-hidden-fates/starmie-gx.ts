@@ -36,7 +36,7 @@ export class StarmieGx extends PokemonCard {
       name: 'Hydro Pump-GX',
       cost: [C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 40 more damage times the amount of [W] Energy attached to this Pokémon. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];
@@ -45,7 +45,8 @@ export class StarmieGx extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Starmie-GX';
-  public fullName: string = 'Starmie-GX HIF';
+  public fullName: string = 'Starmie-GX (HIF 14)';
+  public legacyFullName = 'Starmie-GX HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Star Stream

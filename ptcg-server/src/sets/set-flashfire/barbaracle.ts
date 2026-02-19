@@ -37,7 +37,8 @@ export class Barbaracle extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Barbaracle';
-  public fullName: string = 'Barbaracle FLF';
+  public fullName: string = 'Barbaracle (FLF 49)';
+  public legacyFullName = 'Barbaracle FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-plasma-freeze/weavile.ts (Vilify)

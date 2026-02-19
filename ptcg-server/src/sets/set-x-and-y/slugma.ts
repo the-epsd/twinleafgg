@@ -29,7 +29,8 @@ export class Slugma extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slugma';
-  public fullName: string = 'Slugma XY';
+  public fullName: string = 'Slugma (XY 20)';
+  public legacyFullName = 'Slugma XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/magmortar.ts (Flamethrower)

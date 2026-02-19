@@ -37,7 +37,8 @@ export class Maractus extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Maractus';
-  public fullName: string = 'Maractus DRX';
+  public fullName: string = 'Maractus (DRX 16)';
+  public legacyFullName = 'Maractus DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -37,7 +37,8 @@ export class MagnezoneEx extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magnezone-EX';
-  public fullName: string = 'Magnezone-EX FLF';
+  public fullName: string = 'Magnezone-EX (FLF 35)';
+  public legacyFullName = 'Magnezone-EX FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/m-blastoise-ex.ts (Hydro Bombard)

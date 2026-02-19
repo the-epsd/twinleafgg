@@ -36,7 +36,8 @@ export class Croconaw extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Croconaw';
-  public fullName: string = 'Croconaw PHF';
+  public fullName: string = 'Croconaw (PHF 16)';
+  public legacyFullName = 'Croconaw PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Crunch

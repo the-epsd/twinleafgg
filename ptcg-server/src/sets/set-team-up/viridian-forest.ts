@@ -74,7 +74,8 @@ export class ViridianForest extends TrainerCard {
 
   public name: string = 'Viridian Forest';
 
-  public fullName: string = 'Viridian Forest TEU';
+  public fullName: string = 'Viridian Forest (TEU 156)';
+  public legacyFullName = 'Viridian Forest TEU';
   
   public cardImage: string = 'assets/cardback.png';
 

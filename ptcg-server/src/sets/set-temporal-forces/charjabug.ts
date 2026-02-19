@@ -34,6 +34,7 @@ export class Charjabug extends PokemonCard {
 
   public name: string = 'Charjabug';
 
-  public fullName: string = 'Charjabug TEF';
+  public fullName: string = 'Charjabug (TEF 55)';
+  public legacyFullName = 'Charjabug TEF';
 
 }

@@ -37,7 +37,8 @@ export class Ralts extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ralts';
-  public fullName: string = 'Ralts CEC';
+  public fullName: string = 'Ralts (CEC 80)';
+  public legacyFullName = 'Ralts CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Teleport

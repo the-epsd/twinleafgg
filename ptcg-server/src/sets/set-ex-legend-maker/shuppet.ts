@@ -28,5 +28,6 @@ export class Shuppet extends PokemonCard {
   public setNumber: string = '63';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Shuppet';
-  public fullName: string = 'Shuppet LM';
+  public fullName: string = 'Shuppet (LM 63)';
+  public legacyFullName = 'Shuppet LM';
 }

@@ -33,7 +33,8 @@ export class Nidoking extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidoking';
-  public fullName: string = 'Nidoking PLF';
+  public fullName: string = 'Nidoking (PLF 58)';
+  public legacyFullName = 'Nidoking PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

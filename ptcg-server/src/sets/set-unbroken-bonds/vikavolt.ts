@@ -31,7 +31,7 @@ export class Vikavolt extends PokemonCard {
       name: 'Electricannon',
       cost: [L, L, L, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard all [L] Energy from this Pokémon. If you do, this attack does 100 more damage.'
     }
   ];
@@ -40,7 +40,8 @@ export class Vikavolt extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vikavolt';
-  public fullName: string = 'Vikavolt UNB';
+  public fullName: string = 'Vikavolt (UNB 59)';
+  public legacyFullName = 'Vikavolt UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Stealthy Body (passive - no weakness if stadium in play)

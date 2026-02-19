@@ -29,7 +29,8 @@ export class Pancham extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pancham';
-  public fullName: string = 'Pancham TEU';
+  public fullName: string = 'Pancham (TEU 81)';
+  public legacyFullName = 'Pancham TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Arm Thrust

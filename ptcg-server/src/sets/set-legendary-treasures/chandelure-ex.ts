@@ -36,7 +36,8 @@ export class ChandelureEx extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chandelure-EX';
-  public fullName: string = 'Chandelure-EX LTR';
+  public fullName: string = 'Chandelure-EX (LTR 77)';
+  public legacyFullName = 'Chandelure-EX LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Cursed Drop

@@ -33,7 +33,8 @@ export class Excadrill2 extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Excadrill';
-  public fullName: string = 'Excadrill DEX 57';
+  public fullName: string = 'Excadrill (DEX 57)';
+  public legacyFullName = 'Excadrill DEX 57';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Reinforced Drill - +30 damage if Tool attached

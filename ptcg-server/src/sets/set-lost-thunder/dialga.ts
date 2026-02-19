@@ -30,7 +30,8 @@ export class Dialga extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '127';
   public name: string = 'Dialga';
-  public fullName: string = 'Dialga LOT';
+  public fullName: string = 'Dialga (LOT 127)';
+  public legacyFullName = 'Dialga LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

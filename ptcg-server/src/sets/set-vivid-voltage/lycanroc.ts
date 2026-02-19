@@ -33,5 +33,6 @@ export class Lycanroc extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lycanroc';
-  public fullName: string = 'Lycanroc VIV';
+  public fullName: string = 'Lycanroc (VIV 95)';
+  public legacyFullName = 'Lycanroc VIV';
 }

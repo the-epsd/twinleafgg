@@ -23,7 +23,8 @@ export class MagmaBasin extends TrainerCard {
 
   public name: string = 'Magma Basin';
 
-  public fullName: string = 'Magma Basin BRS';
+  public fullName: string = 'Magma Basin (BRS 144)';
+  public legacyFullName = 'Magma Basin BRS';
 
   public text: string =
     'Once during each player\'s turn, that player may attach a [R] Energy card from their discard pile to 1 of their Benched [R] Pokémon. If a player attached Energy to a Pokémon in this way, put 2 damage counters on that Pokémon.';

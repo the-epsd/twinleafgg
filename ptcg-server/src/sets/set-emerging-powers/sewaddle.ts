@@ -31,7 +31,8 @@ export class Sewaddle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Sewaddle';
-  public fullName: string = 'Sewaddle EPO';
+  public fullName: string = 'Sewaddle (EPO 3)';
+  public legacyFullName = 'Sewaddle EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

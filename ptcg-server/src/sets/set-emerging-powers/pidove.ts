@@ -22,5 +22,6 @@ export class Pidove extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '80';
   public name: string = 'Pidove';
-  public fullName: string = 'Pidove EPO';
+  public fullName: string = 'Pidove (EPO 80)';
+  public legacyFullName = 'Pidove EPO';
 }

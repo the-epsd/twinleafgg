@@ -70,7 +70,8 @@ export class FossilExcavationKit extends TrainerCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fossil Excavation Kit';
-  public fullName: string = 'Fossil Excavation Kit FCO';
+  public fullName: string = 'Fossil Excavation Kit (FCO 101)';
+  public legacyFullName = 'Fossil Excavation Kit FCO';
   public text: string = 'Put 2 in any combination of Helix Fossil Omanyte, Dome Fossil Kabuto, or Old Amber Aerodactyl cards from your discard pile into your hand.';
 
   // Ref: set-ancient-origins/eco-arm.ts (retrieve specific cards from discard to hand with generator pattern)

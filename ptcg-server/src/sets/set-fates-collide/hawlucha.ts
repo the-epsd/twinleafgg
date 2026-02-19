@@ -36,7 +36,8 @@ export class Hawlucha extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hawlucha';
-  public fullName: string = 'Hawlucha FCO';
+  public fullName: string = 'Hawlucha (FCO 48)';
+  public legacyFullName = 'Hawlucha FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Backflip

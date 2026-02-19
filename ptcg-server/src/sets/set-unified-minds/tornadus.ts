@@ -32,7 +32,8 @@ export class Tornadus extends PokemonCard {
   public setNumber: string = '178';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tornadus';
-  public fullName: string = 'Tornadus UNM';
+  public fullName: string = 'Tornadus (UNM 178)';
+  public legacyFullName = 'Tornadus UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Thunderous Tornado

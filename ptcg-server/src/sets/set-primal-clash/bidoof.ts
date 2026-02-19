@@ -36,7 +36,8 @@ export class Bidoof extends PokemonCard {
   public setNumber: string = '116';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bidoof';
-  public fullName: string = 'Bidoof PRC';
+  public fullName: string = 'Bidoof (PRC 116)';
+  public legacyFullName = 'Bidoof PRC';
 
   private readonly PREVENT_DAMAGE_MARKER = 'PREVENT_DAMAGE_MARKER_BIDOOF';
   private readonly CLEAR_PREVENT_DAMAGE_MARKER = 'CLEAR_PREVENT_DAMAGE_MARKER_BIDOOF';

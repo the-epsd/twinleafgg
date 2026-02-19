@@ -28,7 +28,7 @@ export class Cresselia extends PokemonCard {
       name: 'Psychic',
       cost: [P, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class Cresselia extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cresselia';
-  public fullName: string = 'Cresselia UPR';
+  public fullName: string = 'Cresselia (UPR 59)';
+  public legacyFullName = 'Cresselia UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lunar Payback

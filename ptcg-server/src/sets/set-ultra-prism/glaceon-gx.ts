@@ -55,7 +55,8 @@ export class GlaceonGX extends PokemonCard {
 
   public name: string = 'Glaceon-GX';
 
-  public fullName: string = 'Glaceon-GX UPR';
+  public fullName: string = 'Glaceon-GX (UPR 39)';
+  public legacyFullName = 'Glaceon-GX UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Freezing Gaze

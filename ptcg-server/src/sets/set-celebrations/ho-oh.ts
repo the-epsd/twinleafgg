@@ -38,7 +38,8 @@ export class HoOh extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ho-Oh';
-  public fullName: string = 'Ho-Oh CEL';
+  public fullName: string = 'Ho-Oh (CEL 1)';
+  public legacyFullName = 'Ho-Oh CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sacred Fire

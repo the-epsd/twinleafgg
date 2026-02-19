@@ -76,7 +76,8 @@ export class Regice extends PokemonCard {
 
   public name: string = 'Regice';
 
-  public fullName: string = 'Regice ASR';
+  public fullName: string = 'Regice (ASR 37)';
+  public legacyFullName = 'Regice ASR';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
 

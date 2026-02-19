@@ -21,7 +21,7 @@ export class Klink extends PokemonCard {
       name: 'Disorderly Flip',
       cost: [M],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Klink extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klink';
-  public fullName: string = 'Klink STS';
+  public fullName: string = 'Klink (STS 71)';
+  public legacyFullName = 'Klink STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Disorderly Flip

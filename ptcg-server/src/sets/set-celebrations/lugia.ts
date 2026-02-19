@@ -30,7 +30,8 @@ export class Lugia extends PokemonCard {
   public regulationMark = 'D';
   public set: string = 'CEL';
   public name: string = 'Lugia';
-  public fullName: string = 'Lugia CEL';
+  public fullName: string = 'Lugia (CEL 22)';
+  public legacyFullName = 'Lugia CEL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '22';
 

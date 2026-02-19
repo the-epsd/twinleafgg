@@ -36,7 +36,8 @@ export class Registeel extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Registeel';
-  public fullName: string = 'Registeel CIN';
+  public fullName: string = 'Registeel (CIN 68)';
+  public legacyFullName = 'Registeel CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Turbo Arm

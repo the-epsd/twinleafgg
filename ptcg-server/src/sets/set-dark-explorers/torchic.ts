@@ -33,7 +33,8 @@ export class Torchic extends PokemonCard {
 
   public name: string = 'Torchic';
 
-  public fullName: string = 'Torchic DEX';
+  public fullName: string = 'Torchic (DEX 14)';
+  public legacyFullName = 'Torchic DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

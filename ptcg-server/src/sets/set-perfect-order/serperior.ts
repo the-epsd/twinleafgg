@@ -32,7 +32,8 @@ export class Serperior extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Serperior';
-  public fullName: string = 'Serperior M3';
+  public fullName: string = 'Serperior (M3 7)';
+  public legacyFullName = 'Serperior M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Royal Command - 20x damage per Pokemon in play

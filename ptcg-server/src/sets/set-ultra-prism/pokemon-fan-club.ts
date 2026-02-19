@@ -55,7 +55,8 @@ export class PokemonFanClub extends TrainerCard {
 
   public name: string = 'Pokémon Fan Club';
 
-  public fullName: string = 'Pokémon Fan Club UPR';
+  public fullName: string = 'Pokémon Fan Club (UPR 133)';
+  public legacyFullName = 'Pokémon Fan Club UPR';
 
   public cardImage: string = 'assets/cardback.png';
 

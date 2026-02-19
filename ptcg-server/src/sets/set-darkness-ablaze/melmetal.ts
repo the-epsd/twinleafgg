@@ -39,7 +39,8 @@ export class Melmetal extends PokemonCard {
   public setNumber: string = '130';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Melmetal';
-  public fullName: string = 'Melmetal DAA';
+  public fullName: string = 'Melmetal (DAA 130)';
+  public legacyFullName = 'Melmetal DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Energy Link

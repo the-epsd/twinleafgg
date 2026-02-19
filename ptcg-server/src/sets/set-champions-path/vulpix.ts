@@ -36,7 +36,8 @@ export class Vulpix extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vulpix';
-  public fullName: string = 'Vulpix CPA';
+  public fullName: string = 'Vulpix (CPA 6)';
+  public legacyFullName = 'Vulpix CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Singe

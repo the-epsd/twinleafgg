@@ -30,7 +30,8 @@ export class SolgaleoPrismStar extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Solgaleo Prism Star';
-  public fullName: string = 'Solgaleo Prism Star FLI';
+  public fullName: string = 'Solgaleo Prism Star (UPR 89)';
+  public legacyFullName = 'Solgaleo Prism Star FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

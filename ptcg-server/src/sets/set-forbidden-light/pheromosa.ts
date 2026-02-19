@@ -27,7 +27,7 @@ export class Pheromosa extends PokemonCard {
       name: 'White Ray',
       cost: [G, G, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have only 1 Prize card remaining, this attack does 90 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Pheromosa extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pheromosa';
-  public fullName: string = 'Pheromosa FLI';
+  public fullName: string = 'Pheromosa (FLI 11)';
+  public legacyFullName = 'Pheromosa FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: White Ray

@@ -27,6 +27,8 @@ export abstract class Card {
 
   public tags: string[] = [];
 
+  public legacyFullName?: string;
+
   public setNumber: string = '';
 
   public cardImage: string = '';

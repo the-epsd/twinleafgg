@@ -21,7 +21,7 @@ export class Staryu extends PokemonCard {
       name: 'Continuous Spin',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 10 damage times the number of heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Staryu extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Staryu';
-  public fullName: string = 'Staryu BKT';
+  public fullName: string = 'Staryu (BKT 29)';
+  public legacyFullName = 'Staryu BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Spin

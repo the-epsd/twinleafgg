@@ -35,7 +35,8 @@ export class Stunky2 extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stunky';
-  public fullName: string = 'Stunky FLF 54';
+  public fullName: string = 'Stunky (FLF 54)';
+  public legacyFullName = 'Stunky FLF 54';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: AGENTS-patterns.md (Draw cards)

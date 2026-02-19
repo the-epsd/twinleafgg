@@ -38,7 +38,8 @@ export class Mewtwo extends PokemonCard {
 
   public name = 'Mewtwo';
 
-  public fullName = 'Mewtwo BS';
+  public fullName = 'Mewtwo (BS 10)';
+  public legacyFullName = 'Mewtwo BS';
 
   public setNumber = '10';
 

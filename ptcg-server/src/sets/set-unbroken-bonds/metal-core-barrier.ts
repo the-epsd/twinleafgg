@@ -23,7 +23,8 @@ export class MetalCoreBarrier extends TrainerCard {
 
   public name: string = 'Metal Core Barrier';
 
-  public fullName: string = 'Metal Core Barrier UNB';
+  public fullName: string = 'Metal Core Barrier (UNB 180)';
+  public legacyFullName = 'Metal Core Barrier UNB';
 
   public text: string =
     'If this card is attached to 1 of your Pokémon, discard it at the end of your opponent\'s turn. The [M] Pokémon this card is attached to takes 70 less damage from your opponent\'s attacks (after applying Weakness and Resistance).';

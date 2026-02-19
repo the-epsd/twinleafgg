@@ -26,5 +26,6 @@ export class Grubbin extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grubbin';
-  public fullName: string = 'Grubbin RCL';
+  public fullName: string = 'Grubbin (RCL 16)';
+  public legacyFullName = 'Grubbin RCL';
 }

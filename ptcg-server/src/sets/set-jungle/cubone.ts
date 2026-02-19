@@ -40,7 +40,8 @@ export class Cubone extends PokemonCard {
 
   public name: string = 'Cubone';
 
-  public fullName: string = 'Cubone JU';
+  public fullName: string = 'Cubone (JU 50)';
+  public legacyFullName = 'Cubone JU';
 
   public REDUCE_DAMAGE_MARKER = 'REDUCE_DAMAGE_MARKER';
 

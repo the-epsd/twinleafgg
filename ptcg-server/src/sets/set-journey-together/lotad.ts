@@ -17,5 +17,6 @@ export class Lotad extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '35';
   public name: string = 'Lotad';
-  public fullName: string = 'Lotad JTG';
+  public fullName: string = 'Lotad (JTG 35)';
+  public legacyFullName = 'Lotad JTG';
 }

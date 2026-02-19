@@ -21,7 +21,7 @@ export class Drowzee extends PokemonCard {
       name: 'Psychic Boom',
       cost: [P],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 10 damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     },
     {
@@ -36,7 +36,8 @@ export class Drowzee extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drowzee';
-  public fullName: string = 'Drowzee SUM';
+  public fullName: string = 'Drowzee (SUM 59)';
+  public legacyFullName = 'Drowzee SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psychic Boom

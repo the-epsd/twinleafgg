@@ -38,7 +38,8 @@ export class Aegislash extends PokemonCard {
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aegislash';
-  public fullName: string = 'Aegislash TEU';
+  public fullName: string = 'Aegislash (TEU 109)';
+  public legacyFullName = 'Aegislash TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Royal Guard (passive - reduce damage from attacks)

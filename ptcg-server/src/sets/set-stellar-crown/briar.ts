@@ -11,7 +11,8 @@ export class Briar extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '132';
   public name: string = 'Briar';
-  public fullName: string = 'Briar SCR';
+  public fullName: string = 'Briar (SCR 132)';
+  public legacyFullName = 'Briar SCR';
 
   public text: string =
     `You can use this card only if your opponent has exactly 2 Prize cards remaining.

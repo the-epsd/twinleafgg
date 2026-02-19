@@ -54,7 +54,8 @@ export class DuraludonVMAX extends PokemonCard {
 
   public name: string = 'Duraludon VMAX';
 
-  public fullName: string = 'Duraludon VMAX EVS';
+  public fullName: string = 'Duraludon VMAX (EVS 123)';
+  public legacyFullName = 'Duraludon VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

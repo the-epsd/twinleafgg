@@ -28,7 +28,7 @@ export class Medicham extends PokemonCard {
       name: 'Master Strike',
       cost: [F, F],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has a Karate Belt card attached to it, this attack does 60 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Medicham extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Medicham';
-  public fullName: string = 'Medicham UNM';
+  public fullName: string = 'Medicham (UNM 110)';
+  public legacyFullName = 'Medicham UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pure Power

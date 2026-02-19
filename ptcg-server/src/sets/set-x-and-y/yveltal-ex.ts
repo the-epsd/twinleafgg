@@ -41,7 +41,8 @@ export class YveltalEx extends PokemonCard {
 
   public name: string = 'Yveltal-EX';
 
-  public fullName: string = 'Yveltal EX XY';
+  public fullName: string = 'Yveltal-EX (XY 79)';
+  public legacyFullName = 'Yveltal EX XY';
 
   public cardImage: string = 'assets/cardback.png';
 

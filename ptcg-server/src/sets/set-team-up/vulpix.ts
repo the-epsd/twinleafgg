@@ -32,7 +32,8 @@ export class Vulpix extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vulpix';
-  public fullName: string = 'Vulpix TEU';
+  public fullName: string = 'Vulpix (TEU 15)';
+  public legacyFullName = 'Vulpix TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tail Whip

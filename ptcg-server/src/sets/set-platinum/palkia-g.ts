@@ -32,7 +32,8 @@ export class PalkiaG extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Palkia G';
-  public fullName: string = 'Palkia G PL';
+  public fullName: string = 'Palkia G (PL 12)';
+  public legacyFullName = 'Palkia G PL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Splashing Turn

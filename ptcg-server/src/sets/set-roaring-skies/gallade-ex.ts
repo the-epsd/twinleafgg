@@ -31,7 +31,7 @@ export class GalladeEx extends PokemonCard {
       name: 'Piercing Prizes',
       cost: [P, P, P],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each of your remaining Prize cards.'
     }
   ];
@@ -40,7 +40,8 @@ export class GalladeEx extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gallade-EX';
-  public fullName: string = 'Gallade-EX ROS';
+  public fullName: string = 'Gallade-EX (ROS 34)';
+  public legacyFullName = 'Gallade-EX ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swift Lunge

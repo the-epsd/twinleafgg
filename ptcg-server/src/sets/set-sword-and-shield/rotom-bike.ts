@@ -17,7 +17,8 @@ export class RotomBike extends TrainerCard {
   public setNumber: string = '181';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rotom Bike';
-  public fullName: string = 'Rotom Bike SSH';
+  public fullName: string = 'Rotom Bike (SSH 181)';
+  public legacyFullName = 'Rotom Bike SSH';
   public text: string = 'Draw cards until you have 6 cards in your hand. Your turn ends. You may play any number of Item cards during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

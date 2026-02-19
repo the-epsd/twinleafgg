@@ -28,7 +28,8 @@ export class Cubone extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cubone';
-  public fullName: string = 'Cubone BKT';
+  public fullName: string = 'Cubone (BKT 77)';
+  public legacyFullName = 'Cubone BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Whimsy Tackle

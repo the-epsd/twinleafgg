@@ -53,7 +53,8 @@ export class GreninjaGX extends PokemonCard {
 
   public name: string = 'Greninja-GX';
 
-  public fullName: string = 'Greninja-GX SMP';
+  public fullName: string = 'Greninja-GX (SMP 197)';
+  public legacyFullName = 'Greninja-GX SMP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Elusive Master

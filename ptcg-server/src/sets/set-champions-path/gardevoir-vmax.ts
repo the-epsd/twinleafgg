@@ -32,7 +32,8 @@ export class GardevoirVmax extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gardevoir VMAX';
-  public fullName: string = 'Gardevoir VMAX CPA';
+  public fullName: string = 'Gardevoir VMAX (CPA 17)';
+  public legacyFullName = 'Gardevoir VMAX CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Max Cure

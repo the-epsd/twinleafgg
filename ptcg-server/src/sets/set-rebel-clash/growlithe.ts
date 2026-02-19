@@ -35,7 +35,8 @@ export class Growlithe extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Growlithe';
-  public fullName: string = 'Growlithe RCL';
+  public fullName: string = 'Growlithe (RCL 27)';
+  public legacyFullName = 'Growlithe RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Odor Sleuth

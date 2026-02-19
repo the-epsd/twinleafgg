@@ -72,7 +72,8 @@ export class Maintenance extends TrainerCard {
 
   public name: string = 'Maintenance';
 
-  public fullName: string = 'Maintenance BS';
+  public fullName: string = 'Maintenance (BS 83)';
+  public legacyFullName = 'Maintenance BS';
 
   public text: string =
     'Shuffle 2 of the other cards from your hand into your deck in order to draw a card.';

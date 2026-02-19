@@ -37,7 +37,8 @@ export class Golduck extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golduck';
-  public fullName: string = 'Golduck EVS';
+  public fullName: string = 'Golduck (EVS 25)';
+  public legacyFullName = 'Golduck EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psybeam

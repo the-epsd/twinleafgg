@@ -36,7 +36,8 @@ export class Girafarig extends PokemonCard {
 
   public set: string = 'LM';
   public name: string = 'Girafarig';
-  public fullName: string = 'Girafarig LM';
+  public fullName: string = 'Girafarig (LM 16)';
+  public legacyFullName = 'Girafarig LM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
 

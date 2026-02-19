@@ -18,7 +18,8 @@ export class HolonEnergyWP extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
   public name = 'Holon Energy WP';
-  public fullName = 'Holon Energy WP DF';
+  public fullName = 'Holon Energy WP (DF 86)';
+  public legacyFullName = 'Holon Energy WP DF';
 
   public text =
     'Holon Energy WP provides [C] Energy.' +

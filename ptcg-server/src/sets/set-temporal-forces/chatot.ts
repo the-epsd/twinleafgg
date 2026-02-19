@@ -75,7 +75,8 @@ export class Chatot extends PokemonCard {
 
   public name: string = 'Chatot';
 
-  public fullName: string = 'Chatot TEF';
+  public fullName: string = 'Chatot (TEF 132)';
+  public legacyFullName = 'Chatot TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

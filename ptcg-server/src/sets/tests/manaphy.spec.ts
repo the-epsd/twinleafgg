@@ -1,20 +1,20 @@
 import { setupGame, padDeck } from './test-helpers';
 import { createDamageEffect, createActiveDamageEffect } from './card-test-helpers';
 
-describe('Manaphy BRS — Wave Veil', () => {
+describe('Manaphy (BRS 41) — Wave Veil', () => {
 
   it('should prevent bench damage when Manaphy is in play', () => {
     const game = setupGame({
       player1: {
-        active: { card: 'Ralts SIT' },
+        active: { card: 'Ralts (SIT 67)' },
         bench: [
-          { card: 'Ralts SIT' },
-          { card: 'Manaphy BRS' }
+          { card: 'Ralts (SIT 67)' },
+          { card: 'Manaphy (BRS 41)' }
         ],
         deck: padDeck(10),
       },
       player2: {
-        active: { card: 'Ralts SIT', energy: ['Water Energy SVE'] },
+        active: { card: 'Ralts (SIT 67)', energy: ['Water Energy (SVE 3)'] },
         deck: padDeck(10),
       }
     });
@@ -30,12 +30,12 @@ describe('Manaphy BRS — Wave Veil', () => {
   it('should NOT prevent damage to active Pokemon', () => {
     const game = setupGame({
       player1: {
-        active: { card: 'Ralts SIT' },
-        bench: [{ card: 'Manaphy BRS' }],
+        active: { card: 'Ralts (SIT 67)' },
+        bench: [{ card: 'Manaphy (BRS 41)' }],
         deck: padDeck(10),
       },
       player2: {
-        active: { card: 'Ralts SIT', energy: ['Water Energy SVE'] },
+        active: { card: 'Ralts (SIT 67)', energy: ['Water Energy (SVE 3)'] },
         deck: padDeck(10),
       }
     });
@@ -51,12 +51,12 @@ describe('Manaphy BRS — Wave Veil', () => {
   it('should allow bench damage when Manaphy is not in play', () => {
     const game = setupGame({
       player1: {
-        active: { card: 'Ralts SIT' },
-        bench: [{ card: 'Ralts SIT' }],
+        active: { card: 'Ralts (SIT 67)' },
+        bench: [{ card: 'Ralts (SIT 67)' }],
         deck: padDeck(10),
       },
       player2: {
-        active: { card: 'Ralts SIT', energy: ['Water Energy SVE'] },
+        active: { card: 'Ralts (SIT 67)', energy: ['Water Energy (SVE 3)'] },
         deck: padDeck(10),
       }
     });

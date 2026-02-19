@@ -37,7 +37,8 @@ export class Pelipper extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pelipper';
-  public fullName: string = 'Pelipper ROS';
+  public fullName: string = 'Pelipper (ROS 19)';
+  public legacyFullName = 'Pelipper ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swallow

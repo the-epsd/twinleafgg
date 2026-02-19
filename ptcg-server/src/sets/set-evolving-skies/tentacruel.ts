@@ -38,7 +38,8 @@ export class Tentacruel extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tentacruel';
-  public fullName: string = 'Tentacruel EVS';
+  public fullName: string = 'Tentacruel (EVS 27)';
+  public legacyFullName = 'Tentacruel EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Poisonous Prison

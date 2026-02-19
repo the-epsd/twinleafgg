@@ -28,7 +28,8 @@ export class Flabebe extends PokemonCard {
 
   public set: string = 'FLI';
   public name: string = 'Flabébé';
-  public fullName: string = 'Flabebe FLI';
+  public fullName: string = 'Flabébé (FLI 83)';
+  public legacyFullName = 'Flabebe FLI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
 

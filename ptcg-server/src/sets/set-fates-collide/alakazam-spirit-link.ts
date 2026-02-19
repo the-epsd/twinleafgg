@@ -8,7 +8,8 @@ export class AlakazamSpiritLink extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'FCO';
   public name: string = 'Alakazam Spirit Link';
-  public fullName: string = 'Alakazam Spirit Link FCO';
+  public fullName: string = 'Alakazam Spirit Link (FCO 90)';
+  public legacyFullName = 'Alakazam Spirit Link FCO';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
 

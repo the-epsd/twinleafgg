@@ -20,7 +20,7 @@ export class Pansear extends PokemonCard {
       name: 'Fury Swipes',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class Pansear extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pansear';
-  public fullName: string = 'Pansear BKT';
+  public fullName: string = 'Pansear (BKT 23)';
+  public legacyFullName = 'Pansear BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Swipes

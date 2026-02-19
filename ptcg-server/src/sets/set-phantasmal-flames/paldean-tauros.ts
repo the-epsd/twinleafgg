@@ -33,7 +33,8 @@ export class PaldeanTauros extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';
   public name: string = 'Paldean Tauros';
-  public fullName: string = 'Paldean Tauros M2';
+  public fullName: string = 'Paldean Tauros (PFL 48)';
+  public legacyFullName = 'Paldean Tauros M2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

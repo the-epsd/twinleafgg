@@ -38,7 +38,8 @@ export class Foongus extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Foongus';
-  public fullName: string = 'Foongus STS';
+  public fullName: string = 'Foongus (STS 12)';
+  public legacyFullName = 'Foongus STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Play Ball (on-play-from-hand trigger)

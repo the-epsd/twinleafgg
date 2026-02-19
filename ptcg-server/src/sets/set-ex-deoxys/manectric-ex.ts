@@ -36,7 +36,8 @@ export class Manectricex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '101';
   public name: string = 'Manectric ex';
-  public fullName: string = 'Manectric ex DX';
+  public fullName: string = 'Manectric ex (DX 101)';
+  public legacyFullName = 'Manectric ex DX';
 
   public readonly OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_TRAINER_CARDS_MARKER';
 

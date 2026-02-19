@@ -21,7 +21,8 @@ export class Spearow extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '61';
   public name: string = 'Spearow';
-  public fullName: string = 'Spearow CG';
+  public fullName: string = 'Spearow (CG 61)';
+  public legacyFullName = 'Spearow CG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

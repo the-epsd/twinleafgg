@@ -28,7 +28,8 @@ export class Chansey extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
   public name: string = 'Chansey';
-  public fullName: string = 'Chansey MT';
+  public fullName: string = 'Chansey (MT 76)';
+  public legacyFullName = 'Chansey MT';
 
   public readonly CLEAR_SHELL_HIT_MARKER = 'CLEAR_SHELL_HIT_MARKER';
   public readonly SHELL_HIT_MARKER = 'SHELL_HIT_MARKER';

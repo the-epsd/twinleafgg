@@ -27,5 +27,6 @@ export class Dugtrio extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dugtrio';
-  public fullName: string = 'Dugtrio SSH';
+  public fullName: string = 'Dugtrio (SSH 93)';
+  public legacyFullName = 'Dugtrio SSH';
 }

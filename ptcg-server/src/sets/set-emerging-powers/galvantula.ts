@@ -32,7 +32,8 @@ export class Galvantula extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '34';
   public name: string = 'Galvantula';
-  public fullName: string = 'Galvantula EPO';
+  public fullName: string = 'Galvantula (EPO 34)';
+  public legacyFullName = 'Galvantula EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

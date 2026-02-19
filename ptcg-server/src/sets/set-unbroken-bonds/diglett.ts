@@ -33,7 +33,8 @@ export class Diglett extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Diglett';
-  public fullName: string = 'Diglett UNB';
+  public fullName: string = 'Diglett (UNB 85)';
+  public legacyFullName = 'Diglett UNB';
 
   // Ability: Underground Work
   // TODO: "If you discard this Pokemon with the effect of Giovanni's Exile, discard the top card

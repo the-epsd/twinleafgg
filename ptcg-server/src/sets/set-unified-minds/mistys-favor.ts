@@ -64,7 +64,8 @@ export class MistysFavor extends TrainerCard {
 
   public name: string = 'Misty\'s Favor';
 
-  public fullName: string = 'Misty\'s Favor UNM';
+  public fullName: string = 'Misty\'s Favor (UNM 202)';
+  public legacyFullName = 'Misty\'s Favor UNM';
 
   public text: string =
     'Search your deck for up to 3 Supporters, reveal them, and put them into your hand. Then, shuffle your deck.';

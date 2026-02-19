@@ -20,7 +20,8 @@ export class Ralts extends PokemonCard {
 
   public set: string = 'CRE';
   public name: string = 'Ralts';
-  public fullName: string = 'Ralts CRE';
+  public fullName: string = 'Ralts (CRE 59)';
+  public legacyFullName = 'Ralts CRE';
   public regulationMark: string = 'E';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '59';

@@ -27,7 +27,8 @@ export class Flareon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Flareon';
-  public fullName: string = 'Flareon PLF';
+  public fullName: string = 'Flareon (PLF 12)';
+  public legacyFullName = 'Flareon PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

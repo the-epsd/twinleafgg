@@ -35,7 +35,8 @@ export class TeamRocketsArbok extends PokemonCard {
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Arbok';
-  public fullName: string = 'Team Rocket\'s Arbok DRI';
+  public fullName: string = 'Team Rocket\'s Arbok (DRI 113)';
+  public legacyFullName = 'Team Rocket\'s Arbok DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Intimidating Glare

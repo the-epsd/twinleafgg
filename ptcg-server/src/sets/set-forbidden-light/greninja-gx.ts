@@ -57,7 +57,8 @@ export class GreninjaGX extends PokemonCard {
 
   public name: string = 'Greninja-GX';
 
-  public fullName: string = 'Greninja-GX FLI';
+  public fullName: string = 'Greninja-GX (FLI 24)';
+  public legacyFullName = 'Greninja-GX FLI';
 
   public cardImage: string = 'assets/cardback.png';
 

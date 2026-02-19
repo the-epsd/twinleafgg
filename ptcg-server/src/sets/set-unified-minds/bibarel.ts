@@ -39,7 +39,8 @@ export class Bibarel extends PokemonCard {
   public setNumber: string = '172';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bibarel';
-  public fullName: string = 'Bibarel UNM';
+  public fullName: string = 'Bibarel (UNM 172)';
+  public legacyFullName = 'Bibarel UNM';
 
   public amnesiaAttack: Attack | null = null;
 

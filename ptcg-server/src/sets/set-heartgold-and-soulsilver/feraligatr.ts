@@ -37,7 +37,8 @@ export class Feraligatr extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Feraligatr';
-  public fullName: string = 'Feraligatr HS';
+  public fullName: string = 'Feraligatr (HS 108)';
+  public legacyFullName = 'Feraligatr HS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -29,7 +29,7 @@ export class Whimsicott extends PokemonCard {
       name: 'Lost March',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage for each of your Pokémon, except p (Prism Star) Pokémon, in the Lost Zone.'
     }
   ];
@@ -38,7 +38,8 @@ export class Whimsicott extends PokemonCard {
   public setNumber: string = '148';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whimsicott';
-  public fullName: string = 'Whimsicott CEC';
+  public fullName: string = 'Whimsicott (CEC 148)';
+  public legacyFullName = 'Whimsicott CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sneaky Pocket

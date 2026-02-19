@@ -21,7 +21,7 @@ export class Shelgon extends PokemonCard {
       name: 'Raging Blade',
       cost: [R, W],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any damage counters on it, this attack does 50 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Shelgon extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shelgon';
-  public fullName: string = 'Shelgon CES';
+  public fullName: string = 'Shelgon (CES 105)';
+  public legacyFullName = 'Shelgon CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Raging Blade

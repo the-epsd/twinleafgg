@@ -139,7 +139,8 @@ export class ErikasClefairy extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
   public name: string = 'Erika\'s Clefairy';
-  public fullName: string = 'Erika\'s Clefairy G2';
+  public fullName: string = 'Erika\'s Clefairy (G2 40)';
+  public legacyFullName = 'Erika\'s Clefairy G2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

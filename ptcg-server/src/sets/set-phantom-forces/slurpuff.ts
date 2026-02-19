@@ -31,7 +31,8 @@ export class Slurpuff extends PokemonCard {
 
   public set: string = 'PHF';
   public name: string = 'Slurpuff';
-  public fullName: string = 'Slurpuff PHF';
+  public fullName: string = 'Slurpuff (PHF 69)';
+  public legacyFullName = 'Slurpuff PHF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';
 

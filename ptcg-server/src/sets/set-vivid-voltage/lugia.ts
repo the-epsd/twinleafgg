@@ -36,7 +36,8 @@ export class Lugia extends PokemonCard {
   public setNumber: string = '132';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lugia';
-  public fullName: string = 'Lugia VIV';
+  public fullName: string = 'Lugia (VIV 132)';
+  public legacyFullName = 'Lugia VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Wind Pressure

@@ -38,7 +38,8 @@ export class Absolex extends PokemonCard {
 
   public set: string = 'PK';
   public name: string = 'Absol ex';
-  public fullName: string = 'Absol ex PK';
+  public fullName: string = 'Absol ex (PK 92)';
+  public legacyFullName = 'Absol ex PK';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
 

@@ -11,7 +11,8 @@ export class ProfessorOaksResearch extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'DF';
   public name: string = 'Professor Oak\'s Research';
-  public fullName: string = 'Professor Oak\'s Research DF';
+  public fullName: string = 'Professor Oak\'s Research (DF 80)';
+  public legacyFullName = 'Professor Oak\'s Research DF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '80';
 

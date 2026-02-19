@@ -26,5 +26,6 @@ export class Snubbull extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snubbull';
-  public fullName: string = 'Snubbull DAA';
+  public fullName: string = 'Snubbull (DAA 70)';
+  public legacyFullName = 'Snubbull DAA';
 }

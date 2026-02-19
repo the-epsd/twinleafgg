@@ -31,7 +31,8 @@ export class Prinplup extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Prinplup';
-  public fullName: string = 'Prinplup LTR';
+  public fullName: string = 'Prinplup (LTR 34)';
+  public legacyFullName = 'Prinplup LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Water Splash

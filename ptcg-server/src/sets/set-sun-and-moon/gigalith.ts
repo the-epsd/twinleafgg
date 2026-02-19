@@ -23,7 +23,7 @@ export class Gigalith extends PokemonCard {
       name: 'Rock Artillery',
       cost: [F, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard any amount of [F] Energy from your Pokémon. This attack does 50 damage for each card you discarded in this way.'
     },
     {
@@ -38,7 +38,8 @@ export class Gigalith extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gigalith';
-  public fullName: string = 'Gigalith SUM';
+  public fullName: string = 'Gigalith (SUM 71)';
+  public legacyFullName = 'Gigalith SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rock Artillery

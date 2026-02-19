@@ -37,7 +37,8 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '143';
   public name: string = 'Togepi & Cleffa & Igglybuff-GX';
-  public fullName: string = 'Togepi & Cleffa & Igglybuff-GX CEC';
+  public fullName: string = 'Togepi & Cleffa & Igglybuff-GX (CEC 143)';
+  public legacyFullName = 'Togepi & Cleffa & Igglybuff-GX CEC';
 
   public readonly SUPREME_PUFF_MARKER = 'SUPREME_PUFF_MARKER';
   public readonly SUPREME_PUFF_MARKER_2 = 'SUPREME_PUFF_MARKER_2';

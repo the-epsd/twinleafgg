@@ -72,7 +72,8 @@ export class Seadra extends PokemonCard {
 
   public name: string = 'Seadra';
 
-  public fullName: string = 'Seadra SFA';
+  public fullName: string = 'Seadra (SFA 11)';
+  public legacyFullName = 'Seadra SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

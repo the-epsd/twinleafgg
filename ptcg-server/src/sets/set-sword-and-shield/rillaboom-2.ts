@@ -37,7 +37,8 @@ export class Rillaboom2 extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rillaboom';
-  public fullName: string = 'Rillaboom SSH 15';
+  public fullName: string = 'Rillaboom (SSH 15)';
+  public legacyFullName = 'Rillaboom SSH 15';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Drum Roll

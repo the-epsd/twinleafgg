@@ -27,7 +27,8 @@ export class Xerneas extends PokemonCard {
 
   public set: string = 'CIN';
   public name: string = 'Xerneas';
-  public fullName: string = 'Xerneas CIN';
+  public fullName: string = 'Xerneas (CIN 73)';
+  public legacyFullName = 'Xerneas CIN';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';
 

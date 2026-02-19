@@ -25,7 +25,8 @@ export class Sizzlipede extends PokemonCard {
   public regulationMark = 'D';
   public set: string = 'SSH';
   public name: string = 'Sizzlipede';
-  public fullName: string = 'Sizzlipede SSH';
+  public fullName: string = 'Sizzlipede (SSH 37)';
+  public legacyFullName = 'Sizzlipede SSH';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '37';
 

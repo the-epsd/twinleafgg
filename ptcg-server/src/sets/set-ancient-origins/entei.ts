@@ -30,7 +30,7 @@ export class Entei extends PokemonCard {
       name: 'Combat Blaze',
       cost: [R, R],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each of your opponent\'s Benched Pokémon.'
     }
   ];
@@ -39,7 +39,8 @@ export class Entei extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Entei';
-  public fullName: string = 'Entei AOR';
+  public fullName: string = 'Entei (AOR 14)';
+  public legacyFullName = 'Entei AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Burning Roar

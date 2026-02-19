@@ -48,7 +48,8 @@ export class Bibarel extends PokemonCard {
 
   public name: string = 'Bibarel';
 
-  public fullName: string = 'Bibarel BRS';
+  public fullName: string = 'Bibarel (BRS 121)';
+  public legacyFullName = 'Bibarel BRS';
 
   public readonly INDUSTRIOUS_INCISORS_MARKER = 'INDUSTRIOUS_INCISORS_MARKER';
 

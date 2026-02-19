@@ -29,7 +29,8 @@ export class Tynamo extends PokemonCard {
   public regulationMark: string = 'F';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tynamo';
-  public fullName: string = 'Tynamo LOR';
+  public fullName: string = 'Tynamo (LOR 59)';
+  public legacyFullName = 'Tynamo LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

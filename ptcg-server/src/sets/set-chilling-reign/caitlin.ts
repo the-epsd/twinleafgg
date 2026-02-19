@@ -44,7 +44,8 @@ export class Caitlin extends TrainerCard {
 
   public name: string = 'Caitlin';
 
-  public fullName: string = 'Caitlin CRE';
+  public fullName: string = 'Caitlin (CRE 132)';
+  public legacyFullName = 'Caitlin CRE';
 
   public text: string =
     'Put as many cards from your hand as you like on the bottom of your deck in any order. Then, draw a card for each card you put on the bottom of your deck.';

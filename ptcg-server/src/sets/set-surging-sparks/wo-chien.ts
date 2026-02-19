@@ -34,7 +34,8 @@ export class Wochien extends PokemonCard {
 
   public set: string = 'SSP';
   public name: string = 'Wo-Chien';
-  public fullName: string = 'Wo-chien SSP';
+  public fullName: string = 'Wo-Chien (SSP 15)';
+  public legacyFullName = 'Wo-chien SSP';
   public setNumber: string = '15';
   public regulationMark = 'H';
   public cardImage: string = 'assets/cardback.png';

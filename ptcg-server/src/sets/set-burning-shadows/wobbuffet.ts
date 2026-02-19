@@ -21,7 +21,7 @@ export class Wobbuffet extends PokemonCard {
       name: 'Shadowy Knot',
       cost: [P, P, P],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 50 damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];
@@ -30,7 +30,8 @@ export class Wobbuffet extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wobbuffet';
-  public fullName: string = 'Wobbuffet BUS';
+  public fullName: string = 'Wobbuffet (BUS 49)';
+  public legacyFullName = 'Wobbuffet BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shadowy Knot

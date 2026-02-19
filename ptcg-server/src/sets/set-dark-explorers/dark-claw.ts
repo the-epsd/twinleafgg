@@ -14,7 +14,8 @@ export class DarkClaw extends TrainerCard {
 
   public name: string = 'Dark Claw';
 
-  public fullName: string = 'Dark Claw DEX';
+  public fullName: string = 'Dark Claw (DEX 92)';
+  public legacyFullName = 'Dark Claw DEX';
 
   public cardImage: string = 'assets/cardback.png';
 

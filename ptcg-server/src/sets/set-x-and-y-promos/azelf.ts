@@ -29,7 +29,8 @@ export class Azelf extends PokemonCard {
   public setNumber: string = '142';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Azelf';
-  public fullName: string = 'Azelf XYP';
+  public fullName: string = 'Azelf (XYP 142)';
+  public legacyFullName = 'Azelf XYP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

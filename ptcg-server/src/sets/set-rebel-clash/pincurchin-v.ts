@@ -36,7 +36,8 @@ export class PincurchinV extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pincurchin V';
-  public fullName: string = 'Pincurchin V RCL';
+  public fullName: string = 'Pincurchin V (RCL 72)';
+  public legacyFullName = 'Pincurchin V RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Counterattack Kerzap (passive - flip 3 coins when damaged, 3 damage counters per heads)

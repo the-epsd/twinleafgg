@@ -38,7 +38,8 @@ export class ShiningLugia extends PokemonCard {
   public setNumber = '82';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Shining Lugia';
-  public fullName: string = 'Shining Lugia SMP';
+  public fullName: string = 'Shining Lugia (SMP 82)';
+  public legacyFullName = 'Shining Lugia SMP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

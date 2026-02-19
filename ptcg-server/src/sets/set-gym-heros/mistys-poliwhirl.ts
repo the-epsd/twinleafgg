@@ -32,7 +32,8 @@ export class MistysPoliwhirl extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
   public name: string = 'Misty\'s Poliwhirl';
-  public fullName: string = 'Misty\'s Poliwhirl G1';
+  public fullName: string = 'Misty\'s Poliwhirl (G1 53)';
+  public legacyFullName = 'Misty\'s Poliwhirl G1';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

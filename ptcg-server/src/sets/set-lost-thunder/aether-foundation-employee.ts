@@ -17,7 +17,8 @@ export class AetherFoundationEmployee extends TrainerCard {
   public setNumber: string = '168';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aether Foundation Employee';
-  public fullName: string = 'Aether Foundation Employee LOT';
+  public fullName: string = 'Aether Foundation Employee (LOT 168)';
+  public legacyFullName = 'Aether Foundation Employee LOT';
   public text: string = 'Put 3 Pok\u00e9mon that have "Alolan" in their names from your discard pile into your hand. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

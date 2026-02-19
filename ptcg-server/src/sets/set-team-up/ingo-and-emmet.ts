@@ -14,7 +14,8 @@ export class IngoAndEmmet extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'TEU';
   public name: string = 'Ingo & Emmet';
-  public fullName: string = 'Ingo & Emmet TEU';
+  public fullName: string = 'Ingo & Emmet (TEU 144)';
+  public legacyFullName = 'Ingo & Emmet TEU';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '144';
 

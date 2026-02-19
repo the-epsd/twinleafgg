@@ -87,7 +87,8 @@ export class BugCatchingSet extends TrainerCard {
 
   public name: string = 'Bug Catching Set';
 
-  public fullName: string = 'Bug Catching Set TWM';
+  public fullName: string = 'Bug Catching Set (TWM 143)';
+  public legacyFullName = 'Bug Catching Set TWM';
 
   public text: string =
     'Look at the top 7 cards of your deck, and put up to 2 in any combination of [G] Pokémon and Basic [G] Energy cards you find there into your hand. Shuffle the remaining cards back into your deck.';

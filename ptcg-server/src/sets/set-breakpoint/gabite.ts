@@ -30,7 +30,8 @@ export class Gabite extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gabite';
-  public fullName: string = 'Gabite BKP';
+  public fullName: string = 'Gabite (BKP 69)';
+  public legacyFullName = 'Gabite BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sand Tomb

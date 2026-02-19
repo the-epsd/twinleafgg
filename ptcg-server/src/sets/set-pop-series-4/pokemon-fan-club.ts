@@ -12,7 +12,8 @@ export class PokemonFanClub extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'P4';
   public name: string = 'Pokémon Fan Club';
-  public fullName: string = 'Pokémon Fan Club P4';
+  public fullName: string = 'Pokémon Fan Club (P4 9)';
+  public legacyFullName = 'Pokémon Fan Club P4';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '9';
 

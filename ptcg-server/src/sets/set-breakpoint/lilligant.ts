@@ -29,7 +29,7 @@ export class Lilligant extends PokemonCard {
       name: 'Leaf Slice',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class Lilligant extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lilligant';
-  public fullName: string = 'Lilligant BKP';
+  public fullName: string = 'Lilligant (BKP 8)';
+  public legacyFullName = 'Lilligant BKP';
 
   public readonly BOO_HOO_MARKER = 'LILLIGANT_BKP_BOO_HOO_MARKER';
   public readonly CLEAR_BOO_HOO_MARKER = 'LILLIGANT_BKP_CLEAR_BOO_HOO_MARKER';

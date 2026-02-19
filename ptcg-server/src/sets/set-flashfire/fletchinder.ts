@@ -32,7 +32,8 @@ export class Fletchinder extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fletchinder';
-  public fullName: string = 'Fletchinder FLF';
+  public fullName: string = 'Fletchinder (FLF 17)';
+  public legacyFullName = 'Fletchinder FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/taillow.ts (Aerial Ace)

@@ -27,7 +27,7 @@ export class Zygarde2 extends PokemonCard {
       name: 'Calm Strike',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have used your GX attack, this attack does 60 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Zygarde2 extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zygarde';
-  public fullName: string = 'Zygarde FLI 72';
+  public fullName: string = 'Zygarde (FLI 72)';
+  public legacyFullName = 'Zygarde FLI 72';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Glare

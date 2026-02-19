@@ -19,7 +19,8 @@ export class MartialArtsDojo extends TrainerCard {
 
   public name = 'Martial Arts Dojo';
 
-  public fullName = 'Martial Arts Dojo UNB';
+  public fullName = 'Martial Arts Dojo (UNB 179)';
+  public legacyFullName = 'Martial Arts Dojo UNB';
 
   public text = 'The attacks of non-Ultra Beast Pokémon that have any basic [F] Energy attached to them (both yours and your opponent\'s) do 10 more damage to the opponent\'s Active Pokémon (before applying Weakness and Resistance). If the attacking player has more Prize cards remaining than their opponent, those attacks do 40 more damage instead.';
 

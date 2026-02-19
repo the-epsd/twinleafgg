@@ -36,7 +36,8 @@ export class Sharpedo extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sharpedo';
-  public fullName: string = 'Sharpedo EVS';
+  public fullName: string = 'Sharpedo (EVS 36)';
+  public legacyFullName = 'Sharpedo EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Taunt

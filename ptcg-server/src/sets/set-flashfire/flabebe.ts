@@ -30,7 +30,8 @@ export class Flabebe extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flabébé';
-  public fullName: string = 'Flabébé FLF';
+  public fullName: string = 'Flabébé (FLF 62)';
+  public legacyFullName = 'Flabébé FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/skitty.ts (Heal Bell)

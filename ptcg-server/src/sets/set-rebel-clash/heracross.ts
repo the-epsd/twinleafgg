@@ -36,7 +36,8 @@ export class Heracross extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heracross';
-  public fullName: string = 'Heracross RCL';
+  public fullName: string = 'Heracross (RCL 6)';
+  public legacyFullName = 'Heracross RCL';
 
   public usedPushDown = false;
 

@@ -27,7 +27,8 @@ export class GarchompGiratinaGX extends PokemonCard {
 
   public name = 'Garchomp & Giratina-GX';
 
-  public fullName = 'Garchomp & Giratina-GX UNM';
+  public fullName = 'Garchomp & Giratina-GX (UNM 146)';
+  public legacyFullName = 'Garchomp & Giratina-GX UNM';
 
   public attacks = [
     {

@@ -37,7 +37,8 @@ export class Palossandex extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Palossand ex';
-  public fullName: string = 'Palossand ex SSP';
+  public fullName: string = 'Palossand ex (SSP 91)';
+  public legacyFullName = 'Palossand ex SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sand Tomb

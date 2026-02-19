@@ -35,7 +35,8 @@ export class Turtonator extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Turtonator';
-  public fullName: string = 'Turtonator UPR';
+  public fullName: string = 'Turtonator (UPR 27)';
+  public legacyFullName = 'Turtonator UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Searing Flame

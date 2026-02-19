@@ -37,7 +37,8 @@ export class Xurkitree extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Xurkitree';
-  public fullName: string = 'Xurkitree FLI';
+  public fullName: string = 'Xurkitree (FLI 39)';
+  public legacyFullName = 'Xurkitree FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dazzle Blast

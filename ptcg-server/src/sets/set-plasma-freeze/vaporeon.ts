@@ -34,7 +34,8 @@ export class Vaporeon extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vaporeon';
-  public fullName: string = 'Vaporeon PLF';
+  public fullName: string = 'Vaporeon (PLF 20)';
+  public legacyFullName = 'Vaporeon PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

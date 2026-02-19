@@ -46,7 +46,8 @@ export class Empoleon extends PokemonCard {
 
   public name: string = 'Empoleon';
 
-  public fullName: string = 'Empoleon DEX';
+  public fullName: string = 'Empoleon (DEX 29)';
+  public legacyFullName = 'Empoleon DEX';
 
   public cardImage: string = 'assets/cardback.png';
 

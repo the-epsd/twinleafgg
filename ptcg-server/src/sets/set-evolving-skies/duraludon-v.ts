@@ -49,7 +49,8 @@ export class DuraludonV extends PokemonCard {
 
   public name: string = 'Duraludon V';
 
-  public fullName: string = 'Duraludon V EVS';
+  public fullName: string = 'Duraludon V (EVS 122)';
+  public legacyFullName = 'Duraludon V EVS';
 
   public readonly BREAKING_SWIPE_MARKER = 'BREAKING_SWIPE_MARKER';
 

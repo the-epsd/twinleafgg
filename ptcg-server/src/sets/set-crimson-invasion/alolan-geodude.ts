@@ -39,7 +39,8 @@ export class AlolanGeodude extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Geodude';
-  public fullName: string = 'Alolan Geodude CIN';
+  public fullName: string = 'Alolan Geodude (CIN 32)';
+  public legacyFullName = 'Alolan Geodude CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Defense Curl

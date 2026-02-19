@@ -31,7 +31,8 @@ export class Dewott extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
   public name: string = 'Dewott';
-  public fullName: string = 'Dewott BLW 29';
+  public fullName: string = 'Dewott (BLW 29)';
+  public legacyFullName = 'Dewott BLW 29';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

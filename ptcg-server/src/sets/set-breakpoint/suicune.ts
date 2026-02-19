@@ -35,7 +35,8 @@ export class Suicune extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Suicune';
-  public fullName: string = 'Suicune BKP';
+  public fullName: string = 'Suicune (BKP 30)';
+  public legacyFullName = 'Suicune BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Wind Charm (passive - intercept AbstractAttackEffect)

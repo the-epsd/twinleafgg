@@ -34,7 +34,8 @@ export class Accelgor extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Accelgor';
-  public fullName: string = 'Accelgor NVI';
+  public fullName: string = 'Accelgor (NVI 12)';
+  public legacyFullName = 'Accelgor NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Acid Spray - flip to discard opponent's energy

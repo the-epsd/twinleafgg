@@ -39,7 +39,8 @@ export class Growlithe extends PokemonCard {
 
   public name: string = 'Growlithe';
 
-  public fullName: string = 'Growlithe SVI';
+  public fullName: string = 'Growlithe (SVI 31)';
+  public legacyFullName = 'Growlithe SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

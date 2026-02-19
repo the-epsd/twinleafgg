@@ -36,7 +36,8 @@ export class Heatmor extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heatmor';
-  public fullName: string = 'Heatmor SSH';
+  public fullName: string = 'Heatmor (SSH 26)';
+  public legacyFullName = 'Heatmor SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Searing Flame

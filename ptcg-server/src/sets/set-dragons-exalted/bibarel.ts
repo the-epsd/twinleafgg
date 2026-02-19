@@ -35,7 +35,8 @@ export class Bibarel extends PokemonCard {
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bibarel';
-  public fullName: string = 'Bibarel DRX';
+  public fullName: string = 'Bibarel (DRX 107)';
+  public legacyFullName = 'Bibarel DRX';
 
   public amnesiaAttack: Attack | null = null;
 

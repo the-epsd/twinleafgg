@@ -38,7 +38,8 @@ export class Miraidonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
   public name: string = 'Miraidon ex';
-  public fullName: string = 'Miraidon ex SVI';
+  public fullName: string = 'Miraidon ex (SVI 81)';
+  public legacyFullName = 'Miraidon ex SVI';
 
   public readonly TANDEM_UNIT_MARKER = 'TANDEM_UNIT_MARKER';
 

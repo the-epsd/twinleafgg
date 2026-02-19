@@ -34,7 +34,8 @@ export class TeamRocketsHonchkrow extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '127';
   public name: string = 'Team Rocket\'s Honchkrow';
-  public fullName: string = 'Team Rocket\'s Honchkrow M2a';
+  public fullName: string = 'Team Rocket\'s Honchkrow (ASC 127)';
+  public legacyFullName = 'Team Rocket\'s Honchkrow M2a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

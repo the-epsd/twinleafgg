@@ -10,6 +10,7 @@ import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects
 
 export class EnteiAndRaikouLegendTop extends PokemonCard {
   public stage: Stage = Stage.LEGEND;
+  public multiPartPosition: 'Top' | 'Bottom' | 'Top Left' | 'Top Right' | 'Bottom Left' | 'Bottom Right' = 'Top';
   public tags = [CardTag.LEGEND, CardTag.DUAL_LEGEND];
   public cardType = R;
   public additionalCardTypes = [L];
@@ -44,7 +45,8 @@ export class EnteiAndRaikouLegendTop extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
   public name: string = 'Entei & Raikou LEGEND';
-  public fullName: string = 'Entei & Raikou LEGEND (Top) UL';
+  public fullName: string = 'Entei & Raikou LEGEND (UL 90)';
+  public legacyFullName = 'Entei & Raikou LEGEND (Top) UL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the avengers

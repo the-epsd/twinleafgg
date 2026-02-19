@@ -33,5 +33,6 @@ export class Zebstrika extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zebstrika';
-  public fullName: string = 'Zebstrika VIV';
+  public fullName: string = 'Zebstrika (VIV 54)';
+  public legacyFullName = 'Zebstrika VIV';
 }

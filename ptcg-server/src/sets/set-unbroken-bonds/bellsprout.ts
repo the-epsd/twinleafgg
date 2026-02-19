@@ -25,5 +25,6 @@ export class Bellsprout extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bellsprout';
-  public fullName: string = 'Bellsprout UNB';
+  public fullName: string = 'Bellsprout (UNB 13)';
+  public legacyFullName = 'Bellsprout UNB';
 }

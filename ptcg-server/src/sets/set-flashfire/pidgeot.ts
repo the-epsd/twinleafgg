@@ -40,7 +40,8 @@ export class Pidgeot extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pidgeot';
-  public fullName: string = 'Pidgeot FLF';
+  public fullName: string = 'Pidgeot (FLF 77)';
+  public legacyFullName = 'Pidgeot FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/zoroark.ts (Corner)

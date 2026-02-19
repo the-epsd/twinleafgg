@@ -32,7 +32,8 @@ export class GalarianDarmanitanVmax extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Darmanitan VMAX';
-  public fullName: string = 'Galarian Darmanitan VMAX VIV';
+  public fullName: string = 'Galarian Darmanitan VMAX (VIV 37)';
+  public legacyFullName = 'Galarian Darmanitan VMAX VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Max Whiteout

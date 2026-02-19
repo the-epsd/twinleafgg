@@ -38,7 +38,8 @@ export class Flygon extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flygon';
-  public fullName: string = 'Flygon DRM';
+  public fullName: string = 'Flygon (DRM 39)';
+  public legacyFullName = 'Flygon DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Dragon Guard (passive - prevent effects of attacks except damage on Dragon Pokemon)

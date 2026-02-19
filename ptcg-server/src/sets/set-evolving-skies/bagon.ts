@@ -31,5 +31,6 @@ export class Bagon extends PokemonCard {
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bagon';
-  public fullName: string = 'Bagon EVS';
+  public fullName: string = 'Bagon (EVS 107)';
+  public legacyFullName = 'Bagon EVS';
 }

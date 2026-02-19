@@ -87,7 +87,8 @@ export class ArceusV extends PokemonCard {
 
   public name: string = 'Arceus V';
 
-  public fullName: string = 'Arceus V BRS';
+  public fullName: string = 'Arceus V (BRS 122)';
+  public legacyFullName = 'Arceus V BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

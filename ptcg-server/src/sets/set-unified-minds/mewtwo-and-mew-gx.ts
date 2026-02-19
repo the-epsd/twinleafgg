@@ -42,7 +42,8 @@ export class MewtwoMewGX extends PokemonCard {
 
   public name: string = 'Mewtwo & Mew-GX';
 
-  public fullName: string = 'Mewtwo & Mew-GX UNM';
+  public fullName: string = 'Mewtwo & Mew-GX (UNM 71)';
+  public legacyFullName = 'Mewtwo & Mew-GX UNM';
 
   public setNumber: string = '71';
 

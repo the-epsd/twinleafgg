@@ -30,7 +30,8 @@ export class Gloom extends PokemonCard {
 
   public name: string = 'Gloom';
 
-  public fullName: string = 'Gloom BUS';
+  public fullName: string = 'Gloom (BUS 5)';
+  public legacyFullName = 'Gloom BUS';
 
   public cardImage: string = 'assets/cardback.png';
 

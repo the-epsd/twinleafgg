@@ -30,7 +30,8 @@ export class Weezing extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
   public name: string = 'Weezing';
-  public fullName: string = 'Weezing FO';
+  public fullName: string = 'Weezing (FO 45)';
+  public legacyFullName = 'Weezing FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

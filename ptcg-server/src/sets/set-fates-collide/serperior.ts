@@ -40,7 +40,8 @@ export class Serperior extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Serperior';
-  public fullName: string = 'Serperior FCO';
+  public fullName: string = 'Serperior (FCO 7)';
+  public legacyFullName = 'Serperior FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Check for Coil bonus on ANY attack from this Pokemon

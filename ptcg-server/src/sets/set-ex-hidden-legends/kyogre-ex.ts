@@ -37,7 +37,8 @@ export class Kyogreex extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kyogre ex';
-  public fullName: string = 'Kyogre ex HL';
+  public fullName: string = 'Kyogre ex (HL 94)';
+  public legacyFullName = 'Kyogre ex HL';
 
   public usedSTW = false;
 

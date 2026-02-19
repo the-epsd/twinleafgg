@@ -34,7 +34,8 @@ export class Bronzong extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';
   public name: string = 'Bronzong';
-  public fullName: string = 'Bronzong TEF';
+  public fullName: string = 'Bronzong (TEF 69)';
+  public legacyFullName = 'Bronzong TEF';
 
   public readonly EVOLUTION_JAMMER_MARKER = 'EVOLUTION_JAMMER_MARKER';
 

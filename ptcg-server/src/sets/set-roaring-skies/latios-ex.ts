@@ -41,7 +41,8 @@ export class LatiosEx extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Latios-EX';
-  public fullName: string = 'Latios-EX ROS';
+  public fullName: string = 'Latios-EX (ROS 58)';
+  public legacyFullName = 'Latios-EX ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fast Raid

@@ -39,7 +39,8 @@ export class Altaria extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Altaria';
-  public fullName: string = 'Altaria CPA';
+  public fullName: string = 'Altaria (CPA 49)';
+  public legacyFullName = 'Altaria CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Miraculous Charm (passive - prevent all damage from V/GX attacks)

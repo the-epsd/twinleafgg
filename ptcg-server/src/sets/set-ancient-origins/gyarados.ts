@@ -29,7 +29,7 @@ export class Gyarados extends PokemonCard {
       name: 'Aqua Tail',
       cost: [W, C, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin for each [W] Energy attached to this Pokémon. This attack does 30 more damage for each heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class Gyarados extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gyarados';
-  public fullName: string = 'Gyarados AOR';
+  public fullName: string = 'Gyarados (AOR 20)';
+  public legacyFullName = 'Gyarados AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Berserker Splash

@@ -25,5 +25,6 @@ export class Lapras extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lapras';
-  public fullName: string = 'Lapras HIF';
+  public fullName: string = 'Lapras (HIF 17)';
+  public legacyFullName = 'Lapras HIF';
 }

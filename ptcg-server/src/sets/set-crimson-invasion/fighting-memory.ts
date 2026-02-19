@@ -15,7 +15,8 @@ export class FightingMemory extends TrainerCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fighting Memory';
-  public fullName: string = 'Fighting Memory CIN';
+  public fullName: string = 'Fighting Memory (CIN 94)';
+  public legacyFullName = 'Fighting Memory CIN';
   public text: string = 'The Silvally-GX this card is attached to is a Fighting Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

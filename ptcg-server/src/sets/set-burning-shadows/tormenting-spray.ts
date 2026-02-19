@@ -15,7 +15,8 @@ export class TormentingSpray extends TrainerCard {
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tormenting Spray';
-  public fullName: string = 'Tormenting Spray BUS';
+  public fullName: string = 'Tormenting Spray (BUS 125)';
+  public legacyFullName = 'Tormenting Spray BUS';
   public text: string = 'Choose a random card from your opponent\'s hand. Your opponent reveals that card. If it\'s a Supporter card, discard it.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

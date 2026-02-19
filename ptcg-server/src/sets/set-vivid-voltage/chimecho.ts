@@ -32,7 +32,8 @@ export class Chimecho extends PokemonCard {
 
   public name: string = 'Chimecho';
 
-  public fullName: string = 'Chimecho VIV';
+  public fullName: string = 'Chimecho (VIV 72)';
+  public legacyFullName = 'Chimecho VIV';
 
   public cardImage: string = 'assets/cardback.png';
 

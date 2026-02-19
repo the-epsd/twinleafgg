@@ -13,7 +13,8 @@ export class RocketsHideout extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'N3';
   public name: string = 'Rocket\'s Hideout';
-  public fullName: string = 'Rocket\'s Hideout N3';
+  public fullName: string = 'Rocket\'s Hideout (N3 63)';
+  public legacyFullName = 'Rocket\'s Hideout N3';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '63';
 

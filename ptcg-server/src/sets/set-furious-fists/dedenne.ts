@@ -73,7 +73,8 @@ export class Dedenne extends PokemonCard {
 
   public name: string = 'Dedenne';
 
-  public fullName: string = 'Dedenne FFI';
+  public fullName: string = 'Dedenne (FFI 34)';
+  public legacyFullName = 'Dedenne FFI';
 
   public cardImage: string = 'assets/cardback.png';
 

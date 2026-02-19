@@ -18,7 +18,8 @@ export class MysteryPlateGamma extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '135';
   public name: string = 'Mystery Plate γ';
-  public fullName: string = 'Mystery Plate γ SK';
+  public fullName: string = 'Mystery Plate γ (SK 135)';
+  public legacyFullName = 'Mystery Plate γ SK';
 
   public attacks: Attack[] = [{
     name: 'Retro Cave',

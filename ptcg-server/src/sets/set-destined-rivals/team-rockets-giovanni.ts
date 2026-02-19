@@ -26,7 +26,8 @@ export class TeamRocketsGiovanni extends TrainerCard {
 
   public name: string = 'Team Rocket\'s Giovanni';
 
-  public fullName: string = 'Team Rocket\'s Giovanni DRI';
+  public fullName: string = 'Team Rocket\'s Giovanni (DRI 174)';
+  public legacyFullName = 'Team Rocket\'s Giovanni DRI';
 
   public text: string =
     'Switch your Active Team Rocket\'s Pokemon with 1 of your Benched Team Rocket\'s Pokemon. If you do, then switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon.';

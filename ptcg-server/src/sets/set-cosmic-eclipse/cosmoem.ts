@@ -34,7 +34,8 @@ export class Cosmoem extends PokemonCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cosmoem';
-  public fullName: string = 'Cosmoem CEC';
+  public fullName: string = 'Cosmoem (CEC 101)';
+  public legacyFullName = 'Cosmoem CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stiffen

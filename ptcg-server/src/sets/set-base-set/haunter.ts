@@ -14,7 +14,8 @@ export class Haunter extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Haunter BS';
+  public fullName = 'Haunter (BS 29)';
+  public legacyFullName = 'Haunter BS';
 
   public stage = Stage.STAGE_1;
 

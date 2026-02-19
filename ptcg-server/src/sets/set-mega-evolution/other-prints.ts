@@ -42,333 +42,387 @@ import { MegaLucarioex } from './mega-lucario-ex';
 import { MegaVenusaurEx } from './mega-venusaur-ex';
 
 export class BulbasaurM1S extends Bulbasaur {
-  public fullName = 'Bulbasaur M1S 64';
+  public fullName = 'Bulbasaur (M1L 64)';
+  public legacyFullName = 'Bulbasaur M1S 64';
   public set = 'M1L';
   public setNumber = '64';
 }
 
 export class InteleonM1S extends Inteleon {
-  public fullName = 'Inteleon M1L 69';
+  public fullName = 'Inteleon (M1L 69)';
+  public legacyFullName = 'Inteleon M1L 69';
   public set = 'M1L';
   public setNumber = '69';
 }
 
 export class MegaGardevoirexM1S extends MegaGardevoirex {
-  public fullName = 'Mega Gardevoir ex M1S 87';
+  public fullName = 'Mega Gardevoir ex (M1S 87)';
+  public legacyFullName = 'Mega Gardevoir ex M1S 87';
   public set = 'M1S';
   public setNumber = '87';
 }
 
 export class MegaKangaskhanexM1S extends MegaKangaskhanex {
-  public fullName = 'Mega Kangaskhan ex M1S 89';
+  public fullName = 'Mega Kangaskhan ex (M1S 89)';
+  public legacyFullName = 'Mega Kangaskhan ex M1S 89';
   public set = 'M1S';
   public setNumber = '89';
 }
 
 export class MegaLucarioexM1S extends MegaLucarioex {
-  public fullName = 'Mega Lucario ex M1S 88';
+  public fullName = 'Mega Lucario ex (M1S 88)';
+  public legacyFullName = 'Mega Lucario ex M1S 88';
   public set = 'M1S';
   public setNumber = '88';
 }
 
 export class MegaVenusaurExM1S extends MegaVenusaurEx {
-  public fullName = 'Mega Venusaur ex M1L 87';
+  public fullName = 'Mega Venusaur ex (M1L 87)';
+  public legacyFullName = 'Mega Venusaur ex M1L 87';
   public set = 'M1L';
   public setNumber = '87';
 }
 
 export class NightStretcherM1S extends NightlyStretcher {
-  public fullName = 'Night Stretcher M1L 83';
+  public fullName = 'Night Stretcher (M1L 83)';
+  public legacyFullName = 'Night Stretcher M1L 83';
   public set = 'M1L';
   public setNumber = '83';
 }
 
 export class RareCandyM1S extends RareCandy {
-  public fullName = 'Rare Candy M1S 82';
+  public fullName = 'Rare Candy (M1S 82)';
+  public legacyFullName = 'Rare Candy M1S 82';
   public set = 'M1S';
   public setNumber = '82';
   public regulationMark = 'I';
 }
 export class BossOrdersMEG extends BossOrders {
   public setNumber = '114';
-  public fullName: string = 'Boss\'s Orders MEG';
+  public fullName: string = 'Boss\'s Orders (MEG 114)';
+  public legacyFullName = 'Boss\'s Orders MEG';
   public set = 'MEG';
   public regulationMark = 'I';
 }
 
 export class RepelMEG extends Repel {
   public setNumber = '126';
-  public fullName = 'Repel M1L';
+  public fullName = 'Repel (MEG 126)';
+  public legacyFullName = 'Repel M1L';
   public set = 'MEG';
   public regulationMark = 'I';
 }
 
 export class EnergySwitchPKMEG extends EnergySwitchPK {
   public setNumber = '115';
-  public fullName: string = 'Energy Switch MEG';
+  public fullName: string = 'Energy Switch (MEG 115)';
+  public legacyFullName = 'Energy Switch MEG';
   public set = 'MEG';
   public regulationMark = 'I';
 }
 
 export class RareCandyMEG extends RareCandy {
   public setNumber = '125';
-  public fullName: string = 'Rare Candy MEG';
+  public fullName: string = 'Rare Candy (MEG 125)';
+  public legacyFullName = 'Rare Candy MEG';
   public set = 'MEG';
   public regulationMark = 'I';
 }
 
 export class SwitchMEG extends Switch {
   public setNumber = '130';
-  public fullName: string = 'Switch MEG';
+  public fullName: string = 'Switch (MEG 130)';
+  public legacyFullName = 'Switch MEG';
   public set = 'MEG';
   public regulationMark = 'I';
 }
 
 export class UltraBallMEG extends UltraBall {
   public setNumber = '131';
-  public fullName: string = 'Ultra Ball MEG';
+  public fullName: string = 'Ultra Ball (MEG 131)';
+  public legacyFullName = 'Ultra Ball MEG';
   public set = 'MEG';
   public regulationMark = 'I';
 }
 
 export class Bulbasaur2MEG extends BulbasaurMEG1 {
   public setNumber = '133';
-  public fullName: string = 'Bulbasaur2 MEG';
+  public fullName: string = 'Bulbasaur (MEG 133)';
+  public legacyFullName = 'Bulbasaur2 MEG';
   public set = 'MEG';
 }
 
 export class Ivysaur2MEG extends IvysaurMEG2 {
   public setNumber = '134';
-  public fullName: string = 'Ivysaur2 MEG';
+  public fullName: string = 'Ivysaur (MEG 134)';
+  public legacyFullName = 'Ivysaur2 MEG';
   public set = 'MEG';
 }
 
 export class Ninjask2MEG extends NinjaskMEG17 {
   public setNumber = '137';
-  public fullName: string = 'Ninjask2 MEG';
+  public fullName: string = 'Ninjask (MEG 137)';
+  public legacyFullName = 'Ninjask2 MEG';
   public set = 'MEG';
 }
 
 export class Snover2MEG extends SnoverMEG35 {
   public setNumber = '140';
-  public fullName: string = 'Snover2 MEG';
+  public fullName: string = 'Snover (MEG 140)';
+  public legacyFullName = 'Snover2 MEG';
   public set = 'MEG';
 }
 
 export class Clawitizer2MEG extends ClawitizerMEG38 {
   public setNumber = '141';
-  public fullName: string = 'Clawitizer2 MEG';
+  public fullName: string = 'Clawitizer (MEG 141)';
+  public legacyFullName = 'Clawitizer2 MEG';
   public set = 'MEG';
 }
 
 export class Inteleon2MEG extends InteleonMEG41 {
   public setNumber = '142';
-  public fullName: string = 'Inteleon2 MEG';
+  public fullName: string = 'Inteleon (MEG 142)';
+  public legacyFullName = 'Inteleon2 MEG';
   public set = 'MEG';
 }
 
 export class Houndstone2MEG extends HoundstoneMEG66 {
   public setNumber = '145';
-  public fullName: string = 'Houndstone2 MEG';
+  public fullName: string = 'Houndstone (MEG 145)';
+  public legacyFullName = 'Houndstone2 MEG';
   public set = 'MEG';
 }
 
 export class Garganacl2MEG extends GarganaclMEG84 {
   public setNumber = '147';
-  public fullName: string = 'Garganacl2 MEG';
+  public fullName: string = 'Garganacl (MEG 147)';
+  public legacyFullName = 'Garganacl2 MEG';
   public set = 'MEG';
 }
 
 export class Steelix2MEG extends SteelixMEG93 {
   public setNumber = '150';
-  public fullName: string = 'Steelix2 MEG';
+  public fullName: string = 'Steelix (MEG 150)';
+  public legacyFullName = 'Steelix2 MEG';
   public set = 'MEG';
 }
 
 export class Gumshoos2MEG extends GumshoosMEG110 {
   public setNumber = '153';
-  public fullName: string = 'Gumshoos2 MEG';
+  public fullName: string = 'Gumshoos (MEG 153)';
+  public legacyFullName = 'Gumshoos2 MEG';
   public set = 'MEG';
 }
 
 export class MegaVenusaurEx2MEG extends MegaVenusaurExMEG3 {
   public setNumber = '155';
-  public fullName: string = 'Mega Venusaur ex2 MEG';
+  public fullName: string = 'Mega Venusaur ex (MEG 155)';
+  public legacyFullName = 'Mega Venusaur ex2 MEG';
   public set = 'MEG';
 }
 
 export class MegaCameruptEx2MEG extends MegaCameruptExMEG22 {
   public setNumber = '156';
-  public fullName: string = 'Mega Camerupt ex2 MEG';
+  public fullName: string = 'Mega Camerupt ex (MEG 156)';
+  public legacyFullName = 'Mega Camerupt ex2 MEG';
   public set = 'MEG';
 }
 
 export class MegaAbomasnowEx2MEG extends MegaAbomasnowExMEG36 {
   public setNumber = '157';
-  public fullName: string = 'Mega Abomasnow ex2 MEG';
+  public fullName: string = 'Mega Abomasnow ex (MEG 157)';
+  public legacyFullName = 'Mega Abomasnow ex2 MEG';
   public set = 'MEG';
 }
 
 export class MegaManectricEx2MEG extends MegaManectricExMEG50 {
   public setNumber = '158';
-  public fullName: string = 'Mega Manectric ex2 MEG';
+  public fullName: string = 'Mega Manectric ex (MEG 158)';
+  public legacyFullName = 'Mega Manectric ex2 MEG';
   public set = 'MEG';
 }
 
 export class MegaGardevoirex2MEG extends MegaGardevoirexMEG60 {
   public setNumber = '159';
-  public fullName: string = 'Mega Gardevoir ex2 MEG';
+  public fullName: string = 'Mega Gardevoir ex (MEG 159)';
+  public legacyFullName = 'Mega Gardevoir ex2 MEG';
   public set = 'MEG';
 }
 
 export class MegaLucarioex2MEG extends MegaLucarioexMEG77 {
   public setNumber = '160';
-  public fullName: string = 'Mega Lucario ex2 MEG';
+  public fullName: string = 'Mega Lucario ex (MEG 160)';
+  public legacyFullName = 'Mega Lucario ex2 MEG';
   public set = 'MEG';
 }
 
 export class MegaAbsolex2MEG extends MegaAbsolexMEG86 {
   public setNumber = '161';
-  public fullName: string = 'Mega Absol ex2 MEG';
+  public fullName: string = 'Mega Absol ex (MEG 161)';
+  public legacyFullName = 'Mega Absol ex2 MEG';
   public set = 'MEG';
 }
 
 export class MegaMawileEx2MEG extends MegaMawileExMEG94 {
   public setNumber = '162';
-  public fullName: string = 'Mega Mawile ex2 MEG';
+  public fullName: string = 'Mega Mawile ex (MEG 162)';
+  public legacyFullName = 'Mega Mawile ex2 MEG';
   public set = 'MEG';
 }
 
 export class MegaLatiasex2MEG extends MegaLatiasexMEG100 {
   public setNumber = '163';
-  public fullName: string = 'Mega Latias ex2 MEG';
+  public fullName: string = 'Mega Latias ex (MEG 163)';
+  public legacyFullName = 'Mega Latias ex2 MEG';
   public set = 'MEG';
 }
 
 export class MegaKangaskhanex2MEG extends MegaKangaskhanexMEG104 {
   public setNumber = '164';
-  public fullName: string = 'Mega Kangaskhan ex2 MEG';
+  public fullName: string = 'Mega Kangaskhan ex (MEG 164)';
+  public legacyFullName = 'Mega Kangaskhan ex2 MEG';
   public set = 'MEG';
 }
 
 export class AirBalloonMEG extends AirBalloon {
   public setNumber = '166';
-  public fullName: string = 'Air Balloon MEG';
+  public fullName: string = 'Air Balloon (MEG 166)';
+  public legacyFullName = 'Air Balloon MEG';
   public set = 'MEG';
   public regulationMark = 'I';
 }
 
 export class BuddyBuddyPoffinMEG extends BuddyBuddyPoffin {
   public setNumber = '167';
-  public fullName: string = 'Buddy-Buddy Poffin MEG';
+  public fullName: string = 'Buddy-Buddy Poffin (MEG 167)';
+  public legacyFullName = 'Buddy-Buddy Poffin MEG';
   public set = 'MEG';
 }
 
 export class FightingGong2MEG extends FightingGongMEG116 {
   public setNumber = '168';
-  public fullName: string = 'Fighting Gong2 MEG';
+  public fullName: string = 'Fighting Gong (MEG 168)';
+  public legacyFullName = 'Fighting Gong2 MEG';
   public set = 'MEG';
 }
 
 export class LilliesDetermination2MEG extends LilliesDeterminationMEG119 {
   public setNumber = '169';
-  public fullName: string = 'Lillie\'s Determination2 MEG';
+  public fullName: string = 'Lillie\'s Determination (MEG 169)';
+  public legacyFullName = 'Lillie\'s Determination2 MEG';
   public set = 'MEG';
 }
 
 export class MegaSignal2MEG extends MegaSignalMEG121 {
   public setNumber = '171';
-  public fullName: string = 'Mega Signal2 MEG';
+  public fullName: string = 'Mega Signal (MEG 171)';
+  public legacyFullName = 'Mega Signal2 MEG';
   public set = 'MEG';
 }
 
 export class MysteryGarden2MEG extends MysteryGardenMEG122 {
   public setNumber = '172';
-  public fullName: string = 'Mystery Garden2 MEG';
+  public fullName: string = 'Mystery Garden (MEG 172)';
+  public legacyFullName = 'Mystery Garden2 MEG';
   public set = 'MEG';
 }
 
 export class NightlyStretcherMEG extends NightlyStretcher {
   public setNumber = '173';
-  public fullName: string = 'Night Stretcher MEG';
+  public fullName: string = 'Night Stretcher (MEG 173)';
+  public legacyFullName = 'Night Stretcher MEG';
   public set = 'MEG';
 }
 
 export class PowerProtein2MEG extends PowerProteinMEG124 {
   public setNumber = '174';
-  public fullName: string = 'Premium Power Pro2 MEG';
+  public fullName: string = 'Premium Power Pro (MEG 174)';
+  public legacyFullName = 'Premium Power Pro2 MEG';
   public set = 'MEG';
 }
 
 export class RareCandy2MEG extends RareCandyHP90 {
   public setNumber = '175';
-  public fullName: string = 'Rare Candy2 MEG';
+  public fullName: string = 'Rare Candy (MEG 175)';
+  public legacyFullName = 'Rare Candy2 MEG';
   public set = 'MEG';
   public regulationMark = 'I';
 }
 
 export class WallysCompassion2MEG extends WallysCompassionMEG132 {
   public setNumber = '176';
-  public fullName: string = 'Wally\'s Compassion2 MEG';
+  public fullName: string = 'Wally\'s Compassion (MEG 176)';
+  public legacyFullName = 'Wally\'s Compassion2 MEG';
   public set = 'MEG';
 }
 
 export class MegaVenusaurEx3MEG extends MegaVenusaurExMEG3 {
   public setNumber = '177';
-  public fullName: string = 'Mega Venusaur ex3 MEG';
+  public fullName: string = 'Mega Venusaur ex (MEG 177)';
+  public legacyFullName = 'Mega Venusaur ex3 MEG';
   public set = 'MEG';
 }
 
 export class MegaGardevoirex3MEG extends MegaGardevoirexMEG60 {
   public setNumber = '178';
-  public fullName: string = 'Mega Gardevoir ex3 MEG';
+  public fullName: string = 'Mega Gardevoir ex (MEG 178)';
+  public legacyFullName = 'Mega Gardevoir ex3 MEG';
   public set = 'MEG';
 }
 
 export class MegaLucarioex3MEG extends MegaLucarioexMEG77 {
   public setNumber = '179';
-  public fullName: string = 'Mega Lucario ex3 MEG';
+  public fullName: string = 'Mega Lucario ex (MEG 179)';
+  public legacyFullName = 'Mega Lucario ex3 MEG';
   public set = 'MEG';
 }
 
 export class MegaAbsolex3MEG extends MegaAbsolexMEG86 {
   public setNumber = '180';
-  public fullName: string = 'Mega Absol ex3 MEG';
+  public fullName: string = 'Mega Absol ex (MEG 180)';
+  public legacyFullName = 'Mega Absol ex3 MEG';
   public set = 'MEG';
 }
 
 export class MegaLatiasex3MEG extends MegaLatiasexMEG100 {
   public setNumber = '181';
-  public fullName: string = 'Mega Latias ex3 MEG';
+  public fullName: string = 'Mega Latias ex (MEG 181)';
+  public legacyFullName = 'Mega Latias ex3 MEG';
   public set = 'MEG';
 }
 
 export class MegaKangaskhanex3MEG extends MegaKangaskhanexMEG104 {
   public setNumber = '182';
-  public fullName: string = 'Mega Kangaskhan ex3 MEG';
+  public fullName: string = 'Mega Kangaskhan ex (MEG 182)';
+  public legacyFullName = 'Mega Kangaskhan ex3 MEG';
   public set = 'MEG';
 }
 
 export class LilliesDetermination3MEG extends LilliesDeterminationMEG119 {
   public setNumber = '184';
-  public fullName: string = 'Lillie\'s Determination3 MEG';
+  public fullName: string = 'Lillie\'s Determination (MEG 184)';
+  public legacyFullName = 'Lillie\'s Determination3 MEG';
   public set = 'MEG';
 }
 
 export class WallysCompassion3MEG extends WallysCompassionMEG132 {
   public setNumber = '186';
-  public fullName: string = 'Wally\'s Compassion3 MEG';
+  public fullName: string = 'Wally\'s Compassion (MEG 186)';
+  public legacyFullName = 'Wally\'s Compassion3 MEG';
   public set = 'MEG';
 }
 
 export class MegaGardevoirex4MEG extends MegaGardevoirexMEG60 {
   public setNumber = '187';
-  public fullName: string = 'Mega Gardevoir ex4 MEG';
+  public fullName: string = 'Mega Gardevoir ex (MEG 187)';
+  public legacyFullName = 'Mega Gardevoir ex4 MEG';
   public set = 'MEG';
 }
 
 export class MegaLucarioex4MEG extends MegaLucarioexMEG77 {
   public setNumber = '188';
-  public fullName: string = 'Mega Lucario ex4 MEG';
+  public fullName: string = 'Mega Lucario ex (MEG 188)';
+  public legacyFullName = 'Mega Lucario ex4 MEG';
   public set = 'MEG';
 }

@@ -30,7 +30,8 @@ export class Dragonair extends PokemonCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragonair';
-  public fullName: string = 'Dragonair TEU';
+  public fullName: string = 'Dragonair (TEU 118)';
+  public legacyFullName = 'Dragonair TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Twister

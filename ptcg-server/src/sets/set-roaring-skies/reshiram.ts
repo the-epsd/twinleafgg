@@ -35,7 +35,8 @@ export class Reshiram extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '63';
   public name: string = 'Reshiram';
-  public fullName: string = 'Reshiram ROS';
+  public fullName: string = 'Reshiram (ROS 63)';
+  public legacyFullName = 'Reshiram ROS';
   private readonly TURBOBLAZE_MARKER = 'TURBOBLAZE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

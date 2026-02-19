@@ -31,7 +31,8 @@ export class Whimsicott extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whimsicott';
-  public fullName: string = 'Whimsicott FCO';
+  public fullName: string = 'Whimsicott (FCO 71)';
+  public legacyFullName = 'Whimsicott FCO';
 
   private usedLightSteps = false;
 

@@ -52,7 +52,8 @@ export class GalarianArticunoV extends PokemonCard {
 
   public name: string = 'Galarian Articuno V';
 
-  public fullName: string = 'Galarian Articuno V CRE';
+  public fullName: string = 'Galarian Articuno V (CRE 58)';
+  public legacyFullName = 'Galarian Articuno V CRE';
 
   public readonly RECONSTITUTE_MARKER = 'RECONSTITUTE_MARKER';
 

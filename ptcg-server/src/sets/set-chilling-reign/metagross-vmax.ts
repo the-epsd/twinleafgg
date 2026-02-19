@@ -38,7 +38,8 @@ export class MetagrossVmax extends PokemonCard {
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metagross VMAX';
-  public fullName: string = 'Metagross VMAX CRE';
+  public fullName: string = 'Metagross VMAX (CRE 113)';
+  public legacyFullName = 'Metagross VMAX CRE';
 
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'METAGROSS_VMAX_CRE_NEXT_TURN_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_CLEAR_MARKER = 'METAGROSS_VMAX_CRE_NEXT_TURN_DAMAGE_CLEAR_MARKER';

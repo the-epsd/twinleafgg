@@ -32,7 +32,7 @@ export class Hatterene extends PokemonCard {
       name: 'Psychic',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 50 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -42,7 +42,8 @@ export class Hatterene extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hatterene';
-  public fullName: string = 'Hatterene CRE';
+  public fullName: string = 'Hatterene (CRE 73)';
+  public legacyFullName = 'Hatterene CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Witch Rondo

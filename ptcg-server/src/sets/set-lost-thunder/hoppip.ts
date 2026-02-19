@@ -32,6 +32,7 @@ export class Hoppip extends PokemonCard {
 
   public name: string = 'Hoppip';
 
-  public fullName: string = 'Hoppip LOT';
+  public fullName: string = 'Hoppip (LOT 12)';
+  public legacyFullName = 'Hoppip LOT';
 
 }

@@ -29,7 +29,7 @@ export class Lombre extends PokemonCard {
       name: 'Ambush',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Lombre extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lombre';
-  public fullName: string = 'Lombre CES';
+  public fullName: string = 'Lombre (CES 37)';
+  public legacyFullName = 'Lombre CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Aqua Lift (passive - free retreat if [W] Energy attached)

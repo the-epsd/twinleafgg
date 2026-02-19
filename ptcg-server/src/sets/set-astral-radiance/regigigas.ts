@@ -44,7 +44,8 @@ export class Regigigas extends PokemonCard {
 
   public name: string = 'Regigigas';
 
-  public fullName: string = 'Regigigas ASR';
+  public fullName: string = 'Regigigas (ASR 130)';
+  public legacyFullName = 'Regigigas ASR';
 
   public readonly ANCIENT_WISDOM_MARKER = 'ANCIENT_WISDOM_MARKER';
 

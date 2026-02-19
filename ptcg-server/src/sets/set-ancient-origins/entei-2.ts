@@ -36,7 +36,8 @@ export class Entei2 extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Entei';
-  public fullName: string = 'Entei AOR 15';
+  public fullName: string = 'Entei (AOR 15)';
+  public legacyFullName = 'Entei AOR 15';
 
   public readonly REDUCE_DAMAGE_MARKER = 'ENTEI2_REDUCE_DAMAGE_MARKER';
   public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'ENTEI2_CLEAR_REDUCE_DAMAGE_MARKER';

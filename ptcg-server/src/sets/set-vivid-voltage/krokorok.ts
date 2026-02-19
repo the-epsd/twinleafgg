@@ -36,7 +36,8 @@ export class Krokorok extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Krokorok';
-  public fullName: string = 'Krokorok VIV';
+  public fullName: string = 'Krokorok (VIV 108)';
+  public legacyFullName = 'Krokorok VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Dredge Up

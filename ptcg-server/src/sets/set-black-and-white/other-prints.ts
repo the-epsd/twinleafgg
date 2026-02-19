@@ -15,7 +15,8 @@ export class EnergyRetrievalBLW extends EnergyRetrieval {
   public setNumber: string = '92';
   public regulationMark = '';
   public name: string = 'Energy Retrieval';
-  public fullName: string = 'Energy Retrieval BLW';
+  public fullName: string = 'Energy Retrieval (BLW 92)';
+  public legacyFullName = 'Energy Retrieval BLW';
 }
 
 export class SwitchBLW extends Switch {
@@ -23,58 +24,68 @@ export class SwitchBLW extends Switch {
   public setNumber: string = '104';
   public regulationMark = '';
   public name: string = 'Switch';
-  public fullName: string = 'Switch BLW';
+  public fullName: string = 'Switch (BLW 104)';
+  public legacyFullName = 'Switch BLW';
 }
 export class EnergySearchBLW extends EnergySearch {
   public setNumber = '93';
-  public fullName: string = 'Energy Search BLW';
+  public fullName: string = 'Energy Search (BLW 93)';
+  public legacyFullName = 'Energy Search BLW';
   public set = 'BLW';
 }
 
 export class EnergySwitchPKBLW extends EnergySwitchPK {
   public setNumber = '94';
-  public fullName: string = 'Energy Switch BLW';
+  public fullName: string = 'Energy Switch (BLW 94)';
+  public legacyFullName = 'Energy Switch BLW';
   public set = 'BLW';
 }
 
 export class FullHealBLW extends FullHeal {
   public setNumber = '95';
-  public fullName: string = 'Full Heal BLW';
+  public fullName: string = 'Full Heal (BLW 95)';
+  public legacyFullName = 'Full Heal BLW';
   public set = 'BLW';
 }
 
 export class PokeBallBLW extends PokeBall {
   public setNumber = '97';
-  public fullName: string = 'Poké Ball BLW';
+  public fullName: string = 'Poké Ball (BLW 97)';
+  public legacyFullName = 'Poké Ball BLW';
   public set = 'BLW';
 }
 
 export class PokemonCommunicationHSBLW extends PokemonCommunicationHS {
   public setNumber = '99';
-  public fullName: string = 'Pokemon Communication BLW';
+  public fullName: string = 'Pokémon Communication (BLW 99)';
+  public legacyFullName = 'Pokemon Communication BLW';
   public set = 'BLW';
 }
 
 export class PotionBLW extends Potion {
   public setNumber = '100';
-  public fullName: string = 'Potion BLW';
+  public fullName: string = 'Potion (BLW 100)';
+  public legacyFullName = 'Potion BLW';
   public set = 'BLW';
 }
 
 export class SuperScoopUpBLW extends SuperScoopUp {
   public setNumber = '103';
-  public fullName: string = 'Super Scoop Up BLW';
+  public fullName: string = 'Super Scoop Up (BLW 103)';
+  public legacyFullName = 'Super Scoop Up BLW';
   public set = 'BLW';
 }
 
 export class Reshiram2BLW extends ReshiramBLW26 {
   public setNumber = '113';
-  public fullName: string = 'Reshiram2 BLW';
+  public fullName: string = 'Reshiram (BLW 113)';
+  public legacyFullName = 'Reshiram2 BLW';
   public set = 'BLW';
 }
 
 export class Zekrom2BLW extends ZekromBLW47 {
   public setNumber = '114';
-  public fullName: string = 'Zekrom2 BLW';
+  public fullName: string = 'Zekrom (BLW 114)';
+  public legacyFullName = 'Zekrom2 BLW';
   public set = 'BLW';
 }

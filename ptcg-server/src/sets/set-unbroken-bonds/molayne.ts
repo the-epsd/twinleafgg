@@ -103,7 +103,8 @@ export class Molayne extends TrainerCard {
   public setNumber: string = '181';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Molayne';
-  public fullName: string = 'Molayne UNB';
+  public fullName: string = 'Molayne (UNB 181)';
+  public legacyFullName = 'Molayne UNB';
   public text: string = 'You can play this card only if you discard 2 [M] Energy cards from your hand. Shuffle a Trainer card from your discard pile into your deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-sword-and-shield/ordinary-rod.ts (generator pattern for multi-step trainer)

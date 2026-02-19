@@ -52,7 +52,8 @@ export class TeamRocketsPetrel extends TrainerCard {
   public tags = [CardTag.TEAM_ROCKET];
   public set: string = 'DRI';
   public name: string = 'Team Rocket\'s Petrel';
-  public fullName: string = 'Team Rocket\'s Petrel DRI';
+  public fullName: string = 'Team Rocket\'s Petrel (DRI 176)';
+  public legacyFullName = 'Team Rocket\'s Petrel DRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '176';
   public regulationMark = 'I';

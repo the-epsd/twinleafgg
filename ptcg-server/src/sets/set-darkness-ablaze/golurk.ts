@@ -34,5 +34,6 @@ export class Golurk extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golurk';
-  public fullName: string = 'Golurk DAA';
+  public fullName: string = 'Golurk (DAA 77)';
+  public legacyFullName = 'Golurk DAA';
 }

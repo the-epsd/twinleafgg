@@ -38,7 +38,8 @@ export class Cinderace3 extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cinderace';
-  public fullName: string = 'Cinderace SSH 36';
+  public fullName: string = 'Cinderace (SSH 36)';
+  public legacyFullName = 'Cinderace SSH 36';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flame Cloak

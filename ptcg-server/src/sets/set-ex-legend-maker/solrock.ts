@@ -37,7 +37,8 @@ export class Solrock extends PokemonCard {
 
   public set: string = 'LM';
   public name: string = 'Solrock';
-  public fullName: string = 'Solrock LM';
+  public fullName: string = 'Solrock (LM 25)';
+  public legacyFullName = 'Solrock LM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '25';
 

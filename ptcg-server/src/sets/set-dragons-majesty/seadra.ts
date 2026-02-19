@@ -22,7 +22,7 @@ export class Seadra extends PokemonCard {
       name: 'Hydro Pump',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage times the amount of [W] Energy attached to this Pokémon.'
     }
   ];
@@ -31,7 +31,8 @@ export class Seadra extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Seadra';
-  public fullName: string = 'Seadra DRM';
+  public fullName: string = 'Seadra (DRM 17)';
+  public legacyFullName = 'Seadra DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hydro Pump

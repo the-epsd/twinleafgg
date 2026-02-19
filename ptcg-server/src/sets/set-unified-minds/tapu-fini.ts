@@ -30,7 +30,8 @@ export class TapuFini extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tapu Fini';
-  public fullName: string = 'Tapu Fini UNM';
+  public fullName: string = 'Tapu Fini (UNM 53)';
+  public legacyFullName = 'Tapu Fini UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Nature Wave - reduce cost to [C] if opponent has Ultra Beasts

@@ -36,7 +36,8 @@ export class Heatmor extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heatmor';
-  public fullName: string = 'Heatmor BST';
+  public fullName: string = 'Heatmor (BST 26)';
+  public legacyFullName = 'Heatmor BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Burning Licks

@@ -26,7 +26,7 @@ export class Crabrawler extends PokemonCard {
       name: 'Knuckle Blast',
       cost: [F, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have more Prize cards remaining than your opponent, this attack does 60 more damage.'
     }
   ];
@@ -35,7 +35,8 @@ export class Crabrawler extends PokemonCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crabrawler';
-  public fullName: string = 'Crabrawler UNB';
+  public fullName: string = 'Crabrawler (UNB 104)';
+  public legacyFullName = 'Crabrawler UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Knuckle Blast

@@ -27,7 +27,8 @@ export class Kadabra extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
   public name: string = 'Kadabra';
-  public fullName: string = 'Kadabra TWM';
+  public fullName: string = 'Kadabra (TWM 81)';
+  public legacyFullName = 'Kadabra TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Psychic

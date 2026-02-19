@@ -71,7 +71,8 @@ export class Pokegear30 extends TrainerCard {
 
   public name: string = 'Pokegear 3.0';
 
-  public fullName: string = 'Pokegear SVI';
+  public fullName: string = 'Pokegear 3.0 (SVI 186)';
+  public legacyFullName = 'Pokegear SVI';
 
   public text: string =
     'Look at the top 7 cards of your deck. You may reveal a Supporter card ' +

@@ -23,7 +23,7 @@ export class Malamar extends PokemonCard {
       name: 'Rapid Strike Tentacles',
       cost: [P],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Reveal any number of Rapid Strike cards from your hand. This attack does 40 damage for each card you revealed in this way. Then, shuffle those cards into your deck.'
     }
   ];
@@ -33,7 +33,8 @@ export class Malamar extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Malamar';
-  public fullName: string = 'Malamar CRE';
+  public fullName: string = 'Malamar (CRE 70)';
+  public legacyFullName = 'Malamar CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rapid Strike Tentacles

@@ -37,7 +37,8 @@ export class Stunfisk2 extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stunfisk';
-  public fullName: string = 'Stunfisk LTR 83';
+  public fullName: string = 'Stunfisk (LTR 83)';
+  public legacyFullName = 'Stunfisk LTR 83';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Muddy Water

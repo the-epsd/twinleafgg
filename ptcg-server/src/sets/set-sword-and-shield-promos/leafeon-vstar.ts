@@ -46,7 +46,8 @@ export class LeafeonVSTAR extends PokemonCard {
 
   public name = 'Leafeon VSTAR';
 
-  public fullName = 'Leafeon VSTAR SWSH';
+  public fullName = 'Leafeon VSTAR (SWSH 195)';
+  public legacyFullName = 'Leafeon VSTAR SWSH';
 
   public readonly LEAF_GUARD_MARKER = 'LEAF_GUARD_MARKER';
 

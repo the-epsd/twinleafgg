@@ -36,7 +36,8 @@ export class Silcoon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Silcoon';
-  public fullName: string = 'Silcoon LOR';
+  public fullName: string = 'Silcoon (LOR 7)';
+  public legacyFullName = 'Silcoon LOR';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
 

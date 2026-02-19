@@ -74,7 +74,8 @@ export class EscapeRope extends TrainerCard {
 
   public name: string = 'Escape Rope';
 
-  public fullName: string = 'Escape Rope PLS';
+  public fullName: string = 'Escape Rope (PLS 120)';
+  public legacyFullName = 'Escape Rope PLS';
 
   public cardImage: string = 'assets/cardback.png';
 

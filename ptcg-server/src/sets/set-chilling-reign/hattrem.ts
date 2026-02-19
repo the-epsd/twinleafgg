@@ -32,7 +32,8 @@ export class Hattrem extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hattrem';
-  public fullName: string = 'Hattrem CRE';
+  public fullName: string = 'Hattrem (CRE 72)';
+  public legacyFullName = 'Hattrem CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spiral Drain

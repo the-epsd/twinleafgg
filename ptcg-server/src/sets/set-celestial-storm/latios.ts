@@ -22,7 +22,7 @@ export class Latios extends PokemonCard {
       name: 'Dragon Fleet',
       cost: [C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 50 damage for each of your Evolution Dragon Pokémon in play.'
     }
   ];
@@ -31,7 +31,8 @@ export class Latios extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Latios \u25C7';
-  public fullName: string = 'Latios \u25C7 CES';
+  public fullName: string = 'Latios \u25C7 (CES 108)';
+  public legacyFullName = 'Latios \u25C7 CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dragon Fleet

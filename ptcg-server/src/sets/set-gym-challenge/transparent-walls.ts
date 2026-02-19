@@ -14,7 +14,8 @@ export class TransparentWalls extends TrainerCard {
   public set: string = 'G2';
   public setNumber = '125';
   public name: string = 'Transparent Walls';
-  public fullName: string = 'Transparent Walls G2';
+  public fullName: string = 'Transparent Walls (G2 125)';
+  public legacyFullName = 'Transparent Walls G2';
   public cardImage: string = 'assets/cardback.png';
   public text: string = 'Until the end of your opponent\'s next turn, prevent all damage from attacks done to your Benched Pokémon. (Any other effects of attacks still happen.)';
 

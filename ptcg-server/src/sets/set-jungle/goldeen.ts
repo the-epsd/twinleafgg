@@ -25,6 +25,7 @@ export class Goldeen extends PokemonCard {
 
   public name: string = 'Goldeen';
 
-  public fullName: string = 'Goldeen JU';
+  public fullName: string = 'Goldeen (JU 53)';
+  public legacyFullName = 'Goldeen JU';
 
 }

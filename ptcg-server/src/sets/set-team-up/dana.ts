@@ -15,7 +15,8 @@ export class Dana extends TrainerCard {
   public setNumber: string = '137';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dana';
-  public fullName: string = 'Dana TEU';
+  public fullName: string = 'Dana (TEU 137)';
+  public legacyFullName = 'Dana TEU';
   public text: string = 'You can play this card only if your opponent\'s Active Pokémon is a Stage 2 Pokémon. Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-celestial-storm/mawile.ts (SEARCH_DECK_FOR_CARDS_TO_HAND)

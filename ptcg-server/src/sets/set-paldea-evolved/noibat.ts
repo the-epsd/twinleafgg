@@ -30,6 +30,7 @@ export class Noibat extends PokemonCard {
 
   public name: string = 'Noibat';
 
-  public fullName: string = 'Noibat PAL';
+  public fullName: string = 'Noibat (PAL 152)';
+  public legacyFullName = 'Noibat PAL';
 
 }

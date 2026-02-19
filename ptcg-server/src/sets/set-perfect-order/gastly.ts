@@ -23,7 +23,8 @@ export class Gastly extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '47';
   public name: string = 'Gastly';
-  public fullName: string = 'Gastly M3';
+  public fullName: string = 'Gastly (M3 47)';
+  public legacyFullName = 'Gastly M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Surprise Attack - coin flip

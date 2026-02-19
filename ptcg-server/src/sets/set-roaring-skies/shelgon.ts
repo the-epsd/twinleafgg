@@ -37,7 +37,8 @@ export class Shelgon extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shelgon';
-  public fullName: string = 'Shelgon ROS';
+  public fullName: string = 'Shelgon (ROS 56)';
+  public legacyFullName = 'Shelgon ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Exoskeleton (passive - damage reduction)

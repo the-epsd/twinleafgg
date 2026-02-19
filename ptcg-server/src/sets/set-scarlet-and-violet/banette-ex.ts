@@ -50,7 +50,8 @@ export class Banetteex extends PokemonCard {
 
   public name: string = 'Banette ex';
 
-  public fullName: string = 'Banette ex SVI';
+  public fullName: string = 'Banette ex (SVI 88)';
+  public legacyFullName = 'Banette ex SVI';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 

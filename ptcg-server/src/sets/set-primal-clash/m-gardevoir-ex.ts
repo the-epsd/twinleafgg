@@ -24,7 +24,7 @@ export class MGardevoirEx extends PokemonCard {
       name: 'Brilliant Arrow',
       cost: [Y, C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 30 damage times the amount of [Y] Energy attached to all of your Pokémon.'
     }
   ];
@@ -33,7 +33,8 @@ export class MGardevoirEx extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Gardevoir-EX';
-  public fullName: string = 'M Gardevoir-EX PRC';
+  public fullName: string = 'M Gardevoir-EX (PRC 106)';
+  public legacyFullName = 'M Gardevoir-EX PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Brilliant Arrow

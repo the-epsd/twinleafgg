@@ -21,7 +21,8 @@ export class Onix extends PokemonCard {
 
   public setNumber = '56';
 
-  public fullName = 'Onix BS';
+  public fullName = 'Onix (BS 56)';
+  public legacyFullName = 'Onix BS';
 
   public stage = Stage.BASIC;
 

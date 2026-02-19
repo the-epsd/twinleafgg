@@ -41,7 +41,8 @@ export class HopsRookidee extends PokemonCard {
 
   public name: string = 'Hop\'s Rookidee';
 
-  public fullName: string = 'Hop\'s Rookidee JTG';
+  public fullName: string = 'Hop\'s Rookidee (JTG 133)';
+  public legacyFullName = 'Hop\'s Rookidee JTG';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER';

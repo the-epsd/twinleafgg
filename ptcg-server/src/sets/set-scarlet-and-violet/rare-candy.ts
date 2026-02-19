@@ -135,7 +135,8 @@ export class RareCandy extends TrainerCard {
 
   public name: string = 'Rare Candy';
 
-  public fullName: string = 'Rare Candy SVI';
+  public fullName: string = 'Rare Candy (SVI 191)';
+  public legacyFullName = 'Rare Candy SVI';
 
   public text: string =
     'Choose 1 of your Basic Pokemon in play. If you have a Stage 2 card in ' +

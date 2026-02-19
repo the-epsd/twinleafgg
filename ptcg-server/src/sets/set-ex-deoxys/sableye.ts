@@ -35,7 +35,8 @@ export class Sableye extends PokemonCard {
   public setNumber = '23';
   public cardImage = 'assets/cardback.png';
   public name = 'Sableye';
-  public fullName = 'Sableye DX';
+  public fullName = 'Sableye (DX 23)';
+  public legacyFullName = 'Sableye DX';
 
   public readonly NIGHT_VISION_MARKER = 'NIGHT_VISION_MARKER';
   public readonly OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_SUPPORTER_CARDS_MARKER';

@@ -27,7 +27,8 @@ export class Rabsca extends PokemonCard {
 
   public name: string = 'Rabsca';
 
-  public fullName: string = 'Rabsca SSP';
+  public fullName: string = 'Rabsca (SSP 14)';
+  public legacyFullName = 'Rabsca SSP';
 
   public setNumber: string = '14';
 

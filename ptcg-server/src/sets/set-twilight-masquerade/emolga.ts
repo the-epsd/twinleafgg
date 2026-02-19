@@ -37,7 +37,8 @@ export class Emolga extends PokemonCard {
 
   public name: string = 'Emolga';
 
-  public fullName: string = 'Emolga TWM';
+  public fullName: string = 'Emolga (TWM 69)';
+  public legacyFullName = 'Emolga TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

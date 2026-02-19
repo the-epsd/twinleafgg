@@ -35,7 +35,8 @@ export class BlastoisePiplupGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '38';
   public name: string = 'Blastoise & Piplup-GX';
-  public fullName: string = 'Blastoise & Piplup-GX CEC';
+  public fullName: string = 'Blastoise & Piplup-GX (CEC 38)';
+  public legacyFullName = 'Blastoise & Piplup-GX CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Splash Maker

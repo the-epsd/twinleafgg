@@ -23,7 +23,8 @@ export class Charmander extends PokemonCard {
 
   public name: string = 'Charmander';
 
-  public fullName: string = 'Charmander HIF';
+  public fullName: string = 'Charmander (HIF 7)';
+  public legacyFullName = 'Charmander HIF';
 
   public cardImage: string = 'assets/cardback.png';
 

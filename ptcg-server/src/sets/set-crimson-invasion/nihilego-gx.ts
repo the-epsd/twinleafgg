@@ -43,7 +43,8 @@ export class NihilegoGx extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nihilego-GX';
-  public fullName: string = 'Nihilego-GX CIN';
+  public fullName: string = 'Nihilego-GX (CIN 49)';
+  public legacyFullName = 'Nihilego-GX CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Empty Light (on-play-from-hand)

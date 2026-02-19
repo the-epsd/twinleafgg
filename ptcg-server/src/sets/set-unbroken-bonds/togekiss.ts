@@ -41,7 +41,8 @@ export class Togekiss extends PokemonCard {
   public setNumber: string = '138';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togekiss';
-  public fullName: string = 'Togekiss UNB';
+  public fullName: string = 'Togekiss (UNB 138)';
+  public legacyFullName = 'Togekiss UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fairy Feast

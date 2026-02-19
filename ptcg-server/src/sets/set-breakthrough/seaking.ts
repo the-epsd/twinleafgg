@@ -25,7 +25,7 @@ export class Seaking extends PokemonCard {
       name: 'Soaking Horn',
       cost: [W],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon was healed during this turn, this attack does 80 more damage.'
     },
     {
@@ -40,7 +40,8 @@ export class Seaking extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Seaking';
-  public fullName: string = 'Seaking BKT';
+  public fullName: string = 'Seaking (BKT 28)';
+  public legacyFullName = 'Seaking BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track if this Pokemon was healed this turn

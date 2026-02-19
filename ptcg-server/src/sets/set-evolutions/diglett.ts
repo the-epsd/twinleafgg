@@ -36,7 +36,8 @@ export class Diglett extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Diglett';
-  public fullName: string = 'Diglett EVO';
+  public fullName: string = 'Diglett (EVO 55)';
+  public legacyFullName = 'Diglett EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Submerge (passive - prevent all damage when on bench)

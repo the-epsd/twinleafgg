@@ -17,7 +17,8 @@ export class Allister extends TrainerCard {
   public setNumber: string = '146';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Allister';
-  public fullName: string = 'Allister VIV';
+  public fullName: string = 'Allister (VIV 146)';
+  public legacyFullName = 'Allister VIV';
   public text: string = 'Draw 3 cards. If you drew any cards in this way, discard up to 3 cards from your hand. (You must discard at least 1 card.) You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

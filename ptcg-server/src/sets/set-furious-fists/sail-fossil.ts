@@ -64,7 +64,8 @@ export class SailFossil extends TrainerCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sail Fossil';
-  public fullName: string = 'Sail Fossil FFI';
+  public fullName: string = 'Sail Fossil (FFI 98)';
+  public legacyFullName = 'Sail Fossil FFI';
   public text: string = 'Look at the bottom 7 cards of your deck. You may reveal an Amaura you find there and put it onto your Bench. Shuffle the other cards back into your deck.';
 
   // Ref: set-noble-victories/cover-fossil.ts (bottom 7 fossil pattern)

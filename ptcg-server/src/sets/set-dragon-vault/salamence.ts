@@ -35,7 +35,8 @@ export class Salamence extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salamence';
-  public fullName: string = 'Salamence DRV';
+  public fullName: string = 'Salamence (DRV 8)';
+  public legacyFullName = 'Salamence DRV';
 
   public readonly SCORNFUL_STORM_MARKER = 'SCORNFUL_STORM_MARKER';
 

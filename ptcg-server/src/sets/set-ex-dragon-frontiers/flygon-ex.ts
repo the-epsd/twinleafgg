@@ -31,7 +31,8 @@ export class Flygonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
   public name: string = 'Flygon ex';
-  public fullName: string = 'Flygon ex DF 92';
+  public fullName: string = 'Flygon ex (DF 92)';
+  public legacyFullName = 'Flygon ex DF 92';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

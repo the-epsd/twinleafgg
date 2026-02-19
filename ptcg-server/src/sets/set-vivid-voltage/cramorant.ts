@@ -22,7 +22,7 @@ export class Cramorant extends PokemonCard {
       name: 'Continuous Gulp Missile',
       cost: [C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard any number of Arrokuda from your Bench. This attack does 60 damage for each Arrokuda you discarded in this way.'
     }
   ];
@@ -32,7 +32,8 @@ export class Cramorant extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cramorant';
-  public fullName: string = 'Cramorant VIV';
+  public fullName: string = 'Cramorant (VIV 40)';
+  public legacyFullName = 'Cramorant VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Gulp Missile

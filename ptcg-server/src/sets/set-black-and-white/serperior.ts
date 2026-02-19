@@ -33,7 +33,8 @@ export class Serperior extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
   public name: string = 'Serperior';
-  public fullName: string = 'Serperior BLW 5';
+  public fullName: string = 'Serperior (BLW 5)';
+  public legacyFullName = 'Serperior BLW 5';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

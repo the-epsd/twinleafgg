@@ -30,7 +30,7 @@ export class Hitmontop extends PokemonCard {
       name: 'Tornado Kick',
       cost: [F, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you played Bea from your hand during this turn, this attack does 80 more damage.'
     }
   ];
@@ -40,7 +40,8 @@ export class Hitmontop extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hitmontop';
-  public fullName: string = 'Hitmontop VIV';
+  public fullName: string = 'Hitmontop (VIV 88)';
+  public legacyFullName = 'Hitmontop VIV';
 
   public readonly BEA_PLAYED_MARKER = 'HITMONTOP_VIV_BEA_PLAYED_MARKER';
 

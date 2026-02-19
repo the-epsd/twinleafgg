@@ -21,7 +21,7 @@ export class Machamp extends PokemonCard {
       name: 'Settle the Score',
       cost: [F, F],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 80 more damage for each Prize card your opponent took on their last turn.'
     },
     {
@@ -36,7 +36,8 @@ export class Machamp extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machamp';
-  public fullName: string = 'Machamp GRI';
+  public fullName: string = 'Machamp (GRI 65)';
+  public legacyFullName = 'Machamp GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Settle the Score

@@ -37,7 +37,8 @@ export class Araquanid extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Araquanid';
-  public fullName: string = 'Araquanid SUM';
+  public fullName: string = 'Araquanid (SUM 46)';
+  public legacyFullName = 'Araquanid SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Water Bubble (passive - prevent damage from Fire Pokemon)

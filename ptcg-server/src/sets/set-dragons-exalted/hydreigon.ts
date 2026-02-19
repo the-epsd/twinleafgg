@@ -91,7 +91,8 @@ export class Hydreigon extends PokemonCard {
 
   public name: string = 'Hydreigon';
 
-  public fullName: string = 'Hydreigon DRX';
+  public fullName: string = 'Hydreigon (DRX 97)';
+  public legacyFullName = 'Hydreigon DRX';
 
   public cardImage: string = 'assets/cardback.png';
 

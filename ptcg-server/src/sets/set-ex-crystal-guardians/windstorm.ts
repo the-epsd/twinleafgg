@@ -12,7 +12,8 @@ export class Windstorm extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'CG';
   public name: string = 'Windstorm';
-  public fullName: string = 'Windstorm CG';
+  public fullName: string = 'Windstorm (CG 85)';
+  public legacyFullName = 'Windstorm CG';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
 

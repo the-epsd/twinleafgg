@@ -19,7 +19,8 @@ export class Sightseer extends TrainerCard {
 
   public name: string = 'Sightseer';
 
-  public fullName: string = 'Sightseer LOT';
+  public fullName: string = 'Sightseer (LOT 189)';
+  public legacyFullName = 'Sightseer LOT';
 
   public text: string = 'You may discard any number of cards from your hand. Then, draw cards until you have 5 cards in your hand. ' +
     'If you can\'t draw any cards in this way, you can\'t play this card.';

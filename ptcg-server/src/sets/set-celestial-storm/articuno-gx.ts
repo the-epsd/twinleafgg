@@ -44,7 +44,8 @@ export class ArticunoGX extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Articuno-GX';
-  public fullName: string = 'Articuno-GX CES';
+  public fullName: string = 'Articuno-GX (CES 31)';
+  public legacyFullName = 'Articuno-GX CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Legendary Ascent

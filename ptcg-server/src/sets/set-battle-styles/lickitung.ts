@@ -32,5 +32,6 @@ export class Lickitung extends PokemonCard {
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lickitung';
-  public fullName: string = 'Lickitung BST';
+  public fullName: string = 'Lickitung (BST 113)';
+  public legacyFullName = 'Lickitung BST';
 }

@@ -33,7 +33,8 @@ export class Skorupi extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skorupi';
-  public fullName: string = 'Skorupi UPR';
+  public fullName: string = 'Skorupi (UPR 54)';
+  public legacyFullName = 'Skorupi UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hone Claws

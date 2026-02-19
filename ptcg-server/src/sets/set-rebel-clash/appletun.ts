@@ -38,7 +38,8 @@ export class Appletun extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Appletun';
-  public fullName: string = 'Appletun RCL';
+  public fullName: string = 'Appletun (RCL 23)';
+  public legacyFullName = 'Appletun RCL';
 
   public readonly DELICIOUS_AROMA_MARKER = 'DELICIOUS_AROMA_MARKER';
 

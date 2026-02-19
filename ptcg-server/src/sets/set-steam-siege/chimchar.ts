@@ -35,7 +35,8 @@ export class Chimchar extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chimchar';
-  public fullName: string = 'Chimchar STS';
+  public fullName: string = 'Chimchar (STS 18)';
+  public legacyFullName = 'Chimchar STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Ember

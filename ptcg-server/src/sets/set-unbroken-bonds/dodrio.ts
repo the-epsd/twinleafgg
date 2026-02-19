@@ -22,7 +22,7 @@ export class Dodrio extends PokemonCard {
       name: 'Tri Attack',
       cost: [C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 60 damage for each heads.'
     },
     {
@@ -37,7 +37,8 @@ export class Dodrio extends PokemonCard {
   public setNumber: string = '151';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dodrio';
-  public fullName: string = 'Dodrio UNB';
+  public fullName: string = 'Dodrio (UNB 151)';
+  public legacyFullName = 'Dodrio UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tri Attack

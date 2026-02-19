@@ -11,7 +11,8 @@ export class ElectricMemory extends TrainerCard {
   public setNumber: string = '121';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electric Memory';
-  public fullName: string = 'Electric Memory UPR';
+  public fullName: string = 'Electric Memory (UPR 121)';
+  public legacyFullName = 'Electric Memory UPR';
   public text: string = 'The Silvally-GX this card is attached to is a Lightning Pokémon.';
 
   // Ref: set-crimson-invasion/psychic-memory.ts (Psychic Memory - CheckPokemonTypeEffect tool)

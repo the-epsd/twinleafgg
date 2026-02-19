@@ -48,7 +48,8 @@ export class ZamazentaV extends PokemonCard {
 
   public name: string = 'Zamazenta V';
 
-  public fullName: string = 'Zamazenta V CRZ';
+  public fullName: string = 'Zamazenta V (CRZ 98)';
+  public legacyFullName = 'Zamazenta V CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

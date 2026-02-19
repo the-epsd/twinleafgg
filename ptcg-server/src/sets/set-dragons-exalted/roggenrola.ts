@@ -36,7 +36,8 @@ export class Roggenrola extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Roggenrola';
-  public fullName: string = 'Roggenrola DRX';
+  public fullName: string = 'Roggenrola (DRX 65)';
+  public legacyFullName = 'Roggenrola DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

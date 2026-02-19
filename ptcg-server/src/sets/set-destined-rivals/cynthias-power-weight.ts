@@ -15,7 +15,8 @@ export class CynthiasPowerWeight extends TrainerCard {
   public setNumber: string = '162';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cynthia\'s Power Weight';
-  public fullName: string = 'Cynthia\'s Power Weight DRI';
+  public fullName: string = 'Cynthia\'s Power Weight (DRI 162)';
+  public legacyFullName = 'Cynthia\'s Power Weight DRI';
 
   public text: string =
     'The Cynthia\'s Pokémon this card is attached to gets +70 HP.';

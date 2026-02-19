@@ -75,7 +75,8 @@ export class Gengar extends PokemonCard {
 
   public name: string = 'Gengar';
 
-  public fullName: string = 'Gengar PAF';
+  public fullName: string = 'Gengar (PAF 57)';
+  public legacyFullName = 'Gengar PAF';
 
   public readonly NIGHT_GATE_MARKER = 'NIGHT_GATE_MARKER';
 

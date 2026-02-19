@@ -33,7 +33,8 @@ export class Spiritomb extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spiritomb';
-  public fullName: string = 'Spiritomb TEU';
+  public fullName: string = 'Spiritomb (TEU 89)';
+  public legacyFullName = 'Spiritomb TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spirit Compressor

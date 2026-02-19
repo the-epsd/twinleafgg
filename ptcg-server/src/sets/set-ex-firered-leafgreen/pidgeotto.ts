@@ -32,7 +32,8 @@ export class Pidgeotto extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
   public name: string = 'Pidgeotto';
-  public fullName: string = 'Pidgeotto RG';
+  public fullName: string = 'Pidgeotto (RG 45)';
+  public legacyFullName = 'Pidgeotto RG';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

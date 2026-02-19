@@ -76,7 +76,8 @@ export class TurffieldStadium extends TrainerCard {
 
   public name = 'Turffield Stadium';
 
-  public fullName = 'Turffield Stadium CPA';
+  public fullName = 'Turffield Stadium (CPA 68)';
+  public legacyFullName = 'Turffield Stadium CPA';
   
   public  text = 'Once during each player\'s turn, that player may search their deck for an Evolution [G] Pokémon, reveal it, and put it into their hand. Then, that player shuffles their deck.';
     

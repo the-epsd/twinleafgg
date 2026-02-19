@@ -27,7 +27,7 @@ export class Marshtomp extends PokemonCard {
       name: 'Endeavor',
       cost: [W, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Marshtomp extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marshtomp';
-  public fullName: string = 'Marshtomp PRC';
+  public fullName: string = 'Marshtomp (PRC 34)';
+  public legacyFullName = 'Marshtomp PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Endeavor

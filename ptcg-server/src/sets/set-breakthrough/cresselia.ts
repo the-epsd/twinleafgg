@@ -36,7 +36,8 @@ export class Cresselia extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cresselia';
-  public fullName: string = 'Cresselia BKT';
+  public fullName: string = 'Cresselia (BKT 70)';
+  public legacyFullName = 'Cresselia BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: My Way (passive - reduce retreat cost to 0 if stadium in play)

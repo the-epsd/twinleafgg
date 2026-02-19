@@ -11,7 +11,8 @@ export class SurpriseTimeMachine extends TrainerCard {
   public tags = [CardTag.ROCKETS_SECRET_MACHINE];
   public set: string = 'TRR';
   public name: string = 'Surprise! Time Machine';
-  public fullName: string = 'Surprise! Time Machine TRR';
+  public fullName: string = 'Surprise! Time Machine (TRR 91)';
+  public legacyFullName = 'Surprise! Time Machine TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public text = 'Choose 1 of your Evolved Pokémon, remove the highest Stage Evolution card from it, and shuffle it into your deck (this counts as devolving that Pokémon). If that Pokémon remains in play, search your deck for an Evolution card that evolves from that Pokémon and put it onto that Pokémon (this counts as evolving that Pokémon). Shuffle your deck afterward.';

@@ -29,7 +29,8 @@ export class Pansage extends PokemonCard {
 
   public name: string = 'Pansage';
 
-  public fullName: string = 'Pansage BLW';
+  public fullName: string = 'Pansage (BLW 7)';
+  public legacyFullName = 'Pansage BLW';
 
   public cardImage: string = 'assets/cardback.png';
 

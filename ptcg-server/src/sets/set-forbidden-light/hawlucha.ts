@@ -28,7 +28,7 @@ export class Hawlucha extends PokemonCard {
       name: 'Sky Drop',
       cost: [C, C, C],
       damage: 80,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-' as const,
       text: 'This attack does 20 less damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];
@@ -37,7 +37,8 @@ export class Hawlucha extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hawlucha';
-  public fullName: string = 'Hawlucha FLI';
+  public fullName: string = 'Hawlucha (FLI 70)';
+  public legacyFullName = 'Hawlucha FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Sky Drop

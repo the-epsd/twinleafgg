@@ -37,7 +37,8 @@ export class Carbink extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carbink';
-  public fullName: string = 'Carbink ROS';
+  public fullName: string = 'Carbink (ROS 47)';
+  public legacyFullName = 'Carbink ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Jewel Armor (passive - prevent all damage when on bench)

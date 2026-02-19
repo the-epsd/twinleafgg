@@ -60,7 +60,8 @@ export class Glimmet2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '124';
   public name: string = 'Glimmet';
-  public fullName: string = 'Glimmet PAL2';
+  public fullName: string = 'Glimmet (PAL 124)';
+  public legacyFullName = 'Glimmet PAL2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -31,7 +31,8 @@ export class Aegislash extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '57';
   public name: string = 'Aegislash';
-  public fullName: string = 'Aegislash M3';
+  public fullName: string = 'Aegislash (M3 57)';
+  public legacyFullName = 'Aegislash M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Metal Slash - can't attack next turn

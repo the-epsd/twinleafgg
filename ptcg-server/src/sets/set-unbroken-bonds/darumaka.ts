@@ -34,7 +34,8 @@ export class Darumaka extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Darumaka';
-  public fullName: string = 'Darumaka UNB';
+  public fullName: string = 'Darumaka (UNB 23)';
+  public legacyFullName = 'Darumaka UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flame Charge

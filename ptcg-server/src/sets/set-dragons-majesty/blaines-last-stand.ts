@@ -16,7 +16,8 @@ export class BlaineSLastStand extends TrainerCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blaine\'s Last Stand';
-  public fullName: string = 'Blaine\'s Last Stand DRM';
+  public fullName: string = 'Blaine\'s Last Stand (DRM 58)';
+  public legacyFullName = 'Blaine\'s Last Stand DRM';
   public text: string = 'You can play this card only when it is the last card in your hand.\n\nDraw 2 cards for each Fire Pokémon you have in play.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

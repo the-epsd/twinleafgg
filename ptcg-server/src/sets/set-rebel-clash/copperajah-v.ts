@@ -39,7 +39,8 @@ export class CopperajahV extends PokemonCard {
   public setNumber: string = '136';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Copperajah V';
-  public fullName: string = 'Copperajah V RCL';
+  public fullName: string = 'Copperajah V (RCL 136)';
+  public legacyFullName = 'Copperajah V RCL';
 
   public readonly REDUCE_DAMAGE_MARKER = 'COPPERAJAH_V_RCL_REDUCE_DAMAGE_MARKER';
   public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'COPPERAJAH_V_RCL_CLEAR_REDUCE_DAMAGE_MARKER';

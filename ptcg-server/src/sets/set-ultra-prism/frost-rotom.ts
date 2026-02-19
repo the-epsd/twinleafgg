@@ -25,7 +25,7 @@ export class FrostRotom extends PokemonCard {
       name: 'Frost Crush',
       cost: [W, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage times the amount of Energy attached to all of your opponent\'s Pokémon.'
     }
   ];
@@ -34,7 +34,8 @@ export class FrostRotom extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Frost Rotom';
-  public fullName: string = 'Frost Rotom UPR';
+  public fullName: string = 'Frost Rotom (UPR 41)';
+  public legacyFullName = 'Frost Rotom UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Roto Motor (passive - ignore energy cost if 9+ tools in discard)

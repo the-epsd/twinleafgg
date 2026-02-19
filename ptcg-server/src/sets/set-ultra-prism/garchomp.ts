@@ -35,7 +35,8 @@ export class Garchomp extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '99';
   public name: string = 'Garchomp';
-  public fullName: string = 'Garchomp UPR';
+  public fullName: string = 'Garchomp (UPR 99)';
+  public legacyFullName = 'Garchomp UPR';
 
   private readonly CYNTHIA_MARKER = 'CYNTHIA_MARKER';
 

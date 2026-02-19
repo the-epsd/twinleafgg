@@ -37,7 +37,8 @@ export class Luxio extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luxio';
-  public fullName: string = 'Luxio BKP';
+  public fullName: string = 'Luxio (BKP 45)';
+  public legacyFullName = 'Luxio BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Thunder Fang

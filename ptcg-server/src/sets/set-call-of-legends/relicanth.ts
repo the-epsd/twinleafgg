@@ -41,7 +41,8 @@ export class Relicanth extends PokemonCard {
 
   public name: string = 'Relicanth';
 
-  public fullName: string = 'Relicanth CL';
+  public fullName: string = 'Relicanth (CL 69)';
+  public legacyFullName = 'Relicanth CL';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

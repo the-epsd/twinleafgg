@@ -40,7 +40,8 @@ export class Machamp extends PokemonCard {
 
   public name: string = 'Machamp';
 
-  public fullName: string = 'Machamp LOR';
+  public fullName: string = 'Machamp (LOR 88)';
+  public legacyFullName = 'Machamp LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

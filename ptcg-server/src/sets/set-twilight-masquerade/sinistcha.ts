@@ -32,7 +32,8 @@ export class Sinistcha extends PokemonCard {
 
   public set: string = 'TWM';
   public name: string = 'Sinistcha';
-  public fullName: string = 'Sinistcha TWM';
+  public fullName: string = 'Sinistcha (TWM 22)';
+  public legacyFullName = 'Sinistcha TWM';
   public regulationMark = 'H';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '22';

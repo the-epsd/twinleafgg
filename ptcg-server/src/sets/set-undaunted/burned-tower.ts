@@ -15,7 +15,8 @@ export class BurnedTower extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'UD';
   public name = 'Burned Tower';
-  public fullName = 'Burned Tower UD';
+  public fullName = 'Burned Tower (UD 71)';
+  public legacyFullName = 'Burned Tower UD';
 
   public text = 'Once during each player\'s turn, that player may flip a coin. If heads, the player searches his or her discard pile for a basic Energy card, shows it to his or her opponent, and puts it into his or her hand.';
 

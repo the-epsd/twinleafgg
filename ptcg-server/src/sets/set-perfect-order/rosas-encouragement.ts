@@ -12,7 +12,8 @@ export class RosasEncouragement extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '75';
   public name: string = 'Rosa\'s Encouragement';
-  public fullName: string = 'Rosa\'s Encouragement M3';
+  public fullName: string = 'Rosa\'s Encouragement (M3 75)';
+  public legacyFullName = 'Rosa\'s Encouragement M3';
   public text: string = 'You can\'t use this card if you have more Prize cards remaining than your opponent.\n\nAttach up to 2 Basic Energy cards from your discard pile to 1 of your Stage 2 Pokemon.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean | undefined {

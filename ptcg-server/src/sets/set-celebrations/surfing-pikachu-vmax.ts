@@ -33,7 +33,8 @@ export class SurfingPikachuVmax extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Surfing Pikachu VMAX';
-  public fullName: string = 'Surfing Pikachu VMAX CEL';
+  public fullName: string = 'Surfing Pikachu VMAX (CEL 9)';
+  public legacyFullName = 'Surfing Pikachu VMAX CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Max Surfer

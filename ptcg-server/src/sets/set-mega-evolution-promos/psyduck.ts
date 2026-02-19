@@ -30,7 +30,8 @@ export class Psyduck extends PokemonCard {
   public setNumber = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Psyduck';
-  public fullName: string = 'Psyduck SVP';
+  public fullName: string = 'Psyduck (MEP 7)';
+  public legacyFullName = 'Psyduck SVP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Damp') {

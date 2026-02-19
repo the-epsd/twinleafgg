@@ -35,7 +35,8 @@ export class Bounsweet extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bounsweet';
-  public fullName: string = 'Bounsweet DAA';
+  public fullName: string = 'Bounsweet (DAA 14)';
+  public legacyFullName = 'Bounsweet DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Synthesis

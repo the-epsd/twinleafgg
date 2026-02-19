@@ -34,7 +34,8 @@ export class Galvantula extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
   public name: string = 'Galvantula';
-  public fullName: string = 'Galvantula BLW';
+  public fullName: string = 'Galvantula (BLW 46)';
+  public legacyFullName = 'Galvantula BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Leech Life - heal same amount as damage dealt

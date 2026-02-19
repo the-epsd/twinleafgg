@@ -28,7 +28,7 @@ export class Darmanitan extends PokemonCard {
       name: 'Darmani-Hands',
       cost: [R, R, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 4 coins. This attack does 50 more damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Darmanitan extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Darmanitan';
-  public fullName: string = 'Darmanitan DRM';
+  public fullName: string = 'Darmanitan (DRM 9)';
+  public legacyFullName = 'Darmanitan DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Heat Assist

@@ -20,7 +20,7 @@ export class Larvitar2 extends PokemonCard {
       name: 'Second Strike',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon already has 3 or more damage counters on it, this attack does 70 more damage.'
     }
   ];
@@ -29,7 +29,8 @@ export class Larvitar2 extends PokemonCard {
   public setNumber: string = '115';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Larvitar';
-  public fullName: string = 'Larvitar LOT 115';
+  public fullName: string = 'Larvitar (LOT 115)';
+  public legacyFullName = 'Larvitar LOT 115';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Second Strike

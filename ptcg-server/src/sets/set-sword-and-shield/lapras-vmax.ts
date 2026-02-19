@@ -23,7 +23,7 @@ export class LaprasVmax extends PokemonCard {
       name: 'G-Max Pump',
       cost: [C, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each [W] Energy attached to this Pokémon.'
     }
   ];
@@ -33,7 +33,8 @@ export class LaprasVmax extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lapras VMAX';
-  public fullName: string = 'Lapras VMAX SSH';
+  public fullName: string = 'Lapras VMAX (SSH 50)';
+  public legacyFullName = 'Lapras VMAX SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: G-Max Pump

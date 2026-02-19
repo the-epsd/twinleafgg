@@ -40,7 +40,8 @@ export class TeamAquasKyogre extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Team Aqua\'s Kyogre';
-  public fullName: string = 'Team Aqua\'s Kyogre MA';
+  public fullName: string = 'Team Aqua\'s Kyogre (MA 3)';
+  public legacyFullName = 'Team Aqua\'s Kyogre MA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

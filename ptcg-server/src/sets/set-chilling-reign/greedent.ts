@@ -35,7 +35,8 @@ export class Greedent extends PokemonCard {
   public setNumber: string = '128';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Greedent';
-  public fullName: string = 'Greedent CRE';
+  public fullName: string = 'Greedent (CRE 128)';
+  public legacyFullName = 'Greedent CRE';
 
   public reduceEffect(_store: StoreLike, state: State, _effect: Effect): State {
     // Ability: Brazen Tail

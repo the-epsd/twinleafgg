@@ -22,7 +22,7 @@ export class Golurk extends PokemonCard {
       name: 'Triple Smash',
       cost: [P, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 3 coins. This attack does 60 more damage for each heads.'
     },
     {
@@ -37,7 +37,8 @@ export class Golurk extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golurk';
-  public fullName: string = 'Golurk SLG';
+  public fullName: string = 'Golurk (SLG 44)';
+  public legacyFullName = 'Golurk SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Triple Smash

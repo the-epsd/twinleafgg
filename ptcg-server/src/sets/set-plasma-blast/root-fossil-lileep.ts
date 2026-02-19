@@ -60,7 +60,8 @@ export class RootFossilLileep extends TrainerCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Root Fossil Lileep';
-  public fullName: string = 'Root Fossil Lileep PLB';
+  public fullName: string = 'Root Fossil Lileep (PLB 87)';
+  public legacyFullName = 'Root Fossil Lileep PLB';
   public text: string = 'Look at the bottom 7 cards of your deck. You may reveal a Lileep you find there and put it onto your Bench. Shuffle the other cards back into your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

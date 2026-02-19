@@ -33,7 +33,8 @@ export class Dragonite extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragonite';
-  public fullName: string = 'Dragonite DRV';
+  public fullName: string = 'Dragonite (DRV 5)';
+  public legacyFullName = 'Dragonite DRV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Hyper Beam - flip for energy discard

@@ -29,7 +29,7 @@ export class GalarianStunfisk extends PokemonCard {
       name: 'Damage Rush',
       cost: [M, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     }
   ];
@@ -39,7 +39,8 @@ export class GalarianStunfisk extends PokemonCard {
   public setNumber: string = '132';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Stunfisk';
-  public fullName: string = 'Galarian Stunfisk SSH';
+  public fullName: string = 'Galarian Stunfisk (SSH 132)';
+  public legacyFullName = 'Galarian Stunfisk SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Snap Trap (passive - discard energy from attacker when damaged in active spot)

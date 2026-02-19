@@ -31,7 +31,8 @@ export class Wimpod extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wimpod';
-  public fullName: string = 'Wimpod DAA';
+  public fullName: string = 'Wimpod (DAA 17)';
+  public legacyFullName = 'Wimpod DAA';
 
   public usedGnawAndRun = false;
 

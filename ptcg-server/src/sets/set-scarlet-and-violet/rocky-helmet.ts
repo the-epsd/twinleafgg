@@ -22,7 +22,8 @@ export class RockyHelmet extends TrainerCard {
 
   public name = 'Rocky Helmet';
 
-  public fullName = 'Rocky Helmet SVI';
+  public fullName = 'Rocky Helmet (SVI 193)';
+  public legacyFullName = 'Rocky Helmet SVI';
 
   public text: string =
     'If the Pokemon this card is attached to is your Active Pokemon and is ' +

@@ -38,7 +38,8 @@ export class Shiftry extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shiftry';
-  public fullName: string = 'Shiftry BKP';
+  public fullName: string = 'Shiftry (BKP 73)';
+  public legacyFullName = 'Shiftry BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Roll Up

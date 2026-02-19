@@ -35,7 +35,8 @@ export class HolonsMagneton extends PokemonCard implements EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '22';
   public name: string = 'Holon\'s Magneton';
-  public fullName: string = 'Holon\'s Magneton DS';
+  public fullName: string = 'Holon\'s Magneton (DS 22)';
+  public legacyFullName = 'Holon\'s Magneton DS';
 
   // Which energies this provides when attached as an energy
   public provides: CardType[] = [CardType.ANY, CardType.ANY];

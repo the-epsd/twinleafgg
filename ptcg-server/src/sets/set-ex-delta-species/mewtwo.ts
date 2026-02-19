@@ -37,7 +37,8 @@ export class Mewtwo extends PokemonCard {
 
   public set: string = 'DS';
   public name: string = 'Mewtwo';
-  public fullName: string = 'Mewtwo DS';
+  public fullName: string = 'Mewtwo (DS 12)';
+  public legacyFullName = 'Mewtwo DS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
 

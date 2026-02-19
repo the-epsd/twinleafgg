@@ -31,5 +31,6 @@ export class Gible extends PokemonCard {
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gible';
-  public fullName: string = 'Gible UNM';
+  public fullName: string = 'Gible (UNM 112)';
+  public legacyFullName = 'Gible UNM';
 }

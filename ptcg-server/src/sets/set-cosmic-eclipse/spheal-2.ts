@@ -29,7 +29,8 @@ export class Spheal2 extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spheal';
-  public fullName: string = 'Spheal CEC 50';
+  public fullName: string = 'Spheal (CEC 50)';
+  public legacyFullName = 'Spheal CEC 50';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Body Slam

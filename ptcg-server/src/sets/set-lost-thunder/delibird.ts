@@ -37,7 +37,8 @@ export class Delibird extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Delibird';
-  public fullName: string = 'Delibird LOT';
+  public fullName: string = 'Delibird (LOT 57)';
+  public legacyFullName = 'Delibird LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Happy Delivery

@@ -29,7 +29,7 @@ export class TogekissEx extends PokemonCard {
       name: 'Hurricane Wing',
       cost: [Y, C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class TogekissEx extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togekiss-EX';
-  public fullName: string = 'Togekiss-EX BKP';
+  public fullName: string = 'Togekiss-EX (BKP 83)';
+  public legacyFullName = 'Togekiss-EX BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mighty Wind

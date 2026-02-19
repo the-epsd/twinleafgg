@@ -41,7 +41,8 @@ export class Relicanth extends PokemonCard {
 
   public name: string = 'Relicanth';
 
-  public fullName: string = 'Relicanth TEF';
+  public fullName: string = 'Relicanth (TEF 84)';
+  public legacyFullName = 'Relicanth TEF';
 
   public cardImage: string = 'assets/cardback.png';
 

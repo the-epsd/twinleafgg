@@ -97,7 +97,8 @@ export class JunkArm extends TrainerCard {
 
   public name: string = 'Junk Arm';
 
-  public fullName: string = 'Junk Arm TM';
+  public fullName: string = 'Junk Arm (TM 87)';
+  public legacyFullName = 'Junk Arm TM';
 
   public cardImage: string = 'assets/cardback.png';
 

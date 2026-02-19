@@ -41,7 +41,8 @@ export class MRayquazaEx extends PokemonCard {
 
   public set: string = 'ROS';
   public name: string = 'M Rayquaza-EX';
-  public fullName: string = 'M Rayquaza-EX ROS';
+  public fullName: string = 'M Rayquaza-EX (ROS 76)';
+  public legacyFullName = 'M Rayquaza-EX ROS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
 

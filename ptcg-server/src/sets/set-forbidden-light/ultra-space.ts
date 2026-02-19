@@ -70,7 +70,8 @@ export class UltraSpace extends TrainerCard {
 
   public name: string = 'Ultra Space';
 
-  public fullName: string = 'Ultra Space FLI';
+  public fullName: string = 'Ultra Space (FLI 115)';
+  public legacyFullName = 'Ultra Space FLI';
 
   public text: string =
     'Once during each player\'s turn, that player may search their deck for an Ultra Beast card, reveal it, put it into their hand, and shuffle their deck.';

@@ -28,7 +28,7 @@ export class Seismitoad extends PokemonCard {
       name: 'Resonance',
       cost: [W, C, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Confused, this attack does 120 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Seismitoad extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Seismitoad';
-  public fullName: string = 'Seismitoad RCL';
+  public fullName: string = 'Seismitoad (RCL 46)';
+  public legacyFullName = 'Seismitoad RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Split Spiral Punch

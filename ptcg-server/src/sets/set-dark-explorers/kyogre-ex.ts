@@ -42,7 +42,8 @@ export class KyogreEx extends PokemonCard {
 
   public name: string = 'Kyogre-EX';
 
-  public fullName: string = 'Kyogre EX DEX';
+  public fullName: string = 'Kyogre-EX (DEX 26)';
+  public legacyFullName = 'Kyogre EX DEX';
 
   private usedSmashTurn: boolean = false;
 

@@ -23,7 +23,8 @@ export class Munchlax extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '173';
   public name = 'Munchlax';
-  public fullName = 'Munchlax UNM';
+  public fullName = 'Munchlax (UNM 173)';
+  public legacyFullName = 'Munchlax UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

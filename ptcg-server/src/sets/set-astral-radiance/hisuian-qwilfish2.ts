@@ -23,7 +23,8 @@ export class HisuianQwilfish2 extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hisuian Qwilfish';
-  public fullName: string = 'Hisuian Qwilfish2 ASR';
+  public fullName: string = 'Hisuian Qwilfish (ASR 89)';
+  public legacyFullName = 'Hisuian Qwilfish2 ASR';
 
   public COIN_FLIP_TAILS: boolean = false;
 

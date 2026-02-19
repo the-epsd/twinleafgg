@@ -36,7 +36,8 @@ export class LycanrocV extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lycanroc V';
-  public fullName: string = 'Lycanroc V EVS';
+  public fullName: string = 'Lycanroc V (EVS 91)';
+  public legacyFullName = 'Lycanroc V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Crashing Fangs

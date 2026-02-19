@@ -46,7 +46,8 @@ export class CynthiasGabite extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cynthia\'s Gabite';
-  public fullName: string = 'Cynthia\'s Gabite DRI';
+  public fullName: string = 'Cynthia\'s Gabite (DRI 103)';
+  public legacyFullName = 'Cynthia\'s Gabite DRI';
 
   public readonly CHAMPIONS_CALL_MARKER = 'CHAMPIONS_CALL_MARKER';
 

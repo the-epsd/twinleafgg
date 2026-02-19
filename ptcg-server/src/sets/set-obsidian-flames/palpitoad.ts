@@ -31,6 +31,7 @@ export class Palpitoad extends PokemonCard {
 
   public name: string = 'Palpitoad';
 
-  public fullName: string = 'Palpitoad OBF';
+  public fullName: string = 'Palpitoad (OBF 51)';
+  public legacyFullName = 'Palpitoad OBF';
 
 }

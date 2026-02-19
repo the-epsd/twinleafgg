@@ -33,7 +33,8 @@ export class Nickit extends PokemonCard {
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nickit';
-  public fullName: string = 'Nickit DAA';
+  public fullName: string = 'Nickit (DAA 112)';
+  public legacyFullName = 'Nickit DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tail Whip

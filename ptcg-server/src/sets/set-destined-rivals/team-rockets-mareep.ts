@@ -30,7 +30,8 @@ export class TeamRocketsMareep extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '72';
   public name: string = 'Team Rocket\'s Mareep';
-  public fullName: string = 'Team Rocket\'s Mareep DRI';
+  public fullName: string = 'Team Rocket\'s Mareep (DRI 72)';
+  public legacyFullName = 'Team Rocket\'s Mareep DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Provision

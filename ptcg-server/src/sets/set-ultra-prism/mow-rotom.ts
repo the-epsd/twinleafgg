@@ -38,7 +38,8 @@ export class MowRotom extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mow Rotom';
-  public fullName: string = 'Mow Rotom UPR';
+  public fullName: string = 'Mow Rotom (UPR 14)';
+  public legacyFullName = 'Mow Rotom UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Roto Motor (passive - ignore energy cost if 9+ tools in discard)

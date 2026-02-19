@@ -32,7 +32,8 @@ export class Duraludon extends PokemonCard {
   public setNumber: string = '129';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Duraludon';
-  public fullName: string = 'Duraludon SSP';
+  public fullName: string = 'Duraludon (SSP 129)';
+  public legacyFullName = 'Duraludon SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

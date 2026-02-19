@@ -36,7 +36,8 @@ export class Palpitoad extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Palpitoad';
-  public fullName: string = 'Palpitoad DRX';
+  public fullName: string = 'Palpitoad (DRX 35)';
+  public legacyFullName = 'Palpitoad DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

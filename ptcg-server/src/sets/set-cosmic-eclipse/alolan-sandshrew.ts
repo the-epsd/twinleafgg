@@ -38,7 +38,8 @@ export class AlolanSandshrew extends PokemonCard {
   public setNumber: string = '137';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Sandshrew';
-  public fullName: string = 'Alolan Sandshrew CEC';
+  public fullName: string = 'Alolan Sandshrew (CEC 137)';
+  public legacyFullName = 'Alolan Sandshrew CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Run Around

@@ -34,7 +34,8 @@ export class Slowpoke extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slowpoke';
-  public fullName: string = 'Slowpoke BKP';
+  public fullName: string = 'Slowpoke (BKP 19)';
+  public legacyFullName = 'Slowpoke BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Tail Lure

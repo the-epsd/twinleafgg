@@ -22,7 +22,7 @@ export class Tynamo extends PokemonCard {
       name: 'Aqua Shock',
       cost: [L],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon has any [W] Energy attached to it, this attack does 30 more damage.'
     }
   ];
@@ -31,7 +31,8 @@ export class Tynamo extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tynamo';
-  public fullName: string = 'Tynamo BUS';
+  public fullName: string = 'Tynamo (BUS 44)';
+  public legacyFullName = 'Tynamo BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Aqua Shock

@@ -38,7 +38,8 @@ export class Skuntank extends PokemonCard {
   public setNumber: string = '115';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skuntank';
-  public fullName: string = 'Skuntank RCL';
+  public fullName: string = 'Skuntank (RCL 115)';
+  public legacyFullName = 'Skuntank RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Poison Ring

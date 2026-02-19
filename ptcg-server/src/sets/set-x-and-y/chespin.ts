@@ -29,7 +29,8 @@ export class Chespin extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chespin';
-  public fullName: string = 'Chespin XY';
+  public fullName: string = 'Chespin (XY 12)';
+  public legacyFullName = 'Chespin XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pin Missile

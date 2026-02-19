@@ -21,7 +21,8 @@ export class SpellTag extends TrainerCard {
 
   public name: string = 'Spell Tag';
 
-  public fullName: string = 'Spell Tag LOT';
+  public fullName: string = 'Spell Tag (LOT 190)';
+  public legacyFullName = 'Spell Tag LOT';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -31,7 +31,8 @@ export class Minun extends PokemonCard {
   public setNumber: string = '61';
   public name: string = 'Minun';
   public regulationMark: string = 'G';
-  public fullName: string = 'Minun PAR';
+  public fullName: string = 'Minun (PAR 61)';
+  public legacyFullName = 'Minun PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

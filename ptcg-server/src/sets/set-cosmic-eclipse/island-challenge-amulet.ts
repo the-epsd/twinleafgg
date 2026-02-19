@@ -16,7 +16,8 @@ export class IslandChallengeAmulet extends TrainerCard {
   public setNumber: string = '194';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Island Challenge Amulet';
-  public fullName: string = 'Island Challenge Amulet CEC';
+  public fullName: string = 'Island Challenge Amulet (CEC 194)';
+  public legacyFullName = 'Island Challenge Amulet CEC';
   public text: string = 'The Pokémon-GX or Pokémon-EX this card is attached to gets -100 HP, and when it is Knocked Out by damage from an opponent\'s attack, that player takes 1 fewer Prize card.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

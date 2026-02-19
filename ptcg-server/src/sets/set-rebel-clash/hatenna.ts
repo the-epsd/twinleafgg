@@ -36,7 +36,8 @@ export class Hatenna extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hatenna';
-  public fullName: string = 'Hatenna RCL';
+  public fullName: string = 'Hatenna (RCL 83)';
+  public legacyFullName = 'Hatenna RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Find a Friend

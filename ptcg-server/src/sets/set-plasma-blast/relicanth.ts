@@ -34,7 +34,8 @@ export class Relicanth extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Relicanth';
-  public fullName: string = 'Relicanth PLB';
+  public fullName: string = 'Relicanth (PLB 24)';
+  public legacyFullName = 'Relicanth PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

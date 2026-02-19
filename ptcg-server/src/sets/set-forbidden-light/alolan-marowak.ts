@@ -27,7 +27,7 @@ export class AlolanMarowak extends PokemonCard {
       name: 'Alolan Club',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage for each of your Pokémon in play that has Alolan in its name.'
     }
   ];
@@ -36,7 +36,8 @@ export class AlolanMarowak extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Marowak';
-  public fullName: string = 'Alolan Marowak FLI';
+  public fullName: string = 'Alolan Marowak (FLI 12)';
+  public legacyFullName = 'Alolan Marowak FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Limbo Limbo

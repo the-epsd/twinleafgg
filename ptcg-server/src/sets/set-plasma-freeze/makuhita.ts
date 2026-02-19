@@ -36,7 +36,8 @@ export class Makuhita extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Makuhita';
-  public fullName: string = 'Makuhita PLF';
+  public fullName: string = 'Makuhita (PLF 62)';
+  public legacyFullName = 'Makuhita PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

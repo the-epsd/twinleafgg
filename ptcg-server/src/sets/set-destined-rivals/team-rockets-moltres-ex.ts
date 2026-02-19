@@ -34,7 +34,8 @@ export class TeamRocketsMoltresex extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Moltres ex';
-  public fullName: string = 'Team Rocket\'s Moltres ex DRI';
+  public fullName: string = 'Team Rocket\'s Moltres ex (DRI 31)';
+  public legacyFullName = 'Team Rocket\'s Moltres ex DRI';
   public readonly FLAME_SCREEN_MARKER = 'FLAME_SCREEN_MARKER';
   public readonly CLEAR_FLAME_SCREEN_MARKER = 'CLEAR_FLAME_SCREEN_MARKER';
 

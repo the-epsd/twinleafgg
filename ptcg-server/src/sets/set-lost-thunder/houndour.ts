@@ -34,7 +34,8 @@ export class Houndour extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Houndour';
-  public fullName: string = 'Houndour LOT';
+  public fullName: string = 'Houndour (LOT 45)';
+  public legacyFullName = 'Houndour LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Team Hunt

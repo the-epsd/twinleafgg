@@ -11,7 +11,8 @@ export class HyperDevolutionSpray extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber = '73';
   public set = 'N2';
-  public fullName = 'Hyper Devolution Spray N2';
+  public fullName = 'Hyper Devolution Spray (N2 73)';
+  public legacyFullName = 'Hyper Devolution Spray N2';
   public superType = SuperType.TRAINER;
   public trainerType = TrainerType.ITEM;
 

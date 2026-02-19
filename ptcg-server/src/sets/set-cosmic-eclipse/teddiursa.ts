@@ -31,5 +31,6 @@ export class Teddiursa extends PokemonCard {
   public setNumber: string = '171';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Teddiursa';
-  public fullName: string = 'Teddiursa CEC';
+  public fullName: string = 'Teddiursa (CEC 171)';
+  public legacyFullName = 'Teddiursa CEC';
 }

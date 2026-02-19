@@ -13,7 +13,8 @@ export class RuinWall extends TrainerCard {
   public setNumber: string = '74';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ruin Wall';
-  public fullName: string = 'Ruin Wall N2';
+  public fullName: string = 'Ruin Wall (N2 74)';
+  public legacyFullName = 'Ruin Wall N2';
 
   public text: string = 'Search your deck for a card with Unown in its name and put it onto your Bench. Shuffle your deck afterward. (You can\'t play this card if your Bench is full.)';
 

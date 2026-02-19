@@ -15,7 +15,8 @@ export class Bicycle extends TrainerCard {
 
   public name: string = 'Bicycle';
 
-  public fullName: string = 'Bicycle PLS';
+  public fullName: string = 'Bicycle (PLS 117)';
+  public legacyFullName = 'Bicycle PLS';
 
   public cardImage: string = 'assets/cardback.png';
 

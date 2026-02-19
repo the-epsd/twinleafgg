@@ -23,7 +23,7 @@ export class CinderaceVmax extends PokemonCard {
       name: 'Counter',
       cost: [R, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon was damaged by an attack during your opponent\'s last turn, this attack does that much more damage.'
     },
     {
@@ -39,7 +39,8 @@ export class CinderaceVmax extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cinderace VMAX';
-  public fullName: string = 'Cinderace VMAX RCL';
+  public fullName: string = 'Cinderace VMAX (RCL 36)';
+  public legacyFullName = 'Cinderace VMAX RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Counter

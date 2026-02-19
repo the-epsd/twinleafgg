@@ -35,7 +35,8 @@ export class Wimpod extends PokemonCard {
   public setNumber: string = 'SV4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wimpod';
-  public fullName: string = 'Wimpod HIF';
+  public fullName: string = 'Wimpod (HIF SV4)';
+  public legacyFullName = 'Wimpod HIF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Wimp Out (passive - free retreat on first turn)

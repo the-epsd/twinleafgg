@@ -35,7 +35,8 @@ export class Sneasel extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sneasel';
-  public fullName: string = 'Sneasel FLF';
+  public fullName: string = 'Sneasel (FLF 50)';
+  public legacyFullName = 'Sneasel FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-stellar-crown/salazzle.ts (Sudden Scorching)

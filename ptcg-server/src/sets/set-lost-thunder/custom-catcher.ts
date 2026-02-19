@@ -88,7 +88,8 @@ export class CustomCatcher extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'LOT';
   public name: string = 'Custom Catcher';
-  public fullName: string = 'Custom Catcher LOT';
+  public fullName: string = 'Custom Catcher (LOT 171)';
+  public legacyFullName = 'Custom Catcher LOT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '171';
 

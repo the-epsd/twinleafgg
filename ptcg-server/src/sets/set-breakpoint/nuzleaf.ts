@@ -36,7 +36,8 @@ export class Nuzleaf extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nuzleaf';
-  public fullName: string = 'Nuzleaf BKP';
+  public fullName: string = 'Nuzleaf (BKP 72)';
+  public legacyFullName = 'Nuzleaf BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Razor Wind

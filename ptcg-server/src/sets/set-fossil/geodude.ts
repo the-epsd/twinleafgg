@@ -23,7 +23,8 @@ export class Geodude extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Geodude';
-  public fullName: string = 'Geodude FO';
+  public fullName: string = 'Geodude (FO 47)';
+  public legacyFullName = 'Geodude FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

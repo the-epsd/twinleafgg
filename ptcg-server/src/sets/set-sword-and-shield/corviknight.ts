@@ -43,7 +43,8 @@ export class Corviknight extends PokemonCard {
   public setNumber: string = '135';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Corviknight';
-  public fullName: string = 'Corviknight SSH';
+  public fullName: string = 'Corviknight (SSH 135)';
+  public legacyFullName = 'Corviknight SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Iron Wings

@@ -32,7 +32,8 @@ export class Cyclizarex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '159';
   public name: string = 'Cyclizar ex';
-  public fullName: string = 'Cyclizar ex SSP';
+  public fullName: string = 'Cyclizar ex (SSP 159)';
+  public legacyFullName = 'Cyclizar ex SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Break Through

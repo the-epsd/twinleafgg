@@ -49,7 +49,8 @@ export class Empoleon extends PokemonCard {
 
   public name: string = 'Empoleon';
 
-  public fullName: string = 'Empoleon BRS';
+  public fullName: string = 'Empoleon (BRS 37)';
+  public legacyFullName = 'Empoleon BRS';
 
   public readonly EMERGENCY_SURFACING_MARKER = 'EMERGENCY_SURFACING_MARKER';
 

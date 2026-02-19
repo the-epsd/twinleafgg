@@ -33,7 +33,8 @@ export class Aron extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aron';
-  public fullName: string = 'Aron PLB';
+  public fullName: string = 'Aron (PLB 57)';
+  public legacyFullName = 'Aron PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

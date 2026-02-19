@@ -20,7 +20,8 @@ export class DreamBall extends TrainerCard {
 
   public name: string = 'Dream Ball';
 
-  public fullName: string = 'Dream Ball EVS';
+  public fullName: string = 'Dream Ball (EVS 146)';
+  public legacyFullName = 'Dream Ball EVS';
 
   public text: string =
     'You can play this card only if you took it as a face-down Prize card, before you put it into your hand. ' +

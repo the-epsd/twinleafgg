@@ -35,6 +35,7 @@ export class Remoraid extends PokemonCard {
 
   public name: string = 'Remoraid';
 
-  public fullName: string = 'Remoraid PAR';
+  public fullName: string = 'Remoraid (PAR 33)';
+  public legacyFullName = 'Remoraid PAR';
 
 }

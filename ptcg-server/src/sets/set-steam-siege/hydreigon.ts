@@ -34,7 +34,7 @@ export class Hydreigon extends PokemonCard {
       name: 'Dark Burn',
       cost: [P, D, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard as many [D] Energy attached to your Pokémon as you like. This attack does 50 damage times the amount of [D] Energy you discarded in this way.'
     }
   ];
@@ -43,7 +43,8 @@ export class Hydreigon extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hydreigon';
-  public fullName: string = 'Hydreigon STS';
+  public fullName: string = 'Hydreigon (STS 86)';
+  public legacyFullName = 'Hydreigon STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Cruel Fang

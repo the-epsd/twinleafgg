@@ -22,7 +22,8 @@ export class ScoopUpCyclone extends TrainerCard {
 
   public name: string = 'Scoop Up Cyclone';
 
-  public fullName: string = 'Scoop Up Cyclone TWM';
+  public fullName: string = 'Scoop Up Cyclone (TWM 162)';
+  public legacyFullName = 'Scoop Up Cyclone TWM';
 
   public cardImage: string = 'assets/cardback.png';
 

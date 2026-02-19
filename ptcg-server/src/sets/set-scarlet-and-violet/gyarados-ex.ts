@@ -45,7 +45,8 @@ export class Gyaradosex extends PokemonCard {
 
   public name: string = 'Gyarados ex';
 
-  public fullName: string = 'Gyarados ex SVI';
+  public fullName: string = 'Gyarados ex (SVI 45)';
+  public legacyFullName = 'Gyarados ex SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

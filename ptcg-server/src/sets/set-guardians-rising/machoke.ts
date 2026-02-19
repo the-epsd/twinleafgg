@@ -42,7 +42,8 @@ export class Machoke extends PokemonCard {
 
   public name: string = 'Machoke';
 
-  public fullName: string = 'Machoke GRI';
+  public fullName: string = 'Machoke (GRI 64)';
+  public legacyFullName = 'Machoke GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

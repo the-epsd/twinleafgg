@@ -35,7 +35,8 @@ export class Morpeko extends PokemonCard {
 
   public name: string = 'Morpeko';
 
-  public fullName: string = 'Morpeko SSH';
+  public fullName: string = 'Morpeko (SSH 78)';
+  public legacyFullName = 'Morpeko SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     

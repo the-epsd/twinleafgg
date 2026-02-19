@@ -35,7 +35,8 @@ export class Celebi extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Celebi \u25c7';
-  public fullName: string = 'Celebi \u25c7 LOT';
+  public fullName: string = 'Celebi \u25c7 (LOT 19)';
+  public legacyFullName = 'Celebi \u25c7 LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Time Distortion

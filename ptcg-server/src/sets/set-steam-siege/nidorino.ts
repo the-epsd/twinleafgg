@@ -27,7 +27,7 @@ export class Nidorino extends PokemonCard {
       name: 'Nido Press',
       cost: [P, P, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Nidorina is on your Bench, this attack does 40 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Nidorino extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nidorino';
-  public fullName: string = 'Nidorino STS';
+  public fullName: string = 'Nidorino (STS 44)';
+  public legacyFullName = 'Nidorino STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Nido Press

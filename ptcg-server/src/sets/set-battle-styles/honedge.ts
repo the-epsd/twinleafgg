@@ -22,7 +22,7 @@ export class Honedge extends PokemonCard {
       name: 'Ambush',
       cost: [M],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -32,7 +32,8 @@ export class Honedge extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Honedge';
-  public fullName: string = 'Honedge BST';
+  public fullName: string = 'Honedge (BST 105)';
+  public legacyFullName = 'Honedge BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ambush

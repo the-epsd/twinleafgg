@@ -33,7 +33,8 @@ export class Audino extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Audino';
-  public fullName: string = 'Audino BLW';
+  public fullName: string = 'Audino (BLW 87)';
+  public legacyFullName = 'Audino BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

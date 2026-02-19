@@ -35,7 +35,8 @@ export class Pinsir extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pinsir';
-  public fullName: string = 'Pinsir LOT';
+  public fullName: string = 'Pinsir (LOT 4)';
+  public legacyFullName = 'Pinsir LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Grip and Squeeze

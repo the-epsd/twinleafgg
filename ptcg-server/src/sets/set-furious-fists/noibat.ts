@@ -32,5 +32,6 @@ export class Noibat extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Noibat';
-  public fullName: string = 'Noibat FFI';
+  public fullName: string = 'Noibat (FFI 87)';
+  public legacyFullName = 'Noibat FFI';
 }

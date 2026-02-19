@@ -36,7 +36,8 @@ export class Spinda extends PokemonCard {
   public setNumber: string = '115';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spinda';
-  public fullName: string = 'Spinda PRC';
+  public fullName: string = 'Spinda (PRC 115)';
+  public legacyFullName = 'Spinda PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Staggering Steps

@@ -51,7 +51,8 @@ export class MimikyuV extends PokemonCard {
 
   public name: string = 'Mimikyu V';
 
-  public fullName: string = 'Mimikyu V BST';
+  public fullName: string = 'Mimikyu V (BST 62)';
+  public legacyFullName = 'Mimikyu V BST';
 
   public readonly DUMMY_DOLL_MARKER: string = 'DUMMY_DOLL_MARKER';
   public readonly CLEAR_DUMMY_DOLL_MARKER: string = 'CLEAR_DUMMY_DOLL_MARKER';

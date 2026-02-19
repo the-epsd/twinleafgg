@@ -28,7 +28,8 @@ export class Maractus extends PokemonCard {
   public set: string = 'SSH';
   public regulationMark = 'D';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Maractus SSH';
+  public fullName: string = 'Maractus (SSH 7)';
+  public legacyFullName = 'Maractus SSH';
   public name: string = 'Maractus';
   public setNumber: string = '7';
 

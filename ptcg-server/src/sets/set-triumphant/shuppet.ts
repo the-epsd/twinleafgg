@@ -34,7 +34,8 @@ export class Shuppet extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '75';
   public name: string = 'Shuppet';
-  public fullName: string = 'Shuppet TM';
+  public fullName: string = 'Shuppet (TM 75)';
+  public legacyFullName = 'Shuppet TM';
 
   public MEMORY_SKIPPED_ATTACK: Attack | undefined;
 

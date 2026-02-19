@@ -14,7 +14,8 @@ export class LysandrePrismStar extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '110';
   public name: string = 'Lysandre Prism Star';
-  public fullName: string = 'Lysandre Prism Star FLI';
+  public fullName: string = 'Lysandre Prism Star (FLI 110)';
+  public legacyFullName = 'Lysandre Prism Star FLI';
 
   public text: string = 'For each of your [R] Pokémon in play, put a card from your opponent\'s discard pile in the Lost Zone.';
 

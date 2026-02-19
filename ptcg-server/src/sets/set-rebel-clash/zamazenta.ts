@@ -38,7 +38,8 @@ export class Zamazenta extends PokemonCard {
   public setNumber: string = '140';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zamazenta';
-  public fullName: string = 'Zamazenta RCL';
+  public fullName: string = 'Zamazenta (RCL 140)';
+  public legacyFullName = 'Zamazenta RCL';
 
   public readonly GUARD_PRESS_MARKER = 'ZAMAZENTA_RCL_GUARD_PRESS_MARKER';
   public readonly CLEAR_GUARD_PRESS_MARKER = 'ZAMAZENTA_RCL_CLEAR_GUARD_PRESS_MARKER';

@@ -41,7 +41,8 @@ export class Klawfex extends PokemonCard {
 
   public name: string = 'Klawf ex';
 
-  public fullName: string = 'Klawf ex OBF';
+  public fullName: string = 'Klawf ex (OBF 157)';
+  public legacyFullName = 'Klawf ex OBF';
 
   //   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     

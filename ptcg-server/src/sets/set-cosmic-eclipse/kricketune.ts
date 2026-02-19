@@ -23,7 +23,7 @@ export class Kricketune extends PokemonCard {
       name: 'Improvisational Performance',
       cost: [G],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have exactly 1 card in your hand, this attack does 100 more damage. If you have exactly 3 cards in your hand, your opponent\'s Active Pokémon is now Confused. If you have exactly 6 cards in your hand, this attack does 30 damage to each of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
@@ -32,7 +32,8 @@ export class Kricketune extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kricketune';
-  public fullName: string = 'Kricketune CEC';
+  public fullName: string = 'Kricketune (CEC 14)';
+  public legacyFullName = 'Kricketune CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Improvisational Performance

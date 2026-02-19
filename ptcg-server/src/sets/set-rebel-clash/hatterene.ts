@@ -79,7 +79,8 @@ export class Hatterene extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hatterene';
-  public fullName: string = 'Hatterene RCL';
+  public fullName: string = 'Hatterene (RCL 85)';
+  public legacyFullName = 'Hatterene RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Mind Hat

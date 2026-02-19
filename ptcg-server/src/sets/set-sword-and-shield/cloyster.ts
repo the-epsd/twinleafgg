@@ -37,7 +37,8 @@ export class Cloyster extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cloyster';
-  public fullName: string = 'Cloyster SSH';
+  public fullName: string = 'Cloyster (SSH 41)';
+  public legacyFullName = 'Cloyster SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shell Grab

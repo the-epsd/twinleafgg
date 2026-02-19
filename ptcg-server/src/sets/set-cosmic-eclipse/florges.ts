@@ -29,7 +29,7 @@ export class Florges extends PokemonCard {
       name: 'Petal Dance',
       cost: [Y, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 60 damage for each heads. This Pokémon is now Confused.'
     }
   ];
@@ -38,7 +38,8 @@ export class Florges extends PokemonCard {
   public setNumber: string = '152';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Florges';
-  public fullName: string = 'Florges CEC';
+  public fullName: string = 'Florges (CEC 152)';
+  public legacyFullName = 'Florges CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Flower Picking (on-evolve)

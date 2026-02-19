@@ -25,7 +25,8 @@ export class Totodile extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '39';
   public name: string = 'Totodile';
-  public fullName: string = 'Totodile TEF';
+  public fullName: string = 'Totodile (TEF 39)';
+  public legacyFullName = 'Totodile TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Big Bite

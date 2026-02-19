@@ -34,7 +34,8 @@ export class JolteonEX extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jolteon-EX';
-  public fullName: string = 'Jolteon-EX GEN';
+  public fullName: string = 'Jolteon-EX (GEN 28)';
+  public legacyFullName = 'Jolteon-EX GEN';
 
   public readonly FLASH_RAY_MARKER = 'FLASH_RAY_MARKER';
 

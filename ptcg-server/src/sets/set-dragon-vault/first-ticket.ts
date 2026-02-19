@@ -13,7 +13,8 @@ export class FirstTicket extends TrainerCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'First Ticket';
-  public fullName: string = 'First Ticket DRV';
+  public fullName: string = 'First Ticket (DRV 19)';
+  public legacyFullName = 'First Ticket DRV';
   public text: string = 'Before you flip a coin to decide who goes first in a game, you may play this card. Don\'t flip that coin, and you go first. If both players play First Ticket, flip the coin as normal. (You may play only 1 First Ticket before you flip that coin.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

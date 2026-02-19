@@ -29,7 +29,8 @@ export class Applin2 extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Applin';
-  public fullName: string = 'Applin RCL 21';
+  public fullName: string = 'Applin (RCL 21)';
+  public legacyFullName = 'Applin RCL 21';
 
   public readonly WITHDRAW_MARKER = 'APPLIN2_RCL_WITHDRAW_MARKER';
   public readonly CLEAR_WITHDRAW_MARKER = 'APPLIN2_RCL_CLEAR_WITHDRAW_MARKER';

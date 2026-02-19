@@ -35,7 +35,8 @@ export class Hitmonlee extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hitmonlee';
-  public fullName: string = 'Hitmonlee FFI';
+  public fullName: string = 'Hitmonlee (FFI 47)';
+  public legacyFullName = 'Hitmonlee FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stretch Kick

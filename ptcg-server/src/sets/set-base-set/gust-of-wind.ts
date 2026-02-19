@@ -57,7 +57,8 @@ export class GustOfWind extends TrainerCard {
 
   public name: string = 'Gust of Wind';
 
-  public fullName: string = 'Gust of Wind BS';
+  public fullName: string = 'Gust of Wind (BS 93)';
+  public legacyFullName = 'Gust of Wind BS';
 
   public text: string =
     'Switch 1 of your opponent\'s Benched Pokemon with his or her ' +

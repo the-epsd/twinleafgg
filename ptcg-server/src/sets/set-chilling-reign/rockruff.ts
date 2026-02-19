@@ -31,7 +31,8 @@ export class Rockruff extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rockruff';
-  public fullName: string = 'Rockruff CRE';
+  public fullName: string = 'Rockruff (CRE 86)';
+  public legacyFullName = 'Rockruff CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Crunch

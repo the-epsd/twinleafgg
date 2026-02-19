@@ -36,7 +36,8 @@ export class Emboar extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Emboar';
-  public fullName: string = 'Emboar CEC';
+  public fullName: string = 'Emboar (CEC 33)';
+  public legacyFullName = 'Emboar CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Explosive Fire Dance

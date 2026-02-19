@@ -119,7 +119,8 @@ export class UnownQ extends PokemonCard {
 
   public name: string = 'Unown Q';
 
-  public fullName: string = 'Unown Q MD';
+  public fullName: string = 'Unown Q (MD 49)';
+  public legacyFullName = 'Unown Q MD';
 
   public cardImage: string = 'assets/cardback.png';
 

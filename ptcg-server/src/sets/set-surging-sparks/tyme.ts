@@ -96,7 +96,8 @@ export class Tyme extends TrainerCard {
   public setNumber: string = '190';
   public regulationMark = 'H';
   public name: string = 'Tyme';
-  public fullName: string = 'Tyme SSP';
+  public fullName: string = 'Tyme (SSP 190)';
+  public legacyFullName = 'Tyme SSP';
 
   public text: string =
     'Tell your opponent the name of a Pokémon in your hand and put that Pokémon face down in front of you. Your opponent guesses that Pokémon\'s HP, and then you reveal it. If your opponent guessed right, they draw 4 cards. If they guessed wrong, you draw 4 cards. Then, return the Pokémon to your hand.';

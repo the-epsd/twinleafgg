@@ -33,7 +33,8 @@ export class Vullaby extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '68';
   public name: string = 'Vullaby';
-  public fullName: string = 'Vullaby EPO';
+  public fullName: string = 'Vullaby (EPO 68)';
+  public legacyFullName = 'Vullaby EPO';
 
   public readonly REAR_GUARD_MARKER = 'REAR_GUARD_MARKER';
 

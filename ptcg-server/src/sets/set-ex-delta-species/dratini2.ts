@@ -24,7 +24,8 @@ export class Dratini2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
   public name: string = 'Dratini';
-  public fullName: string = 'Dratini DS 66';
+  public fullName: string = 'Dratini (DS 66)';
+  public legacyFullName = 'Dratini DS 66';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

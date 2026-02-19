@@ -29,7 +29,8 @@ export class Dratini extends PokemonCard {
   public setNumber: string = '117';
   public set = 'TEU';
   public name: string = 'Dratini';
-  public fullName: string = 'Dratini TEU';
+  public fullName: string = 'Dratini (TEU 117)';
+  public legacyFullName = 'Dratini TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

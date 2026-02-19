@@ -38,7 +38,8 @@ export class Hitmontop extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '26';
   public name: string = 'Hitmontop';
-  public fullName: string = 'Hitmontop UF';
+  public fullName: string = 'Hitmontop (UF 26)';
+  public legacyFullName = 'Hitmontop UF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

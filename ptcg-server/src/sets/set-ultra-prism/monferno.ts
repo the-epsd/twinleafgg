@@ -30,7 +30,8 @@ export class Monferno extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Monferno';
-  public fullName: string = 'Monferno UPR';
+  public fullName: string = 'Monferno (UPR 22)';
+  public legacyFullName = 'Monferno UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Super Singe

@@ -26,7 +26,7 @@ export class Heracross extends PokemonCard {
       name: 'Riled Horn',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent has any TAG TEAM Pokémon in play, this attack does 70 more damage.'
     }
   ];
@@ -35,7 +35,8 @@ export class Heracross extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heracross';
-  public fullName: string = 'Heracross CEC';
+  public fullName: string = 'Heracross (CEC 9)';
+  public legacyFullName = 'Heracross CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Riled Horn

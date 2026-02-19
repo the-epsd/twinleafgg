@@ -28,7 +28,8 @@ export class Audino extends PokemonCard {
 
   public set: string = 'UNM';
   public name: string = 'Audino';
-  public fullName: string = 'Audino UNM';
+  public fullName: string = 'Audino (UNM 177)';
+  public legacyFullName = 'Audino UNM';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '177';
 

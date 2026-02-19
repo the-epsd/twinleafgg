@@ -35,7 +35,8 @@ export class Cofagrigus extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cofagrigus';
-  public fullName: string = 'Cofagrigus DEX';
+  public fullName: string = 'Cofagrigus (DEX 52)';
+  public legacyFullName = 'Cofagrigus DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Chuck - discard Tool cards from hand for damage

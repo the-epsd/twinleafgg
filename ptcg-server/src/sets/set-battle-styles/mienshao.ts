@@ -39,7 +39,8 @@ export class Mienshao extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mienshao';
-  public fullName: string = 'Mienshao BST';
+  public fullName: string = 'Mienshao (BST 77)';
+  public legacyFullName = 'Mienshao BST';
 
   private usedSpinningWhip: boolean = false;
 

@@ -13,7 +13,8 @@ export class MewtwoSpiritLink extends TrainerCard {
   public setNumber: string = '144';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mewtwo Spirit Link';
-  public fullName: string = 'Mewtwo Spirit Link BKT';
+  public fullName: string = 'Mewtwo Spirit Link (BKT 144)';
+  public legacyFullName = 'Mewtwo Spirit Link BKT';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Mewtwo-EX.';
 
   // Ref: set-ancient-origins/sceptile-spirit-link.ts (Spirit Link - no-op, handled by engine)

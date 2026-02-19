@@ -40,7 +40,8 @@ export class Yanmegaex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Yanmega ex';
-  public fullName: string = 'Yanmega ex DRI';
+  public fullName: string = 'Yanmega ex (DRI 3)';
+  public legacyFullName = 'Yanmega ex DRI';
   public tachyonBits: number = 0;
 
   public readonly BUZZ_BOOST_MARKER = 'BUZZ_BOOST_MARKER';

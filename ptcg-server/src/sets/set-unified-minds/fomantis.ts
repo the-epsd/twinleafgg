@@ -36,7 +36,8 @@ export class Fomantis extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fomantis';
-  public fullName: string = 'Fomantis UNM';
+  public fullName: string = 'Fomantis (UNM 15)';
+  public legacyFullName = 'Fomantis UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sweet Scent

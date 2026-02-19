@@ -40,7 +40,8 @@ export class Furfrou extends PokemonCard {
   public setNumber: string = '126';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Furfrou';
-  public fullName: string = 'Furfrou CRE';
+  public fullName: string = 'Furfrou (CRE 126)';
+  public legacyFullName = 'Furfrou CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Find a Friend

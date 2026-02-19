@@ -36,7 +36,8 @@ export class Probopass extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Probopass';
-  public fullName: string = 'Probopass GRI';
+  public fullName: string = 'Probopass (GRI 86)';
+  public legacyFullName = 'Probopass GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Energy Link

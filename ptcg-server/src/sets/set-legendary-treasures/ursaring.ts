@@ -37,7 +37,8 @@ export class Ursaring extends PokemonCard {
   public setNumber: string = 'RC16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ursaring';
-  public fullName: string = 'Ursaring LTR';
+  public fullName: string = 'Ursaring (LTR RC16)';
+  public legacyFullName = 'Ursaring LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Picnic Weather

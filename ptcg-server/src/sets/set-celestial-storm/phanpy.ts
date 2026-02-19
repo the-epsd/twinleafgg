@@ -31,7 +31,8 @@ export class Phanpy extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '72';
   public name = 'Phanpy';
-  public fullName = 'Phanpy CES';
+  public fullName = 'Phanpy (CES 72)';
+  public legacyFullName = 'Phanpy CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

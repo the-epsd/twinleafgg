@@ -36,7 +36,8 @@ export class Dragonair extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '151';
   public name: string = 'Dragonair';
-  public fullName: string = 'Dragonair M2a';
+  public fullName: string = 'Dragonair (ASC 151)';
+  public legacyFullName = 'Dragonair M2a';
 
   public readonly EVOLUTION_GUIDANCE_MARKER = 'EVOLUTION_GUIDANCE_MARKER';
 

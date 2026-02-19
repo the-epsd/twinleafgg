@@ -27,7 +27,8 @@ export class LilliesCutiefly extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
   public name: string = 'Lillie\'s Cutiefly';
-  public fullName: string = 'Lillie\'s Cutiefly JTG';
+  public fullName: string = 'Lillie\'s Cutiefly (JTG 66)';
+  public legacyFullName = 'Lillie\'s Cutiefly JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

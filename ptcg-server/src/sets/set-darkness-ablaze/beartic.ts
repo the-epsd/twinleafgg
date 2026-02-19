@@ -36,7 +36,8 @@ export class Beartic extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beartic';
-  public fullName: string = 'Beartic DAA';
+  public fullName: string = 'Beartic (DAA 49)';
+  public legacyFullName = 'Beartic DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Frozen Slice

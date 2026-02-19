@@ -46,7 +46,8 @@ export class Munkidori extends PokemonCard {
 
   public name: string = 'Munkidori';
 
-  public fullName: string = 'Munkidori TWM';
+  public fullName: string = 'Munkidori (TWM 95)';
+  public legacyFullName = 'Munkidori TWM';
 
   public readonly ADRENA_BRAIN_MARKER = 'ADRENA_BRAIN_MARKER';
 

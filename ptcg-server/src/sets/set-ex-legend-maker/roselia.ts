@@ -28,7 +28,8 @@ export class Roselia extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Roselia';
-  public fullName: string = 'Roselia LM';
+  public fullName: string = 'Roselia (LM 42)';
+  public legacyFullName = 'Roselia LM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle Healing Stone Poké-Body

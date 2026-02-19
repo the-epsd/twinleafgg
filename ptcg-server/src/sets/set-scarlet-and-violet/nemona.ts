@@ -22,7 +22,8 @@ export class Nemona extends TrainerCard {
 
   public name: string = 'Nemona';
 
-  public fullName: string = 'Nemona SVI';
+  public fullName: string = 'Nemona (SVI 180)';
+  public legacyFullName = 'Nemona SVI';
 
   public text: string =
     'Draw 3 cards.';

@@ -50,7 +50,8 @@ export class Rabsca extends PokemonCard {
 
   public name: string = 'Rabsca';
 
-  public fullName: string = 'Rabsca TEF';
+  public fullName: string = 'Rabsca (TEF 24)';
+  public legacyFullName = 'Rabsca TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

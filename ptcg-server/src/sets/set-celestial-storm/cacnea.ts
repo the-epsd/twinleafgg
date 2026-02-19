@@ -36,7 +36,8 @@ export class Cacnea extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cacnea';
-  public fullName: string = 'Cacnea CES';
+  public fullName: string = 'Cacnea (CES 19)';
+  public legacyFullName = 'Cacnea CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Poison Payback (passive - triggered when damaged by opponent's attack)

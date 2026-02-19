@@ -40,7 +40,8 @@ export class Venomoth extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Venomoth';
-  public fullName: string = 'Venomoth PHF';
+  public fullName: string = 'Venomoth (PHF 2)';
+  public legacyFullName = 'Venomoth PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dizzying Wind

@@ -49,7 +49,8 @@ export class Pidove extends PokemonCard {
 
   public name: string = 'Pidove';
 
-  public fullName: string = 'Pidove TEF';
+  public fullName: string = 'Pidove (TEF 133)';
+  public legacyFullName = 'Pidove TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Emergency Evolution

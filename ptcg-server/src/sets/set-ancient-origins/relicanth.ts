@@ -37,7 +37,8 @@ export class Relicanth extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Relicanth';
-  public fullName: string = 'Relicanth AOR';
+  public fullName: string = 'Relicanth (AOR 23)';
+  public legacyFullName = 'Relicanth AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Deep Sea Search

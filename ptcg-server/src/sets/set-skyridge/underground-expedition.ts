@@ -12,7 +12,8 @@ export class UndergroundExpedition extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '140';
   public name: string = 'Underground Expedition';
-  public fullName: string = 'Underground Expedition SK';
+  public fullName: string = 'Underground Expedition (SK 140)';
+  public legacyFullName = 'Underground Expedition SK';
 
   public text: string = 'Look at the bottom 4 cards of your deck and put 2 of them into your hand. Put the other cards back on the bottom of your deck in any order.';
 

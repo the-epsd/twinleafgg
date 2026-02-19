@@ -44,7 +44,8 @@ export class Magneton extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Magneton';
-  public fullName: string = 'Magneton DR';
+  public fullName: string = 'Magneton (DR 17)';
+  public legacyFullName = 'Magneton DR';
 
   public readonly MAGNETIC_FIELD_MARKER = 'MAGNETIC_FIELD_MARKER';
 

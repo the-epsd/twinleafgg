@@ -36,7 +36,8 @@ export class Pangoro extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pangoro';
-  public fullName: string = 'Pangoro TEU';
+  public fullName: string = 'Pangoro (TEU 94)';
+  public legacyFullName = 'Pangoro TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tighten Up

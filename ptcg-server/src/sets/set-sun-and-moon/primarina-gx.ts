@@ -25,7 +25,7 @@ export class PrimarinaGx extends PokemonCard {
       name: 'Bubble Beat',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage times the amount of [W] Energy attached to your Pokémon.'
     },
     {
@@ -46,7 +46,8 @@ export class PrimarinaGx extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Primarina-GX';
-  public fullName: string = 'Primarina-GX SUM';
+  public fullName: string = 'Primarina-GX (SUM 42)';
+  public legacyFullName = 'Primarina-GX SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble Beat

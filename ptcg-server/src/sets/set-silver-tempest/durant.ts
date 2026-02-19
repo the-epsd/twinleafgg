@@ -44,7 +44,8 @@ export class Durant extends PokemonCard {
 
   public name: string = 'Durant';
 
-  public fullName: string = 'Durant SIT';
+  public fullName: string = 'Durant (SIT 13)';
+  public legacyFullName = 'Durant SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Copied from Gimmighoul SSP's Minor Errand-Running

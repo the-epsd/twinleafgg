@@ -22,14 +22,14 @@ export class Beartic extends PokemonCard {
       name: 'Igloo Hold',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     },
     {
       name: 'Mountain Drop',
       cost: [W, W, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 40 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Beartic extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beartic';
-  public fullName: string = 'Beartic FFI';
+  public fullName: string = 'Beartic (FFI 22)';
+  public legacyFullName = 'Beartic FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Igloo Hold

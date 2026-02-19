@@ -36,7 +36,8 @@ export class Ninetales extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Ninetales';
-  public fullName: string = 'Ninetales HS';
+  public fullName: string = 'Ninetales (HS 7)';
+  public legacyFullName = 'Ninetales HS';
 
   public readonly ROAST_REVEAL_MARKER = 'ROAST_REVEAL_MARKER';
 

@@ -16,7 +16,8 @@ export class ScorchedEarth extends TrainerCard {
   public set: string = 'PRC';
   public setNumber: string = '138';
   public name: string = 'Scorched Earth';
-  public fullName: string = 'Scorched Earth PRC';
+  public fullName: string = 'Scorched Earth (PRC 138)';
+  public legacyFullName = 'Scorched Earth PRC';
   public cardImage: string = 'assets/cardback.png';
 
   public text: string =

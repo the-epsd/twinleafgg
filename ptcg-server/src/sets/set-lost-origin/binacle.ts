@@ -26,5 +26,6 @@ export class Binacle extends PokemonCard {
   public regulationMark = 'F';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Binacle';
-  public fullName: string = 'Binacle LOR';
+  public fullName: string = 'Binacle (LOR 106)';
+  public legacyFullName = 'Binacle LOR';
 }

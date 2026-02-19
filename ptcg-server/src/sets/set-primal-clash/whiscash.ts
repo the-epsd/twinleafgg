@@ -30,7 +30,7 @@ export class Whiscash extends PokemonCard {
       name: 'Rising Lunge',
       cost: [W, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Whiscash extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whiscash';
-  public fullName: string = 'Whiscash PRC';
+  public fullName: string = 'Whiscash (PRC 40)';
+  public legacyFullName = 'Whiscash PRC';
 
   public amnesiaAttack: Attack | null = null;
 

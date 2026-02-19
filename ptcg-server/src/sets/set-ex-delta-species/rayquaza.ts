@@ -39,7 +39,8 @@ export class Rayquaza extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '13';
   public name: string = 'Rayquaza';
-  public fullName: string = 'Rayquaza DS';
+  public fullName: string = 'Rayquaza (DS 13)';
+  public legacyFullName = 'Rayquaza DS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

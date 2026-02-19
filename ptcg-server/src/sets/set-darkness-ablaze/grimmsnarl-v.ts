@@ -37,7 +37,8 @@ export class GrimmsnarlV extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grimmsnarl V';
-  public fullName: string = 'Grimmsnarl V DAA';
+  public fullName: string = 'Grimmsnarl V (DAA 114)';
+  public legacyFullName = 'Grimmsnarl V DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Spiky Knuckle

@@ -36,7 +36,8 @@ export class Dedenne extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dedenne';
-  public fullName: string = 'Dedenne PHF';
+  public fullName: string = 'Dedenne (PHF 70)';
+  public legacyFullName = 'Dedenne PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Nuzzle

@@ -72,7 +72,8 @@ export class Gordie extends TrainerCard {
   public setNumber: string = '149';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gordie';
-  public fullName: string = 'Gordie EVS';
+  public fullName: string = 'Gordie (EVS 149)';
+  public legacyFullName = 'Gordie EVS';
   public text: string = 'Look at the top 7 cards of your deck. You may reveal any number of Energy cards you find there and put them into your hand. Shuffle the other cards back into your deck. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

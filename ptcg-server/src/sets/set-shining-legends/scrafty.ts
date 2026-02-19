@@ -22,7 +22,7 @@ export class Scrafty extends PokemonCard {
       name: 'Dangerous Head',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, this attack does 50 more damage.'
     },
     {
@@ -37,7 +37,8 @@ export class Scrafty extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scrafty';
-  public fullName: string = 'Scrafty SLG';
+  public fullName: string = 'Scrafty (SLG 51)';
+  public legacyFullName = 'Scrafty SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dangerous Head

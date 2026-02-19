@@ -57,7 +57,8 @@ export class Janine extends TrainerCard {
   public setNumber: string = '176';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Janine';
-  public fullName: string = 'Janine UNB';
+  public fullName: string = 'Janine (UNB 176)';
+  public legacyFullName = 'Janine UNB';
   public text: string = 'Look at the top 4 cards of your deck and put 2 of them into your hand. Shuffle the other cards back into your deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-celestial-storm/hiker.ts (Hiker - generator pattern look at top cards choose some)

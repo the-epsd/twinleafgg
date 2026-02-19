@@ -18,7 +18,8 @@ export class FairyCharmAbility extends TrainerCard {
   public setNumber: string = '171';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fairy Charm Ability';
-  public fullName: string = 'Fairy Charm Ability UNB';
+  public fullName: string = 'Fairy Charm Ability (UNB 171)';
+  public legacyFullName = 'Fairy Charm Ability UNB';
   public text: string = 'Prevent all damage done to the Fairy Pokémon this card is attached to by attacks from your opponent\'s Pokémon-GX and Pokémon-EX that have Abilities.';
 
   // Ref: set-lost-thunder/fairy-charm-psychic.ts (Fairy Charm tool damage prevention pattern)

@@ -27,5 +27,6 @@ export class Pikipek extends PokemonCard {
   public setNumber: string = '143';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikipek';
-  public fullName: string = 'Pikipek VIV';
+  public fullName: string = 'Pikipek (VIV 143)';
+  public legacyFullName = 'Pikipek VIV';
 }

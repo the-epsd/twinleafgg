@@ -47,7 +47,8 @@ export class Bidoof extends PokemonCard {
 
   public name: string = 'Bidoof';
 
-  public fullName: string = 'Bidoof CRZ';
+  public fullName: string = 'Bidoof (CRZ 111)';
+  public legacyFullName = 'Bidoof CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

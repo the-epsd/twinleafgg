@@ -49,7 +49,8 @@ export class HopsCorviknight extends PokemonCard {
 
   public name: string = 'Hop\'s Corviknight';
 
-  public fullName: string = 'Hop\'s Corviknight JTG';
+  public fullName: string = 'Hop\'s Corviknight (JTG 108)';
+  public legacyFullName = 'Hop\'s Corviknight JTG';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

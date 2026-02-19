@@ -21,5 +21,6 @@ export class Toedscool extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';
   public name: string = 'Toedscool';
-  public fullName: string = 'Toedscool JTG';
+  public fullName: string = 'Toedscool (JTG 88)';
+  public legacyFullName = 'Toedscool JTG';
 }

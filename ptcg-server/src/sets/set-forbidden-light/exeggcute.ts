@@ -28,7 +28,8 @@ export class Exeggcute extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Exeggcute';
-  public fullName: string = 'Exeggcute FLI';
+  public fullName: string = 'Exeggcute (FLI 1)';
+  public legacyFullName = 'Exeggcute FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Multiply

@@ -19,7 +19,8 @@ export class ThunderMountainPrismStar extends TrainerCard {
 
   public name: string = 'Thunder Mountain Prism Star';
 
-  public fullName: string = 'Thunder Mountain Prism Star LOT';
+  public fullName: string = 'Thunder Mountain Prism Star (LOT 191)';
+  public legacyFullName = 'Thunder Mountain Prism Star LOT';
 
   public cardImage: string = 'assets/cardback.png';
 

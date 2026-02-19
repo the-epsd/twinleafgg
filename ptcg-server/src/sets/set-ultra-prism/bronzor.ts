@@ -36,7 +36,8 @@ export class Bronzor extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bronzor';
-  public fullName: string = 'Bronzor UPR';
+  public fullName: string = 'Bronzor (UPR 86)';
+  public legacyFullName = 'Bronzor UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hypnosis

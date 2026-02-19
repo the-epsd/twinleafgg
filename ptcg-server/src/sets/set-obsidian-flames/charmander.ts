@@ -32,7 +32,8 @@ export class Charmander extends PokemonCard {
 
   public name: string = 'Charmander';
 
-  public fullName: string = 'Charmander OBF';
+  public fullName: string = 'Charmander (OBF 26)';
+  public legacyFullName = 'Charmander OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -30,7 +30,7 @@ export class Wigglytuff extends PokemonCard {
       name: 'Punishing Slap',
       cost: [Y, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If any of your opponent\'s Pokémon have any [D] Energy attached to them, this attack does 60 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Wigglytuff extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wigglytuff';
-  public fullName: string = 'Wigglytuff CIN';
+  public fullName: string = 'Wigglytuff (CIN 72)';
+  public legacyFullName = 'Wigglytuff CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hypnoblast

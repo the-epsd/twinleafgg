@@ -33,7 +33,8 @@ export class Copperajahex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '150';
   public name: string = 'Copperajah ex';
-  public fullName: string = 'Copperajah ex PAL';
+  public fullName: string = 'Copperajah ex (PAL 150)';
+  public legacyFullName = 'Copperajah ex PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

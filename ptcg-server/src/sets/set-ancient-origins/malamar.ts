@@ -39,7 +39,8 @@ export class Malamar extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Malamar';
-  public fullName: string = 'Malamar AOR';
+  public fullName: string = 'Malamar (AOR 46)';
+  public legacyFullName = 'Malamar AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Entangling Control

@@ -16,7 +16,8 @@ export class BurningEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '151';
   public name = 'Burning Energy';
-  public fullName = 'Burning Energy BKT';
+  public fullName = 'Burning Energy (BKT 151)';
+  public legacyFullName = 'Burning Energy BKT';
 
   public text = `This card can only be attached to [R] Pokémon. This card provides [R] Energy only while this card is attached to a [R] Pokémon.
 

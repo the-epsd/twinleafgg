@@ -39,7 +39,8 @@ export class Shiftry extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shiftry';
-  public fullName: string = 'Shiftry FLF';
+  public fullName: string = 'Shiftry (FLF 7)';
+  public legacyFullName = 'Shiftry FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-unbroken-bonds/salazzle.ts (Roast Reveal - discard energy to draw)

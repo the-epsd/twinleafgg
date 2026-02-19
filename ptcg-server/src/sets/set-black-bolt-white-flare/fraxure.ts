@@ -33,7 +33,8 @@ export class Fraxure extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';
   public name: string = 'Fraxure';
-  public fullName: string = 'Fraxure SV11B';
+  public fullName: string = 'Fraxure (BLK 69)';
+  public legacyFullName = 'Fraxure SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Boundless Power

@@ -17,7 +17,8 @@ export class SkySealStone extends TrainerCard {
   public regulationMark: string = 'F';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sky Seal Stone';
-  public fullName: string = 'Sky Seal Stone CRZ';
+  public fullName: string = 'Sky Seal Stone (CRZ 143)';
+  public legacyFullName = 'Sky Seal Stone CRZ';
 
   public text: string = 'The Pokémon V this card is attached to can use the VSTAR Power on this card.';
 

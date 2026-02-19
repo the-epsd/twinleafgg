@@ -23,7 +23,8 @@ export class Peonia extends TrainerCard {
 
   public name: string = 'Peonia';
 
-  public fullName: string = 'Peonia CRE';
+  public fullName: string = 'Peonia (CRE 149)';
+  public legacyFullName = 'Peonia CRE';
 
   public text: string =
     'Put up to 3 Prize cards into your hand. Then, for each Prize card you put into your hand in this way, put a card from your hand face down as a Prize card.';

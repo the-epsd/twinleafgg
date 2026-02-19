@@ -9,7 +9,8 @@ export class Ruffian extends TrainerCard {
   public name: string = 'Ruffian';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '157';
-  public fullName: string = 'Ruffian JTG';
+  public fullName: string = 'Ruffian (JTG 157)';
+  public legacyFullName = 'Ruffian JTG';
 
   public text: string = 'Discard a Pokémon Tool and a Special Energy from 1 of your opponent\'s Pokémon.';
 

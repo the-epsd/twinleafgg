@@ -14,7 +14,8 @@ export class NsPlan extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
   public name: string = 'N\'s Plan';
-  public fullName: string = 'N\'s Plot SV11B';
+  public fullName: string = 'N\'s Plan (BLK 83)';
+  public legacyFullName = 'N\'s Plot SV11B';
   public text: string = 'Move up to 2 Energy from your Benched Pokémon to your Active Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

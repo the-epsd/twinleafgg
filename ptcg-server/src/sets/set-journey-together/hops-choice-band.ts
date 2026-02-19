@@ -25,7 +25,8 @@ export class HopsChoiceBand extends TrainerCard {
 
   public name: string = 'Hop\'s Choice Band';
 
-  public fullName: string = 'Hop\'s Choice Band JTG';
+  public fullName: string = 'Hop\'s Choice Band (JTG 148)';
+  public legacyFullName = 'Hop\'s Choice Band JTG';
 
   public text: string = 'Attacks used by the Hop\'s Pokémon this card is attached to cost [C] less and do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
 

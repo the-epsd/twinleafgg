@@ -27,7 +27,7 @@ export class Purrloin extends PokemonCard {
       name: 'Tail Rap',
       cost: [D, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 20 damage for each heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Purrloin extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Purrloin';
-  public fullName: string = 'Purrloin SLG';
+  public fullName: string = 'Purrloin (SLG 48)';
+  public legacyFullName = 'Purrloin SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Tail Rap

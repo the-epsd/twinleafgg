@@ -16,7 +16,8 @@ export class FairyCharmGrass extends TrainerCard {
   public setNumber: string = '174';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fairy Charm Grass';
-  public fullName: string = 'Fairy Charm Grass LOT';
+  public fullName: string = 'Fairy Charm Grass (LOT 174)';
+  public legacyFullName = 'Fairy Charm Grass LOT';
   public text: string = 'Prevent all damage done to the Fairy Pok\u00e9mon this card is attached to by attacks from your opponent\'s Grass Pok\u00e9mon-GX and Grass Pok\u00e9mon-EX.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

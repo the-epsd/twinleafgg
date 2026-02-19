@@ -41,7 +41,8 @@ export class Porygon extends PokemonCard {
 
   public name: string = 'Porygon';
 
-  public fullName: string = 'Porygon BS';
+  public fullName: string = 'Porygon (BS 39)';
+  public legacyFullName = 'Porygon BS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -31,7 +31,7 @@ export class Onix extends PokemonCard {
       name: 'Rage',
       cost: [F, F],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     }
   ];
@@ -40,7 +40,8 @@ export class Onix extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Onix';
-  public fullName: string = 'Onix CES';
+  public fullName: string = 'Onix (CES 71)';
+  public legacyFullName = 'Onix CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Screech

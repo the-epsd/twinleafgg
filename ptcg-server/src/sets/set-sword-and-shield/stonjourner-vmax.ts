@@ -34,7 +34,8 @@ export class StonjournerVMAX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '116';
   public name: string = 'Stonjourner VMAX';
-  public fullName: string = 'Stonjourner VMAX SSH';
+  public fullName: string = 'Stonjourner VMAX (SSH 116)';
+  public legacyFullName = 'Stonjourner VMAX SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

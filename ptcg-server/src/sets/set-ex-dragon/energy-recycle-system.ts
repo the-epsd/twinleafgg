@@ -17,7 +17,8 @@ export class EnergyRecycleSystem extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
   public name: string = 'Energy Recycle System';
-  public fullName: string = 'Energy Recycle System DR';
+  public fullName: string = 'Energy Recycle System (DR 84)';
+  public legacyFullName = 'Energy Recycle System DR';
 
   public text: string =
     `Choose 1:

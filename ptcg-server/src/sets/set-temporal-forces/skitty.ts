@@ -76,7 +76,8 @@ export class Skitty extends PokemonCard {
 
   public name: string = 'Skitty';
 
-  public fullName: string = 'Skitty TEF';
+  public fullName: string = 'Skitty (TEF 130)';
+  public legacyFullName = 'Skitty TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

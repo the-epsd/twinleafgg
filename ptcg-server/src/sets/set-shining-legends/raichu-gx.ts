@@ -25,7 +25,7 @@ export class RaichuGx extends PokemonCard {
       name: 'Powerful Spark',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage times the amount of [L] Energy attached to your Pokémon.'
     },
     {
@@ -47,7 +47,8 @@ export class RaichuGx extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raichu GX';
-  public fullName: string = 'Raichu GX SLG';
+  public fullName: string = 'Raichu GX (SLG 29)';
+  public legacyFullName = 'Raichu GX SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Powerful Spark

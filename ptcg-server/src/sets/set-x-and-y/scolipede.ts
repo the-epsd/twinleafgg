@@ -38,7 +38,8 @@ export class Scolipede extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scolipede';
-  public fullName: string = 'Scolipede XY';
+  public fullName: string = 'Scolipede (XY 53)';
+  public legacyFullName = 'Scolipede XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-boundaries-crossed/delcatty.ts (Double Slap - multiple coin flips)

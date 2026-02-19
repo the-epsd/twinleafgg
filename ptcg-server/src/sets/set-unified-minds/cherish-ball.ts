@@ -55,7 +55,8 @@ export class CherishBall extends TrainerCard {
   public setNumber: string = '191';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cherish Ball';
-  public fullName: string = 'Cherish Ball UNM';
+  public fullName: string = 'Cherish Ball (UNM 191)';
+  public legacyFullName = 'Cherish Ball UNM';
   public text: string = 'Search your deck for a Pokémon-GX, reveal it, and put it into your hand. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

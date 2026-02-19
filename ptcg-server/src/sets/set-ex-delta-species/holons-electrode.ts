@@ -33,7 +33,8 @@ export class HolonsElectrode extends PokemonCard implements EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
   public name: string = 'Holon\'s Electrode';
-  public fullName: string = 'Holon\'s Electrode DS';
+  public fullName: string = 'Holon\'s Electrode (DS 21)';
+  public legacyFullName = 'Holon\'s Electrode DS';
 
   // Which energies this provides when attached as an energy
   public provides: CardType[] = [CardType.ANY, CardType.ANY];

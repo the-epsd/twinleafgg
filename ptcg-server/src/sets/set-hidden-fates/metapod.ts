@@ -26,5 +26,6 @@ export class Metapod extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metapod';
-  public fullName: string = 'Metapod HIF';
+  public fullName: string = 'Metapod (HIF 2)';
+  public legacyFullName = 'Metapod HIF';
 }

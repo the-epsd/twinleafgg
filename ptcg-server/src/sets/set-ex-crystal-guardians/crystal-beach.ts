@@ -11,7 +11,8 @@ export class CrystalBeach extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'CG';
   public name = 'Crystal Beach';
-  public fullName = 'Crystal Beach CG';
+  public fullName = 'Crystal Beach (CG 75)';
+  public legacyFullName = 'Crystal Beach CG';
 
   public text = 'Each Special Energy card that provides 2 or more Energy (both yours and your opponent\'s) now provides only 1 [C] Energy. This isn\'t affected by any Poké-Powers or Poké-Bodies.';
 

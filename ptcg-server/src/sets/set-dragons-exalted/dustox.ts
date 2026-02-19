@@ -42,7 +42,8 @@ export class Dustox extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dustox';
-  public fullName: string = 'Dustox DRX';
+  public fullName: string = 'Dustox (DRX 47)';
+  public legacyFullName = 'Dustox DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

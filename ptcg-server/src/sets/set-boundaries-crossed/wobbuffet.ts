@@ -25,5 +25,6 @@ export class Wobbuffet extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wobbuffet';
-  public fullName: string = 'Wobbuffet BCR';
+  public fullName: string = 'Wobbuffet (BCR 58)';
+  public legacyFullName = 'Wobbuffet BCR';
 }

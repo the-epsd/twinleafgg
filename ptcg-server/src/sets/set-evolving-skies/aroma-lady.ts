@@ -16,7 +16,8 @@ export class AromaLady extends TrainerCard {
   public setNumber: string = '141';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aroma Lady';
-  public fullName: string = 'Aroma Lady EVS';
+  public fullName: string = 'Aroma Lady (EVS 141)';
+  public legacyFullName = 'Aroma Lady EVS';
   public text: string = 'Draw 2 cards. If you do, your Active Pokémon recovers from all Special Conditions. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

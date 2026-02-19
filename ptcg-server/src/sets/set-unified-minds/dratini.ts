@@ -31,7 +31,8 @@ export class Dratini extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '148';
   public name: string = 'Dratini';
-  public fullName: string = 'Dratini UNM';
+  public fullName: string = 'Dratini (UNM 148)';
+  public legacyFullName = 'Dratini UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

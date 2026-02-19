@@ -9,7 +9,8 @@ export class RelicHunter extends TrainerCard {
   public set = 'SK';
   public setNumber: string = '120';
   public name = 'Relic Hunter';
-  public fullName = 'Relic Hunter SK';
+  public fullName = 'Relic Hunter (SK 120)';
+  public legacyFullName = 'Relic Hunter SK';
 
   public text = 'Search your deck for up to 2 Supporter and/or Stadium cards, show them to your opponent, and put them into your hand. Shuffle your deck afterward.';
 

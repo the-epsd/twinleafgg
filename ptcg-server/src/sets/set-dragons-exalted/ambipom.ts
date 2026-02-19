@@ -33,7 +33,8 @@ export class Ambipom extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ambipom';
-  public fullName: string = 'Ambipom DRX';
+  public fullName: string = 'Ambipom (DRX 100)';
+  public legacyFullName = 'Ambipom DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

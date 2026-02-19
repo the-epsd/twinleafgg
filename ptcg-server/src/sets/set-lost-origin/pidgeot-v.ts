@@ -48,7 +48,8 @@ export class PidgeotV extends PokemonCard {
 
   public name: string = 'Pidgeot V';
 
-  public fullName: string = 'Pidgeot V LOR';
+  public fullName: string = 'Pidgeot V (LOR 137)';
+  public legacyFullName = 'Pidgeot V LOR';
 
   // Implement ability
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

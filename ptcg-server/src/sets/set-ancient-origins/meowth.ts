@@ -21,7 +21,7 @@ export class Meowth extends PokemonCard {
       name: 'Act Tough',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any [D] Energy attached to it, this attack does 20 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Meowth extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meowth';
-  public fullName: string = 'Meowth AOR';
+  public fullName: string = 'Meowth (AOR 61)';
+  public legacyFullName = 'Meowth AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Act Tough

@@ -32,7 +32,8 @@ export class ZeraoraVMAX extends PokemonCard {
   public regulationMark = 'F';
   public set: string = 'CRZ';
   public name: string = 'Zeraora VMAX';
-  public fullName: string = 'Zeraora VMAX CRZ';
+  public fullName: string = 'Zeraora VMAX (CRZ 54)';
+  public legacyFullName = 'Zeraora VMAX CRZ';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '54';
 

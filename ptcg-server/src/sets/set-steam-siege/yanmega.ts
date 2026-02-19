@@ -29,7 +29,7 @@ export class Yanmega extends PokemonCard {
       name: 'Assault Boom',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pok\u00e9mon has a Pok\u00e9mon Tool card attached to it, this attack does 70 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Yanmega extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yanmega';
-  public fullName: string = 'Yanmega STS';
+  public fullName: string = 'Yanmega (STS 7)';
+  public legacyFullName = 'Yanmega STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sonic Vision (passive - ignore energy in attack cost if exactly 4 cards in hand)

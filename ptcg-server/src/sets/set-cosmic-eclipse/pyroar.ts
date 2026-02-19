@@ -35,7 +35,8 @@ export class Pyroar extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pyroar';
-  public fullName: string = 'Pyroar CEC';
+  public fullName: string = 'Pyroar (CEC 37)';
+  public legacyFullName = 'Pyroar CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swirling Inferno

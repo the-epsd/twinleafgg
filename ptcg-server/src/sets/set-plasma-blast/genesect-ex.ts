@@ -31,7 +31,8 @@ export class GenesectEX extends PokemonCard {
 
   public set: string = 'PLB';
   public name: string = 'Genesect-EX';
-  public fullName: string = 'Genesect EX PLB';
+  public fullName: string = 'Genesect-EX (PLB 11)';
+  public legacyFullName = 'Genesect EX PLB';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
 

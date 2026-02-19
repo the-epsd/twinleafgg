@@ -16,7 +16,8 @@ export class AssaultVest extends TrainerCard {
   public setNumber: string = '133';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Assault Vest';
-  public fullName: string = 'Assault Vest BKT';
+  public fullName: string = 'Assault Vest (BKT 133)';
+  public legacyFullName = 'Assault Vest BKT';
   public text: string = 'Any damage done to the Pokémon this card is attached to by attacks from your opponent\'s Pokémon that have any Special Energy attached to them is reduced by 40 (after applying Weakness and Resistance).';
 
   // Ref: set-x-and-y/hard-charm.ts (Tool damage reduction with IS_TOOL_BLOCKED + DealDamageEffect)

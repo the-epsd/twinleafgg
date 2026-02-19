@@ -30,7 +30,8 @@ export class Barraskewda extends PokemonCard {
   public regulationMark = 'D';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Barraskewda';
-  public fullName: string = 'Barraskewda RCL';
+  public fullName: string = 'Barraskewda (RCL 53)';
+  public legacyFullName = 'Barraskewda RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

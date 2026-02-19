@@ -22,5 +22,6 @@ export class Abra extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '63';
   public name: string = 'Abra';
-  public fullName: string = 'Abra MEW';
+  public fullName: string = 'Abra (MEW 63)';
+  public legacyFullName = 'Abra MEW';
 }

@@ -32,7 +32,8 @@ export class AlolanRaticate extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
   public name: string = 'Alolan Raticate';
-  public fullName: string = 'Alolan Raticate PGO';
+  public fullName: string = 'Alolan Raticate (PGO 42)';
+  public legacyFullName = 'Alolan Raticate PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

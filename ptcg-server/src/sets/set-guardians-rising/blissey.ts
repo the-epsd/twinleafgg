@@ -36,7 +36,8 @@ export class Blissey extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blissey';
-  public fullName: string = 'Blissey GRI';
+  public fullName: string = 'Blissey (GRI 102)';
+  public legacyFullName = 'Blissey GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fresh Egg (on-evolve)

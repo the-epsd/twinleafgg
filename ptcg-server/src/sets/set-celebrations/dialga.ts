@@ -31,7 +31,8 @@ export class Dialga extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name: string = 'Dialga';
-  public fullName: string = 'Dialga CEL';
+  public fullName: string = 'Dialga (CEL 20)';
+  public legacyFullName = 'Dialga CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

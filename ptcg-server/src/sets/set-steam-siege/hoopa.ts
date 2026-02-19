@@ -34,7 +34,8 @@ export class Hoopa extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hoopa';
-  public fullName: string = 'Hoopa STS';
+  public fullName: string = 'Hoopa (STS 51)';
+  public legacyFullName = 'Hoopa STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hyperspace Punch

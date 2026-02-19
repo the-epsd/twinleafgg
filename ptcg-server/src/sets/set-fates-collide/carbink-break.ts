@@ -30,7 +30,8 @@ export class CarbinkBreak extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carbink BREAK';
-  public fullName: string = 'Carbink BREAK FCO';
+  public fullName: string = 'Carbink BREAK (FCO 51)';
+  public legacyFullName = 'Carbink BREAK FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Diamond Gift

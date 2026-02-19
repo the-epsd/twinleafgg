@@ -17,7 +17,8 @@ export class Yanma extends PokemonCard {
   public set: string = 'ASR';
   public regulationMark = 'F';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Yanma ASR';
+  public fullName: string = 'Yanma (ASR 6)';
+  public legacyFullName = 'Yanma ASR';
   public name: string = 'Yanma';
   public setNumber: string = '6';
 

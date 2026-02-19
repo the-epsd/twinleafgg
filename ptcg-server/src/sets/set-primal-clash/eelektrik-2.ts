@@ -22,7 +22,7 @@ export class Eelektrik2 extends PokemonCard {
       name: 'Thrash',
       cost: [L, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage. If tails, this Pokémon does 20 damage to itself.'
     }
   ];
@@ -31,7 +31,8 @@ export class Eelektrik2 extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eelektrik';
-  public fullName: string = 'Eelektrik PRC 64';
+  public fullName: string = 'Eelektrik (PRC 64)';
+  public legacyFullName = 'Eelektrik PRC 64';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thrash

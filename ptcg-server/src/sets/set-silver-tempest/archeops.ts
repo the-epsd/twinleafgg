@@ -55,7 +55,8 @@ export class Archeops extends PokemonCard {
 
   public name: string = 'Archeops';
 
-  public fullName: string = 'Archeops SIT';
+  public fullName: string = 'Archeops (SIT 147)';
+  public legacyFullName = 'Archeops SIT';
 
   public readonly PRIMAL_TURBO_MARKER = 'PRIMAL_TURBO_MARKER';
 

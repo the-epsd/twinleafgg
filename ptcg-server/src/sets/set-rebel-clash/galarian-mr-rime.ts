@@ -28,7 +28,7 @@ export class GalarianMrRime extends PokemonCard {
       name: 'Triple Spin',
       cost: [W, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 50 damage for each heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class GalarianMrRime extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Mr. Rime';
-  public fullName: string = 'Galarian Mr. Rime RCL';
+  public fullName: string = 'Galarian Mr. Rime (RCL 38)';
+  public legacyFullName = 'Galarian Mr. Rime RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Screen Cleaner (passive - prevent attack effects except damage for your Pokemon with energy)

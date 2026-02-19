@@ -30,7 +30,8 @@ export class Gossifleur extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gossifleur';
-  public fullName: string = 'Gossifleur EVS';
+  public fullName: string = 'Gossifleur (EVS 15)';
+  public legacyFullName = 'Gossifleur EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Blot

@@ -28,155 +28,181 @@ import { TropicalBeach } from './tropical-beach';
 export class KeldeoExBWP extends KeldeoEx {
   public set: string = 'BWP';
   public setNumber: string = '61';
-  public fullName: string = 'Keldeo EX BWP';
+  public fullName: string = 'Keldeo-EX (BWP 61)';
+  public legacyFullName = 'Keldeo EX BWP';
 }
 
 export class TropicalBeach2 extends TropicalBeach {
   public set: string = 'BWP';
   public setNumber: string = '50';
   public name: string = 'Tropical Beach';
-  public fullName: string = 'Tropical Beach BWP 50';
+  public fullName: string = 'Tropical Beach (BWP 50)';
+  public legacyFullName = 'Tropical Beach BWP 50';
 }
 export class ReshiramBWP extends Reshiram {
   public setNumber = '4';
-  public fullName: string = 'Reshiram BWP';
+  public fullName: string = 'Reshiram (BWP 4)';
+  public legacyFullName = 'Reshiram BWP';
   public set = 'BWP';
 }
 
 export class ZekromBWP extends Zekrom {
   public setNumber = '5';
-  public fullName: string = 'Zekrom BWP';
+  public fullName: string = 'Zekrom (BWP 5)';
+  public legacyFullName = 'Zekrom BWP';
   public set = 'BWP';
 }
 
 export class ZoroarkBWP extends Zoroark {
   public setNumber = '9';
-  public fullName: string = 'Zoroark BWP';
+  public fullName: string = 'Zoroark (BWP 9)';
+  public legacyFullName = 'Zoroark BWP';
   public set = 'BWP';
 }
 
 export class EmboarBWP extends Emboar {
   public setNumber = '21';
-  public fullName: string = 'Emboar BWP';
+  public fullName: string = 'Emboar (BWP 21)';
+  public legacyFullName = 'Emboar BWP';
   public set = 'BWP';
 }
 
 export class Reshiram2BWP extends ReshiramBLW26 {
   public setNumber = '23';
-  public fullName: string = 'Reshiram2 BWP';
+  public fullName: string = 'Reshiram (BWP 23)';
+  public legacyFullName = 'Reshiram2 BWP';
   public set = 'BWP';
 }
 
 export class Zekrom2BWP extends ZekromBLW47 {
   public setNumber = '24';
-  public fullName: string = 'Zekrom2 BWP';
+  public fullName: string = 'Zekrom (BWP 24)';
+  public legacyFullName = 'Zekrom2 BWP';
   public set = 'BWP';
 }
 
 export class ReshiramExBWP extends ReshiramEx {
   public setNumber = '36';
-  public fullName: string = 'Reshiram EX BWP';
+  public fullName: string = 'Reshiram-EX (BWP 36)';
+  public legacyFullName = 'Reshiram EX BWP';
   public set = 'BWP';
 }
 
 export class ZekromExBWP extends ZekromEx {
   public setNumber = '38';
-  public fullName: string = 'Zekrom EX BWP';
+  public fullName: string = 'Zekrom-EX (BWP 38)';
+  public legacyFullName = 'Zekrom EX BWP';
   public set = 'BWP';
 }
 
 export class TornadusBWP extends Tornadus {
   public setNumber = '42';
-  public fullName: string = 'Tornadus BWP';
+  public fullName: string = 'Tornadus (BWP 42)';
+  public legacyFullName = 'Tornadus BWP';
   public set = 'BWP';
 }
 
 export class MewtwoExBWP extends MewtwoEx {
   public setNumber = '45';
-  public fullName: string = 'Mewtwo EX BWP';
+  public fullName: string = 'Mewtwo-EX (BWP 45)';
+  public legacyFullName = 'Mewtwo EX BWP';
   public set = 'BWP';
 }
 
 export class DarkraiExBWP extends DarkraiEx {
   public setNumber = '46';
-  public fullName: string = 'Darkrai-EX BWP';
+  public fullName: string = 'Darkrai-EX (BWP 46)';
+  public legacyFullName = 'Darkrai-EX BWP';
   public set = 'BWP';
 }
 
 export class RayquazaExBWP extends RayquazaEx {
   public setNumber = '47';
-  public fullName: string = 'Rayquaza EX BWP';
+  public fullName: string = 'Rayquaza-EX (BWP 47)';
+  public legacyFullName = 'Rayquaza EX BWP';
   public set = 'BWP';
 }
 
 export class AltariaBWP extends Altaria {
   public setNumber = '48';
-  public fullName: string = 'Altaria BWP';
+  public fullName: string = 'Altaria (BWP 48)';
+  public legacyFullName = 'Altaria BWP';
   public set = 'BWP';
 }
 
 export class FlygonBWP extends Flygon {
   public setNumber = '53';
-  public fullName: string = 'Flygon BWP';
+  public fullName: string = 'Flygon (BWP 53)';
+  public legacyFullName = 'Flygon BWP';
   public set = 'BWP';
 }
 
 export class BlackKyuremBWP extends BlackKyurem {
   public setNumber = '58';
-  public fullName: string = 'Black Kyurem BWP';
+  public fullName: string = 'Black Kyurem (BWP 58)';
+  public legacyFullName = 'Black Kyurem BWP';
   public set = 'BWP';
 }
 
 export class DrifblimBWP extends Drifblim {
   public setNumber = '64';
-  public fullName: string = 'Drifblim BWP';
+  public fullName: string = 'Drifblim (BWP 64)';
+  public legacyFullName = 'Drifblim BWP';
   public set = 'BWP';
 }
 
 export class NinetalesBWP extends Ninetales {
   public setNumber = '66';
-  public fullName: string = 'Ninetales BWP';
+  public fullName: string = 'Ninetales (BWP 66)';
+  public legacyFullName = 'Ninetales BWP';
   public set = 'BWP';
 }
 
 export class ThundurusEXBWP extends ThundurusEX {
   public setNumber = '81';
-  public fullName: string = 'Thundurus EX BWP';
+  public fullName: string = 'Thundurus-EX (BWP 81)';
+  public legacyFullName = 'Thundurus EX BWP';
   public set = 'BWP';
 }
 
 export class DeoxysEXBWP extends DeoxysEX {
   public setNumber = '82';
-  public fullName: string = 'Deoxys EX BWP';
+  public fullName: string = 'Deoxys-EX (BWP 82)';
+  public legacyFullName = 'Deoxys EX BWP';
   public set = 'BWP';
 }
 
 export class LugiaExBWP extends LugiaEx {
   public setNumber = '83';
-  public fullName: string = 'Lugia EX BWP';
+  public fullName: string = 'Lugia-EX (BWP 83)';
+  public legacyFullName = 'Lugia EX BWP';
   public set = 'BWP';
 }
 
 export class EeveeBWP extends Eevee {
   public setNumber = '94';
-  public fullName: string = 'Eevee BWP';
+  public fullName: string = 'Eevee (BWP 94)';
+  public legacyFullName = 'Eevee BWP';
   public set = 'BWP';
 }
 
 export class TornadusExBWP extends TornadusEx {
   public setNumber = '96';
-  public fullName: string = 'Tornadus EX BWP';
+  public fullName: string = 'Tornadus-EX (BWP 96)';
+  public legacyFullName = 'Tornadus EX BWP';
   public set = 'BWP';
 }
 
 export class Eevee2BWP extends EeveePLF89 {
   public setNumber = '97';
-  public fullName: string = 'Eevee2 BWP';
+  public fullName: string = 'Eevee (BWP 97)';
+  public legacyFullName = 'Eevee2 BWP';
   public set = 'BWP';
 }
 
 export class NBWP extends N {
   public setNumber = '100';
-  public fullName: string = 'N BWP';
+  public fullName: string = 'N (BWP 100)';
+  public legacyFullName = 'N BWP';
   public set = 'BWP';
 }

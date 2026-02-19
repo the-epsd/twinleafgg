@@ -37,7 +37,8 @@ export class Jolteon extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jolteon';
-  public fullName: string = 'Jolteon CEC';
+  public fullName: string = 'Jolteon (CEC 70)';
+  public legacyFullName = 'Jolteon CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Speed Cheer (passive - reduce attack cost for Eevee GX)

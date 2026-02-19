@@ -51,7 +51,8 @@ export class Hawlucha extends PokemonCard {
 
   public name: string = 'Hawlucha';
 
-  public fullName: string = 'Hawlucha SVI';
+  public fullName: string = 'Hawlucha (SVI 118)';
+  public legacyFullName = 'Hawlucha SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

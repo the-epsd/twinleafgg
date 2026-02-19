@@ -37,7 +37,8 @@ export class Lombre extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lombre';
-  public fullName: string = 'Lombre PLS';
+  public fullName: string = 'Lombre (PLS 30)';
+  public legacyFullName = 'Lombre PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Jump On

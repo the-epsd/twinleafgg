@@ -15,7 +15,8 @@ export class FadedTown extends TrainerCard {
   public setNumber = '73';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Faded Town';
-  public fullName: string = 'Faded Town AOR';
+  public fullName: string = 'Faded Town (AOR 73)';
+  public legacyFullName = 'Faded Town AOR';
 
   public text: string =
     'At any time between turns, put 2 damage counters on each Mega Evolution Pokémon.';

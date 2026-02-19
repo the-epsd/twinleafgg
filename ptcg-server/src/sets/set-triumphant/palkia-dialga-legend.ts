@@ -28,7 +28,8 @@ export class PalkiaDialgaLEGEND extends PokemonCard {
 
   public set: string = 'LEGEND';
   public name: string = 'Palkia & Dialga LEGEND';
-  public fullName: string = 'Palkia & Dialga LEGEND LEGEND';
+  public fullName: string = 'Palkia & Dialga LEGEND (LEGEND 1)';
+  public legacyFullName = 'Palkia & Dialga LEGEND LEGEND';
   public tags = [CardTag.LEGEND];
   public setNumber = '1';
 

@@ -19,5 +19,6 @@ export class Seel extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
   public name: string = 'Seel';
-  public fullName: string = 'Seel UNB';
+  public fullName: string = 'Seel (UNB 44)';
+  public legacyFullName = 'Seel UNB';
 }

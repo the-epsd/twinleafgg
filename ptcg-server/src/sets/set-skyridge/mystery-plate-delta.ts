@@ -18,7 +18,8 @@ export class MysteryPlateDelta extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '136';
   public name: string = 'Mystery Plate δ';
-  public fullName: string = 'Mystery Plate δ SK';
+  public fullName: string = 'Mystery Plate δ (SK 136)';
+  public legacyFullName = 'Mystery Plate δ SK';
 
   public attacks: Attack[] = [{
     name: 'Healing Oasis',

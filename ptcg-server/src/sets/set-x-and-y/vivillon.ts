@@ -38,7 +38,8 @@ export class Vivillon extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vivillon';
-  public fullName: string = 'Vivillon XY';
+  public fullName: string = 'Vivillon (XY 17)';
+  public legacyFullName = 'Vivillon XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-wotc-promos/mew.ts (SelectPrompt pattern)

@@ -37,7 +37,8 @@ export class Girafarig extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Girafarig';
-  public fullName: string = 'Girafarig VIV';
+  public fullName: string = 'Girafarig (VIV 65)';
+  public legacyFullName = 'Girafarig VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psypower

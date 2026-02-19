@@ -50,7 +50,8 @@ export class Mew extends PokemonCard {
 
   public name: string = 'Mew';
 
-  public fullName: string = 'Mew CEL';
+  public fullName: string = 'Mew (CEL 11)';
+  public legacyFullName = 'Mew CEL';
 
   public readonly MYSTERIOUS_TAIL_MARKER = 'MYSTERIOUS_TAIL_MARKER';
 

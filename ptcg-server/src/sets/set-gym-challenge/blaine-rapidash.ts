@@ -31,7 +31,8 @@ export class BlainesRapidash extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '33';
   public name: string = 'Blaine\'s Rapidash';
-  public fullName: string = 'Blaine\'s Rapidash G2';
+  public fullName: string = 'Blaine\'s Rapidash (G2 33)';
+  public legacyFullName = 'Blaine\'s Rapidash G2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

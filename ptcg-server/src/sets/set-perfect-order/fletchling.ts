@@ -29,7 +29,8 @@ export class Fletchling extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
   public name: string = 'Fletchling';
-  public fullName: string = 'Fletchling M3';
+  public fullName: string = 'Fletchling (M3 65)';
+  public legacyFullName = 'Fletchling M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Chirp - search for Pokemon with Fire resistance

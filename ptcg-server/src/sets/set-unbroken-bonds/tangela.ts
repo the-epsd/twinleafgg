@@ -34,7 +34,8 @@ export class Tangela extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tangela';
-  public fullName: string = 'Tangela UNB';
+  public fullName: string = 'Tangela (UNB 16)';
+  public legacyFullName = 'Tangela UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tangle Drag

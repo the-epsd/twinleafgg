@@ -28,7 +28,7 @@ export class Magneton extends PokemonCard {
       name: 'Tri Attack',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 40 damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Magneton extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magneton';
-  public fullName: string = 'Magneton UNM';
+  public fullName: string = 'Magneton (UNM 59)';
+  public legacyFullName = 'Magneton UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Tri Attack

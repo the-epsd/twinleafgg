@@ -37,7 +37,8 @@ export class Zorua extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zorua';
-  public fullName: string = 'Zorua BKT';
+  public fullName: string = 'Zorua (BKT 89)';
+  public legacyFullName = 'Zorua BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Moonless Madness

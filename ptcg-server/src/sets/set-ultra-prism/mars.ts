@@ -18,7 +18,8 @@ export class Mars extends TrainerCard {
 
   public name: string = 'Mars';
 
-  public fullName: string = 'Mars UPR';
+  public fullName: string = 'Mars (UPR 128)';
+  public legacyFullName = 'Mars UPR';
 
   public text: string =
     'Draw 2 cards. If you do, discard a random card from your opponent\'s hand.';

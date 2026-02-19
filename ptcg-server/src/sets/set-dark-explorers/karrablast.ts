@@ -39,7 +39,8 @@ export class Karrablast extends PokemonCard {
 
   public name: string = 'Karrablast';
 
-  public fullName: string = 'Karrablast DEX';
+  public fullName: string = 'Karrablast (DEX 9)';
+  public legacyFullName = 'Karrablast DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

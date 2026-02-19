@@ -85,7 +85,8 @@ export class Nihilego extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '106';
   public name: string = 'Nihilego';
-  public fullName: string = 'Nihilego LOT';
+  public fullName: string = 'Nihilego (LOT 106)';
+  public legacyFullName = 'Nihilego LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

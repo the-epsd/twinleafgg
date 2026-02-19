@@ -25,7 +25,8 @@ export class Naclstack extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '103';
   public name: string = 'Naclstack';
-  public fullName: string = 'Naclstack PAR';
+  public fullName: string = 'Naclstack (PAR 103)';
+  public legacyFullName = 'Naclstack PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

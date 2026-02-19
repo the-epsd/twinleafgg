@@ -31,7 +31,7 @@ export class VaporeonVmax extends PokemonCard {
       name: 'Max Torrent',
       cost: [W, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 100 more damage.'
     }
   ];
@@ -41,7 +41,8 @@ export class VaporeonVmax extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vaporeon VMAX';
-  public fullName: string = 'Vaporeon VMAX EVS';
+  public fullName: string = 'Vaporeon VMAX (EVS 30)';
+  public legacyFullName = 'Vaporeon VMAX EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble Pod

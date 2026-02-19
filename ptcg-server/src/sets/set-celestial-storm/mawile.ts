@@ -28,7 +28,7 @@ export class Mawile extends PokemonCard {
       name: 'Bite Off',
       cost: [M, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Pokémon-GX or a Pokémon-EX, this attack does 30 more damage (before applying Weakness and Resistance).'
     }
   ];
@@ -37,7 +37,8 @@ export class Mawile extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mawile';
-  public fullName: string = 'Mawile CES';
+  public fullName: string = 'Mawile (CES 91)';
+  public legacyFullName = 'Mawile CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Mining

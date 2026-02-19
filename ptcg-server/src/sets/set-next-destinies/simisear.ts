@@ -33,7 +33,8 @@ export class Simisear extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Simisear';
-  public fullName: string = 'Simisear NXD';
+  public fullName: string = 'Simisear (NXD 16)';
+  public legacyFullName = 'Simisear NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Collect - draw 3 cards

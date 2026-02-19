@@ -28,7 +28,7 @@ export class Vespiquen2 extends PokemonCard {
       name: 'Fury Swipes',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Vespiquen2 extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vespiquen';
-  public fullName: string = 'Vespiquen AOR 11';
+  public fullName: string = 'Vespiquen (AOR 11)';
+  public legacyFullName = 'Vespiquen AOR 11';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bee Drain

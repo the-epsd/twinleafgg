@@ -37,7 +37,8 @@ export class Gothita extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothita';
-  public fullName: string = 'Gothita DAA';
+  public fullName: string = 'Gothita (DAA 73)';
+  public legacyFullName = 'Gothita DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fortunate Eye

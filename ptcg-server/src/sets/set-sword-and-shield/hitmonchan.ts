@@ -20,7 +20,7 @@ export class Hitmonchan extends PokemonCard {
       name: 'Coordinated Beatdown',
       cost: [F],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Hitmonlee is on your Bench, this attack does 20 more damage.'
     },
     {
@@ -36,7 +36,8 @@ export class Hitmonchan extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hitmonchan';
-  public fullName: string = 'Hitmonchan SSH';
+  public fullName: string = 'Hitmonchan (SSH 95)';
+  public legacyFullName = 'Hitmonchan SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Coordinated Beatdown

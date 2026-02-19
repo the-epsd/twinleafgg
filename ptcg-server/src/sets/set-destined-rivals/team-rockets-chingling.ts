@@ -27,7 +27,8 @@ export class TeamRocketsChingling extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Chingling';
-  public fullName: string = 'Team Rocket\'s Chingling DRI';
+  public fullName: string = 'Team Rocket\'s Chingling (DRI 85)';
+  public legacyFullName = 'Team Rocket\'s Chingling DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

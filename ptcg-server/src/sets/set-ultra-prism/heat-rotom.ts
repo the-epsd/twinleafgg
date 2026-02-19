@@ -32,7 +32,8 @@ export class HeatRotom extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heat Rotom';
-  public fullName: string = 'Heat Rotom UPR';
+  public fullName: string = 'Heat Rotom (UPR 24)';
+  public legacyFullName = 'Heat Rotom UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Roto Motor (passive - ignore energy cost if 9+ tools in discard)

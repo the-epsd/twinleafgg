@@ -30,7 +30,8 @@ export class Shelmet extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
   public name: string = 'Shelmet';
-  public fullName: string = 'Shelmet NVI';
+  public fullName: string = 'Shelmet (NVI 11)';
+  public legacyFullName = 'Shelmet NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

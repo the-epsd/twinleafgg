@@ -33,6 +33,7 @@ export class Pidgey extends PokemonCard {
 
   public name: string = 'Pidgey';
 
-  public fullName: string = 'Pidgey OBF';
+  public fullName: string = 'Pidgey (OBF 162)';
+  public legacyFullName = 'Pidgey OBF';
 
 }

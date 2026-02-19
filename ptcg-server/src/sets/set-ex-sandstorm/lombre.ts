@@ -31,7 +31,8 @@ export class Lombre extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lombre';
-  public fullName: string = 'Lombre SS';
+  public fullName: string = 'Lombre (SS 45)';
+  public legacyFullName = 'Lombre SS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle Rain Dish Poké-Body

@@ -29,7 +29,8 @@ export class Ekans extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ekans';
-  public fullName: string = 'Ekans SLG';
+  public fullName: string = 'Ekans (SLG 36)';
+  public legacyFullName = 'Ekans SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Sting

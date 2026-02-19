@@ -47,7 +47,8 @@ export class Medichamex extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Medicham ex';
-  public fullName: string = 'Medicham ex EM';
+  public fullName: string = 'Medicham ex (EM 95)';
+  public legacyFullName = 'Medicham ex EM';
   public evolvesFrom: string = 'Meditite';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

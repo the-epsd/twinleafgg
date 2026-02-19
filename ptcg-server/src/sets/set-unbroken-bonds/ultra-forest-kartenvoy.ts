@@ -18,7 +18,8 @@ export class UltraForestKartenvoy extends TrainerCard {
   public setNumber: string = '188';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ultra Forest Kartenvoy';
-  public fullName: string = 'Ultra Forest Kartenvoy UNB';
+  public fullName: string = 'Ultra Forest Kartenvoy (UNB 188)';
+  public legacyFullName = 'Ultra Forest Kartenvoy UNB';
   public text: string = 'During this turn, damage from your Ultra Beasts\' attacks isn\'t affected by any effects on your opponent\'s Active Pokémon. You may play only 1 Supporter card during your turn (before your attack).';
 
   public readonly KARTENVOY_MARKER = 'ULTRA_FOREST_KARTENVOY_MARKER';

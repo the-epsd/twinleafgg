@@ -36,7 +36,8 @@ export class CharizardEx extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charizard-EX';
-  public fullName: string = 'Charizard-EX FLF';
+  public fullName: string = 'Charizard-EX (FLF 11)';
+  public legacyFullName = 'Charizard-EX FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Refs: set-next-destinies/cilan.ts (basic energy search), set-dragons-exalted/wailord.ts (coin gated)

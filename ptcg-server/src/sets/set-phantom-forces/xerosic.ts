@@ -18,7 +18,8 @@ export class Xerosic extends TrainerCard {
 
   public name: string = 'Xerosic';
 
-  public fullName: string = 'Xerosic PHF';
+  public fullName: string = 'Xerosic (PHF 110)';
+  public legacyFullName = 'Xerosic PHF';
 
   public text: string =
     'Choose a Pokémon Tool or Special Energy card attached to a Pokémon in play (yours or your opponent\'s) and discard it.';

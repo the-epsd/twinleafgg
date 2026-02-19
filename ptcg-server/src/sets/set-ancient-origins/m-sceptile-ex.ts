@@ -31,7 +31,8 @@ export class MSceptileEx extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Sceptile-EX';
-  public fullName: string = 'M Sceptile-EX AOR';
+  public fullName: string = 'M Sceptile-EX (AOR 8)';
+  public legacyFullName = 'M Sceptile-EX AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Jagged Saber

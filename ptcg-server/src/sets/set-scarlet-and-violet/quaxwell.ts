@@ -29,5 +29,6 @@ export class Quaxwell extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Quaxwell';
-  public fullName: string = 'Quaxwell SVI';
+  public fullName: string = 'Quaxwell (SVI 53)';
+  public legacyFullName = 'Quaxwell SVI';
 }

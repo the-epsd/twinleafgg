@@ -37,7 +37,8 @@ export class Purugly extends PokemonCard {
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Purugly';
-  public fullName: string = 'Purugly UPR';
+  public fullName: string = 'Purugly (UPR 109)';
+  public legacyFullName = 'Purugly UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Own the Place

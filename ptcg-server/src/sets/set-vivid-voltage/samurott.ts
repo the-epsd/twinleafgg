@@ -38,7 +38,8 @@ export class Samurott extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Samurott';
-  public fullName: string = 'Samurott VIV';
+  public fullName: string = 'Samurott (VIV 35)';
+  public legacyFullName = 'Samurott VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Swaddling Leaves (passive - damage reduction)

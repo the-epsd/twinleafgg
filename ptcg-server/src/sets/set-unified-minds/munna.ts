@@ -28,7 +28,8 @@ export class Munna extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Munna';
-  public fullName: string = 'Munna UNM';
+  public fullName: string = 'Munna (UNM 88)';
+  public legacyFullName = 'Munna UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Future Sight

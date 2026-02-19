@@ -36,7 +36,8 @@ export class Sliggoo extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sliggoo';
-  public fullName: string = 'Sliggoo FLF';
+  public fullName: string = 'Sliggoo (FLF 73)';
+  public legacyFullName = 'Sliggoo FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/corsola.ts (heal self)

@@ -41,7 +41,8 @@ export class Vibrava extends PokemonCard {
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vibrava';
-  public fullName: string = 'Vibrava PRC';
+  public fullName: string = 'Vibrava (PRC 109)';
+  public legacyFullName = 'Vibrava PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sand Attack

@@ -20,7 +20,7 @@ export class Skorupi extends PokemonCard {
       name: 'Pin Missile',
       cost: [P, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class Skorupi extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skorupi';
-  public fullName: string = 'Skorupi BKP';
+  public fullName: string = 'Skorupi (BKP 53)';
+  public legacyFullName = 'Skorupi BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pin Missile

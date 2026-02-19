@@ -32,7 +32,8 @@ export class Vanilluxe extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
   public name: string = 'Vanilluxe';
-  public fullName: string = 'Vanilluxe PAR';
+  public fullName: string = 'Vanilluxe (PAR 45)';
+  public legacyFullName = 'Vanilluxe PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Frigid Room

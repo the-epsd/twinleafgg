@@ -37,7 +37,8 @@ export class Thievul2 extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Thievul';
-  public fullName: string = 'Thievul SHF 48';
+  public fullName: string = 'Thievul (SHF 48)';
+  public legacyFullName = 'Thievul SHF 48';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Goons

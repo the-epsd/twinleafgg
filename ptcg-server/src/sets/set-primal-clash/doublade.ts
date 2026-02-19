@@ -38,7 +38,8 @@ export class Doublade extends PokemonCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Doublade';
-  public fullName: string = 'Doublade PRC';
+  public fullName: string = 'Doublade (PRC 99)';
+  public legacyFullName = 'Doublade PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: False Swipe

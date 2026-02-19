@@ -33,7 +33,8 @@ export class Rotom extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rotom';
-  public fullName: string = 'Rotom SSP';
+  public fullName: string = 'Rotom (SSP 61)';
+  public legacyFullName = 'Rotom SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Crushing Pulse

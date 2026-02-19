@@ -27,7 +27,8 @@ export class Clamperl extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clamperl';
-  public fullName: string = 'Clamperl DRI';
+  public fullName: string = 'Clamperl (DRI 54)';
+  public legacyFullName = 'Clamperl DRI';
 
   public readonly SHELL_PRESS_MARKER = 'SHELL_PRESS_MARKER';
 

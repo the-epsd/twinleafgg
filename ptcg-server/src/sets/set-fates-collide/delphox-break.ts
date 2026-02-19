@@ -29,7 +29,8 @@ export class DelphoxBreak extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Delphox BREAK';
-  public fullName: string = 'Delphox BREAK FCO';
+  public fullName: string = 'Delphox BREAK (FCO 14)';
+  public legacyFullName = 'Delphox BREAK FCO';
 
   public readonly FLARE_WITCH_MARKER = 'DELPHOX_BREAK_FCO_FLARE_WITCH_MARKER';
 

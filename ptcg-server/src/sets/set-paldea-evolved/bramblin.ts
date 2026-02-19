@@ -23,7 +23,8 @@ export class Bramblin extends PokemonCard {
   public regulationMark: string = 'G';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bramblin';
-  public fullName: string = 'Bramblin PAL';
+  public fullName: string = 'Bramblin (PAL 23)';
+  public legacyFullName = 'Bramblin PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -34,7 +34,8 @@ export class Heracross extends PokemonCard {
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heracross';
-  public fullName: string = 'Heracross UNM';
+  public fullName: string = 'Heracross (UNM 107)';
+  public legacyFullName = 'Heracross UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Turn the Tables

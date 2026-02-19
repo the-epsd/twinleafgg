@@ -29,7 +29,8 @@ export class Blitzle extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blitzle';
-  public fullName: string = 'Blitzle BKP';
+  public fullName: string = 'Blitzle (BKP 48)';
+  public legacyFullName = 'Blitzle BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Reckless Charge

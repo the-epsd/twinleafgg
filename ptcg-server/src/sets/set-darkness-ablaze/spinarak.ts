@@ -32,5 +32,6 @@ export class Spinarak extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spinarak';
-  public fullName: string = 'Spinarak DAA';
+  public fullName: string = 'Spinarak (DAA 102)';
+  public legacyFullName = 'Spinarak DAA';
 }

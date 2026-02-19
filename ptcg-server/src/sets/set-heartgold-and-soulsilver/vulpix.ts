@@ -34,7 +34,8 @@ export class Vulpix extends PokemonCard {
 
   public set: string = 'HS';
   public name: string = 'Vulpix';
-  public fullName: string = 'Vulpix HS';
+  public fullName: string = 'Vulpix (HS 87)';
+  public legacyFullName = 'Vulpix HS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
 

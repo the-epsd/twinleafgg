@@ -27,7 +27,7 @@ export class Cloyster extends PokemonCard {
       name: 'Headlock',
       cost: [W, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
     },
     {
@@ -42,7 +42,8 @@ export class Cloyster extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cloyster';
-  public fullName: string = 'Cloyster SUM';
+  public fullName: string = 'Cloyster (SUM 34)';
+  public legacyFullName = 'Cloyster SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Headlock

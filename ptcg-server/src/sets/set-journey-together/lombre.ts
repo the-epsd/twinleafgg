@@ -23,7 +23,8 @@ export class Lombre extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '36';
   public name: string = 'Lombre';
-  public fullName: string = 'Lombre JTG';
+  public fullName: string = 'Lombre (JTG 36)';
+  public legacyFullName = 'Lombre JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Aqua Slash

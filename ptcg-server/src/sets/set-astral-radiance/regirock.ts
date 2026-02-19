@@ -30,7 +30,8 @@ export class Regirock extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '75';
   public name: string = 'Regirock';
-  public fullName: string = 'Regirock ASR';
+  public fullName: string = 'Regirock (ASR 75)';
+  public legacyFullName = 'Regirock ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

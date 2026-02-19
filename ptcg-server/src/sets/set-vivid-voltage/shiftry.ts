@@ -33,7 +33,8 @@ export class Shiftry extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Shiftry';
-  public fullName: string = 'Shiftry VIV';
+  public fullName: string = 'Shiftry (VIV 12)';
+  public legacyFullName = 'Shiftry VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

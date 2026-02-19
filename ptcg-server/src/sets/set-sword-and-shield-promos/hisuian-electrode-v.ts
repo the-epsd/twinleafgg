@@ -45,7 +45,8 @@ export class HisuianElectrodeV extends PokemonCard {
 
   public name = 'Hisuian Electrode V';
 
-  public fullName = 'Hisuian Electrode V SWSH';
+  public fullName = 'Hisuian Electrode V (SWSH 294)';
+  public legacyFullName = 'Hisuian Electrode V SWSH';
 
   public SOLAR_SHOT_MARKER = 'SOLAR_SHOT_MARKER';
 

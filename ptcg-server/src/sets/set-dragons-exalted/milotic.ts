@@ -32,7 +32,8 @@ export class Milotic extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Milotic';
-  public fullName: string = 'Milotic DRX';
+  public fullName: string = 'Milotic (DRX 28)';
+  public legacyFullName = 'Milotic DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Clear Search - search deck for any 3 cards

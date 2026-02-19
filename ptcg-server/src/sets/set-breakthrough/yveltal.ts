@@ -39,7 +39,8 @@ export class Yveltal extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yveltal';
-  public fullName: string = 'Yveltal BKT';
+  public fullName: string = 'Yveltal (BKT 94)';
+  public legacyFullName = 'Yveltal BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fright Night (passive - block all tools while this is active)

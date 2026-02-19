@@ -31,7 +31,8 @@ export class Zorua extends PokemonCard {
 
   public name: string = 'Zorua';
 
-  public fullName: string = 'Zorua BLW';
+  public fullName: string = 'Zorua (BLW 70)';
+  public legacyFullName = 'Zorua BLW';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -37,7 +37,8 @@ export class GalarianDarmanitan extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Darmanitan';
-  public fullName: string = 'Galarian Darmanitan RCL';
+  public fullName: string = 'Galarian Darmanitan (RCL 48)';
+  public legacyFullName = 'Galarian Darmanitan RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Blizzard

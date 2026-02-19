@@ -23,14 +23,14 @@ export class SteelixEx extends PokemonCard {
       name: 'Wild Edge',
       cost: [M, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 50 more damage. If you do, this Pokémon does 20 damage to itself.'
     },
     {
       name: 'Iron Tail',
       cost: [M, C, C, C, C],
       damage: 100,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 100 damage times the number of heads.'
     }
   ];
@@ -39,7 +39,8 @@ export class SteelixEx extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steelix-EX';
-  public fullName: string = 'Steelix-EX STS';
+  public fullName: string = 'Steelix-EX (STS 67)';
+  public legacyFullName = 'Steelix-EX STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wild Edge

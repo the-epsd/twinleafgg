@@ -34,7 +34,8 @@ export class Minccino extends PokemonCard {
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Minccino';
-  public fullName: string = 'Minccino DRX';
+  public fullName: string = 'Minccino (DRX 109)';
+  public legacyFullName = 'Minccino DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

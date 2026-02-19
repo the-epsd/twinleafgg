@@ -42,7 +42,8 @@ export class VenusaurV extends PokemonCard {
 
   public name: string = 'Venusaur V';
 
-  public fullName: string = 'Venusaur V SWSH 100';
+  public fullName: string = 'Venusaur V (SWSH 100)';
+  public legacyFullName = 'Venusaur V SWSH 100';
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

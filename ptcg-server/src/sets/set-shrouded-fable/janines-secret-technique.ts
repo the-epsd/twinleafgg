@@ -23,7 +23,8 @@ export class JaninesSecretTechnique extends TrainerCard {
 
   public name: string = 'Janine\'s Secret Art';
 
-  public fullName: string = 'Janine\'s Secret Technique SFA';
+  public fullName: string = 'Janine\'s Secret Art (SFA 59)';
+  public legacyFullName = 'Janine\'s Secret Technique SFA';
 
   public text: string =
     'Choose up to 2 of your [D] Pokémon. For each of those Pokémon, search your deck for a Basic [D] Energy card and attach it to that Pokémon. Then, shuffle your deck. If you attached Energy to your Active Pokémon in this way, it is now Poisoned.';

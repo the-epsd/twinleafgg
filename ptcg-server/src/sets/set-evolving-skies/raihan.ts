@@ -107,7 +107,8 @@ export class Raihan extends TrainerCard {
 
   public name: string = 'Raihan';
 
-  public fullName: string = 'Raihan EVS';
+  public fullName: string = 'Raihan (EVS 152)';
+  public legacyFullName = 'Raihan EVS';
 
   public text: string = `You can play this card only if any of your Pokémon were Knocked Out during your opponent's last turn.
 

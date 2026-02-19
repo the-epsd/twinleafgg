@@ -38,7 +38,8 @@ export class Scizor extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scizor';
-  public fullName: string = 'Scizor BCR';
+  public fullName: string = 'Scizor (BCR 94)';
+  public legacyFullName = 'Scizor BCR';
   public readonly STEEL_SLASH_MARKER = 'STEEL_SLASH_MARKER';
   public readonly CLEAR_STEEL_SLASH_MARKER = 'CLEAR_STEEL_SLASH_MARKER';
 

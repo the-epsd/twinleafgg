@@ -18,7 +18,8 @@ export class AZ extends TrainerCard {
 
   public name: string = 'AZ';
 
-  public fullName: string = 'AZ PHF';
+  public fullName: string = 'AZ (PHF 91)';
+  public legacyFullName = 'AZ PHF';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -13,7 +13,8 @@ export class TeamAquaBall extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'MA';
   public name: string = 'Team Aqua Ball';
-  public fullName: string = 'Team Aqua Ball MA';
+  public fullName: string = 'Team Aqua Ball (MA 75)';
+  public legacyFullName = 'Team Aqua Ball MA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '75';
 

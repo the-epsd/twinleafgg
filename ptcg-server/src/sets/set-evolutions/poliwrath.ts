@@ -23,7 +23,7 @@ export class Poliwrath extends PokemonCard {
       name: 'Dashing Punch',
       cost: [W],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pok\u00e9mon was on the Bench and became your Active Pok\u00e9mon this turn, this attack does 50 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Poliwrath extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poliwrath';
-  public fullName: string = 'Poliwrath EVO';
+  public fullName: string = 'Poliwrath (EVO 25)';
+  public legacyFullName = 'Poliwrath EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Reset movedToActiveThisTurn at end of turn

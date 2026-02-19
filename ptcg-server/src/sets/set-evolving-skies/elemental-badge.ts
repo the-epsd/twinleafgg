@@ -16,7 +16,8 @@ export class ElementalBadge extends TrainerCard {
   public setNumber: string = '147';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Elemental Badge';
-  public fullName: string = 'Elemental Badge EVS';
+  public fullName: string = 'Elemental Badge (EVS 147)';
+  public legacyFullName = 'Elemental Badge EVS';
   public text: string = 'If the Pokémon V this card is attached to has "Vaporeon," "Jolteon," or "Flareon" in its name, its attacks cost Colorless less. You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

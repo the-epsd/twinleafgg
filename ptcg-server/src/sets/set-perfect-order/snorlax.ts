@@ -28,7 +28,8 @@ export class Snorlax extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '62';
   public name: string = 'Snorlax';
-  public fullName: string = 'Snorlax M3';
+  public fullName: string = 'Snorlax (M3 62)';
+  public legacyFullName = 'Snorlax M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Big Eater - flip coins until tails, search for Basic Energy for each heads

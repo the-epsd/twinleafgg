@@ -33,7 +33,8 @@ export class Regirockex extends PokemonCard {
   public setNumber: string = '101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Regirock ex';
-  public fullName: string = 'Regirock ex DRI';
+  public fullName: string = 'Regirock ex (DRI 101)';
+  public legacyFullName = 'Regirock ex DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Regi Charge

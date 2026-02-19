@@ -47,7 +47,8 @@ export class BloodmoonUrsaluna extends PokemonCard {
 
   public name: string = 'Bloodmoon Ursaluna';
 
-  public fullName: string = 'Bloodmoon Ursaluna SFA';
+  public fullName: string = 'Bloodmoon Ursaluna (SFA 25)';
+  public legacyFullName = 'Bloodmoon Ursaluna SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

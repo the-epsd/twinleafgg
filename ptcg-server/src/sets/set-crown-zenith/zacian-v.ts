@@ -47,7 +47,8 @@ export class ZacianV extends PokemonCard {
 
   public name: string = 'Zacian V';
 
-  public fullName: string = 'Zacian V CRZ';
+  public fullName: string = 'Zacian V (CRZ 95)';
+  public legacyFullName = 'Zacian V CRZ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

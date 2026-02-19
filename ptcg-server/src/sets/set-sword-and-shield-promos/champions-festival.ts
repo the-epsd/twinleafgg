@@ -21,7 +21,8 @@ export class ChampionsFestival extends TrainerCard {
 
   public name = 'Champion\'s Festival';
 
-  public fullName = 'Champion\'s Festival SWSH';
+  public fullName = 'Champion\'s Festival (SWSH 296)';
+  public legacyFullName = 'Champion\'s Festival SWSH';
 
   public text = 'Once during each player\'s turn, if that player has ' + 
     '6 Pokémon in play, they may heal 10 damage from ' +

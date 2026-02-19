@@ -29,7 +29,8 @@ export class Electrike extends PokemonCard {
   public setNumber: string = '58';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electrike';
-  public fullName: string = 'Electrike DAA';
+  public fullName: string = 'Electrike (DAA 58)';
+  public legacyFullName = 'Electrike DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunderbolt

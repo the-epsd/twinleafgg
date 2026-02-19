@@ -39,7 +39,8 @@ export class Magneton extends PokemonCard {
 
   public name: string = 'Magneton';
 
-  public fullName: string = 'Magneton FO';
+  public fullName: string = 'Magneton (FO 11)';
+  public legacyFullName = 'Magneton FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

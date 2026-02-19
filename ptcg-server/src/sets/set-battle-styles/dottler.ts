@@ -32,7 +32,8 @@ export class Dottler extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '64';
   public name: string = 'Dottler';
-  public fullName: string = 'Dottler BST';
+  public fullName: string = 'Dottler (BST 64)';
+  public legacyFullName = 'Dottler BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

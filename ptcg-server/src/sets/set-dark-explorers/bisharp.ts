@@ -33,7 +33,8 @@ export class Bisharp extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bisharp';
-  public fullName: string = 'Bisharp DEX';
+  public fullName: string = 'Bisharp (DEX 72)';
+  public legacyFullName = 'Bisharp DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Fury Cutter

@@ -29,7 +29,8 @@ export class Larvesta extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Larvesta';
-  public fullName: string = 'Larvesta CRE';
+  public fullName: string = 'Larvesta (CRE 23)';
+  public legacyFullName = 'Larvesta CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flame Charge

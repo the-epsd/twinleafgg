@@ -20,7 +20,8 @@ export class RichEnergy extends EnergyCard {
 
   public name = 'Enriching Energy';
 
-  public fullName = 'Rich Energy SSP';
+  public fullName = 'Enriching Energy (SSP 191)';
+  public legacyFullName = 'Rich Energy SSP';
 
   public cardImage: string = 'assets/cardback.png';
 

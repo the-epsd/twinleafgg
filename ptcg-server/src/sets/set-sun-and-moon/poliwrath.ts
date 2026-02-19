@@ -28,7 +28,7 @@ export class Poliwrath extends PokemonCard {
       name: 'Wake-Up Slap',
       cost: [W, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 80 more damage. Then, remove all Special Conditions from that Pokémon.'
     }
   ];
@@ -37,7 +37,8 @@ export class Poliwrath extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poliwrath';
-  public fullName: string = 'Poliwrath SUM';
+  public fullName: string = 'Poliwrath (SUM 32)';
+  public legacyFullName = 'Poliwrath SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Split Spiral Punch

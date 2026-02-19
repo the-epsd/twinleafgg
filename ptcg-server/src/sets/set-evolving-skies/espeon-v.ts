@@ -44,7 +44,8 @@ export class EspeonV extends PokemonCard {
 
   public name: string = 'Espeon V';
 
-  public fullName: string = 'Espeon V EVS';
+  public fullName: string = 'Espeon V (EVS 64)';
+  public legacyFullName = 'Espeon V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

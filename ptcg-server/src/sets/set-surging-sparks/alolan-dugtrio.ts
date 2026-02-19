@@ -38,7 +38,8 @@ export class AlolanDugtrio extends PokemonCard {
 
   public name: string = 'Alolan Dugtrio';
 
-  public fullName: string = 'Alolan Dugtrio SSP';
+  public fullName: string = 'Alolan Dugtrio (SSP 123)';
+  public legacyFullName = 'Alolan Dugtrio SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Trio-Cheehoo

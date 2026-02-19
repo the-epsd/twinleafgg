@@ -36,7 +36,8 @@ export class Helioptile extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Helioptile';
-  public fullName: string = 'Helioptile FLF';
+  public fullName: string = 'Helioptile (FLF 36)';
+  public legacyFullName = 'Helioptile FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/furfrou.ts (Energy Cutoff)

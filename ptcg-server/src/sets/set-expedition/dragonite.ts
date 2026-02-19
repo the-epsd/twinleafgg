@@ -31,7 +31,8 @@ export class Dragonite extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragonite';
-  public fullName: string = 'Dragonite EX';
+  public fullName: string = 'Dragonite (EX 9)';
+  public legacyFullName = 'Dragonite EX';
 
   public readonly TAILWIND_MARKER = 'TAILWIND_MARKER';
   public readonly TAILWIND_USED_MARKER = 'TAILWIND_USED_MARKER';

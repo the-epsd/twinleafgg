@@ -26,7 +26,7 @@ export class Hippopotas extends PokemonCard {
       name: 'Double Stomp',
       cost: [F, F, F, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Hippopotas extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hippopotas';
-  public fullName: string = 'Hippopotas DAA';
+  public fullName: string = 'Hippopotas (DAA 93)';
+  public legacyFullName = 'Hippopotas DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Double Stomp

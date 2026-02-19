@@ -70,7 +70,8 @@ export class StormyMountains extends TrainerCard {
 
   public name = 'Stormy Mountains';
 
-  public fullName = 'Stormy Mountains EVS';
+  public fullName = 'Stormy Mountains (EVS 161)';
+  public legacyFullName = 'Stormy Mountains EVS';
 
   public text = 'Once during each player\'s turn, that player may search their deck for a Basic [L] Pokémon or Basic [N] Pokémon and put it onto their Bench. Then, that player shuffles their deck.';
 

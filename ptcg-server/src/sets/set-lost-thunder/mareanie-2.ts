@@ -26,7 +26,7 @@ export class Mareanie2 extends PokemonCard {
       name: 'Pin Missile',
       cost: [P, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 10 damage for each heads.'
     }
   ];
@@ -35,7 +35,8 @@ export class Mareanie2 extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mareanie';
-  public fullName: string = 'Mareanie LOT 105';
+  public fullName: string = 'Mareanie (LOT 105)';
+  public legacyFullName = 'Mareanie LOT 105';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Pin Missile

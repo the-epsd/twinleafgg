@@ -27,7 +27,8 @@ export class Dipplin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Dipplin';
-  public fullName: string = 'Dipplin DRI';
+  public fullName: string = 'Dipplin (DRI 17)';
+  public legacyFullName = 'Dipplin DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Energy Loop

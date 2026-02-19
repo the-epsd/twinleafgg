@@ -37,7 +37,8 @@ export class Corvisquire extends PokemonCard {
   public setNumber: string = '151';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Corvisquire';
-  public fullName: string = 'Corvisquire SSH';
+  public fullName: string = 'Corvisquire (SSH 151)';
+  public legacyFullName = 'Corvisquire SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pluck

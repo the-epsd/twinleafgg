@@ -34,7 +34,8 @@ export class DarkPupitar extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dark Pupitar';
-  public fullName: string = 'Dark Pupitar TRR';
+  public fullName: string = 'Dark Pupitar (TRR 41)';
+  public legacyFullName = 'Dark Pupitar TRR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

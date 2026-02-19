@@ -30,7 +30,8 @@ export class Lucario extends PokemonCard {
   public setNumber = '14';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Lucario';
-  public fullName: string = 'Lucario CL';
+  public fullName: string = 'Lucario (CL 14)';
+  public legacyFullName = 'Lucario CL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

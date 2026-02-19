@@ -35,7 +35,8 @@ export class Lilligant extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lilligant';
-  public fullName: string = 'Lilligant NVI';
+  public fullName: string = 'Lilligant (NVI 5)';
+  public legacyFullName = 'Lilligant NVI';
 
   private usedWindmill: boolean = false;
 

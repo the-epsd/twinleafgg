@@ -35,7 +35,8 @@ export class Gible2 extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gible';
-  public fullName: string = 'Gible UPR 97';
+  public fullName: string = 'Gible (UPR 97)';
+  public legacyFullName = 'Gible UPR 97';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Rock Hiding (passive - free retreat if [F] Energy attached)

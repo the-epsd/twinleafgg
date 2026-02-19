@@ -27,5 +27,6 @@ export class Swablu extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swablu';
-  public fullName: string = 'Swablu CPA';
+  public fullName: string = 'Swablu (CPA 48)';
+  public legacyFullName = 'Swablu CPA';
 }

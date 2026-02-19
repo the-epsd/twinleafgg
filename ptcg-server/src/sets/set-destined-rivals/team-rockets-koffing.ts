@@ -33,7 +33,8 @@ export class TeamRocketsKoffing extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '125';
   public name: string = 'Team Rocket\'s Koffing';
-  public fullName: string = 'Team Rocket\'s Koffing DRI';
+  public fullName: string = 'Team Rocket\'s Koffing (DRI 125)';
+  public legacyFullName = 'Team Rocket\'s Koffing DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AfterDamageEffect && effect.target.getPokemonCard() === this) {

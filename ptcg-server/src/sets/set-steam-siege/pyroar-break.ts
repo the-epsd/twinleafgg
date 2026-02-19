@@ -29,7 +29,8 @@ export class PyroarBreak extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pyroar BREAK';
-  public fullName: string = 'Pyroar BREAK STS';
+  public fullName: string = 'Pyroar BREAK (STS 24)';
+  public legacyFullName = 'Pyroar BREAK STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Kaiser Tackle

@@ -8,5 +8,6 @@ import { Froslass as FroslassCRE } from '../set-chilling-reign/froslass';
 export class Froslass extends FroslassCRE {
   public set: string = 'EVS';
   public setNumber: string = '226';
-  public fullName: string = 'Froslass EVS';
+  public fullName: string = 'Froslass (EVS 226)';
+  public legacyFullName = 'Froslass EVS';
 }

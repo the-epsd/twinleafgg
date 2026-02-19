@@ -30,7 +30,8 @@ export class GalarianLinoone extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Linoone';
-  public fullName: string = 'Galarian Linoone CPA';
+  public fullName: string = 'Galarian Linoone (CPA 36)';
+  public legacyFullName = 'Galarian Linoone CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double-Edge

@@ -50,7 +50,8 @@ export class Aegislash extends PokemonCard {
 
   public name: string = 'Aegislash';
 
-  public fullName: string = 'Aegislash PAR';
+  public fullName: string = 'Aegislash (PAR 134)';
+  public legacyFullName = 'Aegislash PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Mysterious Shield

@@ -33,7 +33,8 @@ export class Scrafty extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scrafty';
-  public fullName: string = 'Scrafty BLW';
+  public fullName: string = 'Scrafty (BLW 69)';
+  public legacyFullName = 'Scrafty BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

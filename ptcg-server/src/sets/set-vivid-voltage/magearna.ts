@@ -30,7 +30,8 @@ export class Magearna extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '128';
   public name: string = 'Magearna';
-  public fullName: string = 'Magearna VIV';
+  public fullName: string = 'Magearna (VIV 128)';
+  public legacyFullName = 'Magearna VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

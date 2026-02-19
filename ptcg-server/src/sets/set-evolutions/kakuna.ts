@@ -38,7 +38,8 @@ export class Kakuna extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kakuna';
-  public fullName: string = 'Kakuna EVO';
+  public fullName: string = 'Kakuna (EVO 6)';
+  public legacyFullName = 'Kakuna EVO';
 
   public readonly REDUCE_DAMAGE_MARKER = 'KAKUNA_EVO_REDUCE_DAMAGE';
   public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'KAKUNA_EVO_CLEAR_REDUCE_DAMAGE';

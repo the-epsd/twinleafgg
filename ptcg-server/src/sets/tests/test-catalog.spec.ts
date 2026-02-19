@@ -7,7 +7,7 @@ describe('Card Test Catalog', () => {
   });
 
   it('should return assigned tests for known cards', () => {
-    const assigned = getAssignedTests('Manaphy BRS');
+    const assigned = getAssignedTests('Manaphy (BRS 41)');
     expect(assigned.length).toBeGreaterThan(0);
   });
 });

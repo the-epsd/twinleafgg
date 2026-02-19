@@ -34,6 +34,7 @@ export class Vigoroth extends PokemonCard {
 
   public name: string = 'Vigoroth';
 
-  public fullName: string = 'Vigoroth SSP';
+  public fullName: string = 'Vigoroth (SSP 146)';
+  public legacyFullName = 'Vigoroth SSP';
 
 }

@@ -34,7 +34,8 @@ export class VikavoltV extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';
   public name: string = 'Vikavolt V';
-  public fullName: string = 'Vikavolt V DAA';
+  public fullName: string = 'Vikavolt V (DAA 60)';
+  public legacyFullName = 'Vikavolt V DAA';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 

@@ -35,7 +35,8 @@ export class Ferrothorn2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';
   public name: string = 'Ferrothorn';
-  public fullName: string = 'Ferrothorn EPO 73';
+  public fullName: string = 'Ferrothorn (EPO 73)';
+  public legacyFullName = 'Ferrothorn EPO 73';
 
   public readonly IRON_DEFENSE_MARKER = 'IRON_DEFENSE_MARKER';
 

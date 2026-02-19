@@ -35,7 +35,8 @@ export class Victini extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Victini';
-  public fullName: string = 'Victini CPA';
+  public fullName: string = 'Victini (CPA 7)';
+  public legacyFullName = 'Victini CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Quick Draw

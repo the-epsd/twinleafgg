@@ -43,7 +43,8 @@ export class RapidStrikeUrshifuV extends PokemonCard {
 
   public name: string = 'Rapid Strike Urshifu V';
 
-  public fullName: string = 'Rapid Strike Urshifu V BST';
+  public fullName: string = 'Rapid Strike Urshifu V (BST 87)';
+  public legacyFullName = 'Rapid Strike Urshifu V BST';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

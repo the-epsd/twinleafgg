@@ -32,5 +32,6 @@ export class Pansear extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pansear';
-  public fullName: string = 'Pansear DAA';
+  public fullName: string = 'Pansear (DAA 26)';
+  public legacyFullName = 'Pansear DAA';
 }

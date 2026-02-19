@@ -35,7 +35,8 @@ export class Clauncher extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clauncher';
-  public fullName: string = 'Clauncher FFI';
+  public fullName: string = 'Clauncher (FFI 23)';
+  public legacyFullName = 'Clauncher FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble

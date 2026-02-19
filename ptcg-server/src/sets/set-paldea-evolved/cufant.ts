@@ -35,6 +35,7 @@ export class Cufant extends PokemonCard {
 
   public name: string = 'Cufant';
 
-  public fullName: string = 'Cufant PAL';
+  public fullName: string = 'Cufant (PAL 149)';
+  public legacyFullName = 'Cufant PAL';
 
 }

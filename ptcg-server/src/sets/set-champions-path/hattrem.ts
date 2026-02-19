@@ -34,5 +34,6 @@ export class Hattrem extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hattrem';
-  public fullName: string = 'Hattrem CPA';
+  public fullName: string = 'Hattrem (CPA 19)';
+  public legacyFullName = 'Hattrem CPA';
 }

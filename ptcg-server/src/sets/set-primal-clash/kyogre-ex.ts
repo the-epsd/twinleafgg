@@ -37,7 +37,8 @@ export class KyogreEx extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kyogre-EX';
-  public fullName: string = 'Kyogre-EX PRC';
+  public fullName: string = 'Kyogre-EX (PRC 54)';
+  public legacyFullName = 'Kyogre-EX PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Water Pulse

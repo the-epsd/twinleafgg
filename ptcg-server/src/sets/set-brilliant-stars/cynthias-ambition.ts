@@ -21,7 +21,8 @@ export class CynthiasAmbition extends TrainerCard {
 
   public name: string = 'Cynthia\'s Ambition';
 
-  public fullName: string = 'Cynthia\'s Ambition BRS';
+  public fullName: string = 'Cynthia\'s Ambition (BRS 138)';
+  public legacyFullName = 'Cynthia\'s Ambition BRS';
 
   public readonly CYNTHIAS_AMBITION_MARKER = 'CYNTHIAS_AMBITION_MARKER';
 

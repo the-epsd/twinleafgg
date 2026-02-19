@@ -48,7 +48,8 @@ export class Comfey extends PokemonCard {
 
   public name: string = 'Comfey';
 
-  public fullName: string = 'Comfey LOR';
+  public fullName: string = 'Comfey (LOR 79)';
+  public legacyFullName = 'Comfey LOR';
 
   public readonly FLOWER_SELECTING_MARKER = 'FLOWER_SELECTING_MARKER';
 

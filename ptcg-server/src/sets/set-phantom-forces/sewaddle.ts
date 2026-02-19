@@ -35,7 +35,8 @@ export class Sewaddle extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sewaddle';
-  public fullName: string = 'Sewaddle PHF';
+  public fullName: string = 'Sewaddle (PHF 5)';
+  public legacyFullName = 'Sewaddle PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Nap

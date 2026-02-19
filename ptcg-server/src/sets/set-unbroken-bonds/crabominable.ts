@@ -21,7 +21,7 @@ export class Crabominable extends PokemonCard {
       name: 'Fight Alone',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have fewer Pokémon in play than your opponent, this attack does 50 more damage for each Pokémon fewer you have in play.'
     },
     {
@@ -36,7 +36,8 @@ export class Crabominable extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crabominable';
-  public fullName: string = 'Crabominable UNB';
+  public fullName: string = 'Crabominable (UNB 105)';
+  public legacyFullName = 'Crabominable UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fight Alone

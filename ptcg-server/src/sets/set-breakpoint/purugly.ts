@@ -28,7 +28,7 @@ export class Purugly extends PokemonCard {
       name: 'Nyan Press',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
     }
   ];
@@ -37,7 +37,8 @@ export class Purugly extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Purugly';
-  public fullName: string = 'Purugly BKP';
+  public fullName: string = 'Purugly (BKP 94)';
+  public legacyFullName = 'Purugly BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Nyan Press

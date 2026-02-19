@@ -16,7 +16,8 @@ export class CirchesterBath extends TrainerCard {
   public setNumber: string = '150';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Circhester Bath';
-  public fullName: string = 'Circhester Bath VIV';
+  public fullName: string = 'Circhester Bath (VIV 150)';
+  public legacyFullName = 'Circhester Bath VIV';
   public text: string = 'All Basic Pokémon (both yours and your opponent\'s) take 20 less damage from attacks from the opponent\'s Pokémon (after applying Weakness and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

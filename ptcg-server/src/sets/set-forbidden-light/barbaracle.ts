@@ -36,7 +36,8 @@ export class Barbaracle extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Barbaracle';
-  public fullName: string = 'Barbaracle FLI';
+  public fullName: string = 'Barbaracle (FLI 67)';
+  public legacyFullName = 'Barbaracle FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Seven Shock

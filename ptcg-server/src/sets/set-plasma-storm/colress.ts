@@ -19,7 +19,8 @@ export class Colress extends TrainerCard {
 
   public name: string = 'Colress';
 
-  public fullName: string = 'Colress PLS';
+  public fullName: string = 'Colress (PLS 118)';
+  public legacyFullName = 'Colress PLS';
 
   public cardImage: string = 'assets/cardback.png';
 

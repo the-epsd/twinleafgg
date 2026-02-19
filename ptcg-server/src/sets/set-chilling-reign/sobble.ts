@@ -84,7 +84,8 @@ export class Sobble extends PokemonCard {
 
   public name: string = 'Sobble';
 
-  public fullName: string = 'Sobble CRE';
+  public fullName: string = 'Sobble (CRE 41)';
+  public legacyFullName = 'Sobble CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

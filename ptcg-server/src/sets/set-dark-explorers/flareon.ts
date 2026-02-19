@@ -35,7 +35,8 @@ export class Flareon extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flareon';
-  public fullName: string = 'Flareon DEX';
+  public fullName: string = 'Flareon (DEX 12)';
+  public legacyFullName = 'Flareon DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sand-Attack - mark opponent's active

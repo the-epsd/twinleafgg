@@ -16,7 +16,8 @@ export class CallEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
   public name = 'Call Energy';
-  public fullName = 'Call Energy MD';
+  public fullName = 'Call Energy (MD 92)';
+  public legacyFullName = 'Call Energy MD';
 
   public powers = [{
     name: 'Call Energy',

@@ -32,7 +32,8 @@ export class Blazikenex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
   public name: string = 'Blaziken ex';
-  public fullName: string = 'Blaziken ex JTG';
+  public fullName: string = 'Blaziken ex (JTG 24)';
+  public legacyFullName = 'Blaziken ex JTG';
 
   public readonly OVERFLOWING_SPIRIT_MARKER = 'OVERFLOWING_SPIRIT_MARKER';
 

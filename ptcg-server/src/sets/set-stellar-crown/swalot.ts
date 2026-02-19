@@ -33,7 +33,8 @@ export class Swalot extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
   public name: string = 'Swalot';
-  public fullName: string = 'Swalot SCR';
+  public fullName: string = 'Swalot (SCR 92)';
+  public legacyFullName = 'Swalot SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

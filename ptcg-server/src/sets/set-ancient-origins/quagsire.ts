@@ -35,7 +35,8 @@ export class Quagsire extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Quagsire';
-  public fullName: string = 'Quagsire AOR';
+  public fullName: string = 'Quagsire (AOR 39)';
+  public legacyFullName = 'Quagsire AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Landslide

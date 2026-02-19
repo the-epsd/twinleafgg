@@ -36,7 +36,8 @@ export class Gligar extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gligar';
-  public fullName: string = 'Gligar BCR';
+  public fullName: string = 'Gligar (BCR 80)';
+  public legacyFullName = 'Gligar BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Wicked Jab

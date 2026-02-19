@@ -28,7 +28,7 @@ export class Glalie extends PokemonCard {
       name: 'Raging Floe',
       cost: [W, W, W],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any damage counters on it, this attack does 80 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Glalie extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Glalie';
-  public fullName: string = 'Glalie GRI';
+  public fullName: string = 'Glalie (GRI 32)';
+  public legacyFullName = 'Glalie GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Crunch

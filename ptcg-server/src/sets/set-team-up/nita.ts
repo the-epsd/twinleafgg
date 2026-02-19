@@ -15,7 +15,8 @@ export class Nita extends TrainerCard {
   public setNumber: string = '151';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nita';
-  public fullName: string = 'Nita TEU';
+  public fullName: string = 'Nita (TEU 151)';
+  public legacyFullName = 'Nita TEU';
   public text: string = 'You can play this card only if your opponent\'s Active Pokémon is a Basic Pokémon. Put an Energy from your opponent\'s Active Pokémon on top of their deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-primal-clash/crawdaunt.ts (Unruly Claw - choose energy from opponent pattern)

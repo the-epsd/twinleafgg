@@ -25,7 +25,8 @@ export class Treecko extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '80';
   public name: string = 'Treecko';
-  public fullName: string = 'Treecko DR';
+  public fullName: string = 'Treecko (DR 80)';
+  public legacyFullName = 'Treecko DR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

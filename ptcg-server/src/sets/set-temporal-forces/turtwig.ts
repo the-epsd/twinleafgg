@@ -43,7 +43,8 @@ export class Turtwig extends PokemonCard {
 
   public name: string = 'Turtwig';
 
-  public fullName: string = 'Turtwig TEF';
+  public fullName: string = 'Turtwig (TEF 10)';
+  public legacyFullName = 'Turtwig TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

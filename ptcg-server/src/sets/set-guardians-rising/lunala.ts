@@ -23,7 +23,7 @@ export class Lunala extends PokemonCard {
       name: 'Shatter Shot',
       cost: [P],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 40 damage times the amount of [P] Energy attached to this Pokémon.'
     },
     {
@@ -38,7 +38,8 @@ export class Lunala extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lunala';
-  public fullName: string = 'Lunala GRI';
+  public fullName: string = 'Lunala (GRI 61)';
+  public legacyFullName = 'Lunala GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shatter Shot

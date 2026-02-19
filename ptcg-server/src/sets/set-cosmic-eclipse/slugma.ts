@@ -23,7 +23,8 @@ export class Slugma extends PokemonCard {
 
   public set: string = 'CEC';
   public name: string = 'Slugma';
-  public fullName: string = 'Slugma CEC';
+  public fullName: string = 'Slugma (CEC 26)';
+  public legacyFullName = 'Slugma CEC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '26';
 

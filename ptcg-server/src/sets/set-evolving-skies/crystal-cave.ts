@@ -21,7 +21,8 @@ export class CrystalCave extends TrainerCard {
   
   public name = 'Crystal Cave';
   
-  public fullName = 'Crystal Cave EVS';
+  public fullName = 'Crystal Cave (EVS 144)';
+  public legacyFullName = 'Crystal Cave EVS';
     
   public  text = 'Once during each player\'s turn, that player may heal 30 damage from each of their [M] Pokémon and [N] Pokémon.';
         

@@ -37,7 +37,8 @@ export class Magneton extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magneton';
-  public fullName: string = 'Magneton EVO';
+  public fullName: string = 'Magneton (EVO 38)';
+  public legacyFullName = 'Magneton EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Wave

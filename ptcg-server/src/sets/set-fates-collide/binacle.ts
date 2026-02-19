@@ -20,7 +20,7 @@ export class Binacle extends PokemonCard {
       name: 'Swing Around',
       cost: [W, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     }
   ];
@@ -29,7 +29,8 @@ export class Binacle extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Binacle';
-  public fullName: string = 'Binacle FCO';
+  public fullName: string = 'Binacle (FCO 22)';
+  public legacyFullName = 'Binacle FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Swing Around

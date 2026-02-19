@@ -31,7 +31,8 @@ export class Registeel extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
   public name: string = 'Registeel';
-  public fullName: string = 'Registeel CES';
+  public fullName: string = 'Registeel (CES 96)';
+  public legacyFullName = 'Registeel CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

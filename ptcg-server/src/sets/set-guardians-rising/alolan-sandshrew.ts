@@ -37,7 +37,8 @@ export class AlolanSandshrew extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Sandshrew';
-  public fullName: string = 'Alolan Sandshrew GRI';
+  public fullName: string = 'Alolan Sandshrew (GRI 19)';
+  public legacyFullName = 'Alolan Sandshrew GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Defense Curl

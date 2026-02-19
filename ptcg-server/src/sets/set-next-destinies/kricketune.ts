@@ -34,7 +34,8 @@ export class Kricketune extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kricketune';
-  public fullName: string = 'Kricketune NXD';
+  public fullName: string = 'Kricketune (NXD 4)';
+  public legacyFullName = 'Kricketune NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // White Noise

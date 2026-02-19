@@ -23,14 +23,14 @@ export class Probopass extends PokemonCard {
       name: 'Triple Smash',
       cost: [M],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
     },
     {
       name: 'Reinforced Nose',
       cost: [M, M, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 50 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Probopass extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Probopass';
-  public fullName: string = 'Probopass PRC';
+  public fullName: string = 'Probopass (PRC 95)';
+  public legacyFullName = 'Probopass PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Triple Smash

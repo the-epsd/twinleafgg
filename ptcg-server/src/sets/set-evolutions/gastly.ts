@@ -40,7 +40,8 @@ export class Gastly extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gastly';
-  public fullName: string = 'Gastly EVO';
+  public fullName: string = 'Gastly (EVO 47)';
+  public legacyFullName = 'Gastly EVO';
 
   public readonly LITTLE_GRUDGE_MARKER = 'LITTLE_GRUDGE_MARKER';
   public readonly CLEAR_LITTLE_GRUDGE_MARKER = 'CLEAR_LITTLE_GRUDGE_MARKER';

@@ -30,7 +30,8 @@ export class Tinkatuff extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '103';
   public name: string = 'Tinkatuff';
-  public fullName: string = 'Tinkatuff PAL';
+  public fullName: string = 'Tinkatuff (PAL 103)';
+  public legacyFullName = 'Tinkatuff PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Boundless Power

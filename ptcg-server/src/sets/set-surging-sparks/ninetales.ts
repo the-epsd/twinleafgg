@@ -27,7 +27,8 @@ export class Ninetales extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name = 'Ninetales';
-  public fullName = 'Ninetales SSP';
+  public fullName = 'Ninetales (SSP 17)';
+  public legacyFullName = 'Ninetales SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

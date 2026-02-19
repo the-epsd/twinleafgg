@@ -20,7 +20,7 @@ export class Heatmor extends PokemonCard {
       name: 'Reinforced Flame',
       cost: [R],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 20 more damage.'
     },
     {
@@ -35,7 +35,8 @@ export class Heatmor extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Heatmor';
-  public fullName: string = 'Heatmor BKP';
+  public fullName: string = 'Heatmor (BKP 15)';
+  public legacyFullName = 'Heatmor BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Reinforced Flame

@@ -34,7 +34,8 @@ export class Carracosta extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carracosta';
-  public fullName: string = 'Carracosta NVI';
+  public fullName: string = 'Carracosta (NVI 26)';
+  public legacyFullName = 'Carracosta NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Solid Rock - reduce damage taken by 20

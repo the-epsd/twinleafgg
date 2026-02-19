@@ -23,7 +23,7 @@ export class AlolanGolem extends PokemonCard {
       name: 'Electromagnetic Bomb',
       cost: [],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Move any number of [L] Energy from your Benched Pokémon to this Pokémon. This attack does 20 damage for each Energy card you moved in this way.'
     },
     {
@@ -38,7 +38,8 @@ export class AlolanGolem extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Golem';
-  public fullName: string = 'Alolan Golem TEU';
+  public fullName: string = 'Alolan Golem (TEU 37)';
+  public legacyFullName = 'Alolan Golem TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Electromagnetic Bomb

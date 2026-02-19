@@ -21,7 +21,8 @@ export class Revitalizer extends TrainerCard {
 
   public name: string = 'Revitalizer';
 
-  public fullName: string = 'Revitalizer GEN';
+  public fullName: string = 'Revitalizer (GEN 70)';
+  public legacyFullName = 'Revitalizer GEN';
 
   public text: string =
     'Put 2 [G] Pokémon from your discard pile into your hand.';

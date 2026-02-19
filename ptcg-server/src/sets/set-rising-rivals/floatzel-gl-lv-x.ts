@@ -42,7 +42,8 @@ export class FloatzelGLLVX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '104';
   public name: string = 'Floatzel GL';
-  public fullName: string = 'Floatzel GL LV.X RR';
+  public fullName: string = 'Floatzel GL (RR 104)';
+  public legacyFullName = 'Floatzel GL LV.X RR';
 
   public readonly WATER_RESCUE_MARKER = 'WATER_RESCUE_MARKER';
 

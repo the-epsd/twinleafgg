@@ -36,7 +36,8 @@ export class Dustox2 extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dustox';
-  public fullName: string = 'Dustox ROS 8';
+  public fullName: string = 'Dustox (ROS 8)';
+  public legacyFullName = 'Dustox ROS 8';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Wind Shard

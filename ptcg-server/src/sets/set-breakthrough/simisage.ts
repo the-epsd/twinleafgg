@@ -29,7 +29,7 @@ export class Simisage extends PokemonCard {
       name: 'Hand Fling',
       cost: [C, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 10 damage times the number of cards in your hand.'
     }
   ];
@@ -38,7 +38,8 @@ export class Simisage extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Simisage';
-  public fullName: string = 'Simisage BKT';
+  public fullName: string = 'Simisage (BKT 6)';
+  public legacyFullName = 'Simisage BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fire Fling

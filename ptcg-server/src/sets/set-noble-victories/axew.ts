@@ -23,7 +23,8 @@ export class Axew extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Axew';
-  public fullName: string = 'Axew NVI';
+  public fullName: string = 'Axew (NVI 86)';
+  public legacyFullName = 'Axew NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

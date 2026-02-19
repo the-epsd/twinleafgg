@@ -3,7 +3,8 @@ import { RecycleEnergy } from '../set-unified-minds/recycle-energy';
 import { SuperiorEnergyRetrieval } from '../set-plasma-freeze/superior-energy-retrieval';
 
 export class MetalEnergyN1 extends MetalEnergySpecial {
-  public fullName = 'Metal Energy N1';
+  public fullName = 'Metal Energy (N1 19)';
+  public legacyFullName = 'Metal Energy N1';
   public name = 'Metal Energy';
   public set = 'N1';
   public setNumber = '19';
@@ -11,7 +12,8 @@ export class MetalEnergyN1 extends MetalEnergySpecial {
 }
 
 export class RecycleEnergyN1 extends RecycleEnergy {
-  public fullName = 'Recycle Energy N1';
+  public fullName = 'Recycle Energy (N1 105)';
+  public legacyFullName = 'Recycle Energy N1';
   public name = 'Recycle Energy';
   public set = 'N1';
   public setNumber = '105';
@@ -19,7 +21,8 @@ export class RecycleEnergyN1 extends RecycleEnergy {
 }
 
 export class SuperEnergyRetrieval extends SuperiorEnergyRetrieval {
-  public fullName = 'Super Energy Retrieval N1';
+  public fullName = 'Super Energy Retrieval (N1 89)';
+  public legacyFullName = 'Super Energy Retrieval N1';
   public name = 'Super Energy Retrieval';
   public set = 'N1';
   public setNumber = '89';

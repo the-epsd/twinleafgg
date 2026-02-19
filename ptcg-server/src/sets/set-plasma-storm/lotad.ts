@@ -29,7 +29,8 @@ export class Lotad extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lotad';
-  public fullName: string = 'Lotad PLS';
+  public fullName: string = 'Lotad (PLS 29)';
+  public legacyFullName = 'Lotad PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble Beam

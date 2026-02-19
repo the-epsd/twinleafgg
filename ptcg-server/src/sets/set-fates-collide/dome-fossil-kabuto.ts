@@ -64,7 +64,8 @@ export class DomeFossilKabuto extends TrainerCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dome Fossil Kabuto';
-  public fullName: string = 'Dome Fossil Kabuto FCO';
+  public fullName: string = 'Dome Fossil Kabuto (FCO 96)';
+  public legacyFullName = 'Dome Fossil Kabuto FCO';
   public text: string = 'Look at the bottom 7 cards of your deck. You may reveal a Kabuto you find there and put it onto your Bench. Shuffle the other cards back into your deck.';
 
   // Ref: set-furious-fists/jaw-fossil.ts (bottom 7 fossil pattern)

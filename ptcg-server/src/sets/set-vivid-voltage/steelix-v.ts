@@ -22,7 +22,7 @@ export class SteelixV extends PokemonCard {
       name: 'Raging Hammer',
       cost: [M, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     },
     {
@@ -38,7 +38,8 @@ export class SteelixV extends PokemonCard {
   public setNumber: string = '115';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steelix V';
-  public fullName: string = 'Steelix V VIV';
+  public fullName: string = 'Steelix V (VIV 115)';
+  public legacyFullName = 'Steelix V VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Raging Hammer

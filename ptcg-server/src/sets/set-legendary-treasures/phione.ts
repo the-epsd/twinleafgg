@@ -38,7 +38,8 @@ export class Phione extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Phione';
-  public fullName: string = 'Phione LTR';
+  public fullName: string = 'Phione (LTR 36)';
+  public legacyFullName = 'Phione LTR';
 
   private usedAquaBoomerang: boolean = false;
 

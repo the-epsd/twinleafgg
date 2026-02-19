@@ -27,7 +27,7 @@ export class Wormadam2 extends PokemonCard {
       name: 'Twin Bursts',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If Mothim is on your Bench, this attack does 60 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Wormadam2 extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wormadam';
-  public fullName: string = 'Wormadam FCO 44';
+  public fullName: string = 'Wormadam (FCO 44)';
+  public legacyFullName = 'Wormadam FCO 44';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Twin Bursts

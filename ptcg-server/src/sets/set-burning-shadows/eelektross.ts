@@ -31,7 +31,7 @@ export class Eelektross extends PokemonCard {
       name: 'Vacuum Bolt',
       cost: [L, L, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may do 80 more damage. If you do, this attack does 80 damage to 1 of your Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];
@@ -40,7 +40,8 @@ export class Eelektross extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eelektross';
-  public fullName: string = 'Eelektross BUS';
+  public fullName: string = 'Eelektross (BUS 46)';
+  public legacyFullName = 'Eelektross BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dark Clamp

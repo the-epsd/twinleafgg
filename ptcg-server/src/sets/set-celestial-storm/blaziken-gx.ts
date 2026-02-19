@@ -46,7 +46,8 @@ export class BlazikenGx extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blaziken-GX';
-  public fullName: string = 'Blaziken-GX CES';
+  public fullName: string = 'Blaziken-GX (CES 28)';
+  public legacyFullName = 'Blaziken-GX CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Explosive Kick

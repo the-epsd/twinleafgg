@@ -34,7 +34,8 @@ export class Blissey extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blissey';
-  public fullName: string = 'Blissey DEX';
+  public fullName: string = 'Blissey (DEX 82)';
+  public legacyFullName = 'Blissey DEX';
 
   public readonly SOFTBOILED_MARKER = 'SOFTBOILED_MARKER';
 

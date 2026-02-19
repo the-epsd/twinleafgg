@@ -14,7 +14,8 @@ export class BeastRing extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '102';
   public name: string = 'Beast Ring';
-  public fullName: string = 'Beast Ring FLI';
+  public fullName: string = 'Beast Ring (FLI 102)';
+  public legacyFullName = 'Beast Ring FLI';
 
   public text: string =
     `You can play this card only if your opponent has exactly 3 or 4 Prize cards remaining.

@@ -29,7 +29,8 @@ export class Snivy extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snivy';
-  public fullName: string = 'Snivy FCO';
+  public fullName: string = 'Snivy (FCO 5)';
+  public legacyFullName = 'Snivy FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Blot

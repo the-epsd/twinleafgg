@@ -31,7 +31,8 @@ export class Capsakid extends PokemonCard {
   public setNumber: string = '28';
   public set = 'SVI';
   public name: string = 'Capsakid';
-  public fullName: string = 'Capsakid SVI';
+  public fullName: string = 'Capsakid (SVI 28)';
+  public legacyFullName = 'Capsakid SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

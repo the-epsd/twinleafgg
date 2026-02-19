@@ -29,7 +29,8 @@ export class Wailmer extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '83';
   public name: string = 'Wailmer';
-  public fullName: string = 'Wailmer SS';
+  public fullName: string = 'Wailmer (SS 83)';
+  public legacyFullName = 'Wailmer SS';
 
   public usedSuperHypnoWave = false;
 

@@ -34,7 +34,8 @@ export class Krookodile extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
   public name: string = 'Krookodile';
-  public fullName: string = 'Krookodile BLW';
+  public fullName: string = 'Krookodile (BLW 65)';
+  public legacyFullName = 'Krookodile BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

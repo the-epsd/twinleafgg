@@ -49,7 +49,8 @@ export class Morpeko extends PokemonCard {
 
   public name: string = 'Morpeko';
 
-  public fullName: string = 'Morpeko TWM';
+  public fullName: string = 'Morpeko (TWM 72)';
+  public legacyFullName = 'Morpeko TWM';
 
   public readonly SNACK_SEARCH_MARKER = 'SNACK_SEARCH_MARKER';
 

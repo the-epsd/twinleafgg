@@ -48,7 +48,8 @@ export class SingleStrikeUrshifuVMAX extends PokemonCard {
 
   public name: string = 'Single Strike Urshifu VMAX';
 
-  public fullName: string = 'Single Strike Urshifu VMAX BST';
+  public fullName: string = 'Single Strike Urshifu VMAX (BST 86)';
+  public legacyFullName = 'Single Strike Urshifu VMAX BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

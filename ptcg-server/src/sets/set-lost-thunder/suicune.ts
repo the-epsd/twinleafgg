@@ -35,7 +35,8 @@ export class Suicune extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Suicune';
-  public fullName: string = 'Suicune LOT';
+  public fullName: string = 'Suicune (LOT 59)';
+  public legacyFullName = 'Suicune LOT';
 
   public readonly FROZEN_FLOW_MARKER = 'FROZEN_FLOW_MARKER';
 

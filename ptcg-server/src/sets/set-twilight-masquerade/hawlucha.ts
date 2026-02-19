@@ -23,7 +23,8 @@ export class Hawlucha extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '107';
   public name: string = 'Hawlucha';
-  public fullName: string = 'Hawlucha TWM';
+  public fullName: string = 'Hawlucha (TWM 107)';
+  public legacyFullName = 'Hawlucha TWM';
   public regulationMark: string = 'H';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

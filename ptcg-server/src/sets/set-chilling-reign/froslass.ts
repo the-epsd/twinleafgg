@@ -75,7 +75,8 @@ export class Froslass extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Froslass';
-  public fullName: string = 'Froslass CRE';
+  public fullName: string = 'Froslass (CRE 36)';
+  public legacyFullName = 'Froslass CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

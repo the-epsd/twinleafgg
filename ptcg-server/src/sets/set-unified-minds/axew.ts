@@ -35,7 +35,8 @@ export class Axew extends PokemonCard {
   public setNumber: string = '154';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Axew';
-  public fullName: string = 'Axew UNM';
+  public fullName: string = 'Axew (UNM 154)';
+  public legacyFullName = 'Axew UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Unnerve (passive - prevent trainer effects targeting this Pokemon)

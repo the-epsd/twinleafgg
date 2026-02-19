@@ -20,7 +20,8 @@ export class BlendEnergyGRPD extends EnergyCard {
 
   public name = 'Blend Energy GRPD';
 
-  public fullName = 'Blend Energy GRPD DRX';
+  public fullName = 'Blend Energy GRPD (DRX 117)';
+  public legacyFullName = 'Blend Energy GRPD DRX';
 
   public text = 'This card provides [C] Energy. When this card is attached to a Pokemon, this card provides [G], [R], [P], or [D] Energy but provides only 1 Energy at a time.';
 

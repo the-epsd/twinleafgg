@@ -25,5 +25,6 @@ export class Snorunt extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snorunt';
-  public fullName: string = 'Snorunt UNM';
+  public fullName: string = 'Snorunt (UNM 37)';
+  public legacyFullName = 'Snorunt UNM';
 }

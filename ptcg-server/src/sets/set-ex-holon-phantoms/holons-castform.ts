@@ -32,7 +32,8 @@ export class HolonsCastform extends PokemonCard implements EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
   public name: string = 'Holon\'s Castform';
-  public fullName: string = 'Holon\'s Castform HP';
+  public fullName: string = 'Holon\'s Castform (HP 44)';
+  public legacyFullName = 'Holon\'s Castform HP';
 
   // Which energies this provides when not attached as an energy
   public provides: CardType[] = [CardType.COLORLESS];

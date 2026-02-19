@@ -35,7 +35,8 @@ export class Wishiwashi extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wishiwashi';
-  public fullName: string = 'Wishiwashi DAA';
+  public fullName: string = 'Wishiwashi (DAA 50)';
+  public legacyFullName = 'Wishiwashi DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Deep Sea Swirl

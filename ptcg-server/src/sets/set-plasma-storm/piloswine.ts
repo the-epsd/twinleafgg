@@ -37,7 +37,8 @@ export class Piloswine extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Piloswine';
-  public fullName: string = 'Piloswine PLS';
+  public fullName: string = 'Piloswine (PLS 27)';
+  public legacyFullName = 'Piloswine PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ice Beam

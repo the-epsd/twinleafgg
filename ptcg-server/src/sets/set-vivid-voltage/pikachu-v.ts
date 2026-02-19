@@ -36,7 +36,8 @@ export class PikachuV extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikachu V';
-  public fullName: string = 'Pikachu V VIV';
+  public fullName: string = 'Pikachu V (VIV 43)';
+  public legacyFullName = 'Pikachu V VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Charge

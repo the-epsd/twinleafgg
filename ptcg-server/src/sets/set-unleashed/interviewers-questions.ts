@@ -13,7 +13,8 @@ export class InterviewersQuestions extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '77';
   public name: string = 'Interviewer\'s Questions';
-  public fullName: string = 'Interviewer\'s Questions UL';
+  public fullName: string = 'Interviewer\'s Questions (UL 77)';
+  public legacyFullName = 'Interviewer\'s Questions UL';
 
   public text: string =
     'Look at the top 8 cards of your deck. Choose as many Energy cards as you like, show them to your opponent, and put them into your hand. Shuffle the other cards back into your deck.';

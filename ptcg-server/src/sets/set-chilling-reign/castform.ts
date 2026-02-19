@@ -36,7 +36,8 @@ export class Castform extends PokemonCard {
   public setNumber: string = '121';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Castform';
-  public fullName: string = 'Castform CRE';
+  public fullName: string = 'Castform (CRE 121)';
+  public legacyFullName = 'Castform CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Weather Reading (passive CheckAttackCostEffect - if 8+ Stadiums in discard, ignore all energy in attack cost)

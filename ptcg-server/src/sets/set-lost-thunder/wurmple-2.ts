@@ -29,7 +29,8 @@ export class Wurmple2 extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wurmple';
-  public fullName: string = 'Wurmple LOT 24';
+  public fullName: string = 'Wurmple (LOT 24)';
+  public legacyFullName = 'Wurmple LOT 24';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Sting

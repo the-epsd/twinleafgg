@@ -47,7 +47,8 @@ export class Braixen extends PokemonCard {
 
   public name: string = 'Braixen';
 
-  public fullName: string = 'Braixen SIT';
+  public fullName: string = 'Braixen (SIT 26)';
+  public legacyFullName = 'Braixen SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

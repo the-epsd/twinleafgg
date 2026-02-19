@@ -28,7 +28,8 @@ export class Nickit extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
   public name = 'Nickit';
-  public fullName = 'Nickit CPA';
+  public fullName = 'Nickit (CPA 46)';
+  public legacyFullName = 'Nickit CPA';
   public regulationMark = 'D';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

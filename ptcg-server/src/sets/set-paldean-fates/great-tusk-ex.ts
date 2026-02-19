@@ -34,7 +34,8 @@ export class GreatTuskex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
   public name: string = 'Great Tusk ex';
-  public fullName: string = 'Great Tusk ex PAF';
+  public fullName: string = 'Great Tusk ex (PAF 53)';
+  public legacyFullName = 'Great Tusk ex PAF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Quaking Demolition (who wanted this why was this made in what context would anyone play this card without path to the peak in format)

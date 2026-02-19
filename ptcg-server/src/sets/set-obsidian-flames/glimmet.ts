@@ -23,7 +23,8 @@ export class Glimmet extends PokemonCard {
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Glimmet';
-  public fullName: string = 'Glimmet OBF';
+  public fullName: string = 'Glimmet (OBF 122)';
+  public legacyFullName = 'Glimmet OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)){

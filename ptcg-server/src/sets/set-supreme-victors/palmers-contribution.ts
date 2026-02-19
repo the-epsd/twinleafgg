@@ -95,7 +95,8 @@ export class PalmersContribution extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '139';
   public name: string = 'Palmer\'s Contribution';
-  public fullName: string = 'Palmer\'s Contribution SV';
+  public fullName: string = 'Palmer\'s Contribution (SV 139)';
+  public legacyFullName = 'Palmer\'s Contribution SV';
 
   public text: string =
     'Search your discard pile for up to 5 in any combination of Pokémon and basic Energy cards. Show them to your opponent and shuffle them into your deck.';

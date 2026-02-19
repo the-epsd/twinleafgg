@@ -7,7 +7,8 @@ import { Scyther } from '../set-jungle/scyther';
 import { RainbowEnergy } from '../set-sun-and-moon/rainbow-energy';
 
 export class RainbowEnergyPL extends RainbowEnergy {
-  public fullName = 'Rainbow Energy PL';
+  public fullName = 'Rainbow Energy (PL 121)';
+  public legacyFullName = 'Rainbow Energy PL';
   public name = 'Rainbow Energy';
   public set = 'PL';
   public setNumber = '121';
@@ -15,36 +16,42 @@ export class RainbowEnergyPL extends RainbowEnergy {
 }
 export class PlusPowerPL extends PlusPower {
   public setNumber = '112';
-  public fullName: string = 'PlusPower PL';
+  public fullName: string = 'PlusPower (PL 112)';
+  public legacyFullName = 'PlusPower PL';
   public set = 'PL';
 }
 
 export class PokeBallPL extends PokeBall {
   public setNumber = '113';
-  public fullName: string = 'Poké Ball PL';
+  public fullName: string = 'Poké Ball (PL 113)';
+  public legacyFullName = 'Poké Ball PL';
   public set = 'PL';
 }
 
 export class PokedexHandyPL extends PokedexHandy {
   public setNumber = '114';
-  public fullName: string = 'Pokedex HANDY910is PL';
+  public fullName: string = 'Pokedex HANDY910is (PL 114)';
+  public legacyFullName = 'Pokedex HANDY910is PL';
   public set = 'PL';
 }
 
 export class ElectabuzzPL extends Electabuzz {
   public setNumber = '128';
-  public fullName: string = 'Electabuzz PL';
+  public fullName: string = 'Electabuzz (PL 128)';
+  public legacyFullName = 'Electabuzz PL';
   public set = 'PL';
 }
 
 export class HitmonchanPL extends Hitmonchan {
   public setNumber = '129';
-  public fullName: string = 'Hitmonchan PL';
+  public fullName: string = 'Hitmonchan (PL 129)';
+  public legacyFullName = 'Hitmonchan PL';
   public set = 'PL';
 }
 
 export class ScytherPL extends Scyther {
   public setNumber = '130';
-  public fullName: string = 'Scyther PL';
+  public fullName: string = 'Scyther (PL 130)';
+  public legacyFullName = 'Scyther PL';
   public set = 'PL';
 }

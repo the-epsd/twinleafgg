@@ -14,14 +14,16 @@ import { Switch } from '../set-scarlet-and-violet/switch';
 
 
 export class DoubleColorlessEnergyHS extends DoubleColorlessEnergy {
-  public fullName = 'Double Colorless Energy HS';
+  public fullName = 'Double Colorless Energy (HS 103)';
+  public legacyFullName = 'Double Colorless Energy HS';
   public set = 'HS';
   public setNumber = '103';
   public text = 'Double Colorless Energy provides [C][C] Energy.';
 }
 
 export class FishermanHS extends Fisherman {
-  public fullName = 'Fisherman HS';
+  public fullName = 'Fisherman (HS 92)';
+  public legacyFullName = 'Fisherman HS';
   public name = 'Fisherman';
   public set = 'HS';
   public setNumber = '92';
@@ -29,7 +31,8 @@ export class FishermanHS extends Fisherman {
 }
 
 export class Pokegear30HS extends Pokegear30 {
-  public fullName = 'Pokégear 3.0 HS';
+  public fullName = 'Pokégear 3.0 (HS 96)';
+  public legacyFullName = 'Pokégear 3.0 HS';
   public name = 'Pokégear 3.0';
   public set = 'HS';
   public setNumber = '96';
@@ -37,7 +40,8 @@ export class Pokegear30HS extends Pokegear30 {
 }
 
 export class PokemonCommunicationHS extends PokemonCommunication {
-  public fullName = 'Pokemon Communication HS';
+  public fullName = 'Pokémon Communication (HS 98)';
+  public legacyFullName = 'Pokemon Communication HS';
   public name = 'Pokémon Communication';
   public set = 'HS';
   public setNumber = '98';
@@ -45,7 +49,8 @@ export class PokemonCommunicationHS extends PokemonCommunication {
 }
 
 export class PokemonReversalHS extends PokemonReversal {
-  public fullName = 'Pokemon Reversal HS';
+  public fullName = 'Pokemon Reversal (HS 99)';
+  public legacyFullName = 'Pokemon Reversal HS';
   public name = 'Pokemon Reversal';
   public set = 'HS';
   public setNumber = '99';
@@ -53,14 +58,16 @@ export class PokemonReversalHS extends PokemonReversal {
 }
 
 export class RainbowEnergyHS extends RainbowEnergy {
-  public fullName = 'Rainbow Energy HS';
+  public fullName = 'Rainbow Energy (HS 104)';
+  public legacyFullName = 'Rainbow Energy HS';
   public set = 'HS';
   public setNumber = '104';
   public text = 'Attach Rainbow Energy to 1 of your Pokémon. While in play, Rainbow Energy provides every type of Energy but provides only 1 Energy at a time. (Has no effect other than providing Energy.) When you attach this card from your hand to 1 of your Pokémon, put 1 damage counter on that Pokémon. (While not in play, Rainbow Energy counts as [C] Energy.)';
 }
 
 export class SwitchHS extends Switch {
-  public fullName = 'Switch HS';
+  public fullName = 'Switch (HS 102)';
+  public legacyFullName = 'Switch HS';
   public name = 'Switch';
   public set = 'HS';
   public setNumber = '102';
@@ -68,36 +75,42 @@ export class SwitchHS extends Switch {
 }
 export class BillHS extends Bill {
   public setNumber = '89';
-  public fullName: string = 'Bill HS';
+  public fullName: string = 'Bill (HS 89)';
+  public legacyFullName = 'Bill HS';
   public set = 'HS';
 }
 
 export class CopycatHS extends Copycat {
   public setNumber = '90';
-  public fullName: string = 'Copycat HS';
+  public fullName: string = 'Copycat (HS 90)';
+  public legacyFullName = 'Copycat HS';
   public set = 'HS';
 }
 
 export class EnergySwitchPKHS extends EnergySwitchPK {
   public setNumber = '91';
-  public fullName: string = 'Energy Switch HS';
+  public fullName: string = 'Energy Switch (HS 91)';
+  public legacyFullName = 'Energy Switch HS';
   public set = 'HS';
 }
 
 export class FullHealHS extends FullHeal {
   public setNumber = '93';
-  public fullName: string = 'Full Heal HS';
+  public fullName: string = 'Full Heal (HS 93)';
+  public legacyFullName = 'Full Heal HS';
   public set = 'HS';
 }
 
 export class PokeBallHS extends PokeBall {
   public setNumber = '95';
-  public fullName: string = 'Poké Ball HS';
+  public fullName: string = 'Poké Ball (HS 95)';
+  public legacyFullName = 'Poké Ball HS';
   public set = 'HS';
 }
 
 export class ProfessorElmsTrainingMethodHS extends ProfessorElmsTrainingMethod {
   public setNumber = '100';
-  public fullName: string = 'Professor Elm\'s Training Method HS';
+  public fullName: string = 'Professor Elm\'s Training Method (HS 100)';
+  public legacyFullName = 'Professor Elm\'s Training Method HS';
   public set = 'HS';
 }

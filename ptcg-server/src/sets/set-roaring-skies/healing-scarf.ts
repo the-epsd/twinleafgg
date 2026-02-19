@@ -16,7 +16,8 @@ export class HealingScarf extends TrainerCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Healing Scarf';
-  public fullName: string = 'Healing Scarf ROS';
+  public fullName: string = 'Healing Scarf (ROS 84)';
+  public legacyFullName = 'Healing Scarf ROS';
   public text: string = 'Whenever you attach an Energy card from your hand to the Pok\u00e9mon this card is attached to, heal 20 damage from it.';
 
   // Ref: set-x-and-y/hard-charm.ts (Tool effect pattern), set-phantom-forces/gliscor.ts (AttachEnergyEffect interception)

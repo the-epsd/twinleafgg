@@ -38,7 +38,7 @@ export class Ampharos extends PokemonCard {
       name: 'Gigavolt',
       cost: [L, L, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
     }
   ];
@@ -47,7 +47,8 @@ export class Ampharos extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ampharos';
-  public fullName: string = 'Ampharos STS';
+  public fullName: string = 'Ampharos (STS 40)';
+  public legacyFullName = 'Ampharos STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Shocking Light

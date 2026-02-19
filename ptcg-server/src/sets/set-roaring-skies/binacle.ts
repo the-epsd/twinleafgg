@@ -36,7 +36,8 @@ export class Binacle extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Binacle';
-  public fullName: string = 'Binacle ROS';
+  public fullName: string = 'Binacle (ROS 38)';
+  public legacyFullName = 'Binacle ROS';
 
   public readonly SAND_ATTACK_MARKER = 'BINACLE_ROS_SAND_ATTACK_MARKER';
   public readonly CLEAR_SAND_ATTACK_MARKER = 'BINACLE_ROS_CLEAR_SAND_ATTACK_MARKER';

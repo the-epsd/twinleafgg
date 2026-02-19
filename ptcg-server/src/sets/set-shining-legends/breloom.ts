@@ -36,7 +36,8 @@ export class Breloom extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Breloom';
-  public fullName: string = 'Breloom SLG';
+  public fullName: string = 'Breloom (SLG 5)';
+  public legacyFullName = 'Breloom SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hibernation Spore

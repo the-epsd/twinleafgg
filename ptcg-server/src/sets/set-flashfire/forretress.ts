@@ -40,7 +40,8 @@ export class Forretress extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Forretress';
-  public fullName: string = 'Forretress FLF';
+  public fullName: string = 'Forretress (FLF 60)';
+  public legacyFullName = 'Forretress FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-plasma-blast/salamence.ts (Breakwing evolve trigger)

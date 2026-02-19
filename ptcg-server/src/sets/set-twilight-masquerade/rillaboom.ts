@@ -33,7 +33,8 @@ export class Rillaboom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Rillaboom';
-  public fullName: string = 'Rillaboom TWM';
+  public fullName: string = 'Rillaboom (TWM 16)';
+  public legacyFullName = 'Rillaboom TWM';
 
   public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 

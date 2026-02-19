@@ -31,7 +31,8 @@ export class Weezing extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '110';
   public name: string = 'Weezing';
-  public fullName: string = 'Weezing MEW';
+  public fullName: string = 'Weezing (MEW 110)';
+  public legacyFullName = 'Weezing MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof KnockOutEffect &&

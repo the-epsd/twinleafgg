@@ -42,7 +42,8 @@ export class BlisseyV extends PokemonCard {
 
   public name: string = 'Blissey V';
 
-  public fullName: string = 'Blissey V CRE';
+  public fullName: string = 'Blissey V (CRE 119)';
+  public legacyFullName = 'Blissey V CRE';
 
   public usedBlissfulBlast = false;
 

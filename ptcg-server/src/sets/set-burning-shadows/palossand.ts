@@ -38,7 +38,8 @@ export class Palossand extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Palossand';
-  public fullName: string = 'Palossand BUS';
+  public fullName: string = 'Palossand (BUS 62)';
+  public legacyFullName = 'Palossand BUS';
 
   public usedDustStorm = false;
 

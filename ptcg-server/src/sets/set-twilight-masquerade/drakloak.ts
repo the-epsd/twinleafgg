@@ -50,7 +50,8 @@ export class Drakloak extends PokemonCard {
 
   public name: string = 'Drakloak';
 
-  public fullName: string = 'Drakloak TWM';
+  public fullName: string = 'Drakloak (TWM 129)';
+  public legacyFullName = 'Drakloak TWM';
 
   public readonly TELLING_SPIRIT_MARKER = 'TELLING_SPIRIT_MARKER';
 

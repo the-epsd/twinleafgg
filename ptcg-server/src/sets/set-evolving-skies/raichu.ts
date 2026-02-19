@@ -37,7 +37,8 @@ export class Raichu extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raichu';
-  public fullName: string = 'Raichu EVS';
+  public fullName: string = 'Raichu (EVS 50)';
+  public legacyFullName = 'Raichu EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Big Sparking

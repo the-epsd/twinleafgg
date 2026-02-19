@@ -25,7 +25,8 @@ export class Snover extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snover';
-  public fullName: string = 'Snover UNM';
+  public fullName: string = 'Snover (UNM 41)';
+  public legacyFullName = 'Snover UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Powder Snow

@@ -38,7 +38,8 @@ export class Ludicolo2 extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ludicolo';
-  public fullName: string = 'Ludicolo PRC 37';
+  public fullName: string = 'Ludicolo (PRC 37)';
+  public legacyFullName = 'Ludicolo PRC 37';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Astonish

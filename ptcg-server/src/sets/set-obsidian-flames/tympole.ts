@@ -36,7 +36,8 @@ export class Tympole extends PokemonCard {
 
   public name: string = 'Tympole';
 
-  public fullName: string = 'Tympole OBF';
+  public fullName: string = 'Tympole (OBF 50)';
+  public legacyFullName = 'Tympole OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

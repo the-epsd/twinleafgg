@@ -19,7 +19,8 @@ export class Clavell extends TrainerCard {
 
   public name: string = 'Clavell';
 
-  public fullName: string = 'Clavell PAL';
+  public fullName: string = 'Clavell (PAL 177)';
+  public legacyFullName = 'Clavell PAL';
 
   public text: string =
     'Search your deck for up to 3 Basic Pokémon with 120 HP or less, reveal them, and put them into your hand. Then, shuffle your deck.';

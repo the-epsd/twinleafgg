@@ -20,7 +20,8 @@ export class MarniesImpidimp extends PokemonCard {
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Marnie\'s Impidimp';
-  public fullName: string = 'Marnie\'s Impidimp DRI';
+  public fullName: string = 'Marnie\'s Impidimp (DRI 134)';
+  public legacyFullName = 'Marnie\'s Impidimp DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {

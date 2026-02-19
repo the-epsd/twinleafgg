@@ -36,7 +36,8 @@ export class Claydol extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Claydol';
-  public fullName: string = 'Claydol AOR';
+  public fullName: string = 'Claydol (AOR 33)';
+  public legacyFullName = 'Claydol AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rewind

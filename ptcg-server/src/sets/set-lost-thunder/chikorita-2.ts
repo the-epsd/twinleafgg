@@ -26,7 +26,8 @@ export class Chikorita2 extends PokemonCard {
   }];
 
   public set: string = 'LOT';
-  public fullName: string = 'Chikorita LOT 5';
+  public fullName: string = 'Chikorita (LOT 5)';
+  public legacyFullName = 'Chikorita LOT 5';
   public name: string = 'Chikorita';
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';

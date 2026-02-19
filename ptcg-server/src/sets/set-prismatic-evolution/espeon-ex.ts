@@ -44,7 +44,8 @@ export class Espeonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '34';
   public name: string = 'Espeon ex';
-  public fullName: string = 'Espeon ex PRE';
+  public fullName: string = 'Espeon ex (PRE 34)';
+  public legacyFullName = 'Espeon ex PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Psych Out

@@ -44,7 +44,8 @@ export class HisuianGoodraV extends PokemonCard {
 
   public name: string = 'Hisuian Goodra V';
 
-  public fullName: string = 'Hisuian Goodra V LOR';
+  public fullName: string = 'Hisuian Goodra V (LOR 135)';
+  public legacyFullName = 'Hisuian Goodra V LOR';
 
   private usedSlipNTrip: boolean = false;
 

@@ -17,7 +17,8 @@ export class ExcitingStadium extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '180';
   public name: string = 'Lively Stadium';
-  public fullName: string = 'Exciting Stadium SSP';
+  public fullName: string = 'Lively Stadium (SSP 180)';
+  public legacyFullName = 'Exciting Stadium SSP';
 
   public text: string =
     'Each Basic Pokémon in play (both yours and your opponent\'s) gets +30 HP.';

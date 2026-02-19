@@ -38,7 +38,8 @@ export class CorviknightV extends PokemonCard {
   public setNumber: string = '109';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Corviknight V';
-  public fullName: string = 'Corviknight V BST';
+  public fullName: string = 'Corviknight V (BST 109)';
+  public legacyFullName = 'Corviknight V BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Clutch

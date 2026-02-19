@@ -56,7 +56,8 @@ export class SylveonGX extends PokemonCard {
 
   public name: string = 'Sylveon-GX';
 
-  public fullName: string = 'Sylveon-GX GRI';
+  public fullName: string = 'Sylveon-GX (GRI 92)';
+  public legacyFullName = 'Sylveon-GX GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Magical Ribbon

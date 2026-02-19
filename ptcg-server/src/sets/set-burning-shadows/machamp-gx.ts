@@ -22,7 +22,7 @@ export class MachampGx extends PokemonCard {
       name: 'Cross-Cut',
       cost: [F, F],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 60 more damage.'
     },
     {
@@ -44,7 +44,8 @@ export class MachampGx extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Machamp-GX';
-  public fullName: string = 'Machamp-GX BUS';
+  public fullName: string = 'Machamp-GX (BUS 64)';
+  public legacyFullName = 'Machamp-GX BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Cross-Cut

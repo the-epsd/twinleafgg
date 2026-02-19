@@ -36,7 +36,8 @@ export class Carnivine extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carnivine';
-  public fullName: string = 'Carnivine DAA';
+  public fullName: string = 'Carnivine (DAA 5)';
+  public legacyFullName = 'Carnivine DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Return

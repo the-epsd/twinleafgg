@@ -36,7 +36,8 @@ export class Vanillite extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vanillite';
-  public fullName: string = 'Vanillite BKT';
+  public fullName: string = 'Vanillite (BKT 43)';
+  public legacyFullName = 'Vanillite BKT';
 
   public readonly REDUCE_DAMAGE_MARKER = 'VANILLITE_BKT_REDUCE_DAMAGE';
   public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'VANILLITE_BKT_CLEAR_REDUCE_DAMAGE';

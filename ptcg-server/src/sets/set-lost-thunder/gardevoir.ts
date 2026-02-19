@@ -28,7 +28,7 @@ export class Gardevoir extends PokemonCard {
       name: 'Sensitive Ray',
       cost: [Y, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you played a Supporter card from your hand during this turn, this attack does 90 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Gardevoir extends PokemonCard {
   public setNumber: string = '141';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gardevoir';
-  public fullName: string = 'Gardevoir LOT';
+  public fullName: string = 'Gardevoir (LOT 141)';
+  public legacyFullName = 'Gardevoir LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Brilliant Search

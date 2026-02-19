@@ -31,7 +31,8 @@ export class Shuppet extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shuppet';
-  public fullName: string = 'Shuppet VIV';
+  public fullName: string = 'Shuppet (VIV 67)';
+  public legacyFullName = 'Shuppet VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Haunt

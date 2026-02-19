@@ -20,7 +20,8 @@ export class Mantyke extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '39';
   public name: string = 'Mantyke';
-  public fullName: string = 'Mantyke PAR';
+  public fullName: string = 'Mantyke (PAR 39)';
+  public legacyFullName = 'Mantyke PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

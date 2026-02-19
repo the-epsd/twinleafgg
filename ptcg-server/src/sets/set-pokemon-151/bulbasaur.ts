@@ -25,7 +25,8 @@ export class Bulbasaur extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
   public name: string = 'Bulbasaur';
-  public fullName: string = 'Bulbasaur MEW';
+  public fullName: string = 'Bulbasaur (MEW 1)';
+  public legacyFullName = 'Bulbasaur MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

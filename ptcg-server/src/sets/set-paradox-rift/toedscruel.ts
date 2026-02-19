@@ -46,7 +46,8 @@ export class Toedscruel extends PokemonCard {
 
   public name: string = 'Toedscruel';
 
-  public fullName: string = 'Toedscruel PAR';
+  public fullName: string = 'Toedscruel (PAR 17)';
+  public legacyFullName = 'Toedscruel PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

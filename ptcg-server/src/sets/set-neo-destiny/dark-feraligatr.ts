@@ -31,7 +31,8 @@ export class DarkFeraligatr extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
   public name: string = 'Dark Feraligatr';
-  public fullName: string = 'Dark Feraligatr N4';
+  public fullName: string = 'Dark Feraligatr (N4 5)';
+  public legacyFullName = 'Dark Feraligatr N4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Baby Rule effect blocking

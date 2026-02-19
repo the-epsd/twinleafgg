@@ -35,7 +35,8 @@ export class Rellor extends PokemonCard {
 
   public name: string = 'Rellor';
 
-  public fullName: string = 'Rellor TEF';
+  public fullName: string = 'Rellor (TEF 23)';
+  public legacyFullName = 'Rellor TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

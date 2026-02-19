@@ -46,7 +46,8 @@ export class Conkeldurr extends PokemonCard {
 
   public name: string = 'Conkeldurr';
 
-  public fullName: string = 'Conkeldurr TWM';
+  public fullName: string = 'Conkeldurr (TWM 105)';
+  public legacyFullName = 'Conkeldurr TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Tantrum

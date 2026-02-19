@@ -24,7 +24,8 @@ export class LarrysRufflet extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '173';
   public name: string = 'Larry\'s Rufflet';
-  public fullName: string = 'Larry\'s Rufflet MC';
+  public fullName: string = 'Larry\'s Rufflet (ASC 173)';
+  public legacyFullName = 'Larry\'s Rufflet MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

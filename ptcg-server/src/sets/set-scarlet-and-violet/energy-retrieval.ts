@@ -73,7 +73,8 @@ export class EnergyRetrieval extends TrainerCard {
 
   public name: string = 'Energy Retrieval';
 
-  public fullName: string = 'Energy Retrieval SVI';
+  public fullName: string = 'Energy Retrieval (SVI 171)';
+  public legacyFullName = 'Energy Retrieval SVI';
 
   public text: string =
     'Put 2 basic Energy cards from your discard pile into your hand.';

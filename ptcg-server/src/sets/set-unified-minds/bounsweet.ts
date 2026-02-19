@@ -31,5 +31,6 @@ export class Bounsweet extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bounsweet';
-  public fullName: string = 'Bounsweet UNM';
+  public fullName: string = 'Bounsweet (UNM 17)';
+  public legacyFullName = 'Bounsweet UNM';
 }

@@ -33,5 +33,6 @@ export class Carkol extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carkol';
-  public fullName: string = 'Carkol RCL';
+  public fullName: string = 'Carkol (RCL 106)';
+  public legacyFullName = 'Carkol RCL';
 }

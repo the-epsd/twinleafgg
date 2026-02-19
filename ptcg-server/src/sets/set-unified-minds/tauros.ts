@@ -28,7 +28,8 @@ export class Tauros extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '164';
   public name: string = 'Tauros';
-  public fullName: string = 'Tauros UNM';
+  public fullName: string = 'Tauros (UNM 164)';
+  public legacyFullName = 'Tauros UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

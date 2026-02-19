@@ -37,7 +37,8 @@ export class Chesnaught extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chesnaught';
-  public fullName: string = 'Chesnaught XY';
+  public fullName: string = 'Chesnaught (XY 14)';
+  public legacyFullName = 'Chesnaught XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Spiky Shield

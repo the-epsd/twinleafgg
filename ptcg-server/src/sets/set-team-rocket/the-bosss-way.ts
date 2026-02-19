@@ -12,7 +12,8 @@ export class TheBosssWay extends TrainerCard {
   public set: string = 'TR';
   public setNumber = '73';
   public name: string = 'The Boss\'s Way';
-  public fullName: string = 'The Boss\'s Way TR';
+  public fullName: string = 'The Boss\'s Way (TR 73)';
+  public legacyFullName = 'The Boss\'s Way TR';
   public cardImage: string = 'assets/cardback.png';
 
   public text: string = 'Search your deck for an Evolution card with Dark in its name. Show it to your opponent and put it into your hand. Shuffle your deck afterward.';

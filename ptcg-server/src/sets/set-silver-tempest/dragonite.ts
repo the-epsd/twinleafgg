@@ -45,7 +45,8 @@ export class Dragonite extends PokemonCard {
 
   public name: string = 'Dragonite';
 
-  public fullName: string = 'Dragonite SIT';
+  public fullName: string = 'Dragonite (SIT 131)';
+  public legacyFullName = 'Dragonite SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

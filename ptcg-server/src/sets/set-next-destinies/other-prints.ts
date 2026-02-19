@@ -16,95 +16,111 @@ import { RegigigasEx as RegigigasExNXD82 } from '../set-next-destinies/regigigas
 import { LevelBall } from './level-ball';
 
 export class DoubleColorlessEnergyNXD extends DoubleColorlessEnergy {
-  public fullName = 'Double Colorless Energy NXD';
+  public fullName = 'Double Colorless Energy (NXD 92)';
+  public legacyFullName = 'Double Colorless Energy NXD';
   public set = 'NXD';
   public setNumber = '92';
   public text = 'Double Colorless Energy provides [C][C] Energy.';
 }
 
 export class LevelBallNXD extends LevelBall {
-  public fullName = 'Level Ball NXD';
+  public fullName = 'Level Ball (NXD 89)';
+  public legacyFullName = 'Level Ball NXD';
   public set = 'NXD';
   public setNumber = '89';
 }
 export class ReshiramNXD extends Reshiram {
   public setNumber = '21';
-  public fullName: string = 'Reshiram NXD';
+  public fullName: string = 'Reshiram (NXD 21)';
+  public legacyFullName = 'Reshiram NXD';
   public set = 'NXD';
 }
 
 export class ZekromNXD extends Zekrom {
   public setNumber = '50';
-  public fullName: string = 'Zekrom NXD';
+  public fullName: string = 'Zekrom (NXD 50)';
+  public legacyFullName = 'Zekrom NXD';
   public set = 'NXD';
 }
 
 export class RioluNXD extends Riolu {
   public setNumber = '63';
-  public fullName: string = 'Riolu NXD';
+  public fullName: string = 'Riolu (NXD 63)';
+  public legacyFullName = 'Riolu NXD';
   public set = 'NXD';
 }
 
 export class ExpShareNXD extends ExpShare {
   public setNumber = '87';
-  public fullName: string = 'Exp. Share NXD';
+  public fullName: string = 'Exp. Share (NXD 87)';
+  public legacyFullName = 'Exp. Share NXD';
   public set = 'NXD';
 }
 
 export class ShayminEX2NXD extends ShayminEXNXD5 {
   public setNumber = '94';
-  public fullName: string = 'Shaymin EX2 NXD';
+  public fullName: string = 'Shaymin-EX (NXD 94)';
+  public legacyFullName = 'Shaymin EX2 NXD';
   public set = 'NXD';
 }
 
 export class ReshiramEx2NXD extends ReshiramExNXD22 {
   public setNumber = '95';
-  public fullName: string = 'Reshiram EX2 NXD';
+  public fullName: string = 'Reshiram-EX (NXD 95)';
+  public legacyFullName = 'Reshiram EX2 NXD';
   public set = 'NXD';
 }
 
 export class KyuremEx2NXD extends KyuremExNXD38 {
   public setNumber = '96';
-  public fullName: string = 'Kyurem-EX NXD 96';
+  public fullName: string = 'Kyurem-EX (NXD 96)';
+  public legacyFullName = 'Kyurem-EX NXD 96';
 }
 
 export class ZekromEx2NXD extends ZekromExNXD51 {
   public setNumber = '97';
-  public fullName: string = 'Zekrom EX2 NXD';
+  public fullName: string = 'Zekrom-EX (NXD 97)';
+  public legacyFullName = 'Zekrom EX2 NXD';
   public set = 'NXD';
 }
 
 export class MewtwoEx2NXD extends MewtwoExNXD54 {
   public setNumber = '98';
-  public fullName: string = 'Mewtwo EX2 NXD';
+  public fullName: string = 'Mewtwo-EX (NXD 98)';
+  public legacyFullName = 'Mewtwo EX2 NXD';
   public set = 'NXD';
 }
 
 export class RegigigasEx2NXD extends RegigigasExNXD82 {
   public setNumber = '99';
-  public fullName: string = 'Regigigas-EX NXD 99';
+  public fullName: string = 'Regigigas-EX (NXD 99)';
+  public legacyFullName = 'Regigigas-EX NXD 99';
 }
 
 export class EmboarNXD extends Emboar {
   public setNumber = '100';
-  public fullName: string = 'Emboar NXD';
+  public fullName: string = 'Emboar (NXD 100)';
+  public legacyFullName = 'Emboar NXD';
   public set = 'NXD';
 }
 
 export class Chandelure2NXD extends ChandelureNVI60 {
   public setNumber = '101';
-  public fullName: string = 'Chandelure2 NXD';
+  public fullName: string = 'Chandelure (NXD 101)';
+  public legacyFullName = 'Chandelure2 NXD';
   public set = 'NXD';
 }
 
 export class ZoroarkNXD extends Zoroark {
   public setNumber = '102';
-  public fullName: string = 'Zoroark NXD';
+  public fullName: string = 'Zoroark (NXD 102)';
+  public legacyFullName = 'Zoroark NXD';
   public set = 'NXD';
 }
 
 export class HydreigonNXD extends HydreigonNVI79 {
   public setNumber = '103';
-  public fullName: string = 'Hydreigon NXD';
+  public fullName: string = 'Hydreigon (NXD 103)';
+  public legacyFullName = 'Hydreigon NXD';
   public set = 'NXD';
 }

@@ -83,7 +83,8 @@ export class Quagsire extends PokemonCard {
   }];
 
   public set: string = 'DRM';
-  public fullName: string = 'Quagsire DRM';
+  public fullName: string = 'Quagsire (DRM 26)';
+  public legacyFullName = 'Quagsire DRM';
   public name: string = 'Quagsire';
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';

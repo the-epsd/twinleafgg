@@ -36,7 +36,8 @@ export class Dewott extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dewott';
-  public fullName: string = 'Dewott VIV';
+  public fullName: string = 'Dewott (VIV 34)';
+  public legacyFullName = 'Dewott VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Aqua Wash

@@ -26,7 +26,7 @@ export class Zacian extends PokemonCard {
       name: 'Amazing Sword',
       cost: [G, P, M],
       damage: 150,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent has any Pokémon VMAX in play, this attack does 150 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Zacian extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zacian';
-  public fullName: string = 'Zacian VIV';
+  public fullName: string = 'Zacian (VIV 82)';
+  public legacyFullName = 'Zacian VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Metal Armament

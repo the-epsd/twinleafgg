@@ -16,7 +16,8 @@ export class Volo extends TrainerCard {
 
   public name: string = 'Volo';
 
-  public fullName: string = 'Volo LOR';
+  public fullName: string = 'Volo (LOR 169)';
+  public legacyFullName = 'Volo LOR';
 
   public text: string =
     'Discard 1 of your Benched Pokémon V and all attached cards.';

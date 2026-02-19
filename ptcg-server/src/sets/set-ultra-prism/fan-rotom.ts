@@ -38,7 +38,8 @@ export class FanRotom extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fan Rotom';
-  public fullName: string = 'Fan Rotom UPR';
+  public fullName: string = 'Fan Rotom (UPR 110)';
+  public legacyFullName = 'Fan Rotom UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Roto Motor (passive - ignore energy costs)

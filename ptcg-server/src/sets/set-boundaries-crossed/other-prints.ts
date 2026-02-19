@@ -19,107 +19,125 @@ import { WhiteKyuremEx } from './white-kyurem-ex';
 
 export class KeldeoExBCR extends KeldeoEx {
   public setNumber = '142';
-  public fullName: string = 'Keldeo EX BCR 142';
+  public fullName: string = 'Keldeo-EX (BCR 142)';
+  public legacyFullName = 'Keldeo EX BCR 142';
   public set = 'BCR';
 }
 
 export class RockyHelmetBCR extends RockyHelmet {
   public setNumber = '133';
-  public fullName: string = 'Rocky Helmet BCR';
+  public fullName: string = 'Rocky Helmet (BCR 133)';
+  public legacyFullName = 'Rocky Helmet BCR';
   public set = 'BCR';
 }
 export class EnergySearchBCR extends EnergySearch {
   public setNumber = '128';
-  public fullName: string = 'Energy Search BCR';
+  public fullName: string = 'Energy Search (BCR 128)';
+  public legacyFullName = 'Energy Search BCR';
   public set = 'BCR';
 }
 
 export class GreatBallBCR extends GreatBall {
   public setNumber = '129';
-  public fullName: string = 'Great Ball BCR';
+  public fullName: string = 'Great Ball (BCR 129)';
+  public legacyFullName = 'Great Ball BCR';
   public set = 'BCR';
 }
 
 export class PokeBallBCR extends PokeBall {
   public setNumber = '131';
-  public fullName: string = 'Poké Ball BCR';
+  public fullName: string = 'Poké Ball (BCR 131)';
+  public legacyFullName = 'Poké Ball BCR';
   public set = 'BCR';
 }
 
 export class SwitchBCR extends Switch {
   public setNumber = '135';
-  public fullName: string = 'Switch BCR';
+  public fullName: string = 'Switch (BCR 135)';
+  public legacyFullName = 'Switch BCR';
   public set = 'BCR';
 }
 
 export class TownMapBCR extends TownMap {
   public setNumber = '136';
-  public fullName: string = 'Town Map BCR';
+  public fullName: string = 'Town Map (BCR 136)';
+  public legacyFullName = 'Town Map BCR';
   public set = 'BCR';
 }
 
 export class LandorusEx2BCR extends LandorusExBCR89 {
   public setNumber = '144';
-  public fullName: string = 'Landorus EX2 BCR';
+  public fullName: string = 'Landorus-EX (BCR 144)';
+  public legacyFullName = 'Landorus EX2 BCR';
   public set = 'BCR';
 }
 
 export class BiancaBCR extends Bianca {
   public setNumber = '147';
-  public fullName: string = 'Bianca BCR';
+  public fullName: string = 'Bianca (BCR 147)';
+  public legacyFullName = 'Bianca BCR';
   public set = 'BCR';
 }
 
 export class CherenBCR extends Cheren {
   public setNumber = '148';
-  public fullName: string = 'Cheren BCR';
+  public fullName: string = 'Cheren (BCR 148)';
+  public legacyFullName = 'Cheren BCR';
   public set = 'BCR';
 }
 
 export class Skyla2BCR extends SkylaBCR134 {
   public setNumber = '149';
-  public fullName: string = 'Skyla2 BCR';
+  public fullName: string = 'Skyla (BCR 149)';
+  public legacyFullName = 'Skyla2 BCR';
   public set = 'BCR';
 }
 
 export class TerrakionBCR extends Terrakion {
   public setNumber = '151';
-  public fullName: string = 'Terrakion BCR';
+  public fullName: string = 'Terrakion (BCR 151)';
+  public legacyFullName = 'Terrakion BCR';
   public set = 'BCR';
 }
 
 export class AltariaBCR extends Altaria {
   public setNumber = '152';
-  public fullName: string = 'Altaria BCR';
+  public fullName: string = 'Altaria (BCR 152)';
+  public legacyFullName = 'Altaria BCR';
   public set = 'BCR';
 }
 
 export class RockyHelmet2BCR extends RockyHelmetSVI193 {
   public setNumber = '153';
-  public fullName: string = 'Rocky Helmet2 BCR';
+  public fullName: string = 'Rocky Helmet (BCR 153)';
+  public legacyFullName = 'Rocky Helmet2 BCR';
   public set = 'BCR';
 }
 
 export class CelebiEx2 extends CelebiEx {
   public set: string = 'BCR';
   public setNumber: string = '141';
-  public fullName: string = 'Celebi-EX BCR 141';
+  public fullName: string = 'Celebi-EX (BCR 141)';
+  public legacyFullName = 'Celebi-EX BCR 141';
 }
 
 export class CresseliaEx2 extends CresseliaEx {
   public set: string = 'BCR';
   public setNumber: string = '143';
-  public fullName: string = 'Cresselia-EX BCR 143';
+  public fullName: string = 'Cresselia-EX (BCR 143)';
+  public legacyFullName = 'Cresselia-EX BCR 143';
 }
 
 export class BlackKyuremEx2 extends BlackKyuremEx {
   public set: string = 'BCR';
   public setNumber: string = '145';
-  public fullName: string = 'Black Kyurem-EX BCR 145';
+  public fullName: string = 'Black Kyurem-EX (BCR 145)';
+  public legacyFullName = 'Black Kyurem-EX BCR 145';
 }
 
 export class WhiteKyuremEx2 extends WhiteKyuremEx {
   public set: string = 'BCR';
   public setNumber: string = '146';
-  public fullName: string = 'White Kyurem-EX BCR 146';
+  public fullName: string = 'White Kyurem-EX (BCR 146)';
+  public legacyFullName = 'White Kyurem-EX BCR 146';
 }

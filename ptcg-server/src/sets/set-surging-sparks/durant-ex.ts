@@ -45,7 +45,8 @@ export class Durantex extends PokemonCard {
 
   public name: string = 'Durant ex';
 
-  public fullName: string = 'Durant ex SSP';
+  public fullName: string = 'Durant ex (SSP 4)';
+  public legacyFullName = 'Durant ex SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sudden Scrape

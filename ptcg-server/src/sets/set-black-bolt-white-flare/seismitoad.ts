@@ -33,7 +33,8 @@ export class Seismitoad extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
   public name: string = 'Seismitoad';
-  public fullName: string = 'Seismitoad SV11B';
+  public fullName: string = 'Seismitoad (BLK 21)';
+  public legacyFullName = 'Seismitoad SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

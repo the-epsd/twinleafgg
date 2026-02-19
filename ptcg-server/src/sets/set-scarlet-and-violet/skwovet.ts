@@ -47,7 +47,8 @@ export class Skwovet extends PokemonCard {
 
   public name: string = 'Skwovet';
 
-  public fullName: string = 'Skwovet SVI';
+  public fullName: string = 'Skwovet (SVI 151)';
+  public legacyFullName = 'Skwovet SVI';
 
   public readonly NEST_STASH_MARKER = 'NEST_STASH_MARKER';
 

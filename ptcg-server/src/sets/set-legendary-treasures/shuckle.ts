@@ -37,7 +37,8 @@ export class Shuckle extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shuckle';
-  public fullName: string = 'Shuckle LTR';
+  public fullName: string = 'Shuckle (LTR 3)';
+  public legacyFullName = 'Shuckle LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Share

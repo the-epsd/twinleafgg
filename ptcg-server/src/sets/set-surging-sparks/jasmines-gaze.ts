@@ -17,7 +17,8 @@ export class JasminesGaze extends TrainerCard {
   public cardImage = 'assets/cardback.png';
   public regulationMark: string = 'H';
   public name: string = 'Jasmine\'s Gaze';
-  public fullName: string = 'Jasmine\'s Gaze SSP';
+  public fullName: string = 'Jasmine\'s Gaze (SSP 178)';
+  public legacyFullName = 'Jasmine\'s Gaze SSP';
   public text: string = 'During your opponent\'s next turn, all of your Pokémon take 30 less damage ' +
     'from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance). ' +
     '(This includes new Pokémon that come into play.)';

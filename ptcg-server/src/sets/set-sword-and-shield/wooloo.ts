@@ -31,7 +31,8 @@ export class Wooloo extends PokemonCard {
   public setNumber: string = '152';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wooloo';
-  public fullName: string = 'Wooloo SSH';
+  public fullName: string = 'Wooloo (SSH 152)';
+  public legacyFullName = 'Wooloo SSH';
 
   public readonly REDUCE_DAMAGE_MARKER = 'WOOLOO_SSH_REDUCE_DAMAGE_MARKER';
   public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'WOOLOO_SSH_CLEAR_REDUCE_DAMAGE_MARKER';

@@ -76,7 +76,8 @@ export class MegaVenusaurEx extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Venusaur ex';
-  public fullName: string = 'Mega Venusaur ex M1L';
+  public fullName: string = 'Mega Venusaur ex (MEG 3)';
+  public legacyFullName = 'Mega Venusaur ex M1L';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

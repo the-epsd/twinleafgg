@@ -28,7 +28,7 @@ export class Darkrai extends PokemonCard {
       name: 'Vortex of Darkness',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each [D] Energy attached to this Pokémon.'
     }
   ];
@@ -38,7 +38,8 @@ export class Darkrai extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Darkrai';
-  public fullName: string = 'Darkrai DAA';
+  public fullName: string = 'Darkrai (DAA 105)';
+  public legacyFullName = 'Darkrai DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Darkness Guard (passive - reduce damage if has D energy)

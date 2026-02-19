@@ -37,7 +37,8 @@ export class Electrode extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electrode';
-  public fullName: string = 'Electrode TEU';
+  public fullName: string = 'Electrode (TEU 39)';
+  public legacyFullName = 'Electrode TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Electro Shaker (on-evolve - move Lightning energy)

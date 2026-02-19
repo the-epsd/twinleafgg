@@ -49,7 +49,8 @@ export class Mamoswineex extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mamoswine ex';
-  public fullName: string = 'Mamoswine ex JTG';
+  public fullName: string = 'Mamoswine ex (JTG 79)';
+  public legacyFullName = 'Mamoswine ex JTG';
 
   public readonly MAMMOTH_RIDE_MARKER = 'MAMMOTH_RIDE_MARKER';
 

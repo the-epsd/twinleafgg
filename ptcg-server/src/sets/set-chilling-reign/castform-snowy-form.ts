@@ -34,7 +34,8 @@ export class CastformSnowyForm extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '34';
   public name: string = 'Castform Snowy Form';
-  public fullName: string = 'Castform Snowy Form CRE';
+  public fullName: string = 'Castform Snowy Form (CRE 34)';
+  public legacyFullName = 'Castform Snowy Form CRE';
 
   public getColorlessReduction(state: State): number {
     const player = state.players[state.activePlayer];

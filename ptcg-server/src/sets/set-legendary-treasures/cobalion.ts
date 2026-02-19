@@ -42,7 +42,8 @@ export class Cobalion extends PokemonCard {
 
   public name: string = 'Cobalion';
 
-  public fullName: string = 'Cobalion LTR';
+  public fullName: string = 'Cobalion (LTR 91)';
+  public legacyFullName = 'Cobalion LTR';
 
   public cardImage: string = 'assets/cardback.png';
 

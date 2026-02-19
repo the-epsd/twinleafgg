@@ -37,7 +37,8 @@ export class Raichu extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raichu';
-  public fullName: string = 'Raichu UNB';
+  public fullName: string = 'Raichu (UNB 55)';
+  public legacyFullName = 'Raichu UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Never Give Up

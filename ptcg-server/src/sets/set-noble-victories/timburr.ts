@@ -24,7 +24,8 @@ export class Timburr extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Timburr';
-  public fullName: string = 'Timburr NVI';
+  public fullName: string = 'Timburr (NVI 62)';
+  public legacyFullName = 'Timburr NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

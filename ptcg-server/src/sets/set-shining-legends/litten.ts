@@ -25,5 +25,6 @@ export class Litten extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Litten';
-  public fullName: string = 'Litten SLG';
+  public fullName: string = 'Litten (SLG 15)';
+  public legacyFullName = 'Litten SLG';
 }

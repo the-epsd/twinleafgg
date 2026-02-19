@@ -37,7 +37,8 @@ export class MewtwoEx extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mewtwo-EX';
-  public fullName: string = 'Mewtwo-EX BKT';
+  public fullName: string = 'Mewtwo-EX (BKT 61)';
+  public legacyFullName = 'Mewtwo-EX BKT';
 
   public readonly REDUCE_DAMAGE_MARKER = 'MEWTWO_EX_BKT_REDUCE_DAMAGE';
   public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'MEWTWO_EX_BKT_CLEAR_REDUCE_DAMAGE';

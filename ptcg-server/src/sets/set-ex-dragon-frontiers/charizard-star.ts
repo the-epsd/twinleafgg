@@ -28,7 +28,8 @@ export class CharizardStar extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charizard Star';
-  public fullName: string = 'Charizard Star DF';
+  public fullName: string = 'Charizard Star (DF 100)';
+  public legacyFullName = 'Charizard Star DF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

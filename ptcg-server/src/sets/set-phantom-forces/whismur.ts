@@ -29,7 +29,8 @@ export class Whismur extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whismur';
-  public fullName: string = 'Whismur PHF';
+  public fullName: string = 'Whismur (PHF 83)';
+  public legacyFullName = 'Whismur PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Screaming Fit

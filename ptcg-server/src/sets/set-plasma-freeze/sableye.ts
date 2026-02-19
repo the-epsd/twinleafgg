@@ -32,7 +32,8 @@ export class Sableye extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sableye';
-  public fullName: string = 'Sableye PLF';
+  public fullName: string = 'Sableye (PLF 49)';
+  public legacyFullName = 'Sableye PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

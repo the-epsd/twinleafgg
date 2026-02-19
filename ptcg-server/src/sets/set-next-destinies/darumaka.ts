@@ -21,7 +21,8 @@ export class Darumaka extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Darumaka';
-  public fullName: string = 'Darumaka NXD';
+  public fullName: string = 'Darumaka (NXD 17)';
+  public legacyFullName = 'Darumaka NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;

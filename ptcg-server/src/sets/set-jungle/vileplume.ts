@@ -41,7 +41,8 @@ export class Vileplume extends PokemonCard {
 
   public name: string = 'Vileplume';
 
-  public fullName: string = 'Vileplume JU';
+  public fullName: string = 'Vileplume (JU 15)';
+  public legacyFullName = 'Vileplume JU';
 
   public readonly HEAL_MARKER = 'HEAL_MARKER';
 

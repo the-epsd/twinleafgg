@@ -16,7 +16,8 @@ export class BraveryCharm extends TrainerCard {
 
   public name: string = 'Bravery Charm';
 
-  public fullName: string = 'Bravery Charm PAL';
+  public fullName: string = 'Bravery Charm (PAL 173)';
+  public legacyFullName = 'Bravery Charm PAL';
 
   public text: string =
     'The Basic Pokémon this card is attached to gets +50 HP.';

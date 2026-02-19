@@ -17,5 +17,6 @@ export class Drifloon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '50';
   public name: string = 'Drifloon';
-  public fullName: string = 'Drifloon DRX';
+  public fullName: string = 'Drifloon (DRX 50)';
+  public legacyFullName = 'Drifloon DRX';
 }

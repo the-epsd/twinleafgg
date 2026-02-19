@@ -36,7 +36,8 @@ export class SkySplittingDeoxys extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
   public name: string = 'Sky-Splitting Deoxys';
-  public fullName: string = 'Sky-Splitting Deoxys PCGP';
+  public fullName: string = 'Sky-Splitting Deoxys (PCGP 18)';
+  public legacyFullName = 'Sky-Splitting Deoxys PCGP';
 
   public readonly FORME_CHANGE_MARKER = 'FORME_CHANGE_MARKER';
 

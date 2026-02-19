@@ -22,7 +22,8 @@ export class VengefulPunch extends TrainerCard {
 
   public name = 'Vengeful Punch';
 
-  public fullName = 'Vengeful Punch OBF';
+  public fullName = 'Vengeful Punch (OBF 197)';
+  public legacyFullName = 'Vengeful Punch OBF';
 
   public text: string =
     'If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent\'s Pokémon, put 4 damage counters on the Attacking Pokémon.';

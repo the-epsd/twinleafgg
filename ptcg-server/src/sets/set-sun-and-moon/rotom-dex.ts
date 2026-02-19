@@ -15,7 +15,8 @@ export class RotomDex extends TrainerCard {
 
   public setNumber: string = '131';
 
-  public fullName: string = 'Rotom Dex SUM';
+  public fullName: string = 'Rotom Dex (SUM 131)';
+  public legacyFullName = 'Rotom Dex SUM';
 
   public text: string =
     'After counting your Prize cards, shuffle them into your deck. Then, take that many cards from the top of your deck and put them face down as your Prize cards.';

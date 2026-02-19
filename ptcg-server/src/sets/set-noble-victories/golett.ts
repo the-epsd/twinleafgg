@@ -34,7 +34,8 @@ export class Golett extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
   public name: string = 'Golett';
-  public fullName: string = 'Golett NVI';
+  public fullName: string = 'Golett (NVI 71)';
+  public legacyFullName = 'Golett NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

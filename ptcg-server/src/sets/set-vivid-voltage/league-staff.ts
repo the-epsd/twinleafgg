@@ -16,7 +16,8 @@ export class LeagueStaff extends TrainerCard {
   public setNumber: string = '153';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'League Staff';
-  public fullName: string = 'League Staff VIV';
+  public fullName: string = 'League Staff (VIV 153)';
+  public legacyFullName = 'League Staff VIV';
   public text: string = 'Draw 2 cards. If Wyndon Stadium is in play, draw 2 more cards. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

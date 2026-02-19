@@ -35,7 +35,8 @@ export class Simipour extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Simipour';
-  public fullName: string = 'Simipour XY';
+  public fullName: string = 'Simipour (XY 38)';
+  public legacyFullName = 'Simipour XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-noble-victories/trubbish.ts (Garbage Collection)

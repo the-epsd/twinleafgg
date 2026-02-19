@@ -36,7 +36,8 @@ export class Spiritomb extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spiritomb';
-  public fullName: string = 'Spiritomb CRE';
+  public fullName: string = 'Spiritomb (CRE 103)';
+  public legacyFullName = 'Spiritomb CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ghostly Cries

@@ -47,7 +47,8 @@ export class Koraidon extends PokemonCard {
 
   public name: string = 'Koraidon';
 
-  public fullName: string = 'Koraidon SSP';
+  public fullName: string = 'Koraidon (SSP 116)';
+  public legacyFullName = 'Koraidon SSP';
 
   public readonly UNRELENTING_ONSLAUGHT_MARKER = 'UNRELENTING_ONSLAUGHT_MARKER';
   public readonly UNRELENTING_ONSLAUGHT_2_MARKER = 'UNRELENTING_ONSLAUGHT_2_MARKER';

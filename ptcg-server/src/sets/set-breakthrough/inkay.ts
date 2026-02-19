@@ -21,7 +21,7 @@ export class Inkay extends PokemonCard {
       name: 'Disorderly Flip',
       cost: [D, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Inkay extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Inkay';
-  public fullName: string = 'Inkay BKT';
+  public fullName: string = 'Inkay (BKT 93)';
+  public legacyFullName = 'Inkay BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Disorderly Flip

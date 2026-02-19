@@ -26,7 +26,8 @@ export class Venonat extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '9';
   public name: string = 'Venonat';
-  public fullName: string = 'Venonat UNB';
+  public fullName: string = 'Venonat (UNB 9)';
+  public legacyFullName = 'Venonat UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

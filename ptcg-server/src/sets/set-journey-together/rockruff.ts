@@ -29,7 +29,8 @@ export class Rockruff extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
   public name: string = 'Rockruff';
-  public fullName: string = 'Rockruff JTG';
+  public fullName: string = 'Rockruff (JTG 84)';
+  public legacyFullName = 'Rockruff JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

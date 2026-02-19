@@ -31,5 +31,6 @@ export class Gible extends PokemonCard {
 
   public name: string = 'Gible';
 
-  public fullName: string = 'Gible PAR';
+  public fullName: string = 'Gible (PAR 94)';
+  public legacyFullName = 'Gible PAR';
 }

@@ -34,7 +34,8 @@ export class Unfezant extends PokemonCard {
   public setNumber: string = '86';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Unfezant';
-  public fullName: string = 'Unfezant BLW';
+  public fullName: string = 'Unfezant (BLW 86)';
+  public legacyFullName = 'Unfezant BLW';
 
   private readonly PREVENT_ALL_MARKER = 'PREVENT_ALL_DAMAGE_AND_EFFECTS_UNFEZANT';
   private readonly CLEAR_PREVENT_ALL_MARKER = 'CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_UNFEZANT';

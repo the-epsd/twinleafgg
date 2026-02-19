@@ -38,7 +38,8 @@ export class Cinderace extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cinderace';
-  public fullName: string = 'Cinderace CRE';
+  public fullName: string = 'Cinderace (CRE 28)';
+  public legacyFullName = 'Cinderace CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Crisis Power (passive - boost THIS Pokemon's attacks vs opponent's active per prize taken by opponent)

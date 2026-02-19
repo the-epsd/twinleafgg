@@ -40,7 +40,8 @@ export class Decidueye extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Decidueye';
-  public fullName: string = 'Decidueye DAA';
+  public fullName: string = 'Decidueye (DAA 13)';
+  public legacyFullName = 'Decidueye DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Deep Forest Camo (passive - prevent V/GX damage)

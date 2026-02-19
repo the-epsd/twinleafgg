@@ -66,7 +66,8 @@ export class DualBall extends TrainerCard {
 
   public name: string = 'Dual Ball';
 
-  public fullName: string = 'Dual Ball UL';
+  public fullName: string = 'Dual Ball (UL 72)';
+  public legacyFullName = 'Dual Ball UL';
 
   public cardImage: string = 'assets/cardback.png';
 

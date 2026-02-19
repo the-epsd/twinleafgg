@@ -51,7 +51,8 @@ export class Gardevoir extends PokemonCard {
 
   public name: string = 'Gardevoir';
 
-  public fullName: string = 'Gardevoir SIT';
+  public fullName: string = 'Gardevoir (SIT 69)';
+  public legacyFullName = 'Gardevoir SIT';
 
   public readonly REFINEMENT_MARKER = 'REFINEMENT_MARKER';
 

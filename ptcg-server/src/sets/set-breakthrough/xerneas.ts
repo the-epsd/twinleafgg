@@ -26,14 +26,14 @@ export class Xerneas extends PokemonCard {
       name: 'Rainbow Force',
       cost: [Y, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each different type of Pokémon on your Bench.'
     },
     {
       name: 'Power Creation',
       cost: [Y, Y, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon was healed during this turn, this attack does 80 more damage.'
     }
   ];
@@ -42,7 +42,8 @@ export class Xerneas extends PokemonCard {
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Xerneas';
-  public fullName: string = 'Xerneas BKT';
+  public fullName: string = 'Xerneas (BKT 107)';
+  public legacyFullName = 'Xerneas BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track if this Pokemon was healed this turn

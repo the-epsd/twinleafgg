@@ -43,7 +43,8 @@ export class TapuKokoGX extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tapu Koko-GX';
-  public fullName: string = 'Tapu Koko-GX GRI';
+  public fullName: string = 'Tapu Koko-GX (GRI 47)';
+  public legacyFullName = 'Tapu Koko-GX GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Aero Trail

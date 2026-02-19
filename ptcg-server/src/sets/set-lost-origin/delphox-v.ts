@@ -47,7 +47,8 @@ export class DelphoxV extends PokemonCard {
 
   public name: string = 'Delphox V';
 
-  public fullName: string = 'Delphox V LOR';
+  public fullName: string = 'Delphox V (LOR 27)';
+  public legacyFullName = 'Delphox V LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -23,7 +23,8 @@ export class Snubbull extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
   public name: string = 'Snubbull';
-  public fullName: string = 'Snubbull SUM';
+  public fullName: string = 'Snubbull (SUM 90)';
+  public legacyFullName = 'Snubbull SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

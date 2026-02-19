@@ -31,7 +31,8 @@ export class Shelgon extends PokemonCard {
 
   public set: string = 'DS';
   public name: string = 'Shelgon';
-  public fullName: string = 'Shelgon DS 53';
+  public fullName: string = 'Shelgon (DS 53)';
+  public legacyFullName = 'Shelgon DS 53';
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
 

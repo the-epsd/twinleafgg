@@ -31,7 +31,8 @@ export class Keldeoex extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Keldeo ex';
-  public fullName: string = 'Keldeo ex SV11W';
+  public fullName: string = 'Keldeo ex (WHT 30)';
+  public legacyFullName = 'Keldeo ex SV11W';
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
     if (effect instanceof EndTurnEffect && this.movedToActiveThisTurn) {

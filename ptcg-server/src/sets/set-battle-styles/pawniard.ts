@@ -36,7 +36,8 @@ export class Pawniard extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pawniard';
-  public fullName: string = 'Pawniard BST';
+  public fullName: string = 'Pawniard (BST 103)';
+  public legacyFullName = 'Pawniard BST';
 
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'PAWNIARD_NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_CLEAR_MARKER = 'PAWNIARD_NEXT_TURN_MORE_DAMAGE_CLEAR_MARKER';

@@ -33,7 +33,8 @@ export class Tyranitar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '135';
   public name: string = 'Tyranitar';
-  public fullName: string = 'Tyranitar PAL';
+  public fullName: string = 'Tyranitar (PAL 135)';
+  public legacyFullName = 'Tyranitar PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Rout

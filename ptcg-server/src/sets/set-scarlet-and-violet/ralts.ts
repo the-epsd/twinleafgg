@@ -34,5 +34,6 @@ export class Ralts extends PokemonCard {
 
   public name: string = 'Ralts';
 
-  public fullName: string = 'Ralts SVI';
+  public fullName: string = 'Ralts (SVI 84)';
+  public legacyFullName = 'Ralts SVI';
 }

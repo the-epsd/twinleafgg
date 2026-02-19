@@ -24,7 +24,7 @@ export class CramorantVmax extends PokemonCard {
       name: 'Max Jet',
       cost: [C, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 80 damage for each heads.'
     }
   ];
@@ -34,7 +34,8 @@ export class CramorantVmax extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cramorant VMAX';
-  public fullName: string = 'Cramorant VMAX SHF';
+  public fullName: string = 'Cramorant VMAX (SHF 55)';
+  public legacyFullName = 'Cramorant VMAX SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Max Jet

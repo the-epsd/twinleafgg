@@ -38,7 +38,8 @@ export class Applin2 extends PokemonCard {
 
   public name: string = 'Applin';
 
-  public fullName: string = 'Applin TWM1';
+  public fullName: string = 'Applin (TWM 17)';
+  public legacyFullName = 'Applin TWM1';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

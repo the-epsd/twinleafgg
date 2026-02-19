@@ -36,7 +36,8 @@ export class Gothorita extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gothorita';
-  public fullName: string = 'Gothorita GRI';
+  public fullName: string = 'Gothorita (GRI 53)';
+  public legacyFullName = 'Gothorita GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Psybeam

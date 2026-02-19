@@ -28,7 +28,7 @@ export class Lugia extends PokemonCard {
       name: 'Intensifying Burn',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, this attack does 60 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Lugia extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lugia';
-  public fullName: string = 'Lugia FCO';
+  public fullName: string = 'Lugia (FCO 78)';
+  public legacyFullName = 'Lugia FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Pressure (passive - intercept DealDamageEffect)

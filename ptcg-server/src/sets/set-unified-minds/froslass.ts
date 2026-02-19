@@ -31,7 +31,8 @@ export class Froslass extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Froslass';
-  public fullName: string = 'Froslass UNM';
+  public fullName: string = 'Froslass (UNM 38)';
+  public legacyFullName = 'Froslass UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

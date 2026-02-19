@@ -36,7 +36,8 @@ export class Alakazam extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
   public name: string = 'Alakazam';
-  public fullName: string = 'Alakazam TWM';
+  public fullName: string = 'Alakazam (TWM 82)';
+  public legacyFullName = 'Alakazam TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Strange Hacking

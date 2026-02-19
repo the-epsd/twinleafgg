@@ -39,7 +39,8 @@ export class Emboar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '13';
   public name: string = 'Emboar';
-  public fullName: string = 'Emboar SV11B';
+  public fullName: string = 'Emboar (WHT 13)';
+  public legacyFullName = 'Emboar SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

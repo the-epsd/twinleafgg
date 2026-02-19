@@ -30,7 +30,7 @@ export class Ampharos extends PokemonCard {
       name: 'Electron Crush',
       cost: [L, L, L, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard 3 [L] Energy from this Pokémon. If you do, this attack does 120 more damage.'
     }
   ];
@@ -40,7 +40,8 @@ export class Ampharos extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ampharos';
-  public fullName: string = 'Ampharos EVS';
+  public fullName: string = 'Ampharos (EVS 56)';
+  public legacyFullName = 'Ampharos EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Shock

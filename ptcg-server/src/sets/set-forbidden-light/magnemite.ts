@@ -35,7 +35,8 @@ export class Magnemite extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magnemite';
-  public fullName: string = 'Magnemite FLI';
+  public fullName: string = 'Magnemite (FLI 34)';
+  public legacyFullName = 'Magnemite FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Searching Magnet

@@ -37,7 +37,8 @@ export class Starmie extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Starmie';
-  public fullName: string = 'Starmie BKT';
+  public fullName: string = 'Starmie (BKT 30)';
+  public legacyFullName = 'Starmie BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Deep Sea Swirl

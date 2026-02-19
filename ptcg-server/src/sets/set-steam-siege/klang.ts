@@ -28,7 +28,7 @@ export class Klang extends PokemonCard {
       name: 'Disorderly Flip',
       cost: [M, M, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 30 damage times the number of heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Klang extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klang';
-  public fullName: string = 'Klang STS';
+  public fullName: string = 'Klang (STS 72)';
+  public legacyFullName = 'Klang STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Disorderly Flip

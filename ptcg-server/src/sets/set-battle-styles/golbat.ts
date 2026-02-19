@@ -33,7 +33,8 @@ export class Golbat extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
   public name: string = 'Golbat';
-  public fullName: string = 'Golbat BST';
+  public fullName: string = 'Golbat (BST 90)';
+  public legacyFullName = 'Golbat BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

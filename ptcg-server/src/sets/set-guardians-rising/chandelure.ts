@@ -41,7 +41,8 @@ export class Chandelure extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chandelure';
-  public fullName: string = 'Chandelure GRI';
+  public fullName: string = 'Chandelure (GRI 13)';
+  public legacyFullName = 'Chandelure GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Shady Move

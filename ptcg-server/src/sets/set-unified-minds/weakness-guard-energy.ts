@@ -22,7 +22,8 @@ export class WeaknessGuardEnergy extends EnergyCard {
 
   public name = 'Weakness Guard Energy';
 
-  public fullName = 'Weakness Guard Energy UNM';
+  public fullName = 'Weakness Guard Energy (UNM 213)';
+  public legacyFullName = 'Weakness Guard Energy UNM';
 
   public text =
     'This card provides [C] Energy.' +

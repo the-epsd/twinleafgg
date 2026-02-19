@@ -25,7 +25,8 @@ export class AncientBoosterEnergyCapsule extends TrainerCard {
 
   public name: string = 'Ancient Booster Energy Capsule';
 
-  public fullName: string = 'Ancient Booster Energy Capsule PAR';
+  public fullName: string = 'Ancient Booster Energy Capsule (PAR 159)';
+  public legacyFullName = 'Ancient Booster Energy Capsule PAR';
 
   public text: string =
     'The Ancient Pokémon this card is attached to gets +60 HP, recovers from all Special Conditions, and can\'t be affected by any Special Conditions.';

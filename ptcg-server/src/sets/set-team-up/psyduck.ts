@@ -31,7 +31,8 @@ export class Psyduck extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Psyduck';
-  public fullName: string = 'Psyduck TEU';
+  public fullName: string = 'Psyduck (TEU 26)';
+  public legacyFullName = 'Psyduck TEU';
 
   // Refs: set-unified-minds/beheeyem.ts (Item block with markers), set-x-and-y/trevenant.ts (trainer block)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

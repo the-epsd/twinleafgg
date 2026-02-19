@@ -29,7 +29,7 @@ export class Sharpedo extends PokemonCard {
       name: 'Aqua Impact',
       cost: [D, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];
@@ -38,7 +38,8 @@ export class Sharpedo extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sharpedo';
-  public fullName: string = 'Sharpedo SUM';
+  public fullName: string = 'Sharpedo (SUM 82)';
+  public legacyFullName = 'Sharpedo SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Rough Skin (passive - damage attacker when damaged)

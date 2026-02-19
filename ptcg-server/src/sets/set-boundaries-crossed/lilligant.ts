@@ -37,7 +37,8 @@ export class Lilligant extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lilligant';
-  public fullName: string = 'Lilligant BCR';
+  public fullName: string = 'Lilligant (BCR 17)';
+  public legacyFullName = 'Lilligant BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Return

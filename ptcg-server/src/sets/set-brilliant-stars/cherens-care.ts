@@ -90,7 +90,8 @@ export class CherensCare extends TrainerCard {
 
   public name: string = 'Cheren\'s Care';
 
-  public fullName: string = 'Cheren\'s Care BRS';
+  public fullName: string = 'Cheren\'s Care (BRS 134)';
+  public legacyFullName = 'Cheren\'s Care BRS';
 
   public text: string =
     'Put 1 of your [C] Pokémon that has any damage counters on it and all attached cards into your hand.';

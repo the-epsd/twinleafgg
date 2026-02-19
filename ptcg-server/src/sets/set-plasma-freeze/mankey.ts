@@ -25,5 +25,6 @@ export class Mankey extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mankey';
-  public fullName: string = 'Mankey PLF';
+  public fullName: string = 'Mankey (PLF 59)';
+  public legacyFullName = 'Mankey PLF';
 }

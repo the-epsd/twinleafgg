@@ -39,7 +39,8 @@ export class Seel extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Seel';
-  public fullName: string = 'Seel EVO';
+  public fullName: string = 'Seel (EVO 28)';
+  public legacyFullName = 'Seel EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Growl

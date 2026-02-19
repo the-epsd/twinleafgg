@@ -29,7 +29,7 @@ export class TornadusVmax extends PokemonCard {
       name: 'Max Wind Spirit',
       cost: [C, C, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If a Stadium is in play, this attack does 120 more damage. Then, discard that Stadium.'
     }
   ];
@@ -39,7 +39,8 @@ export class TornadusVmax extends PokemonCard {
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tornadus VMAX';
-  public fullName: string = 'Tornadus VMAX CRE';
+  public fullName: string = 'Tornadus VMAX (CRE 125)';
+  public legacyFullName = 'Tornadus VMAX CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Max Wind Spirit

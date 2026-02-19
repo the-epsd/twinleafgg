@@ -46,7 +46,8 @@ export class DialgaGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
   public name: string = 'Dialga-GX';
-  public fullName: string = 'Dialga-GX FLI';
+  public fullName: string = 'Dialga-GX (FLI 82)';
+  public legacyFullName = 'Dialga-GX FLI';
   public readonly TIMELESS_GX_MARKER = 'TIMELESS_GX_MARKER';
   public readonly TIMELESS_GX_MARKER_2 = 'TIMELESS_GX_MARKER_2';
 

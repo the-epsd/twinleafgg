@@ -34,7 +34,8 @@ export class Beartic extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beartic';
-  public fullName: string = 'Beartic NXD';
+  public fullName: string = 'Beartic (NXD 37)';
+  public legacyFullName = 'Beartic NXD';
 
   public readonly DAUNT_MARKER = 'DAUNT_MARKER';
 

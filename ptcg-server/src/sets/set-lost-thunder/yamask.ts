@@ -30,7 +30,8 @@ export class Yamask extends PokemonCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yamask';
-  public fullName: string = 'Yamask LOT';
+  public fullName: string = 'Yamask (LOT 99)';
+  public legacyFullName = 'Yamask LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Haunt

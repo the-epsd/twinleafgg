@@ -39,7 +39,8 @@ export class Politoed extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Politoed';
-  public fullName: string = 'Politoed GRI';
+  public fullName: string = 'Politoed (GRI 25)';
+  public legacyFullName = 'Politoed GRI';
 
   public wantsToShuffle: boolean = false;
 

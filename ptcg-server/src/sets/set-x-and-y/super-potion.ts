@@ -81,7 +81,8 @@ export class SuperPotion extends TrainerCard {
 
   public name: string = 'Super Potion';
 
-  public fullName: string = 'Super Potion XY';
+  public fullName: string = 'Super Potion (XY 128)';
+  public legacyFullName = 'Super Potion XY';
 
   public cardImage: string = 'assets/cardback.png';
 

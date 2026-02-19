@@ -33,7 +33,8 @@ export class Meowstic extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
   public name: string = 'Meowstic';
-  public fullName: string = 'Meowstic SIT';
+  public fullName: string = 'Meowstic (SIT 82)';
+  public legacyFullName = 'Meowstic SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

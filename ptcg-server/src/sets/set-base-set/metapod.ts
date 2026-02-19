@@ -19,7 +19,8 @@ export class Metapod extends PokemonCard {
 
   public set = 'BS';
 
-  public fullName = 'Metapod BS';
+  public fullName = 'Metapod (BS 54)';
+  public legacyFullName = 'Metapod BS';
 
   public cardType = CardType.GRASS;
 

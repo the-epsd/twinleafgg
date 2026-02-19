@@ -32,7 +32,8 @@ export class Tyrantrum extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
   public name: string = 'Tyrantrum';
-  public fullName: string = 'Tyrantrum M3';
+  public fullName: string = 'Tyrantrum (M3 44)';
+  public legacyFullName = 'Tyrantrum M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: +150 HP if has Special Energy

@@ -24,7 +24,8 @@ export class Wurmple extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
   public name: string = 'Wurmple';
-  public fullName: string = 'Wurmple LOT';
+  public fullName: string = 'Wurmple (LOT 24)';
+  public legacyFullName = 'Wurmple LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

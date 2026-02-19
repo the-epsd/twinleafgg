@@ -19,7 +19,8 @@ export class Pidgey extends PokemonCard {
 
   public cardType = CardType.COLORLESS;
 
-  public fullName = 'Pidgey BS';
+  public fullName = 'Pidgey (BS 57)';
+  public legacyFullName = 'Pidgey BS';
 
   public stage = Stage.BASIC;
 

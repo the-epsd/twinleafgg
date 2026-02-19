@@ -30,7 +30,8 @@ export class Flamigo extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '106';
   public name = 'Flamigo';
-  public fullName = 'Flamigo PAR';
+  public fullName = 'Flamigo (PAR 106)';
+  public legacyFullName = 'Flamigo PAR';
   public regulationMark = 'G';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

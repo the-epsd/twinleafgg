@@ -58,7 +58,8 @@ export class Cleffa extends PokemonCard {
 
   public name: string = 'Cleffa';
 
-  public fullName: string = 'Cleffa UNB';
+  public fullName: string = 'Cleffa (UNB 131)';
+  public legacyFullName = 'Cleffa UNB';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -22,7 +22,7 @@ export class Trumbeak extends PokemonCard {
       name: 'Bullet Seed',
       cost: [C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 20 damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Trumbeak extends PokemonCard {
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trumbeak';
-  public fullName: string = 'Trumbeak SUM';
+  public fullName: string = 'Trumbeak (SUM 107)';
+  public legacyFullName = 'Trumbeak SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bullet Seed

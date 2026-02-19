@@ -27,7 +27,8 @@ export class Gigalith extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gigalith';
-  public fullName: string = 'Gigalith NVI';
+  public fullName: string = 'Gigalith (NVI 61)';
+  public legacyFullName = 'Gigalith NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Power Gem - 60 damage + bench spread based on energy

@@ -38,7 +38,8 @@ export class SandacondaVmax extends PokemonCard {
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandaconda VMAX';
-  public fullName: string = 'Sandaconda VMAX CRE';
+  public fullName: string = 'Sandaconda VMAX (CRE 90)';
+  public legacyFullName = 'Sandaconda VMAX CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sand Pulse

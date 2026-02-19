@@ -17,7 +17,8 @@ export class ReversalEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '192';
   public name = 'Reversal Energy';
-  public fullName = 'Reversal Energy PAL';
+  public fullName = 'Reversal Energy (PAL 192)';
+  public legacyFullName = 'Reversal Energy PAL';
 
   public text =
     `As long as this card is attached to a Pokémon, it provides [C] Energy.

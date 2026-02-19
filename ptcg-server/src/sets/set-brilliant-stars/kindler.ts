@@ -89,7 +89,8 @@ export class Kindler extends TrainerCard {
 
   public name: string = 'Kindler';
 
-  public fullName: string = 'Kindler BRS';
+  public fullName: string = 'Kindler (BRS 143)';
+  public legacyFullName = 'Kindler BRS';
 
   public text: string =
     `You can use this card only if you discard a [R] Energy card from your hand. 

@@ -106,7 +106,8 @@ export class Clefable extends PokemonCard {
 
   public name: string = 'Clefable';
 
-  public fullName: string = 'Clefable JU';
+  public fullName: string = 'Clefable (JU 1)';
+  public legacyFullName = 'Clefable JU';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

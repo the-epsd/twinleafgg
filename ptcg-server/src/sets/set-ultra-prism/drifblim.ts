@@ -39,7 +39,8 @@ export class Drifblim extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drifblim';
-  public fullName: string = 'Drifblim UPR';
+  public fullName: string = 'Drifblim (UPR 52)';
+  public legacyFullName = 'Drifblim UPR';
 
   public usedWindWheel = false;
 

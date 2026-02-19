@@ -40,7 +40,8 @@ export class WhiteKyurem extends PokemonCard {
 
   public name: string = 'White Kyurem';
 
-  public fullName: string = 'White Kyurem LOT';
+  public fullName: string = 'White Kyurem (LOT 63)';
+  public legacyFullName = 'White Kyurem LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

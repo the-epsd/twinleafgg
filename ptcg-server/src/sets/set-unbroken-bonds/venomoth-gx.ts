@@ -25,7 +25,7 @@ export class VenomothGx extends PokemonCard {
       name: 'Shinobi Mastery',
       cost: [G, C, C],
       damage: 110,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you played Koga\'s Trap from your hand during this turn, this attack does 90 more damage. If you played Janine from your hand during this turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon during your opponent\'s next turn.'
     },
     {
@@ -40,7 +40,8 @@ export class VenomothGx extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Venomoth-GX';
-  public fullName: string = 'Venomoth-GX UNB';
+  public fullName: string = 'Venomoth-GX (UNB 12)';
+  public legacyFullName = 'Venomoth-GX UNB';
 
   public readonly KOGAS_TRAP_MARKER = 'VENOMOTH_GX_KOGAS_TRAP_MARKER';
   public readonly JANINE_MARKER = 'VENOMOTH_GX_JANINE_MARKER';

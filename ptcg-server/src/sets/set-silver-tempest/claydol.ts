@@ -42,7 +42,8 @@ export class Claydol extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '94';
   public name: string = 'Claydol';
-  public fullName: string = 'Claydol SIT';
+  public fullName: string = 'Claydol (SIT 94)';
+  public legacyFullName = 'Claydol SIT';
   
   public readonly CHARGE_MARKER = 'CHARGE_MARKER';
 

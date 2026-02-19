@@ -38,7 +38,8 @@ export class Braviary extends PokemonCard {
   public setNumber: string = '116';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Braviary';
-  public fullName: string = 'Braviary PLS';
+  public fullName: string = 'Braviary (PLS 116)';
+  public legacyFullName = 'Braviary PLS';
   public readonly BIG_WING_MARKER = 'BIG_WING_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

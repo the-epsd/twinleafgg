@@ -30,7 +30,7 @@ export class Hawlucha extends PokemonCard {
       name: 'Acrobatics',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     }
   ];
@@ -39,7 +39,8 @@ export class Hawlucha extends PokemonCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hawlucha';
-  public fullName: string = 'Hawlucha STS';
+  public fullName: string = 'Hawlucha (STS 97)';
+  public legacyFullName = 'Hawlucha STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sudden Cyclone (on-play-from-hand trigger)

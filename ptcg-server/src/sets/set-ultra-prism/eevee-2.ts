@@ -17,7 +17,7 @@ export class Eevee2 extends PokemonCard {
       name: 'Palette of Friends',
       cost: [C, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 10 damage for each different type of Pokémon on your Bench.'
     }
   ];
@@ -26,7 +26,8 @@ export class Eevee2 extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eevee';
-  public fullName: string = 'Eevee UPR 105';
+  public fullName: string = 'Eevee (UPR 105)';
+  public legacyFullName = 'Eevee UPR 105';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Palette of Friends

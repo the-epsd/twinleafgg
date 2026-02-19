@@ -40,7 +40,8 @@ export class Vileplume extends PokemonCard {
 
   public name: string = 'Vileplume';
 
-  public fullName: string = 'Vileplume MEW';
+  public fullName: string = 'Vileplume (MEW 45)';
+  public legacyFullName = 'Vileplume MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

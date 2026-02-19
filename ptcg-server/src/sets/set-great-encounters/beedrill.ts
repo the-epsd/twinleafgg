@@ -31,7 +31,8 @@ export class Beedrill extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '13';
   public name: string = 'Beedrill';
-  public fullName: string = 'Beedrill GE';
+  public fullName: string = 'Beedrill (GE 13)';
+  public legacyFullName = 'Beedrill GE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

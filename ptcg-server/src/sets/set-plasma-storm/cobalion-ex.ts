@@ -39,7 +39,8 @@ export class CobalionEx extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cobalion-EX';
-  public fullName: string = 'Cobalion-EX PLS';
+  public fullName: string = 'Cobalion-EX (PLS 93)';
+  public legacyFullName = 'Cobalion-EX PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Righteous Edge

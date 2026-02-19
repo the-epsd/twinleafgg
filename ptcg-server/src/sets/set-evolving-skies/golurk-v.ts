@@ -37,7 +37,8 @@ export class GolurkV extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Golurk V';
-  public fullName: string = 'Golurk V EVS';
+  public fullName: string = 'Golurk V (EVS 70)';
+  public legacyFullName = 'Golurk V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Rewind Beam

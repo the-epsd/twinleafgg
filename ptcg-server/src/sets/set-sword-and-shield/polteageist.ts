@@ -29,7 +29,7 @@ export class Polteageist extends PokemonCard {
       name: 'Poltergeist',
       cost: [P, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Your opponent reveals their hand. This attack does 50 damage for each Trainer card you find there.'
     }
   ];
@@ -39,7 +39,8 @@ export class Polteageist extends PokemonCard {
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Polteageist';
-  public fullName: string = 'Polteageist SSH';
+  public fullName: string = 'Polteageist (SSH 90)';
+  public legacyFullName = 'Polteageist SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Teatime

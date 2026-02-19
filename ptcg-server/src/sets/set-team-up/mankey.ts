@@ -34,7 +34,8 @@ export class Mankey extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mankey';
-  public fullName: string = 'Mankey TEU';
+  public fullName: string = 'Mankey (TEU 71)';
+  public legacyFullName = 'Mankey TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Scout

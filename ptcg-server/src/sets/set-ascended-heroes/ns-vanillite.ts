@@ -31,7 +31,8 @@ export class NsVanillite extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '49';
   public name: string = 'N\'s Vanillite';
-  public fullName: string = 'N\'s Vanillite M2a';
+  public fullName: string = 'N\'s Vanillite (ASC 49)';
+  public legacyFullName = 'N\'s Vanillite M2a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

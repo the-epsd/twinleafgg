@@ -36,7 +36,8 @@ export class Panpour extends PokemonCard {
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Panpour';
-  public fullName: string = 'Panpour XY';
+  public fullName: string = 'Panpour (XY 37)';
+  public legacyFullName = 'Panpour XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Water Splash

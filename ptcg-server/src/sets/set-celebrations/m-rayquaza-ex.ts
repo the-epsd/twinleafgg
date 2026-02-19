@@ -47,7 +47,8 @@ export class MRayquazaEx extends PokemonCard {
   public setNumber: string = '76A';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'M Rayquaza EX';
-  public fullName: string = 'M Rayquaza EX CEL';
+  public fullName: string = 'M Rayquaza EX (CEL 76A)';
+  public legacyFullName = 'M Rayquaza EX CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Δ Evolution

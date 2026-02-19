@@ -36,7 +36,8 @@ export class Bounsweet extends PokemonCard {
 
   public name: string = 'Bounsweet';
 
-  public fullName: string = 'Bounsweet PAR';
+  public fullName: string = 'Bounsweet (PAR 8)';
+  public legacyFullName = 'Bounsweet PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

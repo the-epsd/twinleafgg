@@ -50,7 +50,8 @@ export class Cynthia extends TrainerCard {
 
   public name: string = 'Cynthia';
 
-  public fullName: string = 'Cynthia UPR';
+  public fullName: string = 'Cynthia (UPR 119)';
+  public legacyFullName = 'Cynthia UPR';
 
   public text: string =
     'Shuffle your hand into your deck. Then, draw 6 cards.';

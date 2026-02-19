@@ -19,7 +19,8 @@ export class ToolJammer extends TrainerCard {
 
   public name: string = 'Tool Jammer';
 
-  public fullName: string = 'Tool Jammer BST';
+  public fullName: string = 'Tool Jammer (BST 136)';
+  public legacyFullName = 'Tool Jammer BST';
 
   public text: string =
     'As long as the Pokémon this card is attached to is in the Active Spot, Pokémon Tools attached to your opponent\'s Active Pokémon have no effect, except for Tool Jammer.';

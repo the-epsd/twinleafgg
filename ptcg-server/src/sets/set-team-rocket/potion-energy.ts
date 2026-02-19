@@ -13,7 +13,8 @@ export class PotionEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
   public name = 'Potion Energy';
-  public fullName = 'Potion Energy TR';
+  public fullName = 'Potion Energy (TR 82)';
+  public legacyFullName = 'Potion Energy TR';
 
   public text = 'If you play this card from your hand, remove 1 damage counter from the Pokémon you attach it to, if it has any.';
 

@@ -36,7 +36,8 @@ export class Roserade extends PokemonCard {
   public setNumber: string = '9';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Roserade';
-  public fullName: string = 'Roserade FLF';
+  public fullName: string = 'Roserade (FLF 9)';
+  public legacyFullName = 'Roserade FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/lairon.ts (Wreak Havoc - flip until tails pattern)

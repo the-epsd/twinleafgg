@@ -42,7 +42,8 @@ export class NaganadelGuzzlordGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '158';
   public name: string = 'Naganadel & Guzzlord-GX';
-  public fullName: string = 'Naganadel & Guzzlord-GX CEC';
+  public fullName: string = 'Naganadel & Guzzlord-GX (CEC 158)';
+  public legacyFullName = 'Naganadel & Guzzlord-GX CEC';
 
   public readonly VIOLENT_APPETITE_MARKER = 'VIOLENT_APPETITE_MARKER';
 

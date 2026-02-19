@@ -41,7 +41,8 @@ export class HoOhEx2 extends PokemonCard {
   public setNumber: string = '121';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ho-Oh-EX';
-  public fullName: string = 'Ho-Oh-EX BKP 121';
+  public fullName: string = 'Ho-Oh-EX (BKP 121)';
+  public legacyFullName = 'Ho-Oh-EX BKP 121';
 
   public readonly PURIFYING_FIRE_MARKER = 'HOOH_EX_BKP_121_PURIFYING_FIRE';
 

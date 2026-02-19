@@ -78,7 +78,8 @@ export class GreatCatcher extends TrainerCard {
 
   public name: string = 'Great Catcher';
 
-  public fullName: string = 'Great Catcher CEC';
+  public fullName: string = 'Great Catcher (CEC 192)';
+  public legacyFullName = 'Great Catcher CEC';
 
   public text: string =
     'You can play this card only if you discard two other cards. Switch 1 of your opponent\'s Benched Pokemon-GX or Pokemon-EX ' +

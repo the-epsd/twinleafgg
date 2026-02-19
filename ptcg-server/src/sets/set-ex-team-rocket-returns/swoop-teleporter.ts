@@ -15,7 +15,8 @@ export class SwoopTeleporter extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
   public name: string = 'Swoop! Teleporter';
-  public fullName: string = 'Swoop! Teleporter TRR';
+  public fullName: string = 'Swoop! Teleporter (TRR 92)';
+  public legacyFullName = 'Swoop! Teleporter TRR';
 
   public text: string =
     'Search your deck for a Basic Pokémon (excluding Pokémon-ex) and switch it with 1 of your Basic Pokémon (excluding Pokémon-ex) in play. (Any cards attached to that Pokémon, damage counters, Special Conditions, and effects on it are now on the new Pokémon.) Place the first Basic Pokémon in the discard pile. Shuffle your deck afterward.';

@@ -37,7 +37,8 @@ export class GalarianDarmanitanV extends PokemonCard {
   public setNumber: string = '36';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Darmanitan V';
-  public fullName: string = 'Galarian Darmanitan V VIV';
+  public fullName: string = 'Galarian Darmanitan V (VIV 36)';
+  public legacyFullName = 'Galarian Darmanitan V VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Freezing Headbutt

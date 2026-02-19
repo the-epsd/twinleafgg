@@ -34,7 +34,8 @@ export class Kangaskhan extends PokemonCard {
   public setNumber: string = '128';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kangaskhan';
-  public fullName: string = 'Kangaskhan TEU';
+  public fullName: string = 'Kangaskhan (TEU 128)';
+  public legacyFullName = 'Kangaskhan TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fast Evolution

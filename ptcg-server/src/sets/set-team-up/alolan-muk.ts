@@ -52,7 +52,8 @@ export class AlolanMuk extends PokemonCard {
 
   public name: string = 'Alolan Muk';
 
-  public fullName: string = 'Alolan Muk TEU';
+  public fullName: string = 'Alolan Muk (TEU 84)';
+  public legacyFullName = 'Alolan Muk TEU';
 
   public cardImage: string = 'assets/cardback.png';
 

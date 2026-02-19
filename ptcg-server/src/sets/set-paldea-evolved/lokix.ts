@@ -29,7 +29,8 @@ export class Lokix extends PokemonCard {
   public set: string = 'PAL';
   public regulationMark = 'G';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Lokix PAL';
+  public fullName: string = 'Lokix (PAL 21)';
+  public legacyFullName = 'Lokix PAL';
   public name: string = 'Lokix';
   public setNumber: string = '21';
 

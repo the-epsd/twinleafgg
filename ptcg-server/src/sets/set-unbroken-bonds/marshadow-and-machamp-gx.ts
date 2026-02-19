@@ -41,7 +41,8 @@ export class MarshadowMachampGX extends PokemonCard {
   public setNumber = '82';
   public cardImage = 'assets/cardback.png';
   public name = 'Marshadow & Machamp-GX';
-  public fullName = 'Marshadow & Machamp-GX UNB';
+  public fullName = 'Marshadow & Machamp-GX (UNB 82)';
+  public legacyFullName = 'Marshadow & Machamp-GX UNB';
 
   public readonly ACME_OF_HEROSIM_MARKER = 'ACME_OF_HEROSIM_MARKER';
 

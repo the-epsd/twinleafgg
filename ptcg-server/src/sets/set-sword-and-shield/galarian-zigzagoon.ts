@@ -45,7 +45,8 @@ export class GalarianZigzagoon extends PokemonCard {
 
   public name: string = 'Galarian Zigzagoon';
 
-  public fullName: string = 'Galarian Zigzagoon SSH';
+  public fullName: string = 'Galarian Zigzagoon (SSH 117)';
+  public legacyFullName = 'Galarian Zigzagoon SSH';
 
   public cardImage: string = 'assets/cardback.png';
 

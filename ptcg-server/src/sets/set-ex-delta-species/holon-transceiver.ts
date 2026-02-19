@@ -16,7 +16,8 @@ export class HolonTransceiver extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '98';
   public name: string = 'Holon Transceiver';
-  public fullName: string = 'Holon Transceiver DS';
+  public fullName: string = 'Holon Transceiver (DS 98)';
+  public legacyFullName = 'Holon Transceiver DS';
 
   public text: string = 'Search your deck for a Supporter card that has Holon in its name, show it to your opponent, and put it into your hand. Shuffle your deck afterward. Or, search your discard pile for a Supporter card that has Holon in its name, show it to your opponent, and put it into your hand.';
 

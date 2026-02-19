@@ -14,7 +14,8 @@ export class DimensionValley extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'PHF';
   public name: string = 'Dimension Valley';
-  public fullName: string = 'Dimension Valley PHF';
+  public fullName: string = 'Dimension Valley (PHF 93)';
+  public legacyFullName = 'Dimension Valley PHF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
 

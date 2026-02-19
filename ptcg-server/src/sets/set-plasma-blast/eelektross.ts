@@ -34,7 +34,8 @@ export class Eelektross extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eelektross';
-  public fullName: string = 'Eelektross PLB';
+  public fullName: string = 'Eelektross (PLB 33)';
+  public legacyFullName = 'Eelektross PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

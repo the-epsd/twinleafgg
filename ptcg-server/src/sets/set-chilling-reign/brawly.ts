@@ -61,7 +61,8 @@ export class Brawly extends TrainerCard {
   public setNumber: string = '131';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Brawly';
-  public fullName: string = 'Brawly CRE';
+  public fullName: string = 'Brawly (CRE 131)';
+  public legacyFullName = 'Brawly CRE';
   public text: string = 'Search your deck for up to 3 Basic Rapid Strike Pokémon and put them onto your Bench. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -75,7 +75,8 @@ export class Xtransceiver extends TrainerCard {
 
   public name: string = 'Xtransceiver';
 
-  public fullName: string = 'Xtransceiver NVI';
+  public fullName: string = 'Xtransceiver (NVI 96)';
+  public legacyFullName = 'Xtransceiver NVI';
 
   public text: string = 'Flip a coin. If heads, search your deck for a Supporter card, reveal it, and put it into your hand. Shuffle your deck afterward.';
 

@@ -28,7 +28,8 @@ export class EthansCyndaquil extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ethan\'s Cyndaquil';
-  public fullName: string = 'Ethan\'s Cyndaquil DRI';
+  public fullName: string = 'Ethan\'s Cyndaquil (DRI 32)';
+  public legacyFullName = 'Ethan\'s Cyndaquil DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

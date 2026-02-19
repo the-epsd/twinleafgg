@@ -55,7 +55,8 @@ export class Weedle extends PokemonCard {
   public setNumber = '1';
   public cardImage = 'assets/cardback.png';
   public name = 'Weedle';
-  public fullName = 'Weedle VIV';
+  public fullName = 'Weedle (VIV 1)';
+  public legacyFullName = 'Weedle VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -22,5 +22,6 @@ export class Applin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Applin';
-  public fullName: string = 'Applin SCR';
+  public fullName: string = 'Applin (SCR 12)';
+  public legacyFullName = 'Applin SCR';
 }

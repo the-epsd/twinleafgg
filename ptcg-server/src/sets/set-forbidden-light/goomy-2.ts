@@ -29,7 +29,8 @@ export class Goomy2 extends PokemonCard {
 
   public set: string = 'FLI';
   public name: string = 'Goomy';
-  public fullName: string = 'Goomy FLI 92';
+  public fullName: string = 'Goomy (FLI 92)';
+  public legacyFullName = 'Goomy FLI 92';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '92';
 

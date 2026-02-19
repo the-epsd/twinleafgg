@@ -25,5 +25,6 @@ export class Stufful extends PokemonCard {
   public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Stufful';
-  public fullName: string = 'Stufful CIN';
+  public fullName: string = 'Stufful (CIN 55)';
+  public legacyFullName = 'Stufful CIN';
 }

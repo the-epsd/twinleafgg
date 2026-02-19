@@ -33,7 +33,8 @@ export class Persian extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Persian';
-  public fullName: string = 'Persian DS';
+  public fullName: string = 'Persian (DS 50)';
+  public legacyFullName = 'Persian DS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Prowl

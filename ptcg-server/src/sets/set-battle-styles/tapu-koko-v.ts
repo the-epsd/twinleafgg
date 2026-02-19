@@ -46,7 +46,8 @@ export class TapuKokoV extends PokemonCard {
 
   public name: string = 'Tapu Koko V';
 
-  public fullName: string = 'Tapu Koko V BST';
+  public fullName: string = 'Tapu Koko V (BST 50)';
+  public legacyFullName = 'Tapu Koko V BST';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

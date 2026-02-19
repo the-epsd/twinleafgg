@@ -32,7 +32,8 @@ export class GengarMimikyuGX extends PokemonCard {
 
   public set: string = 'TEU';
   public name: string = 'Gengar & Mimikyu-GX';
-  public fullName: string = 'Gengar & Mimikyu-GX TEU';
+  public fullName: string = 'Gengar & Mimikyu-GX (TEU 53)';
+  public legacyFullName = 'Gengar & Mimikyu-GX TEU';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
 

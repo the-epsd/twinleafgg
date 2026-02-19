@@ -71,7 +71,8 @@ export class Kofu extends TrainerCard {
 
   public name: string = 'Kofu';
 
-  public fullName: string = 'Kofu SCR';
+  public fullName: string = 'Kofu (SCR 138)';
+  public legacyFullName = 'Kofu SCR';
 
   public text: string =
     'Put 2 cards from your hand on the bottom of your deck in any order. If you put 2 cards on the bottom of your deck in this way, draw 4 cards. (If you can\'t put 2 cards from your hand on the bottom of your deck, you can\'t use this card.)';

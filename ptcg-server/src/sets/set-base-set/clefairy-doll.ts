@@ -12,7 +12,8 @@ export class ClefairyDoll extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber = '70';
   public set = 'BS';
-  public fullName = 'Clefairy Doll BS';
+  public fullName = 'Clefairy Doll (BS 70)';
+  public legacyFullName = 'Clefairy Doll BS';
 
   public evolvesFrom = '';
   public cardTag = [];

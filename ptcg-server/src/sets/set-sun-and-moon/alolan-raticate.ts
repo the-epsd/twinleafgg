@@ -28,7 +28,7 @@ export class AlolanRaticate extends PokemonCard {
       name: 'Endeavor',
       cost: [D, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class AlolanRaticate extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Raticate';
-  public fullName: string = 'Alolan Raticate SUM';
+  public fullName: string = 'Alolan Raticate (SUM 77)';
+  public legacyFullName = 'Alolan Raticate SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Evil Orders

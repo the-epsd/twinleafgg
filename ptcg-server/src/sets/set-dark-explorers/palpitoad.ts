@@ -26,7 +26,8 @@ export class Palpitoad extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Palpitoad';
-  public fullName: string = 'Palpitoad DEX';
+  public fullName: string = 'Palpitoad (DEX 32)';
+  public legacyFullName = 'Palpitoad DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Bubble Beam - flip coin for Paralysis

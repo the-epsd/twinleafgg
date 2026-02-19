@@ -37,7 +37,8 @@ export class Koraidonex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '125';
   public name: string = 'Koraidon ex';
-  public fullName: string = 'Koraidon ex SVI';
+  public fullName: string = 'Koraidon ex (SVI 125)';
+  public legacyFullName = 'Koraidon ex SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Wild Impact

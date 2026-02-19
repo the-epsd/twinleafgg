@@ -29,7 +29,7 @@ export class Meloetta extends PokemonCard {
       name: 'Prima Rondo',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any [P] Energy attached to it, this attack does 50 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Meloetta extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meloetta';
-  public fullName: string = 'Meloetta BKT';
+  public fullName: string = 'Meloetta (BKT 85)';
+  public legacyFullName = 'Meloetta BKT';
 
   public usedAcceleratingSpin = false;
 

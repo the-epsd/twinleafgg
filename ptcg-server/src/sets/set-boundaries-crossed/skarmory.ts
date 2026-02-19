@@ -35,7 +35,8 @@ export class Skarmory extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skarmory';
-  public fullName: string = 'Skarmory BCR';
+  public fullName: string = 'Skarmory (BCR 95)';
+  public legacyFullName = 'Skarmory BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Claw

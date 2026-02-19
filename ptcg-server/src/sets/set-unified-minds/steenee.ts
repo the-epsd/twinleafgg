@@ -17,7 +17,7 @@ export class Steenee extends PokemonCard {
       name: 'Double Slap',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage for each heads.'
     },
     {
@@ -32,7 +32,8 @@ export class Steenee extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steenee';
-  public fullName: string = 'Steenee UNM';
+  public fullName: string = 'Steenee (UNM 18)';
+  public legacyFullName = 'Steenee UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Slap

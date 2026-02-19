@@ -37,7 +37,8 @@ export class Klang extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Klang';
-  public fullName: string = 'Klang PLS';
+  public fullName: string = 'Klang (PLS 89)';
+  public legacyFullName = 'Klang PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Gear Smash

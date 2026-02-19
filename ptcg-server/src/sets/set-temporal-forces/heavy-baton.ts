@@ -16,7 +16,8 @@ export class HeavyBaton extends TrainerCard {
 
   public name: string = 'Heavy Baton';
 
-  public fullName: string = 'Heavy Baton PAR';
+  public fullName: string = 'Heavy Baton (TEF 151)';
+  public legacyFullName = 'Heavy Baton PAR';
 
   public cardImage: string = 'assets/cardback.png';
 

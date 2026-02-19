@@ -13,7 +13,8 @@ export class DarknessEnergySpecial extends EnergyCard {
   public energyType = EnergyType.SPECIAL;
   public set: string = 'RS';
   public name = 'Darkness Energy';
-  public fullName = 'Darkness Energy RS';
+  public fullName = 'Darkness Energy (RS 93)';
+  public legacyFullName = 'Darkness Energy RS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
 

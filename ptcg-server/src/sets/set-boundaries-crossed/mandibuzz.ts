@@ -37,7 +37,8 @@ export class Mandibuzz extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mandibuzz';
-  public fullName: string = 'Mandibuzz BCR';
+  public fullName: string = 'Mandibuzz (BCR 93)';
+  public legacyFullName = 'Mandibuzz BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Dual Cut

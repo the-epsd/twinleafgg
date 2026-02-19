@@ -33,7 +33,8 @@ export class Krookodile extends PokemonCard {
   public setNumber: string = '70';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Krookodile';
-  public fullName: string = 'Krookodile PLF';
+  public fullName: string = 'Krookodile (PLF 70)';
+  public legacyFullName = 'Krookodile PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Piston Headbutt - move energy from defending to opponent's benched

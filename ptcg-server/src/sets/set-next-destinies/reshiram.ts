@@ -32,7 +32,8 @@ export class Reshiram extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Reshiram';
-  public fullName: string = 'Reshiram NXD 21';
+  public fullName: string = 'Reshiram (NXD 21)';
+  public legacyFullName = 'Reshiram NXD 21';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Outrage

@@ -47,7 +47,8 @@ export class CastformSunnyForm extends PokemonCard {
 
   public name: string = 'Castform Sunny Form';
 
-  public fullName: string = 'Castform Sunny Form CRE';
+  public fullName: string = 'Castform Sunny Form (CRE 22)';
+  public legacyFullName = 'Castform Sunny Form CRE';
 
   public getColorlessReduction(state: State): number {
     const player = state.players[state.activePlayer];

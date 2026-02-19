@@ -19,7 +19,8 @@ export class Electrode extends PokemonCard implements EnergyCard {
 
   public set = 'BS';
 
-  public fullName = 'Electrode BS';
+  public fullName = 'Electrode (BS 21)';
+  public legacyFullName = 'Electrode BS';
 
   public stage = Stage.STAGE_1;
 

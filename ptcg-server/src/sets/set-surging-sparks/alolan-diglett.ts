@@ -37,7 +37,8 @@ export class AlolanDiglett extends PokemonCard {
 
   public name: string = 'Alolan Diglett';
 
-  public fullName: string = 'Alolan Diglett SSP';
+  public fullName: string = 'Alolan Diglett (SSP 122)';
+  public legacyFullName = 'Alolan Diglett SSP';
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

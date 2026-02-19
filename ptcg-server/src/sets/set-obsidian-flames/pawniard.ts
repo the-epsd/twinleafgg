@@ -27,7 +27,8 @@ export class Pawniard extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '148';
   public name: string = 'Pawniard';
-  public fullName: string = 'Pawniard OBF';
+  public fullName: string = 'Pawniard (OBF 148)';
+  public legacyFullName = 'Pawniard OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)){

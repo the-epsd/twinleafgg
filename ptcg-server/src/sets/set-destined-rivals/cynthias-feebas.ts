@@ -26,7 +26,8 @@ export class CynthiasFeebas extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cynthia\'s Feebas';
-  public fullName: string = 'Cynthia\'s Feebas DRI';
+  public fullName: string = 'Cynthia\'s Feebas (DRI 52)';
+  public legacyFullName = 'Cynthia\'s Feebas DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

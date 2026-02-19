@@ -22,7 +22,8 @@ export class Mesagoza extends TrainerCard {
 
   public name = 'Mesagoza';
 
-  public fullName = 'Mesagoza SVI';
+  public fullName = 'Mesagoza (SVI 178)';
+  public legacyFullName = 'Mesagoza SVI';
 
   public text = 'Once during each player\'s turn, that player may flip a coin. If heads, that player searches their deck for a Pokémon, reveals it, and puts it into their hand. Then, that player shuffles their deck.';
 

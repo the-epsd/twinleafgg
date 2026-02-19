@@ -36,7 +36,8 @@ export class Xerneas extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Xerneas';
-  public fullName: string = 'Xerneas VIV';
+  public fullName: string = 'Xerneas (VIV 78)';
+  public legacyFullName = 'Xerneas VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Geo Hunt

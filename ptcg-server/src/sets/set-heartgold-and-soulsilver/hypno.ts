@@ -48,7 +48,8 @@ export class Hypno extends PokemonCard {
 
   public name: string = 'Hypno';
 
-  public fullName: string = 'Hypno HS';
+  public fullName: string = 'Hypno (HS 23)';
+  public legacyFullName = 'Hypno HS';
 
   public cardImage: string = 'assets/cardback.png';
 

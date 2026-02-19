@@ -83,7 +83,8 @@ export class OrdinaryRod extends TrainerCard {
   public setNumber: string = '171';
   public regulationMark = 'D';
   public name: string = 'Ordinary Rod';
-  public fullName: string = 'Ordinary Rod SSH';
+  public fullName: string = 'Ordinary Rod (SSH 171)';
+  public legacyFullName = 'Ordinary Rod SSH';
 
   public text: string =
     `Choose 1 or both:

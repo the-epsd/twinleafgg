@@ -29,7 +29,8 @@ export class Snubbull extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snubbull';
-  public fullName: string = 'Snubbull FCO';
+  public fullName: string = 'Snubbull (FCO 68)';
+  public legacyFullName = 'Snubbull FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ruckus

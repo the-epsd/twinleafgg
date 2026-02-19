@@ -36,7 +36,8 @@ export class Dustox extends PokemonCard {
 
   public set: string = 'ROS';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Dustox ROS';
+  public fullName: string = 'Dustox (ROS 8)';
+  public legacyFullName = 'Dustox ROS';
   public name: string = 'Dustox';
   public setNumber: string = '8';
 

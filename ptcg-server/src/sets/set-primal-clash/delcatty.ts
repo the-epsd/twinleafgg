@@ -29,7 +29,7 @@ export class Delcatty extends PokemonCard {
       name: 'Play Rough',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Delcatty extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Delcatty';
-  public fullName: string = 'Delcatty PRC';
+  public fullName: string = 'Delcatty (PRC 114)';
+  public legacyFullName = 'Delcatty PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Replace

@@ -31,7 +31,8 @@ export class Carracosta extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carracosta';
-  public fullName: string = 'Carracosta SV11W';
+  public fullName: string = 'Carracosta (BLK 23)';
+  public legacyFullName = 'Carracosta SV11W';
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {

@@ -22,7 +22,8 @@ export class DittoPrismStar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public set: string = 'LOT';
   public name: string = 'Ditto Prism Star';
-  public fullName: string = 'Ditto Prism Star LOT';
+  public fullName: string = 'Ditto Prism Star (LOT 154)';
+  public legacyFullName = 'Ditto Prism Star LOT';
   public setNumber: string = '154';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -67,7 +67,8 @@ export class SwitchRaft extends TrainerCard {
 
   public name: string = 'Switch Raft';
 
-  public fullName: string = 'Switch Raft DRM';
+  public fullName: string = 'Switch Raft (DRM 62)';
+  public legacyFullName = 'Switch Raft DRM';
 
   public text: string =
     'Switch your Active [W] Pokémon with 1 of your Benched Pokémon. If you do, heal 30 damage from the Pokémon you moved to your Bench.';

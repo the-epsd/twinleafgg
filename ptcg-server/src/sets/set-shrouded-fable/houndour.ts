@@ -38,6 +38,7 @@ export class Houndour extends PokemonCard {
 
   public name: string = 'Houndour';
 
-  public fullName: string = 'Houndour SFA';
+  public fullName: string = 'Houndour (SFA 7)';
+  public legacyFullName = 'Houndour SFA';
 
 }

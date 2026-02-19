@@ -36,7 +36,8 @@ export class GalarianMrMime extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Mr. Mime';
-  public fullName: string = 'Galarian Mr. Mime BST';
+  public fullName: string = 'Galarian Mr. Mime (BST 34)';
+  public legacyFullName = 'Galarian Mr. Mime BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Find It

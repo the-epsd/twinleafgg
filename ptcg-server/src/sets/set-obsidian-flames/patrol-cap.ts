@@ -10,7 +10,8 @@ export class PatrolCap extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'OBF';
   public name: string = 'Patrol Cap';
-  public fullName: string = 'Patrol Cap OBF';
+  public fullName: string = 'Patrol Cap (OBF 191)';
+  public legacyFullName = 'Patrol Cap OBF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '191';
 

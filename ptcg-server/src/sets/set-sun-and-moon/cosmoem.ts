@@ -23,7 +23,8 @@ export class Cosmoem extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
   public name: string = 'Cosmoem';
-  public fullName: string = 'Cosmoem SUM';
+  public fullName: string = 'Cosmoem (SUM 65)';
+  public legacyFullName = 'Cosmoem SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {

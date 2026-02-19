@@ -45,7 +45,8 @@ export class Lucario extends PokemonCard {
 
   public name: string = 'Lucario';
 
-  public fullName: string = 'Lucario UPR';
+  public fullName: string = 'Lucario (UPR 67)';
+  public legacyFullName = 'Lucario UPR';
 
   public readonly PRECOGNITIVE_MARKER = 'PRECOGNITIVE_MARKER';
 

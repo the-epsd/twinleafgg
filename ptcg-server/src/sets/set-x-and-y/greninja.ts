@@ -47,7 +47,8 @@ export class Greninja extends PokemonCard {
 
   public name: string = 'Greninja';
 
-  public fullName: string = 'Greninja XY';
+  public fullName: string = 'Greninja (XY 41)';
+  public legacyFullName = 'Greninja XY';
 
   public readonly WATER_SHURIKEN_MARKER = 'WATER_SHURIKEN_MARKER';
 

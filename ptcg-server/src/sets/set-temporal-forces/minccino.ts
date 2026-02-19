@@ -106,7 +106,8 @@ export class Minccino extends PokemonCard {
 
   public name: string = 'Minccino';
 
-  public fullName: string = 'Minccino TEF';
+  public fullName: string = 'Minccino (TEF 136)';
+  public legacyFullName = 'Minccino TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -35,7 +35,8 @@ export class Unfezant extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
   public name: string = 'Unfezant';
-  public fullName: string = 'Unfezant EPO';
+  public fullName: string = 'Unfezant (EPO 82)';
+  public legacyFullName = 'Unfezant EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

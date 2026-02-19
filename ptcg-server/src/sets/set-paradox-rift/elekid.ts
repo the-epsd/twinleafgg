@@ -36,7 +36,8 @@ export class Elekid extends PokemonCard {
 
   public name: string = 'Elekid';
 
-  public fullName: string = 'Elekid PAR';
+  public fullName: string = 'Elekid (PAR 59)';
+  public legacyFullName = 'Elekid PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

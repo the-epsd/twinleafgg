@@ -35,7 +35,8 @@ export class Torchic extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Torchic';
-  public fullName: string = 'Torchic DAA';
+  public fullName: string = 'Torchic (DAA 22)';
+  public legacyFullName = 'Torchic DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Family

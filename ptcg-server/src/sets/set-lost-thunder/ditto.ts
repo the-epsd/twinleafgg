@@ -27,7 +27,8 @@ export class Ditto extends PokemonCard {
   public setNumber: string = '154';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ditto ◇';
-  public fullName: string = 'Ditto ◇ LOT';
+  public fullName: string = 'Ditto ◇ (LOT 154)';
+  public legacyFullName = 'Ditto ◇ LOT';
 
   // Ref: set-lost-thunder/ditto-prism-star.ts (Almighty Evolution)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

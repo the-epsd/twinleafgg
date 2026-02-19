@@ -13,7 +13,8 @@ export class BigParasol extends TrainerCard {
 
   public set: string = 'DAA';
   public name: string = 'Big Parasol';
-  public fullName: string = 'Big Parasol DAA';
+  public fullName: string = 'Big Parasol (DAA 157)';
+  public legacyFullName = 'Big Parasol DAA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '157';
 

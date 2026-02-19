@@ -21,7 +21,8 @@ export class BillowingSmoke extends TrainerCard {
 
   public name: string = 'Billowing Smoke';
 
-  public fullName: string = 'Billowing Smoke DAA';
+  public fullName: string = 'Billowing Smoke (DAA 158)';
+  public legacyFullName = 'Billowing Smoke DAA';
 
   public text: string =
     'If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent\'s Pokémon, ' +

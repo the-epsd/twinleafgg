@@ -36,7 +36,8 @@ export class Magcargo extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magcargo';
-  public fullName: string = 'Magcargo CEC';
+  public fullName: string = 'Magcargo (CEC 27)';
+  public legacyFullName = 'Magcargo CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Stomp Off

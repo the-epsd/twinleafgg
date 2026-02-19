@@ -22,14 +22,14 @@ export class Ambipom extends PokemonCard {
       name: 'Furry Chance',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Discard the top card of your opponent\'s deck. If that card is an Energy card, this attack does 60 more damage.'
     },
     {
       name: 'Double Hit',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class Ambipom extends PokemonCard {
   public setNumber: string = '91';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ambipom';
-  public fullName: string = 'Ambipom STS';
+  public fullName: string = 'Ambipom (STS 91)';
+  public legacyFullName = 'Ambipom STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Furry Chance

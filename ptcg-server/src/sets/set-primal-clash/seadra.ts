@@ -21,7 +21,7 @@ export class Seadra extends PokemonCard {
       name: 'Knockout Needle',
       cost: [W],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. If both of them are heads, this attack does 40 more damage.'
     },
     {
@@ -36,7 +36,8 @@ export class Seadra extends PokemonCard {
   public setNumber: string = '31';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Seadra';
-  public fullName: string = 'Seadra PRC';
+  public fullName: string = 'Seadra (PRC 31)';
+  public legacyFullName = 'Seadra PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Knockout Needle

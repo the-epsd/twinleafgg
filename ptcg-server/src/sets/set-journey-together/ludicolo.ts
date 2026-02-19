@@ -26,7 +26,8 @@ export class Ludicolo extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '37';
   public name: string = 'Ludicolo';
-  public fullName: string = 'Ludicolo JTG';
+  public fullName: string = 'Ludicolo (JTG 37)';
+  public legacyFullName = 'Ludicolo JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

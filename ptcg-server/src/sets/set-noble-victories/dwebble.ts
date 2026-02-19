@@ -33,7 +33,8 @@ export class Dwebble extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dwebble';
-  public fullName: string = 'Dwebble NVI';
+  public fullName: string = 'Dwebble (NVI 6)';
+  public legacyFullName = 'Dwebble NVI';
 
   public readonly WITHDRAW_MARKER = 'WITHDRAW_MARKER';
 

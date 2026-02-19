@@ -35,7 +35,8 @@ export class SlowpokePsyduckGX extends PokemonCard {
   public setNumber = '35';
   public cardImage = 'assets/cardback.png';
   public name = 'Slowpoke & Psyduck-GX';
-  public fullName = 'Slowpoke & Psyduck-GX UNM';
+  public fullName = 'Slowpoke & Psyduck-GX (UNM 35)';
+  public legacyFullName = 'Slowpoke & Psyduck-GX UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ditch and Splash

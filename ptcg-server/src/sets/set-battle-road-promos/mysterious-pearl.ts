@@ -14,7 +14,8 @@ export class MysteriousPearl extends TrainerCard {
 
   public setNumber: string = '2';
 
-  public fullName: string = 'Mysterious Pearl BRP';
+  public fullName: string = 'Mysterious Pearl (BRP 2)';
+  public legacyFullName = 'Mysterious Pearl BRP';
 
   public text: string =
     'Look at all of your face-down Prize cards. You may choose 1 Pokémon you find there, show it to your opponent, and put it into your hand. If you do, put this card as a Prize card face up instead of discarding it.';

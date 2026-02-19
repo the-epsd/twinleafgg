@@ -96,7 +96,8 @@ export class TownVolunteers extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '136';
   public name: string = 'Town Volunteers';
-  public fullName: string = 'Town Volunteers AQ';
+  public fullName: string = 'Town Volunteers (AQ 136)';
+  public legacyFullName = 'Town Volunteers AQ';
 
   public text: string =
     'Take 5 Baby Pokémon, Basic Pokémon, Evolution, and/or basic Energy cards from your discard pile and then show them to your opponent. Shuffle them into your deck.';

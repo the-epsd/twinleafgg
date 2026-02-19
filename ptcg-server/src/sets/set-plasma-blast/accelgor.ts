@@ -36,7 +36,8 @@ export class Accelgor extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Accelgor';
-  public fullName: string = 'Accelgor PLB';
+  public fullName: string = 'Accelgor (PLB 8)';
+  public legacyFullName = 'Accelgor PLB';
 
   public readonly ESCAVALIER_KO_MARKER = 'ESCAVALIER_KO_MARKER';
   public readonly ESCAVALIER_DAMAGED_BY_OPPONENT_ATTACK_MARKER = 'ESCAVALIER_DAMAGED_BY_OPPONENT_ATTACK_MARKER';

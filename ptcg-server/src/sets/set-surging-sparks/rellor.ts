@@ -25,7 +25,8 @@ export class Rellor extends PokemonCard {
 
   public name: string = 'Rellor';
 
-  public fullName: string = 'Rellor SSP';
+  public fullName: string = 'Rellor (SSP 13)';
+  public legacyFullName = 'Rellor SSP';
 
   public setNumber: string = '13';
 

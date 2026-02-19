@@ -30,7 +30,8 @@ export class Joltik extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Joltik';
-  public fullName: string = 'Joltik PLS';
+  public fullName: string = 'Joltik (PLS 50)';
+  public legacyFullName = 'Joltik PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Jump On

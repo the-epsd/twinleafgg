@@ -30,7 +30,8 @@ export class GalarianDarumaka extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Darumaka';
-  public fullName: string = 'Galarian Darumaka RCL';
+  public fullName: string = 'Galarian Darumaka (RCL 47)';
+  public legacyFullName = 'Galarian Darumaka RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ice Punch

@@ -27,7 +27,7 @@ export class Poliwag extends PokemonCard {
       name: 'Hydro Pump',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage times the amount of [W] Energy attached to this Pokémon.'
     }
   ];
@@ -36,7 +36,8 @@ export class Poliwag extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poliwag';
-  public fullName: string = 'Poliwag SUM';
+  public fullName: string = 'Poliwag (SUM 30)';
+  public legacyFullName = 'Poliwag SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Hydro Pump

@@ -21,7 +21,7 @@ export class Sizzlipede2 extends PokemonCard {
       name: 'Relentless Flames',
       cost: [R, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 40 damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Sizzlipede2 extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sizzlipede';
-  public fullName: string = 'Sizzlipede SSH 38';
+  public fullName: string = 'Sizzlipede (SSH 38)';
+  public legacyFullName = 'Sizzlipede SSH 38';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Relentless Flames

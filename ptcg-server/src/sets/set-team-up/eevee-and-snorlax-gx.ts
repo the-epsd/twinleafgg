@@ -38,7 +38,8 @@ export class EeveeSnorlaxGX extends PokemonCard {
   public setNumber = '120';
   public cardImage = 'assets/cardback.png';
   public name = 'Eevee & Snorlax-GX';
-  public fullName = 'Eevee & Snorlax-GX TEU';
+  public fullName = 'Eevee & Snorlax-GX (TEU 120)';
+  public legacyFullName = 'Eevee & Snorlax-GX TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Cheer Up

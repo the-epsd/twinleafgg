@@ -29,7 +29,7 @@ export class Crobat extends PokemonCard {
       name: 'Surprise Strike',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 60 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Crobat extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crobat';
-  public fullName: string = 'Crobat SUM';
+  public fullName: string = 'Crobat (SUM 56)';
+  public legacyFullName = 'Crobat SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Triple Poison

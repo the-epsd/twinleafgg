@@ -15,7 +15,8 @@ export class PsychicsThirdEye extends TrainerCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Psychic\'s Third Eye';
-  public fullName: string = 'Psychic\'s Third Eye BKP';
+  public fullName: string = 'Psychic\'s Third Eye (BKP 108)';
+  public legacyFullName = 'Psychic\'s Third Eye BKP';
   public text: string = 'Your opponent reveals his or her hand. Discard as many cards as you like from your hand. Then, draw that many cards. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Refs: set-fates-collide/umbreon-ex.ts (Veil of Darkness - discard and draw), AGENTS-patterns.md (show cards)

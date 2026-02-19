@@ -31,7 +31,8 @@ export class Snorunt extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snorunt';
-  public fullName: string = 'Snorunt PLB';
+  public fullName: string = 'Snorunt (PLB 21)';
+  public legacyFullName = 'Snorunt PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

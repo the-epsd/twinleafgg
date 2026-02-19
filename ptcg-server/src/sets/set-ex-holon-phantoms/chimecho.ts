@@ -31,7 +31,8 @@ export class Chimecho extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '37';
   public name: string = 'Chimecho';
-  public fullName: string = 'Chimecho HP';
+  public fullName: string = 'Chimecho (HP 37)';
+  public legacyFullName = 'Chimecho HP';
 
   public readonly HOLON_SUPPORTER_MARKER = 'HOLON_SUPPORTER_MARKER';
   public readonly DELTA_SUPPORT_USED_MARKER = 'DELTA_SUPPORT_USED_MARKER';

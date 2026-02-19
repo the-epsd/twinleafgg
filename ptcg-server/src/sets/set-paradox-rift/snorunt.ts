@@ -35,7 +35,8 @@ export class Snorunt extends PokemonCard {
 
   public name: string = 'Snorunt';
 
-  public fullName: string = 'Snorunt PAR';
+  public fullName: string = 'Snorunt (PAR 37)';
+  public legacyFullName = 'Snorunt PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

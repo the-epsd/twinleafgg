@@ -21,7 +21,8 @@ export class Pansear extends PokemonCard {
 
   public name: string = 'Pansear';
 
-  public fullName: string = 'Pansear SSP';
+  public fullName: string = 'Pansear (SSP 22)';
+  public legacyFullName = 'Pansear SSP';
 
   public regulationMark = 'H';
 

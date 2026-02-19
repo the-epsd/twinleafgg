@@ -27,7 +27,8 @@ export class Primeape extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public name: string = 'Primeape';
-  public fullName: string = 'Primeape DRI';
+  public fullName: string = 'Primeape (DRI 91)';
+  public legacyFullName = 'Primeape DRI';
 
   public usedDragOff: boolean = false;
 

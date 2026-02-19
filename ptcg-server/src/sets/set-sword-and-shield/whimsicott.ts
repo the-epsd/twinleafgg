@@ -36,7 +36,8 @@ export class Whimsicott extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whimsicott';
-  public fullName: string = 'Whimsicott SSH';
+  public fullName: string = 'Whimsicott (SSH 6)';
+  public legacyFullName = 'Whimsicott SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Cotton Ride

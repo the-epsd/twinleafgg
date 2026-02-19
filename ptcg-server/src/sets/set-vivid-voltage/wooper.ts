@@ -32,5 +32,6 @@ export class Wooper extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wooper';
-  public fullName: string = 'Wooper VIV';
+  public fullName: string = 'Wooper (VIV 83)';
+  public legacyFullName = 'Wooper VIV';
 }

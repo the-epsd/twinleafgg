@@ -70,7 +70,8 @@ export class Wurmple extends PokemonCard {
 
   public name: string = 'Wurmple';
 
-  public fullName: string = 'Wurmple ROS';
+  public fullName: string = 'Wurmple (ROS 3)';
+  public legacyFullName = 'Wurmple ROS';
 
   public cardImage: string = 'assets/cardback.png';
 

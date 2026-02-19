@@ -24,7 +24,8 @@ export class Wimpod extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '50';
   public name: string = 'Wimpod';
-  public fullName: string = 'Wimpod UNM';
+  public fullName: string = 'Wimpod (UNM 50)';
+  public legacyFullName = 'Wimpod UNM';
 
   public readonly DEFENDING_POKEMON_CANNOT_ATTACK_MARKER = 'DEFENDING_POKEMON_CANNOT_ATTACK_MARKER';
   public readonly SMOKESCREEN_MARKER = 'SMOKESCREEN_MARKER';

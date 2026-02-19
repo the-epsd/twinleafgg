@@ -35,7 +35,8 @@ export class Ralts extends PokemonCard {
   public setNumber: string = 'RC8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ralts';
-  public fullName: string = 'Ralts LTR';
+  public fullName: string = 'Ralts (LTR RC8)';
+  public legacyFullName = 'Ralts LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hypnotic Gaze

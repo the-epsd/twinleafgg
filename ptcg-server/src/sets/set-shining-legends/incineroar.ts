@@ -23,7 +23,7 @@ export class Incineroar extends PokemonCard {
       name: 'Profane Punch',
       cost: [R, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your Benched Pokémon have any damage counters on them, this attack does 80 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Incineroar extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Incineroar';
-  public fullName: string = 'Incineroar SLG';
+  public fullName: string = 'Incineroar (SLG 17)';
+  public legacyFullName = 'Incineroar SLG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Profane Punch

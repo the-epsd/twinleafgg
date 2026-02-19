@@ -3,18 +3,21 @@ import { Typhlosion } from '../set-heartgold-and-soulsilver/typhlosion';
 import { Cleffa } from '../set-heartgold-and-soulsilver/cleffa';
 export class MeganiumHSP extends Meganium {
   public setNumber = '8';
-  public fullName: string = 'Meganium HSP';
+  public fullName: string = 'Meganium (HSP 8)';
+  public legacyFullName = 'Meganium HSP';
   public set = 'HSP';
 }
 
 export class TyphlosionHSP extends Typhlosion {
   public setNumber = '9';
-  public fullName: string = 'Typhlosion HSP';
+  public fullName: string = 'Typhlosion (HSP 9)';
+  public legacyFullName = 'Typhlosion HSP';
   public set = 'HSP';
 }
 
 export class CleffaHSP extends Cleffa {
   public setNumber = '12';
-  public fullName: string = 'Cleffa HSP';
+  public fullName: string = 'Cleffa (HSP 12)';
+  public legacyFullName = 'Cleffa HSP';
   public set = 'HSP';
 }

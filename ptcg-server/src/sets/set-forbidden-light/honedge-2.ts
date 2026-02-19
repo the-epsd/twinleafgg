@@ -30,7 +30,8 @@ export class Honedge2 extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Honedge';
-  public fullName: string = 'Honedge FLI 2';
+  public fullName: string = 'Honedge (FLI 47)';
+  public legacyFullName = 'Honedge FLI 2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Metal Sound

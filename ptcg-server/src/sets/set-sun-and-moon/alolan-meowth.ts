@@ -21,7 +21,7 @@ export class AlolanMeowth extends PokemonCard {
       name: 'Fury Swipes',
       cost: [],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 10 damage for each heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class AlolanMeowth extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Meowth';
-  public fullName: string = 'Alolan Meowth SUM';
+  public fullName: string = 'Alolan Meowth (SUM 78)';
+  public legacyFullName = 'Alolan Meowth SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Swipes

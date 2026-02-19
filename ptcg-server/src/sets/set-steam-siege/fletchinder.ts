@@ -27,5 +27,6 @@ export class Fletchinder extends PokemonCard {
   public setNumber: string = '95';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fletchinder';
-  public fullName: string = 'Fletchinder STS';
+  public fullName: string = 'Fletchinder (STS 95)';
+  public legacyFullName = 'Fletchinder STS';
 }

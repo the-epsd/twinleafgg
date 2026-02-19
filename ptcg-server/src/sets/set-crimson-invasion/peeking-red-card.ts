@@ -15,7 +15,8 @@ export class PeekingRedCard extends TrainerCard {
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Peeking Red Card';
-  public fullName: string = 'Peeking Red Card CIN';
+  public fullName: string = 'Peeking Red Card (CIN 97)';
+  public legacyFullName = 'Peeking Red Card CIN';
   public text: string = 'Your opponent reveals their hand. You may have your opponent count the cards in their hand, shuffle those cards into their deck, then draw that many cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

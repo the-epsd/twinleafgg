@@ -38,7 +38,8 @@ export class Passimian extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Passimian';
-  public fullName: string = 'Passimian CRE';
+  public fullName: string = 'Passimian (CRE 88)';
+  public legacyFullName = 'Passimian CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Throwing Coach (passive - boost Rapid Strike attacks to opponent's Benched V/GX)

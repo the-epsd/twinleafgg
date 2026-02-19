@@ -23,7 +23,7 @@ export class Umbreon extends PokemonCard {
       name: 'Retaliate',
       cost: [D],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If any of your Pokémon were Knocked Out by damage from an opponent\'s attack during their last turn, this attack does 90 more damage.'
     },
     {
@@ -38,7 +38,8 @@ export class Umbreon extends PokemonCard {
   public setNumber: string = '120';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Umbreon';
-  public fullName: string = 'Umbreon LOT';
+  public fullName: string = 'Umbreon (LOT 120)';
+  public legacyFullName = 'Umbreon LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Retaliate

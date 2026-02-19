@@ -16,7 +16,8 @@ export class WondrousLabyrinth extends TrainerCard {
   public setNumber: string = '158';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wondrous Labyrinth ◇';
-  public fullName: string = 'Wondrous Labyrinth ◇ TEU';
+  public fullName: string = 'Wondrous Labyrinth ◇ (TEU 158)';
+  public legacyFullName = 'Wondrous Labyrinth ◇ TEU';
   public text: string = 'The attacks of non-Fairy Pokémon (both yours and your opponent\'s) cost Colorless more. Whenever any player plays an Item or Supporter card from their hand, prevent all effects of that card done to this Stadium card. ◇ (Prism Star) Rule: You can\'t have more than 1 ◇ card with the same name in your deck. If a ◇ card would go to the discard pile, put it in the Lost Zone instead.';
 
   // Ref: set-team-up/wondrous-labyrinth-prism-star.ts (same card, different print)

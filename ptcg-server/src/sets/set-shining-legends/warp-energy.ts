@@ -13,7 +13,8 @@ export class WarpEnergy extends EnergyCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '70';
   public name = 'Warp Energy';
-  public fullName = 'Warp Energy SLG';
+  public fullName = 'Warp Energy (SLG 70)';
+  public legacyFullName = 'Warp Energy SLG';
 
   public text =
     'This card provides [C] Energy.' +

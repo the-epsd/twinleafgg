@@ -24,7 +24,7 @@ export class TorkoalV extends PokemonCard {
       name: 'Combustion Pillar',
       cost: [R, R, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Discard the top card of your deck. If that card is a [R] Energy card, this attack does 90 more damage.'
     },
     {
@@ -40,7 +40,8 @@ export class TorkoalV extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Torkoal V';
-  public fullName: string = 'Torkoal V SSH';
+  public fullName: string = 'Torkoal V (SSH 24)';
+  public legacyFullName = 'Torkoal V SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Combustion Pillar

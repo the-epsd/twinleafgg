@@ -15,7 +15,8 @@ export class MaxElixir extends TrainerCard {
 
   public name: string = 'Max Elixir';
 
-  public fullName: string = 'Max Elixir BKP';
+  public fullName: string = 'Max Elixir (BKP 102)';
+  public legacyFullName = 'Max Elixir BKP';
 
   public text = 'Look at the top 6 cards of your deck and attach a basic Energy card you find there to a Basic Pokémon on your Bench. Shuffle the other cards back into your deck.';
 

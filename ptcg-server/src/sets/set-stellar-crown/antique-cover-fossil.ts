@@ -50,7 +50,8 @@ At any time during your turn, you may discard this card from play.`,
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '129';
   public name: string = 'Antique Cover Fossil';
-  public fullName: string = 'Antique Cover Fossil SCR';
+  public fullName: string = 'Antique Cover Fossil (SCR 129)';
+  public legacyFullName = 'Antique Cover Fossil SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

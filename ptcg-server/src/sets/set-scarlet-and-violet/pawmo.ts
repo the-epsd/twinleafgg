@@ -27,7 +27,8 @@ export class Pawmo extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '75';
   public name: string = 'Pawmo';
-  public fullName: string = 'Pawmo SVI';
+  public fullName: string = 'Pawmo (SVI 75)';
+  public legacyFullName = 'Pawmo SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

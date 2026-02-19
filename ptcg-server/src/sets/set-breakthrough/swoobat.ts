@@ -37,7 +37,8 @@ export class Swoobat extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Swoobat';
-  public fullName: string = 'Swoobat BKT';
+  public fullName: string = 'Swoobat (BKT 72)';
+  public legacyFullName = 'Swoobat BKT';
 
   public readonly WAVE_AMP_MARKER = 'SWOOBAT_BKT_WAVE_AMP_MARKER';
   public readonly WAVE_AMP_MARKER_2 = 'SWOOBAT_BKT_WAVE_AMP_MARKER_2';

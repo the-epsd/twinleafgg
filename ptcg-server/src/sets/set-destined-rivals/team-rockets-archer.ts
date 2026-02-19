@@ -26,7 +26,8 @@ export class TeamRocketsArcher extends TrainerCard {
 
   public name: string = 'Team Rocket\'s Archer';
 
-  public fullName: string = 'Team Rocket\'s Archer DRI';
+  public fullName: string = 'Team Rocket\'s Archer (DRI 170)';
+  public legacyFullName = 'Team Rocket\'s Archer DRI';
 
   public text: string = `You can use this card only if any of your Team Rocket's Pokemon were Knocked Out during your opponent's last turn.
 

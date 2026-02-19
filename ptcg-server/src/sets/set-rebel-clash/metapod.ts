@@ -39,7 +39,8 @@ export class Metapod extends PokemonCard {
 
   public name: string = 'Metapod';
 
-  public fullName: string = 'Metapod RCL';
+  public fullName: string = 'Metapod (RCL 2)';
+  public legacyFullName = 'Metapod RCL';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -25,7 +25,8 @@ export class Weedle extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Weedle';
-  public fullName: string = 'Weedle PLF';
+  public fullName: string = 'Weedle (PLF 1)';
+  public legacyFullName = 'Weedle PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Triple Stab - flip 3 coins, 10x heads

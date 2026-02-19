@@ -40,7 +40,8 @@ At any time during your turn, you may discard this card from play.`,
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '79';
   public name: string = 'Antique Plume Fossil';
-  public fullName: string = 'Antique Plume Fossil SV11W';
+  public fullName: string = 'Antique Plume Fossil (WHT 79)';
+  public legacyFullName = 'Antique Plume Fossil SV11W';
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
 

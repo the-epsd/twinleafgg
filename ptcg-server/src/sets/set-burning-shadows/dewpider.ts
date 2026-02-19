@@ -21,7 +21,7 @@ export class Dewpider extends PokemonCard {
       name: 'Ambush',
       cost: [G],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Dewpider extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dewpider';
-  public fullName: string = 'Dewpider BUS';
+  public fullName: string = 'Dewpider (BUS 14)';
+  public legacyFullName = 'Dewpider BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ambush

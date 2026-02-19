@@ -30,7 +30,8 @@ export class Pyukumuku extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pyukumuku';
-  public fullName: string = 'Pyukumuku UNM';
+  public fullName: string = 'Pyukumuku (UNM 52)';
+  public legacyFullName = 'Pyukumuku UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Collect

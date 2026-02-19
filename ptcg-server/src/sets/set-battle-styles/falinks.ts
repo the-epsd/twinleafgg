@@ -35,7 +35,8 @@ export class Falinks extends PokemonCard {
 
   public name = 'Falinks';
 
-  public fullName = 'Falinks BST';
+  public fullName = 'Falinks (BST 83)';
+  public legacyFullName = 'Falinks BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

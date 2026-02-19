@@ -30,7 +30,8 @@ export class Aerodactyl extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aerodactyl';
-  public fullName: string = 'Aerodactyl DEX';
+  public fullName: string = 'Aerodactyl (DEX 53)';
+  public legacyFullName = 'Aerodactyl DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ancient Scream - boost damage to Active Pokémon

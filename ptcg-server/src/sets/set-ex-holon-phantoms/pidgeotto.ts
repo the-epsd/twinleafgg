@@ -26,7 +26,8 @@ export class Pidgeotto extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '49';
   public name: string = 'Pidgeotto';
-  public fullName: string = 'Pidgeotto HP';
+  public fullName: string = 'Pidgeotto (HP 49)';
+  public legacyFullName = 'Pidgeotto HP';
 
   public usedWhirlwind = false;
 

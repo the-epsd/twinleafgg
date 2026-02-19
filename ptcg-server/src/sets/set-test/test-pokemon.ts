@@ -59,7 +59,8 @@ export class TestPokemon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
   public name: string = 'Test Pokemon';
-  public fullName: string = 'Test Pokemon TEST';
+  public fullName: string = 'Test Pokemon (TEST 1)';
+  public legacyFullName = 'Test Pokemon TEST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

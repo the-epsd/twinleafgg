@@ -14,7 +14,8 @@ export class Blowtorch extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
   public name: string = 'Blowtorch';
-  public fullName: string = 'Blowtorch PFL';
+  public fullName: string = 'Blowtorch (PFL 86)';
+  public legacyFullName = 'Blowtorch PFL';
 
   public text: string =
     'You can use this card only if you discard a Basic [R] Energy card from your hand.\n\nDiscard a Pokémon Tool or Special Energy card from 1 of your opponent\'s Pokémon, or discard a Stadium in play.';

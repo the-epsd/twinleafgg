@@ -27,7 +27,7 @@ export class Diancie extends PokemonCard {
       name: 'Sensitive Ray',
       cost: [P, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you played a Supporter card from your hand during this turn, this attack does 70 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Diancie extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Diancie';
-  public fullName: string = 'Diancie VIV';
+  public fullName: string = 'Diancie (VIV 79)';
+  public legacyFullName = 'Diancie VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Sparkle Veil (passive - reduce damage to all your Pokemon while Diancie is Active)

@@ -12,7 +12,8 @@ export class DevolutionSprayZ extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber = '166';
   public set = 'UB';
-  public fullName = 'Devolution Spray Z UB';
+  public fullName = 'Devolution Spray Z (UB 166)';
+  public legacyFullName = 'Devolution Spray Z UB';
   public superType = SuperType.TRAINER;
   public trainerType = TrainerType.ITEM;
 

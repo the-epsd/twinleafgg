@@ -29,7 +29,7 @@ export class Hattrem extends PokemonCard {
       name: 'Brutal Swing',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Hattrem extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hattrem';
-  public fullName: string = 'Hattrem RCL';
+  public fullName: string = 'Hattrem (RCL 84)';
+  public legacyFullName = 'Hattrem RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Calm Mind

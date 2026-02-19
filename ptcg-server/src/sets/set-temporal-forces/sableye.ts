@@ -40,7 +40,8 @@ export class Sableye extends PokemonCard {
 
   public name: string = 'Sableye';
 
-  public fullName: string = 'Sableye TEF';
+  public fullName: string = 'Sableye (TEF 107)';
+  public legacyFullName = 'Sableye TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

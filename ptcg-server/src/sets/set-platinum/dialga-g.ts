@@ -35,7 +35,8 @@ export class DialgaG extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Dialga G';
-  public fullName: string = 'Dialga G PL';
+  public fullName: string = 'Dialga G (PL 7)';
+  public legacyFullName = 'Dialga G PL';
 
   public readonly DEAFEN_MARKER = 'DEAFEN_MARKER';
 

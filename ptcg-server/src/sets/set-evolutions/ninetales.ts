@@ -37,7 +37,8 @@ export class Ninetales extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ninetales';
-  public fullName: string = 'Ninetales EVO';
+  public fullName: string = 'Ninetales (EVO 15)';
+  public legacyFullName = 'Ninetales EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lure

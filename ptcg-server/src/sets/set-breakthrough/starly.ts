@@ -29,7 +29,8 @@ export class Starly extends PokemonCard {
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Starly';
-  public fullName: string = 'Starly BKT';
+  public fullName: string = 'Starly (BKT 125)';
+  public legacyFullName = 'Starly BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Pals

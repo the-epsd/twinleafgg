@@ -21,7 +21,7 @@ export class Spritzee extends PokemonCard {
       name: 'Flail',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 10 damage times the number of damage counters on this Pokémon.'
     }
   ];
@@ -30,7 +30,8 @@ export class Spritzee extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spritzee';
-  public fullName: string = 'Spritzee BKT';
+  public fullName: string = 'Spritzee (BKT 105)';
+  public legacyFullName = 'Spritzee BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flail

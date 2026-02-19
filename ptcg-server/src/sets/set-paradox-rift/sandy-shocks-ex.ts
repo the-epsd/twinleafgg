@@ -36,7 +36,8 @@ export class SandyShocksex extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sandy Shocks ex';
-  public fullName: string = 'Sandy Shocks ex PAR';
+  public fullName: string = 'Sandy Shocks ex (PAR 108)';
+  public legacyFullName = 'Sandy Shocks ex PAR';
 
   public readonly MAGNETIC_ABSORPTION_MARKER = 'MAGNETIC_ABSORPTION_MARKER';
 

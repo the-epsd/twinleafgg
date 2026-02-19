@@ -35,7 +35,8 @@ export class Coalossal extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '107';
   public name: string = 'Coalossal';
-  public fullName: string = 'Coalossal RCL';
+  public fullName: string = 'Coalossal (RCL 107)';
+  public legacyFullName = 'Coalossal RCL';
 
   public readonly TAR_GENERATOR_MARKER = 'TAR_GENERATOR_MARKER';
 

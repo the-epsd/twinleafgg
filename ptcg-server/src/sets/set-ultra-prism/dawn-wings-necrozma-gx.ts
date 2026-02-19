@@ -63,7 +63,8 @@ export class DawnWingsNecrozmaGX extends PokemonCard {
 
   public name: string = 'Dawn Wings Necrozma-GX';
 
-  public fullName: string = 'Dawn Wings Necrozma-GX UPR';
+  public fullName: string = 'Dawn Wings Necrozma-GX (UPR 63)';
+  public legacyFullName = 'Dawn Wings Necrozma-GX UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

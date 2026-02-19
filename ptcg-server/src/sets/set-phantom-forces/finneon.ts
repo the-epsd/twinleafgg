@@ -25,5 +25,6 @@ export class Finneon extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Finneon';
-  public fullName: string = 'Finneon PHF';
+  public fullName: string = 'Finneon (PHF 18)';
+  public legacyFullName = 'Finneon PHF';
 }

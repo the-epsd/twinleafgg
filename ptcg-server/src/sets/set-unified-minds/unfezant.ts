@@ -33,7 +33,8 @@ export class Unfezant extends PokemonCard {
   public setNumber: string = '176';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Unfezant';
-  public fullName: string = 'Unfezant UNM';
+  public fullName: string = 'Unfezant (UNM 176)';
+  public legacyFullName = 'Unfezant UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Downburst

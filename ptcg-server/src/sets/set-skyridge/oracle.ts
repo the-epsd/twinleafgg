@@ -75,7 +75,8 @@ export class Oracle extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '138';
   public name: string = 'Oracle';
-  public fullName: string = 'Oracle SK';
+  public fullName: string = 'Oracle (SK 138)';
+  public legacyFullName = 'Oracle SK';
 
   public text: string =
     'Choose 2 cards from your deck and shuffle the rest of your deck. Put the chosen cards on top of your deck in any order.';

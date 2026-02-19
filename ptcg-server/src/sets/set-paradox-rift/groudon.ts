@@ -44,7 +44,8 @@ export class Groudon extends PokemonCard {
 
   public name: string = 'Groudon';
 
-  public fullName: string = 'Groudon PAR';
+  public fullName: string = 'Groudon (PAR 93)';
+  public legacyFullName = 'Groudon PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

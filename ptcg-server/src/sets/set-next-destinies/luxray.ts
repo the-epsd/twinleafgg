@@ -33,7 +33,8 @@ export class Luxray extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Luxray';
-  public fullName: string = 'Luxray NXD';
+  public fullName: string = 'Luxray (NXD 46)';
+  public legacyFullName = 'Luxray NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Flash Impact - 60 damage to active, 20 to own benched

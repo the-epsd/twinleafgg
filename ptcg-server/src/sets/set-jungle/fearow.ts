@@ -40,7 +40,8 @@ export class Fearow extends PokemonCard {
 
   public name: string = 'Fearow';
 
-  public fullName: string = 'Fearow JU';
+  public fullName: string = 'Fearow (JU 36)';
+  public legacyFullName = 'Fearow JU';
 
   public readonly PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';
   public readonly CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER';

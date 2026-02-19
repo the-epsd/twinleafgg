@@ -47,7 +47,8 @@ export class Froslassex extends PokemonCard {
 
   public name: string = 'Froslass ex';
 
-  public fullName: string = 'Froslass ex PAR';
+  public fullName: string = 'Froslass ex (PAR 3)';
+  public legacyFullName = 'Froslass ex PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -22,8 +22,6 @@ export abstract class PokemonCard extends Card {
 
   public evolvesToStage: Stage[] = [];
 
-  public legacyFullName?: string;
-
   public stage: Stage = Stage.BASIC;
 
   public retreat: CardType[] = [];
@@ -49,6 +47,8 @@ export abstract class PokemonCard extends Card {
   public maxTools: number = 1;
 
   public archetype: CardType[] = [];
+
+  public multiPartPosition?: 'Top' | 'Bottom' | 'Top Left' | 'Top Right' | 'Bottom Left' | 'Bottom Right';
 
   public canAttackTwice?: boolean;
 

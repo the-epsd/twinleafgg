@@ -86,7 +86,8 @@ export class Candice extends TrainerCard {
 
   public name: string = 'Candice';
 
-  public fullName: string = 'Candice SIT';
+  public fullName: string = 'Candice (SIT 152)';
+  public legacyFullName = 'Candice SIT';
 
   public text: string =
     'Look at the top 7 cards of your deck. You may reveal any number of [W] Pokémon and [W] Energy cards you find there and put them into your hand. Shuffle the other cards back into your deck.';

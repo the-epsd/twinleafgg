@@ -32,7 +32,8 @@ export class Alcremie extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
   public name: string = 'Alcremie';
-  public fullName: string = 'Alcremie BRS';
+  public fullName: string = 'Alcremie (BRS 71)';
+  public legacyFullName = 'Alcremie BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

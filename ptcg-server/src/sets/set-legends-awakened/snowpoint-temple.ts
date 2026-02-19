@@ -16,7 +16,8 @@ export class SnowpointTemple extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '134';
   public name: string = 'Snowpoint Temple';
-  public fullName: string = 'Snowpoint Temple LA';
+  public fullName: string = 'Snowpoint Temple (LA 134)';
+  public legacyFullName = 'Snowpoint Temple LA';
 
   public text: string =
     'Each Pokémon that isn\'t an Evolved Pokémon in play (both yours and your opponent\'s) gets +20 HP.';

@@ -47,7 +47,8 @@ export class RadiantJirachi extends PokemonCard {
 
   public name: string = 'Radiant Jirachi';
 
-  public fullName: string = 'Radiant Jirachi SIT';
+  public fullName: string = 'Radiant Jirachi (SIT 120)';
+  public legacyFullName = 'Radiant Jirachi SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

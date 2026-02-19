@@ -29,7 +29,8 @@ export class Spheal extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '43';
   public name: string = 'Spheal';
-  public fullName: string = 'Spheal SSP';
+  public fullName: string = 'Spheal (SSP 43)';
+  public legacyFullName = 'Spheal SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

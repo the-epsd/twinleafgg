@@ -49,7 +49,8 @@ export class Blisseyex extends PokemonCard {
 
   public name: string = 'Blissey ex';
 
-  public fullName: string = 'Blissey ex TWM';
+  public fullName: string = 'Blissey ex (TWM 134)';
+  public legacyFullName = 'Blissey ex TWM';
 
   public readonly BLISSFUL_SWAP_MARKER = 'BLISSFUL_SWAP_MARKER';
 

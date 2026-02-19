@@ -29,7 +29,8 @@ export class Fennekin2 extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fennekin';
-  public fullName: string = 'Fennekin FCO 11';
+  public fullName: string = 'Fennekin (FCO 11)';
+  public legacyFullName = 'Fennekin FCO 11';
 
   public usedInviteOut = false;
 

@@ -33,5 +33,6 @@ export class Rookidee extends PokemonCard {
   public setNumber: string = 'SV101';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rookidee';
-  public fullName: string = 'Rookidee SHF';
+  public fullName: string = 'Rookidee (SHF SV101)';
+  public legacyFullName = 'Rookidee SHF';
 }

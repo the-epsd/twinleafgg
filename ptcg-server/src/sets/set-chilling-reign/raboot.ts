@@ -31,7 +31,8 @@ export class Raboot extends PokemonCard {
   public setNumber: string = '27';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raboot';
-  public fullName: string = 'Raboot CRE';
+  public fullName: string = 'Raboot (CRE 27)';
+  public legacyFullName = 'Raboot CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Volley Kick

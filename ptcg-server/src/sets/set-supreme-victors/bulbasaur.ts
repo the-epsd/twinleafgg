@@ -26,6 +26,7 @@ export class Bulbasaur extends PokemonCard {
   public setNumber: string = '93';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bulbasaur';
-  public fullName: string = 'Bulbasaur SV';
+  public fullName: string = 'Bulbasaur (SV 93)';
+  public legacyFullName = 'Bulbasaur SV';
 
 }

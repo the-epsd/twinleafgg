@@ -36,7 +36,8 @@ export class Mawile extends PokemonCard {
   public setNumber: string = '78';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mawile';
-  public fullName: string = 'Mawile BKP';
+  public fullName: string = 'Mawile (BKP 78)';
+  public legacyFullName = 'Mawile BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tight Jaw

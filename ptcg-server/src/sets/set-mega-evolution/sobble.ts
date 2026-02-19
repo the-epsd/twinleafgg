@@ -22,7 +22,8 @@ export class Sobble extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '39';
   public name: string = 'Sobble';
-  public fullName: string = 'Sobble M1S';
+  public fullName: string = 'Sobble (MEG 39)';
+  public legacyFullName = 'Sobble M1S';
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

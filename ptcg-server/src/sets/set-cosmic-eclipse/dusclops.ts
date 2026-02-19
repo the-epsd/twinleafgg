@@ -23,7 +23,8 @@ export class Dusclops extends PokemonCard {
 
   public set: string = 'CEC';
   public name: string = 'Dusclops';
-  public fullName: string = 'Dusclops CEC';
+  public fullName: string = 'Dusclops (CEC 84)';
+  public legacyFullName = 'Dusclops CEC';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
 

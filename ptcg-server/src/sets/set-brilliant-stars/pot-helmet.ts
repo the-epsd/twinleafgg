@@ -22,7 +22,8 @@ export class PotHelmet extends TrainerCard {
 
   public name: string = 'Pot Helmet';
 
-  public fullName: string = 'Pot Helmet BRS';
+  public fullName: string = 'Pot Helmet (BRS 146)';
+  public legacyFullName = 'Pot Helmet BRS';
 
   public text: string =
     'If the Pokémon this card is attached to doesn\'t have a Rule Box, it takes 30 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance). (Pokémon V, Pokémon-GX, etc. have Rule Boxes.)';

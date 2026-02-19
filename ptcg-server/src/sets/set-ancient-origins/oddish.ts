@@ -21,7 +21,7 @@ export class Oddish extends PokemonCard {
       name: 'Trip Over',
       cost: [G],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Oddish extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Oddish';
-  public fullName: string = 'Oddish AOR';
+  public fullName: string = 'Oddish (AOR 1)';
+  public legacyFullName = 'Oddish AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Trip Over

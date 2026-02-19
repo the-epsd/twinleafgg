@@ -25,5 +25,6 @@ export class Karrablast extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Karrablast';
-  public fullName: string = 'Karrablast PLB';
+  public fullName: string = 'Karrablast (PLB 6)';
+  public legacyFullName = 'Karrablast PLB';
 }

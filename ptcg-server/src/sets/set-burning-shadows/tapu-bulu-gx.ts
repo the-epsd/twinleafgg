@@ -49,7 +49,8 @@ export class TapuBuluGX extends PokemonCard {
 
   public name: string = 'Tapu Bulu-GX';
 
-  public fullName: string = 'Tapu Bulu-GX BUS';
+  public fullName: string = 'Tapu Bulu-GX (BUS 130)';
+  public legacyFullName = 'Tapu Bulu-GX BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Jet Punch

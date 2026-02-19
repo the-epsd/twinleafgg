@@ -37,7 +37,8 @@ export class Floette2 extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Floette';
-  public fullName: string = 'Floette FLF 65';
+  public fullName: string = 'Floette (FLF 65)';
+  public legacyFullName = 'Floette FLF 65';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-plasma-freeze/seismitoad.ts (Seismic Punch)

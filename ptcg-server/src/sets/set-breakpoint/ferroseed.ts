@@ -34,7 +34,8 @@ export class Ferroseed extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ferroseed';
-  public fullName: string = 'Ferroseed BKP';
+  public fullName: string = 'Ferroseed (BKP 79)';
+  public legacyFullName = 'Ferroseed BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Harden

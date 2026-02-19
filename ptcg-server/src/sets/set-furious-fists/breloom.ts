@@ -36,7 +36,8 @@ export class Breloom extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Breloom';
-  public fullName: string = 'Breloom FFI';
+  public fullName: string = 'Breloom (FFI 50)';
+  public legacyFullName = 'Breloom FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Giga Drain

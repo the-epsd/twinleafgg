@@ -20,7 +20,8 @@ export class WonderEnergy extends EnergyCard {
 
   public name = 'Wonder Energy';
 
-  public fullName = 'Wonder Energy PRC';
+  public fullName = 'Wonder Energy (PRC 144)';
+  public legacyFullName = 'Wonder Energy PRC';
 
   public text = 'This card can only be attached to [Y] Pokémon. This card provides [Y] Energy only while this card is attached to a [Y] Pokémon.' +
     '\n\n' +

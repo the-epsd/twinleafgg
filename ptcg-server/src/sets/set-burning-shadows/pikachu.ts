@@ -36,7 +36,8 @@ export class Pikachu extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikachu';
-  public fullName: string = 'Pikachu BUS';
+  public fullName: string = 'Pikachu (BUS 40)';
+  public legacyFullName = 'Pikachu BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Thunder Shock

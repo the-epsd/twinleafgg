@@ -15,7 +15,8 @@ export class BeastBall extends TrainerCard {
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beast Ball';
-  public fullName: string = 'Beast Ball CES';
+  public fullName: string = 'Beast Ball (CES 125)';
+  public legacyFullName = 'Beast Ball CES';
   public text: string = 'Look at your face-down Prize cards. You may reveal an Ultra Beast card you find there, put it into your hand, and put this Beast Ball in its place. (If you don\'t reveal an Ultra Beast card, put this card in the discard pile.) Then, shuffle your face-down Prize cards.';
 
   // Ref: set-astral-radiance/hisuian-heavy-ball.ts (prize card look/swap pattern)

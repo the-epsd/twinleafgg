@@ -20,7 +20,8 @@ export class ProfessorOak extends TrainerCard {
 
   public name: string = 'Professor Oak';
 
-  public fullName: string = 'Professor Oak BS';
+  public fullName: string = 'Professor Oak (BS 88)';
+  public legacyFullName = 'Professor Oak BS';
 
   public text: string =
     'Discard your hand, then draw 7 cards.';

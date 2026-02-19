@@ -40,7 +40,8 @@ export class Pineco extends PokemonCard {
   public setNumber: string = '8';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pineco';
-  public fullName: string = 'Pineco VIV';
+  public fullName: string = 'Pineco (VIV 8)';
+  public legacyFullName = 'Pineco VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Iron Defense

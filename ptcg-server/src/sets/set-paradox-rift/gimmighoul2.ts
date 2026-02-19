@@ -28,7 +28,8 @@ export class Gimmighoul2 extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gimmighoul';
-  public fullName: string = 'Gimmighoul2 PAR';
+  public fullName: string = 'Gimmighoul (PAR 88)';
+  public legacyFullName = 'Gimmighoul2 PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

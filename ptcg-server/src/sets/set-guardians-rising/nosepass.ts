@@ -27,7 +27,7 @@ export class Nosepass extends PokemonCard {
       name: 'Rising Lunge',
       cost: [F, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Nosepass extends PokemonCard {
   public setNumber: string = '69';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nosepass';
-  public fullName: string = 'Nosepass GRI';
+  public fullName: string = 'Nosepass (GRI 69)';
+  public legacyFullName = 'Nosepass GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Rising Lunge

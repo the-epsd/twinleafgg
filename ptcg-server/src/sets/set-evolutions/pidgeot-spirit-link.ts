@@ -13,7 +13,8 @@ export class PidgeotSpiritLink extends TrainerCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pidgeot Spirit Link';
-  public fullName: string = 'Pidgeot Spirit Link EVO';
+  public fullName: string = 'Pidgeot Spirit Link (EVO 81)';
+  public legacyFullName = 'Pidgeot Spirit Link EVO';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Pidgeot-EX.';
 
   // Ref: set-primal-clash/gardevoir-spirit-link.ts (Spirit Link)

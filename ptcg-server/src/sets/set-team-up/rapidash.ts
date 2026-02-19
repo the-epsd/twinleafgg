@@ -33,7 +33,8 @@ export class Rapidash extends PokemonCard {
   public setNumber = '18';
   public cardImage = 'assets/cardback.png';
   public name = 'Rapidash';
-  public fullName = 'Rapidash TEU';
+  public fullName = 'Rapidash (TEU 18)';
+  public legacyFullName = 'Rapidash TEU';
 
   private readonly PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';
   private readonly CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN = 'CLEAR_PREVENT_ALL_DAMAGE_AND_EFFECTS_DURING_OPPONENTS_NEXT_TURN';

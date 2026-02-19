@@ -32,7 +32,8 @@ export class Nosepass extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Nosepass';
-  public fullName: string = 'Nosepass DX';
+  public fullName: string = 'Nosepass (DX 42)';
+  public legacyFullName = 'Nosepass DX';
 
   public readonly MAGNETIC_REVERSAL_MARKER = 'MAGNETIC_REVERSAL_MARKER';
 

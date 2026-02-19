@@ -48,7 +48,8 @@ export class BattleCompressor extends TrainerCard {
 
   public name: string = 'Battle Compressor';
 
-  public fullName: string = 'Battle Compressor PHF';
+  public fullName: string = 'Battle Compressor (PHF 92)';
+  public legacyFullName = 'Battle Compressor PHF';
 
   public cardImage: string = 'assets/cardback.png';
 

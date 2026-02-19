@@ -49,7 +49,8 @@ export class Rotom extends PokemonCard {
 
   public name: string = 'Rotom';
 
-  public fullName: string = 'Rotom UD';
+  public fullName: string = 'Rotom (UD 20)';
+  public legacyFullName = 'Rotom UD';
 
   public cardImage: string = 'assets/cardback.png';
 

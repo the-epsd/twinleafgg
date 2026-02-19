@@ -35,7 +35,8 @@ export class Houndstoneex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '102';
   public name: string = 'Houndstone ex';
-  public fullName: string = 'Houndstone ex OBF';
+  public fullName: string = 'Houndstone ex (OBF 102)';
+  public legacyFullName = 'Houndstone ex OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Big Bite

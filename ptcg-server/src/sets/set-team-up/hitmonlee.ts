@@ -11,7 +11,8 @@ export class Hitmonlee extends PokemonCard {
 
   public set = 'TEU';
 
-  public fullName = 'Hitmonlee TEU';
+  public fullName = 'Hitmonlee (TEU 73)';
+  public legacyFullName = 'Hitmonlee TEU';
 
   public stage = Stage.BASIC;
 

@@ -73,7 +73,8 @@ export class Oddish extends PokemonCard {
 
   public name: string = 'Oddish';
 
-  public fullName: string = 'Oddish JU';
+  public fullName: string = 'Oddish (JU 58)';
+  public legacyFullName = 'Oddish JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

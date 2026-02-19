@@ -11,7 +11,8 @@ export class Jacinthe extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
   public name: string = 'Jacinthe';
-  public fullName: string = 'Jacinthe M3';
+  public fullName: string = 'Jacinthe (M3 76)';
+  public legacyFullName = 'Jacinthe M3';
   public text: string = 'Heal 150 damage from 1 of your [P] Pokemon.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean | undefined {

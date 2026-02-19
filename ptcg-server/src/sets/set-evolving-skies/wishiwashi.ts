@@ -44,7 +44,8 @@ export class Wishiwashi extends PokemonCard {
 
   public name: string = 'Wishiwashi';
 
-  public fullName: string = 'Wishiwashi EVS';
+  public fullName: string = 'Wishiwashi (EVS 46)';
+  public legacyFullName = 'Wishiwashi EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -47,7 +47,8 @@ export class Grotle extends PokemonCard {
 
   public name: string = 'Grotle';
 
-  public fullName: string = 'Grotle TEF';
+  public fullName: string = 'Grotle (TEF 11)';
+  public legacyFullName = 'Grotle TEF';
 
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

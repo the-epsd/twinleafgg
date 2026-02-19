@@ -35,7 +35,8 @@ export class Belliboltex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '79';
   public name: string = 'Bellibolt ex';
-  public fullName: string = 'Bellibolt ex PAL';
+  public fullName: string = 'Bellibolt ex (PAL 79)';
+  public legacyFullName = 'Bellibolt ex PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Jumping Press

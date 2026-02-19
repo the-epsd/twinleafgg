@@ -34,7 +34,8 @@ export class Umbreon extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Umbreon';
-  public fullName: string = 'Umbreon CL';
+  public fullName: string = 'Umbreon (CL 22)';
+  public legacyFullName = 'Umbreon CL';
 
   public readonly MOONLIGHT_FANG_MARKER = 'MOONLIGHT_FANG_MARKER';
 

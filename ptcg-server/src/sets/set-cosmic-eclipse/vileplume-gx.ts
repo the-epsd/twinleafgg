@@ -44,7 +44,8 @@ export class VileplumeGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
   public name: string = 'Vileplume-GX';
-  public fullName: string = 'Vileplume-GX CEC';
+  public fullName: string = 'Vileplume-GX (CEC 4)';
+  public legacyFullName = 'Vileplume-GX CEC';
 
   public readonly FRAGRANT_FLOWER_GARDEN_MARKER = 'FRAGRANT_FLOWER_GARDEN_MARKER';
 

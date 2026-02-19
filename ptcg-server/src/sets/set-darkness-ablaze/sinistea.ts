@@ -35,7 +35,8 @@ export class Sinistea extends PokemonCard {
 
   public name: string = 'Sinistea';
 
-  public fullName: string = 'Sinistea DAA';
+  public fullName: string = 'Sinistea (DAA 82)';
+  public legacyFullName = 'Sinistea DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

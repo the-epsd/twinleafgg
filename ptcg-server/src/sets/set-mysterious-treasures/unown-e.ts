@@ -107,7 +107,8 @@ export class UnownE extends PokemonCard {
 
   public set: string = 'MT';
   public name: string = 'Unown [E]';
-  public fullName: string = 'Unown [E] MT';
+  public fullName: string = 'Unown [E] (MT 65)';
+  public legacyFullName = 'Unown [E] MT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
 

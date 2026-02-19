@@ -30,7 +30,8 @@ export class ChesnaughtBreak extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chesnaught BREAK';
-  public fullName: string = 'Chesnaught BREAK BKT';
+  public fullName: string = 'Chesnaught BREAK (BKT 12)';
+  public legacyFullName = 'Chesnaught BREAK BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tough Hammer

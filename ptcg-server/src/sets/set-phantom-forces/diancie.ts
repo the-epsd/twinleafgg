@@ -42,7 +42,8 @@ export class Diancie extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Diancie';
-  public fullName: string = 'Diancie PHF';
+  public fullName: string = 'Diancie (PHF 71)';
+  public legacyFullName = 'Diancie PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sparkle

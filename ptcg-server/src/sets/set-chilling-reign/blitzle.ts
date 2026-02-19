@@ -31,7 +31,8 @@ export class Blitzle extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blitzle';
-  public fullName: string = 'Blitzle CRE';
+  public fullName: string = 'Blitzle (CRE 50)';
+  public legacyFullName = 'Blitzle CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Spear

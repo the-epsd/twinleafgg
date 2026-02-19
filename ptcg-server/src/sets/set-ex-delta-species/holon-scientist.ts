@@ -15,7 +15,8 @@ export class HolonScientist extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '97';
   public name: string = 'Holon Scientist';
-  public fullName: string = 'Holon Scientist DS';
+  public fullName: string = 'Holon Scientist (DS 97)';
+  public legacyFullName = 'Holon Scientist DS';
 
   public text: string =
     'Discard a card from your hand. If you can\'t discard a card from your hand, you can\'t play this card.\n\nIf you have less cards in your hand than your opponent, draw cards until you have the same number of cards as your opponent.';

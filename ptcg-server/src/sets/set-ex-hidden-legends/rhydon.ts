@@ -42,7 +42,8 @@ export class Rhydon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
   public name: string = 'Rhydon';
-  public fullName: string = 'Rhydon HL';
+  public fullName: string = 'Rhydon (HL 46)';
+  public legacyFullName = 'Rhydon HL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

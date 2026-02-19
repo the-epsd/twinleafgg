@@ -33,7 +33,8 @@ export class Drowzee extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Drowzee';
-  public fullName: string = 'Drowzee FFI';
+  public fullName: string = 'Drowzee (FFI 35)';
+  public legacyFullName = 'Drowzee FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Sinister Suggestion

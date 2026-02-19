@@ -37,7 +37,8 @@ export class Venipede extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Venipede';
-  public fullName: string = 'Venipede BCR';
+  public fullName: string = 'Venipede (BCR 72)';
+  public legacyFullName = 'Venipede BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Poison Point

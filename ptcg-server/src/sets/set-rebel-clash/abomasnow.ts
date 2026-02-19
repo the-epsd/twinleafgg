@@ -37,7 +37,8 @@ export class Abomasnow extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Abomasnow';
-  public fullName: string = 'Abomasnow RCL';
+  public fullName: string = 'Abomasnow (RCL 13)';
+  public legacyFullName = 'Abomasnow RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Soothing Scent

@@ -30,7 +30,8 @@ export class MegaGalladeex extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Gallade ex';
-  public fullName: string = 'Mega Gallade ex MEP';
+  public fullName: string = 'Mega Gallade ex (MEP 68)';
+  public legacyFullName = 'Mega Gallade ex MEP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Gale Cut

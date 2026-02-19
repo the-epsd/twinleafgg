@@ -20,7 +20,7 @@ export class Scyther extends PokemonCard {
       name: 'Fury Cutter',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 3 coins. If 1 of them is heads, this attack does 20 more damage. If 2 of them are heads, this attack does 50 more damage. If all of them are heads, this attack does 70 more damage.'
     }
   ];
@@ -29,7 +29,8 @@ export class Scyther extends PokemonCard {
   public setNumber: string = '3';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scyther';
-  public fullName: string = 'Scyther LOT';
+  public fullName: string = 'Scyther (LOT 3)';
+  public legacyFullName = 'Scyther LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fury Cutter

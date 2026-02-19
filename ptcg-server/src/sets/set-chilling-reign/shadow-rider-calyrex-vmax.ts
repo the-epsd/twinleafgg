@@ -52,7 +52,8 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
 
   public name: string = 'Shadow Rider Calyrex VMAX';
 
-  public fullName: string = 'Shadow Rider Calyrex VMAX CRE';
+  public fullName: string = 'Shadow Rider Calyrex VMAX (CRE 75)';
+  public legacyFullName = 'Shadow Rider Calyrex VMAX CRE';
 
   public readonly UNDERWORLD_DOOR_MARKER = 'UNDERWORLD_DOOR_MARKER';
 

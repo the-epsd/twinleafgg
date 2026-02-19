@@ -33,7 +33,8 @@ export class Heatran extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '100';
   public name: string = 'Heatran';
-  public fullName: string = 'Heatran BRS';
+  public fullName: string = 'Heatran (BRS 100)';
+  public legacyFullName = 'Heatran BRS';
 
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

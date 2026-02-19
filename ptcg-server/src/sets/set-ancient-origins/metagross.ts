@@ -38,7 +38,7 @@ export class Metagross extends PokemonCard {
       name: 'Iron Cannon',
       cost: [M, M, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard all [M] Energy attached to this Pokémon. If you do, this attack does 80 more damage.'
     }
   ];
@@ -47,7 +47,8 @@ export class Metagross extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metagross';
-  public fullName: string = 'Metagross AOR';
+  public fullName: string = 'Metagross (AOR 49)';
+  public legacyFullName = 'Metagross AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Magnetic Warp

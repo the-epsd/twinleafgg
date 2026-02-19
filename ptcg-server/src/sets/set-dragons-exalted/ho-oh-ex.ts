@@ -113,7 +113,8 @@ export class HoOhEx extends PokemonCard {
 
   public name: string = 'Ho-Oh-EX';
 
-  public fullName: string = 'Ho-Oh EX DRX';
+  public fullName: string = 'Ho-Oh-EX (DRX 22)';
+  public legacyFullName = 'Ho-Oh EX DRX';
 
   public cardImage: string = 'assets/cardback.png';
 

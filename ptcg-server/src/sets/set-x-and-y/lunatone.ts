@@ -38,7 +38,8 @@ export class Lunatone extends PokemonCard {
   public setNumber: string = '63';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lunatone';
-  public fullName: string = 'Lunatone XY';
+  public fullName: string = 'Lunatone (XY 63)';
+  public legacyFullName = 'Lunatone XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Draw

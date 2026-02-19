@@ -41,7 +41,8 @@ export class RadiantHawlucha extends PokemonCard {
 
   public name: string = 'Radiant Hawlucha';
 
-  public fullName: string = 'Radiant Hawlucha ASR';
+  public fullName: string = 'Radiant Hawlucha (ASR 81)';
+  public legacyFullName = 'Radiant Hawlucha ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

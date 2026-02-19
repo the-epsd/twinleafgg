@@ -30,7 +30,8 @@ export class Kyogre extends PokemonCard {
 
   public set: string = 'MEG';
   public name: string = 'Kyogre';
-  public fullName: string = 'Kyogre M1S';
+  public fullName: string = 'Kyogre (MEG 34)';
+  public legacyFullName = 'Kyogre M1S';
   public setNumber: string = '34';
   public regulationMark: string = 'I';
   public cardImage: string = 'assets/cardback.png';

@@ -39,7 +39,8 @@ export class Magnezone extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magnezone';
-  public fullName: string = 'Magnezone PLS';
+  public fullName: string = 'Magnezone (PLS 46)';
+  public legacyFullName = 'Magnezone PLS';
 
   public usedGyroBall = false;
 

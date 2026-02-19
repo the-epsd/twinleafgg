@@ -32,7 +32,8 @@ export class Vaporeon extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vaporeon';
-  public fullName: string = 'Vaporeon DEX';
+  public fullName: string = 'Vaporeon (DEX 25)';
+  public legacyFullName = 'Vaporeon DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Muddy Water - 20 to active + 20 to benched

@@ -40,7 +40,8 @@ export class Krookodile extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Krookodile';
-  public fullName: string = 'Krookodile XY';
+  public fullName: string = 'Krookodile (XY 71)';
+  public legacyFullName = 'Krookodile XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Block supporters if marker is set

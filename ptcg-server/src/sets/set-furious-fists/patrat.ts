@@ -28,7 +28,8 @@ export class Patrat extends PokemonCard {
   public setNumber: string = '84';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Patrat';
-  public fullName: string = 'Patrat FFI';
+  public fullName: string = 'Patrat (FFI 84)';
+  public legacyFullName = 'Patrat FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Safety Check

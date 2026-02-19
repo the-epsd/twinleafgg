@@ -48,7 +48,8 @@ export class GarchompCLvX extends PokemonCard {
   public setNumber: string = '145A';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Garchomp C LV.X';
-  public fullName: string = 'Garchomp C LV.X CEL';
+  public fullName: string = 'Garchomp C LV.X (CEL 145A)';
+  public legacyFullName = 'Garchomp C LV.X CEL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Healing Breath

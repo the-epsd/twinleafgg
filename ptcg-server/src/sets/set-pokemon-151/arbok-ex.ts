@@ -33,7 +33,8 @@ export class Arbokex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
   public name: string = 'Arbok ex';
-  public fullName: string = 'Arbok ex MEW';
+  public fullName: string = 'Arbok ex (MEW 24)';
+  public legacyFullName = 'Arbok ex MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

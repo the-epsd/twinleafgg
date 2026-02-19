@@ -43,7 +43,8 @@ export class LeafeonV extends PokemonCard {
 
   public name: string = 'Leafeon V';
 
-  public fullName: string = 'Leafeon V EVS';
+  public fullName: string = 'Leafeon V (EVS 7)';
+  public legacyFullName = 'Leafeon V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PowerEffect && effect.power === this.powers[0]) {

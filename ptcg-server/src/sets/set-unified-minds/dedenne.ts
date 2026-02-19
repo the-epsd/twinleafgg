@@ -23,7 +23,8 @@ export class Dedenne extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '145';
   public name: string = 'Dedenne';
-  public fullName: string = 'Dedenne UNM';
+  public fullName: string = 'Dedenne (UNM 145)';
+  public legacyFullName = 'Dedenne UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

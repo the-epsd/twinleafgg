@@ -30,7 +30,8 @@ export class Dhelmise extends PokemonCard {
   public setNumber: string = '22';
   public cardImage = 'assets/cardback.png';
   public name: string = 'Dhelmise';
-  public fullName: string = 'Dhelmise CES';
+  public fullName: string = 'Dhelmise (CES 22)';
+  public legacyFullName = 'Dhelmise CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Giga Drain

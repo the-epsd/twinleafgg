@@ -36,7 +36,8 @@ export class Rattata extends PokemonCard {
 
   public set: string = 'TR';
   public name: string = 'Rattata';
-  public fullName: string = 'Rattata TR';
+  public fullName: string = 'Rattata (TR 66)';
+  public legacyFullName = 'Rattata TR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
 

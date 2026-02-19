@@ -27,7 +27,7 @@ export class Magcargo2 extends PokemonCard {
       name: 'Indomitable Blaze',
       cost: [R, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, this attack does 60 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Magcargo2 extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magcargo';
-  public fullName: string = 'Magcargo PRC 24';
+  public fullName: string = 'Magcargo (PRC 24)';
+  public legacyFullName = 'Magcargo PRC 24';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Indomitable Blaze

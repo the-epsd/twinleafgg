@@ -80,7 +80,8 @@ export class FlowerShopLady extends TrainerCard {
 
   public name: string = 'Flower Shop Lady';
 
-  public fullName: string = 'Flower Shop Lady UD';
+  public fullName: string = 'Flower Shop Lady (UD 74)';
+  public legacyFullName = 'Flower Shop Lady UD';
 
   public cardImage: string = 'assets/cardback.png';
 

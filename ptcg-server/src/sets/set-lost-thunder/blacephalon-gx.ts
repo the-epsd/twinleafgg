@@ -48,7 +48,8 @@ export class BlacephalonGX extends PokemonCard {
 
   public name: string = 'Blacephalon-GX';
 
-  public fullName: string = 'Blacephalon-GX LOT';
+  public fullName: string = 'Blacephalon-GX (LOT 52)';
+  public legacyFullName = 'Blacephalon-GX LOT';
 
   public regulationMark = 'LOT';
 

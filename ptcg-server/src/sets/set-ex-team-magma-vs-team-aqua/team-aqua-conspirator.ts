@@ -13,7 +13,8 @@ export class TeamAquaConspirator extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '77';
   public name: string = 'Team Aqua Conspirator';
-  public fullName: string = 'Team Aqua Conspirator MA';
+  public fullName: string = 'Team Aqua Conspirator (MA 77)';
+  public legacyFullName = 'Team Aqua Conspirator MA';
 
   public text: string =
     'Search your deck for up to 2 in any combination of Basic Pokémon with Team Aqua in its name and basic Energy cards, show them to your opponent, and put them into your hand. Shuffle your deck afterward.';

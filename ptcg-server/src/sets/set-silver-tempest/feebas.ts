@@ -75,7 +75,8 @@ export class Feebas extends PokemonCard {
 
   public name: string = 'Feebas';
 
-  public fullName: string = 'Feebas SIT';
+  public fullName: string = 'Feebas (SIT 39)';
+  public legacyFullName = 'Feebas SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

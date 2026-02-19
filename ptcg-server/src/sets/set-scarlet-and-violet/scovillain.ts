@@ -48,7 +48,8 @@ export class Scovillain extends PokemonCard {
 
   public name: string = 'Scovillain';
 
-  public fullName: string = 'Scovillain SVI';
+  public fullName: string = 'Scovillain (SVI 29)';
+  public legacyFullName = 'Scovillain SVI';
 
 
   reduceEffect(store: StoreLike, state: State, effect: Effect) {

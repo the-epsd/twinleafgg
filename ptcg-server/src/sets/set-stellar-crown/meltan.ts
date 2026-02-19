@@ -31,7 +31,8 @@ export class Meltan extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meltan';
-  public fullName: string = 'Meltan SCR';
+  public fullName: string = 'Meltan (SCR 103)';
+  public legacyFullName = 'Meltan SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

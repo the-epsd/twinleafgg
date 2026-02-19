@@ -38,7 +38,8 @@ export class Emboar extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Emboar';
-  public fullName: string = 'Emboar BST';
+  public fullName: string = 'Emboar (BST 25)';
+  public legacyFullName = 'Emboar BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Fighting Fury Stance (passive - Single Strike Pokemon do 30 more damage to opponent's Active)

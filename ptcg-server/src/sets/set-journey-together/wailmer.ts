@@ -17,5 +17,6 @@ export class Wailmer extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
   public name: string = 'Wailmer';
-  public fullName: string = 'Wailmer JTG';
+  public fullName: string = 'Wailmer (JTG 40)';
+  public legacyFullName = 'Wailmer JTG';
 }

@@ -41,7 +41,8 @@ export class Musharna extends PokemonCard {
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Musharna';
-  public fullName: string = 'Musharna UNM';
+  public fullName: string = 'Musharna (UNM 89)';
+  public legacyFullName = 'Musharna UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rest Well

@@ -25,7 +25,8 @@ export class Ferroseed extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ferroseed';
-  public fullName: string = 'Ferroseed NXD';
+  public fullName: string = 'Ferroseed (NXD 77)';
+  public legacyFullName = 'Ferroseed NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Self Destruct

@@ -43,7 +43,8 @@ export class Genesect extends PokemonCard {
 
   public name: string = 'Genesect';
 
-  public fullName: string = 'Genesect SFA';
+  public fullName: string = 'Genesect (SFA 40)';
+  public legacyFullName = 'Genesect SFA';
 
   public readonly OPPONENT_CANNOT_PLAY_ACE_SPECS_MARKER = 'OPPONENT_CANNOT_PLAY_ACE_SPECS_MARKER';
 

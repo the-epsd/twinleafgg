@@ -15,7 +15,8 @@ export class SpaceCenter extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'DX';
   public name: string = 'Space Center';
-  public fullName: string = 'Space Center DX';
+  public fullName: string = 'Space Center (DX 91)';
+  public legacyFullName = 'Space Center DX';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
 

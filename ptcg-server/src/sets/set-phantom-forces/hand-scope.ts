@@ -15,7 +15,8 @@ export class HandScope extends TrainerCard {
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hand Scope';
-  public fullName: string = 'Hand Scope PHF';
+  public fullName: string = 'Hand Scope (PHF 96)';
+  public legacyFullName = 'Hand Scope PHF';
   public text: string = 'Your opponent reveals his or her hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

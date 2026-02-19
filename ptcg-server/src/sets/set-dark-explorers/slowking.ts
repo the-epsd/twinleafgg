@@ -34,7 +34,8 @@ export class Slowking extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slowking';
-  public fullName: string = 'Slowking DEX';
+  public fullName: string = 'Slowking (DEX 49)';
+  public legacyFullName = 'Slowking DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Psy Bolt - flip coin for paralysis

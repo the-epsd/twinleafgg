@@ -36,7 +36,8 @@ export class Torracat extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Torracat';
-  public fullName: string = 'Torracat TEU';
+  public fullName: string = 'Torracat (TEU 21)';
+  public legacyFullName = 'Torracat TEU';
 
   public usedRoar = false;
 

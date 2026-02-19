@@ -38,7 +38,8 @@ export class Aromatisse extends PokemonCard {
   public setNumber: string = '106';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aromatisse';
-  public fullName: string = 'Aromatisse BKT';
+  public fullName: string = 'Aromatisse (BKT 106)';
+  public legacyFullName = 'Aromatisse BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Heavy Perfume - Confuse with 60 damage instead of 30

@@ -37,7 +37,8 @@ export class Thievul extends PokemonCard {
   public setNumber: string = '126';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Thievul';
-  public fullName: string = 'Thievul SSH';
+  public fullName: string = 'Thievul (SSH 126)';
+  public legacyFullName = 'Thievul SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thief

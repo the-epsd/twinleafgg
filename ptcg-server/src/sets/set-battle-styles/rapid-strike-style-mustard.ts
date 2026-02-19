@@ -25,7 +25,8 @@ export class RapidStrikeStyleMustard extends TrainerCard {
   
   public name: string = 'Rapid Strike Style Mustard';
   
-  public fullName: string = 'Rapid Strike Style Mustard BST';
+  public fullName: string = 'Rapid Strike Style Mustard (BST 132)';
+  public legacyFullName = 'Rapid Strike Style Mustard BST';
 
   public text: string =
     `You can play this card only when it is the last card in your hand.

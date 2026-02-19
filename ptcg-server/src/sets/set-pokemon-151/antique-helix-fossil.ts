@@ -35,6 +35,7 @@ export class AntiqueHelixFossil extends PokemonCard {
 
   public name: string = 'Antique Helix Fossil';
 
-  public fullName: string = 'Antique Helix Fossil MEW';
+  public fullName: string = 'Antique Helix Fossil (MEW 153)';
+  public legacyFullName = 'Antique Helix Fossil MEW';
 
 }

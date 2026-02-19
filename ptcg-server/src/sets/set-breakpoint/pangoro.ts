@@ -38,7 +38,8 @@ export class Pangoro extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pangoro';
-  public fullName: string = 'Pangoro BKP';
+  public fullName: string = 'Pangoro (BKP 75)';
+  public legacyFullName = 'Pangoro BKP';
 
   public readonly REDUCE_DAMAGE_MARKER = 'PANGORO_REDUCE_DAMAGE_MARKER';
   public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'PANGORO_CLEAR_REDUCE_DAMAGE_MARKER';

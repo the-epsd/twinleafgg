@@ -42,7 +42,8 @@ export class IronLeaves extends PokemonCard {
 
   public name: string = 'Iron Leaves';
 
-  public fullName: string = 'Iron Leaves TWM';
+  public fullName: string = 'Iron Leaves (TWM 19)';
+  public legacyFullName = 'Iron Leaves TWM';
 
   public cardImage: string = 'assets/cardback.png';
 

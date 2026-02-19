@@ -16,7 +16,8 @@ export class BellelbaAndBrycenMan extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '186';
   public name: string = 'Bellelba & Brycen-Man';
-  public fullName: string = 'Bellelba & Brycen-Man CEC';
+  public fullName: string = 'Bellelba & Brycen-Man (CEC 186)';
+  public legacyFullName = 'Bellelba & Brycen-Man CEC';
 
   public text: string =
     `Discard 3 cards from the top of each player's deck.

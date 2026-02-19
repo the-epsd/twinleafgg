@@ -40,7 +40,8 @@ export class Goodra extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Goodra';
-  public fullName: string = 'Goodra AOR';
+  public fullName: string = 'Goodra (AOR 60)';
+  public legacyFullName = 'Goodra AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Liquid Blow

@@ -35,7 +35,8 @@ export class Electivire extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electivire';
-  public fullName: string = 'Electivire BCR';
+  public fullName: string = 'Electivire (BCR 54)';
+  public legacyFullName = 'Electivire BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Electriwave

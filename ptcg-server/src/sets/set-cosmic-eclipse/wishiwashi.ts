@@ -31,7 +31,8 @@ export class Wishiwashi extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wishiwashi';
-  public fullName: string = 'Wishiwashi CEC';
+  public fullName: string = 'Wishiwashi (CEC 62)';
+  public legacyFullName = 'Wishiwashi CEC';
 
   public readonly SCATTER_MARKER = 'SCATTER_MARKER';
 

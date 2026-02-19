@@ -33,7 +33,8 @@ export class Moltres extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Moltres';
-  public fullName: string = 'Moltres TEU';
+  public fullName: string = 'Moltres (TEU 19)';
+  public legacyFullName = 'Moltres TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

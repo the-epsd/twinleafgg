@@ -30,7 +30,8 @@ export class Corphish extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Corphish';
-  public fullName: string = 'Corphish BST';
+  public fullName: string = 'Corphish (BST 38)';
+  public legacyFullName = 'Corphish BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble Beam

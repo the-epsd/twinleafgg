@@ -15,7 +15,8 @@ export class Carmine extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '145';
   public name: string = 'Carmine';
-  public fullName: string = 'Carmine TWM';
+  public fullName: string = 'Carmine (TWM 145)';
+  public legacyFullName = 'Carmine TWM';
 
   public text: string =
     `If you go first, you can use this card on your first turn.

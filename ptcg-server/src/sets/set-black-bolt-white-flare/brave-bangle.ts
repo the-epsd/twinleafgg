@@ -15,7 +15,8 @@ export class BraveBangle extends TrainerCard {
   public setNumber: string = '80';
   public regulationMark = 'I';
   public name: string = 'Brave Bangle';
-  public fullName: string = 'Brave Bangle SV11W';
+  public fullName: string = 'Brave Bangle (WHT 80)';
+  public legacyFullName = 'Brave Bangle SV11W';
 
   public text: string = 'The attacks of the Pokémon this card is attached to (excluding Pokémon with a Rule Box) deal 30 more damage to your opponent\'s Active Pokémon ex.';
 

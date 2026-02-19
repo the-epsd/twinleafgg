@@ -33,7 +33,8 @@ export class Cetitan extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cetitan';
-  public fullName: string = 'Cetitan SSP';
+  public fullName: string = 'Cetitan (SSP 54)';
+  public legacyFullName = 'Cetitan SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Solid Body

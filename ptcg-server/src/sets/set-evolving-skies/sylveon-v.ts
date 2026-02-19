@@ -49,7 +49,8 @@ export class SylveonV extends PokemonCard {
 
   public name: string = 'Sylveon V';
 
-  public fullName: string = 'Sylveon V EVS';
+  public fullName: string = 'Sylveon V (EVS 74)';
+  public legacyFullName = 'Sylveon V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

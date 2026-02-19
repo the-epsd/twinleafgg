@@ -16,7 +16,8 @@ export class ToyCatcher extends TrainerCard {
   public setNumber: string = '163';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toy Catcher';
-  public fullName: string = 'Toy Catcher EVS';
+  public fullName: string = 'Toy Catcher (EVS 163)';
+  public legacyFullName = 'Toy Catcher EVS';
   public text: string = 'Switch 1 of your opponent\'s Benched Pokémon that has 50 HP or less remaining with your opponent\'s Active Pokémon. You may play any number of Item cards during your turn. Attach a Pokémon Tool to 1 of your Pokémon that doesn\'t already have a Pokémon Tool attached.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

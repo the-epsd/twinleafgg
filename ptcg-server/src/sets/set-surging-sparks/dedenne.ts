@@ -29,7 +29,8 @@ export class Dedenne extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '87';
   public name: string = 'Dedenne';
-  public fullName: string = 'Dedenne SSP';
+  public fullName: string = 'Dedenne (SSP 87)';
+  public legacyFullName = 'Dedenne SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

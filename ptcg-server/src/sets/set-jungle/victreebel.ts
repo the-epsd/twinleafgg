@@ -31,7 +31,8 @@ export class Victreebel extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public name: string = 'Victreebel';
-  public fullName: string = 'Victreebel JU';
+  public fullName: string = 'Victreebel (JU 14)';
+  public legacyFullName = 'Victreebel JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Lure

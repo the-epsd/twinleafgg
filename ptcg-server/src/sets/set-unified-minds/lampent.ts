@@ -30,7 +30,8 @@ export class Lampent extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lampent';
-  public fullName: string = 'Lampent UNM';
+  public fullName: string = 'Lampent (UNM 29)';
+  public legacyFullName = 'Lampent UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Fireworks

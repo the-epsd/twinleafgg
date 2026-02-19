@@ -33,7 +33,8 @@ export class Umbreon2 extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Umbreon';
-  public fullName: string = 'Umbreon DEX 61';
+  public fullName: string = 'Umbreon (DEX 61)';
+  public legacyFullName = 'Umbreon DEX 61';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Confuse Ray

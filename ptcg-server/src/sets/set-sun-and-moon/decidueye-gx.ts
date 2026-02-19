@@ -56,7 +56,8 @@ export class DecidueyeGX extends PokemonCard {
 
   public name: string = 'Decidueye-GX';
 
-  public fullName: string = 'Decidueye-GX SUM';
+  public fullName: string = 'Decidueye-GX (SUM 12)';
+  public legacyFullName = 'Decidueye-GX SUM';
 
   public cardImage: string = 'assets/cardback.png';
 

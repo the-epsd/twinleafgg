@@ -36,7 +36,8 @@ export class Tsareena extends PokemonCard {
   public setNumber: string = '20';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tsareena';
-  public fullName: string = 'Tsareena SUM';
+  public fullName: string = 'Tsareena (SUM 20)';
+  public legacyFullName = 'Tsareena SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Queenly Majesty

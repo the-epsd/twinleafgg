@@ -35,7 +35,8 @@ export class Magnemite extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magnemite';
-  public fullName: string = 'Magnemite PLS';
+  public fullName: string = 'Magnemite (PLS 42)';
+  public legacyFullName = 'Magnemite PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Metal Sound

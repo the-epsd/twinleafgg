@@ -42,7 +42,8 @@ export class Vivillon extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Vivillon';
-  public fullName: string = 'Vivillon BKT';
+  public fullName: string = 'Vivillon (BKT 15)';
+  public legacyFullName = 'Vivillon BKT';
 
   public readonly ENERGY_COLOR_MARKER = 'VIVILLON_BKT_ENERGY_COLOR_MARKER';
 

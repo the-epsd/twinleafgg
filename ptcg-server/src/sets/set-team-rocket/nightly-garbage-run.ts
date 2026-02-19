@@ -70,7 +70,8 @@ export class NightlyGarbageRun extends TrainerCard {
 
   public name: string = 'Nightly Garbage Run';
 
-  public fullName: string = 'Nightly Garbage Run TR';
+  public fullName: string = 'Nightly Garbage Run (TR 77)';
+  public legacyFullName = 'Nightly Garbage Run TR';
 
   public cardImage: string = 'assets/cardback.png';
 

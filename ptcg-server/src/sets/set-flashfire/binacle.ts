@@ -29,7 +29,8 @@ export class Binacle extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Binacle';
-  public fullName: string = 'Binacle FLF';
+  public fullName: string = 'Binacle (FLF 48)';
+  public legacyFullName = 'Binacle FLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-x-and-y/tauros.ts (Seething Anger)

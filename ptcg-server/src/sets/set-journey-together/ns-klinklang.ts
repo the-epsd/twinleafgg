@@ -29,7 +29,8 @@ export class NsKlinklang extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '105';
   public name: string = 'N\'s Klinklang';
-  public fullName: string = 'N\'s Klinklang JTG';
+  public fullName: string = 'N\'s Klinklang (JTG 105)';
+  public legacyFullName = 'N\'s Klinklang JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

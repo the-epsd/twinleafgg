@@ -28,7 +28,7 @@ export class Pikachu extends PokemonCard {
       name: 'Quick Attack',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Pikachu extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pikachu';
-  public fullName: string = 'Pikachu CIN';
+  public fullName: string = 'Pikachu (CIN 30)';
+  public legacyFullName = 'Pikachu CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pika Draw

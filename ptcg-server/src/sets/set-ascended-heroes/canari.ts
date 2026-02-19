@@ -108,7 +108,8 @@ export class Canari extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '185';
   public name: string = 'Canari';
-  public fullName: string = 'Canari M2a';
+  public fullName: string = 'Canari (ASC 185)';
+  public legacyFullName = 'Canari M2a';
 
   public text: string = `You can use this card only if you discard another card from your hand.
   

@@ -30,7 +30,8 @@ export class Slakoth2 extends PokemonCard {
   public setNumber: string = '168';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slakoth';
-  public fullName: string = 'Slakoth UNM 168';
+  public fullName: string = 'Slakoth (UNM 168)';
+  public legacyFullName = 'Slakoth UNM 168';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Boundless Power

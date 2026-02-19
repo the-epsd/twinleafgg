@@ -21,7 +21,7 @@ export class Bagon extends PokemonCard {
       name: 'Continuous Headbutt',
       cost: [R, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 30 damage times the number of heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Bagon extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bagon';
-  public fullName: string = 'Bagon ROS';
+  public fullName: string = 'Bagon (ROS 54)';
+  public legacyFullName = 'Bagon ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Continuous Headbutt

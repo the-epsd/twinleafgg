@@ -38,7 +38,8 @@ export class Conkeldurr extends PokemonCard {
   public setNumber: string = '75';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Conkeldurr';
-  public fullName: string = 'Conkeldurr BST';
+  public fullName: string = 'Conkeldurr (BST 75)';
+  public legacyFullName = 'Conkeldurr BST';
 
   public readonly CANT_ATTACK_MARKER = 'CONKELDURR_BST_CANT_ATTACK_MARKER';
 

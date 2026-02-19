@@ -18,7 +18,8 @@ export class Morty extends TrainerCard {
   public setNumber: string = '186';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Morty';
-  public fullName: string = 'Morty LOT';
+  public fullName: string = 'Morty (LOT 186)';
+  public legacyFullName = 'Morty LOT';
   public text: string = 'You can play this card only if 1 of your Psychic Pok\u00e9mon was Knocked Out during your opponent\'s last turn. Your opponent reveals their hand. Choose 2 cards you find there. Your opponent shuffles those cards into their deck. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

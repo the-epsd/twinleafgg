@@ -36,7 +36,8 @@ export class Pikachu extends PokemonCard {
   public set: string = 'LM';
   public setNumber: string = '93';
   public name: string = 'Pikachu';
-  public fullName: string = 'Pikachu LM';
+  public fullName: string = 'Pikachu (LM 93)';
+  public legacyFullName = 'Pikachu LM';
   public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

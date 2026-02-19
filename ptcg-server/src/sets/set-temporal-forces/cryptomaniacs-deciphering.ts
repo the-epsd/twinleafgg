@@ -85,7 +85,8 @@ export class CiphermaniacsCodebreaking extends TrainerCard {
 
   public name: string = 'Ciphermaniac\'s Codebreaking';
 
-  public fullName: string = 'Ciphermaniac\'s Codebreaking TEF';
+  public fullName: string = 'Ciphermaniac\'s Codebreaking (TEF 145)';
+  public legacyFullName = 'Ciphermaniac\'s Codebreaking TEF';
 
   public text: string =
     'Search your deck for 2 cards, shuffle your deck, then put those cards on top of it in any order.';

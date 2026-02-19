@@ -35,6 +35,7 @@ export class Snom extends PokemonCard {
 
   public name: string = 'Snom';
 
-  public fullName: string = 'Snom SSH';
+  public fullName: string = 'Snom (SSH 63)';
+  public legacyFullName = 'Snom SSH';
 
 }

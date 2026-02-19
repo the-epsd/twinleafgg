@@ -46,7 +46,8 @@ export class AltariaGx extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Altaria GX';
-  public fullName: string = 'Altaria GX DRM';
+  public fullName: string = 'Altaria GX (DRM 41)';
+  public legacyFullName = 'Altaria GX DRM';
 
   public readonly BRIGHT_TONE_MARKER = 'BRIGHT_TONE_MARKER';
   public readonly CLEAR_BRIGHT_TONE_MARKER = 'CLEAR_BRIGHT_TONE_MARKER';

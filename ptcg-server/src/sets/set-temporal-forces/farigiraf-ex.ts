@@ -35,7 +35,8 @@ export class Farigirafex extends PokemonCard {
   public setNumber: string = '108';
 
   public name: string = 'Farigiraf ex';
-  public fullName: string = 'Farigiraf ex TEF';
+  public fullName: string = 'Farigiraf ex (TEF 108)';
+  public legacyFullName = 'Farigiraf ex TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {

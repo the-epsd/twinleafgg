@@ -39,7 +39,8 @@ export class Hydreigon extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hydreigon';
-  public fullName: string = 'Hydreigon DRM';
+  public fullName: string = 'Hydreigon (DRM 33)';
+  public legacyFullName = 'Hydreigon DRM';
 
   public readonly WEED_OUT_MARKER = 'WEED_OUT_MARKER_DRM';
 

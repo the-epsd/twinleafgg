@@ -70,7 +70,8 @@ export class Oleana extends TrainerCard {
   public setNumber: string = '163';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Oleana';
-  public fullName: string = 'Oleana RCL';
+  public fullName: string = 'Oleana (RCL 163)';
+  public legacyFullName = 'Oleana RCL';
   public text: string = 'You can play this card only if you discard 2 other cards from your hand. Your opponent reveals their hand. Put a Trainer card you find there on the bottom of their deck. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

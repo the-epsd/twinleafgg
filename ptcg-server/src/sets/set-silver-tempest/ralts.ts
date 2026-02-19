@@ -36,7 +36,8 @@ export class Ralts extends PokemonCard {
 
   public name: string = 'Ralts';
 
-  public fullName: string = 'Ralts SIT';
+  public fullName: string = 'Ralts (SIT 67)';
+  public legacyFullName = 'Ralts SIT';
 
   public MEMORY_SKIPPED_ATTACK: Attack | undefined;
 

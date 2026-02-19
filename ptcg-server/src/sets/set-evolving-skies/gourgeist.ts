@@ -23,7 +23,7 @@ export class Gourgeist extends PokemonCard {
       name: 'Pandemonium',
       cost: [C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Reveal the top 6 cards of your deck. This attack does 60 damage for each Psychic Pokémon you find there. Then, shuffle those Pokémon back into your deck and discard the other cards.'
     }
   ];
@@ -33,7 +33,8 @@ export class Gourgeist extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gourgeist';
-  public fullName: string = 'Gourgeist EVS';
+  public fullName: string = 'Gourgeist (EVS 77)';
+  public legacyFullName = 'Gourgeist EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pandemonium

@@ -33,7 +33,8 @@ export class Electrode extends PokemonCard {
   public setNumber: string = '33';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Electrode';
-  public fullName: string = 'Electrode PLF';
+  public fullName: string = 'Electrode (PLF 33)';
+  public legacyFullName = 'Electrode PLF';
 
   public readonly MAGNETIC_DRAW_MARKER = 'MAGNETIC_DRAW_MARKER';
 

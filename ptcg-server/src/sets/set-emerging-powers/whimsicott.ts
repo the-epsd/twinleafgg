@@ -36,7 +36,8 @@ export class Whimsicott extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
   public name: string = 'Whimsicott';
-  public fullName: string = 'Whimsicott EPO';
+  public fullName: string = 'Whimsicott (EPO 11)';
+  public legacyFullName = 'Whimsicott EPO';
 
   public readonly COTTON_GUARD_MARKER = 'WHIMSICOTT_COTTON_GUARD_MARKER';
 

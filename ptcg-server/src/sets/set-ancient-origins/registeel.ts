@@ -23,7 +23,7 @@ export class Registeel extends PokemonCard {
       name: 'Iron Head',
       cost: [M, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 30 damage times the number of heads.'
     },
     {
@@ -38,7 +38,8 @@ export class Registeel extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Registeel';
-  public fullName: string = 'Registeel AOR';
+  public fullName: string = 'Registeel (AOR 51)';
+  public legacyFullName = 'Registeel AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Iron Head

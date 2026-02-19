@@ -17,7 +17,8 @@ export class EnergySticker extends TrainerCard {
 
   public name: string = 'Energy Sticker';
 
-  public fullName: string = 'Energy Sticker MEW';
+  public fullName: string = 'Energy Sticker (MEW 159)';
+  public legacyFullName = 'Energy Sticker MEW';
 
   public text = 'Flip a coin. If heads, attach a Basic Energy card from your discard pile to 1 of your Benched Pokémon.';
 

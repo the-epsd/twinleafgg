@@ -39,7 +39,8 @@ export class Poipole extends PokemonCard {
 
   public name: string = 'Poipole';
 
-  public fullName: string = 'Poipole LOT';
+  public fullName: string = 'Poipole (LOT 107)';
+  public legacyFullName = 'Poipole LOT';
 
   public cardImage: string = 'assets/cardback.png';
 

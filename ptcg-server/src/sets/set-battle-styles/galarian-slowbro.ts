@@ -28,7 +28,7 @@ export class GalarianSlowbro extends PokemonCard {
       name: 'Unhinged Hammer',
       cost: [D, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon is affected by a Special Condition, this attack does 120 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class GalarianSlowbro extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Slowbro';
-  public fullName: string = 'Galarian Slowbro BST';
+  public fullName: string = 'Galarian Slowbro (BST 92)';
+  public legacyFullName = 'Galarian Slowbro BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Splattering Poison

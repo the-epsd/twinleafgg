@@ -36,7 +36,8 @@ export class Poliwag extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Poliwag';
-  public fullName: string = 'Poliwag FFI';
+  public fullName: string = 'Poliwag (FFI 15)';
+  public legacyFullName = 'Poliwag FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Spiral Current

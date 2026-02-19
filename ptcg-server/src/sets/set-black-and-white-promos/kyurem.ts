@@ -41,7 +41,8 @@ export class Kyurem extends PokemonCard {
 
   public name: string = 'Kyurem';
 
-  public fullName: string = 'Kyurem BWP';
+  public fullName: string = 'Kyurem (BWP 44)';
+  public legacyFullName = 'Kyurem BWP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

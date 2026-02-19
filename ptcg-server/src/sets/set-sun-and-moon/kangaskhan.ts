@@ -20,14 +20,14 @@ export class Kangaskhan extends PokemonCard {
       name: 'Cross-Cut',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 30 more damage.'
     },
     {
       name: 'Hurricane Punch',
       cost: [C, C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 50 damage for each heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Kangaskhan extends PokemonCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kangaskhan';
-  public fullName: string = 'Kangaskhan SUM';
+  public fullName: string = 'Kangaskhan (SUM 99)';
+  public legacyFullName = 'Kangaskhan SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Cross-Cut

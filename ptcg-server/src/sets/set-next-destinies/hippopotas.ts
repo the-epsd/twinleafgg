@@ -32,7 +32,8 @@ export class Hippopotas extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hippopotas';
-  public fullName: string = 'Hippopotas NXD';
+  public fullName: string = 'Hippopotas (NXD 65)';
+  public legacyFullName = 'Hippopotas NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sand Jet - 20 damage to benched

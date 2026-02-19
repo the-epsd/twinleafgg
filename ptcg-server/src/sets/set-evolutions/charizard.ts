@@ -38,7 +38,8 @@ export class Charizard extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Charizard';
-  public fullName: string = 'Charizard EVO';
+  public fullName: string = 'Charizard (EVO 11)';
+  public legacyFullName = 'Charizard EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Energy Burn (passive - all energy provides Fire)

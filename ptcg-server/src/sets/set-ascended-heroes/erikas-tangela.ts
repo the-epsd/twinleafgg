@@ -32,7 +32,8 @@ export class ErikasTangela extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '7';
   public name: string = 'Erika\'s Tangela';
-  public fullName: string = 'Erika\'s Tangela MC';
+  public fullName: string = 'Erika\'s Tangela (ASC 7)';
+  public legacyFullName = 'Erika\'s Tangela MC';
 
   public readonly COLORFUL_RIOT_MARKER = 'COLORFUL_RIOT_MARKER';
 

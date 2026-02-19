@@ -36,7 +36,8 @@ export class Phanpy extends PokemonCard {
 
   public name: string = 'Phanpy';
 
-  public fullName: string = 'Phanpy VIV';
+  public fullName: string = 'Phanpy (VIV 86)';
+  public legacyFullName = 'Phanpy VIV';
 
   public regulationMark = 'D';
 

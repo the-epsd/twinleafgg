@@ -92,7 +92,8 @@ export class Clefable extends PokemonCard {
 
   public name: string = 'Clefable';
 
-  public fullName: string = 'Clefable TWM';
+  public fullName: string = 'Clefable (TWM 79)';
+  public legacyFullName = 'Clefable TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

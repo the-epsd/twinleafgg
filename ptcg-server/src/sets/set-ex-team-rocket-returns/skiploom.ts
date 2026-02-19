@@ -31,7 +31,8 @@ export class Skiploom extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skiploom';
-  public fullName: string = 'Skiploom TRR';
+  public fullName: string = 'Skiploom (TRR 49)';
+  public legacyFullName = 'Skiploom TRR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

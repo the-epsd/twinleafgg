@@ -38,7 +38,8 @@ export class Pelipper extends PokemonCard {
   public setNumber: string = '38';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pelipper';
-  public fullName: string = 'Pelipper SUM';
+  public fullName: string = 'Pelipper (SUM 38)';
+  public legacyFullName = 'Pelipper SUM';
 
   private readonly PREVENT_ALL_MARKER = 'PELIPPER_PREVENT_ALL_MARKER';
   private readonly CLEAR_PREVENT_ALL_MARKER = 'PELIPPER_CLEAR_PREVENT_ALL_MARKER';

@@ -18,7 +18,8 @@ export class CancelingCologne extends TrainerCard {
   public name: string = 'Canceling Cologne';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '136';
-  public fullName: string = 'Canceling Cologne ASR';
+  public fullName: string = 'Canceling Cologne (ASR 136)';
+  public legacyFullName = 'Canceling Cologne ASR';
   public text: string = 'Until the end of your turn, your opponent\'s Active Pokémon has no Abilities. (This includes Pokémon that come into play during that turn.)';
 
   public CANCELING_COLOGNE_MARKER = 'CANCELING_COLOGNE_MARKER';

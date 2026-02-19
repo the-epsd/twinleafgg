@@ -35,7 +35,8 @@ export class Oddish extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Oddish';
-  public fullName: string = 'Oddish BCR';
+  public fullName: string = 'Oddish (BCR 1)';
+  public legacyFullName = 'Oddish BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Absorb

@@ -31,7 +31,8 @@ export class Venipede extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '38';
   public name: string = 'Venipede';
-  public fullName: string = 'Venipede EPO';
+  public fullName: string = 'Venipede (EPO 38)';
+  public legacyFullName = 'Venipede EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

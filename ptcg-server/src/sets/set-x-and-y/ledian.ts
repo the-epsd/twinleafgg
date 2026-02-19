@@ -36,7 +36,8 @@ export class Ledian extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ledian';
-  public fullName: string = 'Ledian XY';
+  public fullName: string = 'Ledian (XY 7)';
+  public legacyFullName = 'Ledian XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Mach Punch

@@ -30,7 +30,8 @@ export class Gulpin extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public name: string = 'Gulpin';
-  public fullName: string = 'Gulpin SCR';
+  public fullName: string = 'Gulpin (SCR 91)';
+  public legacyFullName = 'Gulpin SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

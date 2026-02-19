@@ -39,7 +39,8 @@ export class Metagross extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
   public name: string = 'Metagross';
-  public fullName: string = 'Metagross DS';
+  public fullName: string = 'Metagross (DS 11)';
+  public legacyFullName = 'Metagross DS';
 
   public readonly DELTA_CONTROL_MARKER = 'DELTA_CONTROL_MARKER';
 

@@ -38,7 +38,8 @@ export class Roserade extends PokemonCard {
   public setNumber: string = '5';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Roserade';
-  public fullName: string = 'Roserade UPR';
+  public fullName: string = 'Roserade (UPR 5)';
+  public legacyFullName = 'Roserade UPR';
 
   public usedInvitingPoison = false;
 

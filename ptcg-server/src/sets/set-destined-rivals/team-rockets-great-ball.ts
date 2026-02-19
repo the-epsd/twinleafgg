@@ -23,7 +23,8 @@ export class TeamRocketsGreatBall extends TrainerCard {
 
   public name: string = 'Team Rocket\'s Great Ball';
 
-  public fullName: string = 'Team Rocket\'s Great Ball DRI';
+  public fullName: string = 'Team Rocket\'s Great Ball (DRI 175)';
+  public legacyFullName = 'Team Rocket\'s Great Ball DRI';
 
   public text: string = 'Flip a coin. If heads, search your deck for an Evolution Team Rocket Pokémon, reveal it, and put it into your hand. If tails, search your deck for a Basic Team Rocket Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
 

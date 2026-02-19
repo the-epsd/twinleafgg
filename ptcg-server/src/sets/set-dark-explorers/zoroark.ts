@@ -42,7 +42,8 @@ export class Zoroark extends PokemonCard {
 
   public name: string = 'Zoroark';
 
-  public fullName: string = 'Zoroark DEX';
+  public fullName: string = 'Zoroark (DEX 71)';
+  public legacyFullName = 'Zoroark DEX';
 
   public cardImage: string = 'assets/cardback.png';
 

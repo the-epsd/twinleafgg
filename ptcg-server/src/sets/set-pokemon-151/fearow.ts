@@ -26,7 +26,8 @@ export class Fearow extends PokemonCard {
 
   public set: string = 'MEW';
   public name: string = 'Fearow';
-  public fullName: string = 'Fearow MEW';
+  public fullName: string = 'Fearow (MEW 22)';
+  public legacyFullName = 'Fearow MEW';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '22';
 

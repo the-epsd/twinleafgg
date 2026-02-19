@@ -131,7 +131,8 @@ export class Reuniclus extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Reuniclus';
-  public fullName: string = 'Reuniclus SV11B';
+  public fullName: string = 'Reuniclus (BLK 39)';
+  public legacyFullName = 'Reuniclus SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Cellular Awakening

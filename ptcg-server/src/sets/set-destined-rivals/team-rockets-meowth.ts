@@ -31,7 +31,8 @@ export class TeamRocketsMeowth extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '149';
   public name: string = 'Team Rocket\'s Meowth';
-  public fullName: string = 'Team Rocket\'s Meowth DRI';
+  public fullName: string = 'Team Rocket\'s Meowth (DRI 149)';
+  public legacyFullName = 'Team Rocket\'s Meowth DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Cat Nab

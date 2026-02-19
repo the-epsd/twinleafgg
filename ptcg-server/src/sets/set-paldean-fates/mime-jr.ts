@@ -89,7 +89,8 @@ export class MimeJr extends PokemonCard {
 
   public name: string = 'Mime Jr.';
 
-  public fullName: string = 'Mime Jr. PAF';
+  public fullName: string = 'Mime Jr. (PAF 31)';
+  public legacyFullName = 'Mime Jr. PAF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

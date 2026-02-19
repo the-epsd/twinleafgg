@@ -17,7 +17,8 @@ export class PremierBall extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '101';
   public name: string = 'Premier Ball';
-  public fullName: string = 'Premier Ball GE';
+  public fullName: string = 'Premier Ball (GE 101)';
+  public legacyFullName = 'Premier Ball GE';
 
   public text: string = 'Search your deck or your discard pile for a Pokémon LV.X, show it to your opponent, and put it into your hand. If you search your deck, shuffle your deck afterward.';
 

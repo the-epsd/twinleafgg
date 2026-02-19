@@ -36,7 +36,8 @@ export class Delcatty extends PokemonCard {
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Delcatty';
-  public fullName: string = 'Delcatty BCR';
+  public fullName: string = 'Delcatty (BCR 114)';
+  public legacyFullName = 'Delcatty BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Gather Energy

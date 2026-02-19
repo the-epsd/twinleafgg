@@ -31,7 +31,8 @@ export class Sinistea extends PokemonCard {
   public setNumber: string = 'SV052';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sinistea';
-  public fullName: string = 'Sinistea SHF';
+  public fullName: string = 'Sinistea (SHF SV052)';
+  public legacyFullName = 'Sinistea SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Furtive Drop

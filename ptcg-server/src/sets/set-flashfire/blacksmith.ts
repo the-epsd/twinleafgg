@@ -24,7 +24,8 @@ export class Blacksmith extends TrainerCard {
 
   public setNumber: string = '88';
 
-  public fullName: string = 'Blacksmith FLF';
+  public fullName: string = 'Blacksmith (FLF 88)';
+  public legacyFullName = 'Blacksmith FLF';
 
   public text: string =
     'Attach 2 [R] Energy cards from your discard pile to 1 of your [R] Pokémon.';

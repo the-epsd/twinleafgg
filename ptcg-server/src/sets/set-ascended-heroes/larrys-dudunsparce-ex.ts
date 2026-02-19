@@ -25,7 +25,8 @@ export class LarrysDudunsparceex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '164';
   public name: string = 'Larry\'s Dudunsparce ex';
-  public fullName: string = 'Larry\'s Dudunsparce ex MC';
+  public fullName: string = 'Larry\'s Dudunsparce ex (ASC 164)';
+  public legacyFullName = 'Larry\'s Dudunsparce ex MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

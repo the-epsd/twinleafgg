@@ -27,7 +27,7 @@ export class Masquerain extends PokemonCard {
       name: 'Hurricane Wing',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 40 damage for each heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Masquerain extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Masquerain';
-  public fullName: string = 'Masquerain CES';
+  public fullName: string = 'Masquerain (CES 16)';
+  public legacyFullName = 'Masquerain CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Surprising Pattern

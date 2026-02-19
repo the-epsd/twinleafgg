@@ -20,5 +20,6 @@ export class Smoliv extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Smoliv';
-  public fullName: string = 'Smoliv DRI';
+  public fullName: string = 'Smoliv (DRI 21)';
+  public legacyFullName = 'Smoliv DRI';
 }

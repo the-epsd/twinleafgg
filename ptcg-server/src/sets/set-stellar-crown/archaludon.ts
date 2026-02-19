@@ -33,7 +33,8 @@ export class Archaludon extends PokemonCard {
   public setNumber = '107';
   public cardImage = 'assets/cardback.png';
   public name = 'Archaludon';
-  public fullName = 'Archaludon SCR';
+  public fullName = 'Archaludon (SCR 107)';
+  public legacyFullName = 'Archaludon SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckRetreatCostEffect) {

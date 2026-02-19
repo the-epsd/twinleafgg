@@ -32,7 +32,7 @@ export class Haxorus extends PokemonCard {
       name: 'Powerful Axe',
       cost: [R, M],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 40 more damage times the amount of basic Energy attached to this Pokemon.'
     }
   ];
@@ -41,7 +41,8 @@ export class Haxorus extends PokemonCard {
   public setNumber: string = '156';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Haxorus';
-  public fullName: string = 'Haxorus UNM';
+  public fullName: string = 'Haxorus (UNM 156)';
+  public legacyFullName = 'Haxorus UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Grind Up

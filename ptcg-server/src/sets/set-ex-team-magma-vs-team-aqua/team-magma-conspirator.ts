@@ -13,7 +13,8 @@ export class TeamMagmaConspirator extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
   public name: string = 'Team Magma Conspirator';
-  public fullName: string = 'Team Magma Conspirator MA';
+  public fullName: string = 'Team Magma Conspirator (MA 82)';
+  public legacyFullName = 'Team Magma Conspirator MA';
 
   public text: string =
     'Search your deck for up to 2 in any combination of Basic Pokémon with Team Magma in its name and basic Energy cards, show them to your opponent, and put them into your hand. Shuffle your deck afterward.';

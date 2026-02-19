@@ -28,7 +28,7 @@ export class Salazzle extends PokemonCard {
       name: 'Hunter\'s Nails',
       cost: [R, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 60 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Salazzle extends PokemonCard {
   public setNumber: string = '26';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salazzle';
-  public fullName: string = 'Salazzle UPR';
+  public fullName: string = 'Salazzle (UPR 26)';
+  public legacyFullName = 'Salazzle UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Panic Poison

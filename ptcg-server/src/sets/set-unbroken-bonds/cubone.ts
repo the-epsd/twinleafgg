@@ -37,7 +37,8 @@ export class Cubone extends PokemonCard {
   public setNumber: string = '90';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cubone';
-  public fullName: string = 'Cubone UNB';
+  public fullName: string = 'Cubone (UNB 90)';
+  public legacyFullName = 'Cubone UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Focus Energy

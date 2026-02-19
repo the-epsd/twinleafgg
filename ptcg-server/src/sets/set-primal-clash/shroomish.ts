@@ -29,7 +29,8 @@ export class Shroomish extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shroomish';
-  public fullName: string = 'Shroomish PRC';
+  public fullName: string = 'Shroomish (PRC 15)';
+  public legacyFullName = 'Shroomish PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spore

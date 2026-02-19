@@ -38,7 +38,8 @@ export class ScizorV extends PokemonCard {
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scizor V';
-  public fullName: string = 'Scizor V DAA';
+  public fullName: string = 'Scizor V (DAA 118)';
+  public legacyFullName = 'Scizor V DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hack Off

@@ -30,7 +30,8 @@ export class StevensBaltoy extends PokemonCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Steven\'s Baltoy';
-  public fullName: string = 'Steven\'s Baltoy DRI';
+  public fullName: string = 'Steven\'s Baltoy (DRI 83)';
+  public legacyFullName = 'Steven\'s Baltoy DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

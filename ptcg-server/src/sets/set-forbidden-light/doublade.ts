@@ -31,7 +31,8 @@ export class Doublade extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Doublade';
-  public fullName: string = 'Doublade FLI';
+  public fullName: string = 'Doublade (FLI 48)';
+  public legacyFullName = 'Doublade FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Curse of the Blade

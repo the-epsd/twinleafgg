@@ -27,7 +27,7 @@ export class VolcanionV extends PokemonCard {
       name: 'Dynamite Tackle',
       cost: [R, R, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has 10 or more damage counters on it, this attack does 150 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class VolcanionV extends PokemonCard {
   public setNumber: string = '25';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Volcanion V';
-  public fullName: string = 'Volcanion V CRE';
+  public fullName: string = 'Volcanion V (CRE 25)';
+  public legacyFullName = 'Volcanion V CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Dynamite Tackle

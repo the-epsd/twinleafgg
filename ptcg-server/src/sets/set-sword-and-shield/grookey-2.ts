@@ -32,5 +32,6 @@ export class Grookey2 extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Grookey';
-  public fullName: string = 'Grookey SSH 11';
+  public fullName: string = 'Grookey (SSH 11)';
+  public legacyFullName = 'Grookey SSH 11';
 }

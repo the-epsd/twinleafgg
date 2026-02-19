@@ -36,7 +36,8 @@ export class AlolanSandslash extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Sandslash';
-  public fullName: string = 'Alolan Sandslash UPR';
+  public fullName: string = 'Alolan Sandslash (UPR 29)';
+  public legacyFullName = 'Alolan Sandslash UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spike Armor

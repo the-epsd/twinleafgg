@@ -44,7 +44,8 @@ export class Mewtwo extends PokemonCard {
 
   public name: string = 'Mewtwo';
 
-  public fullName: string = 'Mewtwo UNB';
+  public fullName: string = 'Mewtwo (UNB 75)';
+  public legacyFullName = 'Mewtwo UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

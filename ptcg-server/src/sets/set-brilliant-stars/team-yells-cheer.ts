@@ -76,7 +76,8 @@ export class TeamYellsCheer extends TrainerCard {
 
   public name: string = 'Team Yell\'s Cheer';
 
-  public fullName: string = 'Team Yell\'s Cheer BRS';
+  public fullName: string = 'Team Yell\'s Cheer (BRS 149)';
+  public legacyFullName = 'Team Yell\'s Cheer BRS';
 
   public text: string =
     'Shuffle up to 3 in any combination of Pokémon and Supporter cards, except for Team Yell\'s Cheer, from your discard pile into your deck.';

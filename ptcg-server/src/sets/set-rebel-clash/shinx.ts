@@ -20,7 +20,7 @@ export class Shinx extends PokemonCard {
       name: 'Under Pressure',
       cost: [L],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent has 3 or fewer Prize cards remaining, this attack does 50 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Shinx extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shinx';
-  public fullName: string = 'Shinx RCL';
+  public fullName: string = 'Shinx (RCL 60)';
+  public legacyFullName = 'Shinx RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Under Pressure

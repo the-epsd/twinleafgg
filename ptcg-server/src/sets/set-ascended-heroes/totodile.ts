@@ -23,7 +23,8 @@ export class Totodile extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Totodile';
-  public fullName: string = 'Totodile MC';
+  public fullName: string = 'Totodile (ASC 41)';
+  public legacyFullName = 'Totodile MC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -34,7 +34,8 @@ export class Gothorita2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
   public name: string = 'Gothorita';
-  public fullName: string = 'Gothorita EPO 46';
+  public fullName: string = 'Gothorita (EPO 46)';
+  public legacyFullName = 'Gothorita EPO 46';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

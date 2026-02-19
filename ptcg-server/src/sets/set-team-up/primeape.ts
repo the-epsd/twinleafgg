@@ -27,7 +27,7 @@ export class Primeape extends PokemonCard {
       name: 'Wreck',
       cost: [F, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 80 more damage. Then, discard that Stadium card.'
     }
   ];
@@ -36,7 +36,8 @@ export class Primeape extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Primeape';
-  public fullName: string = 'Primeape TEU';
+  public fullName: string = 'Primeape (TEU 72)';
+  public legacyFullName = 'Primeape TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Wreck

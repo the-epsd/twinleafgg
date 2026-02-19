@@ -92,7 +92,8 @@ export class Kingdraex extends PokemonCard {
 
   public name: string = 'Kingdra ex';
 
-  public fullName: string = 'Kingdra ex SFA';
+  public fullName: string = 'Kingdra ex (SFA 12)';
+  public legacyFullName = 'Kingdra ex SFA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

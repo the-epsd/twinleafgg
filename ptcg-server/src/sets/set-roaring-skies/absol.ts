@@ -40,7 +40,8 @@ export class Absol extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Absol';
-  public fullName: string = 'Absol ROS';
+  public fullName: string = 'Absol (ROS 40)';
+  public legacyFullName = 'Absol ROS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Cursed Eyes (play-from-hand trigger)

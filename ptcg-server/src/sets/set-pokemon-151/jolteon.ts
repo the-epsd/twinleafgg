@@ -47,7 +47,8 @@ export class Jolteon extends PokemonCard {
 
   public name: string = 'Jolteon';
 
-  public fullName: string = 'Jolteon MEW';
+  public fullName: string = 'Jolteon (MEW 135)';
+  public legacyFullName = 'Jolteon MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -36,7 +36,8 @@ export class Pincurchin extends PokemonCard {
   public setNumber: string = '64';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pincurchin';
-  public fullName: string = 'Pincurchin DAA';
+  public fullName: string = 'Pincurchin (DAA 64)';
+  public legacyFullName = 'Pincurchin DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Double Draw

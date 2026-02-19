@@ -33,7 +33,8 @@ export class BuzzwoleGX extends PokemonCard {
 
   public set: string = 'CIN';
   public name: string = 'Buzzwole-GX';
-  public fullName: string = 'Buzzwole-GX CIN';
+  public fullName: string = 'Buzzwole-GX (CIN 57)';
+  public legacyFullName = 'Buzzwole-GX CIN';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '57';
 

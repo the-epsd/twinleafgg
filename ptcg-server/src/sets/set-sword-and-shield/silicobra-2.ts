@@ -32,5 +32,6 @@ export class Silicobra2 extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Silicobra';
-  public fullName: string = 'Silicobra SSH 108';
+  public fullName: string = 'Silicobra (SSH 108)';
+  public legacyFullName = 'Silicobra SSH 108';
 }

@@ -12,7 +12,8 @@ export class BattleColosseum extends TrainerCard {
   public regulationMark = 'I';
   public set: string = 'PFL';
   public name: string = 'Battle Cage';
-  public fullName: string = 'Battle Colosseum M2';
+  public fullName: string = 'Battle Cage (PFL 85)';
+  public legacyFullName = 'Battle Colosseum M2';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public text: string = 'Prevent all damage counters from being placed on Benched Pokémon (both yours and your opponent\'s) by effects of attacks and Abilities from the opponent\'s Pokémon. (Damage from attacks is still taken.)';

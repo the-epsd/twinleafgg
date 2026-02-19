@@ -40,7 +40,8 @@ export class Volcarona extends PokemonCard {
   public setNumber: string = '15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Volcarona';
-  public fullName: string = 'Volcarona STS';
+  public fullName: string = 'Volcarona (STS 15)';
+  public legacyFullName = 'Volcarona STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shimmering Scales

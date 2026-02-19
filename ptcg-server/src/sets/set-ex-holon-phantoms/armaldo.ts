@@ -29,7 +29,8 @@ export class Armaldo extends PokemonCard {
   }];
 
   public set: string = 'HP';
-  public fullName: string = 'Armaldo HP';
+  public fullName: string = 'Armaldo (HP 1)';
+  public legacyFullName = 'Armaldo HP';
   public name: string = 'Armaldo';
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';

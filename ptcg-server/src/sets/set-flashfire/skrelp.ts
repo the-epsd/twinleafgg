@@ -33,7 +33,8 @@ export class Skrelp extends PokemonCard {
 
   public name: string = 'Skrelp';
 
-  public fullName: string = 'Skrelp FLF';
+  public fullName: string = 'Skrelp (FLF 44)';
+  public legacyFullName = 'Skrelp FLF';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -46,7 +46,8 @@ export class Murkrow extends PokemonCard {
 
   public name: string = 'Murkrow';
 
-  public fullName: string = 'Murkrow PAL';
+  public fullName: string = 'Murkrow (PAL 131)';
+  public legacyFullName = 'Murkrow PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

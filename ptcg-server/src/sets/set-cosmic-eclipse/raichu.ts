@@ -30,7 +30,7 @@ export class Raichu extends PokemonCard {
       name: 'Powerful Spark',
       cost: [L],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage times the amount of [L] Energy attached to all of your Pokémon.'
     }
   ];
@@ -39,7 +39,8 @@ export class Raichu extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raichu';
-  public fullName: string = 'Raichu CEC';
+  public fullName: string = 'Raichu (CEC 67)';
+  public legacyFullName = 'Raichu CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Nuzzle

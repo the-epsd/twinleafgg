@@ -30,7 +30,8 @@ export class Chinchou2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '70';
   public name: string = 'Chinchou';
-  public fullName: string = 'Chinchou AQ 70';
+  public fullName: string = 'Chinchou (AQ 70)';
+  public legacyFullName = 'Chinchou AQ 70';
 
   public readonly FLOAT_MARKER = 'FLOAT_MARKER';
 

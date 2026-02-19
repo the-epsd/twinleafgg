@@ -11,7 +11,8 @@ export class Dan extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'RCL';
   public name: string = 'Dan';
-  public fullName: string = 'Dan RCL';
+  public fullName: string = 'Dan (RCL 158)';
+  public legacyFullName = 'Dan RCL';
   public regulationMark = 'D';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '158';

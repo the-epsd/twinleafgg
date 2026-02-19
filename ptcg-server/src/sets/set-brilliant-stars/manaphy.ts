@@ -43,7 +43,8 @@ export class Manaphy extends PokemonCard {
 
   public name: string = 'Manaphy';
 
-  public fullName: string = 'Manaphy BRS';
+  public fullName: string = 'Manaphy (BRS 41)';
+  public legacyFullName = 'Manaphy BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

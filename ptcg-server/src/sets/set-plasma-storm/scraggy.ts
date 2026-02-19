@@ -32,5 +32,6 @@ export class Scraggy extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scraggy';
-  public fullName: string = 'Scraggy PLS';
+  public fullName: string = 'Scraggy (PLS 85)';
+  public legacyFullName = 'Scraggy PLS';
 }

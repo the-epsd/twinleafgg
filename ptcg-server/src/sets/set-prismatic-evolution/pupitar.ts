@@ -29,5 +29,6 @@ export class Pupitar extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';
   public name: string = 'Pupitar';
-  public fullName: string = 'Pupitar PRE';
+  public fullName: string = 'Pupitar (PRE 48)';
+  public legacyFullName = 'Pupitar PRE';
 }

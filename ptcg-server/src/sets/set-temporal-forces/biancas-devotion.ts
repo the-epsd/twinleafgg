@@ -21,7 +21,8 @@ export class BiancasDevotion extends TrainerCard {
 
   public name: string = 'Bianca\'s Devotion';
 
-  public fullName: string = 'Bianca\'s Devotion TEF';
+  public fullName: string = 'Bianca\'s Devotion (TEF 142)';
+  public legacyFullName = 'Bianca\'s Devotion TEF';
 
   public text: string = 'Heal all damage from 1 of your Pokémon that has 30 HP or less remaining.';
 

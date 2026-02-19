@@ -35,7 +35,8 @@ export class TeamRocketsArticuno extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Articuno';
-  public fullName: string = 'Team Rocket\'s Articuno DRI';
+  public fullName: string = 'Team Rocket\'s Articuno (DRI 51)';
+  public legacyFullName = 'Team Rocket\'s Articuno DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Resistant Veil

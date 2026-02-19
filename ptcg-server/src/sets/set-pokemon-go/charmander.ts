@@ -36,7 +36,8 @@ export class Charmander extends PokemonCard {
 
   public name: string = 'Charmander';
 
-  public fullName: string = 'Charmander PGO';
+  public fullName: string = 'Charmander (PGO 8)';
+  public legacyFullName = 'Charmander PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

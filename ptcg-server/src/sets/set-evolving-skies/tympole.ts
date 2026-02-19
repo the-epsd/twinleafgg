@@ -26,5 +26,6 @@ export class Tympole extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tympole';
-  public fullName: string = 'Tympole EVS';
+  public fullName: string = 'Tympole (EVS 42)';
+  public legacyFullName = 'Tympole EVS';
 }

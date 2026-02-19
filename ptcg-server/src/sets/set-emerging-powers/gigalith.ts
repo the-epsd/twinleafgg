@@ -34,7 +34,8 @@ export class Gigalith extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
   public name: string = 'Gigalith';
-  public fullName: string = 'Gigalith EPO';
+  public fullName: string = 'Gigalith (EPO 53)';
+  public legacyFullName = 'Gigalith EPO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

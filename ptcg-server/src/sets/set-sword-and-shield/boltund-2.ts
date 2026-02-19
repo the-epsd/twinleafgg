@@ -36,7 +36,8 @@ export class Boltund2 extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Boltund';
-  public fullName: string = 'Boltund SSH 76';
+  public fullName: string = 'Boltund (SSH 76)';
+  public legacyFullName = 'Boltund SSH 76';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Electrodash

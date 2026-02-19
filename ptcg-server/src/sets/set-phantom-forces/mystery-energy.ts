@@ -24,7 +24,8 @@ export class MysteryEnergy extends EnergyCard {
 
   public name = 'Mystery Energy';
 
-  public fullName = 'Mystery Energy PHF';
+  public fullName = 'Mystery Energy (PHF 112)';
+  public legacyFullName = 'Mystery Energy PHF';
 
   public cardImage: string = 'assets/cardback.png';
 

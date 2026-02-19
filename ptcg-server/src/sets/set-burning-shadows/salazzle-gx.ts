@@ -53,7 +53,8 @@ export class SalazzleGX extends PokemonCard {
 
   public name: string = 'Salazzle-GX';
 
-  public fullName: string = 'Salazzle-GX BUS';
+  public fullName: string = 'Salazzle-GX (BUS 25)';
+  public legacyFullName = 'Salazzle-GX BUS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Diabolical Claws

@@ -14,7 +14,8 @@ export class DustIsland extends TrainerCard {
   public setNumber: string = '168';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dust Island';
-  public fullName: string = 'Dust Island UNB';
+  public fullName: string = 'Dust Island (UNB 168)';
+  public legacyFullName = 'Dust Island UNB';
   public text: string = 'Whenever either player switches their Poisoned Active Pokémon with 1 of their Benched Pokémon with the effect of a Trainer card, the new Active Pokémon is now affected by that Special Condition.';
 
   // TODO: "Transfer poison to new Active when switching via Trainer card" requires

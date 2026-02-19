@@ -15,7 +15,8 @@ export class Spikemuth extends TrainerCard {
   public setNumber: string = '170';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Spikemuth';
-  public fullName: string = 'Spikemuth DAA';
+  public fullName: string = 'Spikemuth (DAA 170)';
+  public legacyFullName = 'Spikemuth DAA';
   public text: string = 'Whenever a player\'s Active Pokémon moves to the Bench during their turn, put 2 damage counters on that Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -39,7 +39,8 @@ export class Carbink extends PokemonCard {
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carbink';
-  public fullName: string = 'Carbink FLF';
+  public fullName: string = 'Carbink (FLF 68)';
+  public legacyFullName = 'Carbink FLF';
 
   private readonly PREVENT_ALL_MARKER = 'CARBINK_PREVENT_ALL_MARKER';
   private readonly CLEAR_PREVENT_ALL_MARKER = 'CARBINK_CLEAR_PREVENT_ALL_MARKER';

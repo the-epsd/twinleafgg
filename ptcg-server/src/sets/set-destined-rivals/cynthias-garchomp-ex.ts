@@ -37,7 +37,8 @@ export class CynthiasGarchompex extends PokemonCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cynthia\'s Garchomp ex';
-  public fullName: string = 'Cynthia\'s Garchomp ex DRI';
+  public fullName: string = 'Cynthia\'s Garchomp ex (DRI 104)';
+  public legacyFullName = 'Cynthia\'s Garchomp ex DRI';
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -15,7 +15,8 @@ export class Roxie extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '205';
   public name: string = 'Roxie';
-  public fullName: string = 'Roxie CEC';
+  public fullName: string = 'Roxie (CEC 205)';
+  public legacyFullName = 'Roxie CEC';
 
   public text: string =
     'Discard up to 2 Pokémon that aren\'t Pokémon-GX or Pokémon-EX from your hand. Draw 3 cards for each card you discarded in this way.';

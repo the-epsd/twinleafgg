@@ -34,7 +34,8 @@ export class ImakuniSDoduo extends PokemonCard {
   public setNumber: string = '112';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Imakuni?\'s Doduo';
-  public fullName: string = 'Imakuni?\'s Doduo EVO';
+  public fullName: string = 'Imakuni?\'s Doduo (EVO 112)';
+  public legacyFullName = 'Imakuni?\'s Doduo EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Frenzied Escape - joke effect, no digital implementation possible (throw physical card)

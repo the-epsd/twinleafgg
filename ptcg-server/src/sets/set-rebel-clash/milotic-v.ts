@@ -23,7 +23,7 @@ export class MiloticV extends PokemonCard {
       name: 'Aqua Impact',
       cost: [W, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 50 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     },
     {
@@ -39,7 +39,8 @@ export class MiloticV extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Milotic V';
-  public fullName: string = 'Milotic V RCL';
+  public fullName: string = 'Milotic V (RCL 43)';
+  public legacyFullName = 'Milotic V RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Aqua Impact

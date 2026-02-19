@@ -39,7 +39,8 @@ export class Delcatty extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
   public name: string = 'Delcatty';
-  public fullName: string = 'Delcatty LM';
+  public fullName: string = 'Delcatty (LM 4)';
+  public legacyFullName = 'Delcatty LM';
 
   public readonly REACTIVE_SHIFT_MARKER = 'REACTIVE_SHIFT_MARKER';
 

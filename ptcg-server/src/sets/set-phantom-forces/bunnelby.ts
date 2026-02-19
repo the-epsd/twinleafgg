@@ -31,5 +31,6 @@ export class Bunnelby extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bunnelby';
-  public fullName: string = 'Bunnelby PHF';
+  public fullName: string = 'Bunnelby (PHF 87)';
+  public legacyFullName = 'Bunnelby PHF';
 }

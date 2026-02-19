@@ -24,7 +24,8 @@ export class SpikyEnergy extends EnergyCard {
 
   public name = 'Spiky Energy';
 
-  public fullName = 'Spiky Energy JTG';
+  public fullName = 'Spiky Energy (JTG 159)';
+  public legacyFullName = 'Spiky Energy JTG';
 
   public text =
     'As long as this card is attached to a Pokémon, it provides [C] Energy. \n' +

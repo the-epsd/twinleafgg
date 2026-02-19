@@ -20,7 +20,7 @@ export class Binacle extends PokemonCard {
       name: 'Dual Chop',
       cost: [F, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 50 damage for each heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Binacle extends PokemonCard {
   public setNumber: string = '103';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Binacle';
-  public fullName: string = 'Binacle RCL';
+  public fullName: string = 'Binacle (RCL 103)';
+  public legacyFullName = 'Binacle RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dual Chop

@@ -29,7 +29,7 @@ export class Staravia extends PokemonCard {
       name: 'Quick Attack',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Staravia extends PokemonCard {
   public setNumber: string = '126';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Staravia';
-  public fullName: string = 'Staravia BKT';
+  public fullName: string = 'Staravia (BKT 126)';
+  public legacyFullName = 'Staravia BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Quick Attack

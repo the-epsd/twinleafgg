@@ -26,7 +26,8 @@ export class TeamRocketsAriana extends TrainerCard {
 
   public name: string = 'Team Rocket\'s Ariana';
 
-  public fullName: string = 'Team Rocket\'s Ariana DRI';
+  public fullName: string = 'Team Rocket\'s Ariana (DRI 171)';
+  public legacyFullName = 'Team Rocket\'s Ariana DRI';
 
   public text: string =
     'Draw cards until you have 5 cards in your hand. If all of your Pokémon in play are Team Rocket\'s Pokemon, draw until you have 8 cards in your hand instead.';

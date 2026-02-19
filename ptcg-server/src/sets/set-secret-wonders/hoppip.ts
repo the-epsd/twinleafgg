@@ -32,7 +32,8 @@ export class Hoppip extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '90';
   public name: string = 'Hoppip';
-  public fullName: string = 'Hoppip SW';
+  public fullName: string = 'Hoppip (SW 90)';
+  public legacyFullName = 'Hoppip SW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

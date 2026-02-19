@@ -35,7 +35,8 @@ export class Dewpider extends PokemonCard {
   public setNumber: string = '32';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dewpider';
-  public fullName: string = 'Dewpider FLI';
+  public fullName: string = 'Dewpider (FLI 32)';
+  public legacyFullName = 'Dewpider FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Spider Web

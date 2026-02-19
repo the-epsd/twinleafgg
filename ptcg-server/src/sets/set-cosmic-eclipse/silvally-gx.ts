@@ -32,7 +32,7 @@ export class SilvallyGx extends PokemonCard {
       name: 'Brave Buddies',
       cost: [C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you played a Supporter card from your hand during this turn, this attack does 70 more damage.'
     },
     {
@@ -47,7 +47,8 @@ export class SilvallyGx extends PokemonCard {
   public setNumber: string = '184';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Silvally-GX';
-  public fullName: string = 'Silvally-GX CEC';
+  public fullName: string = 'Silvally-GX (CEC 184)';
+  public legacyFullName = 'Silvally-GX CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Disk Reload

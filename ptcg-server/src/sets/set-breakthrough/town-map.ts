@@ -13,7 +13,8 @@ export class TownMap extends TrainerCard {
 
   public name: string = 'Town Map';
 
-  public fullName: string = 'Town Map BKT';
+  public fullName: string = 'Town Map (BKT 150)';
+  public legacyFullName = 'Town Map BKT';
 
   public cardImage: string = 'assets/cardback.png';
 

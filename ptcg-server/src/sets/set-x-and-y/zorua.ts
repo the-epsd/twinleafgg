@@ -35,7 +35,8 @@ export class Zorua extends PokemonCard {
   public setNumber: string = '72';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zorua';
-  public fullName: string = 'Zorua XY';
+  public fullName: string = 'Zorua (XY 72)';
+  public legacyFullName = 'Zorua XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-unbroken-bonds/reds-challenge.ts (SEARCH_DECK_FOR_CARDS_TO_HAND pattern)

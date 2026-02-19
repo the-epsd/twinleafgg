@@ -38,7 +38,8 @@ export class Rotom extends PokemonCard {
   public setNumber: string = 'SV038';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rotom';
-  public fullName: string = 'Rotom SHF';
+  public fullName: string = 'Rotom (SHF SV038)';
+  public legacyFullName = 'Rotom SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Roto Choice

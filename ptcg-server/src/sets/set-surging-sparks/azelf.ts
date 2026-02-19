@@ -39,7 +39,8 @@ export class Azelf extends PokemonCard {
 
   public name: string = 'Azelf';
 
-  public fullName: string = 'Azelf SSP';
+  public fullName: string = 'Azelf (SSP 80)';
+  public legacyFullName = 'Azelf SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

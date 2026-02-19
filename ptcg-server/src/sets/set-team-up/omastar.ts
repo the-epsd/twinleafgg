@@ -36,7 +36,8 @@ export class Omastar extends PokemonCard {
   public setNumber: string = '76';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Omastar';
-  public fullName: string = 'Omastar TEU';
+  public fullName: string = 'Omastar (TEU 76)';
+  public legacyFullName = 'Omastar TEU';
 
   // Ref: set-x-and-y/trevenant.ts (Forest's Curse - PlayItemEffect block)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

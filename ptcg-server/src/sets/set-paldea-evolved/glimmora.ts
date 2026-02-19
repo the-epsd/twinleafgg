@@ -34,7 +34,8 @@ export class Glimmora extends PokemonCard {
   public cardImage = 'assets/cardback.png';
   public regulationMark: string = 'G';
   public name: string = 'Glimmora';
-  public fullName: string = 'Glimmora PAL';
+  public fullName: string = 'Glimmora (PAL 126)';
+  public legacyFullName = 'Glimmora PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Shattering Crystal

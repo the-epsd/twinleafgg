@@ -31,7 +31,7 @@ export class Jellicent extends PokemonCard {
       name: 'Ensnaring Spray',
       cost: [W, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -40,7 +40,8 @@ export class Jellicent extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jellicent';
-  public fullName: string = 'Jellicent PHF';
+  public fullName: string = 'Jellicent (PHF 21)';
+  public legacyFullName = 'Jellicent PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Meddling

@@ -23,7 +23,8 @@ export class Inkay extends PokemonCard {
 
   public set: string = 'FLI';
   public name: string = 'Inkay';
-  public fullName: string = 'Inkay FLI';
+  public fullName: string = 'Inkay (FLI 50)';
+  public legacyFullName = 'Inkay FLI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '50';
 

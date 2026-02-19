@@ -37,7 +37,8 @@ export class Zapdos extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zapdos';
-  public fullName: string = 'Zapdos LTR';
+  public fullName: string = 'Zapdos (LTR 46)';
+  public legacyFullName = 'Zapdos LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Random Spark

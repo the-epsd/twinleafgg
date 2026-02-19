@@ -41,7 +41,8 @@ export class Hala extends TrainerCard {
   public setNumber: string = '126';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hala';
-  public fullName: string = 'Hala GRI';
+  public fullName: string = 'Hala (GRI 126)';
+  public legacyFullName = 'Hala GRI';
   public text: string = 'Shuffle your hand into your deck. If you have used your GX attack, draw 7 cards. If not, draw 4 cards. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

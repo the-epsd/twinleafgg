@@ -26,7 +26,7 @@ export class Inkay extends PokemonCard {
       name: 'Attack from Behind',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Confused, this attack does 50 more damage.'
     }
   ];
@@ -36,7 +36,8 @@ export class Inkay extends PokemonCard {
   public setNumber: string = '44';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Inkay';
-  public fullName: string = 'Inkay CPA';
+  public fullName: string = 'Inkay (CPA 44)';
+  public legacyFullName = 'Inkay CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Attack from Behind

@@ -36,7 +36,8 @@ export class Morelull extends PokemonCard {
   public setNumber: string = '79';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Morelull';
-  public fullName: string = 'Morelull DAA';
+  public fullName: string = 'Morelull (DAA 79)';
+  public legacyFullName = 'Morelull DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spore

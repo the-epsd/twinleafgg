@@ -9,35 +9,41 @@ export class SwitchDP extends Switch {
   public set: string = 'DP';
   public setNumber: string = '119';
   public regulationMark = '';
-  public fullName: string = 'Switch DP';
+  public fullName: string = 'Switch (DP 119)';
+  public legacyFullName = 'Switch DP';
   public text: string = 'Switch 1 of your Active Pokémon with 1 of your Benched Pokémon.';
 }
 export class EnergySwitchPKDP extends EnergySwitchPK {
   public setNumber = '107';
-  public fullName: string = 'Energy Switch DP';
+  public fullName: string = 'Energy Switch (DP 107)';
+  public legacyFullName = 'Energy Switch DP';
   public set = 'DP';
 }
 
 export class PokeBallDP extends PokeBall {
   public setNumber = '110';
-  public fullName: string = 'Poké Ball DP';
+  public fullName: string = 'Poké Ball (DP 110)';
+  public legacyFullName = 'Poké Ball DP';
   public set = 'DP';
 }
 
 export class WarpPointG2DP extends WarpPointG2 {
   public setNumber = '116';
-  public fullName: string = 'Warp Point DP';
+  public fullName: string = 'Warp Point (DP 116)';
+  public legacyFullName = 'Warp Point DP';
   public set = 'DP';
 }
 
 export class EnergySearchDP extends EnergySearch {
   public setNumber = '117';
-  public fullName: string = 'Energy Search DP';
+  public fullName: string = 'Energy Search (DP 117)';
+  public legacyFullName = 'Energy Search DP';
   public set = 'DP';
 }
 
 export class PotionDP extends Potion {
   public setNumber = '118';
-  public fullName: string = 'Potion DP';
+  public fullName: string = 'Potion (DP 118)';
+  public legacyFullName = 'Potion DP';
   public set = 'DP';
 }

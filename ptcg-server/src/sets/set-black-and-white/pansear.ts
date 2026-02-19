@@ -24,7 +24,8 @@ export class Pansear extends PokemonCard {
 
   public name: string = 'Pansear';
 
-  public fullName: string = 'Pansear BLW';
+  public fullName: string = 'Pansear (BLW 21)';
+  public legacyFullName = 'Pansear BLW';
 
   public cardImage: string = 'assets/cardback.png';
 

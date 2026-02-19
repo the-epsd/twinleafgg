@@ -27,7 +27,8 @@ export class Meditite extends PokemonCard {
 
   public set: string = 'DP';
   public name: string = 'Meditite';
-  public fullName: string = 'Meditite DP';
+  public fullName: string = 'Meditite (DP 89)';
+  public legacyFullName = 'Meditite DP';
   public setNumber: string = '89';
   public cardImage: string = 'assets/cardback.png';
 

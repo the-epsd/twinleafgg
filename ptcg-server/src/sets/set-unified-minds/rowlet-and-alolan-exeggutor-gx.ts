@@ -170,7 +170,8 @@ export class RowletAlolanExeggutorGX extends PokemonCard {
   public setNumber = '1';
   public cardImage = 'assets/cardback.png';
   public name = 'Rowlet & Alolan Exeggutor-GX';
-  public fullName = 'Rowlet & Alolan Exeggutor-GX UNM';
+  public fullName = 'Rowlet & Alolan Exeggutor-GX (UNM 1)';
+  public legacyFullName = 'Rowlet & Alolan Exeggutor-GX UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Super Growth

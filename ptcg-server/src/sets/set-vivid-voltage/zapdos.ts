@@ -38,7 +38,8 @@ export class Zapdos extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zapdos';
-  public fullName: string = 'Zapdos VIV';
+  public fullName: string = 'Zapdos (VIV 48)';
+  public legacyFullName = 'Zapdos VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Thunder Snipe

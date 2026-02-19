@@ -30,7 +30,8 @@ export class Morelull extends PokemonCard {
   public setNumber: string = '147';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Morelull';
-  public fullName: string = 'Morelull LOT';
+  public fullName: string = 'Morelull (LOT 147)';
+  public legacyFullName = 'Morelull LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Perplex

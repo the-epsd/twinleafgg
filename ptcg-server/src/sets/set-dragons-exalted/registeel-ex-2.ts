@@ -34,7 +34,8 @@ export class RegisteelEx2 extends PokemonCard {
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Registeel-EX';
-  public fullName: string = 'Registeel-EX DRX 122';
+  public fullName: string = 'Registeel-EX (DRX 122)';
+  public legacyFullName = 'Registeel-EX DRX 122';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'REGISTEEL2_TAKE_LESS_DAMAGE_MARKER';
   public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'REGISTEEL2_CLEAR_TAKE_LESS_DAMAGE_MARKER';

@@ -26,7 +26,8 @@ export class FlashEnergy extends EnergyCard {
   public setNumber: string = '83';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flash Energy';
-  public fullName: string = 'Flash Energy AOR';
+  public fullName: string = 'Flash Energy (AOR 83)';
+  public legacyFullName = 'Flash Energy AOR';
   public text: string = 'This card can only be attached to Lightning Pokémon. This card provides [L] Energy only while this card is attached to a Lightning Pokémon. The Lightning Pokémon this card is attached to has no Weakness. (If this card is attached to anything other than a Lightning Pokémon, discard this card.)';
 
   // Ref: set-furious-fists/strong-energy.ts (type-restricted special energy pattern)

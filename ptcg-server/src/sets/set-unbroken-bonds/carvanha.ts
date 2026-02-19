@@ -26,5 +26,6 @@ export class Carvanha extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Carvanha';
-  public fullName: string = 'Carvanha UNB';
+  public fullName: string = 'Carvanha (UNB 110)';
+  public legacyFullName = 'Carvanha UNB';
 }

@@ -13,7 +13,8 @@ export class GoodManners extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '111';
   public name: string = 'Good Manners';
-  public fullName: string = 'Good Manners G1';
+  public fullName: string = 'Good Manners (G1 111)';
+  public legacyFullName = 'Good Manners G1';
 
   public text: string =
     'In order to play this card, you can\'t have any Basic Pokémon cards in your hand. Show your hand to your opponent, then search your deck for a Basic Pokémon card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';

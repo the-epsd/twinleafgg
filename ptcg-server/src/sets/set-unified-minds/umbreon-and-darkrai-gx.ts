@@ -36,7 +36,8 @@ export class UmbreonDarkraiGX extends PokemonCard {
   public setNumber = '125';
   public cardImage = 'assets/cardback.png';
   public name = 'Umbreon & Darkrai-GX';
-  public fullName = 'Umbreon & Darkrai-GX UNM';
+  public fullName = 'Umbreon & Darkrai-GX (UNM 125)';
+  public legacyFullName = 'Umbreon & Darkrai-GX UNM';
 
   public readonly DARK_MOON_MARKER = 'DARK_MOON_MARKER';
 

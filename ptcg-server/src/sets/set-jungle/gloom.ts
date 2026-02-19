@@ -39,7 +39,8 @@ export class Gloom extends PokemonCard {
 
   public name: string = 'Gloom';
 
-  public fullName: string = 'Gloom JU';
+  public fullName: string = 'Gloom (JU 37)';
+  public legacyFullName = 'Gloom JU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -13,7 +13,8 @@ export class MaxRevive extends TrainerCard {
 
   public name: string = 'Max Revive';
 
-  public fullName: string = 'Max Revive GEN'; // Replace with the appropriate set abbreviation
+  public fullName: string = 'Max Revive (GEN 65)';
+  public legacyFullName = 'Max Revive GEN'; // Replace with the appropriate set abbreviation
 
   public cardImage: string = 'assets/cardback.png'; // Replace with the appropriate card image path
 

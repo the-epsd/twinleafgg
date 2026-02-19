@@ -33,7 +33,8 @@ export class ArceusWater extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = 'AR4';
   public name: string = 'Arceus';
-  public fullName: string = 'Arceus Water AR';
+  public fullName: string = 'Arceus (AR AR4)';
+  public legacyFullName = 'Arceus Water AR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

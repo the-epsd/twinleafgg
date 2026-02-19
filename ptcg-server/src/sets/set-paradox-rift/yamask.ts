@@ -26,7 +26,8 @@ export class Yamask extends PokemonCard {
   public setNumber: string = '75';
 
   public name: string = 'Yamask';
-  public fullName: string = 'Yamask PAR';
+  public fullName: string = 'Yamask (PAR 75)';
+  public legacyFullName = 'Yamask PAR';
 
   
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

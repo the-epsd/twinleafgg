@@ -36,7 +36,8 @@ export class Glalie extends PokemonCard {
   public setNumber: string = '48';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Glalie';
-  public fullName: string = 'Glalie CEC';
+  public fullName: string = 'Glalie (CEC 48)';
+  public legacyFullName = 'Glalie CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ice Fang

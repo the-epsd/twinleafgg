@@ -37,7 +37,8 @@ export class Ninetales extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ninetales';
-  public fullName: string = 'Ninetales PRC';
+  public fullName: string = 'Ninetales (PRC 21)';
+  public legacyFullName = 'Ninetales PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Barrier Shrine (passive - blocks Stadium play for both players)

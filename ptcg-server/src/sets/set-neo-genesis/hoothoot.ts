@@ -30,7 +30,8 @@ export class Hoothoot extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';
   public name: string = 'Hoothoot';
-  public fullName: string = 'Hoothoot N1';
+  public fullName: string = 'Hoothoot (N1 60)';
+  public legacyFullName = 'Hoothoot N1';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

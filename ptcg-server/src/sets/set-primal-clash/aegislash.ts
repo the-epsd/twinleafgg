@@ -43,7 +43,8 @@ export class Aegislash extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aegislash';
-  public fullName: string = 'Aegislash PRC';
+  public fullName: string = 'Aegislash (PRC 100)';
+  public legacyFullName = 'Aegislash PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Miracle Guard

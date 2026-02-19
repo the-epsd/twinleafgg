@@ -25,7 +25,8 @@ export class Grant extends TrainerCard {
 
   public name: string = 'Grant';
 
-  public fullName: string = 'Grant ASR';
+  public fullName: string = 'Grant (ASR 144)';
+  public legacyFullName = 'Grant ASR';
 
   public text: string =
     'During this turn, your [F] Pokémon\'s attacks do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';

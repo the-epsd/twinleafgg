@@ -31,7 +31,8 @@ export class Crustle extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crustle';
-  public fullName: string = 'Crustle NVI';
+  public fullName: string = 'Crustle (NVI 7)';
+  public legacyFullName = 'Crustle NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

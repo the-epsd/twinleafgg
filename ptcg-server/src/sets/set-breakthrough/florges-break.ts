@@ -31,7 +31,8 @@ export class FlorgesBreak extends PokemonCard {
   public setNumber: string = '104';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Florges BREAK';
-  public fullName: string = 'Florges BREAK BKT';
+  public fullName: string = 'Florges BREAK (BKT 104)';
+  public legacyFullName = 'Florges BREAK BKT';
 
   public readonly FLORAL_BREEZE_MARKER = 'FLORGES_BREAK_FLORAL_BREEZE_MARKER';
 

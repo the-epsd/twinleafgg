@@ -20,7 +20,8 @@ export class WishfulBaton extends TrainerCard {
 
   public name: string = 'Wishful Baton';
 
-  public fullName: string = 'Wishful Baton BUS';
+  public fullName: string = 'Wishful Baton (BUS 128)';
+  public legacyFullName = 'Wishful Baton BUS';
 
   public cardImage: string = 'assets/cardback.png';
 

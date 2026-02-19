@@ -29,7 +29,8 @@ export class Braixen extends PokemonCard {
 
   public set: string = 'XY';
   public name: string = 'Braixen';
-  public fullName: string = 'Braixen XY';
+  public fullName: string = 'Braixen (XY 25)';
+  public legacyFullName = 'Braixen XY';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '25';
 

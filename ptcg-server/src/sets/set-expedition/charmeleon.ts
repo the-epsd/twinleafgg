@@ -31,7 +31,8 @@ export class Charmeleon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';
   public name: string = 'Charmeleon';
-  public fullName: string = 'Charmeleon EX';
+  public fullName: string = 'Charmeleon (EX 73)';
+  public legacyFullName = 'Charmeleon EX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

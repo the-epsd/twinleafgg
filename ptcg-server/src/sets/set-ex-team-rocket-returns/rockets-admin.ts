@@ -11,7 +11,8 @@ export class RocketsAdmin extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
   public name: string = 'Rocket\'s Admin.';
-  public fullName: string = 'Rocket\'s Admin TRR';
+  public fullName: string = 'Rocket\'s Admin. (TRR 86)';
+  public legacyFullName = 'Rocket\'s Admin TRR';
   public text = 'Each player shuffles his or her hand into his or her deck. Then, each player counts his or her Prize cards left and draws up to that many cards. (You draw your cards first.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

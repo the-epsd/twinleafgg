@@ -34,7 +34,7 @@ export class Scrafty extends PokemonCard {
       name: 'Bad Brawl',
       cost: [D, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you played Piers from your hand during this turn, this attack does 90 more damage.'
     }
   ];
@@ -44,7 +44,8 @@ export class Scrafty extends PokemonCard {
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scrafty';
-  public fullName: string = 'Scrafty CPA';
+  public fullName: string = 'Scrafty (CPA 42)';
+  public legacyFullName = 'Scrafty CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Track when Piers is played from hand

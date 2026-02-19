@@ -15,7 +15,8 @@ export class GrassEnergy extends EnergyCard {
 
   public name = 'Grass Energy';
 
-  public fullName = 'Grass Energy BLW';
+  public fullName = 'Grass Energy (BLW 105)';
+  public legacyFullName = 'Grass Energy BLW';
 
 }
 
@@ -33,7 +34,8 @@ export class FireEnergy extends EnergyCard {
 
   public name = 'Fire Energy';
 
-  public fullName = 'Fire Energy BLW';
+  public fullName = 'Fire Energy (BLW 106)';
+  public legacyFullName = 'Fire Energy BLW';
 
 }
 
@@ -51,7 +53,8 @@ export class WaterEnergy extends EnergyCard {
 
   public name = 'Water Energy';
 
-  public fullName = 'Water Energy BLW';
+  public fullName = 'Water Energy (BLW 107)';
+  public legacyFullName = 'Water Energy BLW';
 
 }
 
@@ -69,7 +72,8 @@ export class LightningEnergy extends EnergyCard {
 
   public name = 'Lightning Energy';
 
-  public fullName = 'Lightning Energy BLW';
+  public fullName = 'Lightning Energy (BLW 108)';
+  public legacyFullName = 'Lightning Energy BLW';
 
 }
 
@@ -87,7 +91,8 @@ export class PsychicEnergy extends EnergyCard {
 
   public name = 'Psychic Energy';
 
-  public fullName = 'Psychic Energy BLW';
+  public fullName = 'Psychic Energy (BLW 109)';
+  public legacyFullName = 'Psychic Energy BLW';
 
 }
 
@@ -105,7 +110,8 @@ export class FightingEnergy extends EnergyCard {
 
   public name = 'Fighting Energy';
 
-  public fullName = 'Fighting Energy BLW';
+  public fullName = 'Fighting Energy (BLW 110)';
+  public legacyFullName = 'Fighting Energy BLW';
 
 }
 
@@ -123,7 +129,8 @@ export class DarknessEnergy extends EnergyCard {
 
   public name = 'Darkness Energy';
 
-  public fullName = 'Darkness Energy BLW';
+  public fullName = 'Darkness Energy (BLW 111)';
+  public legacyFullName = 'Darkness Energy BLW';
 
 }
 
@@ -141,6 +148,7 @@ export class MetalEnergy extends EnergyCard {
 
   public name = 'Metal Energy';
 
-  public fullName = 'Metal Energy BLW';
+  public fullName = 'Metal Energy (BLW 112)';
+  public legacyFullName = 'Metal Energy BLW';
 
 }

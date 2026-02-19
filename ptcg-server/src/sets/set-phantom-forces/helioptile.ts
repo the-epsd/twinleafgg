@@ -21,7 +21,7 @@ export class Helioptile extends PokemonCard {
       name: 'Tail Rap',
       cost: [L, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class Helioptile extends PokemonCard {
   public setNumber: string = '28';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Helioptile';
-  public fullName: string = 'Helioptile PHF';
+  public fullName: string = 'Helioptile (PHF 28)';
+  public legacyFullName = 'Helioptile PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tail Rap

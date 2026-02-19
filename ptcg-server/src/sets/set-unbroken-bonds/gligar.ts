@@ -29,7 +29,7 @@ export class Gligar extends PokemonCard {
       name: 'Shinobi Strike',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you played Janine from your hand during this turn, this attack does 90 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Gligar extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gligar';
-  public fullName: string = 'Gligar UNB';
+  public fullName: string = 'Gligar (UNB 98)';
+  public legacyFullName = 'Gligar UNB';
 
   private readonly JANINE_MARKER = 'GLIGAR_JANINE_MARKER';
 

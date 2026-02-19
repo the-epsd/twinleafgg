@@ -27,5 +27,6 @@ export class Cufant extends PokemonCard {
   public setNumber: string = 'SV090';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cufant';
-  public fullName: string = 'Cufant SHF';
+  public fullName: string = 'Cufant (SHF SV090)';
+  public legacyFullName = 'Cufant SHF';
 }

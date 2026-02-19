@@ -34,7 +34,8 @@ export class Mareanie extends PokemonCard {
   public setNumber: string = '39';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mareanie';
-  public fullName: string = 'Mareanie GRI';
+  public fullName: string = 'Mareanie (GRI 39)';
+  public legacyFullName = 'Mareanie GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bail Out

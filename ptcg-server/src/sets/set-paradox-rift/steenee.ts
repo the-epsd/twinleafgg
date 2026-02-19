@@ -45,7 +45,8 @@ export class Steenee extends PokemonCard {
 
   public name: string = 'Steenee';
 
-  public fullName: string = 'Steenee PAR';
+  public fullName: string = 'Steenee (PAR 9)';
+  public legacyFullName = 'Steenee PAR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {

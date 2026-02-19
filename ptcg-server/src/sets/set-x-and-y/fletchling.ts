@@ -35,7 +35,8 @@ export class Fletchling extends PokemonCard {
   public setNumber: string = '113';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fletchling';
-  public fullName: string = 'Fletchling XY';
+  public fullName: string = 'Fletchling (XY 113)';
+  public legacyFullName = 'Fletchling XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Me First

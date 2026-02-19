@@ -28,7 +28,8 @@ export class Aipom extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aipom';
-  public fullName: string = 'Aipom UL';
+  public fullName: string = 'Aipom (UL 43)';
+  public legacyFullName = 'Aipom UL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Surprise Punch - move opponent's energy after attack

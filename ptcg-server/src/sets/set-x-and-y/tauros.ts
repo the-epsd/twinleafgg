@@ -35,7 +35,8 @@ export class Tauros extends PokemonCard {
   public setNumber: string = '100';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tauros';
-  public fullName: string = 'Tauros XY';
+  public fullName: string = 'Tauros (XY 100)';
+  public legacyFullName = 'Tauros XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/mareep.ts (self damage)

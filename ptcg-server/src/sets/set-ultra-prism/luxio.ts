@@ -26,7 +26,8 @@ export class Luxio extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '47';
   public name: string = 'Luxio';
-  public fullName: string = 'Luxio UPR';
+  public fullName: string = 'Luxio (UPR 47)';
+  public legacyFullName = 'Luxio UPR';
 
   public readonly OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER = 'OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER';
 

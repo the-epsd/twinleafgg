@@ -37,7 +37,8 @@ export class Bisharp extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bisharp';
-  public fullName: string = 'Bisharp XY';
+  public fullName: string = 'Bisharp (XY 82)';
+  public legacyFullName = 'Bisharp XY';
 
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'BISHARP_NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'BISHARP_NEXT_TURN_MORE_DAMAGE_MARKER_2';

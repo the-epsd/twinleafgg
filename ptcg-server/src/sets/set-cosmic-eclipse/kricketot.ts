@@ -34,7 +34,8 @@ export class Kricketot extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kricketot';
-  public fullName: string = 'Kricketot CEC';
+  public fullName: string = 'Kricketot (CEC 13)';
+  public legacyFullName = 'Kricketot CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Collect

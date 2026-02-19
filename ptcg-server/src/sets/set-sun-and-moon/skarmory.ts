@@ -28,7 +28,7 @@ export class Skarmory extends PokemonCard {
       name: 'Aerial Ace',
       cost: [M, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -37,7 +37,8 @@ export class Skarmory extends PokemonCard {
   public setNumber: string = '88';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skarmory';
-  public fullName: string = 'Skarmory SUM';
+  public fullName: string = 'Skarmory (SUM 88)';
+  public legacyFullName = 'Skarmory SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Metallic Sound

@@ -32,7 +32,8 @@ export class GalarianWeezing extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
   public name: string = 'Galarian Weezing';
-  public fullName: string = 'Galarian Weezing CRE';
+  public fullName: string = 'Galarian Weezing (CRE 96)';
+  public legacyFullName = 'Galarian Weezing CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

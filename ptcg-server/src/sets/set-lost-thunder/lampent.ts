@@ -31,7 +31,8 @@ export class Lampent extends PokemonCard {
   public setNumber: string = '102';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lampent';
-  public fullName: string = 'Lampent LOT';
+  public fullName: string = 'Lampent (LOT 102)';
+  public legacyFullName = 'Lampent LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Haunt

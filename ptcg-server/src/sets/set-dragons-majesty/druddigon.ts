@@ -34,7 +34,8 @@ export class Druddigon extends PokemonCard {
   public setNumber: string = '45';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Druddigon';
-  public fullName: string = 'Druddigon DRM';
+  public fullName: string = 'Druddigon (DRM 45)';
+  public legacyFullName = 'Druddigon DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Rough Skin

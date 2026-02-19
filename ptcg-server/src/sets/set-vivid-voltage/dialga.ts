@@ -39,7 +39,8 @@ export class Dialga extends PokemonCard {
   public setNumber: string = '121';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dialga';
-  public fullName: string = 'Dialga VIV';
+  public fullName: string = 'Dialga (VIV 121)';
+  public legacyFullName = 'Dialga VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rewind Time

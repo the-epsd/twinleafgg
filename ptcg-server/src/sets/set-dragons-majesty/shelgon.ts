@@ -37,7 +37,8 @@ export class Shelgon extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Shelgon';
-  public fullName: string = 'Shelgon DRM';
+  public fullName: string = 'Shelgon (DRM 43)';
+  public legacyFullName = 'Shelgon DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Energy Guard (passive - damage reduction)

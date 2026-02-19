@@ -34,7 +34,8 @@ export class Sigilyph extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Sigilyph';
-  public fullName: string = 'Sigilyph EPO';
+  public fullName: string = 'Sigilyph (EPO 41)';
+  public legacyFullName = 'Sigilyph EPO';
 
   public readonly REFLECT_MARKER = 'REFLECT_MARKER';
 

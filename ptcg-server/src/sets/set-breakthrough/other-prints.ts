@@ -20,133 +20,155 @@ import { MMewtwoEx2 } from './m-mewtwo-ex-2';
 import { GiovannisScheme } from './giovannis-scheme';
 
 export class FishermanBKT extends Fisherman {
-  public fullName = 'Fisherman BKT';
+  public fullName = 'Fisherman (BKT 136)';
+  public legacyFullName = 'Fisherman BKT';
   public set = 'BKT';
   public setNumber = '136';
   public text = 'Put 4 basic Energy cards from your discard pile into your hand.';
 }
 
 export class FloatStoneBKT extends FloatStone {
-  public fullName = 'Float Stone BKT';
+  public fullName = 'Float Stone (BKT 137)';
+  public legacyFullName = 'Float Stone BKT';
   public set = 'BKT';
   public setNumber = '137';
 }
 
 export class ProfessorsLetterBKT extends ProfessorsLetter {
-  public fullName = 'Professors Letter BKT';
+  public fullName = 'Professor\'s Letter (BKT 146)';
+  public legacyFullName = 'Professors Letter BKT';
   public set = 'BKT';
   public setNumber = '146';
 }
 export class HeavyBallBKT extends HeavyBall {
   public setNumber = '140';
-  public fullName: string = 'Heavy Ball BKT';
+  public fullName: string = 'Heavy Ball (BKT 140)';
+  public legacyFullName = 'Heavy Ball BKT';
   public set = 'BKT';
 }
 
 export class JudgeULBKT extends JudgeUL {
   public setNumber = '143';
-  public fullName: string = 'Judge BKT';
+  public fullName: string = 'Judge (BKT 143)';
+  public legacyFullName = 'Judge BKT';
   public set = 'BKT';
 }
 
 export class SkylaBKT extends Skyla {
   public setNumber = '148';
-  public fullName: string = 'Skyla BKT';
+  public fullName: string = 'Skyla (BKT 148)';
+  public legacyFullName = 'Skyla BKT';
   public set = 'BKT';
 }
 
 export class SuperRodBKT extends SuperRod {
   public setNumber = '149';
-  public fullName: string = 'Super Rod BKT';
+  public fullName: string = 'Super Rod (BKT 149)';
+  public legacyFullName = 'Super Rod BKT';
   public set = 'BKT';
 }
 
 export class RainbowEnergyPLBKT extends RainbowEnergyPL {
   public setNumber = '152';
-  public fullName: string = 'Rainbow Energy BKT';
+  public fullName: string = 'Rainbow Energy (BKT 152)';
+  public legacyFullName = 'Rainbow Energy BKT';
   public set = 'BKT';
 }
 
 export class Brigette2BKT extends BrigetteBKT134 {
   public setNumber = '161';
-  public fullName: string = 'Brigette2 BKT';
+  public fullName: string = 'Brigette (BKT 161)';
+  public legacyFullName = 'Brigette2 BKT';
   public set = 'BKT';
 }
 
 export class ProfessorsLetter2BKT extends ProfessorsLetterXY123 {
   public setNumber = '146a';
-  public fullName: string = 'Professor\'s Letter2 BKT';
+  public fullName: string = 'Professor\'s Letter (BKT 146a)';
+  public legacyFullName = 'Professor\'s Letter2 BKT';
   public set = 'BKT';
 }
 
 export class SwabluBKT extends Swablu {
   public set: string = 'BKT';
   public setNumber: string = '124';
-  public fullName: string = 'Swablu BKT';
+  public fullName: string = 'Swablu (BKT 124)';
+  public legacyFullName = 'Swablu BKT';
 }
 
 export class HoundoomEx2 extends HoundoomEx {
   public set: string = 'BKT';
   public setNumber: string = '153';
-  public fullName: string = 'Houndoom-EX BKT 153';
+  public fullName: string = 'Houndoom-EX (BKT 153)';
+  public legacyFullName = 'Houndoom-EX BKT 153';
 }
 
 export class MHoundoomEx2 extends MHoundoomEx {
   public set: string = 'BKT';
   public setNumber: string = '154';
-  public fullName: string = 'M Houndoom-EX BKT 154';
+  public fullName: string = 'M Houndoom-EX (BKT 154)';
+  public legacyFullName = 'M Houndoom-EX BKT 154';
 }
 
 export class GlalieEx2 extends GlalieEx {
   public set: string = 'BKT';
   public setNumber: string = '155';
-  public fullName: string = 'Glalie-EX BKT 155';
+  public fullName: string = 'Glalie-EX (BKT 155)';
+  public legacyFullName = 'Glalie-EX BKT 155';
 }
 
 export class MGlalieEx2 extends MGlalieEx {
   public set: string = 'BKT';
   public setNumber: string = '156';
-  public fullName: string = 'M Glalie-EX BKT 156';
+  public fullName: string = 'M Glalie-EX (BKT 156)';
+  public legacyFullName = 'M Glalie-EX BKT 156';
 }
 
 export class MewtwoEx3 extends MewtwoEx {
   public set: string = 'BKT';
   public setNumber: string = '157';
-  public fullName: string = 'Mewtwo-EX BKT 157';
+  public fullName: string = 'Mewtwo-EX (BKT 157)';
+  public legacyFullName = 'Mewtwo-EX BKT 157';
 }
 
 export class MewtwoEx4 extends MewtwoEx2 {
   public set: string = 'BKT';
   public setNumber: string = '158';
-  public fullName: string = 'Mewtwo-EX BKT 158';
+  public fullName: string = 'Mewtwo-EX (BKT 158)';
+  public legacyFullName = 'Mewtwo-EX BKT 158';
 }
 
 export class MMewtwoEx3 extends MMewtwoEx {
   public set: string = 'BKT';
   public setNumber: string = '159';
-  public fullName: string = 'M Mewtwo-EX BKT 159';
+  public fullName: string = 'M Mewtwo-EX (BKT 159)';
+  public legacyFullName = 'M Mewtwo-EX BKT 159';
 }
 
 export class MMewtwoEx4 extends MMewtwoEx2 {
   public set: string = 'BKT';
   public setNumber: string = '160';
-  public fullName: string = 'M Mewtwo-EX BKT 160';
+  public fullName: string = 'M Mewtwo-EX (BKT 160)';
+  public legacyFullName = 'M Mewtwo-EX BKT 160';
 }
 
 export class GiovannisScheme2 extends GiovannisScheme {
   public set: string = 'BKT';
   public setNumber: string = '162';
-  public fullName: string = 'Giovanni\'s Scheme BKT 162';
+  public fullName: string = 'Giovanni\'s Scheme (BKT 162)';
+  public legacyFullName = 'Giovanni\'s Scheme BKT 162';
 }
 
 export class MewtwoEx5 extends MewtwoEx {
   public set: string = 'BKT';
   public setNumber: string = '163';
-  public fullName: string = 'Mewtwo-EX BKT 163';
+  public fullName: string = 'Mewtwo-EX (BKT 163)';
+  public legacyFullName = 'Mewtwo-EX BKT 163';
 }
 
 export class MewtwoEx6 extends MewtwoEx2 {
   public set: string = 'BKT';
   public setNumber: string = '164';
-  public fullName: string = 'Mewtwo-EX BKT 164';
+  public fullName: string = 'Mewtwo-EX (BKT 164)';
+  public legacyFullName = 'Mewtwo-EX BKT 164';
 }

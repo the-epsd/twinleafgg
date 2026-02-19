@@ -15,7 +15,8 @@ export class Eviolite extends TrainerCard {
 
   public name: string = 'Eviolite';
 
-  public fullName: string = 'Eviolite NVI';
+  public fullName: string = 'Eviolite (NVI 91)';
+  public legacyFullName = 'Eviolite NVI';
 
   public cardImage: string = 'assets/cardback.png';
 

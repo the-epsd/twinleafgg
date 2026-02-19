@@ -26,5 +26,6 @@ export class Porygon extends PokemonCard {
   public setNumber: string = '116';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Porygon';
-  public fullName: string = 'Porygon CRE';
+  public fullName: string = 'Porygon (CRE 116)';
+  public legacyFullName = 'Porygon CRE';
 }

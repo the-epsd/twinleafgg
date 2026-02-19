@@ -45,7 +45,8 @@ export class Mawile extends PokemonCard {
 
   public name: string = 'Mawile';
 
-  public fullName: string = 'Mawile LOR';
+  public fullName: string = 'Mawile (LOR 71)';
+  public legacyFullName = 'Mawile LOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

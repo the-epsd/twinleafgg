@@ -40,7 +40,8 @@ export class NaganadelGX extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '56';
   public name: string = 'Naganadel-GX';
-  public fullName: string = 'Naganadel-GX FLI';
+  public fullName: string = 'Naganadel-GX (FLI 56)';
+  public legacyFullName = 'Naganadel-GX FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

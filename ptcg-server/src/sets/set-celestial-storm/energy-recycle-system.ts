@@ -13,7 +13,8 @@ export class EnergyRecycleSystem extends TrainerCard {
   public setNumber: string = '128';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Energy Recycle System';
-  public fullName: string = 'Energy Recycle System CES';
+  public fullName: string = 'Energy Recycle System (CES 128)';
+  public legacyFullName = 'Energy Recycle System CES';
   public text: string = `Choose 1: 
   
   • Put a basic Energy card from your discard pile into your hand.

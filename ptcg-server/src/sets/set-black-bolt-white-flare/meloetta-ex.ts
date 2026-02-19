@@ -35,7 +35,8 @@ export class Meloettaex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
   public name: string = 'Meloetta ex';
-  public fullName: string = 'Meloetta ex SV11B';
+  public fullName: string = 'Meloetta ex (BLK 44)';
+  public legacyFullName = 'Meloetta ex SV11B';
 
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER = 'NEXT_TURN_MORE_DAMAGE_MARKER';
   public readonly NEXT_TURN_MORE_DAMAGE_MARKER_2 = 'NEXT_TURN_MORE_DAMAGE_MARKER_2';

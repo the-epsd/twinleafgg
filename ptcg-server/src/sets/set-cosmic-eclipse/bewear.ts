@@ -36,7 +36,8 @@ export class Bewear extends PokemonCard {
   public setNumber: string = '182';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Bewear';
-  public fullName: string = 'Bewear CEC';
+  public fullName: string = 'Bewear (CEC 182)';
+  public legacyFullName = 'Bewear CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Carry and Run (passive - reduce retreat cost while on bench)

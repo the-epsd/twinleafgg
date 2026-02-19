@@ -21,7 +21,7 @@ export class Torchic extends PokemonCard {
       name: 'Quick Attack',
       cost: [R, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Torchic extends PokemonCard {
   public setNumber: string = '12';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Torchic';
-  public fullName: string = 'Torchic FFI';
+  public fullName: string = 'Torchic (FFI 12)';
+  public legacyFullName = 'Torchic FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Quick Attack

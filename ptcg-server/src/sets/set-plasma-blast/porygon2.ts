@@ -26,7 +26,8 @@ export class Porygon2 extends PokemonCard {
   public setNumber: string = '73';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Porygon2';
-  public fullName: string = 'Porygon2 PLB';
+  public fullName: string = 'Porygon2 (PLB 73)';
+  public legacyFullName = 'Porygon2 PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

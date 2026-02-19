@@ -37,7 +37,8 @@ export class Kecleon extends PokemonCard {
 
   public set: string = 'LM';
   public name: string = 'Kecleon';
-  public fullName: string = 'Kecleon LM';
+  public fullName: string = 'Kecleon (LM 37)';
+  public legacyFullName = 'Kecleon LM';
   public setNumber: string = '37';
   public cardImage: string = 'assets/cardback.png';
 

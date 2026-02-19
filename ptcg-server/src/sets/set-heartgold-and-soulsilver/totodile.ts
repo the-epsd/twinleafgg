@@ -25,5 +25,6 @@ export class Totodile extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
   public name: string = 'Totodile';
-  public fullName: string = 'Totodile HS';
+  public fullName: string = 'Totodile (HS 86)';
+  public legacyFullName = 'Totodile HS';
 }

@@ -12,7 +12,8 @@ export class Karen extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'XYP';
   public name: string = 'Karen';
-  public fullName: string = 'Karen XYP';
+  public fullName: string = 'Karen (XYP 177)';
+  public legacyFullName = 'Karen XYP';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '177';
 

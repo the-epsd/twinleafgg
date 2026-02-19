@@ -24,7 +24,7 @@ export class AlolanRaticateGx extends PokemonCard {
       name: 'Chuck Away',
       cost: [],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Discard up to 2 cards from your hand. This attack does 40 damage for each card you discarded in this way.'
     },
     {
@@ -45,7 +45,8 @@ export class AlolanRaticateGx extends PokemonCard {
   public setNumber: string = '85';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Raticate-GX';
-  public fullName: string = 'Alolan Raticate-GX CES';
+  public fullName: string = 'Alolan Raticate-GX (CES 85)';
+  public legacyFullName = 'Alolan Raticate-GX CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Chuck Away

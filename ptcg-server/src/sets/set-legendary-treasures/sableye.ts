@@ -28,7 +28,8 @@ export class Sableye extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sableye';
-  public fullName: string = 'Sableye LTR';
+  public fullName: string = 'Sableye (LTR 61)';
+  public legacyFullName = 'Sableye LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tight Jaw

@@ -35,7 +35,8 @@ export class Skeledirgeex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '37';
   public name: string = 'Skeledirge ex';
-  public fullName: string = 'Skeledirge ex PAL';
+  public fullName: string = 'Skeledirge ex (PAL 37)';
+  public legacyFullName = 'Skeledirge ex PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Vitality Song

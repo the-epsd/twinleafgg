@@ -33,7 +33,8 @@ export class MegaHawluchaex extends PokemonCard {
   public setNumber: string = '116';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Hawlucha ex';
-  public fullName: string = 'Mega Hawlucha ex M2a';
+  public fullName: string = 'Mega Hawlucha ex (ASC 116)';
+  public legacyFullName = 'Mega Hawlucha ex M2a';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

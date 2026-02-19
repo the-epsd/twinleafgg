@@ -40,7 +40,8 @@ export class Blaziken extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Blaziken';
-  public fullName: string = 'Blaziken DAA';
+  public fullName: string = 'Blaziken (DAA 24)';
+  public legacyFullName = 'Blaziken DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Double Type (passive - adds Fighting type)

@@ -29,7 +29,7 @@ export class Toxicroak extends PokemonCard {
       name: 'Exact Revenge',
       cost: [C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If any of your Fighting Pokémon were Knocked Out by damage from an opponent\'s attack during their last turn, this attack does 70 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class Toxicroak extends PokemonCard {
   public setNumber: string = '57';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Toxicroak';
-  public fullName: string = 'Toxicroak UPR';
+  public fullName: string = 'Toxicroak (UPR 57)';
+  public legacyFullName = 'Toxicroak UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Jab

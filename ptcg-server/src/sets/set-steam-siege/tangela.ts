@@ -21,7 +21,7 @@ export class Tangela extends PokemonCard {
       name: 'Slam',
       cost: [G, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
     },
     {
@@ -36,7 +36,8 @@ export class Tangela extends PokemonCard {
   public setNumber: string = '1';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Tangela';
-  public fullName: string = 'Tangela STS';
+  public fullName: string = 'Tangela (STS 1)';
+  public legacyFullName = 'Tangela STS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Slam

@@ -86,7 +86,8 @@ export class Beautifly extends PokemonCard {
 
   public name: string = 'Beautifly';
 
-  public fullName: string = 'Beautifly ROS';
+  public fullName: string = 'Beautifly (ROS 5)';
+  public legacyFullName = 'Beautifly ROS';
 
   public cardImage: string = 'assets/cardback.png';
 

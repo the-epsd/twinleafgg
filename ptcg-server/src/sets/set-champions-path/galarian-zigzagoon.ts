@@ -20,7 +20,7 @@ export class GalarianZigzagoon extends PokemonCard {
       name: 'Pin Missile',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 4 coins. This attack does 10 damage for each heads.'
     }
   ];
@@ -30,7 +30,8 @@ export class GalarianZigzagoon extends PokemonCard {
   public setNumber: string = '35';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Zigzagoon';
-  public fullName: string = 'Galarian Zigzagoon CPA';
+  public fullName: string = 'Galarian Zigzagoon (CPA 35)';
+  public legacyFullName = 'Galarian Zigzagoon CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Pin Missile

@@ -21,7 +21,8 @@ export class Foongus extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Foongus';
-  public fullName: string = 'Foongus SV11B';
+  public fullName: string = 'Foongus (BLK 10)';
+  public legacyFullName = 'Foongus SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {

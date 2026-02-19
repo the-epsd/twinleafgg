@@ -27,7 +27,7 @@ export class Meloetta extends PokemonCard {
       name: 'Shooting Star Pirouette',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Meloetta extends PokemonCard {
   public setNumber: string = '123';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Meloetta';
-  public fullName: string = 'Meloetta UNM';
+  public fullName: string = 'Meloetta (UNM 123)';
+  public legacyFullName = 'Meloetta UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Tag Cheer

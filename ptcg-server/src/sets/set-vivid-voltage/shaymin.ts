@@ -43,7 +43,8 @@ export class Shaymin extends PokemonCard {
 
   public name: string = 'Shaymin';
 
-  public fullName: string = 'Shaymin VIV';
+  public fullName: string = 'Shaymin (VIV 15)';
+  public legacyFullName = 'Shaymin VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Leech Seed

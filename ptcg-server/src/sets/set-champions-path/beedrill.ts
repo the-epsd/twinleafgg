@@ -31,7 +31,8 @@ export class Beedrill extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Beedrill';
-  public fullName: string = 'Beedrill CPA';
+  public fullName: string = 'Beedrill (CPA 4)';
+  public legacyFullName = 'Beedrill CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Jab

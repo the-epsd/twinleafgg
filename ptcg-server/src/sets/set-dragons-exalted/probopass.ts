@@ -34,7 +34,8 @@ export class Probopass extends PokemonCard {
   public setNumber: string = '82';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Probopass';
-  public fullName: string = 'Probopass DRX';
+  public fullName: string = 'Probopass (DRX 82)';
+  public legacyFullName = 'Probopass DRX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Magnetic Lines - optionally move an Energy from the Defending Pokemon to opponent's bench

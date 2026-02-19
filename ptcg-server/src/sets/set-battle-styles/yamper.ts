@@ -37,7 +37,8 @@ export class Yamper extends PokemonCard {
   public setNumber: string = '52';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Yamper';
-  public fullName: string = 'Yamper BST';
+  public fullName: string = 'Yamper (BST 52)';
+  public legacyFullName = 'Yamper BST';
 
   // Ref: set-steam-siege/foongus.ts (Play Ball - PlayPokemonEffect trigger for ball retrieval ability)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

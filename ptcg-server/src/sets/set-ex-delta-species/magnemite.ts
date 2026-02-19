@@ -29,7 +29,8 @@ export class Magnemite extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '74';
   public name: string = 'Magnemite';
-  public fullName: string = 'Magnemite DS';
+  public fullName: string = 'Magnemite (DS 74)';
+  public legacyFullName = 'Magnemite DS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

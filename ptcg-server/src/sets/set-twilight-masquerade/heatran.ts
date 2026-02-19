@@ -34,7 +34,8 @@ export class Heatran extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '123';
   public name: string = 'Heatran';
-  public fullName: string = 'Heatran TWM';
+  public fullName: string = 'Heatran (TWM 123)';
+  public legacyFullName = 'Heatran TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

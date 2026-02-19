@@ -83,7 +83,8 @@ export class Samurott extends PokemonCard {
   public setNumber: string = '23';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Samurott';
-  public fullName: string = 'Samurott SV11W';
+  public fullName: string = 'Samurott (WHT 23)';
+  public legacyFullName = 'Samurott SV11W';
 
   public readonly STRONG_CURRENTS_MARKER = 'STRONG_CURRENTS_MARKER';
 

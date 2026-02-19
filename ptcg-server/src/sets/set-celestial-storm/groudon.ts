@@ -21,7 +21,7 @@ export class Groudon extends PokemonCard {
       name: 'Wreck',
       cost: [F, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If there is any Stadium card in play, this attack does 50 more damage. Then, discard that Stadium card.'
     },
     {
@@ -36,7 +36,8 @@ export class Groudon extends PokemonCard {
   public setNumber: string = '81';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Groudon';
-  public fullName: string = 'Groudon CES';
+  public fullName: string = 'Groudon (CES 81)';
+  public legacyFullName = 'Groudon CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Wreck

@@ -41,7 +41,8 @@ export class KeldeoGX extends PokemonCard {
   public setNumber = '47';
   public cardImage = 'assets/cardback.png';
   public name = 'Keldeo-GX';
-  public fullName = 'Keldeo-GX UNM';
+  public fullName = 'Keldeo-GX (UNM 47)';
+  public legacyFullName = 'Keldeo-GX UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Pure Heart: Prevent damage & effects from Pokemon-EX

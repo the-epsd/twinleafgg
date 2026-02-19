@@ -75,7 +75,8 @@ export class EscapeRope extends TrainerCard {
 
   public name: string = 'Escape Rope';
 
-  public fullName: string = 'Escape Rope BST';
+  public fullName: string = 'Escape Rope (BST 125)';
+  public legacyFullName = 'Escape Rope BST';
 
   public text: string =
     'Each player switches his or her Active Pokemon with 1 of his or her ' +

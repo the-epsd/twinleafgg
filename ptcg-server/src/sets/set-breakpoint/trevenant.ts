@@ -29,7 +29,7 @@ export class Trevenant extends PokemonCard {
       name: 'Energy Press',
       cost: [P, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];
@@ -38,7 +38,8 @@ export class Trevenant extends PokemonCard {
   public setNumber: string = '65';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trevenant';
-  public fullName: string = 'Trevenant BKP';
+  public fullName: string = 'Trevenant (BKP 65)';
+  public legacyFullName = 'Trevenant BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Nervous Seed (passive)

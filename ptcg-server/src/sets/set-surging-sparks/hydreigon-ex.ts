@@ -33,7 +33,8 @@ export class Hydreigonex extends PokemonCard {
   public setNumber: string = '119';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hydreigon ex';
-  public fullName: string = 'Hydreigon ex SSP';
+  public fullName: string = 'Hydreigon ex (SSP 119)';
+  public legacyFullName = 'Hydreigon ex SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Tera

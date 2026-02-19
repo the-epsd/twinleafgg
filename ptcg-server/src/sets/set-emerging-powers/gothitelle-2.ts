@@ -32,7 +32,8 @@ export class Gothitelle2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '48';
   public name: string = 'Gothitelle';
-  public fullName: string = 'Gothitelle EPO 48';
+  public fullName: string = 'Gothitelle (EPO 48)';
+  public legacyFullName = 'Gothitelle EPO 48';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

@@ -23,7 +23,7 @@ export class Staravia extends PokemonCard {
       name: 'Ambush',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     },
     {
@@ -39,7 +39,8 @@ export class Staravia extends PokemonCard {
   public setNumber: string = '146';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Staravia';
-  public fullName: string = 'Staravia DAA';
+  public fullName: string = 'Staravia (DAA 146)';
+  public legacyFullName = 'Staravia DAA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ambush

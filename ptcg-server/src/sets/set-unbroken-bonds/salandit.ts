@@ -29,7 +29,8 @@ export class Salandit extends PokemonCard {
   public setNumber: string = '30';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Salandit';
-  public fullName: string = 'Salandit UNB';
+  public fullName: string = 'Salandit (UNB 30)';
+  public legacyFullName = 'Salandit UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Grass Fire

@@ -35,7 +35,8 @@ export class Phantump extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Phantump';
-  public fullName: string = 'Phantump RCL';
+  public fullName: string = 'Phantump (RCL 14)';
+  public legacyFullName = 'Phantump RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dark Guidance

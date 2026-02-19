@@ -16,7 +16,8 @@ export class Iono extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '185';
   public name: string = 'Iono';
-  public fullName: string = 'Iono PAL';
+  public fullName: string = 'Iono (PAL 185)';
+  public legacyFullName = 'Iono PAL';
 
   public text: string =
     'Each player shuffles their hand and puts it on the bottom of their deck. ' +

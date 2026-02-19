@@ -43,7 +43,8 @@ export class DragoniteV extends PokemonCard {
 
   public name: string = 'Dragonite V';
 
-  public fullName: string = 'Dragonite V EVS';
+  public fullName: string = 'Dragonite V (EVS 191)';
+  public legacyFullName = 'Dragonite V EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

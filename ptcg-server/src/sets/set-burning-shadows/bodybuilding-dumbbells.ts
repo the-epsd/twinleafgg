@@ -18,7 +18,8 @@ export class BodybuildingDumbbells extends TrainerCard {
 
   public name: string = 'Bodybuilding Dumbbells';
 
-  public fullName: string = 'Bodybuilding Dumbbells BUS';
+  public fullName: string = 'Bodybuilding Dumbbells (BUS 113)';
+  public legacyFullName = 'Bodybuilding Dumbbells BUS';
 
   public text: string = 'The Stage 1 Pokémon this card is attached to gets +40 HP.';
 

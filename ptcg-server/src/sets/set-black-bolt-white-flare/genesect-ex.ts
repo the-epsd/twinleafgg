@@ -33,7 +33,8 @@ export class Genesectex extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Genesect ex';
-  public fullName: string = 'Genesect ex SV11B';
+  public fullName: string = 'Genesect ex (BLK 67)';
+  public legacyFullName = 'Genesect ex SV11B';
 
   private turnTracker: number = 0;
   public readonly METAL_SIGNAL_MARKER = 'METAL_SIGNAL_MARKER';

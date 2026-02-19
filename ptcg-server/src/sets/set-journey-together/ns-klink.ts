@@ -27,7 +27,8 @@ export class NsKlink extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '103';
   public name: string = 'N\'s Klink';
-  public fullName: string = 'N\'s Klink JTG';
+  public fullName: string = 'N\'s Klink (JTG 103)';
+  public legacyFullName = 'N\'s Klink JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

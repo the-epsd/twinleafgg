@@ -86,7 +86,8 @@ export class Annihilapeex extends PokemonCard {
 
   public name: string = 'Annihilape ex';
 
-  public fullName: string = 'Annihilape ex SVP';
+  public fullName: string = 'Annihilape ex (SVP 32)';
+  public legacyFullName = 'Annihilape ex SVP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

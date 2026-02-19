@@ -36,7 +36,8 @@ export class Cherrim extends PokemonCard {
   public setNumber: string = '11';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cherrim';
-  public fullName: string = 'Cherrim UPR';
+  public fullName: string = 'Cherrim (UPR 11)';
+  public legacyFullName = 'Cherrim UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Weather Guard (passive - remove weakness from Grass Pokemon)

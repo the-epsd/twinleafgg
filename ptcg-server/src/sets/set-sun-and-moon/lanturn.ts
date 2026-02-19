@@ -30,7 +30,7 @@ export class Lanturn extends PokemonCard {
       name: 'Aqua Spark',
       cost: [L, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon has any [W] Energy attached to it, this attack does 60 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Lanturn extends PokemonCard {
   public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lanturn';
-  public fullName: string = 'Lanturn SUM';
+  public fullName: string = 'Lanturn (SUM 50)';
+  public legacyFullName = 'Lanturn SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Confuse Ray

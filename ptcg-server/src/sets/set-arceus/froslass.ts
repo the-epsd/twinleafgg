@@ -30,7 +30,8 @@ export class Froslass extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Froslass';
-  public fullName: string = 'Froslass AR';
+  public fullName: string = 'Froslass (AR 2)';
+  public legacyFullName = 'Froslass AR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Snow Gift

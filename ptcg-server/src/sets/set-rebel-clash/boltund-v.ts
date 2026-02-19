@@ -28,7 +28,7 @@ export class BoltundV extends PokemonCard {
       name: 'Bolt Storm',
       cost: [L, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 30 more damage for each [L] Energy attached to all of your Pokémon.'
     }
   ];
@@ -38,7 +38,8 @@ export class BoltundV extends PokemonCard {
   public setNumber: string = '67';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Boltund V';
-  public fullName: string = 'Boltund V RCL';
+  public fullName: string = 'Boltund V (RCL 67)';
+  public legacyFullName = 'Boltund V RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Electrify

@@ -55,7 +55,8 @@ export class DuskManeNecrozmaGX extends PokemonCard {
 
   public name: string = 'Dusk Mane Necrozma-GX';
 
-  public fullName: string = 'Dusk Mane Necrozma-GX UPR';
+  public fullName: string = 'Dusk Mane Necrozma-GX (UPR 90)';
+  public legacyFullName = 'Dusk Mane Necrozma-GX UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Meteor Tempest

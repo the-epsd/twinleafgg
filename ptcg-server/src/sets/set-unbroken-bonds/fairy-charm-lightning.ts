@@ -16,7 +16,8 @@ export class FairyCharmLightning extends TrainerCard {
   public setNumber: string = '172';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fairy Charm Lightning';
-  public fullName: string = 'Fairy Charm Lightning UNB';
+  public fullName: string = 'Fairy Charm Lightning (UNB 172)';
+  public legacyFullName = 'Fairy Charm Lightning UNB';
   public text: string = 'Prevent all damage done to the Fairy Pokémon this card is attached to by attacks from your opponent\'s Lightning Pokémon-GX and Lightning Pokémon-EX.';
 
   // Ref: set-lost-thunder/fairy-charm-psychic.ts (Fairy Charm type-based damage prevention)

@@ -36,7 +36,8 @@ export class Gyarados extends PokemonCard {
   public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gyarados';
-  public fullName: string = 'Gyarados EVO';
+  public fullName: string = 'Gyarados (EVO 34)';
+  public legacyFullName = 'Gyarados EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bubble Beam

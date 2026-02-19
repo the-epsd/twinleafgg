@@ -23,7 +23,7 @@ export class Fletchinder extends PokemonCard {
       name: 'Quick Attack',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];
@@ -33,7 +33,8 @@ export class Fletchinder extends PokemonCard {
   public setNumber: string = '139';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Fletchinder';
-  public fullName: string = 'Fletchinder EVS';
+  public fullName: string = 'Fletchinder (EVS 139)';
+  public legacyFullName = 'Fletchinder EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Quick Attack

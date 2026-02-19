@@ -20,7 +20,8 @@ export class UnitEnergyFDY extends EnergyCard {
 
   public name = 'Unit Energy FDY';
 
-  public fullName = 'Unit Energy FDY FLI';
+  public fullName = 'Unit Energy FDY (FLI 118)';
+  public legacyFullName = 'Unit Energy FDY FLI';
 
   public text = 'This card provides [C] Energy.' +
     '\n\n' +

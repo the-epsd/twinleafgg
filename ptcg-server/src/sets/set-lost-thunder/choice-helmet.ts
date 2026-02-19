@@ -15,7 +15,8 @@ export class ChoiceHelmet extends TrainerCard {
   public setNumber: string = '169';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Choice Helmet';
-  public fullName: string = 'Choice Helmet LOT';
+  public fullName: string = 'Choice Helmet (LOT 169)';
+  public legacyFullName = 'Choice Helmet LOT';
   public text: string = 'The Pokémon this card is attached to takes 30 less damage from the attacks of your opponent\'s Pokémon-GX and Pokémon-EX (after applying Weakness and Resistance).';
 
   // Ref: set-x-and-y/hard-charm.ts (Tool damage reduction pattern)

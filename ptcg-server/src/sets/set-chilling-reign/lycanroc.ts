@@ -22,7 +22,7 @@ export class Lycanroc extends PokemonCard {
       name: 'Rogue Fangs',
       cost: [F, F],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 10 more damage for each Single Strike Pokémon in your discard pile.'
     }
   ];
@@ -32,7 +32,8 @@ export class Lycanroc extends PokemonCard {
   public setNumber: string = '87';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lycanroc';
-  public fullName: string = 'Lycanroc CRE';
+  public fullName: string = 'Lycanroc (CRE 87)';
+  public legacyFullName = 'Lycanroc CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Rogue Fangs

@@ -13,7 +13,8 @@ export class BlackMarketPrismStar extends TrainerCard {
   public set: string = 'TEU';
   public setNumber: string = '134';
   public name: string = 'Black Market Prism Star';
-  public fullName: string = 'Black Market Prism Star TEU';
+  public fullName: string = 'Black Market Prism Star (TEU 134)';
+  public legacyFullName = 'Black Market Prism Star TEU';
   public cardImage: string = 'assets/cardback.png';
 
   public text: string =

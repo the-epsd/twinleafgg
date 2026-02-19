@@ -36,7 +36,8 @@ export class Hawlucha extends PokemonCard {
   public setNumber: string = '148';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hawlucha';
-  public fullName: string = 'Hawlucha RCL';
+  public fullName: string = 'Hawlucha (RCL 148)';
+  public legacyFullName = 'Hawlucha RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Windfall

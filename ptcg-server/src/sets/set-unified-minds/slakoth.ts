@@ -35,7 +35,8 @@ export class Slakoth extends PokemonCard {
   public setNumber: string = '167';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Slakoth';
-  public fullName: string = 'Slakoth UNM';
+  public fullName: string = 'Slakoth (UNM 167)';
+  public legacyFullName = 'Slakoth UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lazy Howl

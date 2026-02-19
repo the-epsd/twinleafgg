@@ -37,7 +37,8 @@ export class Bellossom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
   public name: string = 'Bellossom';
-  public fullName: string = 'Bellossom UD';
+  public fullName: string = 'Bellossom (UD 1)';
+  public legacyFullName = 'Bellossom UD';
 
   public readonly HUSTLE_STEP_MARKER = 'HUSTLE_STEP_MARKER';
 

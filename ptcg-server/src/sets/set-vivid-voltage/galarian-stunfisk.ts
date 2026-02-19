@@ -39,7 +39,8 @@ export class GalarianStunfisk extends PokemonCard {
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Galarian Stunfisk';
-  public fullName: string = 'Galarian Stunfisk VIV';
+  public fullName: string = 'Galarian Stunfisk (VIV 125)';
+  public legacyFullName = 'Galarian Stunfisk VIV';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Counterattack (passive - when damaged by opponent's attack, put 3 damage counters on attacker)

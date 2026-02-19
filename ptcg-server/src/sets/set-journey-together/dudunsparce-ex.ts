@@ -32,7 +32,8 @@ export class Dudunsparceex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '121';
   public name: string = 'Dudunsparce ex';
-  public fullName: string = 'Dudunsparce ex JTG';
+  public fullName: string = 'Dudunsparce ex (JTG 121)';
+  public legacyFullName = 'Dudunsparce ex JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

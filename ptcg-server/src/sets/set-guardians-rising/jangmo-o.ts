@@ -35,7 +35,8 @@ export class JangmoO extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jangmo-o';
-  public fullName: string = 'Jangmo-o GRI';
+  public fullName: string = 'Jangmo-o (GRI 98)';
+  public legacyFullName = 'Jangmo-o GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Bulletproof (passive - reduce damage from attacks by 10)

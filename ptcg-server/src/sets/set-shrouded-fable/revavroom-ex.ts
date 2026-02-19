@@ -48,7 +48,8 @@ export class Revavroomex extends PokemonCard {
 
   public name: string = 'Revavroom ex';
 
-  public fullName: string = 'Revavroom ex SFA';
+  public fullName: string = 'Revavroom ex (SFA 15)';
+  public legacyFullName = 'Revavroom ex SFA';
 
   public discardRevavroom: boolean = false;
 

@@ -14,7 +14,8 @@ export class Pokedex extends TrainerCard {
 
   public name: string = 'Pokédex';
 
-  public fullName: string = 'Pokedex BLW'; // Replace with the appropriate set abbreviation
+  public fullName: string = 'Pokédex (BLW 98)';
+  public legacyFullName = 'Pokedex BLW'; // Replace with the appropriate set abbreviation
 
   public cardImage: string = 'assets/cardback.png'; // Replace with the appropriate card image path
 

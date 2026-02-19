@@ -48,7 +48,8 @@ export class AntiqueSailFossil extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';
   public name: string = 'Antique Sail Fossil';
-  public fullName: string = 'Antique Sail Fossil M3';
+  public fullName: string = 'Antique Sail Fossil (M3 69)';
+  public legacyFullName = 'Antique Sail Fossil M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Discard from play

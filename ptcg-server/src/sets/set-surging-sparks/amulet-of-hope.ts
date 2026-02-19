@@ -25,7 +25,8 @@ export class AmuletofHope extends TrainerCard {
 
   public name: string = 'Amulet of Hope';
 
-  public fullName: string = 'Amulet of Hope SSP';
+  public fullName: string = 'Amulet of Hope (SSP 162)';
+  public legacyFullName = 'Amulet of Hope SSP';
 
   public text: string =
     'If the Pokémon this card is attached to is Knocked Out by damage from an attack from your opponent\'s Pokémon, search your deck for up to 3 cards and put them into your hand. Then, shuffle your deck.';

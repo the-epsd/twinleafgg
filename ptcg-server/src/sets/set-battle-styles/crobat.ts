@@ -32,7 +32,8 @@ export class Crobat extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public name: string = 'Crobat';
-  public fullName: string = 'Crobat BST';
+  public fullName: string = 'Crobat (BST 91)';
+  public legacyFullName = 'Crobat BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {

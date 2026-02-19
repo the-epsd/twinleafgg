@@ -31,7 +31,7 @@ export class Clawitzer extends PokemonCard {
       name: 'Splash Cannon',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 20 more damage for each [W] Energy attached to this Pokémon.'
     }
   ];
@@ -40,7 +40,8 @@ export class Clawitzer extends PokemonCard {
   public setNumber: string = '24';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Clawitzer';
-  public fullName: string = 'Clawitzer FFI';
+  public fullName: string = 'Clawitzer (FFI 24)';
+  public legacyFullName = 'Clawitzer FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Reverse Thrust

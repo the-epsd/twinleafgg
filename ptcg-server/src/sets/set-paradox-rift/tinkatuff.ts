@@ -41,7 +41,8 @@ export class Tinkatuff extends PokemonCard {
 
   public name: string = 'Tinkatuff';
 
-  public fullName: string = 'Tinkatuff PAR';
+  public fullName: string = 'Tinkatuff (PAR 84)';
+  public legacyFullName = 'Tinkatuff PAR';
 
 
   reduceEffect(store: StoreLike, state: State, effect: Effect) {

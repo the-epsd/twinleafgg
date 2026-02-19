@@ -35,7 +35,8 @@ export class Magmar extends PokemonCard {
   public setNumber: string = '10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Magmar';
-  public fullName: string = 'Magmar FFI';
+  public fullName: string = 'Magmar (FFI 10)';
+  public legacyFullName = 'Magmar FFI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Ember

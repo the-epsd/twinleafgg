@@ -46,7 +46,8 @@ export class Electivire extends PokemonCard {
 
   public name: string = 'Electivire';
 
-  public fullName: string = 'Electivire BRS';
+  public fullName: string = 'Electivire (BRS 47)';
+  public legacyFullName = 'Electivire BRS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

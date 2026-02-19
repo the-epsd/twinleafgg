@@ -31,5 +31,6 @@ export class Ponyta extends PokemonCard {
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ponyta';
-  public fullName: string = 'Ponyta EVO';
+  public fullName: string = 'Ponyta (EVO 19)';
+  public legacyFullName = 'Ponyta EVO';
 }

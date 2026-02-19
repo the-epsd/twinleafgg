@@ -34,7 +34,8 @@ export class TeamRocketsCrobatex extends PokemonCard {
   public setNumber: string = '122';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Rocket\'s Crobat ex';
-  public fullName: string = 'Team Rocket\'s Crobat ex DRI';
+  public fullName: string = 'Team Rocket\'s Crobat ex (DRI 122)';
+  public legacyFullName = 'Team Rocket\'s Crobat ex DRI';
 
   public usedAssassinsReturn = false;
 

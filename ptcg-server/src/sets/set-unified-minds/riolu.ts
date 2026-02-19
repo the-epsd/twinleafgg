@@ -7,7 +7,8 @@ export class Riolu extends PokemonCard {
   
   public set = 'UNM';
   
-  public fullName = 'Riolu UNM';
+  public fullName = 'Riolu (UNM 115)';
+  public legacyFullName = 'Riolu UNM';
 
   public stage = Stage.BASIC;
 

@@ -35,7 +35,8 @@ export class Charizard extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public name: string = 'Charizard';
-  public fullName: string = 'Charizard TEU';
+  public fullName: string = 'Charizard (TEU 14)';
+  public legacyFullName = 'Charizard TEU';
 
   public readonly ROARING_RESEOLVE_MARKER = 'ROARING_RESEOLVE_MARKER';
 

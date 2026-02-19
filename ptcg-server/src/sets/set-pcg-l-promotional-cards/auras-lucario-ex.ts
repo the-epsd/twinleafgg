@@ -36,7 +36,8 @@ export class AurasLucarioex extends PokemonCard {
   public setNumber: string = '6';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Aura\'s Lucario ex';
-  public fullName: string = 'Aura\'s Lucario ex PCGL';
+  public fullName: string = 'Aura\'s Lucario ex (PCGL 6)';
+  public legacyFullName = 'Aura\'s Lucario ex PCGL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

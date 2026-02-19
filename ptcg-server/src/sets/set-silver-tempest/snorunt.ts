@@ -29,7 +29,8 @@ export class Snorunt extends PokemonCard {
   public regulationMark: string = 'F';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Snorunt';
-  public fullName: string = 'Snorunt SIT';
+  public fullName: string = 'Snorunt (SIT 41)';
+  public legacyFullName = 'Snorunt SIT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

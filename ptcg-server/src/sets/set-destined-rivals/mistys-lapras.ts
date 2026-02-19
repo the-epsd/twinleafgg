@@ -34,7 +34,8 @@ export class MistysLapras extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '50';
   public name: string = 'Misty\'s Lapras';
-  public fullName: string = 'Misty\'s Lapras DRI';
+  public fullName: string = 'Misty\'s Lapras (DRI 50)';
+  public legacyFullName = 'Misty\'s Lapras DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Swim Together

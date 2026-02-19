@@ -17,7 +17,8 @@ export class TeamPlasmaGrunt extends TrainerCard {
   public setNumber: string = '125';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Plasma Grunt';
-  public fullName: string = 'Team Plasma Grunt PLS';
+  public fullName: string = 'Team Plasma Grunt (PLS 125)';
+  public legacyFullName = 'Team Plasma Grunt PLS';
   public text: string = 'Discard a Team Plasma card from your hand. (if you can\'t discard a Team Plasma card, you can\'t play this card.) Draw 4 cards. You may play only 1 Supporter card during your turn (before your attack).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

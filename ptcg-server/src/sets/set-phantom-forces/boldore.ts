@@ -37,7 +37,8 @@ export class Boldore extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Boldore';
-  public fullName: string = 'Boldore PHF';
+  public fullName: string = 'Boldore (PHF 49)';
+  public legacyFullName = 'Boldore PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Core Heal

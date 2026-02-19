@@ -11,7 +11,8 @@ export class BalloonBerry extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public set: string = 'DR';
   public name: string = 'Balloon Berry';
-  public fullName: string = 'Balloon Berry DR';
+  public fullName: string = 'Balloon Berry (DR 82)';
+  public legacyFullName = 'Balloon Berry DR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
 

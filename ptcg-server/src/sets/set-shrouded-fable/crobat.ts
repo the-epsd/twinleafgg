@@ -35,7 +35,8 @@ export class Crobat extends PokemonCard {
   public setNumber: string = '29';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Crobat';
-  public fullName: string = 'Crobat SFA';
+  public fullName: string = 'Crobat (SFA 29)';
+  public legacyFullName = 'Crobat SFA';
 
   public readonly SHADOWY_ENVOY_MARKER = 'SHADOWY_ENVOY_MARKER';
   public readonly PLAY_JANINES_SECRET_ART_MARKER = 'PLAY_JANINES_SECRET_ART_MARKER';

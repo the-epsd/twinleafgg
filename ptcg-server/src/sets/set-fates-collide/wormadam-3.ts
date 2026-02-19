@@ -23,14 +23,14 @@ export class Wormadam3 extends PokemonCard {
       name: 'Strike Back',
       cost: [M],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 20 damage times the number of damage counters on this Pokémon.'
     },
     {
       name: 'Iron Head',
       cost: [M, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin until you get tails. This attack does 20 more damage for each heads.'
     }
   ];
@@ -39,7 +39,8 @@ export class Wormadam3 extends PokemonCard {
   public setNumber: string = '59';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Wormadam';
-  public fullName: string = 'Wormadam FCO 59';
+  public fullName: string = 'Wormadam (FCO 59)';
+  public legacyFullName = 'Wormadam FCO 59';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Strike Back

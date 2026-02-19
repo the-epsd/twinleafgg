@@ -31,7 +31,8 @@ export class BlackKyurem extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '100';
   public name: string = 'Black Kyurem';
-  public fullName: string = 'Black Kyurem BCR';
+  public fullName: string = 'Black Kyurem (BCR 100)';
+  public legacyFullName = 'Black Kyurem BCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

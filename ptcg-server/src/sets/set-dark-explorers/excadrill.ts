@@ -33,7 +33,8 @@ export class Excadrill extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Excadrill';
-  public fullName: string = 'Excadrill DEX';
+  public fullName: string = 'Excadrill (DEX 56)';
+  public legacyFullName = 'Excadrill DEX';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Tunnel Strike - 30 damage to benched

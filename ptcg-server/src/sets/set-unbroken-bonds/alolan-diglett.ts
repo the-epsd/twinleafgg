@@ -26,5 +26,6 @@ export class AlolanDiglett extends PokemonCard {
   public setNumber: string = '121';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Diglett';
-  public fullName: string = 'Alolan Diglett UNB';
+  public fullName: string = 'Alolan Diglett (UNB 121)';
+  public legacyFullName = 'Alolan Diglett UNB';
 }

@@ -20,7 +20,7 @@ export class Hydreigon extends PokemonCard {
       name: 'Dragon Counter',
       cost: [P, D],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'This attack does 100 more damage for each Prize card your opponent took during their last turn.'
     },
     {
@@ -36,7 +36,8 @@ export class Hydreigon extends PokemonCard {
   public setNumber: string = '115';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hydreigon';
-  public fullName: string = 'Hydreigon EVS';
+  public fullName: string = 'Hydreigon (EVS 115)';
+  public legacyFullName = 'Hydreigon EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Dragon Counter

@@ -35,7 +35,8 @@ export class Teddiursa extends PokemonCard {
   public setNumber: string = 'RC15';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Teddiursa';
-  public fullName: string = 'Teddiursa LTR';
+  public fullName: string = 'Teddiursa (LTR RC15)';
+  public legacyFullName = 'Teddiursa LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Honey Snack

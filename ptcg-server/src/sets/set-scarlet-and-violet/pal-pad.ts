@@ -70,7 +70,8 @@ export class PalPad extends TrainerCard {
 
   public name: string = 'Pal Pad';
 
-  public fullName: string = 'Pal Pad SVI';
+  public fullName: string = 'Pal Pad (SVI 182)';
+  public legacyFullName = 'Pal Pad SVI';
 
   public text: string =
     'Shuffle up to 2 Supporter cards from your discard pile into' +

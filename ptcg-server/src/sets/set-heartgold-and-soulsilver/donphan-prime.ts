@@ -38,7 +38,8 @@ export class Donphan extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '107';
   public name: string = 'Donphan';
-  public fullName: string = 'Donphan HS';
+  public fullName: string = 'Donphan (HS 107)';
+  public legacyFullName = 'Donphan HS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -35,7 +35,8 @@ export class Scatterbug extends PokemonCard {
   public setNumber: string = '13';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scatterbug';
-  public fullName: string = 'Scatterbug BKT';
+  public fullName: string = 'Scatterbug (BKT 13)';
+  public legacyFullName = 'Scatterbug BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: String Shot

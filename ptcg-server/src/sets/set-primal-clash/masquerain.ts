@@ -40,7 +40,8 @@ export class Masquerain extends PokemonCard {
   public setNumber: string = '14';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Masquerain';
-  public fullName: string = 'Masquerain PRC';
+  public fullName: string = 'Masquerain (PRC 14)';
+  public legacyFullName = 'Masquerain PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Spiral Gyration

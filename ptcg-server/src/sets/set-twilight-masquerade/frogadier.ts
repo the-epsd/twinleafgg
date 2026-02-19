@@ -39,7 +39,8 @@ export class Frogadier extends PokemonCard {
 
   public name: string = 'Frogadier';
 
-  public fullName: string = 'Frogadier TWM';
+  public fullName: string = 'Frogadier (TWM 57)';
+  public legacyFullName = 'Frogadier TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -28,7 +28,7 @@ export class GardevoirV extends PokemonCard {
       name: 'Swelling Pulse',
       cost: [P, P, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If this Pokémon was healed during this turn, this attack does 80 more damage.'
     }
   ];
@@ -38,7 +38,8 @@ export class GardevoirV extends PokemonCard {
   public setNumber: string = '16';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gardevoir V';
-  public fullName: string = 'Gardevoir V CPA';
+  public fullName: string = 'Gardevoir V (CPA 16)';
+  public legacyFullName = 'Gardevoir V CPA';
 
   public readonly HEALED_THIS_TURN_MARKER = 'GARDEVOIR_V_HEALED_THIS_TURN_MARKER';
 

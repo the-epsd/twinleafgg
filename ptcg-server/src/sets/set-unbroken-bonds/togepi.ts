@@ -34,7 +34,8 @@ export class Togepi extends PokemonCard {
   public setNumber: string = '136';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Togepi';
-  public fullName: string = 'Togepi UNB';
+  public fullName: string = 'Togepi (UNB 136)';
+  public legacyFullName = 'Togepi UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Daunt

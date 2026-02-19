@@ -37,7 +37,8 @@ export class Honedge extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Honedge';
-  public fullName: string = 'Honedge FLI';
+  public fullName: string = 'Honedge (FLI 46)';
+  public legacyFullName = 'Honedge FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Final Hour (passive - when KO'd by opponent's attack, put damage counters)

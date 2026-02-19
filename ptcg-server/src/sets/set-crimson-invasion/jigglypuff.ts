@@ -27,7 +27,7 @@ export class Jigglypuff extends PokemonCard {
       name: 'Double Slap',
       cost: [Y, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 20 damage for each heads.'
     }
   ];
@@ -36,7 +36,8 @@ export class Jigglypuff extends PokemonCard {
   public setNumber: string = '71';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jigglypuff';
-  public fullName: string = 'Jigglypuff CIN';
+  public fullName: string = 'Jigglypuff (CIN 71)';
+  public legacyFullName = 'Jigglypuff CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Double Slap

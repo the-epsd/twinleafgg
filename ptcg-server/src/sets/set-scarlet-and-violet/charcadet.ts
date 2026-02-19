@@ -32,6 +32,7 @@ export class Charcadet extends PokemonCard {
 
   public name: string = 'Charcadet';
 
-  public fullName: string = 'Charcadet SVI';
+  public fullName: string = 'Charcadet (SVI 40)';
+  public legacyFullName = 'Charcadet SVI';
 
 }

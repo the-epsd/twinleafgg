@@ -29,7 +29,7 @@ export class Dodrio extends PokemonCard {
       name: 'Fury Attack',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 3 coins. This attack does 40 damage times the number of heads.'
     }
   ];
@@ -38,7 +38,8 @@ export class Dodrio extends PokemonCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dodrio';
-  public fullName: string = 'Dodrio BKT';
+  public fullName: string = 'Dodrio (BKT 117)';
+  public legacyFullName = 'Dodrio BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Retreat Aid (passive - reduce retreat cost by 2 when on bench)

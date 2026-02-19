@@ -77,7 +77,8 @@ export class Swinub extends PokemonCard {
 
   public name: string = 'Swinub';
 
-  public fullName: string = 'Swinub JTG';
+  public fullName: string = 'Swinub (JTG 77)';
+  public legacyFullName = 'Swinub JTG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -37,7 +37,8 @@ export class FlyingPikachu extends PokemonCard {
   public setNumber: string = '110';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Flying Pikachu';
-  public fullName: string = 'Flying Pikachu EVO';
+  public fullName: string = 'Flying Pikachu (EVO 110)';
+  public legacyFullName = 'Flying Pikachu EVO';
 
   public readonly PREVENT_ALL_MARKER = 'FLYING_PIKACHU_EVO_PREVENT_ALL';
   public readonly CLEAR_PREVENT_ALL_MARKER = 'FLYING_PIKACHU_EVO_CLEAR_PREVENT_ALL';

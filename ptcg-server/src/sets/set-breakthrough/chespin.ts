@@ -35,7 +35,8 @@ export class Chespin extends PokemonCard {
   public setNumber: string = '7';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Chespin';
-  public fullName: string = 'Chespin BKT';
+  public fullName: string = 'Chespin (BKT 7)';
+  public legacyFullName = 'Chespin BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Nosh

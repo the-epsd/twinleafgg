@@ -30,7 +30,8 @@ export class Gothorita extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
   public name: string = 'Gothorita';
-  public fullName: string = 'Gothorita WHT';
+  public fullName: string = 'Gothorita (WHT 42)';
+  public legacyFullName = 'Gothorita WHT';
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

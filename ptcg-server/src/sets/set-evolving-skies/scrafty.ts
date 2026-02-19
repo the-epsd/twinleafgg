@@ -36,7 +36,8 @@ export class Scrafty extends PokemonCard {
   public setNumber: string = '99';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Scrafty';
-  public fullName: string = 'Scrafty EVS';
+  public fullName: string = 'Scrafty (EVS 99)';
+  public legacyFullName = 'Scrafty EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Shakedown

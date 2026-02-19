@@ -17,7 +17,8 @@ export class VictoryPiece extends TrainerCard {
   public setNumber: string = '130';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Victory Piece';
-  public fullName: string = 'Victory Piece PLS';
+  public fullName: string = 'Victory Piece (PLS 130)';
+  public legacyFullName = 'Victory Piece PLS';
   public text: string = 'If this card is attached to Victini-EX, Victini-EX can use its attacks regardless of the amount or type of Energy attached to it. You can\'t have more than 1 ACE SPEC card in your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

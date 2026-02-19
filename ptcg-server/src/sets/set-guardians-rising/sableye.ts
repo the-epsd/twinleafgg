@@ -35,7 +35,8 @@ export class Sableye extends PokemonCard {
   public setNumber: string = '80';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sableye';
-  public fullName: string = 'Sableye GRI';
+  public fullName: string = 'Sableye (GRI 80)';
+  public legacyFullName = 'Sableye GRI';
 
   public readonly OPPONENT_CANNOT_PLAY_SUPPORTER_MARKER = 'SABLEYE_GRI_OPPONENT_CANNOT_PLAY_SUPPORTER_MARKER';
 

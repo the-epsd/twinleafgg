@@ -26,7 +26,7 @@ export class Skarmory extends PokemonCard {
       name: 'Calm Strike',
       cost: [M, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If you have used your GX attack, this attack does 70 more damage.'
     },
     {
@@ -41,7 +41,8 @@ export class Skarmory extends PokemonCard {
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skarmory';
-  public fullName: string = 'Skarmory TEU';
+  public fullName: string = 'Skarmory (TEU 98)';
+  public legacyFullName = 'Skarmory TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Calm Strike

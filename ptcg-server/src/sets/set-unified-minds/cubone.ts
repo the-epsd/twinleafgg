@@ -31,7 +31,7 @@ export class Cubone extends PokemonCard {
       name: 'Bonemerang',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 20 damage for each heads.'
     }
   ];
@@ -40,7 +40,8 @@ export class Cubone extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Cubone';
-  public fullName: string = 'Cubone UNM';
+  public fullName: string = 'Cubone (UNM 105)';
+  public legacyFullName = 'Cubone UNM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Growl

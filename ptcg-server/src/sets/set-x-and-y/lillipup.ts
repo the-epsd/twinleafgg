@@ -31,5 +31,6 @@ export class Lillipup extends PokemonCard {
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Lillipup';
-  public fullName: string = 'Lillipup XY';
+  public fullName: string = 'Lillipup (XY 108)';
+  public legacyFullName = 'Lillipup XY';
 }

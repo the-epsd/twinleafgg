@@ -17,7 +17,8 @@ export class UTurnBoard extends TrainerCard {
 
   public name: string = 'U-Turn Board';
 
-  public fullName: string = 'U-Turn Board UNM';
+  public fullName: string = 'U-Turn Board (UNM 211)';
+  public legacyFullName = 'U-Turn Board UNM';
 
   public cardImage: string = 'assets/cardback.png';
 

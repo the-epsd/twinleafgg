@@ -38,7 +38,8 @@ export class Rowlet extends PokemonCard {
   public setNumber: string = '17';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rowlet';
-  public fullName: string = 'Rowlet CEC';
+  public fullName: string = 'Rowlet (CEC 17)';
+  public legacyFullName = 'Rowlet CEC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Hide and Seek

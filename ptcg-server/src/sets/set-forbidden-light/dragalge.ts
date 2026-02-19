@@ -38,7 +38,8 @@ export class Dragalge extends PokemonCard {
   public setNumber: string = '53';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Dragalge';
-  public fullName: string = 'Dragalge FLI';
+  public fullName: string = 'Dragalge (FLI 53)';
+  public legacyFullName = 'Dragalge FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Poison Point (passive - triggered when damaged by opponent's attack)

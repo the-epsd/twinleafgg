@@ -153,9 +153,23 @@ function getSetCodeToModules(): Map<string, string[]> {
 }
 
 function extractSetCodeFromFullName(fullName: string): string {
+  // New format: "CardName (SET NUMBER)" — extract SET from inside parens
+  const parenMatch = fullName.match(/\(([A-Za-z0-9-]+)\s+[^)]+\)$/);
+  if (parenMatch) {
+    const setCode = parenMatch[1].toUpperCase();
+    if (SET_CODE_REGEX.test(setCode)) {
+      return setCode;
+    }
+  }
+  // Legacy format: "CardName SET" or "CardName SET NUMBER"
   const tokens = fullName.trim().split(/\s+/);
   const lastToken = tokens[tokens.length - 1]?.toUpperCase();
   if (!lastToken || !SET_CODE_REGEX.test(lastToken)) {
+    // Try second-to-last token (for "CardName SET NUMBER" format)
+    const secondLast = tokens[tokens.length - 2]?.toUpperCase();
+    if (secondLast && SET_CODE_REGEX.test(secondLast)) {
+      return secondLast;
+    }
     throw new Error(`[test-helpers] Could not infer set code from card fullName "${fullName}"`);
   }
   return lastToken;
@@ -227,7 +241,7 @@ export function getCardByName(fullName: string): Card {
   return card;
 }
 
-const DEFAULT_FILLER = 'Water Energy SVE';
+const DEFAULT_FILLER = 'Water Energy (SVE 3)';
 
 export function padDeck(n: number, cardName?: string): string[] {
   return Array(n).fill(cardName ?? DEFAULT_FILLER);

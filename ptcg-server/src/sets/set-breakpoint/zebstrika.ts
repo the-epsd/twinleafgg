@@ -30,7 +30,7 @@ export class Zebstrika extends PokemonCard {
       name: 'Crashing Bolt',
       cost: [C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon has Fighting Resistance, this attack does 60 more damage.'
     }
   ];
@@ -39,7 +39,8 @@ export class Zebstrika extends PokemonCard {
   public setNumber: string = '49';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zebstrika';
-  public fullName: string = 'Zebstrika BKP';
+  public fullName: string = 'Zebstrika (BKP 49)';
+  public legacyFullName = 'Zebstrika BKP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Zap Zone (passive - no useWhenInPlay)

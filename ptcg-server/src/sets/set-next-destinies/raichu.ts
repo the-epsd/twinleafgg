@@ -34,7 +34,8 @@ export class Raichu extends PokemonCard {
   public setNumber: string = '40';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Raichu';
-  public fullName: string = 'Raichu NXD';
+  public fullName: string = 'Raichu (NXD 40)';
+  public legacyFullName = 'Raichu NXD';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Thundershock

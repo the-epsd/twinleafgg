@@ -14,7 +14,8 @@ export class PlusPower extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '109';
   public name: string = 'PlusPower';
-  public fullName: string = 'PlusPower DP';
+  public fullName: string = 'PlusPower (DP 109)';
+  public legacyFullName = 'PlusPower DP';
 
   public text: string =
     'Attach PlusPower to 1 of your Pokémon. Discard this card at the end of your turn.\n\nIf the Pokémon PlusPower is attached to attacks, the attack does 10 more damage to the Active Pokémon (before applying Weakness and Resistance).';

@@ -35,7 +35,8 @@ export class Skeledirgeex extends PokemonCard {
   public regulationMark = 'H';
   public set: string = 'PAR';
   public name: string = 'Skeledirge ex';
-  public fullName: string = 'Skeledirge ex PAR';
+  public fullName: string = 'Skeledirge ex (PAR 137)';
+  public legacyFullName = 'Skeledirge ex PAR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '137';
 

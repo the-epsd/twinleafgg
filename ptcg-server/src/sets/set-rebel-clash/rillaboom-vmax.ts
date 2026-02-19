@@ -33,7 +33,7 @@ export class RillaboomVmax extends PokemonCard {
       name: 'Max Beating',
       cost: [G, G, G, C],
       damage: 130,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'You may discard up to 3 [G] Energy from this Pokémon. If you do, this attack does 50 more damage for each card you discarded in this way.'
     }
   ];
@@ -43,7 +43,8 @@ export class RillaboomVmax extends PokemonCard {
   public setNumber: string = '18';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rillaboom VMAX';
-  public fullName: string = 'Rillaboom VMAX RCL';
+  public fullName: string = 'Rillaboom VMAX (RCL 18)';
+  public legacyFullName = 'Rillaboom VMAX RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Max Beating

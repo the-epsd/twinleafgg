@@ -33,7 +33,8 @@ export class Throh extends PokemonCard {
   public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Throh';
-  public fullName: string = 'Throh PLB';
+  public fullName: string = 'Throh (PLB 51)';
+  public legacyFullName = 'Throh PLB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

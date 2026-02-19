@@ -37,7 +37,8 @@ export class Durant2 extends PokemonCard {
   public setNumber: string = '92';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Durant';
-  public fullName: string = 'Durant PLS 92';
+  public fullName: string = 'Durant (PLS 92)';
+  public legacyFullName = 'Durant PLS 92';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Backup

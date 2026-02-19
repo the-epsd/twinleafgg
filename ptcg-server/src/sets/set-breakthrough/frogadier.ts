@@ -26,5 +26,6 @@ export class Frogadier extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Frogadier';
-  public fullName: string = 'Frogadier BKT';
+  public fullName: string = 'Frogadier (BKT 47)';
+  public legacyFullName = 'Frogadier BKT';
 }

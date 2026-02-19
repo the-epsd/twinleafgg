@@ -24,7 +24,8 @@ export class Victini3 extends PokemonCard {
   public setNumber: string = '43';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Victini';
-  public fullName: string = 'Victini NVI 43';
+  public fullName: string = 'Victini (NVI 43)';
+  public legacyFullName = 'Victini NVI 43';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

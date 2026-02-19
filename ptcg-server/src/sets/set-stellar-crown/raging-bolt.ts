@@ -43,7 +43,8 @@ export class RagingBolt extends PokemonCard {
 
   public name: string = 'Raging Bolt';
 
-  public fullName: string = 'Raging Bolt SCR';
+  public fullName: string = 'Raging Bolt (SCR 111)';
+  public legacyFullName = 'Raging Bolt SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

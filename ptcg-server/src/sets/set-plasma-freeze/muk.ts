@@ -35,7 +35,8 @@ export class Muk extends PokemonCard {
   public setNumber: string = '46';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Muk';
-  public fullName: string = 'Muk PLF';
+  public fullName: string = 'Muk (PLF 46)';
+  public legacyFullName = 'Muk PLF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Poison Suction

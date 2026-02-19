@@ -16,7 +16,8 @@ export class SamsonOak extends TrainerCard {
   public setNumber: string = '185';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Samson Oak';
-  public fullName: string = 'Samson Oak UNB';
+  public fullName: string = 'Samson Oak (UNB 185)';
+  public legacyFullName = 'Samson Oak UNB';
   public text: string = 'Draw 2 cards. If both Active Pokémon are the same type, draw 2 more cards. You may play only 1 Supporter card during your turn (before your attack).';
 
   // Ref: set-lost-thunder/virizion-gx.ts (supporterTurn check), set-ultra-prism/bronzong.ts (CheckPokemonTypeEffect)

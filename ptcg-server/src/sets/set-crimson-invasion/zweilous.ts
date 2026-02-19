@@ -28,7 +28,7 @@ export class Zweilous extends PokemonCard {
       name: 'Double Hit',
       cost: [D, D, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip 2 coins. This attack does 60 damage for each heads.'
     }
   ];
@@ -37,7 +37,8 @@ export class Zweilous extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zweilous';
-  public fullName: string = 'Zweilous CIN';
+  public fullName: string = 'Zweilous (CIN 61)';
+  public legacyFullName = 'Zweilous CIN';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Double Hit

@@ -38,7 +38,8 @@ export class Gardevoir extends PokemonCard {
   public setNumber: string = 'RC10';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Gardevoir';
-  public fullName: string = 'Gardevoir LTR';
+  public fullName: string = 'Gardevoir (LTR RC10)';
+  public legacyFullName = 'Gardevoir LTR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Psybeam

@@ -39,7 +39,8 @@ export class Bellossom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Bellossom';
-  public fullName: string = 'Bellossom HL';
+  public fullName: string = 'Bellossom (HL 16)';
+  public legacyFullName = 'Bellossom HL';
 
   public readonly HEAL_DANCE_MARKER = 'HEAL_DANCE_MARKER';
 

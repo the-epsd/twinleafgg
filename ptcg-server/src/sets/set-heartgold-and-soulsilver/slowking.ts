@@ -31,7 +31,8 @@ export class Slowking extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Slowking';
-  public fullName: string = 'Slowking HS';
+  public fullName: string = 'Slowking (HS 12)';
+  public legacyFullName = 'Slowking HS';
 
   public readonly SECOND_SIGHT_MARKER = 'SECOND_SIGHT_MARKER';
 

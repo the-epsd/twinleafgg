@@ -44,6 +44,7 @@ export class HopsCorvisquire extends PokemonCard {
 
   public name: string = 'Hop\'s Corvisquire';
 
-  public fullName: string = 'Hop\'s Corvisquire JTG';
+  public fullName: string = 'Hop\'s Corvisquire (JTG 134)';
+  public legacyFullName = 'Hop\'s Corvisquire JTG';
 
 }

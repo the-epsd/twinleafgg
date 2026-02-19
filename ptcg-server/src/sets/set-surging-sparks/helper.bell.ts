@@ -13,7 +13,8 @@ export class HelperBell extends TrainerCard {
   public setNumber: string = '165';
   public regulationMark = 'H';
   public name: string = 'Call Bell';
-  public fullName: string = 'Helper Bell SSP';
+  public fullName: string = 'Call Bell (SSP 165)';
+  public legacyFullName = 'Helper Bell SSP';
 
   public text: string =
     `You can use this card only if you go second, and only on your first turn.

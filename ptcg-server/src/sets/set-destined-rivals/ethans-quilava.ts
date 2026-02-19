@@ -42,7 +42,8 @@ export class EthansQuilava extends PokemonCard {
 
   public name: string = 'Ethan\'s Quilava';
 
-  public fullName: string = 'Ethan\'s Quilava DRI';
+  public fullName: string = 'Ethan\'s Quilava (DRI 33)';
+  public legacyFullName = 'Ethan\'s Quilava DRI';
 
   public readonly ADVENTURE_BOUND_MARKER = 'ADVENTURE_BOUND';
 

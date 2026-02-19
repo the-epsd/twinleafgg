@@ -50,7 +50,8 @@ export class DeoxysVSTAR extends PokemonCard {
 
   public name = 'Deoxys VSTAR';
 
-  public fullName = 'Deoxys VSTAR SWSH';
+  public fullName = 'Deoxys VSTAR (SWSH 268)';
+  public legacyFullName = 'Deoxys VSTAR SWSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -26,7 +26,8 @@ export class Cottonee extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
   public name: string = 'Cottonee';
-  public fullName: string = 'Cottonee SV11W';
+  public fullName: string = 'Cottonee (WHT 4)';
+  public legacyFullName = 'Cottonee SV11W';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

@@ -14,7 +14,8 @@ export class DuskBall extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '175';
   public name: string = 'Dusk Ball';
-  public fullName: string = 'Dusk Ball SSP';
+  public fullName: string = 'Dusk Ball (SSP 175)';
+  public legacyFullName = 'Dusk Ball SSP';
 
   public text: string =
     'Look at the 7 cards from the bottom of your deck. Choose 1 Pokémon you find there, show it to your opponent, and put it into your hand. Put the remaining cards back on top of your deck. Shuffle your deck afterward.';

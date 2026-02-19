@@ -40,7 +40,8 @@ export class Goldeen extends PokemonCard {
 
   public name: string = 'Goldeen';
 
-  public fullName: string = 'Goldeen TWM';
+  public fullName: string = 'Goldeen (TWM 44)';
+  public legacyFullName = 'Goldeen TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {

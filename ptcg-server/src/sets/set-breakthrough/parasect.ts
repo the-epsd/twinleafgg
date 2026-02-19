@@ -32,7 +32,7 @@ export class Parasect extends PokemonCard {
       name: 'X-Scissor',
       cost: [G, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];
@@ -41,7 +41,8 @@ export class Parasect extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Parasect';
-  public fullName: string = 'Parasect BKT';
+  public fullName: string = 'Parasect (BKT 2)';
+  public legacyFullName = 'Parasect BKT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Colorful Spores

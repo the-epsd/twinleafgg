@@ -22,7 +22,7 @@ export class MewtwoEx2 extends PokemonCard {
       name: 'Shatter Shot',
       cost: [P],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'This attack does 30 damage times the amount of [P] Energy attached to this Pokémon.'
     },
     {
@@ -37,7 +37,8 @@ export class MewtwoEx2 extends PokemonCard {
   public setNumber: string = '62';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mewtwo-EX';
-  public fullName: string = 'Mewtwo-EX BKT 62';
+  public fullName: string = 'Mewtwo-EX (BKT 62)';
+  public legacyFullName = 'Mewtwo-EX BKT 62';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shatter Shot

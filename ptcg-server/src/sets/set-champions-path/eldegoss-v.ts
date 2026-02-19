@@ -54,7 +54,8 @@ export class EldegossV extends PokemonCard {
 
   public name: string = 'Eldegoss V';
 
-  public fullName: string = 'Eldegoss V CPA';
+  public fullName: string = 'Eldegoss V (CPA 5)';
+  public legacyFullName = 'Eldegoss V CPA';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

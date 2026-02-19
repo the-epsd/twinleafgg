@@ -46,7 +46,8 @@ export class Garbodor extends PokemonCard {
 
   public name: string = 'Garbodor';
 
-  public fullName: string = 'Garbodor GRI';
+  public fullName: string = 'Garbodor (GRI 51)';
+  public legacyFullName = 'Garbodor GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Trashalanche

@@ -31,5 +31,6 @@ export class Paras extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Paras';
-  public fullName: string = 'Paras HIF';
+  public fullName: string = 'Paras (HIF 4)';
+  public legacyFullName = 'Paras HIF';
 }

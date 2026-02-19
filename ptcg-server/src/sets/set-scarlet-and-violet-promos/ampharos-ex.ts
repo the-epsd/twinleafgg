@@ -47,7 +47,8 @@ export class Ampharosex extends PokemonCard {
 
   public name: string = 'Ampharos ex';
 
-  public fullName: string = 'Ampharos ex SVP';
+  public fullName: string = 'Ampharos ex (SVP 16)';
+  public legacyFullName = 'Ampharos ex SVP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

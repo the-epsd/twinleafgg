@@ -20,7 +20,8 @@ export class StudentsInPaldea extends TrainerCard {
 
   public name = 'Paldean Student';
 
-  public fullName = 'Paldean Student PAF';
+  public fullName = 'Paldean Student (PAF 85)';
+  public legacyFullName = 'Paldean Student PAF';
 
   public text: string =
     'Search your deck for a Pokémon that doesn\'t have a Rule Box, reveal it, and put it into your hand. For each other Students in Paldea in your discard pile, you may search your deck for another Pokémon that doesn\'t have a Rule Box. Then, shuffle your deck. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)';

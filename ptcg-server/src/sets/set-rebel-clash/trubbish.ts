@@ -20,7 +20,7 @@ export class Trubbish extends PokemonCard {
       name: 'Venoshock',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 50 more damage.'
     }
   ];
@@ -30,7 +30,8 @@ export class Trubbish extends PokemonCard {
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Trubbish';
-  public fullName: string = 'Trubbish RCL';
+  public fullName: string = 'Trubbish (RCL 117)';
+  public legacyFullName = 'Trubbish RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Venoshock

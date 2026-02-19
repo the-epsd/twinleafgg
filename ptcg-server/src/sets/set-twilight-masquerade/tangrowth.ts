@@ -34,7 +34,8 @@ export class Tangrowth extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '2';
   public name: string = 'Tangrowth';
-  public fullName: string = 'Tangrowth TWM';
+  public fullName: string = 'Tangrowth (TWM 2)';
+  public legacyFullName = 'Tangrowth TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Bouffer: reduce damage taken by 30 after Weakness/Resistance

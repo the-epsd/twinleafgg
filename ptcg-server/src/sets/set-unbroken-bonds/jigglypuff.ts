@@ -22,7 +22,7 @@ export class Jigglypuff extends PokemonCard {
       name: 'Ball Roll',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x' as const,
       text: 'Flip a coin until you get tails. This attack does 20 damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Jigglypuff extends PokemonCard {
   public setNumber: string = '134';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jigglypuff';
-  public fullName: string = 'Jigglypuff UNB';
+  public fullName: string = 'Jigglypuff (UNB 134)';
+  public legacyFullName = 'Jigglypuff UNB';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Ball Roll

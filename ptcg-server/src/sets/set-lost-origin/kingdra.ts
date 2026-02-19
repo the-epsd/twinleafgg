@@ -34,7 +34,8 @@ export class Kingdra extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '37';
   public name: string = 'Kingdra';
-  public fullName: string = 'Kingdra LOR';
+  public fullName: string = 'Kingdra (LOR 37)';
+  public legacyFullName = 'Kingdra LOR';
 
   public readonly SEETHING_CURRENTS_MARKER = 'SEETHING_CURRENTS_MARKER';
 

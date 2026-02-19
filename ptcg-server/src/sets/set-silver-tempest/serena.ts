@@ -21,7 +21,8 @@ export class Serena extends TrainerCard {
 
   public name: string = 'Serena';
 
-  public fullName: string = 'Serena SIT';
+  public fullName: string = 'Serena (SIT 164)';
+  public legacyFullName = 'Serena SIT';
 
   public text: string =
     'Choose 1:\n\n' +

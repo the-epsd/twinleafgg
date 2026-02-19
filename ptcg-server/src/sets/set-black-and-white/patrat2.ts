@@ -31,7 +31,8 @@ export class Patrat2 extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '78';
   public name: string = 'Patrat';
-  public fullName: string = 'Patrat BLW 78';
+  public fullName: string = 'Patrat (BLW 78)';
+  public legacyFullName = 'Patrat BLW 78';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

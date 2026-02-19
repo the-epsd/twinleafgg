@@ -42,7 +42,8 @@ export class Manectric extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Manectric';
-  public fullName: string = 'Manectric PRC';
+  public fullName: string = 'Manectric (PRC 61)';
+  public legacyFullName = 'Manectric PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Lightning Turn

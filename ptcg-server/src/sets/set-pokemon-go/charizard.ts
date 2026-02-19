@@ -27,7 +27,8 @@ export class Charizard extends PokemonCard {
 
   public cardImage: string = 'assets/cardback.png';
 
-  public fullName = 'Charizard PGO';
+  public fullName = 'Charizard (PGO 10)';
+  public legacyFullName = 'Charizard PGO';
 
   public name = 'Charizard';
 

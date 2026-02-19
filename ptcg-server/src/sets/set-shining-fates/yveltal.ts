@@ -30,7 +30,8 @@ export class Yveltal extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
   public name: string = 'Yveltal';
-  public fullName: string = 'Yveltal SHF';
+  public fullName: string = 'Yveltal (SHF 46)';
+  public legacyFullName = 'Yveltal SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack: Amazing Destruction (knock out opponent's Active Pokemon)

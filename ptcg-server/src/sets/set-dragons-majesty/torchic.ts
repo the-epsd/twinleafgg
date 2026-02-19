@@ -29,7 +29,8 @@ export class Torchic extends PokemonCard {
   public setNumber: string = '4';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Torchic';
-  public fullName: string = 'Torchic DRM';
+  public fullName: string = 'Torchic (DRM 4)';
+  public legacyFullName = 'Torchic DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Singe

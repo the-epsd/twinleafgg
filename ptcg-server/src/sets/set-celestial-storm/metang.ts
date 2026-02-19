@@ -22,7 +22,7 @@ export class Metang extends PokemonCard {
       name: 'Bullet Punch',
       cost: [M],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     }
   ];
@@ -31,7 +31,8 @@ export class Metang extends PokemonCard {
   public setNumber: string = '94';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Metang';
-  public fullName: string = 'Metang CES';
+  public fullName: string = 'Metang (CES 94)';
+  public legacyFullName = 'Metang CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Bullet Punch

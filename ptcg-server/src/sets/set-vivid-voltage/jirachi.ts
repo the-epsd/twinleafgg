@@ -57,7 +57,8 @@ export class Jirachi extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '119';
   public name: string = 'Jirachi';
-  public fullName: string = 'Jirachi VIV';
+  public fullName: string = 'Jirachi (VIV 119)';
+  public legacyFullName = 'Jirachi VIV';
 
   public readonly DREAMY_REVELATION_MARKER = 'DREAMY_REVELATION_MARKER';
 

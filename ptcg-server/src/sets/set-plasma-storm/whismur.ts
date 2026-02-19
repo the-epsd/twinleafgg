@@ -34,7 +34,8 @@ export class Whismur extends PokemonCard {
   public setNumber: string = '105';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Whismur';
-  public fullName: string = 'Whismur PLS';
+  public fullName: string = 'Whismur (PLS 105)';
+  public legacyFullName = 'Whismur PLS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shout

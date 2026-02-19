@@ -24,7 +24,8 @@ export class SplashEnergy extends EnergyCard {
 
   public name = 'Splash Energy';
 
-  public fullName = 'Splash Energy BKP';
+  public fullName = 'Splash Energy (BKP 113)';
+  public legacyFullName = 'Splash Energy BKP';
 
   public text =
     'This card can only be attached to [W] Pokémon. This card provides [W] Energy only while this card is attached to a [W] Pokémon.' +

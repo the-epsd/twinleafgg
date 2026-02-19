@@ -31,7 +31,8 @@ export class Riolu extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Riolu';
-  public fullName: string = 'Riolu P8';
+  public fullName: string = 'Riolu (P8 16)';
+  public legacyFullName = 'Riolu P8';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AddSpecialConditionsEffect && effect.specialConditions.includes(SpecialCondition.PARALYZED) && effect.target.getPokemonCard() === this) {

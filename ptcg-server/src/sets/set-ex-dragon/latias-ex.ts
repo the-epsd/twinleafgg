@@ -35,7 +35,8 @@ export class Latiasex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
   public name: string = 'Latias ex';
-  public fullName: string = 'Latias ex DR';
+  public fullName: string = 'Latias ex (DR 93)';
+  public legacyFullName = 'Latias ex DR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

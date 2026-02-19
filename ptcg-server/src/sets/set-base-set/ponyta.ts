@@ -14,7 +14,8 @@ export class Ponyta extends PokemonCard {
 
   public cardType = CardType.FIRE;
 
-  public fullName = 'Ponyta BS';
+  public fullName = 'Ponyta (BS 60)';
+  public legacyFullName = 'Ponyta BS';
 
   public stage = Stage.BASIC;
 

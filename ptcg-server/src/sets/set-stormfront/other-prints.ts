@@ -10,7 +10,8 @@ import { PremierBall } from '../set-great-encounters/premier-ball';
 import { WarpEnergy } from '../set-shining-legends/warp-energy';
 
 export class CycloneEnergySF extends CycloneEnergy {
-  public fullName = 'Cyclone Energy SF';
+  public fullName = 'Cyclone Energy (SF 94)';
+  public legacyFullName = 'Cyclone Energy SF';
   public name = 'Cyclone Energy';
   public set = 'SF';
   public setNumber = '94';
@@ -18,14 +19,16 @@ export class CycloneEnergySF extends CycloneEnergy {
 }
 
 export class PremierBallSF extends PremierBall {
-  public fullName = 'Premier Ball SF';
+  public fullName = 'Premier Ball (SF 91)';
+  public legacyFullName = 'Premier Ball SF';
   public name = 'Premier Ball';
   public set = 'SF';
   public setNumber = '91';
 }
 
 export class WarpEnergySF extends WarpEnergy {
-  public fullName = 'Warp Energy SF';
+  public fullName = 'Warp Energy (SF 95)';
+  public legacyFullName = 'Warp Energy SF';
   public name = 'Warp Energy';
   public set = 'SF';
   public setNumber = '95';
@@ -33,42 +36,49 @@ export class WarpEnergySF extends WarpEnergy {
 }
 export class EnergySwitchPKSF extends EnergySwitchPK {
   public setNumber = '84';
-  public fullName: string = 'Energy Switch SF';
+  public fullName: string = 'Energy Switch (SF 84)';
+  public legacyFullName = 'Energy Switch SF';
   public set = 'SF';
 }
 
 export class GreatBallSF extends GreatBall {
   public setNumber = '85';
-  public fullName: string = 'Great Ball SF';
+  public fullName: string = 'Great Ball (SF 85)';
+  public legacyFullName = 'Great Ball SF';
   public set = 'SF';
 }
 
 export class PotionSF extends Potion {
   public setNumber = '92';
-  public fullName: string = 'Potion SF';
+  public fullName: string = 'Potion (SF 92)';
+  public legacyFullName = 'Potion SF';
   public set = 'SF';
 }
 
 export class SwitchSF extends Switch {
   public setNumber = '93';
-  public fullName: string = 'Switch SF';
+  public fullName: string = 'Switch (SF 93)';
+  public legacyFullName = 'Switch SF';
   public set = 'SF';
 }
 
 export class CharmanderSF extends Charmander {
   public setNumber = '101';
-  public fullName: string = 'Charmander SF';
+  public fullName: string = 'Charmander (SF 101)';
+  public legacyFullName = 'Charmander SF';
   public set = 'SF';
 }
 
 export class CharmeleonSF extends Charmeleon {
   public setNumber = '102';
-  public fullName: string = 'Charmeleon SF';
+  public fullName: string = 'Charmeleon (SF 102)';
+  public legacyFullName = 'Charmeleon SF';
   public set = 'SF';
 }
 
 export class CharizardSF extends Charizard {
   public setNumber = '103';
-  public fullName: string = 'Charizard SF';
+  public fullName: string = 'Charizard (SF 103)';
+  public legacyFullName = 'Charizard SF';
   public set = 'SF';
 }

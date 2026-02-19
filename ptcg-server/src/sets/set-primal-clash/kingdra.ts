@@ -36,7 +36,8 @@ export class Kingdra extends PokemonCard {
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Kingdra';
-  public fullName: string = 'Kingdra PRC';
+  public fullName: string = 'Kingdra (PRC 107)';
+  public legacyFullName = 'Kingdra PRC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Shred

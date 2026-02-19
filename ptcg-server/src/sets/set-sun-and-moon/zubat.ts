@@ -29,7 +29,8 @@ export class Zubat extends PokemonCard {
   public setNumber: string = '54';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Zubat';
-  public fullName: string = 'Zubat SUM';
+  public fullName: string = 'Zubat (SUM 54)';
+  public legacyFullName = 'Zubat SUM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Astonish

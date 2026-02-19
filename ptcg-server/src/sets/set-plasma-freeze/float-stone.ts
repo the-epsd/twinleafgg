@@ -15,7 +15,8 @@ export class FloatStone extends TrainerCard {
 
   public name: string = 'Float Stone';
 
-  public fullName: string = 'Float Stone PLF';
+  public fullName: string = 'Float Stone (PLF 99)';
+  public legacyFullName = 'Float Stone PLF';
 
   public cardImage: string = 'assets/cardback.png';
 

@@ -23,7 +23,7 @@ export class AlolanGraveler extends PokemonCard {
       name: 'Thunder Punch',
       cost: [L, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+' as const,
       text: 'Flip a coin. If heads, this attack does 20 more damage. If tails, this Pokémon does 20 damage to itself.'
     },
     {
@@ -38,7 +38,8 @@ export class AlolanGraveler extends PokemonCard {
   public setNumber: string = '41';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Alolan Graveler';
-  public fullName: string = 'Alolan Graveler GRI';
+  public fullName: string = 'Alolan Graveler (GRI 41)';
+  public legacyFullName = 'Alolan Graveler GRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Thunder Punch
