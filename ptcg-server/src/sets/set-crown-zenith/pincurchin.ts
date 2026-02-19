@@ -7,44 +7,50 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../game/store/prefabs/prefabs';
+import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS } from '../../game/store/prefabs/attack-effects';
 
-export class Inkay2 extends PokemonCard {
+export class Pincurchin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = D;
-  public hp: number = 50;
-  public weakness = [{ type: G }];
+  public cardType: CardType = L;
+  public hp: number = 80;
+  public weakness = [{ type: F }];
   public retreat = [C];
 
   public attacks = [
     {
       name: 'Call for Family',
-      cost: [D],
+      cost: [C],
       damage: 0,
       text: 'Search your deck for up to 2 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
     },
     {
-      name: 'Tackle',
-      cost: [D, C],
-      damage: 20,
-      text: ''
+      name: 'Continuous Tumble',
+      cost: [L, C],
+      damage: 30,
+      damageCalculation: '+' as '+',
+      text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     }
   ];
 
   public regulationMark: string = 'F';
-  public set: string = 'LOR';
-  public setNumber: string = '121';
+  public set: string = 'CRZ';
+  public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Inkay';
-  public fullName: string = 'Inkay (LOR 121)';
+  public name: string = 'Pincurchin';
+  public fullName: string = 'Pincurchin (CRZ 56)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Call for Family
-    // Ref: set-astral-radiance/hisuian-basculin.ts (Gather the Crew)
+    // Ref: set-battle-styles/drampa.ts (Call for Family - search up to 2 Basic Pokemon onto bench)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
-        store, state, player, { stage: Stage.BASIC }, { min: 0, max: 2 }
-      );
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(store, state, player, { stage: Stage.BASIC }, { max: 2 });
+    }
+
+    // Attack 2: Continuous Tumble
+    // Ref: set-battle-styles/drampa.ts (Spiral Rush - flip until tails, 30 more damage per heads)
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      return FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS(store, state, effect, 30);
     }
 
     return state;

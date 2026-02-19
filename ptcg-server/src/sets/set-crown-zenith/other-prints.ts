@@ -98,6 +98,30 @@ import { GiratinaVSTAR } from '../set-lost-origin/giratina-vstar';
 import { ArceusVSTAR } from '../set-brilliant-stars/arceus-vstar';
 import { LostVacuum } from '../set-lost-origin/lost-vacuum';
 import { RescueCarrier } from '../set-evolving-skies/rescue-carrier';
+import { Sunkern } from '../set-silver-tempest/sunkern';
+import { Grubbin } from '../set-fusion-strike/grubbin';
+import { CharizardV } from '../set-brilliant-stars/charizard-v';
+import { CharizardVstar } from '../set-brilliant-stars/charizard-vstar';
+import { SimisearV } from '../set-brilliant-stars/simisear-v';
+import { Seel } from '../set-lost-origin/seel';
+import { GalarianMrMime } from '../set-battle-styles/galarian-mr-mime';
+import { Corphish } from '../set-brilliant-stars/corphish';
+import { Shinx } from '../set-battle-styles/shinx';
+import { Luxio } from '../set-battle-styles/luxio';
+import { Emolga } from '../set-evolving-skies/emolga';
+import { Zeraora } from '../set-fusion-strike/zeraora';
+import { Dusclops } from '../set-brilliant-stars/dusclops';
+import { Graveler } from '../set-fusion-strike/graveler';
+import { Baltoy } from '../set-fusion-strike/baltoy';
+import { Koffing } from '../set-ex-deoxys/koffing';
+import { Krokorok } from '../set-vivid-voltage/krokorok';
+import { Metang } from '../set-celestial-storm/metang';
+import { Pawniard } from '../set-astral-radiance/pawniard';
+import { Snorlax } from '../set-fusion-strike/snorlax';
+import { Starly } from '../set-brilliant-stars/starly';
+import { Bea } from '../set-vivid-voltage/bea';
+import { FriendsInHisui } from './friends-in-hisui';
+import { FriendsInSinnoh } from './friends-in-sinnoh';
 
 export class LostVacuumCRZ extends LostVacuum {
   public fullName = 'Lost Vacuum (CRZ 135)';
@@ -796,4 +820,148 @@ export class ArceusVSTARCRZ extends ArceusVSTAR {
   public fullName: string = 'Arceus VSTAR (CRZ GG70)';
   public legacyFullName = 'Arceus VSTAR CRZ';
   public set = 'CRZ';
+}
+
+export class SunkernCRZ extends Sunkern {
+  public set: string = 'CRZ';
+  public setNumber: string = '7';
+  public fullName: string = 'Sunkern (CRZ 7)';
+}
+
+export class GrubbinCRZ extends Grubbin {
+  public set: string = 'CRZ';
+  public setNumber: string = '15';
+  public fullName: string = 'Grubbin (CRZ 15)';
+}
+
+export class CharizardVCRZ extends CharizardV {
+  public set: string = 'CRZ';
+  public setNumber: string = '18';
+  public fullName: string = 'Charizard V (CRZ 18)';
+}
+
+export class CharizardVstarCRZ extends CharizardVstar {
+  public set: string = 'CRZ';
+  public setNumber: string = '19';
+  public fullName: string = 'Charizard VSTAR (CRZ 19)';
+}
+
+export class SimisearVCRZ extends SimisearV {
+  public set: string = 'CRZ';
+  public setNumber: string = '22';
+  public fullName: string = 'Simisear V (CRZ 22)';
+}
+
+export class SeelCRZ extends Seel {
+  public set: string = 'CRZ';
+  public setNumber: string = '29';
+  public fullName: string = 'Seel (CRZ 29)';
+}
+
+export class GalarianMrMimeCRZ extends GalarianMrMime {
+  public set: string = 'CRZ';
+  public setNumber: string = '30';
+  public fullName: string = 'Galarian Mr. Mime (CRZ 30)';
+}
+
+export class CorphishCRZ extends Corphish {
+  public set: string = 'CRZ';
+  public setNumber: string = '33';
+  public fullName: string = 'Corphish (CRZ 33)';
+}
+
+export class ShinxCRZ extends Shinx {
+  public set: string = 'CRZ';
+  public setNumber: string = '39';
+  public fullName: string = 'Shinx (CRZ 39)';
+}
+
+export class LuxioCRZ extends Luxio {
+  public set: string = 'CRZ';
+  public setNumber: string = '41';
+  public fullName: string = 'Luxio (CRZ 41)';
+}
+
+export class EmolgaCRZ extends Emolga {
+  public set: string = 'CRZ';
+  public setNumber: string = '47';
+  public fullName: string = 'Emolga (CRZ 47)';
+}
+
+export class ZeraoraCRZ extends Zeraora {
+  public set: string = 'CRZ';
+  public setNumber: string = '52';
+  public fullName: string = 'Zeraora (CRZ 52)';
+}
+
+export class DusclopsCRZ extends Dusclops {
+  public set: string = 'CRZ';
+  public setNumber: string = '63';
+  public fullName: string = 'Dusclops (CRZ 63)';
+}
+
+export class GravelerCRZ extends Graveler {
+  public set: string = 'CRZ';
+  public setNumber: string = '68';
+  public fullName: string = 'Graveler (CRZ 68)';
+}
+
+export class BaltoyCRZ extends Baltoy {
+  public set: string = 'CRZ';
+  public setNumber: string = '70';
+  public fullName: string = 'Baltoy (CRZ 70)';
+}
+
+export class KoffingCRZ extends Koffing {
+  public set: string = 'CRZ';
+  public setNumber: string = '75';
+  public fullName: string = 'Koffing (CRZ 75)';
+}
+
+export class KrokorokCRZ extends Krokorok {
+  public set: string = 'CRZ';
+  public setNumber: string = '79';
+  public fullName: string = 'Krokorok (CRZ 79)';
+}
+
+export class MetangCRZ extends Metang {
+  public set: string = 'CRZ';
+  public setNumber: string = '90';
+  public fullName: string = 'Metang (CRZ 90)';
+}
+
+export class PawniardCRZ extends Pawniard {
+  public set: string = 'CRZ';
+  public setNumber: string = '91';
+  public fullName: string = 'Pawniard (CRZ 91)';
+}
+
+export class SnorlaxCRZ extends Snorlax {
+  public set: string = 'CRZ';
+  public setNumber: string = '109';
+  public fullName: string = 'Snorlax (CRZ 109)';
+}
+
+export class StarlyCRZ extends Starly {
+  public set: string = 'CRZ';
+  public setNumber: string = '110';
+  public fullName: string = 'Starly (CRZ 110)';
+}
+
+export class BeaCRZ extends Bea {
+  public set: string = 'CRZ';
+  public setNumber: string = '123';
+  public fullName: string = 'Bea (CRZ 123)';
+}
+
+export class FriendsInHisui2 extends FriendsInHisui {
+  public set: string = 'CRZ';
+  public setNumber: string = '148';
+  public fullName: string = 'Friends in Hisui (CRZ 148)';
+}
+
+export class FriendsInSinnoh2 extends FriendsInSinnoh {
+  public set: string = 'CRZ';
+  public setNumber: string = '149';
+  public fullName: string = 'Friends in Sinnoh (CRZ 149)';
 }

@@ -64,7 +64,6 @@ import { Honchkrow } from './honchkrow';
 import { Hoopa } from './hoopa';
 import { Horsea } from './horsea';
 import { Inkay } from './inkay';
-import { Inkay2 } from './inkay-2';
 import { Jynx } from './jynx';
 import { Kingdra } from './kingdra';
 import { Komala } from './komala';
@@ -301,7 +300,6 @@ export const setLostOrigin: Card[] = [
   new Hoopa(),
   new Horsea(),
   new Inkay(),
-  new Inkay2(),
   new Jynx(),
   new Kingdra(),
   new Komala(),

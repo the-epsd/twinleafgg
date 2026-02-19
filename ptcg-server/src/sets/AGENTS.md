@@ -1377,3 +1377,30 @@ Reference: `set-silver-tempest/forest-seal-stone.ts`, `set-silver-tempest/earthe
 **Workaround:** Use player-level markers (`player.marker`) or card instance properties (`public myFlag = false`) for state that must survive through retreat.
 
 Reference: `set-silver-tempest/skuntank-v.ts` (retreat tracking via instance property)
+
+### `MoveDamagePrompt` playerType controls source selection
+
+The `playerType` parameter of `MoveDamagePrompt` determines which player's Pokemon are valid as **damage sources** (where damage counters move FROM). Common mistake: using `PlayerType.ANY` when card text says "move damage counters from **your** Pokemon" — this allows selecting opponent's Pokemon as sources.
+
+| Card Text | playerType |
+|-----------|------------|
+| "Move damage counters from your Pokemon..." | `PlayerType.BOTTOM_PLAYER` |
+| "Move damage counters from your opponent's Pokemon..." | `PlayerType.TOP_PLAYER` |
+| "Move damage counters between any Pokemon..." | `PlayerType.ANY` |
+
+Use `blockedTo` array to restrict destinations, and `maxAllowedDamage` to restrict which Pokemon can receive damage.
+
+Reference: `set-crown-zenith/hatterene-vmax.ts` (Witch's Domain)
+
+### "Can't attack" vs "Can't use [Attack Name]" — two different flags
+
+These two card texts require completely different implementations:
+
+| Card Text | Code |
+|-----------|------|
+| "This Pokémon can't attack during your next turn." | `player.active.cannotAttackNextTurnPending = true` |
+| "This Pokémon can't use [Attack Name] during your next turn." | `player.active.cannotUseAttacksNextTurnPending.push('Attack Name')` |
+
+Common mistake: using `cannotUseAttacksNextTurnPending.push('Attack Name')` when the card says "can't attack" (without naming a specific attack). The push only blocks ONE named attack; `cannotAttackNextTurnPending = true` blocks ALL attacks.
+
+Reference: `set-crown-zenith/zamazenta-vstar.ts` (Giga Impact)
