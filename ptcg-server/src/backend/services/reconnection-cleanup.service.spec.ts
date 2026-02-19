@@ -11,11 +11,9 @@ describe('ReconnectionCleanupService', () => {
   const mockConfig: MaintenanceConfig = {
     cleanupIntervalMs: 5000,
     databaseOptimizationIntervalMs: 10000,
-    memoryCleanupThresholdMb: 50,
     maxSessionAge: 60000,
     enableScheduledCleanup: true,
-    enableDatabaseOptimization: true,
-    enableMemoryManagement: true
+    enableDatabaseOptimization: true
   };
 
   beforeEach(() => {
@@ -80,35 +78,6 @@ describe('ReconnectionCleanupService', () => {
       const result = await cleanupService.cleanupOrphanedGameStates();
 
       expect(result).toBe(0);
-    });
-  });
-
-  describe('performMemoryCleanup', () => {
-    it('should return 0 when memory management is disabled', async () => {
-      cleanupService.updateConfig({ enableMemoryManagement: false });
-
-      const result = await cleanupService.performMemoryCleanup();
-
-      expect(result).toBe(0);
-    });
-
-    it('should return 0 when memory usage is below threshold', async () => {
-      // Mock process.memoryUsage to return low memory usage
-      const originalMemoryUsage = process.memoryUsage;
-      process.memoryUsage = jasmine.createSpy('memoryUsage').and.returnValue({
-        heapUsed: 30 * 1024 * 1024, // 30MB - below 50MB threshold
-        rss: 0,
-        external: 0,
-        heapTotal: 0,
-        arrayBuffers: 0
-      });
-
-      const result = await cleanupService.performMemoryCleanup();
-
-      expect(result).toBe(0);
-
-      // Restore original function
-      process.memoryUsage = originalMemoryUsage;
     });
   });
 

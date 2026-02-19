@@ -23,22 +23,6 @@ describe('ReconnectionManager Notification System', () => {
     reconnectionManager.dispose();
   });
 
-  describe('Timeout Warning System', () => {
-    it('should have checkTimeoutWarnings method', () => {
-      expect(typeof reconnectionManager.checkTimeoutWarnings).toBe('function');
-    });
-
-    it('should handle timeout warning check without throwing', async () => {
-      // Act & Assert - should not throw
-      try {
-        await reconnectionManager.checkTimeoutWarnings();
-        expect(true).toBe(true); // Test passes if no exception is thrown
-      } catch (error) {
-        fail('checkTimeoutWarnings should not throw an error');
-      }
-    });
-  });
-
   describe('Session Cleanup with Notifications', () => {
     it('should have cleanupExpiredSessions method', () => {
       expect(typeof reconnectionManager.cleanupExpiredSessions).toBe('function');

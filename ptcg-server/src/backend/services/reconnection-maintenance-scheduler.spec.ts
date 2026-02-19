@@ -10,7 +10,6 @@ describe('ReconnectionMaintenanceScheduler', () => {
     mockCleanupService = jasmine.createSpyObj('ReconnectionCleanupService', [
       'performScheduledCleanup',
       'performDatabaseMaintenance',
-      'performMemoryCleanup',
       'resetMetrics',
       'getHealthStatus',
       'getMetrics'
@@ -18,7 +17,6 @@ describe('ReconnectionMaintenanceScheduler', () => {
 
     (mockCleanupService.performScheduledCleanup as jasmine.Spy).and.returnValue(Promise.resolve());
     (mockCleanupService.performDatabaseMaintenance as jasmine.Spy).and.returnValue(Promise.resolve());
-    (mockCleanupService.performMemoryCleanup as jasmine.Spy).and.returnValue(Promise.resolve(0));
     (mockCleanupService.getHealthStatus as jasmine.Spy).and.returnValue({
       isHealthy: true,
       lastCleanupAge: 1000,
@@ -43,7 +41,6 @@ describe('ReconnectionMaintenanceScheduler', () => {
       expect(tasks.size).toBeGreaterThan(0);
       expect(tasks.has('cleanup-expired-sessions')).toBe(true);
       expect(tasks.has('database-maintenance')).toBe(true);
-      expect(tasks.has('memory-cleanup')).toBe(true);
       expect(tasks.has('metrics-reset')).toBe(true);
       expect(tasks.has('health-check')).toBe(true);
     });
@@ -222,17 +219,6 @@ describe('ReconnectionMaintenanceScheduler', () => {
       }
 
       expect(mockCleanupService.performDatabaseMaintenance).toHaveBeenCalled();
-    });
-
-    it('should execute memory-cleanup task', async () => {
-      const tasks = maintenanceScheduler.getTasks();
-      const memoryTask = tasks.get('memory-cleanup');
-
-      if (memoryTask) {
-        await memoryTask.execute();
-      }
-
-      expect(mockCleanupService.performMemoryCleanup).toHaveBeenCalled();
     });
 
     it('should execute metrics-reset task', async () => {

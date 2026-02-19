@@ -52,19 +52,7 @@ export class ReconnectionMaintenanceScheduler {
       }
     });
 
-    // Task 3: Memory cleanup (every 2 scheduler ticks = ~2 days)
-    this.addTask({
-      name: 'memory-cleanup',
-      description: 'Perform memory cleanup and garbage collection if needed',
-      intervalCount: 2,
-      lastExecuted: 0,
-      isEnabled: true,
-      execute: async () => {
-        await this.cleanupService.performMemoryCleanup();
-      }
-    });
-
-    // Task 4: Metrics reset (every 30 scheduler ticks = ~30 days)
+    // Task 3: Metrics reset (every 30 scheduler ticks = ~30 days)
     this.addTask({
       name: 'metrics-reset',
       description: 'Reset cleanup metrics to prevent overflow',
@@ -81,7 +69,7 @@ export class ReconnectionMaintenanceScheduler {
       }
     });
 
-    // Task 5: Health check (every scheduler tick = daily)
+    // Task 4: Health check (every scheduler tick = daily)
     this.addTask({
       name: 'health-check',
       description: 'Check health status of cleanup service and log warnings',

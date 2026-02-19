@@ -1,7 +1,7 @@
 FROM node:18-alpine
 
 # Set memory optimization environment variables
-ENV NODE_OPTIONS="--expose-gc --max-old-space-size=2048"
+ENV NODE_OPTIONS="--max-old-space-size=2048"
 ENV NODE_ENV=production
 ENV UV_THREADPOOL_SIZE=16
 
@@ -40,4 +40,4 @@ EXPOSE 8080
 ENTRYPOINT ["dumb-init", "--"]
 
 # Start the application with memory optimizations
-CMD ["node", "--expose-gc", "--max-old-space-size=2048", "start.js"]
+CMD ["node", "--max-old-space-size=2048", "start.js"]

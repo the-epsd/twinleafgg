@@ -6,11 +6,11 @@ After=network.target
 Type=simple
 User=node
 WorkingDirectory=/Users/joemyerscough/ptcg-elite/ptcg-server
-ExecStart=/usr/bin/node --expose-gc --max-old-space-size=2048 start.js
+ExecStart=/usr/bin/node --max-old-space-size=2048 start.js
 Restart=always
 RestartSec=10
 Environment=NODE_ENV=production
-Environment=NODE_OPTIONS=--expose-gc --max-old-space-size=2048
+Environment=NODE_OPTIONS=--max-old-space-size=2048
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=ptcg-elite
