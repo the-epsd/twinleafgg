@@ -34,6 +34,21 @@ import { JudgeUL } from '../set-unleashed/other-prints';
 import { Raihan } from '../set-evolving-skies/raihan';
 import { RayquazaVMAX as RayquazaVMAXEVS111 } from '../set-evolving-skies/rayquaza-vmax';
 import { DuraludonVMAX as DuraludonVMAXEVS123 } from '../set-evolving-skies/duraludon-vmax';
+import { Sandile } from '../set-emerging-powers/sandile';
+import { Mareanie } from '../set-sun-and-moon/mareanie';
+import { Metang } from '../set-celestial-storm/metang';
+import { Fletchling } from '../set-steam-siege/fletchling';
+import { GymTrainer } from '../set-shining-fates/gym-trainer';
+import { ChesnaughtV } from './chesnaught-v';
+import { ReshiramV } from './reshiram-v';
+import { OmastarV } from './omastar-v';
+import { MawileV } from './mawile-v';
+import { HisuianArcanineV } from './hisuian-arcanine-v';
+import { SkuntankV } from './skuntank-v';
+import { HoOhV } from './ho-oh-v';
+import { Brandon } from './brandon';
+import { Wallace } from './wallace';
+import { MawileVstar } from './mawile-vstar';
 export class SerperiorV2SIT extends SerperiorVSIT7 {
   public setNumber = '170';
   public fullName: string = 'Serperior V (SIT 170)';
@@ -361,4 +376,118 @@ export class DuraludonVMAX2SIT extends DuraludonVMAXEVS123 {
   public fullName: string = 'Duraludon VMAX (SIT TG30)';
   public legacyFullName = 'Duraludon VMAX2 SIT';
   public set = 'SIT';
+}
+
+export class SandileSIT extends Sandile {
+  public set: string = 'SIT';
+  public setNumber: string = '111';
+  public fullName: string = 'Sandile (SIT 111)';
+}
+
+export class MareanieSIT extends Mareanie {
+  public set: string = 'SIT';
+  public setNumber: string = '114';
+  public fullName: string = 'Mareanie (SIT 114)';
+}
+
+export class MetangSIT extends Metang {
+  public set: string = 'SIT';
+  public setNumber: string = '118';
+  public fullName: string = 'Metang (SIT 118)';
+}
+
+export class FletchlingSIT extends Fletchling {
+  public set: string = 'SIT';
+  public setNumber: string = '150';
+  public fullName: string = 'Fletchling (SIT 150)';
+}
+
+export class GymTrainerSIT extends GymTrainer {
+  public set: string = 'SIT';
+  public setNumber: string = '158';
+  public fullName: string = 'Gym Trainer (SIT 158)';
+}
+
+export class ChesnaughtV2 extends ChesnaughtV {
+  public set: string = 'SIT';
+  public setNumber: string = '171';
+  public fullName: string = 'Chesnaught V (SIT 171)';
+}
+
+export class ReshiramV2 extends ReshiramV {
+  public set: string = 'SIT';
+  public setNumber: string = '172';
+  public fullName: string = 'Reshiram V (SIT 172)';
+}
+
+export class OmastarV2 extends OmastarV {
+  public set: string = 'SIT';
+  public setNumber: string = '174';
+  public fullName: string = 'Omastar V (SIT 174)';
+}
+
+export class MawileV2 extends MawileV {
+  public set: string = 'SIT';
+  public setNumber: string = '178';
+  public fullName: string = 'Mawile V (SIT 178)';
+}
+
+export class HisuianArcanineV2 extends HisuianArcanineV {
+  public set: string = 'SIT';
+  public setNumber: string = '179';
+  public fullName: string = 'Hisuian Arcanine V (SIT 179)';
+}
+
+export class SkuntankV2 extends SkuntankV {
+  public set: string = 'SIT';
+  public setNumber: string = '180';
+  public fullName: string = 'Skuntank V (SIT 180)';
+}
+
+export class SkuntankV3 extends SkuntankV {
+  public set: string = 'SIT';
+  public setNumber: string = '181';
+  public fullName: string = 'Skuntank V (SIT 181)';
+}
+
+export class HoOhV2 extends HoOhV {
+  public set: string = 'SIT';
+  public setNumber: string = '187';
+  public fullName: string = 'Ho-Oh V (SIT 187)';
+}
+
+export class Brandon2 extends Brandon {
+  public set: string = 'SIT';
+  public setNumber: string = '188';
+  public fullName: string = 'Brandon (SIT 188)';
+}
+
+export class GymTrainer2 extends GymTrainer {
+  public set: string = 'SIT';
+  public setNumber: string = '191';
+  public fullName: string = 'Gym Trainer (SIT 191)';
+}
+
+export class Wallace2 extends Wallace {
+  public set: string = 'SIT';
+  public setNumber: string = '194';
+  public fullName: string = 'Wallace (SIT 194)';
+}
+
+export class MawileVstar2 extends MawileVstar {
+  public set: string = 'SIT';
+  public setNumber: string = '200';
+  public fullName: string = 'Mawile VSTAR (SIT 200)';
+}
+
+export class Brandon3 extends Brandon {
+  public set: string = 'SIT';
+  public setNumber: string = '203';
+  public fullName: string = 'Brandon (SIT 203)';
+}
+
+export class Wallace3 extends Wallace {
+  public set: string = 'SIT';
+  public setNumber: string = '208';
+  public fullName: string = 'Wallace (SIT 208)';
 }

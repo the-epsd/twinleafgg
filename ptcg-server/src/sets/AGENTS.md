@@ -1354,3 +1354,26 @@ store.reduceEffect(state, putDamage);
 ```
 
 Reference: `set-astral-radiance/hisuian-samurott-vstar.ts` (Moon Cleave Star)
+
+### Tool card `reduceEffect`: check `PokemonCardList.tools`, NOT `PokemonCard.tools`
+
+When a tool card needs to check if it's attached to a Pokemon inside `reduceEffect`, always check the `PokemonCardList.tools` array (e.g., `player.active.tools.includes(this)`). Do NOT check `getPokemonCard().tools` — `PokemonCard.tools` is an empty array by default and is never populated by the engine. The engine only pushes attached tools to `PokemonCardList.tools`.
+
+```typescript
+// CORRECT: checks PokemonCardList.tools (populated by engine)
+if (!effect.player.active.tools.includes(this)) { return state; }
+
+// WRONG: checks PokemonCard.tools (always empty — never finds tools)
+const pokemonCard = effect.player.active.getPokemonCard();
+if (!pokemonCard.tools.includes(this)) { return state; }
+```
+
+Reference: `set-silver-tempest/forest-seal-stone.ts`, `set-silver-tempest/earthen-seal-stone.ts`
+
+### PokemonCardList markers are wiped during RetreatEffect
+
+`PokemonCardList.clearEffects()` contains `this.marker.markers = []`, which wipes ALL custom markers on the card list. This method is called by `retreatReducer` on the active slot BEFORE the retreat swap happens. Any marker placed on a `PokemonCardList` during a `RetreatEffect` handler (which runs in `propagateEffect`, before `retreatReducer`) will be cleared.
+
+**Workaround:** Use player-level markers (`player.marker`) or card instance properties (`public myFlag = false`) for state that must survive through retreat.
+
+Reference: `set-silver-tempest/skuntank-v.ts` (retreat tracking via instance property)
