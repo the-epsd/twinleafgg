@@ -1270,3 +1270,87 @@ if (IS_TOOL_BLOCKED(store, state, player, this)) {
 `IS_TOOL_BLOCKED` wraps the same `ToolEffect` logic internally, but the prefab is the established pattern. Never mix both approaches in the same card.
 
 Reference: `set-evolving-skies/spirit-mask.ts`, `set-evolving-skies/digging-gloves.ts`
+
+### Async callback bug: modify `effect.damage` INSIDE the callback
+
+When a prompt callback determines how much extra damage to deal, the damage modification MUST happen inside the callback. Code after `store.prompt()` runs BEFORE the callback:
+
+```typescript
+// WRONG: energyDiscarded is always 0 outside the callback
+let energyDiscarded = 0;
+store.prompt(state, new ChooseCardsPrompt(...), cards => {
+  energyDiscarded = cards.length;
+});
+effect.damage += energyDiscarded * 30;  // reads stale value!
+
+// CORRECT: capture reference and modify inside callback
+const attackEffect = effect;
+return store.prompt(state, new ChooseCardsPrompt(...), cards => {
+  attackEffect.damage += cards.length * 30;
+});
+```
+
+Reference: `set-astral-radiance/hisuian-decidueye-vstar.ts` (Somersault Feathers)
+
+### `CLEAN_UP_SUPPORTER` must be called exactly ONCE
+
+In generator-pattern Supporter cards, ensure `CLEAN_UP_SUPPORTER(effect, player)` is called exactly once per execution path. Common bugs: calling it inside a loop (once per iteration) or in multiple branches plus a final always-call.
+
+Reference: `set-astral-radiance/energy-loto.ts`, `set-astral-radiance/gardenias-vigor.ts`
+
+### JavaScript `||` bug in tag checks
+
+Never use `||` inside `includes()` for checking multiple tags. JavaScript's `||` evaluates to the first truthy value, so only the first tag is checked:
+
+```typescript
+// WRONG: Only checks POKEMON_V (|| returns first truthy value)
+sourceCard.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)
+
+// CORRECT: Separate includes() calls
+sourceCard.tags.includes(CardTag.POKEMON_V) ||
+sourceCard.tags.includes(CardTag.POKEMON_VMAX) ||
+sourceCard.tags.includes(CardTag.POKEMON_VSTAR)
+```
+
+### `effect.opponent` is available on AttackEffect
+
+Inside `WAS_ATTACK_USED` blocks, `effect.opponent` is already resolved — no need for `StateUtils.getOpponent(state, player)`. Both work identically; prefer `effect.opponent` to reduce imports.
+
+### `DealDamageEffect` for active, `PutDamageEffect` for bench
+
+When targeting "1 of your opponent's Pokemon" (active OR bench), use the correct effect type based on the selected target:
+
+- `DealDamageEffect` — applies Weakness and Resistance (use for active Pokemon)
+- `PutDamageEffect` — bypasses Weakness and Resistance (use for benched Pokemon)
+
+```typescript
+store.prompt(state, new ChoosePokemonPrompt(...), selected => {
+  const target = selected[0];
+  if (target === opponent.active) {
+    const dealDamage = new DealDamageEffect(effect, damage);
+    dealDamage.target = target;
+    store.reduceEffect(state, dealDamage);
+  } else {
+    const putDamage = new PutDamageEffect(effect, damage);
+    putDamage.target = target;
+    store.reduceEffect(state, putDamage);
+  }
+});
+```
+
+Reference: `set-astral-radiance/beedrill-v.ts` (Toxic Bore)
+
+### Never directly mutate `target.damage` for ability-based damage
+
+Always use `PutDamageCountersEffect` instead of `target.damage += X`. Direct mutation bypasses KO detection and damage prevention effects:
+
+```typescript
+// WRONG: Bypasses engine
+target.damage += 40;
+
+// CORRECT: Goes through engine
+const putDamage = new PutDamageCountersEffect(powerEffect, 40);
+store.reduceEffect(state, putDamage);
+```
+
+Reference: `set-astral-radiance/hisuian-samurott-vstar.ts` (Moon Cleave Star)

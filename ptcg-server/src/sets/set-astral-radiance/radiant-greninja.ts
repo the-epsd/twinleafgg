@@ -2,14 +2,14 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag, BoardEffect } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, Card, State, GameError, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { GameMessage } from '../../game/game-message';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { ChooseEnergyPrompt } from '../../game/store/prompts/choose-energy-prompt';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { DAMAGE_OPPONENT_POKEMON, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DAMAGE_OPPONENT_POKEMON, DRAW_CARDS, IS_ABILITY_BLOCKED, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class RadiantGreninja extends PokemonCard {
   public tags = [CardTag.RADIANT];
@@ -71,6 +71,10 @@ export class RadiantGreninja extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
@@ -100,7 +104,7 @@ export class RadiantGreninja extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       // Count all Pokémon in play (active + bench with cards)

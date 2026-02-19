@@ -71,7 +71,7 @@ export class Miltank extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)) {
+      if (sourceCard.tags.includes(CardTag.POKEMON_V) || sourceCard.tags.includes(CardTag.POKEMON_VMAX) || sourceCard.tags.includes(CardTag.POKEMON_VSTAR)) {
 
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {

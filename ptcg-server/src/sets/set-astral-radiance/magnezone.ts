@@ -4,6 +4,7 @@ import { PowerType, StoreLike, State, StateUtils, AttachEnergyPrompt, CardList, 
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Magnezone extends PokemonCard {
 
@@ -63,6 +64,10 @@ export class Magnezone extends PokemonCard {
 
       if (player.marker.hasMarker(this.GIGA_MAGNET_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       if (player.deck.cards.length == 0) {

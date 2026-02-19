@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
+import { Stage, CardType, EnergyType, SuperType, CardTag, BoardEffect } from '../../game/store/card/card-types';
 import {
   PowerType, StoreLike, State, StateUtils,
   GameError, GameMessage, EnergyCard, PlayerType, SlotType,
@@ -73,6 +73,12 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+        }
+      });
+
       const blocked2: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
         if (card.cardType !== CardType.WATER) {
@@ -94,10 +100,10 @@ export class OriginFormePalkiaVSTAR extends PokemonCard {
         if (transfers.length === 0) {
           return;
         }
+        player.usedVSTAR = true;
         for (const transfer of transfers) {
           const target = StateUtils.getTarget(state, player, transfer.to);
           MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.powers[0] });
-          player.usedVSTAR = true;
         }
       });
 

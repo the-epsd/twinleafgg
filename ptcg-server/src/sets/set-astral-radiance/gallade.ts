@@ -19,7 +19,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Gallade extends PokemonCard {
 
@@ -126,6 +126,10 @@ export class Gallade extends PokemonCard {
 
       if (player.marker.hasMarker(this.BUDDY_CATCH_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       return store.prompt(state, new ChooseCardsPrompt(
