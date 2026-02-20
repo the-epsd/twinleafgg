@@ -41,6 +41,7 @@ import { Schoolgirl } from './schoolgirl';
 import { Shauna } from './shauna';
 import { Shellder } from './shellder';
 import { Shelmet } from './shelmet';
+import { Sidney } from './sidney';
 import { SkatersPark } from './skaters-park';
 import { Starmie } from './starmie';
 import { Staryu } from './staryu';
@@ -102,6 +103,7 @@ export const setFusionStrike: Card[] = [
   new Accelgor(),
   new Shellder(),
   new Shelmet(),
+  new Sidney(),
   new SkatersPark(),
   new Starmie(),
   new Staryu(),
