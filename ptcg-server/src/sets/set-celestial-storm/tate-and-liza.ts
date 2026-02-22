@@ -55,7 +55,7 @@ export class TateAndLiza extends TrainerCard {
               { allowCancel: false }
             ), result => {
               const cardList = result[0];
-              player.switchPokemon(cardList);
+              player.switchPokemon(cardList, store, state);
               CLEAN_UP_SUPPORTER(effect, player);
             });
           }

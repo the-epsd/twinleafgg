@@ -1,11 +1,12 @@
 import { PokemonCard, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, State, StoreLike, GameError, CardTag, Stage } from '../../game';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MedichamV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -58,7 +59,7 @@ export class MedichamV extends PokemonCard {
       // DON'T clear usedTurnSkip here - it needs to stay true for initNextTurn
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Check if Yoga Loop was used last turn

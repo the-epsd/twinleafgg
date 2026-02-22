@@ -43,7 +43,7 @@ export const ZONE_POSITIONS = {
     ],
     board: new Vector3(0, 0.1, 3),
     prizes: new Vector3(20, 0.1, 8),
-    deck: new Vector3(-18, 0.1, 8),
+    deck: new Vector3(-18, 0.1, 10), // Z=10 matches active row; symmetrical with bottom deck
     discard: new Vector3(-18, 0.1, 4),
     lostZone: new Vector3(-10, 0.1, 10),
   }

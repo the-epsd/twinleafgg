@@ -3,11 +3,11 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { GameMessage } from '../../game/game-message';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Skrelp extends PokemonCard {
 
@@ -19,11 +19,11 @@ export class Skrelp extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Spit Poison',
-    cost: [ CardType.PSYCHIC ],
+    cost: [CardType.PSYCHIC],
     damage: 0,
     text: 'Flip a coin. If heads, your opponent\'s Active Pokemon ' +
       'is now Poisoned.'
@@ -41,7 +41,7 @@ export class Skrelp extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, [

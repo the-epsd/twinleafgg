@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils, PlayerType } from '../../game';
-import { AttackEffect, EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
+import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class LilliesClefairyex extends PokemonCard {
 
@@ -67,7 +68,7 @@ export class LilliesClefairyex extends PokemonCard {
     }
 
     // Full Moon Rondo
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       //Get number of benched pokemon

@@ -3,9 +3,10 @@ import { GameLog, GameMessage } from '../../game/game-message';
 import { CardType, Stage, TrainerType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Crobat extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -37,31 +38,31 @@ export class Crobat extends PokemonCard {
 
   public ECHOING_MADNESS_ITEM_LOCK_MARKER = 'ECHOING_MADNESS_ITEM_LOCK_MARKER';
   public ECHOING_MADNESS_SUPPORTER_LOCK_MARKER = 'ECHOING_MADNESS_SUPPORTER_LOCK_MARKER';
-  
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
+
     if (effect instanceof TrainerEffect && effect.player.marker.hasMarker(this.ECHOING_MADNESS_ITEM_LOCK_MARKER) &&
-        effect.trainerCard.trainerType === TrainerType.ITEM) {
+      effect.trainerCard.trainerType === TrainerType.ITEM) {
       throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    
+
     if (effect instanceof TrainerEffect && effect.player.marker.hasMarker(this.ECHOING_MADNESS_SUPPORTER_LOCK_MARKER) &&
-        effect.trainerCard.trainerType === TrainerType.SUPPORTER) {
+      effect.trainerCard.trainerType === TrainerType.SUPPORTER) {
       throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
     }
-    
+
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ECHOING_MADNESS_ITEM_LOCK_MARKER)) {
       effect.player.marker.removeMarker(this.ECHOING_MADNESS_ITEM_LOCK_MARKER);
     }
-    
+
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ECHOING_MADNESS_SUPPORTER_LOCK_MARKER)) {
       effect.player.marker.removeMarker(this.ECHOING_MADNESS_SUPPORTER_LOCK_MARKER);
     }
-    
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       const options = [
         {
           message: GameMessage.ITEMS,
@@ -75,12 +76,12 @@ export class Crobat extends PokemonCard {
           message: GameMessage.SUPPORTERS,
           action: () => {
             opponent.marker.addMarker(this.ECHOING_MADNESS_SUPPORTER_LOCK_MARKER, this);
-            store.log(state, GameLog.LOG_PLAYER_DISABLES_SUPPORTERS_UNTIL_END_OF_NEXT_TURN, { name: player.name, attack: this.attacks[0].name });            
+            store.log(state, GameLog.LOG_PLAYER_DISABLES_SUPPORTERS_UNTIL_END_OF_NEXT_TURN, { name: player.name, attack: this.attacks[0].name });
             return state;
           }
         }
       ];
-      
+
       return store.prompt(state, new SelectPrompt(
         player.id,
         GameMessage.CHOOSE_ITEMS_OR_SUPPORTERS,
@@ -92,7 +93,7 @@ export class Crobat extends PokemonCard {
         if (option.action) {
           option.action();
         }
-        
+
         return state;
       });
     }

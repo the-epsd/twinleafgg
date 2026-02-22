@@ -7,7 +7,8 @@ import { PutDamagePrompt } from '../../game';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // GRI Oricorio 56 (https://limitlesstcg.com/cards/GRI/56)
 export class Oricorio2 extends PokemonCard {
@@ -53,7 +54,7 @@ export class Oricorio2 extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Supernatural Dance
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -99,7 +100,7 @@ export class Oricorio2 extends PokemonCard {
     }
 
     // Revelation Dance
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       if (!StateUtils.getStadiumCard(state)) {
         effect.damage = 0;
       }

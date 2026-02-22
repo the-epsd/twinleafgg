@@ -3,9 +3,10 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Koraidon extends PokemonCard {
 
@@ -68,7 +69,7 @@ export class Koraidon extends PokemonCard {
       effect.player.marker.addMarker(this.UNRELENTING_ONSLAUGHT_2_MARKER, this);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const playerLastAttackInfo = state.playerLastAttack?.[player.id];
       const originalCard = playerLastAttackInfo ? playerLastAttackInfo.sourceCard : null;

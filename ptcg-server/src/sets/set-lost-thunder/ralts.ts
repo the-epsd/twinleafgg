@@ -3,6 +3,7 @@ import { Stage, CardType, SuperType, TrainerType } from '../../game/store/card/c
 import { StoreLike, State, Card, ChooseCardsPrompt, GameError, GameLog, GameMessage, ShowCardsPrompt, StateUtils, TrainerCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useBeckon(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
@@ -81,7 +82,7 @@ export class Ralts extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useBeckon(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

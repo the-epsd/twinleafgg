@@ -2,13 +2,14 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
-import {AddSpecialConditionsEffect} from '../../game/store/effects/attack-effects';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Incineroarex extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public stage: Stage = Stage.STAGE_2;
 
@@ -20,7 +21,7 @@ export class Incineroarex extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Hustle Play',
@@ -30,11 +31,11 @@ export class Incineroarex extends PokemonCard {
   }];
 
   public attacks = [
-    { 
-      name: 'Blaze Blast', 
-      cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS], 
-      damage: 240, 
-      text: 'Your opponent\'s Active Pokémon is now Burned.' 
+    {
+      name: 'Blaze Blast',
+      cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
+      damage: 240,
+      text: 'Your opponent\'s Active Pokémon is now Burned.'
     }
   ];
 
@@ -55,7 +56,7 @@ export class Incineroarex extends PokemonCard {
     if (effect instanceof CheckAttackCostEffect) {
       const player = effect.player;
 
-      if (effect.player !== player || player.active.getPokemonCard() !== this){
+      if (effect.player !== player || player.active.getPokemonCard() !== this) {
         return state;
       }
 
@@ -72,12 +73,12 @@ export class Incineroarex extends PokemonCard {
 
       const index = effect.cost.indexOf(CardType.COLORLESS);
       effect.cost.splice(index, benched);
-        
+
       return state;
     }
 
     // Blaze Blast
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
       return store.reduceEffect(state, specialCondition);
     }

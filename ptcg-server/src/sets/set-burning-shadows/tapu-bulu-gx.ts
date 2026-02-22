@@ -4,8 +4,8 @@ import { StoreLike, State, GameMessage, ConfirmPrompt, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardCardsEffect, HealTargetEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // BUS Tapu Bulu-GX 130 (https://limitlesstcg.com/cards/BUS/130)
 export class TapuBuluGX extends PokemonCard {
@@ -53,7 +53,7 @@ export class TapuBuluGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Jet Punch
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       state = store.prompt(state, new ConfirmPrompt(
@@ -79,7 +79,7 @@ export class TapuBuluGX extends PokemonCard {
     }
 
     // Absorption GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
       // Check if player has used GX attack
       BLOCK_IF_GX_ATTACK_USED(player);

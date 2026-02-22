@@ -7,6 +7,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { Card, ChooseCardsPrompt, GameMessage, PokemonCardList, ShuffleDeckPrompt } from '../../game';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useCallForFamilyNidoran(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -89,7 +90,7 @@ export class NidoranFemale extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       return store.prompt(state, [
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
@@ -100,7 +101,7 @@ export class NidoranFemale extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const generator = useCallForFamilyNidoran(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

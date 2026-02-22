@@ -1,8 +1,8 @@
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { Attack, PokemonCard, Power, PowerType, State, StateUtils, StoreLike } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dipplin extends PokemonCard {
 
@@ -40,7 +40,7 @@ export class Dipplin extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle the Do the Wave attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const activePokemon = opponent.active.getPokemonCard();

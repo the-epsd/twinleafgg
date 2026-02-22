@@ -3,7 +3,7 @@ import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { GameMessage } from '../../game/game-message';
 import { PowerType } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
@@ -11,7 +11,8 @@ import { PlayerType } from '../../game';
 import { CoinFlipPrompt } from '../../game';
 import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import {AttachEnergyEffect} from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Eevee extends PokemonCard {
 
@@ -23,7 +24,7 @@ export class Eevee extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Energy Evolution',
@@ -33,7 +34,7 @@ export class Eevee extends PokemonCard {
 
   public attacks = [{
     name: 'Quick Draw',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 0,
     text: 'Flip a coin. If heads, draw a card.'
   }];
@@ -50,7 +51,7 @@ export class Eevee extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Energy Evolution (which is a mess but hey it works)
-    if (effect instanceof AttachEnergyEffect && effect.target.cards.includes(this)){
+    if (effect instanceof AttachEnergyEffect && effect.target.cards.includes(this)) {
       const player = effect.player;
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
@@ -63,7 +64,7 @@ export class Eevee extends PokemonCard {
 
       let eeveeloutionType = CardType.COLORLESS;
 
-      switch (effect.energyCard.name){
+      switch (effect.energyCard.name) {
         case 'Water Energy': eeveeloutionType = CardType.WATER; break; // Vaporeon + Glaceon
         case 'Fire Energy': eeveeloutionType = CardType.FIRE; break; // Flareon
         case 'Lightning Energy': eeveeloutionType = CardType.LIGHTNING; break; // Jolteon
@@ -77,7 +78,7 @@ export class Eevee extends PokemonCard {
       if (player.deck.cards.length === 0) {
         return state;
       }
-      if (eeveeloutionType === CardType.COLORLESS){
+      if (eeveeloutionType === CardType.COLORLESS) {
         return state;
       }
 
@@ -88,14 +89,14 @@ export class Eevee extends PokemonCard {
             player,
             GameMessage.CHOOSE_CARD_TO_EVOLVE,
             player.deck,
-            { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Eevee', cardType: eeveeloutionType},
+            { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Eevee', cardType: eeveeloutionType },
             { min: 0, max: 1, allowCancel: false }
           ), selected => {
             cards = selected || [];
-            if (cards){
+            if (cards) {
               player.deck.moveCardsTo(cards, cardList);
               cardList.clearEffects();
-              cardList.pokemonPlayedTurn = state.turn; 
+              cardList.pokemonPlayedTurn = state.turn;
             }
           });
         }
@@ -103,9 +104,9 @@ export class Eevee extends PokemonCard {
     }
 
     // quick draw
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-  
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {

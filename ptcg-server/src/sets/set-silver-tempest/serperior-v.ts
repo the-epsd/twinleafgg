@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, PlayerType, PokemonCardList, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class SerperiorV extends PokemonCard {
@@ -46,7 +47,7 @@ export class SerperiorV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

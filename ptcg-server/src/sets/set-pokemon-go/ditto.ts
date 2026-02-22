@@ -8,8 +8,9 @@ import {
   Player
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
+import { UseAttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 // function* useApexDragon(next: Function, store: StoreLike, state: State,
 //   effect: PowerEffect): IterableIterator<State> {
@@ -76,7 +77,6 @@ import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/sto
 //   return state;
 // }
 
-
 export class Ditto extends PokemonCard {
 
   public regulationMark = 'F';
@@ -110,7 +110,7 @@ export class Ditto extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
 

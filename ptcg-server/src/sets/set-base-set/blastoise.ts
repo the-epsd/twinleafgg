@@ -1,15 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType
-} from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { BLOCK_IF_ASLEEP_CONFUSED_PARALYZED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Blastoise extends PokemonCard {
 
@@ -53,7 +50,7 @@ export class Blastoise extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
 
@@ -78,7 +75,7 @@ export class Blastoise extends PokemonCard {
 
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       BLOCK_IF_ASLEEP_CONFUSED_PARALYZED(player, this);

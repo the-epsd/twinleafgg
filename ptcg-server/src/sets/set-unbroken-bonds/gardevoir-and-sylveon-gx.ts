@@ -1,9 +1,8 @@
 import { AttachEnergyPrompt, CardTag, CardType, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, ShuffleDeckPrompt, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GardevoirSylveonGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
@@ -43,7 +42,7 @@ export class GardevoirSylveonGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Fairy Song
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
       if (hasBench === false) { return state; }
@@ -72,7 +71,7 @@ export class GardevoirSylveonGX extends PokemonCard {
     }
 
     // Kaleidostorm
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       return store.prompt(state, new MoveEnergyPrompt(
         player.id,
@@ -92,7 +91,7 @@ export class GardevoirSylveonGX extends PokemonCard {
     }
 
     // Magical Miracle-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
 

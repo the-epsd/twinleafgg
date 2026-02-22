@@ -3,6 +3,7 @@ import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useAscension(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -60,7 +61,7 @@ export class Misdreavus extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ascension attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useAscension(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

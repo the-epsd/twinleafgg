@@ -3,7 +3,8 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dreepy extends PokemonCard {
 
@@ -45,7 +46,7 @@ export class Dreepy extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const dealDamage = new DealDamageEffect(effect, 10);
       dealDamage.target = player.active;

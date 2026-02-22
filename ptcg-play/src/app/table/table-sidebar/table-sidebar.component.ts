@@ -5,7 +5,7 @@ import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { LocalGameState } from '../../shared/session/session.interface';
 import { GameService } from '../../api/services/game.service';
 import { SessionService } from 'src/app/shared/session/session.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 
 @UntilDestroy()

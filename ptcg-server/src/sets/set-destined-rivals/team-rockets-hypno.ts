@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsHypno extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,23 +40,23 @@ export class TeamRocketsHypno extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = effect.opponent;
-      let tails = 0;
-
+      let coinFlips = 0;
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-        if (opponent.active === card) {
+        if (card === opponent.active) {
           return;
         }
-
-        COIN_FLIP_PROMPT(store, state, effect.player, result => {
-          if (!result) {
-            tails++;
-          }
-        });
+        coinFlips++;
       });
 
-      effect.ignoreResistance = true;
-      effect.ignoreWeakness = true;
-      effect.damage = (80 * tails);
+      if (coinFlips > 0) {
+        MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.opponent, coinFlips, results => {
+          const tails = results.filter(r => !r).length;
+          effect.damage = 80 * tails;
+
+          effect.ignoreResistance = true;
+          effect.ignoreWeakness = true;
+        });
+      }
     }
 
     return state;

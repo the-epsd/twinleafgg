@@ -3,11 +3,11 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { GameMessage } from '../../game/game-message';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Vanilluxe extends PokemonCard {
 
@@ -21,18 +21,18 @@ export class Vanilluxe extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Double Freeze',
-    cost: [ CardType.WATER, CardType.COLORLESS ],
+    cost: [CardType.WATER, CardType.COLORLESS],
     damage: 40,
     text: 'Flip 2 coins. This attack does 40 damage times the number of heads. ' +
       'If either of them is heads, the Defending Pokemon is now Paralyzed.'
   },
   {
     name: 'Frost Breath',
-    cost: [ CardType.WATER, CardType.WATER ],
+    cost: [CardType.WATER, CardType.WATER],
     damage: 60,
     text: ''
   }];
@@ -49,7 +49,7 @@ export class Vanilluxe extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),

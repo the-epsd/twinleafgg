@@ -2,11 +2,11 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, BoardEffect, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, AttachEnergyPrompt, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { EndTurnEffect, AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { DRAW_CARDS, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Frosmoth extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -55,7 +55,7 @@ export class Frosmoth extends PokemonCard {
     }
 
     // Inviting Wings ability
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
 
@@ -94,7 +94,7 @@ export class Frosmoth extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       ADD_MARKER(this.COLD_CYCLONE_MARKER, effect.player, this);
       return state;
     }

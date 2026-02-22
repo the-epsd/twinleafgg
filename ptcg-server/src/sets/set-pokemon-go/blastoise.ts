@@ -1,17 +1,11 @@
-import {
-  AttachEnergyPrompt, GameMessage, PlayerType,
-  PowerType,
-  ShuffleDeckPrompt, SlotType,
-  State,
-  StateUtils,
-  StoreLike
-} from '../../game';
+import { AttachEnergyPrompt, GameMessage, PlayerType, PowerType, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* useVitalitySpring(next: Function, store: StoreLike, state: State,
   effect: PowerEffect): IterableIterator<State> {
@@ -89,7 +83,7 @@ export class Blastoise extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
@@ -105,7 +99,7 @@ export class Blastoise extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const generator = useVitalitySpring(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

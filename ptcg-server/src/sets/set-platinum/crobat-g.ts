@@ -4,9 +4,9 @@ import { PowerType, StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType 
 import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { GameMessage } from '../../game/game-message';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { IS_POKEPOWER_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useFlashBite(next: Function, store: StoreLike, state: State, effect: PlayPokemonEffect): IterableIterator<State> {
   const player = effect.player;
@@ -29,7 +29,6 @@ function* useFlashBite(next: Function, store: StoreLike, state: State, effect: P
 
   return state;
 }
-
 
 export class CrobatG extends PokemonCard {
 
@@ -87,7 +86,7 @@ export class CrobatG extends PokemonCard {
       return generator.next().value;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
       specialCondition.poisonDamage = 20;
       store.reduceEffect(state, specialCondition);

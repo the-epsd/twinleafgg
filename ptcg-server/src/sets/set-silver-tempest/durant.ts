@@ -3,9 +3,8 @@ import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/ca
 import { Card, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { StoreLike, State, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import {SHOW_CARDS_TO_PLAYER} from '../../game/store/prefabs/prefabs';
 
+import { SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Durant extends PokemonCard {
 
@@ -17,18 +16,18 @@ export class Durant extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Energy Digging',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Search your deck for up to 2 basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.'
     },
     {
       name: 'Bite',
-      cost: [ CardType.GRASS, CardType.COLORLESS ],
+      cost: [CardType.GRASS, CardType.COLORLESS],
       damage: 50,
       text: ''
     }
@@ -48,7 +47,7 @@ export class Durant extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Copied from Gimmighoul SSP's Minor Errand-Running
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
 

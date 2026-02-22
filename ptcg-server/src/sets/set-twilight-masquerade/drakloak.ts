@@ -6,9 +6,10 @@ import { CardList } from '../../game/store/state/card-list';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { GameMessage } from '../../game/game-message';
 import { GameError, PlayerType, PokemonCard, PowerType } from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Drakloak extends PokemonCard {
 
@@ -61,7 +62,7 @@ export class Drakloak extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {

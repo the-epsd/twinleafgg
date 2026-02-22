@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { BoardEffect, CardTag, CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
-import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { HealEffect } from '../../game/store/effects/game-effects';
 import { StoreLike, State, PowerType, StateUtils, CardTarget, GameError, GameMessage, PlayerType, PokemonCardList, ChoosePokemonPrompt, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Venusaurex extends PokemonCard {
 
@@ -45,7 +46,7 @@ export class Venusaurex extends PokemonCard {
       player.marker.removeMarker(this.TRANQUIL_FLOWER_MARKER);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
 
       const player = effect.player;
 
@@ -97,7 +98,7 @@ export class Venusaurex extends PokemonCard {
         return state;
       });
     }
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

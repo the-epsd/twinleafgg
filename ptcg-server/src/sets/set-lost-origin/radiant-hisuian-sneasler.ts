@@ -2,9 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardTag, CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class RadiantHisuianSneasler extends PokemonCard {
 
@@ -85,7 +86,7 @@ export class RadiantHisuianSneasler extends PokemonCard {
     }
 
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
       store.reduceEffect(state, specialCondition);

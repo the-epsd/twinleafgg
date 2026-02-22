@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, CoinFlipPrompt, GameMessage, PokemonCardList, Card, ChooseCardsPrompt, GameError, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Marowak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -45,7 +46,7 @@ export class Marowak extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       state = store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
@@ -58,7 +59,7 @@ export class Marowak extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 

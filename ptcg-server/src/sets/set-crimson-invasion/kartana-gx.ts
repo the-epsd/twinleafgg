@@ -4,10 +4,9 @@ import { PowerType, StoreLike, State, GameMessage, ConfirmPrompt, PlayerType, Ca
 import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect, AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
-import { BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, TAKE_X_PRIZES, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, IS_ABILITY_BLOCKED, MOVE_CARDS, TAKE_X_PRIZES, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { SHUFFLE_THIS_POKEMON_AND_ALL_ATTACHED_CARDS_INTO_YOUR_DECK } from '../../game/store/prefabs/attack-effects';
 
 export class KartanaGX extends PokemonCard {
@@ -87,14 +86,7 @@ export class KartanaGX extends PokemonCard {
       }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 

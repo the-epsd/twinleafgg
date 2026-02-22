@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, CoinFlipPrompt } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Gothorita extends PokemonCard {
 
@@ -18,18 +19,18 @@ export class Gothorita extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Double Slap',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 20,
       text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
     },
     {
       name: 'Psybeam',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS],
       damage: 20,
       text: 'The Defending Pokemon is now Confused.'
     },
@@ -46,7 +47,7 @@ export class Gothorita extends PokemonCard {
   public setNumber: string = '71';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, [
@@ -59,7 +60,7 @@ export class Gothorita extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
       store.reduceEffect(state, specialConditionEffect);
     }

@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, BoardEffect, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, StateUtils, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, ChoosePokemonPrompt, SlotType } from '../../game';
-import { AttackEffect, Effect, EffectOfAbilityEffect, MoveCardsEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { Effect, EffectOfAbilityEffect, MoveCardsEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class TestPokemon extends PokemonCard {
 
@@ -74,7 +75,7 @@ export class TestPokemon extends PokemonCard {
       });
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       state = store.prompt(state, new ChooseCardsPrompt(
@@ -100,7 +101,7 @@ export class TestPokemon extends PokemonCard {
       });
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[1]) {
+    if (WAS_POWER_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -154,7 +155,7 @@ export class TestPokemon extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const max = Math.min(2);

@@ -3,10 +3,10 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { GamePhase, State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayerType, PowerType, StateUtils } from '../../game';
 import { BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Garganacl extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -113,7 +113,7 @@ export class Garganacl extends PokemonCard {
     }
 
     // Knocking Hammer
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

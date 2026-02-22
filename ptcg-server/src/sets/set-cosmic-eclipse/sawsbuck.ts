@@ -2,9 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { ChoosePokemonPrompt, ConfirmPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ADD_MARKER } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Sawsbuck extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,7 +40,7 @@ export class Sawsbuck extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(this.SEASONAL_BLESSINGS_MARKER)) {
@@ -55,7 +55,7 @@ export class Sawsbuck extends PokemonCard {
       ADD_MARKER(this.SEASONAL_BLESSINGS_MARKER, player, this);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       this.bounceMarker = true;
     }
 

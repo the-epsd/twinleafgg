@@ -12,8 +12,9 @@ import {
   ShuffleDeckPrompt
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
+import { UseAttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 // function* useApexDragon(next: Function, store: StoreLike, state: State,
 //   effect: PowerEffect): IterableIterator<State> {
@@ -80,7 +81,6 @@ import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/sto
 //   return state;
 // }
 
-
 export class Mew extends PokemonCard {
 
   public tags = [CardTag.PRIME];
@@ -123,7 +123,7 @@ export class Mew extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let cards: Card[] = [];
@@ -148,7 +148,7 @@ export class Mew extends PokemonCard {
       });
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
 

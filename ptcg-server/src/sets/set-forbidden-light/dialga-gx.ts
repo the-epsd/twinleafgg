@@ -1,14 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import {
-  StoreLike, State,
-  StateUtils
-} from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { ApplyWeaknessEffect, AfterDamageEffect } from '../../game/store/effects/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class DialgaGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];
@@ -62,7 +59,7 @@ export class DialgaGX extends PokemonCard {
       effect.player.marker.addMarker(this.TIMELESS_GX_MARKER_2, this);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       while (player.hand.cards.length < 6) {
         if (player.deck.cards.length === 0) {
@@ -72,7 +69,7 @@ export class DialgaGX extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -89,7 +86,7 @@ export class DialgaGX extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
 
       BLOCK_IF_GX_ATTACK_USED(player);

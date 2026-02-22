@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
-import {GameError, GameMessage, PowerType, ShuffleDeckPrompt, State, StoreLike} from '../../game';
-import {Effect} from '../../game/store/effects/effect';
-import {PowerEffect} from '../../game/store/effects/game-effects';
+import { GameError, GameMessage, PowerType, ShuffleDeckPrompt, State, StoreLike } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Abra extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -10,7 +11,7 @@ export class Abra extends PokemonCard {
   public hp: number = 40;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
-  public retreat = [ C ];
+  public retreat = [C];
 
   public powers = [{
     name: 'Teleporter',
@@ -21,7 +22,7 @@ export class Abra extends PokemonCard {
 
   public attacks = [{
     name: 'Beam',
-    cost: [ P ],
+    cost: [P],
     damage: 10,
     text: '',
   }];
@@ -35,10 +36,10 @@ export class Abra extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Teleport
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]){
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      if (player.active.getPokemonCard() !== this){
+      if (player.active.getPokemonCard() !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 

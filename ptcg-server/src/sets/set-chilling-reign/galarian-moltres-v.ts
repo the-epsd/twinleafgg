@@ -1,13 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, ChooseCardsPrompt, PowerType, GameError, EnergyCard } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class GalarianMoltresV extends PokemonCard {
 
@@ -62,7 +62,7 @@ export class GalarianMoltresV extends PokemonCard {
       player.marker.removeMarker(this.DIREFLAME_WINGS_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(this.DIREFLAME_WINGS_MARKER, this)) {
@@ -83,7 +83,6 @@ export class GalarianMoltresV extends PokemonCard {
         return state;
       }
 
-
       return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_ATTACH,
@@ -103,7 +102,7 @@ export class GalarianMoltresV extends PokemonCard {
       effect.player.marker.removeMarker(this.DIREFLAME_WINGS_MARKER, this);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const dealDamage = new DealDamageEffect(effect, 30);

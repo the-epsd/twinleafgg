@@ -2,10 +2,11 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, GameError, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { GameMessage } from '../../game/game-message';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class DarkGolbat extends PokemonCard {
   public tags = [CardTag.DARK];
@@ -50,7 +51,7 @@ export class DarkGolbat extends PokemonCard {
       player.marker.removeMarker(this.QUICK_SHOOTING_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       //const opponent = StateUtils.getOpponent(state, player);
 

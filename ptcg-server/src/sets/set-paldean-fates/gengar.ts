@@ -4,10 +4,11 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType } from '../..';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* useNightGate(next: Function, store: StoreLike, state: State,
   effect: PowerEffect): IterableIterator<State> {
@@ -91,7 +92,7 @@ export class Gengar extends PokemonCard {
       player.marker.removeMarker(this.NIGHT_GATE_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const generator = useNightGate(() => generator.next(), store, state, effect);
       const player = effect.player;
       if (player.marker.hasMarker(this.NIGHT_GATE_MARKER, this)) {
@@ -109,7 +110,7 @@ export class Gengar extends PokemonCard {
       return generator.next().value;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       store.reduceEffect(state, specialCondition);

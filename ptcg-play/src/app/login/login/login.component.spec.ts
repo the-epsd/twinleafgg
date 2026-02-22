@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { ApiModule } from '../../api/api.module';
 import { LoginComponent } from './login.component';
 
@@ -14,10 +15,10 @@ describe('LoginComponent', () => {
       imports: [
         ApiModule,
         FormsModule,
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
+        MatDialogModule
       ],
       declarations: [LoginComponent],
-      providers: [{ provide: LoginPopupService, useValue: { openDialog: () => { } } }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
       .compileComponents();

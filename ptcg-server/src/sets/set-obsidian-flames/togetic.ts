@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Togetic extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -10,18 +11,18 @@ export class Togetic extends PokemonCard {
   public cardType: CardType = P;
   public hp: number = 90;
   public weakness = [{ type: M }];
-  public retreat = [ C ];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Shared Peace',
-      cost: [ C ],
+      cost: [C],
       damage: 0,
       text: 'Each player draws 3 cards.'
     },
     {
       name: 'Speed Dive',
-      cost: [ C, C ],
+      cost: [C, C],
       damage: 40,
       text: ''
     }
@@ -36,7 +37,7 @@ export class Togetic extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Shared Peace
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

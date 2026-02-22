@@ -3,9 +3,10 @@ import { Stage, CardType, EnergyType, SuperType, BoardEffect } from '../../game/
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, EnergyCard, GameError, GameMessage, PlayerType, AttachEnergyPrompt, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Coalossal extends PokemonCard {
 
@@ -46,7 +47,7 @@ export class Coalossal extends PokemonCard {
       player.marker.removeMarker(this.TAR_GENERATOR_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
@@ -84,7 +85,6 @@ export class Coalossal extends PokemonCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
         }
-
 
         player.marker.addMarker(this.TAR_GENERATOR_MARKER, this);
 

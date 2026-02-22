@@ -3,10 +3,11 @@ import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { StateUtils } from '../../game/store/state-utils';
 import { CardList, EnergyCard, GameLog } from '../../game';
 import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Haxorus extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -16,7 +17,6 @@ export class Haxorus extends PokemonCard {
   public weakness = [];
   public resistance = [];
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
 
   public attacks = [{
     name: 'Bring Down the Axe',
@@ -41,7 +41,7 @@ export class Haxorus extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const pokemon = opponent.active;
@@ -65,19 +65,19 @@ export class Haxorus extends PokemonCard {
 
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      
+
       const deckTop = new CardList();
       player.deck.moveTo(deckTop, 3);
       const discards = deckTop.cards;
-  
+
       deckTop.moveTo(player.discard, deckTop.cards.length);
 
       discards.forEach((card, index) => {
         store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: effect.attack.name });
       });
-      
+
       return state;
     }
 

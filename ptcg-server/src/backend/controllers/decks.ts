@@ -1035,11 +1035,26 @@ const SetReleaseDates: { [key: string]: Date } = {
   'M1L': new Date('2025-09-26'),
   'M1S': new Date('2025-09-26'),
   'PFL': new Date('2025-11-14'),
+  'M3': new Date('2026-01-23'),
+  'MC': new Date('2026-01-23'),
   'M2a': new Date('2026-01-28'),
-  'ASC': new Date('2026-01-28')
+  'ASC': new Date('2026-01-28'),
+  'M4': new Date('2026-03-13')
 };
 
 const STANDARD_MAJORS_SETS = ['SVP', 'SVI', 'PAL', 'OBF', 'MEW', 'PAR', 'PAF', 'TEF', 'TWM', 'SFA', 'SCR', 'SSP', 'PRE', 'JTG', 'DRI', 'SV11', 'SV11B', 'SV11W', 'BLK', 'WHT', 'MEG', 'MEP', 'M1L', 'M1S', 'PFL'];
+
+/** Checks if a printing is legal in Standard: set must be in rotation (>= SVI) and released (<= today). Allows J Regulation Mark as long as released. */
+function isPrintingLegalInStandard(card: any): boolean {
+  const setDate = SetReleaseDates[card.set];
+  return !!setDate && setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
+}
+
+/** Checks if a printing is legal in Standard Nightly: same as Standard PLUS future sets (SVI+ but not yet released, e.g. M3, M4). */
+function isPrintingLegalInStandardNightly(card: any): boolean {
+  const setDate = SetReleaseDates[card.set];
+  return !!setDate && setDate >= SetReleaseDates['TEF'];
+}
 
 function getValidFormatsForCardList(cardNames: string[]): number[] {
   const cardManager = CardManager.getInstance();
@@ -1179,41 +1194,27 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
       case Format.STANDARD: {
         // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
-        // is legal in Standard (has regulation mark G, H, or I)
+        // is legal in Standard (G, H, I, or J if released)
         const cardManager = CardManager.getInstance();
         const allPrintings = cardManager.getAllCards().filter((c: any) =>
           c && c.name === card.name
         );
 
-        // If no printings found, fall back to checking this card's regulation mark
         if (allPrintings.length === 0) {
-          const rm = card.regulationMark;
-          return rm && (rm === 'G' || rm === 'H' || rm === 'I');
+          return isPrintingLegalInStandard(card);
         }
 
-        return allPrintings.some((c: any) => {
-          const rm = c.regulationMark;
-          return rm && (rm === 'G' || rm === 'H' || rm === 'I');
-        });
+        return allPrintings.some((c: any) => isPrintingLegalInStandard(c));
       }
       case Format.STANDARD_NIGHTLY: {
-        // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
-        // is legal in Standard Nightly (has regulation mark H, I, or J - excludes G)
         const cardManager = CardManager.getInstance();
         const allPrintings = cardManager.getAllCards().filter((c: any) =>
           c && c.name === card.name
         );
-
-        // If no printings found, fall back to checking this card's regulation mark
         if (allPrintings.length === 0) {
-          const rm = card.regulationMark;
-          return rm && (rm === 'H' || rm === 'I' || rm === 'J');
+          return isPrintingLegalInStandardNightly(card);
         }
-
-        return allPrintings.some((c: any) => {
-          const rm = c.regulationMark;
-          return rm && (rm === 'H' || rm === 'I' || rm === 'J');
-        });
+        return allPrintings.some((c: any) => isPrintingLegalInStandardNightly(c));
       }
       case Format.STANDARD_MAJORS: {
         // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
@@ -1277,16 +1278,10 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
     case Format.ETERNAL:
       return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
     case Format.STANDARD: {
-      const setDate = SetReleaseDates[card.set];
-      if (card.regulationMark === 'J') {
-        return false;
-      }
-      return setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
+      return isPrintingLegalInStandard(card);
     }
     case Format.STANDARD_NIGHTLY:
-      return card.regulationMark === 'H' ||
-        card.regulationMark === 'I' ||
-        card.regulationMark === 'J';
+      return isPrintingLegalInStandardNightly(card);
     case Format.STANDARD_MAJORS:
       return STANDARD_MAJORS_SETS.includes(card.set);
     case Format.EXPANDED: {

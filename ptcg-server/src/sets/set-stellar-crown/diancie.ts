@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, SuperType, EnergyType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Diancie extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -33,7 +34,7 @@ export class Diancie extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       let specialEnergyCount = 0;

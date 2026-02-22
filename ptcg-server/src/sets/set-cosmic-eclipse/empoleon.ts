@@ -4,7 +4,7 @@ import { StoreLike, State, GameMessage, Attack, ChooseAttackPrompt, GameLog, Sta
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { DISCARD_ALL_ENERGY_FROM_POKEMON } from '../../game/store/prefabs/prefabs';
+import { DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useRecall(next: Function, store: StoreLike, state: State,
   self: Empoleon, effect: AttackEffect): IterableIterator<State> {
@@ -91,13 +91,13 @@ export class Empoleon extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Recall attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useRecall(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
 
     // Aquafall attack - discard all energy after damage is dealt
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, this);
     }
 

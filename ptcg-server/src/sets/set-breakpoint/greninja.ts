@@ -3,9 +3,10 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameMessage, PlayerType, GameError, StateUtils, ConfirmPrompt, ChooseEnergyPrompt, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckProvidedEnergyEffect, CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Greninja extends PokemonCard {
 
@@ -57,7 +58,7 @@ export class Greninja extends PokemonCard {
     }
 
     // Shadow Stitching
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -66,7 +67,7 @@ export class Greninja extends PokemonCard {
     }
 
     // Mist Slash
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       state = store.prompt(state, new ConfirmPrompt(

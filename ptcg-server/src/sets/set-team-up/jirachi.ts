@@ -5,7 +5,8 @@ import { StoreLike, State, GameError, GameMessage, StateUtils, CardList, ChooseC
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Jirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -49,7 +50,7 @@ export class Jirachi extends PokemonCard {
       effect.player.marker.removeMarker(this.STELLAR_WISH_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {

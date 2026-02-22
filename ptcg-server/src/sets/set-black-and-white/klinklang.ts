@@ -4,7 +4,7 @@ import { StoreLike, State, StateUtils, PlayerType, SlotType, MoveEnergyPrompt, C
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_BENCHED_POKEMON } from '../../game/store/prefabs/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
@@ -88,7 +88,7 @@ export class Klinklang extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Shift Gear ability
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Check if there's any Metal energy to move

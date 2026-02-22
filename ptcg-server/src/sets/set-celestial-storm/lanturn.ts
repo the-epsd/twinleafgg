@@ -3,10 +3,11 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, StateUtils, GameMessage, PlayerType, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EnergyType, SuperType } from '../../game/store/card/card-types';
 import { CardList } from '../../game/store/state/card-list';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Lanturn extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -88,7 +89,7 @@ export class Lanturn extends PokemonCard {
     }
 
     // Lightning Strike attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const active = player.active;
       // Find all Lightning Energy attached to this Pokémon

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { MoveDamagePrompt,/* Player,*/ PlayerType, GameError } from '../../game';
+import { MoveDamagePrompt, /* Player, */ PlayerType, GameError } from '../../game';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
@@ -10,9 +10,9 @@ import { StateUtils } from '../../game';
 import { DamageMap } from '../../game';
 import { SlotType } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { TrainerCard, TrainerType } from '../../game';
-import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 // CES Banette-GX 66 (https://limitlesstcg.com/cards/CES/66)
 export class BanetteGX extends PokemonCard {
@@ -75,7 +75,7 @@ export class BanetteGX extends PokemonCard {
     }
 
     // Shady Move
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -125,7 +125,7 @@ export class BanetteGX extends PokemonCard {
     }
 
     // Shadow Chant
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let supportersInDiscard = 0;
@@ -144,7 +144,7 @@ export class BanetteGX extends PokemonCard {
     }
 
     // Shadowy Hunter-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       // Check if player has used GX attack
@@ -162,9 +162,9 @@ export class BanetteGX extends PokemonCard {
           {},
           { min: 1, max: 3, allowCancel: false }
         )], selected => {
-        const cards = selected || [];
-        MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[1] });
-      });
+          const cards = selected || [];
+          MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this, sourceEffect: this.attacks[1] });
+        });
     }
 
     if (effect instanceof EndTurnEffect) {

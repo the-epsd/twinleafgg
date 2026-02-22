@@ -2,9 +2,9 @@ import { CardList, ChooseCardsPrompt, ConfirmPrompt, EnergyCard, GameError, Game
 import { BoardEffect, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/prefabs/attack-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, HAS_MARKER, IS_POKEPOWER_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Delcatty extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -64,14 +64,7 @@ export class Delcatty extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.POKEPOWER,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
         return state;
       }
 
@@ -90,7 +83,7 @@ export class Delcatty extends PokemonCard {
             { min: 1, max: 2, allowCancel: false }
           ), selected => {
             if (selected.length === 0) return;
-            
+
             selected.forEach(card => {
               store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
               player.discard.moveCardTo(card, deckTop);
@@ -103,7 +96,7 @@ export class Delcatty extends PokemonCard {
               { allowCancel: false }
             ), order => {
               if (order === null) return state;
-              
+
               deckTop.applyOrder(order);
               deckTop.moveToTopOfDestination(player.deck);
 

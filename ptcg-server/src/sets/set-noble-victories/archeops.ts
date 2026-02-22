@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect, EvolveEffect } from '../../game/store/effects/game-effects';
+import { EvolveEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
@@ -11,6 +11,7 @@ import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Archeops extends PokemonCard {
 
@@ -24,7 +25,7 @@ export class Archeops extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Ancient Power',
@@ -35,7 +36,7 @@ export class Archeops extends PokemonCard {
 
   public attacks = [{
     name: 'Rock Slide',
-    cost: [ CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS ],
+    cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.COLORLESS],
     damage: 60,
     text: 'Does 10 damage to 2 of your opponent\'s Benched Pokemon. ' +
       '(Don\'t apply Weakness and Resistance for Benched Pokemon.)'
@@ -53,7 +54,7 @@ export class Archeops extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -67,7 +68,7 @@ export class Archeops extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { min: count, max: count, allowCancel: false }
       ), targets => {
         if (!targets || targets.length === 0) {
@@ -102,14 +103,7 @@ export class Archeops extends PokemonCard {
       }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 

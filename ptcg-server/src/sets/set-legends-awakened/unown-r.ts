@@ -1,11 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
-  PokemonCardList, MoveEnergyPrompt, PlayerType, SlotType
-} from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PokemonCardList, MoveEnergyPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* useHiddenPower(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
@@ -72,7 +70,7 @@ export class UnownR extends PokemonCard {
   public setNumber: string = '77';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
 
@@ -88,7 +86,7 @@ export class UnownR extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useHiddenPower(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

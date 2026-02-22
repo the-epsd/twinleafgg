@@ -3,6 +3,7 @@ import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useCallForFamily(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -46,18 +47,18 @@ export class Gossifleur extends PokemonCard {
   public cardType: CardType = G;
   public hp: number = 50;
   public weakness = [{ type: R }];
-  public retreat = [ C ];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Call For Family',
-      cost: [ C ],
+      cost: [C],
       damage: 0,
       text: 'Search your deck for up to 3 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
     },
     {
       name: 'Razor Leaf',
-      cost: [ G ],
+      cost: [G],
       damage: 10,
       text: ''
     }
@@ -70,7 +71,7 @@ export class Gossifleur extends PokemonCard {
   public fullName: string = 'Gossifleur SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useCallForFamily(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

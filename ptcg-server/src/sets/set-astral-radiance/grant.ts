@@ -6,9 +6,9 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { Card, CardList, ChooseCardsPrompt, GameError, GameLog, GameMessage, PowerType } from '../../game';
+import { Card, CardList, CardType, ChooseCardsPrompt, GameError, GameLog, GameMessage, PowerType } from '../../game';
 import { TrainerPowerEffect } from '../../game/store/effects/game-effects';
-import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
+import { CheckPokemonPowersEffect, CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Grant extends TrainerCard {
@@ -65,7 +65,12 @@ export class Grant extends TrainerCard {
     if (effect instanceof DealDamageEffect) {
       const player = effect.player;
       if (player.marker.hasMarker(this.GRANT_MARKER, this) && effect.damage > 0) {
-        effect.damage += 30;
+        // Only boost [F] Pokemon attacks
+        const checkType = new CheckPokemonTypeEffect(effect.source);
+        store.reduceEffect(state, checkType);
+        if (checkType.cardTypes.includes(CardType.FIGHTING)) {
+          effect.damage += 30;
+        }
       }
     }
 

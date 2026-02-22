@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, PokemonCardList, Card,
-  ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, PokemonCardList, Card, ShuffleDeckPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useFlock(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -48,19 +48,19 @@ export class Wurmple extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Flock',
-      cost: [ CardType.GRASS ],
+      cost: [CardType.GRASS],
       damage: 0,
       text: 'Search your deck for Wurmple and put it onto your Bench. ' +
         'Shuffle your deck afterward.'
     },
     {
       name: 'Tackle',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
       text: ''
     }
@@ -77,7 +77,7 @@ export class Wurmple extends PokemonCard {
   public setNumber: string = '3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useFlock(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

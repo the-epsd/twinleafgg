@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Uxie extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -28,7 +29,7 @@ export class Uxie extends PokemonCard {
   public fullName: string = 'Uxie SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = effect.opponent;
 
       const activeDamageEffect = new PutCountersEffect(effect, 20);

@@ -2,13 +2,14 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import { AttachEnergyPrompt, CardTarget, CoinFlipPrompt, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { PikachuVUNIONTopRight } from './pikachu-v-union-tr';
 import { PikachuVUNIONBottomLeft } from './pikachu-v-union-bl';
 import { PikachuVUNIONBottomRight } from './pikachu-v-union-br';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class PikachuVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
@@ -66,7 +67,7 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
@@ -104,7 +105,7 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
     }
 
     // Union Gain
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let lightningsInDiscard = 0;
@@ -146,7 +147,7 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
     }
 
     // Shocking Shock
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       return store.prompt(state, [
@@ -160,7 +161,7 @@ export class PikachuVUNIONTopLeft extends PokemonCard {
     }
 
     // Disconnect
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

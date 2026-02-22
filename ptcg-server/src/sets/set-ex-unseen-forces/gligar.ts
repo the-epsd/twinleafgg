@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_POKEBODY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Gligar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -44,7 +44,7 @@ export class Gligar extends PokemonCard {
       }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 

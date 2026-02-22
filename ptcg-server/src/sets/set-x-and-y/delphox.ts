@@ -2,9 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, GameMessage, GameError, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Delphox extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -37,7 +38,6 @@ export class Delphox extends PokemonCard {
 
   public readonly MYSTICAL_FIRE_MARKER = 'MYSTICAL_FIRE_MARKER';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
@@ -50,8 +50,7 @@ export class Delphox extends PokemonCard {
       player.marker.removeMarker(this.MYSTICAL_FIRE_MARKER, this);
     }
 
-
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.marker.hasMarker(this.MYSTICAL_FIRE_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
@@ -72,7 +71,7 @@ export class Delphox extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const pokemon = player.active;
 

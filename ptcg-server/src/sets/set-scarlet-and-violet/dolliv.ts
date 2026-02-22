@@ -7,7 +7,8 @@ import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AbstractAttackEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dolliv extends PokemonCard {
 
@@ -52,7 +53,7 @@ export class Dolliv extends PokemonCard {
 
   reduceEffect(store: StoreLike, state: State, effect: Effect) {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

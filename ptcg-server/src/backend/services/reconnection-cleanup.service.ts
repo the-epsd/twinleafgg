@@ -41,9 +41,9 @@ export class ReconnectionCleanupService {
   };
 
   private config: MaintenanceConfig = {
-    cleanupIntervalMs: 2 * 60 * 1000, // 2 minutes - more frequent cleanup
+    cleanupIntervalMs: 5 * 60 * 1000, // 5 minutes
     databaseOptimizationIntervalMs: 30 * 60 * 1000, // 30 minutes - more frequent DB optimization
-    memoryCleanupThresholdMb: 500, // 500MB - more realistic threshold
+    memoryCleanupThresholdMb: 700, // 700MB - reduce CPU from frequent GC
     maxSessionAge: 6 * 60 * 60 * 1000, // 6 hours - shorter session retention
     enableScheduledCleanup: true,
     enableDatabaseOptimization: true,

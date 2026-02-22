@@ -4,6 +4,7 @@ import { StoreLike, State, Card, ChooseCardsPrompt, ChoosePokemonPrompt, GameMes
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useSprout(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -47,19 +48,19 @@ export class Oddish extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
-  public attacks = 
+  public attacks =
     [
       {
         name: 'Stun Spore',
-        cost: [ CardType.GRASS ],
+        cost: [CardType.GRASS],
         damage: 10,
         text: 'Flip a coin. If heads, the Defending Pokémon is now Paralyzed.'
       },
       {
         name: 'Sprout',
-        cost: [ CardType.GRASS, CardType.GRASS ],
+        cost: [CardType.GRASS, CardType.GRASS],
         damage: 0,
         text: 'The Defending Pokémon is now Asleep.'
       },
@@ -77,14 +78,14 @@ export class Oddish extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const targets = selected || [];
@@ -93,11 +94,11 @@ export class Oddish extends PokemonCard {
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         });
-        return state; 
+        return state;
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const generator = useSprout(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

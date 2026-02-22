@@ -1,19 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, BoardEffect } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State,
-  GameMessage,
-  ChooseCardsPrompt,
-  ShuffleDeckPrompt,
-  GameError,
-  PlayerType,
-  ShowCardsPrompt,
-  StateUtils
-} from '../../game';
+import { PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt, GameError, PlayerType, ShowCardsPrompt, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Gabite extends PokemonCard {
 
@@ -69,7 +61,7 @@ export class Gabite extends PokemonCard {
       player.marker.removeMarker(this.DRAGON_CALL_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

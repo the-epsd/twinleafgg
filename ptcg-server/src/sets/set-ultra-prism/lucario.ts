@@ -4,8 +4,9 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameMessage, PlayerType, GameError, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Lucario extends PokemonCard {
 
@@ -56,7 +57,7 @@ export class Lucario extends PokemonCard {
     }
 
     // Precognitive Aura
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {
@@ -93,7 +94,7 @@ export class Lucario extends PokemonCard {
     }
 
     // Missile Jab
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.ignoreResistance = true;
     }
 

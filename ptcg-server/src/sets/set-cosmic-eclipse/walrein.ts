@@ -7,7 +7,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { GameError, GameMessage, StoreLike, State, StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, REMOVE_MARKER_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
@@ -48,7 +48,7 @@ export class Walrein extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Block Cold Snap if used last turn (self-restriction via 2-phase marker)
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.marker.hasMarker(this.COLD_SNAP_MARKER, this) || player.marker.hasMarker(this.CLEAR_COLD_SNAP_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);

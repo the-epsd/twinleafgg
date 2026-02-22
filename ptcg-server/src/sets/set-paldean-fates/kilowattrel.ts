@@ -3,9 +3,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils } from '../../game';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { GameMessage } from '../../game/game-message';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Kilowattrel extends PokemonCard {
 
@@ -52,7 +52,7 @@ export class Kilowattrel extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const hasBench = opponent.bench.some(b => b.cards.length > 0);

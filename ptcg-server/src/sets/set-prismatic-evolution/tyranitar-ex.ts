@@ -2,32 +2,33 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Tyranitarex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Pupitar';
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
   public cardType: CardType = D;
   public hp: number = 340;
   public weakness = [{ type: G }];
-  public retreat = [ C, C, C ];
+  public retreat = [C, C, C];
 
   public attacks = [
     {
       name: 'Grind',
-      cost: [ C ],
+      cost: [C],
       damage: 50,
       damageCalculation: 'x',
       text: 'This attack does 50 damage for each Energy attached to this Pokémon.'
     },
     {
       name: 'Tyranical Crush',
-      cost: [ D, C, C ],
+      cost: [D, C, C],
       damage: 150,
       text: 'Discard a random card from your opponent\'s hand.'
     },
-    
+
   ];
 
   public set: string = 'PRE';
@@ -39,7 +40,7 @@ export class Tyranitarex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Grind
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const energies = player.active.cards.filter(card => card.superType === SuperType.ENERGY);
@@ -47,14 +48,14 @@ export class Tyranitarex extends PokemonCard {
     }
 
     // Tyranical Crush
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-  
-      if (opponent.hand.cards.length === 0){
+
+      if (opponent.hand.cards.length === 0) {
         return state;
       }
-  
+
       state = store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
@@ -63,7 +64,7 @@ export class Tyranitarex extends PokemonCard {
         { allowCancel: false, min: 1, max: 1, isSecret: true }
       ), cards => {
         cards = cards || [];
-  
+
         opponent.hand.moveCardsTo(cards, opponent.discard);
       });
     }

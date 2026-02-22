@@ -1,9 +1,9 @@
 import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, SuperType, StateUtils, SpecialCondition } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ABILITY_USED, WAS_ATTACK_USED, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, WAS_ATTACK_USED, DRAW_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class LarrysKomala extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -39,7 +39,7 @@ export class LarrysKomala extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Lethargic Charge ability
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Check if this Pokemon is on Bench

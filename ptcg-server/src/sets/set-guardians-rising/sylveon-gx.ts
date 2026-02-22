@@ -5,8 +5,8 @@ import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt, Card } from '../../game';
 import { ShuffleDeckPrompt } from '../../game';
 import { StateUtils } from '../../game/store/state-utils';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // GRI Sylveon-GX 92 (https://limitlesstcg.com/cards/GRI/92)
 export class SylveonGX extends PokemonCard {
@@ -60,7 +60,7 @@ export class SylveonGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Magical Ribbon
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       let cards: Card[] = [];
       return store.prompt(state, new ChooseCardsPrompt(
@@ -79,7 +79,7 @@ export class SylveonGX extends PokemonCard {
     }
 
     // Plea-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

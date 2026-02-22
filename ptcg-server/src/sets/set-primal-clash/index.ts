@@ -12,7 +12,6 @@ import { Blaziken } from './blaziken';
 import { Bouffalant } from './bouffalant';
 import { Breloom } from './breloom';
 import { Bunnelby } from './bunnelby';
-import { Bunnelby2 } from './bunnelby-2';
 import { CameruptEx } from './camerupt-ex';
 import { Chinchou } from './chinchou';
 import { Clamperl } from './clamperl';
@@ -182,7 +181,6 @@ export const setPrimalClash: Card[] = [
   new Bouffalant(),
   new Breloom(),
   new Bunnelby(),
-  new Bunnelby2(),
   new CameruptEx(),
   new Chinchou(),
   new Clamperl(),

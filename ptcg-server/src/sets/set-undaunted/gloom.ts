@@ -8,6 +8,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { SelectPrompt } from '../../game/store/prompts/select-prompt';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useMiraclePowder(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -60,11 +61,11 @@ export class Gloom extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Miracle Powder',
-    cost: [ CardType.GRASS, CardType.COLORLESS ],
+    cost: [CardType.GRASS, CardType.COLORLESS],
     damage: 30,
     text: 'Flip a coin. If heads, choose 1 Special Condition. ' +
       'The Defending Pokemon is now affected by that Special Condition.'
@@ -82,7 +83,7 @@ export class Gloom extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useMiraclePowder(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

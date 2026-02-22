@@ -3,9 +3,10 @@ import { StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { SpecialCondition } from '../../game/store/card/card-types';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Articuno extends PokemonCard {
 
@@ -45,7 +46,7 @@ export class Articuno extends PokemonCard {
   public fullName: string = 'Articuno FO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, [
@@ -58,10 +59,10 @@ export class Articuno extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-    
+
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {
@@ -73,11 +74,11 @@ export class Articuno extends PokemonCard {
             const damageEffect = new PutDamageEffect(effect, 10);
             damageEffect.target = cardList;
             store.reduceEffect(state, damageEffect);
-    
+
           });
         }
         if (result === false) {
-    
+
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
             if (cardList === player.active) {
               return;

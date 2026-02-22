@@ -2,10 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, StateUtils, CoinFlipPrompt, PlayerType, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TogepiCleffaIgglybuffGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
@@ -55,7 +55,7 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
     }
 
     // Rolling Panic
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const flipCoin = (heads: number = 0): State => {
@@ -73,7 +73,7 @@ export class TogepiCleffaIgglybuffGX extends PokemonCard {
     }
 
     // Supreme Puff-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       BLOCK_IF_GX_ATTACK_USED(player);

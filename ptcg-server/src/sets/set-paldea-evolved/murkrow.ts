@@ -3,7 +3,6 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Murkrow extends PokemonCard {
 
@@ -73,7 +72,7 @@ export class Murkrow extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       let pokemonCount = 0;

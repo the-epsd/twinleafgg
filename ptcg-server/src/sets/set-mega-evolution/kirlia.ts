@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
 import { Card } from '../../game/store/card/card';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useCallSign(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
@@ -57,7 +58,7 @@ export class Kirlia extends PokemonCard {
   public fullName: string = 'Kirlia M1S';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useCallSign(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

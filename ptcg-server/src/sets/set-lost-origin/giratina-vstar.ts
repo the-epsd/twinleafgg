@@ -4,9 +4,10 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { GameError, PlayerType, PokemonCard, SlotType, StateUtils } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
 import { DiscardEnergyPrompt } from '../../game/store/prompts/discard-energy-prompt';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GiratinaVSTAR extends PokemonCard {
 
@@ -51,7 +52,7 @@ export class GiratinaVSTAR extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -76,8 +77,7 @@ export class GiratinaVSTAR extends PokemonCard {
       }
     }
 
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
 

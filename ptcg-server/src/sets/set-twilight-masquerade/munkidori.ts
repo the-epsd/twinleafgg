@@ -2,9 +2,10 @@ import { PokemonCard, Stage, CardType, PowerType, DamageMap, GameMessage, Player
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PlaceDamageCountersEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Munkidori extends PokemonCard {
 
@@ -51,7 +52,7 @@ export class Munkidori extends PokemonCard {
   public readonly ADRENA_BRAIN_MARKER = 'ADRENA_BRAIN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
       store.reduceEffect(state, specialConditionEffect);
     }
@@ -65,7 +66,7 @@ export class Munkidori extends PokemonCard {
       effect.player.marker.removeMarker(this.ADRENA_BRAIN_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

@@ -4,7 +4,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Rellor extends PokemonCard {
 
@@ -16,11 +17,11 @@ export class Rellor extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Slight Intrusion',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 30,
     text: 'This Pokémon also does 10 damage to itself.'
   }];
@@ -39,15 +40,15 @@ export class Rellor extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
-      
+
       const dealDamage = new DealDamageEffect(effect, 10);
       dealDamage.target = player.active;
       return store.reduceEffect(state, dealDamage);
     }
     return state;
   }
-      
+
 }

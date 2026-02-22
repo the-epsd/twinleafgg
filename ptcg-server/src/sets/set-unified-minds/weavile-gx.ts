@@ -3,9 +3,10 @@ import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/stor
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Card, CardTarget, ChooseCardsPrompt, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCardList, PowerType, ShuffleDeckPrompt, SlotType, StateUtils } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* useShadowConnection(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -95,23 +96,23 @@ export class WeavileGX extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Shadow Connection
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const generator = useShadowConnection(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
 
     // Nocturnal Maneuvers-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      if (player.usedGX){
+      if (player.usedGX) {
         throw new GameError(GameMessage.LABEL_GX_USED);
       }
       player.usedGX = true;
 
       let missingBenched = 0;
-      player.bench.forEach(benchedSpot =>{
-        if (benchedSpot.cards.length === 0){
+      player.bench.forEach(benchedSpot => {
+        if (benchedSpot.cards.length === 0) {
           missingBenched++;
         }
       });
@@ -127,7 +128,7 @@ export class WeavileGX extends PokemonCard {
         { min: 0, max: missingBenched, allowCancel: false }
       ), selected => {
         cards = selected || [];
-        
+
         cards.forEach((card, index) => {
           player.deck.moveCardTo(card, slots[index]);
           slots[index].pokemonPlayedTurn = state.turn;

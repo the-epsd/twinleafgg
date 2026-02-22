@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, GameError, GameMessage, PlayerType, StateUtils } from '../../game';
-import { AttackEffect, EffectOfAbilityEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { EffectOfAbilityEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Snorlax extends PokemonCard {
@@ -76,7 +76,7 @@ export class Snorlax extends PokemonCard {
     }
 
     // Collapse
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.player.active.addSpecialCondition(SpecialCondition.ASLEEP);
       return state;
     }

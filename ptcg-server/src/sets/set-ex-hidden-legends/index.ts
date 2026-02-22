@@ -22,6 +22,7 @@ import { Oddish } from './oddish';
 import { Regirockex } from './regirock-ex';
 import { Rhyhorn } from './rhyhorn';
 import { Rhydon } from './rhydon';
+import { Voltorb } from './voltorb';
 import { Vulpix } from './vulpix';
 
 // Other Prints
@@ -54,6 +55,7 @@ export const setEXHiddenLegends: Card[] = [
   new Regirockex(),
   new Rhyhorn(),
   new Rhydon(),
+  new Voltorb(),
   new Vulpix(),
 
   // Other Prints

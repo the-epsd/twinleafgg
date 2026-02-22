@@ -1,6 +1,7 @@
 import { Attack, CardType, PlayerType, PokemonCard, PokemonCardList, Stage, State, StoreLike, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class WashRotom extends PokemonCard {
 
@@ -31,7 +32,7 @@ export class WashRotom extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList) => {
         const healEffect = new HealEffect(player, cardList, 10);
@@ -40,7 +41,7 @@ export class WashRotom extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       let toolCount = 0;
 

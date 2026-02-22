@@ -1,16 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
-  PlayerType, SlotType,
-  ChooseCardsPrompt,
-  ChoosePokemonPrompt
-} from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, SlotType, ChooseCardsPrompt, ChoosePokemonPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class DecidueyeGX extends PokemonCard {
 
@@ -71,7 +66,7 @@ export class DecidueyeGX extends PokemonCard {
     }
 
     // Feather Arrow
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -111,7 +106,7 @@ export class DecidueyeGX extends PokemonCard {
     }
 
     // Hollow Hunt-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       BLOCK_IF_DISCARD_EMPTY(player);
@@ -131,9 +126,9 @@ export class DecidueyeGX extends PokemonCard {
           {},
           { min, max, allowCancel: false }
         )], selected => {
-        const cards = selected || [];
-        player.discard.moveCardsTo(cards, player.hand);
-      });
+          const cards = selected || [];
+          player.discard.moveCardsTo(cards, player.hand);
+        });
 
     }
 

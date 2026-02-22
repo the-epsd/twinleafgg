@@ -1,6 +1,6 @@
 import { Component, OnChanges, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, TrainerCard, PokemonCardList, EnergyCard, CardTag, PokemonCard, Player } from 'ptcg-server';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 

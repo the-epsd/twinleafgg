@@ -3,7 +3,7 @@ import { Stage, CardType, SuperType, TrainerType } from '../../game/store/card/c
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
@@ -12,7 +12,7 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { CardList } from '../../game/store/state/card-list';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game';
-
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Altaria extends PokemonCard {
 
@@ -59,7 +59,7 @@ export class Altaria extends PokemonCard {
       player.marker.removeMarker(this.FOREWARN_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {

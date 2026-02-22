@@ -2,16 +2,17 @@ import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, Slo
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Slugma extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = CardType.FIRE;
   public hp: number = 70;
   public weakness = [{ type: CardType.WATER }];
-  
+
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
@@ -35,7 +36,7 @@ export class Slugma extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       // this.damageDealt = false;
 
@@ -44,7 +45,7 @@ export class Slugma extends PokemonCard {
           && c.energyType === EnergyType.BASIC
           && c.provides.includes(CardType.FIRE);
       });
-      
+
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
@@ -75,6 +76,5 @@ export class Slugma extends PokemonCard {
 
     return state;
   }
-
 
 }

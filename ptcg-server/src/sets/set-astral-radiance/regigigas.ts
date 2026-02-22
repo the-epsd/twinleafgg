@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, AttachEnergyPrompt, GameError, GameMessage, SlotType, StateUtils } from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Regigigas extends PokemonCard {
 
@@ -59,68 +59,58 @@ export class Regigigas extends PokemonCard {
       player.marker.removeMarker(this.ANCIENT_WISDOM_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       // Check if player has Regirock, Regice, Registeel, Regieleki, and Regidrago in play
       const player = effect.player;
-      let hasRegis = false;
+
+      if (player.marker.hasMarker(this.ANCIENT_WISDOM_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
       let regis = ['Regirock', 'Regice', 'Registeel', 'Regieleki', 'Regidrago'];
-
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
         if (regis.includes(card.name)) {
           regis = regis.filter(r => r !== card.name);
         }
       });
 
-      if (regis.length === 0) {
-        hasRegis = true;
-      }
-
-      if (!hasRegis) {
+      if (regis.length > 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      if (hasRegis) {
-
-
-        // Check if player has energy cards in discard pile
-        const hasEnergy = player.discard.cards.some(c => c.superType === SuperType.ENERGY);
-        if (!hasEnergy) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
-        }
-
-        if (player.marker.hasMarker(this.ANCIENT_WISDOM_MARKER, this)) {
-          throw new GameError(GameMessage.POWER_ALREADY_USED);
-        }
-
-        state = store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          player.discard,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { superType: SuperType.ENERGY },
-          { allowCancel: false, min: 0, max: 3, sameTarget: true }
-        ), transfers => {
-          transfers = transfers || [];
-          // cancelled by user
-          if (transfers.length === 0) {
-            return;
-          }
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.powers[0] });
-            player.marker.addMarker(this.ANCIENT_WISDOM_MARKER, this);
-
-            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-              if (cardList.getPokemonCard() === this) {
-                cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-              }
-            });
-
-          }
-        });
+      // Check if player has energy cards in discard pile
+      const hasEnergy = player.discard.cards.some(c => c.superType === SuperType.ENERGY);
+      if (!hasEnergy) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+
+      player.marker.addMarker(this.ANCIENT_WISDOM_MARKER, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+        }
+      });
+
+      state = store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        player.discard,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { superType: SuperType.ENERGY },
+        { allowCancel: false, min: 0, max: 3, sameTarget: true }
+      ), transfers => {
+        transfers = transfers || [];
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this, sourceEffect: this.powers[0] });
+        }
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

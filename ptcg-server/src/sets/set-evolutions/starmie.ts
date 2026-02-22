@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { DiscardToHandEffect } from '../../game/store/effects/play-card-effects';
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* useSpaceBeacon(next: Function, store: StoreLike, state: State,
   effect: PowerEffect, self: Card): IterableIterator<State> {
@@ -125,7 +125,7 @@ export class Starmie extends PokemonCard {
       player.marker.removeMarker(this.SPACE_BEACON_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.marker.hasMarker(this.SPACE_BEACON_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);

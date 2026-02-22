@@ -2,8 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Wailmer extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -28,7 +29,7 @@ export class Wailmer extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Check attached energy
@@ -38,7 +39,6 @@ export class Wailmer extends PokemonCard {
       const totalWaterEnergy = checkEnergy.energyMap.reduce((sum, energy) => {
         return sum + energy.provides.filter(type => type === CardType.WATER || type === CardType.ANY).length;
       }, 0);
-
 
       effect.damage += totalWaterEnergy * 20;
     }

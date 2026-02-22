@@ -1,13 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, CardList, EnergyCard, Card } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { SelectPrompt } from '../../game/store/prompts/select-prompt';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class RayquazaEx extends PokemonCard {
 
@@ -42,7 +42,7 @@ export class RayquazaEx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const temp = new CardList();
       player.deck.moveTo(temp, 3);
@@ -52,7 +52,7 @@ export class RayquazaEx extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);

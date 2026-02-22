@@ -5,7 +5,8 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils, CardTarget, PlayerType, SlotType, ChoosePokemonPrompt, GameMessage } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Excadrillex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -37,7 +38,7 @@ export class Excadrillex extends PokemonCard {
   public fullName: string = 'Excadrill ex SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -69,7 +70,7 @@ export class Excadrillex extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       effect.ignoreResistance = true;
       return state;
     }

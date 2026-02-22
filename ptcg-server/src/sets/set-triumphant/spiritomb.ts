@@ -4,9 +4,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { DRAW_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, IS_POKEPOWER_BLOCKED, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Spiritomb extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -41,14 +40,7 @@ export class Spiritomb extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.POKEPOWER,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
         return state;
       }
 

@@ -5,6 +5,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { DEVOLVE_POKEMON, IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
@@ -103,7 +104,6 @@ export class TechnicalMachineDevolution extends TrainerCard {
         }
       }
 
-
       opponent.bench.forEach(benchSpot => {
         if (benchSpot.getPokemonCard()) {
           const benchPokemon = benchSpot.getPokemons();
@@ -112,7 +112,6 @@ export class TechnicalMachineDevolution extends TrainerCard {
           }
         }
       });
-
 
     }
 

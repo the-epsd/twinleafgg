@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
-import { AttackEffect, Effect } from '../../game/store/effects/game-effects';
+import { Effect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
 import { State, StoreLike } from '../../game';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ConkeldurrV extends PokemonCard {
 
@@ -49,14 +50,14 @@ export class ConkeldurrV extends PokemonCard {
   public fullName: string = 'Conkeldurr V PGO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const activeCard = effect.player.active.getPokemonCard();
       if (activeCard !== undefined && activeCard.damageTakenLastTurn !== undefined) {
         effect.damage += activeCard.damageTakenLastTurn;
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const coinFlipEffect = new CoinFlipEffect(effect.player, (result: boolean) => {
         if (result) {
           effect.damage += 90;

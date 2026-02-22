@@ -87,7 +87,7 @@ export class Flareonex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Burning Charge
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useBurningCharge(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
@@ -109,7 +109,7 @@ export class Flareonex extends PokemonCard {
 
       effect.preventDefault = true;
     }
-    
+
     return state;
   }
 }

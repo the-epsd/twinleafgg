@@ -866,7 +866,6 @@ function main() {
       const cardAttackNames = (card.attacks || []).map((a: any) => a.name);
       const cardAbilityNames = (card.abilities || []).map((a: any) => a.name);
       const source = crossEntries.find(e => {
-        if (!e.hasReduceEffect) return false;
         // Compare attack names
         if (e.attackNames.length !== cardAttackNames.length) return false;
         for (let j = 0; j < cardAttackNames.length; j++) {

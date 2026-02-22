@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Yamask extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -11,13 +12,15 @@ export class Yamask extends PokemonCard {
   public hp: number = 70;
   public weakness = [{ type: CardType.DARK }];
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
-    { name: 'Ominous Eyes', 
-      cost: [ CardType.PSYCHIC, CardType.PSYCHIC ], 
-      damage: 0, 
-      text: 'Put 3 damage counters on 1 of your opponent\'s Pokémon.' }
+    {
+      name: 'Ominous Eyes',
+      cost: [CardType.PSYCHIC, CardType.PSYCHIC],
+      damage: 0,
+      text: 'Put 3 damage counters on 1 of your opponent\'s Pokémon.'
+    }
   ];
 
   public set: string = 'PAR';
@@ -28,16 +31,15 @@ export class Yamask extends PokemonCard {
   public name: string = 'Yamask';
   public fullName: string = 'Yamask PAR';
 
-  
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-    
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: false }
       ), targets => {
         if (!targets || targets.length === 0) {
@@ -51,5 +53,5 @@ export class Yamask extends PokemonCard {
 
     return state;
   }
-  
+
 }

@@ -7,6 +7,7 @@ import { GroudonEx } from '../set-primal-clash/groudon-ex';
 import { HoopaEX } from '../set-ancient-origins/hoopa-ex';
 import { Meloetta } from '../set-x-and-y-promos/meloetta';
 import { MewEx } from '../set-legendary-treasures/mew-ex';
+import { PalaceBook } from '../set-sun-and-moon-promos/palace-book';
 import { Froakie as FroakieBKP38 } from '../set-breakpoint/froakie';
 import { Volcanion } from '../set-steam-siege/volcanion';
 import { XerneasEX as XerneasEXXY97 } from '../set-x-and-y/xerneas-ex';
@@ -16,6 +17,12 @@ import { MagearnaEX } from '../set-steam-siege/magearna-ex';
 import { Jirachi as JirachiXYP67 } from '../set-x-and-y-promos/jirachi';
 import { Karen as KarenXYP177 } from '../set-x-and-y-promos/karen';
 import { Bronzong } from '../set-phantom-forces/bronzong';
+
+export class PalaceBookXYP extends PalaceBook {
+  public setNumber = 'NAN83';
+  public fullName: string = 'Palace Book XYP';
+  public set = 'XYP';
+}
 
 export class BronzongXYP extends Bronzong {
   public fullName = 'Bronzong XYP 21';

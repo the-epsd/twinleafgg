@@ -1,13 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, GameError, GameMessage, StateUtils,
-  PokemonCardList, CardTarget, PlayerType, ChoosePokemonPrompt, SlotType
-} from '../../game';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils, PokemonCardList, CardTarget, PlayerType, ChoosePokemonPrompt, SlotType } from '../../game';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* usePower(next: Function, store: StoreLike, state: State, self: Shedinja, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -123,7 +120,7 @@ export class Shedinja extends PokemonCard {
   public fullName: string = 'Shedinja LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const generator = usePower(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
@@ -132,7 +129,7 @@ export class Shedinja extends PokemonCard {
       effect.prizeCount -= 1;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

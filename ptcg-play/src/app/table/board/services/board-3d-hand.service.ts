@@ -187,8 +187,10 @@ export class Board3dHandService {
 
   /**
    * Remove a specific card by index (after it's played)
+   * @param index Hand index of the card to remove
+   * @param scene Optional scene for fallback removal when card was moved (e.g. during drag)
    */
-  removeCard(index: number): void {
+  removeCard(index: number, scene?: Scene): void {
     const card = this.handCards.get(index);
     if (card) {
       const cardGroup = card.getGroup();
@@ -201,6 +203,9 @@ export class Board3dHandService {
       // Check if card is actually in handGroup before removing
       if (cardGroup.parent === this.handGroup) {
         this.handGroup.remove(cardGroup);
+      } else if (scene && cardGroup.parent) {
+        // Card may have been moved (e.g. during drag) - remove from scene
+        cardGroup.parent.remove(cardGroup);
       }
 
       card.dispose();

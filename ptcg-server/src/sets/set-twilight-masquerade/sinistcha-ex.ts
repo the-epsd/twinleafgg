@@ -3,29 +3,30 @@ import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/stor
 import { StoreLike, State, PlayerType, GameMessage, SlotType, ChoosePokemonPrompt, EnergyCard, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { HealTargetEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Sinistchaex extends PokemonCard {
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Poltchageist';
   public cardType: CardType = CardType.GRASS;
   public hp: number = 240;
   public weakness = [{ type: CardType.FIRE }];
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
-    { 
-      name: 'Re-Brew', 
-      cost: [ CardType.COLORLESS ], 
-      damage: 0, 
-      text: 'Put 2 damage counters on 1 of your opponent\'s Pokémon for each Basic [G] Energy card in your discard pile. Then, shuffle those Energy cards into your deck.' 
+    {
+      name: 'Re-Brew',
+      cost: [CardType.COLORLESS],
+      damage: 0,
+      text: 'Put 2 damage counters on 1 of your opponent\'s Pokémon for each Basic [G] Energy card in your discard pile. Then, shuffle those Energy cards into your deck.'
     },
-    { 
-      name: 'Matcha Splash', 
-      cost: [ CardType.GRASS, CardType.COLORLESS ], 
+    {
+      name: 'Matcha Splash',
+      cost: [CardType.GRASS, CardType.COLORLESS],
       damage: 120,
-      text: 'Heal 30 damage from each of your Pokémon.' 
+      text: 'Heal 30 damage from each of your Pokémon.'
     },
   ];
 
@@ -38,11 +39,11 @@ export class Sinistchaex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Re-Brew
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       // counting the energies
       const grassInDiscard = player.discard.cards.filter(c => c.superType === SuperType.ENERGY && c.name === 'Grass Energy').length;
-      if (grassInDiscard === 0){
+      if (grassInDiscard === 0) {
         return state;
       }
 
@@ -50,7 +51,7 @@ export class Sinistchaex extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: false }
       ), targets => {
         const damageEffect = new PutCountersEffect(effect, 20 * grassInDiscard);
@@ -70,7 +71,7 @@ export class Sinistchaex extends PokemonCard {
     }
 
     // Matcha Splash
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
@@ -82,5 +83,5 @@ export class Sinistchaex extends PokemonCard {
 
     return state;
   }
-  
+
 }

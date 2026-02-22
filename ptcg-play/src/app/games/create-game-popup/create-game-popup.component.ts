@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_LEGACY_DIALOG_DATA as MAT_DIALOG_DATA, MatLegacyDialogRef as MatDialogRef } from '@angular/material/legacy-dialog';
 import { Format, GameSettings, Archetype } from 'ptcg-server';
 import { DeckListEntry } from 'src/app/api/interfaces/deck.interface';
 import { CardsBaseService } from 'src/app/shared/cards/cards-base.service';

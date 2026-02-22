@@ -11,6 +11,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { AfterDamageEffect, HealTargetEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useKnockOff(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -40,7 +41,7 @@ function* useKnockOff(next: Function, store: StoreLike, state: State,
     player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     opponent.hand,
-    { },
+    {},
     { min: 1, max: 1, allowCancel: false, isSecret: true }
   ), selected => {
     cards = selected || [];
@@ -64,17 +65,17 @@ export class Croagunk extends PokemonCard {
     value: 10
   }];
 
-  public retreat = [ CardType.COLORLESS,  CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Knock Off',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 0,
     text: 'Flip a coin. If heads, choose 1 card from your opponent\'s hand ' +
       'without looking and discard it.'
   }, {
     name: 'Nimble',
-    cost: [ CardType.PSYCHIC, CardType.PSYCHIC ],
+    cost: [CardType.PSYCHIC, CardType.PSYCHIC],
     damage: 30,
     text: 'If you have Turtwig in play, remove from Croagunk the number of ' +
       'damage counters equal to the damage you did to the Defending Pokemon.'
@@ -88,7 +89,7 @@ export class Croagunk extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useKnockOff(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

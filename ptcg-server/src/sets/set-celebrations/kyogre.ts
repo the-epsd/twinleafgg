@@ -4,7 +4,8 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CardList } from '../../game/store/state/card-list';
 import { ChoosePokemonPrompt, EnergyCard, GameMessage, PlayerType, PokemonCard, SlotType, StateUtils } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Kyogre extends PokemonCard {
 
@@ -47,7 +48,7 @@ export class Kyogre extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const hasBench = opponent.bench.some(b => b.cards.length > 0);

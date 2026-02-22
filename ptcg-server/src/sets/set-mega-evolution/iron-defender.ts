@@ -12,7 +12,7 @@ import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 export class IronDefender extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.SUPPORTER;
+  public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'MEG';
   public setNumber = '118';
   public cardImage = 'assets/cardback.png';

@@ -1,12 +1,13 @@
 import { CardType, PokemonCard, PowerType, Stage, AttachEnergyPrompt, EnergyCard, EnergyType, GameError, PlayerType, PokemonCardList, SlotType, StateUtils, SuperType } from '../../game';
 import { StoreLike, State, GameMessage, ChooseEnergyPrompt } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Card } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Blaziken extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -48,7 +49,7 @@ export class Blaziken extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
@@ -93,7 +94,7 @@ export class Blaziken extends PokemonCard {
       effect.player.marker.removeMarker(this.FIRESTARTER_MARKER, this);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);

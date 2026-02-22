@@ -21,9 +21,9 @@ export class MemoryOptimizationService {
     this.memoryMonitor = MemoryMonitorService.getInstance();
     this.config = {
       enablePeriodicCleanup: true,
-      cleanupIntervalMs: 60000, // 1 minute
-      aggressiveCleanupThreshold: 400, // MB
-      maxMemoryUsage: 800, // MB
+      cleanupIntervalMs: 300000, // 5 minutes
+      aggressiveCleanupThreshold: 650, // MB
+      maxMemoryUsage: 1200, // MB
       enableStateCompression: true,
       maxStateSize: 1024 * 1024 // 1MB
     };
@@ -45,7 +45,7 @@ export class MemoryOptimizationService {
     }
 
     this.isRunning = true;
-    this.memoryMonitor.startMonitoring(30000); // Monitor every 30 seconds
+    this.memoryMonitor.startMonitoring(60000); // Monitor every 60 seconds
 
     if (this.config.enablePeriodicCleanup) {
       this.optimizationInterval = setInterval(() => {
@@ -140,11 +140,8 @@ export class MemoryOptimizationService {
       message: 'Performing critical memory optimization'
     });
 
-    // Force garbage collection multiple times
-    for (let i = 0; i < 3; i++) {
-      this.memoryMonitor.forceGarbageCollection();
-      await this.sleep(1000); // Wait 1 second between GC calls
-    }
+    // Force garbage collection (single pass; multiple GCs cause CPU spikes)
+    this.memoryMonitor.forceGarbageCollection();
 
     // Clear caches and temporary data
     await this.clearCaches();
@@ -347,12 +344,5 @@ export class MemoryOptimizationService {
       trend: this.memoryMonitor.getMemoryTrend(),
       health: this.memoryMonitor.getHealthStatus()
     };
-  }
-
-  /**
-   * Utility method for sleeping
-   */
-  private sleep(ms: number): Promise<void> {
-    return new Promise(resolve => setTimeout(resolve, ms));
   }
 }

@@ -8,7 +8,7 @@ import { PlayerType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
+import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
 
 export class GolisopodGx extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];
@@ -54,9 +54,8 @@ export class GolisopodGx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: First Impression
-    // Ref: set-unified-minds/golisopod.ts (First Impression)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      if (this.movedToActiveThisTurn) {
+      if (MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)) {
         effect.damage += 90;
       }
     }

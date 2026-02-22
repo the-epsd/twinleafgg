@@ -1,13 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import {
-  StoreLike, State, StateUtils, GameMessage,
-  ChooseAttackPrompt, Attack, GameLog, PowerType, Card, ChooseCardsPrompt, GameError,
-  ShowCardsPrompt
-} from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, ChooseAttackPrompt, Attack, GameLog, PowerType, Card, ChooseCardsPrompt, GameError, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* useApexDragon(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -119,12 +116,12 @@ export class RegidragoVSTAR extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useApexDragon(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

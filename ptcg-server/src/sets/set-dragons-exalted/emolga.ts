@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, PokemonCardList, Card,
-  ShuffleDeckPrompt, GameMessage } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, PokemonCardList, Card, ShuffleDeckPrompt, GameMessage } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useCallForFamily(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -49,19 +49,19 @@ export class Emolga extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public attacks = [
     {
       name: 'Call for Family',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Search your deck for 2 Basic Pokemon and put them onto your ' +
         'Bench. Shuffle your deck afterward.'
     },
     {
       name: 'Static Shock',
-      cost: [ CardType.LIGHTNING ],
+      cost: [CardType.LIGHTNING],
       damage: 20,
       text: ''
     }
@@ -78,7 +78,7 @@ export class Emolga extends PokemonCard {
   public setNumber: string = '45';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useCallForFamily(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

@@ -1,17 +1,12 @@
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
-import {
-  StoreLike, State, PlayerType,
-  StateUtils,
-  GameError,
-  GameMessage
-} from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, PlayerType, StateUtils, GameError, GameMessage } from '../../game';
+
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttachEnergyEffect, PlayStadiumEffect } from '../../game/store/effects/play-card-effects';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Noivernex extends PokemonCard {
 
@@ -59,7 +54,7 @@ export class Noivernex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       player.active.marker.addMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER, this);
@@ -79,7 +74,7 @@ export class Noivernex extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       opponent.marker.addMarker(this.DOMINATING_ECHO_MARKER, this);

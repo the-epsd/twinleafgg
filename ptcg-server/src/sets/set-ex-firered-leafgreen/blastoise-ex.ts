@@ -1,16 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType,
-  ChooseCardsPrompt
-} from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, EnergyCard, PlayerType, SlotType, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
-import { BLOCK_IF_HAS_SPECIAL_CONDITION, FLIP_UNTIL_TAILS_AND_COUNT_HEADS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_HAS_SPECIAL_CONDITION, FLIP_UNTIL_TAILS_AND_COUNT_HEADS, WAS_POWER_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Blastoiseex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -78,7 +73,7 @@ export class Blastoiseex extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const active = opponent.active;

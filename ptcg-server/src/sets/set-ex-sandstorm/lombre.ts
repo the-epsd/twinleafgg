@@ -1,8 +1,8 @@
 import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, CoinFlipPrompt, GameMessage, PlayerType, ConfirmPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
+import { HealEffect } from '../../game/store/effects/game-effects';
 import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
-import { IS_POKEBODY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Lombre extends PokemonCard {
@@ -60,7 +60,7 @@ export class Lombre extends PokemonCard {
 
 
     // Handle Double Scratch attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       let heads = 0;
 

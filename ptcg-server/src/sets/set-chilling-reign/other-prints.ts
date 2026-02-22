@@ -27,6 +27,27 @@ import { WaterEnergy } from '../set-base-set-energy/water-energy';
 import { PsychicEnergy } from '../set-base-set-energy/psychic-energy';
 import { FightingEnergy } from '../set-base-set-energy/fighting-energy';
 import { Bronzong } from '../set-battle-styles/bronzong';
+import { Koffing } from '../set-ex-deoxys/koffing';
+import { Venipede } from '../set-black-and-white/venipede';
+import { CelebiV } from './celebi-v';
+import { VolcanionV } from './volcanion-v';
+import { ZeraoraV } from './zeraora-v';
+import { GalarianRapidashV } from './galarian-rapidash-v';
+import { SandacondaV } from './sandaconda-v';
+import { GalarianSlowkingV } from './galarian-slowking-v';
+import { LiepardV } from './liepard-v';
+import { MetagrossV } from './metagross-v';
+import { TornadusV } from './tornadus-v';
+import { Doctor } from './doctor';
+import { Honey } from './honey';
+import { Siebold } from './siebold';
+import { CelebiVmax } from './celebi-vmax';
+import { SandacondaVmax } from './sandaconda-vmax';
+import { GalarianSlowkingVmax } from './galarian-slowking-vmax';
+import { MetagrossVmax } from './metagross-vmax';
+import { TornadusVmax } from './tornadus-vmax';
+import { RuggedHelmet } from './rugged-helmet';
+import { WelcomingLantern } from './welcoming-lantern';
 
 export class BronzongCRE extends Bronzong {
   public fullName = 'Bronzong CRE 223';
@@ -313,4 +334,160 @@ export class FightingEnergyCRE extends FightingEnergy {
   public setNumber = '233';
   public fullName: string = 'Fighting Energy CRE';
   public set = 'CRE';
+}
+
+export class KoffingCRE extends Koffing {
+  public set: string = 'CRE';
+  public setNumber: string = '94';
+  public fullName: string = 'Koffing CRE';
+}
+
+export class VenipedeCRE extends Venipede {
+  public set: string = 'CRE';
+  public setNumber: string = '105';
+  public fullName: string = 'Venipede CRE';
+}
+
+export class CelebiV2 extends CelebiV {
+  public set: string = 'CRE';
+  public setNumber: string = '160';
+  public fullName: string = 'Celebi V CRE 160';
+}
+
+export class VolcanionV2 extends VolcanionV {
+  public set: string = 'CRE';
+  public setNumber: string = '162';
+  public fullName: string = 'Volcanion V CRE 162';
+}
+
+export class ZeraoraV2 extends ZeraoraV {
+  public set: string = 'CRE';
+  public setNumber: string = '165';
+  public fullName: string = 'Zeraora V CRE 165';
+}
+
+export class ZeraoraV3 extends ZeraoraV {
+  public set: string = 'CRE';
+  public setNumber: string = '166';
+  public fullName: string = 'Zeraora V CRE 166';
+}
+
+export class GalarianRapidashV2 extends GalarianRapidashV {
+  public set: string = 'CRE';
+  public setNumber: string = '168';
+  public fullName: string = 'Galarian Rapidash V CRE 168';
+}
+
+export class SandacondaV2 extends SandacondaV {
+  public set: string = 'CRE';
+  public setNumber: string = '175';
+  public fullName: string = 'Sandaconda V CRE 175';
+}
+
+export class GalarianSlowkingV2 extends GalarianSlowkingV {
+  public set: string = 'CRE';
+  public setNumber: string = '178';
+  public fullName: string = 'Galarian Slowking V CRE 178';
+}
+
+export class GalarianSlowkingV3 extends GalarianSlowkingV {
+  public set: string = 'CRE';
+  public setNumber: string = '179';
+  public fullName: string = 'Galarian Slowking V CRE 179';
+}
+
+export class LiepardV2 extends LiepardV {
+  public set: string = 'CRE';
+  public setNumber: string = '180';
+  public fullName: string = 'Liepard V CRE 180';
+}
+
+export class MetagrossV2 extends MetagrossV {
+  public set: string = 'CRE';
+  public setNumber: string = '181';
+  public fullName: string = 'Metagross V CRE 181';
+}
+
+export class TornadusV2 extends TornadusV {
+  public set: string = 'CRE';
+  public setNumber: string = '184';
+  public fullName: string = 'Tornadus V CRE 184';
+}
+
+export class TornadusV3 extends TornadusV {
+  public set: string = 'CRE';
+  public setNumber: string = '185';
+  public fullName: string = 'Tornadus V CRE 185';
+}
+
+export class Doctor2 extends Doctor {
+  public set: string = 'CRE';
+  public setNumber: string = '190';
+  public fullName: string = 'Doctor CRE 190';
+}
+
+export class Honey2 extends Honey {
+  public set: string = 'CRE';
+  public setNumber: string = '192';
+  public fullName: string = 'Honey CRE 192';
+}
+
+export class Siebold2 extends Siebold {
+  public set: string = 'CRE';
+  public setNumber: string = '198';
+  public fullName: string = 'Siebold CRE 198';
+}
+
+export class CelebiVmax2 extends CelebiVmax {
+  public set: string = 'CRE';
+  public setNumber: string = '199';
+  public fullName: string = 'Celebi VMAX CRE 199';
+}
+
+export class SandacondaVmax2 extends SandacondaVmax {
+  public set: string = 'CRE';
+  public setNumber: string = '206';
+  public fullName: string = 'Sandaconda VMAX CRE 206';
+}
+
+export class GalarianSlowkingVmax2 extends GalarianSlowkingVmax {
+  public set: string = 'CRE';
+  public setNumber: string = '207';
+  public fullName: string = 'Galarian Slowking VMAX CRE 207';
+}
+
+export class MetagrossVmax2 extends MetagrossVmax {
+  public set: string = 'CRE';
+  public setNumber: string = '208';
+  public fullName: string = 'Metagross VMAX CRE 208';
+}
+
+export class TornadusVmax2 extends TornadusVmax {
+  public set: string = 'CRE';
+  public setNumber: string = '209';
+  public fullName: string = 'Tornadus VMAX CRE 209';
+}
+
+export class Doctor3 extends Doctor {
+  public set: string = 'CRE';
+  public setNumber: string = '214';
+  public fullName: string = 'Doctor CRE 214';
+}
+
+export class Siebold3 extends Siebold {
+  public set: string = 'CRE';
+  public setNumber: string = '221';
+  public fullName: string = 'Siebold CRE 221';
+}
+
+export class RuggedHelmet2 extends RuggedHelmet {
+  public set: string = 'CRE';
+  public setNumber: string = '228';
+  public fullName: string = 'Rugged Helmet CRE 228';
+}
+
+export class WelcomingLantern2 extends WelcomingLantern {
+  public set: string = 'CRE';
+  public setNumber: string = '230';
+  public fullName: string = 'Welcoming Lantern CRE 230';
 }

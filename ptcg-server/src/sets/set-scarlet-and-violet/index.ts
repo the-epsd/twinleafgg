@@ -42,6 +42,7 @@ import { Magnezoneex } from './magnezone-ex';
 import { Mankey } from './mankey';
 import { Mareep } from './mareep';
 import { Mesagoza } from './mesagoza';
+import { Meowscarada } from './meowscarada';
 import { Miraidonex } from './miraidon-ex';
 import { Miriam } from './miriam';
 import { Nemona } from './nemona';
@@ -134,6 +135,7 @@ export const setScarletAndViolet: Card[] = [
   new Mankey(),
   new Mareep(),
   new Mesagoza(),
+  new Meowscarada(),
   new Miraidonex(),
   new Miriam(),
   new Nemona(),

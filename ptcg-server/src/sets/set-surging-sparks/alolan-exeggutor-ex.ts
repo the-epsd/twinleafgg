@@ -1,8 +1,9 @@
 import { PokemonCard, CardTag, Stage, CardType, StoreLike, State, StateUtils, CoinFlipPrompt, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType, CardTarget, AttachEnergyPrompt, EnergyCard, EnergyType, SuperType } from '../../game';
 import { KnockOutOpponentEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class AlolanExeggutorex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
@@ -36,7 +37,7 @@ export class AlolanExeggutorex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasEnergyInHand = player.hand.cards.some(c => {
@@ -66,7 +67,7 @@ export class AlolanExeggutorex extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const blocked: CardTarget[] = [];
@@ -78,7 +79,6 @@ export class AlolanExeggutorex extends PokemonCard {
           blocked.push();
         }
       });
-
 
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)

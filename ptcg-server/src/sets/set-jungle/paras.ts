@@ -2,8 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Paras extends PokemonCard {
 
@@ -15,19 +16,19 @@ export class Paras extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
-  public attacks = 
+  public attacks =
     [
       {
         name: 'Scratch',
-        cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+        cost: [CardType.COLORLESS, CardType.COLORLESS],
         damage: 20,
         text: ''
       },
       {
         name: 'Spore',
-        cost: [ CardType.GRASS, CardType.GRASS ],
+        cost: [CardType.GRASS, CardType.GRASS],
         damage: 0,
         text: 'The Defending Pokémon is now Asleep.'
       },
@@ -45,7 +46,7 @@ export class Paras extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       store.reduceEffect(state, specialConditionEffect);
     }

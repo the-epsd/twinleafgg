@@ -3,8 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../game/store/prefabs/prefabs';
 
 export class Swanna extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -50,19 +49,9 @@ export class Swanna extends PokemonCard {
 
     // Incessant Peck - flip until tails, +20 for each heads
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-
-      const flipUntilTails = (): void => {
-        const coinFlipEffect = new CoinFlipEffect(player, (result: boolean) => {
-          if (result) {
-            effect.damage += 20;
-            flipUntilTails();
-          }
-        });
-        store.reduceEffect(state, coinFlipEffect);
-      };
-
-      flipUntilTails();
+      return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, effect.player, headsCount => {
+        effect.damage += 20 * headsCount;
+      });
     }
 
     return state;

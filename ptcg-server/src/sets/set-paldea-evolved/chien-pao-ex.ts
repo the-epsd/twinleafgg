@@ -1,12 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, ChooseCardsPrompt, ShuffleDeckPrompt, PowerType, PlayerType, SlotType, GameError, ShowCardsPrompt, StateUtils } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameLog, GameMessage } from '../../game/game-message';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { DISCARD_UP_TO_X_TYPE_ENERGY_FROM_YOUR_POKEMON } from '../../game/store/prefabs/costs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class ChienPaoex extends PokemonCard {
@@ -113,7 +114,7 @@ export class ChienPaoex extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.damage = 0;
 
       // Legacy implementation:

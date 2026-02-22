@@ -2,9 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType, SpecialCondition } from '../../game/store/card/card-types';
 import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class CharizardBraixenGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -42,7 +42,7 @@ export class CharizardBraixenGX extends PokemonCard {
     }
 
     // Crimson Flame Pillar-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       BLOCK_IF_GX_ATTACK_USED(player);

@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardType, PowerType, EnergyType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY } from '../../game/store/prefabs/prefabs';
+import { EvolveEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED, LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY } from '../../game/store/prefabs/prefabs';
 
 
 export class Gloom extends PokemonCard {
@@ -50,14 +50,7 @@ export class Gloom extends PokemonCard {
       const player = effect.player;
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 

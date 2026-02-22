@@ -1,15 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType
-} from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Eelektrik extends PokemonCard {
 
@@ -49,7 +46,7 @@ export class Eelektrik extends PokemonCard {
       player.marker.removeMarker(this.DYNAMOTOR_MAREKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasBench = player.bench.some(b => b.cards.length > 0);
@@ -98,6 +95,5 @@ export class Eelektrik extends PokemonCard {
 
     return state;
   }
-
 
 }

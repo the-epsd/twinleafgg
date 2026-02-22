@@ -4,8 +4,8 @@ import { StoreLike, State, GameMessage, PlayerType, SlotType, PokemonCardList, C
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+
+import { AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
 export class TapuFiniGX extends PokemonCard {
@@ -72,7 +72,7 @@ export class TapuFiniGX extends PokemonCard {
     }
 
     // Hydro Shot
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
@@ -104,7 +104,7 @@ export class TapuFiniGX extends PokemonCard {
     }
 
     // Tapu Storm-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

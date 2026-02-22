@@ -3,12 +3,12 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Piplup extends PokemonCard {
 
@@ -23,17 +23,17 @@ export class Piplup extends PokemonCard {
     value: 10
   }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Water Sport',
-    cost: [ CardType.WATER ],
+    cost: [CardType.WATER],
     damage: 10,
     text: 'If Piplup has less Energy attached to it than the Defending ' +
       'Pokemon, this attack does 10 damage plus 10 more damage.'
   }, {
     name: 'Wavelet',
-    cost: [ CardType.WATER, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.WATER, CardType.COLORLESS, CardType.COLORLESS],
     damage: 40,
     text: 'If you have Buizel in play, this attack does 10 damage to each ' +
       'of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and ' +
@@ -48,7 +48,7 @@ export class Piplup extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -71,7 +71,7 @@ export class Piplup extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

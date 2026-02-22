@@ -2,10 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameMessage, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ABILITY_USED, LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Metang extends PokemonCard {
 
@@ -62,7 +62,7 @@ export class Metang extends PokemonCard {
       effect.player.marker.removeMarker(this.METAL_MAKER_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
 
       const player = effect.player;
 

@@ -3,6 +3,7 @@ import { Stage, CardType, SuperType, TrainerType } from '../../game/store/card/c
 import { StoreLike, State, PokemonCardList, GameMessage, CardTarget, ChoosePokemonPrompt, GameError, PlayerType, SlotType, StateUtils, ChooseCardsPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 function* useCleaningUp(next: Function, store: StoreLike, state: State,
@@ -109,7 +110,7 @@ export class Minccino extends PokemonCard {
   public fullName: string = 'Minccino TEF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useCleaningUp(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

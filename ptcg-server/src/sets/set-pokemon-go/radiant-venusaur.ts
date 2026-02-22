@@ -1,8 +1,9 @@
 import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, SpecialCondition, PlayerType } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class RadiantVenusaur extends PokemonCard {
 
@@ -46,7 +47,7 @@ export class RadiantVenusaur extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED, SpecialCondition.CONFUSED, SpecialCondition.POISONED]);
       store.reduceEffect(state, specialCondition);

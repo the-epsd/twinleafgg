@@ -1,14 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
-  PlayerType, ChooseCardsPrompt
-} from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Empoleon extends PokemonCard {
 
@@ -60,7 +57,7 @@ export class Empoleon extends PokemonCard {
       player.marker.removeMarker(this.DIVING_DRAW_MAREKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.hand.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -87,7 +84,7 @@ export class Empoleon extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       let pokemonInPlay = 0;

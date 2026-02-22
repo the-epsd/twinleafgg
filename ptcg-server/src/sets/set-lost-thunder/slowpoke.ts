@@ -3,8 +3,9 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { SpecialCondition } from '../../game/store/card/card-types';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // LOT Slowpoke 54 (https://limitlesstcg.com/cards/LOT/54)
 export class Slowpoke extends PokemonCard {
@@ -33,10 +34,9 @@ export class Slowpoke extends PokemonCard {
 
   public fullName: string = 'Slowpoke LOT';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       return store.reduceEffect(state, specialCondition);
     }

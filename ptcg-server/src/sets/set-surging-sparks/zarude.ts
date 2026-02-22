@@ -4,7 +4,8 @@ import { StoreLike, State, GameMessage, ConfirmPrompt, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { HealTargetEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Zarude extends PokemonCard {
 
@@ -47,7 +48,7 @@ export class Zarude extends PokemonCard {
   public fullName: string = 'Zarude SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const healingTime = new HealTargetEffect(effect, 20);
@@ -55,7 +56,7 @@ export class Zarude extends PokemonCard {
       store.reduceEffect(state, healingTime);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       state = store.prompt(state, new ConfirmPrompt(
@@ -65,7 +66,6 @@ export class Zarude extends PokemonCard {
         if (wantToUse) {
           const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
           state = store.reduceEffect(state, checkProvidedEnergy);
-
 
           const cards: Card[] = [];
           checkProvidedEnergy.energyMap.forEach(em => {

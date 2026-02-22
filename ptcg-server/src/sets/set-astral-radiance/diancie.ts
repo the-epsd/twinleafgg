@@ -2,9 +2,9 @@ import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
-import { DRAW_CARDS, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Diancie extends PokemonCard {
 
@@ -58,7 +58,7 @@ export class Diancie extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       DRAW_CARDS(effect.player, 2);
     }
 

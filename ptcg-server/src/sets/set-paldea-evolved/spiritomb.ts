@@ -3,12 +3,13 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { PlayerType, PokemonCardList, StateUtils } from '../../game';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Spiritomb extends PokemonCard {
 
@@ -139,7 +140,7 @@ export class Spiritomb extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       player.active.clearEffects();
       player.active.moveTo(player.hand);

@@ -2,9 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
-import { Effect, AttackEffect } from '../../game/store/effects/game-effects';
+import { Effect } from '../../game/store/effects/game-effects';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { GameMessage } from '../../game/game-message';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Kricketot extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -28,7 +29,7 @@ export class Kricketot extends PokemonCard {
   public fullName: string = 'Kricketot ASR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       return store.prompt(state, new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), flipResult => {
         if (flipResult) {
           effect.damage += 20;

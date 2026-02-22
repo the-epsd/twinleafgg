@@ -7,11 +7,11 @@ import { checkState } from '../../game/store/effect-reducers/check-effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Electrode extends PokemonCard implements EnergyCard {
 
@@ -75,7 +75,7 @@ export class Electrode extends PokemonCard implements EnergyCard {
       }
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
@@ -87,7 +87,6 @@ export class Electrode extends PokemonCard implements EnergyCard {
 
       cardList.damage = 999;
       state = checkState(store, state);
-
 
       if (store.hasPrompts()) {
         state = store.waitPrompt(state, () => { });
@@ -155,7 +154,7 @@ export class Electrode extends PokemonCard implements EnergyCard {
       effect.energyMap.push({ card: this, provides: this.provides });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       return store.prompt(state, new CoinFlipPrompt(
         effect.player.id, GameMessage.FLIP_COIN
       ), (result) => {

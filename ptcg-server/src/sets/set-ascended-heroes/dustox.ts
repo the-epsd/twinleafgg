@@ -2,13 +2,13 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dustox extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -56,7 +56,7 @@ export class Dustox extends PokemonCard {
     }
 
     // Rustling Wind ability
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -95,7 +95,7 @@ export class Dustox extends PokemonCard {
     }
 
     // Twilight Poison attack - apply Asleep and Poisoned
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

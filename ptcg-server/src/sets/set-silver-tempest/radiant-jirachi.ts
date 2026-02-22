@@ -3,9 +3,11 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { ChooseCardsPrompt, CoinFlipPrompt, GameMessage, PlayerType, ShuffleDeckPrompt, StateUtils } from '../../game';
+import { ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
+import { IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 
 export class RadiantJirachi extends PokemonCard {
@@ -55,14 +57,7 @@ export class RadiantJirachi extends PokemonCard {
       // This Pokemon was knocked out
       const player = effect.player;
 
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 
@@ -73,42 +68,23 @@ export class RadiantJirachi extends PokemonCard {
         player.deck,
         {},
         { min: 0, max: 3, allowCancel: false }),
-      (selected: any[]) => {
-        cards = selected || [];
-        if (cards.length > 0) {
-          player.deck.moveCardsTo(cards, player.hand);
-        }
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
-          player.deck.applyOrder(order);
-          return state;
+        (selected: any[]) => {
+          cards = selected || [];
+          if (cards.length > 0) {
+            player.deck.moveCardsTo(cards, player.hand);
+          }
+          return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
+            player.deck.applyOrder(order);
+            return state;
+          });
         });
-      });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      let coin1Result = false;
-      let coin2Result = false;
-
-      return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
-        coin1Result = result;
-
-        return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), (result: boolean) => {
-          coin2Result = result;
-
-          if (coin1Result && coin2Result) {
-            // Both heads
-
-            opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
-              if (cardList.getPokemonCard() === opponent.active.cards[0]) {
-                cardList.damage += 999;
-              }
-            });
-          }
-        });
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      MULTIPLE_COIN_FLIPS_PROMPT(store, state, effect.player, 2, results => {
+        if (results.every(r => r)) {
+          KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
+        }
       });
     }
     return state;

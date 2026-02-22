@@ -1,9 +1,9 @@
 import { CardTag, CardType, PokemonCard, Stage, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect, EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
+import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
 import { GamePhase } from '../../game/store/state/state';
-import { IS_ABILITY_BLOCKED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MegaScraftyex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -57,7 +57,7 @@ export class MegaScraftyex extends PokemonCard {
     }
 
     // DDC Outlaw Leg attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

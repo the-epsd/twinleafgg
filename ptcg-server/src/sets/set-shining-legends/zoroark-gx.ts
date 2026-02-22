@@ -1,18 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
-  PlayerType, ChooseAttackPrompt,
-  Attack,
-  ChooseCardsPrompt,
-  GameLog
-} from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, ChooseAttackPrompt, Attack, ChooseCardsPrompt, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 // citing empoleon to help make this (https://github.com/keeshii/ryuu-play/blob/master/ptcg-server/src/sets/set-black-and-white/empoleon.ts)
 
 function* useTricksterGX(next: Function, store: StoreLike, state: State,
@@ -127,7 +121,7 @@ export class ZoroarkGX extends PokemonCard {
       player.marker.removeMarker(this.TRADE_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.hand.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -160,14 +154,14 @@ export class ZoroarkGX extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       let pokemonInPlay = 0;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, () => { pokemonInPlay += 1; });
       effect.damage = 20 * pokemonInPlay;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const generator = useTricksterGX(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

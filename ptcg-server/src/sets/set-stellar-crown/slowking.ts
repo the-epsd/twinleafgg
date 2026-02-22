@@ -4,6 +4,7 @@ import { StoreLike, State, GameMessage, ChooseAttackPrompt, Card, Resistance, Ga
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useSeekInspiration(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
@@ -21,17 +22,17 @@ function* useSeekInspiration(next: Function, store: StoreLike, state: State, eff
   }
 
   // this looks disgusting but the previous method didn't work (if only hasRuleBox() worked on topdeck, although that might not work either who knows)
-  if (topdeck.tags.includes(CardTag.POKEMON_EX) 
-    || topdeck.tags.includes(CardTag.POKEMON_GX) 
-    || topdeck.tags.includes(CardTag.POKEMON_LV_X) 
-    || topdeck.tags.includes(CardTag.POKEMON_V) 
-    || topdeck.tags.includes(CardTag.PRISM_STAR) 
-    || topdeck.tags.includes(CardTag.RADIANT) 
-    || topdeck.tags.includes(CardTag.POKEMON_VMAX) 
-    || topdeck.tags.includes(CardTag.POKEMON_VSTAR) 
-    || topdeck.tags.includes(CardTag.POKEMON_ex) 
-    || topdeck.tags.includes(CardTag.BREAK) 
-    || topdeck.tags.includes(CardTag.POKEMON_SV_MEGA)){
+  if (topdeck.tags.includes(CardTag.POKEMON_EX)
+    || topdeck.tags.includes(CardTag.POKEMON_GX)
+    || topdeck.tags.includes(CardTag.POKEMON_LV_X)
+    || topdeck.tags.includes(CardTag.POKEMON_V)
+    || topdeck.tags.includes(CardTag.PRISM_STAR)
+    || topdeck.tags.includes(CardTag.RADIANT)
+    || topdeck.tags.includes(CardTag.POKEMON_VMAX)
+    || topdeck.tags.includes(CardTag.POKEMON_VSTAR)
+    || topdeck.tags.includes(CardTag.POKEMON_ex)
+    || topdeck.tags.includes(CardTag.BREAK)
+    || topdeck.tags.includes(CardTag.POKEMON_SV_MEGA)) {
     return state;
   }
 
@@ -123,7 +124,7 @@ export class Slowking extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useSeekInspiration(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

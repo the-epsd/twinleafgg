@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Zweilous extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,7 +35,7 @@ export class Zweilous extends PokemonCard {
   public fullName: string = 'Zweilous SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: 2, sourceCard: this, sourceEffect: this.attacks[0] });

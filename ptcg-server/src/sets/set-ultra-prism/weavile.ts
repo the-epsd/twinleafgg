@@ -3,8 +3,8 @@ import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-ty
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Weavile extends PokemonCard {
 
@@ -49,7 +49,7 @@ export class Weavile extends PokemonCard {
   public evolvesFrom = 'Sneasel';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -81,7 +81,7 @@ export class Weavile extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const sleepEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       store.reduceEffect(state, sleepEffect);
 

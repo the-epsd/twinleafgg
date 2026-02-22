@@ -3,9 +3,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
+import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Palafin extends PokemonCard {
 
@@ -46,13 +45,8 @@ export class Palafin extends PokemonCard {
   public fullName: string = 'Palafin OBF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect) {
-      this.movedToActiveThisTurn = false;
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      if (!this.movedToActiveThisTurn) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      if (!MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)) {
         effect.damage = 0;
         return state;
       }
@@ -60,7 +54,7 @@ export class Palafin extends PokemonCard {
       effect.damage = 210;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

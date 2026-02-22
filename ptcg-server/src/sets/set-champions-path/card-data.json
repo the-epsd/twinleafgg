@@ -1,0 +1,4986 @@
+[
+  {
+    "id": "swsh35-1",
+    "name": "Venusaur V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "220",
+    "types": [
+      "Grass"
+    ],
+    "attacks": [
+      {
+        "name": "Pollen Bomb",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "80",
+        "text": "Your opponent's Active Pok\u00e9mon is now Asleep and Poisoned."
+      },
+      {
+        "name": "Solar Typhoon",
+        "cost": [
+          "Grass",
+          "Grass",
+          "Grass",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "220",
+        "text": "During your next turn, this Pok\u00e9mon can't use Solar Typhoon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 3,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "1",
+    "artist": "PLANETA Mochizuki",
+    "rarity": "Holo Rare V",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      3
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-2",
+    "name": "Weedle",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "60",
+    "types": [
+      "Grass"
+    ],
+    "attacks": [
+      {
+        "name": "Call for Family",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Search your deck for a Basic Pok\u00e9mon and put it onto your Bench. Then, shuffle your deck."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "2",
+    "artist": "Yuka Morii",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      13
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-3",
+    "name": "Kakuna",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "80",
+    "types": [
+      "Grass"
+    ],
+    "evolvesFrom": "Weedle",
+    "attacks": [
+      {
+        "name": "Bug Bite",
+        "cost": [
+          "Grass"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 3,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "3",
+    "artist": "Miki Tanaka",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      14
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-4",
+    "name": "Beedrill",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "hp": "140",
+    "types": [
+      "Grass"
+    ],
+    "evolvesFrom": "Kakuna",
+    "attacks": [
+      {
+        "name": "Poison Jab",
+        "cost": [
+          "Grass"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "80",
+        "text": "Your opponent's Active Pok\u00e9mon is now Poisoned."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "4",
+    "artist": "Hideki Ishikawa",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      15
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-5",
+    "name": "Eldegoss V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "180",
+    "types": [
+      "Grass"
+    ],
+    "abilities": [
+      {
+        "name": "Happy Match",
+        "text": "When you play this Pok\u00e9mon from your hand onto your Bench during your turn, you may put a Supporter card from your discard pile into your hand.",
+        "type": "Ability"
+      }
+    ],
+    "attacks": [
+      {
+        "name": "Float Up",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "50",
+        "text": "You may shuffle this Pok\u00e9mon and all attached cards into your deck."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "5",
+    "artist": "5ban Graphics",
+    "rarity": "Holo Rare V",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      830
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-6",
+    "name": "Vulpix",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "60",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Gnaw",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Singe",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "",
+        "text": "Your opponent's Active Pok\u00e9mon is now Burned."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "6",
+    "artist": "Shibuzoh.",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      37
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-7",
+    "name": "Victini",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Quick Draw",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Combustion",
+        "cost": [
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "7",
+    "artist": "Taira Akitsu",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      494
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-8",
+    "name": "Incineroar V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "220",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Grand Flame",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "90",
+        "text": "Attach up to 2 Fire Energy cards from your discard pile to 1 of your Benched Pok\u00e9mon."
+      },
+      {
+        "name": "Flare Blitzer",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "220",
+        "text": "This Pok\u00e9mon also does 30 damage to itself."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 3,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "8",
+    "artist": "Kouki Saitou",
+    "rarity": "Holo Rare V",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      727
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-9",
+    "name": "Sizzlipede",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Combustion",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "50",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "9",
+    "artist": "Akira Komayama",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      850
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-10",
+    "name": "Centiskorch",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "130",
+    "types": [
+      "Fire"
+    ],
+    "evolvesFrom": "Sizzlipede",
+    "attacks": [
+      {
+        "name": "Searing Flame",
+        "cost": [
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "50",
+        "text": "Your opponent's Active Pok\u00e9mon is now Burned."
+      },
+      {
+        "name": "Heat Crawler",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "140",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 3,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "10",
+    "artist": "Shin Nagasawa",
+    "rarity": "Holo Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      851
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-11",
+    "name": "Carvanha",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "60",
+    "types": [
+      "Water"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "11",
+    "artist": "Shigenori Negishi",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      318
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-12",
+    "name": "Sharpedo",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "110",
+    "types": [
+      "Water"
+    ],
+    "evolvesFrom": "Carvanha",
+    "attacks": [
+      {
+        "name": "Aqua Jet",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "50",
+        "text": "This attack also does 20 damage to 1 of your opponent's Benched Pok\u00e9mon. (Don't apply Weakness and Resistance for Benched Pok\u00e9mon.)"
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "12",
+    "artist": "Ryuta Fuse",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      319
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-13",
+    "name": "Wailord V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "280",
+    "types": [
+      "Water"
+    ],
+    "attacks": [
+      {
+        "name": "Draw Up",
+        "cost": [
+          "Water"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Attach up to 3 Water Energy cards from your discard pile to this Pok\u00e9mon."
+      },
+      {
+        "name": "Ocean Waves",
+        "cost": [
+          "Water",
+          "Water",
+          "Water",
+          "Water"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "120\u00d7",
+        "text": "Flip 3 coins. This attack does 120 damage for each heads."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 4,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "13",
+    "artist": "PLANETA Mochizuki",
+    "rarity": "Holo Rare V",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      321
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-14",
+    "name": "Drednaw V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "210",
+    "types": [
+      "Water"
+    ],
+    "abilities": [
+      {
+        "name": "Solid Shell",
+        "text": "This Pok\u00e9mon takes 30 less damage from attacks (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "attacks": [
+      {
+        "name": "Powerful Bite",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "130",
+        "text": "During your opponent's next turn, the Defending Pok\u00e9mon can't retreat."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 4,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "14",
+    "artist": "aky CG Works",
+    "rarity": "Holo Rare V",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      834
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-15",
+    "name": "Drednaw VMAX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "hp": "320",
+    "types": [
+      "Water"
+    ],
+    "evolvesFrom": "Drednaw V",
+    "abilities": [
+      {
+        "name": "Solid Shell",
+        "text": "This Pok\u00e9mon takes 30 less damage from attacks (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "attacks": [
+      {
+        "name": "G-Max Headbutt",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "160+",
+        "text": "Flip a coin. If heads, this attack does 80 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 4,
+    "rules": [
+      "VMAX rule: When your Pok\u00e9mon VMAX is Knocked Out, your opponent takes 3 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "15",
+    "artist": "aky CG Works",
+    "rarity": "Holo Rare VMAX",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      834
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-16",
+    "name": "Gardevoir V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "210",
+    "types": [
+      "Psychic"
+    ],
+    "attacks": [
+      {
+        "name": "Magical Shot",
+        "cost": [
+          "Psychic"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Swelling Pulse",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "120+",
+        "text": "If this Pok\u00e9mon was healed during this turn, this attack does 80 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Metal",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "16",
+    "artist": "Kagemaru Himeno",
+    "rarity": "Holo Rare V",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      282
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-17",
+    "name": "Gardevoir VMAX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "hp": "320",
+    "types": [
+      "Psychic"
+    ],
+    "evolvesFrom": "Gardevoir V",
+    "attacks": [
+      {
+        "name": "Max Cure",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "180",
+        "text": "Heal 50 damage from this Pok\u00e9mon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Metal",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "rules": [
+      "VMAX rule: When your Pok\u00e9mon VMAX is Knocked Out, your opponent takes 3 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "17",
+    "artist": "5ban Graphics",
+    "rarity": "Holo Rare VMAX",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      282
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-18",
+    "name": "Hatenna",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "60",
+    "types": [
+      "Psychic"
+    ],
+    "attacks": [
+      {
+        "name": "Stampede",
+        "cost": [
+          "Psychic"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Magical Shot",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Darkness",
+        "value": "\u00d72"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Fighting",
+        "value": "-30"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "18",
+    "artist": "Akira Komayama",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      856
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-19",
+    "name": "Hattrem",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "90",
+    "types": [
+      "Psychic"
+    ],
+    "evolvesFrom": "Hatenna",
+    "attacks": [
+      {
+        "name": "Beat",
+        "cost": [
+          "Psychic"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "20",
+        "text": ""
+      },
+      {
+        "name": "Super Psy Bolt",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "40",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Darkness",
+        "value": "\u00d72"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Fighting",
+        "value": "-30"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "19",
+    "artist": "Hitoshi Ariga",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      857
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-20",
+    "name": "Hatterene",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "hp": "150",
+    "types": [
+      "Psychic"
+    ],
+    "evolvesFrom": "Hattrem",
+    "abilities": [
+      {
+        "name": "Hazard Sensor",
+        "text": "If this Pok\u00e9mon is in the Active Spot and is damaged by an attack from your opponent's Pok\u00e9mon (even if this Pok\u00e9mon is Knocked Out), the Attacking Pok\u00e9mon is now Confused.",
+        "type": "Ability"
+      }
+    ],
+    "attacks": [
+      {
+        "name": "Life Sucker",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "100",
+        "text": "Heal 30 damage from this Pok\u00e9mon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Darkness",
+        "value": "\u00d72"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Fighting",
+        "value": "-30"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "20",
+    "artist": "Naoki Saito",
+    "rarity": "Holo Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      858
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-21",
+    "name": "Galarian Cursola V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "190",
+    "types": [
+      "Psychic"
+    ],
+    "abilities": [
+      {
+        "name": "Gnawing Aura",
+        "text": "As long as this Pok\u00e9mon is in the Active Spot, whenever your opponent attaches an Energy card from their hand to 1 of their Pok\u00e9mon, put 3 damage counters on that Pok\u00e9mon.",
+        "type": "Ability"
+      }
+    ],
+    "attacks": [
+      {
+        "name": "Hollow Missile",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "60",
+        "text": "Put 3 damage counters on your opponent's Benched Pok\u00e9mon in any way you like."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Darkness",
+        "value": "\u00d72"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Fighting",
+        "value": "-30"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "21",
+    "artist": "5ban Graphics",
+    "rarity": "Holo Rare V",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      864
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-22",
+    "name": "Alcremie V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "170",
+    "types": [
+      "Psychic"
+    ],
+    "attacks": [
+      {
+        "name": "Sugary Sprinkles",
+        "cost": [
+          "Psychic"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Heal 30 damage from each of your Benched Pok\u00e9mon."
+      },
+      {
+        "name": "Sweet Splash",
+        "cost": [
+          "Psychic",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "100",
+        "text": "If the Defending Pok\u00e9mon is a Basic Pok\u00e9mon, it can't attack during your opponent's next turn."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Metal",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "22",
+    "artist": "Ayaka Yoshida",
+    "rarity": "Holo Rare V",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      869
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-23",
+    "name": "Alcremie VMAX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "hp": "310",
+    "types": [
+      "Psychic"
+    ],
+    "evolvesFrom": "Alcremie V",
+    "attacks": [
+      {
+        "name": "Adornment",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "For each of your Benched Pok\u00e9mon, search your deck for a Psychic Energy card and attach it to that Pok\u00e9mon. Then, shuffle your deck."
+      },
+      {
+        "name": "G-Max Whisk",
+        "cost": [
+          "Psychic",
+          "Psychic"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "60\u00d7",
+        "text": "Discard any amount of Energy from your Pok\u00e9mon. This attack does 60 damage for each card you discarded in this way."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Metal",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 3,
+    "rules": [
+      "VMAX rule: When your Pok\u00e9mon VMAX is Knocked Out, your opponent takes 3 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "23",
+    "artist": "5ban Graphics",
+    "rarity": "Holo Rare VMAX",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      869
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-24",
+    "name": "Machop",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Fighting"
+    ],
+    "attacks": [
+      {
+        "name": "Low Kick",
+        "cost": [
+          "Fighting"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Steady Punch",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20+",
+        "text": "Flip a coin. If heads, this attack does 40 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Psychic",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "24",
+    "artist": "Shibuzoh.",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      66
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-25",
+    "name": "Machoke",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "110",
+    "types": [
+      "Fighting"
+    ],
+    "evolvesFrom": "Machop",
+    "attacks": [
+      {
+        "name": "Low Kick",
+        "cost": [
+          "Fighting"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Pummel",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "50+",
+        "text": "Flip a coin. If heads, this attack does 70 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Psychic",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 3,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "25",
+    "artist": "AKIRA EGAWA",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      67
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-26",
+    "name": "Machamp",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "hp": "170",
+    "types": [
+      "Fighting"
+    ],
+    "evolvesFrom": "Machoke",
+    "attacks": [
+      {
+        "name": "Macho Revenge",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20\u00d7",
+        "text": "This attack does 20 damage for each Fighting Pok\u00e9mon in your discard pile."
+      },
+      {
+        "name": "Dynamite Punch",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "200",
+        "text": "This Pok\u00e9mon also does 50 damage to itself."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Psychic",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 3,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "26",
+    "artist": "Anesaki Dynamic",
+    "rarity": "Holo Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      68
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-27",
+    "name": "Lucario V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "210",
+    "types": [
+      "Fighting"
+    ],
+    "attacks": [
+      {
+        "name": "Aura Sphere",
+        "cost": [
+          "Fighting"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "40",
+        "text": "This attack also does 20 damage to 1 of your opponent's Benched Pok\u00e9mon. (Don't apply Weakness and Resistance for Benched Pok\u00e9mon.)"
+      },
+      {
+        "name": "Beatdown Smash",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "180",
+        "text": "During your next turn, this Pok\u00e9mon can't use Beatdown Smash."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Psychic",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "27",
+    "artist": "AKIRA EGAWA",
+    "rarity": "Holo Rare V",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      448
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-28",
+    "name": "Zygarde",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "140",
+    "types": [
+      "Fighting"
+    ],
+    "attacks": [
+      {
+        "name": "Bite",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Power Blast",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "130",
+        "text": "Discard a Fighting Energy from this Pok\u00e9mon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 3,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "28",
+    "artist": "Shin Nagasawa",
+    "rarity": "Holo Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      718
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-29",
+    "name": "Rockruff",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Fighting"
+    ],
+    "attacks": [
+      {
+        "name": "Collect",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Bite",
+        "cost": [
+          "Fighting",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "29",
+    "artist": "Naoyo Kimura",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      744
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-30",
+    "name": "Lycanroc",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "120",
+    "types": [
+      "Fighting"
+    ],
+    "evolvesFrom": "Rockruff",
+    "attacks": [
+      {
+        "name": "Rock Throw",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Slashing Strike",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "150",
+        "text": "During your next turn, this Pok\u00e9mon can't use Slashing Strike."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "30",
+    "artist": "Ryuta Fuse",
+    "rarity": "Holo Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      745
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-31",
+    "name": "Rolycoly",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Fighting"
+    ],
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "31",
+    "artist": "Masakazu Fukuda",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      837
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-32",
+    "name": "Grapploct V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "210",
+    "types": [
+      "Fighting"
+    ],
+    "attacks": [
+      {
+        "name": "Tie Up",
+        "cost": [
+          "Fighting"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "20",
+        "text": "If the Defending Pok\u00e9mon is a Basic Pok\u00e9mon, it can't attack during your opponent's next turn."
+      },
+      {
+        "name": "Moonsault Press",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "120+",
+        "text": "Flip a coin. If heads, this attack does 100 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Psychic",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "32",
+    "artist": "PLANETA Igarashi",
+    "rarity": "Holo Rare V",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      853
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-33",
+    "name": "Ekans",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Darkness"
+    ],
+    "attacks": [
+      {
+        "name": "Ram",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Tail Snap",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "33",
+    "artist": "Uta",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      23
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-34",
+    "name": "Arbok",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "120",
+    "types": [
+      "Darkness"
+    ],
+    "evolvesFrom": "Ekans",
+    "attacks": [
+      {
+        "name": "Sharp Fang",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Tail Snap",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "34",
+    "artist": "nagimiso",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      24
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-35",
+    "name": "Galarian Zigzagoon",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Darkness"
+    ],
+    "attacks": [
+      {
+        "name": "Pin Missile",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10\u00d7",
+        "text": "Flip 4 coins. This attack does 10 damage for each heads."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "35",
+    "artist": "Kouki Saitou",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      263
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-36",
+    "name": "Galarian Linoone",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "100",
+    "types": [
+      "Darkness"
+    ],
+    "evolvesFrom": "Galarian Zigzagoon",
+    "attacks": [
+      {
+        "name": "Double-Edge",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "60",
+        "text": "This Pok\u00e9mon also does 20 damage to itself."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "36",
+    "artist": "Akira Komayama",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      264
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-37",
+    "name": "Galarian Obstagoon",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 2"
+    ],
+    "hp": "170",
+    "types": [
+      "Darkness"
+    ],
+    "evolvesFrom": "Galarian Linoone",
+    "abilities": [
+      {
+        "name": "Wicked Ruler",
+        "text": "Once during your turn, you may have your opponent discard cards from their hand until they have 4 cards in their hand.",
+        "type": "Ability"
+      }
+    ],
+    "attacks": [
+      {
+        "name": "Knuckle Impact",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "180",
+        "text": "During your next turn, this Pok\u00e9mon can't attack."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "37",
+    "artist": "Shin Nagasawa",
+    "rarity": "Holo Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      862
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-38",
+    "name": "Absol",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "100",
+    "types": [
+      "Darkness"
+    ],
+    "attacks": [
+      {
+        "name": "Dark Cutter",
+        "cost": [
+          "Darkness",
+          "Darkness"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "70",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "38",
+    "artist": "kodama",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      359
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-39",
+    "name": "Purrloin",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Darkness"
+    ],
+    "attacks": [
+      {
+        "name": "Dig Claws",
+        "cost": [
+          "Darkness"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Fake Out",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20",
+        "text": "Flip a coin. If heads, your opponent's Active Pok\u00e9mon is now Paralyzed."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "39",
+    "artist": "sowsow",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      509
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-40",
+    "name": "Liepard",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "100",
+    "types": [
+      "Darkness"
+    ],
+    "evolvesFrom": "Purrloin",
+    "abilities": [
+      {
+        "name": "Limber",
+        "text": "This Pok\u00e9mon can't be Paralyzed.",
+        "type": "Ability"
+      }
+    ],
+    "attacks": [
+      {
+        "name": "Slashing Claw",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "90",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "40",
+    "artist": "Hasuno",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      510
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-41",
+    "name": "Scraggy",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Darkness"
+    ],
+    "attacks": [
+      {
+        "name": "Stampede",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Ram",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "41",
+    "artist": "miki kudo",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      559
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-42",
+    "name": "Scrafty",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "120",
+    "types": [
+      "Darkness"
+    ],
+    "evolvesFrom": "Scraggy",
+    "attacks": [
+      {
+        "name": "Corner",
+        "cost": [
+          "Darkness"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "30",
+        "text": "During your opponent's next turn, the Defending Pok\u00e9mon can't retreat."
+      },
+      {
+        "name": "Bad Brawl",
+        "cost": [
+          "Darkness",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "90+",
+        "text": "If you played Piers from your hand during this turn, this attack does 90 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "42",
+    "artist": "tetsuya koizumi",
+    "rarity": "Holo Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      560
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-43",
+    "name": "Trubbish",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "60",
+    "types": [
+      "Darkness"
+    ],
+    "attacks": [
+      {
+        "name": "Venoshock",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20+",
+        "text": "If your opponent's Active Pok\u00e9mon is Poisoned, this attack does 50 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fighting",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "43",
+    "artist": "nagimiso",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      568
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-44",
+    "name": "Inkay",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "60",
+    "types": [
+      "Darkness"
+    ],
+    "attacks": [
+      {
+        "name": "Tackle",
+        "cost": [
+          "Darkness"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "10",
+        "text": ""
+      },
+      {
+        "name": "Attack from Behind",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "20+",
+        "text": "If your opponent's Active Pok\u00e9mon is Confused, this attack does 50 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "44",
+    "artist": "sui",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      686
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-45",
+    "name": "Malamar",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "120",
+    "types": [
+      "Darkness"
+    ],
+    "evolvesFrom": "Inkay",
+    "attacks": [
+      {
+        "name": "Eerie Wave",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "50",
+        "text": "Your opponent's Active Pok\u00e9mon is now Confused."
+      },
+      {
+        "name": "Random Peck",
+        "cost": [
+          "Darkness",
+          "Darkness",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "80+",
+        "text": "Flip 2 coins. This attack does 40 more damage for each heads."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 3,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "45",
+    "artist": "kawayoo",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      687
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-46",
+    "name": "Nickit",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "70",
+    "types": [
+      "Darkness"
+    ],
+    "attacks": [
+      {
+        "name": "Filch",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "",
+        "text": "Draw a card."
+      },
+      {
+        "name": "Tail Smack",
+        "cost": [
+          "Darkness",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "30",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Grass",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "46",
+    "artist": "Naoki Saito",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      827
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-47",
+    "name": "Duraludon V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "220",
+    "types": [
+      "Metal"
+    ],
+    "abilities": [
+      {
+        "name": "Hard Coat",
+        "text": "This Pok\u00e9mon takes 30 less damage from attacks (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "attacks": [
+      {
+        "name": "Gatling Slug",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "10+",
+        "text": "This attack does 40 more damage for each Metal Energy attached to this Pok\u00e9mon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Fire",
+        "value": "\u00d72"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Grass",
+        "value": "-30"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 3,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "47",
+    "artist": "aky CG Works",
+    "rarity": "Holo Rare V",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      884
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-48",
+    "name": "Swablu",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic"
+    ],
+    "hp": "50",
+    "types": [
+      "Colorless"
+    ],
+    "attacks": [
+      {
+        "name": "Peck",
+        "cost": [
+          "Colorless"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "20",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "\u00d72"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Fighting",
+        "value": "-30"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "48",
+    "artist": "0313",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      333
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-49",
+    "name": "Altaria",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Stage 1"
+    ],
+    "hp": "110",
+    "types": [
+      "Colorless"
+    ],
+    "evolvesFrom": "Swablu",
+    "abilities": [
+      {
+        "name": "Miraculous Charm",
+        "text": "Prevent all damage done to this Pok\u00e9mon by attacks from your opponent's Pok\u00e9mon V and Pok\u00e9mon-GX.",
+        "type": "Ability"
+      }
+    ],
+    "attacks": [
+      {
+        "name": "Speed Dive",
+        "cost": [
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "60",
+        "text": ""
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "\u00d72"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Fighting",
+        "value": "-30"
+      }
+    ],
+    "retreatCost": [
+      "Colorless"
+    ],
+    "convertedRetreatCost": 1,
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "49",
+    "artist": "Taira Akitsu",
+    "rarity": "Holo Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      334
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-50",
+    "name": "Bede",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "rules": [
+      "Attach a basic Energy card from your hand to 1 of your Benched Pok\u00e9mon."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "50",
+    "artist": "Naoki Saito",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-51",
+    "name": "Full Heal",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "rules": [
+      "Your Active Pok\u00e9mon recovers from all Special Conditions."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "51",
+    "artist": "Yoshinobu Saito",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-52",
+    "name": "Great Ball",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "rules": [
+      "Look at the top 7 cards of your deck. You may reveal a Pok\u00e9mon you find there and put it into your hand. Shuffle the other cards back into your deck."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "52",
+    "artist": "Toyste Beach",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-53",
+    "name": "Hop",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "rules": [
+      "Draw 3 cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "53",
+    "artist": "Sanosuke Sakuma",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-54",
+    "name": "Hyper Potion",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "rules": [
+      "Heal 120 damage from 1 of your Pok\u00e9mon that has at least 2 Energy attached. If you healed any damage in this way, discard 2 Energy from it."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "54",
+    "artist": "Ryo Ueda",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-55",
+    "name": "Kabu",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "rules": [
+      "Shuffle your hand into your deck. Then, draw 4 cards. If your Active Pok\u00e9mon is your only Pok\u00e9mon in play, draw 8 cards instead."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "55",
+    "artist": "take",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-56",
+    "name": "Marnie",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "rules": [
+      "Each player shuffles their hand and puts it on the bottom of their deck. If either player put any cards on the bottom of their deck in this way, you draw 5 cards, and your opponent draws 4 cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "56",
+    "artist": "kirisAki",
+    "rarity": "Holo Rare",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-57",
+    "name": "Milo",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "rules": [
+      "Discard up to 2 cards from your hand, and draw 2 cards for each card you discarded in this way."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "57",
+    "artist": "take",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-58",
+    "name": "Piers",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "rules": [
+      "Search your deck for an Energy card and a Darkness Pok\u00e9mon, reveal them, and put them into your hand. Then, shuffle your deck."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "58",
+    "artist": "take",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-59",
+    "name": "Pok\u00e9 Ball",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "rules": [
+      "Flip a coin. If heads, search your deck for a Pok\u00e9mon, reveal it, and put it into your hand. Then, shuffle your deck."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "59",
+    "artist": "Studio Bora Inc.",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-60",
+    "name": "Pok\u00e9mon Center Lady",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "rules": [
+      "Heal 60 damage from 1 of your Pok\u00e9mon, and it recovers from all Special Conditions."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "60",
+    "artist": "kirisAki",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-61",
+    "name": "Potion",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "rules": [
+      "Heal 30 damage from 1 of your Pok\u00e9mon."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "61",
+    "artist": "Ryo Ueda",
+    "rarity": "Common",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-62",
+    "name": "Professor's Research (Professor Magnolia)",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "rules": [
+      "Discard your hand and draw 7 cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "62",
+    "artist": "Yusuke Ohmura",
+    "rarity": "Holo Rare",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-63",
+    "name": "Rotom Bike",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "rules": [
+      "Draw cards until you have 6 cards in your hand. Your turn ends."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "63",
+    "artist": "5ban Graphics",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-64",
+    "name": "Rotom Phone",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "rules": [
+      "Look at the top 5 cards of your deck, choose 1 of them, and shuffle the other cards back into your deck. Then, put the card you chose on top of your deck."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "64",
+    "artist": "Ryo Ueda",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-65",
+    "name": "Sonia",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "rules": [
+      "Search your deck for up to 2 Basic Pok\u00e9mon or up to 2 basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "65",
+    "artist": "Yusuke Ohmura",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-66",
+    "name": "Suspicious Food Tin",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "rules": [
+      "Heal 80 damage from 1 of your Pok\u00e9mon that has at least 1 Psychic Energy attached. If you healed any damage in this way, discard a Psychic Energy from it."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "66",
+    "artist": "Ryo Ueda",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-67",
+    "name": "Team Yell Grunt",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "rules": [
+      "Put an Energy attached to 1 of your opponent's Pok\u00e9mon into their hand."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "67",
+    "artist": "nagimiso",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-68",
+    "name": "Turffield Stadium",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Stadium"
+    ],
+    "rules": [
+      "Once during each player's turn, that player may search their deck for an Evolution Grass Pok\u00e9mon, reveal it, and put it into their hand. Then, that player shuffles their deck."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "68",
+    "artist": "aky CG Works",
+    "rarity": "Uncommon",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-69",
+    "name": "Drednaw V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "210",
+    "types": [
+      "Water"
+    ],
+    "abilities": [
+      {
+        "name": "Solid Shell",
+        "text": "This Pok\u00e9mon takes 30 less damage from attacks (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "attacks": [
+      {
+        "name": "Powerful Bite",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "130",
+        "text": "During your opponent's next turn, the Defending Pok\u00e9mon can't retreat."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 4,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "69",
+    "artist": "aky CG Works",
+    "rarity": "Ultra Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      834
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-70",
+    "name": "Gardevoir V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "210",
+    "types": [
+      "Psychic"
+    ],
+    "attacks": [
+      {
+        "name": "Magical Shot",
+        "cost": [
+          "Psychic"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "30",
+        "text": ""
+      },
+      {
+        "name": "Swelling Pulse",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "120+",
+        "text": "If this Pok\u00e9mon was healed during this turn, this attack does 80 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Metal",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "70",
+    "artist": "PLANETA Mochizuki",
+    "rarity": "Ultra Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      282
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-71",
+    "name": "Galarian Cursola V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "190",
+    "types": [
+      "Psychic"
+    ],
+    "abilities": [
+      {
+        "name": "Gnawing Aura",
+        "text": "As long as this Pok\u00e9mon is in the Active Spot, whenever your opponent attaches an Energy card from their hand to 1 of their Pok\u00e9mon, put 3 damage counters on that Pok\u00e9mon.",
+        "type": "Ability"
+      }
+    ],
+    "attacks": [
+      {
+        "name": "Hollow Missile",
+        "cost": [
+          "Psychic",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 2,
+        "damage": "60",
+        "text": "Put 3 damage counters on your opponent's Benched Pok\u00e9mon in any way you like."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Darkness",
+        "value": "\u00d72"
+      }
+    ],
+    "resistances": [
+      {
+        "type": "Fighting",
+        "value": "-30"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "71",
+    "artist": "5ban Graphics",
+    "rarity": "Ultra Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      864
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-72",
+    "name": "Grapploct V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "210",
+    "types": [
+      "Fighting"
+    ],
+    "attacks": [
+      {
+        "name": "Tie Up",
+        "cost": [
+          "Fighting"
+        ],
+        "convertedEnergyCost": 1,
+        "damage": "20",
+        "text": "If the Defending Pok\u00e9mon is a Basic Pok\u00e9mon, it can't attack during your opponent's next turn."
+      },
+      {
+        "name": "Moonsault Press",
+        "cost": [
+          "Fighting",
+          "Fighting",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "120+",
+        "text": "Flip a coin. If heads, this attack does 100 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Psychic",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "72",
+    "artist": "PLANETA Igarashi",
+    "rarity": "Ultra Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      853
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-73",
+    "name": "Hop",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "rules": [
+      "Draw 3 cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "73",
+    "artist": "Naoki Saito",
+    "rarity": "Ultra Rare",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-74",
+    "name": "Charizard VMAX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "hp": "330",
+    "types": [
+      "Fire"
+    ],
+    "evolvesFrom": "Charizard V",
+    "attacks": [
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "100",
+        "text": ""
+      },
+      {
+        "name": "G-Max Wildfire",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 5,
+        "damage": "300",
+        "text": "Discard 2 Energy from this Pok\u00e9mon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 3,
+    "rules": [
+      "VMAX rule: When your Pok\u00e9mon VMAX is Knocked Out, your opponent takes 3 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "74",
+    "artist": "aky CG Works",
+    "rarity": "Secret Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      6
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-75",
+    "name": "Drednaw VMAX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "hp": "320",
+    "types": [
+      "Water"
+    ],
+    "evolvesFrom": "Drednaw V",
+    "abilities": [
+      {
+        "name": "Solid Shell",
+        "text": "This Pok\u00e9mon takes 30 less damage from attacks (after applying Weakness and Resistance).",
+        "type": "Ability"
+      }
+    ],
+    "attacks": [
+      {
+        "name": "G-Max Headbutt",
+        "cost": [
+          "Water",
+          "Water",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "160+",
+        "text": "Flip a coin. If heads, this attack does 80 more damage."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Lightning",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 4,
+    "rules": [
+      "VMAX rule: When your Pok\u00e9mon VMAX is Knocked Out, your opponent takes 3 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "75",
+    "artist": "aky CG Works",
+    "rarity": "Secret Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      834
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-76",
+    "name": "Gardevoir VMAX",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "VMAX"
+    ],
+    "hp": "320",
+    "types": [
+      "Psychic"
+    ],
+    "evolvesFrom": "Gardevoir V",
+    "attacks": [
+      {
+        "name": "Max Cure",
+        "cost": [
+          "Psychic",
+          "Psychic",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "180",
+        "text": "Heal 50 damage from this Pok\u00e9mon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Metal",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 2,
+    "rules": [
+      "VMAX rule: When your Pok\u00e9mon VMAX is Knocked Out, your opponent takes 3 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "76",
+    "artist": "5ban Graphics",
+    "rarity": "Secret Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      282
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-77",
+    "name": "Kabu",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "rules": [
+      "Shuffle your hand into your deck. Then, draw 4 cards. If your Active Pok\u00e9mon is your only Pok\u00e9mon in play, draw 8 cards instead."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "77",
+    "artist": "Hitoshi Ariga",
+    "rarity": "Secret Rare",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-78",
+    "name": "Piers",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Supporter"
+    ],
+    "rules": [
+      "Search your deck for an Energy card and a Darkness Pok\u00e9mon, reveal them, and put them into your hand. Then, shuffle your deck."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "78",
+    "artist": "kirisAki",
+    "rarity": "Secret Rare",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-79",
+    "name": "Charizard V",
+    "supertype": "Pok\u00e9mon",
+    "subtypes": [
+      "Basic",
+      "V"
+    ],
+    "hp": "220",
+    "types": [
+      "Fire"
+    ],
+    "attacks": [
+      {
+        "name": "Claw Slash",
+        "cost": [
+          "Colorless",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 3,
+        "damage": "80",
+        "text": ""
+      },
+      {
+        "name": "Fire Spin",
+        "cost": [
+          "Fire",
+          "Fire",
+          "Colorless",
+          "Colorless"
+        ],
+        "convertedEnergyCost": 4,
+        "damage": "220",
+        "text": "Discard 2 Energy from this Pok\u00e9mon."
+      }
+    ],
+    "weaknesses": [
+      {
+        "type": "Water",
+        "value": "\u00d72"
+      }
+    ],
+    "retreatCost": [
+      "Colorless",
+      "Colorless",
+      "Colorless"
+    ],
+    "convertedRetreatCost": 3,
+    "rules": [
+      "V rule: When your Pok\u00e9mon V is Knocked Out, your opponent takes 2 Prize cards."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "79",
+    "artist": "5ban Graphics",
+    "rarity": "Secret Rare",
+    "regulationMark": "D",
+    "nationalPokedexNumbers": [
+      6
+    ],
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  },
+  {
+    "id": "swsh35-80",
+    "name": "Suspicious Food Tin",
+    "supertype": "Trainer",
+    "subtypes": [
+      "Item"
+    ],
+    "rules": [
+      "Heal 80 damage from 1 of your Pok\u00e9mon that has at least 1 Psychic Energy attached. If you healed any damage in this way, discard a Psychic Energy from it."
+    ],
+    "set": {
+      "id": "swsh35",
+      "name": "Champion's Path",
+      "series": "Sword & Shield",
+      "printedTotal": 73,
+      "total": 80,
+      "legalities": {
+        "unlimited": "Legal",
+        "expanded": "Legal"
+      },
+      "ptcgoCode": "CPA",
+      "releaseDate": "2020/09/25",
+      "images": {
+        "symbol": "https://images.pokemontcg.io/swsh35/symbol.png",
+        "logo": "https://images.pokemontcg.io/swsh35/logo.png"
+      }
+    },
+    "number": "80",
+    "artist": "Ryo Ueda",
+    "rarity": "Secret Rare",
+    "regulationMark": "D",
+    "legalities": {
+      "unlimited": "Legal",
+      "expanded": "Legal"
+    }
+  }
+]

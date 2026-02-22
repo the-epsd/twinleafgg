@@ -26,7 +26,7 @@ describe('PromptChooseCardsComponent', () => {
     fixture = TestBed.createComponent(PromptChooseCardsComponent);
     component = fixture.componentInstance;
     component.gameState = {} as any;
-    component.prompt = new ChooseCardsPrompt(1, GameMessage.COIN_FLIP, new CardList(), {});
+    component.prompt = new ChooseCardsPrompt({} as any, GameMessage.COIN_FLIP, new CardList(), {});
     fixture.detectChanges();
   });
 

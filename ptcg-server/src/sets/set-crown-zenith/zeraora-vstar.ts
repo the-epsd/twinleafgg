@@ -2,7 +2,7 @@ import { PokemonCard, Stage, CardType, CardTag, StoreLike, State, StateUtils, Co
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useLightningStormStar(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
@@ -73,7 +73,7 @@ export class ZeraoraVSTAR extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard !== undefined) {
 
@@ -94,7 +94,7 @@ export class ZeraoraVSTAR extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const generator = useLightningStormStar(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

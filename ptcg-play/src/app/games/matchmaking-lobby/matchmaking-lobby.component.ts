@@ -10,7 +10,7 @@ import { DeckListEntry } from '../../api/interfaces/deck.interface';
 import { ArchetypeUtils } from '../../deck/deck-archetype-service/archetype.utils';
 import { CardsBaseService } from '../../shared/cards/cards-base.service';
 import { DeckItem } from '../../deck/deck-card/deck-card.interface';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { SettingsService } from '../../table/table-sidebar/settings-dialog/settings.service';
 
 

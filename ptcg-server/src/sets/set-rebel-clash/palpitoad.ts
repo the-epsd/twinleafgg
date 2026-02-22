@@ -3,7 +3,8 @@ import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-ty
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Palpitoad extends PokemonCard {
 
@@ -33,7 +34,7 @@ export class Palpitoad extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public evolvesFrom: string = 'Tympole';
-  
+
   public setNumber: string = '45';
 
   public name: string = 'Palpitoad';
@@ -42,12 +43,12 @@ export class Palpitoad extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
       store.reduceEffect(state, specialConditionEffect);
       return state;
     }
-    
+
     return state;
   }
 }

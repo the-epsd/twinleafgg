@@ -4,9 +4,10 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, GameError, ChoosePokemonPrompt, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Greninja extends PokemonCard {
 
@@ -58,7 +59,7 @@ export class Greninja extends PokemonCard {
     }
 
     // Water Shuriken
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Check marker
@@ -104,7 +105,7 @@ export class Greninja extends PokemonCard {
     }
 
     // Mist Slash
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

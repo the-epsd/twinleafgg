@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, SlotType, StateUtils, EnergyCard } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { DiscardEnergyPrompt } from '../../game/store/prompts/discard-energy-prompt';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Turtonator extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -30,10 +30,9 @@ export class Turtonator extends PokemonCard {
   public name: string = 'Turtonator';
   public fullName: string = 'Turtonator DRM';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let totalFireEnergy = 0;

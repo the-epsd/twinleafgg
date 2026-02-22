@@ -3,8 +3,9 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { PlayerType } from '../../game/store/actions/play-card-action';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Miltank extends PokemonCard {
 
@@ -16,19 +17,19 @@ export class Miltank extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Powerful Friends',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 10,
       text: 'If you have any Stage 2 Pokemon on your Bench, ' +
         'this attack does 70 more damage.'
     },
     {
       name: 'Hammer In',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
       text: ''
     },
@@ -46,7 +47,7 @@ export class Miltank extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let hasStage2 = false;

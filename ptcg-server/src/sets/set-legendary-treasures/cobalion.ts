@@ -3,12 +3,13 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
+import { UseAttackEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Cobalion extends PokemonCard {
 
@@ -22,17 +23,17 @@ export class Cobalion extends PokemonCard {
 
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Energy Press',
-    cost: [ CardType.METAL, CardType.COLORLESS ],
+    cost: [CardType.METAL, CardType.COLORLESS],
     damage: 20,
     text: 'Does 20 more damage for each Energy attached to ' +
       'the Defending Pokemon.'
   }, {
     name: 'Iron Breaker',
-    cost: [ CardType.METAL, CardType.METAL, CardType.COLORLESS ],
+    cost: [CardType.METAL, CardType.METAL, CardType.COLORLESS],
     damage: 80,
     text: 'The Defending Pokemon can\'t attack during your opponent\'s ' +
       'next turn.'
@@ -53,7 +54,7 @@ export class Cobalion extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Energy Press
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -64,7 +65,7 @@ export class Cobalion extends PokemonCard {
     }
 
     // Iron Breaker
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this);

@@ -1,5 +1,5 @@
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { Injectable } from '@angular/core';
+import { inject } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { SessionService } from './shared/session/session.service';
@@ -7,36 +7,28 @@ import { TranslateService } from '@ngx-translate/core';
 import { AlertService } from './shared/alert/alert.service';
 import { LoginService } from './api/services/login.service';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class CanActivateService implements CanActivate {
+export const canActivateGuard: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree => {
+  const sessionService = inject(SessionService);
+  const router = inject(Router);
+  const alertService = inject(AlertService);
+  const translate = inject(TranslateService);
+  const loginService = inject(LoginService);
 
-  constructor(
-    private sessionService: SessionService,
-    private router: Router,
-    private alertService: AlertService,
-    private translate: TranslateService,
-    private loginService: LoginService,
-  ) { }
+  const loggedUserId = sessionService.session.loggedUserId;
+  const loggedUser = loggedUserId && sessionService.session.users[loggedUserId];
+  const isLoggedIn = !!loggedUser;
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    const loggedUserId = this.sessionService.session.loggedUserId;
-    const loggedUser = loggedUserId && this.sessionService.session.users[loggedUserId];
-    const isLoggedIn = !!loggedUser;
-
-    if (isLoggedIn) {
-      if (loggedUser.roleId === 1) {
-        this.alertService.toast(this.translate.instant('ERROR_ACCOUNT_BANNED'));
-        this.sessionService.clear();
-        this.loginService.logout();
-        return this.router.createUrlTree(['/login'], { queryParams: { redirectUrl: state.url } });
-      }
-      return true;
+  if (isLoggedIn) {
+    if (loggedUser!.roleId === 1) {
+      alertService.toast(translate.instant('ERROR_ACCOUNT_BANNED'));
+      sessionService.clear();
+      loginService.logout();
+      return router.createUrlTree(['/login'], { queryParams: { redirectUrl: state.url } });
     }
-    return this.router.createUrlTree(['/login'], { queryParams: { redirectUrl: state.url } });
+    return true;
   }
-}
+  return router.createUrlTree(['/login'], { queryParams: { redirectUrl: state.url } });
+};

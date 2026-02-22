@@ -7,6 +7,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameMessage } from '../../game/game-message';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 function* useCallforFamily(next: Function, store: StoreLike, state: State,
@@ -75,7 +76,7 @@ export class Salandit extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useCallforFamily(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

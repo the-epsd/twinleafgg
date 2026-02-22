@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, Card, ChooseEnergyPrompt, GameMessage } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class IceRiderCalyrexV extends PokemonCard {
 
@@ -14,24 +15,24 @@ export class IceRiderCalyrexV extends PokemonCard {
 
   public cardType: CardType = CardType.WATER;
 
-  public tags = [ CardTag.POKEMON_V ];
+  public tags = [CardTag.POKEMON_V];
 
   public hp: number = 210;
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Pierce',
-      cost: [ CardType.WATER ],
+      cost: [CardType.WATER],
       damage: 40,
       text: ''
     },
     {
       name: 'Glacial Lance',
-      cost: [ CardType.WATER, CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
       damage: 200,
       text: 'Discard 2 Energy from this Pokémon.'
     },
@@ -49,17 +50,17 @@ export class IceRiderCalyrexV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-  
+
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
-  
+
       state = store.prompt(state, new ChooseEnergyPrompt(
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ CardType.COLORLESS, CardType.COLORLESS],
+        [CardType.COLORLESS, CardType.COLORLESS],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);

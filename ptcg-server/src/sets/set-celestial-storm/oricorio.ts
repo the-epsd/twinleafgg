@@ -3,9 +3,10 @@ import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-ty
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { GustOpponentBenchEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Oricorio extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,7 +39,7 @@ export class Oricorio extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const hasBench = opponent.bench.some(b => b.cards.length > 0);

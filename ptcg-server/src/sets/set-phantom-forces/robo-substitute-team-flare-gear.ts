@@ -6,8 +6,9 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardType, PokemonType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { GameError, GameMessage, Power, PowerType, PokemonCard, PokemonCardList, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 // Ref: set-phantom-forces/robo-substitutue.ts (Robo Substitute - existing implementation)
 export class RoboSubstituteTeamFlareGear extends TrainerCard {
@@ -53,7 +54,7 @@ export class RoboSubstituteTeamFlareGear extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Discard from play when activated
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
       const player = effect.player;
 

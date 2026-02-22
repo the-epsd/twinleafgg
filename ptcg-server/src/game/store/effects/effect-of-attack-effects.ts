@@ -35,7 +35,7 @@ export class PreventRetreatEffect extends EffectOfAttackEffect {
   }
 
   applyEffect(): void {
-    this.opponent.active.marker.addMarker(MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this.markerSource);
+    this.opponent.active.marker.addMarker(MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this.markerSource, 'attack', 'pokemon');
   }
 }
 
@@ -50,8 +50,9 @@ export class PreventDamageEffect extends EffectOfAttackEffect {
   }
 
   applyEffect(): void {
-    this.player.active.marker.addMarker(MarkerConstants.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this.markerSource);
-    this.opponent.marker.addMarker(MarkerConstants.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this.markerSource);
+    this.player.active.marker.addMarker(MarkerConstants.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this.markerSource, 'attack', 'pokemon');
+    // CLEAR marker goes on player.marker — it's a turn-cycle bookkeeping signal, not tied to a specific Pokemon
+    this.opponent.marker.addMarker(MarkerConstants.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER, this.markerSource, 'attack', 'player');
   }
 }
 
@@ -66,7 +67,7 @@ export class PreventAttackEffect extends EffectOfAttackEffect {
   }
 
   applyEffect(): void {
-    this.opponent.active.marker.addMarker(MarkerConstants.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this.markerSource);
+    this.opponent.active.marker.addMarker(MarkerConstants.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER, this.markerSource, 'attack', 'pokemon');
   }
 }
 
@@ -81,7 +82,7 @@ export class ReduceDamageEffect extends EffectOfAttackEffect {
   }
 
   applyEffect(): void {
-    this.opponent.active.marker.addMarker(MarkerConstants.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this.markerSource);
+    this.opponent.active.marker.addMarker(MarkerConstants.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this.markerSource, 'attack', 'pokemon');
   }
 }
 

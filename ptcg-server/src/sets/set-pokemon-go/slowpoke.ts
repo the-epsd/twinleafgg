@@ -2,8 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, TrainerType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, TrainerCard, Card, ChooseCardsPrompt, GameMessage, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/prefabs/prefabs';
+
+import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Slowpoke extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,11 +34,11 @@ export class Slowpoke extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 30);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const blocked: number[] = [];
       let numItems = 0;

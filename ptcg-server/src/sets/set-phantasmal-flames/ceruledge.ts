@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { State } from '../../game/store/state/state';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { ChooseCardsPrompt, GameMessage } from '../../game';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Ceruledge extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -30,7 +30,7 @@ export class Ceruledge extends PokemonCard {
   public fullName: string = 'Ceruledge M2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Check if player has at least 4 Basic Fire Energy cards in hand

@@ -3,10 +3,11 @@ import { Stage, CardType, BoardEffect, SpecialCondition } from '../../game/store
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, StateUtils } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Charizard extends PokemonCard {
@@ -45,7 +46,7 @@ export class Charizard extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 

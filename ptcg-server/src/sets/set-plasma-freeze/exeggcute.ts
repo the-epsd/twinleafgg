@@ -3,11 +3,12 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameMessage } from '../../game/game-message';
 import { GameError } from '../../game/game-error';
 import { DiscardToHandEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Exeggcute extends PokemonCard {
 
@@ -50,7 +51,7 @@ export class Exeggcute extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Check if card is in the discard

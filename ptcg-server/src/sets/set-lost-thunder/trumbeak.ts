@@ -5,7 +5,8 @@ import { Effect } from '../../game/store/effects/effect';
 import { SuperType } from '../../game/store/card/card-types';
 import { ChooseCardsPrompt } from '../../game';
 import { CardList } from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Trumbeak extends PokemonCard {
 
@@ -50,7 +51,7 @@ export class Trumbeak extends PokemonCard {
   public fullName: string = 'Trumbeak LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

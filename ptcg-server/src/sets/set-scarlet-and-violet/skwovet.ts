@@ -4,10 +4,11 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { CardList, GameError, GameMessage, PlayerType } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Skwovet extends PokemonCard {
 
@@ -58,7 +59,7 @@ export class Skwovet extends PokemonCard {
       player.marker.removeMarker(this.NEST_STASH_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
 
       const player = effect.player;
       const cards = player.hand.cards.filter(c => c !== this);

@@ -88,8 +88,10 @@ export class Board3dStackService {
     );
 
     // Position and rotate each card in the stack
+    // Top player (rotation=180): add 180° on Z so face-down card backs match other top player cards
     const rotationRad = (rotation * Math.PI) / 180;
-    const quaternion = new Quaternion().setFromEuler(new Euler(-Math.PI / 2, rotationRad, 0));
+    const flipZ = rotation === 180 ? Math.PI : 0;
+    const quaternion = new Quaternion().setFromEuler(new Euler(-Math.PI / 2, rotationRad, flipZ));
 
     for (let i = 0; i < count; i++) {
       const matrix = new Matrix4();
@@ -135,6 +137,10 @@ export class Board3dStackService {
       if (topCardMesh) {
         topCardMesh.getGroup().userData.isDeck = true;
         topCardMesh.getGroup().userData.cardList = deckCardList; // Set full deck CardList, not just single card
+        // Top player (rotation=180): add 180° on Z so face-down card back matches other top player cards
+        if (rotation === 180) {
+          topCardMesh.getGroup().rotation.z = Math.PI;
+        }
       }
     }
   }

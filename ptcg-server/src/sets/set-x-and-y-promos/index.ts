@@ -1,4 +1,3 @@
-import { XerneasXYP, YveltalXYP, XerneasEXXYP, YveltalExXYP, DragalgeXYP, GroudonExXYP, HoopaEXXYP, MeloettaXYP, MewExXYP, Froakie2XYP, VolcanionXYP, XerneasEX2XYP, YveltalEx2XYP, VolcanionEXXYP, MagearnaEXXYP, Jirachi2XYP, YveltalEx3XYP, Karen2XYP } from './other-prints';
 import { Card } from '../../game/store/card/card';
 import { Azelf } from './azelf';
 import { Celebi } from './celebi';
@@ -9,7 +8,28 @@ import { Meloetta } from './meloetta';
 import { Regirock } from './regirock';
 
 // Other Prints
-import { BronzongXYP } from './other-prints';
+import {
+  XerneasXYP,
+  YveltalXYP,
+  XerneasEXXYP,
+  YveltalExXYP,
+  DragalgeXYP,
+  GroudonExXYP,
+  HoopaEXXYP,
+  MeloettaXYP,
+  MewExXYP,
+  Froakie2XYP,
+  VolcanionXYP,
+  XerneasEX2XYP,
+  YveltalEx2XYP,
+  VolcanionEXXYP,
+  MagearnaEXXYP,
+  Jirachi2XYP,
+  YveltalEx3XYP,
+  Karen2XYP,
+  PalaceBookXYP,
+  BronzongXYP,
+} from './other-prints';
 
 export const setXYPromos: Card[] = [
   new Azelf(),
@@ -21,6 +41,7 @@ export const setXYPromos: Card[] = [
   new Regirock(),
 
   // Other Prints
+  new PalaceBookXYP(),
   new BronzongXYP(),
   new XerneasXYP(),
   new YveltalXYP(),

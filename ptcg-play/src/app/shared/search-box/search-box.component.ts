@@ -1,5 +1,5 @@
 import { Component, ViewChild, EventEmitter, Output, Input } from '@angular/core';
-import { MatInput } from '@angular/material/input';
+import { MatLegacyInput as MatInput } from '@angular/material/legacy-input';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({

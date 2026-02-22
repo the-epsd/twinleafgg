@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardType, CardTag, PowerType, StoreLike, State, SpecialCondition, GamePhase, StateUtils } from '../../game';
 import { AbstractAttackEffect, AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Miloticex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -122,7 +123,7 @@ export class Miloticex extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       state = store.reduceEffect(state, specialConditionEffect);
     }

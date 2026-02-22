@@ -8,8 +8,8 @@ import { AttachEnergyPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 // LOT Magcargo-GX 44 (https://limitlesstcg.com/cards/LOT/44)
 export class MagcargoGX extends PokemonCard {
@@ -68,7 +68,7 @@ export class MagcargoGX extends PokemonCard {
     }
 
     // Crushing Charge
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {
@@ -114,9 +114,8 @@ export class MagcargoGX extends PokemonCard {
       return state;
     }
 
-
     // Lava Flow
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let cards: Card[] = [];
@@ -136,7 +135,7 @@ export class MagcargoGX extends PokemonCard {
     }
 
     // Burning Magma-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       // Check if player has used GX attack

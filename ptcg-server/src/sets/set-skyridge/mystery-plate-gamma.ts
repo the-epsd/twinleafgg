@@ -5,6 +5,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { DEVOLVE_POKEMON, DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
@@ -105,13 +106,13 @@ export class MysteryPlateGamma extends TrainerCard {
           [SlotType.ACTIVE, SlotType.BENCH],
           { allowCancel: false, min: 1, max: 1, blocked }
         ),
-        (results) => {
-          if (results && results.length > 0) {
-            DEVOLVE_POKEMON(store, state, results[0], effect.opponent.deck);
-          }
+          (results) => {
+            if (results && results.length > 0) {
+              DEVOLVE_POKEMON(store, state, results[0], effect.opponent.deck);
+            }
 
-          return state;
-        }
+            return state;
+          }
         );
       }
     }

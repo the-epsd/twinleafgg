@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, AttachEnergyPrompt, EnergyCard, GameError, PlayerType, SlotType, StateUtils, PowerType, CardTarget } from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Solrock extends PokemonCard {
 
@@ -44,7 +45,7 @@ export class Solrock extends PokemonCard {
       player.marker.removeMarker(this.SUN_ENERGY_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Check if player has a Lunatone in play

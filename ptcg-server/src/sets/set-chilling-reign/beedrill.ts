@@ -3,8 +3,9 @@ import { Stage, CardType, EnergyType, CardTag } from '../../game/store/card/card
 import { StoreLike, State, EnergyCard, StateUtils, Card, ChooseEnergyPrompt, GameMessage } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Beedrill extends PokemonCard {
 
@@ -53,7 +54,7 @@ export class Beedrill extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
       const pokemon = player.active;
@@ -71,7 +72,7 @@ export class Beedrill extends PokemonCard {
             activePokemon.hp = 0;
           }
         }
-        if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+        if (WAS_ATTACK_USED(effect, 1, this)) {
           const player = effect.player;
 
           const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);

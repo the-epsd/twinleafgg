@@ -5,8 +5,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Lapras extends PokemonCard {
 
@@ -48,24 +48,24 @@ export class Lapras extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
       const attachedEnergy = effect.source.cards.filter(c => c instanceof EnergyCard);
-      
+
       for (const energy of attachedEnergy) {
         player.active.moveCardTo(energy, player.hand);
       }
-      
+
       const opponent = StateUtils.getOpponent(state, player);
       const benched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
 
       const min = Math.min(1, benched);
       const max = Math.min(1, benched);
-      
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
@@ -84,7 +84,7 @@ export class Lapras extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const sleepEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       store.reduceEffect(state, sleepEffect);
     }

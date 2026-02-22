@@ -2,9 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
-import { Effect, AttackEffect } from '../../game/store/effects/game-effects';
+import { Effect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { SpecialCondition } from '../../game/store/card/card-types';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Misdreavus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -29,7 +30,7 @@ export class Misdreavus extends PokemonCard {
   public fullName: string = 'Misdreavus PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       state = store.reduceEffect(state, specialCondition);
     }

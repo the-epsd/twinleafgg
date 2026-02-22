@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/car
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { StateUtils } from '../../game/store/state-utils';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
@@ -13,7 +13,7 @@ import { GameMessage } from '../../game/game-message';
 import { GameError } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class RadiantAlakazam extends PokemonCard {
 
@@ -70,7 +70,7 @@ export class RadiantAlakazam extends PokemonCard {
       player.marker.removeMarker(this.PAINFUL_SPOONS_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -128,7 +128,7 @@ export class RadiantAlakazam extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const oppHand = opponent.hand.cards.length;

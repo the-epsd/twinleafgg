@@ -5,7 +5,8 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import {IS_TOOL_BLOCKED} from '../../game/store/prefabs/prefabs';
+
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -42,7 +43,7 @@ export class RapidStrikeScrollOfSwirls extends TrainerCard {
     if (effect instanceof CheckPokemonAttacksEffect && effect.player.active.getPokemonCard()?.tools.includes(this) &&
       !effect.attacks.includes(this.attacks[0])) {
 
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)){ return state; }
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       effect.attacks.push(this.attacks[0]);
     }

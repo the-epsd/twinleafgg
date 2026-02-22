@@ -1,7 +1,7 @@
 import { GameError, GameMessage, PlayerType, StoreLike, State } from '../../game';
 import { CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
@@ -32,7 +32,10 @@ export class DoubleRainbowEnergy extends EnergyCard {
     }
 
     // Reduce damage done to opponent's Pokemon by 10
-    if ((effect instanceof DealDamageEffect) && effect.source.cards.includes(this)) {
+    if ((effect instanceof DealDamageEffect) && effect.source.cards.includes(this) && effect.target === effect.opponent.active) {
+      effect.damage -= 10;
+    } else if (effect instanceof PutDamageEffect && effect.source.cards.includes(this) && effect.target !== effect.opponent.active) {
+      // Reduction not only on active
       effect.damage -= 10;
     }
 

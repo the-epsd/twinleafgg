@@ -3,8 +3,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Absol extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -46,7 +46,7 @@ export class Absol extends PokemonCard {
       effect.cost.push(CardType.COLORLESS);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

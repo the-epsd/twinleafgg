@@ -11,13 +11,18 @@ import { Machoke } from './machoke';
 import { Machop } from './machop';
 import { MysteriousFossil } from './mysterious-fossil';
 import { Salamenceex } from './salamence-ex';
+import { SidneysStadium } from './sidneys-stadium';
 import { Skitty } from './skitty';
 import { StevensAdvice } from './stevens-advice';
 
 // Other prints
 import {
+  DarknessEnergySpecialPK,
   DelcattyPK,
-  EnergySwitchPK
+  EnergySwitchPK,
+  GreatBallPK,
+  MetalEnergySpecialPK,
+  WarpEnergyPK
 } from './other-prints';
 
 export const setEXPowerKeepers: Card[] = [
@@ -32,12 +37,17 @@ export const setEXPowerKeepers: Card[] = [
   new Machop(),
   new MysteriousFossil(),
   new Salamenceex(),
+  new SidneysStadium(),
   new Skitty(),
   new StevensAdvice(),
 
   // Other prints
+  new DarknessEnergySpecialPK(),
   new DelcattyPK(),
   new EnergySwitchPK(),
+  new GreatBallPK(),
+  new MetalEnergySpecialPK(),
+  new WarpEnergyPK(),
 
   // Basic energies
   new GrassEnergy(),

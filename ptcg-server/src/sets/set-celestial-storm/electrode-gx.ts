@@ -2,9 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, GameError, AttachEnergyPrompt, StateUtils, CardTarget } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { DiscardEnergyPrompt } from '../../game/store/prompts/discard-energy-prompt';
-import { BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class ElectrodeGX extends PokemonCard {
 
@@ -61,7 +61,7 @@ export class ElectrodeGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const hasEnergyInHand = player.discard.cards.some(c => {
         return c.superType === SuperType.ENERGY;
@@ -112,7 +112,7 @@ export class ElectrodeGX extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       BLOCK_IF_GX_ATTACK_USED(player);

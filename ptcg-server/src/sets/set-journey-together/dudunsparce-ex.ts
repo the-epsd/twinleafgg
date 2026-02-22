@@ -1,7 +1,8 @@
 import { PokemonCard, CardTag, Stage, CardType, State, StoreLike, StateUtils, PlayerType } from '../../game';
 import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dudunsparceex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex];
@@ -36,7 +37,7 @@ export class Dudunsparceex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -50,7 +51,7 @@ export class Dudunsparceex extends PokemonCard {
       effect.damage = opponentexPokemon * 60;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

@@ -4,9 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage } from '../../game';
+import { StoreLike, State, GameMessage, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, SHUFFLE_DECK, MOVE_CARDS, SHOW_CARDS_TO_PLAYER } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 
 export class Drilbur extends PokemonCard {
@@ -47,6 +47,7 @@ export class Drilbur extends PokemonCard {
         return state;
       }
 
+      const opponent = StateUtils.getOpponent(state, player);
       state = store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_DECK,
@@ -55,10 +56,9 @@ export class Drilbur extends PokemonCard {
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         const cards = selected || [];
-        cards.forEach(card => {
-          player.discard.moveCardTo(card, player.deck);
-        });
-        return SHUFFLE_DECK(store, state, player);
+        SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
+        MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
+        SHUFFLE_DECK(store, state, player);
       });
     }
 

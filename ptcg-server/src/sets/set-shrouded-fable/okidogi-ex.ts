@@ -4,6 +4,7 @@ import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, ShuffleDe
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Okidogiex extends PokemonCard {
@@ -40,7 +41,7 @@ export class Okidogiex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const cardList = StateUtils.findCardList(state, this);
@@ -71,7 +72,7 @@ export class Okidogiex extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
 
       const player = effect.player;
       if (player.active.specialConditions.includes(SpecialCondition.POISONED)) {

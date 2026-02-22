@@ -41,7 +41,7 @@ export class Eelektross extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Suction Heal - heal same amount as damage dealt
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const healEffect = new HealTargetEffect(effect, effect.damage);
       healEffect.target = effect.player.active;
       store.reduceEffect(state, healEffect);

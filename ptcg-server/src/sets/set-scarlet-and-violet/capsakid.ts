@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardType, Resistance, StoreLike, State, GameMessage, SuperType, EnergyType, StateUtils, AttachEnergyPrompt, PlayerType, ShuffleDeckPrompt, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+
+import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Capsakid extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,7 +34,7 @@ export class Capsakid extends PokemonCard {
   public fullName: string = 'Capsakid SVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,

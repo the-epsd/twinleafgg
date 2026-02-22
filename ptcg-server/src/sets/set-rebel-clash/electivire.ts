@@ -4,8 +4,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Electivire extends PokemonCard {
 
@@ -51,7 +51,7 @@ export class Electivire extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, [
@@ -64,7 +64,7 @@ export class Electivire extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, player.active);

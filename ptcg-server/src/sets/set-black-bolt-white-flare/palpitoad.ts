@@ -3,7 +3,8 @@ import { Stage } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 // Energy type constants (W, C, L) are assumed to be globally available as in other SV11B cards
 
 export class Palpitoad extends PokemonCard {
@@ -36,7 +37,7 @@ export class Palpitoad extends PokemonCard {
   public fullName: string = 'Palpitoad SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let pokemonCount = 0;

@@ -3,7 +3,8 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TapuKoko extends PokemonCard {
 
@@ -41,7 +42,7 @@ export class TapuKoko extends PokemonCard {
   public fullName: string = 'Tapu Koko SMP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = effect.opponent;
       const benched = opponent.bench.filter(b => b.cards.length > 0);
 

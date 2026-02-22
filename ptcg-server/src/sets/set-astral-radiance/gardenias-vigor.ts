@@ -35,10 +35,6 @@ export class GardeniasVigor extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      if (player.deck.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-
       const supporterTurn = player.supporterTurn;
 
       if (supporterTurn > 0) {
@@ -50,15 +46,6 @@ export class GardeniasVigor extends TrainerCard {
       effect.preventDefault = true;
 
       DRAW_CARDS(player, 2);
-
-      // const hasEnergyInHand = player.hand.cards.some(c => {
-      //   return c instanceof EnergyCard
-      //     && c.energyType === EnergyType.BASIC
-      //     && c.provides.includes(CardType.GRASS);
-      // });
-      // if (!hasEnergyInHand) {
-      //   throw new GameError(GameMessage.CANNOT_USE_POWER);
-      // }
 
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
@@ -75,8 +62,9 @@ export class GardeniasVigor extends TrainerCard {
           const energyCard = transfer.card as EnergyCard;
           const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
           store.reduceEffect(state, attachEnergyEffect);
-          CLEAN_UP_SUPPORTER(effect, player);
         }
+        // Clean up supporter once, after all transfers are done
+        CLEAN_UP_SUPPORTER(effect, player);
       });
     }
 

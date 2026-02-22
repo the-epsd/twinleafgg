@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, ChooseEnergyPrompt, Card } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Quilava extends PokemonCard {
 
@@ -20,18 +20,18 @@ export class Quilava extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Flare',
-      cost: [ CardType.FIRE, CardType.COLORLESS ],
+      cost: [CardType.FIRE, CardType.COLORLESS],
       damage: 30,
       text: ''
     },
     {
       name: 'Flamethrower',
-      cost: [ CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
       damage: 60,
       text: 'Discard an Energy attached to Quilava.'
     }
@@ -49,7 +49,7 @@ export class Quilava extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
@@ -59,7 +59,7 @@ export class Quilava extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
         checkProvidedEnergy.energyMap,
-        [ CardType.COLORLESS ],
+        [CardType.COLORLESS],
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);

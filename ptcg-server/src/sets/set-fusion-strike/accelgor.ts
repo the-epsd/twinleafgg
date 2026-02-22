@@ -2,8 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { MOVED_TO_ACTIVE_THIS_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Accelgor extends PokemonCard {
 
@@ -46,14 +46,8 @@ export class Accelgor extends PokemonCard {
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect) {
-      this.movedToActiveThisTurn = false;
-      console.log('movedToActiveThisTurn = false');
-    }
-
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
-      if (this.movedToActiveThisTurn) {
+      if (MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)) {
         effect.cost = [ CardType.GRASS ];
       }
     }

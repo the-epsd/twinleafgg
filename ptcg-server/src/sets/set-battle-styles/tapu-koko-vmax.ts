@@ -3,14 +3,15 @@ import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/car
 import { StoreLike, State, StateUtils } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TapuKokoVMAX extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VMAX ];
+  public tags = [CardTag.POKEMON_VMAX];
 
   public regulationMark = 'E';
-  
+
   public stage: Stage = Stage.VMAX;
 
   public evolvesFrom = 'Tapu Koko V';
@@ -21,7 +22,7 @@ export class TapuKokoVMAX extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
@@ -29,7 +30,7 @@ export class TapuKokoVMAX extends PokemonCard {
       cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
       damage: 180,
       text: 'If you have more Prize cards remaining than your ' +
-      'opponent, their Active Pokémon is now Paralyzed.'
+        'opponent, their Active Pokémon is now Paralyzed.'
     }
   ];
 
@@ -44,7 +45,7 @@ export class TapuKokoVMAX extends PokemonCard {
   public fullName: string = 'Tapu Koko VMAX BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       if (player.getPrizeLeft() >= opponent.getPrizeLeft()) {

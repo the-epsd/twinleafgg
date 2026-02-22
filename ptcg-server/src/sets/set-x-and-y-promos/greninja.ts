@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PlayerType, CoinFlipPrompt, GameMessage } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect, Effect } from '../../game/store/effects/game-effects';
+import { Effect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Greninja extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -33,7 +34,7 @@ export class Greninja extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -48,7 +49,7 @@ export class Greninja extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), result => {
         return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), result2 => {

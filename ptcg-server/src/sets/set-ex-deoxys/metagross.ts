@@ -4,8 +4,8 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameError, GameMessage, PlayerType, EnergyCard, AttachEnergyPrompt, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { ABILITY_USED, ADD_MARKER, MOVE_CARDS, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { ABILITY_USED, ADD_MARKER, MOVE_CARDS, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
 export class Metagross extends PokemonCard {
@@ -48,7 +48,7 @@ export class Metagross extends PokemonCard {
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.SUPER_CONNECTIVITY_MARKER, this);
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {

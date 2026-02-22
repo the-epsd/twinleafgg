@@ -4,8 +4,8 @@ import { ChooseCardsPrompt, EnergyCard, GameError, GameMessage, PokemonCardList,
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { ABILITY_USED, ADD_MARKER, DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../game/store/prefabs/prefabs';
+
+import { ABILITY_USED, ADD_MARKER, DRAW_CARDS_UNTIL_CARDS_IN_HAND, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class IonosKilowattrel extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -52,7 +52,7 @@ export class IonosKilowattrel extends PokemonCard {
       player.marker.removeMarker(this.RUMBLING_ENGINE_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.hand.cards.length >= 6) {

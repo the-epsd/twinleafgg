@@ -39,7 +39,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // Discard trainer only when user selected a Pokemon
   CLEAN_UP_SUPPORTER(effect, player);
   player.active.clearEffects();
-  player.switchPokemon(targets[0]);
+  player.switchPokemon(targets[0], store, state);
   return state;
 }
 

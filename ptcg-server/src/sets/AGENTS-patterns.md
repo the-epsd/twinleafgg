@@ -238,6 +238,13 @@ Use these before writing custom marker/prompt logic.
 
 ### Post-Damage Switching (CRITICAL - use AfterAttackEffect)
 
+> **WARNING**: ALL switching in attacks that also deal damage MUST use the AfterAttackEffect pattern below. This includes:
+> - "Switch this Pokemon with 1 of your Benched Pokemon" (self-switch)
+> - "Switch the Defending Pokemon with 1 of your opponent's Benched Pokemon" (opponent switch)
+> - "Your opponent switches their Active Pokemon" (opponent chooses)
+>
+> Even if the switch is inside a prompt callback within `WAS_ATTACK_USED`, it STILL needs AfterAttackEffect.
+
 ```typescript
 public usedSwitchAttack = false;
 
@@ -281,6 +288,24 @@ if (effect instanceof EndTurnEffect) {
 > cards.forEach(c => { player.active.moveCardTo(c, player.discard); });
 > ```
 > Reference: `set-primal-clash/manectric.ts`
+
+### Returning Energy to Hand (NOT Discard)
+
+When the card text says "put Energy into their hand" or "return Energy to your hand," use `GameMessage.CHOOSE_ENERGIES_TO_HAND` instead of `GameMessage.CHOOSE_ENERGIES_TO_DISCARD`:
+
+```typescript
+// Card text: "Put 2 Energy attached to this Pokemon into your hand."
+store.prompt(state, new ChooseEnergyPrompt(
+  player.id,
+  GameMessage.CHOOSE_ENERGIES_TO_HAND,  // NOT CHOOSE_ENERGIES_TO_DISCARD
+  player.active,
+  ...
+), selected => {
+  player.active.moveCardsTo(selected, player.hand);  // Move to HAND, not discard
+});
+```
+
+> **Common mistake**: Using `CHOOSE_ENERGIES_TO_DISCARD` when the card puts energy into the hand. Always match the `GameMessage` to the card text destination.
 
 ### Discarding Energy from Opponent's Pokemon
 
@@ -771,7 +796,7 @@ Reference: `set-breakthrough/giovannis-scheme.ts`
 When card text says "The Defending Pokemon can't retreat during your opponent's next turn":
 
 ```typescript
-import { MarkerConstants } from '../../game/store/prefabs/prefabs';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
 
 // In WAS_ATTACK_USED block (MUST return the result):
 return BLOCK_RETREAT(store, state, effect, this);
@@ -823,6 +848,7 @@ Reference: `set-surging-sparks/energy-search-pro.ts`
 |-------------|----------------|-----------------|----------|
 | Activated (click to use) | `true` | `WAS_POWER_USED(effect, 0, this)` | Victreebel FFI (Wafting Scent), Gothitelle FFI (Teleport Room) |
 | Passive (auto-triggers) | omit | `effect instanceof DealDamageEffect` etc. | Klefki FFI (Secret Key), Noivern FFI (Echolocation), Eevee FFI (Energy Evolution) |
+| On-evolve (triggers when played) | omit | `JUST_EVOLVED(effect, this)` | Galarian Obstagoon SSH (Untamed Shout) |
 
 **Why this matters:** Setting `useWhenInPlay: true` on a passive ability creates a non-functional "use ability" button in the game UI.
 
@@ -1070,3 +1096,108 @@ if (player.stadium.cards.length > 0) { ... }
 ```
 
 Reference: `set-cosmic-eclipse/black-kyurem.ts`
+
+### Activated ability: `throw GameError` vs `return state` for IS_ABILITY_BLOCKED
+
+When `IS_ABILITY_BLOCKED` returns `true`, the response depends on the ability type:
+
+```typescript
+// ACTIVATED ability (WAS_POWER_USED): THROW error to show feedback to player
+if (WAS_POWER_USED(effect, 0, this)) {
+  if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+    throw new GameError(GameMessage.BLOCKED_BY_EFFECT);  // Player sees "blocked" message
+  }
+  // ... ability logic
+}
+
+// PASSIVE ability (DealDamageEffect, etc.): RETURN state silently
+if (effect instanceof DealDamageEffect) {
+  if (IS_ABILITY_BLOCKED(store, state, owner, this)) {
+    return state;  // Silently skip, no UI message
+  }
+  // ... ability logic
+}
+```
+
+> **Common mistake**: Using `return state` in activated abilities. This fails silently without showing the player why their ability didn't work.
+
+---
+
+## MoveEnergyPrompt: `blockedFrom` vs `blockedTo`
+
+When using `MoveEnergyPrompt` to restrict energy movement direction:
+
+- `blockedFrom` — slots that CANNOT be used as **source** (energy cannot be taken from these slots)
+- `blockedTo` — slots that CANNOT be used as **destination** (energy cannot be moved to these slots)
+
+**Example: Move energy FROM bench TO active only** (e.g., Galarian Sirfetch'd V's Resolute Spear):
+```typescript
+const blockedFrom: CardTarget[] = [];
+const blockedTo: CardTarget[] = [];
+
+player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+  if (cardList === player.active) {
+    blockedFrom.push(target);  // Can't take energy FROM active
+  } else {
+    blockedTo.push(target);    // Can't move energy TO bench
+  }
+});
+
+store.prompt(state, new MoveEnergyPrompt(
+  player.id,
+  GameMessage.MOVE_ENERGY_CARDS,
+  PlayerType.BOTTOM_PLAYER,
+  [SlotType.BENCH, SlotType.ACTIVE],
+  { superType: SuperType.ENERGY },
+  { allowCancel: true, blockedFrom, blockedTo }
+), transfers => { ... });
+```
+
+> **Common mistake**: Swapping `blockedFrom` and `blockedTo`. Always think: "FROM where?" = source, "TO where?" = destination.
+
+Reference: `set-vivid-voltage/galarian-sirfetchd-v.ts`
+
+---
+
+## Special Card Types: Structural Requirements
+
+### LV.X Cards
+
+Every LV.X implementation MUST have these structural properties:
+1. `public stage: Stage = Stage.LV_X`
+2. `public evolvesFrom: string = 'BasePokemonName'` (e.g., `'Garchomp C'`, `'Luxray GL'`)
+3. `public tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP]` (for SP Pokemon) or `[CardTag.POKEMON_LV_X]`
+4. An `LV.X Rule` power at `powers[0]` with `PowerType.LV_X_RULE` and `useWhenInPlay: false`
+5. Any Poké-Powers must use `PowerType.POKEPOWER` (NOT `PowerType.ABILITY`)
+6. NO `useWhenInPlay: true` on Poké-Powers
+
+Reference: `set-supreme-victors/garchomp-c-lv-x.ts`, `set-rising-rivals/luxray-gl-lv-x.ts`
+
+### Mega Evolution Cards
+
+Every MEGA card MUST have:
+1. `public stage: Stage = Stage.MEGA`
+2. `public evolvesFrom: string = 'BasePokemonName-EX'` (e.g., `'Rayquaza-EX'`)
+3. `public tags = [CardTag.MEGA, CardTag.POKEMON_EX]`
+4. A `Mega Evolution Rule` power at `powers[0]` with `PowerType.MEGA_EVOLUTION_RULE`
+5. Ancient Traits (Δ Evolution etc.) should NOT have `useWhenInPlay: true`
+
+Reference: `set-roaring-skies/mega-rayquaza-ex.ts`
+
+### Passive Damage Intercepts
+
+When intercepting `DealDamageEffect`, `PutDamageEffect`, or `PutCountersEffect` for a specific card, BOTH checks are required:
+```typescript
+effect.target.cards.includes(this) && effect.target.getPokemonCard() === this
+```
+The `cards.includes(this)` check alone fails for evolved Pokemon where this card is buried under a Stage 2. Missing `getPokemonCard() === this` is the most commonly missed pattern.
+
+### ConfirmPrompt GameMessage Selection
+
+When using `ConfirmPrompt` in attacks or abilities, use the correct `GameMessage` for the context:
+
+- `GameMessage.WANT_TO_USE_ABILITY` — only for ability activation confirm dialogs (WAS_POWER_USED pattern)
+- `GameMessage.WANT_TO_DISCARD_ENERGY` — for optional energy discard during attacks (e.g., "You may discard all [L] Energy...")
+- `GameMessage.WANT_TO_SWITCH_POKEMON` — for optional switch during/after attacks
+
+Using the wrong message doesn't break the game but shows incorrect dialog text to the player.

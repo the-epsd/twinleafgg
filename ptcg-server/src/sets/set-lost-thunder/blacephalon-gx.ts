@@ -5,8 +5,8 @@ import { StoreLike, State, GameMessage, PlayerType, SlotType, EnergyCard } from 
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class BlacephalonGX extends PokemonCard {
 
@@ -58,13 +58,13 @@ export class BlacephalonGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Bursting Burn
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED, SpecialCondition.BURNED]);
       return store.reduceEffect(state, specialCondition);
     }
 
     // Mind Blown
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       let totalFireEnergy = 0;
@@ -106,7 +106,7 @@ export class BlacephalonGX extends PokemonCard {
     }
 
     // Burst-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
       // Check if player has used GX attack
       BLOCK_IF_GX_ATTACK_USED(player);

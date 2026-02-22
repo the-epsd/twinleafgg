@@ -3,6 +3,7 @@ import { Stage, CardType, TrainerType, CardTag } from '../../game/store/card/car
 import { StoreLike, State, StateUtils, Card, TrainerCard, ChooseCardsPrompt, GameMessage, GameLog, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useMixedCall(next: Function, store: StoreLike, state: State,
   self: Oricorio, effect: AttackEffect): IterableIterator<State> {
@@ -92,7 +93,7 @@ export class Oricorio extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useMixedCall(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

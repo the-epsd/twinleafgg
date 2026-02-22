@@ -3,7 +3,8 @@ import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-ty
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Meloetta extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -33,7 +34,7 @@ export class Meloetta extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -48,19 +49,19 @@ export class Meloetta extends PokemonCard {
         if (heads === 0) {
           return state;
         }
-        
+
         opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
           const damage = 10 * heads;
           const damageEffect = new PutDamageEffect(effect, damage);
           damageEffect.target = cardList;
           store.reduceEffect(state, damageEffect);
         });
-        
+
         return state;
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
       store.reduceEffect(state, specialConditionEffect);
     }

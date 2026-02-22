@@ -3,8 +3,8 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+
+import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MegaLopunnyex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,28 +35,13 @@ export class MegaLopunnyex extends PokemonCard {
   public fullName: string = 'Mega Lopunny ex M2';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      const player = effect.player;
-
-      // Check if this Pokemon was on the bench this turn
-      const activePokemon = player.active.getPokemonCard();
-      if (activePokemon && activePokemon.movedToActiveThisTurn) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      if (MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)) {
         effect.damage += 170;
       }
     }
 
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-
-      // Check if this Pokemon was on the bench this turn
-      const activePokemon = player.active.getPokemonCard();
-      if (activePokemon && activePokemon.movedToActiveThisTurn) {
-        activePokemon.movedToActiveThisTurn = false;
-      }
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       // Spike Hopper ignores effects on opponent's Active Pokemon
       // This is handled by the damage calculation system automatically
       // No special implementation needed as the text is descriptive

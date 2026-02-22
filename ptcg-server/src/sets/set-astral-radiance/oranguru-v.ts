@@ -1,13 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { Stage, CardType, CardTag, TrainerType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, GameError, TrainerCard } from '../../game';
+import { Stage, CardType, CardTag, TrainerType, SuperType, BoardEffect } from '../../game/store/card/card-types';
+import { PowerType, StoreLike, State, GameMessage, GameError, TrainerCard, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class OranguruV extends PokemonCard {
 
@@ -64,8 +63,12 @@ export class OranguruV extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      if (player.marker.hasMarker(this.BACK_ORDER_MARKER)) {
+      if (player.marker.hasMarker(this.BACK_ORDER_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       if (player.active.getPokemonCard() !== this) {
@@ -75,6 +78,14 @@ export class OranguruV extends PokemonCard {
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
+
+      player.marker.addMarker(this.BACK_ORDER_MARKER, this);
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+        }
+      });
 
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
@@ -87,7 +98,7 @@ export class OranguruV extends PokemonCard {
     }
 
     // Psychic
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -99,10 +110,9 @@ export class OranguruV extends PokemonCard {
       effect.damage += opponentEnergyCount * 50;
     }
 
-    // marker gaming
+    // Remove once-per-turn marker at end of turn
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BACK_ORDER_MARKER, this)) {
       const player = effect.player;
-
       player.marker.removeMarker(this.BACK_ORDER_MARKER, this);
     }
 

@@ -4,7 +4,8 @@ import { ChooseCardsPrompt, GameError, GameMessage, PlayerType, PowerType, ShowC
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Grovyle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -28,7 +29,6 @@ export class Grovyle extends PokemonCard {
     }
   ];
 
-
   public set: string = 'LOT';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
@@ -48,7 +48,7 @@ export class Grovyle extends PokemonCard {
       player.marker.removeMarker(this.SUNSHINE_GRACE_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

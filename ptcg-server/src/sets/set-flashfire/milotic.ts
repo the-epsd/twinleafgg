@@ -2,7 +2,8 @@ import { AttachEnergyPrompt, CardTarget, GameError, GameMessage, PlayerType, Pow
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Milotic extends PokemonCard {
 
@@ -46,7 +47,7 @@ export class Milotic extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const energyInDiscard = player.discard.cards.filter(c => {

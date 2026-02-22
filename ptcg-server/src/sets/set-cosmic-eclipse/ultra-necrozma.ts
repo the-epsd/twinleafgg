@@ -1,8 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, PowerType, StateUtils, GameError } from '../../game'; import { AttackEffect, PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, PowerType, StateUtils, GameError } from '../../game';
+import { UseAttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // CEC Ultra Necrozma 164 (https://limitlesstcg.com/cards/CEC/164)
 export class UltraNecrozma extends PokemonCard {
@@ -55,14 +57,7 @@ export class UltraNecrozma extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 
@@ -72,7 +67,7 @@ export class UltraNecrozma extends PokemonCard {
     }
 
     // Luster of Downfall
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const activeCardList = opponent.active;

@@ -3,10 +3,11 @@ import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dragonair extends PokemonCard {
 
@@ -52,7 +53,7 @@ export class Dragonair extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       return store.prompt(state, [
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
@@ -64,7 +65,7 @@ export class Dragonair extends PokemonCard {
 
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

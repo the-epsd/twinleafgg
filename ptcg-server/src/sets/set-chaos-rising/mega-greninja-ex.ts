@@ -6,8 +6,9 @@ import { PlayerType, SlotType } from '../../game/store/actions/play-card-action'
 import { PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { WAS_POWER_USED, WAS_ATTACK_USED, ABILITY_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { WAS_POWER_USED, WAS_ATTACK_USED, ABILITY_USED, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 import { GameError } from '../../game/game-error';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class MegaGreninjaex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -94,6 +95,11 @@ export class MegaGreninjaex extends PokemonCard {
         ABILITY_USED(player, this);
       });
       return state;
+    }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.MORTAL_SHURIKEN_MARKER, this);
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      effect.player.marker.removeMarker(this.MORTAL_SHURIKEN_MARKER, this);
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

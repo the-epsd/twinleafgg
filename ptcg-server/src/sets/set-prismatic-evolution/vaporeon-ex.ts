@@ -4,7 +4,7 @@ import { StoreLike, State, StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayerType } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Vaporeonex extends PokemonCard {
@@ -38,7 +38,7 @@ export class Vaporeonex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Severe Squall
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

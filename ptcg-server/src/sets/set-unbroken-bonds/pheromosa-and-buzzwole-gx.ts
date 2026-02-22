@@ -1,9 +1,9 @@
 import { CardTag, CardType, ChoosePokemonPrompt, GameMessage, GamePhase, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED, NEXT_TURN_ATTACK_BASE_DAMAGE } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, NEXT_TURN_ATTACK_BASE_DAMAGE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class PheromosaAndBuzzwoleGX extends PokemonCard {
@@ -51,7 +51,7 @@ export class PheromosaAndBuzzwoleGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Jet Punch (literally just buzzwole-gx's first attack)
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -80,13 +80,13 @@ export class PheromosaAndBuzzwoleGX extends PokemonCard {
     }
 
     // Elegant Sole
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       this.usedBaseBeastGame = false;
       this.usedEnhancedBeastGame = false;
     }
 
     // Beast Game-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
 
       BLOCK_IF_GX_ATTACK_USED(player);

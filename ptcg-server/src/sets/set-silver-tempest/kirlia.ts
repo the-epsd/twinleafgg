@@ -1,14 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, GameError, GameMessage,
-  ChooseCardsPrompt,
-  PlayerType
-} from '../../game';
+import { PowerType, StoreLike, State, GameError, GameMessage, ChooseCardsPrompt, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Kirlia extends PokemonCard {
 
@@ -61,7 +58,7 @@ export class Kirlia extends PokemonCard {
       player.marker.removeMarker(this.REFINEMENT_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.hand.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);

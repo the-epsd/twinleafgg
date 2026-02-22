@@ -2,9 +2,10 @@ import { ChooseCardsPrompt, GameError, GameMessage, PowerType, State, StoreLike 
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Oranguru extends PokemonCard {
 
@@ -53,7 +54,7 @@ export class Oranguru extends PokemonCard {
       player.marker.removeMarker(this.PRIMATE_WISDOM_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0 || player.hand.cards.length === 0) {

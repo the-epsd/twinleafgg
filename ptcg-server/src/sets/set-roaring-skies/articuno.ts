@@ -3,12 +3,13 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { GameMessage } from '../../game/game-message';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Articuno extends PokemonCard {
 
@@ -55,12 +56,12 @@ export class Articuno extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       store.reduceEffect(state, specialConditionEffect);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),

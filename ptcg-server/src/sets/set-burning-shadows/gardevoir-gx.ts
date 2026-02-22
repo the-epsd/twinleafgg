@@ -1,19 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag, BoardEffect } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
-  PlayerType, SlotType,
-  AttachEnergyPrompt,
-  Card,
-  ShuffleDeckPrompt,
-  ChooseCardsPrompt
-} from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, SlotType, AttachEnergyPrompt, Card, ShuffleDeckPrompt, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 // BUS Gardevoir-GX 93 (https://limitlesstcg.com/cards/BUS/93)
 export class GardevoirGX extends PokemonCard {
@@ -83,7 +76,7 @@ export class GardevoirGX extends PokemonCard {
     }
 
     // Secret Spring
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasEnergyInHand = player.hand.cards.some(c => {
@@ -123,7 +116,7 @@ export class GardevoirGX extends PokemonCard {
     }
 
     // Infinite Force
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -141,7 +134,7 @@ export class GardevoirGX extends PokemonCard {
     }
 
     // Twilight-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       // Check if player has used GX attack
       BLOCK_IF_GX_ATTACK_USED(player);

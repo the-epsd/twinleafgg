@@ -4,7 +4,7 @@ import { Attack } from '../../game/store/card/pokemon-types';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -15,17 +15,17 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 export class Zapdos extends PokemonCard {
 
   public set = 'BS';
-  
+
   public name = 'Zapdos';
-  
+
   public fullName = 'Zapdos BS';
 
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '16';
-  
+
   public stage: Stage = Stage.BASIC;
-  
+
   public cardType: CardType = CardType.LIGHTNING;
 
   public hp: number = 90;
@@ -54,7 +54,7 @@ export class Zapdos extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       return store.prompt(state, new CoinFlipPrompt(
         effect.player.id, GameMessage.COIN_FLIP
@@ -67,10 +67,10 @@ export class Zapdos extends PokemonCard {
       });
 
     }
-    
+
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-  
+
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 

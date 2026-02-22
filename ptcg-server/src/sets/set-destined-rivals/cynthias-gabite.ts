@@ -1,18 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State,
-  GameMessage,
-  ChooseCardsPrompt,
-  ShuffleDeckPrompt,
-  GameError,
-  StateUtils
-} from '../../game';
+import { PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt, GameError, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { REMOVE_MARKER, HAS_MARKER, ABILITY_USED, SHOW_CARDS_TO_PLAYER, ADD_MARKER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { REMOVE_MARKER, HAS_MARKER, ABILITY_USED, SHOW_CARDS_TO_PLAYER, ADD_MARKER, MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class CynthiasGabite extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -60,7 +53,7 @@ export class CynthiasGabite extends PokemonCard {
       REMOVE_MARKER(this.CHAMPIONS_CALL_MARKER, effect.player, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

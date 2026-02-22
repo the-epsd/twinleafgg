@@ -1,13 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import {
-  StoreLike, State, Card, PowerType, StateUtils,
-  CardTarget, PlayerType, MoveEnergyPrompt, SlotType
-} from '../../game';
+import { StoreLike, State, Card, PowerType, StateUtils, CardTarget, PlayerType, MoveEnergyPrompt, SlotType } from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* useMetalTransfer(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -89,7 +87,7 @@ export class Bronzong extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const generator = useMetalTransfer(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

@@ -1,19 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, BoardEffect } from '../../game/store/card/card-types';
-import {
-  StoreLike, State, StateUtils, PlayerType, SlotType,
-  MoveEnergyPrompt, CardTarget,
-  PowerType,
-  Card,
-  GameError,
-  EnergyCard
-} from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, StateUtils, PlayerType, SlotType, MoveEnergyPrompt, CardTarget, PowerType, Card, GameError, EnergyCard } from '../../game';
+
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class ShiningGenesect extends PokemonCard {
 
@@ -62,13 +56,12 @@ export class ShiningGenesect extends PokemonCard {
       player.marker.removeMarker(this.ENERGY_RELOAD_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(this.ENERGY_RELOAD_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
-
 
       let pokemonCount = 0;
       let otherPokemonWithEnergy = false;
@@ -153,7 +146,7 @@ export class ShiningGenesect extends PokemonCard {
       effect.player.marker.removeMarker(this.ENERGY_RELOAD_MARKER, this);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Check attached energy
@@ -164,7 +157,6 @@ export class ShiningGenesect extends PokemonCard {
       const totalGrassEnergy = checkEnergy.energyMap.reduce((sum, energy) => {
         return sum + energy.provides.filter(type => type === CardType.GRASS || type === CardType.ANY).length;
       }, 0);
-
 
       effect.damage += totalGrassEnergy * 20;
     }

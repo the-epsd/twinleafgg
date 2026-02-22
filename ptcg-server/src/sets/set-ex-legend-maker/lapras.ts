@@ -4,8 +4,8 @@ import {
   StoreLike, State, GameMessage, PowerType, ChooseCardsPrompt, ConfirmPrompt, GameLog, PlayerType, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { IS_POKEPOWER_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Lapras extends PokemonCard {
 
@@ -34,7 +34,7 @@ export class Lapras extends PokemonCard {
     }
   ];
 
-  public set: string = 'LM'; 
+  public set: string = 'LM';
 
   public setNumber: string = '8';
 
@@ -55,14 +55,7 @@ export class Lapras extends PokemonCard {
       }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.POKEPOWER,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
         return state;
       }
 

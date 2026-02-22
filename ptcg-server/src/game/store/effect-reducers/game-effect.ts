@@ -32,7 +32,7 @@ import { StoreLike } from '../store-like';
 import { MoveCardsEffect } from '../effects/game-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 import { PokemonCardList } from '../state/pokemon-card-list';
-import { MOVE_CARDS } from '../prefabs/prefabs';
+import { MOVE_CARDS, ADD_MARKER, HAS_MARKER } from '../prefabs/prefabs';
 import { CardList } from '../state/card-list';
 import { MarkerConstants } from '../markers/marker-constants';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
@@ -41,7 +41,7 @@ import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
 import { Card } from '../card/card';
 import { Attack } from '../card/pokemon-types';
 import { WaitPrompt } from '../prompts/wait-prompt';
-import { CoinFlipEffect } from '../effects/play-card-effects';
+import { CoinFlipEffect, CoinFlipSequenceEffect } from '../effects/play-card-effects';
 
 
 function applyWeaknessAndResistance(
@@ -623,6 +623,49 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     }
 
     return state;
+  }
+
+  if (effect instanceof CoinFlipSequenceEffect) {
+    const seqEffect = effect as CoinFlipSequenceEffect;
+    const player = seqEffect.player;
+    const GLIMWOOD_REFLIP_USED = 'GLIMWOOD_REFLIP_USED';
+
+    const doOneFlip = (s: State, resultsSoFar: boolean[], onDone: (results: boolean[]) => void): State => {
+      const coinFlip = new CoinFlipEffect(player, (result: boolean) => {
+        const newResults = [...resultsSoFar, result];
+        if (seqEffect.mode === 'untilTails' && result) {
+          doOneFlip(s, newResults, onDone);
+        } else if (seqEffect.mode === 'untilTails' && !result) {
+          onDone(newResults);
+        } else if (typeof seqEffect.mode === 'number' && newResults.length < seqEffect.mode) {
+          doOneFlip(s, newResults, onDone);
+        } else {
+          onDone(newResults);
+        }
+      });
+      coinFlip.skipReflipStadium = true;
+      return store.reduceEffect(s, coinFlip);
+    };
+
+    const finish = (results: boolean[]) => {
+      const stadium = StateUtils.getStadiumCard(state);
+      const isGlimwood = stadium?.name === 'Glimwood Tangle';
+      if (state.phase === GamePhase.ATTACK && isGlimwood && stadium && !HAS_MARKER(GLIMWOOD_REFLIP_USED, player, stadium)) {
+        store.prompt(state, new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY), wantToReflip => {
+          if (wantToReflip) {
+            store.log(state, GameLog.LOG_PLAYER_REFLIPS_WITH_GLIMWOOD_TANGLE, { name: player.name });
+            ADD_MARKER(GLIMWOOD_REFLIP_USED, player, stadium as Card);
+            doOneFlip(state, [], finish);
+          } else {
+            seqEffect.callback(results);
+          }
+        });
+      } else {
+        seqEffect.callback(results);
+      }
+    };
+
+    return doOneFlip(state, [], finish);
   }
 
   if (effect instanceof CoinFlipEffect) {

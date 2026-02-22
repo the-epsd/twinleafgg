@@ -7,6 +7,7 @@ import {
 } from '../../game';
 import { AttackEffect, PowerEffect, EvolveEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* useBabyEvolution(next: Function, store: StoreLike, state: State,
   self: Pichu, effect: PowerEffect): IterableIterator<State> {
@@ -131,12 +132,12 @@ export class Pichu extends PokemonCard {
   public fullName: string = 'Pichu OP9';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const generator = useBabyEvolution(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useFindAFriend(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

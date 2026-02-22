@@ -1,6 +1,7 @@
 import { CardType, CoinFlipPrompt, GameMessage, PokemonCard, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Fuecoco extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -31,7 +32,7 @@ export class Fuecoco extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       return store.prompt(state, new CoinFlipPrompt(
         player.id,
@@ -43,7 +44,7 @@ export class Fuecoco extends PokemonCard {
         }
       });
     }
-    
+
     return state;
   }
 }

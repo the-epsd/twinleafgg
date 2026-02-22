@@ -1,11 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils,
-  PokemonCardList,
-  GamePhase} from '../../game';
+import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils, PokemonCardList, GamePhase } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayStadiumEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class DusknoirLvX extends PokemonCard {
 
@@ -17,7 +16,7 @@ export class DusknoirLvX extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC, value: 10 }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public powers = [{
     name: 'Quick',
@@ -38,7 +37,7 @@ export class DusknoirLvX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = (effect as PowerEffect).player;
       const cardList = StateUtils.findCardList(state, this);
 

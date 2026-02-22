@@ -4,6 +4,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Hitmontop extends PokemonCard {
 
@@ -45,7 +46,7 @@ export class Hitmontop extends PokemonCard {
   public specialComboTurn = -10;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       if (state.turn !== this.specialComboTurn + 2) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }

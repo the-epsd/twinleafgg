@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { BoardComponent } from './board.component';
 import { BoardPrizesComponent } from './board-prizes/board-prizes.component';
 import { BoardDeckComponent } from './board-deck/board-deck.component';

@@ -3,7 +3,6 @@ import { Effect } from '../../game/store/effects/effect';
 import { EvolveEffect } from '../../game/store/effects/game-effects';
 import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
-
 export class DarkAmpharos extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public cardType: CardType = L;
@@ -64,7 +63,7 @@ export class DarkAmpharos extends PokemonCard {
     }
 
     // Handle Shock Bolt attack
-    // if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    // if (WAS_ATTACK_USED(effect, 1, this)) {
     //   const player = effect.player;
     //   const cardList = player.active;
 

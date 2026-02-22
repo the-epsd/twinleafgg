@@ -3,8 +3,8 @@ import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/ca
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameError, GameMessage, ChooseCardsPrompt, Card, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+
+import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Feraligatr extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -30,13 +30,13 @@ export class Feraligatr extends PokemonCard {
 
   public set: string = 'DRM';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '16';
+  public setNumber: string = '24';
   public name: string = 'Feraligatr';
   public fullName: string = 'Feraligatr DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasEnergyInHand = player.hand.cards.some(c => {

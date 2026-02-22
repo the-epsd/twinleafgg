@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, AttachEnergyPrompt, PlayerType, SlotType,
-  MoveEnergyPrompt, CardTarget, EnergyCard } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, StateUtils, AttachEnergyPrompt, PlayerType, SlotType, MoveEnergyPrompt, CardTarget, EnergyCard } from '../../game';
+
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Tornadus extends PokemonCard {
 
@@ -18,17 +18,17 @@ export class Tornadus extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Energy Wheel',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'Move an Energy from 1 of your Benched Pokemon to this Pokemon.'
     }, {
       name: 'Hurricane',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
       text: 'Move a basic Energy from this Pokemon to 1 of your ' +
         'Benched Pokemon.'
@@ -47,7 +47,7 @@ export class Tornadus extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const blockedFrom: CardTarget[] = [];
       const blockedTo: CardTarget[] = [];
@@ -72,7 +72,7 @@ export class Tornadus extends PokemonCard {
         effect.player.id,
         GameMessage.MOVE_ENERGY_TO_ACTIVE,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { superType: SuperType.ENERGY },
         { min: 1, max: 1, allowCancel: false, blockedFrom, blockedTo }
       ), result => {
@@ -85,7 +85,7 @@ export class Tornadus extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
       const hasBasicEnergy = player.active.cards.some(c => {
@@ -101,7 +101,7 @@ export class Tornadus extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.active,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
         { allowCancel: false, min: 1, max: 1 }
       ), transfers => {

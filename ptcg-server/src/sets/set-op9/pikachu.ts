@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PokemonCardList } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect, AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Pikachu extends PokemonCard {
 
@@ -19,12 +19,12 @@ export class Pikachu extends PokemonCard {
 
   public resistance = [{ type: CardType.METAL, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Growl',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 0,
       text: 'During your opponent\'s next turn, any damage done by attacks ' +
         'from the Defending Pokemon is reduced by 20 (before applying ' +
@@ -32,7 +32,7 @@ export class Pikachu extends PokemonCard {
     },
     {
       name: 'Numb',
-      cost: [ CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
       text: 'If Pikachu evolved from Pichu during this turn, the Defending ' +
         'Pokemon is now Paralyzed.'
@@ -49,13 +49,13 @@ export class Pikachu extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       opponent.active.marker.addMarker(this.GROWL_MARKER, this);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const cardList = StateUtils.findCardList(state, this);
       if (!(cardList instanceof PokemonCardList)) {
         return state;

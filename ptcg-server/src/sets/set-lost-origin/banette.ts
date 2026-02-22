@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, PlayerType, Card, GameError, GameMessage, TrainerCard, TrainerType, ChooseCardsPrompt, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { DiscardToHandEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Banette extends PokemonCard {
 
@@ -49,7 +50,7 @@ export class Banette extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasSupporter = player.discard.cards.some(c => {

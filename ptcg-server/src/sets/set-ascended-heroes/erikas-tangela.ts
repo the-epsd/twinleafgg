@@ -1,8 +1,8 @@
 import { PokemonCard, Stage, CardTag, CardType, PowerType, StoreLike, State, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, ABILITY_USED, WAS_ATTACK_USED, COIN_FLIP_PROMPT, ADD_PARALYZED_TO_PLAYER_ACTIVE } from '../../game/store/prefabs/prefabs';
+import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, ABILITY_USED, WAS_ATTACK_USED, COIN_FLIP_PROMPT, ADD_PARALYZED_TO_PLAYER_ACTIVE, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class ErikasTangela extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,7 +38,7 @@ export class ErikasTangela extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Colorful Riot ability
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(this.COLORFUL_RIOT_MARKER, this)) {

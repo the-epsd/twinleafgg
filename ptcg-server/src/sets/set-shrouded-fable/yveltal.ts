@@ -2,9 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { Card, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, PlayerType, StateUtils } from '../../game';
 import { StoreLike, State } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardCardsEffect, PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Yveltal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,7 +39,7 @@ export class Yveltal extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Corrosive Winds
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = effect.opponent;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
         if ((cardList.damage > 0)) {
@@ -50,7 +51,7 @@ export class Yveltal extends PokemonCard {
     }
 
     // Destructive Beam
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

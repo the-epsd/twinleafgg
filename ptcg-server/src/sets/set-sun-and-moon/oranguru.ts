@@ -3,9 +3,10 @@ import { BoardEffect, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Oranguru extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -47,7 +48,7 @@ export class Oranguru extends PokemonCard {
       player.marker.removeMarker(this.INSTRUCT_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.marker.hasMarker(this.INSTRUCT_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
@@ -78,7 +79,7 @@ export class Oranguru extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const pokemon = opponent.active;

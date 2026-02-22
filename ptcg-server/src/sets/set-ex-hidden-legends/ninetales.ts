@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, GamePhase, CardTag, GameMessage, CoinFlipPrompt } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Ninetales extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -68,7 +69,7 @@ export class Ninetales extends PokemonCard {
     }
 
     // Handle Quick Attack coin flip
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Flip a coin

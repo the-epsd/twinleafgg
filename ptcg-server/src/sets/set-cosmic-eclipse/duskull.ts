@@ -1,8 +1,8 @@
 import { Card, CardTarget, CardType, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameLog, GameMessage, PlayerType, PokemonCard, PokemonCardList, Power, PowerType, ShuffleDeckPrompt, SlotType, State, StoreLike, SuperType } from '../../game';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+
+import { MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Duskull extends PokemonCard {
 
@@ -44,7 +44,7 @@ export class Duskull extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.hand.cards.length < 3) {
@@ -120,7 +120,7 @@ export class Duskull extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, new ChoosePokemonPrompt(

@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, CardTarget } from '../../game';
-import { ABILITY_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Barbaracle extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -44,7 +44,7 @@ export class Barbaracle extends PokemonCard {
       player.marker.removeMarker(this.STONE_ARMS_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(this.STONE_ARMS_MARKER, this)) {

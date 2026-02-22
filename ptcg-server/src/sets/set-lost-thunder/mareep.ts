@@ -2,9 +2,10 @@ import { GameError, GameMessage, PowerType, State, StateUtils, StoreLike } from 
 import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Mareep extends PokemonCard {
 
@@ -50,7 +51,7 @@ export class Mareep extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
 
       const player = effect.player;
       if (player.marker.hasMarker(this.FLUFFY_PILLOW_MARKER, this)) {

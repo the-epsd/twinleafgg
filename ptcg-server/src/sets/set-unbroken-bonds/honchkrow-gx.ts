@@ -2,19 +2,20 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardTag, CardType, EnergyType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, PlayerType, ChooseCardsPrompt, CardTarget, SlotType, ChoosePokemonPrompt, PowerType, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import {AttachEnergyEffect, AttachPokemonToolEffect, PlayStadiumEffect} from '../../game/store/effects/play-card-effects';
+import { AttachEnergyEffect, AttachPokemonToolEffect, PlayStadiumEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class HonchkrowGX extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Murkrow';
-  public tags = [ CardTag.POKEMON_GX ];
+  public tags = [CardTag.POKEMON_GX];
   public cardType: CardType = D;
   public hp: number = 210;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
-  public retreat = [ C, C ];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Ruler of the Night',
@@ -25,18 +26,18 @@ export class HonchkrowGX extends PokemonCard {
   public attacks = [
     {
       name: 'Feather Storm',
-      cost: [ D, C, C ],
+      cost: [D, C, C],
       damage: 90,
       text: 'This attack does 30 damage to 2 of your opponent\'s Benched Pokémon-GX and Pokémon-EX. (Don\'t apply Weakness and Resistance for Benched Pokémon.)',
     },
     {
       name: 'Unfair-GX',
-      cost: [ C, C ],
+      cost: [C, C],
       damage: 0,
       gxAttack: true,
       text: 'Your opponent reveals their hand. Discard 2 cards from it. (You can\'t use more than 1 GX attack in a game.)'
     }
-    
+
   ];
 
   public set: string = 'UNB';
@@ -47,14 +48,14 @@ export class HonchkrowGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ruler of the Night
-    if ((effect instanceof AttachEnergyEffect && effect.energyCard.energyType === EnergyType.SPECIAL) || effect instanceof PlayStadiumEffect || effect instanceof AttachPokemonToolEffect){
+    if ((effect instanceof AttachEnergyEffect && effect.energyCard.energyType === EnergyType.SPECIAL) || effect instanceof PlayStadiumEffect || effect instanceof AttachPokemonToolEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.active.getPokemonCard() !== this){
+      if (opponent.active.getPokemonCard() !== this) {
         return state;
       }
-      
+
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
         const stub = new PowerEffect(effect.player, {
@@ -71,7 +72,7 @@ export class HonchkrowGX extends PokemonCard {
     }
 
     // Feather Storm
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -99,7 +100,7 @@ export class HonchkrowGX extends PokemonCard {
         }
       });
 
-      if (!gxsEXsOnBench){
+      if (!gxsEXsOnBench) {
         return state;
       }
 
@@ -113,27 +114,27 @@ export class HonchkrowGX extends PokemonCard {
         if (!targets || targets.length === 0) {
           return;
         }
-        
-        for (const target of targets){
+
+        for (const target of targets) {
           const damageEffect = new PutDamageEffect(effect, 30);
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         }
-        
+
       });
     }
 
     // Unfair-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.usedGX){
+      if (player.usedGX) {
         throw new GameError(GameMessage.LABEL_GX_USED);
       }
       player.usedGX = true;
 
-      if (opponent.hand.cards.length === 0){
+      if (opponent.hand.cards.length === 0) {
         return state;
       }
 

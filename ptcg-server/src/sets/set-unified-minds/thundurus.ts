@@ -2,9 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Thundurus extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,7 +39,7 @@ export class Thundurus extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Thunderous Gale
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       // Check for Tornadus on your Bench
       const hasTornadus = player.bench.some(
@@ -51,7 +52,7 @@ export class Thundurus extends PokemonCard {
     }
 
     // Raging Thunder
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const benched = player.bench.filter(b => b.cards.length > 0);
       if (benched.length === 0) {

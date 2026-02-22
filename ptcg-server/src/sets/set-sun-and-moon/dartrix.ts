@@ -4,8 +4,8 @@ import { StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPromp
 import { Effect } from '../../game/store/effects/effect';
 import { CoinFlipPrompt } from '../../game';
 import { StateUtils } from '../../game/store/state-utils';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
+
+import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // CIN Dartrix 57 (https://limitlesstcg.com/cards/CIN/57)
 export class Dartrix extends PokemonCard {
@@ -46,7 +46,7 @@ export class Dartrix extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sharp Blade Quill
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -68,7 +68,7 @@ export class Dartrix extends PokemonCard {
     }
 
     // Leaf Blade
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       return store.prompt(state, [
@@ -80,7 +80,6 @@ export class Dartrix extends PokemonCard {
       });
 
     }
-
 
     return state;
   }

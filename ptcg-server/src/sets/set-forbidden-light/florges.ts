@@ -3,9 +3,10 @@ import { Stage, CardType, TrainerType, SuperType, BoardEffect } from '../../game
 import { Card, CardList, ChooseCardsPrompt, CoinFlipPrompt, GameError, GameMessage, PlayerType, PowerType, ShowCardsPrompt, State, StateUtils, StoreLike, TrainerCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { TrainerToDeckEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Florges extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -40,10 +41,9 @@ export class Florges extends PokemonCard {
   public readonly CLEAR_MIST_GUARD_MARKER = 'CLEAR_MIST_GUARD_MARKER';
   public readonly WONDROUS_GIFT_MARKER = 'WONDROUS_GIFT_MARKER';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -117,7 +117,7 @@ export class Florges extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       player.active.marker.addMarker(this.MIST_GUARD_MARKER, this);

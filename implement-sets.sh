@@ -14,23 +14,25 @@ LOG_DIR="$SCRIPT_DIR/.claude/set-logs"
 
 mkdir -p "$PROGRESS_DIR" "$LOG_DIR"
 
-# Sun & Moon block sets in release order (through Cosmic Eclipse)
+# Sword & Shield block sets in release order (through Crown Zenith)
 SETS=(
-  "set-sun-and-moon"
-  "set-guardians-rising"
-  "set-burning-shadows"
-  "set-shining-legends"
-  "set-crimson-invasion"
-  "set-ultra-prism"
-  "set-forbidden-light"
-  "set-celestial-storm"
-  "set-dragon-majesty"
-  "set-lost-thunder"
-  "set-team-up"
-  "set-unbroken-bonds"
-  "set-unified-minds"
-  "set-hidden-fates"
-  "set-cosmic-eclipse"
+  "set-sword-and-shield"
+  "set-rebel-clash"
+  "set-darkness-ablaze"
+  "set-champions-path"
+  "set-vivid-voltage"
+  "set-shining-fates"
+  "set-battle-styles"
+  "set-chilling-reign"
+  "set-evolving-skies"
+  "set-celebrations"
+  "set-fusion-strike"
+  "set-brilliant-stars"
+  "set-astral-radiance"
+  "set-pokemon-go"
+  "set-lost-origin"
+  "set-silver-tempest"
+  "set-crown-zenith"
 )
 
 MAX_RETRIES=10
@@ -76,7 +78,7 @@ if [[ -n "$SINGLE_SET" ]]; then
     fi
   done
   if ! $found; then
-    echo "Error: Set '$SINGLE_SET' not found in Sun & Moon sets."
+    echo "Error: Set '$SINGLE_SET' not found in Sword & Shield sets."
     echo "Available sets:"
     printf '  %s\n' "${SETS[@]}"
     exit 1
@@ -178,7 +180,7 @@ set_result() { echo "$1=$2" >> "$RESULTS_FILE"; }
 get_result() { grep "^$1=" "$RESULTS_FILE" 2>/dev/null | tail -1 | cut -d= -f2-; }
 
 echo "========================================"
-echo "  Sun & Moon Set Implementation Pipeline"
+echo "  Sword & Shield Set Implementation Pipeline"
 echo "========================================"
 echo ""
 echo "Sets to process: ${#SETS[@]}"

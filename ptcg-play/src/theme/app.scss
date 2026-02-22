@@ -7,7 +7,16 @@
 
 // NOTE: Theming is currently experimental and not yet publically released!
 
-@include mat.core();
+// TODO(v15): As of v15 mat.legacy-core no longer includes default typography styles.
+//  The following line adds:
+//    1. Default typography styles for all components
+//    2. Styles for typography hierarchy classes (e.g. .mat-headline-1)
+//  If you specify typography styles for the components you use elsewhere, you should delete this line.
+//  If you don't need the default component typographies but still want the hierarchy styles,
+//  you can delete this line and instead use:
+//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
+@include mat.all-legacy-component-typographies();
+@include mat.legacy-core();
 
 $ptcg-primary: mat.define-palette(mat.$grey-palette, A700);
 $ptcg-accent: mat.define-palette(mat.$grey-palette, A200);
@@ -15,8 +24,16 @@ $ptcg-accent: mat.define-palette(mat.$grey-palette, A200);
 // The warn palette is optional (defaults to red).
 $ptcg-warn: mat.define-palette(mat.$deep-orange-palette);
 
-// Create the theme object (a Sass map containing all of the palettes).
-$ptcg-theme: mat.define-dark-theme($ptcg-primary, $ptcg-accent, $ptcg-warn);
+// Create the theme object using Angular Material 15 config format.
+$ptcg-theme: mat.define-dark-theme((
+  color: (
+    primary: $ptcg-primary,
+    accent: $ptcg-accent,
+    warn: $ptcg-warn,
+  ),
+  typography: mat.define-legacy-typography-config($body-2: mat.define-typography-level(14px, 24px, 700)),
+  density: 0,
+));
 
 $ptcg-colors: (
   ability: #e3350d,
@@ -28,13 +45,13 @@ $ptcg-theme: map-merge($ptcg-theme, (ptcg: $ptcg-colors));
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
-@include mat.all-component-themes($ptcg-theme);
+@include mat.all-legacy-component-themes($ptcg-theme);
 
 
 @include ptcg-theme($ptcg-theme);
 
 
 // Create a config with the default typography levels.
-$config: mat.define-typography-config($body-2: mat.define-typography-level(14px, 24px, 700));
+$config: mat.define-legacy-typography-config($body-2: mat.define-typography-level(14px, 24px, 700));
 
 @include ptcg-typography($config);

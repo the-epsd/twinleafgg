@@ -2,11 +2,11 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, IS_ABILITY_BLOCKED, THIS_POKEMON_HAS_ANY_ENERGY_ATTACHED } from '../../game/store/prefabs/prefabs';
+import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND, IS_ABILITY_BLOCKED, THIS_POKEMON_HAS_ANY_ENERGY_ATTACHED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dragonair extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -54,7 +54,7 @@ export class Dragonair extends PokemonCard {
     }
 
     // Evolution Guidance ability
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Check if ability is blocked

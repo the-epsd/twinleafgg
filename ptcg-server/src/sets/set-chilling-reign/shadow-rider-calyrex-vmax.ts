@@ -3,10 +3,10 @@ import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/stor
 import { StoreLike, State, GameMessage, GameError, PlayerType, SlotType, StateUtils, PowerType, AttachEnergyPrompt, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class ShadowRiderCalyrexVMAX extends PokemonCard {
 
@@ -62,7 +62,7 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
       player.marker.removeMarker(this.UNDERWORLD_DOOR_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasBench = player.bench.some(b => b.cards.length > 0);
@@ -122,7 +122,7 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkProvidedEnergyEffect);
         checkProvidedEnergyEffect.energyMap.forEach(energy => {
-          if (energy.provides.includes(CardType.PSYCHIC) || energy.provides.includes(CardType.ANY)){
+          if (energy.provides.includes(CardType.PSYCHIC) || energy.provides.includes(CardType.ANY)) {
             energies++;
           }
         });

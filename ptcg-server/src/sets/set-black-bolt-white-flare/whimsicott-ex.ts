@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useEnergyGift(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -71,12 +72,12 @@ export class Whimsicottex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Energy Gift
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useEnergyGift(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
     // Wonder Cotton
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

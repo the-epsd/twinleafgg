@@ -6,13 +6,14 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Bronzong extends PokemonCard {
 
@@ -53,7 +54,7 @@ export class Bronzong extends PokemonCard {
       player.marker.removeMarker(this.METAL_LINKS_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasBench = player.bench.some(b => b.cards.length > 0);

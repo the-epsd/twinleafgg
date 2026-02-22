@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, StoreLike, State, ChooseCardsPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Snubbull extends PokemonCard {
   public stage = Stage.BASIC;
@@ -29,7 +30,7 @@ export class Snubbull extends PokemonCard {
   public fullName: string = 'Snubbull LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const hand = player.hand;
 

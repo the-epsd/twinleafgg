@@ -3,8 +3,8 @@ import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/ca
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, ConfirmPrompt, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { EvolveEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Klinklang extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -45,14 +45,7 @@ export class Klinklang extends PokemonCard {
       }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
       state = store.prompt(state, new ConfirmPrompt(

@@ -2,6 +2,7 @@ import { AttachEnergyPrompt, CardTarget, GameError, GameMessage, PlayerType, Pok
 import { CardTag, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect, PowerEffect } from '../../game/store/effects/game-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* useExboot(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -82,7 +83,7 @@ export class StevensMetagrossex extends PokemonCard {
   public fullName: string = 'Steven\'s Metagross ex DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const generator = useExboot(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

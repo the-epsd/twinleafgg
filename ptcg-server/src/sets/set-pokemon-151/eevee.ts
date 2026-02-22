@@ -3,10 +3,11 @@ import { GameMessage } from '../../game/game-message';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { State } from '../../game/store/state/state';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { GameError, Card, ShuffleDeckPrompt } from '../../game';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Eevee extends PokemonCard {
 
@@ -45,7 +46,7 @@ export class Eevee extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {
@@ -61,7 +62,6 @@ export class Eevee extends PokemonCard {
         { min: 0, max: 3, allowCancel: true, differentTypes: true }
       ), selected => {
         cards = selected || [];
-
 
         cards.forEach((card, index) => {
           player.deck.moveCardTo(card, player.hand);

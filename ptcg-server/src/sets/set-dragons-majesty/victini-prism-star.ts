@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, EnergyCard, ShuffleDeckPrompt, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class VictiniPrismStar extends PokemonCard {
 
@@ -40,7 +41,7 @@ export class VictiniPrismStar extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const shuffleList: Card[] = [];
       player.discard.cards.forEach(c => {
@@ -50,8 +51,6 @@ export class VictiniPrismStar extends PokemonCard {
       player.discard.moveCardsTo(shuffleList, player.deck);
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => { player.deck.applyOrder(order); });
     }
-
-
 
     return state;
   }

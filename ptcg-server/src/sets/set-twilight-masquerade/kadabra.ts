@@ -2,8 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Kadabra extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -12,11 +13,11 @@ export class Kadabra extends PokemonCard {
   public hp: number = 80;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
-  public retreat = [ C ];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Psychic',
-    cost: [ P ],
+    cost: [P],
     damage: 10,
     damageCalculation: '+',
     text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.',
@@ -31,7 +32,7 @@ export class Kadabra extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Psychic
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

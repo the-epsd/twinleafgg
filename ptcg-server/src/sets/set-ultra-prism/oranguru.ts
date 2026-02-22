@@ -4,8 +4,8 @@ import { StoreLike, State, GameMessage, Card, ChooseCardsPrompt } from '../../ga
 import { Effect } from '../../game/store/effects/effect';
 import { SpecialCondition } from '../../game/store/card/card-types';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { BLOCK_IF_DISCARD_EMPTY } from '../../game/store/prefabs/prefabs';
+
+import { BLOCK_IF_DISCARD_EMPTY, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Oranguru extends PokemonCard {
 
@@ -46,7 +46,7 @@ export class Oranguru extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Resource Management
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       BLOCK_IF_DISCARD_EMPTY(player);
@@ -65,7 +65,7 @@ export class Oranguru extends PokemonCard {
     }
 
     // Profound Knowledge
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
       return store.reduceEffect(state, specialCondition);
     }

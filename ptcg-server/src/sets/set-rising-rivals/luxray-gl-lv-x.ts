@@ -1,22 +1,21 @@
 import { ChoosePokemonPrompt, ConfirmPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import {CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEffect} from '../../game/store/effects/check-effects';
+import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
-import {PowerEffect} from '../../game/store/effects/game-effects';
-import {PlayPokemonEffect} from '../../game/store/effects/play-card-effects';
-import {PutDamageEffect} from '../../game/store/effects/attack-effects';
+import { IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
 export class LuxrayGLLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Luxray GL';
   public cardType: CardType = L;
-  public tags = [ CardTag.POKEMON_LV_X, CardTag.POKEMON_SP ];
+  public tags = [CardTag.POKEMON_LV_X, CardTag.POKEMON_SP];
   public hp: number = 110;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
-  public retreat = [ ];
+  public retreat = [];
 
   public powers = [
     {
@@ -46,17 +45,10 @@ export class LuxrayGLLVX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Bright Look
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
 
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.POKEPOWER,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
         return state;
       }
 
@@ -91,7 +83,7 @@ export class LuxrayGLLVX extends PokemonCard {
     }
 
     // Flash Impact
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       return store.prompt(state, new ChoosePokemonPrompt(
         effect.player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
@@ -109,10 +101,10 @@ export class LuxrayGLLVX extends PokemonCard {
     }
 
     // making sure it gets put on the active pokemon
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
-      if (effect.target !== effect.player.active){ throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD); }
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      if (effect.target !== effect.player.active) { throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD); }
     }
-    
+
     // Trying to get all of the previous stage's attacks and powers
     if (effect instanceof CheckTableStateEffect) {
       const player = effect.player;
@@ -164,7 +156,7 @@ export class LuxrayGLLVX extends PokemonCard {
       }
     }
 
-    if (effect instanceof CheckPokemonPowersEffect){
+    if (effect instanceof CheckPokemonPowersEffect) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);

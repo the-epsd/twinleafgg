@@ -2,11 +2,12 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, GameError, ChooseEnergyPrompt, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class VikavoltV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -40,7 +41,7 @@ export class VikavoltV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Paralyzing Bolt
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -59,7 +60,7 @@ export class VikavoltV extends PokemonCard {
     }
 
     // Super Zap Cannon
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {

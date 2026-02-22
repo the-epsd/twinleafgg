@@ -1,8 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
-import { StoreLike, State, StateUtils, PokemonCardList, Card, ChooseCardsPrompt, GameError, GameMessage } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, Card, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Mantine extends PokemonCard {
 
@@ -29,9 +29,7 @@ export class Mantine extends PokemonCard {
     cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
     damage: 100,
     text: ''
-  }
-
-  ];
+  }];
 
   public regulationMark = 'F';
 
@@ -47,49 +45,84 @@ export class Mantine extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
-
+    // Borne Ashore: Put a Basic Pokemon from either player's discard pile onto that player's Bench.
+    // Ref: set-guardians-rising/alomomola.ts (same attack text, same pattern)
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const slots: PokemonCardList[] = opponent.bench.filter(b => b.cards.length === 0);
 
-      if (opponent.discard.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-      // Check if bench has open slots
-      const openSlots = opponent.bench.filter(b => b.cards.length === 0);
+      const playerHasBasics = player.discard.cards.some(c =>
+        c instanceof PokemonCard && c.stage === Stage.BASIC
+      );
+      const opponentHasBasics = opponent.discard.cards.some(c =>
+        c instanceof PokemonCard && c.stage === Stage.BASIC
+      );
 
-      if (openSlots.length === 0) {
-        // No open slots, throw error
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
-
-      let cards: Card[] = [];
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-        opponent.discard || player.discard,
-        { superType: SuperType.POKEMON, stage: Stage.BASIC },
-        { min: 1, max: 1, allowCancel: true }
-      ), selected => {
-        cards = selected || [];
-      });
-
-      // Operation canceled by the user
-      if (cards.length === 0) {
+      if (!playerHasBasics && !opponentHasBasics) {
         return state;
       }
 
+      const playerHasSpace = player.bench.some(b => b.cards.length === 0);
+      const opponentHasSpace = opponent.bench.some(b => b.cards.length === 0);
 
-      cards.forEach((card, index) => {
-        if (opponent.discard) {
-          opponent.discard.moveCardTo(card, slots[index]);
-        } else {
-          player.discard.moveCardTo(card, slots[index]);
-        }
-        slots[index].pokemonPlayedTurn = state.turn;
-      });
+      // Offer player's discard first (with cancel if opponent's discard is also an option)
+      if (playerHasBasics && playerHasSpace) {
+        let cards: Card[] = [];
+        return store.prompt(state, new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          player.discard,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          { min: 1, max: 1, allowCancel: opponentHasBasics && opponentHasSpace }
+        ), selected => {
+          cards = selected || [];
+          if (cards.length > 0) {
+            const slot = player.bench.find(b => b.cards.length === 0);
+            if (slot) {
+              player.discard.moveCardTo(cards[0], slot);
+              slot.pokemonPlayedTurn = state.turn;
+            }
+          } else if (opponentHasBasics && opponentHasSpace) {
+            // Player chose to use opponent's discard instead
+            store.prompt(state, new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+              opponent.discard,
+              { superType: SuperType.POKEMON, stage: Stage.BASIC },
+              { min: 1, max: 1, allowCancel: false }
+            ), selected2 => {
+              const cards2 = selected2 || [];
+              if (cards2.length > 0) {
+                const slot = opponent.bench.find(b => b.cards.length === 0);
+                if (slot) {
+                  opponent.discard.moveCardTo(cards2[0], slot);
+                  slot.pokemonPlayedTurn = state.turn;
+                }
+              }
+            });
+          }
+        });
+      }
 
+      // Only opponent's discard has basics with available bench space
+      if (opponentHasBasics && opponentHasSpace) {
+        return store.prompt(state, new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
+          opponent.discard,
+          { superType: SuperType.POKEMON, stage: Stage.BASIC },
+          { min: 1, max: 1, allowCancel: false }
+        ), selected => {
+          const cards = selected || [];
+          if (cards.length > 0) {
+            const slot = opponent.bench.find(b => b.cards.length === 0);
+            if (slot) {
+              opponent.discard.moveCardTo(cards[0], slot);
+              slot.pokemonPlayedTurn = state.turn;
+            }
+          }
+        });
+      }
     }
 
     return state;

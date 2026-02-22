@@ -9,7 +9,7 @@ import { LoginRememberService } from '../../login/login-remember.service';
 import { SessionService } from '../../shared/session/session.service';
 import { environment } from '../../../environments/environment';
 
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { SettingsDialogComponent } from '../../table/table-sidebar/settings-dialog/settings-dialog.component';
 import { AlertService } from '../../shared/alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';

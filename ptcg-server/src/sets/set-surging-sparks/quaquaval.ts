@@ -1,8 +1,8 @@
 import { PokemonCard, Stage, CardType, State, StoreLike, GameMessage, PowerType, GameError, ChooseCardsPrompt } from '../../game';
-import {Effect} from '../../game/store/effects/effect';
-import {PowerEffect} from '../../game/store/effects/game-effects';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
-import {ABILITY_USED} from '../../game/store/prefabs/prefabs';
+import { Effect } from '../../game/store/effects/effect';
+
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { ABILITY_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Quaquaval extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -10,7 +10,7 @@ export class Quaquaval extends PokemonCard {
   public cardType: CardType = W;
   public hp: number = 170;
   public weakness = [{ type: L }];
-  public retreat = [ C, C ];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Up-Tempo',
@@ -22,7 +22,7 @@ export class Quaquaval extends PokemonCard {
   public attacks = [
     {
       name: 'Hydro Splash',
-      cost: [ W, C ],
+      cost: [W, C],
       damage: 120,
       text: ''
     }
@@ -38,14 +38,14 @@ export class Quaquaval extends PokemonCard {
   public readonly UP_TEMPO_MARKER = 'UP_TEMPO_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]){
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      if (this.marker.hasMarker(this.UP_TEMPO_MARKER, this)){
+      if (this.marker.hasMarker(this.UP_TEMPO_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      if (player.hand.cards.length > 5 || player.hand.cards.length === 0){
+      if (player.hand.cards.length > 5 || player.hand.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -66,14 +66,14 @@ export class Quaquaval extends PokemonCard {
         this.marker.addMarker(this.UP_TEMPO_MARKER, this);
         player.marker.addMarker(this.UP_TEMPO_MARKER, this);
         player.hand.moveCardsTo(cards, player.deck);
-        
-        while (player.hand.cards.length < 5){
+
+        while (player.hand.cards.length < 5) {
           player.deck.moveTo(player.hand, 1);
         }
       });
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.UP_TEMPO_MARKER, this)){
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.UP_TEMPO_MARKER, this)) {
       effect.player.marker.removeMarker(this.UP_TEMPO_MARKER, this);
       this.marker.removeMarker(this.UP_TEMPO_MARKER, this);
     }

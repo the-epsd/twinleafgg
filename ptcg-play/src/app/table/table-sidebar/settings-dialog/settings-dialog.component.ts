@@ -1,7 +1,7 @@
 import { CommonModule } from "@angular/common";
 import { Component, NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
+import { MatLegacyDialogModule as MatDialogModule, MatLegacyDialogRef as MatDialogRef } from "@angular/material/legacy-dialog";
 import { TranslateModule } from "@ngx-translate/core";
 import { SettingsService } from "./settings.service";
 import { Format } from "ptcg-server";

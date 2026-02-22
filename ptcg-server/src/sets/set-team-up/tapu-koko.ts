@@ -6,8 +6,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { AttachEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED, ABILITY_USED, USE_ABILITY_ONCE_PER_TURN, REMOVE_MARKER_AT_END_OF_TURN, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+
+import { IS_ABILITY_BLOCKED, ABILITY_USED, USE_ABILITY_ONCE_PER_TURN, REMOVE_MARKER_AT_END_OF_TURN, MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class TapuKoko extends PokemonCard {
   public tags = [CardTag.PRISM_STAR];
@@ -44,7 +44,7 @@ export class TapuKoko extends PokemonCard {
 
   // Ref: set-team-up/tapu-koko-prism-star.ts (Dance of the Ancients - existing implementation)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
 

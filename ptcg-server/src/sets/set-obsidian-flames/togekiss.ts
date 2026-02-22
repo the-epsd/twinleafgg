@@ -2,8 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PowerType, EnergyCard, AttachEnergyPrompt, GameMessage, PlayerType, SlotType, ConfirmPrompt, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Togekiss extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -11,7 +12,7 @@ export class Togekiss extends PokemonCard {
   public cardType: CardType = P;
   public hp: number = 150;
   public weakness = [{ type: M }];
-  public retreat = [ ];
+  public retreat = [];
 
   public powers = [{
     name: 'Precious Gift',
@@ -21,7 +22,7 @@ export class Togekiss extends PokemonCard {
 
   public attacks = [{
     name: 'Power Cyclone',
-    cost: [ C, C ],
+    cost: [C, C],
     damage: 110,
     text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.'
   }];
@@ -35,17 +36,17 @@ export class Togekiss extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Precious Gift
-    if (effect instanceof EndTurnEffect){
+    if (effect instanceof EndTurnEffect) {
       const player = effect.player;
 
       let isTogekissInPlay = false;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this){
+        if (card === this) {
           isTogekissInPlay = true;
         }
       });
 
-      if (!isTogekissInPlay){
+      if (!isTogekissInPlay) {
         return state;
       }
 
@@ -56,7 +57,7 @@ export class Togekiss extends PokemonCard {
         return state;
       }
 
-      if (player.hand.cards.length >= 8){
+      if (player.hand.cards.length >= 8) {
         return state;
       }
 
@@ -67,7 +68,7 @@ export class Togekiss extends PokemonCard {
         if (wantToUse) {
           store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, card: 'Togekiss' });
 
-          while (player.hand.cards.length < 8 && player.deck.cards.length > 0){
+          while (player.hand.cards.length < 8 && player.deck.cards.length > 0) {
             player.deck.moveTo(player.hand, 1);
           }
         }
@@ -75,7 +76,7 @@ export class Togekiss extends PokemonCard {
     }
 
     // Power Cyclone
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
 
@@ -92,7 +93,7 @@ export class Togekiss extends PokemonCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.active,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY },
         { allowCancel: false, min: 1, max: 1 }
       ), transfers => {

@@ -4,13 +4,14 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { GameMessage } from '../../game/game-message';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { GameError, PlayerType, ShuffleDeckPrompt } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dragonite extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -49,7 +50,7 @@ export class Dragonite extends PokemonCard {
       player.marker.removeMarker(this.FAST_CALL_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

@@ -2,8 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, PokemonCardList, PowerType, SelectOptionPrompt, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { ABILITY_USED, ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER } from '../../game/store/prefabs/prefabs';
+
+import { ABILITY_USED, ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Mankey extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -42,7 +42,7 @@ export class Mankey extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;

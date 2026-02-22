@@ -3,14 +3,14 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { AttachPokemonToolEffect, PlayItemEffect } from '../../game/store/effects/play-card-effects';
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Jellicentex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -44,7 +44,7 @@ export class Jellicentex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       // Check attack cost
       const checkCost = new CheckAttackCostEffect(player, this.attacks[0]);

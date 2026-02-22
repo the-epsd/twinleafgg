@@ -4,7 +4,7 @@ import { CardType, Stage, CardTag } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
@@ -143,7 +143,7 @@ export class Medichamex extends PokemonCard {
     }
 
     // Handle Sky Kick attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = effect.opponent;
       const defendingPokemon = opponent.active.getPokemonCard();
 

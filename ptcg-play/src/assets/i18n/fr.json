@@ -547,6 +547,7 @@
     "LOG_PLAYER_SWITCHES_POKEMON_WITH_POKEMON_FROM_DECK": "{{name}} échange {{card}} contre {{secondCard}} dans votre deck.",
     "LOG_PLAYER_USES_ATTACK": "{{name}} utilise l'attaque {{attack}}.",
     "LOG_PLAYER_USES_STADIUM": "{{name}} utilise {{stadium}}.",
+    "LOG_PLAYER_REFLIPS_WITH_GLIMWOOD_TANGLE": "{{name}} relance la pièce avec Glimwood Tangle.",
     "LOG_POKEMON_KO": "{{name}} est mis K.O.",
     "LOG_SETUP_NO_BASIC_POKEMON": "{{name}} n'a pas de Pokémon de base en main.",
     "LOG_STARTS_BECAUSE_OF_ABILITY": "{{name}} commence la partie grâce au Talent {{ability}}.",

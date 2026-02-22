@@ -1,5 +1,5 @@
-import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, CardTarget, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, ChooseEnergyPrompt, CoinFlipPrompt, ConfirmPrompt, DamageMap, EnergyCard, GameError, GameLog, GameMessage, MoveDamagePrompt, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../..';
-import { TrainerEffect, AttachEnergyEffect, ToolEffect } from '../effects/play-card-effects';
+import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, CardTarget, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, ChooseEnergyPrompt, ConfirmPrompt, DamageMap, EnergyCard, GameError, GameLog, GameMessage, MoveDamagePrompt, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../..';
+import { TrainerEffect, AttachEnergyEffect, ToolEffect, CoinFlipEffect, CoinFlipSequenceEffect } from '../effects/play-card-effects';
 import { BoardEffect, CardTag, CardType, EnergyType, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
 import { Attack } from '../card/pokemon-types';
 import { GamePhase } from '../state/state';
@@ -51,6 +51,14 @@ export const AFTER_ATTACK = (effect: Effect, index: number, user: PokemonCard): 
  */
 export function JUST_EVOLVED(effect: Effect, card: PokemonCard): effect is EvolveEffect {
   return effect instanceof EvolveEffect && effect.pokemonCard === card;
+}
+
+/**
+ * Returns whether the given Pokemon moved from the player's Bench to the Active Spot this turn.
+ * Uses engine-tracked player.movedToActiveThisTurn (cleared at turn start).
+ */
+export function MOVED_TO_ACTIVE_THIS_TURN(player: Player, pokemon: PokemonCard): boolean {
+  return player.movedToActiveThisTurn.includes(pokemon.id);
 }
 
 /**
@@ -783,7 +791,7 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(damage:
   const opponent = StateUtils.getOpponent(state, player);
 
   const targets = opponent.bench.filter(b => b.cards.length > 0);
-  if (targets.length === 0) {
+  if (targets.length === 0 && !slots?.includes(SlotType.ACTIVE)) {
     return state;
   }
 
@@ -795,6 +803,11 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(damage:
     { min: min, max: max, allowCancel: false }
   ), selected => {
     selected.forEach(target => {
+      if (effect.target === effect.opponent.active) {
+        const damageEffect = new DealDamageEffect(effect, damage);
+        damageEffect.target = target;
+        return store.reduceEffect(state, damageEffect);
+      }
       const damageEffect = new PutDamageEffect(effect, damage);
       damageEffect.target = target;
 
@@ -892,7 +905,7 @@ export function DISCARD_X_ENERGY_FROM_YOUR_HAND(effect: PowerEffect, store: Stor
  */
 export function DISCARD_SPECIFIC_ENERGY_FROM_THIS_POKEMON(store: StoreLike, state: State, effect: AttackEffect, energyMap: CardType[]) {
   const player = effect.player;
-      
+
   const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
   state = store.reduceEffect(state, checkProvidedEnergy);
 
@@ -2207,12 +2220,13 @@ export function CONFIRMATION_PROMPT(store: StoreLike, state: State, player: Play
 }
 
 export function COIN_FLIP_PROMPT(store: StoreLike, state: State, player: Player, callback: (result: boolean) => void): State {
-  return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), callback);
+  const coinFlip = new CoinFlipEffect(player, callback);
+  return store.reduceEffect(state, coinFlip);
 }
 
 export function MULTIPLE_COIN_FLIPS_PROMPT(store: StoreLike, state: State, player: Player, amount: number, callback: (results: boolean[]) => void): State {
-  const prompts: CoinFlipPrompt[] = new Array(amount).fill(0).map((_) => new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP));
-  return store.prompt(state, prompts, callback);
+  const sequenceEffect = new CoinFlipSequenceEffect(player, amount, callback);
+  return store.reduceEffect(state, sequenceEffect);
 }
 
 /**
@@ -2225,17 +2239,11 @@ export function FLIP_UNTIL_TAILS_AND_COUNT_HEADS(
   player: Player,
   callback: (heads: number) => void
 ): State {
-  const flipCoin = (heads: number): State => {
-    return store.prompt(state, [new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)], result => {
-      if (result) {
-        return flipCoin(heads + 1);
-      }
-      callback(heads);
-      return state;
-    });
-  };
-
-  return flipCoin(0);
+  const sequenceEffect = new CoinFlipSequenceEffect(player, 'untilTails', (results: boolean[]) => {
+    const headsCount = results.filter(r => r).length;
+    callback(headsCount);
+  });
+  return store.reduceEffect(state, sequenceEffect);
 }
 
 export function SIMULATE_COIN_FLIP(store: StoreLike, state: State, player: Player): boolean {
@@ -2669,12 +2677,13 @@ export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Pl
         }
         break;
       case TrainerType.STADIUM: {
-        // Can't play stadium if one already played this turn
-        if (player.stadiumPlayedTurn === state.turn) {
+        const stadium = StateUtils.getStadiumCard(state);
+        const isHyperrogueOverPrismTower = trainerCard.name === 'Hyperrogue Ange Floette' && stadium?.name === 'Prism Tower';
+        // Can't play stadium if one already played this turn (unless Hyperrogue Ange Floette over Prism Tower)
+        if (player.stadiumPlayedTurn === state.turn && !isHyperrogueOverPrismTower) {
           return false;
         }
         // Can't play same stadium already in play
-        const stadium = StateUtils.getStadiumCard(state);
         if (stadium && stadium.name === trainerCard.name) {
           return false;
         }

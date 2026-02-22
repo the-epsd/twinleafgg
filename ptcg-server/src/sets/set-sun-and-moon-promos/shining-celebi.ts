@@ -2,8 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, ChooseAttackPrompt, Player, EnergyMap } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
+import { UseAttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class ShiningCelebi extends PokemonCard {
 
@@ -37,7 +38,7 @@ export class ShiningCelebi extends PokemonCard {
   public fullName: string = 'Shining Celebi SMP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
 

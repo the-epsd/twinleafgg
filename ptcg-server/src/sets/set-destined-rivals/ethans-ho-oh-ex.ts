@@ -2,9 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils, EnergyCard, PlayerType, CardTarget, AttachEnergyPrompt, SlotType, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { HealEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { ABILITY_USED, ADD_MARKER, BLOCK_EFFECT_IF_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, BLOCK_EFFECT_IF_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class EthansHoOhex extends PokemonCard {
 
@@ -57,7 +57,7 @@ export class EthansHoOhex extends PokemonCard {
       player.marker.removeMarker(this.SHINING_FEATHER_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       BLOCK_EFFECT_IF_MARKER(this.SHINING_FEATHER_MARKER, player, this);

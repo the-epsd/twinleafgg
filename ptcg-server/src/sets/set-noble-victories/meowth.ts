@@ -2,8 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { MULTIPLE_COIN_FLIPS_PROMPT, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+
+import { MULTIPLE_COIN_FLIPS_PROMPT, DRAW_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Meowth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -32,7 +32,7 @@ export class Meowth extends PokemonCard {
   public fullName: string = 'Meowth NVI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 3, results => {
         const heads = results.filter(r => r).length;
@@ -40,7 +40,7 @@ export class Meowth extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       DRAW_CARDS(player, 1);
     }

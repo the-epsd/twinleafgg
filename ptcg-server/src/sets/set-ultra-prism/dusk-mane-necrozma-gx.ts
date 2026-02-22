@@ -6,8 +6,8 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { ChooseEnergyPrompt } from '../../game';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // UPR Dusk Mane Necrozma-GX 90 (https://limitlesstcg.com/cards/UPR/90)
 export class DuskManeNecrozmaGX extends PokemonCard {
@@ -59,7 +59,7 @@ export class DuskManeNecrozmaGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Meteor Tempest
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
@@ -80,7 +80,7 @@ export class DuskManeNecrozmaGX extends PokemonCard {
     }
 
     // Sun's Eclipse-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

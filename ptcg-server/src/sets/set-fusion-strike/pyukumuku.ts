@@ -1,8 +1,8 @@
 import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, GameError, GameMessage, CardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Pyukumuku extends PokemonCard {
 
@@ -50,7 +50,7 @@ export class Pyukumuku extends PokemonCard {
       effect.player.marker.removeMarker(this.PYUK_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(this.PYUK_MARKER, this)) {

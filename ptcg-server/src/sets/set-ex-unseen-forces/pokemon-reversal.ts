@@ -7,7 +7,7 @@ import { TrainerEffect, TrainerTargetEffect } from '../../game/store/effects/pla
 export class PokemonReversal extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'UF';
-  public name: string = 'Pokemon Reversal';
+  public name: string = 'Pokémon Reversal';
   public fullName: string = 'Pokemon Reversal UF';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '88';

@@ -3,9 +3,10 @@ import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/ca
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Arcanine extends PokemonCard {
 
@@ -17,20 +18,20 @@ export class Arcanine extends PokemonCard {
 
   public hp = 140;
 
-  public weakness = [{type: CardType.WATER}];
+  public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Grand Flame',
-      cost: [ CardType.FIRE, CardType.FIRE, CardType.FIRE ],
+      cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE],
       damage: 120,
       text: 'Attach 2 [R] Energy cards from your discard pile to 1 of your Benched Pokémon.'
     },
     {
       name: 'Heat Tackle',
-      cost: [ CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.FIRE ],
+      cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.FIRE],
       damage: 190,
       text: 'This Pokémon does 50 damage to itself.'
     }
@@ -44,25 +45,25 @@ export class Arcanine extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
-  
+
       const energyInDiscardPile = player.discard.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fire Energy');
-      
+
       if (energyInDiscardPile.length === 0) {
         return state;
       }
-      
+
       const min = Math.min(2, energyInDiscardPile.length);
       const max = Math.min(2, energyInDiscardPile.length);
-      
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
         { allowCancel: false, min, max, sameTarget: true },
       ), transfers => {
@@ -77,16 +78,16 @@ export class Arcanine extends PokemonCard {
         }
       });
 
-      return state; 
+      return state;
     }
-    
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const damageEffect = new PutDamageEffect(effect, 50);
       damageEffect.target = player.active;
       store.reduceEffect(state, damageEffect);
     }
-    
+
     return state;
   }
 }

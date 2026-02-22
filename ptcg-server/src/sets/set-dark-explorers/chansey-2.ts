@@ -2,8 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../game/store/prefabs/prefabs';
 
 export class Chansey2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -31,24 +30,9 @@ export class Chansey2 extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Continuous Tumble - flip until tails, damage = 30 x heads
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      let heads = 0;
-
-      const flipUntilTails = (s: State): State => {
-        const coinFlipEffect = new CoinFlipEffect(player, (result: boolean) => {
-          if (result) {
-            // Heads - count it and flip again
-            heads++;
-            flipUntilTails(s);
-          } else {
-            // Tails - stop and set damage
-            effect.damage = 30 * heads;
-          }
-        });
-        return store.reduceEffect(s, coinFlipEffect);
-      };
-
-      return flipUntilTails(state);
+      return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, effect.player, headsCount => {
+        effect.damage = 30 * headsCount;
+      });
     }
 
     return state;

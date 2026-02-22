@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardType, PowerType, ConfirmPrompt, GameLog, GameMessage, PlayerType, State, StoreLike, BoardEffect } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { HealEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 export class Togepi extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
@@ -41,14 +42,7 @@ export class Togepi extends PokemonCard {
       const player = effect.player;
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
       state = store.prompt(state, new ConfirmPrompt(
@@ -62,7 +56,7 @@ export class Togepi extends PokemonCard {
             }
           });
 
-          const healEffect = new HealEffect(player, effect.player.active, 30);
+          const healEffect = new HealEffect(player, effect.player.active, 10);
           store.reduceEffect(state, healEffect);
 
           player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {

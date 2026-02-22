@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, GameMessage, GameError, StateUtils, AttachEnergyPrompt, CardTag, CardTarget, EnergyType, PlayerType, SlotType, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+
+import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Terapagos extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -33,7 +33,7 @@ export class Terapagos extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let teraPokemonInPlay = false;

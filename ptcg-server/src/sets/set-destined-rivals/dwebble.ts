@@ -8,6 +8,7 @@ import { GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useAscension(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -64,7 +65,7 @@ export class Dwebble extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useAscension(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

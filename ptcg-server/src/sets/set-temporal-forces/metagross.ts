@@ -2,10 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { Card, ChooseEnergyPrompt, GameMessage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { NEXT_TURN_ATTACK_BONUS } from '../../game/store/prefabs/prefabs';
+import { NEXT_TURN_ATTACK_BONUS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Metagross extends PokemonCard {
 
@@ -55,7 +55,7 @@ export class Metagross extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);

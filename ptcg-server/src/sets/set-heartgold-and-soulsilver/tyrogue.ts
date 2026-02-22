@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect, AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Tyrogue extends PokemonCard {
 
@@ -13,7 +14,7 @@ export class Tyrogue extends PokemonCard {
 
   public hp: number = 30;
 
-  public retreat = [ ];
+  public retreat = [];
 
   public powers = [{
     name: 'Sweet Sleeping Face',
@@ -25,7 +26,7 @@ export class Tyrogue extends PokemonCard {
   public attacks = [
     {
       name: 'Mischievous Punch',
-      cost: [ ],
+      cost: [],
       damage: 30,
       text: 'This attack\'s damage isn\'t affected by Weakness or Resistance. ' +
         'Tyrogue is now Asleep.'
@@ -43,7 +44,7 @@ export class Tyrogue extends PokemonCard {
   public setNumber: string = '33';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED]);

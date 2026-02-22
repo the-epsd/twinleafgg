@@ -1,14 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, BoardEffect } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, StateUtils,
-  GameError, GameMessage, EnergyCard, PlayerType, SlotType
-} from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, EnergyCard, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Flaaffy extends PokemonCard {
 
@@ -61,7 +59,7 @@ export class Flaaffy extends PokemonCard {
       player.marker.removeMarker(this.DYNAMOTOR_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasBench = player.bench.some(b => b.cards.length > 0);
@@ -117,6 +115,5 @@ export class Flaaffy extends PokemonCard {
 
     return state;
   }
-
 
 }

@@ -2,9 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class HisuianBasculegion extends PokemonCard {
   public regulationMark = 'F';
@@ -37,7 +38,7 @@ export class HisuianBasculegion extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {

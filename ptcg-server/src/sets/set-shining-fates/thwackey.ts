@@ -4,8 +4,8 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 
 export class Thwackey extends PokemonCard {
@@ -39,36 +39,17 @@ export class Thwackey extends PokemonCard {
   public setNumber: string = '12';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.cards.includes(this)) {
+    // Ability: Lay of the Land (passive - no retreat cost if any stadium is in play)
+    // Ref: set-rebel-clash/cinderace-v.ts (Field Runner - CheckRetreatCostEffect + getStadiumCard)
+    if (effect instanceof CheckRetreatCostEffect && effect.player.active.getPokemonCard() === this) {
       const player = effect.player;
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 
-      // Getting stadium in play
-      const stadiumCard = StateUtils.getStadiumCard(state);
-
-      // If no stadium in play, return state
-      if (stadiumCard === undefined) {
-        return state;
-      }
-
-      // Figuring out owner of Stadium
-      const cardList = StateUtils.findCardList(state, stadiumCard);
-      const stadiumOwner = StateUtils.findOwner(state, cardList);
-
-      // If stadium in play, remove retreat cost from Thwackey in play
-      if (stadiumCard !== undefined && stadiumOwner === player) {
+      // Any stadium in play (opponent's or player's) satisfies the condition
+      if (StateUtils.getStadiumCard(state) !== undefined) {
         effect.cost = [];
       }
     }

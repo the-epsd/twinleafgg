@@ -3,9 +3,9 @@ import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PlayerType, GameMessage, GameError } from '../../game';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, SWITCH_ACTIVE_WITH_BENCHED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Vanilluxe extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -39,7 +39,7 @@ export class Vanilluxe extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Slippery Soles - switch both actives
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

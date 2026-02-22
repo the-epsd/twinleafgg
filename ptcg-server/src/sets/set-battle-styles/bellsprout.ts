@@ -3,8 +3,9 @@ import { StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { SpecialCondition } from '../../game/store/card/card-types';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Bellsprout extends PokemonCard {
   public regulationMark = 'E';
@@ -18,8 +19,8 @@ export class Bellsprout extends PokemonCard {
       name: 'Venoshock',
       cost: [CardType.COLORLESS],
       damage: 10,
-      text: 'If your opponent\'s Active Pokémon is Poisoned, this attack' + 
-                'does 40 more damage.'
+      text: 'If your opponent\'s Active Pokémon is Poisoned, this attack' +
+        'does 40 more damage.'
     }
   ];
   public set: string = 'BST';
@@ -33,13 +34,13 @@ export class Bellsprout extends PokemonCard {
   public fullName: string = 'Bellsprout BST';
 
   reduceEffect(store: StoreLike, state: State, effect: Effect) {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       let damage = 10;
       if (effect.opponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
         damage += 40;
       }
       effect.damage = damage;
     }
-    return state; 
+    return state;
   }
 }

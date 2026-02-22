@@ -6,15 +6,14 @@ import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { CardTarget } from '../../game';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TapuKokoGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
   public hp: number = 170;
-  public retreat = [ C, C ];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Aero Trail',
@@ -24,14 +23,14 @@ export class TapuKokoGX extends PokemonCard {
   public attacks = [
     {
       name: 'Sky-High Claws',
-      cost: [ L, L, C ],
+      cost: [L, L, C],
       damage: 130,
       text: ''
     },
 
     {
       name: 'Tapu Thunder-GX',
-      cost: [ L, L, C ],
+      cost: [L, L, C],
       damage: 50,
       damageCalculation: 'x',
       gxAttack: true,
@@ -51,14 +50,7 @@ export class TapuKokoGX extends PokemonCard {
       const player = effect.player;
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 
@@ -117,7 +109,7 @@ export class TapuKokoGX extends PokemonCard {
     }
 
     // Tapu Thunder-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

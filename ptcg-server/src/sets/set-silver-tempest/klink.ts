@@ -3,6 +3,7 @@ import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, Card, GameError, GameMessage, ChooseCardsPrompt, GameLog, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useCallSign(next: Function, store: StoreLike, state: State,
   self: Klink, effect: AttackEffect): IterableIterator<State> {
@@ -25,7 +26,7 @@ function* useCallSign(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  cards.forEach( card => {
+  cards.forEach(card => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
   });
 
@@ -68,7 +69,7 @@ export class Klink extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useCallSign(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

@@ -1,8 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, PokemonType, TrainerType } from '../../game/store/card/card-types';
 import { GameError, GameLog, GameMessage, Power, PowerType, State, StateUtils, StoreLike, TrainerCard } from '../../game';
-import { PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { RetreatEffect } from '../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class AntiquePlumeFossil extends TrainerCard {
   public trainerType = TrainerType.ITEM;
@@ -44,7 +45,7 @@ At any time during your turn, you may discard this card from play.`,
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: this.name, effect: 'Antique Plume Fossil' });

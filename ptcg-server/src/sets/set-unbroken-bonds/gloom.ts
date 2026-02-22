@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { Card, ChooseCardsPrompt, CoinFlipPrompt, GameError, GameMessage, PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Gloom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -35,7 +36,7 @@ export class Gloom extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const slots: PokemonCardList[] = opponent.bench.filter(b => b.cards.length === 0);

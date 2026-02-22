@@ -1,9 +1,9 @@
 import { PokemonCard, Stage, CardType, State, StoreLike, PowerType, GameError, GameMessage, SuperType, CardTag } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { HAS_MARKER, ABILITY_USED, ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
+import { HAS_MARKER, ABILITY_USED, ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Genesectex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -47,9 +47,8 @@ export class Genesectex extends PokemonCard {
       this.turnTracker = 0;
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-
 
       if (HAS_MARKER(this.METAL_SIGNAL_MARKER, player, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
@@ -70,7 +69,7 @@ export class Genesectex extends PokemonCard {
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.METAL_SIGNAL_MARKER, this);
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
     }

@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils} from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, StateUtils } from '../../game';
+
 import { Effect } from '../../game/store/effects/effect';
 import { ApplyWeaknessEffect, AfterDamageEffect } from '../../game/store/effects/attack-effects';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Rayquaza extends PokemonCard {
 
@@ -16,18 +16,18 @@ export class Rayquaza extends PokemonCard {
 
   public weakness = [{ type: CardType.DRAGON }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Dragon Pulse',
-      cost: [ CardType.LIGHTNING ],
+      cost: [CardType.LIGHTNING],
       damage: 40,
       text: 'Discard the top 2 cards of your deck.'
     },
     {
       name: 'Shred',
-      cost: [CardType.FIRE, CardType.LIGHTNING, CardType.COLORLESS ],
+      cost: [CardType.FIRE, CardType.LIGHTNING, CardType.COLORLESS],
       damage: 90,
       text: 'This attack\'s damage isn\'t affected by any effects on ' +
         'the Defending Pokemon.'
@@ -45,13 +45,13 @@ export class Rayquaza extends PokemonCard {
   public setNumber: string = '11';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       player.deck.moveTo(player.discard, 2);
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

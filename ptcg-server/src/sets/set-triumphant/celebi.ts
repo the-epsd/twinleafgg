@@ -3,14 +3,11 @@ import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import {
-  PowerType, StoreLike, State, PlayerType, SlotType,
-  StateUtils, PokemonCardList, EnergyCard, GameError, AttachEnergyPrompt
-} from '../../game';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+import { PowerType, StoreLike, State, PlayerType, SlotType, StateUtils, PokemonCardList, EnergyCard, GameError, AttachEnergyPrompt } from '../../game';
+
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ABILITY_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Celebi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -51,7 +48,7 @@ export class Celebi extends PokemonCard {
       player.marker.removeMarker(this.FOREST_BREATH_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
@@ -99,7 +96,7 @@ export class Celebi extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       player.active.marker.addMarker(this.TIME_CIRCLE_MARKER, this);

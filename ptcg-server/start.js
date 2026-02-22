@@ -14,6 +14,18 @@ require('dotenv').config({ path: require('find-config')('.env') })
 
 const cardManager = CardManager.getInstance();
 
+const allSets = Object.keys(sets)
+  .filter(key => key.startsWith('set') && Array.isArray(sets[key]))
+  .map(key => ({ key: 'sets.' + key, cards: sets[key] }));
+
+const validationErrors = CardManager.validateAllSets(allSets);
+if (validationErrors.length > 0) {
+  console.error('Card manager validation failed:');
+  validationErrors.forEach(err => console.error(err));
+  console.log('Application not started.');
+  process.exit(1);
+}
+
 cardManager.defineSet(sets.setBaseSet);
 cardManager.defineSet(sets.setJungle);
 cardManager.defineSet(sets.setFossil);
@@ -61,6 +73,7 @@ cardManager.defineSet(sets.setEXLegendMaker);
 cardManager.defineSet(sets.setNintendoPromos);
 
 cardManager.defineSet(sets.setPOPSeries2);
+cardManager.defineSet(sets.setPOPSeries3);
 cardManager.defineSet(sets.setPOPSeries4);
 cardManager.defineSet(sets.setPOPSeries5);
 cardManager.defineSet(sets.setPOPSeries8);

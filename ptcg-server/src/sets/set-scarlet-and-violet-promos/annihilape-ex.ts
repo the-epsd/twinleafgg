@@ -6,11 +6,12 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { DamageMap, GameMessage, PlayerType, PutDamagePrompt, SlotType, StateUtils } from '../../game';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useAngryGrudge(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
-    
+
   const hasBenched = opponent.bench.some(b => b.cards.length > 0);
   if (!hasBenched) {
     return state;
@@ -27,7 +28,7 @@ function* useAngryGrudge(next: Function, store: StoreLike, state: State, effect:
     effect.player.id,
     GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
     PlayerType.BOTTOM_PLAYER,
-    [ SlotType.ACTIVE ],
+    [SlotType.ACTIVE],
     damage,
     maxAllowedDamage,
     { allowCancel: false }
@@ -53,7 +54,7 @@ export class Annihilapeex extends PokemonCard {
 
   public regulationMark = 'G';
 
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
 
   public cardType: CardType = CardType.FIGHTING;
 
@@ -61,18 +62,18 @@ export class Annihilapeex extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Angry Grudge',
-      cost: [ ],
+      cost: [],
       damage: 0,
       text: 'Put up to 12 damage counters on this Pokémon. This attack does 20 damage for each damage counter you placed in this way.'
     },
     {
       name: 'Seismic Toss',
-      cost: [ CardType.FIGHTING ],
+      cost: [CardType.FIGHTING],
       damage: 150,
       text: ''
     }
@@ -90,7 +91,7 @@ export class Annihilapeex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useAngryGrudge(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

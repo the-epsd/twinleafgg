@@ -5,8 +5,9 @@ import { Card, ChooseCardsPrompt, EnergyCard, GameMessage, Player, PowerType, St
 import { CardTag } from '../../game/store/card/card-types';
 import { CheckAttackCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GalarianZapdosV extends PokemonCard {
 
@@ -111,7 +112,7 @@ export class GalarianZapdosV extends PokemonCard {
     }
 
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

@@ -1,7 +1,7 @@
 import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { AttachEnergyPrompt, GameMessage, PlayerType, PokemonCard, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
 
@@ -60,7 +60,7 @@ export class HisuianZoroarkV extends PokemonCard {
       this.usedVoidReturn = false;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
 

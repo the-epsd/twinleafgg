@@ -4,10 +4,10 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, ChooseCardsPrompt, GameMessage, TrainerCard, ConfirmPrompt, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { PlaySupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
-import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_POKEPOWER_BLOCKED, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Jirachi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -51,14 +51,7 @@ export class Jirachi extends PokemonCard {
       // This Pokemon was knocked out
       const player = effect.player;
 
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.POKEPOWER,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
         return state;
       }
 
@@ -74,13 +67,13 @@ export class Jirachi extends PokemonCard {
             player.deck,
             {},
             { min: 1, max: 1, allowCancel: false }),
-          (selected: any[]) => {
-            cards = selected || [];
-            if (cards.length > 0) {
-              player.deck.moveCardsTo(cards, player.hand);
-            }
-            SHUFFLE_DECK(store, state, player);
-          });
+            (selected: any[]) => {
+              cards = selected || [];
+              if (cards.length > 0) {
+                player.deck.moveCardsTo(cards, player.hand);
+              }
+              SHUFFLE_DECK(store, state, player);
+            });
         }
       });
     }

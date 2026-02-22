@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import {StoreLike,State, StateUtils, DamageMap, PlayerType, MoveDamagePrompt, GameMessage, SlotType} from '../../game';
-import {Effect} from '../../game/store/effects/effect';
-import {AttackEffect} from '../../game/store/effects/game-effects';
-import {CheckHpEffect, CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
-import {AddSpecialConditionsEffect} from '../../game/store/effects/attack-effects';
+import { StoreLike, State, StateUtils, DamageMap, PlayerType, MoveDamagePrompt, GameMessage, SlotType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+
+import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Alakazam extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -13,18 +14,18 @@ export class Alakazam extends PokemonCard {
   public hp: number = 140;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
-  public retreat = [ C ];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Strange Hacking',
-      cost: [ P ],
+      cost: [P],
       damage: 0,
       text: 'Your opponent\'s Active Pokémon is now Confused. You may move any number of damage counters from your opponent\'s Pokémon to their other Pokémon in any way you like.'
     },
     {
       name: 'Psychic',
-      cost: [ P ],
+      cost: [P],
       damage: 10,
       damageCalculation: '+',
       text: 'This attack does 50 more damage for each Energy attached to your opponent\'s Active Pokémon.'
@@ -40,32 +41,32 @@ export class Alakazam extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Strange Hacking
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
       store.reduceEffect(state, specialCondition);
-    
+
       const maxAllowedDamage: DamageMap[] = [];
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
         const checkHpEffect = new CheckHpEffect(opponent, cardList);
         store.reduceEffect(state, checkHpEffect);
         maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
       });
-    
+
       return store.prompt(state, new MoveDamagePrompt(
         effect.player.id,
         GameMessage.MOVE_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         maxAllowedDamage,
         { allowCancel: true }
       ), transfers => {
         if (transfers === null) {
           return;
         }
-    
+
         for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
@@ -78,7 +79,7 @@ export class Alakazam extends PokemonCard {
     }
 
     // Psychic
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

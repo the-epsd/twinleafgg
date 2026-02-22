@@ -8,7 +8,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { EnergyCard } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class AegislashEX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -64,7 +64,7 @@ export class AegislashEX extends PokemonCard {
       const checkEnergy = new CheckProvidedEnergyEffect(opponent, opponentPokemon);
       store.reduceEffect(state, checkEnergy);
 
-      if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 

@@ -2,12 +2,13 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/store/card/card-types';
 import { AttachEnergyPrompt, CardTarget, DamageMap, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, PutDamagePrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { MewtwoVUNIONTopRight } from './mewtwo-v-union-tr';
 import { MewtwoVUNIONBottomLeft } from './mewtwo-v-union-bl';
 import { MewtwoVUNIONBottomRight } from './mewtwo-v-union-br';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class MewtwoVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
@@ -71,7 +72,7 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
@@ -109,7 +110,7 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
     }
 
     // Photon Barrier
-    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
+    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this) && !IS_ABILITY_BLOCKED(store, state, effect.player, this)) {
       const sourceCard = effect.source.getPokemonCard();
 
       if (StateUtils.findOwner(state, effect.source) === StateUtils.findOwner(state, effect.target)) {
@@ -133,7 +134,7 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
     }
 
     // Union Gain
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let psychicsInDiscard = 0;
@@ -175,7 +176,7 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
     }
 
     // Super Regeneration
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const healing = new HealTargetEffect(effect, 200);
@@ -184,7 +185,7 @@ export class MewtwoVUNIONTopLeft extends PokemonCard {
     }
 
     // Psyplosion
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

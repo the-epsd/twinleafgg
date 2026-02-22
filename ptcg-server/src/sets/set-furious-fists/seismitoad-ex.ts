@@ -1,17 +1,16 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, SlotType, StateUtils,
-  ChoosePokemonPrompt, GameError, GameMessage } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, PlayerType, SlotType, StateUtils, ChoosePokemonPrompt, GameError, GameMessage } from '../../game';
+
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class SeismitoadEx extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_EX ];
+  public tags = [CardTag.POKEMON_EX];
 
   public stage: Stage = Stage.BASIC;
 
@@ -21,18 +20,18 @@ export class SeismitoadEx extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Quaking Punch',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
       text: 'Your opponent can\'t play any Item cards from his or her hand ' +
         'during his or her next turn.'
     }, {
       name: 'Grenade Hammer',
-      cost: [ CardType.WATER, CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.WATER, CardType.COLORLESS],
       damage: 130,
       text: 'This attack does 30 damage to 2 of your Benched Pokemon. ' +
         '(Don\'t apply Weakness and Resistance for Benched Pokemon.)'
@@ -49,17 +48,17 @@ export class SeismitoadEx extends PokemonCard {
 
   public setNumber: string = '20';
 
-  public readonly QUAKING_PUNCH_MAREKER = 'QUAKING_PUNCH_MAREKER';
+  public readonly QUAKING_PUNCH_MARKER = 'QUAKING_PUNCH_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.marker.addMarker(this.QUAKING_PUNCH_MAREKER, this);
+      opponent.marker.addMarker(this.QUAKING_PUNCH_MARKER, this, 'attack', 'player');
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const benched = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
@@ -74,7 +73,7 @@ export class SeismitoadEx extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { min: max, max, allowCancel: false }
       ), selected => {
         const targets = selected || [];
@@ -88,13 +87,13 @@ export class SeismitoadEx extends PokemonCard {
 
     if (effect instanceof PlayItemEffect) {
       const player = effect.player;
-      if (player.marker.hasMarker(this.QUAKING_PUNCH_MAREKER, this)) {
+      if (player.marker.hasMarker(this.QUAKING_PUNCH_MARKER, this)) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
 
     if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.QUAKING_PUNCH_MAREKER, this);
+      effect.player.marker.removeMarker(this.QUAKING_PUNCH_MARKER, this);
     }
 
     return state;

@@ -1,18 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, BoardEffect } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, GameError, GameMessage,
-  ChooseCardsPrompt,
-  PlayerType,
-  AttachEnergyPrompt,
-  EnergyCard,
-  SlotType,
-  StateUtils
-} from '../../game';
+import { PowerType, StoreLike, State, GameError, GameMessage, ChooseCardsPrompt, PlayerType, AttachEnergyPrompt, EnergyCard, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Cinccino extends PokemonCard {
 
@@ -64,7 +57,7 @@ export class Cinccino extends PokemonCard {
       player.marker.removeMarker(this.REFINEMENT_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.hand.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -102,7 +95,7 @@ export class Cinccino extends PokemonCard {
       effect.player.marker.removeMarker(this.REFINEMENT_MARKER, this);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
       const hasBasicEnergy = player.discard.cards.some(c => {

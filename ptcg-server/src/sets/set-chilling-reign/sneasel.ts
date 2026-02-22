@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardTag, CardType, Card, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, State, StateUtils, StoreLike } from '../../game';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Sneasel extends PokemonCard {
 
@@ -38,7 +39,7 @@ export class Sneasel extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

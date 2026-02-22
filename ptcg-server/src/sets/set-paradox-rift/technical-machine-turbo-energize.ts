@@ -5,6 +5,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckAttackCostEffect, CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
@@ -97,7 +98,6 @@ export class TechnicalMachineTurboEnergize extends TrainerCard {
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });
-
 
         return state;
       });

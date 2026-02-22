@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import { State } from '../../game/store/state/state';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game';
 import { DealDamageEffect, AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class SlitherWing extends PokemonCard {
 
@@ -51,7 +51,7 @@ export class SlitherWing extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -60,7 +60,7 @@ export class SlitherWing extends PokemonCard {
 
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
 
       const player = effect.player;
 
@@ -69,7 +69,6 @@ export class SlitherWing extends PokemonCard {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
       store.reduceEffect(state, specialConditionEffect);
       return store.reduceEffect(state, dealDamage);
-
 
     }
     return state;

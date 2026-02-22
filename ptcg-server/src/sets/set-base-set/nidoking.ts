@@ -4,8 +4,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
+
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -49,7 +49,7 @@ export class Nidoking extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       return store.prompt(state, new CoinFlipPrompt(
         effect.player.id, GameMessage.FLIP_COIN

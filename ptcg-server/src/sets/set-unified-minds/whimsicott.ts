@@ -3,6 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameMessage, PowerType, ShuffleDeckPrompt, State, StoreLike } from '../../game';
 import { Effect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 function* useProwl(next: Function, store: StoreLike, state: State,
   self: Whimsicott, effect: PlayPokemonEffect): IterableIterator<State> {
@@ -76,14 +77,7 @@ export class Whimsicott extends PokemonCard {
       const player = effect.player;
 
       // Check to see if anything is blocking our Ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 

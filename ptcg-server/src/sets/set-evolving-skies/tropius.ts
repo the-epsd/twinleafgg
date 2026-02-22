@@ -1,8 +1,8 @@
 import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
 
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Tropius extends PokemonCard {
 
@@ -45,7 +45,7 @@ export class Tropius extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {

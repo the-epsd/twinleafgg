@@ -2,9 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PlaceDamageCountersEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
-import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dusknoir extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -39,7 +39,7 @@ export class Dusknoir extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Cursed Blast
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, new ChoosePokemonPrompt(

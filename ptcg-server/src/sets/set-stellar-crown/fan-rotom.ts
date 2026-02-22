@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, StateUtils, SuperType, GameError, PlayerType, ShuffleDeckPrompt, BoardEffect } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class FanRotom extends PokemonCard {
 
@@ -53,7 +54,7 @@ export class FanRotom extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -115,7 +116,7 @@ export class FanRotom extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard == undefined) {
         effect.damage = 0;

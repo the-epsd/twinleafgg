@@ -2,8 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, ChooseCardsPrompt, Card, SuperType, CoinFlipPrompt, GameMessage, TrainerCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // GRI Garbodor 51 (https://limitlesstcg.com/cards/GRI/51)
 export class Garbodor extends PokemonCard {
@@ -50,7 +51,7 @@ export class Garbodor extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Trashalanche
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -65,8 +66,8 @@ export class Garbodor extends PokemonCard {
     }
 
     // Acid Spray
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      if (WAS_ATTACK_USED(effect, 0, this)) {
         const player = effect.player;
         const opponent = StateUtils.getOpponent(state, player);
 

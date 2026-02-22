@@ -1,9 +1,9 @@
 import { TrainerCard, TrainerType, Stage, CardType, PokemonType, Power, PowerType, StoreLike, State, GameLog, StateUtils, GameError, GameMessage, PokemonCard, GamePhase } from '../../game';
 import { AddSpecialConditionsEffect, AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, RetreatEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { RetreatEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { IS_POKEBODY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { IS_POKEBODY_BLOCKED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class ClawFossil extends TrainerCard {
 
@@ -58,7 +58,7 @@ export class ClawFossil extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const cardList = effect.player.active;
       const player = effect.player;
 

@@ -3,7 +3,7 @@ import { CardTag, Stage, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, Card } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class LuxrayV extends PokemonCard {
 
@@ -54,6 +54,11 @@ export class LuxrayV extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      // "Your opponent reveals their hand." — show all cards in opponent's hand to the player
+      if (opponent.hand.cards.length > 0) {
+        SHOW_CARDS_TO_PLAYER(store, state, player, opponent.hand.cards);
+      }
+
       let cards: Card[] = [];
       store.prompt(state, new ChooseCardsPrompt(
         player,
@@ -63,9 +68,8 @@ export class LuxrayV extends PokemonCard {
         { min: 0, max: 1, allowCancel: false }
       ), selected => {
         cards = selected || [];
-        // Operation canceled by the user
         if (cards.length === 0) {
-          return state;
+          return;
         }
         MOVE_CARDS(store, state, opponent.hand, opponent.discard, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
       });
@@ -73,9 +77,8 @@ export class LuxrayV extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
-      const checkProvidedEnergy = new CheckProvidedEnergyEffect(opponent);
+      const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
       store.prompt(state, new ChooseCardsPrompt(

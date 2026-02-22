@@ -1,9 +1,9 @@
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { Attack, Card, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, PokemonCard, Power, PowerType, State, StateUtils, StoreLike } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Goldeen extends PokemonCard {
 
@@ -43,7 +43,7 @@ export class Goldeen extends PokemonCard {
   public fullName: string = 'Goldeen TWM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

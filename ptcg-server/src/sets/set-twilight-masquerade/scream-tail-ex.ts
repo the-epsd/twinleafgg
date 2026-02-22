@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { StoreLike, State, GameError, GameMessage, StateUtils, CardTag, CardType, Stage, Card, ChooseCardsPrompt, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ScreamTailex extends PokemonCard {
 
@@ -53,7 +54,7 @@ export class ScreamTailex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       // Get current turn
       const turn = state.turn;
 
@@ -66,42 +67,43 @@ export class ScreamTailex extends PokemonCard {
         const opponent = StateUtils.getOpponent(state, player);
         opponent.marker.addMarker(this.SUDDEN_SHRIEK_MARKER, this);
       }
+    }
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
 
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-        // Defending Pokemon has no energy cards attached
-        if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
-          return state;
-        }
-
-        let card: Card;
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          opponent.active,
-          { superType: SuperType.ENERGY },
-          { min: 1, max: 1, allowCancel: false }
-        ), selected => {
-          card = selected[0];
-          return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
-        });
+      // Defending Pokemon has no energy cards attached
+      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
+        return state;
       }
 
-      if (effect instanceof PlaySupporterEffect) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
-        if (opponent.marker.hasMarker(this.SUDDEN_SHRIEK_MARKER, this)) {
-          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-        }
-      }
+      let card: Card;
+      return store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        opponent.active,
+        { superType: SuperType.ENERGY },
+        { min: 1, max: 1, allowCancel: false }
+      ), selected => {
+        card = selected[0];
+        return store.reduceEffect(state, new DiscardCardsEffect(effect, [card]));
+      });
+    }
 
-      if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SUDDEN_SHRIEK_MARKER, this)) {
-        effect.player.marker.removeMarker(this.SUDDEN_SHRIEK_MARKER, this);
+    if (effect instanceof PlaySupporterEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      if (opponent.marker.hasMarker(this.SUDDEN_SHRIEK_MARKER, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
+
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SUDDEN_SHRIEK_MARKER, this)) {
+      effect.player.marker.removeMarker(this.SUDDEN_SHRIEK_MARKER, this);
+    }
+
     return state;
   }
 }

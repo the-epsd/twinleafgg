@@ -3,6 +3,7 @@ import { GameMessage } from '../../game-message';
 import { CardTarget, PlayerType, SlotType } from '../actions/play-card-action';
 import { CardTag } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
+import { MovedToActiveEffect } from '../effects/game-effects';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
 import { PokemonCardList } from './pokemon-card-list';
@@ -158,6 +159,14 @@ export class Player {
     }
   }
 
+  /**
+   * Remove all attack-sourced markers from the player level.
+   * Preserves ability markers, trainer markers, and other non-attack state.
+   */
+  removeAttackEffects(): void {
+    this.marker.removeAttackEffects();
+  }
+
   removePokemonEffects(target: PokemonCardList) {
 
     //breakdown of markers to be removed
@@ -252,26 +261,14 @@ export class Player {
     if (benchIndex !== -1) {
       const temp = this.active;
 
-      //breakdown of markers to be removed on switchPokemon()
-      this.marker.removeMarker(this.ATTACK_USED_MARKER);
-      this.marker.removeMarker(this.ATTACK_USED_2_MARKER);
-      this.marker.removeMarker(this.KNOCKOUT_MARKER);
-      this.marker.removeMarker(this.CLEAR_KNOCKOUT_MARKER);
-      this.marker.removeMarker(this.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER);
-      this.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER);
-      this.marker.removeMarker(this.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER);
-      this.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER);
-      this.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_DEALS_LESS_DAMAGE_MARKER);
-      this.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER);
-      this.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER);
-      this.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER);
-      this.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER);
-      this.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER);
-      this.marker.removeMarker(this.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER);
-      this.marker.removeMarker(this.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER);
-      this.marker.removeMarker(this.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES);
+      // Remove player-level markers scoped to the active Pokemon.
+      // Uses both targetScope metadata (migrated) and whitelist (unmigrated).
+      // Does NOT remove player-scoped locks (item lock, tool lock, etc.).
+      this.marker.removePokemonScopedMarkers();
 
-      this.active.clearEffects();
+      // Remove attack effects from the Pokemon leaving active
+      this.active.removeAttackEffects();
+
       this.active = this.bench[benchIndex];
       this.bench[benchIndex] = temp;
 
@@ -284,6 +281,11 @@ export class Player {
 
         // Keep existing boolean for backwards compatibility
         activePokemon.movedToActiveThisTurn = true;
+
+        // Dispatch MovedToActiveEffect for cards that intercept it (e.g. Cobalion-EX Metal Road)
+        if (store && state) {
+          store.reduceEffect(state, new MovedToActiveEffect(this, activePokemon));
+        }
       }
     }
   }

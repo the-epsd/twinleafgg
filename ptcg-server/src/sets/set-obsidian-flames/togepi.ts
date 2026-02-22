@@ -2,25 +2,26 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Togepi extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
   public hp: number = 50;
   public weakness = [{ type: M }];
-  public retreat = [ C ];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Whiny Voice',
-      cost: [ C ],
+      cost: [C],
       damage: 0,
       text: 'Choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into their deck.'
     },
     {
       name: 'Rolling Tackle',
-      cost: [ C, C ],
+      cost: [C, C],
       damage: 20,
       text: ''
     }
@@ -35,11 +36,11 @@ export class Togepi extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Whiny Voice
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.hand.cards.length === 0){
+      if (opponent.hand.cards.length === 0) {
         return state;
       }
 
@@ -51,7 +52,7 @@ export class Togepi extends PokemonCard {
         { allowCancel: false, min: 1, max: 1, isSecret: true }
       ), cards => {
         cards = cards || [];
-        
+
         store.prompt(state, new ShowCardsPrompt(
           player.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,

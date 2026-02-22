@@ -3,7 +3,7 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
@@ -12,7 +12,7 @@ import { MoveDamagePrompt, DamageMap } from '../../game/store/prompts/move-damag
 import { GameMessage } from '../../game/game-message';
 import { CoinFlipPrompt } from '../..';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, WAS_POWER_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useDamageSwap(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -85,7 +85,7 @@ export class Alakazam extends PokemonCard {
       return generator.next().value;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)

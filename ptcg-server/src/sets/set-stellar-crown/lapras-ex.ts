@@ -2,8 +2,8 @@ import { AttachEnergyPrompt, Card, CardList, CardTag, CardType, EnergyCard, Game
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Laprasex extends PokemonCard {
 
@@ -49,7 +49,7 @@ export class Laprasex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
 
@@ -75,7 +75,7 @@ export class Laprasex extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const temp = new CardList();
       // Create deckBottom and move hand into it

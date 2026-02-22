@@ -4,11 +4,12 @@ import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckAttackCostEffect, CheckPokemonAttacksEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class AncientTechnicalMachineRock extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -141,7 +142,6 @@ export class AncientTechnicalMachineRock extends TrainerCard {
         }
       }
 
-
       opponent.bench.forEach(benchSpot => {
         if (benchSpot.getPokemonCard()) {
           const benchPokemon = benchSpot.cards.filter(card => card.superType === SuperType.POKEMON);
@@ -157,7 +157,6 @@ export class AncientTechnicalMachineRock extends TrainerCard {
           }
         }
       });
-
 
     }
 

@@ -2,8 +2,9 @@ import { GamePhase, State, StateUtils, StoreLike } from '../../game';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class EthansPinsir extends PokemonCard {
   public regulationMark = 'I';
@@ -38,7 +39,7 @@ export class EthansPinsir extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {

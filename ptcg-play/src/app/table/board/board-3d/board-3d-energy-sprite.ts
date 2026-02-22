@@ -7,7 +7,7 @@ import {
   DoubleSide,
   PerspectiveCamera
 } from 'three';
-import { Card } from 'ptcg-server';
+import { Card, CardList } from 'ptcg-server';
 import { getCustomEnergyIconPath } from '../../../shared/cards/energy-icons.utils';
 
 const MAX_VISIBLE_ENERGIES = 8;
@@ -40,9 +40,11 @@ export class Board3dEnergySprite {
 
   /**
    * Update energy sprites from card array
+   * @param energyCardList The energies CardList (for click-to-show-info)
    */
   updateEnergies(
     energyCards: Card[],
+    energyCardList: CardList,
     textures: Map<string, Texture>,
     cardBackTexture: Texture
   ): void {
@@ -87,6 +89,11 @@ export class Board3dEnergySprite {
         0.1, // Slightly above ground
         1.75   // Below the card (card center is at 0, card bottom is around 1.75)
       );
+
+      // userData for click-to-show-energy-card-info
+      mesh.userData.isEnergyIcon = true;
+      mesh.userData.cardData = card;
+      mesh.userData.cardList = energyCardList;
 
       // Billboard: orientation updated via updateBillboards() each frame
       this.group.add(mesh);

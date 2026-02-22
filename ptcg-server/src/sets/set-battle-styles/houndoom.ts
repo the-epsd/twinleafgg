@@ -1,18 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag, EnergyType } from '../../game/store/card/card-types';
-import {
-  PowerType,
-  GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, State, StoreLike,
-  CardTarget,
-  GameError
-} from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerType, GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, State, StoreLike, CardTarget, GameError } from '../../game';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { ABILITY_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
-
-
+import { ABILITY_USED, SHUFFLE_DECK, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Houndoom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -52,7 +45,7 @@ export class Houndoom extends PokemonCard {
       player.marker.removeMarker(this.SINGLE_STRIKE_ROAR_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(this.SINGLE_STRIKE_ROAR_MARKER, this)) {

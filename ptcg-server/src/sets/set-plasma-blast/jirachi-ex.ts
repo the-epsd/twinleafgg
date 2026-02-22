@@ -1,13 +1,11 @@
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, TrainerType, SpecialCondition } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import {
-  PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt,
-  ShuffleDeckPrompt
-} from '../../game';
+import { PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 function* useStellarGuidance(next: Function, store: StoreLike, state: State,
@@ -97,7 +95,7 @@ export class JirachiEX extends PokemonCard {
       return generator.next().value;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const asleepEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       asleepEffect.target = player.active;

@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import { AttachEnergyPrompt, CardTarget, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, ShowCardsPrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { GreninjaVUNIONTopRight } from './greninja-v-union-tr';
 import { GreninjaVUNIONBottomLeft } from './greninja-v-union-bl';
@@ -10,7 +10,7 @@ import { GreninjaVUNIONBottomRight } from './greninja-v-union-br';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
-import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class GreninjaVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
@@ -85,7 +85,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
@@ -126,14 +126,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
     if (effect instanceof PlayItemEffect && effect.target && effect.target.cards.includes(this)) {
       /*const player = StateUtils.findOwner(state, effect.target);
 
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }*/
 
@@ -169,7 +162,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
     }
 
     // Union Gain
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let watersInDiscard = 0;
@@ -211,7 +204,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
     }
 
     // Twister Shuriken
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const opponent = effect.opponent;
 
       opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {

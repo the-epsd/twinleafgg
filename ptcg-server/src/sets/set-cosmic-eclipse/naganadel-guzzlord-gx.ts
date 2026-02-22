@@ -2,9 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage, StateUtils, PowerType, PlayerType, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { HealEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { ABILITY_USED, BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, TAKE_X_PRIZES } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, TAKE_X_PRIZES, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class NaganadelGuzzlordGX extends PokemonCard {
@@ -48,7 +48,7 @@ export class NaganadelGuzzlordGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Violent Appetite
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
@@ -83,7 +83,7 @@ export class NaganadelGuzzlordGX extends PokemonCard {
     }
 
     // Chaotic Order-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       BLOCK_IF_GX_ATTACK_USED(player);

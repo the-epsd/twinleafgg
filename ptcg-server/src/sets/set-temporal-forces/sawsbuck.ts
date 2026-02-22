@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardType, State, StoreLike, PowerType, GameError, GameMessage, SuperType, TrainerType, TrainerCard } from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { HAS_MARKER, ABILITY_USED, ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
+import { HAS_MARKER, ABILITY_USED, ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Sawsbuck extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -40,9 +40,8 @@ export class Sawsbuck extends PokemonCard {
       effect.player.marker.removeMarker(this.CHANGING_SEASONS_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-
 
       if (HAS_MARKER(this.CHANGING_SEASONS_MARKER, player, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);

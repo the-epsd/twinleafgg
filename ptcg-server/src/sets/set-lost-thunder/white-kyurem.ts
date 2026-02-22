@@ -3,9 +3,10 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class WhiteKyurem extends PokemonCard {
 
@@ -16,7 +17,7 @@ export class WhiteKyurem extends PokemonCard {
   public hp: number = 130;
 
   public weakness = [{ type: CardType.METAL }];
-  
+
   public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
@@ -44,38 +45,38 @@ export class WhiteKyurem extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const stadiumCard = StateUtils.getStadiumCard(state);
-      
+
       if (!stadiumCard) {
         return state;
       }
-      
+
       const stadiumCardList = StateUtils.findCardList(state, stadiumCard);
       const owner = StateUtils.findOwner(state, stadiumCardList);
-      
+
       if (stadiumCard !== undefined && owner !== effect.player) {
         const cardList = StateUtils.findCardList(state, stadiumCard);
         const player = StateUtils.findOwner(state, cardList);
         cardList.moveTo(player.discard);
         return state;
       }
-      
+
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, player.active);
       store.reduceEffect(state, checkProvidedEnergy);
-      
+
       const hasFireEnergy = checkProvidedEnergy.energyMap.some(e => e.provides.includes(CardType.ANY) || e.provides.includes(CardType.FIRE) || e.provides.includes(CardType.GRW) || e.provides.includes(CardType.GRPD));
-      
+
       if (hasFireEnergy) {
         effect.damage += 80;
       }
-      
+
       return state;
     }
     return state;

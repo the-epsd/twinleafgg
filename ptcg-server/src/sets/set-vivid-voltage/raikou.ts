@@ -5,8 +5,9 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { GameMessage, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Raikou extends PokemonCard {
 
@@ -20,12 +21,12 @@ export class Raikou extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Amazing Shot',
-      cost: [ CardType.GRASS, CardType.LIGHTNING, CardType.METAL ],
+      cost: [CardType.GRASS, CardType.LIGHTNING, CardType.METAL],
       damage: 120,
       text: 'This attack also does 120 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
@@ -43,20 +44,20 @@ export class Raikou extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-            
+
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
-            
+
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), targets => {
         if (!targets || targets.length === 0) {
@@ -66,7 +67,7 @@ export class Raikou extends PokemonCard {
         damageEffect.target = targets[0];
         store.reduceEffect(state, damageEffect);
       });
-            
+
       return state;
     }
     return state;

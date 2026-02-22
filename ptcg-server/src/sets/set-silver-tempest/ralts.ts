@@ -6,6 +6,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Ralts extends PokemonCard {
 
@@ -42,7 +43,7 @@ export class Ralts extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const pokemonCard = opponent.active.getPokemonCard();
@@ -58,38 +59,38 @@ export class Ralts extends PokemonCard {
         { allowCancel: false }
       ), result => {
         result;
-        
+
         if (!result) {
           return state;
         }
-        
+
         this.MEMORY_SKIPPED_ATTACK = result;
-        
+
         store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
           name: player.name,
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           attack: this.MEMORY_SKIPPED_ATTACK!.name
         });
-        
+
         opponent.active.marker.addMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-        
+
         return state;
       });
 
       return state;
     }
-    
+
     if (effect instanceof AttackEffect && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
       if (effect.attack === this.MEMORY_SKIPPED_ATTACK) {
         throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
     }
-    
+
     if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
       effect.player.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
       this.MEMORY_SKIPPED_ATTACK = undefined;
     }
-    
+
     return state;
   }
 }

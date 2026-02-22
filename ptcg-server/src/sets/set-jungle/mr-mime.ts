@@ -3,7 +3,7 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { PokemonCardList, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { IS_POKEMON_POWER_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MrMime extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -52,14 +52,7 @@ export class MrMime extends PokemonCard {
       }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.POKEMON_POWER,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_POKEMON_POWER_BLOCKED(store, state, player, this)) {
         return state;
       }
 
@@ -68,7 +61,7 @@ export class MrMime extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const damage = opponent.active.damage;
       effect.damage += damage;

@@ -5,9 +5,8 @@ import { Card, ChooseCardsPrompt, GameMessage, Player, PowerType, State, StateUt
 import { CardTag } from '../../game/store/card/card-types';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Drifblim extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -65,14 +64,7 @@ export class Drifblim extends PokemonCard {
         return count;
       };
 
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 

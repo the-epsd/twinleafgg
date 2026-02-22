@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { GameMessage } from '../../game/game-message';
@@ -11,6 +11,7 @@ import { AbstractAttackEffect, PutDamageEffect } from '../../game/store/effects/
 import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Rapidash extends PokemonCard {
 
@@ -19,18 +20,18 @@ export class Rapidash extends PokemonCard {
   public cardType: CardType = R;
   public hp: number = 90;
   public weakness = [{ type: W }];
-  public retreat = [  ];
+  public retreat = [];
 
   public attacks = [
     {
       name: 'Agility',
-      cost: [ R ],
+      cost: [R],
       damage: 20,
       text: 'Flip a coin. If heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn. '
     },
     {
       name: 'Overrun',
-      cost: [ C, C ],
+      cost: [C, C],
       damage: 40,
       text: 'This attack does 20 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
@@ -47,7 +48,7 @@ export class Rapidash extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       state = store.prompt(state, new CoinFlipPrompt(
@@ -62,7 +63,7 @@ export class Rapidash extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -75,7 +76,7 @@ export class Rapidash extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), targets => {
         if (!targets || targets.length === 0) {

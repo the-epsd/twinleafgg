@@ -1,32 +1,33 @@
 import { PokemonCard, Stage, CardType, CardTag, SuperType, State, StoreLike, PokemonCardList, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, ChooseEnergyPrompt, Card } from '../../game';
-import {AfterDamageEffect} from '../../game/store/effects/attack-effects';
-import {CheckProvidedEnergyEffect} from '../../game/store/effects/check-effects';
-import {Effect} from '../../game/store/effects/effect';
-import {AttackEffect} from '../../game/store/effects/game-effects';
+import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { Effect } from '../../game/store/effects/effect';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Quaquavalex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Quaxwell';
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
   public cardType: CardType = W;
   public hp: number = 320;
   public weakness = [{ type: L }];
-  public retreat = [ C, C ];
+  public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Exciting Dance',
-      cost: [ W ],
+      cost: [W],
       damage: 60,
       text: 'Switch this Pokémon with 1 of your Benched Pokémon. If you do, switch out your opponent\'s Active Pokémon to the Bench. (Your opponent chooses the new Active Pokémon.)'
     },
     {
       name: 'Spiral Shot',
-      cost: [ W, C ],
+      cost: [W, C],
       damage: 230,
       text: 'Put 2 Energy attached to this Pokémon into your hand.'
     },
-    
+
   ];
 
   public regulationMark = 'G';
@@ -37,16 +38,16 @@ export class Quaquavalex extends PokemonCard {
   public fullName: string = 'Quaquaval ex PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AfterDamageEffect && effect.attack === this.attacks[0]){
+    if (effect instanceof AfterDamageEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = effect.opponent;
 
       const hasBench = player.bench.some(b => b.cards.length > 0);
-      
+
       if (hasBench === false) {
         return state;
       }
-    
+
       let targets: PokemonCardList[] = [];
       store.prompt(state, new ChoosePokemonPrompt(
         player.id,
@@ -56,18 +57,18 @@ export class Quaquavalex extends PokemonCard {
         { allowCancel: false }
       ), results => {
         targets = results || [];
-          
+
         if (targets.length > 0) {
           player.active.clearEffects();
           player.switchPokemon(targets[0]);
         }
 
         const hasBench = opponent.bench.some(b => b.cards.length > 0);
-      
+
         if (hasBench === false) {
           return state;
         }
-      
+
         let targets2: PokemonCardList[] = [];
         store.prompt(state, new ChoosePokemonPrompt(
           opponent.id,
@@ -77,7 +78,7 @@ export class Quaquavalex extends PokemonCard {
           { allowCancel: false }
         ), results => {
           targets2 = results || [];
-            
+
           if (targets2.length > 0) {
             opponent.active.clearEffects();
             opponent.switchPokemon(targets2[0]);
@@ -86,7 +87,7 @@ export class Quaquavalex extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {
@@ -104,12 +105,12 @@ export class Quaquavalex extends PokemonCard {
         { allowCancel: false }
       ), energy => {
         const cards: Card[] = (energy || []).map(e => e.card);
-        
+
         player.active.moveCardsTo(cards, player.hand);
       });
     }
 
     return state;
-  
+
   }
 }

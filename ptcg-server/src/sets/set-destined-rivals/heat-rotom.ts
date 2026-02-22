@@ -1,7 +1,8 @@
 import { Attack, CardType, PlayerType, PokemonCard, PokemonCardList, SpecialCondition, Stage, State, StoreLike, Weakness } from '../../game';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class HeatRotom extends PokemonCard {
 
@@ -32,7 +33,7 @@ export class HeatRotom extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList: PokemonCardList) => {
         const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
@@ -40,7 +41,7 @@ export class HeatRotom extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       let toolCount = 0;
 

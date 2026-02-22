@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
-import {StoreLike,State, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType} from '../../game';
-import {Effect} from '../../game/store/effects/effect';
-import {AttackEffect} from '../../game/store/effects/game-effects';
-import {PutDamageEffect} from '../../game/store/effects/attack-effects';
+import { StoreLike, State, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Pupitar extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -11,22 +12,22 @@ export class Pupitar extends PokemonCard {
   public cardType: CardType = F;
   public hp: number = 80;
   public weakness = [{ type: G }];
-  public retreat = [ C ];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Rock Throw',
-      cost: [ F ],
+      cost: [F],
       damage: 20,
       text: '',
     },
     {
       name: 'Blasting Tackle',
-      cost: [ F, F ],
+      cost: [F, F],
       damage: 60,
       text: 'This attack also does 20 damage to 1 of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)',
     },
-    
+
   ];
 
   public regulationMark = 'G';
@@ -38,10 +39,9 @@ export class Pupitar extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Blasting Tackle
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
 
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {

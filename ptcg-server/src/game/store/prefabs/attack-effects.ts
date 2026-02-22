@@ -1,10 +1,12 @@
-import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, DamageMap, EnergyCard, GameMessage, PlayerType, PutDamagePrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
-import { SpecialCondition, SuperType, TrainerType } from '../card/card-types';
+import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, ConfirmPrompt, DamageMap, EnergyCard, GameMessage, PlayerType, PutDamagePrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { CardType, SpecialCondition, SuperType, TrainerType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, KnockOutOpponentEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
+import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, CardsToHandEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, KnockOutOpponentEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
+import { CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { AttackEffect } from '../effects/game-effects';
 import { AfterAttackEffect } from '../effects/game-phase-effects';
-import { COIN_FLIP_PROMPT, FLIP_UNTIL_TAILS_AND_COUNT_HEADS, MOVE_CARDS } from './prefabs';
+import { FLIP_UNTIL_TAILS_AND_COUNT_HEADS, MOVE_CARDS } from './prefabs';
+import { CoinFlipEffect } from '../effects/play-card-effects';
 
 
 /**
@@ -87,9 +89,9 @@ export function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(
       { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
       { min, max, allowCancel: false }
     )], selected => {
-    const cards = selected || [];
-    player.discard.moveCardsTo(cards, player.hand);
-  });
+      const cards = selected || [];
+      player.discard.moveCardsTo(cards, player.hand);
+    });
 }
 
 export function PUT_X_DAMAGE_COUNTERS_ON_ALL_YOUR_OPPONENTS_POKEMON(
@@ -252,12 +254,13 @@ export function FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(
   state: State,
   effect: AttackEffect,
   amount: number
-) {
-  COIN_FLIP_PROMPT(store, state, effect.player, (result => {
+): State {
+  const coinFlip = new CoinFlipEffect(effect.player, (result: boolean) => {
     if (result) {
       effect.damage += amount;
     }
-  }));
+  });
+  return store.reduceEffect(state, coinFlip);
 }
 
 export function FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_DAMAGE_PER_HEADS(
@@ -343,7 +346,7 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON(
   ), selected => {
     const target = selected[0];
     let damageEffect: DealDamageEffect | PutDamageEffect;
-    if (target === player.active) {
+    if (target === opponent.active) {
       damageEffect = new DealDamageEffect(effect, damage);
     } else {
       damageEffect = new PutDamageEffect(effect, damage);
@@ -465,6 +468,53 @@ export function DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = opponent.active;
       store.reduceEffect(state, discardEnergy);
+    }
+  });
+}
+
+/**
+ * You may put up to X Energy attached to your opponent's Active Pokémon into their hand.
+ * Uses CardsToHandEffect (AbstractAttackEffect) so abilities like Charmeleon's Flare Veil can block it.
+ */
+export function PUT_ENERGY_FROM_OPPONENTS_ACTIVE_INTO_THEIR_HAND(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  options?: { count?: number }
+): State {
+  const count = options?.count ?? 1;
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  const checkEnergy = new CheckProvidedEnergyEffect(opponent, opponent.active);
+  state = store.reduceEffect(state, checkEnergy);
+
+  if (checkEnergy.energyMap.length === 0) {
+    return state;
+  }
+
+  const cost = Array(count).fill(CardType.COLORLESS);
+
+  return store.prompt(state, new ConfirmPrompt(
+    player.id,
+    GameMessage.WANT_TO_USE_ABILITY,
+  ), wantToUse => {
+    if (wantToUse) {
+      const selectCount = Math.min(count, checkEnergy.energyMap.length);
+      store.prompt(state, new ChooseEnergyPrompt(
+        player.id,
+        GameMessage.CHOOSE_ENERGIES_TO_HAND,
+        checkEnergy.energyMap,
+        cost.slice(0, selectCount),
+        { allowCancel: false }
+      ), energy => {
+        const cards = (energy || []).slice(0, selectCount).map(e => e.card);
+        if (cards.length > 0) {
+          const toHandEffect = new CardsToHandEffect(effect, cards);
+          toHandEffect.target = opponent.active;
+          store.reduceEffect(state, toHandEffect);
+        }
+      });
     }
   });
 }

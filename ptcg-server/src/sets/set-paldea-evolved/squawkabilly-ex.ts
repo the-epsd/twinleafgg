@@ -3,10 +3,10 @@ import { Stage, CardType, CardTag, EnergyType, SuperType, BoardEffect } from '..
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { GameMessage } from '../../game/game-message';
 import { AttachEnergyPrompt, EnergyCard, GameError, PlayerType, PowerType, SlotType, StateUtils } from '../../game';
-
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Squawkabillyex extends PokemonCard {
 
@@ -35,7 +35,6 @@ export class Squawkabillyex extends PokemonCard {
     text: 'Once during your first turn, you may discard your hand and draw 6 cards. You can\'t use more than 1 Squawk and Seize Ability during your turn.'
   }];
 
-
   public attacks = [{
     name: 'Motivate',
     cost: [CardType.COLORLESS],
@@ -53,10 +52,9 @@ export class Squawkabillyex extends PokemonCard {
 
   public fullName: string = 'Squawkabilly ex PAL';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       // Get current turn
       const turn = state.turn;
@@ -86,7 +84,7 @@ export class Squawkabillyex extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
       const hasEnergyInDiscard = player.discard.cards.some(c => {

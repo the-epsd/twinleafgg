@@ -4,6 +4,7 @@ import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, ShuffleDeck
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { GameMessage } from '../../game/game-message';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useFlock(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -78,7 +79,7 @@ export class Grubbin extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useFlock(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

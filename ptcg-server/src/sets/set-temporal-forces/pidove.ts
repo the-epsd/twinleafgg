@@ -5,11 +5,12 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { GameError, PowerType } from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PlayerType } from '../../game';
 import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Pidove extends PokemonCard {
 
@@ -53,7 +54,7 @@ export class Pidove extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Emergency Evolution
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {

@@ -4,18 +4,19 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Reshiram extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
   public hp: number = 120;
   public weakness = [{ type: W }];
-  public retreat = [ C, C, C ];
+  public retreat = [C, C, C];
 
   public attacks = [{
     name: 'Amazing Blaze',
-    cost: [ R, L, D ],
+    cost: [R, L, D],
     damage: 270,
     text: 'This Pokémon also does 60 damage to itself.'
   }];
@@ -29,7 +30,7 @@ export class Reshiram extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
 

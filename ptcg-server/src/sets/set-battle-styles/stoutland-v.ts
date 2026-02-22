@@ -2,8 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GamePhase } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class StoutlandV extends PokemonCard {
 
@@ -77,7 +78,7 @@ export class StoutlandV extends PokemonCard {
         return state;
       }
 
-      if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+      if (WAS_ATTACK_USED(effect, 1, this)) {
         const player = effect.player;
 
         const dealDamage = new DealDamageEffect(effect, 30);

@@ -1,8 +1,8 @@
 import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt, EnergyType, PlayerType, SlotType, StateUtils, SuperType, BoardEffect } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Blazikenex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex];
@@ -43,7 +43,7 @@ export class Blazikenex extends PokemonCard {
       player.marker.removeMarker(this.OVERFLOWING_SPIRIT_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
@@ -94,7 +94,7 @@ export class Blazikenex extends PokemonCard {
       const player = effect.player;
       player.active.cannotAttackNextTurnPending = true;
     }
-    
+
     return state;
   }
 }

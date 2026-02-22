@@ -2,8 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, BoardEffect } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils, AttachEnergyPrompt, CardList, EnergyCard, GameMessage, PlayerType, SlotType, ShuffleDeckPrompt, GameError, ShowCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Magnezone extends PokemonCard {
 
@@ -56,12 +57,16 @@ export class Magnezone extends PokemonCard {
       player.marker.removeMarker(this.GIGA_MAGNET_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const temp = new CardList();
 
       if (player.marker.hasMarker(this.GIGA_MAGNET_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
       if (player.deck.cards.length == 0) {

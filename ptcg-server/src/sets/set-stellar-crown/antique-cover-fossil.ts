@@ -4,7 +4,7 @@ import { GameError, GameLog, GameMessage, Power, PowerType, State, StateUtils, S
 import { AbstractAttackEffect, ApplyWeaknessEffect, PutDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class AntiqueCoverFossil extends TrainerCard {
   public superType = SuperType.TRAINER;
@@ -53,7 +53,7 @@ At any time during your turn, you may discard this card from play.`,
   public fullName: string = 'Antique Cover Fossil SCR';
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const pokeDollCardList = StateUtils.findCardList(state, this);
 

@@ -5,8 +5,9 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { ChooseCardsPrompt, GameError, GameLog, GameMessage, PlayerType } from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Alomomola extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -43,7 +44,7 @@ export class Alomomola extends PokemonCard {
       player.marker.removeMarker(this.GENTLE_FINS_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const openSlots = player.bench.filter(b => b.cards.length === 0);
 

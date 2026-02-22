@@ -62,7 +62,7 @@ export class IronLeavesex extends PokemonCard {
           const cardList = StateUtils.findCardList(state, this);
           const benchIndex = player.bench.indexOf(cardList as PokemonCardList);
 
-          player.switchPokemon(player.bench[benchIndex]);
+          player.switchPokemon(player.bench[benchIndex], store, state);
 
           const blockedFrom: CardTarget[] = [];
           const blockedTo: CardTarget[] = [];

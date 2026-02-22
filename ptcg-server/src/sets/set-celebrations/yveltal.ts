@@ -3,9 +3,9 @@ import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/ca
 import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 
+import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Yveltal extends PokemonCard {
 
@@ -48,7 +48,7 @@ export class Yveltal extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -57,7 +57,6 @@ export class Yveltal extends PokemonCard {
       const oppActive = opponent.active;
 
       const oppPokemon = oppBench || oppActive;
-
 
       const checkEnergy = new CheckProvidedEnergyEffect(player, oppPokemon);
       store.reduceEffect(state, checkEnergy);

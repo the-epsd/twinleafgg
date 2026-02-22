@@ -1,11 +1,10 @@
-import { StateUtils } from '../../game';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class Yveltal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -32,12 +31,9 @@ export class Yveltal extends PokemonCard {
   public fullName: string = 'Yveltal SHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Amazing Destruction
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.damage += 999;
-    } 
+      KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
+    }
 
     return state;
   }

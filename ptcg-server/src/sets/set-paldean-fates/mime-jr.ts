@@ -7,6 +7,7 @@ import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { ChooseAttackPrompt, GameLog, GameMessage, StateUtils } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useMakeBelieveCopycat(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -93,7 +94,7 @@ export class MimeJr extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useMakeBelieveCopycat(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

@@ -1,10 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, ShuffleDeckPrompt, StateUtils,
-  PokemonCardList, Card, ChooseCardsPrompt, GameMessage } from '../../game';
+import {
+  PowerType, StoreLike, State, ShuffleDeckPrompt, StateUtils,
+  PokemonCardList, Card, ChooseCardsPrompt, GameMessage
+} from '../../game';
 import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect, AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* usePlayground(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -84,7 +87,7 @@ export class Pichu extends PokemonCard {
 
   public hp: number = 30;
 
-  public retreat = [ ];
+  public retreat = [];
 
   public powers = [{
     name: 'Sweet Sleeping Face',
@@ -96,7 +99,7 @@ export class Pichu extends PokemonCard {
   public attacks = [
     {
       name: 'Playground',
-      cost: [ ],
+      cost: [],
       damage: 0,
       text: 'Each player may search his or her deck for as many Basic ' +
         'Pokemon as he or she likes, put them onto his or her Bench, and ' +
@@ -118,7 +121,7 @@ export class Pichu extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Playground
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = usePlayground(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

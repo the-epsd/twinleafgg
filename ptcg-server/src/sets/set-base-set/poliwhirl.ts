@@ -8,6 +8,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { ChooseAttackPrompt, GameError, GameLog, GameMessage, PlayerType, PokemonCardList, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Poliwhirl extends PokemonCard {
 
@@ -51,7 +52,7 @@ export class Poliwhirl extends PokemonCard {
   ];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const pokemonCard = opponent.active.getPokemonCard();
@@ -104,7 +105,7 @@ export class Poliwhirl extends PokemonCard {
       this.forgottenAttack = null;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       return store.prompt(state, [
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)

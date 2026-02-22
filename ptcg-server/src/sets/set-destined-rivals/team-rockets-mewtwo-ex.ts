@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, DiscardEnergyPrompt, GameError, GameMessage, EnergyType, PlayerType, SlotType, StateUtils, SuperType, CardTag, PowerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { UseAttackEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class TeamRocketsMewtwoex extends PokemonCard {
@@ -60,7 +60,7 @@ export class TeamRocketsMewtwoex extends PokemonCard {
     }
 
     // Handle Deletion Sphere attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const hasBenched = player.bench.some(b => b.cards.length > 0);
 

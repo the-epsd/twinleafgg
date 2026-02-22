@@ -3,7 +3,7 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { GameError } from '../../game/game-error';
@@ -11,6 +11,7 @@ import { GameMessage } from '../../game/game-message';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Munna extends PokemonCard {
 
@@ -59,7 +60,7 @@ export class Munna extends PokemonCard {
       player.marker.removeMarker(this.LONG_DISTANCE_HYPNOSIS_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

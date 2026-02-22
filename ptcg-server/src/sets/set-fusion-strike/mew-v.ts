@@ -2,8 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, ShuffleDeckPrompt, GameMessage, ConfirmPrompt, AttachEnergyPrompt, SlotType, StateUtils, PlayerType, CardTarget } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
+
+import { AFTER_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MewV extends PokemonCard {
 
@@ -46,10 +46,9 @@ export class MewV extends PokemonCard {
 
   public fullName: string = 'Mew V FST';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       // let fusionStrikePokemon: PokemonCard | null = null;

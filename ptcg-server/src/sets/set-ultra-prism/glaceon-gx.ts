@@ -4,9 +4,9 @@ import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, GameErr
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GlaceonGX extends PokemonCard {
 
@@ -138,7 +138,7 @@ export class GlaceonGX extends PokemonCard {
     }
 
     // Frost Spear
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -164,7 +164,7 @@ export class GlaceonGX extends PokemonCard {
     }
 
     // Polar Spear-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       // Check if player has used GX attack
       BLOCK_IF_GX_ATTACK_USED(player);

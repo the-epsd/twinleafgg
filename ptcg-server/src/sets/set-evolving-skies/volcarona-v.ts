@@ -3,11 +3,11 @@ import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/stor
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Card, ChooseEnergyPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class VolcaronaV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -40,7 +40,7 @@ export class VolcaronaV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Surging Flames
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       // counting the energies
       const energiesInDiscard = player.discard.cards.filter(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC).length;
@@ -62,7 +62,7 @@ export class VolcaronaV extends PokemonCard {
     }
 
     // Fire Blast
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {

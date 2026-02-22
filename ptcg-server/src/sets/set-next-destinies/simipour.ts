@@ -4,7 +4,6 @@ import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 
 export class Simipour extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -44,7 +43,7 @@ export class Simipour extends PokemonCard {
     }
 
     // Stadium Wave - bonus damage and sleep if stadium in play
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       // Check if there's a stadium in play
       const stadiumCard = StateUtils.getStadiumCard(state);
 

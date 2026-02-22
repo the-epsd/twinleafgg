@@ -4,10 +4,10 @@ import { ChooseCardsPrompt, GameError, GameMessage, PowerType, ShuffleDeckPrompt
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { ToolEffect } from '../../game/store/effects/play-card-effects';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
-
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class ForestSealStone extends TrainerCard {
 
@@ -44,7 +44,8 @@ export class ForestSealStone extends TrainerCard {
         const hasValidCard = effect.target.tags.some(tag =>
           tag === CardTag.POKEMON_V ||
           tag === CardTag.POKEMON_VSTAR ||
-          tag === CardTag.POKEMON_VMAX
+          tag === CardTag.POKEMON_VMAX ||
+          tag === CardTag.POKEMON_VUNION
         );
 
         if (!hasValidCard) {

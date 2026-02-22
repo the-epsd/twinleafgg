@@ -1,11 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
-import {
-  StoreLike, State, ChooseCardsPrompt, PokemonCardList, Card,
-  StateUtils, GameMessage, PowerType, GameError, ConfirmPrompt
-} from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, ChooseCardsPrompt, PokemonCardList, Card, StateUtils, GameMessage, PowerType, GameError, ConfirmPrompt } from '../../game';
+
 import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class LugiaVSTAR extends PokemonCard {
 
@@ -57,7 +55,7 @@ export class LugiaVSTAR extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
       const max = Math.min(slots.length, 2);
@@ -84,7 +82,6 @@ export class LugiaVSTAR extends PokemonCard {
       ), selected => {
         cards = selected || [];
 
-
         cards.forEach((card, index) => {
           player.discard.moveCardTo(card, slots[index]);
           slots[index].pokemonPlayedTurn = state.turn;
@@ -93,7 +90,7 @@ export class LugiaVSTAR extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard !== undefined) {
 

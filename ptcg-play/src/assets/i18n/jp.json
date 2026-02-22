@@ -471,6 +471,7 @@
       "LOG_PLAYER_USES_ABILITY": "{{name}}は{{ability}}の能力を使用します。",
       "LOG_PLAYER_USES_ATTACK": "{{name}}は{{attack}}で攻撃します。",
       "LOG_PLAYER_USES_STADIUM": "{{name}}はスタジアム{{stadium}}を使用します。",
+      "LOG_PLAYER_REFLIPS_WITH_GLIMWOOD_TANGLE": "{{name}}はグリムウッドの森でコインを再び投げます。",
       "LOG_POKEMON_KO": "{{name}}は気絶しました。",
       "LOG_SETUP_NO_BASIC_POKEMON": "{{name}}の手札に基本ポケモンがありません。",
       "LOG_STARTS_BECAUSE_OF_ABILITY": "{{name}}は{{ability}}の能力のためにゲームを開始します。",

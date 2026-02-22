@@ -3,10 +3,11 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State, GamePhase } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Miltank extends PokemonCard {
 
@@ -70,7 +71,7 @@ export class Miltank extends PokemonCard {
         return state;
       }
 
-      if (sourceCard.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)) {
+      if (sourceCard.tags.includes(CardTag.POKEMON_V) || sourceCard.tags.includes(CardTag.POKEMON_VMAX) || sourceCard.tags.includes(CardTag.POKEMON_VSTAR)) {
 
         // Try to reduce PowerEffect, to check if something is blocking our ability
         try {
@@ -88,7 +89,7 @@ export class Miltank extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       effect.damage += (opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0) * 20);

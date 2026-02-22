@@ -1,9 +1,10 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, PowerType, GameError, BoardEffect } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* useNightGate(next: Function, store: StoreLike, state: State,
   effect: PowerEffect): IterableIterator<State> {
@@ -94,7 +95,7 @@ export class Samurott extends PokemonCard {
     }
 
     // Strong Currents ability
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const generator = useNightGate(() => generator.next(), store, state, effect);
       const player = effect.player;
       if (player.marker.hasMarker(this.STRONG_CURRENTS_MARKER, this)) {
@@ -112,7 +113,7 @@ export class Samurott extends PokemonCard {
     }
 
     // Energy Slash attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const cardList = player.active;
 

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DndModule } from '@ng-dnd/core';
 import { DndMultiBackendModule } from '@ng-dnd/multi-backend';
 import { TranslateModule } from '@ngx-translate/core';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatLegacyDialogModule as MatDialogModule } from '@angular/material/legacy-dialog';
 import { PokemonCardInfoPaneComponent } from './pokemon-card-info-pane/pokemon-card-info-pane.component';
 import { CardComponent } from './card/card.component';
 import { CardImagePopupComponent } from './card-image-popup/card-image-popup.component';

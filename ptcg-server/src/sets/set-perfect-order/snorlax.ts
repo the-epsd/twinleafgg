@@ -1,7 +1,6 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, EnergyType, SuperType, SpecialCondition } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../game/store/prefabs/prefabs';
 
 export class Snorlax extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,65 +33,47 @@ export class Snorlax extends PokemonCard {
     // Big Eater - flip coins until tails, search for Basic Energy for each heads
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      let headsCount = 0;
-      let gotTails = false;
+      const stateForCallback = state;
 
-      const flipUntilTails = (s: State): State => {
-        if (gotTails) {
-          // Got tails, now search for Basic Energy
-          if (headsCount === 0 || player.deck.cards.length === 0) {
-            return store.prompt(s, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-            });
-          }
-
-          const basicEnergyInDeck = player.deck.cards.filter(card =>
-            card.superType === SuperType.ENERGY && card.energyType === EnergyType.BASIC
-          );
-
-          if (basicEnergyInDeck.length === 0) {
-            return store.prompt(s, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-            });
-          }
-
-          const maxToAttach = Math.min(headsCount, basicEnergyInDeck.length);
-
-          return store.prompt(s, new ChooseCardsPrompt(
-            player,
-            GameMessage.ATTACH_ENERGY_CARDS,
-            player.deck,
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-            { min: 0, max: maxToAttach, allowCancel: false }
-          ), selected => {
-            const cards = selected || [];
-            if (cards.length > 0) {
-              for (const card of cards) {
-                player.deck.moveCardTo(card, player.active);
-              }
-            }
-            return store.prompt(s, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-            });
+      return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, player, headsCount => {
+        if (headsCount === 0 || player.deck.cards.length === 0) {
+          store.prompt(stateForCallback, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
           });
+          return;
         }
 
-        const coinFlipEffect = new CoinFlipEffect(player, (result: boolean) => {
-          if (result === true) {
-            // Heads - increment count and flip again
-            headsCount++;
-            flipUntilTails(s);
-          } else {
-            // Tails - proceed to search
-            gotTails = true;
-            flipUntilTails(s);
+        const basicEnergyInDeck = player.deck.cards.filter(card =>
+          card.superType === SuperType.ENERGY && card.energyType === EnergyType.BASIC
+        );
+
+        if (basicEnergyInDeck.length === 0) {
+          store.prompt(stateForCallback, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+          });
+          return;
+        }
+
+        const maxToAttach = Math.min(headsCount, basicEnergyInDeck.length);
+
+        store.prompt(stateForCallback, new ChooseCardsPrompt(
+          player,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.deck,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { min: 0, max: maxToAttach, allowCancel: false }
+        ), selected => {
+          const cards = selected || [];
+          if (cards.length > 0) {
+            for (const card of cards) {
+              player.deck.moveCardTo(card, player.active);
+            }
           }
+          store.prompt(stateForCallback, new ShuffleDeckPrompt(player.id), order => {
+            player.deck.applyOrder(order);
+          });
         });
-
-        return store.reduceEffect(s, coinFlipEffect);
-      };
-
-      return flipUntilTails(state);
+      });
     }
 
     // Collapse - Pokemon becomes Asleep

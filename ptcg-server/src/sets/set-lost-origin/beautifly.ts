@@ -4,12 +4,13 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, EvolveEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { EvolveEffect, HealEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Beautifly extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -59,7 +60,7 @@ export class Beautifly extends PokemonCard {
       player.marker.removeMarker(this.STOKED_STRAW_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.marker.hasMarker(this.STOKED_STRAW_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
@@ -90,7 +91,7 @@ export class Beautifly extends PokemonCard {
 
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const target = player.active;
       const healEffect = new HealEffect(player, target, 30);

@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/prefabs/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -48,7 +48,7 @@ export class Virizion extends PokemonCard {
       HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect.damage, effect, store, state);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       if (player.active.marker.hasMarker(this.SACRED_SWORD_MARKER, this)) {

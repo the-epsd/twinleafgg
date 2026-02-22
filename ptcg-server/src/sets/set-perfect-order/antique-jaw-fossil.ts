@@ -1,8 +1,9 @@
 import { TrainerCard, TrainerType, Stage, CardType, PokemonType, Power, PowerType, StoreLike, State, GameLog, StateUtils, GameError, GameMessage, PokemonCard, GamePhase } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { RetreatEffect } from '../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { AddSpecialConditionsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class AntiqueJawFossil extends TrainerCard {
   public trainerType = TrainerType.ITEM;
@@ -51,7 +52,7 @@ export class AntiqueJawFossil extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Discard from play
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: this.name, effect: 'Antique Jaw Fossil' });
       const cardList = StateUtils.findCardList(state, this);
@@ -100,14 +101,7 @@ export class AntiqueJawFossil extends TrainerCard {
       }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 

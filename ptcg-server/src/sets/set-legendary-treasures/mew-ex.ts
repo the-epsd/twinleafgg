@@ -1,12 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
-  MoveEnergyPrompt, PlayerType, SlotType, ChooseAttackPrompt, Player, EnergyMap
-} from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, MoveEnergyPrompt, PlayerType, SlotType, ChooseAttackPrompt, Player, EnergyMap } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect, UseAttackEffect } from '../../game/store/effects/game-effects';
+import { UseAttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect, CheckAttackCostEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class MewEx extends PokemonCard {
 
@@ -52,7 +50,7 @@ export class MewEx extends PokemonCard {
   public setNumber: string = 'RC24';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
 
@@ -81,7 +79,7 @@ export class MewEx extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, new MoveEnergyPrompt(

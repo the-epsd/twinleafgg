@@ -2,12 +2,13 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardTag, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PokemonCardList, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../game/store/state-utils';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Nidoqueen extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -41,7 +42,7 @@ export class Nidoqueen extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Queen's Call Ability
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
@@ -72,7 +73,7 @@ export class Nidoqueen extends PokemonCard {
       });
     }
     // Power Lariat
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       let evoCount = 0;
       player.bench.forEach((slot: PokemonCardList) => {

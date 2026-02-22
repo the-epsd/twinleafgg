@@ -1,15 +1,16 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, EnergyCard } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Deoxys extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.FUSION_STRIKE, CardTag.SINGLE_STRIKE, CardTag.RAPID_STRIKE ];
+  public tags = [CardTag.FUSION_STRIKE, CardTag.SINGLE_STRIKE, CardTag.RAPID_STRIKE];
 
   public regulationMark = 'E';
 
@@ -21,12 +22,12 @@ export class Deoxys extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Photon Boost',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
       text: 'If this Pokémon has any Fusion Strike Energy attached, this attack does 80 more damage.'
     },
@@ -35,7 +36,7 @@ export class Deoxys extends PokemonCard {
   public set: string = 'FST';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '120';
 
   public name: string = 'Deoxys';
@@ -44,14 +45,14 @@ export class Deoxys extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
       const pokemon = player.active;
-  
+
       const checkEnergy = new CheckProvidedEnergyEffect(player, pokemon);
       store.reduceEffect(state, checkEnergy);
-  
+
       checkEnergy.energyMap.forEach(em => {
         const energyCard = em.card;
 

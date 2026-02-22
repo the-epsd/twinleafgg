@@ -2,9 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { Card, CardList, ChooseCardsPrompt, CoinFlipPrompt, GameMessage, PowerType, ShowCardsPrompt, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { BLOCK_IF_DISCARD_EMPTY } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_DISCARD_EMPTY, IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Munchlax extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -27,7 +26,7 @@ export class Munchlax extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -36,14 +35,7 @@ export class Munchlax extends PokemonCard {
       BLOCK_IF_DISCARD_EMPTY(player);
 
       // Checking to see if ability is being blocked
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 

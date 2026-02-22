@@ -8,6 +8,7 @@ import { GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useAscension(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -22,7 +23,7 @@ function* useAscension(next: Function, store: StoreLike, state: State,
     player,
     GameMessage.CHOOSE_CARD_TO_EVOLVE,
     player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Feebas'},
+    { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Feebas' },
     { min: 1, max: 1, allowCancel: true }
   ), selected => {
     cards = selected || [];
@@ -51,16 +52,16 @@ export class Feebas extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Ascension',
-    cost: [ CardType.COLORLESS ],
+    cost: [CardType.COLORLESS],
     damage: 0,
     text: 'Search your deck for a card that evolves from this Pokémon and put it onto this Pokémon to evolve it. Then, shuffle your deck.'
   }, {
     name: 'Splash',
-    cost: [ CardType.WATER ],
+    cost: [CardType.WATER],
     damage: 10,
     text: ''
   }];
@@ -79,7 +80,7 @@ export class Feebas extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useAscension(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

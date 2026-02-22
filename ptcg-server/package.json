@@ -8,7 +8,7 @@
     "lint": "eslint -c .eslintrc.js --ext .ts src --fix",
     "compile": "tsc && tsc -p tsconfig.dist.json",
     "start": "node --expose-gc --max-old-space-size=2048 start.js",
-    "start:prod": "node --expose-gc --max-old-space-size=2048 --optimize-for-size start.js",
+    "start:prod": "node --expose-gc --max-old-space-size=2048 start.js",
     "test": "nyc -e \".ts\" -x \"src/**/*.spec.ts\" jasmine-ts \"src/**/*.spec.ts\"",
     "test:sets": "jasmine-ts \"src/sets/tests/*.spec.ts\"",
     "test:sets:catalog": "ts-node src/sets/tests/run-assigned-tests.ts",

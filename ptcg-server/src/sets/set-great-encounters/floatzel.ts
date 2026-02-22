@@ -11,6 +11,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useAquaJet(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -101,7 +102,7 @@ export class Floatzel extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       state = store.prompt(state, new CoinFlipPrompt(
@@ -116,7 +117,7 @@ export class Floatzel extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const generator = useAquaJet(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

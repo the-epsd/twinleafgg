@@ -1,5 +1,6 @@
 import { PokemonCard, Stage, CardType, State, StoreLike, StateUtils, TrainerCard, TrainerType } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Tirtouga extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -31,7 +32,7 @@ export class Tirtouga extends PokemonCard {
   public fullName: string = 'Tirtouga SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

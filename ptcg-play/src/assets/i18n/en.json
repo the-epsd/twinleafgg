@@ -600,6 +600,7 @@
     "LOG_PLAYER_SWITCHES_POKEMON_WITH_POKEMON_FROM_DECK": "{{name}} switches {{card}} with {{secondCard}} from the deck.",
     "LOG_PLAYER_USES_ATTACK": "{{name}} attacks with {{attack}}.",
     "LOG_PLAYER_USES_STADIUM": "{{name}} uses {{stadium}}.",
+    "LOG_PLAYER_REFLIPS_WITH_GLIMWOOD_TANGLE": "{{name}} reflips with Glimwood Tangle.",
     "LOG_POKEMON_KO": "{{name}} has been Knocked Out.",
     "LOG_SETUP_NO_BASIC_POKEMON": "{{name}} has no basic Pokémon in the hand.",
     "LOG_STARTS_BECAUSE_OF_ABILITY": "{{name}} starts the game because of {{ability}} ability.",

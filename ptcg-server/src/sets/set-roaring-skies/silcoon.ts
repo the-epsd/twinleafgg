@@ -3,11 +3,11 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { GameMessage } from '../../game/game-message';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Silcoon extends PokemonCard {
 
@@ -21,11 +21,11 @@ export class Silcoon extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'String Shot',
-    cost: [ CardType.GRASS ],
+    cost: [CardType.GRASS],
     damage: 10,
     text: 'Flip a coin. If heads, the Defending Pokemon is now Paralyzed.'
   }];
@@ -42,7 +42,7 @@ export class Silcoon extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, [

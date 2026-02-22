@@ -37,7 +37,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     });
 
     if (targets.length > 0) {
-      opponent.switchPokemon(targets[0]);
+      opponent.switchPokemon(targets[0], store, state);
     }
   }
 
@@ -54,7 +54,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     });
 
     if (targets.length > 0) {
-      player.switchPokemon(targets[0]);
+      player.switchPokemon(targets[0], store, state);
     }
   }
   CLEAN_UP_SUPPORTER(effect, player);

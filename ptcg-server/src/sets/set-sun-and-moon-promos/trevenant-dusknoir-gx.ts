@@ -2,10 +2,11 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { Card, ChooseCardsPrompt, GameError, GameMessage, PlayerType, ShowCardsPrompt, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TrevenantDusknoirGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -42,11 +43,11 @@ export class TrevenantDusknoirGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Night Watch
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.hand.cards.length === 0){
+      if (opponent.hand.cards.length === 0) {
         return state;
       }
       const cardsToShuffle = Math.min(2, opponent.hand.cards.length);
@@ -59,7 +60,7 @@ export class TrevenantDusknoirGX extends PokemonCard {
         { allowCancel: false, min: cardsToShuffle, max: cardsToShuffle, isSecret: true }
       ), cards => {
         cards = cards || [];
-        
+
         store.prompt(state, new ShowCardsPrompt(
           player.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
@@ -75,11 +76,11 @@ export class TrevenantDusknoirGX extends PokemonCard {
     }
 
     // Pale Moon-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (player.usedGX){
+      if (player.usedGX) {
         throw new GameError(GameMessage.LABEL_GX_USED);
       }
       player.usedGX = true;
@@ -93,8 +94,8 @@ export class TrevenantDusknoirGX extends PokemonCard {
       store.reduceEffect(state, checkProvidedEnergy);
       const meetsExtraEffectCost = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, extraEffectCost);
 
-      if (!meetsExtraEffectCost) { return state; }  
-      
+      if (!meetsExtraEffectCost) { return state; }
+
       // if we have the energies, discard the energies
       const opponentEnergy = new CheckProvidedEnergyEffect(opponent, opponent.active);
       state = store.reduceEffect(state, opponentEnergy);
@@ -110,9 +111,9 @@ export class TrevenantDusknoirGX extends PokemonCard {
     }
 
     // hitman times
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.PALE_MOON_ACTIVATION_MARKER, this)){
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.PALE_MOON_ACTIVATION_MARKER, this)) {
       // kill em.
-      if (effect.player.active.marker.hasMarker(this.PALE_MOON_MARKER, this)){
+      if (effect.player.active.marker.hasMarker(this.PALE_MOON_MARKER, this)) {
         effect.player.active.damage += 999;
       }
       // wipe the evidence

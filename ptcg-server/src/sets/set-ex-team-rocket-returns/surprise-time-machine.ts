@@ -3,7 +3,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, CardTarget, GameStoreMessage, PokemonCard, Card, ChooseCardsPrompt } from '../../game';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { DEVOLVE_POKEMON, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 export class SurpriseTimeMachine extends TrainerCard {
@@ -48,7 +48,7 @@ export class SurpriseTimeMachine extends TrainerCard {
             const targetPokemon = results[0];
 
             //Devolve
-            targetPokemon.moveCardsTo([targetPokemon.cards[targetPokemon.cards.length - 1]], player.deck);
+            DEVOLVE_POKEMON(store, state, targetPokemon, player.deck);
 
             //Evolve
             const blocked2: number[] = [];

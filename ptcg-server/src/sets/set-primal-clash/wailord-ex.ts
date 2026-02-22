@@ -1,15 +1,15 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class WailordEx extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_EX ];
+  public tags = [CardTag.POKEMON_EX];
 
   public stage: Stage = Stage.BASIC;
 
@@ -19,7 +19,7 @@ export class WailordEx extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Water Veil',
@@ -31,7 +31,7 @@ export class WailordEx extends PokemonCard {
   public attacks = [
     {
       name: 'High Breaching',
-      cost: [ CardType.WATER, CardType.WATER, CardType.WATER, CardType.WATER, CardType.WATER ],
+      cost: [CardType.WATER, CardType.WATER, CardType.WATER, CardType.WATER, CardType.WATER],
       damage: 120,
       text: 'This Pokemon is now Asleep.'
     }
@@ -49,7 +49,7 @@ export class WailordEx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       specialConditionEffect.target = effect.player.active;
       store.reduceEffect(state, specialConditionEffect);
@@ -67,14 +67,7 @@ export class WailordEx extends PokemonCard {
       }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 

@@ -1,11 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, BoardEffect, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, GameError, GameMessage, PlayerType, ChooseCardsPrompt } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Polteageist extends PokemonCard {
 
@@ -68,7 +68,7 @@ export class Polteageist extends PokemonCard {
       player.marker.removeMarker(this.ABILITY_USED_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const hasEnergyInHand = player.hand.cards.some(c => {
         return c.superType === SuperType.ENERGY;
@@ -115,7 +115,7 @@ export class Polteageist extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let pokemonCount = 0;

@@ -1,8 +1,9 @@
 import { CardType, PlayerType, PokemonCard, Stage, State, StateUtils, StoreLike } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GalarianMrMime extends PokemonCard {
 
@@ -23,7 +24,7 @@ export class GalarianMrMime extends PokemonCard {
     text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
   },
   { name: 'Icy Snow', cost: [C, C], damage: 30, text: '' }];
-  
+
   public regulationMark = 'D';
 
   public set: string = 'DAA';
@@ -41,7 +42,7 @@ export class GalarianMrMime extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

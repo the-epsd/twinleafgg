@@ -3,13 +3,13 @@ import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameError, GameMessage, PlayerType } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
-import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Octillery extends PokemonCard {
 
@@ -65,7 +65,7 @@ export class Octillery extends PokemonCard {
       player.marker.removeMarker(this.ABYSSAL_HAND_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.marker.hasMarker(this.ABYSSAL_HAND_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);

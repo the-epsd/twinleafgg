@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 
 import { AlertService } from '../shared/alert/alert.service';
 import { MOCK_FORMATS, MOCK_DECKS, MOCK_FRIENDS, MOCK_FORM_DATA, MOCK_ARCHETYPES, MOCK_ENERGY_TYPES, MOCK_TRAINER_TYPES, MOCK_LOADING_STATES, MOCK_STATUS_INDICATORS } from './ui-showcase-mock-data';

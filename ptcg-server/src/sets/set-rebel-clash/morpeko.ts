@@ -5,6 +5,7 @@ import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Morpeko extends PokemonCard {
@@ -17,12 +18,12 @@ export class Morpeko extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Torment',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 20,
       text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. During your opponent\'s next turn, that Pokémon can\'t use that attack.'
     },
@@ -43,26 +44,26 @@ export class Morpeko extends PokemonCard {
   public name: string = 'Morpeko';
 
   public fullName: string = 'Morpeko RCL';
-  
+
   public readonly TORMENT_MARKER = 'TORMENT_MARKER';
   public DISABLED_ATTACK: Attack | undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-            
+
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
-            
+
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), targets => {
         if (!targets || targets.length === 0) {
@@ -72,11 +73,11 @@ export class Morpeko extends PokemonCard {
         damageEffect.target = targets[0];
         store.reduceEffect(state, damageEffect);
       });
-            
+
       return state;
     }
-    
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const pokemonCard = opponent.active.getPokemonCard();
@@ -127,11 +128,11 @@ export class Morpeko extends PokemonCard {
     if (effect instanceof EndTurnEffect) {
       const owner = StateUtils.findOwner(state, StateUtils.findCardList(state, this));
       const player = (effect as EndTurnEffect).player;
-      
+
       if (player !== owner) {
         return state;
       }
-      
+
       player.marker.removeMarker(this.TORMENT_MARKER, this);
     }
 

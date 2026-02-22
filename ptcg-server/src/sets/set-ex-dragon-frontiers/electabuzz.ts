@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PowerType, GameError, PokemonCardList, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ABILITY_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/prefabs/attack-effects';
 
 export class Electabuzz extends PokemonCard {
@@ -34,12 +34,17 @@ export class Electabuzz extends PokemonCard {
   public name: string = 'Electabuzz';
   public fullName: string = 'Electabuzz DF';
 
+  public readonly POWER_DRAW_MARKER = 'POWER_DRAW_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       BLOCK_IF_HAS_SPECIAL_CONDITION(player, this);
+      if (player.marker.hasMarker(this.POWER_DRAW_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
 
       const cardList = StateUtils.findCardList(state, effect.card) as PokemonCardList;
       if (cardList.getPokemons().length < 2) {
@@ -50,6 +55,7 @@ export class Electabuzz extends PokemonCard {
       player.deck.moveCardsTo(bottomCards, player.hand);
 
       ABILITY_USED(player, this);
+      ADD_MARKER(this.POWER_DRAW_MARKER, player, this);
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

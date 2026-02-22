@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Frigibax extends PokemonCard {
 
@@ -16,18 +17,18 @@ export class Frigibax extends PokemonCard {
 
   public weakness = [{ type: CardType.METAL }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Collect',
-      cost: [ CardType.WATER ],
+      cost: [CardType.WATER],
       damage: 0,
       text: 'Draw a card.'
     },
     {
       name: 'Bite',
-      cost: [ CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.COLORLESS],
       damage: 20,
       text: ''
     }
@@ -45,7 +46,7 @@ export class Frigibax extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       player.deck.moveTo(player.hand, 1);
       return state;

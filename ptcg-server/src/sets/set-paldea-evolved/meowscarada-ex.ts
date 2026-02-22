@@ -3,12 +3,13 @@ import { Stage, CardType, CardTag, SuperType, EnergyType, BoardEffect } from '..
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { GameError, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType, ChooseCardsPrompt, EnergyCard } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Meowscaradaex extends PokemonCard {
 
@@ -67,7 +68,7 @@ export class Meowscaradaex extends PokemonCard {
       player.marker.removeMarker(this.BOUQUET_MAGIC_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -126,7 +127,7 @@ export class Meowscaradaex extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       if (opponent.active.damage > 0) {

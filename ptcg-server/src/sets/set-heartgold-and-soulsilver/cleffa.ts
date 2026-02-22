@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, ShuffleDeckPrompt } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect, AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Cleffa extends PokemonCard {
 
@@ -13,7 +14,7 @@ export class Cleffa extends PokemonCard {
 
   public hp: number = 30;
 
-  public retreat = [ ];
+  public retreat = [];
 
   public powers = [{
     name: 'Sweet Sleeping Face',
@@ -25,7 +26,7 @@ export class Cleffa extends PokemonCard {
   public attacks = [
     {
       name: 'Eeeeeeek',
-      cost: [ ],
+      cost: [],
       damage: 0,
       text: 'Shuffle your hand into your deck, then draw 6 cards. Cleffa is ' +
         'now Asleep.'
@@ -45,7 +46,7 @@ export class Cleffa extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Eeeeeeek
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       player.hand.moveTo(player.deck);

@@ -2,8 +2,9 @@ import { State, StoreLike } from '../../game';
 import { CardType, Stage, CardTag, TrainerType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { TrainerCard } from '../../game/store/card/trainer-card';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsPorygon2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -32,7 +33,7 @@ export class TeamRocketsPorygon2 extends PokemonCard {
   public fullName: string = 'Team Rocket\'s Porygon2 DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Count Team Rocket Supporters in discard pile

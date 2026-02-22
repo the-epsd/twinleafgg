@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CanActivateService } from './can-activate.service';
+import { canActivateGuard } from './can-activate.service';
 import { DeckComponent } from './deck/deck.component';
 import { DeckEditComponent } from './deck/deck-edit/deck-edit.component';
 import { DeckStatsComponent } from './deck/deck-stats/deck-stats.component';
@@ -27,27 +27,27 @@ import { SpectateComponent } from './spectate/spectate.component';
 import { UiShowcaseComponent } from './ui-showcase/ui-showcase.component';
 
 const routes: Routes = [
-  { path: 'deck', component: DeckComponent, canActivate: [CanActivateService] },
-  { path: 'deck/:deckId/stats', component: DeckStatsComponent, canActivate: [CanActivateService] },
-  { path: 'deck/:deckId', component: DeckEditComponent, canActivate: [CanActivateService] },
-  { path: 'friends', component: FriendsComponent, canActivate: [CanActivateService] },
-  { path: 'games', component: GamesComponent, canActivate: [CanActivateService] },
-  { path: 'games/active', component: ActiveGamesComponent, canActivate: [CanActivateService] },
-  { path: 'games/history', component: GameHistoryComponent, canActivate: [CanActivateService] },
-  { path: 'games/players', component: PlayersComponent, canActivate: [CanActivateService] },
+  { path: 'deck', component: DeckComponent, canActivate: [canActivateGuard] },
+  { path: 'deck/:deckId/stats', component: DeckStatsComponent, canActivate: [canActivateGuard] },
+  { path: 'deck/:deckId', component: DeckEditComponent, canActivate: [canActivateGuard] },
+  { path: 'friends', component: FriendsComponent, canActivate: [canActivateGuard] },
+  { path: 'games', component: GamesComponent, canActivate: [canActivateGuard] },
+  { path: 'games/active', component: ActiveGamesComponent, canActivate: [canActivateGuard] },
+  { path: 'games/history', component: GameHistoryComponent, canActivate: [canActivateGuard] },
+  { path: 'games/players', component: PlayersComponent, canActivate: [canActivateGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'message', redirectTo: 'message/', pathMatch: 'full' },
-  { path: 'message/:userId', component: MessagesComponent, canActivate: [CanActivateService] },
-  { path: 'ranking', component: RankingComponent, canActivate: [CanActivateService] },
-  { path: 'spectate', component: SpectateComponent, canActivate: [CanActivateService] },
+  { path: 'message/:userId', component: MessagesComponent, canActivate: [canActivateGuard] },
+  { path: 'ranking', component: RankingComponent, canActivate: [canActivateGuard] },
+  { path: 'spectate', component: SpectateComponent, canActivate: [canActivateGuard] },
   { path: 'register', component: RegisterComponent },
-  { path: 'replays', component: ReplaysComponent, canActivate: [CanActivateService] },
-  { path: 'profile/select-avatar', component: SelectAvatarComponent, canActivate: [CanActivateService] },
-  { path: 'profile/:userId', component: ProfileComponent, canActivate: [CanActivateService] },
+  { path: 'replays', component: ReplaysComponent, canActivate: [canActivateGuard] },
+  { path: 'profile/select-avatar', component: SelectAvatarComponent, canActivate: [canActivateGuard] },
+  { path: 'profile/:userId', component: ProfileComponent, canActivate: [canActivateGuard] },
   { path: 'reset-password', component: ResetPasswordComponent, pathMatch: 'full' },
   { path: 'reset-password/:token', component: SetNewPasswordComponent },
   { path: 'vs-screen', component: VsScreenComponent },
-  { path: 'table/:gameId', component: TableComponent, canActivate: [CanActivateService] },
+  { path: 'table/:gameId', component: TableComponent, canActivate: [canActivateGuard] },
   { path: 'terms', component: TermsComponent },
   { path: 'ui-showcase', component: UiShowcaseComponent },
   { path: '', redirectTo: '/games', pathMatch: 'full' },
@@ -56,7 +56,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

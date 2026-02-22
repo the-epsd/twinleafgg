@@ -92,10 +92,11 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
             effect = new PlaySupporterEffect(player, handCard, target);
             break;
           case TrainerType.STADIUM: {
-            if (player.stadiumPlayedTurn === state.turn) {
+            const stadium = StateUtils.getStadiumCard(state);
+            const isHyperrogueOverPrismTower = handCard.name === 'Hyperrogue Ange Floette' && stadium?.name === 'Prism Tower';
+            if (player.stadiumPlayedTurn === state.turn && !isHyperrogueOverPrismTower) {
               throw new GameError(GameMessage.STADIUM_ALREADY_PLAYED);
             }
-            const stadium = StateUtils.getStadiumCard(state);
             if (stadium && stadium.name === handCard.name) {
               throw new GameError(GameMessage.SAME_STADIUM_ALREADY_IN_PLAY);
             }

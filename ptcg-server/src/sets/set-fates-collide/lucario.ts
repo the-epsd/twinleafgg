@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PlayerType } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { Effect } from '../../game/store/effects/effect';
 
+import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Lucario extends PokemonCard {
 
@@ -19,17 +19,17 @@ export class Lucario extends PokemonCard {
 
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Vacuum Wave',
-      cost: [ CardType.METAL ],
+      cost: [CardType.METAL],
       damage: 50,
       text: 'This attack\'s damage isn\'t affected by Weakness or Resistance.'
     }, {
       name: 'Fight Alone',
-      cost: [ CardType.METAL, CardType.COLORLESS ],
+      cost: [CardType.METAL, CardType.COLORLESS],
       damage: 30,
       text: 'If you have fewer Pokemon in play than your opponent, this ' +
         'attack does 60 more damage for each Pokemon fewer you have in play.'
@@ -48,13 +48,13 @@ export class Lucario extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.ignoreWeakness = true;
       effect.ignoreResistance = true;
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

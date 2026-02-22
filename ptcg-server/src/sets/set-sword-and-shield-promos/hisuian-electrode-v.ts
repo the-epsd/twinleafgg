@@ -2,9 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { Card, PokemonCardList, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class HisuianElectrodeV extends PokemonCard {
 
@@ -23,7 +24,7 @@ export class HisuianElectrodeV extends PokemonCard {
   public attacks = [
     {
       name: 'Tantrum Blast',
-      cost: [ ],
+      cost: [],
       damage: 100,
       text: 'This attack does 100 damage for each Special Condition affecting this Pokémon.'
     },
@@ -53,29 +54,29 @@ export class HisuianElectrodeV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
-  
+
       effect.damage = cardList.specialConditions.length * 100;
 
       return state;
 
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-          
+
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
-      state = store.reduceEffect(state, checkProvidedEnergy);  
-          
-      const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);  
-      const discardEnergy = new DiscardCardsEffect(effect, cards);  
+      state = store.reduceEffect(state, checkProvidedEnergy);
+
+      const cards: Card[] = checkProvidedEnergy.energyMap.map(e => e.card);
+      const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
-      store.reduceEffect(state, discardEnergy);  
+      store.reduceEffect(state, discardEnergy);
     }
-      
-    return state; 
+
+    return state;
   }
-        
+
 }

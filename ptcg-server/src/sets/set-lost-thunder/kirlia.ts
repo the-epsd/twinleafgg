@@ -3,8 +3,9 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { SpecialCondition } from '../../game/store/card/card-types';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // LOT Kirlia 140 (https://limitlesstcg.com/cards/LOT/140)
 export class Kirlia extends PokemonCard {
@@ -38,10 +39,9 @@ export class Kirlia extends PokemonCard {
 
   public fullName: string = 'Kirlia LOT';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.CONFUSED]);
       return store.reduceEffect(state, specialCondition);
     }

@@ -3,9 +3,9 @@ import { GameMessage } from '../../game/game-message';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { ABILITY_USED, BLOCK_IF_DECK_EMPTY, IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, BLOCK_IF_DECK_EMPTY, IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MrMime extends PokemonCard {
 
@@ -92,7 +92,7 @@ export class MrMime extends PokemonCard {
     }
 
     // Juggling
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       return MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 4, results => {
         let heads: number = 0;

@@ -15,6 +15,48 @@ export class CardManager {
     return CardManager.instance;
   }
 
+  /**
+   * Validates all sets for duplicate fullName and legacyFullName without loading.
+   * Returns an array of error messages (one per duplicate). Empty if no issues.
+   */
+  public static validateAllSets(
+    entries: Array<{ key: string; cards: Card[] }>
+  ): string[] {
+    const fullNameMap: { [name: string]: Array<{ key: string }> } = {};
+    const legacyFullNameMap: { [name: string]: Array<{ key: string }> } = {};
+
+    for (const { key, cards } of entries) {
+      if (!Array.isArray(cards)) continue;
+      for (const card of cards) {
+        const fullName = card.fullName;
+        if (!fullNameMap[fullName]) fullNameMap[fullName] = [];
+        fullNameMap[fullName].push({ key });
+
+        const p = card as { legacyFullName?: string };
+        if (p.legacyFullName) {
+          const legacyName = p.legacyFullName;
+          if (!legacyFullNameMap[legacyName]) legacyFullNameMap[legacyName] = [];
+          legacyFullNameMap[legacyName].push({ key });
+        }
+      }
+    }
+
+    const errors: string[] = [];
+    for (const [name, entriesList] of Object.entries(fullNameMap)) {
+      if (entriesList.length > 1) {
+        const setKeys = [...new Set(entriesList.map((e) => e.key))];
+        errors.push(`Duplicate fullName '${name}': in ${setKeys.join(', ')}`);
+      }
+    }
+    for (const [name, entriesList] of Object.entries(legacyFullNameMap)) {
+      if (entriesList.length > 1) {
+        const setKeys = [...new Set(entriesList.map((e) => e.key))];
+        errors.push(`Duplicate legacyFullName '${name}': in ${setKeys.join(', ')}`);
+      }
+    }
+    return errors;
+  }
+
   public defineSet(set: Card[]): void {
     for (const card of set) {
       if (this.cardIndex[card.fullName] !== undefined) {

@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Torterra extends PokemonCard {
   public regulationMark: string = 'F';
@@ -35,7 +36,7 @@ export class Torterra extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const playerBench = player.bench;
 
@@ -56,7 +57,6 @@ export class Torterra extends PokemonCard {
 
       // Set the damage based on the count of evolution Pokémon
       effect.damage = 50 * evolutionPokemonCount;
-
 
       return state;
     }

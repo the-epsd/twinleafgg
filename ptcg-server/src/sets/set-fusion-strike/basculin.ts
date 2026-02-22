@@ -1,14 +1,15 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Basculin extends PokemonCard {
 
   public stage: Stage = Stage.BASIC;
 
-  public tags = [ CardTag.RAPID_STRIKE ];
+  public tags = [CardTag.RAPID_STRIKE];
 
   public regulationMark = 'E';
 
@@ -18,12 +19,12 @@ export class Basculin extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Swarm the Wound',
-      cost: [ CardType.WATER, CardType.COLORLESS ],
+      cost: [CardType.WATER, CardType.COLORLESS],
       damage: 30,
       text: 'This attack does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
     },
@@ -32,7 +33,7 @@ export class Basculin extends PokemonCard {
   public set: string = 'FST';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '70';
 
   public name: string = 'Basculin';
@@ -41,7 +42,7 @@ export class Basculin extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

@@ -1,7 +1,8 @@
 import { CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Weedle extends PokemonCard {
 
@@ -37,7 +38,7 @@ export class Weedle extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Reckless Charge
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const dealDamage = new DealDamageEffect(effect, 10);

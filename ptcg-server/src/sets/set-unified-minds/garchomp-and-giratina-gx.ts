@@ -1,9 +1,8 @@
 import { CardTag, CardType, ChoosePokemonPrompt, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
 
+import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GarchompGiratinaGX extends PokemonCard {
 
@@ -52,7 +51,7 @@ export class GarchompGiratinaGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Linear Attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, new ChoosePokemonPrompt(
@@ -68,7 +67,7 @@ export class GarchompGiratinaGX extends PokemonCard {
     }
 
     // Calamitous Slash
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -78,7 +77,7 @@ export class GarchompGiratinaGX extends PokemonCard {
     }
 
     // GG End-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
 

@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PokemonCardList, StateUtils, Resistance, ConfirmPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Gholdengo extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -34,10 +35,9 @@ export class Gholdengo extends PokemonCard {
   public name: string = 'Gholdengo';
   public setNumber: string = '131';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // From Lokix PAL 21
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const cardList = StateUtils.findCardList(state, this);
 
       if (cardList instanceof PokemonCardList) {
@@ -46,7 +46,7 @@ export class Gholdengo extends PokemonCard {
         }
       }
       //From Mew V FST
-    } else if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    } else if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       return store.prompt(state, new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY), wantToUse => {
         if (wantToUse) {

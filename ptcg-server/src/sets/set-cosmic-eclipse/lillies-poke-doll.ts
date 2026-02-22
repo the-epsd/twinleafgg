@@ -1,9 +1,9 @@
 import { GameError, GameLog, GameMessage, PokemonCard, Power, PowerType, State, StateUtils, StoreLike, TrainerCard } from '../..';
 import { CardType, PokemonType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class LilliesPokeDoll extends TrainerCard {
 
@@ -58,7 +58,7 @@ This card can't retreat. If this card is Knocked Out, your opponent can't take a
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const pokeDollCardList = StateUtils.findCardList(state, this);
 

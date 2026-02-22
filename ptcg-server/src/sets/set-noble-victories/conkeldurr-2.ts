@@ -6,8 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, SHOW_CARDS_TO_PLAYER } from '../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { StateUtils } from '../../game/store/state-utils';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { CoinFlipEffect } from '../../game/store/effects/play-card-effects';
+import { PlayPokemonEffect, CoinFlipSequenceEffect } from '../../game/store/effects/play-card-effects';
 
 export class Conkeldurr2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -90,26 +89,19 @@ export class Conkeldurr2 extends PokemonCard {
       effect.player.marker.removeMarker(this.TOP_DOWN_MARKER, this);
     }
 
-    // Chip Away attack - flip until tails, discard cards from opponent's deck
+    // Chip Away attack - flip until tails, discard cards from opponent's deck for each heads
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const flipUntilTails = (s: State): State => {
-        const coinFlipEffect = new CoinFlipEffect(player, (result: boolean) => {
-          if (result) {
-            // Heads - discard top card of opponent's deck and flip again
-            if (opponent.deck.cards.length > 0) {
-              opponent.deck.moveTo(opponent.discard, 1);
-            }
-            flipUntilTails(s);
+      const sequenceEffect = new CoinFlipSequenceEffect(player, 'untilTails', (results: boolean[]) => {
+        for (const isHeads of results) {
+          if (isHeads && opponent.deck.cards.length > 0) {
+            opponent.deck.moveTo(opponent.discard, 1);
           }
-          // Tails - stop
-        });
-        return store.reduceEffect(s, coinFlipEffect);
-      };
-
-      return flipUntilTails(state);
+        }
+      });
+      return store.reduceEffect(state, sequenceEffect);
     }
 
     return state;

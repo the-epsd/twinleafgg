@@ -2,8 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
 import { State, StoreLike } from '../../game';
-import { AttackEffect, RetreatEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Rayquaza extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -34,23 +33,9 @@ export class Rayquaza extends PokemonCard {
   public name: string = 'Rayquaza';
   public fullName: string = 'Rayquaza M2a';
 
-  public movedToActiveThisTurn = false;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    // Reset flag at end of turn
-    if (effect instanceof EndTurnEffect && this.movedToActiveThisTurn) {
-      this.movedToActiveThisTurn = false;
-    }
-
-    // Set flag when another Pokemon retreats (this one might be switching in)
-    if (effect instanceof RetreatEffect && effect.player.active.getPokemonCard() !== this) {
-      this.movedToActiveThisTurn = true;
-    }
-
-    // Handle Assault Break attack - add 90 damage if moved from bench this turn
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      if (this.movedToActiveThisTurn) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      if (MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)) {
         effect.damage += 90;
       }
     }

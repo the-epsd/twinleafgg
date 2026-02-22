@@ -19,7 +19,7 @@ const memoryOptimizations = {
   packageJson: {
     scripts: {
       start: "node --expose-gc --max-old-space-size=2048 start.js",
-      "start:prod": "node --expose-gc --max-old-space-size=2048 --optimize-for-size start.js"
+      "start:prod": "node --expose-gc --max-old-space-size=2048 start.js"
     }
   },
 
@@ -32,8 +32,8 @@ const memoryOptimizations = {
 
   // Memory monitoring configuration
   memoryConfig: {
-    cleanupIntervalMs: 60000, // 1 minute
-    memoryCleanupThresholdMb: 500,
+    cleanupIntervalMs: 300000, // 5 minutes
+    memoryCleanupThresholdMb: 700,
     maxSessionAge: 6 * 60 * 60 * 1000, // 6 hours
     enableStateCompression: true,
     maxStateSize: 1024 * 1024 // 1MB

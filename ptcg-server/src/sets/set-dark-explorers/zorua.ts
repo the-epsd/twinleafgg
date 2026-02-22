@@ -8,6 +8,7 @@ import { GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useAscension(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -22,7 +23,7 @@ function* useAscension(next: Function, store: StoreLike, state: State,
     player,
     GameMessage.CHOOSE_CARD_TO_EVOLVE,
     player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Zorua'},
+    { superType: SuperType.POKEMON, stage: Stage.STAGE_1, evolvesFrom: 'Zorua' },
     { min: 1, max: 1, allowCancel: true }
   ), selected => {
     cards = selected || [];
@@ -53,18 +54,18 @@ export class Zorua extends PokemonCard {
 
   public resistance = [{ type: P, value: -20 }];
 
-  public retreat = [ C ];
+  public retreat = [C];
 
   public attacks = [{
     name: 'Ascension',
-    cost: [ D ],
+    cost: [D],
     damage: 0,
     text: 'Search your deck for a card that evolves from this Pokémon ' +
       'and put it onto this Pokémon. (This counts as evolving this Pokémon.) ' +
       'Shuffle your deck afterward.'
   }, {
     name: 'Scratch',
-    cost: [ C, C ],
+    cost: [C, C],
     damage: 20,
     text: ''
   }];
@@ -81,7 +82,7 @@ export class Zorua extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useAscension(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

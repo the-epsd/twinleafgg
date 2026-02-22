@@ -2,8 +2,8 @@ import { Attack, Card, CardTag, CardTarget, CardType, ChoosePokemonPrompt, GameE
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Zeraora extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -32,7 +32,7 @@ export class Zeraora extends PokemonCard {
   public fullName: string = 'Zeraora DRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

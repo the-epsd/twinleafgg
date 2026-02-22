@@ -2,10 +2,11 @@ import { GameError, GameLog, GameMessage, PokemonCard, PowerType, StateUtils, Tr
 import { CardType, PokemonType, Stage, TrainerType } from '../../game/store/card/card-types';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class ClefairyDoll extends TrainerCard {
   public name = 'Clefairy Doll';
@@ -55,7 +56,7 @@ export class ClefairyDoll extends TrainerCard {
       effect.preventDefault = true;
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const cardList = effect.player.active;
       const player = effect.player;
 

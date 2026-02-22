@@ -1,15 +1,15 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, CoinFlipPrompt } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ReshiramEx extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_EX ];
+  public tags = [CardTag.POKEMON_EX];
 
   public stage: Stage = Stage.BASIC;
 
@@ -19,17 +19,17 @@ export class ReshiramEx extends PokemonCard {
 
   public weakness = [{ type: CardType.WATER }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Glinting Claw',
-      cost: [ CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
       damage: 50,
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }, {
       name: 'Brave Fire',
-      cost: [ CardType.FIRE, CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.FIRE, CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS],
       damage: 150,
       text: 'Flip a coin. If tails, this Pokemon does 50 damage to itself.'
     },
@@ -47,7 +47,7 @@ export class ReshiramEx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, [
@@ -59,7 +59,7 @@ export class ReshiramEx extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       return store.prompt(state, [

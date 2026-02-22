@@ -3,9 +3,10 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, PlayerType, StateUtils, CoinFlipPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Toxicroak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -73,7 +74,7 @@ export class Toxicroak extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)

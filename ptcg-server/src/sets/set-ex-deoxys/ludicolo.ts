@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardType, StoreLike, State, GameError, GameMessage, PowerType, PlayerType, StateUtils, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { ABILITY_USED, ADD_MARKER, DRAW_CARDS, HAS_MARKER, IS_POKEPOWER_BLOCKED, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { ABILITY_USED, ADD_MARKER, DRAW_CARDS, HAS_MARKER, IS_POKEPOWER_BLOCKED, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Ludicolo extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -44,7 +44,7 @@ export class Ludicolo extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Handle Swing Dance Poké-Power
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (HAS_MARKER(this.SWING_DANCE_MARKER, player, this)) {
@@ -71,7 +71,7 @@ export class Ludicolo extends PokemonCard {
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.SWING_DANCE_MARKER, this);
 
     // Handle Water Healing Steps attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const active = player.active;
 
@@ -106,7 +106,7 @@ export class Ludicolo extends PokemonCard {
     }
 
     // Handle Circular Steps attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

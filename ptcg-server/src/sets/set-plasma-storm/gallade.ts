@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, StateUtils, ChoosePokemonPrompt, SlotType } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Gallade extends PokemonCard {
 
@@ -18,19 +19,19 @@ export class Gallade extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Powerful Storm',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 20,
       text: 'Does 20 damage times the amount of Energy attached to all of ' +
         'your Pokemon.'
     },
     {
       name: 'Swift Lunge',
-      cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
       damage: 80,
       text: 'Your opponent switches the Defending Pokemon with ' +
         '1 of his or her Benched Pokemon.'
@@ -48,7 +49,7 @@ export class Gallade extends PokemonCard {
   public setNumber: string = '61';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let energies = 0;
@@ -63,7 +64,7 @@ export class Gallade extends PokemonCard {
       effect.damage = 20 * energies;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentHasBenched = opponent.bench.some(b => b.cards.length > 0);
@@ -75,7 +76,7 @@ export class Gallade extends PokemonCard {
         opponent.id,
         GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false },
       ), selected => {
         if (!selected || selected.length === 0) {

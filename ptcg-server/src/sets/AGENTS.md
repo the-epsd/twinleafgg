@@ -4,6 +4,37 @@ You are working with auto-generated card stubs. All card stats (HP, type, weakne
 
 ---
 
+## Reprints — Check Before Implementing
+
+Many Pokemon TCG cards are reprinted across multiple sets with identical effects. Before implementing any card, **always check if it already exists in another set**.
+
+### How to check
+
+Search for the card name across all sets:
+```bash
+grep -r "public name.*'CardName'" ptcg-server/src/sets/ --include="*.ts" -l
+```
+
+If you find a match, compare the attack names and ability/power names. If they match, the card is a **reprint** — do NOT re-implement it.
+
+### Reprint pattern
+
+When working in the batch pipeline, convert the existing stub file into a reprint — **keep the same class name** so `index.ts` imports don't break. The class only overrides `set`, `setNumber`, and `fullName`:
+
+```typescript
+import { OriginalClass } from '../set-original-set/original-file';
+
+export class CardNameSET extends OriginalClass {
+  public set: string = 'SET';
+  public setNumber: string = '123';
+  public fullName: string = 'CardName SET';
+}
+```
+
+The reprint inherits ALL stats, attacks, abilities, and `reduceEffect` from the original. Never re-implement effects that already exist elsewhere.
+
+---
+
 ## Your Workflow
 
 ### 1. Find the TODO
@@ -316,6 +347,23 @@ if (effect instanceof EndTurnEffect) {
 
 Reference: `set-great-encounters/dialga-lv-x.ts`
 
+### Passive damage-reduction abilities MUST check `GamePhase.ATTACK`
+
+When intercepting `DealDamageEffect` for passive abilities that "reduce/prevent damage from attacks", always guard with `state.phase === GamePhase.ATTACK`. Without this check, the ability may incorrectly trigger on non-attack damage. When an ability intercepts BOTH `DealDamageEffect` AND `PutDamageEffect`, both blocks must have matching phase guards.
+
+```typescript
+import { GamePhase } from '../../game/store/state/state';
+
+if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)
+  && effect.target.getPokemonCard() === this) {
+  if (state.phase === GamePhase.ATTACK) {
+    // Apply damage reduction/prevention
+  }
+}
+```
+
+Reference: `set-rebel-clash/dubwool-v.ts` (Soft Wool), `set-champions-path/drednaw-vmax.ts` (Solid Shell)
+
 ### ATTACH_ENERGY_PROMPT doesn't support conditional post-attachment logic
 
 When a card says "If you attached Energy in this way, then [do something]", you cannot use the `ATTACH_ENERGY_PROMPT` prefab because it doesn't expose whether attachment actually happened. Inline the `AttachEnergyPrompt` logic and set the flag inside the callback when `transfers.length > 0`.
@@ -546,7 +594,7 @@ return SHUFFLE_DECK(store, state, player);
 When using the 3-call BLOCK_RETREAT pattern, `BLOCK_RETREAT_IF_MARKER` and `REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN` must use `MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER` — the exact marker that `BLOCK_RETREAT()` sets internally. Custom marker names will silently fail to block retreat.
 
 ```typescript
-import { MarkerConstants } from '../../game/store/prefabs/prefabs';
+import { MarkerConstants } from '../../game/store/markers/marker-constants';
 
 // In WAS_ATTACK_USED: set the marker
 BLOCK_RETREAT(player, opponent, effect);
@@ -602,6 +650,12 @@ Without the CLEAR marker, the effect gets cleaned up at the end of YOUR turn bef
 ### On-play-from-hand abilities should NOT have `useWhenInPlay: true`
 
 Abilities that trigger when played from hand (intercepting `PlayPokemonEffect`) should NOT have `useWhenInPlay: true`. Only activated abilities that a player clicks to use should have this flag. This also applies to passive abilities (see existing gotcha above).
+
+### "If you searched your deck in this way" — KO always fires
+
+For abilities like Electrode's Buzzap Generator that say "search your deck... If you searched your deck in this way, this Pokemon is Knocked Out", the KO must fire whenever the ability is activated, regardless of whether the player actually took any cards from the search. Do NOT gate the KO on `transfers.length > 0` — the search happened the moment the ability was used.
+
+Reference: `set-vivid-voltage/electrode.ts`
 
 ### 2-phase marker ordering: REMOVE before REPLACE
 
@@ -691,6 +745,27 @@ When card text says "Move a [X] Energy", use `validCardTypes: [CardType.X]` in A
 ### Verify evolution stage matches `evolvesFrom` after stub generation
 
 The stub generator may incorrectly set `Stage.BASIC` for evolved Pokemon (especially when card data comes from TCGdex). Always verify: if `evolvesFrom` is present, the stage should be `Stage.STAGE_1` or `Stage.STAGE_2`, not `Stage.BASIC`. This was the most common bug found during set-shining-legends review (11 out of 37 cards affected).
+
+### `PlaceDamageCountersEffect` for non-attack damage sources
+
+`PutCountersEffect` requires an `AttackEffect`/`AbstractAttackEffect` as its base — it's for attack-sourced damage counters only. For damage counters placed by stadiums, abilities, or other non-attack sources, use `PlaceDamageCountersEffect` instead:
+
+```typescript
+// WRONG: PutCountersEffect needs AttackEffect base — `as any` cast is a type violation
+const damage = new PutCountersEffect(effect as any, 20);
+
+// CORRECT: For stadiums, abilities, items placing damage counters
+const damage = new PlaceDamageCountersEffect(player, target, 20);
+store.reduceEffect(state, damage);
+```
+
+Reference: `set-darkness-ablaze/spikemuth.ts`
+
+### Item card generator: discard from `player.supporter`, not `player.hand`
+
+In generator-pattern Item cards, the `PlayItemEffect` flow moves the card from hand → supporter BEFORE the card's `reduceEffect` runs. When discarding the card at the end of the generator, use `player.supporter.moveCardTo(effect.trainerCard, player.discard)`, NOT `player.hand.moveCardTo(...)`. Using `player.hand` silently fails because the card is no longer there, leaving it stuck in the supporter zone.
+
+Reference: `set-paldea-evolved/delivery-drone.ts`, `set-darkness-ablaze/old-pc.ts`
 
 ### Passive abilities: use `IS_ABILITY_BLOCKED` prefab, not manual `PowerEffect` try/catch
 
@@ -955,3 +1030,377 @@ sourceCard.powers.some(p => p.powerType === PowerType.ABILITY)
 ```
 
 Reference: `set-lost-thunder/carbink-2.ts` (Wonder Ray)
+
+### Energy counting: `energyMap.reduce()`, not `energyMap.length`
+
+For "each Energy attached" effects, always use `energyMap.reduce((sum, em) => sum + em.provides.length, 0)` to count total energy provided. Never use `energyMap.length` — it counts energy **cards**, not energy **units**. A Double Colorless Energy provides 2 energy from 1 card.
+
+```typescript
+// WRONG: Undercounts multi-energy cards
+const energyCount = checkEnergy.energyMap.length;
+
+// CORRECT: Counts total energy provided
+const energyCount = checkEnergy.energyMap.reduce((sum, em) => sum + em.provides.length, 0);
+```
+
+### Energy type filters MUST include `CardType.ANY`
+
+When filtering for a specific energy type (e.g., Lightning), always include `CardType.ANY` to count Rainbow Energy and similar multi-type energy cards:
+
+```typescript
+// WRONG: Misses Rainbow Energy
+em.provides.filter(c => c === CardType.LIGHTNING).length
+
+// CORRECT: Includes Rainbow Energy
+em.provides.filter(c => c === CardType.LIGHTNING || c === CardType.ANY).length
+```
+
+### `effect.player` in PutDamageEffect/DealDamageEffect is the ATTACKER
+
+In `PutDamageEffect` and `DealDamageEffect`, `effect.player` is the attacking player. For `IS_ABILITY_BLOCKED` on the defending Pokemon's ability, use `StateUtils.findOwner(state, effect.target)`:
+
+```typescript
+// WRONG: Checks if the attacker's abilities are blocked
+if (IS_ABILITY_BLOCKED(store, state, effect.player, this)) { ... }
+
+// CORRECT: Checks if the defender's abilities are blocked
+const owner = StateUtils.findOwner(state, effect.target);
+if (IS_ABILITY_BLOCKED(store, state, owner, this)) { ... }
+```
+
+### IS_ABILITY_BLOCKED: throw for activated, return for passive
+
+- **Activated abilities** (uses `WAS_POWER_USED`): `throw new GameError(GameMessage.BLOCKED_BY_EFFECT)` — gives the player UI feedback
+- **Passive abilities** (auto-triggers): `return state` — silently skips the effect
+
+### BLOCK_RETREAT requires 3 calls
+
+`BLOCK_RETREAT` is a 3-call pattern. All three are required — missing any one breaks the feature:
+
+```typescript
+// 1. Inside WAS_ATTACK_USED: set the marker
+return BLOCK_RETREAT(store, state, effect, this);
+
+// 2. Outside WAS_ATTACK_USED: intercept retreat attempts
+BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+
+// 3. Outside WAS_ATTACK_USED: clean up at end of turn
+REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+```
+
+### NEXT_TURN_ATTACK_BONUS vs NEXT_TURN_ATTACK_BASE_DAMAGE
+
+- `NEXT_TURN_ATTACK_BONUS`: Same-attack self-setup. "During your next turn, **this attack** does X more damage."
+- `NEXT_TURN_ATTACK_BASE_DAMAGE`: Cross-attack setup. "During your next turn, [other attack] does X more damage." The `baseDamage` parameter is the TOTAL (base + bonus).
+
+### Passive trigger abilities MUST check `isPokemonInPlay`
+
+Passive abilities that intercept effects like `DealDamageEffect` or `PutDamageEffect` must verify the card is actually in play using `StateUtils.isPokemonInPlay(owner, this)`. Without this check, the ability can trigger from the discard pile or hand.
+
+```typescript
+if (effect instanceof DealDamageEffect && ...) {
+  const owner = StateUtils.findOwner(state, effect.target);
+  if (!StateUtils.isPokemonInPlay(owner, this)) { return state; }
+  // ... rest of ability logic
+}
+```
+
+Reference: `set-shining-fates/arctozolt.ts` (Numbing Vortex)
+
+### "Look at" / "reveal" card text requires SHOW_CARDS_TO_PLAYER
+
+When card text says "look at the top X cards" or "reveal" cards, you must call `SHOW_CARDS_TO_PLAYER(store, state, player, cards)` to display the cards to the player before they make their selection. Omitting this step means players can't see the cards they're choosing from.
+
+Reference: `set-shining-fates/manaphy.ts` (Ocean Search)
+
+### Never mutate `this.attacks[n].cost` directly
+
+When implementing "this attack can be used for [X] energy" conditionally, never mutate the static card property. Instead, intercept `CheckAttackCostEffect` and modify `effect.cost`:
+
+```typescript
+if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[1]) {
+  if (effect.player.active.getPokemonCard() === this && effect.player.active.damage > 0) {
+    effect.cost = [CardType.LIGHTNING];
+  }
+}
+```
+
+Reference: `set-surging-sparks/grapploct.ts` (Raging Tentacles)
+
+### Energy type checks must include `CardType.ANY`
+
+When checking if a Pokemon has a specific energy type attached, always include `CardType.ANY` to account for Rainbow Energy and similar multi-type energy cards:
+
+```typescript
+// CORRECT
+em.provides.includes(CardType.DARK) || em.provides.includes(CardType.ANY)
+
+// WRONG - misses Rainbow Energy
+em.provides.includes(CardType.DARK)
+```
+
+### Use `StateUtils.isPokemonInPlay()` — not `findCardList` null checks
+
+`StateUtils.findCardList()` and `StateUtils.findOwner()` throw `GameError` rather than returning null. Code checking their return values `!== null` always passes. For passive abilities, use `StateUtils.isPokemonInPlay(owner, this)` to properly verify the card is in play.
+
+### Sequential prompts require the generator pattern
+
+When a card requires two prompts in sequence (e.g., player selects a card, then opponent decides), use `function* playCard` with `yield`. Without the generator pattern, both prompts fire simultaneously on the first `reduceEffect` call.
+
+```typescript
+function* playCard(next: Function, store: StoreLike, state: State, ...): IterableIterator<State> {
+  let selectedCard: Card | undefined;
+  yield store.prompt(state, new ChooseCardsPrompt(...), selected => {
+    selectedCard = selected?.[0];
+    next();
+  });
+  // selectedCard is now set — safe to use in subsequent prompts
+  yield store.prompt(state, new ConfirmPrompt(opponent.id, ...), result => {
+    // ...
+    next();
+  });
+}
+```
+
+Reference: `set-battle-styles/sordward-and-shielbert.ts`
+
+### Marker source consistency
+
+Always pass `this` as the source parameter to all three marker methods — `addMarker`, `hasMarker`, and `removeMarker`. Omitting the source from `hasMarker`/`removeMarker` while including it in `addMarker` causes issues when multiple copies of a Pokemon are in play.
+
+### `burnFlipResult` works for Pokemon abilities too
+
+The `BetweenTurnsEffect.burnFlipResult` property can be used for Pokemon abilities (not just stadiums). For ability-sourced use, note that `effect.player` is the player whose Pokemon is being checked for burn, so use `StateUtils.getOpponent(state, effect.player)` to find the ability owner.
+
+Reference: `set-battle-styles/centiskorch.ts` (Overheater)
+
+### "You may" effects always require `ConfirmPrompt`
+
+When card text says "You may draw", "You may switch", "You may heal", etc., always show a `ConfirmPrompt` before taking the action. Prefab versions (e.g., `DRAW_CARDS_UNTIL_CARDS_IN_HAND`, `SWITCH_ACTIVE_WITH_BENCHED`) are MANDATORY — they don't ask the player. For optional effects, inline the logic with a `ConfirmPrompt`:
+
+```typescript
+state = store.prompt(state, new ConfirmPrompt(
+  player.id,
+  GameMessage.WANT_TO_SWITCH_POKEMON
+), wantToSwitch => {
+  if (wantToSwitch) {
+    SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
+  }
+});
+```
+
+Reference: `set-chilling-reign/tapu-fini.ts` (Smash Turn), `set-chilling-reign/shaymin.ts` (Return)
+
+### Post-prompt code must go inside the callback
+
+Any code that must execute AFTER a prompt resolves must be placed inside the prompt's callback function. Code placed synchronously after `store.prompt()` executes BEFORE the player responds to the prompt:
+
+```typescript
+// WRONG: shuffle runs before damage placement
+store.prompt(state, new PutDamagePrompt(...), targets => {
+  // place damage...
+});
+SHUFFLE_DECK(store, state, opponent); // Runs BEFORE callback!
+
+// CORRECT: shuffle inside callback
+return store.prompt(state, new PutDamagePrompt(...), targets => {
+  // place damage...
+  SHUFFLE_DECK(store, state, opponent); // Runs AFTER callback
+});
+```
+
+Reference: `set-chilling-reign/spiritomb.ts` (Ghostly Cries)
+
+### `SEARCH_DECK_FOR_CARDS_TO_HAND` already shuffles the deck
+
+Do NOT call `SHUFFLE_DECK` after `SEARCH_DECK_FOR_CARDS_TO_HAND` — the prefab shuffles internally. Calling it again causes a double-shuffle.
+
+Reference: `set-chilling-reign/delibird.ts` (Package Delivery)
+
+### On-evolve abilities must use `PlayPokemonEffect`, not `WAS_POWER_USED`
+
+Abilities with text "When you play this Pokemon from your hand to evolve..." must intercept `PlayPokemonEffect`, NOT use `WAS_POWER_USED`. Use a `PowerEffect` try/catch for the ability-blocked check, and `ConfirmPrompt` for the "you may" choice:
+
+```typescript
+if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+  const player = effect.player;
+
+  // Ability-blocked check (try/catch is correct here — IS_ABILITY_BLOCKED doesn't apply to PlayPokemonEffect)
+  try {
+    const stub = new PowerEffect(player, { name: 'test', powerType: PowerType.ABILITY, text: '' }, this);
+    store.reduceEffect(state, stub);
+  } catch {
+    return state;
+  }
+
+  state = store.prompt(state, new ConfirmPrompt(
+    player.id,
+    GameMessage.WANT_TO_USE_ABILITY,
+  ), wantToUse => {
+    if (wantToUse) {
+      player.marker.addMarker(this.MY_MARKER, this);
+    }
+  });
+}
+```
+
+The stub generator emits `WAS_POWER_USED` for all ability stubs — this is always wrong for on-evolve abilities. Delete the `WAS_POWER_USED` block entirely and replace with the `PlayPokemonEffect` intercept.
+
+Reference: `set-evolving-skies/ludicolo.ts` (Enthusiastic Dance)
+
+### Tool-blocked checks must use `IS_TOOL_BLOCKED`, not inline `try { new ToolEffect }`
+
+Always use `IS_TOOL_BLOCKED(store, state, player, this)` to check whether a tool's effect is blocked. Do NOT inline the old pattern directly:
+
+```typescript
+// WRONG (deprecated): inline ToolEffect try/catch
+try {
+  const toolEffect = new ToolEffect(player, this);
+  store.reduceEffect(state, toolEffect);
+} catch {
+  return state;
+}
+
+// CORRECT: use the prefab
+if (IS_TOOL_BLOCKED(store, state, player, this)) {
+  return state;
+}
+```
+
+`IS_TOOL_BLOCKED` wraps the same `ToolEffect` logic internally, but the prefab is the established pattern. Never mix both approaches in the same card.
+
+Reference: `set-evolving-skies/spirit-mask.ts`, `set-evolving-skies/digging-gloves.ts`
+
+### Async callback bug: modify `effect.damage` INSIDE the callback
+
+When a prompt callback determines how much extra damage to deal, the damage modification MUST happen inside the callback. Code after `store.prompt()` runs BEFORE the callback:
+
+```typescript
+// WRONG: energyDiscarded is always 0 outside the callback
+let energyDiscarded = 0;
+store.prompt(state, new ChooseCardsPrompt(...), cards => {
+  energyDiscarded = cards.length;
+});
+effect.damage += energyDiscarded * 30;  // reads stale value!
+
+// CORRECT: capture reference and modify inside callback
+const attackEffect = effect;
+return store.prompt(state, new ChooseCardsPrompt(...), cards => {
+  attackEffect.damage += cards.length * 30;
+});
+```
+
+Reference: `set-astral-radiance/hisuian-decidueye-vstar.ts` (Somersault Feathers)
+
+### `CLEAN_UP_SUPPORTER` must be called exactly ONCE
+
+In generator-pattern Supporter cards, ensure `CLEAN_UP_SUPPORTER(effect, player)` is called exactly once per execution path. Common bugs: calling it inside a loop (once per iteration) or in multiple branches plus a final always-call.
+
+Reference: `set-astral-radiance/energy-loto.ts`, `set-astral-radiance/gardenias-vigor.ts`
+
+### JavaScript `||` bug in tag checks
+
+Never use `||` inside `includes()` for checking multiple tags. JavaScript's `||` evaluates to the first truthy value, so only the first tag is checked:
+
+```typescript
+// WRONG: Only checks POKEMON_V (|| returns first truthy value)
+sourceCard.tags.includes(CardTag.POKEMON_V || CardTag.POKEMON_VMAX || CardTag.POKEMON_VSTAR)
+
+// CORRECT: Separate includes() calls
+sourceCard.tags.includes(CardTag.POKEMON_V) ||
+sourceCard.tags.includes(CardTag.POKEMON_VMAX) ||
+sourceCard.tags.includes(CardTag.POKEMON_VSTAR)
+```
+
+### `effect.opponent` is available on AttackEffect
+
+Inside `WAS_ATTACK_USED` blocks, `effect.opponent` is already resolved — no need for `StateUtils.getOpponent(state, player)`. Both work identically; prefer `effect.opponent` to reduce imports.
+
+### `DealDamageEffect` for active, `PutDamageEffect` for bench
+
+When targeting "1 of your opponent's Pokemon" (active OR bench), use the correct effect type based on the selected target:
+
+- `DealDamageEffect` — applies Weakness and Resistance (use for active Pokemon)
+- `PutDamageEffect` — bypasses Weakness and Resistance (use for benched Pokemon)
+
+```typescript
+store.prompt(state, new ChoosePokemonPrompt(...), selected => {
+  const target = selected[0];
+  if (target === opponent.active) {
+    const dealDamage = new DealDamageEffect(effect, damage);
+    dealDamage.target = target;
+    store.reduceEffect(state, dealDamage);
+  } else {
+    const putDamage = new PutDamageEffect(effect, damage);
+    putDamage.target = target;
+    store.reduceEffect(state, putDamage);
+  }
+});
+```
+
+Reference: `set-astral-radiance/beedrill-v.ts` (Toxic Bore)
+
+### Never directly mutate `target.damage` for ability-based damage
+
+Always use `PutDamageCountersEffect` instead of `target.damage += X`. Direct mutation bypasses KO detection and damage prevention effects:
+
+```typescript
+// WRONG: Bypasses engine
+target.damage += 40;
+
+// CORRECT: Goes through engine
+const putDamage = new PutDamageCountersEffect(powerEffect, 40);
+store.reduceEffect(state, putDamage);
+```
+
+Reference: `set-astral-radiance/hisuian-samurott-vstar.ts` (Moon Cleave Star)
+
+### Tool card `reduceEffect`: check `PokemonCardList.tools`, NOT `PokemonCard.tools`
+
+When a tool card needs to check if it's attached to a Pokemon inside `reduceEffect`, always check the `PokemonCardList.tools` array (e.g., `player.active.tools.includes(this)`). Do NOT check `getPokemonCard().tools` — `PokemonCard.tools` is an empty array by default and is never populated by the engine. The engine only pushes attached tools to `PokemonCardList.tools`.
+
+```typescript
+// CORRECT: checks PokemonCardList.tools (populated by engine)
+if (!effect.player.active.tools.includes(this)) { return state; }
+
+// WRONG: checks PokemonCard.tools (always empty — never finds tools)
+const pokemonCard = effect.player.active.getPokemonCard();
+if (!pokemonCard.tools.includes(this)) { return state; }
+```
+
+Reference: `set-silver-tempest/forest-seal-stone.ts`, `set-silver-tempest/earthen-seal-stone.ts`
+
+### PokemonCardList markers are wiped during RetreatEffect
+
+`PokemonCardList.clearEffects()` contains `this.marker.markers = []`, which wipes ALL custom markers on the card list. This method is called by `retreatReducer` on the active slot BEFORE the retreat swap happens. Any marker placed on a `PokemonCardList` during a `RetreatEffect` handler (which runs in `propagateEffect`, before `retreatReducer`) will be cleared.
+
+**Workaround:** Use player-level markers (`player.marker`) or card instance properties (`public myFlag = false`) for state that must survive through retreat.
+
+Reference: `set-silver-tempest/skuntank-v.ts` (retreat tracking via instance property)
+
+### `MoveDamagePrompt` playerType controls source selection
+
+The `playerType` parameter of `MoveDamagePrompt` determines which player's Pokemon are valid as **damage sources** (where damage counters move FROM). Common mistake: using `PlayerType.ANY` when card text says "move damage counters from **your** Pokemon" — this allows selecting opponent's Pokemon as sources.
+
+| Card Text | playerType |
+|-----------|------------|
+| "Move damage counters from your Pokemon..." | `PlayerType.BOTTOM_PLAYER` |
+| "Move damage counters from your opponent's Pokemon..." | `PlayerType.TOP_PLAYER` |
+| "Move damage counters between any Pokemon..." | `PlayerType.ANY` |
+
+Use `blockedTo` array to restrict destinations, and `maxAllowedDamage` to restrict which Pokemon can receive damage.
+
+Reference: `set-crown-zenith/hatterene-vmax.ts` (Witch's Domain)
+
+### "Can't attack" vs "Can't use [Attack Name]" — two different flags
+
+These two card texts require completely different implementations:
+
+| Card Text | Code |
+|-----------|------|
+| "This Pokémon can't attack during your next turn." | `player.active.cannotAttackNextTurnPending = true` |
+| "This Pokémon can't use [Attack Name] during your next turn." | `player.active.cannotUseAttacksNextTurnPending.push('Attack Name')` |
+
+Common mistake: using `cannotUseAttacksNextTurnPending.push('Attack Name')` when the card says "can't attack" (without naming a specific attack). The push only blocks ONE named attack; `cannotAttackNextTurnPending = true` blocks ALL attacks.
+
+Reference: `set-crown-zenith/zamazenta-vstar.ts` (Giga Impact)

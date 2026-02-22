@@ -3,8 +3,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PlayerType } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Emolga extends PokemonCard {
 
@@ -16,14 +16,14 @@ export class Emolga extends PokemonCard {
 
   public hp: number = 60;
 
-  public weakness = [ {type: CardType.FIGHTING} ];
+  public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public attacks = [
     {
       name: 'Sky Wave',
-      cost: [ CardType.COLORLESS ],
+      cost: [CardType.COLORLESS],
       damage: 10,
       text: 'This attack also does 10 damage to each Benched Pokémon (both yours and your opponent\'s). (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
@@ -41,7 +41,7 @@ export class Emolga extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       effect.damage = 10;

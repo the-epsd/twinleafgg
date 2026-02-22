@@ -3,8 +3,9 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameMessage, PlayerType, GameError, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Eeveeex extends PokemonCard {
 
@@ -45,7 +46,7 @@ export class Eeveeex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Rainbow DNA
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.hand.cards.length === 0) {

@@ -3,10 +3,11 @@ import { PlayerType, SlotType } from '../../game/store/actions/play-card-action'
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Volcanion extends PokemonCard {
 
@@ -44,10 +45,10 @@ export class Volcanion extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
-      
+
       const benchIndex = player.bench.indexOf(cardList as PokemonCardList);
       if (benchIndex === -1) {
         return state;
@@ -66,7 +67,7 @@ export class Volcanion extends PokemonCard {
       const benchSpots = player.bench.filter(b => b.cards.length > 0).length;
       const min = Math.min(2, benchSpots);
       const max = Math.min(2, benchSpots);
-      
+
       state = store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,

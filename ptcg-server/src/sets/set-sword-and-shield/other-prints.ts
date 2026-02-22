@@ -22,6 +22,22 @@ import { QuickBall as QuickBallSSH179 } from '../set-sword-and-shield/quick-ball
 import { GreatBall } from '../set-paldea-evolved/great-ball';
 import { Marnie } from './marnie';
 import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
+import { HyperPotion } from '../set-champions-path/hyper-potion';
+import { LuckyEgg } from '../set-arceus/lucky-egg';
+import { PokemonCenterLady } from '../set-flashfire/pokemon-center-lady';
+import { DhelmiseV } from './dhelmise-v';
+import { TorkoalV } from './torkoal-v';
+import { LaprasV } from './lapras-v';
+import { MorpekoV } from './morpeko-v';
+import { WobbuffetV } from './wobbuffet-v';
+import { IndeedeeV } from './indeedee-v';
+import { SableyeV } from './sableye-v';
+import { ZamazentaV } from './zamazenta-v';
+import { SnorlaxV } from './snorlax-v';
+import { TeamYellGrunt } from './team-yell-grunt';
+import { LaprasVmax } from './lapras-vmax';
+import { MorpekoVmax } from './morpeko-vmax';
+import { SnorlaxVmax } from './snorlax-vmax';
 
 export class GreatBallSSH extends GreatBall {
   public fullName = 'Great Ball SSH';
@@ -191,4 +207,112 @@ export class QuickBall2SSH extends QuickBallSSH179 {
   public setNumber = '216';
   public fullName: string = 'Quick Ball SSH 216';
   public set = 'SSH';
+}
+
+export class HyperPotionSSH extends HyperPotion {
+  public set: string = 'SSH';
+  public setNumber: string = '166';
+  public fullName: string = 'Hyper Potion SSH';
+}
+
+export class LuckyEggSSH extends LuckyEgg {
+  public set: string = 'SSH';
+  public setNumber: string = '167';
+  public fullName: string = 'Lucky Egg SSH';
+}
+
+export class PokemonCenterLadySSH extends PokemonCenterLady {
+  public set: string = 'SSH';
+  public setNumber: string = '176';
+  public fullName: string = 'Pokémon Center Lady SSH';
+}
+
+export class DhelmiseV2 extends DhelmiseV {
+  public set: string = 'SSH';
+  public setNumber: string = '187';
+  public fullName: string = 'Dhelmise V SSH 187';
+}
+
+export class TorkoalV2 extends TorkoalV {
+  public set: string = 'SSH';
+  public setNumber: string = '188';
+  public fullName: string = 'Torkoal V SSH 188';
+}
+
+export class LaprasV2 extends LaprasV {
+  public set: string = 'SSH';
+  public setNumber: string = '189';
+  public fullName: string = 'Lapras V SSH 189';
+}
+
+export class MorpekoV2 extends MorpekoV {
+  public set: string = 'SSH';
+  public setNumber: string = '190';
+  public fullName: string = 'Morpeko V SSH 190';
+}
+
+export class WobbuffetV2 extends WobbuffetV {
+  public set: string = 'SSH';
+  public setNumber: string = '191';
+  public fullName: string = 'Wobbuffet V SSH 191';
+}
+
+export class IndeedeeV2 extends IndeedeeV {
+  public set: string = 'SSH';
+  public setNumber: string = '192';
+  public fullName: string = 'Indeedee V SSH 192';
+}
+
+export class SableyeV2 extends SableyeV {
+  public set: string = 'SSH';
+  public setNumber: string = '194';
+  public fullName: string = 'Sableye V SSH 194';
+}
+
+export class ZamazentaV2 extends ZamazentaV {
+  public set: string = 'SSH';
+  public setNumber: string = '196';
+  public fullName: string = 'Zamazenta V SSH 196';
+}
+
+export class SnorlaxV2 extends SnorlaxV {
+  public set: string = 'SSH';
+  public setNumber: string = '197';
+  public fullName: string = 'Snorlax V SSH 197';
+}
+
+export class TeamYellGrunt2 extends TeamYellGrunt {
+  public set: string = 'SSH';
+  public setNumber: string = '202';
+  public fullName: string = 'Team Yell Grunt SSH 202';
+}
+
+export class LaprasVmax2 extends LaprasVmax {
+  public set: string = 'SSH';
+  public setNumber: string = '203';
+  public fullName: string = 'Lapras VMAX SSH 203';
+}
+
+export class MorpekoVmax2 extends MorpekoVmax {
+  public set: string = 'SSH';
+  public setNumber: string = '204';
+  public fullName: string = 'Morpeko VMAX SSH 204';
+}
+
+export class SnorlaxVmax2 extends SnorlaxVmax {
+  public set: string = 'SSH';
+  public setNumber: string = '206';
+  public fullName: string = 'Snorlax VMAX SSH 206';
+}
+
+export class TeamYellGrunt3 extends TeamYellGrunt {
+  public set: string = 'SSH';
+  public setNumber: string = '210';
+  public fullName: string = 'Team Yell Grunt SSH 210';
+}
+
+export class ZamazentaV3 extends ZamazentaV {
+  public set: string = 'SSH';
+  public setNumber: string = '212';
+  public fullName: string = 'Zamazenta V SSH 212';
 }

@@ -3,16 +3,17 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Magikarp extends PokemonCard {
 
   public name = 'Magikarp';
-  
+
   public set = 'BS';
-  
+
   public fullName = 'Magikarp BS';
-  
+
   public cardType = CardType.WATER;
 
   public stage = Stage.BASIC;
@@ -20,7 +21,7 @@ export class Magikarp extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
 
   public setNumber: string = '35';
-  
+
   public hp = 30;
 
   public weakness = [{ type: CardType.LIGHTNING }];
@@ -43,8 +44,8 @@ export class Magikarp extends PokemonCard {
   ];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
-      effect.damage = effect.player.active.damage; 
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      effect.damage = effect.player.active.damage;
     }
     return state;
   }

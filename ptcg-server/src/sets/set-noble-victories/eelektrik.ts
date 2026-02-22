@@ -1,10 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State,
-  GameError, GameMessage, EnergyCard, SlotType } from '../../game';
-import { ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { PowerType, StoreLike, State, GameError, GameMessage, EnergyCard, SlotType } from '../../game';
+import { ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON, IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
@@ -20,7 +19,7 @@ export class Eelektrik extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Dynamotor',
@@ -33,7 +32,7 @@ export class Eelektrik extends PokemonCard {
   public attacks = [
     {
       name: 'Electric Ball',
-      cost: [ CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS ],
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.COLORLESS],
       damage: 50,
       text: ''
     }
@@ -57,7 +56,7 @@ export class Eelektrik extends PokemonCard {
       player.marker.removeMarker(this.DYNAMOTOR_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
@@ -115,6 +114,5 @@ export class Eelektrik extends PokemonCard {
 
     return state;
   }
-
 
 }

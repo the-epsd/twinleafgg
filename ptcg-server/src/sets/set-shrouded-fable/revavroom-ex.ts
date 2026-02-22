@@ -2,9 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, KnockOutEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Revavroomex extends PokemonCard {
 
@@ -53,21 +53,16 @@ export class Revavroomex extends PokemonCard {
   public discardRevavroom: boolean = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof EndTurnEffect) {
-      this.movedToActiveThisTurn = false;
-    }
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
-      if (!this.movedToActiveThisTurn) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
+      if (MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)) {
+        effect.damage += 120;
+      } else {
         effect.damage = 20;
         return state;
       }
-
-      effect.damage += 120;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const knockOutEffect = new KnockOutEffect(player, player.active);
       state = store.reduceEffect(state, knockOutEffect);

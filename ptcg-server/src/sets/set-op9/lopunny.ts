@@ -3,13 +3,13 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { GameMessage } from '../../game/game-message';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Lopunny extends PokemonCard {
 
@@ -26,17 +26,17 @@ export class Lopunny extends PokemonCard {
     value: 20
   }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Jump Kick',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 20,
     text: 'Does 20 damage to 1 of your opponent\'s Benched Pokemon. (Don\'t ' +
       'apply Weakness and Resistance for Benched Pokemon.)'
   }, {
     name: 'Jazzed',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 50,
     text: 'If Lopunny evolved from Buneary during this turn, remove all ' +
       'damage counters from Lopunny.'
@@ -50,7 +50,7 @@ export class Lopunny extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -63,7 +63,7 @@ export class Lopunny extends PokemonCard {
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), targets => {
         targets.forEach(target => {
@@ -74,7 +74,7 @@ export class Lopunny extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       if (player.active.pokemonPlayedTurn === state.turn) {
         player.active.damage = 0;

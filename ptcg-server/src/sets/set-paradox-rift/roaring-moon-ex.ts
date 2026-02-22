@@ -1,13 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { State } from '../../game/store/state/state';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { ConfirmPrompt, GameMessage, StateUtils } from '../../game';
 import { DealDamageEffect, KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
 import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class RoaringMoonex extends PokemonCard {
 
@@ -53,7 +53,7 @@ export class RoaringMoonex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -72,7 +72,7 @@ export class RoaringMoonex extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard) {
         state = store.prompt(state, new ConfirmPrompt(

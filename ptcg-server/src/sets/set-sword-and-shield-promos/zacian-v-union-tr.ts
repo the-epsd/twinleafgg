@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { GameError, GameMessage, PokemonCardList, Power, PowerType, State, StoreLike } from '../../game';
-import { Effect, PowerEffect } from '../../game/store/effects/game-effects';
+import { Effect } from '../../game/store/effects/game-effects';
 import { ZacianVUNIONTopLeft } from './zacian-v-union-tl';
 import { ZacianVUNIONBottomLeft } from './zacian-v-union-bl';
 import { ZacianVUNIONBottomRight } from './zacian-v-union-br';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class ZacianVUNIONTopRight extends PokemonCard {
   public stage: Stage = Stage.VUNION;
@@ -43,7 +44,7 @@ export class ZacianVUNIONTopRight extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 

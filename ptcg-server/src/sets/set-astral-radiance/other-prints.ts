@@ -42,6 +42,21 @@ import { Piers } from '../set-champions-path/piers';
 import { IceRiderCalyrexVMAX as IceRiderCalyrexVMAXCRE46 } from '../set-chilling-reign/ice-rider-calyrex-vmax';
 import { ShadowRiderCalyrexVMAX as ShadowRiderCalyrexVMAXCRE75 } from '../set-chilling-reign/shadow-rider-calyrex-vmax';
 import { Bronzong } from '../set-battle-styles/bronzong';
+import { Barboach } from '../set-rebel-clash/barboach';
+import { Dewott } from '../set-vivid-voltage/dewott';
+import { BeedrillV } from './beedrill-v';
+import { HisuianLilligantV } from './hisuian-lilligant-v';
+import { HeatranV } from './heatran-v';
+import { HisuianTyphlosionV } from './hisuian-typhlosion-v';
+import { MachampV } from './machamp-v';
+import { HisuianSneaslerV } from './hisuian-sneasler-v';
+import { Choy } from './choy';
+import { Kamado } from './kamado';
+import { Zisu } from './zisu';
+import { HisuianLilligantVstar } from './hisuian-lilligant-vstar';
+import { HeatranVmax } from './heatran-vmax';
+import { HisuianTyphlosionVstar } from './hisuian-typhlosion-vstar';
+import { MachampVmax } from './machamp-vmax';
 
 export class BronzongASR extends Bronzong {
   public fullName = 'Bronzong ASR TG11';
@@ -370,4 +385,141 @@ export class ShadowRiderCalyrexVMAX2ASR extends ShadowRiderCalyrexVMAXCRE75 {
   public setNumber = 'TG30';
   public fullName: string = 'Shadow Rider Calyrex VMAX2 ASR';
   public set = 'ASR';
+}
+
+// Reprints from other sets
+export class BarboachASR extends Barboach {
+  public set: string = 'ASR';
+  public setNumber: string = '35';
+  public fullName: string = 'Barboach ASR 35';
+}
+
+export class DewottASR extends Dewott {
+  public set: string = 'ASR';
+  public setNumber: string = '42';
+  public fullName: string = 'Dewott ASR 42';
+}
+
+// Alt-art V cards
+export class BeedrillV2 extends BeedrillV {
+  public set: string = 'ASR';
+  public setNumber: string = '160';
+  public fullName: string = 'Beedrill V ASR 160';
+}
+
+export class BeedrillV3 extends BeedrillV {
+  public set: string = 'ASR';
+  public setNumber: string = '161';
+  public fullName: string = 'Beedrill V ASR 161';
+}
+
+export class HisuianLilligantV2 extends HisuianLilligantV {
+  public set: string = 'ASR';
+  public setNumber: string = '162';
+  public fullName: string = 'Hisuian Lilligant V ASR 162';
+}
+
+export class HisuianLilligantV3 extends HisuianLilligantV {
+  public set: string = 'ASR';
+  public setNumber: string = '163';
+  public fullName: string = 'Hisuian Lilligant V ASR 163';
+}
+
+export class HeatranV2 extends HeatranV {
+  public set: string = 'ASR';
+  public setNumber: string = '165';
+  public fullName: string = 'Heatran V ASR 165';
+}
+
+export class HisuianTyphlosionV2 extends HisuianTyphlosionV {
+  public set: string = 'ASR';
+  public setNumber: string = '169';
+  public fullName: string = 'Hisuian Typhlosion V ASR 169';
+}
+
+export class MachampV2 extends MachampV {
+  public set: string = 'ASR';
+  public setNumber: string = '171';
+  public fullName: string = 'Machamp V ASR 171';
+}
+
+export class MachampV3 extends MachampV {
+  public set: string = 'ASR';
+  public setNumber: string = '172';
+  public fullName: string = 'Machamp V ASR 172';
+}
+
+export class HisuianSneaslerV2 extends HisuianSneaslerV {
+  public set: string = 'ASR';
+  public setNumber: string = '174';
+  public fullName: string = 'Hisuian Sneasler V ASR 174';
+}
+
+export class HisuianSneaslerV3 extends HisuianSneaslerV {
+  public set: string = 'ASR';
+  public setNumber: string = '175';
+  public fullName: string = 'Hisuian Sneasler V ASR 175';
+}
+
+// Alt-art Trainer cards
+export class Choy2 extends Choy {
+  public set: string = 'ASR';
+  public setNumber: string = '182';
+  public fullName: string = 'Choy ASR 182';
+}
+
+export class Kamado2 extends Kamado {
+  public set: string = 'ASR';
+  public setNumber: string = '187';
+  public fullName: string = 'Kamado ASR 187';
+}
+
+export class Zisu2 extends Zisu {
+  public set: string = 'ASR';
+  public setNumber: string = '189';
+  public fullName: string = 'Zisu ASR 189';
+}
+
+// Rainbow rare VSTAR/VMAX cards
+export class HisuianLilligantVstar2 extends HisuianLilligantVstar {
+  public set: string = 'ASR';
+  public setNumber: string = '190';
+  public fullName: string = 'Hisuian Lilligant VSTAR ASR 190';
+}
+
+export class HeatranVmax2 extends HeatranVmax {
+  public set: string = 'ASR';
+  public setNumber: string = '191';
+  public fullName: string = 'Heatran VMAX ASR 191';
+}
+
+export class HisuianTyphlosionVstar2 extends HisuianTyphlosionVstar {
+  public set: string = 'ASR';
+  public setNumber: string = '193';
+  public fullName: string = 'Hisuian Typhlosion VSTAR ASR 193';
+}
+
+export class MachampVmax2 extends MachampVmax {
+  public set: string = 'ASR';
+  public setNumber: string = '194';
+  public fullName: string = 'Machamp VMAX ASR 194';
+}
+
+// Rainbow rare Trainer cards
+export class Choy3 extends Choy {
+  public set: string = 'ASR';
+  public setNumber: string = '200';
+  public fullName: string = 'Choy ASR 200';
+}
+
+export class Kamado3 extends Kamado {
+  public set: string = 'ASR';
+  public setNumber: string = '205';
+  public fullName: string = 'Kamado ASR 205';
+}
+
+export class Zisu3 extends Zisu {
+  public set: string = 'ASR';
+  public setNumber: string = '207';
+  public fullName: string = 'Zisu ASR 207';
 }

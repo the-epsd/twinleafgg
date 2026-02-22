@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardTag, CardType, StoreLike, State, CardTarget, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
+
+import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class EspeonV extends PokemonCard {
 
@@ -48,7 +48,7 @@ export class EspeonV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -68,7 +68,6 @@ export class EspeonV extends PokemonCard {
 
       if (blocked.length) {
         // Opponent has damaged benched Pokemon
-
 
         state = store.prompt(state, new ChoosePokemonPrompt(
           player.id,

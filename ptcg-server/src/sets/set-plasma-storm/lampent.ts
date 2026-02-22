@@ -6,8 +6,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckRetreatCostEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Lampent extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -17,7 +17,7 @@ export class Lampent extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public powers = [  {
+  public powers = [{
     name: 'Freefloating',
     powerType: PowerType.ABILITY,
     text: 'If this Pokémon has no Energy attached to it, this Pokémon has no Retreat Cost.'
@@ -50,14 +50,7 @@ export class Lampent extends PokemonCard {
       }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 

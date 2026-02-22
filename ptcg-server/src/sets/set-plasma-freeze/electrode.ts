@@ -3,9 +3,10 @@ import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameError, GameMessage, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Electrode extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -49,7 +50,7 @@ export class Electrode extends PokemonCard {
       player.marker.removeMarker(this.MAGNETIC_DRAW_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.marker.hasMarker(this.MAGNETIC_DRAW_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);

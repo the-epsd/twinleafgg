@@ -1,15 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, StateUtils, ChoosePokemonPrompt, PlayerType,
-  SlotType, PokemonCardList, GameError, CoinFlipPrompt
-} from '../../game';
+import { PowerType, StoreLike, State, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, PokemonCardList, GameError, CoinFlipPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { GameMessage } from '../../game/game-message';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Hypno extends PokemonCard {
 
@@ -62,7 +60,7 @@ export class Hypno extends PokemonCard {
       player.marker.removeMarker(this.SLEEP_PENDULUM_MAREKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
@@ -91,7 +89,7 @@ export class Hypno extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -124,6 +122,5 @@ export class Hypno extends PokemonCard {
 
     return state;
   }
-
 
 }

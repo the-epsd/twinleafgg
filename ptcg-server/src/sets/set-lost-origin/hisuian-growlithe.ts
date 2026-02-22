@@ -4,7 +4,8 @@ import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { SpecialCondition } from '../../game/store/card/card-types';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class HisuianGrowlithe extends PokemonCard {
 
@@ -41,7 +42,7 @@ export class HisuianGrowlithe extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Singe
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
       return store.reduceEffect(state, specialCondition);
     }

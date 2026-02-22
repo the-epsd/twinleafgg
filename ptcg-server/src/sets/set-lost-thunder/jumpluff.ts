@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State/*, CardTag*/ } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
-import { COUNT_MATCHING_CARDS_IN_ZONE } from '../../game/store/prefabs/prefabs';
+import { COUNT_MATCHING_CARDS_IN_ZONE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Jumpluff extends PokemonCard {
 
@@ -19,12 +19,12 @@ export class Jumpluff extends PokemonCard {
 
   public resistance = [{ type: CardType.FIGHTING, value: -20 }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public attacks = [
     {
       name: 'Lost March',
-      cost: [ CardType.GRASS ],
+      cost: [CardType.GRASS],
       damage: 20,
       text: 'This attack does 20 damage for each of your Pokémon, except Prism Star (Prism Star) Pokémon, in the Lost Zone.'
     }
@@ -41,7 +41,7 @@ export class Jumpluff extends PokemonCard {
   public fullName: string = 'Jumpluff LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       /*

@@ -1,18 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag, EnergyType, BoardEffect } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
-  PlayerType,
-  ConfirmPrompt,
-  AttachEnergyPrompt,
-  CardTarget,
-  SlotType
-} from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, ConfirmPrompt, AttachEnergyPrompt, CardTarget, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, IS_ABILITY_BLOCKED, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // CES Rayquaza-GX 109 (https://limitlesstcg.com/cards/CES/109)
 export class RayquazaGX extends PokemonCard {
@@ -70,14 +62,7 @@ export class RayquazaGX extends PokemonCard {
       const player = effect.player;
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 
@@ -139,7 +124,7 @@ export class RayquazaGX extends PokemonCard {
     }
 
     // Dragon Break
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let grassAndLightningEnergies = 0;
@@ -157,7 +142,7 @@ export class RayquazaGX extends PokemonCard {
     }
 
     // Tempest-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       // Check if player has used GX attack
       BLOCK_IF_GX_ATTACK_USED(player);

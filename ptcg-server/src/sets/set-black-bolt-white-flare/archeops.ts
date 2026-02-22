@@ -1,8 +1,8 @@
 import { PokemonCard, Stage, CardType, State, StoreLike, PowerType, PlayerType, StateUtils, ChoosePokemonPrompt, SlotType, GameMessage, GameError } from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { CardTarget } from '../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ABILITY_USED, DEVOLVE_POKEMON } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, DEVOLVE_POKEMON, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Archeops extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -42,7 +42,7 @@ export class Archeops extends PokemonCard {
       effect.player.marker.removeMarker(this.PRIMAL_WINGS_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const blocked: CardTarget[] = [];

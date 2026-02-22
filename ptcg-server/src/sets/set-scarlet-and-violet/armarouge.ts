@@ -1,14 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, SpecialCondition } from '../../game/store/card/card-types';
-import {
-  StoreLike, State, PowerType, StateUtils,
-  CardTarget, PlayerType, MoveEnergyPrompt, SlotType
-} from '../../game';
+import { StoreLike, State, PowerType, StateUtils, CardTarget, PlayerType, MoveEnergyPrompt, SlotType } from '../../game';
 import { GameMessage } from '../../game/game-message';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Armarouge extends PokemonCard {
 
@@ -52,7 +50,7 @@ export class Armarouge extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
 
@@ -102,7 +100,7 @@ export class Armarouge extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
       store.reduceEffect(state, specialConditionEffect);
     }

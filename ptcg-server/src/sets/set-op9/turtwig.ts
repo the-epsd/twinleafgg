@@ -3,10 +3,10 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { HealTargetEffect, AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Turtwig extends PokemonCard {
 
@@ -26,16 +26,16 @@ export class Turtwig extends PokemonCard {
     value: -20
   }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Absorb',
-    cost: [ CardType.GRASS ],
+    cost: [CardType.GRASS],
     damage: 10,
     text: 'Remove 1 damage counter from Turtwig.'
   }, {
     name: 'Parboil',
-    cost: [ CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 40,
     text: 'If you have Chimchar in play, this attack does 40 damage plus 20 ' +
       'more damage and the Defending Pokemon is now Burned.'
@@ -49,14 +49,14 @@ export class Turtwig extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const healEffect = new HealTargetEffect(effect, 10);
       healEffect.target = player.active;
       return store.reduceEffect(state, healEffect);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       let isChimcharInPlay = false;

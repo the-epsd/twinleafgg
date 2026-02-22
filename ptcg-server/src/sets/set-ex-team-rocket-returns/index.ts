@@ -1,5 +1,6 @@
 import { Card } from '../../game';
 import { Azumarill } from './azumarill';
+import { Cubone } from './cubone';
 import { DarkAmpharos } from './dark-ampharos';
 import { DarkDragonair } from './dark-dragonair';
 import { DarkDragonite } from './dark-dragonite';
@@ -11,6 +12,7 @@ import { DarkSteelix } from './dark-steelix';
 import { DarkTyranitar } from './dark-tyranitar';
 import { DarkTyranitar2 } from './dark-tyrantiar-2';
 import { Dratini } from './dratini';
+import { HereComesTeamRocket } from './here-comes-team-rocket';
 import { Hoppip } from './hoppip';
 import { Larvitar } from './larvitar';
 import { Magmar } from './magmar';
@@ -36,6 +38,7 @@ import { Voltorb } from './voltorb';
 
 export const setEXTeamRocketReturns: Card[] = [
   new Azumarill(),
+  new Cubone(),
   new DarkAmpharos(),
   new DarkDragonair(),
   new DarkDragonite(),
@@ -47,6 +50,7 @@ export const setEXTeamRocketReturns: Card[] = [
   new DarkTyranitar(),
   new DarkTyranitar2(),
   new Dratini(),
+  new HereComesTeamRocket(),
   new Hoppip(),
   new Larvitar(),
   new Magmar(),

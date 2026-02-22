@@ -3,19 +3,20 @@ import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/stor
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { DiscardEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Scizorex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public tags = [ CardTag.POKEMON_ex ];
+  public tags = [CardTag.POKEMON_ex];
   public evolvesFrom = 'Scyther';
   public cardType: CardType = M;
   public hp: number = 270;
   public weakness = [{ type: R }];
-  public resistance = [{ type: G, value:-30 }];
+  public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
   public attacks = [{
@@ -46,10 +47,10 @@ export class Scizorex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Steel Wing
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       player.active.marker.addMarker(this.STEEL_WING, this);
       opponent.marker.addMarker(this.CLEAR_STEEL_WING, this);
     }
@@ -61,7 +62,7 @@ export class Scizorex extends PokemonCard {
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_STEEL_WING, this)) {
       effect.player.marker.removeMarker(this.CLEAR_STEEL_WING, this);
-        
+
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.STEEL_WING, this);
@@ -69,7 +70,7 @@ export class Scizorex extends PokemonCard {
     }
 
     // Cross Breaker
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]){
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       return store.prompt(state, new DiscardEnergyPrompt(
@@ -86,7 +87,7 @@ export class Scizorex extends PokemonCard {
           return;
         }
 
-        if (transfers.length === 0){
+        if (transfers.length === 0) {
           effect.damage = 0;
           return state;
         }
@@ -106,7 +107,7 @@ export class Scizorex extends PokemonCard {
         return state;
       });
     }
-    
+
     return state;
   }
 }

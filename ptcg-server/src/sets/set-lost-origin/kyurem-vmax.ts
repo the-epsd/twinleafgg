@@ -3,10 +3,11 @@ import { Stage, CardType, CardTag, EnergyType, SuperType, BoardEffect } from '..
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameMessage, AttachEnergyPrompt, CardList, EnergyCard, PlayerType, SlotType, StateUtils, ShowCardsPrompt, ChooseCardsPrompt, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class KyuremVMAX extends PokemonCard {
 
@@ -65,7 +66,7 @@ export class KyuremVMAX extends PokemonCard {
       player.marker.removeMarker(this.GLACIATED_WORLD_MARKER, this);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
 
@@ -93,7 +94,7 @@ export class KyuremVMAX extends PokemonCard {
       });
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
 
       const player = effect.player;
       const temp = new CardList();

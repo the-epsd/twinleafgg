@@ -1,7 +1,7 @@
 import { CardTag, CardType, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from '../../game';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class IronJugulis extends PokemonCard {
 
@@ -29,7 +29,7 @@ export class IronJugulis extends PokemonCard {
       text: ''
     }
   ];
-  
+
   public powers = [{
     name: 'Automated Combat',
     powerType: PowerType.ABILITY,
@@ -52,26 +52,19 @@ export class IronJugulis extends PokemonCard {
       const player = effect.player;
 
       const cardList = StateUtils.findCardList(state, this);
-      
+
       if (effect.target !== cardList) {
         return state;
       }
 
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 
       const oppActive = effect.source;
       oppActive.damage += 30;
     }
-    
+
     return state;
   }
 }

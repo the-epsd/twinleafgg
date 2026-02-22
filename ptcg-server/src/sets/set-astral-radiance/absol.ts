@@ -2,8 +2,9 @@ import { State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Absol extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -37,14 +38,13 @@ export class Absol extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Swirling Diaster
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = effect.opponent;
       const benched = opponent.bench.filter(b => b.cards.length > 0);
 
       const activeDamageEffect = new DealDamageEffect(effect, 10);
       activeDamageEffect.target = opponent.active;
       store.reduceEffect(state, activeDamageEffect);
-
 
       benched.forEach(target => {
         const damageEffect = new PutDamageEffect(effect, 10);
@@ -55,7 +55,7 @@ export class Absol extends PokemonCard {
     }
 
     //Claw Rend
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

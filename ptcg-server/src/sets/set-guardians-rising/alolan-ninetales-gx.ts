@@ -6,8 +6,8 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON } from '../../game/store/prefabs/prefabs';
+
+import { BLOCK_IF_GX_ATTACK_USED, DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // GRI Alolan Ninetales-GX 22 (https://limitlesstcg.com/cards/GRI/22)
 export class AlolanNinetalesGX extends PokemonCard {
@@ -49,7 +49,7 @@ export class AlolanNinetalesGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ice Blade
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, new ChoosePokemonPrompt(
@@ -65,7 +65,7 @@ export class AlolanNinetalesGX extends PokemonCard {
     }
 
     // Blizzard Edge
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       if (!player.active.cards.some(c => c.superType === SuperType.ENERGY)) {
@@ -90,7 +90,7 @@ export class AlolanNinetalesGX extends PokemonCard {
     }
 
     // Ice Path-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

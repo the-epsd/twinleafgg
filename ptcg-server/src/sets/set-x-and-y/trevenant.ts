@@ -5,8 +5,8 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Trevenant extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -47,14 +47,7 @@ export class Trevenant extends PokemonCard {
       }
 
       // Checking to see if ability is being blocked
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 
@@ -64,7 +57,7 @@ export class Trevenant extends PokemonCard {
 
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentHasBench = opponent.bench.some(b => b.cards.length > 0);

@@ -3,9 +3,10 @@ import { Stage, CardType, SuperType, BoardEffect } from '../../game/store/card/c
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, StateUtils, Card, GameError, GameMessage, ChooseCardsPrompt, GameLog, ShuffleDeckPrompt, ShowCardsPrompt, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class GalarianMeowth extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -52,7 +53,7 @@ export class GalarianMeowth extends PokemonCard {
       player.marker.removeMarker(this.EVOLUTION_ROAR_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -115,7 +116,6 @@ export class GalarianMeowth extends PokemonCard {
         });
 
       });
-
 
     }
 

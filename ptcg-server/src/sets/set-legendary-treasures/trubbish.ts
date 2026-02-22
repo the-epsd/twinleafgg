@@ -3,9 +3,9 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Trubbish extends PokemonCard {
 
@@ -17,16 +17,16 @@ export class Trubbish extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'Pound',
-    cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 20,
     text: ''
   }, {
     name: 'Poison Gas',
-    cost: [ CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
     damage: 30,
     text: 'The Defending Pokemon is now Poisoned.'
   }];
@@ -43,7 +43,7 @@ export class Trubbish extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
       store.reduceEffect(state, specialCondition);
     }

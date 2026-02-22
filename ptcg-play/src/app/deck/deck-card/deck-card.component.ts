@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core
 import { DragSource } from '@ng-dnd/core';
 import { CardsBaseService } from '../../shared/cards/cards-base.service';
 import { DeckItem } from './deck-card.interface';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { exhaustMap, filter, tap } from 'rxjs/operators';
 import { DeckCardDialogComponent } from '../deck-card-dialog/deck-card-dialog.component';
 import { Subject, merge } from 'rxjs';

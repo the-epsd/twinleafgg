@@ -2,12 +2,13 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class AlolanDugtrio extends PokemonCard {
 
   public stage: Stage = Stage.STAGE_1;
-  
+
   public evolvesFrom = 'Alolan Diglett';
 
   public cardType: CardType = CardType.METAL;
@@ -18,14 +19,15 @@ export class AlolanDugtrio extends PokemonCard {
 
   public resistance = [{ type: CardType.GRASS, value: -30 }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
-    { 
-      name: 'Trio-Cheehoo', 
-      cost: [ ], 
-      damage: 120, 
-      text: 'If you don\'t have exactly 3 cards in your hand, this attack does nothing.' }
+    {
+      name: 'Trio-Cheehoo',
+      cost: [],
+      damage: 120,
+      text: 'If you don\'t have exactly 3 cards in your hand, this attack does nothing.'
+    }
   ];
 
   public set: string = 'SSP';
@@ -42,7 +44,7 @@ export class AlolanDugtrio extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Trio-Cheehoo
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.hand.cards.length != 3) {

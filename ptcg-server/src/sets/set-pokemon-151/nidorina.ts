@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, ChooseCardsPrompt, GameError, GameMessage, ShowCardsPrompt, State, StateUtils, StoreLike, SuperType, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Nidorina extends PokemonCard {
   public stage = Stage.STAGE_1;
@@ -34,7 +35,7 @@ export class Nidorina extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

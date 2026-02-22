@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, ShowCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Murkrow extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -10,12 +11,12 @@ export class Murkrow extends PokemonCard {
   public hp: number = 70;
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -20 }];
-  public retreat = [ C ];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Astonish',
-      cost: [ C ],
+      cost: [C],
       damage: 0,
       text: 'Choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into their deck.'
     }
@@ -29,11 +30,11 @@ export class Murkrow extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Astonish
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (opponent.hand.cards.length === 0){
+      if (opponent.hand.cards.length === 0) {
         return state;
       }
 
@@ -45,7 +46,7 @@ export class Murkrow extends PokemonCard {
         { allowCancel: false, min: 1, max: 1, isSecret: true }
       ), cards => {
         cards = cards || [];
-        
+
         store.prompt(state, new ShowCardsPrompt(
           player.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,

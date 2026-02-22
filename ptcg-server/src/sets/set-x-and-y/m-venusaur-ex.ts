@@ -5,7 +5,8 @@ import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MVenusaurEX extends PokemonCard {
   public tags = [CardTag.POKEMON_EX, CardTag.MEGA,];
@@ -40,8 +41,7 @@ export class MVenusaurEX extends PokemonCard {
       store.reduceEffect(state, endTurnEffect);
     }
 
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.PARALYZED, SpecialCondition.POISONED]);
       store.reduceEffect(state, specialConditionEffect);
     }

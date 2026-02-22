@@ -3,9 +3,9 @@ import { StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage } from '../../game/store/card/card-types';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { DEVOLVE_POKEMON } from '../../game/store/prefabs/prefabs';
+import { DEVOLVE_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Mew extends PokemonCard {
 
@@ -46,7 +46,7 @@ export class Mew extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -59,7 +59,7 @@ export class Mew extends PokemonCard {
       effect.damage = energyCount * 10;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -131,7 +131,5 @@ export class Mew extends PokemonCard {
     }
     return state;
   }
-
-
 
 }

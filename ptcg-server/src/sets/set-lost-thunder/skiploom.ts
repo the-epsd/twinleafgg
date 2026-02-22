@@ -2,9 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PowerType, State, StoreLike, GameMessage, SuperType, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { ChooseCardsPrompt } from '../../game';
-import { MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Skiploom extends PokemonCard {
 
@@ -49,7 +49,7 @@ export class Skiploom extends PokemonCard {
   public fullName: string = 'Skiploom LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       // checking if this pokemon is in play

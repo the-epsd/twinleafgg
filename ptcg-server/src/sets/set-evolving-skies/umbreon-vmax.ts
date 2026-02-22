@@ -1,19 +1,21 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage,
-  PlayerType, PowerType, ChoosePokemonPrompt, ConfirmPrompt, SlotType } from '../../game';
+import {
+  StoreLike, State, StateUtils, GameError, GameMessage,
+  PlayerType, PowerType, ChoosePokemonPrompt, ConfirmPrompt, SlotType
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class UmbreonVMAX extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE ];
+  public tags = [CardTag.POKEMON_VMAX, CardTag.SINGLE_STRIKE];
 
   public stage: Stage = Stage.VMAX;
 
   public regulationMark = 'E';
-  
+
   public evolvesFrom = 'Umbreon V';
 
   public cardType: CardType = CardType.DARK;
@@ -22,7 +24,7 @@ export class UmbreonVMAX extends PokemonCard {
 
   public weakness = [{ type: CardType.GRASS }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Dark Signal',
@@ -35,7 +37,7 @@ export class UmbreonVMAX extends PokemonCard {
 
   public attacks = [{
     name: 'Max Darkness',
-    cost: [ CardType.DARK, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.DARK, CardType.COLORLESS, CardType.COLORLESS],
     damage: 160,
     text: ''
   }
@@ -57,14 +59,7 @@ export class UmbreonVMAX extends PokemonCard {
       const player = effect.player;
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
       state = store.prompt(state, new ConfirmPrompt(
@@ -79,12 +74,12 @@ export class UmbreonVMAX extends PokemonCard {
           if (!hasBench) {
             throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
           }
-            
+
           return store.prompt(state, new ChoosePokemonPrompt(
             player.id,
             GameMessage.CHOOSE_POKEMON_TO_SWITCH,
             PlayerType.TOP_PLAYER,
-            [ SlotType.BENCH ],
+            [SlotType.BENCH],
             { allowCancel: false }
           ), result => {
             const cardList = result[0];

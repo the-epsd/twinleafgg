@@ -4,6 +4,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckPokemonAttacksEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { DISCARD_ALL_ENERGY_FROM_POKEMON, IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 import { State } from '../../game/store/state/state';

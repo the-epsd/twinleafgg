@@ -3,12 +3,12 @@ import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { CoinFlipPrompt, GameError, GameMessage, PlayerType } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Bibarel extends PokemonCard {
 
@@ -64,7 +64,7 @@ export class Bibarel extends PokemonCard {
       player.marker.removeMarker(this.INDUSTRIOUS_INCISORS_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.marker.hasMarker(this.INDUSTRIOUS_INCISORS_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
@@ -95,7 +95,7 @@ export class Bibarel extends PokemonCard {
 
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, [

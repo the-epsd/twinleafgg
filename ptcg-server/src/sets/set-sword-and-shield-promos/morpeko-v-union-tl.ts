@@ -2,11 +2,12 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/store/card/card-types';
 import { AttachEnergyPrompt, CardTarget, EnergyCard, GameError, GameMessage, PlayerType, PokemonCardList, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import {MorpekoVUNIONTopRight} from './morpeko-v-union-tr';
-import {MorpekoVUNIONBottomLeft} from './morpeko-v-union-bl';
-import {MorpekoVUNIONBottomRight} from './morpeko-v-union-br';
+import { MorpekoVUNIONTopRight } from './morpeko-v-union-tr';
+import { MorpekoVUNIONBottomLeft } from './morpeko-v-union-bl';
+import { MorpekoVUNIONBottomRight } from './morpeko-v-union-br';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class MorpekoVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
@@ -63,7 +64,7 @@ export class MorpekoVUNIONTopLeft extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 
@@ -101,7 +102,7 @@ export class MorpekoVUNIONTopLeft extends PokemonCard {
     }
 
     // Union Gain
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let lightningsInDiscard = 0;
@@ -143,25 +144,25 @@ export class MorpekoVUNIONTopLeft extends PokemonCard {
     }
 
     // All You Can Eat
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      
-      if (player.hand.cards.length >= 10){
+
+      if (player.hand.cards.length >= 10) {
         return state;
       }
-      if (player.deck.cards.length === 0){
+      if (player.deck.cards.length === 0) {
         return state;
       }
 
-      while (player.hand.cards.length < 10 && player.deck.cards.length > 0){
+      while (player.hand.cards.length < 10 && player.deck.cards.length > 0) {
         player.deck.moveTo(player.hand, 1);
       }
     }
 
     // Burst Wheel
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
-      
+
       const energies = player.active.cards.filter(card => card.superType === SuperType.ENERGY);
 
       const discardEnergy = new DiscardCardsEffect(effect, energies);

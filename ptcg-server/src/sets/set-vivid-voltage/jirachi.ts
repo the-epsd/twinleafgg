@@ -3,10 +3,10 @@ import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/ca
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, StateUtils, CardList, ChooseCardsPrompt, GameMessage, Card, GameError, AttachEnergyPrompt, PlayerType, SlotType, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { SHUFFLE_DECK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* useDreamyRevelation(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -68,7 +68,7 @@ export class Jirachi extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {
@@ -91,7 +91,7 @@ export class Jirachi extends PokemonCard {
 
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, new AttachEnergyPrompt(

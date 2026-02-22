@@ -3,6 +3,7 @@ import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, StateUtils, MoveEnergyPrompt, ConfirmPrompt, CardTarget, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { MOVED_TO_ACTIVE_THIS_TURN } from '../../game/store/prefabs/prefabs';
 import { PokemonCardList } from '../../game/store/state/pokemon-card-list';
 
 export class Latios extends PokemonCard {
@@ -41,7 +42,7 @@ export class Latios extends PokemonCard {
     }
     const activePokemon = player.active.getPokemonCard();
 
-    if (activePokemon && activePokemon.name === 'M Latias-EX' && activePokemon.movedToActiveThisTurn) {
+    if (activePokemon && activePokemon.name === 'M Latias-EX' && MOVED_TO_ACTIVE_THIS_TURN(player, activePokemon)) {
       if (!player.marker.hasMarker(this.LUSTER_ASSIST_MARKER, this)) {
 
         let hasEnergyOnBench = false;

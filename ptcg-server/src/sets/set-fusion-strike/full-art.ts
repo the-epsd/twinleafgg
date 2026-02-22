@@ -1,7 +1,7 @@
-import { Flaaffy } from '../set-evolving-skies/flaaffy';
 import { TrainingCourt } from '../set-rebel-clash/training-court';
 import { FireEnergy } from '../set-scarlet-and-violet-energy/fire-energy';
 import { GrassEnergy } from '../set-scarlet-and-violet-energy/grass-energy';
+import { CelebiV } from '../set-chilling-reign/celebi-v';
 import { ElesasSparkle } from './elesas-sparkle';
 import { GenesectV } from './genesect-v';
 import { MewV } from './mew-v';
@@ -11,10 +11,11 @@ import { Schoolboy } from './schoolboy';
 import { Schoolgirl } from './schoolgirl';
 import { Shauna } from './shauna';
 
-// export class CelebiVFA extends CelebiV {
-//   public setNumber = '245';
-//   public fullName: string = 'CelebiVFA FST';
-// }
+export class CelebiVFA extends CelebiV {
+  public set = 'FST';
+  public setNumber = '245';
+  public fullName: string = 'Celebi V FST 245';
+}
 
 // export class TsareenaVFA extends TsareenaV {
 //   public setNumber = '246';
@@ -53,7 +54,7 @@ export class MewVAA extends MewV {
 
 // export class HoopaVFA extends HoopaV {
 //   public setNumber = '253';
-//   public fullName: string = 'HoopaVFA FST';
+//   public fullName: string = 'Mew V FST 253';
 // }
 
 export class GenesectVFA extends GenesectV {
@@ -83,7 +84,7 @@ export class GenesectVAA extends GenesectV {
 
 // export class DancerFA extends Dancer {
 //   public setNumber = '259';
-//   public fullName: string = 'DancerFA FST';
+//   public fullName: string = 'Genesect V FST 259';
 // }
 
 export class ElesasSparkleFA extends ElesasSparkle {
@@ -123,7 +124,7 @@ export class ShaunaFA extends Shauna {
 
 // export class BoltundVMAXHR extends BoltundVMAX {
 //   public setNumber = '267';
-//   public fullName: string = 'BoltundVMAXHR FST';
+//   public fullName: string = 'Shauna FST 267';
 // }
 
 export class MewVMAXHR extends MewVMAX {
@@ -143,19 +144,13 @@ export class MewVMAXAA extends MewVMAX {
 
 // export class GengarVMAXAA extends GengarVMAX {
 //   public setNumber = '271';
-//   public fullName: string = 'GengarVMAXAA FST';
+//   public fullName: string = 'Gengar VMAX FST 271';
 // }
 
 // export class GreedentVMAXHR extends GreedentVMAX {
 //   public setNumber = '272';
-//   public fullName: string = 'GreedentVMAXHR FST';
+//   public fullName: string = 'Greedent VMAX FST 272';
 // }
-
-export class FlaaffySR extends Flaaffy {
-  public set = 'FST';
-  public setNumber = '280';
-  public fullName: string = 'FlaaffySR FST';
-}
 
 export class PowerTabletSR extends PowerTablet {
   public setNumber = '281';

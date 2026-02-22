@@ -13,8 +13,8 @@ import { SessionService } from './shared/session/session.service';
 import { SocketService } from './api/socket.service';
 import { TranslateService } from '@ngx-translate/core';
 import { environment } from '../environments/environment';
-import { MatDialog } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { ReconnectionDialogService } from './shared/services/reconnection-dialog.service';
 
 @UntilDestroy()

@@ -3,12 +3,12 @@ import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameError, GameMessage, PlayerType, StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_HAS_SPECIAL_CONDITION, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_HAS_SPECIAL_CONDITION, DRAW_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Porygon2 extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -52,7 +52,7 @@ export class Porygon2 extends PokemonCard {
       player.marker.removeMarker(this.BACKUP_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.marker.hasMarker(this.BACKUP_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);

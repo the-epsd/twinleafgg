@@ -36,20 +36,19 @@ export class SkySealStone extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Add ability to card if attached to a V
-    if (effect instanceof CheckPokemonPowersEffect
-      && !effect.powers.find(p => p.name === this.powers[0].name)) {
+    if (effect instanceof CheckPokemonPowersEffect && !effect.powers.find(p => p.name === this.powers[0].name)) {
       // Find the PokemonCardList that contains the target PokemonCard
       const cardList = StateUtils.findCardList(state, effect.target);
       if (cardList instanceof PokemonCardList && cardList.tools.includes(this)) {
         const hasValidCard = effect.target.tags.some(tag =>
           tag === CardTag.POKEMON_V ||
           tag === CardTag.POKEMON_VSTAR ||
-          tag === CardTag.POKEMON_VMAX
+          tag === CardTag.POKEMON_VMAX ||
+          tag === CardTag.POKEMON_VUNION
         );
         if (!hasValidCard) {
           return state;
         }
-
         effect.powers.push(this.powers[0]);
       }
       return state;

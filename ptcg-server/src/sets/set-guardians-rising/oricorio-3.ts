@@ -6,9 +6,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, ConfirmPrompt, GameMessage, ChooseCardsPrompt, Card, ShowCardsPrompt, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Oricorio3 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -17,7 +16,7 @@ export class Oricorio3 extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public powers = [  {
+  public powers = [{
     name: 'Vital Dance',
     powerType: PowerType.ABILITY,
     text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may search your deck for up to 2 basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.'
@@ -50,14 +49,7 @@ export class Oricorio3 extends PokemonCard {
       }
 
       // Check if ability is blocked
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 

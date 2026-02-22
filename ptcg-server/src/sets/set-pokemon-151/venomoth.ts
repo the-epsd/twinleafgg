@@ -2,9 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Venomoth extends PokemonCard {
 
@@ -39,13 +40,12 @@ export class Venomoth extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       opponent.active.specialConditions.push(SpecialCondition.CONFUSED);
       opponent.marker.addMarker(this.PERPLEXING_POWDER_MARKER, this);
     }
-
 
     if (effect instanceof PlayItemEffect) {
       const player = effect.player;

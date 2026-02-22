@@ -4,7 +4,8 @@ import { ChooseCardsPrompt, CoinFlipPrompt, EnergyCard, GameError, GameMessage, 
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Revavroom extends PokemonCard {
   public regulationMark = 'G';
@@ -51,7 +52,7 @@ export class Revavroom extends PokemonCard {
       player.marker.removeMarker(this.RUMBLING_ENGINE_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.hand.cards.length >= 7) {
@@ -101,7 +102,7 @@ export class Revavroom extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, [

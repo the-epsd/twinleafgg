@@ -7,9 +7,8 @@ import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 // UPR Dawn Wings Necrozma-GX 63 (https://limitlesstcg.com/cards/UPR/63)
 export class DawnWingsNecrozmaGX extends PokemonCard {
@@ -54,7 +53,6 @@ export class DawnWingsNecrozmaGX extends PokemonCard {
   public readonly ECLIPSE_MARKER = 'ECLIPSE_MARKER';
   public readonly CLEAR_ECLIPSE_MARKER = 'CLEAR_ECLIPSE_MARKER';
 
-
   public set: string = 'UPR';
 
   public setNumber = '63';
@@ -71,7 +69,7 @@ export class DawnWingsNecrozmaGX extends PokemonCard {
       player.marker.removeMarker(this.INVASION_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       let bench: PokemonCardList | undefined;
@@ -95,13 +93,13 @@ export class DawnWingsNecrozmaGX extends PokemonCard {
     }
 
     // Dark Flash
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.ignoreResistance = true;
       return state;
     }
 
     // Moon's Eclipse-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

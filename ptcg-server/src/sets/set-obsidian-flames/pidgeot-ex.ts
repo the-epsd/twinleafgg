@@ -1,12 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, ConfirmPrompt, PowerType, ChooseCardsPrompt, ShuffleDeckPrompt, GameError, PlayerType } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../game/store/prefabs/prefabs';
-
+import { DISCARD_A_STADIUM_CARD_IN_PLAY, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Pidgeotex extends PokemonCard {
 
@@ -65,7 +64,7 @@ export class Pidgeotex extends PokemonCard {
       player.marker.removeMarker(this.QUICK_SEARCH_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.marker.hasMarker(this.QUICK_SEARCH_MARKER)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
@@ -99,8 +98,7 @@ export class Pidgeotex extends PokemonCard {
       });
     }
 
-
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard !== undefined) {
 

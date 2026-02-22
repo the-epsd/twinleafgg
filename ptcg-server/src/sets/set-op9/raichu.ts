@@ -1,10 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PokemonCardList, CoinFlipPrompt } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
-
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Raichu extends PokemonCard {
 
@@ -20,18 +20,18 @@ export class Raichu extends PokemonCard {
 
   public resistance = [{ type: CardType.METAL, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Slam',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
       text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
     },
     {
       name: 'High Voltage',
-      cost: [ CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING ],
+      cost: [CardType.LIGHTNING, CardType.LIGHTNING, CardType.LIGHTNING],
       damage: 60,
       text: 'If Raichu evolved from Pikachu this turn, this attack\'s base ' +
         'damage is 100 instead of 60.'
@@ -46,7 +46,7 @@ export class Raichu extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       return store.prompt(state, [
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP),
@@ -58,7 +58,7 @@ export class Raichu extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const cardList = StateUtils.findCardList(state, this);
       if (!(cardList instanceof PokemonCardList)) {
         return state;

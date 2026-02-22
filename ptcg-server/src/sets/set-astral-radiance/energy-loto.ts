@@ -47,32 +47,21 @@ export class EnergyLoto extends TrainerCard {
         { allowCancel: false, min: 0, max: 1 }
       ), chosenCards => {
 
-        if (chosenCards.length == 0) {
-          // No Energy chosen, shuffle all back
-          temp.cards.forEach(card => {
-            temp.moveCardTo(card, player.deck);
-          });
-          CLEAN_UP_SUPPORTER(effect, player);
-        }
-
-        if (chosenCards.length > 0) {
-          // Move chosen Energy to hand
+        if (chosenCards && chosenCards.length > 0) {
+          // Move chosen Energy to hand and reveal it to opponent
           const energyCard = chosenCards[0];
           temp.moveCardTo(energyCard, player.hand);
-          CLEAN_UP_SUPPORTER(effect, player);
-          temp.moveTo(player.deck);
 
-          chosenCards.forEach((card, index) => {
-            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
-          });
+          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: energyCard.name });
 
-          if (chosenCards.length > 0) {
-            state = store.prompt(state, new ShowCardsPrompt(
-              opponent.id,
-              GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-              chosenCards), () => state);
-          }
+          state = store.prompt(state, new ShowCardsPrompt(
+            opponent.id,
+            GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+            chosenCards), () => state);
         }
+
+        // Shuffle remaining cards back into deck
+        temp.moveTo(player.deck);
         CLEAN_UP_SUPPORTER(effect, player);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

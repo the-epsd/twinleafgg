@@ -1,6 +1,7 @@
 import { Card, CardType, ChooseCardsPrompt, GameMessage, PokemonCard, Stage, State, StoreLike, SuperType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Crocalor extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -27,7 +28,7 @@ export class Crocalor extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let card: Card;
@@ -40,7 +41,7 @@ export class Crocalor extends PokemonCard {
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         card = selected[0];
-  
+
         player.active.moveCardTo(card, player.hand);
         return state;
       });

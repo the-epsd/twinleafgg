@@ -12,6 +12,7 @@ import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { CardList } from '../../game/store/state/card-list';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* useSmoothOver(next: Function, store: StoreLike, state: State,
   self: Magcargo, effect: PowerEffect): IterableIterator<State> {
@@ -79,7 +80,7 @@ export class Magcargo extends PokemonCard {
   public setNumber: string = '24';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const generator = useSmoothOver(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

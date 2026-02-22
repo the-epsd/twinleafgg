@@ -1,18 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag, EnergyType, BoardEffect } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, StateUtils, GameError, GameMessage,
-  PlayerType, SlotType,
-  AttachEnergyPrompt,
-  Card,
-  EnergyCard,
-  ShuffleDeckPrompt,
-  ChooseCardsPrompt
-} from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, SlotType, AttachEnergyPrompt, Card, EnergyCard, ShuffleDeckPrompt, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect, EvolveEffect } from '../../game/store/effects/game-effects';
+import { EvolveEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class MetagrossGX extends PokemonCard {
 
@@ -78,7 +70,7 @@ export class MetagrossGX extends PokemonCard {
     }
 
     // Geotech System
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
@@ -120,7 +112,7 @@ export class MetagrossGX extends PokemonCard {
     }
 
     // Giga Hammer
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       // Check marker
       if (effect.player.marker.hasMarker(this.HAMMER_MARKER_1, this)) {
         console.log('attack blocked');
@@ -131,7 +123,7 @@ export class MetagrossGX extends PokemonCard {
     }
 
     // Algorithm-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       // Check if player has used GX attack
       BLOCK_IF_GX_ATTACK_USED(player);

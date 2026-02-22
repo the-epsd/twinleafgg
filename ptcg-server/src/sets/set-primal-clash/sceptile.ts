@@ -5,7 +5,8 @@ import { StoreLike, State, GameMessage, GameError, AttachEnergyPrompt, PlayerTyp
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { HealEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Sceptile extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -43,7 +44,7 @@ export class Sceptile extends PokemonCard {
       player.marker.removeMarker(this.NURTURE_AND_HEAL_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.marker.hasMarker(this.NURTURE_AND_HEAL_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);

@@ -1,11 +1,10 @@
 import { ConfirmPrompt, GameMessage, PlayerType, PowerType, ShuffleDeckPrompt, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import {PutDamageEffect} from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import {COIN_FLIP_PROMPT, WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
+import { COIN_FLIP_PROMPT, IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Giratina extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -41,14 +40,7 @@ export class Giratina extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.POKEPOWER,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
         return state;
       }
 
@@ -78,7 +70,7 @@ export class Giratina extends PokemonCard {
       });
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
 
@@ -86,10 +78,10 @@ export class Giratina extends PokemonCard {
       COIN_FLIP_PROMPT(store, state, player, result => { if (result) heads++; });
       COIN_FLIP_PROMPT(store, state, player, result => { if (result) heads++; });
 
-      if (heads > 0){
+      if (heads > 0) {
         opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-          if (card !== opponent.active){
-            const damage = new PutDamageEffect(effect, (10 * heads) );
+          if (card !== opponent.active) {
+            const damage = new PutDamageEffect(effect, (10 * heads));
             damage.target = card;
             store.reduceEffect(state, damage);
           }

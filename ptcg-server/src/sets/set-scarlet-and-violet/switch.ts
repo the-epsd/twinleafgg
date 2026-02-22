@@ -35,7 +35,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
-  player.switchPokemon(targets[0]);
+  player.switchPokemon(targets[0], store, state);
   player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
   return state;

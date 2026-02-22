@@ -5,7 +5,7 @@ import { EnergyCard } from '../card/energy-card';
 import { PokemonCard } from '../card/pokemon-card';
 import { CheckHpEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
-import { KnockOutEffect } from '../effects/game-effects';
+import { KnockOutEffect, MovedToActiveEffect } from '../effects/game-effects';
 import { TAKE_SPECIFIC_PRIZES, MOVE_CARDS } from '../prefabs/prefabs';
 import { ChoosePokemonPrompt } from '../prompts/choose-pokemon-prompt';
 import { ChoosePrizePrompt } from '../prompts/choose-prize-prompt';
@@ -467,17 +467,19 @@ export function* executeCheckState(next: Function, store: StoreLike, state: Stat
         throw new GameError(GameMessage.ILLEGAL_ACTION);
       }
       const temp = player.active;
-      const playerActive = player.active.getPokemonCard();
       player.active = player.bench[benchIndex];
-      if (playerActive) {
+      player.bench[benchIndex] = temp;
+      const newActivePokemon = player.active.getPokemonCard();
+      if (newActivePokemon) {
         // Add to new tracking system
-        if (!player.movedToActiveThisTurn.includes(playerActive.id)) {
-          player.movedToActiveThisTurn.push(playerActive.id);
+        if (!player.movedToActiveThisTurn.includes(newActivePokemon.id)) {
+          player.movedToActiveThisTurn.push(newActivePokemon.id);
         }
         // Keep existing boolean for backwards compatibility
-        playerActive.movedToActiveThisTurn = true;
+        newActivePokemon.movedToActiveThisTurn = true;
+        // Dispatch MovedToActiveEffect for cards that intercept it
+        store.reduceEffect(state, new MovedToActiveEffect(player, newActivePokemon));
       }
-      player.bench[benchIndex] = temp;
     });
 
     if (store.hasPrompts()) {

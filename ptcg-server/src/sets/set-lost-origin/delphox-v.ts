@@ -1,12 +1,13 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition, CardTag } from '../../game/store/card/card-types';
 import { State } from '../../game/store/state/state';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
 import { Card, ChooseEnergyPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { LostZoneCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class DelphoxV extends PokemonCard {
 
@@ -51,7 +52,7 @@ export class DelphoxV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -60,7 +61,7 @@ export class DelphoxV extends PokemonCard {
       active.addSpecialCondition(SpecialCondition.CONFUSED);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -78,7 +79,6 @@ export class DelphoxV extends PokemonCard {
         const lostZoneEnergy = new LostZoneCardsEffect(effect, cards);
         lostZoneEnergy.target = player.active;
         store.reduceEffect(state, lostZoneEnergy);
-
 
         const hasBenched = opponent.bench.some(b => b.cards.length > 0);
         if (!hasBenched) {

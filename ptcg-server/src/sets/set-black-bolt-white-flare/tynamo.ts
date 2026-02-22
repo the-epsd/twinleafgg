@@ -1,7 +1,8 @@
 import { PokemonCard, Stage, CardType, StoreLike, State } from '../../game';
 import { HealTargetEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Tynamo extends PokemonCard {
 
@@ -26,7 +27,7 @@ export class Tynamo extends PokemonCard {
   public fullName: string = 'Tynamo SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const healEffect = new HealTargetEffect(effect, 10);
       healEffect.target = effect.player.active;
       store.reduceEffect(state, healEffect);

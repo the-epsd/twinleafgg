@@ -138,35 +138,22 @@ export class PokemonCardList extends CardList {
     return true;
   }
 
-  clearAttackEffects(): void {
-    this.marker.markers = [];
+  /**
+   * Surgically remove only attack-sourced effects from this Pokemon.
+   * Unlike `clearEffects()`, this preserves special conditions, ability markers,
+   * and other non-attack state.
+   */
+  removeAttackEffects(): void {
+    this.marker.removeAttackEffects();
+    this.cannotAttackNextTurn = false;
+    this.cannotAttackNextTurnPending = false;
+    this.cannotUseAttacksNextTurn = [];
+    this.cannotUseAttacksNextTurnPending = [];
+    this.damageReductionNextTurn = 0;
   }
 
   clearEffects(): void {
-
-    this.marker.removeMarker(PokemonCardList.ATTACK_USED_MARKER);
-    this.marker.removeMarker(PokemonCardList.ATTACK_USED_2_MARKER);
-    this.marker.removeMarker(PokemonCardList.CLEAR_KNOCKOUT_MARKER);
-    this.marker.removeMarker(PokemonCardList.NEXT_TURN_MORE_DAMAGE_MARKER);
-    this.marker.removeMarker(PokemonCardList.NEXT_TURN_MORE_DAMAGE_MARKER_2);
-    this.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER);
-    this.marker.removeMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER);
-    this.marker.removeMarker(PokemonCardList.PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER);
-    this.marker.removeMarker(PokemonCardList.CLEAR_PREVENT_DAMAGE_DURING_OPPONENTS_NEXT_TURN_MARKER);
-    this.marker.removeMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER);
-    this.marker.removeMarker(PokemonCardList.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER);
-    this.marker.removeMarker(PokemonCardList.DEFENDING_POKEMON_CANNOT_ATTACK_MARKER);
-    this.marker.removeMarker(PokemonCardList.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER);
-    this.marker.removeMarker(PokemonCardList.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER);
-    this.marker.removeMarker(PokemonCardList.PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER);
-    this.marker.removeMarker(PokemonCardList.CLEAR_PREVENT_DAMAGE_FROM_BASIC_POKEMON_MARKER);
-    this.marker.removeMarker(PokemonCardList.PREVENT_ALL_DAMAGE_BY_POKEMON_WITH_ABILITIES_MARKER);
-    this.marker.removeMarker(PokemonCardList.PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN);
-    this.marker.removeMarker(PokemonCardList.CLEAR_PREVENT_OPPONENTS_ACTIVE_FROM_ATTACKING_DURING_OPPONENTS_NEXT_TURN);
-    this.marker.removeMarker(PokemonCardList.OPPONENT_CANNOT_PLAY_ITEM_CARDS_MARKER);
-    this.marker.removeMarker(PokemonCardList.PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER);
-    this.marker.removeMarker(PokemonCardList.CLEAR_PREVENT_ALL_DAMAGE_DONE_BY_OPPONENTS_BASIC_POKEMON_MARKER);
-
+    // Nuclear option: wipe all markers (used by evolution/KO)
     this.marker.markers = [];
 
     this.triggerEvolutionAnimation = false;

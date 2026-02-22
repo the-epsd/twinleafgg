@@ -4,7 +4,8 @@ import { PowerType, StoreLike, State, GameError, GameMessage, PlayerType } from 
 import { GameWinner } from '../../game';
 import { endGame } from '../../game/store/effect-reducers/check-effect';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class UnownDAMAGE extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -32,7 +33,7 @@ export class UnownDAMAGE extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // DAMAGE
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const owner = state.activePlayer;
 

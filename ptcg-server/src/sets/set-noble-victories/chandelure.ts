@@ -3,7 +3,7 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
@@ -15,8 +15,7 @@ import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effe
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
-
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Chandelure extends PokemonCard {
 
@@ -30,7 +29,7 @@ export class Chandelure extends PokemonCard {
 
   public weakness = [{ type: CardType.DARK }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Cursed Shadow',
@@ -43,7 +42,7 @@ export class Chandelure extends PokemonCard {
 
   public attacks = [{
     name: 'Eerie Glow',
-    cost: [ CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS ],
+    cost: [CardType.PSYCHIC, CardType.PSYCHIC, CardType.COLORLESS],
     damage: 50,
     text: 'The Defending Pokemon is now Burned and Confused.'
   }];
@@ -66,7 +65,7 @@ export class Chandelure extends PokemonCard {
       player.marker.removeMarker(this.CURSED_SHADOW_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -97,7 +96,7 @@ export class Chandelure extends PokemonCard {
         effect.player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         damage,
         maxAllowedDamage,
         { allowCancel: true }
@@ -115,7 +114,7 @@ export class Chandelure extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [
         SpecialCondition.BURNED,
         SpecialCondition.CONFUSED

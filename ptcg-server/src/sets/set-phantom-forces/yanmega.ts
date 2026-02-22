@@ -6,8 +6,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED, DRAW_CARDS, SHUFFLE_CARDS_INTO_DECK } from '../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, DRAW_CARDS, SHUFFLE_CARDS_INTO_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Yanmega extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -57,9 +57,8 @@ export class Yanmega extends PokemonCard {
     }
 
     // Attack 2: Surprise Strike
-    // Ref: set-team-up/zapdos.ts (Thunderous Assault)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      if (this.movedToActiveThisTurn) {
+      if (MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)) {
         effect.damage += 50;
       }
     }

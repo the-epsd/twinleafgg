@@ -3,7 +3,8 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Horsea extends PokemonCard {
 
@@ -38,7 +39,7 @@ export class Horsea extends PokemonCard {
   public fullName: string = 'Horsea DRM';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
@@ -52,7 +53,7 @@ export class Horsea extends PokemonCard {
       });
       effect.damage += energyCount * 10;
     }
-    
+
     return state;
   }
 

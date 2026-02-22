@@ -6,7 +6,6 @@ import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-researc
 import { ShayminV as ShayminVBRS13 } from '../set-brilliant-stars/shaymin-v';
 import { LumineonV as LumineonVBRS40 } from '../set-brilliant-stars/lumineon-v';
 import { RaichuV as RaichuVBRS45 } from '../set-brilliant-stars/raichu-v';
-import { WhimsicottV as WhimsicottVBRS64 } from '../set-brilliant-stars/whimsicott-v';
 import { ZamazentaV as ZamazentaVCRZ98 } from '../set-crown-zenith/zamazenta-v';
 import { ArceusV as ArceusVBRS122 } from '../set-brilliant-stars/arceus-v';
 import { CherensCare as CherensCareBRS134 } from '../set-brilliant-stars/cherens-care';
@@ -15,7 +14,6 @@ import { Kindler as KindlerBRS143 } from '../set-brilliant-stars/kindler';
 import { MarniesPride as MarniesPrideBRS145 } from '../set-brilliant-stars/marnies-pride';
 import { RoseannesBackup as RoseannesBackupBRS148 } from '../set-brilliant-stars/roseannes-backup';
 import { ShayminVSTAR as ShayminVSTARBRS14 } from '../set-brilliant-stars/shaymin-vstar';
-import { WhimsicottVSTAR as WhimsicottVSTARBRS65 } from '../set-brilliant-stars/whimsicott-vstar';
 import { ArceusVSTAR as ArceusVSTARBRS123 } from '../set-brilliant-stars/arceus-vstar';
 import { GalarianArticunoV } from '../set-chilling-reign/galarian-articuno-v';
 import { GalarianZapdosV } from '../set-chilling-reign/galarian-zapdos-v';
@@ -53,6 +51,15 @@ import { RapidStrikeUrshifuVMAX as RapidStrikeUrshifuVMAXBST88 } from '../set-ba
 import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
 import { WhimsicottV } from './whimsicott-v';
 import { WhimsicottVSTAR } from './whimsicott-vstar';
+import { Burmy } from '../set-fates-collide/burmy';
+import { Karrablast } from '../set-plasma-blast/karrablast';
+import { FreshWaterSet } from '../set-primal-clash/fresh-water-set';
+import { CharizardV } from './charizard-v';
+import { GranbullV } from './granbull-v';
+import { HonchkrowV } from './honchkrow-v';
+import { FlygonV } from './flygon-v';
+import { Barry } from './barry';
+import { CharizardVstar } from './charizard-vstar';
 
 export class UltraBallHR extends UltraBall {
   public set = 'BRS';
@@ -134,12 +141,6 @@ export class RaichuV2BRS extends RaichuVBRS45 {
   public set = 'BRS';
 }
 
-export class WhimsicottV2BRS extends WhimsicottVBRS64 {
-  public setNumber = '160';
-  public fullName: string = 'Whimsicott V2 BRS';
-  public set = 'BRS';
-}
-
 export class ZamazentaV2BRS extends ZamazentaVCRZ98 {
   public setNumber = '163';
   public fullName: string = 'Zamazenta V2 BRS';
@@ -191,12 +192,6 @@ export class RoseannesBackup2BRS extends RoseannesBackupBRS148 {
 export class ShayminVSTAR2BRS extends ShayminVSTARBRS14 {
   public setNumber = '173';
   public fullName: string = 'Shaymin VSTAR2 BRS';
-  public set = 'BRS';
-}
-
-export class WhimsicottVSTAR2BRS extends WhimsicottVSTARBRS65 {
-  public setNumber = '175';
-  public fullName: string = 'Whimsicott VSTAR2 BRS';
   public set = 'BRS';
 }
 
@@ -432,4 +427,70 @@ export class RapidStrikeUrshifuVMAX2BRS extends RapidStrikeUrshifuVMAXBST88 {
   public setNumber = 'TG30';
   public fullName: string = 'Rapid Strike Urshifu VMAX2 BRS';
   public set = 'BRS';
+}
+
+export class BurmyBRS extends Burmy {
+  public set: string = 'BRS';
+  public setNumber: string = '9';
+  public fullName: string = 'Burmy BRS 9';
+}
+
+export class KarrablastBRS extends Karrablast {
+  public set: string = 'BRS';
+  public setNumber: string = '15';
+  public fullName: string = 'Karrablast BRS 15';
+}
+
+export class FreshWaterSetBRS extends FreshWaterSet {
+  public set: string = 'BRS';
+  public setNumber: string = '139';
+  public fullName: string = 'Fresh Water Set BRS 139';
+}
+
+export class CharizardV2 extends CharizardV {
+  public set: string = 'BRS';
+  public setNumber: string = '153';
+  public fullName: string = 'Charizard V BRS 153';
+}
+
+export class CharizardV3 extends CharizardV {
+  public set: string = 'BRS';
+  public setNumber: string = '154';
+  public fullName: string = 'Charizard V BRS 154';
+}
+
+export class GranbullV2 extends GranbullV {
+  public set: string = 'BRS';
+  public setNumber: string = '159';
+  public fullName: string = 'Granbull V BRS 159';
+}
+
+export class HonchkrowV2 extends HonchkrowV {
+  public set: string = 'BRS';
+  public setNumber: string = '161';
+  public fullName: string = 'Honchkrow V BRS 161';
+}
+
+export class HonchkrowV3 extends HonchkrowV {
+  public set: string = 'BRS';
+  public setNumber: string = '162';
+  public fullName: string = 'Honchkrow V BRS 162';
+}
+
+export class FlygonV2 extends FlygonV {
+  public set: string = 'BRS';
+  public setNumber: string = '164';
+  public fullName: string = 'Flygon V BRS 164';
+}
+
+export class Barry2 extends Barry {
+  public set: string = 'BRS';
+  public setNumber: string = '167';
+  public fullName: string = 'Barry BRS 167';
+}
+
+export class CharizardVstar2 extends CharizardVstar {
+  public set: string = 'BRS';
+  public setNumber: string = '174';
+  public fullName: string = 'Charizard VSTAR BRS 174';
 }

@@ -3,7 +3,7 @@ import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-ty
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
@@ -11,8 +11,8 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { CardList } from '../../game/store/state/card-list';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import {AddSpecialConditionsEffect} from '../../game/store/effects/attack-effects';
-
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Musharna extends PokemonCard {
 
@@ -26,7 +26,7 @@ export class Musharna extends PokemonCard {
 
   public weakness = [{ type: CardType.PSYCHIC }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public powers = [{
     name: 'Forewarn',
@@ -39,7 +39,7 @@ export class Musharna extends PokemonCard {
 
   public attacks = [{
     name: 'Fluffy Dream',
-    cost: [ CardType.PSYCHIC, CardType.PSYCHIC ],
+    cost: [CardType.PSYCHIC, CardType.PSYCHIC],
     damage: 40,
     text: 'This Pokemon is now Asleep.'
   }];
@@ -63,14 +63,14 @@ export class Musharna extends PokemonCard {
       player.marker.removeMarker(this.FOREWARN_MARKER, this);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.ASLEEP]);
       specialConditionEffect.target = player.active;
       store.reduceEffect(state, specialConditionEffect);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {
@@ -89,7 +89,7 @@ export class Musharna extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
-        { },
+        {},
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         player.deck.moveCardsTo(selected, player.hand);

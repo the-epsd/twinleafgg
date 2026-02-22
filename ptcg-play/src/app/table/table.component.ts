@@ -14,7 +14,7 @@ import { SessionService } from '../shared/session/session.service';
 import { CardsBaseService } from '../shared/cards/cards-base.service';
 import { BoardInteractionService } from '../shared/services/board-interaction.service';
 import { GameOverPrompt } from './prompt/prompt-game-over/game-over.prompt';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { SettingsService } from './table-sidebar/settings-dialog/settings.service';
 import { Board3dAccessService } from '../shared/services/board3d-access.service';
 

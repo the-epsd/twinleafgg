@@ -10,7 +10,7 @@ import { AlertService } from '../shared/alert/alert.service';
 import { ProfileService } from '../api/services/profile.service';
 import { SessionService } from '../shared/session/session.service';
 import { ProfilePopupService } from './profile-popup.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ChangeCardImagesPopupComponent } from './change-card-images-popup/change-card-images-popup.component';
 
 @UntilDestroy()

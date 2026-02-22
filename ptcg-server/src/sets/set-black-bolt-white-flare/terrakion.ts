@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, State, StoreLike } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Terrakion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -31,7 +32,7 @@ export class Terrakion extends PokemonCard {
   public fullName: string = 'Terrakion SV11W';
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {

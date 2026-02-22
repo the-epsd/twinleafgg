@@ -2,13 +2,14 @@ import { GameError, PlayerType, PokemonCard, PowerType } from '../../game';
 import { GameMessage } from '../../game/game-message';
 import { BoardEffect, CardType, Stage } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../game/store/state/card-list';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Pidgeotto extends PokemonCard {
 
@@ -61,7 +62,7 @@ export class Pidgeotto extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.deck.cards.length === 0) {

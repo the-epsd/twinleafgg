@@ -1,8 +1,8 @@
 import { PokemonCard, Stage, PowerType, CardType, ChooseCardsPrompt, EnergyCard, EnergyType, GameError, GameMessage, State, StoreLike, SuperType, CardTag } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class VolcanionEX extends PokemonCard {
   public cardType = R;
@@ -42,7 +42,7 @@ export class VolcanionEX extends PokemonCard {
       player.active.cannotAttackNextTurnPending = true;
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.hand.cards.filter(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Fire Energy').length === 0) {

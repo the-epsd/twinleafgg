@@ -1,8 +1,8 @@
 import { CardTag, CardType, PokemonCard, PowerType, Stage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { AbstractAttackEffect, AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class KeldeoGX extends PokemonCard {
 
@@ -66,7 +66,7 @@ export class KeldeoGX extends PokemonCard {
     }
 
     // Sonic Edge
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -85,7 +85,7 @@ export class KeldeoGX extends PokemonCard {
     }
 
     // Resolute Blade-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
       BLOCK_IF_GX_ATTACK_USED(player);

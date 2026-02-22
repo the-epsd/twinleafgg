@@ -17,7 +17,7 @@ export class LegacyEnergy extends EnergyCard {
 
   public set: string = 'TWM';
 
-  public regulationMark = 'G';
+  public regulationMark = 'H';
 
   public cardImage: string = 'assets/cardback.png';
 

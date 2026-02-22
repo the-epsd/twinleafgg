@@ -3,7 +3,8 @@ import { StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Mewtwo extends PokemonCard {
 
@@ -44,7 +45,7 @@ export class Mewtwo extends PokemonCard {
 
   reduceEffect(store: StoreLike, state: State, effect: Effect) {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
 

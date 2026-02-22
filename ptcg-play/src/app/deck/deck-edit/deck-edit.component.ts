@@ -17,7 +17,7 @@ import { Card, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerCard, Trai
 import { cardReplacements, exportReplacements, setCodeReplacements } from './card-replacements';
 import { SleeveService } from 'src/app/api/services/sleeve.service';
 import { SleeveInfo } from 'src/app/api/interfaces/sleeve.interface';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { SleeveSelectPopupComponent } from '../sleeve-select-popup/sleeve-select-popup.component';
 import { ArchetypeDetectionService } from '../archetype-detection/archetype-detection.service';
 import { ArchetypeUtils } from '../deck-archetype-service/archetype.utils';

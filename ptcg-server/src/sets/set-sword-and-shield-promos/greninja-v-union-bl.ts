@@ -2,10 +2,11 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { GameError, GameMessage, PokemonCardList, PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { GreninjaVUNIONTopLeft } from './greninja-v-union-tl';
 import { GreninjaVUNIONTopRight } from './greninja-v-union-tr';
 import { GreninjaVUNIONBottomRight } from './greninja-v-union-br';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class GreninjaVUNIONBottomLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
@@ -77,7 +78,7 @@ export class GreninjaVUNIONBottomLeft extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // assemblin the v-union
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
 

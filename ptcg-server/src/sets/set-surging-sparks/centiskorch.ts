@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import {StoreLike,State, PlayerType} from '../../game';
-import {Effect} from '../../game/store/effects/effect';
-import {AttackEffect} from '../../game/store/effects/game-effects';
-import {PutDamageEffect} from '../../game/store/effects/attack-effects';
+import { StoreLike, State, PlayerType } from '../../game';
+import { Effect } from '../../game/store/effects/effect';
+
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Centiskorch extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -11,7 +12,7 @@ export class Centiskorch extends PokemonCard {
   public cardType: CardType = R;
   public hp: number = 130;
   public weakness = [{ type: W }];
-  public retreat = [ C, C ];
+  public retreat = [C, C];
 
   public attacks = [
     { name: 'Billowing Heat Wave', cost: [R], damage: 130, text: 'This attack also does 30 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)' },
@@ -28,11 +29,11 @@ export class Centiskorch extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Billowing Heat Wave
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList !== player.active){
+        if (cardList !== player.active) {
           const damageEffect = new PutDamageEffect(effect, 30);
           damageEffect.target = cardList;
           store.reduceEffect(state, damageEffect);
@@ -41,5 +42,5 @@ export class Centiskorch extends PokemonCard {
     }
     return state;
   }
-  
+
 }

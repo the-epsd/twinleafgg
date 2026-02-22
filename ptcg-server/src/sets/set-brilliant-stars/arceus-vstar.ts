@@ -1,12 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
-import {
-  StoreLike, State,
-  PlayerType, SlotType, GameMessage, ShuffleDeckPrompt, PowerType, GameError, AttachEnergyPrompt, StateUtils, CardTarget
-} from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, PlayerType, SlotType, GameMessage, ShuffleDeckPrompt, PowerType, GameError, AttachEnergyPrompt, StateUtils, CardTarget } from '../../game';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { ABILITY_USED, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* useTrinityNova(next: Function, store: StoreLike, state: State,
   effect: AttackEffect): IterableIterator<State> {
@@ -99,7 +96,7 @@ export class ArceusVSTAR extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.usedVSTAR) {
@@ -112,7 +109,7 @@ export class ArceusVSTAR extends PokemonCard {
       SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 0, max: 2, allowCancel: false }, this.powers[0]);
     }
 
-    //     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    //     if (WAS_ATTACK_USED(effect, 0, this)) {
     //       const player = effect.player;
     //       state = store.prompt(state, new AttachEnergyPrompt(
     //         player.id,
@@ -159,7 +156,7 @@ export class ArceusVSTAR extends PokemonCard {
     //   }
     // }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useTrinityNova(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

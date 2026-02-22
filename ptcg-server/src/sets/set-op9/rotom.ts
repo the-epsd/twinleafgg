@@ -1,14 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import {
-  StoreLike, State, ShowCardsPrompt, StateUtils, PowerType, GameError,
-  GameMessage, PokemonCardList, PlayerType, TrainerCard
-} from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, ShowCardsPrompt, StateUtils, PowerType, GameError, GameMessage, PokemonCardList, PlayerType, TrainerCard } from '../../game';
+
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
-
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Rotom extends PokemonCard {
 
@@ -54,7 +51,7 @@ export class Rotom extends PokemonCard {
   public readonly CLEAR_TYPE_SHIFT_MARKER = 'CLEAR_TYPE_SHIFT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       if (!(cardList instanceof PokemonCardList)) {
@@ -68,7 +65,7 @@ export class Rotom extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       if (opponent.hand.cards.length === 0) {

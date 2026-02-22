@@ -3,8 +3,8 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Mightyena extends PokemonCard {
 
@@ -52,14 +52,7 @@ export class Mightyena extends PokemonCard {
     if (effect instanceof CheckAttackCostEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
 
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 
@@ -86,7 +79,7 @@ export class Mightyena extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const dealDamage = new DealDamageEffect(effect, 50);

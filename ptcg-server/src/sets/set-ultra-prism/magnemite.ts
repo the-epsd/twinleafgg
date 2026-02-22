@@ -7,6 +7,7 @@ import { PowerEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Magnemite extends PokemonCard {
 
@@ -17,10 +18,10 @@ export class Magnemite extends PokemonCard {
   public hp: number = 60;
 
   public weakness = [{ type: CardType.FIRE }];
-  
+
   public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
 
-  public retreat = [ CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS];
 
   public powers = [{
     name: 'Solid Unit',
@@ -30,7 +31,7 @@ export class Magnemite extends PokemonCard {
 
   public attacks = [{
     name: 'Ram',
-    cost: [ CardType.METAL, CardType.COLORLESS ],
+    cost: [CardType.METAL, CardType.COLORLESS],
     damage: 20,
     text: ''
   }];
@@ -57,14 +58,7 @@ export class Magnemite extends PokemonCard {
       }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 

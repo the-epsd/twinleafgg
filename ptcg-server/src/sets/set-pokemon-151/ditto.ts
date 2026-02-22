@@ -1,9 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { StoreLike, State, GameError, GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Ditto extends PokemonCard {
 
@@ -45,7 +46,7 @@ export class Ditto extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       // Get current turn
       const turn = state.turn;
@@ -60,7 +61,6 @@ export class Ditto extends PokemonCard {
           blocked.push(index);
         }
       });
-
 
       // Check if it is player's first turn
       if (turn > 2) {

@@ -8,6 +8,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class WalkingWake extends PokemonCard {
 
@@ -52,7 +53,7 @@ export class WalkingWake extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const healEffect = new HealEffect(player, effect.player.active, 20);
@@ -61,7 +62,7 @@ export class WalkingWake extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const generator = attack(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

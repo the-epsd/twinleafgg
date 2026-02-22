@@ -2,15 +2,12 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import {
-  StoreLike, State,
-  GameError,
-  GameMessage
-} from '../../game';
+import { StoreLike, State, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class OriginFormeDialgaVSTAR extends PokemonCard {
 
@@ -73,7 +70,7 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
       effect.player.marker.addMarker(this.STAR_CHRONOS_MARKER_2, this);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
@@ -88,7 +85,7 @@ export class OriginFormeDialgaVSTAR extends PokemonCard {
       effect.damage += energyCount * 40;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       if (player.usedVSTAR === true) {

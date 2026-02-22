@@ -2,18 +2,19 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { GameMessage, StateUtils } from '../../game';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Jynx extends PokemonCard {
 
   public name = 'Jynx';
-  
+
   public set = 'BS';
-  
+
   public fullName = 'Jynx BS';
 
   public stage = Stage.BASIC;
@@ -46,22 +47,22 @@ export class Jynx extends PokemonCard {
   ];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       return store.prompt(state, [
-        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP), 
+        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
         new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)
       ], (results) => {
         const heads = results.filter(r => r).length;
         effect.damage = heads * 10;
       });
     }
-    
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const damage = opponent.active.damage + 20;
       effect.damage = damage;
     }
-    
+
     return state;
   }
 }

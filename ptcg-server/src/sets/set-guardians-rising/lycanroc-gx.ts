@@ -1,15 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, StateUtils, GameMessage,
-  PlayerType, SlotType,
-  ChoosePokemonPrompt,
-  ConfirmPrompt
-} from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, ConfirmPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // GRI Lycanroc-GX 74 (https://limitlesstcg.com/cards/GRI/74)
 export class LycanrocGX extends PokemonCard {
@@ -100,7 +95,7 @@ export class LycanrocGX extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       // Check if player has used GX attack

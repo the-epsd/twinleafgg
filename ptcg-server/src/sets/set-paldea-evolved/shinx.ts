@@ -2,10 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, BoardEffect } from '../../game/store/card/card-types';
 import { GameError, GameMessage, PlayerType, PowerType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { SWITCH_OUT_OPPONENT_ACTIVE_POKEMON } from '../../game/store/prefabs/prefabs';
+import { SWITCH_OUT_OPPONENT_ACTIVE_POKEMON, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Shinx extends PokemonCard {
   public stage = Stage.BASIC;
@@ -49,13 +49,12 @@ export class Shinx extends PokemonCard {
       player.marker.removeMarker(this.BIG_ROAR_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.active.cards[0] !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-
 
       if (player.marker.hasMarker(this.BIG_ROAR_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);

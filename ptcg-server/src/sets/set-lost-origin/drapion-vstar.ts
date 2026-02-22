@@ -4,7 +4,8 @@ import { Stage, CardType, SpecialCondition, BoardEffect } from '../../game/store
 import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class DrapionVSTAR extends PokemonCard {
 
@@ -54,7 +55,7 @@ export class DrapionVSTAR extends PokemonCard {
   // Implement ability
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -74,7 +75,7 @@ export class DrapionVSTAR extends PokemonCard {
       opponent.active.poisonDamage = 60;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.damage -= effect.player.active.damage;
       return state;
     }

@@ -3,8 +3,8 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Buzzwole extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -54,7 +54,7 @@ export class Buzzwole extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const target = player.active;
       const healEffect = new HealEffect(player, target, 30);

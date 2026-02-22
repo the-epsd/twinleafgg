@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, CoinFlipPrompt, GameMessage, GameError, StateUtils } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
@@ -10,7 +10,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { ChooseEnergyPrompt } from '../../game/store/prompts/choose-energy-prompt';
 import { Card } from '../../game';
 import { PlayItemEffect, AttachPokemonToolEffect, PlayStadiumEffect } from '../../game/store/effects/play-card-effects';
-import { IS_POKEBODY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Houndoom extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -68,7 +68,7 @@ export class Houndoom extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, [
@@ -81,7 +81,7 @@ export class Houndoom extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);

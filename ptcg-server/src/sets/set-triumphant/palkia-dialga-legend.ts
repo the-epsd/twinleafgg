@@ -1,6 +1,7 @@
 import { PokemonCard, Stage, CardType, CardTag, CardList, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class PalkiaDialgaLEGEND extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -33,7 +34,7 @@ export class PalkiaDialgaLEGEND extends PokemonCard {
   public setNumber = '1';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const allPrizeCards = new CardList();

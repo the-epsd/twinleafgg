@@ -1,9 +1,8 @@
 import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, ChooseCardsPrompt, SuperType, TrainerType, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, ShuffleDeckPrompt, BoardEffect } from '../../game';
 import { PutDamageEffect, KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect, AttackEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 // LOT Alolan Ninetales-GX 132 (https://limitlesstcg.com/cards/LOT/132)
@@ -65,14 +64,7 @@ export class AlolanNinetalesGX extends PokemonCard {
       const player = effect.player;
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
       }
 
@@ -89,26 +81,26 @@ export class AlolanNinetalesGX extends PokemonCard {
               { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
               { min: 0, max: 2, allowCancel: false }
             )], selected => {
-            const cards = selected || [];
+              const cards = selected || [];
 
-            player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-              if (cardList.getPokemonCard() === this) {
-                cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-              }
+              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+                if (cardList.getPokemonCard() === this) {
+                  cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+                }
+              });
+
+              player.deck.moveCardsTo(cards, player.hand);
+
+              return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+                player.deck.applyOrder(order);
+              });
             });
-
-            player.deck.moveCardsTo(cards, player.hand);
-
-            return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-              player.deck.applyOrder(order);
-            });
-          });
         }
       });
     }
 
     // Snowy Wind
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -133,7 +125,7 @@ export class AlolanNinetalesGX extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       // Check if player has used GX attack

@@ -3,8 +3,9 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { CardTag } from '../../game/store/card/card-types';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class FlappleVMAX extends PokemonCard {
 
@@ -14,7 +15,7 @@ export class FlappleVMAX extends PokemonCard {
 
   public regulationMark = 'E';
 
-  public tags = [ CardTag.POKEMON_VMAX ];
+  public tags = [CardTag.POKEMON_VMAX];
 
   public cardType: CardType = CardType.GRASS;
 
@@ -22,16 +23,16 @@ export class FlappleVMAX extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public resistance = [ ];
+  public resistance = [];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [{
     name: 'G-Max Rolling',
-    cost: [ CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 250,
     text: 'This attack does 10 less damage for each damage counter ' +
-    'on this Pokémon.'
+      'on this Pokémon.'
   }];
 
   public set: string = 'BST';
@@ -44,14 +45,13 @@ export class FlappleVMAX extends PokemonCard {
 
   public fullName: string = 'Flapple VMAX BST';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.damage -= effect.player.active.damage;
       return state;
     }
 
-    return state; 
+    return state;
   }
 }
 

@@ -2,12 +2,12 @@ import { GameError, GameMessage, PlayerType, State, StoreLike } from '../../game
 import { CardType, Stage, CardTag, BoardEffect, TrainerType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsPorygonZ extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -51,7 +51,7 @@ export class TeamRocketsPorygonZ extends PokemonCard {
     }
 
     // Reconstitute ability
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Check if ability was already used this turn
@@ -103,7 +103,7 @@ export class TeamRocketsPorygonZ extends PokemonCard {
     }
 
     // Control R attack
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Count Team Rocket Supporters in discard pile

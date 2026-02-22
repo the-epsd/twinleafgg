@@ -1,9 +1,10 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card'; 
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardTag, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, EnergyCard, GameError, GameMessage, AttachEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class KyuremV extends PokemonCard {
 
@@ -14,7 +15,7 @@ export class KyuremV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];
 
   public cardType: CardType = CardType.WATER;
-  
+
   public hp: number = 220;
 
   public weakness = [{ type: CardType.METAL }];
@@ -48,14 +49,14 @@ export class KyuremV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
 
       const hasEnergyInHand = player.hand.cards.some(c => {
         return c instanceof EnergyCard
-      && c.energyType === EnergyType.BASIC
-      && c.provides.includes(CardType.WATER);
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.WATER);
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -66,7 +67,7 @@ export class KyuremV extends PokemonCard {
         GameMessage.ATTACH_ENERGY_CARDS,
         player.hand,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH, SlotType.ACTIVE ],
+        [SlotType.BENCH, SlotType.ACTIVE],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
         { allowCancel: true }
       ), transfers => {

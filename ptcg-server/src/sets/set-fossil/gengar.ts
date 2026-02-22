@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { StateUtils } from '../../game/store/state-utils';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
@@ -12,7 +12,7 @@ import { MoveDamagePrompt, DamageMap } from '../../game/store/prompts/move-damag
 import { GameMessage } from '../../game/game-message';
 import { ChoosePokemonPrompt, GameError } from '../..';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { ABILITY_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Gengar extends PokemonCard {
 
@@ -47,7 +47,7 @@ export class Gengar extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -114,7 +114,7 @@ export class Gengar extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

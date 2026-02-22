@@ -3,7 +3,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Attack } from '../../game/store/card/pokemon-types';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
@@ -53,7 +53,7 @@ export class Arcanine extends PokemonCard {
       DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1, CardType.FIRE);
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const damage = new DealDamageEffect(effect, 30);
       damage.target = effect.player.active;
       store.reduceEffect(state, damage);

@@ -1,16 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, ChooseCardsPrompt,
-  ShuffleDeckPrompt,
-  ShowCardsPrompt,
-  StateUtils,
-  GameError
-} from '../../game';
+import { PowerType, StoreLike, State, ChooseCardsPrompt, ShuffleDeckPrompt, ShowCardsPrompt, StateUtils, GameError } from '../../game';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 
 export function* useRapidStrikeSearch(next: Function, store: StoreLike, state: State,
@@ -107,7 +102,7 @@ export class Octillery extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const generator = useRapidStrikeSearch(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

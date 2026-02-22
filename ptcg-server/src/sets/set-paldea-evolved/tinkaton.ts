@@ -4,8 +4,9 @@ import { PowerType } from '../../game/store/card/pokemon-types';
 import { StoreLike, State, GameError, GameMessage, PlayerType, ChooseCardsPrompt, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Tinkaton extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -45,7 +46,7 @@ export class Tinkaton extends PokemonCard {
       player.marker.removeMarker(this.GATHER_MATERIALS_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       if (player.hand.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);

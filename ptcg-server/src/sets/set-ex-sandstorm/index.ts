@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Anorith } from './anorith';
 import { Armaldo } from './armaldo';
 import { Dunsparce } from './dunsparce';
 import { Gardevoirex } from './gardevoir-ex';
@@ -22,6 +23,7 @@ import {
 } from './other-prints';
 
 export const setEXSandstorm: Card[] = [
+  new Anorith(),
   new Armaldo(),
   new Dunsparce(),
   new Gardevoirex(),

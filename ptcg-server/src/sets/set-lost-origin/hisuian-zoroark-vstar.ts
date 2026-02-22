@@ -3,7 +3,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { GameError, GameMessage, PlayerType, PokemonCard, PowerType } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class HisuianZoroarkVSTAR extends PokemonCard {
 
@@ -52,7 +53,7 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.usedVSTAR === true) {
@@ -69,7 +70,7 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
       player.usedVSTAR = true;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       const hasBenched = player.bench.some(b => b.cards.length > 0);
@@ -92,6 +93,4 @@ export class HisuianZoroarkVSTAR extends PokemonCard {
     return state;
   }
 }
-
-
 

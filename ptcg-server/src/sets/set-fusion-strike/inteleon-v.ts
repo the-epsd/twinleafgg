@@ -2,16 +2,17 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
 import { GameMessage } from '../../game/game-message';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class InteleonV extends PokemonCard {
 
-  public tags = [ CardTag.POKEMON_V, CardTag.RAPID_STRIKE ];
+  public tags = [CardTag.POKEMON_V, CardTag.RAPID_STRIKE];
 
   public regulationMark = 'E';
-  
+
   public stage: Stage = Stage.BASIC;
 
   public cardType: CardType = CardType.WATER;
@@ -20,7 +21,7 @@ export class InteleonV extends PokemonCard {
 
   public weakness = [{ type: CardType.LIGHTNING }];
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
@@ -46,23 +47,22 @@ export class InteleonV extends PokemonCard {
 
   public fullName: string = 'Inteleon V FST';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      
+
       const hasBenched = opponent.bench.some(b => b.cards.length > 0);
       if (!hasBenched) {
         return state;
       }
-      
+
       state = store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
         PlayerType.TOP_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { allowCancel: false }
       ), targets => {
         if (!targets || targets.length === 0) {
@@ -72,7 +72,7 @@ export class InteleonV extends PokemonCard {
         damageEffect.target = targets[0];
         store.reduceEffect(state, damageEffect);
       });
-      
+
       return state;
     }
     return state;

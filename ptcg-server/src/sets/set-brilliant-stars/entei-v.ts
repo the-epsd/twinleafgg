@@ -1,10 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, StateUtils, GameError, GameMessage, PlayerType } from '../../game';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class EnteiV extends PokemonCard {
 
@@ -53,7 +54,6 @@ export class EnteiV extends PokemonCard {
 
   public readonly FLEET_FOOTED_MARKER = 'FLEET_FOOTED_MARKER';
 
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
@@ -66,8 +66,7 @@ export class EnteiV extends PokemonCard {
       player.marker.removeMarker(this.FLEET_FOOTED_MARKER, this);
     }
 
-
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
 
       const player = effect.player;
       if (player.marker.hasMarker(this.FLEET_FOOTED_MARKER, this)) {
@@ -89,7 +88,7 @@ export class EnteiV extends PokemonCard {
 
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
 
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

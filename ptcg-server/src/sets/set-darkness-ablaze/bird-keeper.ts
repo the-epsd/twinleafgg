@@ -43,7 +43,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
-  player.switchPokemon(targets[0]);
+  player.switchPokemon(targets[0], store, state);
   DRAW_CARDS(player, 3);
 
   CLEAN_UP_SUPPORTER(effect, player);

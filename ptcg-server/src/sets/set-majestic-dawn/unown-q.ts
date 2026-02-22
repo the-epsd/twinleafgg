@@ -1,13 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import {
-  PowerType, StoreLike, State, GameError, GameMessage, StateUtils,
-  PokemonCardList, CardTarget, PlayerType, ChoosePokemonPrompt, SlotType
-} from '../../game';
+import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils, PokemonCardList, CardTarget, PlayerType, ChoosePokemonPrompt, SlotType } from '../../game';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 function* usePower(next: Function, store: StoreLike, state: State, self: UnownQ, effect: PowerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -126,7 +123,7 @@ export class UnownQ extends PokemonCard {
   public setNumber: string = '49';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const generator = usePower(() => generator.next(), store, state, this, effect);
       return generator.next().value;
     }

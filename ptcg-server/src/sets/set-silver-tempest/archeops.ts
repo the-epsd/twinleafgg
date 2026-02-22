@@ -1,16 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, EnergyType, BoardEffect } from '../../game/store/card/card-types';
-import {
-  PowerType,
-  GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, State, StoreLike, GameError
-} from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerType, GameMessage, PlayerType, SlotType, AttachEnergyPrompt, StateUtils, State, StoreLike, GameError } from '../../game';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
-
-
+import { SHUFFLE_DECK, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Archeops extends PokemonCard {
 
@@ -66,7 +61,7 @@ export class Archeops extends PokemonCard {
       player.marker.removeMarker(this.PRIMAL_TURBO_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(this.PRIMAL_TURBO_MARKER, this)) {

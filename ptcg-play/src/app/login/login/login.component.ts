@@ -4,7 +4,7 @@ import { Subject, timer } from 'rxjs';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { finalize, switchMap } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { Validators } from '@angular/forms';
 import {
   trigger,

@@ -1,16 +1,9 @@
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import {
-  StoreLike, State, PlayerType,
-  PokemonCardList,
-  Card,
-  ChoosePrizePrompt,
-  ConfirmPrompt,
-  GameMessage,
-  GameError
-} from '../../game';
-import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
+import { StoreLike, State, PlayerType, PokemonCardList, Card, ChoosePrizePrompt, ConfirmPrompt, GameMessage, GameError } from '../../game';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Cresselia extends PokemonCard {
@@ -57,7 +50,7 @@ export class Cresselia extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList) => {
         const healEffect = new HealEffect(player, cardList, 20);
@@ -66,7 +59,7 @@ export class Cresselia extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const prizes = player.prizes.filter(p => p.isSecret);
       const cards: Card[] = [];

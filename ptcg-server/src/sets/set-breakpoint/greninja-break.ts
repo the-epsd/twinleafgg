@@ -4,8 +4,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class GreninjaBREAK extends PokemonCard {
   public stage: Stage = Stage.BREAK;
@@ -38,7 +38,7 @@ export class GreninjaBREAK extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Giant Water Shuriken
-    if (effect instanceof PowerEffect && effect.power === this.powers[1]) {
+    if (WAS_POWER_USED(effect, 1, this)) {
       const player = effect.player;
 
       // Check marker

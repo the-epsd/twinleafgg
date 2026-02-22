@@ -2,8 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { GameError, GameMessage, PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+
+import { IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Tirtouga extends PokemonCard {
   public stage: Stage = Stage.RESTORED;
@@ -41,7 +41,7 @@ export class Tirtouga extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.PREHISTORIC_CALL_MARKER, this);
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {

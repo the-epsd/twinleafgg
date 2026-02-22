@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Regidrago extends PokemonCard {
 
@@ -12,18 +13,18 @@ export class Regidrago extends PokemonCard {
 
   public hp: number = 130;
 
-  public retreat = [ CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS ];
+  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
 
   public attacks = [
     {
       name: 'Hammer In',
-      cost: [ CardType.COLORLESS, CardType.COLORLESS ],
+      cost: [CardType.COLORLESS, CardType.COLORLESS],
       damage: 30,
       text: ''
     },
     {
       name: 'Dragon Energy',
-      cost: [ CardType.GRASS, CardType.GRASS, CardType.FIRE ],
+      cost: [CardType.GRASS, CardType.GRASS, CardType.FIRE],
       damage: 240,
       text: 'This attack does 20 less damage for each damage counter on this Pokémon.'
     }
@@ -42,7 +43,7 @@ export class Regidrago extends PokemonCard {
   public fullName: string = 'Regidrago EVS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const damage = Math.max(0, 240 - (player.active.damage / 20));
       effect.damage = damage;

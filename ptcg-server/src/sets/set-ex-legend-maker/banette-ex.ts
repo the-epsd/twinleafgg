@@ -8,9 +8,9 @@ import { StateUtils } from '../../game';
 import { DamageMap } from '../../game';
 import { SlotType } from '../../game';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { TrainerCard, TrainerType } from '../../game';
-import { ABILITY_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, BLOCK_IF_HAS_SPECIAL_CONDITION, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Banetteex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex];
@@ -54,7 +54,7 @@ export class Banetteex extends PokemonCard {
     }
 
     // Shady Move
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

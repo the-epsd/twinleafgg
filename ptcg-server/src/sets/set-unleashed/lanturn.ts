@@ -1,4 +1,4 @@
-import { PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CheckPokemonTypeEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -43,6 +43,9 @@ export class Lanturn extends PokemonCard {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       BLOCK_IF_HAS_SPECIAL_CONDITION(player, this);
+      if (HAS_MARKER(this.UNDERWATER_DIVE_MARKER, player, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
       ABILITY_USED(player, this);
       ADD_MARKER(this.UNDERWATER_DIVE_MARKER, player, this);
     }

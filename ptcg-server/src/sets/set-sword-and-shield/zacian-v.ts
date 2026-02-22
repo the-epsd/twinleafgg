@@ -2,9 +2,9 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, PowerType, GameMessage, GameError, CardList, EnergyCard, AttachEnergyPrompt, PlayerType, CardTarget } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class ZacianV extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -41,7 +41,7 @@ export class ZacianV extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Intrepid Sword
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       const topdecks = new CardList();
@@ -109,7 +109,7 @@ export class ZacianV extends PokemonCard {
     }
 
     // Brave Blade
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (effect.player.marker.hasMarker(this.BRAVE_BLADE_MARKER, this)) {

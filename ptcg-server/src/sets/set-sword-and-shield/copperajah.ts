@@ -2,7 +2,8 @@ import { State, StoreLike } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, HealEffect } from '../../game/store/effects/game-effects';
+import { HealEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Copperajah extends PokemonCard {
 
@@ -49,17 +50,17 @@ export class Copperajah extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      
+
       const healEffect = new HealEffect(player, effect.player.active, 30);
       store.reduceEffect(state, healEffect);
       return state;
     }
-    
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      
+
       if (player.active.damage >= 80) {
         effect.damage = 0;
         return state;
@@ -67,7 +68,7 @@ export class Copperajah extends PokemonCard {
 
       return state;
     }
-    
+
     return state;
   }
 }

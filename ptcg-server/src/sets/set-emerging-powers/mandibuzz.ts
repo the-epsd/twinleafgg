@@ -3,9 +3,7 @@ import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, EnergyCard, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
-import { GameMessage } from '../../game/game-message';
+import { WAS_ATTACK_USED, FLIP_UNTIL_TAILS_AND_COUNT_HEADS } from '../../game/store/prefabs/prefabs';
 
 export class Mandibuzz extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -41,21 +39,9 @@ export class Mandibuzz extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      let heads = 0;
-
-      const flipUntilTails = (): State => {
-        return store.prompt(state, new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP), result => {
-          if (result) {
-            heads++;
-            return flipUntilTails();
-          } else {
-            (effect as AttackEffect).damage = 30 * heads;
-          }
-        });
-      };
-
-      return flipUntilTails();
+      return FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, effect.player, headsCount => {
+        (effect as AttackEffect).damage = 30 * headsCount;
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

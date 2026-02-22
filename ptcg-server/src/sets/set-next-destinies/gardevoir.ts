@@ -3,7 +3,8 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, EnergyCard, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Gardevoir extends PokemonCard {
 
@@ -46,7 +47,7 @@ export class Gardevoir extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.ignoreResistance = true;
       effect.ignoreWeakness = true;
     }

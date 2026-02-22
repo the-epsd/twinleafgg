@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Raycaster, Vector2, Vector3, Euler, Plane, Camera, Scene, Object3D, Intersection, Texture, InstancedMesh } from 'three';
+import { Raycaster, Vector2, Vector3, Euler, Quaternion, Plane, Camera, Scene, Object3D, Intersection, Texture, InstancedMesh } from 'three';
 import { PlayerType, SlotType, CardTarget, SuperType, Stage, TrainerType, Card, PokemonCard, TrainerCard } from 'ptcg-server';
 import gsap from 'gsap';
 import { Board3dDropZone, DropZoneType, DropZoneState, DropZoneConfig } from '../board-3d/board-3d-drop-zone';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import { Board3dStateSyncService } from './board-3d-state-sync.service';
+import { Board3dHandService } from './board-3d-hand.service';
 import { Board3dCard } from '../board-3d/board-3d-card';
 import { ZONE_POSITIONS, SNAP_DISTANCE, getBenchPositions } from '../board-3d/board-3d-zone-positions';
 
@@ -45,7 +46,9 @@ export class Board3dInteractionService {
   private draggedCardHandIndex: number = -1;
   private draggedCardOriginalPosition: Vector3 = new Vector3();
   private draggedCardOriginalRotation: Euler = new Euler();
+  private draggedCardOriginalQuaternion: Quaternion = new Quaternion();
   private draggedCardOriginalScale: Vector3 = new Vector3();
+  private draggedCardIsBoardCard: boolean = false;
   private dragPlane: Plane = new Plane(new Vector3(0, 1, 0), 0);
   private dragOffset: Vector3 = new Vector3();
   private previousDragPosition: Vector3 = new Vector3();
@@ -76,7 +79,8 @@ export class Board3dInteractionService {
 
   constructor(
     private assetLoader: Board3dAssetLoaderService,
-    private stateSync: Board3dStateSyncService
+    private stateSync: Board3dStateSyncService,
+    private handService: Board3dHandService
   ) {
     this.raycaster = new Raycaster();
     this.mouse = new Vector2();
@@ -179,13 +183,17 @@ export class Board3dInteractionService {
 
   /**
    * Get the card object from an intersection
-   * Traverses up the object hierarchy to find the card group
+   * Traverses up the object hierarchy to find the card group.
+   * Energy icons and tool cards (overlays) take priority so clicking them shows that card's info.
    */
   private getCardFromIntersection(intersection: Intersection): Object3D | null {
     let obj: Object3D | null = intersection.object;
 
-    // Traverse up the hierarchy until we find a card
     while (obj) {
+      // Energy icon or tool overlay: return immediately to show that card's info
+      if (obj.userData?.isEnergyIcon || obj.userData?.isToolCard) {
+        return obj;
+      }
       if (obj.userData && obj.userData.isCard) {
         return obj;
       }
@@ -205,6 +213,20 @@ export class Board3dInteractionService {
       return null;
     }
     return this.stateSync.getCardById(cardId) || null;
+  }
+
+  /**
+   * Find the Pokemon card Object3D in a specific zone (for retreat hover effects)
+   */
+  private getPokemonInZone(player: PlayerType, slotType: SlotType, index: number): Object3D | null {
+    for (const obj of this.interactiveObjects) {
+      if (!obj.userData?.isCard || !obj.userData?.cardTarget) continue;
+      const target = obj.userData.cardTarget as CardTarget;
+      if (target.player === player && target.slot === slotType && target.index === index) {
+        return obj;
+      }
+    }
+    return null;
   }
 
   /**
@@ -545,10 +567,12 @@ export class Board3dInteractionService {
     this.isDragging = true;
     this.draggedCard = card;
     this.draggedCardHandIndex = card.userData.handIndex;
+    this.draggedCardIsBoardCard = card.userData?.isBoardCard === true;
 
-    // Store original position/rotation/scale
+    // Store original position/rotation/scale (and quaternion for board cards)
     this.draggedCardOriginalPosition.copy(card.position);
     this.draggedCardOriginalRotation.copy(card.rotation);
+    this.draggedCardOriginalQuaternion.copy(card.quaternion);
     this.draggedCardOriginalScale.copy(card.scale);
 
     // Create horizontal drag plane at elevated level (Y=2.0) to prevent clipping
@@ -710,9 +734,9 @@ export class Board3dInteractionService {
       }
 
       // Apply physics-based rotation based on drag direction
-      // Normalize velocity for consistent rotation strength
+      // Skip for board cards (retreat) - tilt causes tool overlays to disappear on return
       const velocityMagnitude = this.dragVelocity.length();
-      if (velocityMagnitude > 0.01) {
+      if (velocityMagnitude > 0.01 && !this.draggedCard?.userData?.isBoardCard) {
         // Check if this is a hand card for enhanced physics
         const isHandCard = this.draggedCard?.userData?.isHandCard === true;
 
@@ -756,8 +780,12 @@ export class Board3dInteractionService {
         this.currentDragContext.stage !== undefined &&
         this.currentDragContext.stage !== Stage.BASIC;
 
+      // Check if retreat drag (board card for active/bench swap)
+      const isRetreatDrag = this.currentDragContext?.source === 'board';
+
       // Detect Pokemon card under dragged card (for energy/tool cards and evolution cards)
       let pokemonUnderCard: Object3D | null = null;
+      let pokemonInRetreatZone: Object3D | null = null;
       if ((isEnergyOrTool || isEvolutionCard) && !isOverHand) {
         // Perform raycast to find Pokemon cards
         const intersects = this.raycaster.intersectObjects(this.interactiveObjects, true);
@@ -785,10 +813,24 @@ export class Board3dInteractionService {
         }
       }
 
-      // Handle Pokemon hover effects (for energy/tool cards and evolution cards)
-      const shouldShowHoverEffects = isEnergyOrTool || isEvolutionCard;
+      let validRetreatZoneUnderCard = false;
+      if (isRetreatDrag && !isOverHand) {
+        // For retreat: find valid drop zone under card, then get Pokemon in that zone (if any)
+        const retreatZone = this.findValidDropZone(worldPos);
+        if (retreatZone) {
+          validRetreatZoneUnderCard = true;
+          const config = retreatZone.getConfig();
+          const slotType = config.type === DropZoneType.ACTIVE ? SlotType.ACTIVE : SlotType.BENCH;
+          pokemonInRetreatZone = this.getPokemonInZone(config.player, slotType, config.index);
+        }
+      }
 
-      if (shouldShowHoverEffects && pokemonUnderCard && pokemonUnderCard !== this.hoveredPokemonCard) {
+      // Handle Pokemon hover effects (for energy/tool cards, evolution cards, and retreat)
+      const shouldShowHoverEffects = isEnergyOrTool || isEvolutionCard ||
+        (isRetreatDrag && pokemonInRetreatZone !== null);
+      const pokemonForHoverEffects = pokemonUnderCard ?? pokemonInRetreatZone;
+
+      if (shouldShowHoverEffects && pokemonForHoverEffects && pokemonForHoverEffects !== this.hoveredPokemonCard) {
         // New Pokemon hovered - restore previous Pokemon's scale and remove glow
         if (this.hoveredPokemonCard) {
           // Restore scale of previous Pokemon
@@ -807,9 +849,9 @@ export class Board3dInteractionService {
         }
 
         // Store original scale and add effects to new Pokemon
-        this.hoveredPokemonCard = pokemonUnderCard;
-        this.hoveredPokemonOriginalScale.copy(pokemonUnderCard.scale);
-        this.hoveredPokemonBoard3dCard = this.getBoard3dCardFromObject3D(pokemonUnderCard);
+        this.hoveredPokemonCard = pokemonForHoverEffects;
+        this.hoveredPokemonOriginalScale.copy(pokemonForHoverEffects.scale);
+        this.hoveredPokemonBoard3dCard = this.getBoard3dCardFromObject3D(pokemonForHoverEffects);
 
         if (this.hoveredPokemonBoard3dCard) {
           // Add glow
@@ -817,8 +859,8 @@ export class Board3dInteractionService {
 
           // Scale up by 20% (1.2x)
           const targetScale = this.hoveredPokemonOriginalScale.clone().multiplyScalar(1.2);
-          gsap.killTweensOf(pokemonUnderCard.scale);
-          gsap.to(pokemonUnderCard.scale, {
+          gsap.killTweensOf(pokemonForHoverEffects.scale);
+          gsap.to(pokemonForHoverEffects.scale, {
             x: targetScale.x,
             y: targetScale.y,
             z: targetScale.z,
@@ -826,7 +868,7 @@ export class Board3dInteractionService {
             ease: 'power2.out'
           });
         }
-      } else if (shouldShowHoverEffects && !pokemonUnderCard && this.hoveredPokemonCard) {
+      } else if (shouldShowHoverEffects && !pokemonForHoverEffects && this.hoveredPokemonCard) {
         // No longer hovering over Pokemon - restore scale and remove glow
         gsap.killTweensOf(this.hoveredPokemonCard.scale);
         gsap.to(this.hoveredPokemonCard.scale, {
@@ -863,16 +905,20 @@ export class Board3dInteractionService {
 
       // Determine scale based on priority:
       // 1. Over Pokemon (energy/tool/evolution): 0.7
-      // 2. Over hand area (from hand): 1.05
-      // 3. Otherwise: 1.3 (normal drag scale)
+      // 2. Over valid retreat zone: 0.7
+      // 3. Over hand area (from hand): 1.05
+      // 4. Otherwise: 1.3 (normal drag scale)
       let targetScale = 1.3; // Default drag scale
       if ((isEnergyOrTool || isEvolutionCard) && pokemonUnderCard) {
         targetScale = 0.7; // Shrink to 70% when over Pokemon
+      } else if (isRetreatDrag && validRetreatZoneUnderCard) {
+        targetScale = 0.7; // Shrink to 70% when over valid retreat target
       } else if (isOverHand && this.currentDragContext?.source === 'hand') {
         targetScale = 1.05; // Slight increase when over hand area
       }
 
-      // Apply scale animation
+      // Apply scale animation (kill previous tween to prevent conflicting animations)
+      gsap.killTweensOf(this.draggedCard.scale);
       gsap.to(this.draggedCard.scale, {
         x: targetScale,
         y: targetScale,
@@ -990,10 +1036,23 @@ export class Board3dInteractionService {
           };
         }
       } else {
-        // Play card from hand - return to hand immediately for responsive feedback
-        // (like 2D board behavior - card animates back right away)
-        if (this.draggedCard) {
+        // Play card from hand - return to hand for responsive feedback
+        // Skip for attach actions (energy/tool/evolution onto Pokemon) - card will be removed by state sync
+        const isAttachDrop = this.currentDragContext && (
+          this.currentDragContext.superType === SuperType.ENERGY ||
+          this.currentDragContext.trainerType === TrainerType.TOOL ||
+          (this.currentDragContext.superType === SuperType.POKEMON &&
+            this.currentDragContext.stage !== undefined &&
+            this.currentDragContext.stage !== Stage.BASIC)
+        ) && (config.type === DropZoneType.ACTIVE || config.type === DropZoneType.BENCH);
+
+        if (this.draggedCard && !isAttachDrop) {
           this.returnCardToHand(this.draggedCard);
+        } else if (this.draggedCard && isAttachDrop) {
+          const handIndex = this.draggedCard.userData?.handIndex ?? this.draggedCardHandIndex;
+          if (handIndex >= 0) {
+            this.handService.removeCard(handIndex, scene);
+          }
         }
 
         // Use current index from userData (may have changed during drag)
@@ -1182,14 +1241,29 @@ export class Board3dInteractionService {
       ease: 'power2.out'
     });
 
-    // Smoothly animate rotation back
-    gsap.to(card.rotation, {
-      x: this.draggedCardOriginalRotation.x,
-      y: this.draggedCardOriginalRotation.y,
-      z: this.draggedCardOriginalRotation.z,
-      duration: 0.4,
-      ease: 'power2.out'
-    });
+    // For board cards use quaternion to avoid Euler gimbal lock (preserves tool overlays)
+    if (this.draggedCardIsBoardCard) {
+      const startQuat = card.quaternion.clone();
+      const endQuat = this.draggedCardOriginalQuaternion.clone();
+      const progress = { t: 0 };
+      gsap.to(progress, {
+        t: 1,
+        duration: 0.4,
+        ease: 'power2.out',
+        onUpdate: () => {
+          card.quaternion.slerpQuaternions(startQuat, endQuat, progress.t);
+        }
+      });
+    } else {
+      // Hand cards: use Euler
+      gsap.to(card.rotation, {
+        x: this.draggedCardOriginalRotation.x,
+        y: this.draggedCardOriginalRotation.y,
+        z: this.draggedCardOriginalRotation.z,
+        duration: 0.4,
+        ease: 'power2.out'
+      });
+    }
 
     // Smoothly reset scale to original
     gsap.to(card.scale, {
@@ -1490,6 +1564,26 @@ export class Board3dInteractionService {
    */
   getIsDragging(): boolean {
     return this.isDragging;
+  }
+
+  /**
+   * Get the card ID of the board card being dragged (for state sync to skip position updates)
+   */
+  getDraggedBoardCardId(): string | null {
+    if (!this.isDragging || !this.draggedCard?.userData?.isBoardCard) {
+      return null;
+    }
+    return (this.draggedCard.userData?.cardId as string) ?? null;
+  }
+
+  /**
+   * Get the card ID of the board card being hovered during drag (for state sync to preserve scale)
+   */
+  getHoveredBoardCardId(): string | null {
+    if (!this.isDragging || !this.hoveredPokemonCard?.userData?.cardId) {
+      return null;
+    }
+    return (this.hoveredPokemonCard.userData.cardId as string) ?? null;
   }
 
   /**

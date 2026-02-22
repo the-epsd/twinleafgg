@@ -1,7 +1,8 @@
 import { PokemonCard, CardTag, Stage, CardType, StoreLike, State, StateUtils, SpecialCondition } from '../../game';
 import { AddSpecialConditionsEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class BlackKyuremex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex];
@@ -32,7 +33,7 @@ export class BlackKyuremex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
@@ -42,7 +43,7 @@ export class BlackKyuremex extends PokemonCard {
       }
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
       const dealDamage = new DealDamageEffect(effect, 30);

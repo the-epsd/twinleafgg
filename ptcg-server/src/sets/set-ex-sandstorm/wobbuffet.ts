@@ -1,8 +1,8 @@
 import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, GamePhase, CardTag } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Wobbuffet extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -59,7 +59,7 @@ export class Wobbuffet extends PokemonCard {
     }
 
     // Handle Flip Over self-damage
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const target = player.active;
       if (target.cards.includes(this)) {

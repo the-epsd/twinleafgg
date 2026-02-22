@@ -4,9 +4,10 @@ import { StoreLike, State, GameMessage, PlayerType, SlotType, ChoosePokemonPromp
 import { Effect } from '../../game/store/effects/effect';
 import { StateUtils } from '../../game/store/state-utils';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Decidueyeex extends PokemonCard {
 
@@ -60,7 +61,7 @@ export class Decidueyeex extends PokemonCard {
     }
 
     // Total Freedom
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       if (player.marker.hasMarker(this.TOTAL_FREEDOM_MARKER, this)) {
@@ -99,7 +100,7 @@ export class Decidueyeex extends PokemonCard {
     }
 
     // Hunting Arrow
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

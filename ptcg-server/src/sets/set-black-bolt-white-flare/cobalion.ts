@@ -1,5 +1,6 @@
 import { PokemonCard, Stage, CardType, State, StoreLike, ChooseCardsPrompt, EnergyCard, EnergyType, GameMessage, StateUtils, SuperType, TrainerCard, TrainerType } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Cobalion extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -33,7 +34,7 @@ export class Cobalion extends PokemonCard {
   public fullName: string = 'Cobalion SV11B';
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const active = opponent.active;
@@ -57,7 +58,7 @@ export class Cobalion extends PokemonCard {
       });
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const active = player.active;
 

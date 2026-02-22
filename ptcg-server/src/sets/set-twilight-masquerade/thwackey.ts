@@ -1,12 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, ChooseCardsPrompt, ShuffleDeckPrompt, GameError, PlayerType } from '../../game';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Thwackey extends PokemonCard {
 
@@ -66,14 +66,12 @@ export class Thwackey extends PokemonCard {
       player.marker.removeMarker(this.BOOM_BOOM_DRUM_MARKER, this);
     }
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       // if (activePokemon && activePokemon.powers[0].name !== 'Fesival Lead') {
       //   throw new GameError(GameMessage.CANNOT_USE_POWER);
       // }
-
-
 
       if (player.marker.hasMarker(this.BOOM_BOOM_DRUM_MARKER, this)) {
         throw new GameError(GameMessage.POWER_ALREADY_USED);

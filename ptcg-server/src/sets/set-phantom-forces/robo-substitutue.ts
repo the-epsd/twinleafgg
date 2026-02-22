@@ -1,8 +1,9 @@
 import { GameError, GameMessage, PokemonCard, PokemonCardList, Power, PowerType, State, StateUtils, StoreLike, TrainerCard } from '../..';
 import { CardType, PokemonType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect, PowerEffect, RetreatEffect } from '../../game/store/effects/game-effects';
+import { KnockOutEffect, RetreatEffect } from '../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class RoboSubstitute extends TrainerCard {
 
@@ -54,7 +55,7 @@ export class RoboSubstitute extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof PowerEffect && effect.power === this.powers[0]) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
       const player = effect.player;
 

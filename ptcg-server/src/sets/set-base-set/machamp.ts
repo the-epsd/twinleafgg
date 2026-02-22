@@ -5,7 +5,7 @@ import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike, StateUtils, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
+import { IS_POKEMON_POWER_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Machamp extends PokemonCard {
 
@@ -63,14 +63,7 @@ export class Machamp extends PokemonCard {
       }
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const stub = new PowerEffect(player, {
-          name: 'test',
-          powerType: PowerType.POKEMON_POWER,
-          text: ''
-        }, this);
-        store.reduceEffect(state, stub);
-      } catch {
+      if (IS_POKEMON_POWER_BLOCKED(store, state, player, this)) {
         return state;
       }
 

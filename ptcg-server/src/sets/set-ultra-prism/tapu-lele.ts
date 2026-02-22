@@ -10,6 +10,7 @@ import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { MoveDamagePrompt, DamageMap } from '../../game/store/prompts/move-damage-prompt';
 import { GameMessage } from '../../game/game-message';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 
 function* useMagicalSwap(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
@@ -87,7 +88,7 @@ export class TapuLele extends PokemonCard {
   public fullName: string = 'Tapu Lele UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -99,7 +100,7 @@ export class TapuLele extends PokemonCard {
       effect.damage = opponentEnergyCount * 20;
     }
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const generator = useMagicalSwap(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

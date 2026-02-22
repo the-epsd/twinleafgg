@@ -11,6 +11,7 @@ import { ConfirmPrompt } from '../../game/store/prompts/confirm-prompt';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { GameMessage } from '../../game/game-message';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 function* useWhirlwind(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
   const player = effect.player;
@@ -38,7 +39,7 @@ function* useWhirlwind(next: Function, store: StoreLike, state: State, effect: A
     player.id,
     GameMessage.CHOOSE_NEW_ACTIVE_POKEMON,
     PlayerType.TOP_PLAYER,
-    [ SlotType.BENCH ],
+    [SlotType.BENCH],
     { allowCancel: false },
   ), selected => {
     if (!selected || selected.length === 0) {
@@ -65,7 +66,7 @@ export class Beautifly extends PokemonCard {
 
   public weakness = [{ type: CardType.FIRE }];
 
-  public retreat = [ ];
+  public retreat = [];
 
   public powers = [{
     name: 'Miraculous Scales',
@@ -76,7 +77,7 @@ export class Beautifly extends PokemonCard {
 
   public attacks = [{
     name: 'Whirlwind',
-    cost: [ CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS ],
+    cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 80,
     text: 'You may have your opponent switch his or her Active Pokemon ' +
       'with 1 of his or her Benched Pokemon.'
@@ -94,7 +95,7 @@ export class Beautifly extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = useWhirlwind(() => generator.next(), store, state, effect);
       return generator.next().value;
     }

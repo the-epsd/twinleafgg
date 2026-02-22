@@ -6,8 +6,8 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+
+import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 // SMP Jolteon-GX 173 (https://limitlesstcg.com/cards/SMP/173)
 export class JolteonGX extends PokemonCard {
@@ -65,7 +65,7 @@ export class JolteonGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Electrobullet
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -91,7 +91,7 @@ export class JolteonGX extends PokemonCard {
     }
 
     // Swift Run-GX
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[2]) {
+    if (WAS_ATTACK_USED(effect, 2, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -109,7 +109,6 @@ export class JolteonGX extends PokemonCard {
       effect.preventDefault = true;
       return state;
     }
-
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_ECLIPSE_MARKER, this)) {
 

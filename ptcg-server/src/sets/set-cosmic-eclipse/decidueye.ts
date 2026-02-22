@@ -5,8 +5,8 @@ import { StoreLike } from '../../game/store/store-like';
 import { StateUtils, CardTarget, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Decidueye extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -15,8 +15,6 @@ export class Decidueye extends PokemonCard {
   public hp: number = 140;
   public weakness = [{ type: R }];
   public retreat = [C];
-
-
 
   public attacks = [{
     name: 'Skill Dive',
@@ -41,7 +39,7 @@ export class Decidueye extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Skill Dive
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       return store.prompt(state, new ChoosePokemonPrompt(
@@ -62,7 +60,7 @@ export class Decidueye extends PokemonCard {
     }
 
     // Tracking Shot
-    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
+    if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
