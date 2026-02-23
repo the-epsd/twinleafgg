@@ -8,14 +8,15 @@ import { PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE } from '../../game/store/pref
 export class Blacephalon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public tags = [CardTag.ULTRA_BEAST];
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType = P;
   public hp: number = 110;
-  public weakness = [{ type: CardType.DARK }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -20 }];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Fireworks Bomb',
-    cost: [CardType.PSYCHIC, CardType.COLORLESS],
+    cost: [P, C],
     damage: 0,
     text: 'Put 4 damage counters on your opponent\'s Pokemon in any way you like. If your opponent has exactly 3 Prize cards remaining, put 12 damage counters on them instead.'
   }];

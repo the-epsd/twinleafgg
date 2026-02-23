@@ -305,7 +305,7 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   private handlePlayFromHand(item: HandItem, target: CardTarget): void {
-    this.gameService.playCardAction(this.gameState.gameId, item.index, target);
+    this.gameService.playCardAction(this.gameState.gameId, item.index, target).subscribe();
   }
 
   private handleMoveBoardCard(item: BoardCardItem, target: CardTarget): void {

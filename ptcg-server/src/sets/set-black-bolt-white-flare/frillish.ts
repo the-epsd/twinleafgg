@@ -12,6 +12,7 @@ export class Frillish extends PokemonCard {
   public cardType: CardType = P;
   public hp: number = 80;
   public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C, C];
 
   public attacks = [{

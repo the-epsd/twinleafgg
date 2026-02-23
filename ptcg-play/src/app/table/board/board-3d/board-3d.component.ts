@@ -757,14 +757,12 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
           this.onCardClicked(result.clickedCard);
         } else if (result.action === 'playCard' && result.handIndex !== undefined) {
           // Card dropped on valid zone - send play action
+          // On error (e.g. already attached for turn), restore hand via syncHand
           this.gameService.playCardAction(
             this.gameState.gameId,
             result.handIndex,
             result.zone
-          );
-
-          // Card will be removed from hand when state sync confirms successful play
-          // If play fails, card remains in hand (correct behavior)
+          ).subscribe({ error: () => this.syncHand() });
         } else if (result.action === 'retreat' && result.benchIndex !== undefined) {
           // Retreat action (Active <-> Bench swap)
           this.gameService.retreatAction(

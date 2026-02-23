@@ -5,14 +5,15 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class IronBoulder extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = CardType.PSYCHIC;
+  public cardType: CardType = P;
   public hp: number = 140;
-  public weakness = [{ type: CardType.DARK }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C, C, C];
 
   public attacks = [{
     name: 'Adjusted Horn',
-    cost: [CardType.PSYCHIC, CardType.COLORLESS],
+    cost: [P, C],
     damage: 170,
     text: 'If you don\'t have the same number of cards in your hand as your opponent, this attack does nothing.'
   }];

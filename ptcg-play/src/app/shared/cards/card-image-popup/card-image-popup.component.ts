@@ -20,7 +20,7 @@ export class CardImagePopupComponent {
   ) {
     this.card = data.card;
     this.facedown = data.facedown;
-    this.customImageUrl = data.customImageUrl || '';
+    this.customImageUrl = data.customImageUrl ?? this.cardsBaseService.getCustomImageOverrideForCard(data.card) ?? '';
   }
 
   public onUrlInput(event: Event): void {

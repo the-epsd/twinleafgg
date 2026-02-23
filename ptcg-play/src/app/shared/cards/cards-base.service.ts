@@ -24,6 +24,7 @@ export class CardsBaseService implements OnDestroy {
   private cardIndex = new Map<string, Card>();
   private cardManager: CardManager;
   private customImages: { [key: string]: string } = {};
+  private localOverrides: { [key: string]: string } = {};
   private nightlyImages: { [key: string]: string } = {};
   private favoriteCards: { [cardName: string]: string } = {};
   private unlockedArtworks: CardArtwork[] = [];
@@ -44,6 +45,7 @@ export class CardsBaseService implements OnDestroy {
     private profileService: ProfileService
   ) {
     this.cardManager = CardManager.getInstance();
+    this.loadLocalOverrides();
     this.loadCustomImages();
     this.loadFavoriteCards();
     this.loadNightlyImages();
@@ -122,6 +124,23 @@ export class CardsBaseService implements OnDestroy {
     return this.names;
   }
 
+  private getCardIdentifier(card: Card): string {
+    return `${card.set} ${card.setNumber}`;
+  }
+
+  private getAltIdentifier(card: Card): string {
+    return `${card.set} ${(card.setNumber || '').padStart(3, '0')}`;
+  }
+
+  private loadLocalOverrides(): void {
+    const stored = localStorage.getItem('customCardImageOverrides');
+    if (stored) {
+      this.localOverrides = JSON.parse(stored);
+    } else {
+      this.localOverrides = {};
+    }
+  }
+
   private loadCustomImages(): void {
     if (this.isAuthenticated()) {
       this.loadCustomImagesFromAPI();
@@ -130,6 +149,7 @@ export class CardsBaseService implements OnDestroy {
       if (storedImages) {
         this.customImages = JSON.parse(storedImages);
       }
+      this.loadLocalOverrides();
     }
   }
 
@@ -141,6 +161,7 @@ export class CardsBaseService implements OnDestroy {
         if (storedImages) {
           this.customImages = JSON.parse(storedImages);
         }
+        this.loadLocalOverrides();
         return of({ ok: false, jsonUrl: '' });
       }),
       switchMap(response => {
@@ -152,6 +173,7 @@ export class CardsBaseService implements OnDestroy {
               this.customImages = json;
               // Also save to localStorage as backup
               localStorage.setItem('customCardImages', JSON.stringify(this.customImages));
+              this.loadLocalOverrides();
               return json;
             }),
             catchError(() => {
@@ -160,6 +182,7 @@ export class CardsBaseService implements OnDestroy {
               if (storedImages) {
                 this.customImages = JSON.parse(storedImages);
               }
+              this.loadLocalOverrides();
               return of({});
             })
           );
@@ -169,6 +192,7 @@ export class CardsBaseService implements OnDestroy {
           if (storedImages) {
             this.customImages = JSON.parse(storedImages);
           }
+          this.loadLocalOverrides();
           return of({});
         }
       })
@@ -219,6 +243,7 @@ export class CardsBaseService implements OnDestroy {
         if (storedImages) {
           this.customImages = JSON.parse(storedImages);
         }
+        this.loadLocalOverrides();
       }
     });
   }
@@ -308,23 +333,35 @@ export class CardsBaseService implements OnDestroy {
   }
 
   public setCustomImageForCard(card: Card, imageUrl: string): void {
-    const fullCardIdentifier = `${card.set} ${card.setNumber}`;
+    const fullCardIdentifier = this.getCardIdentifier(card);
     if (!imageUrl) {
-      delete this.customImages[fullCardIdentifier];
+      delete this.localOverrides[fullCardIdentifier];
     } else {
-      this.customImages[fullCardIdentifier] = imageUrl;
+      this.localOverrides[fullCardIdentifier] = imageUrl;
     }
-    localStorage.setItem('customCardImages', JSON.stringify(this.customImages));
+    localStorage.setItem('customCardImageOverrides', JSON.stringify(this.localOverrides));
     this.overridesChangedSubject.next(fullCardIdentifier);
   }
 
   public clearCustomImageForCard(card: Card): void {
-    const fullCardIdentifier = `${card.set} ${card.setNumber}`;
-    if (this.customImages[fullCardIdentifier]) {
-      delete this.customImages[fullCardIdentifier];
-      localStorage.setItem('customCardImages', JSON.stringify(this.customImages));
+    const fullCardIdentifier = this.getCardIdentifier(card);
+    if (this.localOverrides[fullCardIdentifier]) {
+      delete this.localOverrides[fullCardIdentifier];
+      localStorage.setItem('customCardImageOverrides', JSON.stringify(this.localOverrides));
     }
     this.overridesChangedSubject.next(fullCardIdentifier);
+  }
+
+  public getCustomImageOverrideForCard(card: Card): string | undefined {
+    if (!card?.set || !card?.setNumber) {
+      return undefined;
+    }
+    const fullCardIdentifier = this.getCardIdentifier(card);
+    let url = this.localOverrides[fullCardIdentifier];
+    if (!url && card.setNumber) {
+      url = this.localOverrides[this.getAltIdentifier(card)];
+    }
+    return url;
   }
 
   public getScanUrl(card: Card): string {
@@ -348,28 +385,23 @@ export class CardsBaseService implements OnDestroy {
       return '';
     }
 
-    const fullCardIdentifier = `${card.set} ${card.setNumber}`;
+    const fullCardIdentifier = this.getCardIdentifier(card);
+    const altIdentifier = this.getAltIdentifier(card);
 
-    // Check nightly images first (supplements custom images)
-    let nightlyUrl = this.nightlyImages[fullCardIdentifier];
-    if (!nightlyUrl && card.setNumber) {
-      // Try alternative formats for 2-character sets (padded set numbers)
-      const paddedSetNumber = card.setNumber.padStart(3, '0');
-      const altIdentifier = `${card.set} ${paddedSetNumber}`;
-      nightlyUrl = this.nightlyImages[altIdentifier];
-    }
+    // Check nightly images first
+    let nightlyUrl = this.nightlyImages[fullCardIdentifier] ?? this.nightlyImages[altIdentifier];
     if (nightlyUrl) {
       return nightlyUrl;
     }
 
-    // Then check custom images
-    let customUrl = this.customImages[fullCardIdentifier];
-    if (!customUrl && card.setNumber) {
-      // Try alternative formats for 2-character sets (padded set numbers)
-      const paddedSetNumber = card.setNumber.padStart(3, '0');
-      const altIdentifier = `${card.set} ${paddedSetNumber}`;
-      customUrl = this.customImages[altIdentifier];
+    // Then check local overrides (popup-only, takes precedence over base custom images)
+    let overrideUrl = this.localOverrides[fullCardIdentifier] ?? this.localOverrides[altIdentifier];
+    if (overrideUrl) {
+      return overrideUrl;
     }
+
+    // Then check base custom images (from JSON/API)
+    let customUrl = this.customImages[fullCardIdentifier] ?? this.customImages[altIdentifier];
     if (customUrl) {
       return customUrl;
     }
@@ -413,7 +445,7 @@ export class CardsBaseService implements OnDestroy {
     }
 
     // 2. If no artworksMap override, use getScanUrl() directly
-    // This checks nightly images → custom images → default URL (same as 2D board)
+    // Priority: nightly images → local overrides → base custom images → default URL
     return this.getScanUrl(card);
   }
 

@@ -98,7 +98,7 @@ export class GameLogsComponent implements OnDestroy {
         const cardId = parseInt(cardIdStr, 10);
 
         if (!isNaN(cardId)) {
-          this.gameService.playCardAction(this.state.gameId, cardId, cardName);
+          this.gameService.playCardAction(this.state.gameId, cardId, cardName).subscribe();
         }
       }
     }

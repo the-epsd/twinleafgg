@@ -3,9 +3,9 @@ import {
   ClientInfo, GameState, State, CardTarget, StateLog, Replay,
   Base64, StateSerializer, PlayerStats, GamePhase
 } from 'ptcg-server';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
-import { finalize } from 'rxjs/operators';
+import { catchError, finalize, map } from 'rxjs/operators';
 
 import { AlertService } from '../../shared/alert/alert.service';
 import { ApiError } from '../api.error';
@@ -208,9 +208,14 @@ export class GameService {
       .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
-  public playCardAction(gameId: number, handIndex: number, target: CardTarget) {
-    this.socketService.emit('game:action:playCard', { gameId, handIndex, target })
-      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
+  public playCardAction(gameId: number, handIndex: number, target: CardTarget): Observable<void> {
+    return this.socketService.emit('game:action:playCard', { gameId, handIndex, target }).pipe(
+      map(() => undefined),
+      catchError((error: ApiError) => {
+        this.handleError(error);
+        return throwError(() => error);
+      })
+    );
   }
 
   public reorderBenchAction(gameId: number, from: number, to: number) {

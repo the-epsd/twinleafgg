@@ -1036,8 +1036,8 @@ export class Board3dInteractionService {
           };
         }
       } else {
-        // Play card from hand - return to hand for responsive feedback
-        // Skip for attach actions (energy/tool/evolution onto Pokemon) - card will be removed by state sync
+        // Play card from hand - attach drops (energy/tool/evolution) removed optimistically for instant feedback
+        // If play fails, board component restores hand via syncHand. Non-attach uses returnCardToHand.
         const isAttachDrop = this.currentDragContext && (
           this.currentDragContext.superType === SuperType.ENERGY ||
           this.currentDragContext.trainerType === TrainerType.TOOL ||
