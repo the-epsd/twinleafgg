@@ -82,6 +82,7 @@ cardManager.defineSet(sets.setPOPSeries8);
 cardManager.defineSet(sets.setPCGLPromotionalCards);
 cardManager.defineSet(sets.setPCGPPromotionalCards);
 cardManager.defineSet(sets.setPokeParkPremiumFiles);
+cardManager.defineSet(sets.setGiftBoxMewLucario);
 
 // VS Packs
 cardManager.defineSet(sets.setVSPackAurasLucario);

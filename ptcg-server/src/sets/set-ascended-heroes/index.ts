@@ -16,6 +16,7 @@ import { MegaEelektrossex } from './mega-eelektross-ex';
 import { MegaFroslassex } from './mega-froslass-ex';
 import { MegaHawluchaex } from './mega-hawlucha-ex';
 import { MegaScraftyex } from './mega-scrafty-ex';
+import { Miraidonex } from './miraidon-ex';
 import { Misdreavus } from './misdreavus';
 import { Mismagius } from './mismagius';
 import { NightMine } from './night-mine';
@@ -98,6 +99,7 @@ export const setAscendedHeroes: Card[] = [
   new MegaFroslassex(),
   new MegaHawluchaex(),
   new MegaScraftyex(),
+  new Miraidonex(),
   new Misdreavus(),
   new Mismagius(),
   new NightMine(),

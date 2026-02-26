@@ -13,6 +13,7 @@ import { Charmeleon } from './charmeleon';
 import { Darmanitan } from './darmanitan';
 import { Darumaka } from './darumaka';
 import { Dawn } from './dawn';
+import { Empoleonex } from './empoleon-ex';
 import { Firebreather } from './firebreather';
 import { Gastly } from './gastly';
 import { Genesect } from './genesect';
@@ -32,6 +33,8 @@ import { MegaSharpedoex } from './mega-sharpedo-ex';
 import { Moltres } from './moltres';
 import { Oricorioex } from './oricorio-ex';
 import { PaldeanTauros } from './paldean-tauros';
+import { Piplup } from './piplup';
+import { Prinplup } from './prinplup';
 import { PunkHelmet } from './punk-helmet';
 import { Reshiram } from './reshiram';
 import { Rotomex } from './rotom-ex';
@@ -58,6 +61,7 @@ export const setPhantasmalFlames: Card[] = [
   new Darmanitan(),
   new Darumaka(),
   new Dawn(),
+  new Empoleonex(),
   new Firebreather(),
   new Gastly(),
   new Genesect(),
@@ -78,6 +82,8 @@ export const setPhantasmalFlames: Card[] = [
   new Oricorioex(),
   new PaldeanTauros(),
   new Reshiram(),
+  new Piplup(),
+  new Prinplup(),
   new PunkHelmet(),
   new Rotomex(),
   new Sableye(),

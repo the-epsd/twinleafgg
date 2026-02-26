@@ -2,6 +2,8 @@ import { Card } from '../../game/store/card/card';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy } from './basic-energies';
 import { Armaldo } from './armaldo';
 import { Chimecho } from './chimecho';
+import { Corphish } from './corphish';
+import { CrawdauntEx } from './crawdaunt-ex';
 import { DeltaRainbowEnergy } from './delta-rainbow-energy';
 import { Exeggcute } from './exeggcute';
 import { Exeggutor } from './exeggutor';
@@ -24,6 +26,8 @@ import { Vibrava } from './vibrava';
 export const setEXHolonPhantoms: Card[] = [
   new Armaldo(),
   new Chimecho(),
+  new Corphish(),
+  new CrawdauntEx(),
   new DeltaRainbowEnergy(),
   new Exeggcute(),
   new Exeggutor(),

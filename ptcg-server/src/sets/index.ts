@@ -58,6 +58,7 @@ export * from './set-pop-series-8';
 export * from './set-pcg-l-promotional-cards';
 export * from './set-pcg-p-promotional-cards';
 export * from './set-pokepark-premium-files';
+export * from './set-gift-box-mew-lucario';
 
 // VS Packs
 export * from './set-vs-pack-auras-lucario';
