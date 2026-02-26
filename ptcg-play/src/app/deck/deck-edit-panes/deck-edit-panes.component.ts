@@ -91,7 +91,30 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
         this.tempList = this.list = this.moveDeckCards(item);
         if (!item.isInternal) {
           const newItem = this.list.find(i => i.card.fullName === item.data.card.fullName);
-          newItem.count += 1;
+          let shouldAdd = true;
+
+          if (item.data.card.tags.includes(CardTag.ACE_SPEC)) {
+            const aceSpecCount = this.list.filter(c => c.card.tags.includes(CardTag.ACE_SPEC)).reduce((sum, c) => sum + c.count, 0);
+            if (aceSpecCount >= 1) shouldAdd = false;
+          }
+          if (item.data.card.tags.includes(CardTag.RADIANT)) {
+            const radiantCount = this.list.filter(c => c.card.tags.includes(CardTag.RADIANT)).reduce((sum, c) => sum + c.count, 0);
+            if (radiantCount >= 1) shouldAdd = false;
+          }
+          if (item.data.card.tags.includes(CardTag.PRISM_STAR)) {
+            const prismStarCount = this.list.filter(c => c.card.fullName === item.data.card.fullName).reduce((sum, c) => sum + c.count, 0);
+            if (prismStarCount >= 1) shouldAdd = false;
+          }
+          if (this.getSameNameCount(this.list, item.data.card.name) >= 4) {
+            shouldAdd = false;
+          }
+
+          if (shouldAdd) {
+            newItem.count += 1;
+          } else {
+            this.list = this.list.filter(i => !(i.card.fullName === item.data.card.fullName && i.count === 0));
+            this.tempList = this.list = this.sortByPokemonEvolution(this.list);
+          }
         }
         this.deckItemsChange.next(this.list);
       },
@@ -475,6 +498,12 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
     return card.id; // or any unique identifier for the card
   }
 
+  private getSameNameCount(list: DeckItem[], cardName: string): number {
+    return list
+      .filter(i => i.card.name === cardName)
+      .reduce((sum, i) => sum + i.count, 0);
+  }
+
   public async addCardToDeck(item: DeckItem) {
     if (this.disabled) return;
 
@@ -508,6 +537,12 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
       }
     }
 
+    // Max 4 copies per card name (across all printings)
+    const sameNameCount = this.getSameNameCount(list, item.card.name);
+    if (sameNameCount >= 4) {
+      return;
+    }
+
     const count = 1;
     if (index === -1) {
       // First sort the list to find the correct position
@@ -536,13 +571,9 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
 
       list.splice(insertIndex, 0, { ...item, pane: DeckEditPane.DECK, count });
     } else {
-      if (list[index].count < 4) {
+      const currentSameNameCount = this.getSameNameCount(list, item.card.name);
+      if (currentSameNameCount < 4) {
         list[index].count += count;
-      }
-      else {
-        if (list[index].count < 99 && list[index].card.energyType === EnergyType.BASIC) {
-          list[index].count += count;
-        }
       }
     }
 
@@ -655,30 +686,35 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
   public async setCardCount(item: DeckItem) {
     if (this.disabled) return;
 
-    const MAX_CARD_VALUE = 99;
     const index = this.tempList.findIndex(c => c.card.fullName === item.card.fullName);
     if (index !== -1) {
       item = this.tempList[index];
     }
 
+    const otherSameNameCount = this.tempList
+      .filter(i => i.card.name === item.card.name && i.card.fullName !== item.card.fullName)
+      .reduce((sum, i) => sum + i.count, 0);
+    const maxForThisPrinting = Math.max(0, 4 - otherSameNameCount);
+
     const count = await this.alertService.inputNumber({
       title: this.translate.instant('DECK_EDIT_HOW_MANY_CARDS'),
       value: item.count,
       minValue: 0,
-      maxValue: MAX_CARD_VALUE
+      maxValue: maxForThisPrinting
     });
     if (count === undefined) {
       return;
     }
 
     const list = this.tempList.slice();
-    if (index === -1 && count === 0) {
+    const cappedCount = Math.min(count, maxForThisPrinting);
+    if (index === -1 && cappedCount === 0) {
       return;
     } else if (index === -1) {
-      list.push({ ...item, pane: DeckEditPane.DECK, count });
+      list.push({ ...item, pane: DeckEditPane.DECK, count: cappedCount });
     } else {
-      if (count > 0) {
-        list[index].count = count;
+      if (cappedCount > 0) {
+        list[index].count = cappedCount;
       } else {
         list.splice(index, 1);
       }

@@ -119,6 +119,21 @@ export class DeckEditComponent implements OnInit {
     this.deckItems = [];
   }
 
+  private capCardsByByName(fullNames: string[], maxPerName: number): string[] {
+    const nameCount = new Map<string, number>();
+    const result: string[] = [];
+    for (const fullName of fullNames) {
+      const card = this.cardsBaseService.getCardByName(fullName);
+      if (!card) continue;
+      const count = nameCount.get(card.name) ?? 0;
+      if (count < maxPerName) {
+        result.push(fullName);
+        nameCount.set(card.name, count + 1);
+      }
+    }
+    return result;
+  }
+
   private loadDeckItems(cardNames: string[]): DeckItem[] {
     const itemMap: { [name: string]: DeckItem } = {};
     let deckItems: DeckItem[] = [];
@@ -522,9 +537,10 @@ export class DeckEditComponent implements OnInit {
       }
 
       return foundCard?.fullName;
-    }).filter(name => !!name);
+    }).filter(name => !!name) as string[];
 
-    this.deckItems = this.loadDeckItems(successfulCards as string[]);
+    const cappedCards = this.capCardsByByName(successfulCards, 4);
+    this.deckItems = this.loadDeckItems(cappedCards);
 
     if (failedCardCounts.size > 0) {
       const formattedFailures = Array.from(failedCardCounts.entries())
