@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
+import { Player } from '../../game';
 import { Card} from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../game/store/state/card-list';
@@ -92,6 +93,18 @@ export class SuperiorEnergyRetrieval extends TrainerCard {
     `You can use this card only if you discard 2 other cards from your hand. 
 
 Put up to 4 Basic Energy cards from your discard pile into your hand. (You can't choose a card you discarded with the effect of this card.)`;
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const otherCardsInHand = player.hand.cards.filter(c => c !== this).length;
+    if (otherCardsInHand < 2) {
+      return false;
+    }
+
+    const hasBasicEnergy = player.discard.cards.some(c =>
+      c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC
+    );
+    return hasBasicEnergy;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

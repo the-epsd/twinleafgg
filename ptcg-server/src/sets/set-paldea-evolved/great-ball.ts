@@ -4,7 +4,7 @@ import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, GameLog, StateUtils, GameError } from '../../game';
+import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, GameLog, StateUtils, GameError, Player } from '../../game';
 
 export class GreatBall extends TrainerCard {
 
@@ -24,6 +24,10 @@ export class GreatBall extends TrainerCard {
 
   public text: string =
     'Look at the top 7 cards of your deck. You may reveal a Pokémon you find there and put it into your hand. Shuffle the other cards back into your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return player.deck.cards.length > 0;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

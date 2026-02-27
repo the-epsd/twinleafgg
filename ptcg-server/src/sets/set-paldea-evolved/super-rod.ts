@@ -11,7 +11,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { ShowCardsPrompt, StateUtils } from '../../game';
+import { ShowCardsPrompt, StateUtils, Player } from '../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: SuperRod, effect: TrainerEffect): IterableIterator<State> {
@@ -103,6 +103,13 @@ export class SuperRod extends TrainerCard {
   public text: string =
     'Shuffle 3 in any combination of Pokemon and basic Energy cards from ' +
     'your discard pile back into your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const hasValidCards = player.discard.cards.some(c =>
+      c instanceof PokemonCard || (c instanceof EnergyCard && c.energyType === EnergyType.BASIC)
+    );
+    return hasValidCards;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

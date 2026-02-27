@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { StateUtils, CardTarget, PlayerType, GameError, GameMessage, PokemonCardList, ChoosePokemonPrompt, SlotType, Card, ChooseCardsPrompt } from '../../game';
+import { StateUtils, CardTarget, PlayerType, GameError, GameMessage, Player, PokemonCardList, ChoosePokemonPrompt, SlotType, Card, ChooseCardsPrompt } from '../../game';
 
 export class Giacomo extends TrainerCard {
 
@@ -24,6 +24,21 @@ export class Giacomo extends TrainerCard {
 
   public text: string =
     'Discard a Special Energy from each of your opponent\'s Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    const opponent = StateUtils.getOpponent(state, player);
+    let hasPokemonWithSpecialEnergy = false;
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+      if (cardList.energies.cards.some(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL)) {
+        hasPokemonWithSpecialEnergy = true;
+      }
+    });
+    return hasPokemonWithSpecialEnergy;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

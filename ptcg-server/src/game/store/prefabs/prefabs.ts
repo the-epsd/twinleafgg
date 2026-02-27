@@ -2771,9 +2771,13 @@ export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Pl
     }
 
     // If canPlay is not implemented or returns undefined
-    // For Tool cards, if we've passed all basic checks, return true
+    // For Tool and Stadium cards, if we've passed all basic checks, return true
+    // (Stadium checks already done: stadiumPlayedTurn, same-name stadium in play)
     if (trainerCard.trainerType === TrainerType.TOOL) {
       return true; // Tool cards can be played if Pokemon can accept them
+    }
+    if (trainerCard.trainerType === TrainerType.STADIUM) {
+      return true; // Stadiums are playable unless already played one this turn (checked above)
     }
     // For other trainer types, err on the side of caution
     // We can't validate card-specific requirements without canPlay

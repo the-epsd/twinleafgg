@@ -1,6 +1,6 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage, CardTarget, ChoosePokemonPrompt, PlayerType, PokemonCardList, SlotType } from '../../game';
+import { StoreLike, State, StateUtils, GameError, GameMessage, CardTarget, ChoosePokemonPrompt, PlayerType, Player, PokemonCardList, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
@@ -70,6 +70,21 @@ export class FightingAuLait extends TrainerCard {
     `You can use this card only if you have more Prize cards remaining than your opponent.
 
 Heal 60 damage from 1 of your Pokémon.`;
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+    if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
+      return false;
+    }
+
+    let hasPokemonWithDamage = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      if (cardList.damage > 0) {
+        hasPokemonWithDamage = true;
+      }
+    });
+    return hasPokemonWithDamage;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
