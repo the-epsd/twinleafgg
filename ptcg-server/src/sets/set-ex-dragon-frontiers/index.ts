@@ -36,6 +36,7 @@ import { Swablu } from './swablu';
 import { Totodile } from './totodile';
 import { Trapinch } from './trapinch';
 import { Trapinch2 } from './trapinch2';
+import { Tropius } from './tropius';
 import { Vibrava } from './vibrava';
 import { Vibrava2 } from './vibrava2';
 
@@ -85,6 +86,7 @@ export const setEXDragonFrontiers: Card[] = [
   new Totodile(),
   new Trapinch(),
   new Trapinch2(),
+  new Tropius(),
   new Vibrava(),
   new Vibrava2(),
 
