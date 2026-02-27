@@ -125,10 +125,16 @@ export class DeckEditComponent implements OnInit {
     for (const fullName of fullNames) {
       const card = this.cardsBaseService.getCardByName(fullName);
       if (!card) continue;
-      const count = nameCount.get(card.name) ?? 0;
-      if (count < maxPerName) {
+      const isBasicEnergy = card.superType === SuperType.ENERGY &&
+        (card as EnergyCard).energyType === EnergyType.BASIC;
+      if (isBasicEnergy) {
         result.push(fullName);
-        nameCount.set(card.name, count + 1);
+      } else {
+        const count = nameCount.get(card.name) ?? 0;
+        if (count < maxPerName) {
+          result.push(fullName);
+          nameCount.set(card.name, count + 1);
+        }
       }
     }
     return result;

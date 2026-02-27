@@ -105,7 +105,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
             const prismStarCount = this.list.filter(c => c.card.fullName === item.data.card.fullName).reduce((sum, c) => sum + c.count, 0);
             if (prismStarCount >= 1) shouldAdd = false;
           }
-          if (this.getSameNameCount(this.list, item.data.card.name) >= 4) {
+          if (!this.isBasicEnergy(item.data.card) && this.getSameNameCount(this.list, item.data.card.name) >= 4) {
             shouldAdd = false;
           }
 
@@ -504,6 +504,11 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
       .reduce((sum, i) => sum + i.count, 0);
   }
 
+  private isBasicEnergy(card: Card): boolean {
+    return card.superType === SuperType.ENERGY &&
+      (card as EnergyCard).energyType === EnergyType.BASIC;
+  }
+
   public async addCardToDeck(item: DeckItem) {
     if (this.disabled) return;
 
@@ -537,10 +542,12 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
       }
     }
 
-    // Max 4 copies per card name (across all printings)
-    const sameNameCount = this.getSameNameCount(list, item.card.name);
-    if (sameNameCount >= 4) {
-      return;
+    // Max 4 copies per card name (across all printings) - except basic energy
+    if (!this.isBasicEnergy(item.card)) {
+      const sameNameCount = this.getSameNameCount(list, item.card.name);
+      if (sameNameCount >= 4) {
+        return;
+      }
     }
 
     const count = 1;
@@ -571,8 +578,7 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
 
       list.splice(insertIndex, 0, { ...item, pane: DeckEditPane.DECK, count });
     } else {
-      const currentSameNameCount = this.getSameNameCount(list, item.card.name);
-      if (currentSameNameCount < 4) {
+      if (this.isBasicEnergy(item.card) || this.getSameNameCount(list, item.card.name) < 4) {
         list[index].count += count;
       }
     }
@@ -694,7 +700,9 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
     const otherSameNameCount = this.tempList
       .filter(i => i.card.name === item.card.name && i.card.fullName !== item.card.fullName)
       .reduce((sum, i) => sum + i.count, 0);
-    const maxForThisPrinting = Math.max(0, 4 - otherSameNameCount);
+    const isBasicEnergy = this.isBasicEnergy(item.card);
+    const maxPerName = isBasicEnergy ? 60 : 4;
+    const maxForThisPrinting = Math.max(0, maxPerName - otherSameNameCount);
 
     const count = await this.alertService.inputNumber({
       title: this.translate.instant('DECK_EDIT_HOW_MANY_CARDS'),
