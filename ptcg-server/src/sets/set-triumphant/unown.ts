@@ -4,6 +4,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerType, StoreLike, State } from '../../game';
 import { IS_POKEPOWER_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Unown extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -39,6 +40,9 @@ export class Unown extends PokemonCard {
       if (IS_POKEPOWER_BLOCKED(store, state, player, this)) {
         return state;
       }
+
+      const powerEffect = new PowerEffect(player, this.powers[0], this);
+      store.reduceEffect(state, powerEffect);
 
       const conditions = player.active.specialConditions.slice();
       conditions?.forEach(condition => {

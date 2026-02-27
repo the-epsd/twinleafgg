@@ -4,6 +4,7 @@ import { Camerupt } from './camerupt';
 import { CrystalShard } from './crystal-shard';
 import { Electrike } from './electrike';
 import { Electrike2 } from './electrike2';
+import { Golbat } from './golbat';
 import { HealEnergy } from './heal-energy';
 import { Jirachi } from './jirachi';
 import { Koffing } from './koffing';
@@ -26,6 +27,7 @@ import { RayquazaStar } from './rayquaza-star';
 import { Sableye } from './sableye';
 import { Salamenceex } from './salamence-ex';
 import { ScrambleEnergy } from './scramble-energy';
+import { Seedot } from './seedot';
 import { Slugma } from './slugma';
 import { SpaceCenter } from './space-center';
 import { Weezing } from './weezing';
@@ -39,6 +41,7 @@ export const setEXDeoxys: Card[] = [
   new CrystalShard(),
   new Electrike(),
   new Electrike2(),
+  new Golbat(),
   new HealEnergy(),
   new Jirachi(),
   new Koffing(),
@@ -61,6 +64,7 @@ export const setEXDeoxys: Card[] = [
   new Sableye(),
   new Salamenceex(),
   new ScrambleEnergy(),
+  new Seedot(),
   new Slugma(),
   new SpaceCenter(),
   new Weezing(),

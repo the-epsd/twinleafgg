@@ -13,6 +13,7 @@ import { Metagrossex } from './metagross-ex';
 import { MysteriousFossil } from './mysterious-fossil';
 import { PhoebesStadium } from './phoebes-stadium';
 import { Salamenceex } from './salamence-ex';
+import { Shiftryex } from './shiftry-ex';
 import { SidneysStadium } from './sidneys-stadium';
 import { Skitty } from './skitty';
 import { StevensAdvice } from './stevens-advice';
@@ -42,6 +43,7 @@ export const setEXPowerKeepers: Card[] = [
   new MysteriousFossil(),
   new PhoebesStadium(),
   new Salamenceex(),
+  new Shiftryex(),
   new SidneysStadium(),
   new Skitty(),
   new StevensAdvice(),

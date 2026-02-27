@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { Anorith } from './anorith';
 import { Armaldo } from './armaldo';
 import { Dunsparce } from './dunsparce';
+import { Elekid } from './elekid';
 import { Gardevoirex } from './gardevoir-ex';
 import { LanettesNetSearch } from './lanettes-net-search';
 import { Lombre } from './lombre';
@@ -10,6 +11,7 @@ import { Lunatone } from './lunatone';
 import { Marill } from './marill';
 import { MultiEnergy } from './multi-energy';
 import { Onix } from './onix';
+import { Pichu } from './pichu';
 import { Skitty } from './skitty';
 import { Trapinch } from './trapinch';
 import { Wailmer } from './wailmer';
@@ -28,6 +30,7 @@ export const setEXSandstorm: Card[] = [
   new Anorith(),
   new Armaldo(),
   new Dunsparce(),
+  new Elekid(),
   new Gardevoirex(),
   new LanettesNetSearch(),
   new Lombre(),
@@ -36,6 +39,7 @@ export const setEXSandstorm: Card[] = [
   new Marill(),
   new MultiEnergy(),
   new Onix(),
+  new Pichu(),
   new Skitty(),
   new Trapinch(),
   new Wailmer(),

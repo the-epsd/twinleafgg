@@ -6,6 +6,7 @@ import { ABILITY_USED, ADD_MARKER, CONFIRMATION_PROMPT, HAS_MARKER, IS_POKEPOWER
 import { AbstractAttackEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Celebiex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -52,6 +53,9 @@ export class Celebiex extends PokemonCard {
 
       CONFIRMATION_PROMPT(store, state, player, wantToUse => {
         if (wantToUse) {
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, powerEffect);
+
           const deckTop = new CardList();
           return store.prompt(state, new ChooseCardsPrompt(
             player,

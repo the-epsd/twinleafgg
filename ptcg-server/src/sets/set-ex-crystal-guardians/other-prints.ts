@@ -1,5 +1,7 @@
 import { BillsMaintenance } from '../set-ex-firered-leafgreen/bills-maintenance';
+import { EnergySearch } from '../set-scarlet-and-violet/energy-search';
 import { PokeBall } from '../set-jungle/pokeball';
+import { PokeNav } from '../set-ex-ruby-and-sapphire/pokenav';
 import { Potion } from '../set-base-set/potion';
 import { WarpPointMA } from '../set-ex-team-magma-vs-team-aqua/other-prints';
 
@@ -9,11 +11,24 @@ export class BillsMaintenanceCG extends BillsMaintenance {
   public setNumber = '71';
 }
 
+export class EnergySearchCG extends EnergySearch {
+  public fullName = 'Energy Search CG';
+  public set = 'CG';
+  public setNumber = '86';
+  public text = 'Search your deck for a basic Energy card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
+}
+
 export class PokeBallCG extends PokeBall {
   public fullName = 'Poké Ball CG';
   public set = 'CG';
   public setNumber = '82';
   public text = 'Flip a coin. If heads, search your deck for a Pokémon, reveal it, and put it into your hand. Shuffle your deck afterward.';
+}
+
+export class PokeNavCG extends PokeNav {
+  public fullName = 'PokéNav CG';
+  public set = 'CG';
+  public setNumber = '83';
 }
 
 export class PotionCG extends Potion {

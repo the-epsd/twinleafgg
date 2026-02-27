@@ -1,6 +1,7 @@
 import { Card } from '../../game/store/card/card';
 import { AncientTechnicalMachineRock } from './ancient-technical-machine-rock';
 import { AncientTomb } from './ancient-tomb';
+import { Beldum } from './beldum';
 import { Bellossom } from './bellossom';
 import { Chinchou } from './chinchou';
 import { Clamperl } from './clamperl';
@@ -16,6 +17,7 @@ import { Lanturn } from './lanturn';
 import { Machop } from './machop';
 import { MagneticStorm } from './magnetic-storm';
 import { Medicham } from './medicham';
+import { Metang } from './metang';
 import { Milotic } from './milotic';
 import { Ninetales } from './ninetales';
 import { Oddish } from './oddish';
@@ -34,6 +36,7 @@ import {
 export const setEXHiddenLegends: Card[] = [
   new AncientTechnicalMachineRock(),
   new AncientTomb(),
+  new Beldum(),
   new Bellossom(),
   new Chinchou(),
   new Clamperl(),
@@ -49,6 +52,7 @@ export const setEXHiddenLegends: Card[] = [
   new Machop(),
   new MagneticStorm(),
   new Medicham(),
+  new Metang(),
   new Milotic(),
   new Ninetales(),
   new Oddish(),

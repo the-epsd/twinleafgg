@@ -5,6 +5,7 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerType, StoreLike, State, ConfirmPrompt, GameMessage, CardList, ChooseCardsPrompt, ShowCardsPrompt, StateUtils } from '../../game';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
 import { BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, IS_POKEPOWER_BLOCKED, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Azelf extends PokemonCard {
 
@@ -60,6 +61,9 @@ export class Azelf extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, powerEffect);
+
           const opponent = StateUtils.getOpponent(state, player);
           const prizes = player.prizes.filter(p => p.isSecret);
 

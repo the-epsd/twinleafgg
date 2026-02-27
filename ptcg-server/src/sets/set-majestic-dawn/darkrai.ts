@@ -5,6 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { ADD_SLEEP_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, HEAL_X_DAMAGE_FROM_THIS_POKEMON, IS_POKEPOWER_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Darkrai extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -50,6 +51,9 @@ export class Darkrai extends PokemonCard {
 
       CONFIRMATION_PROMPT(store, state, player, result => {
         if (result) {
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, powerEffect);
+
           ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, opponent, this);
         }
       });

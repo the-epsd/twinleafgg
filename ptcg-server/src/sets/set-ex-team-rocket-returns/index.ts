@@ -14,6 +14,7 @@ import { DarkTyranitar2 } from './dark-tyrantiar-2';
 import { Dratini } from './dratini';
 import { HereComesTeamRocket } from './here-comes-team-rocket';
 import { Hoppip } from './hoppip';
+import { Houndour } from './houndour';
 import { Larvitar } from './larvitar';
 import { Magmar } from './magmar';
 import { Onix } from './onix';
@@ -53,6 +54,7 @@ export const setEXTeamRocketReturns: Card[] = [
   new Dratini(),
   new HereComesTeamRocket(),
   new Hoppip(),
+  new Houndour(),
   new Larvitar(),
   new Magmar(),
   new Onix(),

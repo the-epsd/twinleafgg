@@ -10,6 +10,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { IS_POKEPOWER_BLOCKED, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Pachirisu extends PokemonCard {
 
@@ -55,6 +56,8 @@ export class Pachirisu extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, powerEffect);
 
           const hasEnergyInHand = player.hand.cards.some(c => {
             return c.superType === SuperType.ENERGY

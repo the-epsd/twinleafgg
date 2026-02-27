@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
+import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
@@ -70,6 +70,8 @@ export class Absolex extends PokemonCard {
         if (transfers === null) {
           return;
         }
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
 
         for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);

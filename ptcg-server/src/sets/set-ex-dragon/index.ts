@@ -1,5 +1,6 @@
 import { Card } from '../../game';
 import { BalloonBerry } from './balloon-berry';
+import { Corphish } from './corphish';
 import { EnergyRecycleSystem } from './energy-recycle-system';
 import { Grimer } from './grimer';
 import { HighPressureSystem } from './high-pressure-system';
@@ -20,6 +21,7 @@ import { TvReporter } from './tv-reporter';
 
 export const setEXDragon: Card[] = [
   new BalloonBerry(),
+  new Corphish(),
   new EnergyRecycleSystem(),
   new Grimer(),
   new HighPressureSystem(),

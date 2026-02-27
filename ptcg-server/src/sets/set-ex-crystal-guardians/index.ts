@@ -17,6 +17,7 @@ import { Kyogreex } from './kyogre-ex';
 import { Mudkip } from './mudkip';
 import { MysteriousShard } from './mysterious-shard';
 import { Sceptileex } from './sceptile-ex';
+import { Shiftryex } from './shiftry-ex';
 import { Shuppet } from './shuppet';
 import { Spearow } from './spearow';
 import { Swampert } from './swampert';
@@ -29,7 +30,9 @@ import { Windstorm } from './windstorm';
 // Other prints
 import {
   BillsMaintenanceCG,
+  EnergySearchCG,
   PokeBallCG,
+  PokeNavCG,
   PotionCG,
   WarpPointCG,
 } from './other-prints';
@@ -53,6 +56,7 @@ export const setEXCrystalGuardians: Card[] = [
   new Mudkip(),
   new MysteriousShard(),
   new Sceptileex(),
+  new Shiftryex(),
   new Shuppet(),
   new Spearow(),
   new Swampert(),
@@ -64,7 +68,9 @@ export const setEXCrystalGuardians: Card[] = [
 
   // Other prints
   new BillsMaintenanceCG(),
+  new EnergySearchCG(),
   new PokeBallCG(),
+  new PokeNavCG(),
   new PotionCG(),
   new WarpPointCG(),
 ];
