@@ -26,7 +26,6 @@ import {
   BattlePass,
   Sleeves,
   MemoryHealthController,
-  ImageProxy,
 } from './controllers';
 import { ApiErrorEnum } from './common/errors';
 
@@ -87,7 +86,6 @@ export class App {
     app.use('/sleeves', express.static(config.backend.sleevesDir));
 
     // API routes
-    define('/v1/image-proxy', ImageProxy);
     define('/v1/avatars', Avatars);
     define('/v1/cards', Cards);
     define('/v1/decks', Decks);
