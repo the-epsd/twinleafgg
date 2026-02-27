@@ -311,6 +311,9 @@ export class GameService {
     this.socketService.on(`game[${id}]:coinFlip`, (data: { playerId: number, result: boolean }) => {
       this.boardInteractionService.triggerCoinFlipAnimation(data.result, data.playerId);
     });
+    this.socketService.on(`game[${id}]:attachEnergy`, () => {
+      this.soundService.playEnergyAttachSound();
+    });
   }
 
   private stopListening(id: number) {
@@ -324,6 +327,7 @@ export class GameService {
     this.socketService.off(`game[${id}]:evolution`);
     this.socketService.off(`game[${id}]:attack`);
     this.socketService.off(`game[${id}]:coinFlip`);
+    this.socketService.off(`game[${id}]:attachEnergy`);
   }
 
   private onStateChange(gameId: number, stateData: string, playerStats: PlayerStats[]) {

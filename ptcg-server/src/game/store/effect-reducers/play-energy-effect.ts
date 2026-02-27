@@ -5,7 +5,26 @@ import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { EnergyType } from '../card/card-types';
+import { SlotType } from '../actions/play-card-action';
 
+/**
+ * Helper function to emit animation events
+ */
+function emitAnimationEvent(store: StoreLike, eventName: string, data: {
+  playerId: number;
+  cardId: number | string;
+  slot?: string;
+  index?: number;
+}): void {
+  const game = (store as any).handler;
+  if (game && game.core && typeof game.core.emit === 'function') {
+    game.core.emit((c: any) => {
+      if (typeof c.socket !== 'undefined') {
+        c.socket.emit(`game[${game.id}]:${eventName}`, data);
+      }
+    });
+  }
+}
 
 export function playEnergyReducer(store: StoreLike, state: State, effect: Effect): State {
 
@@ -32,6 +51,17 @@ export function playEnergyReducer(store: StoreLike, state: State, effect: Effect
     if (!effect.target.energies.cards.includes(effect.energyCard)) {
       effect.target.energies.cards.push(effect.energyCard);
     }
+
+    // Derive slot and index for animation/sound event
+    const slot = effect.target === effect.player.active ? SlotType.ACTIVE : SlotType.BENCH;
+    const index = slot === SlotType.BENCH ? effect.player.bench.indexOf(effect.target) : undefined;
+    emitAnimationEvent(store, 'attachEnergy', {
+      playerId: effect.player.id,
+      cardId: effect.energyCard.id,
+      slot: String(slot),
+      index
+    });
+
     return state;
   }
 
