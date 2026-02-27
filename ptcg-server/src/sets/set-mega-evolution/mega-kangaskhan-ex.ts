@@ -3,7 +3,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CoinFlipPrompt, GameError, GameMessage, PokemonCard, PowerType } from '../../game';
-import { DRAW_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, DRAW_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class MegaKangaskhanex extends PokemonCard {
@@ -55,6 +55,7 @@ export class MegaKangaskhanex extends PokemonCard {
       }
 
       DRAW_CARDS(player, 2);
+      ABILITY_USED(player, this);
       player.usedRunErrand = true;
     }
 
