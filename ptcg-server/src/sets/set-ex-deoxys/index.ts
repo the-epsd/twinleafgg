@@ -4,6 +4,7 @@ import { Camerupt } from './camerupt';
 import { CrystalShard } from './crystal-shard';
 import { Electrike } from './electrike';
 import { Electrike2 } from './electrike2';
+import { EnergyCharge } from './energy-charge';
 import { Golbat } from './golbat';
 import { HealEnergy } from './heal-energy';
 import { Jirachi } from './jirachi';
@@ -41,6 +42,7 @@ export const setEXDeoxys: Card[] = [
   new CrystalShard(),
   new Electrike(),
   new Electrike2(),
+  new EnergyCharge(),
   new Golbat(),
   new HealEnergy(),
   new Jirachi(),

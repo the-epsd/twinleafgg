@@ -2,14 +2,13 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
+import { ABILITY_USED, ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_DECK_EMPTY, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER, USE_ABILITY_ONCE_PER_TURN, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { GameError } from '../../game/game-error';
+import { GameMessage } from '../../game/game-message';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { GameMessage, PowerType, StoreLike, State, CardList, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { OrderCardsPrompt } from '../../game/store/prompts/order-cards-prompt';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, ABILITY_USED, USE_ABILITY_ONCE_PER_TURN, REMOVE_MARKER_AT_END_OF_TURN, BLOCK_IF_DECK_EMPTY, SHOW_CARDS_TO_PLAYER, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
-
+import { CardList, OrderCardsPrompt, PowerType, State, StoreLike } from '../../game';
 export class Lapras extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
@@ -17,7 +16,7 @@ export class Lapras extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public powers = [  {
+  public powers = [{
     name: 'Go for a Swim',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
@@ -78,10 +77,10 @@ export class Lapras extends PokemonCard {
 
     // Attack 1: Ice Beam
     // Ref: set-celestial-storm/voltorb.ts (Thunder Shock)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
       });
     }

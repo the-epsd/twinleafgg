@@ -2,16 +2,17 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, MoveEnergyPrompt } from '../../game';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
+import { StateUtils } from '../../game/store/state-utils';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
+import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
+import { GameMessage } from '../../game/game-message';
+import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
+import { MoveEnergyPrompt, PlayerType, SlotType, State, StoreLike } from '../../game';
 import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
-
 export class AlolanExeggutorGx extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
@@ -87,8 +88,8 @@ export class AlolanExeggutorGx extends PokemonCard {
 
     // Attack 2: Dragon Hammer
     // Ref: set-burning-shadows/noctowl.ts (Confused status)
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+    if (AFTER_ATTACK(effect, 1, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     // Attack 3: Tower-Go-Round-GX

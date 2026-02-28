@@ -1,14 +1,11 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike } from '../../game/store/store-like';
-import { GamePhase, State } from '../../game/store/state/state';
-import { Effect } from '../../game/store/effects/effect';
-import { ADD_MARKER, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
+import { ADD_MARKER, ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { StateUtils } from '../../game';
+import { GamePhase, State, StateUtils, StoreLike } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
 export class PokeParksMunchlax extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
@@ -63,10 +60,10 @@ export class PokeParksMunchlax extends PokemonCard {
       effect.preventDefault = true;
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
+    if (AFTER_ATTACK(effect, 1, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
       });
     }

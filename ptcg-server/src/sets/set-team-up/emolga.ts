@@ -2,13 +2,14 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
+import { ABILITY_USED, ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_DECK_EMPTY, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, USE_ABILITY_ONCE_PER_TURN, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
+import { GameError } from '../../game/game-error';
+import { GameMessage } from '../../game/game-message';
+import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage, ChooseCardsPrompt, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, SHUFFLE_DECK, COIN_FLIP_PROMPT, BLOCK_IF_DECK_EMPTY, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
-
+import { Card, PowerType, State, StoreLike } from '../../game';
 export class Emolga extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = L;
@@ -80,10 +81,10 @@ export class Emolga extends PokemonCard {
 
     // Attack 1: Nuzzle
     // Ref: set-lost-thunder/dedenne.ts (Nuzzle)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
       });
     }

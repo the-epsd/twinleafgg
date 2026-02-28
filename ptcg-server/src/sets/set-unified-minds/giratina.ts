@@ -2,15 +2,21 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, ConfirmPrompt, GameMessage, ChooseCardsPrompt, Card } from '../../game';
-import { EnergyCard } from '../../game/store/card/energy-card';
-import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
-
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import {
+  CardType,
+  EnergyType,
+  Stage,
+  SuperType
+} from '../../game/store/card/card-types';
+import { StateUtils } from '../../game/store/state-utils';
+import { ConfirmPrompt } from '../../game/store/prompts/confirm-prompt';
+import { GameMessage } from '../../game/game-message';
+import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { Card, EnergyCard, PowerType, State, StoreLike } from '../../game';
 export class Giratina extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
@@ -19,7 +25,7 @@ export class Giratina extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public powers = [  {
+  public powers = [{
     name: 'Dimension Breach',
     powerType: PowerType.ABILITY,
     text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may discard a Special Energy from your opponent\'s Active Pokémon.'
@@ -83,8 +89,8 @@ export class Giratina extends PokemonCard {
 
     // Attack 1: Fade to Black
     // Ref: set-lost-thunder/grimer.ts (Confused status)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

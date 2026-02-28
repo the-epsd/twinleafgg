@@ -1,12 +1,12 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
+import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { StateUtils } from '../../game/store/state-utils';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { State, StoreLike } from '../../game';
 export class Cryogonal2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
@@ -39,8 +39,8 @@ export class Cryogonal2 extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Icy Wind
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     // Ice Chain - switch defending Pokémon after attack

@@ -1,16 +1,12 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, ChooseCardsPrompt } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-import {
-  WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED,
-  USE_ABILITY_ONCE_PER_TURN, REMOVE_MARKER_AT_END_OF_TURN,
-  ABILITY_USED, SHUFFLE_DECK, BLOCK_IF_DECK_EMPTY,
-  SHOW_CARDS_TO_PLAYER
-} from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
+import { ABILITY_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_DECK_EMPTY, IS_ABILITY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, USE_ABILITY_ONCE_PER_TURN, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../game/store/state-utils';
 
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
+import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { GameMessage } from '../../game/game-message';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { PowerType, State, StoreLike } from '../../game';
 export class Metagross extends PokemonCard {
   public tags = [CardTag.TEAM_PLASMA];
   public stage: Stage = Stage.STAGE_2;
@@ -85,8 +81,8 @@ export class Metagross extends PokemonCard {
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.PLASMA_SEARCH_MARKER, this);
 
     // Attack: Mind Bend
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

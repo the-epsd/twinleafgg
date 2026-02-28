@@ -2,15 +2,15 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, IS_POKEBODY_BLOCKED } from '../../game/store/prefabs/prefabs';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonStatsEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
+import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { StateUtils } from '../../game/store/state-utils';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { PowerType, State, StoreLike } from '../../game';
 export class DarkGyarados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public cardType: CardType = W;
@@ -19,7 +19,7 @@ export class DarkGyarados extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [  {
+  public powers = [{
     name: 'Final Beam',
     powerType: PowerType.POKEBODY,
     text: 'When Dark Gyarados is Knocked Out by an attack, flip a coin. If heads, this power does 20 damage for each [W] Energy attached to Dark Gyarados to the Pokémon that Knocked Out Dark Gyarados. Apply Weakness and Resistance. This power doesn\'t work if Dark Gyarados is Asleep, Confused, or Paralyzed.'
@@ -112,10 +112,10 @@ export class DarkGyarados extends PokemonCard {
 
     // Attack 1: Ice Beam
     // Ref: set-fossil/gastly.ts (coin flip + paralysis)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
       });
     }

@@ -2,15 +2,14 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
 import { CheckAttackCostEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { StateUtils } from '../../game/store/state-utils';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { PlayerType, State, StoreLike } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
-
 export class Gastrodon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Shellos';
@@ -75,8 +74,8 @@ export class Gastrodon extends PokemonCard {
 
     // Attack 2: Water Pulse
     // Ref: set-steam-siege/lampent.ts (Flickering Flames - Asleep)
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
+    if (AFTER_ATTACK(effect, 1, this)) {
+      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

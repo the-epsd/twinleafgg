@@ -38,6 +38,11 @@ import { SwoopTeleporter } from './swoop-teleporter';
 import { VentureBomb } from './venture-bomb';
 import { Voltorb } from './voltorb';
 
+// Other prints
+import {
+  CopycatTRR
+} from './other-prints';
+
 export const setEXTeamRocketReturns: Card[] = [
   new Azumarill(),
   new Cubone(),
@@ -77,4 +82,7 @@ export const setEXTeamRocketReturns: Card[] = [
   new SwoopTeleporter(),
   new VentureBomb(),
   new Voltorb(),
+
+  // Other prints
+  new CopycatTRR(),
 ];

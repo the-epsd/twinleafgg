@@ -2,15 +2,16 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, CardTarget, PlayerType, MoveEnergyPrompt, SlotType, GameError } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_ABILITY_BLOCKED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { GameMessage } from '../../game/game-message';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
+import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
+import { GameError } from '../../game/game-error';
+import { StateUtils } from '../../game/store/state-utils';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { CardTarget, MoveEnergyPrompt, PlayerType, PowerType, SlotType, State, StoreLike } from '../../game';
 export class Florges extends PokemonCard {
   public tags = [CardTag.RAPID_STRIKE];
   public stage: Stage = Stage.STAGE_2;
@@ -20,7 +21,7 @@ export class Florges extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public powers = [  {
+  public powers = [{
     name: 'Rapid Strike Connection',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
@@ -101,8 +102,8 @@ export class Florges extends PokemonCard {
 
     // Attack 1: Wonder Shine
     // Ref: attack-effects.ts (YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

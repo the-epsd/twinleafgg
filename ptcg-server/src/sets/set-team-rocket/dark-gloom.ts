@@ -1,10 +1,11 @@
-import { PokemonCard, Stage, StoreLike, State, StateUtils, CardTag, GameError, GameMessage } from '../../game';
-import { PowerType } from '../../game';
-import { Attack } from '../../game/store/card/pokemon-types';
+import { ABILITY_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_MARKER, ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { CardTag, Stage } from '../../game/store/card/card-types';
+import { GameError } from '../../game/game-error';
+import { GameMessage } from '../../game/game-message';
+import { StateUtils } from '../../game/store/state-utils';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { ABILITY_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_MARKER, BLOCK_IF_ASLEEP_CONFUSED_PARALYZED, COIN_FLIP_PROMPT, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
-
+import { Attack, PowerType, State, StoreLike } from '../../game';
 export class DarkGloom extends PokemonCard {
   public stage = Stage.STAGE_1;
   public evolvesFrom = 'Oddish';
@@ -62,8 +63,8 @@ export class DarkGloom extends PokemonCard {
     }
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.POLLEN_STENCH_MARKER, this);
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
     return state;
   }

@@ -2,13 +2,14 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, DRAW_CARDS, IS_ABILITY_BLOCKED, JUST_EVOLVED } from '../../game/store/prefabs/prefabs';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { StateUtils } from '../../game/store/state-utils';
+import { ConfirmPrompt } from '../../game/store/prompts/confirm-prompt';
+import { GameMessage } from '../../game/game-message';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameMessage, ConfirmPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, JUST_EVOLVED, IS_ABILITY_BLOCKED, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
-
+import { PowerType, State, StoreLike } from '../../game';
 export class Alcremie extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Milcery';
@@ -64,8 +65,8 @@ export class Alcremie extends PokemonCard {
 
     // Attack 1: Wonder Shine
     // Ref: set-plasma-blast/musharna.ts (Psywave)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

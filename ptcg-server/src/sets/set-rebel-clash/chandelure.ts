@@ -2,14 +2,13 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { CheckPokemonStatsEffect } from '../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
-
+import { StateUtils } from '../../game/store/state-utils';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { PlayerType, PowerType, State, StoreLike } from '../../game';
 export class Chandelure extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Lampent';
@@ -18,7 +17,7 @@ export class Chandelure extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public powers = [  {
+  public powers = [{
     name: 'Protective Glow',
     powerType: PowerType.ABILITY,
     text: 'All of your Pokémon that have Energy attached have no Weakness.'
@@ -76,8 +75,8 @@ export class Chandelure extends PokemonCard {
 
     // Attack 1: Mirage Flare
     // Ref: AGENTS-patterns.md (Confused)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

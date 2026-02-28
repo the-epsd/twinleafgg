@@ -2,14 +2,13 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
+import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
-
+import { GameMessage } from '../../game/game-message';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { State, StoreLike } from '../../game';
 export class Shaymin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
@@ -72,8 +71,8 @@ export class Shaymin extends PokemonCard {
 
     // Attack 2: Soothing Scent
     // Ref: AGENTS-patterns.md (special conditions)
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
+    if (AFTER_ATTACK(effect, 1, this)) {
+      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

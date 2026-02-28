@@ -2,16 +2,17 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, CardTarget } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../game/store/prefabs/attack-effects';
+import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { EnergyCard } from '../../game/store/card/energy-card';
 
+import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
+import { GameMessage } from '../../game/game-message';
+import { StateUtils } from '../../game/store/state-utils';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { CardTarget, PlayerType, SlotType, State, StoreLike } from '../../game';
 export class Entei extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
@@ -75,8 +76,8 @@ export class Entei extends PokemonCard {
 
     // Attack 2: Fire Fang
     // Ref: AGENTS-patterns.md (Your opponent's Active Pokemon is now Burned)
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
+    if (AFTER_ATTACK(effect, 1, this)) {
+      ADD_BURN_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

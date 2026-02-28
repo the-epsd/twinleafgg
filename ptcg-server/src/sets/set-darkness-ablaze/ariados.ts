@@ -2,15 +2,17 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, ConfirmPrompt } from '../../game';
-import { CardTarget } from '../../game/store/actions/play-card-action';
-import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { StateUtils } from '../../game/store/state-utils';
+import { ConfirmPrompt } from '../../game/store/prompts/confirm-prompt';
+import { GameMessage } from '../../game/game-message';
+import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { BoardEffect, CardTarget, PlayerType, PowerType, SlotType, State, StoreLike } from '../../game';
 export class Ariados extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Spinarak';
@@ -102,8 +104,8 @@ export class Ariados extends PokemonCard {
 
     // Attack 1: Poison Sting
     // Ref: AGENTS-patterns.md (YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

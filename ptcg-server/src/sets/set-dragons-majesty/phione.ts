@@ -2,15 +2,14 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../game';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckPokemonTypeEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { StateUtils } from '../../game/store/state-utils';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
-
+import { PlayerType, PowerType, State, StoreLike } from '../../game';
 export class Phione extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
@@ -18,7 +17,7 @@ export class Phione extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public powers = [  {
+  public powers = [{
     name: 'Murmurs of the Sea',
     powerType: PowerType.ABILITY,
     text: 'Your Water Pok\u00e9mon can\u2019t be Confused. If those Pok\u00e9mon are already Confused, remove that Special Condition.'
@@ -107,8 +106,8 @@ export class Phione extends PokemonCard {
 
     // Attack 1: Water Pulse
     // Ref: AGENTS-patterns.md (special conditions)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

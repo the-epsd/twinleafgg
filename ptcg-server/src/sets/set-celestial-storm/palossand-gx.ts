@@ -2,13 +2,20 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/prefabs/attack-effects';
+import {
+  CardTag,
+  CardType,
+  Stage,
+  SuperType
+} from '../../game/store/card/card-types';
+import { StateUtils } from '../../game/store/state-utils';
+import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { GameMessage } from '../../game/game-message';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { Card, CardList, ChooseCardsPrompt, GameMessage, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
-import { HEAL_X_DAMAGE_FROM_THIS_POKEMON, YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
-
+import { Card, CardList, State, StoreLike } from '../../game';
 export class PalossandGx extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.STAGE_1;
@@ -49,8 +56,8 @@ export class PalossandGx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Eerie Light
     // Ref: set-ultra-prism/salazzle.ts (Panic Poison)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     // Attack 2: Absorb Life

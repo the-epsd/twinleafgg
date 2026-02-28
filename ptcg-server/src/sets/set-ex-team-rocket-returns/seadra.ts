@@ -1,10 +1,10 @@
-import { Effect } from '../../game/store/effects/effect';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, MOVE_CARD_TO, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
+import { GameMessage } from '../../game/game-message';
+import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { StoreLike, State, StateUtils, AttachEnergyPrompt, GameMessage, PlayerType, SlotType } from '../../game';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { MOVE_CARD_TO, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
-
+import { Effect } from '../../game/store/effects/effect';
+import { AttachEnergyPrompt, PlayerType, SlotType, State, StoreLike } from '../../game';
 export class Seadra extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Horsea';
@@ -35,8 +35,8 @@ export class Seadra extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     //Attack
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

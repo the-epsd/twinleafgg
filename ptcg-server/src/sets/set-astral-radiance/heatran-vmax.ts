@@ -2,14 +2,15 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType } from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
+import { ADD_BURN_TO_PLAYER_ACTIVE, ADD_MARKER, AFTER_ATTACK, HAS_MARKER, IS_ABILITY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
+import { GameError } from '../../game/game-error';
+import { GameMessage } from '../../game/game-message';
+import { StateUtils } from '../../game/store/state-utils';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../game/store/prefabs/attack-effects';
-
+import { BoardEffect, PlayerType, PowerType, State, StoreLike } from '../../game';
 export class HeatranVmax extends PokemonCard {
   public tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
@@ -80,8 +81,8 @@ export class HeatranVmax extends PokemonCard {
 
     // Attack 1: Max Heat Burst
     // Ref: set-astral-radiance/heatran-v.ts (Heat Burn - YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_BURN_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

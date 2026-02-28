@@ -2,16 +2,14 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { Card, GameMessage, StoreLike, State, StateUtils } from '../../game';
-import { TrainerCard } from '../../game/store/card/trainer-card';
-import { Effect } from '../../game/store/effects/effect';
+import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
+import { StateUtils } from '../../game/store/state-utils';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
-import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
-
+import { GameMessage } from '../../game/game-message';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { Card, ShowCardsPrompt, State, StoreLike, TrainerCard, TrainerType } from '../../game';
 export class Castform extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
@@ -83,8 +81,8 @@ export class Castform extends PokemonCard {
 
     // Attack 2: Water Pulse
     // Ref: set-sun-and-moon/morelull.ts (Flickering Spores)
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
+    if (AFTER_ATTACK(effect, 1, this)) {
+      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

@@ -1,11 +1,11 @@
-import { AttachEnergyPrompt, EnergyCard, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
+import { ABILITY_USED, ADD_MARKER, ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, CONFIRMATION_PROMPT, HAS_MARKER, IS_POKEPOWER_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { GameMessage } from '../../game/game-message';
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
+import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
-import { ABILITY_USED, ADD_MARKER, COIN_FLIP_PROMPT, CONFIRMATION_PROMPT, HAS_MARKER, IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-
+import { AttachEnergyPrompt, EnergyCard, PlayerType, PowerType, SlotType, State, StoreLike } from '../../game';
 export class Venusaur extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Ivysaur';
@@ -98,10 +98,10 @@ export class Venusaur extends PokemonCard {
       }
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
       });
     }

@@ -8,6 +8,7 @@ import { Clamperl } from './clamperl';
 import { Corsola } from './corsola';
 import { DesertRuins } from './desert-ruins';
 import { Feebas } from './feebas';
+import { Glalie } from './glalie';
 import { Gorebyss } from './gorebyss';
 import { Groudonex } from './groudon-ex';
 import { IslandCave } from './island-cave';
@@ -44,6 +45,7 @@ export const setEXHiddenLegends: Card[] = [
   new Corsola(),
   new DesertRuins(),
   new Feebas(),
+  new Glalie(),
   new Gorebyss(),
   new Groudonex(),
   new IslandCave(),

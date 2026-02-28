@@ -1,5 +1,6 @@
 import { ClawFossil } from '../set-ex-power-keepers/claw-fossil';
 import { Marill } from './marill';
+import { MysteriousFossil } from '../set-fossil/mysterious-fossil';
 import { Ralts } from '../set-ex-dragon-frontiers/ralts';
 import { RareCandy } from '../set-ex-holon-phantoms/rare-candy';
 
@@ -15,6 +16,12 @@ export class MarillMisprint extends Marill {
   public setNumber = '68a';
   public fullName = 'Marill SS (Misprint)';
   public retreat = [];
+}
+
+export class MysteriousFossilSS extends MysteriousFossil {
+  public set = 'SS';
+  public setNumber = '91';
+  public fullName = 'Mysterious Fossil SS';
 }
 
 export class RaltsSS extends Ralts {

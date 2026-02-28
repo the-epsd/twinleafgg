@@ -2,9 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, AFTER_ATTACK, ADD_BURN_TO_PLAYER_ACTIVE } from '../../game/store/prefabs/prefabs';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../game/store/prefabs/attack-effects';
 
 export class Simipour extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -37,8 +36,9 @@ export class Simipour extends PokemonCard {
   public fullName: string = 'Simipour BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
+
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_BURN_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

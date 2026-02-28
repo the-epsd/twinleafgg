@@ -1,10 +1,11 @@
+import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
+import { StateUtils } from '../../game/store/state-utils';
+import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { GameMessage } from '../../game/game-message';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, TrainerType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, TrainerCard, StateUtils, ChooseCardsPrompt, Card, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
-
+import { Card, GameLog, State, StoreLike, TrainerCard, TrainerType } from '../../game';
 export class Haunter extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Gastly';
@@ -37,8 +38,8 @@ export class Haunter extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_POISON_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
