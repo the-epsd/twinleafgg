@@ -14,6 +14,7 @@ import { IslandCave } from './island-cave';
 import { Jirachi } from './jirachi';
 import { Kyogreex } from './kyogre-ex';
 import { Lanturn } from './lanturn';
+import { LifeHerb } from './life-herb';
 import { Machop } from './machop';
 import { MagneticStorm } from './magnetic-storm';
 import { Medicham } from './medicham';
@@ -49,6 +50,7 @@ export const setEXHiddenLegends: Card[] = [
   new Jirachi(),
   new Kyogreex(),
   new Lanturn(),
+  new LifeHerb(),
   new Machop(),
   new MagneticStorm(),
   new Medicham(),

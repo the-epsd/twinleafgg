@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { ApricornForest } from './apricorn-forest';
 import { Blissey } from './blissey';
 import { BoostEnergy } from './boost-energy';
 import { Chansey } from './chansey';
@@ -27,6 +28,7 @@ import { RainbowEnergyAQ } from './other-prints';
 import { WarpEnergyAQ } from './other-prints';
 
 export const setAquapolis: Card[] = [
+  new ApricornForest(),
   new Blissey(),
   new BoostEnergy(),
   new Chansey(),

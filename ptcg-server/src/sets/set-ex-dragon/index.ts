@@ -4,6 +4,8 @@ import { Corphish } from './corphish';
 import { EnergyRecycleSystem } from './energy-recycle-system';
 import { Grimer } from './grimer';
 import { HighPressureSystem } from './high-pressure-system';
+import { Horsea } from './horsea';
+import { Kingdraex } from './kingdra-ex';
 import { Latiasex } from './latias-ex';
 import { LowPressureSystem } from './low-pressure-system';
 import { Magnemite } from './magnemite';
@@ -25,6 +27,8 @@ export const setEXDragon: Card[] = [
   new EnergyRecycleSystem(),
   new Grimer(),
   new HighPressureSystem(),
+  new Horsea(),
+  new Kingdraex(),
   new Latiasex(),
   new LowPressureSystem(),
   new Magnemite(),

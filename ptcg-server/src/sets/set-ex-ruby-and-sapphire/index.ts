@@ -18,10 +18,12 @@ import { Skitty } from './skitty';
 import { Skitty2 } from './skitty2';
 import { Swampert } from './swampert';
 import { Torchic } from './torchic';
+import { Wailmer } from './wailmer';
 import { Blaziken } from './blaziken';
 
 // Other Prints
 import {
+  EnergySearchRS,
   EnergySwitchRS,
   EnergyRemoval2RS,
   MetalEnergySpecialRS,
@@ -48,6 +50,7 @@ export const setEXRubyAndSapphire: Card[] = [
   new Skitty2(),
   new Swampert(),
   new Torchic(),
+  new Wailmer(),
   new Blaziken(),
 
   // Basic energies
@@ -59,6 +62,7 @@ export const setEXRubyAndSapphire: Card[] = [
   new FightingEnergy(),
 
   // Other Prints
+  new EnergySearchRS(),
   new EnergySwitchRS(),
   new EnergyRemoval2RS(),
   new MetalEnergySpecialRS(),
