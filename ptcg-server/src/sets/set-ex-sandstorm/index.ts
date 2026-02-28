@@ -23,6 +23,7 @@ import { Zangoose } from './zangoose';
 // Other Prints
 import {
   MarillMisprint,
+  RaltsSS,
   RareCandySS
 } from './other-prints';
 
@@ -50,5 +51,6 @@ export const setEXSandstorm: Card[] = [
 
   // Other Prints
   new MarillMisprint(),
+  new RaltsSS(),
   new RareCandySS(),
 ];

@@ -5,8 +5,10 @@ import { DarknessEnergySpecial } from './darkness-energy-special';
 import { Delcatty } from './delcatty';
 import { Gardevoir } from './gardevoir';
 import { Kirlia } from './kirlia';
+import { Kirlia2 } from './kirlia2';
 import { LadyOuting } from './lady-outing';
 import { Marshtomp } from './marshtomp';
+import { Mewtwoex } from './mewtwo-ex';
 import { Mudkip } from './mudkip';
 import { OranBerry } from './oran-berry';
 import { PokeNav } from './pokenav';
@@ -33,8 +35,10 @@ export const setEXRubyAndSapphire: Card[] = [
   new Delcatty(),
   new Gardevoir(),
   new Kirlia(),
+  new Kirlia2(),
   new LadyOuting(),
   new Marshtomp(),
+  new Mewtwoex(),
   new Mudkip(),
   new OranBerry(),
   new PokeNav(),
