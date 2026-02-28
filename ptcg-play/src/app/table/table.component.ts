@@ -38,6 +38,7 @@ export class TableComponent implements OnInit, OnDestroy {
   public isTO: boolean;
   private gameId: number;
   public showGameOver = false;
+  public showVictorySplash = false;
   public gameOverPrompt: GameOverPrompt;
   public showSandboxPanel = false;
   public sandboxSidebarCollapsed: boolean = false;
@@ -276,9 +277,16 @@ export class TableComponent implements OnInit, OnDestroy {
     // Check if the game is in the FINISHED phase and update the game over state
     if (state.phase === GamePhase.FINISHED && !gameState.gameOver) {
       this.gameOverPrompt = new GameOverPrompt(clientId, state.winner);
-      this.showGameOver = true;
+      if (!this.showGameOver) {
+        this.showVictorySplash = true;
+        this.showGameOver = false;
+      } else {
+        this.showVictorySplash = false;
+        this.showGameOver = true;
+      }
     } else {
       this.showGameOver = false;
+      this.showVictorySplash = false;
     }
   }
 
@@ -369,14 +377,26 @@ export class TableComponent implements OnInit, OnDestroy {
     this.gameState = state;
     // Show game over screen when the game is finished
     if (state && state.state && state.state.phase === GamePhase.FINISHED && !state.gameOver) {
-      this.showGameOver = true;
       this.gameOverPrompt = new GameOverPrompt(this.clientId, state.state.winner);
+      if (!this.showGameOver) {
+        this.showVictorySplash = true;
+        this.showGameOver = false;
+      } else {
+        this.showVictorySplash = false;
+        this.showGameOver = true;
+      }
     } else {
       this.showGameOver = false;
+      this.showVictorySplash = false;
       this.gameOverPrompt = undefined;
     }
     // Update player information
     this.updatePlayers(state, this.clientId);
+  }
+
+  onVictorySplashDismiss(): void {
+    this.showVictorySplash = false;
+    this.showGameOver = true;
   }
 
   toggleSandboxSidebar() {

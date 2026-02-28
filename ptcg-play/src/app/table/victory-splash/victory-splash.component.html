@@ -1,0 +1,23 @@
+<div class="victory-splash-overlay" (click)="onSplashClick()">
+  <!-- Sci-fi grid background -->
+  <div class="victory-splash-bg"></div>
+
+  <!-- Scan line overlay -->
+  <div class="victory-splash-scanline"></div>
+
+  <!-- Text container -->
+  <div class="victory-splash-content">
+    <!-- Background outline-only text (large, half opacity) -->
+    <div class="victory-splash-text-back" [class]="resultClass">
+      {{ displayText }}
+    </div>
+
+    <!-- Foreground filled text (bold, main) -->
+    <div class="victory-splash-text-front" [class]="resultClass">
+      {{ displayText }}
+    </div>
+  </div>
+
+  <!-- Subtle glow particles -->
+  <div class="victory-splash-particles"></div>
+</div>

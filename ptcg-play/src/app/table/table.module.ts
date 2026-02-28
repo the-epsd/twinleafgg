@@ -7,6 +7,7 @@ import { SharedModule } from '../shared/shared.module';
 import { TableComponent } from './table.component';
 import { TableSidebarModule } from './table-sidebar/table-sidebar.module';
 import { VsScreenComponent } from './vs-screen/vs-screen.component';
+import { VictorySplashComponent } from './victory-splash/victory-splash.component';
 import { GameOverComponent } from './game-over/game-over.component';
 import { SandboxControlComponent } from './sandbox-control/sandbox-control.component';
 
@@ -15,6 +16,7 @@ import { SandboxControlComponent } from './sandbox-control/sandbox-control.compo
     TableComponent,
     HandComponent,
     VsScreenComponent,
+    VictorySplashComponent,
     GameOverComponent,
     SandboxControlComponent
   ],
