@@ -52,7 +52,7 @@ $font-sci-fi: 'Orbitron', sans-serif;
   }
 }
 
-.victory-splash-overlay {
+.match-results-splash-overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -62,13 +62,13 @@ $font-sci-fi: 'Orbitron', sans-serif;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(ellipse at center, #0a0e14 0%, #040816 70%);
+  background: radial-gradient(ellipse at center, rgba(10, 14, 20, 0.5) 0%, rgba(4, 8, 22, 0.5) 70%);
   cursor: pointer;
   overflow: hidden;
   animation: splashFadeIn 0.4s ease-out forwards;
 }
 
-.victory-splash-bg {
+.match-results-splash-bg {
   position: absolute;
   inset: 0;
   background-image:
@@ -79,7 +79,7 @@ $font-sci-fi: 'Orbitron', sans-serif;
   pointer-events: none;
 }
 
-.victory-splash-scanline {
+.match-results-splash-scanline {
   position: absolute;
   left: 0;
   width: 100%;
@@ -94,7 +94,7 @@ $font-sci-fi: 'Orbitron', sans-serif;
   pointer-events: none;
 }
 
-.victory-splash-content {
+.match-results-splash-content {
   position: relative;
   display: flex;
   align-items: center;
@@ -103,7 +103,7 @@ $font-sci-fi: 'Orbitron', sans-serif;
   text-align: center;
 }
 
-.victory-splash-text-back {
+.match-results-splash-text-back {
   position: absolute;
   font-family: $font-sci-fi;
   font-weight: 900;
@@ -130,7 +130,7 @@ $font-sci-fi: 'Orbitron', sans-serif;
   }
 }
 
-.victory-splash-text-front {
+.match-results-splash-text-front {
   position: relative;
   font-family: $font-sci-fi;
   font-weight: 900;
@@ -160,7 +160,7 @@ $font-sci-fi: 'Orbitron', sans-serif;
   }
 }
 
-.victory-splash-particles {
+.match-results-splash-particles {
   position: absolute;
   inset: 0;
   background-image: radial-gradient(

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { trigger, transition, animate, style } from '@angular/animations';
 import { Card, GameWinner, GamePhase, SuperType, Format } from 'ptcg-server';
 import { LocalGameState, PlayerGameStats } from '../../shared/session/session.interface';
 import { GameOverPrompt } from '../prompt/prompt-game-over/game-over.prompt';
@@ -18,7 +19,15 @@ interface PokemonDamageStats {
 @Component({
   selector: 'ptcg-game-over',
   templateUrl: './game-over.component.html',
-  styleUrls: ['./game-over.component.scss']
+  styleUrls: ['./game-over.component.scss'],
+  animations: [
+    trigger('gameOverFade', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('400ms ease-out', style({ opacity: 1 }))
+      ])
+    ])
+  ]
 })
 export class GameOverComponent implements OnInit {
   @Input() prompt!: GameOverPrompt;
@@ -40,6 +49,11 @@ export class GameOverComponent implements OnInit {
   public maxPrizes = 6; // Default to 6, will be updated from game state
   public prizeIndicators: number[] = [1, 2, 3, 4, 5, 6]; // Will be updated dynamically
   private gameId: number;
+
+  get resultClass(): 'victory' | 'defeat' | 'draw' {
+    if (this.prompt?.winner === GameWinner.DRAW) return 'draw';
+    return this.isWinner ? 'victory' : 'defeat';
+  }
   private localId: number;
 
   // Enhanced statistics properties

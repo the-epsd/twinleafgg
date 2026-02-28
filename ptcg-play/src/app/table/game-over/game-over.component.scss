@@ -1,43 +1,33 @@
 @import '../../../theme/variables.scss';
 
-// Animation keyframes
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
+// Sci-fi font - Orbitron (loaded in index.html)
+$font-sci-fi: 'Orbitron', sans-serif;
 
-  to {
-    opacity: 1;
-  }
+// Sci-fi color palette (match victory splash)
+$color-victory: #67c85a;
+$color-defeat: #ef4444;
+$color-draw: #94a3b8;
+$color-cyan: rgba(0, 255, 255, 0.5);
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
   from {
-    transform: translateY(30px);
+    transform: translateY(20px);
     opacity: 0;
   }
-
   to {
     transform: translateY(0);
     opacity: 1;
   }
 }
 
-@keyframes particleMove {
-  0% {
-    transform: translate(0, 0);
-    opacity: 0.3;
-  }
-
-  50% {
-    transform: translate(10px, 15px);
-    opacity: 0.8;
-  }
-
-  100% {
-    transform: translate(0, 0);
-    opacity: 0.3;
-  }
+@keyframes gridPulse {
+  0%, 100% { opacity: 0.03; }
+  50% { opacity: 0.06; }
 }
 
 @keyframes glowGreen {
@@ -45,12 +35,10 @@
     box-shadow: 0 0 5px rgba(103, 200, 90, 0.3);
     transform: scale(1);
   }
-
   50% {
     box-shadow: 0 0 20px rgba(103, 200, 90, 0.8), 0 0 30px rgba(103, 200, 90, 0.4);
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
-
   100% {
     box-shadow: 0 0 5px rgba(103, 200, 90, 0.3);
     transform: scale(1);
@@ -62,12 +50,10 @@
     box-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
     transform: scale(1);
   }
-
   50% {
     box-shadow: 0 0 20px rgba(239, 68, 68, 0.8), 0 0 30px rgba(239, 68, 68, 0.4);
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
-
   100% {
     box-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
     transform: scale(1);
@@ -75,51 +61,24 @@
 }
 
 @keyframes floatAnimation {
-  0% {
-    transform: translateY(0) rotateY(0deg);
-  }
-
-  25% {
-    transform: translateY(-7px) rotateY(3deg);
-  }
-
-  50% {
-    transform: translateY(-10px) rotateY(0deg);
-  }
-
-  75% {
-    transform: translateY(-5px) rotateY(-3deg);
-  }
-
-  100% {
-    transform: translateY(0) rotateY(0deg);
-  }
+  0% { transform: translateY(0) rotateY(0deg); }
+  25% { transform: translateY(-7px) rotateY(3deg); }
+  50% { transform: translateY(-10px) rotateY(0deg); }
+  75% { transform: translateY(-5px) rotateY(-3deg); }
+  100% { transform: translateY(0) rotateY(0deg); }
 }
 
 @keyframes flipCard {
-  0% {
-    transform: rotateY(180deg);
-  }
-
-  100% {
-    transform: rotateY(0deg);
-  }
+  0% { transform: rotateY(180deg); }
+  100% { transform: rotateY(0deg); }
 }
 
-@keyframes gradientWhoosh {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
+@keyframes contentFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
+// Root overlay - match victory splash background
 .ptcg-game-over-overlay {
   position: fixed;
   top: 0;
@@ -129,141 +88,113 @@
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  background: #191d27;
+  background: radial-gradient(ellipse at center, #0a0e14 0%, #040816 70%);
   color: white;
   overflow: hidden;
-  animation: fadeIn 0.5s ease-out forwards;
 }
 
-// Animated particle background
-// .ptcg-particles {
-//   position: absolute;
-//   width: 100%;
-//   height: 100%;
-//   overflow: hidden;
+.ptcg-game-over-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
 
-//   &:before,
-//   &:after {
-//     content: '';
-//     position: absolute;
-//     width: 100%;
-//     height: 100%;
-//     background-image:
-//       radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-//       radial-gradient(circle, rgba(255, 255, 255, 0.05) 2px, transparent 2px);
-//     background-size: 40px 40px, 80px 80px;
-//     background-position: 0 0, 20px 20px;
-//     animation: particleMove 20s infinite alternate;
-//   }
+.ptcg-game-over-scanline {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 255, 255, 0.2),
+    transparent
+  );
+  z-index: 2;
+  pointer-events: none;
+}
 
-// &:after {
-//   animation-delay: -10s;
-//   animation-duration: 15s;
-// }
-// }
-
-// Top gradient section with diagonal cut
+// Top section - minimal, sci-fi
 .ptcg-game-over-top {
   position: relative;
-  padding: 30px;
-  height: 35vh;
-  background: linear-gradient(135deg, #28303f, #313a4f, #28303f);
-  background-size: 400% 400%;
-  animation: gradientWhoosh 4s ease infinite;
+  padding: 24px 30px;
+  min-height: 28vh;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; // Change from space-between to flex-start
+  justify-content: flex-start;
+  align-items: center;
   overflow: hidden;
+  z-index: 2;
+}
 
-  // Diagonal cut
-  .ptcg-diagonal-divider {
-    position: absolute;
-    bottom: -50px;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background: #191d27;
-    transform: rotate(-3deg);
-    z-index: 1;
+.ptcg-victory-header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2vh;
+
+  .ptcg-game-over-title {
+    font-family: $font-sci-fi;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 700;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    animation: slideUp 0.6s ease-out 0.2s forwards;
+    opacity: 0;
+
+    .ptcg-game-over-overlay.victory & {
+      color: $color-victory;
+      text-shadow: 0 0 25px rgba(103, 200, 90, 0.5);
+    }
+    .ptcg-game-over-overlay.defeat & {
+      color: $color-defeat;
+      text-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
+    }
+    .ptcg-game-over-overlay.draw & {
+      color: $color-draw;
+      text-shadow: 0 0 25px rgba(148, 163, 184, 0.4);
+    }
   }
 }
 
-// Player avatars and VS section
+// Player names and VS - Orbitron, cyan accent
 .ptcg-player-avatars {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 12px;
   z-index: 2;
 
-  .ptcg-player-avatar {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    font-size: 1.5rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-
-    &.player {
-      background: linear-gradient(135deg, #e4c16f, #b88a44);
-      animation: fadeIn 0.5s ease-in forwards;
-    }
-
-    &.opponent {
-      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-      opacity: 0.7;
-      animation: fadeIn 0.5s 0.2s ease-in forwards;
-    }
-  }
-
   .ptcg-player-name {
-    margin: 0 10px;
-    font-size: 16px;
+    font-family: $font-sci-fi;
+    margin: 0;
+    font-size: 14px;
     font-weight: 500;
-    opacity: 0;
-    animation: fadeIn 0.5s 0.3s forwards;
-  }
-
-  .ptcg-vs-text {
-    margin: 0 15px;
-    font-size: 24px;
-    font-weight: bold;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.05em;
     opacity: 0;
     animation: fadeIn 0.5s 0.4s forwards;
   }
-}
 
-// Victory header
-.ptcg-victory-header {
-  position: relative; // Change from absolute to relative
-  width: 100%;
-  z-index: 2;
-  text-align: center;
-  margin-top: 2vh; // Add some top margin
-  margin-bottom: 3vh; // Add space between victory text and player names
-
-  .ptcg-game-over-title {
-    font-size: 5rem;
-    font-weight: 800;
-    margin: 0;
-    text-transform: uppercase;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 255, 255, 0.2);
-    color: white;
-    letter-spacing: 4px;
-    animation: slideUp 0.8s ease-out forwards;
-    transform: scale(0.9);
+  .ptcg-vs-text {
+    font-family: $font-sci-fi;
+    margin: 0 8px;
+    font-size: 18px;
+    font-weight: 700;
+    color: $color-cyan;
+    letter-spacing: 0.2em;
     opacity: 0;
-
-    @media (min-width: 768px) {
-      font-size: 6rem;
-    }
+    animation: fadeIn 0.5s 0.5s forwards;
   }
 }
 
-// Main content section
+// Main content
 .ptcg-game-over-content {
   flex: 1;
   padding: 20px 40px 30px;
@@ -271,54 +202,26 @@
   flex-direction: column;
   position: relative;
   z-index: 5;
-  margin-top: -1rem;
 }
 
-// Battle log button
 .ptcg-battle-log {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 20px;
-
-  .ptcg-battle-log-button {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: white;
-    border-radius: 20px;
-    padding: 8px 15px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.2s;
-
-    &:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .ptcg-icon {
-      width: 16px;
-      height: 16px;
-      margin-right: 8px;
-    }
-  }
 }
 
-// Grid layout for stats and card
 .ptcg-game-over-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 50px;
   margin-bottom: 30px;
-  animation: fadeIn 0.8s ease-out forwards;
-  animation-delay: 0.3s;
-  opacity: 0;
-  animation-fill-mode: forwards;
   max-width: 1000px;
   margin-left: auto;
   margin-right: auto;
+  animation: contentFadeIn 0.6s ease-out 0.4s forwards;
+  opacity: 0;
 }
 
-// Stats container
 .ptcg-stats-container {
   display: flex;
   flex-direction: column;
@@ -327,24 +230,28 @@
   padding-left: 10%;
 }
 
-// Stats rows
 .ptcg-stats-row {
   display: flex;
   flex-direction: column;
   gap: 8px;
 
   .ptcg-stat-label {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.7);
+    font-family: $font-sci-fi;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 
   .ptcg-stat-value {
-    font-size: 18px;
-    font-weight: 500;
+    font-family: $font-sci-fi;
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.95);
   }
 }
 
-// Prize indicators
 .ptcg-prize-indicators {
   display: flex;
   gap: 12px;
@@ -353,40 +260,36 @@
   .ptcg-prize-indicator {
     width: 36px;
     height: 36px;
-    border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.05);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 16px;
-    font-weight: 500;
-    border: 2px solid rgba(255, 255, 255, 0.3);
+    font-family: $font-sci-fi;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     transition: all 0.3s;
-    color: rgba(255, 255, 255, 0.5);
+    color: rgba(255, 255, 255, 0.4);
 
     &.ptcg-prize-taken {
-      background-color: rgba(103, 200, 90, 0.3);
-      border-color: #67c85a;
-      color: #67c85a;
-      font-weight: bold;
-      box-shadow: 0 0 15px rgba(103, 200, 90, 0.7);
+      background-color: rgba(103, 200, 90, 0.15);
+      border-color: $color-victory;
+      color: $color-victory;
+      box-shadow: 0 0 12px rgba(103, 200, 90, 0.4);
       animation: glowGreen 2s infinite;
-      z-index: 1;
     }
 
     &.ptcg-prize-opponent-taken {
-      background-color: rgba(239, 68, 68, 0.3);
-      border-color: #ef4444;
-      color: #ef4444;
-      font-weight: bold;
-      box-shadow: 0 0 15px rgba(239, 68, 68, 0.7);
+      background-color: rgba(239, 68, 68, 0.15);
+      border-color: $color-defeat;
+      color: $color-defeat;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
       animation: glowRed 2s infinite;
-      z-index: 1;
     }
   }
 }
 
-// Card of the Game
 .ptcg-card-feature {
   display: flex;
   flex-direction: column;
@@ -396,7 +299,6 @@
   gap: 30px;
 }
 
-// Pokemon sections for player and opponent
 .ptcg-pokemon-section {
   display: flex;
   flex-direction: column;
@@ -404,7 +306,6 @@
   width: 100%;
 }
 
-// Card title container
 .ptcg-card-title-container {
   display: flex;
   align-items: center;
@@ -412,60 +313,54 @@
   gap: 10px;
 
   .ptcg-card-title {
-    font-size: 20px;
-    margin: 0;
-    color: #e6b450;
-  }
-
-  .ptcg-knockout-badge {
-    background-color: rgba(239, 68, 68, 0.2);
-    color: #ef4444;
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 12px;
+    font-family: $font-sci-fi;
+    font-size: 16px;
     font-weight: 600;
+    margin: 0;
+    color: $color-draw;
+    letter-spacing: 0.05em;
   }
 
   .ptcg-damage-badge {
     background-color: rgba(103, 200, 90, 0.2);
-    color: #67c85a;
+    color: $color-victory;
     padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 12px;
+    border-radius: 4px;
+    font-family: $font-sci-fi;
+    font-size: 11px;
     font-weight: 600;
+    border: 1px solid rgba(103, 200, 90, 0.4);
   }
 
   .ptcg-no-damage-badge {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.6);
     padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 12px;
+    border-radius: 4px;
+    font-family: $font-sci-fi;
+    font-size: 11px;
     font-weight: 600;
   }
 }
 
-// Featured card container with proper aspect ratio
 .ptcg-featured-card-container {
   width: 100%;
-  max-width: 180px; // Reduced from 240px to fit both cards
+  max-width: 180px;
   aspect-ratio: 2.5/3.5;
   perspective: 1000px;
   position: relative;
   overflow: visible;
 }
 
-// Card perspective for flip animation
 .ptcg-card-perspective {
   width: 100%;
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: visible;
 }
 
-// Card holder
 .ptcg-card-holder {
   width: 100%;
   height: 100%;
@@ -476,14 +371,11 @@
   overflow: visible;
 }
 
-// Top Pokemon card
 .ptcg-top-pokemon {
   width: 100%;
   height: 100%;
   transform-style: preserve-3d;
-  transition: transform 0.6s;
   overflow: visible;
-  transform: perspective(1000px);
 
   ptcg-card {
     width: 100%;
@@ -492,7 +384,6 @@
   }
 }
 
-// Card placeholder (back)
 .ptcg-card-placeholder {
   width: 100%;
   height: 100%;
@@ -500,21 +391,20 @@
   top: 0;
   left: 0;
   backface-visibility: hidden;
-  transform: rotateY(180deg);
 
   .ptcg-card-back {
     width: 100%;
     height: 100%;
-    background-color: #e74c3c;
-    border-radius: 10px;
+    background-color: #1a1f2e;
+    border-radius: 8px;
     background-image: url('/assets/card-back.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 }
 
-// Card error state
 .ptcg-card-error {
   width: 100%;
   height: 100%;
@@ -523,77 +413,75 @@
   .ptcg-card-back {
     width: 100%;
     height: 100%;
-    background-color: #4a4a4a;
-    border-radius: 10px;
-    border: 2px solid #666;
+    background-color: rgba(74, 74, 74, 0.3);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
 
     .ptcg-error-text {
-      color: #ccc;
-      font-size: 12px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 11px;
       font-weight: 500;
       text-align: center;
       padding: 10px;
       word-wrap: break-word;
       max-width: 90%;
     }
-
-    &::before {
-      content: '?';
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      color: #888;
-      font-size: 18px;
-      font-weight: bold;
-    }
   }
 }
 
-// OK Button
+// OK button - sci-fi outline style
 .ptcg-actions {
   display: flex;
   justify-content: center;
   margin-top: auto;
-
-  .ptcg-ok-button {
-    background: linear-gradient(135deg, #67c85a, #4a9e40);
-    color: white;
-    font-weight: bold;
-    padding: 12px 50px;
-    border: none;
-    border-radius: 30px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-      background: linear-gradient(135deg, #7ad86e, #58b14c);
-    }
-
-    &:active {
-      transform: translateY(1px);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      background: linear-gradient(135deg, #58b14c, #408937);
-    }
-  }
 }
 
-// Additional animations
-@keyframes scaleIn {
-  from {
-    transform: scale(0);
-    opacity: 0;
+.ptcg-ok-button {
+  font-family: $font-sci-fi;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  padding: 12px 48px;
+  background: transparent;
+  color: $color-victory;
+  border: 2px solid $color-victory;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 0 15px rgba(103, 200, 90, 0.2);
+
+  &:hover {
+    background: rgba(103, 200, 90, 0.15);
+    box-shadow: 0 0 25px rgba(103, 200, 90, 0.5);
+    transform: translateY(-2px);
   }
 
-  to {
-    transform: scale(1);
-    opacity: 1;
+  &:active {
+    transform: translateY(0);
+  }
+
+  .ptcg-game-over-overlay.defeat & {
+    color: $color-defeat;
+    border-color: $color-defeat;
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+
+    &:hover {
+      background: rgba(239, 68, 68, 0.15);
+      box-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
+    }
+  }
+
+  .ptcg-game-over-overlay.draw & {
+    color: $color-draw;
+    border-color: $color-draw;
+    box-shadow: 0 0 15px rgba(148, 163, 184, 0.2);
+
+    &:hover {
+      background: rgba(148, 163, 184, 0.15);
+      box-shadow: 0 0 25px rgba(148, 163, 184, 0.4);
+    }
   }
 }

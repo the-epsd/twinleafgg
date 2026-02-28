@@ -68,10 +68,10 @@
       <ptcg-prompt [gameState]="gameState" [clientId]="clientId">
       </ptcg-prompt>
 
-      <!-- Victory/Defeat splash (shown first when match ends) -->
-      <ptcg-victory-splash *ngIf="showVictorySplash" [gameState]="gameState" [prompt]="gameOverPrompt"
-        (dismiss)="onVictorySplashDismiss()">
-      </ptcg-victory-splash>
+      <!-- Match results splash (shown first when match ends) -->
+      <ptcg-match-results-splash *ngIf="showMatchResultsSplash" [gameState]="gameState" [prompt]="gameOverPrompt"
+        (dismiss)="onMatchResultsSplashDismiss()">
+      </ptcg-match-results-splash>
 
       <!-- Game Over screen -->
       <ptcg-game-over *ngIf="showGameOver" [gameState]="gameState" [prompt]="gameOverPrompt">

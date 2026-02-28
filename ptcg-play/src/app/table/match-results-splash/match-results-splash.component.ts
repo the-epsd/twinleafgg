@@ -1,15 +1,23 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { trigger, transition, animate, style } from '@angular/animations';
 import { GameWinner } from 'ptcg-server';
 import { LocalGameState } from '../../shared/session/session.interface';
 import { GameOverPrompt } from '../prompt/prompt-game-over/game-over.prompt';
 import { SessionService } from '../../shared/session/session.service';
 
 @Component({
-  selector: 'ptcg-victory-splash',
-  templateUrl: './victory-splash.component.html',
-  styleUrls: ['./victory-splash.component.scss']
+  selector: 'ptcg-match-results-splash',
+  templateUrl: './match-results-splash.component.html',
+  styleUrls: ['./match-results-splash.component.scss'],
+  animations: [
+    trigger('splashFade', [
+      transition(':leave', [
+        animate('400ms ease-out', style({ opacity: 0 }))
+      ])
+    ])
+  ]
 })
-export class VictorySplashComponent implements OnInit {
+export class MatchResultsSplashComponent implements OnInit {
   @Input() prompt!: GameOverPrompt;
   @Input() gameState!: LocalGameState;
   @Output() dismiss = new EventEmitter<void>();

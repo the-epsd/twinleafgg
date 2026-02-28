@@ -38,7 +38,7 @@ export class TableComponent implements OnInit, OnDestroy {
   public isTO: boolean;
   private gameId: number;
   public showGameOver = false;
-  public showVictorySplash = false;
+  public showMatchResultsSplash = false;
   public gameOverPrompt: GameOverPrompt;
   public showSandboxPanel = false;
   public sandboxSidebarCollapsed: boolean = false;
@@ -278,15 +278,15 @@ export class TableComponent implements OnInit, OnDestroy {
     if (state.phase === GamePhase.FINISHED && !gameState.gameOver) {
       this.gameOverPrompt = new GameOverPrompt(clientId, state.winner);
       if (!this.showGameOver) {
-        this.showVictorySplash = true;
+        this.showMatchResultsSplash = true;
         this.showGameOver = false;
       } else {
-        this.showVictorySplash = false;
+        this.showMatchResultsSplash = false;
         this.showGameOver = true;
       }
     } else {
       this.showGameOver = false;
-      this.showVictorySplash = false;
+      this.showMatchResultsSplash = false;
     }
   }
 
@@ -379,23 +379,23 @@ export class TableComponent implements OnInit, OnDestroy {
     if (state && state.state && state.state.phase === GamePhase.FINISHED && !state.gameOver) {
       this.gameOverPrompt = new GameOverPrompt(this.clientId, state.state.winner);
       if (!this.showGameOver) {
-        this.showVictorySplash = true;
+        this.showMatchResultsSplash = true;
         this.showGameOver = false;
       } else {
-        this.showVictorySplash = false;
+        this.showMatchResultsSplash = false;
         this.showGameOver = true;
       }
     } else {
       this.showGameOver = false;
-      this.showVictorySplash = false;
+      this.showMatchResultsSplash = false;
       this.gameOverPrompt = undefined;
     }
     // Update player information
     this.updatePlayers(state, this.clientId);
   }
 
-  onVictorySplashDismiss(): void {
-    this.showVictorySplash = false;
+  onMatchResultsSplashDismiss(): void {
+    this.showMatchResultsSplash = false;
     this.showGameOver = true;
   }
 
