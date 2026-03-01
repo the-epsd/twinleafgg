@@ -1,12 +1,10 @@
-import { CardList, ChooseCardsPrompt, GameError, GameLog, GameMessage, StateUtils } from '../../game';
+import { CardList, ChooseCardsPrompt, GameError, GameLog, GameMessage, State, StateUtils, StoreLike } from '../../game';
 import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { CLEAN_UP_SUPPORTER, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { DISCARD_X_CARDS_FROM_YOUR_HAND } from '../../game/store/prefabs/trainer-prefabs';
-import { State } from '../../game/store/state/state';
-import { StoreLike } from '../../game/store/store-like';
 
 export class HolonLass extends TrainerCard {
 
@@ -58,7 +56,7 @@ export class HolonLass extends TrainerCard {
           temp.cards.forEach(card => {
             temp.moveCardTo(card, player.deck);
           });
-          player.supporter.moveCardTo(this, player.discard);
+          CLEAN_UP_SUPPORTER(store, effect, player);
         } else {
           // Move chosen Energy to hand
           chosenCards.forEach(card => {
