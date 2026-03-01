@@ -49,7 +49,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     slots[0].pokemonPlayedTurn = state.turn;
   }
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 }
 
 export class TargetWhistleTeamFlareGear extends TrainerCard {

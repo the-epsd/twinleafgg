@@ -38,7 +38,7 @@ export class Colress extends TrainerCard {
       if (player.supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-      
+
       if (cards.length === 0 && player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -51,7 +51,7 @@ export class Colress extends TrainerCard {
 
       player.hand.moveCardsTo(cards, player.deck);
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
         player.deck.moveTo(player.hand, benchCount);

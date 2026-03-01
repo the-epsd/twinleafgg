@@ -28,7 +28,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   ), selected => {
     deckTop.moveCardsTo(selected, player.hand);
     deckTop.moveTo(player.deck);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   });
 }
 

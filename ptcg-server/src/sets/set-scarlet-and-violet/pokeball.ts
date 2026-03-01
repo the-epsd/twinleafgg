@@ -35,10 +35,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player.deck,
       { superType: SuperType.POKEMON },
       { min: 0, max: 1, allowCancel: false }),
-    (selected: any[]) => {
-      cards = selected || [];
-      next();
-    });
+      (selected: any[]) => {
+        cards = selected || [];
+        next();
+      });
 
     if (cards.length > 0) {
       player.discard.moveCardsTo(cards, player.deck);
@@ -56,7 +56,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.deck.moveCardsTo(cards, player.hand);
   }
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
     player.deck.applyOrder(order);
   });

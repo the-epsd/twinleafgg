@@ -92,7 +92,7 @@ export class Crispin extends TrainerCard {
           cardList.moveCardTo(remainingCard, player.hand);
         }
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

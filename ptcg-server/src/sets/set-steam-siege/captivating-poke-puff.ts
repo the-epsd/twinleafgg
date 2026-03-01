@@ -56,7 +56,7 @@ export class CaptivatingPokePuff extends TrainerCard {
         const cards = selected || [];
 
         if (cards.length === 0) {
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           return;
         }
 
@@ -65,7 +65,7 @@ export class CaptivatingPokePuff extends TrainerCard {
           slots[index].pokemonPlayedTurn = state.turn;
         });
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
 

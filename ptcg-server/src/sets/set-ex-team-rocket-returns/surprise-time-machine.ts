@@ -64,7 +64,7 @@ export class SurpriseTimeMachine extends TrainerCard {
             store.reduceEffect(state, checkHpEffect);
             if (targetPokemon.damage >= checkHpEffect.hp) {
               SHUFFLE_DECK(store, state, player);
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
               return state;
             }
 
@@ -86,7 +86,7 @@ export class SurpriseTimeMachine extends TrainerCard {
             targetPokemon.clearEffects();
             targetPokemon.pokemonPlayedTurn = state.turn;
           }
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           return state;
         }
       );

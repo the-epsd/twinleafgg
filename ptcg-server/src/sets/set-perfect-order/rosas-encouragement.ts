@@ -102,7 +102,7 @@ Attach up to 2 Basic Energy cards from your discard pile to 1 of your Stage 2 Po
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
         }
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
 

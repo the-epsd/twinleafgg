@@ -11,14 +11,14 @@ import { ADD_MARKER, DRAW_CARDS_UNTIL_CARDS_IN_HAND, REMOVE_MARKER_AT_END_OF_TUR
 export class ProfessorElm extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-  public cardImage: string = 'assets/cardback.png';  
+  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '96';
   public set = 'N1';
   public name = 'Professor Elm';
   public fullName = 'Professor Elm N1';
 
   public text: string = 'Shuffle your hand into your deck. Then, draw 7 cards. You can\'t play any more Trainer cards this turn.';
-  
+
   public readonly PROFESSOR_ELM_MARKER = 'PROFESSOR_ELM_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -41,11 +41,11 @@ export class ProfessorElm extends TrainerCard {
 
       DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 7);
       ADD_MARKER(this.PROFESSOR_ELM_MARKER, player, this);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
+
       return state;
     }
-    
+
     if (effect instanceof PlayItemEffect
       || effect instanceof PlaySupporterEffect
       || effect instanceof AttachPokemonToolEffect

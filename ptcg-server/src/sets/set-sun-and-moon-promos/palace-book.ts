@@ -38,7 +38,7 @@ export class PalaceBook extends TrainerCard {
       }
 
       player.deck.moveTo(player.hand, 3);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       const endTurnEffect = new EndTurnEffect(player);
       store.reduceEffect(state, endTurnEffect);
       return state;

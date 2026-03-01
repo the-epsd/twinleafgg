@@ -9,7 +9,7 @@ export class AntheaAndConcordia extends TrainerCard {
   public regulationMark = 'I';
   public set: string = 'ASC';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '187';
+  public setNumber: string = '182';
   public name: string = 'Anthea & Concordia';
   public fullName: string = 'Anthea & Concordia M2a';
   public extraPrizes = false;

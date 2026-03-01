@@ -12,20 +12,20 @@ export class Atticus extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
 
   public regulationMark = 'G';
-  
+
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '77';
-  
+
   public set = 'PAF';
-  
+
   public name = 'Atticus';
-  
+
   public fullName = 'Atticus PAF';
 
   public text: string =
     'You can use this card only if your opponent\'s Active Pokémon is Poisoned.' +
-''+
+    '' +
     'Shuffle your hand into your deck, then draw 7 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -60,8 +60,8 @@ export class Atticus extends TrainerCard {
       }
 
       player.deck.moveTo(player.hand, 7);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
+
       return state;
     }
     return state;

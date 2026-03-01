@@ -59,7 +59,7 @@ export class Grusha extends TrainerCard {
             break;
           }
           player.deck.moveTo(player.hand, 1);
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
         }
       }
@@ -70,7 +70,7 @@ export class Grusha extends TrainerCard {
             break;
           }
           player.deck.moveTo(player.hand, 1);
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
         }
         return state;

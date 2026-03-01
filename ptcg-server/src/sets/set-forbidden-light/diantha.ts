@@ -59,7 +59,7 @@ export class Diantha extends TrainerCard {
         { min: 2, max: 2, allowCancel: false }
       ), cards => {
         player.discard.moveCardsTo(cards, player.hand);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
         return state;
       });

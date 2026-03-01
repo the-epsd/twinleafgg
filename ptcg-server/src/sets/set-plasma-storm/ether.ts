@@ -35,7 +35,7 @@ export class Ether extends TrainerCard {
 
       const temp = new CardList();
 
-      player.deck.moveTo(temp, 1); 
+      player.deck.moveTo(temp, 1);
 
       store.prompt(state, new ShowCardsPrompt(
         opponent.id,
@@ -67,13 +67,13 @@ export class Ether extends TrainerCard {
             }
           }
 
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
           return state;
         });
       } else {
         temp.moveToTopOfDestination(player.deck);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       }
 
       return state;

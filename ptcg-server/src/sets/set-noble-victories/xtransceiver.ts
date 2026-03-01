@@ -35,20 +35,20 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player.deck,
       { superType: SuperType.TRAINER, trainerType: TrainerType.SUPPORTER },
       { min: 0, max: 1, allowCancel: false }), (selected: any[]) => {
-      cards = selected || [];
-      next();
-    });
+        cards = selected || [];
+        next();
+      });
 
     player.deck.moveCardsTo(cards, player.hand);
   } else {
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     return state;
   }
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   const opponent = StateUtils.getOpponent(state, player);
-  
+
   yield store.prompt(state, new ShowCardsPrompt(
     opponent.id,
     GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,

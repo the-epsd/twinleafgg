@@ -72,7 +72,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       const playerHasBench = player.bench.some(b => b.cards.length > 0);
 
       if (!playerHasBench) {
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       }
 

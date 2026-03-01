@@ -56,7 +56,7 @@ export class LostRemover extends TrainerCard {
         targets = results || [];
 
         if (targets.length === 0) {
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           return state;
         }
 

@@ -42,7 +42,7 @@ export class AzsTranquility extends TrainerCard {
         if (!selected || selected.length === 0) return state;
         const previousActive = player.active;
         player.switchPokemon(selected[0], store, state);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         const healEffect = new HealEffect(player, previousActive, 80);
         return store.reduceEffect(state, healEffect);
       });

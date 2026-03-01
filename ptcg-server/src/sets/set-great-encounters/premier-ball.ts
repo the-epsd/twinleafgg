@@ -57,7 +57,7 @@ export class PremierBall extends TrainerCard {
               SHOW_CARDS_TO_PLAYER(store, state, player, cards);
 
               player.deck.moveCardsTo(cards, player.hand);
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
               SHUFFLE_DECK(store, state, player);
             });
@@ -85,7 +85,7 @@ export class PremierBall extends TrainerCard {
               });
 
               player.discard.moveCardsTo(cards, player.hand);
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
               return state;
             });
@@ -106,9 +106,9 @@ export class PremierBall extends TrainerCard {
           {
             allowCancel: true,
           }), choice => {
-          const option = options[choice];
-          option.action();
-        });
+            const option = options[choice];
+            option.action();
+          });
       }
     }
     return state;

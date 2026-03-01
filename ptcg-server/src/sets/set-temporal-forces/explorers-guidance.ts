@@ -66,7 +66,7 @@ export class ExplorersGuidance extends TrainerCard {
         player.ancientSupporter = true;
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.discard);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
       });
     }

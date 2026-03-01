@@ -67,7 +67,7 @@ Search your deck for up to 2 basic Energy cards and attach them to 1 of your Ult
           player.deck.moveCardTo(transfer.card, target);
         }
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
         return state;
       });

@@ -49,7 +49,7 @@ export class CedricJuniper extends TrainerCard {
       ), selected => {
         const cards = selected || [];
         if (cards.length === 0) {
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           return;
         }
 
@@ -77,7 +77,7 @@ export class CedricJuniper extends TrainerCard {
             }
 
             selectedPokemon.moveTo(player.hand);
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           });
         });
       });

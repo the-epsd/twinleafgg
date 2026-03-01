@@ -43,7 +43,7 @@ export class Mary extends TrainerCard {
         });
         state = store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         });
       });
     }

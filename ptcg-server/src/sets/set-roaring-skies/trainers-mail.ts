@@ -21,7 +21,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   effect.preventDefault = true;
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
-  
+
   const blocked: number[] = [];
   deckTop.cards.forEach((card, index) => {
     if (card instanceof TrainerCard && card.name === 'Trainers\' Mail') {
@@ -43,7 +43,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   deckTop.moveCardsTo(cards, player.hand);
   deckTop.moveTo(player.deck);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   if (cards.length > 0) {
     yield store.prompt(state, new ShowCardsPrompt(

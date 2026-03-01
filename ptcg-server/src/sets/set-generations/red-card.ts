@@ -43,7 +43,7 @@ export class RedCard extends TrainerCard {
       });
 
       opponent.deck.moveTo(opponent.hand, 4);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

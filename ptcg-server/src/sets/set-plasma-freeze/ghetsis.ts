@@ -47,7 +47,7 @@ export class Ghetsis extends TrainerCard {
       // Draw cards equal to the number of Item cards shuffled
       DRAW_CARDS(player, itemsShown.length);
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       return state;
     }
 

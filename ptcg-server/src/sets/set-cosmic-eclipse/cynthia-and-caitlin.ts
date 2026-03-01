@@ -125,7 +125,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
               // Draw 3 cards
               const drawnCards = player.deck.cards.slice(0, 3);
               player.deck.moveCardsTo(drawnCards, player.hand);
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
             }
           });
         }

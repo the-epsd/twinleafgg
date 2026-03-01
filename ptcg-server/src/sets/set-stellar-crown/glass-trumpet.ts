@@ -72,7 +72,7 @@ Choose up to 2 of your Benched [C] Pokémon and attach a Basic Energy card from 
         transfers = transfers || [];
 
         if (transfers.length === 0) {
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           return;
         }
 
@@ -80,7 +80,7 @@ Choose up to 2 of your Benched [C] Pokémon and attach a Basic Energy card from 
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
         }
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       });
     }

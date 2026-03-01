@@ -61,7 +61,7 @@ export class PuzzleOfTime extends TrainerCard {
             deckTop.applyOrder(order);
             deckTop.moveToTopOfDestination(player.deck);
 
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           });
         } else if (choice === 1) {
           if (player.discard.cards.length === 0) {
@@ -81,7 +81,7 @@ export class PuzzleOfTime extends TrainerCard {
             MOVE_CARDS(store, state, player.hand, player.discard, { cards: [secondPuzzle], sourceCard: this });
           }
 
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         }
       });
     }

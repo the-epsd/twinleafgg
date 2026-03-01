@@ -45,12 +45,12 @@ export class LuckyIcePop extends TrainerCard {
             player.supporter.moveCardTo(effect.trainerCard, player.hand);
           } else {
             // Tails: discard normally
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           }
         });
       } else {
         // No damage to heal: discard the card normally
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       }
     }
 

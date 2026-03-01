@@ -37,7 +37,7 @@ export class Bicycle extends TrainerCard {
       }
 
       player.deck.moveTo(player.hand, cardsToDraw);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

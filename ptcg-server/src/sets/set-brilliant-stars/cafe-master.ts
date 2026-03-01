@@ -69,7 +69,7 @@ export class CafeMaster extends TrainerCard {
       });
 
       // Move supporter card to discard pile
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
       // Check if we should end turn based on active Pokemon
       const playerActive = player.active.getPokemonCard();

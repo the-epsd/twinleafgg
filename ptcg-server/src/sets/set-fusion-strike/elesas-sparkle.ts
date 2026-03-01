@@ -92,7 +92,7 @@ export class ElesasSparkle extends TrainerCard {
             return;
           }
 
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
           for (const transfer of transfers) {
             const target = StateUtils.getTarget(state, player, transfer.to);

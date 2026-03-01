@@ -43,7 +43,7 @@ export class DeliveryBox extends TrainerCard {
         cards = selected || [];
 
         player.deck.moveCardsTo(cards, player.hand);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
         cards.forEach((card, index) => {
           store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });

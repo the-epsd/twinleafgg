@@ -29,7 +29,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     const supporterEffect = new SupporterEffect(player, effect.trainerCard);
     store.reduceEffect(state, supporterEffect);
   } catch {
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     return state;
   }
 
@@ -47,13 +47,13 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
         const supporterEffect = new SupporterEffect(player, effect.trainerCard);
         store.reduceEffect(state, supporterEffect);
       } catch {
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       }
     }
 
     opponent.switchPokemon(cardList);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     return state;
   });
 }

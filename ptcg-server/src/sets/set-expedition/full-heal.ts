@@ -27,7 +27,7 @@ export class FullHeal extends TrainerCard {
         player.active.removeSpecialCondition(condition);
       });
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

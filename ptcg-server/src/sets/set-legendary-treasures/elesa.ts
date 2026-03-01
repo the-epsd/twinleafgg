@@ -61,7 +61,7 @@ export class Elesa extends TrainerCard {
           SHOW_CARDS_TO_PLAYER(store, state, opponent, selected);
           player.deck.moveCardsTo(selected, player.hand);
         }
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         SHUFFLE_DECK(store, state, player);
       });
     }

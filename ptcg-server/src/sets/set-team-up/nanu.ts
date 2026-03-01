@@ -48,7 +48,7 @@ export class Nanu extends TrainerCard {
       ), (selectedCards) => {
         const card = selectedCards[0];
         if (!card) {
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           return state;
         }
 
@@ -60,7 +60,7 @@ export class Nanu extends TrainerCard {
           { min: 1, max: 1, allowCancel: false }
         ), (targets: PokemonCardList[]) => {
           if (!targets || targets.length === 0) {
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
             return state;
           }
 
@@ -75,7 +75,7 @@ export class Nanu extends TrainerCard {
           // Place the new Basic Darkness Pokemon into the slot
           player.discard.moveCardTo(card, targetList);
 
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         });
       });
     }

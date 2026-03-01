@@ -109,7 +109,7 @@ export class Klara extends TrainerCard {
 
       if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       }
 

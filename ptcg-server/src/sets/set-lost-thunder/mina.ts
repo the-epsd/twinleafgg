@@ -33,7 +33,7 @@ export class Mina extends TrainerCard {
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-      
+
       if (supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
@@ -56,15 +56,15 @@ export class Mina extends TrainerCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.deck.moveCardTo(transfer.card, target);
         }
-        
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
+
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });
       });
     }
-      
+
     return state;
   }
 }

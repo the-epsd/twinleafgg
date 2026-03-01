@@ -56,7 +56,7 @@ export class ComputerError extends TrainerCard {
         });
       });
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
       // Pretty much just for Chaos Gym: if used while not your turn, there is no end turn effect
       // Better to refer to whoever's turn it is, but idk how to do that

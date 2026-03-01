@@ -47,7 +47,7 @@ export class Fantina extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
       opponent.marker.addMarker(this.CLEAR_FANTINA_MARKER, this);
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     // During opponent's next turn: reduce damage from V Pokemon by 120

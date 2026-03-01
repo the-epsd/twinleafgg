@@ -56,12 +56,12 @@ export class MaxRevive extends TrainerCard {
       ), selected => {
         cards = selected || [];
         if (cards.length > 0) {
-          const deckTop = new CardList();          
-          
+          const deckTop = new CardList();
+
           cards.forEach(card => {
             player.discard.moveCardTo(card, deckTop);
           });
-          
+
           return store.prompt(state, new OrderCardsPrompt(
             player.id,
             GameMessage.CHOOSE_CARDS_ORDER,
@@ -74,7 +74,7 @@ export class MaxRevive extends TrainerCard {
 
             deckTop.applyOrder(order);
             deckTop.moveToTopOfDestination(player.deck);
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
             if (cards.length > 0) {
               const opponent = StateUtils.getOpponent(state, player);

@@ -39,7 +39,7 @@ export class ProfessorLaventon extends TrainerCard {
       );
 
       if (hisuianInDiscard.length === 0) {
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       }
 
@@ -65,7 +65,7 @@ export class ProfessorLaventon extends TrainerCard {
         if (cards.length > 0) {
           MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: this });
         }
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
 

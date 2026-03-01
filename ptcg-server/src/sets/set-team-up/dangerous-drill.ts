@@ -94,7 +94,7 @@ export class DangerousDrill extends TrainerCard {
                 const supporterEffect = new SupporterEffect(player, effect.trainerCard);
                 store.reduceEffect(state, supporterEffect);
               } catch {
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
                 return state;
               }
             }
@@ -170,7 +170,7 @@ export class DangerousDrill extends TrainerCard {
             ), selected => {
               cards = selected || [];
               if (cards.length > 0) {
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
                 target.moveCardsTo(cards, opponent.discard);
               }
 

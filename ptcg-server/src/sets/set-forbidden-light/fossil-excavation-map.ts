@@ -57,7 +57,7 @@ export class FossilExcavationMap extends TrainerCard {
                 cards
               ), () => { });
             }
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
               player.deck.applyOrder(order);
             });
@@ -89,7 +89,7 @@ export class FossilExcavationMap extends TrainerCard {
               ), () => { });
             }
 
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           }
         }
       ];

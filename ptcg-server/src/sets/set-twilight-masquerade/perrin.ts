@@ -69,7 +69,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   player.deck.moveCardsTo(cards, player.hand);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
 
   if (cards.length > 0) {

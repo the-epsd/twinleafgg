@@ -33,7 +33,7 @@ export class GoodManners extends TrainerCard {
       SHOW_CARDS_TO_PLAYER(store, state, opponent, player.hand.cards);
       SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, { stage: Stage.BASIC }, { min: 0, max: 1 });
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       return state;
     }
 

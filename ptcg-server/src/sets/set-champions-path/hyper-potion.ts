@@ -79,7 +79,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       MOVE_CARDS(store, state, target, player.discard, { cards: cards, sourceCard: self });
     });
   });
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   return state;
 }
 

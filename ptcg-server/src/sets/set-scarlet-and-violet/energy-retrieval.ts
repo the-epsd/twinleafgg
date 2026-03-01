@@ -54,7 +54,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       // Recover discarded Energy
       player.discard.moveCardsTo(cards, player.hand);
       // Discard item card
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
   });
 }
@@ -103,7 +103,7 @@ export class EnergyRetrieval extends TrainerCard {
 
       if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       }
 

@@ -57,7 +57,7 @@ export class ErikasPerfume extends TrainerCard {
 
         // Operation canceled by the user
         if (cards.length === 0) {
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           return;
         }
 
@@ -66,7 +66,7 @@ export class ErikasPerfume extends TrainerCard {
           slots[index].pokemonPlayedTurn = state.turn;
         });
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
 

@@ -18,7 +18,7 @@ export class Surfer extends TrainerCard {
   public setNumber: string = '187';
 
   public regulationMark = 'H';
-  
+
   public name: string = 'Surfer';
 
   public fullName: string = 'Surfer SSP';
@@ -51,18 +51,18 @@ export class Surfer extends TrainerCard {
       ), result => {
         const cardList = result[0];
         player.switchPokemon(cardList);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-              
+
+
         while (player.hand.cards.length < 5) {
           if (player.deck.cards.length === 0) {
             break;
           }
           player.deck.moveTo(player.hand, 1);
         }
-        
+
         return state;
       });
-      
+
     }
     return state;
   }

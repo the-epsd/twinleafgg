@@ -47,7 +47,7 @@ export class ShadowTriad extends TrainerCard {
           return state;
         }
         state = MOVE_CARDS(store, state, player.discard, player.hand, { cards });
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
     return state;

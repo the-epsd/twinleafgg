@@ -24,7 +24,6 @@ export class StrangeTimepiece extends TrainerCard {
 
     if (WAS_TRAINER_USED(effect, this)) {
       let canDevolve = false;
-      const player = effect.player;
 
       const blocked: CardTarget[] = [];
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
@@ -78,7 +77,7 @@ export class StrangeTimepiece extends TrainerCard {
                     DEVOLVE_POKEMON(store, state, results[0], effect.player.hand);
                   }
                 }
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
                 return state;
               }
             });

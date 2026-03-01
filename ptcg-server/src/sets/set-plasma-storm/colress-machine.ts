@@ -77,7 +77,7 @@ export class ColressMachine extends TrainerCard {
           player.deck.moveCardTo(transfer.card, target);
         }
         SHUFFLE_DECK(store, state, player);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       });
     }

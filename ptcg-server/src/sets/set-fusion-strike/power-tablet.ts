@@ -35,7 +35,7 @@ export class PowerTablet extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       player.marker.addMarker(this.POWER_TABLET_MARKER, this);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     if (effect instanceof DealDamageEffect && effect.player.active.getPokemonCard()?.tags.includes(CardTag.FUSION_STRIKE)) {

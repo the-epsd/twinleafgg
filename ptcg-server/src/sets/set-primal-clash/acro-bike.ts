@@ -44,12 +44,12 @@ export class AcroBike extends TrainerCard {
         player,
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
-        { },
+        {},
         { min: 1, max: 1, allowCancel: false }
       ), selected => {
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.discard);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
 

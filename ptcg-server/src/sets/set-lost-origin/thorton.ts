@@ -91,7 +91,7 @@ export class Thorton extends TrainerCard {
           player.discard.moveCardTo(card, targetList);
 
           // Move Thorton to the discard pile
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         });
       });
     }

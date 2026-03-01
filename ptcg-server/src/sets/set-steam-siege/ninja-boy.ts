@@ -37,19 +37,19 @@ export class NinjaBoy extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-  
+
       const blocked: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
         if (card.stage !== Stage.BASIC) {
           blocked.push(target);
-        } 
+        }
       });
-  
+
       return store.prompt(state, new ChoosePokemonPrompt(
         player.id,
         GameMessage.CHOOSE_POKEMON_TO_SWITCH,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { allowCancel: false, blocked }
       ), results => {
         const target = results || [];
@@ -57,7 +57,7 @@ export class NinjaBoy extends TrainerCard {
         if (target.length === 0) {
           return state;
         }
-  
+
         let cards: Card[] = [];
         return store.prompt(state, new ChooseCardsPrompt(
           player,
@@ -67,30 +67,30 @@ export class NinjaBoy extends TrainerCard {
           { min: 1, max: 1, allowCancel: false }
         ), selectedCards => {
           cards = selectedCards || [];
-          
+
           if (cards.length === 0) {
             return state;
           }
-    
+
           cards.forEach((card, index) => {
             target[0].moveCardTo(card, player.deck);
             player.deck.moveCardTo(card, target[0]);
           });
-        
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          
-          
+
+
+
+
           store.log(state, GameLog.LOG_PLAYER_SWITCHES_POKEMON_WITH_POKEMON_FROM_DECK, { name: player.name, card: target[0].getPokemonCard()!.name, secondCard: cards[0].name });
-          
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          
+
+
+
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);
           });
-        });        
-      });  
+        });
+      });
     }
-    
+
     return state;
   }
 

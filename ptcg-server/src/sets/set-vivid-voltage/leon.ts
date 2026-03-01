@@ -34,7 +34,7 @@ export class Leon extends TrainerCard {
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       ADD_MARKER(this.LEON_MARKER, player, this);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     if (effect instanceof DealDamageEffect && HAS_MARKER(this.LEON_MARKER, effect.player, this) && effect.damage > 0) {

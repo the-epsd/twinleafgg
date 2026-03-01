@@ -91,7 +91,7 @@ export class Blacksmith extends TrainerCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           player.discard.moveCardTo(transfer.card, target);
         }
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
       });
     }

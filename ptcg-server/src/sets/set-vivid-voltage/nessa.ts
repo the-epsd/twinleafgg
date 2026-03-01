@@ -57,7 +57,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   player.discard.moveCardsTo(cards, player.hand);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
 
   if (cards.length > 0) {
@@ -105,7 +105,7 @@ export class Nessa extends TrainerCard {
 
       if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       }
 

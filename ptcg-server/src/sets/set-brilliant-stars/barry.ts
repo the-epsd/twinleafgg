@@ -36,7 +36,7 @@ export class Barry extends TrainerCard {
 
       DRAW_CARDS(player, 3);
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

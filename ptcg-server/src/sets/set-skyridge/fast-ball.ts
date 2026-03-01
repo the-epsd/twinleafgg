@@ -41,7 +41,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (evolution !== undefined) {
     player.deck.moveCardTo(evolution, player.hand);
   }
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   SHUFFLE_DECK(store, state, player);
 }
 

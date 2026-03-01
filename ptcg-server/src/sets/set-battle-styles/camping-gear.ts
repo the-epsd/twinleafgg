@@ -26,7 +26,7 @@ export class CampingGear extends TrainerCard {
 
       SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, effect.trainerCard, {}, { min: 0, max: 1 });
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
       if (effect.player === StateUtils.findOwner(state, StateUtils.findCardList(state, this))) {
         const endTurnEffect = new EndTurnEffect(player);

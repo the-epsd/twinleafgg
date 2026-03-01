@@ -73,7 +73,7 @@ export class PerformanceFlute extends TrainerCard {
           ), () => {
 
             deckTop.moveTo(opponent.deck);
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
             return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
               player.deck.applyOrder(order);
               return state;
@@ -88,7 +88,7 @@ export class PerformanceFlute extends TrainerCard {
 
         deckTop.moveTo(opponent.deck);
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
         return store.prompt(state, new ShuffleDeckPrompt(opponent.id), order => {
           opponent.deck.applyOrder(order);

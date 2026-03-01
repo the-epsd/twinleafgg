@@ -92,7 +92,7 @@ export class TeamRocketsGiovanni extends TrainerCard {
         }
       ), targets => {
         if (!targets || targets.length === 0) {
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           return state;
         }
 
@@ -109,7 +109,7 @@ export class TeamRocketsGiovanni extends TrainerCard {
           { allowCancel: false }
         ), oppTargets => {
           if (!oppTargets || oppTargets.length === 0) {
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
             return state;
           }
 

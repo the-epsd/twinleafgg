@@ -18,18 +18,18 @@ function* playCard(next: Function, store: StoreLike, state: State,
   if (supporterTurn > 0) {
     throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
   }
-  
+
   if (player.deck.cards.length === 0) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
-  
+
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
   // We will discard this card after prompt confirmation
-  effect.preventDefault = true;  
-      
+  effect.preventDefault = true;
+
   const deckTop = new CardList();
   player.deck.moveTo(deckTop, 7);
-      
+
   return store.prompt(state, new ChooseCardsPrompt(
     player,
     GameMessage.CHOOSE_CARD_TO_HAND,
@@ -39,11 +39,11 @@ function* playCard(next: Function, store: StoreLike, state: State,
   ), selected => {
     deckTop.moveCardsTo(selected, player.hand);
     deckTop.moveTo(player.deck);
-    
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
-    
+
+
+
     const opponent = StateUtils.getOpponent(state, player);
-    
+
     if (selected.length > 0) {
       store.prompt(state, new ShowCardsPrompt(
         opponent.id,
@@ -51,7 +51,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
         selected
       ), () => next());
     }
-    
+
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);
       return state;

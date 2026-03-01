@@ -67,7 +67,7 @@ export class Judge extends TrainerCard {
       DRAW_CARDS(player, 4);
 
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
     }
 

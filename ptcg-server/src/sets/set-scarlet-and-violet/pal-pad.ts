@@ -50,7 +50,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: PalPad,
     }
 
   }
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });
@@ -97,7 +97,7 @@ export class PalPad extends TrainerCard {
 
       if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       }
 

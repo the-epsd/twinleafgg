@@ -55,7 +55,7 @@ export class UndergroundExpedition extends TrainerCard {
           bottomCardList.moveCardTo(bottomCardList.cards[0], player.deck);
         }
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       });
     }

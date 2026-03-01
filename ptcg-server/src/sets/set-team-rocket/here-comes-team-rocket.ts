@@ -39,7 +39,7 @@ export class HereComesTeamRocket extends TrainerCard {
         }
       });
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

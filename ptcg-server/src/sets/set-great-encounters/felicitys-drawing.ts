@@ -52,7 +52,7 @@ export class FelicitysDrawing extends TrainerCard {
         DRAW_CARDS(player, drawCount);
       });
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       return state;
     }
 

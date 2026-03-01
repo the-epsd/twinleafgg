@@ -20,7 +20,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
   // Check if bench has open slots
   const openSlots = opponent.bench.filter(b => b.cards.length === 0);
-      
+
   if (openSlots.length === 0) {
     // No open slots, throw error
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -46,12 +46,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
-  
+
   cards.forEach((card, index) => {
     opponent.discard.moveCardTo(card, slots[index]);
     slots[index].pokemonPlayedTurn = state.turn;
 
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   });
 
 }

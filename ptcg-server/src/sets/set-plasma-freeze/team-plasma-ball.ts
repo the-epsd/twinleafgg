@@ -52,7 +52,7 @@ export class TeamPlasmaBall extends TrainerCard {
 
         MOVE_CARDS_TO_HAND(store, state, player, cards);
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         SHUFFLE_DECK(store, state, player);
       });
     }

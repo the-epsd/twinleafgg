@@ -52,7 +52,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     const healEffect = new HealEffect(player, target, 150);
     store.reduceEffect(state, healEffect);
   });
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   return state;
 }
 

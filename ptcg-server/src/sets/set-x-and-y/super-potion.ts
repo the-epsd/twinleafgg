@@ -69,7 +69,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // Heal Pokemon
   const healEffect = new HealEffect(player, target, 60);
   store.reduceEffect(state, healEffect);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  
   return state;
 }
 

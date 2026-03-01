@@ -68,7 +68,7 @@ export class N extends TrainerCard {
       player.deck.moveTo(player.hand, Math.min(player.getPrizeLeft(), player.deck.cards.length));
 
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
     }
 

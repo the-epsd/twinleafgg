@@ -34,7 +34,7 @@ export class RollerSkates extends TrainerCard {
         }
       }));
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

@@ -56,7 +56,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Ordinar
   });
 
   player.discard.moveCardsTo(cards, player.deck);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
@@ -69,7 +69,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Ordinar
       cards
     ), () => next());
   }
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

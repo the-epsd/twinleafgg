@@ -81,7 +81,7 @@ export class DamagePump extends TrainerCard {
           if (totalDamageMoved >= 20) break;
         }
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       });
     }

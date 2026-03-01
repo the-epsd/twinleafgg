@@ -63,7 +63,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     store.reduceEffect(state, healEffect);
   }
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   return state;
 }
 

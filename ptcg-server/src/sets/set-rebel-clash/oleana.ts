@@ -58,7 +58,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Oleana,
   }
 
   // Clean up supporter
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   return state;
 }

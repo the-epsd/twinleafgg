@@ -32,7 +32,7 @@ export class QuadStone extends TrainerCard {
         // Only 1 card: heal 10 damage from Active Pokemon
         const healEffect = new HealEffect(player, player.active, 10);
         store.reduceEffect(state, healEffect);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       }
 
@@ -66,7 +66,7 @@ export class QuadStone extends TrainerCard {
           });
         }
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
 

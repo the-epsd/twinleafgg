@@ -61,11 +61,11 @@ export class HooligansJimAndCas extends TrainerCard {
           ], () => {
             // Shuffle the selected cards into opponent's deck
             SHUFFLE_CARDS_INTO_DECK(store, state, opponent, selectedCards);
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           });
         }
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
 

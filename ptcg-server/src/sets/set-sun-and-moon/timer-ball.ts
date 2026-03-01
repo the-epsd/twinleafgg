@@ -53,7 +53,7 @@ export class TimerBall extends TrainerCard {
         results.forEach(r => { heads += r ? 1 : 0; });
 
         if (heads === 0) {
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           return state;
         }
 
@@ -77,7 +77,7 @@ export class TimerBall extends TrainerCard {
         ), selected => {
           cards = selected || [];
 
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
           if (cards.length > 0) {
 

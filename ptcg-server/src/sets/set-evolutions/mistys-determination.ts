@@ -86,7 +86,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   // Move supporter to discard
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   // Shuffle deck
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

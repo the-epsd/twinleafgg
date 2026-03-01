@@ -36,7 +36,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   if (playTwoCards === false) {
     player.deck.moveTo(player.hand, 1);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     return state;
   }
 
@@ -62,7 +62,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Get selected cards
   player.deck.moveCardsTo(cards, player.hand);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   // Shuffle the deck
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

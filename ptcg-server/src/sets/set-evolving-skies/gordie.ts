@@ -19,7 +19,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   effect.preventDefault = true;
 
   if (player.deck.cards.length === 0) {
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     return state;
   }
 
@@ -51,7 +51,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // Move selected energy cards to hand, shuffle rest back into deck
   topCards.moveCardsTo(cards, player.hand);
   topCards.moveTo(player.deck);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   // Reveal selected energy cards to opponent (card text says "reveal")
   if (cards.length > 0) {

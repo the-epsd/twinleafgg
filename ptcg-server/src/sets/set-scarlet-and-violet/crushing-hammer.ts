@@ -39,7 +39,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   if (coinResult === false) {
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     return state;
   }
 
@@ -56,7 +56,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   if (targets.length === 0) {
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     return state;
   }
 
@@ -74,7 +74,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   target.moveCardsTo(cards, opponent.discard);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   return state;
 }

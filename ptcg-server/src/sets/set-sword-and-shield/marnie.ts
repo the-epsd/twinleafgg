@@ -70,7 +70,7 @@ export class Marnie extends TrainerCard {
         opponent.deck.moveTo(opponent.hand, Math.min(4, opponent.deck.cards.length));
       }
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
     }
 

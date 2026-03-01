@@ -53,7 +53,7 @@ export class Bede extends TrainerCard {
           player.hand.moveCardTo(transfer.card, target);
         }
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
         return state;
       });

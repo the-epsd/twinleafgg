@@ -32,7 +32,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player,
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     player.deck,
-    { },
+    {},
     { min: 1, max: 2, allowCancel: false }
   ), selected => {
     cards = selected || [];
@@ -40,8 +40,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   player.deck.moveCardsTo(cards, player.discard);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
+
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

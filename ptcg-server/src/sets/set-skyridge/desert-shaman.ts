@@ -84,7 +84,7 @@ export class DesertShaman extends TrainerCard {
         });
       }
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
     }
 

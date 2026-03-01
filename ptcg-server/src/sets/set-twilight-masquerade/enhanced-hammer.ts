@@ -64,7 +64,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     // Discard selected special energy card
     target.moveCardsTo(cards, opponent.discard);
   }
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   return state;
 }
 

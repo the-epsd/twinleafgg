@@ -158,7 +158,7 @@ export class Faba extends TrainerCard {
             ), selected => {
               cards = selected || [];
               if (cards.length > 0) {
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
                 target.moveCardsTo(cards, opponent.lostzone);
               }
 

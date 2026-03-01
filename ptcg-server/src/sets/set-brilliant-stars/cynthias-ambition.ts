@@ -58,7 +58,7 @@ export class CynthiasAmbition extends TrainerCard {
         player.deck.moveTo(player.hand, cardsToDraw);
       }
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     if (effect instanceof KnockOutEffect) {

@@ -78,7 +78,7 @@ export class RescueStretcher extends TrainerCard {
               });
 
               player.discard.moveCardsTo(cards, player.deck);
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
               return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
@@ -105,7 +105,7 @@ export class RescueStretcher extends TrainerCard {
               });
 
               player.discard.moveCardsTo(cards, player.hand);
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
               return state;
             });
