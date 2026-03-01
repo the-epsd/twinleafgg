@@ -46,7 +46,8 @@ export class Avatars extends Controller {
     const map: { [key: string]: string } = {
       'avatar_150': 'av_5.png',
       'avatar_shadow_rider': 'av_4.png',
-      'avatar_pao': 'pao.webp'
+      'avatar_pao': 'pao.webp',
+      'avatar_151': 'mew.png'
     };
     return map[itemId] || 'av_default.png';
   }
@@ -141,7 +142,7 @@ export class Avatars extends Controller {
 
       // Verify the user owns an unlocked avatar that maps to this fileName
       const unlockedItems = await UserUnlockedItem.find({ where: { userId, itemType: 'avatar' } });
-      
+
       let foundMatch = false;
       for (const item of unlockedItems) {
         const itemFileName = this.getAvatarFileNameFromId(item.itemId);

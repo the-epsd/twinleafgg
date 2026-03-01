@@ -17,6 +17,8 @@ import { GameOverPrompt } from './prompt/prompt-game-over/game-over.prompt';
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { SettingsService } from './table-sidebar/settings-dialog/settings.service';
 import { Board3dAccessService } from '../shared/services/board3d-access.service';
+import { BattlePassService } from '../battle-pass/battle-pass.service';
+import { XpGainData } from '../battle-pass/battle-pass.model';
 
 @UntilDestroy()
 @Component({
@@ -39,6 +41,8 @@ export class TableComponent implements OnInit, OnDestroy {
   private gameId: number;
   public showGameOver = false;
   public showMatchResultsSplash = false;
+  public showXpGainScreen = false;
+  public xpGainData: XpGainData | null = null;
   public gameOverPrompt: GameOverPrompt;
   public showSandboxPanel = false;
   public sandboxSidebarCollapsed: boolean = false;
@@ -81,7 +85,8 @@ export class TableComponent implements OnInit, OnDestroy {
     private boardInteractionService: BoardInteractionService,
     private snackBar: MatSnackBar,
     private settingsService: SettingsService,
-    private board3dAccessService: Board3dAccessService
+    private board3dAccessService: Board3dAccessService,
+    private battlePassService: BattlePassService
   ) {
     this.gameStates$ = this.sessionService.get(session => session.gameStates);
     this.clientId$ = this.sessionService.get(session => session.clientId);
@@ -397,6 +402,43 @@ export class TableComponent implements OnInit, OnDestroy {
   onMatchResultsSplashDismiss(): void {
     this.showMatchResultsSplash = false;
     this.showGameOver = true;
+  }
+
+  onGameOverConfirm(): void {
+    const localId = this.gameState?.localId;
+    const isPlaying = this.gameState?.state?.players?.some((p: { id: number }) => p.id === this.clientId);
+    if (!isPlaying || this.gameState?.replay) {
+      this.finishAndNavigate(localId);
+      return;
+    }
+    this.battlePassService.getPendingMatchReward().pipe(
+      untilDestroyed(this)
+    ).subscribe({
+      next: (reward) => {
+        if (reward) {
+          this.xpGainData = reward;
+          this.showXpGainScreen = true;
+          // Keep showGameOver true so XP screen fades in on top; we never reveal the board
+        } else {
+          this.finishAndNavigate(localId);
+        }
+      },
+      error: () => this.finishAndNavigate(localId)
+    });
+  }
+
+  onXpGainDismiss(): void {
+    this.finishAndNavigate(this.gameState?.localId);
+  }
+
+  private finishAndNavigate(localId: number | undefined): void {
+    if (localId) {
+      this.gameService.removeLocalGameState(localId);
+    }
+    this.router.navigate(['/']);
+    this.showXpGainScreen = false;
+    this.xpGainData = null;
+    this.showGameOver = false;
   }
 
   toggleSandboxSidebar() {

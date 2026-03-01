@@ -3,11 +3,18 @@ import { BattlePassService } from './battle-pass.service';
 import { ApiService } from '../api/api.service';
 import { BattlePassReward, BattlePassSeason, BattlePassProgress } from './battle-pass.model';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 interface BattlePassLevel {
   level: number;
   freeReward?: BattlePassReward;
+}
+
+interface SeasonOption {
+  seasonId: string;
+  name: string;
+  startDate: string;
 }
 
 @UntilDestroy()
@@ -23,28 +30,95 @@ export class BattlePassComponent implements OnInit {
   public season: BattlePassSeason | undefined;
   public progress: BattlePassProgress | undefined;
   public levels: BattlePassLevel[] = [];
+  public seasons: SeasonOption[] = [];
+  public selectedSeasonId = '';
   public loading = true;
+  public switchingSeason = false;
+  public noSeasonsAvailable = false;
   public claimingLevel: number | null = null;
 
   constructor(private battlePassService: BattlePassService, private api: ApiService) { }
 
   ngOnInit(): void {
-    forkJoin({
-      seasonData: this.battlePassService.getCurrentSeason(),
-      progressData: this.battlePassService.getProgress()
-    })
-      .pipe(untilDestroyed(this))
+    this.battlePassService.getSeasons()
+      .pipe(
+        untilDestroyed(this),
+        switchMap(seasonsRes => {
+          this.seasons = seasonsRes.seasons;
+          if (this.seasons.length === 0) {
+            this.noSeasonsAvailable = true;
+            this.loading = false;
+            return of(null);
+          }
+          const defaultId = this.seasons[0]?.seasonId ?? '';
+          return this.battlePassService.getActiveSeason().pipe(
+            catchError(() => of(null)),
+            switchMap(savedId => {
+              const isValidSaved = savedId && this.seasons.some(s => s.seasonId === savedId);
+              if (isValidSaved) {
+                this.selectedSeasonId = savedId;
+                return this.loadSeasonData(this.selectedSeasonId);
+              }
+              return this.battlePassService.getCurrentSeason().pipe(
+                map(current => current.season.seasonId),
+                catchError(() => of(defaultId))
+              ).pipe(
+                switchMap(newestId => {
+                  this.selectedSeasonId = newestId || defaultId;
+                  return this.loadSeasonData(this.selectedSeasonId);
+                })
+              );
+            })
+          );
+        })
+      )
       .subscribe({
-        next: ({ seasonData, progressData }) => {
-          this.season = seasonData.season;
-          this.progress = progressData.progress;
-          this.levels = this.groupRewardsByLevel(seasonData.season.rewards);
+        next: (result) => {
+          if (result) {
+            this.season = result.season;
+            this.progress = result.progress;
+            this.levels = this.groupRewardsByLevel(result.season.rewards);
+          }
           this.loading = false;
         },
         error: () => {
           this.loading = false;
         }
       });
+  }
+
+  public onSeasonChange(): void {
+    if (!this.selectedSeasonId) return;
+    this.switchingSeason = true;
+    this.battlePassService.setActiveSeason(this.selectedSeasonId).pipe(
+      untilDestroyed(this),
+      catchError(() => of(void 0))
+    ).subscribe();
+    this.loadSeasonData(this.selectedSeasonId)
+      .pipe(untilDestroyed(this))
+      .subscribe({
+        next: ({ season: s, progress: p }) => {
+          this.season = s;
+          this.progress = p;
+          this.levels = this.groupRewardsByLevel(s.rewards);
+          this.switchingSeason = false;
+        },
+        error: () => {
+          this.switchingSeason = false;
+        }
+      });
+  }
+
+  private loadSeasonData(seasonId: string) {
+    return forkJoin({
+      seasonData: this.battlePassService.getSeason(seasonId),
+      progressData: this.battlePassService.getProgress(seasonId)
+    }).pipe(
+      map(({ seasonData, progressData }) => ({
+        season: seasonData.season,
+        progress: progressData.progress
+      }))
+    );
   }
 
 
@@ -78,12 +152,12 @@ export class BattlePassComponent implements OnInit {
   }
 
   public claim(level: number): void {
-    if (this.claimingLevel || (this.progress && this.progress.claimedRewards.includes(level))) {
-      return; // Already claiming or already claimed
+    if (!this.selectedSeasonId || this.claimingLevel || (this.progress && this.progress.claimedRewards.includes(level))) {
+      return;
     }
 
     this.claimingLevel = level;
-    this.battlePassService.claimReward(level)
+    this.battlePassService.claimReward(level, this.selectedSeasonId)
       .pipe(untilDestroyed(this))
       .subscribe({
         next: () => {
@@ -92,11 +166,16 @@ export class BattlePassComponent implements OnInit {
           }
           this.claimingLevel = null;
         },
-        error: (err) => {
+        error: () => {
           this.claimingLevel = null;
-          // Optionally show an error message to the user
         }
       });
+  }
+
+  public getDisplayLevel(): number {
+    if (!this.progress) return 1;
+    const level = this.progress.level;
+    return (typeof level === 'number' && !Number.isNaN(level)) ? level : 1;
   }
 
   public getExpPercentage(): number {
@@ -105,20 +184,23 @@ export class BattlePassComponent implements OnInit {
     }
     const currentLevelExp = this.getCurrentLevelExp();
     const totalLevelExp = this.getTotalLevelExp();
-    if (totalLevelExp === 0) {
+    if (totalLevelExp === 0 || totalLevelExp === undefined || Number.isNaN(totalLevelExp)) {
       return 0;
     }
-    return (currentLevelExp / totalLevelExp) * 100;
+    const pct = (currentLevelExp / totalLevelExp) * 100;
+    return Number.isNaN(pct) ? 0 : pct;
   }
 
   public getCurrentLevelExp(): number {
     if (!this.progress) return 0;
-    return this.progress.exp - this.progress.totalXpForCurrentLevel;
+    const exp = (this.progress.exp ?? 0) - (this.progress.totalXpForCurrentLevel ?? 0);
+    return Number.isNaN(exp) ? 0 : exp;
   }
 
   public getTotalLevelExp(): number {
     if (!this.progress) return 0;
-    return this.progress.nextLevelXp;
+    const xp = this.progress.nextLevelXp ?? 0;
+    return Number.isNaN(xp) ? 0 : xp;
   }
 
   public addDebugExp(): void {
@@ -126,8 +208,7 @@ export class BattlePassComponent implements OnInit {
       .pipe(untilDestroyed(this))
       .subscribe({
         next: () => {
-          // Refresh progress to get new level and xp
-          this.battlePassService.getProgress()
+          this.battlePassService.getProgress(this.selectedSeasonId || undefined)
             .pipe(untilDestroyed(this))
             .subscribe({
               next: (progressData) => {
@@ -135,8 +216,7 @@ export class BattlePassComponent implements OnInit {
               }
             });
         },
-        error: (err) => {
-        }
+        error: () => {}
       });
   }
 

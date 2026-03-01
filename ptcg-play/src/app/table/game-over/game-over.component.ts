@@ -1,11 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { Card, GameWinner, GamePhase, SuperType, Format } from 'ptcg-server';
 import { LocalGameState, PlayerGameStats } from '../../shared/session/session.interface';
 import { GameOverPrompt } from '../prompt/prompt-game-over/game-over.prompt';
 import { SessionService } from '../../shared/session/session.service';
-import { Router } from '@angular/router';
-import { GameService } from 'src/app/api/services/game.service';
 import { AlertService } from '../../shared/alert/alert.service';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -32,6 +30,7 @@ interface PokemonDamageStats {
 export class GameOverComponent implements OnInit {
   @Input() prompt!: GameOverPrompt;
   @Input() gameState!: LocalGameState;
+  @Output() confirm = new EventEmitter<void>();
 
   public GameWinner = GameWinner;
   public isWinner = false;
@@ -62,8 +61,6 @@ export class GameOverComponent implements OnInit {
 
   constructor(
     private sessionService: SessionService,
-    private router: Router,
-    private gameService: GameService,
     private alertService: AlertService,
     private translate: TranslateService
   ) { }
@@ -646,9 +643,7 @@ export class GameOverComponent implements OnInit {
     }
   }
 
-  confirm(): void {
-    this.gameService.removeLocalGameState(this.localId);
-    this.router.navigate(['/']);
-    this.isDeleted = true;
+  onConfirmClick(): void {
+    this.confirm.emit();
   }
 } 

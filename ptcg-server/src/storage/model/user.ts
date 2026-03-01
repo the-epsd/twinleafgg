@@ -45,6 +45,9 @@ export class User extends BaseEntity {
   @Column({ nullable: true })
   public nightlyImagesJsonUrl: string = '';
 
+  @Column({ type: 'varchar', length: 255, nullable: true })
+  public activeBattlePassSeasonId: string | null = null;
+
   @OneToMany(type => Deck, deck => deck.user)
     decks!: Deck[];
 

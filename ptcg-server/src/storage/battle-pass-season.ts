@@ -24,9 +24,6 @@ export class BattlePassSeason extends BaseEntity {
   @Column({ type: 'date', default: () => '(CURRENT_DATE)' })
     startDate!: Date;
 
-  @Column({ type: 'date', default: () => '(CURRENT_DATE)' })
-    endDate!: Date;
-
   @Column()
     rewardsFile!: string;
 

@@ -9,6 +9,7 @@ import { TableSidebarModule } from './table-sidebar/table-sidebar.module';
 import { VsScreenComponent } from './vs-screen/vs-screen.component';
 import { MatchResultsSplashComponent } from './match-results-splash/match-results-splash.component';
 import { GameOverComponent } from './game-over/game-over.component';
+import { XpGainScreenComponent } from './xp-gain-screen/xp-gain-screen.component';
 import { SandboxControlComponent } from './sandbox-control/sandbox-control.component';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { SandboxControlComponent } from './sandbox-control/sandbox-control.compo
     VsScreenComponent,
     MatchResultsSplashComponent,
     GameOverComponent,
+    XpGainScreenComponent,
     SandboxControlComponent
   ],
   imports: [

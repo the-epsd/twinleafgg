@@ -74,8 +74,14 @@
       </ptcg-match-results-splash>
 
       <!-- Game Over screen -->
-      <ptcg-game-over *ngIf="showGameOver" [gameState]="gameState" [prompt]="gameOverPrompt">
+      <ptcg-game-over *ngIf="showGameOver" [gameState]="gameState" [prompt]="gameOverPrompt"
+        (confirm)="onGameOverConfirm()">
       </ptcg-game-over>
+
+      <!-- XP Gain screen (after game over OK) -->
+      <ptcg-xp-gain-screen *ngIf="showXpGainScreen && xpGainData" [data]="xpGainData"
+        (dismiss)="onXpGainDismiss()">
+      </ptcg-xp-gain-screen>
 
       <!-- Floating UI Overlays for 3D Board -->
       <div class="board-3d-overlays" *ngIf="use3dBoard && webglSupported && has3dBoardAccess && gameState">

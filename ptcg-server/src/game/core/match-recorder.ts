@@ -1,9 +1,10 @@
 import { Transaction, TransactionManager, EntityManager } from 'typeorm';
+import { LessThanOrEqual } from 'typeorm';
 
 import { Client } from '../client/client.interface';
 import { Core } from './core';
 import { State, GamePhase, GameWinner } from '../store/state/state';
-import { User, Match, Deck } from '../../storage';
+import { User, Match, Deck, BattlePassSeason, UserBattlePass, MatchXpAward } from '../../storage';
 import { RankingCalculator } from './ranking-calculator';
 import { Replay } from './replay';
 import { ReplayPlayer } from './replay.interface';
@@ -109,6 +110,9 @@ export class MatchRecorder {
         this.core.emit(c => c.onUsersUpdate(users));
       }
 
+      // Award Battle Pass XP to both players
+      await this.awardBattlePassXp(manager, match, state);
+
     } catch (error) {
       console.error('[MatchRecorder] Error saving match:', error);
     } finally {
@@ -116,6 +120,86 @@ export class MatchRecorder {
         clearTimeout(this.transactionTimeout);
       }
       this.cleanup();
+    }
+  }
+
+  private async awardBattlePassXp(manager: EntityManager, match: Match, state: State): Promise<void> {
+    try {
+      const today = new Date().toISOString().slice(0, 10);
+      const defaultSeason = await manager.findOne(BattlePassSeason, {
+        where: { startDate: LessThanOrEqual(today) },
+        order: { startDate: 'DESC' }
+      });
+      if (!defaultSeason) return;
+
+      const xpForWin = 100;
+      const xpForLoss = 50;
+      const xpForDraw = 25;
+
+      const players: { user: User; xpAmount: number }[] = [];
+      if (match.winner === GameWinner.PLAYER_1) {
+        players.push({ user: match.player1, xpAmount: xpForWin });
+        players.push({ user: match.player2, xpAmount: xpForLoss });
+      } else if (match.winner === GameWinner.PLAYER_2) {
+        players.push({ user: match.player1, xpAmount: xpForLoss });
+        players.push({ user: match.player2, xpAmount: xpForWin });
+      } else {
+        players.push({ user: match.player1, xpAmount: xpForDraw });
+        players.push({ user: match.player2, xpAmount: xpForDraw });
+      }
+
+      for (const { user, xpAmount } of players) {
+        const dbUser = await manager.findOne(User, { where: { id: user.id } });
+        let season = defaultSeason;
+        if (dbUser?.activeBattlePassSeasonId) {
+          const activeSeason = await manager.findOne(BattlePassSeason, {
+            where: { seasonId: dbUser.activeBattlePassSeasonId }
+          });
+          if (activeSeason) {
+            const seasonStart = String(activeSeason.startDate).slice(0, 10);
+            if (seasonStart <= today) {
+              season = activeSeason;
+            }
+          }
+        }
+
+        let progress = await manager.findOne(UserBattlePass, {
+          where: { userId: user.id, seasonId: season.seasonId },
+          relations: ['season']
+        });
+        if (!progress) {
+          progress = manager.create(UserBattlePass, {
+            userId: user.id,
+            seasonId: season.seasonId,
+            season,
+            exp: 0,
+            level: 1,
+            claimedRewards: []
+          });
+        } else if (!progress.season) {
+          progress.season = season;
+        }
+
+        const previousExp = progress.exp;
+        const previousLevel = progress.level;
+        await progress.addExp(xpAmount);
+        await manager.save(progress);
+
+        const award = manager.create(MatchXpAward, {
+          matchId: match.id,
+          userId: user.id,
+          seasonId: season.seasonId,
+          xpGained: xpAmount,
+          previousExp,
+          newExp: progress.exp,
+          previousLevel,
+          newLevel: progress.level,
+          viewed: false
+        });
+        await manager.save(award);
+      }
+    } catch (error) {
+      console.error('[MatchRecorder] Error awarding Battle Pass XP:', error);
     }
   }
 
