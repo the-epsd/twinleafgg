@@ -56,7 +56,7 @@ export class SagesTraining extends TrainerCard {
         player.ancientSupporter = true;
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.discard);
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
 
       });
     }

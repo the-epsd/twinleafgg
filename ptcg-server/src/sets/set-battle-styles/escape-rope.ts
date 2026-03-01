@@ -57,7 +57,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       player.switchPokemon(targets[0], store, state);
     }
   }
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
   return state;
 }
 

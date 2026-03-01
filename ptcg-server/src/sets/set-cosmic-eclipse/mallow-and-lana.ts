@@ -66,7 +66,7 @@ When you play this card, you may discard 2 other cards from your hand. If you do
         player.switchPokemon(cardList);
 
         if (player.hand.cards.length < 2 || !activeHasDamage) {
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
           return state;
         }
 
@@ -97,7 +97,7 @@ When you play this card, you may discard 2 other cards from your hand. If you do
             });
           }
 
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
 
         });
       });

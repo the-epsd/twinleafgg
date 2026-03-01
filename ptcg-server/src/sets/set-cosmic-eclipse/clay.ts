@@ -48,7 +48,7 @@ export class Clay extends TrainerCard {
 
       if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
         return state;
       }
 
@@ -61,7 +61,7 @@ export class Clay extends TrainerCard {
 
       // Move item cards to hand
       MOVE_CARDS(store, state, player.discard, player.hand, { cards: itemCards, sourceCard: this });
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
 
       return state;
     }

@@ -65,11 +65,9 @@ export class HolonScientist extends TrainerCard {
           DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, opponent.hand.cards.length);
         });
       }
-
-      player.hand.moveCardTo(effect.trainerCard, player.supporter);
       effect.preventDefault = true;
 
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
       return state;
     }
 

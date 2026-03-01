@@ -28,7 +28,7 @@ export class Hau extends TrainerCard {
       effect.preventDefault = true;
 
       DRAW_CARDS(player, 3);
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
       return state;
     }
     return state;

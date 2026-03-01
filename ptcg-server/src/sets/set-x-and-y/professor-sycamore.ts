@@ -37,7 +37,7 @@ export class ProfessorSycamore extends TrainerCard {
       const cards = player.hand.cards.filter(c => c !== this);
       state = MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
       player.deck.moveTo(player.hand, 7);
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

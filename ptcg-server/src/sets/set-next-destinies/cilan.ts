@@ -47,7 +47,7 @@ export class Cilan extends TrainerCard {
 
       if (basicEnergyCount === 0) {
         // Still shuffle deck even if no energy found
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });
@@ -71,7 +71,7 @@ export class Cilan extends TrainerCard {
           MOVE_CARDS(store, state, player.deck, player.hand, { cards: selectedCards, sourceCard: this });
         }
 
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

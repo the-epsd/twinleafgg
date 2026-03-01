@@ -88,7 +88,7 @@ export class Gloria extends TrainerCard {
             slots[index].pokemonPlayedTurn = state.turn;
           });
 
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);

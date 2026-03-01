@@ -36,7 +36,7 @@ export class Fennel extends TrainerCard {
         const healEffect = new HealEffect(player, cardList, 40);
         state = store.reduceEffect(state, healEffect);
       });
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
       return state;
     }
     return state;

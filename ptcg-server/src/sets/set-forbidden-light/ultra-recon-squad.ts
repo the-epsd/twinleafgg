@@ -53,7 +53,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   if (cards.length === 0) {
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
     return state;
   }
 
@@ -63,7 +63,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const drawCount = cards.length * 3;
   DRAW_CARDS(player, drawCount);
 
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
 
   return state;
 }

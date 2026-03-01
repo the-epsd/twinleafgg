@@ -64,7 +64,7 @@ export class BrocksGrit extends TrainerCard {
           store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
         });
         MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: this });
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

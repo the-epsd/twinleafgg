@@ -63,7 +63,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       // Recover discarded Pokemon
       MOVE_CARDS(store, state, player.discard, player.hand, { cards, sourceCard: effect.trainerCard });
       // Discard item card
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
   });
 }

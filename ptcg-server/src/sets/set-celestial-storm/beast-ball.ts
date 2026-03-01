@@ -72,7 +72,7 @@ export class BeastBall extends TrainerCard {
               p.isSecret = true;
             }
           });
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
           this.shuffleFaceDownPrizeCards(player.prizes.filter((p, index) => originallyFaceDown[index]));
           return state;
         }

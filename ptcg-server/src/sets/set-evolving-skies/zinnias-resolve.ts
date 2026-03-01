@@ -49,7 +49,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const cardsToDraw = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
 
   DRAW_CARDS(player, cardsToDraw);
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
   return state;
 }
 export class ZinniasResolve extends TrainerCard {

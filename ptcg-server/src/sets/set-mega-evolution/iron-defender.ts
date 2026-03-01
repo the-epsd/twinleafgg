@@ -27,7 +27,7 @@ export class IronDefender extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       effect.player.marker.addMarker(this.IRON_DEFENDER_MARKER, this);
-      CLEAN_UP_SUPPORTER(effect, effect.player);
+      CLEAN_UP_SUPPORTER(store, effect, effect.player);
     }
 
     if (effect instanceof PutDamageEffect) {

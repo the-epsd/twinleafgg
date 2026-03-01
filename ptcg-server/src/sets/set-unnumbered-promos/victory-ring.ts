@@ -53,7 +53,7 @@ export class VictoryRing extends TrainerCard {
               emptyPrize.isSecret = true;
             });
         }
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
       });
     }
 

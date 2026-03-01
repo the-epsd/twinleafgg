@@ -60,7 +60,7 @@ export class HolonTransceiver extends TrainerCard {
               SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
 
               MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
-              CLEAN_UP_SUPPORTER(effect, player);
+              CLEAN_UP_SUPPORTER(store, effect, player);
 
               SHUFFLE_DECK(store, state, player);
             });
@@ -89,7 +89,7 @@ export class HolonTransceiver extends TrainerCard {
 
               SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
               MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
-              CLEAN_UP_SUPPORTER(effect, player);
+              CLEAN_UP_SUPPORTER(store, effect, player);
 
               return state;
             });
@@ -110,9 +110,9 @@ export class HolonTransceiver extends TrainerCard {
           {
             allowCancel: true,
           }), choice => {
-          const option = options[choice];
-          option.action();
-        });
+            const option = options[choice];
+            option.action();
+          });
       }
     }
     return state;

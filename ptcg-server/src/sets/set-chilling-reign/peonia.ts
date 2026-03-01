@@ -84,7 +84,7 @@ export class Peonia extends TrainerCard {
           });
         });
 
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
 
       });
     }

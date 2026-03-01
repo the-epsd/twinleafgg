@@ -57,7 +57,7 @@ export class Cyllene extends TrainerCard {
         results.forEach(r => { heads += r ? 1 : 0; });
 
         if (heads === 0) {
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
           return state;
         }
 

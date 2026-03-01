@@ -52,7 +52,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     MOVE_CARDS(store, state, opponent.discard, slots[index], { cards: [card], sourceCard: self, sourceEffect: effect });
     slots[index].pokemonPlayedTurn = state.turn;
 
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
   });
 
 }

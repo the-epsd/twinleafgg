@@ -80,7 +80,7 @@ export class TeamRocketsAriana extends TrainerCard {
         player.deck.moveTo(player.hand, 1);
       }
 
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
 
       return state;
     }

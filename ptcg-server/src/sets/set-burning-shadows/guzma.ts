@@ -34,7 +34,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       const supporterEffect = new SupporterEffect(player, effect.trainerCard);
       store.reduceEffect(state, supporterEffect);
     } catch {
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
       return state;
     }
 
@@ -58,7 +58,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
         opponent.switchPokemon(targetCard.target);
       } else {
         // If no target, effect ends
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
         return state;
       }
 
@@ -98,7 +98,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
             const supporterEffect = new SupporterEffect(player, effect.trainerCard);
             store.reduceEffect(state, supporterEffect);
           } catch {
-            CLEAN_UP_SUPPORTER(effect, player);
+            CLEAN_UP_SUPPORTER(store, effect, player);
             return state;
           }
         }
@@ -108,7 +108,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
         store.log(state, GameLog.LOG_PLAYER_SWITCHES_POKEMON_TO_ACTIVE, { name: player.name, card: target[0].getPokemonCard()!.name });
 
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
         return state;
       });
     });

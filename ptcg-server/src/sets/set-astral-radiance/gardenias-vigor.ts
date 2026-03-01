@@ -64,7 +64,7 @@ export class GardeniasVigor extends TrainerCard {
           store.reduceEffect(state, attachEnergyEffect);
         }
         // Clean up supporter once, after all transfers are done
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
       });
     }
 

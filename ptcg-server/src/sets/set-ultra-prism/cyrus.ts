@@ -59,11 +59,11 @@ export class Cyrus extends TrainerCard {
             }
           });
           SHUFFLE_DECK(store, state, opponent);
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
         });
       } else {
         // 2 or fewer benched Pokemon: nothing to shuffle away
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
       }
 
       return state;

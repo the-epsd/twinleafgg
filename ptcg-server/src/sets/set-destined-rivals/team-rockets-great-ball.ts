@@ -69,7 +69,7 @@ export class TeamRocketsGreatBall extends TrainerCard {
 
             // Operation canceled by the user
             if (cards.length === 0) {
-              CLEAN_UP_SUPPORTER(effect, player);
+              CLEAN_UP_SUPPORTER(store, effect, player);
               return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
               });
@@ -81,7 +81,7 @@ export class TeamRocketsGreatBall extends TrainerCard {
 
 
             if (cards.length > 0) {
-              CLEAN_UP_SUPPORTER(effect, player);
+              CLEAN_UP_SUPPORTER(store, effect, player);
               state = store.prompt(state, new ShowCardsPrompt(
                 opponent.id,
                 GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
@@ -109,7 +109,7 @@ export class TeamRocketsGreatBall extends TrainerCard {
 
             // Operation canceled by the user
             if (cards.length === 0) {
-              CLEAN_UP_SUPPORTER(effect, player);
+              CLEAN_UP_SUPPORTER(store, effect, player);
               return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
               });
@@ -120,7 +120,7 @@ export class TeamRocketsGreatBall extends TrainerCard {
             });
 
             if (cards.length > 0) {
-              CLEAN_UP_SUPPORTER(effect, player);
+              CLEAN_UP_SUPPORTER(store, effect, player);
               state = store.prompt(state, new ShowCardsPrompt(
                 opponent.id,
                 GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,

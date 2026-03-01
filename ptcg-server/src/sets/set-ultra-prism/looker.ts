@@ -30,7 +30,7 @@ export class Looker extends TrainerCard {
         player.deck.moveCardsTo(bottomCards, player.hand);
       }
 
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

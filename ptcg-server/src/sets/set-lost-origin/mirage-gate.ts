@@ -54,7 +54,7 @@ Search your deck for up to 2 basic Energy cards of different types and attach th
           min: 0
         }
       );
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

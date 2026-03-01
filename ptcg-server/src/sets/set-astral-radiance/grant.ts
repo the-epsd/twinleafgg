@@ -59,7 +59,7 @@ export class Grant extends TrainerCard {
       effect.preventDefault = true;
 
       player.marker.addMarker(this.GRANT_MARKER, this);
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     if (effect instanceof DealDamageEffect) {

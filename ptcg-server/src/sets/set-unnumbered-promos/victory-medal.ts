@@ -27,17 +27,17 @@ export class VictoryMedal extends TrainerCard {
       MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, coinResults => {
         if (coinResults.every(r => r === true)) {
           SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 1, max: 1, allowCancel: false });
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
           return state;
         } else if (coinResults.some(r => r === true)) {
           DRAW_CARDS(player, 1);
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
           return state;
         }
         return state;
       });
 
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
     return state;
   }

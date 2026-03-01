@@ -16,7 +16,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const player = effect.player;
 
   if (player.deck.cards.length === 0) {
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
     return state;
   }
 
@@ -40,7 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   deckBottom.cards = player.deck.cards.slice(start, end);
 
   if (deckBottom.cards.length === 0) {
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
     return state;
   }
 
@@ -62,7 +62,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.deck.moveCardTo(card, player.hand);
   });
 
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
 
   // Shuffle the remaining deck cards
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

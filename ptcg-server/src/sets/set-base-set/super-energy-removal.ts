@@ -108,7 +108,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   target2.moveCardsTo(cards2, opponent.discard);
 
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
 
   return state;
 }

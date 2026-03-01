@@ -34,7 +34,7 @@ export class TvReporter extends TrainerCard {
       DRAW_CARDS(player, 3);
       DISCARD_X_CARDS_FROM_YOUR_HAND(effect, store, state, 1, 1);
 
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

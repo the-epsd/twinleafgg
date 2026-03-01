@@ -117,7 +117,7 @@ export class TeamRocketsGiovanni extends TrainerCard {
           opponent.active.clearEffects();
           opponent.switchPokemon(oppTargets[0]);
 
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
           return state;
         });
       });

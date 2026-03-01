@@ -51,7 +51,7 @@ export class Cheryl extends TrainerCard {
             const energyCards = cardList.cards.filter(c => c.superType === SuperType.ENERGY);
             MOVE_CARDS(store, state, cardList, player.discard, { cards: energyCards, sourceCard: this });
           }
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
         });
       }
 

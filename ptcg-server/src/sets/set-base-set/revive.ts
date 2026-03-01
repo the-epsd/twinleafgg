@@ -58,7 +58,7 @@ export class Revive extends TrainerCard {
           slot.damage = damage;
           slot.pokemonPlayedTurn = state.turn;
 
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
 
           return state;
         }

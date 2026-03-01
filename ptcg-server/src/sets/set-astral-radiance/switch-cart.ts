@@ -50,7 +50,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     store.reduceEffect(state, healEffect);
     player.active.clearEffects();
     player.switchPokemon(targets[0]);
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
     return state;
   }
   return state;

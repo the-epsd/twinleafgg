@@ -58,7 +58,7 @@ export class RedsChallenge extends TrainerCard {
       DISCARD_X_CARDS_FROM_YOUR_HAND(effect, store, state, 2, 2);
       SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 1, max: 1, allowCancel: false });
 
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

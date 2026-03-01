@@ -76,7 +76,7 @@ Each player shuffles their hand into their deck. Then, you draw 5 cards, and you
       SHUFFLE_DECK(store, state, player);
       DRAW_CARDS(player, 5);
 
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     // Track when a Team Rocket's Pokemon is knocked out

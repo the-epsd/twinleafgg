@@ -54,7 +54,7 @@ export class TrekkingShoes extends TrainerCard {
         if (selected !== null) {
           // Add card to hand
           deckTop.moveCardsTo(deckTop.cards, player.hand);
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
         } else {
 
           // Discard card
@@ -62,7 +62,7 @@ export class TrekkingShoes extends TrainerCard {
 
           // Draw a card
           player.deck.moveTo(player.hand, 1);
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
         }
       });
     }

@@ -63,7 +63,7 @@ Search your deck for up to 3 Basic Team Rocket's Pokémon, reveal them, and put 
 
         MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
         SHUFFLE_DECK(store, state, player);
       });
     }

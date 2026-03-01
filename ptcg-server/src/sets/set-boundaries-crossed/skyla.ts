@@ -23,7 +23,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, self, { superType: SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false });
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

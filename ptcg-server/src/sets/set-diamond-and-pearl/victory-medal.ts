@@ -43,7 +43,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
     // Get selected cards
     MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
     // Shuffle the deck
     yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
       player.deck.applyOrder(order);
@@ -56,7 +56,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (coinResults.some(r => r === true)) {
     // Get selected cards
     DRAW_CARDS(player, 1);
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
     return state;
   }
 

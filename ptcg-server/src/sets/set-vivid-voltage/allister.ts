@@ -43,7 +43,7 @@ export class Allister extends TrainerCard {
         DISCARD_X_CARDS_FROM_YOUR_HAND(effect, store, state, 1, 3);
       }
 
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

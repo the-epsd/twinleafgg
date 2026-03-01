@@ -30,7 +30,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   const cardsNumber = opponent.hand.cards.length;
   DRAW_CARDS(player, cardsNumber);
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
   return state;
 }
 

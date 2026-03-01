@@ -86,14 +86,14 @@ export class Brigette extends TrainerCard {
             ), singleCards => {
               const chosen = singleCards || [];
               if (chosen.length === 0) {
-                CLEAN_UP_SUPPORTER(effect, player);
+                CLEAN_UP_SUPPORTER(store, effect, player);
                 return state;
               }
 
               MOVE_CARDS(store, state, player.deck, slots[0], { cards: [chosen[0]], sourceCard: this });
               slots[0].pokemonPlayedTurn = state.turn;
 
-              CLEAN_UP_SUPPORTER(effect, player);
+              CLEAN_UP_SUPPORTER(store, effect, player);
 
               return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
@@ -107,7 +107,7 @@ export class Brigette extends TrainerCard {
             slots[index].pokemonPlayedTurn = state.turn;
           });
 
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);

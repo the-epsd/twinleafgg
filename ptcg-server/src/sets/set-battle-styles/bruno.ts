@@ -60,7 +60,7 @@ export class Bruno extends TrainerCard {
       MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards.filter(c => c !== this) });
       SHUFFLE_DECK(store, state, player);
       DRAW_CARDS(player, cardsToDraw);
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.BRUNO_MARKER, this);

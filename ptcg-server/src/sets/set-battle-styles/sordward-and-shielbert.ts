@@ -18,7 +18,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // Check if there are any Trainer cards in the discard
   const trainerCards = player.discard.cards.filter(c => c.superType === SuperType.TRAINER);
   if (trainerCards.length === 0) {
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
     return state;
   }
 
@@ -36,7 +36,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   if (!selectedCard) {
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
     return state;
   }
 
@@ -58,7 +58,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     DRAW_CARDS(player, 3);
   }
 
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
   return state;
 }
 

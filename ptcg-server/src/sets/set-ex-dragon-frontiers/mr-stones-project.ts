@@ -58,7 +58,7 @@ export class MrStonesProject extends TrainerCard {
               }
 
               MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
-              CLEAN_UP_SUPPORTER(effect, player);
+              CLEAN_UP_SUPPORTER(store, effect, player);
 
               store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
@@ -91,7 +91,7 @@ export class MrStonesProject extends TrainerCard {
               }
 
               MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
-              CLEAN_UP_SUPPORTER(effect, player);
+              CLEAN_UP_SUPPORTER(store, effect, player);
 
             });
 

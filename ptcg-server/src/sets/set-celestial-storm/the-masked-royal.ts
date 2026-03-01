@@ -46,7 +46,7 @@ export class TheMaskedRoyal extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
 
       store.prompt(state, new AttachEnergyPrompt(
         player.id,

@@ -55,7 +55,7 @@ export class PokemonFlute extends TrainerCard {
           MOVE_CARDS(store, state, opponent.discard, slot, { cards: [card], sourceCard: this });
           slot.pokemonPlayedTurn = state.turn;
 
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
         }
       });
     }

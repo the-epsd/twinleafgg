@@ -28,7 +28,7 @@ export class ImposterProfessorOak extends TrainerCard {
       SHUFFLE_DECK(store, state, opponent);
       DRAW_CARDS(opponent, 7);
 
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

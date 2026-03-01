@@ -47,7 +47,7 @@ export class DevolutionSpray extends TrainerCard {
           if (results && results.length > 0) {
             DEVOLVE_POKEMON(store, state, results[0], effect.player.hand);
           }
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
           return state;
         }
       );

@@ -42,7 +42,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
   SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
 
   SHUFFLE_DECK(store, state, player);
 }

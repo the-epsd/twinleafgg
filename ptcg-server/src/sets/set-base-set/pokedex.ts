@@ -51,7 +51,7 @@ export class Pokedex extends TrainerCard {
         deckTop.applyOrder(rearrangedCards);
         deckTop.moveTo(player.deck);
 
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
       });
     }
 

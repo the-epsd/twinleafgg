@@ -49,7 +49,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   SHUFFLE_DECK(store, state, player);
   DRAW_CARDS(player, coinResult ? 5 : 3);
 
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
 }
 
 export class Harlequin extends TrainerCard {

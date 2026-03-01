@@ -62,11 +62,11 @@ Search your deck for a [M] Energy card or a Basic Pokémon (or Evolution card) t
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         MOVE_CARDS_TO_HAND(store, state, player, cards);
 
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
         SHUFFLE_DECK(store, state, player);
       });
 
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
       return state;
     }
 

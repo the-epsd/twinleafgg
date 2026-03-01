@@ -3,7 +3,7 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+import { CLEAN_UP_SUPPORTER, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -42,6 +42,14 @@ export class RocketsMission extends TrainerCard {
 
       if (cards.length == 1) {
         player.hand.moveCardsTo(player.hand.cards, player.discard);
+        let cardsToDraw = 3;
+
+        if (cards[0] instanceof PokemonCard && (cards[0].tags.includes(CardTag.ROCKETS) || cards[0].tags.includes(CardTag.DARK))) {
+          cardsToDraw = 4;
+        }
+        DRAW_CARDS(player, cardsToDraw);
+        CLEAN_UP_SUPPORTER(store, effect, player);
+        return state;
       }
 
       if (cards.length > 1) {
@@ -71,7 +79,7 @@ export class RocketsMission extends TrainerCard {
         });
       }
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(store, effect, player);
       return state;
     }
 

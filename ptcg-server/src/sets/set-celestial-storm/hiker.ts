@@ -39,7 +39,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const targetPlayer = chosenPlayerIndex === 0 ? player : opponent;
 
   if (targetPlayer.deck.cards.length === 0) {
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
     return state;
   }
 
@@ -84,7 +84,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     targetPlayer.deck.cards.unshift(chosenCard);
   }
 
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
 
   return state;
 }

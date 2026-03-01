@@ -84,7 +84,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Plumeri
   });
 
   if (targets.length === 0) {
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
     return state;
   }
 
@@ -95,7 +95,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Plumeri
       const supporterEffect = new SupporterEffect(player, effect.trainerCard);
       store.reduceEffect(state, supporterEffect);
     } catch {
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
       return state;
     }
   }
@@ -113,7 +113,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Plumeri
     next();
   });
 
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
   MOVE_CARDS(store, state, target, opponent.discard, { cards, sourceCard: self });
   return state;
 }

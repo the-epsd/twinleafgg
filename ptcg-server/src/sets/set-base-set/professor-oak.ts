@@ -36,7 +36,7 @@ export class ProfessorOak extends TrainerCard {
       const cards = player.hand.cards.filter(c => c !== this);
       MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
       DRAW_CARDS(player, 7);
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

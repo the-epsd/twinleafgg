@@ -116,7 +116,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       store.reduceEffect(state, evolveEffect);
 
       // Discard trainer only when user selected a Pokemon
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
   });
 }

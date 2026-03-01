@@ -62,7 +62,7 @@ export class MarniesPride extends TrainerCard {
           MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
         }
 
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
 
         return state;
       });

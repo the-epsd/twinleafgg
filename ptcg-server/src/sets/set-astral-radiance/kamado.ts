@@ -17,7 +17,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // Need at least 2 cards in hand (the Kamado card + 1 other to keep)
   // The effect.trainerCard is already moved to supporter zone before this runs
   if (player.hand.cards.length === 0) {
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
@@ -35,7 +35,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   if (!keptCard) {
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
     return state;
   }
 
@@ -48,7 +48,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // Draw 4 cards
   DRAW_CARDS(player, 4);
 
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
   return state;
 }
 

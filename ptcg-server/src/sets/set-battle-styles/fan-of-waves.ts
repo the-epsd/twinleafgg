@@ -64,7 +64,7 @@ export class FanOfWaves extends TrainerCard {
       });
 
       if (targets.length === 0) {
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
         return state;
       }
 
@@ -79,11 +79,11 @@ export class FanOfWaves extends TrainerCard {
         const cards = selected as Card[];
 
         const opponentDeckBottom = new CardList();
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
         cards.forEach(card => {
           opponentDeckBottom.moveCardTo(card, opponent.deck);
 
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
         });
 
         return state;

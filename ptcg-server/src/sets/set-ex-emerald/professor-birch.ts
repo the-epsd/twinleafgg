@@ -34,7 +34,7 @@ export class ProfessorBirch extends TrainerCard {
 
       DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 6);
 
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

@@ -65,7 +65,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       const supporterEffect = new SupporterEffect(player, effect.trainerCard);
       store.reduceEffect(state, supporterEffect);
     } catch {
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
       return state;
     }
   }
@@ -85,7 +85,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   if (cards.length > 0) {
     // Discard trainer only when user selected a Pokemon
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
     // Discard selected special energy card
     MOVE_CARDS(store, state, target, opponent.discard, { cards, sourceCard: trainerCard });
   }

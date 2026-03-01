@@ -29,9 +29,9 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Pokemon
   ), result => {
     const cardList = result[0];
     opponent.switchPokemon(cardList);
-    CLEAN_UP_SUPPORTER(effect, player);
+    CLEAN_UP_SUPPORTER(store, effect, player);
   });
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
 }
 
 export class PokemonCatcher extends TrainerCard {

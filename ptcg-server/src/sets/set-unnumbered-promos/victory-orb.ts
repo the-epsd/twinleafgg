@@ -40,7 +40,7 @@ export class VictoryOrb extends TrainerCard {
         deckTop.applyOrder(order);
         deckTop.moveToTopOfDestination(player.deck);
 
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
       });
     }
     return state;

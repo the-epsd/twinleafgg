@@ -64,7 +64,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     next();
   });
 
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
   MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

@@ -49,7 +49,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   SHUFFLE_DECK(store, state, player);
   DRAW_CARDS(player, 6);
 
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
 
   return state;
 }

@@ -47,7 +47,7 @@ export class TeamGalacticsWager extends TrainerCard {
 
       // Dew Guard prevents RPS and the rest of the effect fizzles (ruling from @Shutterstock)
       if (opponentMoveEffect.preventDefault) {
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
         return state;
       }
 

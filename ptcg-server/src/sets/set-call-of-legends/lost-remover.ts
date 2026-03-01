@@ -70,7 +70,7 @@ export class LostRemover extends TrainerCard {
         ), selected => {
           MOVE_CARDS(store, state, target, opponent.lostzone, { cards: selected, sourceCard: this });
         });
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
       });
     }
     return state;

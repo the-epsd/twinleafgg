@@ -50,7 +50,7 @@ export class BillsMaintenance extends TrainerCard {
         DRAW_CARDS(player, 3);
       });
 
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
       return state;
     }
 

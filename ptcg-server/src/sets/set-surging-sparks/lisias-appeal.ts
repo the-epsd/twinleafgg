@@ -58,7 +58,7 @@ export class LisiasAppeal extends TrainerCard {
           opponent.active.addSpecialCondition(SpecialCondition.CONFUSED);
         }
       });
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
     return state;
   }

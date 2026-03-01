@@ -106,7 +106,7 @@ export class Melony extends TrainerCard {
           // Draw 3 cards
           DRAW_CARDS(player, 3);
 
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
         });
       });
     }

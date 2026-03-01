@@ -51,7 +51,7 @@ export class BossOrders extends TrainerCard {
       }
 
       SWITCH_IN_OPPONENT_BENCHED_POKEMON(store, state, effect.player, { allowCancel: false });
-      CLEAN_UP_SUPPORTER(effect, effect.player);
+      CLEAN_UP_SUPPORTER(store, effect, effect.player);
     }
     return state;
   }

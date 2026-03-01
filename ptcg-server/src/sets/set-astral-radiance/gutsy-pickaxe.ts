@@ -54,7 +54,7 @@ export class GutsyPickaxe extends TrainerCard {
             ), () => {
               temp.cards.slice(0, 1).forEach(card => {
                 temp.moveCardTo(card, player.hand);
-                CLEAN_UP_SUPPORTER(effect, player);
+                CLEAN_UP_SUPPORTER(store, effect, player);
               });
             });
           } else {
@@ -76,11 +76,11 @@ export class GutsyPickaxe extends TrainerCard {
                 for (const transfer of transfers) {
                   const target = StateUtils.getTarget(state, player, transfer.to);
                   temp.moveCardTo(transfer.card, target); // Move card to target
-                  CLEAN_UP_SUPPORTER(effect, player);
+                  CLEAN_UP_SUPPORTER(store, effect, player);
                 }
                 temp.cards.forEach(card => {
                   temp.moveCardTo(card, player.hand); // Move card to hand
-                  CLEAN_UP_SUPPORTER(effect, player);
+                  CLEAN_UP_SUPPORTER(store, effect, player);
                 });
                 return state;
               }

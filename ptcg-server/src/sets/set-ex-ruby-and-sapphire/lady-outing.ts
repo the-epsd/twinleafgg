@@ -52,13 +52,13 @@ export class LadyOuting extends TrainerCard {
           }
         }
         if (selected.length === 0) {
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
           return state;
         }
 
         SHOW_CARDS_TO_PLAYER(store, state, opponent, selected);
         MOVE_CARDS(store, state, player.deck, player.hand, { cards: selected, sourceCard: this });
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
       });
 
       return state;

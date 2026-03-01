@@ -49,7 +49,7 @@ export class InterviewersQuestions extends TrainerCard {
           temp.cards.forEach(card => {
             temp.moveCardTo(card, player.deck);
           });
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
         }
 
         if (chosenCards.length > 0) {
@@ -66,7 +66,7 @@ export class InterviewersQuestions extends TrainerCard {
               chosenCards), () => state);
           }
 
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
           temp.moveTo(player.deck);
 
           if (chosenCards.length > 0) {
@@ -76,7 +76,7 @@ export class InterviewersQuestions extends TrainerCard {
               chosenCards), () => state);
           }
         }
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

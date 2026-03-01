@@ -57,7 +57,7 @@ function* playCard(next: Function, store: StoreLike, state: State, self: TeamYel
     next();
   });
   MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: self });
-  CLEAN_UP_SUPPORTER(effect, player);
+  CLEAN_UP_SUPPORTER(store, effect, player);
 
   return state;
 }

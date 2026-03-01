@@ -68,7 +68,7 @@ export class CyrusPrismStar extends TrainerCard {
               SHUFFLE_DECK(store, state, opponent);
             }
           });
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
         });
       }
 

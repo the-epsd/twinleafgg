@@ -91,7 +91,7 @@ export class Avery extends TrainerCard {
               MOVE_CARDS(store, state, cardList, opponent.discard, { cards: pokemons });
             }
           });
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
           return state;
         });
       }

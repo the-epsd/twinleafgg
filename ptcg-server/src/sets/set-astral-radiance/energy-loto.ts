@@ -62,7 +62,7 @@ export class EnergyLoto extends TrainerCard {
 
         // Shuffle remaining cards back into deck
         temp.moveTo(player.deck);
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

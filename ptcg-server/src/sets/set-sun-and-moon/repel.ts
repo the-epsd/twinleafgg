@@ -32,7 +32,7 @@ export class Repel extends TrainerCard {
       //
       // Converted to prefab version (SWITCH_OUT_OPPONENT_ACTIVE_POKEMON).
       SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(store, state, player, { allowCancel: false });
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

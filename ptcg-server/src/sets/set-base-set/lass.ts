@@ -73,7 +73,7 @@ export class Lass extends TrainerCard {
             player.deck.applyOrder(playerOrder);
             return store.prompt(state, new ShuffleDeckPrompt(opponent.id), opponentOrder => {
               opponent.deck.applyOrder(opponentOrder);
-              CLEAN_UP_SUPPORTER(effect, player);
+              CLEAN_UP_SUPPORTER(store, effect, player);
               return state;
             });
           });

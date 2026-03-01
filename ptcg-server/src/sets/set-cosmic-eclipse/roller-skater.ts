@@ -42,7 +42,7 @@ export class RollerSkater extends TrainerCard {
       ), cards => {
         cards = cards || [];
         if (cards.length === 0) {
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
           return;
         }
         let cardsToDraw = 2;
@@ -59,7 +59,7 @@ export class RollerSkater extends TrainerCard {
         DRAW_CARDS(player, cardsToDraw);
       });
 
-      CLEAN_UP_SUPPORTER(effect, player);
+      CLEAN_UP_SUPPORTER(store, effect, player);
       return state;
     }
 

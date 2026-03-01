@@ -5,6 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { GameError, GameMessage, StateUtils } from '../../game';
+import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 
 export class HereComesTeamRocket extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -43,7 +44,7 @@ export class HereComesTeamRocket extends TrainerCard {
         }
       });
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

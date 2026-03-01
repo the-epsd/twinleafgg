@@ -75,7 +75,7 @@ export class MrBrineysCompassion extends TrainerCard {
           if (pokemons.length > 0) {
             MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons, sourceCard: this });
           }
-          CLEAN_UP_SUPPORTER(effect, player);
+          CLEAN_UP_SUPPORTER(store, effect, player);
         }
       });
     }

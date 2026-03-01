@@ -49,7 +49,7 @@ export class Naveen extends TrainerCard {
         selected = selected || [];
         MOVE_CARDS(store, state, player.hand, player.discard, { cards: selected });
         DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 5);
-        CLEAN_UP_SUPPORTER(effect, player);
+        CLEAN_UP_SUPPORTER(store, effect, player);
       });
       return state;
     }
