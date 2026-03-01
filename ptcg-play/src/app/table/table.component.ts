@@ -411,20 +411,22 @@ export class TableComponent implements OnInit, OnDestroy {
       this.finishAndNavigate(localId);
       return;
     }
-    this.battlePassService.getPendingMatchReward().pipe(
-      untilDestroyed(this)
-    ).subscribe({
-      next: (reward) => {
-        if (reward) {
-          this.xpGainData = reward;
-          this.showXpGainScreen = true;
-          // Keep showGameOver true so XP screen fades in on top; we never reveal the board
-        } else {
-          this.finishAndNavigate(localId);
-        }
-      },
-      error: () => this.finishAndNavigate(localId)
-    });
+    // XP gain screen temporarily hidden - navigate directly
+    this.finishAndNavigate(localId);
+    // this.battlePassService.getPendingMatchReward().pipe(
+    //   untilDestroyed(this)
+    // ).subscribe({
+    //   next: (reward) => {
+    //     if (reward) {
+    //       this.xpGainData = reward;
+    //       this.showXpGainScreen = true;
+    //       // Keep showGameOver true so XP screen fades in on top; we never reveal the board
+    //     } else {
+    //       this.finishAndNavigate(localId);
+    //     }
+    //   },
+    //   error: () => this.finishAndNavigate(localId)
+    // });
   }
 
   onXpGainDismiss(): void {
