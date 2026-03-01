@@ -4,7 +4,7 @@ import { StoreLike, State, PowerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutCountersEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { ADD_MARKER, COIN_FLIP_PROMPT, CONFIRMATION_PROMPT, HAS_MARKER, IS_POKEPOWER_BLOCKED, REMOVE_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { EffectOfAbilityEffect } from '../../game/store/effects/game-effects';
+import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
@@ -45,6 +45,9 @@ export class JolteonStar extends PokemonCard {
         if (result) {
           const player = effect.player;
           const opponent = StateUtils.getOpponent(state, effect.player);
+
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, powerEffect);
 
           const effectOfAbility = new EffectOfAbilityEffect(effect.player, this.powers[0], this, opponent.active);
           store.reduceEffect(state, effectOfAbility);

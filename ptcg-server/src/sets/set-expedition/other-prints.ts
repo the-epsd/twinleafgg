@@ -1,3 +1,4 @@
+import { BillsMaintenance } from '../set-ex-firered-leafgreen/bills-maintenance';
 import { Copycat } from '../set-ex-dragon-frontiers/copycat';
 import { DualBall } from '../set-unleashed/dual-ball';
 import { EnergyRemoval2 } from '../set-ex-power-keepers/energy-removal-2';
@@ -6,7 +7,15 @@ import { PokemonReversal } from '../set-ex-unseen-forces/pokemon-reversal';
 import { ProfessorElmsTrainingMethod } from '../set-ex-unseen-forces/professors-elm-training-method';
 import { ProfessorOaksResearch } from '../set-ex-dragon-frontiers/professor-oaks-research';
 import { StrengthCharm } from '../set-ex-dragon-frontiers/strength-charm';
+import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
 import { Switch } from '../set-scarlet-and-violet/switch';
+
+export class BillsMaintenanceEX extends BillsMaintenance {
+  public fullName = 'Bill\'s Maintenance EX';
+  public set = 'EX';
+  public setNumber = '137';
+  public text = 'If you have any cards in your hand, shuffle 1 of them into your deck, then draw 3 cards.';
+}
 
 export class CopycatEX extends Copycat {
   public fullName = 'Copycat EX';
@@ -62,6 +71,13 @@ export class StrengthCharmEX extends StrengthCharm {
   public set = 'EX';
   public setNumber = '150';
   public text = 'Whenever an attack from the Pokémon that Strength Charm is attached to does damage (after applying Weakness and Resistance), the attack does 10 more damage. At the end of your turn in which this happens, discard Strength Charm.';
+}
+
+export class SuperScoopUpEX extends SuperScoopUp {
+  public fullName = 'Super Scoop Up EX';
+  public set = 'EX';
+  public setNumber = '151';
+  public text = 'Flip a coin. If heads, return 1 of your Pokémon and all cards attached to it to your hand.';
 }
 
 export class SwitchEX extends Switch {

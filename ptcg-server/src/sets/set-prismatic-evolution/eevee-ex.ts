@@ -1,11 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, PlayerType, GameError, StateUtils } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-
+import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
+import { PowerType, StoreLike, State, StateUtils } from '../../game';
+import { Effect, PowerEffect } from '../../game/store/effects/game-effects';
+import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Eeveeex extends PokemonCard {
 
@@ -23,9 +21,8 @@ export class Eeveeex extends PokemonCard {
 
   public powers = [{
     name: 'Rainbow DNA',
-    useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'You can play Pokemon ex that evolve from Eevee onto this Pokemon to evolve it. (You can\'t evolve this Pokemon during your first turn or during the turn you play it.) [Click this ability to use it'
+    text: 'You can play Pokemon ex that evolve from Eevee onto this Pokemon to evolve it. (You can\'t evolve this Pokemon during your first turn or during the turn you play it.)'
   }];
 
   public attacks = [
@@ -45,40 +42,49 @@ export class Eeveeex extends PokemonCard {
   public fullName: string = 'Eevee ex PRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Rainbow DNA
-    if (WAS_POWER_USED(effect, 0, this)) {
-      const player = effect.player;
-
-      if (player.hand.cards.length === 0) {
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
+    // Rainbow DNA - allow Pokemon that evolve from Eevee to be dragged onto this
+    if (effect instanceof CheckTableStateEffect) {
+      const slot = StateUtils.findPokemonSlot(state, this);
+      if (!slot) {
+        this.evolvesFromBase = [];
+        return state;
       }
 
-      const blocked = player.hand.cards
-        .filter(c => !c.tags.includes(CardTag.POKEMON_ex))
-        .map(c => player.deck.cards.indexOf(c));
+      let owner;
+      try {
+        owner = StateUtils.findOwner(state, slot);
+      } catch {
+        owner = undefined;
+      }
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        if (cardList.getPokemonCard() === this && cardList.pokemonPlayedTurn === state.turn) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
-        }
+      if (!owner) {
+        this.evolvesFromBase = [];
+        return state;
+      }
 
-        if (cardList.getPokemonCard() === this) {
-          return store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
-            player.hand,
-            { superType: SuperType.POKEMON, evolvesFrom: 'Eevee' },
-            { allowCancel: false, min: 0, max: 1, blocked }
-          ), cards => {
-            if (cards.length > 0) {
-              cards = cards || [];
-              player.hand.moveCardsTo(cards, cardList);
-              cardList.clearEffects();
-              cardList.pokemonPlayedTurn = state.turn;
-            }
-          });
-        }
-      });
+      // First turn restriction
+      // if (state.turn <= 2) {
+      //   this.evolvesFromBase = [];
+      //   return state;
+      // }
+
+      // Can't evolve during the turn this Pokemon was put into play
+      // if (slot.pokemonPlayedTurn >= state.turn) {
+      //   this.evolvesFromBase = [];
+      //   return state;
+      // }
+
+      try {
+        const stub = new PowerEffect(owner, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+        this.evolvesFromBase = ['Eevee'];
+      } catch {
+        this.evolvesFromBase = [];
+      }
     }
 
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {

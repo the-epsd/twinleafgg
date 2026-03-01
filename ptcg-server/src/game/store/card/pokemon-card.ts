@@ -22,6 +22,8 @@ export abstract class PokemonCard extends Card {
 
   public evolvesToStage: Stage[] = [];
 
+  public evolvesFromBase: string[] = [];
+
   public legacyFullName?: string;
 
   public stage: Stage = Stage.BASIC;

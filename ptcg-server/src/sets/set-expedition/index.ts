@@ -16,9 +16,11 @@ import { Ivysaur } from './ivysaur';
 import { MultiTechnicalMachine01 } from './multi-technical-machine-01';
 import { PokemonNurse } from './pokemon-nurse';
 import { Venusaur } from './venusaur';
+import { Vileplume } from './vileplume';
 
 // Other prints
 import {
+  BillsMaintenanceEX,
   CopycatEX,
   DualBallEX,
   EnergyRemoval2EX,
@@ -27,9 +29,9 @@ import {
   ProfessorElmsTrainingMethodEX,
   ProfessorOaksResearchEX,
   StrengthCharmEX,
+  SuperScoopUpEX,
   SwitchEX,
 } from './other-prints';
-
 export const setExpedition: Card[] = [
   new Bulbasaur(),
   new Charizard(),
@@ -47,8 +49,10 @@ export const setExpedition: Card[] = [
   new MultiTechnicalMachine01(),
   new PokemonNurse(),
   new Venusaur(),
+  new Vileplume(),
 
   // Other prints
+  new BillsMaintenanceEX(),
   new CopycatEX(),
   new DualBallEX(),
   new EnergySearchEX(),
@@ -57,6 +61,7 @@ export const setExpedition: Card[] = [
   new ProfessorElmsTrainingMethodEX(),
   new ProfessorOaksResearchEX(),
   new StrengthCharmEX(),
+  new SuperScoopUpEX(),
   new SwitchEX(),
 
   // Basic energies

@@ -1,5 +1,5 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
+import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
@@ -62,13 +62,12 @@ export class Hoppip extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const conditions = effect.target.specialConditions.slice();
-      conditions.forEach((condition: string) => {
-        effect.target.removeSpecialCondition(condition);
+      const player = effect.player;
+      const conditions = player.active.specialConditions.slice();
+      conditions.forEach((condition: SpecialCondition) => {
+        player.active.removeSpecialCondition(condition);
       });
     }
-
     return state;
   }
-
 }

@@ -46,6 +46,9 @@ export class Mesprit extends PokemonCard {
 
       CONFIRMATION_PROMPT(store, state, player, result => {
         if (result) {
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, powerEffect);
+
           const opponent = StateUtils.getOpponent(state, player);
           ADD_MARKER(this.PSYCHIC_BIND_MARKER, opponent, this);
 

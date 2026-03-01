@@ -1,5 +1,6 @@
 import { BoostEnergy } from "../set-aquapolis/boost-energy";
 import { ProfessorElmsTrainingMethod } from "../set-ex-unseen-forces/professors-elm-training-method";
+import { SwitchEX } from "../set-expedition/other-prints";
 import { TvReporter } from "../set-ex-dragon/tv-reporter";
 
 export class BoostEnergyDF extends BoostEnergy {
@@ -13,6 +14,12 @@ export class ProfessorElmsTrainingMethodDF extends ProfessorElmsTrainingMethod {
   public fullName = 'Professor Elm\'s Training Method DF';
   public set = 'DF';
   public setNumber = '79';
+}
+
+export class SwitchDF extends SwitchEX {
+  public fullName = 'Switch DF';
+  public set = 'DF';
+  public setNumber = '83';
 }
 
 export class TvReporterDF extends TvReporter {

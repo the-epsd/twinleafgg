@@ -9,6 +9,7 @@ import { CrystalBeach } from './crystal-beach';
 import { Delcattyex } from './delcatty-ex';
 import { Diglett } from './diglett';
 import { Dugtrio } from './dugtrio';
+import { Electrike } from './electrike';
 import { Fearow } from './fearow';
 import { Grovyle } from './grovyle';
 import { Jirachiex } from './jirachi-ex';
@@ -16,6 +17,7 @@ import { Kyogreex } from './kyogre-ex';
 import { Mudkip } from './mudkip';
 import { MysteriousShard } from './mysterious-shard';
 import { Sceptileex } from './sceptile-ex';
+import { Shiftryex } from './shiftry-ex';
 import { Shuppet } from './shuppet';
 import { Spearow } from './spearow';
 import { Swampert } from './swampert';
@@ -27,7 +29,10 @@ import { Windstorm } from './windstorm';
 
 // Other prints
 import {
+  BillsMaintenanceCG,
+  EnergySearchCG,
   PokeBallCG,
+  PokeNavCG,
   PotionCG,
   WarpPointCG,
 } from './other-prints';
@@ -43,6 +48,7 @@ export const setEXCrystalGuardians: Card[] = [
   new Delcattyex(),
   new Diglett(),
   new Dugtrio(),
+  new Electrike(),
   new Fearow(),
   new Grovyle(),
   new Jirachiex(),
@@ -50,6 +56,7 @@ export const setEXCrystalGuardians: Card[] = [
   new Mudkip(),
   new MysteriousShard(),
   new Sceptileex(),
+  new Shiftryex(),
   new Shuppet(),
   new Spearow(),
   new Swampert(),
@@ -60,7 +67,10 @@ export const setEXCrystalGuardians: Card[] = [
   new Windstorm(),
 
   // Other prints
+  new BillsMaintenanceCG(),
+  new EnergySearchCG(),
   new PokeBallCG(),
+  new PokeNavCG(),
   new PotionCG(),
   new WarpPointCG(),
 ];

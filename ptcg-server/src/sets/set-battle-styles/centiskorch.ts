@@ -2,14 +2,13 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
+import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { PowerType, State, StoreLike } from '../../game';
 import { BetweenTurnsEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../game/store/prefabs/attack-effects';
-
 export class Centiskorch extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Sizzlipede';
@@ -18,7 +17,7 @@ export class Centiskorch extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public powers = [  {
+  public powers = [{
     name: 'Overheater',
     powerType: PowerType.ABILITY,
     text: 'Whenever your opponent flips a coin for their Burned Pokémon during Pokémon Checkup, it doesn\'t recover from that Special Condition even if the result is heads.'
@@ -58,8 +57,8 @@ export class Centiskorch extends PokemonCard {
 
     // Attack 1: Bursting Inferno
     // Ref: set-champions-path/centiskorch.ts (Searing Flame - YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_BURN_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

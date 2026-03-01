@@ -6,6 +6,7 @@ import { Medichamex } from './medicham-ex';
 import { Meditite } from './meditite';
 import { ProfessorBirch } from './professor-birch';
 import { Scott } from './scott';
+import { Voltorb } from './voltorb';
 
 // Other prints
 import {
@@ -24,6 +25,7 @@ export const setEXEmerald: Card[] = [
   new Meditite(),
   new ProfessorBirch(),
   new Scott(),
+  new Voltorb(),
 
   // Other prints
   new DarknessEnergySpecialEM(),

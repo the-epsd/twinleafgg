@@ -13,7 +13,6 @@ import { DedenneGX as DedenneGXUNB195 } from '../set-unbroken-bonds/dedenne-gx';
 import { ElectromagneticRadar as ElectromagneticRadarUNB169 } from '../set-unbroken-bonds/electromagnetic-radar';
 import { FireCrystal as FireCrystalUNB173 } from '../set-unbroken-bonds/fire-crystal';
 import { MetalCoreBarrier as MetalCoreBarrierUNB180 } from '../set-unbroken-bonds/metal-core-barrier';
-import { Pokegear30HS as Pokegear30HSHS96 } from '../set-heartgold-and-soulsilver/other-prints';
 import { TripleAccelerationEnergy as TripleAccelerationEnergyUNB190 } from '../set-unbroken-bonds/triple-acceleration-energy';
 import { DedenneGX } from './dedenne-gx';
 import { VenomothGx } from './venomoth-gx';
@@ -26,6 +25,7 @@ import { Molayne } from './molayne';
 import { RedsChallenge } from './reds-challenge';
 import { BlastoiseGx } from './blastoise-gx';
 import { BeastBringer } from './beast-bringer';
+import { Pokegear30 } from '../set-scarlet-and-violet/pokegear-30';
 
 export class DedenneGXUNB extends DedenneGX {
   public fullName = 'Dedenne-GX UNB';
@@ -200,27 +200,33 @@ export class MetalCoreBarrier2UNB extends MetalCoreBarrierUNB180 {
   public set = 'UNB';
 }
 
-export class Pokegear30HS4UNB extends Pokegear30HSHS96 {
-  public setNumber = '233';
-  public fullName: string = 'Pokégear 3.04 UNB';
-  public set = 'UNB';
-}
-
 export class TripleAccelerationEnergy2UNB extends TripleAccelerationEnergyUNB190 {
   public setNumber = '234';
   public fullName: string = 'Triple Acceleration Energy2 UNB';
   public set = 'UNB';
 }
 
-export class Pokegear30HS2UNB extends Pokegear30HSHS96 {
+export class Pokegear30UNB extends Pokegear30 {
+  public setNumber = '182';
+  public fullName: string = 'Pokégear 3.01 UNB';
+  public set = 'UNB';
+}
+
+export class Pokegear30HS2UNB extends Pokegear30 {
   public setNumber = '182a';
   public fullName: string = 'Pokégear 3.02 UNB';
   public set = 'UNB';
 }
 
-export class Pokegear30HS3UNB extends Pokegear30HSHS96 {
+export class Pokegear30HS3UNB extends Pokegear30 {
   public setNumber = '182b';
   public fullName: string = 'Pokégear 3.03 UNB';
+  public set = 'UNB';
+}
+
+export class Pokegear30HS4UNB extends Pokegear30 {
+  public setNumber = '233';
+  public fullName: string = 'Pokégear 3.04 UNB';
   public set = 'UNB';
 }
 

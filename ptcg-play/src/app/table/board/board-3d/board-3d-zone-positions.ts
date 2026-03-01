@@ -1,6 +1,5 @@
 import { Vector3 } from 'three';
 import { PlayerType } from 'ptcg-server';
-import { getBoardConfig } from './board-3d-config';
 
 // Zone positions in 3D world space
 // Layout: Stadium shared at center-left, Active near center, Bench behind Active
@@ -50,31 +49,108 @@ export const ZONE_POSITIONS = {
 };
 
 // Original bench positions (before shift) - used for 8-spot benches
-// These extend further left/right than the current shifted positions
+// These extend further left/right than the current shifted positions.
+// Top player bench shifted +2 in x to avoid overlapping with discard at (-18, 4).
 export const ORIGINAL_BENCH_POSITIONS = {
   bottomPlayer: [
-    new Vector3(-12, 0.1, 22),
-    new Vector3(-8, 0.1, 22),
-    new Vector3(-4, 0.1, 22),
-    new Vector3(0, 0.1, 22),
-    new Vector3(4, 0.1, 22),
-    new Vector3(8, 0.1, 22),
-    new Vector3(12, 0.1, 22),
-    new Vector3(16, 0.1, 22),
+    new Vector3(-12, 0.1, 24),
+    new Vector3(-8, 0.1, 24),
+    new Vector3(-4, 0.1, 24),
+    new Vector3(0, 0.1, 24),
+    new Vector3(4, 0.1, 24),
+    new Vector3(8, 0.1, 24),
+    new Vector3(12, 0.1, 24),
+    new Vector3(16, 0.1, 24),
   ],
   topPlayer: [
-    new Vector3(12, 0.1, -4),
-    new Vector3(8, 0.1, -4),
-    new Vector3(4, 0.1, -4),
-    new Vector3(0, 0.1, -4),
-    new Vector3(-4, 0.1, -4),
-    new Vector3(-8, 0.1, -4),
-    new Vector3(-12, 0.1, -4),
-    new Vector3(-16, 0.1, -4),
+    new Vector3(14, 0.1, 4),   // Shifted +2 right to avoid discard at x=-18
+    new Vector3(10, 0.1, 4),
+    new Vector3(6, 0.1, 4),
+    new Vector3(2, 0.1, 4),
+    new Vector3(-2, 0.1, 4),
+    new Vector3(-6, 0.1, 4),
+    new Vector3(-10, 0.1, 4),
+    new Vector3(-14, 0.1, 4),
+  ]
+};
+
+/**
+ * Mobile-specific zone positions (aspect < 0.8)
+ * Tighter bench spacing for portrait mobile orientations
+ */
+export const MOBILE_ZONE_POSITIONS = {
+  stadium: new Vector3(-10, 0.1, 14),
+  bottomPlayer: {
+    active: new Vector3(0, 0.1, 18),
+    supporter: new Vector3(6, 0.1, 18),
+    bench: [
+      new Vector3(-6, 0.1, 24),
+      new Vector3(-3, 0.1, 24),
+      new Vector3(0, 0.1, 24),
+      new Vector3(3, 0.1, 24),
+      new Vector3(6, 0.1, 24),
+      new Vector3(9, 0.1, 24),
+      new Vector3(12, 0.1, 24),
+      new Vector3(15, 0.1, 24),
+    ],
+    board: new Vector3(0, 0.1, 16),
+    prizes: new Vector3(-18, 0.1, 20),
+    deck: new Vector3(20, 0.1, 18),
+    discard: new Vector3(20, 0.1, 24),
+    lostZone: new Vector3(-10, 0.1, 18),
+  },
+  topPlayer: {
+    active: new Vector3(0, 0.1, 10),
+    supporter: new Vector3(-6, 0.1, 10),
+    bench: [
+      new Vector3(6, 0.1, 4),
+      new Vector3(3, 0.1, 4),
+      new Vector3(0, 0.1, 4),
+      new Vector3(-3, 0.1, 4),
+      new Vector3(-6, 0.1, 4),
+      new Vector3(-9, 0.1, 4),
+      new Vector3(-12, 0.1, 4),
+      new Vector3(-15, 0.1, 4),
+    ],
+    board: new Vector3(0, 0.1, 3),
+    prizes: new Vector3(20, 0.1, 8),
+    deck: new Vector3(-18, 0.1, 10),
+    discard: new Vector3(-18, 0.1, 4),
+    lostZone: new Vector3(-10, 0.1, 10),
+  }
+};
+
+/**
+ * Mobile-specific original bench positions for 8-spot benches.
+ * Top player bench shifted +2 right to avoid overlapping with discard at (-18, 4).
+ */
+export const MOBILE_ORIGINAL_BENCH_POSITIONS = {
+  bottomPlayer: [
+    new Vector3(-9, 0.1, 24),
+    new Vector3(-6, 0.1, 24),
+    new Vector3(-3, 0.1, 24),
+    new Vector3(0, 0.1, 24),
+    new Vector3(3, 0.1, 24),
+    new Vector3(6, 0.1, 24),
+    new Vector3(9, 0.1, 24),
+    new Vector3(12, 0.1, 24),
+  ],
+  topPlayer: [
+    new Vector3(11, 0.1, 4),   // Shifted +2 right to avoid discard at x=-18
+    new Vector3(8, 0.1, 4),
+    new Vector3(5, 0.1, 4),
+    new Vector3(2, 0.1, 4),
+    new Vector3(-1, 0.1, 4),
+    new Vector3(-4, 0.1, 4),
+    new Vector3(-7, 0.1, 4),
+    new Vector3(-10, 0.1, 4),
   ]
 };
 
 export const SNAP_DISTANCE = 3.5;
+
+/** Aspect ratio (width/height) below which mobile positions are used */
+const MOBILE_ASPECT_THRESHOLD = 0.8;
 
 /**
  * Get zone positions based on aspect ratio
@@ -82,12 +158,10 @@ export const SNAP_DISTANCE = 3.5;
  * @returns Zone positions structure for the given aspect ratio
  */
 export function getZonePositions(aspect?: number): typeof ZONE_POSITIONS {
-  if (aspect === undefined) {
+  if (aspect === undefined || aspect >= MOBILE_ASPECT_THRESHOLD) {
     return ZONE_POSITIONS;
   }
-  
-  const config = getBoardConfig(aspect);
-  return config.zonePositions as typeof ZONE_POSITIONS;
+  return MOBILE_ZONE_POSITIONS;
 }
 
 /**
@@ -96,12 +170,10 @@ export function getZonePositions(aspect?: number): typeof ZONE_POSITIONS {
  * @returns Original bench positions for the given aspect ratio
  */
 export function getOriginalBenchPositions(aspect?: number): typeof ORIGINAL_BENCH_POSITIONS {
-  if (aspect === undefined) {
+  if (aspect === undefined || aspect >= MOBILE_ASPECT_THRESHOLD) {
     return ORIGINAL_BENCH_POSITIONS;
   }
-  
-  const config = getBoardConfig(aspect);
-  return config.originalBenchPositions as typeof ORIGINAL_BENCH_POSITIONS;
+  return MOBILE_ORIGINAL_BENCH_POSITIONS;
 }
 
 /**
@@ -110,12 +182,7 @@ export function getOriginalBenchPositions(aspect?: number): typeof ORIGINAL_BENC
  * @returns Snap distance for the given aspect ratio
  */
 export function getSnapDistance(aspect?: number): number {
-  if (aspect === undefined) {
-    return SNAP_DISTANCE;
-  }
-  
-  const config = getBoardConfig(aspect);
-  return config.snapDistance;
+  return SNAP_DISTANCE;
 }
 
 /**
@@ -129,7 +196,7 @@ export function getSnapDistance(aspect?: number): number {
 export function getBenchPositions(benchSize: number, playerType: PlayerType, aspect?: number): Vector3[] {
   const zonePositions = getZonePositions(aspect);
   const originalBenchPositions = getOriginalBenchPositions(aspect);
-  
+
   if (benchSize === 8) {
     // Use original positions for 8-spot benches
     return playerType === PlayerType.BOTTOM_PLAYER

@@ -1,11 +1,9 @@
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
+import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
-
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { EnergyCard, State, StoreLike } from '../../game';
 export class Alomomola2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
@@ -36,8 +34,8 @@ export class Alomomola2 extends PokemonCard {
   public fullName: string = 'Alomomola BLW 39';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
@@ -45,8 +43,8 @@ export class Alomomola2 extends PokemonCard {
       let waterEnergy = 0;
 
       player.active.cards.forEach(card => {
-          if (card.superType === SuperType.ENERGY) {
-            waterEnergy += (card as EnergyCard).provides.filter(e => e === CardType.WATER).length;
+        if (card.superType === SuperType.ENERGY) {
+          waterEnergy += (card as EnergyCard).provides.filter(e => e === CardType.WATER).length;
         }
       });
 

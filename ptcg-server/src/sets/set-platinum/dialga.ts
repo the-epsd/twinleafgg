@@ -4,6 +4,7 @@ import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerType, StoreLike, State, GameMessage, CardList, ChooseCardsPrompt, ShowCardsPrompt, StateUtils, EnergyCard, GameLog, OrderCardsPrompt } from '../../game';
 import { ABILITY_USED, CONFIRMATION_PROMPT, DRAW_CARDS_UNTIL_CARDS_IN_HAND, IS_POKEPOWER_BLOCKED, MOVE_CARD_TO, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Dialga extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -53,6 +54,8 @@ export class Dialga extends PokemonCard {
 
       CONFIRMATION_PROMPT(store, state, player, wantToUse => {
         if (wantToUse) {
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, powerEffect);
 
           const blocked: number[] = [];
           player.discard.cards.forEach((c, index) => {

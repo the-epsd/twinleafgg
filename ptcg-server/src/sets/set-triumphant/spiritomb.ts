@@ -4,6 +4,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { DRAW_CARDS, IS_POKEPOWER_BLOCKED, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -49,6 +50,9 @@ export class Spiritomb extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY,
       ), wantToUse => {
         if (wantToUse) {
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, powerEffect);
+
           opponent.hand.moveTo(opponent.deck);
           SHUFFLE_DECK(store, state, opponent);
           DRAW_CARDS(opponent, 6);

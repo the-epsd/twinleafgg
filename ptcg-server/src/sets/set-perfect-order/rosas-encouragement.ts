@@ -13,14 +13,16 @@ export class RosasEncouragement extends TrainerCard {
   public setNumber: string = '75';
   public name: string = 'Rosa\'s Encouragement';
   public fullName: string = 'Rosa\'s Encouragement M3';
-  public text: string = 'You can\'t use this card if you have more Prize cards remaining than your opponent.\n\nAttach up to 2 Basic Energy cards from your discard pile to 1 of your Stage 2 Pokemon.';
+  public text: string = `You can use this card only if you have more Prize cards remaining than your opponent.
+
+Attach up to 2 Basic Energy cards from your discard pile to 1 of your Stage 2 Pokémon.`
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean | undefined {
     const opponent = StateUtils.getOpponent(state, player);
     if (player.supporterTurn > 0) {
       return false;
     }
-    if (player.getPrizeLeft() > opponent.getPrizeLeft()) {
+    if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
       return false;
     }
     const basicEnergyInDiscard = player.discard.cards.filter(c =>
@@ -54,7 +56,7 @@ export class RosasEncouragement extends TrainerCard {
       }
 
       // Check if player has more Prize cards remaining than opponent
-      if (player.getPrizeLeft() > opponent.getPrizeLeft()) {
+      if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 

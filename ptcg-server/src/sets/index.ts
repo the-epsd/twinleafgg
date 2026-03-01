@@ -45,6 +45,7 @@ export * from './set-ex-firered-leafgreen';
 export * from './set-ex-legend-maker';
 
 export * from './set-nintendo-promos';
+export * from './set-unnumbered-promos';
 
 //POP Series
 export * from './set-pop-series-2';
@@ -56,6 +57,8 @@ export * from './set-pop-series-8';
 //Japan Promos ex-era
 export * from './set-pcg-l-promotional-cards';
 export * from './set-pcg-p-promotional-cards';
+export * from './set-pokepark-premium-files';
+export * from './set-gift-box-mew-lucario';
 
 // VS Packs
 export * from './set-vs-pack-auras-lucario';

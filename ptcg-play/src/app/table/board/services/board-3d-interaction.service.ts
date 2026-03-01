@@ -284,17 +284,6 @@ export class Board3dInteractionService {
         this.pendingDragCamera = camera;
         return card;
       }
-      // Board card dragging (for retreat)
-      if (card.userData.isBoardCard && card.userData.cardTarget) {
-        const target = card.userData.cardTarget as CardTarget;
-        // Only allow dragging active/bench Pokemon for retreat
-        if (target.slot === SlotType.ACTIVE || target.slot === SlotType.BENCH) {
-          // Store pending drag info - will start on move threshold
-          this.pendingDragCard = card;
-          this.pendingDragCamera = camera;
-          return card;
-        }
-      }
     }
 
     return null;
@@ -651,6 +640,12 @@ export class Board3dInteractionService {
       return true;
     }
 
+    // Check if target's name is a variant of evolvesFrom (e.g. "Eevee ex" for evolvesFrom "Eevee")
+    if (evolutionCard.evolvesFrom && targetPokemon.name &&
+        targetPokemon.name.startsWith(evolutionCard.evolvesFrom + ' ')) {
+      return true;
+    }
+
     // Check if target Pokemon's evolvesTo includes the evolution card name
     if (targetPokemon.evolvesTo && targetPokemon.evolvesTo.includes(evolutionCard.name)) {
       return true;
@@ -658,6 +653,11 @@ export class Board3dInteractionService {
 
     // Check if target Pokemon's evolvesToStage includes the evolution card stage
     if (targetPokemon.evolvesToStage && targetPokemon.evolvesToStage.includes(evolutionCard.stage)) {
+      return true;
+    }
+
+    // Check if target Pokemon's evolvesFromBase includes the evolution card's evolvesFrom (e.g. Eevee ex)
+    if (Array.isArray(targetPokemon.evolvesFromBase) && targetPokemon.evolvesFromBase.length > 0 && targetPokemon.evolvesFromBase.includes(evolutionCard.evolvesFrom)) {
       return true;
     }
 

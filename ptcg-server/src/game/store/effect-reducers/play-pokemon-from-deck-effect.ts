@@ -2,7 +2,7 @@ import { PlayPokemonFromDeckEffect } from '../effects/play-card-effects';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { Effect } from '../effects/effect';
-import { SpecialCondition, Stage } from '../card/card-types';
+import { SpecialCondition } from '../card/card-types';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 
@@ -24,13 +24,6 @@ export function playPokemonFromDeckReducer(store: StoreLike, state: State, effec
 
   /* Play pokemon card from deck */
   if (effect instanceof PlayPokemonFromDeckEffect) {
-    const stage = effect.pokemonCard.stage;
-    const isBasic = stage === Stage.BASIC;
-
-    // Only allow Basic Pokémon to be played from deck
-    if (!isBasic) {
-      throw new GameError(GameMessage.INVALID_TARGET);
-    }
 
     // Check if target is empty (for Basic Pokémon)
     if (effect.target.cards.length === 0) {

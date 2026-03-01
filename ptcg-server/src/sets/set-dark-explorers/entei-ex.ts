@@ -1,10 +1,10 @@
+import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CardTag, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
+import { GameMessage } from '../../game/game-message';
+import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, EnergyCard, AttachEnergyPrompt, PlayerType, SlotType, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../game/store/prefabs/attack-effects';
-
+import { AttachEnergyPrompt, EnergyCard, PlayerType, SlotType, State, StoreLike } from '../../game';
 export class EnteiEx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public tags = [CardTag.POKEMON_EX];
@@ -37,8 +37,8 @@ export class EnteiEx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Fire Fang - applies burn
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_BURN_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     // Grand Flame - attach Fire Energy from discard to a benched Pokémon

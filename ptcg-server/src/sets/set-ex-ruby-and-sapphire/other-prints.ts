@@ -1,8 +1,16 @@
+import { EnergySearch } from '../set-scarlet-and-violet/energy-search';
 import { EnergySwitch } from '../set-scarlet-and-violet/energy-switch';
 import { EnergyRemoval2 } from '../set-ex-power-keepers/energy-removal-2';
 import { MetalEnergySpecial } from '../set-undaunted/metal-energy-special';
 import { RainbowEnergy } from '../set-sun-and-moon/rainbow-energy';
 import { Switch } from '../set-base-set/switch';
+
+export class EnergySearchRS extends EnergySearch {
+  public set = 'RS';
+  public setNumber = '90';
+  public fullName = 'Energy Search RS';
+  public text = 'Search your deck for a basic Energy card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
+}
 
 export class EnergySwitchRS extends EnergySwitch {
   public set = 'RS';

@@ -23,6 +23,27 @@ export class Iono extends TrainerCard {
     'If either player put any cards on the bottom of their deck in this way, ' +
     'each player draws a card for each of their remaining Prize cards.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+
+    const opponent = StateUtils.getOpponent(state, player);
+    const otherCardsInHand = player.hand.cards.filter(c => c !== this).length;
+
+    // Cannot play if we only hold Iono and deck is empty
+    if (otherCardsInHand === 0 && player.deck.cards.length === 0) {
+      return false;
+    }
+
+    // Cannot play if both hands would be empty (nothing to shuffle)
+    if (otherCardsInHand === 0 && opponent.hand.cards.length === 0) {
+      return false;
+    }
+
+    return true;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
 

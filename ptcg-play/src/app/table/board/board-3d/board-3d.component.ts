@@ -16,15 +16,14 @@ import {
   WebGLRenderer,
   PlaneGeometry,
   MeshStandardMaterial,
+  MeshBasicMaterial,
   Mesh,
   PCFSoftShadowMap,
   ACESFilmicToneMapping,
   Vector3,
   RepeatWrapping,
-  BufferGeometry,
-  BufferAttribute,
-  LineLoop,
-  LineBasicMaterial
+  Group,
+  DoubleSide
 } from 'three';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { Board3dAssetLoaderService } from '../services/board-3d-asset-loader.service';
@@ -43,7 +42,7 @@ import { GameService } from '../../../api/services/game.service';
 import { BoardInteractionService } from '../../../shared/services/board-interaction.service';
 import { Object3D } from 'three';
 import { getCameraConfig } from './board-3d-config';
-import { getBenchPositions } from './board-3d-zone-positions';
+import { getBenchPositions, ZONE_POSITIONS } from './board-3d-zone-positions';
 
 @UntilDestroy()
 @Component({
@@ -70,9 +69,13 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
   private boardMesh!: Mesh;
   private boardCenterOverlay!: Mesh;
 
-  // Bench turn-indicator outlines (gray by default, red/blue when that player's turn)
-  private topBenchOutline: LineLoop | null = null;
-  private bottomBenchOutline: LineLoop | null = null;
+  // Per-slot outlines (always visible, independent of drop zones)
+  private topBenchSpotOutlines: Group[] = [];
+  private bottomBenchSpotOutlines: Group[] = [];
+  private otherSpotOutlines: Group[] = [];
+
+  // 4x4 grid overlay on the board
+  private boardGridGroup: Group | null = null;
 
   private animationFrameId: number = 0;
   private needsRender: boolean = true;
@@ -125,7 +128,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     const bottomBenchSize = this.bottomPlayer?.bench?.length ?? 5;
     const topBenchSize = this.topPlayer?.bench?.length ?? 5;
     this.interactionService.createDropZoneIndicators(this.scene, bottomBenchSize, topBenchSize).then(() => {
-      this.createBenchOutlines(bottomBenchSize, topBenchSize);
+      this.createBenchSpotOutlines(bottomBenchSize, topBenchSize);
       this.markDirty();
     });
 
@@ -217,8 +220,10 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     // Clean up wireframes
     this.wireframeService.dispose(this.scene);
 
-    // Clean up bench outline meshes
+    // Clean up spot outline meshes
     this.disposeBenchOutlines();
+    this.disposeOtherSpotOutlines();
+    this.disposeBoardGrid();
 
     // Clean up service state to prevent stale references on mode switch
     this.stateSync.dispose(this.scene);
@@ -297,12 +302,12 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     const boardGeometry = new PlaneGeometry(70, 50);
 
     // Load black grid texture
-    const boardTexture = await this.assetLoader.loadBoardGridTexture();
+    // const boardTexture = await this.assetLoader.loadBoardGridTexture();
 
-    // Board material with black grid texture
+    // Board material - dark grey (texture commented out)
     const boardMaterial = new MeshStandardMaterial({
-      map: boardTexture,
-      color: 0xffffff, // White color to show texture properly
+      // map: boardTexture,
+      color: 0x404040, // Dark grey
       roughness: 1,
       metalness: 0.00
     });
@@ -340,7 +345,79 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.boardCenterOverlay.receiveShadow = false;
     this.scene.add(this.boardCenterOverlay);
 
+    // Add 1-unit grid overlay (same thickness as slot outlines, half opacity)
+    this.createBoardGrid();
+
     this.markDirty();
+  }
+
+  /** Grid height - below cards (0.1) so grid appears underneath */
+  private static readonly BOARD_GRID_Y = 0.1;
+
+  /**
+   * Create a 1-unit grid overlay on the board surface.
+   * Aligns with the game board's coordinate system so "move by 1 unit" is visible.
+   * Same thickness as BENCH_OUTLINE_THICKNESS, half opacity.
+   * Positioned below cards (y=0.01) so it renders underneath.
+   */
+  private createBoardGrid(): void {
+    this.disposeBoardGrid();
+
+    const t = Board3dComponent.BENCH_OUTLINE_THICKNESS;
+    const y = Board3dComponent.BOARD_GRID_Y;
+    const boardW = 70;
+    const boardH = 50;
+    const boardCenterZ = 12;
+    const minX = -boardW / 2;
+    const maxX = boardW / 2;
+    const minZ = boardCenterZ - boardH / 2;
+    const maxZ = boardCenterZ + boardH / 2;
+
+    const material = new MeshBasicMaterial({
+      color: Board3dComponent.BENCH_OUTLINE_COLOR,
+      transparent: true,
+      opacity: 0.5,
+      side: DoubleSide,
+      depthTest: true
+    });
+
+    this.boardGridGroup = new Group();
+
+    // Vertical lines at every integer x (1 unit = 1 world unit, same as zone positions)
+    for (let x = Math.ceil(minX) + 1; x <= Math.floor(maxX) - 1; x++) {
+      const line = new Mesh(new PlaneGeometry(t, boardH), material);
+      line.rotation.x = -Math.PI / 2;
+      line.position.set(x, y, boardCenterZ);
+      this.boardGridGroup.add(line);
+    }
+
+    // Horizontal lines at every integer z
+    for (let z = Math.ceil(minZ) + 1; z <= Math.floor(maxZ) - 1; z++) {
+      const line = new Mesh(new PlaneGeometry(boardW, t), material);
+      line.rotation.x = -Math.PI / 2;
+      line.position.set(0, y, z);
+      this.boardGridGroup.add(line);
+    }
+
+    this.boardGridGroup.renderOrder = -1; // Render first so grid appears underneath cards
+    this.boardGridGroup.userData.isBoardGrid = true;
+    this.scene.add(this.boardGridGroup);
+  }
+
+  private disposeBoardGrid(): void {
+    if (!this.boardGridGroup) {
+      return;
+    }
+    this.scene.remove(this.boardGridGroup);
+    let material: MeshBasicMaterial | null = null;
+    for (const child of this.boardGridGroup.children) {
+      if (child instanceof Mesh) {
+        child.geometry.dispose();
+        material = child.material as MeshBasicMaterial;
+      }
+    }
+    material?.dispose();
+    this.boardGridGroup = null;
   }
 
   private animate = (): void => {
@@ -466,9 +543,6 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
         // Update drop zones if bench size changed
         this.updateDropZonesForBenchSize();
 
-        // Update bench outline colors based on whose turn it is
-        this.updateBenchOutlineColors();
-
         // Update interactive objects cache for optimized raycasting
         this.interactionService.updateInteractiveObjects(this.scene);
 
@@ -488,124 +562,160 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
     // Recreate drop zones with updated bench sizes
     this.interactionService.createDropZoneIndicators(this.scene, bottomBenchSize, topBenchSize).then(() => {
-      this.createBenchOutlines(bottomBenchSize, topBenchSize);
+      this.createBenchSpotOutlines(bottomBenchSize, topBenchSize);
       this.markDirty();
     });
   }
 
+  /** Slot dimensions (must match Board3dDropZone) */
+  private static readonly BENCH_OUTLINE_THICKNESS = 0.02;
+  private static readonly BENCH_OUTLINE_Y = 0.15;
+  private static readonly BENCH_OUTLINE_COLOR = 0xffffff;
+
+  /** Card/slot dimensions for outlines */
+  private static readonly CARD_SLOT_WIDTH = 2.8;
+  private static readonly CARD_SLOT_HEIGHT = 3.8;
+
   /**
-   * Create rectangular outline meshes around each player's bench area.
-   * Gray by default; colors update based on whose turn it is.
+   * Create per-slot outline meshes for bench and all other board slots.
+   * Always visible, independent of drop zone state.
    */
-  private createBenchOutlines(bottomBenchSize: number, topBenchSize: number): void {
+  private createBenchSpotOutlines(bottomBenchSize: number, topBenchSize: number): void {
     this.disposeBenchOutlines();
+    this.disposeOtherSpotOutlines();
 
-    const padding = 2;
-    const benchHeight = 3;
+    const w = Board3dComponent.CARD_SLOT_WIDTH;
+    const h = Board3dComponent.CARD_SLOT_HEIGHT;
 
-    // Create top player bench outline
+    // Bench slots
     const topPositions = getBenchPositions(topBenchSize, PlayerType.TOP_PLAYER);
-    if (topPositions.length > 0) {
-      const topBounds = this.getBenchOutlineBounds(topPositions, padding, benchHeight);
-      this.topBenchOutline = this.createBenchOutlineLineLoop(topBounds);
-      this.topBenchOutline.userData.isBenchOutline = true;
-      this.scene.add(this.topBenchOutline);
+    for (const pos of topPositions) {
+      const group = this.createSpotOutlineGroup(pos, w, h);
+      this.topBenchSpotOutlines.push(group);
+      this.scene.add(group);
     }
-
-    // Create bottom player bench outline
     const bottomPositions = getBenchPositions(bottomBenchSize, PlayerType.BOTTOM_PLAYER);
-    if (bottomPositions.length > 0) {
-      const bottomBounds = this.getBenchOutlineBounds(bottomPositions, padding, benchHeight);
-      this.bottomBenchOutline = this.createBenchOutlineLineLoop(bottomBounds);
-      this.bottomBenchOutline.userData.isBenchOutline = true;
-      this.scene.add(this.bottomBenchOutline);
+    for (const pos of bottomPositions) {
+      const group = this.createSpotOutlineGroup(pos, w, h);
+      this.bottomBenchSpotOutlines.push(group);
+      this.scene.add(group);
     }
 
-    this.updateBenchOutlineColors();
+    // Stadium (single shared slot)
+    this.addSpotOutline(ZONE_POSITIONS.stadium, w, h);
+
+    // Active, supporter, deck, discard (each player)
+    for (const position of ['bottomPlayer', 'topPlayer'] as const) {
+      const zp = ZONE_POSITIONS[position];
+      this.addSpotOutline(zp.active, w, h);
+      this.addSpotOutline(zp.supporter, w, h);
+      this.addSpotOutline(zp.deck, w, h);
+      this.addSpotOutline(zp.discard, w, h);
+    }
+
+    // Prize slots (6 per player, 2x3 grid - match board-3d-prize.service layout)
+    for (const basePos of [ZONE_POSITIONS.bottomPlayer.prizes, ZONE_POSITIONS.topPlayer.prizes]) {
+      for (let i = 0; i < 6; i++) {
+        const row = Math.floor(i / 2);
+        const col = i % 2;
+        const offsetX = (col - 0.5) * 3;
+        const offsetZ = (row - 1) * 4;
+        const pos = new Vector3(basePos.x + offsetX, basePos.y, basePos.z + offsetZ);
+        this.addSpotOutline(pos, w, h);
+      }
+    }
   }
 
-  private getBenchOutlineBounds(
-    positions: Vector3[],
-    padding: number,
-    benchHeight: number
-  ): { minX: number; maxX: number; minZ: number; maxZ: number } {
-    const xs = positions.map(p => p.x);
-    const zs = positions.map(p => p.z);
-    const centerZ = zs[0];
-    return {
-      minX: Math.min(...xs) - padding,
-      maxX: Math.max(...xs) + padding,
-      minZ: centerZ - benchHeight,
-      maxZ: centerZ + benchHeight
-    };
+  private addSpotOutline(position: Vector3, width: number, height: number): void {
+    const group = this.createSpotOutlineGroup(position, width, height);
+    this.otherSpotOutlines.push(group);
+    this.scene.add(group);
   }
 
-  private createBenchOutlineLineLoop(bounds: {
-    minX: number;
-    maxX: number;
-    minZ: number;
-    maxZ: number;
-  }): LineLoop {
-    const y = 0.02;
-    const vertices = new Float32Array([
-      bounds.minX, y, bounds.minZ,
-      bounds.maxX, y, bounds.minZ,
-      bounds.maxX, y, bounds.maxZ,
-      bounds.minX, y, bounds.maxZ
-    ]);
-    const geometry = new BufferGeometry();
-    geometry.setAttribute('position', new BufferAttribute(vertices, 3));
+  /**
+   * Create a Group with 4 thin plane meshes forming a rectangle outline.
+   */
+  private createSpotOutlineGroup(position: Vector3, width: number, height: number): Group {
+    const t = Board3dComponent.BENCH_OUTLINE_THICKNESS;
+    const y = Board3dComponent.BENCH_OUTLINE_Y;
+    const minX = position.x - width / 2;
+    const maxX = position.x + width / 2;
+    const minZ = position.z - height / 2;
+    const maxZ = position.z + height / 2;
 
-    const material = new LineBasicMaterial({
-      color: 0x6b7280,
-      linewidth: 1
+    const material = new MeshBasicMaterial({
+      color: Board3dComponent.BENCH_OUTLINE_COLOR,
+      transparent: true,
+      opacity: 0,
+      side: DoubleSide,
+      depthTest: true
     });
 
-    return new LineLoop(geometry, material);
+    const group = new Group();
+
+    const topEdge = new Mesh(new PlaneGeometry(width + t * 2, t), material);
+    topEdge.rotation.x = -Math.PI / 2;
+    topEdge.position.set(position.x, y, maxZ + t / 2);
+    group.add(topEdge);
+
+    const bottomEdge = new Mesh(new PlaneGeometry(width + t * 2, t), material);
+    bottomEdge.rotation.x = -Math.PI / 2;
+    bottomEdge.position.set(position.x, y, minZ - t / 2);
+    group.add(bottomEdge);
+
+    const leftEdge = new Mesh(new PlaneGeometry(t, height), material);
+    leftEdge.rotation.x = -Math.PI / 2;
+    leftEdge.position.set(minX - t / 2, y, position.z);
+    group.add(leftEdge);
+
+    const rightEdge = new Mesh(new PlaneGeometry(t, height), material);
+    rightEdge.rotation.x = -Math.PI / 2;
+    rightEdge.position.set(maxX + t / 2, y, position.z);
+    group.add(rightEdge);
+
+    group.renderOrder = 100;
+    group.userData.isSpotOutline = true;
+    return group;
   }
 
   /**
-   * Update bench outline colors based on whose turn it is.
-   * Gray default; red when top player's turn; blue when bottom player's turn.
-   */
-  private updateBenchOutlineColors(): void {
-    const isTopPlayerActive =
-      this.gameState?.state?.players[this.gameState.state.activePlayer]?.id === this.topPlayer?.id;
-    const isBottomPlayerActive =
-      this.gameState?.state?.players[this.gameState.state.activePlayer]?.id === this.bottomPlayer?.id;
-
-    const GRAY = 0x6b7280;
-    const RED = 0xdc2626;
-    const BLUE = 0x0052ff;
-
-    if (this.topBenchOutline?.material) {
-      (this.topBenchOutline.material as LineBasicMaterial).color.setHex(
-        isTopPlayerActive ? RED : GRAY
-      );
-    }
-    if (this.bottomBenchOutline?.material) {
-      (this.bottomBenchOutline.material as LineBasicMaterial).color.setHex(
-        isBottomPlayerActive ? BLUE : GRAY
-      );
-    }
-  }
-
-  /**
-   * Remove and dispose bench outline meshes.
+   * Remove and dispose bench spot outline meshes.
    */
   private disposeBenchOutlines(): void {
-    if (this.topBenchOutline) {
-      this.scene.remove(this.topBenchOutline);
-      (this.topBenchOutline.geometry as BufferGeometry).dispose();
-      (this.topBenchOutline.material as LineBasicMaterial).dispose();
-      this.topBenchOutline = null;
-    }
-    if (this.bottomBenchOutline) {
-      this.scene.remove(this.bottomBenchOutline);
-      (this.bottomBenchOutline.geometry as BufferGeometry).dispose();
-      (this.bottomBenchOutline.material as LineBasicMaterial).dispose();
-      this.bottomBenchOutline = null;
-    }
+    const disposeGroup = (g: Group) => {
+      this.scene.remove(g);
+      let material: MeshBasicMaterial | null = null;
+      for (const child of g.children) {
+        if (child instanceof Mesh) {
+          child.geometry.dispose();
+          material = child.material as MeshBasicMaterial; // All children share one material
+        }
+      }
+      material?.dispose();
+    };
+    this.topBenchSpotOutlines.forEach(disposeGroup);
+    this.bottomBenchSpotOutlines.forEach(disposeGroup);
+    this.topBenchSpotOutlines = [];
+    this.bottomBenchSpotOutlines = [];
+  }
+
+  /**
+   * Remove and dispose other (non-bench) spot outline meshes.
+   */
+  private disposeOtherSpotOutlines(): void {
+    const disposeGroup = (g: Group) => {
+      this.scene.remove(g);
+      let material: MeshBasicMaterial | null = null;
+      for (const child of g.children) {
+        if (child instanceof Mesh) {
+          child.geometry.dispose();
+          material = child.material as MeshBasicMaterial;
+        }
+      }
+      material?.dispose();
+    };
+    this.otherSpotOutlines.forEach(disposeGroup);
+    this.otherSpotOutlines = [];
   }
 
   private updateDropZoneOccupancy(): void {
@@ -971,7 +1081,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
       // Determine which player's deck this is by checking cardList reference
       const isBottomDeck = this.bottomPlayer && this.bottomPlayer.deck === cardList;
       const isTopDeck = this.topPlayer && this.topPlayer.deck === cardList;
-      
+
       if (cardList) {
         const facedown = true;
         const allowReveal = !!this.gameState.replay;

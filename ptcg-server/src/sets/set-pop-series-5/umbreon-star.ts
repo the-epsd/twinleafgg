@@ -5,6 +5,7 @@ import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { PowerType, StoreLike, State, GameMessage, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 import { CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, MOVE_CARD_TO, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class UmbreonStar extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -46,6 +47,9 @@ export class UmbreonStar extends PokemonCard {
         if (wantToUse) {
           const player = effect.player;
           const opponent = StateUtils.getOpponent(state, player);
+
+          const powerEffect = new PowerEffect(player, this.powers[0], this);
+          store.reduceEffect(state, powerEffect);
 
           if (opponent.hand.cards.length > 0) {
             const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);

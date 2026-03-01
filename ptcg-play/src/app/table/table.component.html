@@ -64,18 +64,24 @@
       <ptcg-hand *ngIf="!use3dBoard || !webglSupported || !has3dBoardAccess" [clientId]="clientId"
         [gameState]="gameState" [player]="bottomPlayer" [isAdmin]="isAdmin" [isTO]="isTO"></ptcg-hand>
 
-      <!-- <button mat-raised-button color="primary" (click)="undo()" [disabled]="!canUndoBackend"
-        style="position:absolute;top:10px;left:50%;transform:translateX(-50%);z-index:1000;">
-        Undo
-      </button> -->
-
       <!-- Player prompt -->
       <ptcg-prompt [gameState]="gameState" [clientId]="clientId">
       </ptcg-prompt>
 
+      <!-- Match results splash (shown first when match ends) -->
+      <ptcg-match-results-splash *ngIf="showMatchResultsSplash" [gameState]="gameState" [prompt]="gameOverPrompt"
+        (dismiss)="onMatchResultsSplashDismiss()">
+      </ptcg-match-results-splash>
+
       <!-- Game Over screen -->
-      <ptcg-game-over *ngIf="showGameOver" [gameState]="gameState" [prompt]="gameOverPrompt">
+      <ptcg-game-over *ngIf="showGameOver" [gameState]="gameState" [prompt]="gameOverPrompt"
+        (confirm)="onGameOverConfirm()">
       </ptcg-game-over>
+
+      <!-- XP Gain screen (after game over OK) -->
+      <ptcg-xp-gain-screen *ngIf="showXpGainScreen && xpGainData" [data]="xpGainData"
+        (dismiss)="onXpGainDismiss()">
+      </ptcg-xp-gain-screen>
 
       <!-- Floating UI Overlays for 3D Board -->
       <div class="board-3d-overlays" *ngIf="use3dBoard && webglSupported && has3dBoardAccess && gameState">

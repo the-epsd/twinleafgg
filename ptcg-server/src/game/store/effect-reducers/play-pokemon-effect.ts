@@ -64,10 +64,11 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       throw new GameError(GameMessage.INVALID_TARGET);
     }
 
-    // Check if evolution is valid using either evolvesFrom or evolvesTo
+    // Check if evolution is valid using either evolvesFrom, evolvesTo, evolvesToStage, or evolvesFromBase
     const isValidEvolution = (isEvolved && pokemonCard.stage < stage && pokemonCard.name === evolvesFrom) ||
       (isEvolved && pokemonCard.evolvesTo.includes(effect.pokemonCard.name)) ||
-      (isEvolved && pokemonCard.evolvesToStage.includes(effect.pokemonCard.stage));
+      (isEvolved && pokemonCard.evolvesToStage.includes(effect.pokemonCard.stage)) ||
+      (isEvolved && Array.isArray(pokemonCard.evolvesFromBase) && pokemonCard.evolvesFromBase.length > 0 && pokemonCard.evolvesFromBase.includes(effect.pokemonCard.evolvesFrom));
 
     if (isValidEvolution) {
       const playedTurnEffect = new CheckPokemonPlayedTurnEffect(effect.player, effect.target);

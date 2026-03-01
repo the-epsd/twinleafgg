@@ -25,6 +25,7 @@ export class AntiqueCoverFossil extends TrainerCard {
   public attacksThisTurn: number = 0;
   public maxAttacksThisTurn: number = 1;
   public allowSubsequentAttackChoice: boolean = false;
+  public evolvesFromBase: string[] = [];
   public maxTools: number = 1;
   public evolvesTo = [];
   public evolvesToStage = [];

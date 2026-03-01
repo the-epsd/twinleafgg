@@ -13,7 +13,6 @@ import { AbortGameAction, AbortGameReason } from '../store/actions/abort-game-ac
 import { AddPlayerAction } from '../store/actions/add-player-action';
 import { Format } from '../store/card/card-types';
 import { CheckHpEffect } from '../store/effects/check-effects';
-import { deepClone } from '../../utils/utils';
 import { logger } from '../../utils/logger';
 
 export interface DisconnectedPlayer {
@@ -37,8 +36,6 @@ export class Game implements StoreHandler {
   private lastActivity: number = Date.now();
   public format: Format = Format.STANDARD;
   private periodicSyncRef: NodeJS.Timeout | undefined;
-  private stateHistory: State[] = [];
-  private turnStartHistoryIndex: number = 0;
 
   // Reconnection-related properties
   private disconnectedPlayers: Map<number, DisconnectedPlayer> = new Map();
@@ -185,10 +182,6 @@ export class Game implements StoreHandler {
   public dispatch(client: Client, action: Action): State {
     let state = this.store.state;
     try {
-      this.stateHistory.push(deepClone(state));
-      if (this.isStartOfTurnAction(action, state)) {
-        this.turnStartHistoryIndex = this.stateHistory.length - 1;
-      }
       // Pass client roleId for sandbox actions
       const clientRoleId = client.user?.roleId;
       state = this.store.dispatch(action, clientRoleId);
@@ -202,10 +195,6 @@ export class Game implements StoreHandler {
       throw error;
     }
     return state;
-  }
-
-  private isStartOfTurnAction(action: Action, state: State): boolean {
-    return action.constructor.name === 'PassTurnAction';
   }
 
   public handleClientLeave(client: Client): void {
@@ -717,26 +706,5 @@ export class Game implements StoreHandler {
       clearInterval(this.periodicSyncRef);
       this.periodicSyncRef = undefined;
     }
-  }
-
-  public canUndo(clientId?: number): boolean {
-    if (clientId !== undefined) {
-      const state = this.store.state;
-      const activePlayer = state.players[state.activePlayer];
-      if (!activePlayer || activePlayer.id !== clientId) {
-        return false;
-      }
-    }
-    return this.stateHistory.length - 1 >= this.turnStartHistoryIndex - 1;
-  }
-
-  public undo(clientId?: number): boolean {
-    if (!this.canUndo(clientId)) return false;
-    if (this.stateHistory.length - 1 < this.turnStartHistoryIndex - 1) return false;
-    const prevState = this.stateHistory.pop();
-    if (!prevState) return false;
-    this.store.state = deepClone(prevState);
-    this.onStateChange(this.store.state);
-    return true;
   }
 }

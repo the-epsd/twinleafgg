@@ -1,4 +1,7 @@
 export const setCodeReplacements = [
+  { from: 'E1', to: 'EX' },
+  { from: 'E2', to: 'AQ' },
+  { from: 'E3', to: 'SK' },
   { from: 'PR-SH', to: 'SWSH' },
   { from: 'SP', to: 'SWSH' },
   { from: 'PR-SW', to: 'SWSH' },

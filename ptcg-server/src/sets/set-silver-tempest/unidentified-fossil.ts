@@ -34,6 +34,7 @@ export class UnidentifiedFossil extends TrainerCard {
   public fullName: string = 'Unidentified Fossil SIT';
   public regulationMark = 'F';
   public maxTools: number = 1;
+  public evolvesFromBase: string[] = [];
 
   public powers: Power[] = [
     {

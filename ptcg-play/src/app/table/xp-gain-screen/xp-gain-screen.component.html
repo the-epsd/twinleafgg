@@ -1,0 +1,38 @@
+<div class="xp-gain-overlay" [@screenFade]>
+  <div class="xp-gain-bg"></div>
+
+  <div class="xp-gain-content">
+    <h2 class="xp-gain-title">{{ data.seasonName ?? 'BATTLE PASS' }}</h2>
+    <p class="xp-gain-subtitle">Match Complete</p>
+
+    <div class="xp-gain-bar-section">
+      <div class="xp-gain-level-row">
+        <span class="xp-gain-level-label">Level</span>
+        <span class="xp-gain-level-value">{{ showLevelUp ? data.newLevel : data.previousLevel }}</span>
+      </div>
+
+      <div class="xp-gain-bar-container">
+        <div class="xp-gain-bar-track">
+          <div class="xp-gain-bar-fill" [style.width.%]="currentBarPercent"
+            (transitionend)="onBarTransitionEnd()"></div>
+        </div>
+      </div>
+
+      <div class="xp-gain-detail-row" *ngIf="data.xpForNextLevel > 0">
+        <span class="xp-gain-exp-text">{{ data.previousExp - data.totalXpForPreviousLevel }}/{{ data.xpForPreviousLevel }}</span>
+        <span class="xp-gain-gained">+{{ data.xpGained }} XP</span>
+        <span class="xp-gain-exp-text">{{ data.newExp - data.totalXpForNewLevel }}/{{ data.xpForNextLevel }}</span>
+      </div>
+    </div>
+
+    <!-- Level up animation -->
+    <div class="xp-gain-level-up" *ngIf="showLevelUp" [@levelUpAnim]>
+      <div class="xp-gain-level-up-badge">
+        <span class="xp-gain-level-up-text">LEVEL UP!</span>
+        <span class="xp-gain-level-up-value">{{ data.newLevel }}</span>
+      </div>
+    </div>
+
+    <button class="xp-gain-continue" (click)="onContinueClick()">Continue</button>
+  </div>
+</div>

@@ -1,5 +1,10 @@
 import { Vector3 } from 'three';
-import { PlayerType } from 'ptcg-server';
+import {
+  ZONE_POSITIONS,
+  ORIGINAL_BENCH_POSITIONS,
+  MOBILE_ZONE_POSITIONS,
+  MOBILE_ORIGINAL_BENCH_POSITIONS
+} from './board-3d-zone-positions';
 
 /**
  * Camera configuration for a specific aspect ratio preset
@@ -73,69 +78,8 @@ const WIDESCREEN_CONFIG: Board3dConfig = {
     position: { x: 0, y: 47.5, z: 35 },
     lookAt: { x: 0, y: 0, z: 18 }
   },
-  zonePositions: {
-    stadium: new Vector3(-10, 0.1, 14),
-    bottomPlayer: {
-      active: new Vector3(0, 0.1, 18),
-      supporter: new Vector3(6, 0.1, 18),
-      bench: [
-        new Vector3(-8, 0.1, 24),
-        new Vector3(-4, 0.1, 24),
-        new Vector3(0, 0.1, 24),
-        new Vector3(4, 0.1, 24),
-        new Vector3(8, 0.1, 24),
-        new Vector3(12, 0.1, 24),
-        new Vector3(16, 0.1, 24),
-        new Vector3(20, 0.1, 24),
-      ],
-      board: new Vector3(0, 0.1, 16),
-      prizes: new Vector3(-18, 0.1, 20),
-      deck: new Vector3(20, 0.1, 18),
-      discard: new Vector3(20, 0.1, 24),
-      lostZone: new Vector3(-10, 0.1, 18),
-    },
-    topPlayer: {
-      active: new Vector3(0, 0.1, 10),
-      supporter: new Vector3(-6, 0.1, 10),
-      bench: [
-        new Vector3(8, 0.1, 4),
-        new Vector3(4, 0.1, 4),
-        new Vector3(0, 0.1, 4),
-        new Vector3(-4, 0.1, 4),
-        new Vector3(-8, 0.1, 4),
-        new Vector3(-12, 0.1, 4),
-        new Vector3(-16, 0.1, 4),
-        new Vector3(-20, 0.1, 4),
-      ],
-      board: new Vector3(0, 0.1, 3),
-      prizes: new Vector3(20, 0.1, 8),
-      deck: new Vector3(-18, 0.1, 10), // Z=10 matches active row; symmetrical with bottom deck
-      discard: new Vector3(-18, 0.1, 4),
-      lostZone: new Vector3(-10, 0.1, 10),
-    }
-  },
-  originalBenchPositions: {
-    bottomPlayer: [
-      new Vector3(-12, 0.1, 22),
-      new Vector3(-8, 0.1, 22),
-      new Vector3(-4, 0.1, 22),
-      new Vector3(0, 0.1, 22),
-      new Vector3(4, 0.1, 22),
-      new Vector3(8, 0.1, 22),
-      new Vector3(12, 0.1, 22),
-      new Vector3(16, 0.1, 22),
-    ],
-    topPlayer: [
-      new Vector3(12, 0.1, -4),
-      new Vector3(8, 0.1, -4),
-      new Vector3(4, 0.1, -4),
-      new Vector3(0, 0.1, -4),
-      new Vector3(-4, 0.1, -4),
-      new Vector3(-8, 0.1, -4),
-      new Vector3(-12, 0.1, -4),
-      new Vector3(-16, 0.1, -4),
-    ]
-  },
+  zonePositions: ZONE_POSITIONS,
+  originalBenchPositions: ORIGINAL_BENCH_POSITIONS,
   snapDistance: 3.5
 };
 
@@ -149,69 +93,8 @@ const STANDARD_CONFIG: Board3dConfig = {
     position: { x: 0, y: 60, z: 45 },
     lookAt: { x: 0, y: 0, z: 18 }
   },
-  zonePositions: {
-    stadium: new Vector3(-10, 0.1, 14),
-    bottomPlayer: {
-      active: new Vector3(0, 0.1, 18),
-      supporter: new Vector3(6, 0.1, 18),
-      bench: [
-        new Vector3(-8, 0.1, 24),
-        new Vector3(-4, 0.1, 24),
-        new Vector3(0, 0.1, 24),
-        new Vector3(4, 0.1, 24),
-        new Vector3(8, 0.1, 24),
-        new Vector3(12, 0.1, 24),
-        new Vector3(16, 0.1, 24),
-        new Vector3(20, 0.1, 24),
-      ],
-      board: new Vector3(0, 0.1, 16),
-      prizes: new Vector3(-18, 0.1, 20),
-      deck: new Vector3(20, 0.1, 18),
-      discard: new Vector3(20, 0.1, 24),
-      lostZone: new Vector3(-10, 0.1, 18),
-    },
-    topPlayer: {
-      active: new Vector3(0, 0.1, 10),
-      supporter: new Vector3(-6, 0.1, 10),
-      bench: [
-        new Vector3(8, 0.1, 4),
-        new Vector3(4, 0.1, 4),
-        new Vector3(0, 0.1, 4),
-        new Vector3(-4, 0.1, 4),
-        new Vector3(-8, 0.1, 4),
-        new Vector3(-12, 0.1, 4),
-        new Vector3(-16, 0.1, 4),
-        new Vector3(-20, 0.1, 4),
-      ],
-      board: new Vector3(0, 0.1, 3),
-      prizes: new Vector3(20, 0.1, 8),
-      deck: new Vector3(-18, 0.1, 10), // Z=10 matches active row; symmetrical with bottom deck
-      discard: new Vector3(-18, 0.1, 4),
-      lostZone: new Vector3(-10, 0.1, 10),
-    }
-  },
-  originalBenchPositions: {
-    bottomPlayer: [
-      new Vector3(-12, 0.1, 22),
-      new Vector3(-8, 0.1, 22),
-      new Vector3(-4, 0.1, 22),
-      new Vector3(0, 0.1, 22),
-      new Vector3(4, 0.1, 22),
-      new Vector3(8, 0.1, 22),
-      new Vector3(12, 0.1, 22),
-      new Vector3(16, 0.1, 22),
-    ],
-    topPlayer: [
-      new Vector3(12, 0.1, -4),
-      new Vector3(8, 0.1, -4),
-      new Vector3(4, 0.1, -4),
-      new Vector3(0, 0.1, -4),
-      new Vector3(-4, 0.1, -4),
-      new Vector3(-8, 0.1, -4),
-      new Vector3(-12, 0.1, -4),
-      new Vector3(-16, 0.1, -4),
-    ]
-  },
+  zonePositions: ZONE_POSITIONS,
+  originalBenchPositions: ORIGINAL_BENCH_POSITIONS,
   snapDistance: 3.5
 };
 
@@ -225,69 +108,8 @@ const MOBILE_CONFIG: Board3dConfig = {
     position: { x: 0, y: 60, z: 45 },
     lookAt: { x: 0, y: 0, z: 18 }
   },
-  zonePositions: {
-    stadium: new Vector3(-10, 0.1, 14),
-    bottomPlayer: {
-      active: new Vector3(0, 0.1, 18),
-      supporter: new Vector3(6, 0.1, 18),
-      bench: [
-        new Vector3(-6, 0.1, 24),
-        new Vector3(-3, 0.1, 24),
-        new Vector3(0, 0.1, 24),
-        new Vector3(3, 0.1, 24),
-        new Vector3(6, 0.1, 24),
-        new Vector3(9, 0.1, 24),
-        new Vector3(12, 0.1, 24),
-        new Vector3(15, 0.1, 24),
-      ],
-      board: new Vector3(0, 0.1, 16),
-      prizes: new Vector3(-18, 0.1, 20),
-      deck: new Vector3(20, 0.1, 18),
-      discard: new Vector3(20, 0.1, 24),
-      lostZone: new Vector3(-10, 0.1, 18),
-    },
-    topPlayer: {
-      active: new Vector3(0, 0.1, 10),
-      supporter: new Vector3(-6, 0.1, 10),
-      bench: [
-        new Vector3(6, 0.1, 4),
-        new Vector3(3, 0.1, 4),
-        new Vector3(0, 0.1, 4),
-        new Vector3(-3, 0.1, 4),
-        new Vector3(-6, 0.1, 4),
-        new Vector3(-9, 0.1, 4),
-        new Vector3(-12, 0.1, 4),
-        new Vector3(-15, 0.1, 4),
-      ],
-      board: new Vector3(0, 0.1, 3),
-      prizes: new Vector3(20, 0.1, 8),
-      deck: new Vector3(-18, 0.1, 10), // Z=10 matches active row; symmetrical with bottom deck
-      discard: new Vector3(-18, 0.1, 4),
-      lostZone: new Vector3(-10, 0.1, 10),
-    }
-  },
-  originalBenchPositions: {
-    bottomPlayer: [
-      new Vector3(-9, 0.1, 22),
-      new Vector3(-6, 0.1, 22),
-      new Vector3(-3, 0.1, 22),
-      new Vector3(0, 0.1, 22),
-      new Vector3(3, 0.1, 22),
-      new Vector3(6, 0.1, 22),
-      new Vector3(9, 0.1, 22),
-      new Vector3(12, 0.1, 22),
-    ],
-    topPlayer: [
-      new Vector3(9, 0.1, -4),
-      new Vector3(6, 0.1, -4),
-      new Vector3(3, 0.1, -4),
-      new Vector3(0, 0.1, -4),
-      new Vector3(-3, 0.1, -4),
-      new Vector3(-6, 0.1, -4),
-      new Vector3(-9, 0.1, -4),
-      new Vector3(-12, 0.1, -4),
-    ]
-  },
+  zonePositions: MOBILE_ZONE_POSITIONS,
+  originalBenchPositions: MOBILE_ORIGINAL_BENCH_POSITIONS,
   snapDistance: 3.5
 };
 

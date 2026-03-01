@@ -177,7 +177,6 @@ import { LtSurgesStrategy } from './lt-surges-strategy';
 import { MartialArtsDojo } from './martial-arts-dojo';
 import { MetalCoreBarrier } from './metal-core-barrier';
 import { Molayne } from './molayne';
-import { Pokegear30 } from './pokegear-30';
 import { PowerPlant } from './power-plant';
 import { RedsChallenge } from './reds-challenge';
 import { SamsonOak } from './samson-oak';
@@ -237,6 +236,7 @@ import {
   PersianGx3,
   CelesteelaGx3,
   BeastBringer2,
+  Pokegear30UNB,
 } from './other-prints';
 import { GreninjaAndZoroarkGX } from './greninja-and-zoroark-gx';
 import { PheromosaAndBuzzwoleGX } from './pheromosa-and-buzzwole-gx';
@@ -425,7 +425,7 @@ export const setUnbrokenBonds: Card[] = [
   new MartialArtsDojo(),
   new MetalCoreBarrier(),
   new Molayne(),
-  new Pokegear30(),
+  new Pokegear30UNB(),
   new PowerPlant(),
   new RedsChallenge(),
   new SamsonOak(),

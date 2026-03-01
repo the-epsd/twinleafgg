@@ -24,7 +24,6 @@ import { ResolvePromptAction } from '../../game/store/actions/resolve-prompt-act
 import { SocketCache } from './socket-cache';
 import { SocketWrapper, Response } from './socket-wrapper';
 import { StateSanitizer } from './state-sanitizer';
-import { SocketClient } from './socket-client';
 
 export class GameSocket {
 
@@ -490,27 +489,6 @@ export class GameSocket {
     this.socket.removeListener('game:sandbox:modifyGameState');
     this.socket.removeListener('game:sandbox:modifyCard');
     this.socket.removeListener('game:sandbox:modifyPokemon');
-  }
-
-  public onUndoing(game: Game, playerName: string): void {
-    // Only notify clients that are actually in this game
-    game.clients.forEach(c => {
-      const socketClient = c as SocketClient;
-      if (socketClient.socket) {
-        socketClient.socket.emit(`game[${game.id}]:undoing`, { playerName });
-      }
-    });
-  }
-
-  public canUndo(params: { gameId: number }, response: Response<{ canUndo: boolean }>) {
-    const game = this.core.games.find(g => g.id === params.gameId);
-    if (game === undefined) {
-      response('error', ApiErrorEnum.GAME_INVALID_ID);
-      return;
-    }
-    const clientId = this.client.id;
-    const result = game.canUndo(clientId);
-    response('ok', { canUndo: result });
   }
 
 }

@@ -2,15 +2,15 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, PowerType, StoreLike, State } from '../../game';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
-import { Effect } from '../../game/store/effects/effect';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
-
+import { GameError } from '../../game/game-error';
+import { GameMessage } from '../../game/game-message';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { PlayerType, PowerType, State, StoreLike } from '../../game';
 export class Lunatone extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
@@ -110,10 +110,10 @@ export class Lunatone extends PokemonCard {
 
     // Attack 1: Psyshock
     // Ref: set-ultra-prism/bronzong.ts (Psy Bolt)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
       });
     }

@@ -17,6 +17,8 @@ import { GameOverPrompt } from './prompt/prompt-game-over/game-over.prompt';
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { SettingsService } from './table-sidebar/settings-dialog/settings.service';
 import { Board3dAccessService } from '../shared/services/board3d-access.service';
+import { BattlePassService } from '../battle-pass/battle-pass.service';
+import { XpGainData } from '../battle-pass/battle-pass.model';
 
 @UntilDestroy()
 @Component({
@@ -38,8 +40,10 @@ export class TableComponent implements OnInit, OnDestroy {
   public isTO: boolean;
   private gameId: number;
   public showGameOver = false;
+  public showMatchResultsSplash = false;
+  public showXpGainScreen = false;
+  public xpGainData: XpGainData | null = null;
   public gameOverPrompt: GameOverPrompt;
-  public canUndoBackend = false;
   public showSandboxPanel = false;
   public sandboxSidebarCollapsed: boolean = false;
   public use3dBoard: boolean = false;
@@ -81,7 +85,8 @@ export class TableComponent implements OnInit, OnDestroy {
     private boardInteractionService: BoardInteractionService,
     private snackBar: MatSnackBar,
     private settingsService: SettingsService,
-    private board3dAccessService: Board3dAccessService
+    private board3dAccessService: Board3dAccessService,
+    private battlePassService: BattlePassService
   ) {
     this.gameStates$ = this.sessionService.get(session => session.gameStates);
     this.clientId$ = this.sessionService.get(session => session.clientId);
@@ -147,7 +152,6 @@ export class TableComponent implements OnInit, OnDestroy {
         // Game ID should only be set when actively joining as a player, not when spectating
 
         this.updatePlayers(this.gameState, clientId);
-        this.updateCanUndo();
       });
 
     this.gameStates$
@@ -164,19 +168,7 @@ export class TableComponent implements OnInit, OnDestroy {
           this.showSandboxPanel = false;
         }
         this.updatePlayers(this.gameState, clientId);
-        this.updateCanUndo();
       });
-
-    // Listen for undoing event
-    if (this.gameId) {
-      const eventName = `game[${this.gameId}]:undoing`;
-      this.gameService.socketService.on(eventName, (data: { playerName: string }) => {
-        const myName = this.bottomPlayer?.name || this.topPlayer?.name;
-        if (data.playerName && data.playerName !== myName) {
-          this.snackBar.open(`${data.playerName} is rewinding their board state`, 'OK', { duration: 3000 });
-        }
-      });
-    }
   }
 
   ngOnDestroy() {
@@ -290,9 +282,16 @@ export class TableComponent implements OnInit, OnDestroy {
     // Check if the game is in the FINISHED phase and update the game over state
     if (state.phase === GamePhase.FINISHED && !gameState.gameOver) {
       this.gameOverPrompt = new GameOverPrompt(clientId, state.winner);
-      this.showGameOver = true;
+      if (!this.showGameOver) {
+        this.showMatchResultsSplash = true;
+        this.showGameOver = false;
+      } else {
+        this.showMatchResultsSplash = false;
+        this.showGameOver = true;
+      }
     } else {
       this.showGameOver = false;
+      this.showMatchResultsSplash = false;
     }
   }
 
@@ -379,37 +378,69 @@ export class TableComponent implements OnInit, OnDestroy {
     });
   }
 
-  private updateCanUndo() {
-    if (this.gameId) {
-      this.gameService.canUndo(this.gameId).subscribe(canUndo => {
-        this.canUndoBackend = canUndo;
-      });
-    } else {
-      this.canUndoBackend = false;
-    }
-  }
-
   private updateGameState(state: LocalGameState) {
     this.gameState = state;
-    this.updateCanUndo();
     // Show game over screen when the game is finished
     if (state && state.state && state.state.phase === GamePhase.FINISHED && !state.gameOver) {
-      this.showGameOver = true;
       this.gameOverPrompt = new GameOverPrompt(this.clientId, state.state.winner);
+      if (!this.showGameOver) {
+        this.showMatchResultsSplash = true;
+        this.showGameOver = false;
+      } else {
+        this.showMatchResultsSplash = false;
+        this.showGameOver = true;
+      }
     } else {
       this.showGameOver = false;
+      this.showMatchResultsSplash = false;
       this.gameOverPrompt = undefined;
     }
     // Update player information
     this.updatePlayers(state, this.clientId);
   }
 
-  public undo() {
-    if (this.gameId) {
-      this.gameService.undo(this.gameId);
-      // Optionally, optimistically set canUndoBackend to false until next state update
-      this.canUndoBackend = false;
+  onMatchResultsSplashDismiss(): void {
+    this.showMatchResultsSplash = false;
+    this.showGameOver = true;
+  }
+
+  onGameOverConfirm(): void {
+    const localId = this.gameState?.localId;
+    const isPlaying = this.gameState?.state?.players?.some((p: { id: number }) => p.id === this.clientId);
+    if (!isPlaying || this.gameState?.replay) {
+      this.finishAndNavigate(localId);
+      return;
     }
+    // XP gain screen temporarily hidden - navigate directly
+    this.finishAndNavigate(localId);
+    // this.battlePassService.getPendingMatchReward().pipe(
+    //   untilDestroyed(this)
+    // ).subscribe({
+    //   next: (reward) => {
+    //     if (reward) {
+    //       this.xpGainData = reward;
+    //       this.showXpGainScreen = true;
+    //       // Keep showGameOver true so XP screen fades in on top; we never reveal the board
+    //     } else {
+    //       this.finishAndNavigate(localId);
+    //     }
+    //   },
+    //   error: () => this.finishAndNavigate(localId)
+    // });
+  }
+
+  onXpGainDismiss(): void {
+    this.finishAndNavigate(this.gameState?.localId);
+  }
+
+  private finishAndNavigate(localId: number | undefined): void {
+    if (localId) {
+      this.gameService.removeLocalGameState(localId);
+    }
+    this.router.navigate(['/']);
+    this.showXpGainScreen = false;
+    this.xpGainData = null;
+    this.showGameOver = false;
   }
 
   toggleSandboxSidebar() {

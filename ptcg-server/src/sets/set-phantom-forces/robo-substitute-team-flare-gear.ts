@@ -34,6 +34,7 @@ export class RoboSubstituteTeamFlareGear extends TrainerCard {
   public allowSubsequentAttackChoice: boolean = false;
   public maxTools: number = 1;
   public movedToActiveThisTurn = false;
+  public evolvesFromBase: string[] = [];
 
   public set: string = 'PHF';
   public setNumber: string = '102';

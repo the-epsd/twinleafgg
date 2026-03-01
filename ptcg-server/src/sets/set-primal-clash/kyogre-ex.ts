@@ -2,14 +2,19 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
+import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  CardTag,
+  CardType,
+  EnergyType,
+  Stage,
+  SuperType
+} from '../../game/store/card/card-types';
+import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
+import { GameMessage } from '../../game/game-message';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, GameMessage, StoreLike, State } from '../../game';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
-
+import { Card, EnergyCard, State, StoreLike } from '../../game';
 export class KyogreEx extends PokemonCard {
   public tags = [CardTag.POKEMON_EX];
   public stage: Stage = Stage.BASIC;
@@ -42,8 +47,8 @@ export class KyogreEx extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Water Pulse
     // Ref: AGENTS-patterns.md (opponent active asleep)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     // Attack 2: Giant Whirlpool
@@ -63,7 +68,8 @@ export class KyogreEx extends PokemonCard {
           GameMessage.CHOOSE_CARD_TO_HAND,
           player.active,
           { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-          { min: count, max: count, allowCancel: false,
+          {
+            min: count, max: count, allowCancel: false,
             blocked: player.active.cards.map((c, i) =>
               (c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.WATER)) ? -1 : i
             ).filter(i => i !== -1)

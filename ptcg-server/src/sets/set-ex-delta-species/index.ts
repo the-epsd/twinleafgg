@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { Bagon } from './bagon';
 import { Bagon2 } from './bagon2';
 import { Beldum } from './beldum';
+import { Crobat } from './crobat';
 import { Ditto } from './ditto';
 import { Dragonair } from './dragonair';
 import { Dragonair2 } from './dragonair2';
@@ -26,8 +27,10 @@ import { HolonsMagneton } from './holons-magneton';
 import { HolonsVoltorb } from './holons-voltorb';
 import { Jolteonex } from './jolteon-ex';
 import { Kirlia } from './kirlia';
+import { Koffing } from './koffing';
 import { Larvitar } from './larvitar';
 import { Magnemite } from './magnemite';
+import { Marowak } from './marowak';
 import { Meowth } from './meowth';
 import { Metagross } from './metagross';
 import { Metang } from './metang';
@@ -41,6 +44,8 @@ import { Salamence } from './salamence';
 import { Shelgon } from './shelgon';
 import { Shelgon2 } from './shelgon2';
 import { Vaporeonex } from './vaporeon-ex';
+import { Weezing } from './weezing';
+import { Zubat } from './zubat';
 
 import { SuperScoopUpDS, DarknessEnergySpecialDS, GreatBallDS, MetalEnergySpecialDS, DualBallDS } from './other-prints';
 
@@ -48,6 +53,7 @@ export const setEXDeltaSpecies: Card[] = [
   new Bagon(),
   new Bagon2(),
   new Beldum(),
+  new Crobat(),
   new Ditto(),
   new Dragonair(),
   new Dragonair2(),
@@ -72,8 +78,10 @@ export const setEXDeltaSpecies: Card[] = [
   new HolonsVoltorb(),
   new Jolteonex(),
   new Kirlia(),
+  new Koffing(),
   new Larvitar(),
   new Magnemite(),
+  new Marowak(),
   new Meowth(),
   new Metagross(),
   new Metang(),
@@ -87,6 +95,8 @@ export const setEXDeltaSpecies: Card[] = [
   new Shelgon(),
   new Shelgon2(),
   new Vaporeonex(),
+  new Weezing(),
+  new Zubat(),
 
   // Other Prints
   new DarknessEnergySpecialDS(),

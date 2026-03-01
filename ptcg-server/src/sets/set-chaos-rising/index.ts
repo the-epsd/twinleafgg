@@ -7,6 +7,10 @@ import { BubbleWaterEnergy } from './bubble-water-energy';
 import { Chespin } from './chespin';
 import { Chesnaught } from './chesnaught';
 import { Cobalionex } from './cobalion-ex';
+import { Deoxys } from './deoxys';
+import { Deoxys2 } from './deoxys-2';
+import { Deoxys3 } from './deoxys-3';
+import { Deoxys4 } from './deoxys-4';
 import { Delphox } from './delphox';
 import { Fennekin } from './fennekin';
 import { Froakie } from './froakie';
@@ -44,6 +48,10 @@ export const setChaosRising: Card[] = [
   new Trevenant(),
   new Pumpkaboo(),
   new Gourgeistex(),
+  new Deoxys(),
+  new Deoxys2(),
+  new Deoxys3(),
+  new Deoxys4(),
   new Xerneas(),
   new Cobalionex(),
   new Philippe(),

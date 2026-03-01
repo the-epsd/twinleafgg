@@ -1,12 +1,12 @@
-<div class="ptcg-game-over-overlay">
-  <!-- Animated background particles -->
-  <!-- <div class="ptcg-particles"></div> -->
+<div class="ptcg-game-over-overlay" [@gameOverFade] [class]="'ptcg-game-over-overlay ' + resultClass">
+  <!-- Sci-fi grid background -->
+  <div class="ptcg-game-over-bg"></div>
 
-  <!-- Top gradient section with diagonal cut -->
+  <!-- Scan line accent between header and content -->
+  <div class="ptcg-game-over-scanline"></div>
+
+  <!-- Top section with result -->
   <div class="ptcg-game-over-top">
-    <!-- Diagonal divider -->
-    <div class="ptcg-diagonal-divider"></div>
-
     <!-- Victory text -->
     <div class="ptcg-victory-header">
       <h1 class="ptcg-game-over-title" *ngIf="isWinner">Victory!</h1>
@@ -170,7 +170,7 @@
 
     <!-- OK Button -->
     <div class="ptcg-actions">
-      <button class="ptcg-ok-button" (click)="confirm()">OK</button>
+      <button class="ptcg-ok-button" (click)="onConfirmClick()">OK</button>
     </div>
   </div>
 </div>

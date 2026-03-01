@@ -24,6 +24,7 @@ export class AntiquePlumeFossil extends TrainerCard {
   public maxTools: number = 1;
   public evolvesTo = [];
   public evolvesToStage = [];
+  public evolvesFromBase: string[] = [];
 
   public powers: Power[] = [{
     name: 'Antique Plume Fossil',

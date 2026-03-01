@@ -1,11 +1,12 @@
 import { PlayerType, PokemonCard, PowerType, StateUtils } from '../../game';
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
-import { PlaceDamageCountersEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { BetweenTurnsEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
+import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class Froslass extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -44,14 +45,7 @@ export class Froslass extends PokemonCard {
 
         const player = effect.player;
 
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
+        if (IS_ABILITY_BLOCKED(store, state, player, this)) {
           return state;
         }
 

@@ -23,7 +23,7 @@ import { Garganaclex } from './garganacl-ex';
 import { GlassTrumpet } from './glass-trumpet';
 import { SparklingCrystal } from './sparkling-crystal';
 import { GravityGemstone } from './gravity-gemstone';
-import { GreatTree } from './great-tree';
+import { GreatTree } from './grand-tree';
 import { Gulpin } from './gulpin';
 import { Hoothoot } from './hoothoot';
 import { Hydrappleex } from './hydrapple-ex';

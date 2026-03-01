@@ -9,23 +9,12 @@ import { AttachEnergyPrompt, EnergyCard, GameError, PlayerType, PowerType, SlotT
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Squawkabillyex extends PokemonCard {
-
   public stage: Stage = Stage.BASIC;
-
   public tags = [CardTag.POKEMON_ex];
-
-  public regulationMark = 'G';
-
   public cardType: CardType = CardType.COLORLESS;
-
   public hp: number = 160;
-
-  public weakness = [{
-    type: CardType.LIGHTNING
-  }];
-
+  public weakness = [{ type: CardType.LIGHTNING }];
   public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-
   public retreat = [CardType.COLORLESS];
 
   public powers = [{
@@ -42,14 +31,11 @@ export class Squawkabillyex extends PokemonCard {
     text: 'Attach up to 2 Basic Energy cards from your discard pile to 1 of your Benched Pokémon.'
   }];
 
+  public regulationMark = 'G';
   public set: string = 'PAL';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '169';
-
   public name: string = 'Squawkabilly ex';
-
   public fullName: string = 'Squawkabilly ex PAL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -62,26 +48,24 @@ export class Squawkabillyex extends PokemonCard {
       // Check if it is player's first turn
       if (turn > 2) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
-      } else {
-
-        if (player.usedSquawkAndSeizeThisTurn) {
-          throw new GameError(GameMessage.POWER_ALREADY_USED);
-        }
-        // Discard hand and draw cards
-        player.hand.moveTo(player.discard);
-        // Draw 6 cards
-        player.deck.moveTo(player.hand, 6);
-        // Mark power as used this turn
-        player.usedSquawkAndSeizeThisTurn = true;
-        // Return updated state
-
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-          if (cardList.getPokemonCard() === this) {
-            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-          }
-        });
-
       }
+
+      if (player.usedSquawkAndSeizeThisTurn) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+      // Discard hand and draw cards
+      player.hand.moveTo(player.discard);
+      // Draw 6 cards
+      player.deck.moveTo(player.hand, 6);
+      // Mark power as used this turn
+      player.usedSquawkAndSeizeThisTurn = true;
+      // Return updated state
+
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+        if (cardList.getPokemonCard() === this) {
+          cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+        }
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

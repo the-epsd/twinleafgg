@@ -7,6 +7,7 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { ADD_BURN_TO_PLAYER_ACTIVE, CONFIRMATION_PROMPT, IS_POKEPOWER_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class FlareonStar extends PokemonCard {
 
@@ -45,6 +46,8 @@ export class FlareonStar extends PokemonCard {
 
       CONFIRMATION_PROMPT(store, state, player, result => {
         if (!result) { return state; }
+        const powerEffect = new PowerEffect(player, this.powers[0], this);
+        store.reduceEffect(state, powerEffect);
 
         ADD_BURN_TO_PLAYER_ACTIVE(store, state, player, this);
         ADD_BURN_TO_PLAYER_ACTIVE(store, state, opponent, this);

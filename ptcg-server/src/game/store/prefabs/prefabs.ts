@@ -823,6 +823,23 @@ export function THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(damage:
   });
 }
 
+export function THIS_ATTACK_DOES_X_DAMAGE_TO_EACH_OF_YOUR_OPPONENTS_POKEMON(damage: number, effect: AttackEffect, store: StoreLike, state: State, benchOnly: boolean = false) {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+    if (effect.target === effect.opponent.active && !benchOnly) {
+      const damageEffect = new DealDamageEffect(effect, damage);
+      damageEffect.target = cardList;
+      return store.reduceEffect(state, damageEffect);
+    }
+    const damageEffect = new PutDamageEffect(effect, damage);
+    damageEffect.target = cardList;
+
+    store.reduceEffect(state, damageEffect);
+  });
+}
+
 export function THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store: StoreLike, state: State, effect: AttackEffect, amount: number) {
   const dealDamage = new DealDamageEffect(effect, amount);
   dealDamage.target = effect.source;
@@ -2754,9 +2771,13 @@ export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Pl
     }
 
     // If canPlay is not implemented or returns undefined
-    // For Tool cards, if we've passed all basic checks, return true
+    // For Tool and Stadium cards, if we've passed all basic checks, return true
+    // (Stadium checks already done: stadiumPlayedTurn, same-name stadium in play)
     if (trainerCard.trainerType === TrainerType.TOOL) {
       return true; // Tool cards can be played if Pokemon can accept them
+    }
+    if (trainerCard.trainerType === TrainerType.STADIUM) {
+      return true; // Stadiums are playable unless already played one this turn (checked above)
     }
     // For other trainer types, err on the side of caution
     // We can't validate card-specific requirements without canPlay
@@ -2835,7 +2856,8 @@ export function CAN_PLAY_POKEMON_CARD(store: StoreLike, state: State, player: Pl
       if (activePokemon) {
         const matchesEvolution = activePokemon.name === pokemonCard.evolvesFrom ||
           activePokemon.evolvesTo.includes(pokemonCard.name) ||
-          activePokemon.evolvesToStage.includes(pokemonCard.stage);
+          activePokemon.evolvesToStage.includes(pokemonCard.stage) ||
+          (Array.isArray(activePokemon.evolvesFromBase) && activePokemon.evolvesFromBase.length > 0 && activePokemon.evolvesFromBase.includes(pokemonCard.evolvesFrom));
         if (matchesEvolution) {
           // Check if Pokemon was played this turn (can't evolve if played this turn)
           if (player.active.pokemonPlayedTurn < state.turn) {
@@ -2851,7 +2873,8 @@ export function CAN_PLAY_POKEMON_CARD(store: StoreLike, state: State, player: Pl
         if (benchPokemon) {
           const matchesEvolution = benchPokemon.name === pokemonCard.evolvesFrom ||
             benchPokemon.evolvesTo.includes(pokemonCard.name) ||
-            benchPokemon.evolvesToStage.includes(pokemonCard.stage);
+            benchPokemon.evolvesToStage.includes(pokemonCard.stage) ||
+            (Array.isArray(benchPokemon.evolvesFromBase) && benchPokemon.evolvesFromBase.length > 0 && benchPokemon.evolvesFromBase.includes(pokemonCard.evolvesFrom));
           if (matchesEvolution) {
             // Check if Pokemon was played this turn (can't evolve if played this turn)
             if (bench.pokemonPlayedTurn < state.turn) {

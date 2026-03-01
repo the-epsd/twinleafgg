@@ -1,0 +1,172 @@
+@import '../../../theme/variables.scss';
+
+// Sci-fi font - Orbitron (loaded in index.html)
+$font-sci-fi: 'Orbitron', sans-serif;
+
+@keyframes splashFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes textScaleIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes textGlowPulse {
+  0%, 100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.95;
+    filter: brightness(1.15);
+  }
+}
+
+@keyframes scanlineMove {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+@keyframes gridPulse {
+  0%, 100% {
+    opacity: 0.03;
+  }
+  50% {
+    opacity: 0.08;
+  }
+}
+
+.match-results-splash-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, rgba(10, 14, 20, 0.5) 0%, rgba(4, 8, 22, 0.5) 70%);
+  cursor: pointer;
+  overflow: hidden;
+  animation: splashFadeIn 0.4s ease-out forwards;
+}
+
+.match-results-splash-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.match-results-splash-scanline {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 255, 255, 0.1),
+    transparent
+  );
+  animation: scanlineMove 2s linear 0.5s;
+  pointer-events: none;
+}
+
+.match-results-splash-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+}
+
+.match-results-splash-text-back {
+  position: absolute;
+  font-family: $font-sci-fi;
+  font-weight: 900;
+  font-size: clamp(6rem, 18vw, 14rem);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(255, 255, 255, 0.4);
+  opacity: 0.5;
+  animation: textScaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
+  transform-origin: center;
+
+  &.victory {
+    -webkit-text-stroke: 2px rgba(103, 200, 90, 0.5);
+  }
+
+  &.defeat {
+    -webkit-text-stroke: 2px rgba(239, 68, 68, 0.5);
+  }
+
+  &.draw {
+    -webkit-text-stroke: 2px rgba(148, 163, 184, 0.5);
+  }
+}
+
+.match-results-splash-text-front {
+  position: relative;
+  font-family: $font-sci-fi;
+  font-weight: 900;
+  font-size: clamp(4rem, 12vw, 10rem);
+  line-height: 1;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  text-transform: uppercase;
+  animation: textScaleIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards,
+    textGlowPulse 2s ease-in-out 1s infinite;
+  transform-origin: center;
+  opacity: 0;
+
+  &.victory {
+    color: #67c85a;
+    text-shadow: 0 0 30px rgba(103, 200, 90, 0.6);
+  }
+
+  &.defeat {
+    color: #ef4444;
+    text-shadow: 0 0 30px rgba(239, 68, 68, 0.6);
+  }
+
+  &.draw {
+    color: #94a3b8;
+    text-shadow: 0 0 30px rgba(148, 163, 184, 0.5);
+  }
+}
+
+.match-results-splash-particles {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.03) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
+}

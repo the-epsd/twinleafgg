@@ -365,14 +365,10 @@ export class Store implements StoreLike {
       player.stadium.cards.forEach(c => cards.push(c));
       player.supporter.cards.forEach(c => cards.push(c));
       player.active.cards.forEach(c => cards.push(c));
-      if (player.active.tools.length > 0) {
-        cards.push(player.active.tools[0]);
-      }
+      player.active.tools.forEach(t => cards.push(t));
       for (const bench of player.bench) {
         bench.cards.forEach(c => cards.push(c));
-        if (bench.tools.length > 0) {
-          cards.push(bench.tools[0]);
-        }
+        bench.tools.forEach(t => cards.push(t));
       }
       for (const prize of player.prizes) {
         prize.cards.forEach(c => cards.push(c));

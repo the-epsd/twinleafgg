@@ -1,0 +1,23 @@
+<div class="match-results-splash-overlay" [@splashFade] (click)="onSplashClick()">
+  <!-- Sci-fi grid background -->
+  <div class="match-results-splash-bg"></div>
+
+  <!-- Scan line overlay (removed - was moving down screen) -->
+  <!-- <div class="match-results-splash-scanline"></div> -->
+
+  <!-- Text container -->
+  <div class="match-results-splash-content">
+    <!-- Background outline-only text (large, half opacity) -->
+    <div class="match-results-splash-text-back" [class]="resultClass">
+      {{ displayText }}
+    </div>
+
+    <!-- Foreground filled text (bold, main) -->
+    <div class="match-results-splash-text-front" [class]="resultClass">
+      {{ displayText }}
+    </div>
+  </div>
+
+  <!-- Subtle glow particles -->
+  <div class="match-results-splash-particles"></div>
+</div>

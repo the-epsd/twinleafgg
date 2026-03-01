@@ -31,6 +31,7 @@ export class MysteriousFossil extends TrainerCard {
   public attacksThisTurn: number = 0;
   public maxAttacksThisTurn: number = 1;
   public allowSubsequentAttackChoice: boolean = false;
+  public evolvesFromBase: string[] = [];
   public maxTools: number = 1;
   public set: string = 'PK';
   public cardImage: string = 'assets/cardback.png';

@@ -1,4 +1,14 @@
-import { Mesh, PlaneGeometry, MeshStandardMaterial, DoubleSide, Vector3, Scene, Object3D, Texture } from 'three';
+import {
+  Mesh,
+  PlaneGeometry,
+  MeshStandardMaterial,
+  MeshBasicMaterial,
+  DoubleSide,
+  Vector3,
+  Scene,
+  Texture,
+  Group
+} from 'three';
 import { PlayerType, SlotType } from 'ptcg-server';
 import gsap from 'gsap';
 
@@ -42,9 +52,17 @@ const STATE_COLORS = {
 // Base opacity for zones with texture (always visible)
 const TEXTURE_BASE_OPACITY = 0.01;
 
+// Outline color for board spot borders (white)
+const OUTLINE_COLOR = 0xffffff;
+
+// Border thickness in world units
+const OUTLINE_THICKNESS = 0.01;
+
 export class Board3dDropZone {
   private mesh: Mesh;
   private material: MeshStandardMaterial;
+  private outlineGroup: Group | null = null;
+  private outlineMaterial: MeshBasicMaterial | null = null;
   private config: DropZoneConfig;
   private currentState: DropZoneState = DropZoneState.HIDDEN;
   private pulseAnimation: gsap.core.Tween | null = null;
@@ -97,6 +115,46 @@ export class Board3dDropZone {
       zoneIndex: config.index,
       player: config.player
     };
+
+    // Create outline for non-BENCH zones only (bench gets standalone outlines from board component)
+    if (config.type !== DropZoneType.BENCH) {
+      const outlineY = 0.15;
+      const minX = config.position.x - width / 2;
+      const maxX = config.position.x + width / 2;
+      const minZ = config.position.z - height / 2;
+      const maxZ = config.position.z + height / 2;
+      const t = OUTLINE_THICKNESS;
+      this.outlineMaterial = new MeshBasicMaterial({
+        color: OUTLINE_COLOR,
+        transparent: true,
+        opacity: 0,
+        side: DoubleSide,
+        depthTest: true
+      });
+      this.outlineGroup = new Group();
+
+      const topEdge = new Mesh(new PlaneGeometry(width + t * 2, t), this.outlineMaterial);
+      topEdge.rotation.x = -Math.PI / 2;
+      topEdge.position.set(config.position.x, outlineY, maxZ + t / 2);
+      this.outlineGroup.add(topEdge);
+
+      const bottomEdge = new Mesh(new PlaneGeometry(width + t * 2, t), this.outlineMaterial);
+      bottomEdge.rotation.x = -Math.PI / 2;
+      bottomEdge.position.set(config.position.x, outlineY, minZ - t / 2);
+      this.outlineGroup.add(bottomEdge);
+
+      const leftEdge = new Mesh(new PlaneGeometry(t, height), this.outlineMaterial);
+      leftEdge.rotation.x = -Math.PI / 2;
+      leftEdge.position.set(minX - t / 2, outlineY, config.position.z);
+      this.outlineGroup.add(leftEdge);
+
+      const rightEdge = new Mesh(new PlaneGeometry(t, height), this.outlineMaterial);
+      rightEdge.rotation.x = -Math.PI / 2;
+      rightEdge.position.set(maxX + t / 2, outlineY, config.position.z);
+      this.outlineGroup.add(rightEdge);
+
+      this.outlineGroup.renderOrder = 100;
+    }
   }
 
   getMesh(): Mesh {
@@ -282,6 +340,9 @@ export class Board3dDropZone {
    */
   addToScene(scene: Scene): void {
     scene.add(this.mesh);
+    if (this.outlineGroup) {
+      scene.add(this.outlineGroup);
+    }
   }
 
   /**
@@ -289,6 +350,9 @@ export class Board3dDropZone {
    */
   removeFromScene(scene: Scene): void {
     scene.remove(this.mesh);
+    if (this.outlineGroup) {
+      scene.remove(this.outlineGroup);
+    }
   }
 
   /**
@@ -301,5 +365,13 @@ export class Board3dDropZone {
     }
     this.mesh.geometry.dispose();
     this.material.dispose();
+    if (this.outlineGroup) {
+      for (const child of this.outlineGroup.children) {
+        if (child instanceof Mesh) {
+          child.geometry.dispose();
+        }
+      }
+      this.outlineMaterial?.dispose();
+    }
   }
 }

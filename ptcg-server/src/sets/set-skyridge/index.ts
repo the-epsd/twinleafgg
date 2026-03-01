@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { AncientRuins } from './ancient-ruins';
 import { BuriedFossil } from './buried-fossil';
 import { DesertShaman } from './desert-shaman';
 import { Ditto } from './ditto';
@@ -18,9 +19,14 @@ import { RelicHunter } from './relic-hunter';
 import { UndergroundExpedition } from './underground-expedition';
 
 // Other prints
-import { FishermanSK } from './other-prints';
+import {
+  ApricornMakerSK,
+  CrystalShardSK,
+  FishermanSK
+} from './other-prints';
 
 export const setSkyridge: Card[] = [
+  new AncientRuins(),
   new BuriedFossil(),
   new DesertShaman(),
   new Ditto(),
@@ -40,5 +46,7 @@ export const setSkyridge: Card[] = [
   new UndergroundExpedition(),
 
   // Other prints
+  new ApricornMakerSK(),
+  new CrystalShardSK(),
   new FishermanSK(),
 ];

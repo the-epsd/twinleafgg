@@ -1,7 +1,12 @@
-<div class="battle-pass-container" *ngIf="!loading">
+<div class="battle-pass-container" *ngIf="season" [class.switching]="switchingSeason">
+
+  <!-- Switching overlay (subtle, keeps content visible) -->
+  <div class="switching-overlay" *ngIf="switchingSeason">
+    <div class="switching-spinner"></div>
+  </div>
 
   <!-- Main Header with Pokemon Artwork -->
-  <div class="battle-pass-header">
+  <div class="battle-pass-header" ptcgPreventWheelScroll>
     <div class="header-background">
       <div class="header-artwork">
         <div class="artwork-left"></div>
@@ -24,7 +29,7 @@
         <!-- Level Progress Section -->
         <div class="level-progress-section" *ngIf="season && progress">
           <div class="level-display">
-            <div class="level-number">{{ progress.level }}</div>
+            <div class="level-number">{{ getDisplayLevel() }}</div>
             <div class="level-badge">
               <div class="badge-content">
                 <span class="current-xp">{{ getCurrentLevelExp() }}</span>
@@ -43,9 +48,13 @@
           <div class="status-badge">
             <span class="status-text">BATTLE PASS</span>
           </div>
-          <div class="time-remaining">
-            <span class="time-label">ENDS IN:</span>
-            <span class="time-value">9W 6D</span>
+          <select class="season-select" *ngIf="seasons.length > 1" [(ngModel)]="selectedSeasonId"
+            (ngModelChange)="onSeasonChange()" [disabled]="switchingSeason">
+            <option *ngFor="let s of seasons" [value]="s.seasonId">{{ s.name }}</option>
+          </select>
+          <div class="season-started" *ngIf="season">
+            <span class="time-label">STARTED:</span>
+            <span class="time-value">{{ season.startDate }}</span>
           </div>
         </div>
       </div>
@@ -105,8 +114,8 @@
 
 </div>
 
-<!-- Loading Spinner -->
-<div class="loading-spinner" *ngIf="loading">
+<!-- Loading Spinner (initial load only) -->
+<div class="loading-spinner" *ngIf="loading && !season">
   <div class="spinner">
     <div class="spinner-ring"></div>
     <div class="spinner-ring"></div>
@@ -116,7 +125,7 @@
 
 <div class="no-season-container" *ngIf="!loading && !season">
   <div class="no-season-content">
-    <h2>No Active Battle Pass</h2>
-    <p>There is no active Battle Pass season at the moment.</p>
+    <h2>{{ noSeasonsAvailable ? 'No Battle Pass Seasons Available' : 'No Active Battle Pass' }}</h2>
+    <p>{{ noSeasonsAvailable ? 'There are no Battle Pass seasons configured.' : 'There is no active Battle Pass season at the moment.' }}</p>
   </div>
 </div>

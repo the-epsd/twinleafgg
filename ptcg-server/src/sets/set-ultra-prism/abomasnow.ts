@@ -2,15 +2,14 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
+import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_ABILITY_BLOCKED, JUST_EVOLVED } from '../../game/store/prefabs/prefabs';
+import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
+import { ConfirmPrompt } from '../../game/store/prompts/confirm-prompt';
+import { GameMessage } from '../../game/game-message';
+import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, ConfirmPrompt, GameMessage, PlayerType, SlotType } from '../../game';
-import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
-import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, JUST_EVOLVED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP } from '../../game/store/prefabs/attack-effects';
-
+import { AttachEnergyPrompt, EnergyCard, PlayerType, PowerType, SlotType, State, StoreLike } from '../../game';
 export class Abomasnow extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Snover';
@@ -84,8 +83,8 @@ export class Abomasnow extends PokemonCard {
 
     // Attack 1: Hypno Hammer
     // Ref: set-shining-legends/breloom.ts (Hibernation Spore - asleep)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_ASLEEP(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

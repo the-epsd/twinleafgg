@@ -119,6 +119,27 @@ export class DeckEditComponent implements OnInit {
     this.deckItems = [];
   }
 
+  private capCardsByByName(fullNames: string[], maxPerName: number): string[] {
+    const nameCount = new Map<string, number>();
+    const result: string[] = [];
+    for (const fullName of fullNames) {
+      const card = this.cardsBaseService.getCardByName(fullName);
+      if (!card) continue;
+      const isBasicEnergy = card.superType === SuperType.ENERGY &&
+        (card as EnergyCard).energyType === EnergyType.BASIC;
+      if (isBasicEnergy) {
+        result.push(fullName);
+      } else {
+        const count = nameCount.get(card.name) ?? 0;
+        if (count < maxPerName) {
+          result.push(fullName);
+          nameCount.set(card.name, count + 1);
+        }
+      }
+    }
+    return result;
+  }
+
   private loadDeckItems(cardNames: string[]): DeckItem[] {
     const itemMap: { [name: string]: DeckItem } = {};
     let deckItems: DeckItem[] = [];
@@ -485,6 +506,7 @@ export class DeckEditComponent implements OnInit {
 
     const successfulCards = cardDetails.map(card => {
       const { name, set, setNumber } = card;
+      const normalizedSet = this.normalizeImportedSetCode(set);
 
       // Apply card replacements to the name
       let processedName = name;
@@ -493,11 +515,11 @@ export class DeckEditComponent implements OnInit {
       }
 
       // First try: exact match with name, set, and setNumber
-      let foundCard = this.cardsBaseService.getCardByNameSetNumber(processedName, set, setNumber);
+      let foundCard = this.cardsBaseService.getCardByNameSetNumber(processedName, normalizedSet, setNumber);
 
       // Second try: match by name and set (ignore setNumber)
       if (!foundCard) {
-        foundCard = this.cardsBaseService.getCardByNameSet(processedName, set);
+        foundCard = this.cardsBaseService.getCardByNameSet(processedName, normalizedSet);
       }
 
       // Third try: match by name only (ignore set and setNumber)
@@ -522,9 +544,10 @@ export class DeckEditComponent implements OnInit {
       }
 
       return foundCard?.fullName;
-    }).filter(name => !!name);
+    }).filter(name => !!name) as string[];
 
-    this.deckItems = this.loadDeckItems(successfulCards as string[]);
+    const cappedCards = this.capCardsByByName(successfulCards, 4);
+    this.deckItems = this.loadDeckItems(cappedCards);
 
     if (failedCardCounts.size > 0) {
       const formattedFailures = Array.from(failedCardCounts.entries())
@@ -532,6 +555,22 @@ export class DeckEditComponent implements OnInit {
       const message = `${this.translate.instant('FAILED_IMPORTS')}:\n${formattedFailures.join('\n')}`;
       this.alertService.alert(this.translate.instant('IMPORT_RESULTS'), message, []);
     }
+  }
+
+  private normalizeImportedSetCode(setCode: string): string {
+    const normalizedCode = (setCode || '').trim().toUpperCase();
+    if (!normalizedCode) {
+      return setCode;
+    }
+
+    let mappedCode = normalizedCode;
+    for (const replacement of setCodeReplacements) {
+      if (replacement.from.toUpperCase() === mappedCode) {
+        mappedCode = replacement.to.toUpperCase();
+      }
+    }
+
+    return mappedCode;
   }
 
   public async exportDeck() {

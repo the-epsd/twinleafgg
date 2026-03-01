@@ -2,16 +2,18 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_ABILITY_BLOCKED, REMOVE_MARKER_AT_END_OF_TURN, USE_ABILITY_ONCE_PER_TURN, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { PlayerType, SlotType, CardTarget } from '../../game/store/actions/play-card-action';
 import { MoveDamagePrompt, DamageMap } from '../../game/store/prompts/move-damage-prompt';
 
+import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
+import { StateUtils } from '../../game/store/state-utils';
+import { GameError } from '../../game/game-error';
+import { GameMessage } from '../../game/game-message';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { BoardEffect, PowerType, State, StoreLike } from '../../game';
 export class HattereneVmax extends PokemonCard {
   public tags = [CardTag.POKEMON_VMAX];
   public stage: Stage = Stage.VMAX;
@@ -22,7 +24,7 @@ export class HattereneVmax extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public powers = [  {
+  public powers = [{
     name: 'Witch\'s Domain',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
@@ -126,8 +128,8 @@ export class HattereneVmax extends PokemonCard {
 
     // Attack 1: G-Max Smite
     // Ref: set-crown-zenith/girafarig.ts (YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

@@ -54,7 +54,7 @@ export class DarkTyranitar extends PokemonCard {
         }
 
         // ex era ruling is that this should mean unevolved
-        if (cardList.getPokemons().length === 1 || card.tags.includes(CardTag.LEGEND)) {
+        if (!cardList.isEvolved()) {
           cardList.damage += (10);
         }
       });

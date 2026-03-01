@@ -5,8 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonFromDeckEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 
-export class CherishCarrier extends TrainerCard {
-
+export class PreciousTrolley extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public tags = [CardTag.ACE_SPEC];
   public set: string = 'SSP';

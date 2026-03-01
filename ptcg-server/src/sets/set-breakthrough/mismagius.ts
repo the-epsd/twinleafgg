@@ -2,14 +2,15 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { ConfirmPrompt, GameMessage, PowerType, StoreLike, State, StateUtils } from '../../game';
-import { Effect } from '../../game/store/effects/effect';
+import { ABILITY_USED, ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, DRAW_CARDS, IS_ABILITY_BLOCKED, JUST_EVOLVED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { ConfirmPrompt } from '../../game/store/prompts/confirm-prompt';
+import { GameMessage } from '../../game/game-message';
 import { PowerEffect } from '../../game/store/effects/game-effects';
-import { JUST_EVOLVED, ABILITY_USED, IS_ABILITY_BLOCKED, SHUFFLE_DECK, DRAW_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
-
+import { StateUtils } from '../../game/store/state-utils';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { PowerType, State, StoreLike } from '../../game';
 export class Mismagius extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Misdreavus';
@@ -19,7 +20,7 @@ export class Mismagius extends PokemonCard {
   public resistance = [{ type: F, value: -20 }];
   public retreat = [C];
 
-  public powers = [  {
+  public powers = [{
     name: 'Twisted Incantation',
     powerType: PowerType.ABILITY,
     text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon, you may have your opponent shuffle his or her hand into his or her deck and draw a card for each of his or her remaining Prize cards.'
@@ -82,8 +83,8 @@ export class Mismagius extends PokemonCard {
 
     // Attack 1: Curse Deeply
     // Ref: AGENTS-patterns.md (Confused)
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { Not, IsNull } from 'typeorm';
-
 import { AuthToken, Validate, check } from '../services';
 import { CardManager, DeckAnalyser, GameWinner } from '../../game';
 import { Controller, Get, Post } from './controller';
@@ -13,6 +12,7 @@ import { ANY_PRINTING_ALLOWED } from '../../game/store/card/any-printing-allowed
 
 export class Decks extends Controller {
 
+  // --- GET /list ---
   @Get('/list')
   @AuthToken()
   public async onList(req: Request, res: Response) {
@@ -83,6 +83,7 @@ export class Decks extends Controller {
     res.send({ ok: true, decks: [...decks, ...themeDecks], total });
   }
 
+  // --- GET /get/:id ---
   @Get('/get/:id')
   @AuthToken()
   public async onGet(req: Request, res: Response) {
@@ -119,6 +120,7 @@ export class Decks extends Controller {
     res.send({ ok: true, deck });
   }
 
+  // --- POST /save ---
   @Post('/save')
   @AuthToken()
   @Validate({
@@ -201,6 +203,7 @@ export class Decks extends Controller {
     });
   }
 
+  // --- POST /delete ---
   @Post('/delete')
   @AuthToken()
   @Validate({
@@ -231,6 +234,7 @@ export class Decks extends Controller {
     res.send({ ok: true });
   }
 
+  // --- POST /rename ---
   @Post('/rename')
   @AuthToken()
   @Validate({
@@ -274,6 +278,7 @@ export class Decks extends Controller {
     });
   }
 
+  // --- POST /duplicate ---
   @Post('/duplicate')
   @AuthToken()
   @Validate({
@@ -305,6 +310,7 @@ export class Decks extends Controller {
     return this.onSave(req, res);
   }
 
+  // --- GET /stats/:deckId ---
   @Get('/stats/:deckId')
   @AuthToken()
   public async onStats(req: Request, res: Response) {
@@ -440,6 +446,7 @@ export class Decks extends Controller {
     // console.timeEnd(statsLogLabel);
   }
 
+  // --- POST /backfill-secondary-archetypes ---
   @Post('/backfill-secondary-archetypes')
   @AuthToken()
   public async onBackfillSecondaryArchetypes(req: Request, res: Response) {
@@ -497,6 +504,7 @@ export class Decks extends Controller {
     });
   }
 
+  // --- POST /validate-formats ---
   @Post('/validate-formats')
   public async onValidateFormats(req: Request, res: Response) {
     const cardNames: string[] = req.body.cardNames;
@@ -507,6 +515,7 @@ export class Decks extends Controller {
     return res.json({ ok: true, formats });
   }
 
+  // --- validateCards (private) ---
   private validateCards(deck: string[]): boolean {
     const cardManager = CardManager.getInstance();
     const validNames = new Set<string>();
@@ -530,7 +539,8 @@ export class Decks extends Controller {
 
 }
 
-// --- BanLists and SetReleaseDates (ported from frontend) ---
+// ========== Format Validation Data ==========
+// --- BanLists ---
 const BanLists: { [key: number]: string[] } = {
   [Format.GLC]: [
     'Palace Book SMP NAN25',
@@ -898,6 +908,7 @@ const BanLists: { [key: number]: string[] } = {
   [Format.SWSH]: [],
 };
 
+// --- SetReleaseDates ---
 const SetReleaseDates: { [key: string]: Date } = {
   'BS': new Date('1999-01-09'),
   'JU': new Date('1999-06-16'),
@@ -1025,37 +1036,39 @@ const SetReleaseDates: { [key: string]: Date } = {
   'PRE': new Date('2025-01-17'),
   'JTG': new Date('2025-03-28'),
   'DRI': new Date('2025-05-17'),
-  'SV11': new Date('2025-07-18'),
-  'SV11B': new Date('2025-07-18'),
-  'SV11W': new Date('2025-07-18'),
   'BLK': new Date('2025-07-18'),
   'WHT': new Date('2025-07-18'),
-  'MEG': new Date('2025-09-26'),
   'MEP': new Date('2025-09-26'),
-  'M1L': new Date('2025-09-26'),
-  'M1S': new Date('2025-09-26'),
+  'MEG': new Date('2025-09-26'),
   'PFL': new Date('2025-11-14'),
-  'M3': new Date('2026-01-23'),
-  'MC': new Date('2026-01-23'),
-  'M2a': new Date('2026-01-28'),
   'ASC': new Date('2026-01-28'),
-  'M4': new Date('2026-03-13')
+  'M3': new Date('2026-03-27'),
+  'M4': new Date('2026-05-22')
 };
 
+// --- STANDARD_MAJORS_SETS ---
 const STANDARD_MAJORS_SETS = ['SVP', 'SVI', 'PAL', 'OBF', 'MEW', 'PAR', 'PAF', 'TEF', 'TWM', 'SFA', 'SCR', 'SSP', 'PRE', 'JTG', 'DRI', 'SV11', 'SV11B', 'SV11W', 'BLK', 'WHT', 'MEG', 'MEP', 'M1L', 'M1S', 'PFL'];
 
+// ========== Format Validation Helpers ==========
+// --- isPrintingLegalInStandard ---
 /** Checks if a printing is legal in Standard: set must be in rotation (>= SVI) and released (<= today). Allows J Regulation Mark as long as released. */
 function isPrintingLegalInStandard(card: any): boolean {
   const setDate = SetReleaseDates[card.set];
   return !!setDate && setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
 }
 
-/** Checks if a printing is legal in Standard Nightly: same as Standard PLUS future sets (SVI+ but not yet released, e.g. M3, M4). */
+// --- isPrintingLegalInStandardNightly ---
+/** Checks if a printing is legal in Standard Nightly: same as Standard PLUS future sets (SVI+ but not yet released, e.g. M3, M4). SVP is included only if regulation mark is not G. */
 function isPrintingLegalInStandardNightly(card: any): boolean {
   const setDate = SetReleaseDates[card.set];
+  // SVP allowed only when regulation mark is not G
+  if (card.set === 'SVP') {
+    return !!setDate && card.regulationMark !== 'G';
+  }
   return !!setDate && setDate >= SetReleaseDates['TEF'];
 }
 
+// --- getValidFormatsForCardList ---
 function getValidFormatsForCardList(cardNames: string[]): number[] {
   const cardManager = CardManager.getInstance();
   const cards = cardNames.map((name: string) => cardManager.getCardByName(name)).filter((c: any) => !!c);
@@ -1159,6 +1172,7 @@ function getValidFormatsForCardList(cardNames: string[]): number[] {
   return formatList;
 }
 
+// --- getValidFormats ---
 function getValidFormats(card: any): number[] {
   const formats = [Format.UNLIMITED];
   [
@@ -1182,6 +1196,7 @@ function getValidFormats(card: any): number[] {
   return formats;
 }
 
+// --- isValid ---
 function isValid(card: any, format: number, anyPrintingAllowed?: string[]): boolean {
   if (card.superType === SuperType.ENERGY && card.energyType === EnergyType.BASIC) {
     return true;
@@ -1291,13 +1306,8 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
     }
     case Format.GLC: {
       const setDate = SetReleaseDates[card.set];
-      const forceLegalSets = ['SV11', 'SV11B', 'SV11W'];
-      const isForceLegal = forceLegalSets.includes(card.set);
       return (
-        (
-          (setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date())
-          || isForceLegal
-        ) &&
+        setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
         !(card.tags && card.tags.some((t: any) => [
           CardTag.ACE_SPEC.toString(),
           CardTag.POKEMON_EX.toString(),
@@ -1309,8 +1319,8 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
           CardTag.POKEMON_GX.toString(),
           CardTag.PRISM_STAR.toString(),
           CardTag.POKEMON_VUNION.toString()
-        ].includes(t))
-        ));
+        ].includes(t)))
+      );
     }
     case Format.RETRO:
       return card.set === 'BS' ||
@@ -1357,7 +1367,11 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         card.set === 'MSM' ||
         card.set === 'MSD' ||
         card.set === 'PCGP' ||
-        card.set === 'PCGL';
+        card.set === 'PCGL' ||
+        card.set === 'VS' ||
+        card.set === 'PPF' ||
+        card.set === 'PPB' ||
+        card.set === 'UP';
     case Format.SWSH:
       return card.set === 'SWSH' ||
         card.set === 'SSH' ||

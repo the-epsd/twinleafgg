@@ -20,7 +20,7 @@ import { Cetitan } from './cetitan';
 import { Cetoddle } from './cetoddle';
 import { Charcadet } from './charcadet';
 import { Charcadet2 } from './charcadet-2';
-import { CherishCarrier } from './cherish-carrier';
+import { PreciousTrolley } from './precious-trolley';
 import { ChienPao } from './chien-pao';
 import { ChillTeaserToy } from './chill-teaser-toy';
 import { ClemontsQuickWit } from './clemonts-quick-wit';
@@ -159,7 +159,7 @@ export const setSurgingSparks: Card[] = [
   new HoOh(),
   new Azumarill(),
   new BrilliantBlender(),
-  new CherishCarrier(),
+  new PreciousTrolley(),
   new Marill(),
   new TeraOrb(),
   new Trapinch(),

@@ -75,10 +75,10 @@ export class SoundService implements OnDestroy {
 
   /**
    * Play attack sound for a specific CardType
+   * Only plays when tab is visible to avoid deferred playback when switching tabs
    */
   public playAttackSound(cardType: CardType): void {
-    // Check if SFX is enabled
-    if (!this.sfxEnabled) {
+    if (!this.sfxEnabled || document.hidden) {
       return;
     }
 
@@ -126,6 +126,31 @@ export class SoundService implements OnDestroy {
     audio.play().catch(error => {
       console.warn(`Failed to play sound: ${soundFileName}`, error);
       this.currentlyPlaying = null;
+    });
+  }
+
+  /**
+   * Play energy attach sound (non-exclusive, allows overlapping with attacks)
+   * Only plays when tab is visible to avoid deferred playback when switching tabs
+   */
+  public playEnergyAttachSound(): void {
+    if (!this.sfxEnabled || document.hidden) {
+      return;
+    }
+
+    const soundFileName = 'energy_attach_v3_1.wav';
+
+    // Use dedicated cache for energy attach - clone/copy audio to allow overlapping
+    const audio = new Audio(`assets/sounds/${soundFileName}`);
+    audio.volume = this.sfxVolume;
+    audio.preload = 'auto';
+
+    audio.addEventListener('error', () => {
+      console.warn(`Failed to load sound file: ${soundFileName}`);
+    });
+
+    audio.play().catch(error => {
+      console.warn(`Failed to play sound: ${soundFileName}`, error);
     });
   }
 

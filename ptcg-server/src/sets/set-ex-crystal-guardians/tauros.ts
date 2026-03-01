@@ -6,6 +6,7 @@ import {
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { IS_POKEPOWER_BLOCKED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Tauros extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -54,6 +55,8 @@ export class Tauros extends PokemonCard {
           GameMessage.WANT_TO_USE_ABILITY,
         ), wantToUse => {
           if (wantToUse) {
+            const powerEffect = new PowerEffect(effect.player, this.powers[0], this);
+            store.reduceEffect(state, powerEffect);
 
             // Discard Stadium
             const cardList = StateUtils.findCardList(state, stadiumCard);

@@ -2,15 +2,13 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { PlayerType, SlotType, StoreLike, State, StateUtils } from '../../game';
-import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
+import { ADD_CONFUSION_TO_PLAYER_ACTIVE, AFTER_ATTACK, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { GameMessage } from '../../game/game-message';
+import { StateUtils } from '../../game/store/state-utils';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED } from '../../game/store/prefabs/attack-effects';
-
+import { AttachEnergyPrompt, PlayerType, SlotType, State, StoreLike } from '../../game';
 export class Illumise extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
@@ -73,8 +71,8 @@ export class Illumise extends PokemonCard {
 
     // Attack 2: Twirling Sign
     // Ref: AGENTS-patterns.md (opponent active confused)
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_CONFUSED(store, state, effect);
+    if (AFTER_ATTACK(effect, 1, this)) {
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

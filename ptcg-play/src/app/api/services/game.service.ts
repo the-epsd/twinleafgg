@@ -248,24 +248,6 @@ export class GameService {
       .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
-  public undo(gameId: number) {
-    this.socketService.emit('game:action:undo', { gameId })
-      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
-  }
-
-  public canUndo(gameId: number): Observable<boolean> {
-    return new Observable<boolean>(observer => {
-      this.socketService.emit('game:canUndo', { gameId })
-        .subscribe((result: { canUndo: boolean }) => {
-          observer.next(result.canUndo);
-          observer.complete();
-        }, (error: ApiError) => {
-          observer.next(false);
-          observer.complete();
-        });
-    });
-  }
-
   public forceDisconnect() {
     // Force disconnect from the socket to simulate network issues
     this.socketService.forceDisconnect();
@@ -329,6 +311,9 @@ export class GameService {
     this.socketService.on(`game[${id}]:coinFlip`, (data: { playerId: number, result: boolean }) => {
       this.boardInteractionService.triggerCoinFlipAnimation(data.result, data.playerId);
     });
+    this.socketService.on(`game[${id}]:attachEnergy`, () => {
+      this.soundService.playEnergyAttachSound();
+    });
   }
 
   private stopListening(id: number) {
@@ -342,6 +327,7 @@ export class GameService {
     this.socketService.off(`game[${id}]:evolution`);
     this.socketService.off(`game[${id}]:attack`);
     this.socketService.off(`game[${id}]:coinFlip`);
+    this.socketService.off(`game[${id}]:attachEnergy`);
   }
 
   private onStateChange(gameId: number, stateData: string, playerStats: PlayerStats[]) {

@@ -2,14 +2,13 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
+import { ADD_BURN_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
+import { GameMessage } from '../../game/game-message';
+import { StateUtils } from '../../game/store/state-utils';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { Card, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../game';
-import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../game/store/prefabs/attack-effects';
-
+import { AttachEnergyPrompt, Card, PlayerType, SlotType, State, StoreLike } from '../../game';
 export class Torkoal extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = R;
@@ -87,8 +86,8 @@ export class Torkoal extends PokemonCard {
 
     // Attack 2: Searing Flame
     // Ref: set-ultra-prism/salazzle.ts (Panic Poison)
-    if (WAS_ATTACK_USED(effect, 1, this)) {
-      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
+    if (AFTER_ATTACK(effect, 1, this)) {
+      ADD_BURN_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
     return state;

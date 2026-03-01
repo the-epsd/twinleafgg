@@ -6,7 +6,7 @@ export class Slowpoke extends PokemonCard {
 
   public regulationMark = 'H';
   public stage: Stage = Stage.BASIC;
-  public cardType: CardType = W;
+  public cardType: CardType = P;
   public hp: number = 80;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
@@ -53,15 +53,15 @@ export class Slowpoke extends PokemonCard {
           { superType: SuperType.POKEMON },
           { min: 1, max: 1, allowCancel: false }
         )], selected => {
-        const cards = new CardList();
-        if (selected) {
-          cards.cards = selected;
-        }
-        selected.forEach(card => {
-          store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+          const cards = new CardList();
+          if (selected) {
+            cards.cards = selected;
+          }
+          selected.forEach(card => {
+            store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });
+          });
+          MOVE_CARDS(store, state, cards, player.hand);
         });
-        MOVE_CARDS(store, state, cards, player.hand);
-      });
     }
 
     return state;

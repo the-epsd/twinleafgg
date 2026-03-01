@@ -5,6 +5,7 @@ import { Bayleef } from './bayleef';
 import { Chikorita } from './chikorita';
 import { Corsola } from './corsola';
 import { Cyndaquil } from './cyndaquil';
+import { EnergyRoot } from './energy-root';
 import { Espeonex } from './espeon-ex';
 import { FluffyBerry } from './fluffy-berry';
 import { Forretress } from './forretress';
@@ -58,6 +59,7 @@ export const setEXUnseenForces: Card[] = [
   new Chikorita(),
   new Corsola(),
   new Cyndaquil(),
+  new EnergyRoot(),
   new Espeonex(),
   new FluffyBerry(),
   new Forretress(),
