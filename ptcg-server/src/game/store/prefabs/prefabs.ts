@@ -1429,7 +1429,7 @@ export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, pl
 // Made this so that we can easily change behavior for older formats in the future
 export function CLEAN_UP_SUPPORTER(store: StoreLike, effect: TrainerEffect, player: Player) {
   const format = (store as any).handler.format;
-  if (!(format === Format.RSPK || format === Format.RETRO)) {
+  if (!(format === Format.RSPK || format === Format.RETRO) || effect.trainerCard.trainerType !== TrainerType.SUPPORTER) {
     player.supporter.moveCardTo(effect.trainerCard, player.discard);
   }
 }

@@ -1,9 +1,10 @@
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
+import { PlayerType, StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
 import { CardTag, CardType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class ScrambleEnergy extends EnergyCard {
@@ -20,6 +21,12 @@ export class ScrambleEnergy extends EnergyCard {
   public text: string = 'Scramble Energy can be attached only to an Evolved Pokémon (excluding Pokémon-ex). Scramble Energy provides [C] Energy. While in play, if you have more Prize cards left than your opponent, Scramble Energy provides every type of Energy but provides only 3 in any combination at a time. If the Pokémon Scramble Energy is attached to isn\'t an Evolved Pokémon (or evolves into Pokémon-ex), discard Scramble Energy.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
+      if (!effect.target.isEvolved() || effect.target.getPokemonCard()?.tags.includes(CardTag.POKEMON_ex)) {
+        throw new GameError(GameMessage.INVALID_TARGET);
+      }
+    }
 
     // Provide energy 
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
