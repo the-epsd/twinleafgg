@@ -3,7 +3,7 @@ import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-type
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { DISCARD_X_CARDS_FROM_YOUR_HAND } from '../../game/store/prefabs/trainer-prefabs';
 
 export class HolonLass extends TrainerCard {
@@ -56,7 +56,6 @@ export class HolonLass extends TrainerCard {
           temp.cards.forEach(card => {
             temp.moveCardTo(card, player.deck);
           });
-          CLEAN_UP_SUPPORTER(store, effect, player);
         } else {
           // Move chosen Energy to hand
           chosenCards.forEach(card => {
@@ -67,8 +66,6 @@ export class HolonLass extends TrainerCard {
           if (chosenCards.length > 0) {
             SHOW_CARDS_TO_PLAYER(store, state, opponent, chosenCards);
           }
-
-          CLEAN_UP_SUPPORTER(store, effect, player);
           temp.moveTo(player.deck);
         }
 

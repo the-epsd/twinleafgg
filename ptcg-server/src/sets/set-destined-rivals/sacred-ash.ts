@@ -10,7 +10,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: SacredAsh, effect: TrainerEffect): IterableIterator<State> {
@@ -49,8 +49,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   if (cards.length === 0) {
     return state;
   }
-
-  CLEAN_UP_SUPPORTER(store, effect, player);
   MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: self });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

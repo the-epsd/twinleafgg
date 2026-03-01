@@ -6,7 +6,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class ProfessorOak extends TrainerCard {
 
@@ -36,7 +36,6 @@ export class ProfessorOak extends TrainerCard {
       const cards = player.hand.cards.filter(c => c !== this);
       MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
       DRAW_CARDS(player, 7);
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

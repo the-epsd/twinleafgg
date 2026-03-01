@@ -4,7 +4,6 @@ import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, GameLog, StateUtils, GameError, EnergyCard } from '../../game';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class InterviewersQuestions extends TrainerCard {
@@ -49,7 +48,6 @@ export class InterviewersQuestions extends TrainerCard {
           temp.cards.forEach(card => {
             temp.moveCardTo(card, player.deck);
           });
-          CLEAN_UP_SUPPORTER(store, effect, player);
         }
 
         if (chosenCards.length > 0) {
@@ -65,8 +63,6 @@ export class InterviewersQuestions extends TrainerCard {
               GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
               chosenCards), () => state);
           }
-
-          CLEAN_UP_SUPPORTER(store, effect, player);
           temp.moveTo(player.deck);
 
           if (chosenCards.length > 0) {
@@ -76,7 +72,6 @@ export class InterviewersQuestions extends TrainerCard {
               chosenCards), () => state);
           }
         }
-        CLEAN_UP_SUPPORTER(store, effect, player);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

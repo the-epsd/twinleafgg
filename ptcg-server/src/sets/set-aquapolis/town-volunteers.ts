@@ -12,7 +12,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { ShowCardsPrompt, StateUtils } from '../../game';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: TownVolunteers, effect: TrainerEffect): IterableIterator<State> {
@@ -83,7 +83,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: self });
-  CLEAN_UP_SUPPORTER(store, effect, player);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

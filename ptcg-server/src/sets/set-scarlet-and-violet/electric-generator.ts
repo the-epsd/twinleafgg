@@ -5,7 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError, GameMessage, SlotType, Player } from '../../game';
-import { CLEAN_UP_SUPPORTER, LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY } from '../../game/store/prefabs/prefabs';
+import { LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY } from '../../game/store/prefabs/prefabs';
 
 export class ElectricGenerator extends TrainerCard {
 
@@ -87,7 +87,6 @@ export class ElectricGenerator extends TrainerCard {
           remainderDestination: 'shuffle'
         }
       );
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

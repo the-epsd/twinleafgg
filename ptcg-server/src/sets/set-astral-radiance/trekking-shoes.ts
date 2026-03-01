@@ -8,8 +8,6 @@ import { CardList } from '../../game/store/state/card-list';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { ConfirmCardsPrompt } from '../../game/store/prompts/confirm-cards-prompt';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 export class TrekkingShoes extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -54,7 +52,6 @@ export class TrekkingShoes extends TrainerCard {
         if (selected !== null) {
           // Add card to hand
           deckTop.moveCardsTo(deckTop.cards, player.hand);
-          CLEAN_UP_SUPPORTER(store, effect, player);
         } else {
 
           // Discard card
@@ -62,7 +59,6 @@ export class TrekkingShoes extends TrainerCard {
 
           // Draw a card
           player.deck.moveTo(player.hand, 1);
-          CLEAN_UP_SUPPORTER(store, effect, player);
         }
       });
     }

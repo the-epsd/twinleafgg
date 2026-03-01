@@ -6,7 +6,7 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class ProfessorJuniper extends TrainerCard {
 
@@ -44,7 +44,6 @@ export class ProfessorJuniper extends TrainerCard {
       const cards = player.hand.cards.filter(c => c !== this);
       state = MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
       player.deck.moveTo(player.hand, 7);
-      CLEAN_UP_SUPPORTER(store, effect, player);
 
     }
 

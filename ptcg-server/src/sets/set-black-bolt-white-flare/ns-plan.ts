@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { GameError, GameMessage, MoveEnergyPrompt, StateUtils, PlayerType, SlotType } from '../../game';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class NsPlan extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -79,7 +79,6 @@ export class NsPlan extends TrainerCard {
             }
           }
         }
-        CLEAN_UP_SUPPORTER(store, effect, player);
       });
     }
     return state;

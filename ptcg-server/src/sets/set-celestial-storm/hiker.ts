@@ -7,8 +7,6 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, CardList, SelectPrompt, ChooseCardsPrompt, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Hiker, effect: TrainerEffect): IterableIterator<State> {
 
@@ -39,7 +37,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const targetPlayer = chosenPlayerIndex === 0 ? player : opponent;
 
   if (targetPlayer.deck.cards.length === 0) {
-    CLEAN_UP_SUPPORTER(store, effect, player);
     return state;
   }
 
@@ -83,8 +80,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     targetPlayer.deck.cards.splice(idx, 1);
     targetPlayer.deck.cards.unshift(chosenCard);
   }
-
-  CLEAN_UP_SUPPORTER(store, effect, player);
 
   return state;
 }

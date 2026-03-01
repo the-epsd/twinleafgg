@@ -3,8 +3,6 @@ import { Stage, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 export class MarysRequest extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'UF';
@@ -43,8 +41,6 @@ export class MarysRequest extends TrainerCard {
       if (!hasStage2) {
         player.deck.moveTo(player.hand, Math.min(2, player.deck.cards.length));
       }
-
-      CLEAN_UP_SUPPORTER(store, effect, player);
 
     }
 

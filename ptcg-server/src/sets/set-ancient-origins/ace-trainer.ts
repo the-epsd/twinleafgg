@@ -6,7 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { GameError, GameMessage } from '../../game';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { MoveCardsEffect } from '../../game/store/effects/game-effects';
 
 export class AceTrainer extends TrainerCard {
@@ -17,9 +17,7 @@ export class AceTrainer extends TrainerCard {
   public setNumber: string = '69';
   public name: string = 'Ace Trainer';
   public fullName: string = 'Ace Trainer AOR';
-
-  public text: string =
-    'You can play this card only if you have more Prize cards left than your opponent.\n\nEach player shuffles his or her hand into his or her deck. Then, draw 6 cards. Your opponent draws 3 cards.';
+  public text: string = 'You can play this card only if you have more Prize cards left than your opponent.\n\nEach player shuffles his or her hand into his or her deck. Then, draw 6 cards. Your opponent draws 3 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -51,8 +49,6 @@ export class AceTrainer extends TrainerCard {
       // player shuffle and draw
       SHUFFLE_DECK(store, state, player);
       DRAW_CARDS(player, 6);
-
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

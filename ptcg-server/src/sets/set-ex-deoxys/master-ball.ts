@@ -5,8 +5,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, GameLog, StateUtils, GameError } from '../../game';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 export class MasterBall extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'DX';
@@ -68,7 +66,6 @@ export class MasterBall extends TrainerCard {
               chosenCards), () => state);
           }
         }
-        CLEAN_UP_SUPPORTER(store, effect, player);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

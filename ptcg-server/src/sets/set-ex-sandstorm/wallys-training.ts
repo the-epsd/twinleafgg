@@ -8,7 +8,6 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -74,7 +73,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Canceled by user, he didn't found the card in the deck
   if (cards.length === 0) {
-    CLEAN_UP_SUPPORTER(store, effect, player);
 
     return state;
   }
@@ -85,11 +83,8 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const targetList = player.active;
   const pokemonCard = targetList.getPokemonCard();
   if (!pokemonCard || pokemonCard.name !== evolution.evolvesFrom) {
-    CLEAN_UP_SUPPORTER(store, effect, player);
     return state; // invalid target
   }
-
-  CLEAN_UP_SUPPORTER(store, effect, player);
 
   // Evolve Pokemon
   player.deck.moveCardTo(evolution, targetList);

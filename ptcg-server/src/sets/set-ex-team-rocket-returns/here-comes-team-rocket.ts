@@ -5,8 +5,6 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { GameError, GameMessage, StateUtils } from '../../game';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 export class HereComesTeamRocket extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'TRR';
@@ -43,8 +41,6 @@ export class HereComesTeamRocket extends TrainerCard {
           prize.isPublic = true;
         }
       });
-
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

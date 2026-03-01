@@ -9,7 +9,7 @@ import {
   GameError, GameMessage, PokemonCardList, ChooseCardsPrompt
 } from '../../game';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class LostRemover extends TrainerCard {
 
@@ -70,7 +70,6 @@ export class LostRemover extends TrainerCard {
         ), selected => {
           MOVE_CARDS(store, state, target, opponent.lostzone, { cards: selected, sourceCard: this });
         });
-        CLEAN_UP_SUPPORTER(store, effect, player);
       });
     }
     return state;

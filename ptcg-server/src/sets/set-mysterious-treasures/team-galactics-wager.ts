@@ -3,7 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { MoveCardsEffect } from '../../game/store/effects/game-effects';
-import { CLEAN_UP_SUPPORTER, DRAW_UP_TO_X_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { DRAW_UP_TO_X_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class TeamGalacticsWager extends TrainerCard {
@@ -47,7 +47,6 @@ export class TeamGalacticsWager extends TrainerCard {
 
       // Dew Guard prevents RPS and the rest of the effect fizzles (ruling from @Shutterstock)
       if (opponentMoveEffect.preventDefault) {
-        CLEAN_UP_SUPPORTER(store, effect, player);
         return state;
       }
 

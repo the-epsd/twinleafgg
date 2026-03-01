@@ -5,7 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { AttachEnergyPrompt, CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Melony extends TrainerCard {
 
@@ -105,8 +105,6 @@ export class Melony extends TrainerCard {
 
           // Draw 3 cards
           DRAW_CARDS(player, 3);
-
-          CLEAN_UP_SUPPORTER(store, effect, player);
         });
       });
     }

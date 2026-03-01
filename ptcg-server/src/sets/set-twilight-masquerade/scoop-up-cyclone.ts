@@ -7,29 +7,18 @@ import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { PlayerType, PokemonCard, SlotType } from '../../game';
-import { MOVE_CARD_TO, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
-
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class ScoopUpCyclone extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public tags = [CardTag.ACE_SPEC];
-
   public regulationMark = 'H';
-
   public set: string = 'TWM';
-
   public name: string = 'Scoop Up Cyclone';
-
   public fullName: string = 'Scoop Up Cyclone TWM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '162';
-
-  public text: string =
-    'Put 1 of your Pokemon and all cards attached to it into your hand.';
+  public text: string = 'Put 1 of your Pokémon and all cards attached to it into your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -71,7 +60,6 @@ export class ScoopUpCyclone extends TrainerCard {
           if (pokemons.length > 0) {
             MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
           }
-          MOVE_CARD_TO(state, effect.trainerCard, player.discard);
         }
       });
     }

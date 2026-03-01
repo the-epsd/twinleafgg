@@ -6,7 +6,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { CoinFlipPrompt, GameError, GameMessage, Player } from '../../game';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { MoveCardsEffect } from '../../game/store/effects/game-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -48,8 +48,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // player shuffle and draw
   SHUFFLE_DECK(store, state, player);
   DRAW_CARDS(player, coinResult ? 5 : 3);
-
-  CLEAN_UP_SUPPORTER(store, effect, player);
 }
 
 export class Harlequin extends TrainerCard {

@@ -8,7 +8,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { SelectOptionPrompt } from '../../game/store/prompts/select-option-prompt';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: CynthiaAndCaitlin, effect: TrainerEffect): IterableIterator<State> {
@@ -45,10 +45,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
         MOVE_CARDS(store, state, player.hand, player.discard, { cards: discarded, sourceCard: self });
         // Draw 3 cards
         DRAW_CARDS(player, 3);
-        CLEAN_UP_SUPPORTER(store, effect, player);
       }
     });
-    CLEAN_UP_SUPPORTER(store, effect, player);
     return state;
   }
 
@@ -88,7 +86,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
         if (selected && selected.length > 0) {
           store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: selected[0].name });
           MOVE_CARDS(store, state, player.discard, player.hand, { cards: selected, sourceCard: self });
-          CLEAN_UP_SUPPORTER(store, effect, player);
         }
       });
     } else if (choice === 1) {
@@ -132,8 +129,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
       });
     }
   });
-
-  CLEAN_UP_SUPPORTER(store, effect, player);
   return state;
 }
 
@@ -163,7 +158,6 @@ When you play this card, you may discard another card from your hand. If you do,
 
       if (effect.preventDefault) {
         // If prevented, just discard the card and return
-        CLEAN_UP_SUPPORTER(store, effect, player);
         return state;
       }
 

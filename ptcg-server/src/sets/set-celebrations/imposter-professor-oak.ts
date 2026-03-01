@@ -7,7 +7,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class ImposterProfessorOak extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -27,8 +27,6 @@ export class ImposterProfessorOak extends TrainerCard {
       MOVE_CARDS(store, state, opponent.hand, opponent.deck, { sourceCard: this });
       SHUFFLE_DECK(store, state, opponent);
       DRAW_CARDS(opponent, 7);
-
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

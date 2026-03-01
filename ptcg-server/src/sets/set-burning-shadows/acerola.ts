@@ -5,7 +5,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { MOVE_CARD_TO, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -86,7 +86,6 @@ export class Acerola extends TrainerCard {
           if (pokemons.length > 0) {
             MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
           }
-          MOVE_CARD_TO(state, effect.trainerCard, player.discard);
         }
       });
     }

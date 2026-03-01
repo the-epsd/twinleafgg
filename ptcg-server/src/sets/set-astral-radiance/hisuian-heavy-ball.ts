@@ -1,8 +1,6 @@
 import { CardList, ChooseCardsPrompt, GameError, GameMessage, ShowCardsPrompt, Stage, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 export class HisuianHeavyBall extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -67,7 +65,6 @@ export class HisuianHeavyBall extends TrainerCard {
               p.isSecret = true;
             }
           });
-          CLEAN_UP_SUPPORTER(store, effect, player);
           this.shuffleFaceDownPrizeCards(player.prizes.filter((p, index) => originallyFaceDown[index]));
           return state;
         }

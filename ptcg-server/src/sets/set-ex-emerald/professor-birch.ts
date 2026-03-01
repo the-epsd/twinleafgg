@@ -5,7 +5,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { GameError, GameMessage } from '../../game';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../game/store/prefabs/prefabs';
 
 export class ProfessorBirch extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -33,8 +33,6 @@ export class ProfessorBirch extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 6);
-
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

@@ -4,8 +4,6 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { MoveCardsEffect } from '../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 export class RocketsAdmin extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'TRR';
@@ -92,8 +90,6 @@ export class RocketsAdmin extends TrainerCard {
           }
         });
       }
-
-      CLEAN_UP_SUPPORTER(store, effect, player);
 
     }
 

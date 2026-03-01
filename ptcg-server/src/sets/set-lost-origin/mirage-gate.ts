@@ -3,7 +3,7 @@ import { EnergyType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON, CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
+import { ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class MirageGate extends TrainerCard {
 
@@ -54,7 +54,6 @@ Search your deck for up to 2 basic Energy cards of different types and attach th
           min: 0
         }
       );
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

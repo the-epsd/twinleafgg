@@ -8,7 +8,7 @@ import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { ADD_MARKER, HAS_MARKER, MOVE_CARD_TO, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class CancelingCologne extends TrainerCard {
@@ -30,7 +30,6 @@ export class CancelingCologne extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       ADD_MARKER(this.CANCELING_COLOGNE_MARKER, opponent, this);
-      MOVE_CARD_TO(state, effect.trainerCard, player.discard);
     }
 
     if (effect instanceof CheckPokemonPowersEffect) {

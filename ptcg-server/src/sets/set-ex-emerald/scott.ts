@@ -1,7 +1,7 @@
 import { TrainerCard, TrainerType, StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { BLOCK_IF_DECK_EMPTY, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_DECK_EMPTY, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Scott extends TrainerCard {
 
@@ -53,8 +53,6 @@ export class Scott extends TrainerCard {
         MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
         SHUFFLE_DECK(store, state, player);
       });
-
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

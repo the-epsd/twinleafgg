@@ -3,7 +3,6 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -50,8 +49,6 @@ export class Pokedex extends TrainerCard {
 
         deckTop.applyOrder(rearrangedCards);
         deckTop.moveTo(player.deck);
-
-        CLEAN_UP_SUPPORTER(store, effect, player);
       });
     }
 

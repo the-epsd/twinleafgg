@@ -2,7 +2,7 @@ import { Card, ChooseCardsPrompt, GameMessage, StateUtils } from '../../game';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { MOVE_CARD_TO, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -35,7 +35,6 @@ export class RocketsSneakAttack extends TrainerCard {
         cards = selected || [];
         MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards });
         SHUFFLE_DECK(store, state, opponent);
-        MOVE_CARD_TO(state, effect.trainerCard, player.discard);
       });
     }
 

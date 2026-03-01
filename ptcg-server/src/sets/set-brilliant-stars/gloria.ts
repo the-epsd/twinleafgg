@@ -3,9 +3,6 @@ import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/ca
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
-
 export class Gloria extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -87,8 +84,6 @@ export class Gloria extends TrainerCard {
             player.deck.moveCardTo(card, slots[index]);
             slots[index].pokemonPlayedTurn = state.turn;
           });
-
-          CLEAN_UP_SUPPORTER(store, effect, player);
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
             player.deck.applyOrder(order);

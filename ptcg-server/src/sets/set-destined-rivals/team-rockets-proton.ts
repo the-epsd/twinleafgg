@@ -7,7 +7,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { Card, ChooseCardsPrompt, StateUtils } from '../../game';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class TeamRocketsProton extends TrainerCard {
@@ -63,7 +63,6 @@ Search your deck for up to 3 Basic Team Rocket's Pokémon, reveal them, and put 
 
         MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-        CLEAN_UP_SUPPORTER(store, effect, player);
         SHUFFLE_DECK(store, state, player);
       });
     }

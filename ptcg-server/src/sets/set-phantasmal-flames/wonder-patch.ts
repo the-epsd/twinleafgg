@@ -11,7 +11,7 @@ import { GameMessage } from '../../game/game-message';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { PlayerType, SlotType, CardTarget } from '../../game/store/actions/play-card-action';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class WonderPatch extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -83,7 +83,6 @@ export class WonderPatch extends TrainerCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
         }
-        CLEAN_UP_SUPPORTER(store, effect, player);
       });
     }
     return state;

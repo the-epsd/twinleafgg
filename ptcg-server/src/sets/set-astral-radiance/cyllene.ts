@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect, TrainerToDeckEffect } from '../../game/store/effects/play-card-effects';
 import { StateUtils, GameError, GameMessage, CoinFlipPrompt, ChooseCardsPrompt, Card, CardList, OrderCardsPrompt, ShowCardsPrompt } from '../../game';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { MoveCardsEffect } from '../../game/store/effects/game-effects';
 
 export class Cyllene extends TrainerCard {
@@ -57,7 +57,6 @@ export class Cyllene extends TrainerCard {
         results.forEach(r => { heads += r ? 1 : 0; });
 
         if (heads === 0) {
-          CLEAN_UP_SUPPORTER(store, effect, player);
           return state;
         }
 

@@ -7,7 +7,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, SuperType, EnergyType } from '../../game/store/card/card-types';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS, SHOW_CARDS_TO_PLAYER } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class Cilan extends TrainerCard {
@@ -47,7 +47,6 @@ export class Cilan extends TrainerCard {
 
       if (basicEnergyCount === 0) {
         // Still shuffle deck even if no energy found
-        CLEAN_UP_SUPPORTER(store, effect, player);
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);
         });
@@ -70,8 +69,6 @@ export class Cilan extends TrainerCard {
           // Move cards to hand
           MOVE_CARDS(store, state, player.deck, player.hand, { cards: selectedCards, sourceCard: this });
         }
-
-        CLEAN_UP_SUPPORTER(store, effect, player);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

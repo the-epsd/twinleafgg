@@ -7,7 +7,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { SelectOptionPrompt } from '../../game/store/prompts/select-option-prompt';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: GuzmaAndHala, effect: TrainerEffect): IterableIterator<State> {
@@ -48,8 +48,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
           return state;
         });
       }
-
-      CLEAN_UP_SUPPORTER(store, effect, player);
 
       return store.prompt(state, new ShowCardsPrompt(
         opponent.id,
@@ -99,8 +97,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
           });
         }
 
-        CLEAN_UP_SUPPORTER(store, effect, player);
-
         return store.prompt(state, new ShowCardsPrompt(
           opponent.id,
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
@@ -148,8 +144,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
               return state;
             });
           }
-
-          CLEAN_UP_SUPPORTER(store, effect, player);
 
           return store.prompt(state, new ShowCardsPrompt(
             opponent.id,

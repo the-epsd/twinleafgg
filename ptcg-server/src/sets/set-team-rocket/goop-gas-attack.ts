@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ADD_MARKER, HAS_MARKER, MOVE_CARD_TO, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -31,8 +31,6 @@ export class GoopGasAttack extends TrainerCard {
 
       ADD_MARKER(this.GOOP_GAS_MARKER, player, this);
       ADD_MARKER(this.GOOP_GAS_MARKER, opponent, this);
-
-      MOVE_CARD_TO(state, effect.trainerCard, player.discard);
     }
 
     if (effect instanceof CheckPokemonPowersEffect && HAS_MARKER(this.GOOP_GAS_MARKER, effect.player, this)) {

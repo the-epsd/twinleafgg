@@ -6,8 +6,6 @@ import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect, TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
 import { PlayerType, SlotType, StateUtils, GameError, GameMessage } from '../../game';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
@@ -38,8 +36,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
         opponent.switchPokemon(targetCard.target);
       }
     }
-
-    CLEAN_UP_SUPPORTER(store, effect, player);
     return state;
   });
 }

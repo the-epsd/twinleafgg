@@ -1,8 +1,6 @@
 import { Card, CardList, ChoosePrizePrompt, GameError, GameMessage, State, StoreLike, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 export class Gladion extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -69,8 +67,6 @@ export class Gladion extends TrainerCard {
 
         prizes.forEach(p => { p.isSecret = true; });
         player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
-
-        CLEAN_UP_SUPPORTER(store, effect, player);
       });
 
       return state;

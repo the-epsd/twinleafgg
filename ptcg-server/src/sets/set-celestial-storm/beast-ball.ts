@@ -7,8 +7,6 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { CardList, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, ShowCardsPrompt, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 export class BeastBall extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'CES';
@@ -72,7 +70,6 @@ export class BeastBall extends TrainerCard {
               p.isSecret = true;
             }
           });
-          CLEAN_UP_SUPPORTER(store, effect, player);
           this.shuffleFaceDownPrizeCards(player.prizes.filter((p, index) => originallyFaceDown[index]));
           return state;
         }

@@ -4,7 +4,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -56,7 +56,6 @@ export class TateAndLiza extends TrainerCard {
             ), result => {
               const cardList = result[0];
               player.switchPokemon(cardList, store, state);
-              CLEAN_UP_SUPPORTER(store, effect, player);
             });
           }
         },
@@ -73,7 +72,6 @@ export class TateAndLiza extends TrainerCard {
             });
 
             DRAW_CARDS(player, 5);
-            CLEAN_UP_SUPPORTER(store, effect, player);
           }
         }
       ];

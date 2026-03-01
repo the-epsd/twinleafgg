@@ -9,7 +9,7 @@ import { GameMessage } from '../../game/game-message';
 import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { PokemonCard } from '../../game';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, self: TeamYellsCheer, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -57,7 +57,6 @@ function* playCard(next: Function, store: StoreLike, state: State, self: TeamYel
     next();
   });
   MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: self });
-  CLEAN_UP_SUPPORTER(store, effect, player);
 
   return state;
 }

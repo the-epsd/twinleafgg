@@ -2,7 +2,7 @@ import { StateUtils } from '../../game';
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -35,8 +35,6 @@ export class SuperEnergyRemoval2 extends TrainerCard {
           MOVE_CARDS(store, state, player.active, player.discard, { cards, sourceCard: this });
         }
       });
-
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
     return state;
   }

@@ -5,8 +5,6 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 export class VictoryOrb extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'UP'; // Replace with the appropriate set abbreviation
@@ -39,8 +37,6 @@ export class VictoryOrb extends TrainerCard {
 
         deckTop.applyOrder(order);
         deckTop.moveToTopOfDestination(player.deck);
-
-        CLEAN_UP_SUPPORTER(store, effect, player);
       });
     }
     return state;

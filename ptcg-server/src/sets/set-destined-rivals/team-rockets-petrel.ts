@@ -8,7 +8,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../game';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
@@ -42,7 +42,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
 
   SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-  CLEAN_UP_SUPPORTER(store, effect, player);
 
   SHUFFLE_DECK(store, state, player);
 }

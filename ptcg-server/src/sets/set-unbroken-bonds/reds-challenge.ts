@@ -7,7 +7,7 @@ import { State } from '../../game/store/state/state';
 import { GameError } from '../../game';
 import { Player } from '../../game/store/state/player';
 import { DISCARD_X_CARDS_FROM_YOUR_HAND, WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
-import { CLEAN_UP_SUPPORTER, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
+import { SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
 
 export class RedsChallenge extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -57,8 +57,6 @@ export class RedsChallenge extends TrainerCard {
 
       DISCARD_X_CARDS_FROM_YOUR_HAND(effect, store, state, 2, 2);
       SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 1, max: 1, allowCancel: false });
-
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

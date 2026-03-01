@@ -5,7 +5,6 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
@@ -116,8 +115,6 @@ export class TeamRocketsGiovanni extends TrainerCard {
           // Switch opponent's Pokémon
           opponent.active.clearEffects();
           opponent.switchPokemon(oppTargets[0]);
-
-          CLEAN_UP_SUPPORTER(store, effect, player);
           return state;
         });
       });

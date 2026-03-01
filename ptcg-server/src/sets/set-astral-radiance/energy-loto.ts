@@ -5,8 +5,6 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, GameLog, StateUtils } from '../../game';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 export class EnergyLoto extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -62,7 +60,6 @@ export class EnergyLoto extends TrainerCard {
 
         // Shuffle remaining cards back into deck
         temp.moveTo(player.deck);
-        CLEAN_UP_SUPPORTER(store, effect, player);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

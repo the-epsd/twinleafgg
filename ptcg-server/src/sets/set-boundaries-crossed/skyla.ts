@@ -8,7 +8,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { CLEAN_UP_SUPPORTER, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
+import { SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, self: Card): IterableIterator<State> {
   const player = effect.player;
@@ -23,7 +23,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, self, { superType: SuperType.TRAINER }, { min: 0, max: 1, allowCancel: false });
-  CLEAN_UP_SUPPORTER(store, effect, player);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

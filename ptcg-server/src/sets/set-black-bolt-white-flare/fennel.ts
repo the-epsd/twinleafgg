@@ -6,8 +6,6 @@ import { State } from '../../game/store/state/state';
 import { PlayerType } from '../../game/store/actions/play-card-action';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError, GameMessage } from '../../game';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 export class Fennel extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'I';
@@ -36,7 +34,6 @@ export class Fennel extends TrainerCard {
         const healEffect = new HealEffect(player, cardList, 40);
         state = store.reduceEffect(state, healEffect);
       });
-      CLEAN_UP_SUPPORTER(store, effect, player);
       return state;
     }
     return state;

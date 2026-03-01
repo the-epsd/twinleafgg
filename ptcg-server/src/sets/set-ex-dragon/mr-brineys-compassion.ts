@@ -3,7 +3,7 @@ import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class MrBrineysCompassion extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -75,7 +75,6 @@ export class MrBrineysCompassion extends TrainerCard {
           if (pokemons.length > 0) {
             MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons, sourceCard: this });
           }
-          CLEAN_UP_SUPPORTER(store, effect, player);
         }
       });
     }

@@ -10,7 +10,7 @@ import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../game/store/state/card-list';
 import { StateUtils } from '../../game/store/state-utils';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 function* playCard(next: Function, store: StoreLike, state: State,
   self: ZinniasResolve, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -49,7 +49,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const cardsToDraw = opponent.bench.reduce((left, b) => left + (b.cards.length ? 1 : 0), 0);
 
   DRAW_CARDS(player, cardsToDraw);
-  CLEAN_UP_SUPPORTER(store, effect, player);
   return state;
 }
 export class ZinniasResolve extends TrainerCard {

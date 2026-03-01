@@ -3,7 +3,7 @@ import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-t
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class MrStonesProject extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -56,7 +56,6 @@ export class MrStonesProject extends TrainerCard {
               }
 
               MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
-              CLEAN_UP_SUPPORTER(store, effect, player);
 
               store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
@@ -89,7 +88,6 @@ export class MrStonesProject extends TrainerCard {
               }
 
               MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
-              CLEAN_UP_SUPPORTER(store, effect, player);
 
             });
 

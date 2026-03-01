@@ -2,7 +2,7 @@ import { CardTarget, ChoosePokemonPrompt, GameError, GameMessage, GameStoreMessa
 import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, DEVOLVE_POKEMON } from '../../game/store/prefabs/prefabs';
+import { DEVOLVE_POKEMON } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -20,7 +20,6 @@ export class DevolutionSpray extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       let canDevolve = false;
-      const player = effect.player;
       const blocked: CardTarget[] = [];
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
         if (list.getPokemons().length > 1) {
@@ -47,7 +46,6 @@ export class DevolutionSpray extends TrainerCard {
           if (results && results.length > 0) {
             DEVOLVE_POKEMON(store, state, results[0], effect.player.hand);
           }
-          CLEAN_UP_SUPPORTER(store, effect, player);
           return state;
         }
       );

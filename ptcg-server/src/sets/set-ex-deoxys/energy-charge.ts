@@ -10,7 +10,7 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: EnergyCharge, effect: TrainerEffect): IterableIterator<State> {
@@ -42,7 +42,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   if (!coinResult) {
-    CLEAN_UP_SUPPORTER(store, effect, player);
     return state;
   }
 
@@ -60,7 +59,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   MOVE_CARDS(store, state, player.discard, player.deck, { cards, sourceCard: self });
-  CLEAN_UP_SUPPORTER(store, effect, player);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

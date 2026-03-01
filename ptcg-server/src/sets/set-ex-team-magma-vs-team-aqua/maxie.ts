@@ -6,7 +6,7 @@ import { State } from '../../game/store/state/state';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
-import { BLOCK_IF_NO_SLOTS, CLEAN_UP_SUPPORTER, GET_PLAYER_BENCH_SLOTS } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_NO_SLOTS, GET_PLAYER_BENCH_SLOTS } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt, PokemonCard, SelectOptionPrompt } from '../../game';
 
 export class Maxie extends TrainerCard {
@@ -129,8 +129,6 @@ export class Maxie extends TrainerCard {
             option.action();
           });
       }
-
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

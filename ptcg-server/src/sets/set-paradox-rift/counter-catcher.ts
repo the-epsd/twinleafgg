@@ -8,7 +8,7 @@ import { State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { Player } from '../../game';
-import { CLEAN_UP_SUPPORTER, SWITCH_IN_OPPONENT_BENCHED_POKEMON } from '../../game/store/prefabs/prefabs';
+import { SWITCH_IN_OPPONENT_BENCHED_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class CounterCatcher extends TrainerCard {
 
@@ -62,7 +62,6 @@ Switch in 1 of your opponent's Benched Pokémon to the Active Spot.`;
       //
       // Converted to prefab version (SWITCH_IN_OPPONENT_BENCHED_POKEMON).
       SWITCH_IN_OPPONENT_BENCHED_POKEMON(store, state, player, { allowCancel: false });
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

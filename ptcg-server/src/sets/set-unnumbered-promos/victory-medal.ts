@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MULTIPLE_COIN_FLIPS_PROMPT, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MULTIPLE_COIN_FLIPS_PROMPT, SEARCH_DECK_FOR_CARDS_TO_HAND } from '../../game/store/prefabs/prefabs';
 
 export class VictoryMedal extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -27,17 +27,13 @@ export class VictoryMedal extends TrainerCard {
       MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, coinResults => {
         if (coinResults.every(r => r === true)) {
           SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 1, max: 1, allowCancel: false });
-          CLEAN_UP_SUPPORTER(store, effect, player);
           return state;
         } else if (coinResults.some(r => r === true)) {
           DRAW_CARDS(player, 1);
-          CLEAN_UP_SUPPORTER(store, effect, player);
           return state;
         }
         return state;
       });
-
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
     return state;
   }

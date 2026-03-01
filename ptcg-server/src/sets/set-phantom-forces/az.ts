@@ -8,7 +8,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { GameError, PokemonCard } from '../../game';
-import { MOVE_CARD_TO, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class AZ extends TrainerCard {
 
@@ -75,7 +75,6 @@ export class AZ extends TrainerCard {
           if (pokemons.length > 0) {
             MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
           }
-          MOVE_CARD_TO(state, effect.trainerCard, player.discard);
         }
       });
     }

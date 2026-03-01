@@ -8,7 +8,7 @@ import { StoreLike, State, GameError, GameMessage, Card, ChooseCardsPrompt } fro
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class CaraLiss extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -64,8 +64,6 @@ export class CaraLiss extends TrainerCard {
       } else {
         SHUFFLE_DECK(store, state, player);
       }
-
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;

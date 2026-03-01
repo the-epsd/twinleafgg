@@ -7,7 +7,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { GameError, GameMessage } from '../../game';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Copycat, effect: TrainerEffect): IterableIterator<State> {
@@ -36,7 +36,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   const cardsNumber = opponent.hand.cards.length;
   DRAW_CARDS(player, cardsNumber);
-  CLEAN_UP_SUPPORTER(store, effect, player);
   return state;
 }
 

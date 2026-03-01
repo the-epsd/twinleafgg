@@ -6,7 +6,7 @@ import { State } from '../../game/store/state/state';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
-import { BLOCK_IF_DECK_EMPTY, BLOCK_IF_NO_SLOTS, CLEAN_UP_SUPPORTER, GET_PLAYER_BENCH_SLOTS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_DECK_EMPTY, BLOCK_IF_NO_SLOTS, GET_PLAYER_BENCH_SLOTS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt, PokemonCard } from '../../game';
 
 export class Archie extends TrainerCard {
@@ -67,8 +67,6 @@ export class Archie extends TrainerCard {
         });
         SHUFFLE_DECK(store, state, player);
       });
-
-      CLEAN_UP_SUPPORTER(store, effect, player);
     }
 
     return state;
