@@ -216,6 +216,19 @@ cardManager.defineSet(sets.setArceus);
 
 StateSerializer.setKnownCards(cardManager.getAllCards());
 
+if (process.argv.includes('--backfill')) {
+  require('./scripts/backfill-deck-formats').run()
+    .then(() => {
+      console.log('Deck formats backfill complete.');
+      process.exit(0);
+    })
+    .catch(err => {
+      console.error('Backfill failed:', err.message);
+      process.exit(1);
+    });
+  return;
+}
+
 const botManager = BotManager.getInstance();
 // botManager.registerBot(new SimpleBot('Gardevoir'));
 // botManager.registerBot(new SimpleBot('Charizard'));

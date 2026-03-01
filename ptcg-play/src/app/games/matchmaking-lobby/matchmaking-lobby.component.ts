@@ -266,21 +266,25 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
 
   // Helper method to load decks for a specific format
   private loadDecksForFormat(format: Format): void {
-    this.deckService.getListByFormat(format).subscribe(
+    this.deckService.getListByFormat(format, { summary: true }).subscribe(
       decks => {
-        // Process deck items like in deck component
-        decks.forEach(deck => {
-          const deckCards: DeckItem[] = [];
-          deck.cards.forEach(card => {
-            deckCards.push({
-              card: this.cardsBaseService.getCardByName(card),
-              count: 0,
-              pane: null,
-              scanUrl: null
-            });
+        // Build deckItems only when full card data is present (non-summary)
+        if (decks.some(d => d.cards)) {
+          decks.forEach(deck => {
+            if (deck.cards) {
+              const deckCards: DeckItem[] = [];
+              deck.cards.forEach(card => {
+                deckCards.push({
+                  card: this.cardsBaseService.getCardByName(card),
+                  count: 0,
+                  pane: null,
+                  scanUrl: null
+                });
+              });
+              deck.deckItems = deckCards;
+            }
           });
-          deck.deckItems = deckCards;
-        });
+        }
 
         this.formatDecks[format] = decks;
       },
@@ -355,21 +359,25 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
       // Decks don't exist, need to load them
       this.loading = true;
 
-      this.deckService.getListByFormat(this.selectedFormat).subscribe(
+      this.deckService.getListByFormat(this.selectedFormat, { summary: true }).subscribe(
         decks => {
-          // Process deck items like in deck component
-          decks.forEach(deck => {
-            const deckCards: DeckItem[] = [];
-            deck.cards.forEach(card => {
-              deckCards.push({
-                card: this.cardsBaseService.getCardByName(card),
-                count: 0,
-                pane: null,
-                scanUrl: null
-              });
+          // Build deckItems only when full card data is present (non-summary)
+          if (decks.some(d => d.cards)) {
+            decks.forEach(deck => {
+              if (deck.cards) {
+                const deckCards: DeckItem[] = [];
+                deck.cards.forEach(card => {
+                  deckCards.push({
+                    card: this.cardsBaseService.getCardByName(card),
+                    count: 0,
+                    pane: null,
+                    scanUrl: null
+                  });
+                });
+                deck.deckItems = deckCards;
+              }
             });
-            deck.deckItems = deckCards;
-          });
+          }
 
           this.decksByFormat = decks;
           this.formatDecks[format] = decks; // Store decks for this format
