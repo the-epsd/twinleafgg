@@ -35,7 +35,7 @@ export class Lunatone extends PokemonCard {
   public set: string = 'SS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
-  public name: string = 'Lanturn';
+  public name: string = 'Lunatone';
   public fullName: string = 'Lunatone SS';
 
   public readonly LUNAR_ECLIPSE_MARKER = 'LUNAR_ECLIPSE_MARKER';
