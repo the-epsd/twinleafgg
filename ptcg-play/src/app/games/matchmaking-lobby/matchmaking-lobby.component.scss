@@ -348,6 +348,7 @@
 }
 
 .format-info {
+  position: relative;
   padding: 1.5rem; // Keep consistent padding across all screen sizes
   background: rgba(0, 0, 0, 0.4);
   border-top: 1px solid $twinleaf-green;
@@ -358,6 +359,28 @@
 
   @media (max-width: 425px) {
     padding: 0.75rem;
+  }
+
+  .change-deck-button {
+    position: absolute;
+    top: 0.4rem;
+    right: 0.4rem;
+    padding: 0.2rem 0.4rem;
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: linear-gradient(135deg, rgba($twinleaf-800, 0.95), rgba($twinleaf-900, 0.95));
+    border: 1px solid rgba($twinleaf-green, 0.4);
+    border-radius: 4px;
+    color: $twinleaf-green;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, rgba($twinleaf-800, 1), rgba($twinleaf-900, 1));
+      border-color: $twinleaf-green;
+    }
   }
 
   .format-name {

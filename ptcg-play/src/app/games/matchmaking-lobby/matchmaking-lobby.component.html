@@ -30,9 +30,12 @@
             </div>
           </div>
           <div class="format-info">
+            <button class="change-deck-button" *ngIf="selectedFormat === format.value && !inQueue"
+              (click)="$event.stopPropagation(); openChangeDeckDialog()">
+              {{ 'MATCHMAKING_CHANGE_DECK' | translate }}
+            </button>
             <div class="format-name">{{ getFormatLabel(format.value) | translate }}</div>
-            <div class="deck-name">{{ getDeckForFormat(format.value)?.name || 'NO_DECK' | translate }}
-            </div>
+            <div class="deck-name">{{ getDeckForFormat(format.value)?.name || 'NO_DECK' | translate }}</div>
           </div>
         </div>
       </div>

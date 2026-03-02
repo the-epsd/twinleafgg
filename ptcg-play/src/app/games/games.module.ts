@@ -11,6 +11,7 @@ import { ActiveGamesComponent } from './active-games/active-games.component';
 import { GameHistoryComponent } from './game-history/game-history.component';
 import { PlayersComponent } from './players/players.component';
 import { OnlinePlayersComponent } from './online-players/online-players.component';
+import { ChangeDeckDialogComponent } from './change-deck-dialog/change-deck-dialog.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { OnlinePlayersComponent } from './online-players/online-players.componen
         ActiveGamesComponent,
         GameHistoryComponent,
         PlayersComponent,
-        OnlinePlayersComponent
+        OnlinePlayersComponent,
+        ChangeDeckDialogComponent
     ],
     imports: [
         SharedModule

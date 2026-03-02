@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Archetype, Format } from 'ptcg-server';
-import { Subscription, Subject } from 'rxjs';
-import { filter, takeUntil, map, takeWhile } from 'rxjs/operators';
+import { Subscription, Subject, of } from 'rxjs';
+import { filter, takeUntil, map, takeWhile, switchMap } from 'rxjs/operators';
 import { UntilDestroy } from '@ngneat/until-destroy';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { SocketService } from '../../api/socket.service';
 import { DeckService } from '../../api/services/deck.service';
 import { DeckListEntry } from '../../api/interfaces/deck.interface';
@@ -12,6 +13,8 @@ import { CardsBaseService } from '../../shared/cards/cards-base.service';
 import { DeckItem } from '../../deck/deck-card/deck-card.interface';
 import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { SettingsService } from '../../table/table-sidebar/settings-dialog/settings.service';
+import { ChangeDeckDialogComponent } from '../change-deck-dialog/change-deck-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @UntilDestroy()
@@ -80,7 +83,9 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     private router: Router,
     private cardsBaseService: CardsBaseService,
     private snackBar: MatSnackBar,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private dialog: MatDialog,
+    private translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -205,6 +210,37 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
         this.router.navigate(['/table', data.gameId]);
       }
     });
+  }
+
+  public openChangeDeckDialog(): void {
+    if (!this.selectedFormat || this.inQueue) return;
+
+    const dialogRef = this.dialog.open(ChangeDeckDialogComponent, {
+      width: '500px',
+      maxWidth: '95vw',
+      data: { format: this.selectedFormat },
+      panelClass: 'change-deck-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe((deckId: number | undefined) => {
+      if (deckId !== undefined && this.selectedFormat) {
+        this.setFormatDefaultDeck(this.selectedFormat, deckId);
+        this.deckId = deckId;
+        this.snackBar.open(this.translate.instant('MATCHMAKING_DECK_SET_DEFAULT'), '', {
+          duration: 3000,
+          horizontalPosition: 'center',
+          verticalPosition: 'top'
+        });
+      }
+    });
+  }
+
+  private setFormatDefaultDeck(format: Format, deckId: number): void {
+    const formatKey = Format[format]?.toLowerCase();
+    if (formatKey) {
+      this.formatDefaultDecks[formatKey] = deckId;
+      localStorage.setItem('formatDefaultDecks', JSON.stringify(this.formatDefaultDecks));
+    }
   }
 
   // Get the preferred deck for the current format
@@ -429,11 +465,19 @@ export class MatchmakingLobbyComponent implements OnInit, OnDestroy {
     this.loading = true;
     this.joinLeaveDebounce = true;
 
-    // Pass artworks selection if available on the deck
+    // Deck list uses summary: true, so cards may be missing - fetch full deck if needed
+    const cards$ = deck.cards && deck.cards.length > 0
+      ? of(deck.cards)
+      : this.deckService.getDeck(this.deckId).pipe(map(r => r.deck.cards as string[]));
+
     const artworks = (deck as any).artworks as { code: string; artworkId?: number }[] | undefined;
-    this.socketService.joinMatchmakingQueue(this.selectedFormat, deck.cards, artworks, this.deckId, deck.sleeveImagePath)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
+
+    cards$.pipe(
+      switchMap((cards: string[]) =>
+        this.socketService.joinMatchmakingQueue(this.selectedFormat, cards, artworks, this.deckId, deck.sleeveImagePath)
+      ),
+      takeUntil(this.destroy$)
+    ).subscribe(
         () => {
           this.loading = false;
           this.inQueue = true;
