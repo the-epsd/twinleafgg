@@ -43,7 +43,7 @@ export class CheerleadersCheer extends TrainerCard {
         }, GameMessage.WANT_TO_DRAW_CARDS);
       }
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

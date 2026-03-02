@@ -9,8 +9,6 @@ import {
   PlayerType, SlotType, StateUtils, CardTarget,
   GameMessage, PokemonCardList, ChooseCardsPrompt, Card, GameError, CardList
 } from '../../game';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 export class FanOfWaves extends TrainerCard {
 
   public regulationMark = 'E';
@@ -64,7 +62,6 @@ export class FanOfWaves extends TrainerCard {
       });
 
       if (targets.length === 0) {
-        CLEAN_UP_SUPPORTER(effect, player);
         return state;
       }
 
@@ -79,11 +76,8 @@ export class FanOfWaves extends TrainerCard {
         const cards = selected as Card[];
 
         const opponentDeckBottom = new CardList();
-        CLEAN_UP_SUPPORTER(effect, player);
         cards.forEach(card => {
           opponentDeckBottom.moveCardTo(card, opponent.deck);
-
-          CLEAN_UP_SUPPORTER(effect, player);
         });
 
         return state;

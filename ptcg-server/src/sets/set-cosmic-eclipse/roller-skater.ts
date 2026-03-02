@@ -3,7 +3,7 @@ import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -42,7 +42,6 @@ export class RollerSkater extends TrainerCard {
       ), cards => {
         cards = cards || [];
         if (cards.length === 0) {
-          CLEAN_UP_SUPPORTER(effect, player);
           return;
         }
         let cardsToDraw = 2;
@@ -58,8 +57,6 @@ export class RollerSkater extends TrainerCard {
 
         DRAW_CARDS(player, cardsToDraw);
       });
-
-      CLEAN_UP_SUPPORTER(effect, player);
       return state;
     }
 

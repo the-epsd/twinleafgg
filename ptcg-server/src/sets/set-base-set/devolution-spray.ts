@@ -24,7 +24,6 @@ export class DevolutionSpray extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       let canDevolve = false;
-      const player = effect.player;
       const blocked: CardTarget[] = [];
       effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
         if (list.getPokemons().length > 1) {
@@ -51,7 +50,7 @@ export class DevolutionSpray extends TrainerCard {
           if (results && results.length > 0) {
             DEVOLVE_POKEMON(store, state, results[0], effect.player.hand);
           }
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           return state;
         }
       );

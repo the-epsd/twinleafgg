@@ -100,7 +100,7 @@ Search your deck for up to 2 Trainer cards, reveal them, and put them into your 
             cards), () => state);
         }
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
         return state;
       });

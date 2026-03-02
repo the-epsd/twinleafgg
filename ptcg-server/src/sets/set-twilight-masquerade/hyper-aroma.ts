@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { Card} from '../../game/store/card/card';
+import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
@@ -47,7 +47,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   player.deck.moveCardsTo(cards, player.hand);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -58,7 +58,7 @@ export class HyperAroma extends TrainerCard {
 
   public regulationMark = 'H';
 
-  public tags = [ CardTag.ACE_SPEC ];
+  public tags = [CardTag.ACE_SPEC];
 
   public trainerType: TrainerType = TrainerType.ITEM;
 

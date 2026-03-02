@@ -43,7 +43,7 @@ export class BlackBeltsTraining extends TrainerCard {
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       ADD_MARKER(this.BLACK_BELTS_TRAINING_MARKER, player, this);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     if (PUT_DAMAGE(effect) && HAS_MARKER(this.BLACK_BELTS_TRAINING_MARKER, effect.player, this) && effect.damage > 0) {

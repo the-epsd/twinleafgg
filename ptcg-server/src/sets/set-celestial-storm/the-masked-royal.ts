@@ -8,8 +8,6 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { AttachEnergyPrompt, CardTarget, PlayerType, SlotType, StoreLike, State, StateUtils, GameMessage, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 export class TheMaskedRoyal extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'CES';
@@ -45,8 +43,6 @@ export class TheMaskedRoyal extends TrainerCard {
       if (!hasBasicEnergy || !hasValidTarget) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-
-      CLEAN_UP_SUPPORTER(effect, player);
 
       store.prompt(state, new AttachEnergyPrompt(
         player.id,

@@ -8,8 +8,6 @@ import { GameMessage } from '../../game/game-message';
 import { TrainerCard, TrainerType } from '../../game';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
@@ -46,7 +44,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
           source.damage -= 20;
           target.damage += 20;
         }
-        CLEAN_UP_SUPPORTER(effect, player);
       }
     });
   });

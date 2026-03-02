@@ -1,0 +1,55 @@
+<h2 mat-dialog-title translate>MATCHMAKING_CHANGE_DECK_TITLE</h2>
+
+<mat-dialog-content>
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loading">
+    <div class="loading-spinner">
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+      <div class="spinner-ring"></div>
+    </div>
+    <p class="loading-text">Loading your decks...</p>
+  </div>
+
+  <!-- Deck Selection -->
+  <div class="deck-selection" *ngIf="!loading && decks.length > 0">
+    <div class="selection-header">
+      <h3 class="selection-title" translate>MATCHMAKING_SELECT_DECK</h3>
+      <div class="deck-count">{{ decks.length }} deck{{ decks.length !== 1 ? 's' : '' }} available</div>
+    </div>
+
+    <div class="deck-grid">
+      <div class="deck-card" *ngFor="let deck of decks" [class.selected]="deckId === deck.value"
+        (click)="selectDeck(deck.value)">
+        <div class="deck-card-content">
+          <div class="deck-artwork">
+            <ptcg-archetype [class]="getDeckArchetype(deck.value)"
+              style="transform: scale(2); display: flex; image-rendering: pixelated;"></ptcg-archetype>
+          </div>
+          <div class="deck-info">
+            <div class="deck-name">{{ deck.viewValue }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Decks State -->
+  <div class="no-decks-container" *ngIf="!loading && decks.length === 0">
+    <div class="no-decks-content">
+      <div class="no-decks-icon">
+        <mat-icon>deck</mat-icon>
+      </div>
+      <h3 class="no-decks-title" translate>PROMPT_INVITE_NO_DECK</h3>
+      <p class="no-decks-description">You need to create a deck for this format before you can matchmake.</p>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <twinleaf-button [text]="'BUTTON_CANCEL' | translate" color="secondary" (clicked)="cancel()">
+  </twinleaf-button>
+  <twinleaf-button [text]="'BUTTON_OK' | translate" color="primary"
+    [disabled]="!deckId || decks.length === 0" (clicked)="confirm()">
+  </twinleaf-button>
+</mat-dialog-actions>

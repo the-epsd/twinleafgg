@@ -58,7 +58,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Discard trainer only when user selected a Pokemon
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   targets.forEach(target => {
     const owner = StateUtils.findOwner(state, target);

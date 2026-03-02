@@ -62,7 +62,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   const target = targets[0];
 
   // Discard trainer only when user selected a Pokemon
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
 
   // Heal Pokemon

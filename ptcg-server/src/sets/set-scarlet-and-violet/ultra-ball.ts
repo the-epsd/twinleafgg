@@ -23,8 +23,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
-  effect.preventDefault = true;
-
   const handTemp = new CardList();
   handTemp.cards = player.hand.cards.filter(c => c !== self);
 
@@ -61,8 +59,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
       next();
     }
   });
-
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

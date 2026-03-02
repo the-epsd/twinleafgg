@@ -10,7 +10,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class BrocksGrit extends TrainerCard {
 
@@ -64,7 +64,6 @@ export class BrocksGrit extends TrainerCard {
           store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
         });
         MOVE_CARDS(store, state, player.discard, player.deck, { cards: cards, sourceCard: this });
-        CLEAN_UP_SUPPORTER(effect, player);
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

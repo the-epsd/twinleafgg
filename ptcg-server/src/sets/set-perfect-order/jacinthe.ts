@@ -95,7 +95,7 @@ export class Jacinthe extends TrainerCard {
             store.reduceEffect(state, healEffect);
           }
         }
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
 

@@ -35,7 +35,7 @@ export class Beauty extends TrainerCard {
 
       DRAW_CARDS(player, 2);
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

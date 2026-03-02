@@ -41,7 +41,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.discard.moveCardsTo(cards, player.hand);
   }
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 }
 
 export class OldPc extends TrainerCard {

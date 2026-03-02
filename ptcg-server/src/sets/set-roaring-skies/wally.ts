@@ -76,7 +76,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
   // Canceled by user, he didn't found the card in the deck
   if (cards.length === 0) {
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
     return state;
   }
@@ -102,7 +102,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
 
   if (targets.length === 0) {

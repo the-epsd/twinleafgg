@@ -6,7 +6,7 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { PlayerType } from '../..';
 import { HealEffect } from '../../game/store/effects/game-effects';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class Cheryl extends TrainerCard {
 
@@ -51,7 +51,6 @@ export class Cheryl extends TrainerCard {
             const energyCards = cardList.cards.filter(c => c.superType === SuperType.ENERGY);
             MOVE_CARDS(store, state, cardList, player.discard, { cards: energyCards, sourceCard: this });
           }
-          CLEAN_UP_SUPPORTER(effect, player);
         });
       }
 

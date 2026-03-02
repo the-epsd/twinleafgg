@@ -8,7 +8,7 @@ import { StoreLike, State, StateUtils, GameError, GameMessage, PlayerType, SlotT
 import { Effect } from '../../game/store/effects/effect';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class Cyrus extends TrainerCard {
@@ -59,11 +59,9 @@ export class Cyrus extends TrainerCard {
             }
           });
           SHUFFLE_DECK(store, state, opponent);
-          CLEAN_UP_SUPPORTER(effect, player);
         });
       } else {
         // 2 or fewer benched Pokemon: nothing to shuffle away
-        CLEAN_UP_SUPPORTER(effect, player);
       }
 
       return state;

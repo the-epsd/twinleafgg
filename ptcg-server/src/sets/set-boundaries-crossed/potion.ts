@@ -10,8 +10,6 @@ import {
   PokemonCardList
 } from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
 
@@ -49,7 +47,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
 
   // Discard trainer only when user selected a Pokemon
-  CLEAN_UP_SUPPORTER(effect, player);
 
   targets.forEach(target => {
     // Heal Pokemon

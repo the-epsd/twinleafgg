@@ -5,7 +5,7 @@ import { SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -60,7 +60,6 @@ export class HolonTransceiver extends TrainerCard {
               SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
 
               MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
-              CLEAN_UP_SUPPORTER(effect, player);
 
               SHUFFLE_DECK(store, state, player);
             });
@@ -89,7 +88,6 @@ export class HolonTransceiver extends TrainerCard {
 
               SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
               MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
-              CLEAN_UP_SUPPORTER(effect, player);
 
               return state;
             });
@@ -110,9 +108,9 @@ export class HolonTransceiver extends TrainerCard {
           {
             allowCancel: true,
           }), choice => {
-          const option = options[choice];
-          option.action();
-        });
+            const option = options[choice];
+            option.action();
+          });
       }
     }
     return state;

@@ -51,8 +51,8 @@ export class BiancasDevotion extends TrainerCard {
         state = store.reduceEffect(state, healEffect);
         const cards = cardList.cards.filter(c => c.superType === SuperType.ENERGY);
         cardList.moveCardsTo(cards, player.discard);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
-        
+
+
       });
       return state;
     }

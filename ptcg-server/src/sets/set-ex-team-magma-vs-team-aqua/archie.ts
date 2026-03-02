@@ -67,8 +67,6 @@ export class Archie extends TrainerCard {
         });
         SHUFFLE_DECK(store, state, player);
       });
-
-      player.supporter.moveCardTo(this, player.discard);
     }
 
     return state;

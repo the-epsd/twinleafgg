@@ -89,7 +89,7 @@ Move 1 Energy card attached to the Defending Pokémon to another of your opponen
                 source.moveCardTo(transfer.card, target);
               }
             });
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           }
         },
         {
@@ -117,7 +117,7 @@ Move 1 Energy card attached to the Defending Pokémon to another of your opponen
                 }
               }
 
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
               return state;
             });
           }
@@ -132,7 +132,7 @@ Move 1 Energy card attached to the Defending Pokémon to another of your opponen
       ), choice => {
         const option = options[choice];
         option.action();
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       });
     }

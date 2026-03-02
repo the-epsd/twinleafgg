@@ -6,7 +6,6 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class Looker extends TrainerCard {
@@ -29,8 +28,6 @@ export class Looker extends TrainerCard {
         const bottomCards = player.deck.cards.slice(-cardsToDraw);
         player.deck.moveCardsTo(bottomCards, player.hand);
       }
-
-      CLEAN_UP_SUPPORTER(effect, player);
     }
 
     return state;

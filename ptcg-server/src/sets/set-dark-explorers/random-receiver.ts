@@ -10,7 +10,7 @@ import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -41,7 +41,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (supporter !== undefined) {
     MOVE_CARDS(store, state, player.deck, player.hand, { cards: [supporter], sourceCard: effect.trainerCard, sourceEffect: effect.trainerCard });
   }
-  CLEAN_UP_SUPPORTER(effect, player);
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

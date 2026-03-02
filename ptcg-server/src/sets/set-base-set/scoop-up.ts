@@ -7,7 +7,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Stage, TrainerType } from '../../game/store/card/card-types';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
-import { MOVE_CARDS, MOVE_CARD_TO } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 
 export class ScoopUp extends TrainerCard {
@@ -76,9 +76,6 @@ export class ScoopUp extends TrainerCard {
           if (basicPokemonCards.length > 0) {
             MOVE_CARDS(store, state, cardList, player.hand, { cards: basicPokemonCards });
           }
-
-          // Move the trainer card to discard
-          MOVE_CARD_TO(state, effect.trainerCard, player.discard);
         }
       });
     }

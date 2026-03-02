@@ -3,7 +3,7 @@ import { CardTag, EnergyType, SuperType, TrainerType } from '../../game/store/ca
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { DISCARD_X_CARDS_FROM_YOUR_HAND } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -74,8 +74,6 @@ export class HolonFarmer extends TrainerCard {
           SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         }
         SHUFFLE_DECK(store, state, player);
-
-        CLEAN_UP_SUPPORTER(effect, player);
       });
     }
 

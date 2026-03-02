@@ -55,7 +55,7 @@ export class Hapu extends TrainerCard {
       ), selected => {
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.discard);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
       });
     }

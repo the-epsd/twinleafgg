@@ -10,7 +10,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { CardList } from '../../game/store/state/card-list';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: UltraReconSquad, effect: TrainerEffect): IterableIterator<State> {
@@ -53,7 +53,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   if (cards.length === 0) {
-    CLEAN_UP_SUPPORTER(effect, player);
     return state;
   }
 
@@ -62,8 +61,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // Draw 3 cards for each card discarded
   const drawCount = cards.length * 3;
   DRAW_CARDS(player, drawCount);
-
-  CLEAN_UP_SUPPORTER(effect, player);
 
   return state;
 }

@@ -33,7 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   player.deck.moveTo(player.hand, 6);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   return state;
 }

@@ -12,7 +12,7 @@ import { CardList } from '../../game/store/state/card-list';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../game/store/state-utils';
-import { MOVE_CARDS, CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -93,8 +93,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
       cards
     ), () => next());
   }
-
-  CLEAN_UP_SUPPORTER(effect, player);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

@@ -37,7 +37,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     if (targets.length > 0) {
       opponent.active.clearEffects();
       opponent.switchPokemon(targets[0]);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
   }
 
@@ -56,12 +56,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     if (targets.length > 0) {
       player.active.clearEffects();
       player.switchPokemon(targets[0]);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
   }
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   return state;
 }

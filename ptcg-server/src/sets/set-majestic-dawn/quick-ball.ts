@@ -40,7 +40,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   if (pokemon !== undefined) {
     player.deck.moveCardTo(pokemon, player.hand);
   }
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

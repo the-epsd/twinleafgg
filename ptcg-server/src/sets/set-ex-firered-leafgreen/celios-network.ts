@@ -2,7 +2,7 @@ import { GameError, GameMessage, PokemonCard } from '../../game';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { CLEAN_UP_SUPPORTER, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../game/store/prefabs/prefabs';
+import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -39,8 +39,6 @@ export class CeliosNetwork extends TrainerCard {
       });
 
       SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, {}, { min: 0, max: 1, blocked });
-
-      CLEAN_UP_SUPPORTER(effect, player);
       return state;
     }
 

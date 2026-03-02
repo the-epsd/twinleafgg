@@ -73,7 +73,7 @@ export class StudentsInPaldea extends TrainerCard {
           GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
           cards
         ), () => {
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         });
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
           player.deck.applyOrder(order);

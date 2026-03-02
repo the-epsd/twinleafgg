@@ -6,6 +6,9 @@ export class Rules {
 
   public attackFirstTurn = false;
 
+  // If true, supporters remain in the play zone until end-turn cleanup.
+  public supporterCleanupAtEndTurn = false;
+
   public unlimitedEnergyAttachments = false;
 
   public alternativeSetup = false;

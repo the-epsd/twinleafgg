@@ -93,7 +93,7 @@ export class MetalSaucer extends TrainerCard {
           player.discard.moveCardTo(transfer.card, target);
         }
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
 

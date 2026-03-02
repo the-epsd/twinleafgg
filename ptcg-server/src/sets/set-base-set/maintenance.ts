@@ -10,7 +10,7 @@ import { Card } from '../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../game/store/state/card-list';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Maintenance, effect: TrainerEffect): IterableIterator<State> {
@@ -55,8 +55,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
     player.deck.applyOrder(order);
 
     DRAW_CARDS(player, 1);
-
-    CLEAN_UP_SUPPORTER(effect, player);
   });
 }
 

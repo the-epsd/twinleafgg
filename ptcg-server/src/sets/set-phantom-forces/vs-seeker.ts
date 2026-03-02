@@ -52,7 +52,7 @@ export class VsSeeker extends TrainerCard {
         { min: 1, max: 1, allowCancel: false, blocked }
       );
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       return state;
     }
     return state;

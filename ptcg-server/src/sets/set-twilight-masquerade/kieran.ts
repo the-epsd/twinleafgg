@@ -80,7 +80,7 @@ export class Kieran extends TrainerCard {
             ), result => {
               const cardList = result[0];
               player.switchPokemon(cardList);
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
               return state;
             });
           }
@@ -89,12 +89,12 @@ export class Kieran extends TrainerCard {
           message: GameMessage.INCREASE_DAMAGE_BY_30_AGAINST_OPPONENTS_EX_AND_V_POKEMON,
           action: () => {
             player.marker.addMarker(this.KIERAN_MARKER, this);
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
             return state;
           }
         }
       ];
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       const hasBench = player.bench.some(b => b.cards.length > 0);
 
       if (!hasBench) {

@@ -42,6 +42,13 @@ export class RocketsMission extends TrainerCard {
 
       if (cards.length == 1) {
         player.hand.moveCardsTo(player.hand.cards, player.discard);
+        let cardsToDraw = 3;
+
+        if (cards[0] instanceof PokemonCard && (cards[0].tags.includes(CardTag.ROCKETS) || cards[0].tags.includes(CardTag.DARK))) {
+          cardsToDraw = 4;
+        }
+        DRAW_CARDS(player, cardsToDraw);
+        return state;
       }
 
       if (cards.length > 1) {
@@ -70,8 +77,6 @@ export class RocketsMission extends TrainerCard {
           DRAW_CARDS(player, cardsToDraw);
         });
       }
-
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
       return state;
     }
 

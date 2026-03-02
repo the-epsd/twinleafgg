@@ -1,4 +1,5 @@
 import { Card } from '../../game';
+import { Absol } from './absol';
 import { Anorith } from './anorith';
 import { Arcanineex } from './arcanine-ex2';
 import { Armaldoex } from './armaldo-ex';
@@ -37,6 +38,7 @@ import { Wynaut } from './wynaut';
 import { ChinchouLM, RainbowEnergyLM } from './other-prints';
 
 export const setEXLegendMaker: Card[] = [
+  new Absol(),
   new Anorith(),
   new Arcanineex(),
   new Armaldoex(),

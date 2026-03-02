@@ -49,7 +49,7 @@ export class TeamRocketsHandiwork extends TrainerCard {
         const heads = result.filter(r => !!r).length;
         MOVE_CARDS(store, state, opponent.deck, opponent.discard, { count: heads * 2, sourceCard: this });
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
 

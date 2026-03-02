@@ -35,7 +35,7 @@ export class ImposterOaksRevenge extends TrainerCard {
       SHUFFLE_DECK(store, state, opponent);
       DRAW_CARDS(opponent, 4);
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       return state;
     }
 

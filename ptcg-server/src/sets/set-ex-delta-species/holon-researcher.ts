@@ -3,7 +3,7 @@ import { CardTag, SuperType, TrainerType } from '../../game/store/card/card-type
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS_TO_HAND, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { DISCARD_X_CARDS_FROM_YOUR_HAND } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -61,12 +61,8 @@ Search your deck for a [M] Energy card or a Basic Pokémon (or Evolution card) t
 
         SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
         MOVE_CARDS_TO_HAND(store, state, player, cards);
-
-        CLEAN_UP_SUPPORTER(effect, player);
         SHUFFLE_DECK(store, state, player);
       });
-
-      CLEAN_UP_SUPPORTER(effect, player);
       return state;
     }
 

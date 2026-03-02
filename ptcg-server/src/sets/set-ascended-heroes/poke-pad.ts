@@ -58,7 +58,7 @@ export class PokePad extends TrainerCard {
         store, state, effect.player, {}, { min: 0, max: 1, blocked }
       );
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

@@ -18,20 +18,19 @@ export class AmpharosEx extends PokemonCard {
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Thunder Rod',
-      cost: [C],
-      damage: 0,
-      text: 'Look at the top 4 cards of your deck and attach as many [L] Energy cards you find there as you like to this Pokémon. Shuffle the other cards back into your deck.'
-    },
-    {
-      name: 'Sparkling Tail',
-      cost: [L, L, C, C],
-      damage: 100,
-      text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, or any other effects on your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Thunder Rod',
+    cost: [C],
+    damage: 0,
+    text: 'Look at the top 4 cards of your deck and attach as many [L] Energy cards you find there as you like to this Pokémon. Shuffle the other cards back into your deck.'
+  },
+  {
+    name: 'Sparkling Tail',
+    cost: [L, L, C, C],
+    damage: 100,
+    shredAttack: true,
+    text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, or any other effects on your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '27';

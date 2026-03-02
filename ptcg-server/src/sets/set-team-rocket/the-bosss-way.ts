@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game';
 import { CardTag, Stage, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { MOVE_CARD_TO, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../game/store/prefabs/prefabs';
+import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -34,7 +34,6 @@ export class TheBosssWay extends TrainerCard {
       });
 
       SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, player, {}, { blocked, min: 0, max: 1 });
-      MOVE_CARD_TO(state, effect.trainerCard, player.discard);
     }
 
     return state;

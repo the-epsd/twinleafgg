@@ -33,7 +33,7 @@ export class Opal extends TrainerCard {
         if (heads > 0 && player.deck.cards.length > 0) {
           SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this, {}, { min: 0, max: heads, allowCancel: false });
         }
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
 

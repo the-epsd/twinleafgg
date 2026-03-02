@@ -1,10 +1,9 @@
+import { State, StoreLike } from '../../game';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
-import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, COIN_FLIP_PROMPT, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Zorua2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -37,11 +36,10 @@ export class Zorua2 extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Paralyzing Gaze
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      COIN_FLIP_PROMPT(store, state, player, result => {
+    if (AFTER_ATTACK(effect, 0, this)) {
+      COIN_FLIP_PROMPT(store, state, effect.player, result => {
         if (result) {
-          YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
+          ADD_PARALYZED_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
         }
       });
     }

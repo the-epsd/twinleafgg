@@ -58,7 +58,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       if (second !== undefined) {
         player.hand.moveCardTo(second, player.discard);
       }
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       return state;
     }
 
@@ -84,7 +84,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       if (second !== undefined) {
         player.hand.moveCardTo(second, player.discard);
       }
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       return state;
     });
   });

@@ -1,8 +1,6 @@
 import { AttachEnergyPrompt, CardList, EnergyType, GameMessage, PlayerType, ShowCardsPrompt, SlotType, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
 export class GutsyPickaxe extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -54,7 +52,6 @@ export class GutsyPickaxe extends TrainerCard {
             ), () => {
               temp.cards.slice(0, 1).forEach(card => {
                 temp.moveCardTo(card, player.hand);
-                CLEAN_UP_SUPPORTER(effect, player);
               });
             });
           } else {
@@ -76,11 +73,9 @@ export class GutsyPickaxe extends TrainerCard {
                 for (const transfer of transfers) {
                   const target = StateUtils.getTarget(state, player, transfer.to);
                   temp.moveCardTo(transfer.card, target); // Move card to target
-                  CLEAN_UP_SUPPORTER(effect, player);
                 }
                 temp.cards.forEach(card => {
                   temp.moveCardTo(card, player.hand); // Move card to hand
-                  CLEAN_UP_SUPPORTER(effect, player);
                 });
                 return state;
               }

@@ -78,7 +78,7 @@ export class Recycle extends TrainerCard {
 
                 deckTop.applyOrder(order);
                 deckTop.moveToTopOfDestination(player.deck);
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
                 if (cardsToMove.length > 0) {
                   return store.prompt(state, new ShowCardsPrompt(
@@ -92,11 +92,11 @@ export class Recycle extends TrainerCard {
               });
             }
 
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
             return state;
           });
         }
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
 

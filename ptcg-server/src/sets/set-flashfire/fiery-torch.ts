@@ -17,7 +17,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   let cards: Card[] = [];
 
   cards = player.hand.cards.filter(c => c !== self && c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.name === 'Fire Energy');
-  
+
   if (cards.length < 1) {
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
@@ -28,7 +28,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // We will discard this card after prompt confirmation
   effect.preventDefault = true;
-  player.hand.moveCardTo(effect.trainerCard, player.supporter);  
+  player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
   yield store.prompt(state, new ChooseCardsPrompt(
     player,
@@ -48,8 +48,8 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   player.hand.moveCardsTo(cards, player.discard);
   player.deck.moveTo(player.hand, 3);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
+
   return state;
 }
 

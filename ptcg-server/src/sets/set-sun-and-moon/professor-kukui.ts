@@ -45,7 +45,7 @@ export class ProfessorKukui extends TrainerCard {
       effect.preventDefault = true;
       player.deck.moveTo(player.hand, 2);
       player.marker.addMarker(this.PROFESSOR_KUKUI_MARKER, this);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       return state;
     }
 

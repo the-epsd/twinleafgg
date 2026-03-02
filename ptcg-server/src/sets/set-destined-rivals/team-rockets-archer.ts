@@ -9,7 +9,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { KnockOutEffect, MoveCardsEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsArcher extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -75,8 +75,6 @@ Each player shuffles their hand into their deck. Then, you draw 5 cards, and you
       // player shuffle and draw
       SHUFFLE_DECK(store, state, player);
       DRAW_CARDS(player, 5);
-
-      CLEAN_UP_SUPPORTER(effect, player);
     }
 
     // Track when a Team Rocket's Pokemon is knocked out

@@ -49,7 +49,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   // Operation canceled by the user
   if (cards.length === 0) {
@@ -60,7 +60,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     const supporterEffect = new SupporterEffect(player, effect.trainerCard);
     store.reduceEffect(state, supporterEffect);
   } catch {
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     return state;
   }
 

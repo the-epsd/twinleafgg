@@ -3,7 +3,7 @@ import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-t
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { BLOCK_IF_DISCARD_EMPTY, CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class MrStonesProject extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -29,8 +29,6 @@ export class MrStonesProject extends TrainerCard {
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
-
-      BLOCK_IF_DISCARD_EMPTY(player);
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
@@ -58,7 +56,6 @@ export class MrStonesProject extends TrainerCard {
               }
 
               MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
-              CLEAN_UP_SUPPORTER(effect, player);
 
               store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                 player.deck.applyOrder(order);
@@ -78,7 +75,7 @@ export class MrStonesProject extends TrainerCard {
               GameMessage.CHOOSE_CARD_TO_HAND,
               player.discard,
               { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-              { min: 1, max: 2, allowCancel: false }
+              { min: 0, max: 2, allowCancel: false }
             ), selected => {
               cards = selected || [];
 
@@ -91,7 +88,6 @@ export class MrStonesProject extends TrainerCard {
               }
 
               MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
-              CLEAN_UP_SUPPORTER(effect, player);
 
             });
 

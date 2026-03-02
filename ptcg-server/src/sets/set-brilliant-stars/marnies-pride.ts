@@ -5,7 +5,7 @@ import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-t
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -61,8 +61,6 @@ export class MarniesPride extends TrainerCard {
           const target = StateUtils.getTarget(state, player, transfer.to);
           MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
         }
-
-        CLEAN_UP_SUPPORTER(effect, player);
 
         return state;
       });

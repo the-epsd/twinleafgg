@@ -38,7 +38,7 @@ export class AquaPatch extends TrainerCard {
           && c.energyType === EnergyType.BASIC
           && c.provides.includes(CardType.WATER);
       });
-      
+
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
@@ -77,7 +77,7 @@ export class AquaPatch extends TrainerCard {
         GameMessage.ATTACH_ENERGY_TO_BENCH,
         player.discard,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.BENCH ],
+        [SlotType.BENCH],
         { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
         { allowCancel: true, min: 1, max: 1, blockedTo }
       ), transfers => {
@@ -92,7 +92,7 @@ export class AquaPatch extends TrainerCard {
           player.discard.moveCardTo(transfer.card, target);
         }
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
 

@@ -53,7 +53,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   player.discard.moveCardsTo(cards, player.deck);
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

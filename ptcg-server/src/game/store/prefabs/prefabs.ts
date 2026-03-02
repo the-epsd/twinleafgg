@@ -1,6 +1,6 @@
 import { AttachEnergyOptions, AttachEnergyPrompt, Card, CardList, CardTarget, ChooseCardsOptions, ChooseCardsPrompt, ChoosePokemonPrompt, ChoosePrizePrompt, ChooseEnergyPrompt, ConfirmPrompt, DamageMap, EnergyCard, GameError, GameLog, GameMessage, MoveDamagePrompt, Player, PlayerType, PokemonCardList, PowerType, SelectPrompt, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../..';
 import { TrainerEffect, AttachEnergyEffect, ToolEffect, CoinFlipEffect, CoinFlipSequenceEffect, PlayPokemonFromDeckEffect } from '../effects/play-card-effects';
-import { BoardEffect, CardTag, CardType, EnergyType, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
+import { BoardEffect, CardTag, CardType, EnergyType, Format, SpecialCondition, Stage, SuperType, TrainerType } from '../card/card-types';
 import { Attack } from '../card/pokemon-types';
 import { GamePhase } from '../state/state';
 import { PokemonCard } from '../card/pokemon-card';
@@ -1427,8 +1427,11 @@ export function SEARCH_DECK_FOR_CARDS_TO_HAND(store: StoreLike, state: State, pl
 }
 
 // Made this so that we can easily change behavior for older formats in the future
-export function CLEAN_UP_SUPPORTER(effect: TrainerEffect, player: Player) {
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+export function CLEAN_UP_SUPPORTER(store: StoreLike, effect: TrainerEffect, player: Player) {
+  const format = (store as any).handler.format;
+  if (!(format === Format.RSPK || format === Format.RETRO) || effect.trainerCard.trainerType !== TrainerType.SUPPORTER) {
+    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+  }
 }
 
 /**

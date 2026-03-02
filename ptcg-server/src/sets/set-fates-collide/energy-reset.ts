@@ -47,7 +47,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     source.moveCardTo(transfer.card, player.hand);
   });
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   return state;
 }
 

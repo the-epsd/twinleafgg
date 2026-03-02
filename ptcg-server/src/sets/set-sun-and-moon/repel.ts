@@ -4,7 +4,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { CLEAN_UP_SUPPORTER, SWITCH_OUT_OPPONENT_ACTIVE_POKEMON } from '../../game/store/prefabs/prefabs';
+import { SWITCH_OUT_OPPONENT_ACTIVE_POKEMON } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class Repel extends TrainerCard {
@@ -32,7 +32,6 @@ export class Repel extends TrainerCard {
       //
       // Converted to prefab version (SWITCH_OUT_OPPONENT_ACTIVE_POKEMON).
       SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(store, state, player, { allowCancel: false });
-      CLEAN_UP_SUPPORTER(effect, player);
     }
 
     return state;

@@ -21,7 +21,7 @@ export class Carmine extends TrainerCard {
     `If you go first, you can use this card on your first turn.
 
 Discard your hand and draw 5 cards.`;
-  
+
   public firstTurn = true;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -44,8 +44,8 @@ Discard your hand and draw 5 cards.`;
       const cards = player.hand.cards.filter(c => c !== this);
       player.hand.moveCardsTo(cards, player.discard);
       player.deck.moveTo(player.hand, 5);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
-      
+
+
     }
 
     return state;

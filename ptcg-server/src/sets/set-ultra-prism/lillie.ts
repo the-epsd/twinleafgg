@@ -43,7 +43,7 @@ export class Lillie extends TrainerCard {
         }
       }
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
     }
 

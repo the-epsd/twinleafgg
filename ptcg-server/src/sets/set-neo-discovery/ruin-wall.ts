@@ -32,7 +32,7 @@ export class RuinWall extends TrainerCard {
         }
       });
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
       return SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
         store, state, effect.player, {}, { min: 0, max: 1, blocked }

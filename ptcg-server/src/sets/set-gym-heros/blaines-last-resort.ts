@@ -29,7 +29,7 @@ export class BlainesLastResort extends TrainerCard {
       }
 
       DRAW_CARDS(player, 5);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

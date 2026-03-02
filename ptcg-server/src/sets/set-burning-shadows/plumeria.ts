@@ -13,7 +13,7 @@ import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types'
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { SupporterEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -84,7 +84,6 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Plumeri
   });
 
   if (targets.length === 0) {
-    CLEAN_UP_SUPPORTER(effect, player);
     return state;
   }
 
@@ -95,7 +94,6 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Plumeri
       const supporterEffect = new SupporterEffect(player, effect.trainerCard);
       store.reduceEffect(state, supporterEffect);
     } catch {
-      CLEAN_UP_SUPPORTER(effect, player);
       return state;
     }
   }
@@ -112,8 +110,6 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Plumeri
     cards = selected;
     next();
   });
-
-  CLEAN_UP_SUPPORTER(effect, player);
   MOVE_CARDS(store, state, target, opponent.discard, { cards, sourceCard: self });
   return state;
 }

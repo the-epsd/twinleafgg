@@ -48,7 +48,7 @@ export class Ryme extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       if (!opponent.bench.some(c => c.cards.length > 0)) {
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
         return state;
       }
@@ -68,7 +68,7 @@ export class Ryme extends TrainerCard {
             const supporterEffect = new SupporterEffect(player, effect.trainerCard);
             store.reduceEffect(state, supporterEffect);
           } catch {
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
             return state;
           }
         }
@@ -78,7 +78,7 @@ export class Ryme extends TrainerCard {
           opponent.switchPokemon(results[0]);
         }
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
         return state;
       });

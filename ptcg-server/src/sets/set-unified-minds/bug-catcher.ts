@@ -33,10 +33,10 @@ export class BugCatcher extends TrainerCard {
       ), result => {
         if (result) {
           player.deck.moveTo(player.hand, 2);
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         }
       });
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       return state;
     }
     return state;

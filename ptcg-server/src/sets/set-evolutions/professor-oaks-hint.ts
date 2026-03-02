@@ -31,7 +31,7 @@ export class ProfessorOaksHint extends TrainerCard {
 
       DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 7);
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
       // Your turn ends
       state.phase = GamePhase.BETWEEN_TURNS;

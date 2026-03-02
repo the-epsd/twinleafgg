@@ -34,7 +34,7 @@ export class Challenge extends TrainerCard {
           throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
         } else {
           DRAW_CARDS(player, 2);
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         }
         return state;
       }
@@ -89,7 +89,7 @@ export class Challenge extends TrainerCard {
           // Challenge declined
           DRAW_CARDS(player, 2);
         }
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
     return state;

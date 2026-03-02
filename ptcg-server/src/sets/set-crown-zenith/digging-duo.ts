@@ -8,15 +8,12 @@ import { StoreLike, State, GameError, GameMessage, Card, CoinFlipPrompt, ChooseC
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { CardList } from '../../game/store/state/card-list';
-import { CLEAN_UP_SUPPORTER } from '../../game/store/prefabs/prefabs';
-
-// Ref: set-battle-styles/sordward-and-shielbert.ts (generator pattern with effect.preventDefault + CLEAN_UP_SUPPORTER)
+// Ref: set-battle-styles/sordward-and-shielbert.ts (generator pattern with effect.preventDefault)
 // Ref: set-plasma-blast/root-fossil-lileep.ts (bottom deck lookup pattern)
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length === 0) {
-    CLEAN_UP_SUPPORTER(effect, player);
     return state;
   }
 
@@ -40,7 +37,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   deckBottom.cards = player.deck.cards.slice(start, end);
 
   if (deckBottom.cards.length === 0) {
-    CLEAN_UP_SUPPORTER(effect, player);
     return state;
   }
 
@@ -61,8 +57,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   chosen.forEach(card => {
     player.deck.moveCardTo(card, player.hand);
   });
-
-  CLEAN_UP_SUPPORTER(effect, player);
 
   // Shuffle the remaining deck cards
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

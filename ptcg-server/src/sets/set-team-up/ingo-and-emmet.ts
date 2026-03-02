@@ -69,8 +69,6 @@ export class IngoAndEmmet extends TrainerCard {
           player.deck.moveCardsTo(bottomCards, player.hand);
         }
       });
-
-      MOVE_CARD_TO(state, effect.trainerCard, player.discard);
     }
 
     return state;

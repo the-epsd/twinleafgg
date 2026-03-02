@@ -37,7 +37,7 @@ export class Digger extends TrainerCard {
 
       flipCoin(player);
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

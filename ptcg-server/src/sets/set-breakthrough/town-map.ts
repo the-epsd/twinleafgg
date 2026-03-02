@@ -32,7 +32,7 @@ export class TownMap extends TrainerCard {
         p.isSecret = false;
       });
       effect.player.hand.moveCardTo(effect.trainerCard, effect.player.supporter);
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

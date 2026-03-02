@@ -5,7 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameError, GameMessage, StateUtils } from '../..';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS_UNTIL_CARDS_IN_HAND, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS_UNTIL_CARDS_IN_HAND, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 export class Hugh extends TrainerCard {
@@ -79,11 +79,9 @@ export class Hugh extends TrainerCard {
           const cards = selected || [];
           MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
         });
-        CLEAN_UP_SUPPORTER(effect, player);
       } else {
         DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 5);
       }
-      CLEAN_UP_SUPPORTER(effect, player);
       return state;
     }
     return state;

@@ -12,7 +12,7 @@ import { CardList } from '../../game/store/state/card-list';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -86,7 +86,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   }
 
   MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
-  CLEAN_UP_SUPPORTER(effect, player);
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

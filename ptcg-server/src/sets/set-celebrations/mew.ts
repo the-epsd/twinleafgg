@@ -9,7 +9,7 @@ import { GameError, PokemonCard, PowerType, ShowCardsPrompt, ShuffleDeckPrompt, 
 
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Mew extends PokemonCard {
 
@@ -86,8 +86,9 @@ export class Mew extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_HAND,
         deckTop,
         { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
-        { min: 0, max: 1, allowCancel: true }
+        { min: 0, max: 1, allowCancel: false }
       ), selected => {
+        ABILITY_USED(player, this);
         player.marker.addMarker(this.MYSTERIOUS_TAIL_MARKER, this);
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.deck);

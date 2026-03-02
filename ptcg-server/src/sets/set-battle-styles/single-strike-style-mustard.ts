@@ -78,7 +78,7 @@ Search your deck for a Single Strike Pokémon and put it onto your Bench. Then, 
           player.deck.applyOrder(order);
 
           player.deck.moveTo(player.hand, 5);
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         });
       });
     }

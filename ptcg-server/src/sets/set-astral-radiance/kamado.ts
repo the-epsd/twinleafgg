@@ -8,7 +8,7 @@ import { StoreLike, State, GameMessage, Card, ChooseCardsPrompt } from '../../ga
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Kamado, effect: TrainerEffect): IterableIterator<State> {
@@ -17,7 +17,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // Need at least 2 cards in hand (the Kamado card + 1 other to keep)
   // The effect.trainerCard is already moved to supporter zone before this runs
   if (player.hand.cards.length === 0) {
-    CLEAN_UP_SUPPORTER(effect, player);
     throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
   }
 
@@ -35,7 +34,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   if (!keptCard) {
-    CLEAN_UP_SUPPORTER(effect, player);
     return state;
   }
 
@@ -47,8 +45,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // Draw 4 cards
   DRAW_CARDS(player, 4);
-
-  CLEAN_UP_SUPPORTER(effect, player);
   return state;
 }
 

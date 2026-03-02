@@ -6,7 +6,6 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../game/store/state-utils';
-
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Copycat, effect: TrainerEffect): IterableIterator<State> {
 

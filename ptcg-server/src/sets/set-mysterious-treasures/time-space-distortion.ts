@@ -55,11 +55,11 @@ export class TimeSpaceDistortion extends TrainerCard {
         ), selected => {
           if (selected && selected.length > 0) {
             // Discard trainer only when user selected a Pokemon
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
             // Recover discarded Pokemon
             player.discard.moveCardsTo(selected, player.hand);
           }
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         });
       });
     }

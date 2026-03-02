@@ -2,7 +2,7 @@ import { ChooseCardsPrompt, EnergyCard, GameError, GameMessage, StateUtils } fro
 import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS, SHOW_CARDS_TO_PLAYER } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -52,13 +52,11 @@ export class LadyOuting extends TrainerCard {
           }
         }
         if (selected.length === 0) {
-          CLEAN_UP_SUPPORTER(effect, player);
           return state;
         }
 
         SHOW_CARDS_TO_PLAYER(store, state, opponent, selected);
         MOVE_CARDS(store, state, player.deck, player.hand, { cards: selected, sourceCard: this });
-        CLEAN_UP_SUPPORTER(effect, player);
       });
 
       return state;

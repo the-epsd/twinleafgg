@@ -27,7 +27,7 @@ export class PokemonCirculator extends TrainerCard {
 
       SWITCH_ACTIVE_WITH_BENCHED(store, state, opponent);
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

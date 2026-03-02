@@ -39,7 +39,7 @@ export class Kahili extends TrainerCard {
           player.supporter.moveCardTo(effect.trainerCard, player.hand);
         } else {
           // Tails: normal discard
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         }
       });
     }

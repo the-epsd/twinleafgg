@@ -7,10 +7,10 @@ import { TrainerType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, ConfirmPrompt, Card, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 // Ref: set-legends-awakened/uxie.ts (generator pattern with yield for sequential prompts)
-// Ref: set-chilling-reign/agatha.ts (generator TrainerEffect with CLEAN_UP_SUPPORTER)
+// Ref: set-chilling-reign/agatha.ts (generator TrainerEffect)
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, self: SordwardAndShielbert): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
@@ -18,7 +18,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   // Check if there are any Trainer cards in the discard
   const trainerCards = player.discard.cards.filter(c => c.superType === SuperType.TRAINER);
   if (trainerCards.length === 0) {
-    CLEAN_UP_SUPPORTER(effect, player);
     return state;
   }
 
@@ -36,7 +35,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   if (!selectedCard) {
-    CLEAN_UP_SUPPORTER(effect, player);
     return state;
   }
 
@@ -57,8 +55,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     // Opponent says no: draw 3 cards instead
     DRAW_CARDS(player, 3);
   }
-
-  CLEAN_UP_SUPPORTER(effect, player);
   return state;
 }
 

@@ -5,7 +5,7 @@ import { EnergyType, SuperType, TrainerType } from '../../game/store/card/card-t
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -64,8 +64,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   ), selected => {
     deckTop.moveCardsTo(selected, player.hand);
     deckTop.moveTo(player.deck);
-
-    CLEAN_UP_SUPPORTER(effect, player);
 
 
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

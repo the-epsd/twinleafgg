@@ -58,7 +58,7 @@ export class Cassius extends TrainerCard {
           cardList.moveTo(player.deck);
           SHUFFLE_DECK(store, state, player);
 
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         }
       });
     }

@@ -72,7 +72,7 @@ When you play this card, you may discard 3 other cards from your hand. If you do
       opponentDeckTop.moveTo(opponent.discard, opponentDeckTop.cards.length);
 
       if (cannotDiscardFromHand) {
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       }
 
@@ -157,14 +157,14 @@ When you play this card, you may discard 3 other cards from your hand. If you do
               });
             }
 
-            player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
             return state;
           });
         }
       });
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       return state;
     }
 

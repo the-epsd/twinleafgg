@@ -71,7 +71,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
     player.deck.moveCardsTo(cards, player.hand);
     player.hand.moveCardTo(self, player.discard);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
 
     yield store.prompt(state, new ShowCardsPrompt(

@@ -5,7 +5,7 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { Card, ChooseCardsPrompt, GameError, GameLog, GameMessage, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../game';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, self: TMMachine, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -52,7 +52,6 @@ function* playCard(next: Function, store: StoreLike, state: State, self: TMMachi
   }
 
   MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: self });
-  CLEAN_UP_SUPPORTER(effect, player);
 
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

@@ -45,7 +45,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     next();
   });
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   transfers.forEach(transfer => {
     const source = StateUtils.getTarget(state, player, transfer.from);
     const target = StateUtils.getTarget(state, player, transfer.to);

@@ -438,17 +438,21 @@ export class FormatValidator {
   /**
    * Checks if a deck is valid for a specific format based on deck size requirements.
    * All formats require 60 cards.
+   * When using summary mode (no cards), trusts backend format array if it includes the format.
    * @param deck The deck to validate
    * @param format The format to check validity for
    * @returns true if the deck has the correct size for the format
    */
   static isDeckValidForFormat(deck: DeckListEntry, format: Format): boolean {
-    if (!deck || !deck.cards) {
+    if (!deck) {
       return false;
     }
-
-    const requiredDeckSize = 60; // format === Format.PRE_RELEASE ? 40 : 60;
-    return deck.cards.length === requiredDeckSize;
+    if (deck.cards) {
+      const requiredDeckSize = 60;
+      return deck.cards.length === requiredDeckSize;
+    }
+    // Summary mode: trust backend format array (backend validates 60 cards)
+    return Array.isArray(deck.format) && deck.format.includes(format);
   }
 }
 

@@ -87,7 +87,7 @@ export class GamesComponent implements OnInit, OnDestroy {
 
   public createGame(invitedId?: number) {
     this.loading = true;
-    this.deckService.getList()
+    this.deckService.getList({ summary: true })
       .pipe(
         finalize(() => { this.loading = false; }),
         untilDestroyed(this),

@@ -68,7 +68,7 @@ export class Serena extends TrainerCard {
                   break;
                 }
                 player.deck.moveTo(player.hand, 1);
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
               }
               return state;
@@ -105,7 +105,7 @@ export class Serena extends TrainerCard {
                   const supporterEffect = new SupporterEffect(player, effect.trainerCard);
                   store.reduceEffect(state, supporterEffect);
                 } catch {
-                  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
                   return state;
                 }
               }
@@ -115,7 +115,7 @@ export class Serena extends TrainerCard {
               }
 
               opponent.switchPokemon(cardList);
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
               return state;
             });
           }

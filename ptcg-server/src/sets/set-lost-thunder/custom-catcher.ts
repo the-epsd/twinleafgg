@@ -76,7 +76,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
         player.active.clearEffects();
         player.switchPokemon(target[0]);
 
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       });
     });

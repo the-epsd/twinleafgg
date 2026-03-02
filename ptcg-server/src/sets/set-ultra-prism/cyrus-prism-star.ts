@@ -4,7 +4,7 @@ import { CardTag, CardType, TrainerType } from '../../game/store/card/card-types
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
@@ -68,7 +68,6 @@ export class CyrusPrismStar extends TrainerCard {
               SHUFFLE_DECK(store, state, opponent);
             }
           });
-          CLEAN_UP_SUPPORTER(effect, player);
         });
       }
 

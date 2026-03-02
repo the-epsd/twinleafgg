@@ -69,7 +69,7 @@ export class MiracleDiamond extends TrainerCard {
 
         if (chosenPrize === null || chosenPrize.length === 0) {
           player.prizes.forEach(p => { p.isSecret = true; });
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
           // player.prizes = this.shuffleFaceDownPrizeCards(player.prizes);
           return state;
         }

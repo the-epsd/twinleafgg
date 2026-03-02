@@ -7,7 +7,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameError, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class ProfessorSycamore extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -37,7 +37,6 @@ export class ProfessorSycamore extends TrainerCard {
       const cards = player.hand.cards.filter(c => c !== this);
       state = MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this });
       player.deck.moveTo(player.hand, 7);
-      CLEAN_UP_SUPPORTER(effect, player);
     }
 
     return state;

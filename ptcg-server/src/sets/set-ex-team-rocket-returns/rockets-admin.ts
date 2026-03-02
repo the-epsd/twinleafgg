@@ -4,7 +4,6 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { MoveCardsEffect } from '../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-
 export class RocketsAdmin extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public set: string = 'TRR';
@@ -91,8 +90,6 @@ export class RocketsAdmin extends TrainerCard {
           }
         });
       }
-
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
 
     }
 

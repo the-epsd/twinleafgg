@@ -5,6 +5,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
+    "backfill:deck-formats": "node start.js --backfill",
     "lint": "eslint -c .eslintrc.js --ext .ts src --fix",
     "compile": "tsc && tsc -p tsconfig.dist.json",
     "start": "node --expose-gc --max-old-space-size=4096 start.js",

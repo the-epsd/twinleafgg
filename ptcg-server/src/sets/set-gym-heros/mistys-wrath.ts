@@ -44,7 +44,7 @@ export class MistysWrath extends TrainerCard {
         player.ancientSupporter = true;
         deckTop.moveCardsTo(selected, player.hand);
         deckTop.moveTo(player.discard);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       });
     }
     return state;

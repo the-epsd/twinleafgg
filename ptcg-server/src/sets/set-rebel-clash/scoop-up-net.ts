@@ -69,7 +69,6 @@ export class ScoopUpNet extends TrainerCard {
           if (pokemons.length > 0) {
             MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
           }
-          MOVE_CARD_TO(state, effect.trainerCard, player.discard);
         }
       });
     }

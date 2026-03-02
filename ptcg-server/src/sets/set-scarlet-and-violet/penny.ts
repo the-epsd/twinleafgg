@@ -8,7 +8,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { GameError, Player, PokemonCard } from '../../game';
-import { MOVE_CARD_TO, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 export class Penny extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -112,7 +112,6 @@ export class Penny extends TrainerCard {
           if (pokemons.length > 0) {
             MOVE_CARDS(store, state, cardList, player.hand, { cards: pokemons });
           }
-          MOVE_CARD_TO(state, effect.trainerCard, player.discard);
         }
       });
     }

@@ -9,7 +9,7 @@ import {
   PlayerType, SlotType, StateUtils, CardTarget,
   GameError, GameMessage, ChooseCardsPrompt, Card, PokemonCardList
 } from '../../game';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -62,7 +62,6 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   MOVE_CARDS(store, state, target, opponent.discard, { cards, sourceCard: effect.trainerCard });
-  CLEAN_UP_SUPPORTER(effect, player);
 
   return state;
 }

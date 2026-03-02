@@ -28,7 +28,7 @@ export class TrashExchange extends TrainerCard {
       SHUFFLE_DECK(store, state, player);
       player.deck.moveTo(player.discard, discardCount);
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

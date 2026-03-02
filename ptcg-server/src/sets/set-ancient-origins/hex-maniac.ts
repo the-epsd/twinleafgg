@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
-import { ADD_MARKER, HAS_MARKER, MOVE_CARD_TO, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -41,8 +41,6 @@ export class HexManiac extends TrainerCard {
 
       ADD_MARKER(this.HEX_MANIAC_MARKER, player, this);
       ADD_MARKER(this.HEX_MANIAC_MARKER, opponent, this);
-
-      MOVE_CARD_TO(state, effect.trainerCard, player.discard);
     }
 
     if (effect instanceof CheckPokemonPowersEffect) {

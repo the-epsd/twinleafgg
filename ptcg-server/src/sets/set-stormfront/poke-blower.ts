@@ -45,12 +45,12 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       GameMessage.COIN_FLIP
     ), result => {
       coinFlip = result;
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       next();
     });
 
     if (coinFlip === false) {
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       return state;
     }
 
@@ -66,7 +66,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       }
       next();
     });
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     return state;
   }
 
@@ -89,7 +89,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       return;
     }
     opponent.switchPokemon(targets[0]);
-    player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   });
 }
 

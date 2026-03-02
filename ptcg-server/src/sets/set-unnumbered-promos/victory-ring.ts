@@ -1,6 +1,6 @@
 import { Card, CardList, ChooseCardsPrompt, GameError, GameMessage, State, StoreLike, TrainerCard, TrainerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { CLEAN_UP_SUPPORTER, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class VictoryRing extends TrainerCard {
@@ -53,7 +53,6 @@ export class VictoryRing extends TrainerCard {
               emptyPrize.isSecret = true;
             });
         }
-        CLEAN_UP_SUPPORTER(effect, player);
       });
     }
 

@@ -47,10 +47,14 @@ export class Decks extends Controller {
         } catch {
           const cards = JSON.parse(deck.cards);
           format = getValidFormatsForCardList(cards);
+          // Persist so future list requests skip this work (fire-and-forget)
+          Deck.update({ id: deck.id }, { formats: JSON.stringify(format) }).catch(() => {});
         }
       } else {
         const cards = JSON.parse(deck.cards);
         format = getValidFormatsForCardList(cards);
+        // Persist so future list requests skip this work (fire-and-forget)
+        Deck.update({ id: deck.id }, { formats: JSON.stringify(format) }).catch(() => {});
       }
 
       const base: Record<string, any> = {
@@ -263,6 +267,10 @@ export class Decks extends Controller {
 
     try {
       deck.name = body.name.trim();
+      if (!deck.formats || deck.formats.trim() === '') {
+        const cards = JSON.parse(deck.cards);
+        deck.formats = JSON.stringify(getValidFormatsForCardList(cards));
+      }
       deck = await deck.save();
     } catch (error) {
       res.status(400);
@@ -1068,8 +1076,8 @@ function isPrintingLegalInStandardNightly(card: any): boolean {
   return !!setDate && setDate >= SetReleaseDates['TEF'];
 }
 
-// --- getValidFormatsForCardList ---
-function getValidFormatsForCardList(cardNames: string[]): number[] {
+// --- getValidFormatsForCardList --- (exported for backfill script)
+export function getValidFormatsForCardList(cardNames: string[]): number[] {
   const cardManager = CardManager.getInstance();
   const cards = cardNames.map((name: string) => cardManager.getCardByName(name)).filter((c: any) => !!c);
   if (!cards || cards.length === 0) {

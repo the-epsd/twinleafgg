@@ -6,7 +6,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS_UNTIL_CARDS_IN_HAND, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS_UNTIL_CARDS_IN_HAND, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { CardList } from '../../game/store/state/card-list';
 import { ChooseCardsPrompt } from '../../game';
 
@@ -49,7 +49,6 @@ export class Naveen extends TrainerCard {
         selected = selected || [];
         MOVE_CARDS(store, state, player.hand, player.discard, { cards: selected });
         DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 5);
-        CLEAN_UP_SUPPORTER(effect, player);
       });
       return state;
     }

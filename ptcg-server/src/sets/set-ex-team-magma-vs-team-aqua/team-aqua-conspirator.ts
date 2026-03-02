@@ -55,8 +55,6 @@ export class TeamAquaConspirator extends TrainerCard {
         }
         SHUFFLE_DECK(store, state, player);
       });
-
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
       return state;
     }
 

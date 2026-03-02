@@ -119,7 +119,7 @@ export class PromptInvitePlayerComponent implements OnInit {
 
   private loadDecks() {
     this.loading = true;
-    this.deckService.getListByFormat(this.gameState.format)
+    this.deckService.getListByFormat(this.gameState.format, { summary: true })
       .pipe(
         finalize(() => { this.loading = false; }),
         untilDestroyed(this),

@@ -66,7 +66,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: effect.trainerCard });
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   cards.forEach((card, index) => {
     store.log(state, GameLog.LOG_PLAYER_PUTS_CARD_IN_HAND, { name: player.name, card: card.name });

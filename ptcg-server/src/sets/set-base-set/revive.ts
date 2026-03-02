@@ -3,7 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { State } from '../../game/store/state/state';
 
@@ -57,8 +57,6 @@ export class Revive extends TrainerCard {
 
           slot.damage = damage;
           slot.pokemonPlayedTurn = state.turn;
-
-          CLEAN_UP_SUPPORTER(effect, player);
 
           return state;
         }

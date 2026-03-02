@@ -52,15 +52,15 @@ export class Jett extends TrainerCard {
       let megaEvolutionExCount = 0;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, pokemonCard) => {
         if (pokemonCard instanceof PokemonCard &&
-            pokemonCard.tags.includes(CardTag.POKEMON_SV_MEGA) &&
-            pokemonCard.tags.includes(CardTag.POKEMON_ex)) {
+          pokemonCard.tags.includes(CardTag.POKEMON_SV_MEGA) &&
+          pokemonCard.tags.includes(CardTag.POKEMON_ex)) {
           megaEvolutionExCount++;
         }
       });
 
       DRAW_CARDS(player, megaEvolutionExCount);
 
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
     }
 
     return state;

@@ -154,10 +154,12 @@ export class Core {
     if (gameSettings.format === Format.RETRO) {
       gameSettings.rules.attackFirstTurn = true;
       gameSettings.rules.firstTurnDrawCard = false;
+      gameSettings.rules.supporterCleanupAtEndTurn = true;
     }
     if (gameSettings.format === Format.RSPK) {
       gameSettings.rules.attackFirstTurn = true;
       gameSettings.rules.firstTurnDrawCard = false;
+      gameSettings.rules.supporterCleanupAtEndTurn = true;
     }
     if (gameSettings.format === Format.BW) {
       gameSettings.rules.attackFirstTurn = true;
@@ -202,10 +204,12 @@ export class Core {
     if (gameSettings.format === Format.RETRO) {
       gameSettings.rules.attackFirstTurn = true;
       gameSettings.rules.firstTurnDrawCard = false;
+      gameSettings.rules.supporterCleanupAtEndTurn = true;
     }
     if (gameSettings.format === Format.RSPK) {
       gameSettings.rules.attackFirstTurn = true;
       gameSettings.rules.firstTurnDrawCard = false;
+      gameSettings.rules.supporterCleanupAtEndTurn = true;
     }
     if (gameSettings.format === Format.BW) {
       gameSettings.rules.attackFirstTurn = true;

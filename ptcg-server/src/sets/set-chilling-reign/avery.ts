@@ -6,7 +6,7 @@ import { State } from '../../game/store/state/state';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { Card, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CLEAN_UP_SUPPORTER, DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 //Avery is not done yet!! have to add the "remove from bench" logic
 
@@ -91,7 +91,6 @@ export class Avery extends TrainerCard {
               MOVE_CARDS(store, state, cardList, opponent.discard, { cards: pokemons });
             }
           });
-          CLEAN_UP_SUPPORTER(effect, player);
           return state;
         });
       }

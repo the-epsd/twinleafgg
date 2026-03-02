@@ -27,12 +27,12 @@ export class JudgeWhistle extends TrainerCard {
 
       let isJudgeInDiscard = false;
       player.discard.cards.forEach(card => {
-        if (card instanceof TrainerCard && card.name === 'Judge'){
+        if (card instanceof TrainerCard && card.name === 'Judge') {
           isJudgeInDiscard = true;
         }
       });
 
-      if (!isJudgeInDiscard && player.deck.cards.length === 0){
+      if (!isJudgeInDiscard && player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
@@ -41,9 +41,9 @@ export class JudgeWhistle extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       // if there's no judge, just draw
-      if (!isJudgeInDiscard){
+      if (!isJudgeInDiscard) {
         player.deck.moveTo(player.hand, 1);
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
       }
 
       if (isJudgeInDiscard) {
@@ -64,7 +64,7 @@ export class JudgeWhistle extends TrainerCard {
               });
 
               let cards: Card[] = [];
-  
+
               store.prompt(state, new ChooseCardsPrompt(
                 player,
                 GameMessage.CHOOSE_CARD_TO_DECK,
@@ -76,10 +76,10 @@ export class JudgeWhistle extends TrainerCard {
                 cards.forEach((card, index) => {
                   store.log(state, GameLog.LOG_PLAYER_RETURNS_CARD_TO_HAND, { name: player.name, card: card.name });
                 });
-  
+
                 player.discard.moveCardsTo(cards, player.hand);
-                player.supporter.moveCardTo(effect.trainerCard, player.discard);
-  
+
+
                 return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
                   player.deck.applyOrder(order);
                 });
@@ -90,7 +90,7 @@ export class JudgeWhistle extends TrainerCard {
             message: GameMessage.DRAW,
             action: () => {
               player.deck.moveTo(player.hand, 1);
-              player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
             }
 
           }

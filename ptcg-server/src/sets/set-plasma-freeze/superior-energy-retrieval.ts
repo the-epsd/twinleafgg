@@ -77,7 +77,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   player.hand.moveCardsTo(cards, player.discard);
   player.discard.moveCardsTo(recovered, player.hand);
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
   return state;
 }
 
@@ -113,7 +113,7 @@ export class SuperiorEnergyRetrieval extends TrainerCard {
 
       if (discardEffect.preventDefault) {
         // If prevented, just discard the card and return
-        player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
         return state;
       }
 

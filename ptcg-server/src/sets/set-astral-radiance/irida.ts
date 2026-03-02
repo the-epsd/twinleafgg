@@ -12,7 +12,7 @@ import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { GameError } from '../../game';
-import { CLEAN_UP_SUPPORTER, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Irida, effect: TrainerEffect): IterableIterator<State> {
@@ -67,7 +67,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   MOVE_CARDS(store, state, player.deck, player.hand, { cards, sourceCard: self });
-  CLEAN_UP_SUPPORTER(effect, player);
 
 
   cards.forEach((card, index) => {
@@ -81,7 +80,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
       cards
     ), () => next());
   }
-  CLEAN_UP_SUPPORTER(effect, player);
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
   });

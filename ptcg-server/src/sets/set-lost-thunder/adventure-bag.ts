@@ -48,7 +48,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
     ), () => next());
   }
 
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);
@@ -62,7 +62,7 @@ export class AdventureBag extends TrainerCard {
   public set: string = 'LOT';
 
   public cardImage: string = 'assets/cardback.png';
-  
+
   public setNumber: string = '167';
 
   public name: string = 'Adventure Bag';

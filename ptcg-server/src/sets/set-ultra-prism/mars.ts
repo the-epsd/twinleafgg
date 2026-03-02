@@ -26,24 +26,24 @@ export class Mars extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      
+
       const player = effect.player;
-      
+
       const supporterTurn = player.supporterTurn;
 
       if (supporterTurn > 0) {
         throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
       }
-      
+
       if (player.deck.cards.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      } 
+      }
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       effect.preventDefault = true;
 
       player.deck.moveTo(player.hand, 2);
-      
+
       const opponent = StateUtils.getOpponent(state, player);
 
       if (opponent.hand.cards.length > 0) {
@@ -51,8 +51,8 @@ export class Mars extends TrainerCard {
         const randomCard = opponent.hand.cards[randomIndex];
         opponent.hand.moveCardTo(randomCard, opponent.discard);
       }
-      
-      player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
+
     }
 
     return state;

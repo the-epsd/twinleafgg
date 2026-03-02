@@ -55,29 +55,29 @@ export class Poppy extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
-  
+
       return store.prompt(state, new MoveEnergyPrompt(
         effect.player.id,
         GameMessage.MOVE_ENERGY_CARDS,
         PlayerType.BOTTOM_PLAYER,
-        [ SlotType.ACTIVE, SlotType.BENCH ],
+        [SlotType.ACTIVE, SlotType.BENCH],
         { superType: SuperType.ENERGY },
         { min: 0, max: 2, allowCancel: false }
       ), transfers => {
         if (transfers === null) {
           return;
         }
-  
+
         for (const transfer of transfers) {
           const source = StateUtils.getTarget(state, player, transfer.from);
           const target = StateUtils.getTarget(state, player, transfer.to);
           source.moveCardTo(transfer.card, target);
-          player.supporter.moveCardTo(effect.trainerCard, player.discard);
-          
+
+
         }
       });
     }
-  
+
     return state;
   }
 
