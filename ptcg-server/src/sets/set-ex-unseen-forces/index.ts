@@ -26,6 +26,7 @@ import { Porygon2 } from './porygon2';
 import { ProfessorElmsTrainingMethod } from './professors-elm-training-method';
 import { Scyther } from './scyther';
 import { Scizorex } from './scizor-ex';
+import { Shuckle } from './shuckle';
 import { SolidRage } from './solid-rage';
 import { Stantler } from './stantler';
 import { Slowpoke } from './slowpoke';
@@ -80,6 +81,7 @@ export const setEXUnseenForces: Card[] = [
   new ProfessorElmsTrainingMethod(),
   new Scyther(),
   new Scizorex(),
+  new Shuckle(),
   new SolidRage(),
   new Stantler(),
   new Slowpoke(),

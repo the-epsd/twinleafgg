@@ -14,6 +14,7 @@ import { Fearow } from './fearow';
 import { Grovyle } from './grovyle';
 import { Jirachiex } from './jirachi-ex';
 import { Kyogreex } from './kyogre-ex';
+import { Lombre } from './lombre';
 import { Mudkip } from './mudkip';
 import { MysteriousShard } from './mysterious-shard';
 import { Sceptileex } from './sceptile-ex';
@@ -53,6 +54,7 @@ export const setEXCrystalGuardians: Card[] = [
   new Grovyle(),
   new Jirachiex(),
   new Kyogreex(),
+  new Lombre(),
   new Mudkip(),
   new MysteriousShard(),
   new Sceptileex(),
