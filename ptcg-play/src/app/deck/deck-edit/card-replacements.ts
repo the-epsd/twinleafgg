@@ -10,6 +10,9 @@ export const setCodeReplacements = [
 
 // Single source of truth for card replacements
 export const cardReplacements = [
+  // HTML entity normalization
+  { from: '&amp;', to: '&' },
+
   // Diamond symbol to Prism Star conversion
   { from: '♢', to: 'Prism Star' },
 
