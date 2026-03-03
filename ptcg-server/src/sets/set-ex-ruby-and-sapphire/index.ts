@@ -4,6 +4,7 @@ import { Combusken } from './combusken';
 import { DarknessEnergySpecial } from './darkness-energy-special';
 import { Delcatty } from './delcatty';
 import { Gardevoir } from './gardevoir';
+import { Grovyle } from './grovyle';
 import { Kirlia } from './kirlia';
 import { Kirlia2 } from './kirlia2';
 import { LadyOuting } from './lady-outing';
@@ -35,6 +36,7 @@ export const setEXRubyAndSapphire: Card[] = [
   new Combusken(),
   new DarknessEnergySpecial(),
   new Delcatty(),
+  new Grovyle(),
   new Gardevoir(),
   new Kirlia(),
   new Kirlia2(),

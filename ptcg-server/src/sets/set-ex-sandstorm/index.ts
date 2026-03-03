@@ -2,6 +2,7 @@ import { Card } from '../../game/store/card/card';
 import { Anorith } from './anorith';
 import { Armaldo } from './armaldo';
 import { Azurill } from './azurill';
+import { DoubleFullHeal } from './double-full-heal';
 import { Dunsparce } from './dunsparce';
 import { Elekid } from './elekid';
 import { Gardevoirex } from './gardevoir-ex';
@@ -11,6 +12,7 @@ import { Lotad } from './lotad';
 import { Lunatone } from './lunatone';
 import { Marill } from './marill';
 import { MultiEnergy } from './multi-energy';
+import { Natu } from './natu';
 import { Onix } from './onix';
 import { Pichu } from './pichu';
 import { RootFossil } from './root-fossil';
@@ -20,6 +22,7 @@ import { Wailmer } from './wailmer';
 import { Wailordex } from './wailord-ex';
 import { WallysTraining } from './wallys-training';
 import { Wobbuffet } from './wobbuffet';
+import { Xatu } from './xatu';
 import { Zangoose } from './zangoose';
 
 // Other Prints
@@ -35,6 +38,7 @@ export const setEXSandstorm: Card[] = [
   new Anorith(),
   new Armaldo(),
   new Azurill(),
+  new DoubleFullHeal(),
   new Dunsparce(),
   new Elekid(),
   new Gardevoirex(),
@@ -44,6 +48,7 @@ export const setEXSandstorm: Card[] = [
   new Lunatone(),
   new Marill(),
   new MultiEnergy(),
+  new Natu(),
   new Onix(),
   new Pichu(),
   new RootFossil(),
@@ -53,6 +58,7 @@ export const setEXSandstorm: Card[] = [
   new Wailordex(),
   new WallysTraining(),
   new Wobbuffet(),
+  new Xatu(),
   new Zangoose(),
 
   // Other Prints

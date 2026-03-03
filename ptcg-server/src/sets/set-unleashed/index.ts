@@ -4,6 +4,7 @@ import { Aipom } from './aipom';
 import { Chinchou } from './chinchou';
 import { Crobat } from './crobat-prime';
 import { DualBall } from './dual-ball';
+import { EnergyReturner } from './energy-returner';
 import { EnteiAndRaikouLegendBottom } from './entei-and-raikou-legend-bottom';
 import { EnteiAndRaikouLegendTop } from './entei-and-raikou-legend-top';
 import { Golbat } from './golbat';
@@ -33,6 +34,7 @@ export const setUnleashed: Card[] = [
   new Chinchou(),
   new Crobat(),
   new DualBall(),
+  new EnergyReturner(),
   new EnteiAndRaikouLegendBottom(),
   new EnteiAndRaikouLegendTop(),
   new Golbat(),

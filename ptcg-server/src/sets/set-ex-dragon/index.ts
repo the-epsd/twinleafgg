@@ -15,6 +15,7 @@ import { Magneton } from './magneton';
 import { Mareep } from './mareep';
 import { Meditite } from './meditite';
 import { MrBrineysCompassion } from './mr-brineys-compassion';
+import { Mudkip } from './mudkip';
 import { Mukex } from './muk-ex';
 import { Numel } from './numel';
 import { Rayquazaex } from './rayquaza-ex';
@@ -42,6 +43,7 @@ export const setEXDragon: Card[] = [
   new Meditite(),
   new MrBrineysCompassion(),
   new Mukex(),
+  new Mudkip(),
   new Numel(),
   new Rayquazaex(),
   new Salamence(),

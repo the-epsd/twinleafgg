@@ -47,7 +47,7 @@ export class Trevenant extends PokemonCard {
       }
 
       // Checking to see if ability is being blocked
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, opponent, this)) {
         return state;
       }
 

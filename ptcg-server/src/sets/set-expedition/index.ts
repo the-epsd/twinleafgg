@@ -14,6 +14,7 @@ import { Gastly } from './gastly';
 import { Gengar } from './gengar';
 import { Ivysaur } from './ivysaur';
 import { MultiTechnicalMachine01 } from './multi-technical-machine-01';
+import { Oddish } from './oddish';
 import { PokemonNurse } from './pokemon-nurse';
 import { Venusaur } from './venusaur';
 import { Vileplume } from './vileplume';
@@ -47,6 +48,7 @@ export const setExpedition: Card[] = [
   new Gengar(),
   new Ivysaur(),
   new MultiTechnicalMachine01(),
+  new Oddish(),
   new PokemonNurse(),
   new Venusaur(),
   new Vileplume(),

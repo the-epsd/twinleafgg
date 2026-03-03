@@ -1,5 +1,6 @@
 import { Cleffa } from '../set-heartgold-and-soulsilver/cleffa';
 import { Copycat } from '../set-evolving-skies/copycat';
+import { DualBall } from '../set-unleashed/dual-ball';
 import { ProfessorElmsTrainingMethod } from '../set-ex-unseen-forces/professors-elm-training-method';
 import { Smeargle } from '../set-undaunted/smeargle';
 
@@ -14,6 +15,13 @@ export class CopycatCL extends Copycat {
   public set = 'CL';
   public setNumber = '77';
   public text = 'Shuffle your hand into your deck. Then, draw a card for each card in your opponent\'s hand.';
+}
+
+export class DualBallCL extends DualBall {
+  public fullName = 'Dual Ball CL';
+  public set = 'CL';
+  public setNumber = '78';
+  public text = 'Flip 2 coins. For each heads, search your deck for a Basic Pokémon, show it to your opponent, and put it into your hand. If you do, shuffle your deck afterward.';
 }
 
 export class ProfessorElmsTrainingMethodCL extends ProfessorElmsTrainingMethod {

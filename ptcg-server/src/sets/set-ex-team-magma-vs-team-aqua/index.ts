@@ -25,6 +25,7 @@ import { TeamMagmaConspirator } from './team-magma-conspirator';
 import { TeamMagmaHideout } from './team-magma-hideout';
 import { TeamMagmasBaltoy } from './team-magmas-baltoy';
 import { TeamMagmasBaltoy2 } from './team-magmas-baltoy2';
+import { TeamMagmasBaltoy3 } from './team-magmas-baltoy3';
 import { TeamMagmasCamerupt } from './team-magmas-camerupt';
 import { TeamMagmasClaydol } from './team-magmas-claydol';
 import { TeamMagmasGroudon } from './team-magmas-groudon';
@@ -62,6 +63,7 @@ export const setEXTeamMagmaVsTeamAqua: Card[] = [
   new TeamMagmaHideout(),
   new TeamMagmasBaltoy(),
   new TeamMagmasBaltoy2(),
+  new TeamMagmasBaltoy3(),
   new TeamMagmasCamerupt(),
   new TeamMagmasClaydol(),
   new TeamMagmasGroudon(),
