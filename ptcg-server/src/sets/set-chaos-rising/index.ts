@@ -7,6 +7,7 @@ import { BubbleWaterEnergy } from './bubble-water-energy';
 import { Chespin } from './chespin';
 import { Chesnaught } from './chesnaught';
 import { Cobalionex } from './cobalion-ex';
+import { Crobat } from './crobat';
 import { Deoxys } from './deoxys';
 import { Deoxys2 } from './deoxys-2';
 import { Deoxys3 } from './deoxys-3';
@@ -15,6 +16,7 @@ import { Delphox } from './delphox';
 import { Fennekin } from './fennekin';
 import { Froakie } from './froakie';
 import { Frogadier } from './frogadier';
+import { Golbat } from './golbat';
 import { Gourgeistex } from './gourgeist-ex';
 import { HyperrogueAngeFloette } from './hyperrogue-ange-floette';
 import { Kakuna } from './kakuna';
@@ -29,6 +31,7 @@ import { Quilladin } from './quilladin';
 import { Trevenant } from './trevenant';
 import { Weedle } from './weedle';
 import { Xerneas } from './xerneas';
+import { Zubat } from './zubat';
 
 export const setChaosRising: Card[] = [
   new Chespin(),
@@ -52,6 +55,9 @@ export const setChaosRising: Card[] = [
   new Deoxys2(),
   new Deoxys3(),
   new Deoxys4(),
+  new Zubat(),
+  new Golbat(),
+  new Crobat(),
   new Xerneas(),
   new Cobalionex(),
   new Philippe(),

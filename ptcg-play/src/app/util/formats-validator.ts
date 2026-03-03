@@ -958,6 +958,7 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'MEG': new Date('2025-09-26'),
   'PFL': new Date('2025-11-14'),
   'ASC': new Date('2026-01-28'),
+  'MC': new Date('2026-03-27'),
   'M3': new Date('2026-03-27'),
   'M4': new Date('2026-05-22')
 };
