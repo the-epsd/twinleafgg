@@ -29,9 +29,12 @@ import { Oddish } from './oddish';
 import { Regirockex } from './regirock-ex';
 import { Rhyhorn } from './rhyhorn';
 import { Rhydon } from './rhydon';
+import { Sealeo } from './sealeo';
+import { Spheal } from './spheal';
 import { Vileplumeex } from './vileplume-ex';
 import { Voltorb } from './voltorb';
 import { Vulpix } from './vulpix';
+import { Walrein } from './walrein';
 import { Zubat } from './zubat';
 
 // Other Prints
@@ -71,9 +74,12 @@ export const setEXHiddenLegends: Card[] = [
   new Regirockex(),
   new Rhyhorn(),
   new Rhydon(),
+  new Sealeo(),
+  new Spheal(),
   new Vileplumeex(),
   new Voltorb(),
   new Vulpix(),
+  new Walrein(),
   new Zubat(),
 
   // Other Prints

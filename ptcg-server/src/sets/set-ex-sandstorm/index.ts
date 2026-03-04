@@ -24,6 +24,7 @@ import { WallysTraining } from './wallys-training';
 import { Wobbuffet } from './wobbuffet';
 import { Xatu } from './xatu';
 import { Zangoose } from './zangoose';
+import { Zigzagoon } from './zigzagoon';
 
 // Other Prints
 import {
@@ -60,6 +61,7 @@ export const setEXSandstorm: Card[] = [
   new Wobbuffet(),
   new Xatu(),
   new Zangoose(),
+  new Zigzagoon(),
 
   // Other Prints
   new ClawFossilSS(),
