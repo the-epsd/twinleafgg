@@ -78,6 +78,8 @@ import { Gengar } from './gengar';
 import { Skorupi } from './skorupi';
 import { Drapion } from './drapion';
 import { ChienPao } from './chien-pao';
+import { Laprasex } from './lapras-ex';
+import { SpewpaIR, RowletIR, TalonflameIR, AurorusIR, DedenneIR, ClefairyIR, EspurrIR, ProbopassIR, TyruntIR, DrapionIR, DoubladeIR, RaticateIR, DecidueyeexFA, SalazzleexFA, MegaStarmieexFA, MegaClefableexFA, MegaZygardeexFA, YveltalexFA, MegaSkarmoryexFA, MeowthexFA, EnergyRecyclerFA, SacredAshFA, PokePadFA, WondrousPatchFA, TarragonFA, NaveenFA, RosasEncouragementFA, JacintheFA, ForestOfVitalityFA, LumioiseCityFA, JacintheSIR, MegaClefableexSIR, MegaStarmieexSIR, MegaZygardeexHR, MegaZygardeexSIR, MeowthexSIR, RosasEncouragementSIR } from './other-prints';
 
 export const setPerfectOrder: Card[] = [
   new Barbaracle(),
@@ -159,4 +161,44 @@ export const setPerfectOrder: Card[] = [
   new Skorupi(),
   new Drapion(),
   new ChienPao(),
+  new Laprasex(),
+
+  // IRs, FAs, SIRs, HR
+  new SpewpaIR(),
+  new RowletIR(),
+  new TalonflameIR(),
+  new AurorusIR(),
+  new DedenneIR(),
+  new ClefairyIR(),
+  new EspurrIR(),
+  new ProbopassIR(),
+  new TyruntIR(),
+  new DrapionIR(),
+  new DoubladeIR(),
+  new RaticateIR(),
+  new DecidueyeexFA(),
+  new SalazzleexFA(),
+  new MegaStarmieexFA(),
+  new MegaClefableexFA(),
+  new MegaZygardeexFA(),
+  new YveltalexFA(),
+  new MegaSkarmoryexFA(),
+  new MeowthexFA(),
+  new EnergyRecyclerFA(),
+  new SacredAshFA(),
+  new PokePadFA(),
+  new WondrousPatchFA(),
+  new TarragonFA(),
+  new NaveenFA(),
+  new RosasEncouragementFA(),
+  new JacintheFA(),
+  new ForestOfVitalityFA(),
+  new LumioiseCityFA(),
+  new MegaStarmieexSIR(),
+  new MegaClefableexSIR(),
+  new MegaZygardeexSIR(),
+  new MeowthexSIR(),
+  new RosasEncouragementSIR(),
+  new JacintheSIR(),
+  new MegaZygardeexHR(),
 ];
