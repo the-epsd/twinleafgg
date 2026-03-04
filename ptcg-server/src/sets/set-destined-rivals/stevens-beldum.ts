@@ -10,14 +10,12 @@ export class StevensBeldum extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Metal Slash',
-      cost: [M, C],
-      damage: 30,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Metal Slash',
+    cost: [M, C],
+    damage: 30,
+    text: ''
+  }];
 
   public regulationMark: string = 'I';
   public set: string = 'DRI';
