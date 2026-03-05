@@ -11,6 +11,7 @@ import { EnergyCard } from '../card/energy-card';
 
 export enum GameEffects {
   RETREAT_EFFECT = 'RETREAT_EFFECT',
+  RETREAT_START_EFFECT = 'RETREAT_START_EFFECT',
   USE_ATTACK_EFFECT = 'USE_ATTACK_EFFECT',
   USE_STADIUM_EFFECT = 'USE_STADIUM_EFFECT',
   USE_POWER_EFFECT = 'USE_POWER_EFFECT',
@@ -52,6 +53,16 @@ export class RetreatEffect implements Effect {
     this.player = player;
     this.benchIndex = benchIndex;
     this.moveRetreatCostTo = player.discard;
+  }
+}
+
+export class RetreatStartEffect implements Effect {
+  readonly type: string = GameEffects.RETREAT_START_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+
+  constructor(player: Player) {
+    this.player = player;
   }
 }
 export class UsePowerEffect implements Effect {

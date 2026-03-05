@@ -585,12 +585,10 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
         } else if (result.attack) {
           this.gameService.attack(gameId, result.attack);
 
-          // Retreat: choose bench Pokémon to retreat into
+          // Retreat: validate + pay cost first, then server prompts for bench
         } else if (result.retreat) {
           if (!canRetreat) return;
-          this.boardInteractionService.startRetreatSelection(gameId, (benchIndex) => {
-            this.gameService.retreatAction(gameId, benchIndex);
-          });
+          this.gameService.retreatStart(gameId);
         }
       });
   }
