@@ -9,6 +9,9 @@ export * from './set-wotc-promos';
 export * from './set-gym-heros';
 export * from './set-gym-challenge';
 
+//Game Boy
+export * from './set-game-boy-exclusives';
+
 //Retro Energy
 export * from './set-base-set-energy';
 
