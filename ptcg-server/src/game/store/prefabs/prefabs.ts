@@ -1646,6 +1646,7 @@ export function SWITCH_ACTIVE_WITH_BENCHED(store: StoreLike, state: State, playe
     if (!selected || selected.length === 0)
       return state;
     const target = selected[0];
+    player.active.clearEffects();
     player.switchPokemon(target, store, state);
   });
 }
