@@ -29,7 +29,7 @@ export class Espurr extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      if (player.marker.hasMarker('EMMA_PLAYED_THIS_TURN', this)) {
+      if (player.marker.hasMarker('EMMA_PLAYED_THIS_TURN')) {
         effect.damage += 60;
       }
     }
