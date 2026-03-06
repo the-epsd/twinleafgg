@@ -1380,7 +1380,8 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         card.set === 'VS' ||
         card.set === 'PPF' ||
         card.set === 'PPB' ||
-        card.set === 'UP';
+        card.set === 'UP' ||
+        card.set === 'GBM';
     case Format.SWSH:
       return card.set === 'SWSH' ||
         card.set === 'SSH' ||
