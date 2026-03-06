@@ -5,6 +5,7 @@ export function cors(): RequestHandler {
   return function (req: Request, res: Response, next: NextFunction): any {
     const allowedOrigins = [
       'https://play.twinleaf.gg',
+      'http://play.twinleaf.gg',
       'http://localhost:4200'
     ];
     const origin = req.headers.origin;
