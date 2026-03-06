@@ -144,15 +144,20 @@ function* alternativeSetupGame(next: Function, store: StoreLike, state: State): 
     }
     // Opponent sets up
     yield* alternativeSetupSinglePlayer(opponent, chooseCardsOptions, state, store, next);
-    // Player is shown all opponent's mulligan hands
+    // Show both players' mulligan hands: opponent's first, then player's
     if (opponentMulligans > 0) {
       yield store.prompt(state, new ShowMulliganPrompt(player.id, GameMessage.SETUP_OPPONENT_NO_BASIC, opponentMulliganHands, { allowCancel: false }), () => next());
       yield store.prompt(state, new ShowMulliganPrompt(opponent.id, GameMessage.SETUP_PLAYER_NO_BASIC, opponentMulliganHands, { allowCancel: false }), () => next());
     }
-    // Player chooses how many cards to draw
-    if (opponentMulligans > 0) {
+    if (playerMulliganHands.length > 0) {
+      yield store.prompt(state, new ShowMulliganPrompt(player.id, GameMessage.SETUP_PLAYER_NO_BASIC, playerMulliganHands, { allowCancel: false }), () => next());
+      yield store.prompt(state, new ShowMulliganPrompt(opponent.id, GameMessage.SETUP_OPPONENT_NO_BASIC, playerMulliganHands, { allowCancel: false }), () => next());
+    }
+    // Player (who had Basic first) may draw up to the difference in mulligan counts
+    const extraDraws = Math.max(0, opponentMulligans - playerMulligans);
+    if (extraDraws > 0) {
       const options: { message: string, value: number }[] = [];
-      for (let i = opponentMulligans; i >= 0; i--) {
+      for (let i = extraDraws; i >= 0; i--) {
         options.push({ message: `Draw ${i} card(s)`, value: i });
       }
       yield store.prompt(state, new SelectPrompt(
@@ -185,15 +190,20 @@ function* alternativeSetupGame(next: Function, store: StoreLike, state: State): 
     }
     // Player sets up
     yield* alternativeSetupSinglePlayer(player, chooseCardsOptions, state, store, next);
-    // Opponent is shown all player's mulligan hands
+    // Show both players' mulligan hands: player's first, then opponent's
     if (playerMulligans > 0) {
       yield store.prompt(state, new ShowMulliganPrompt(opponent.id, GameMessage.SETUP_OPPONENT_NO_BASIC, playerMulliganHands, { allowCancel: false }), () => next());
       yield store.prompt(state, new ShowMulliganPrompt(player.id, GameMessage.SETUP_PLAYER_NO_BASIC, playerMulliganHands, { allowCancel: false }), () => next());
     }
-    // Opponent chooses how many cards to draw
-    if (playerMulligans > 0) {
+    if (opponentMulliganHands.length > 0) {
+      yield store.prompt(state, new ShowMulliganPrompt(opponent.id, GameMessage.SETUP_PLAYER_NO_BASIC, opponentMulliganHands, { allowCancel: false }), () => next());
+      yield store.prompt(state, new ShowMulliganPrompt(player.id, GameMessage.SETUP_OPPONENT_NO_BASIC, opponentMulliganHands, { allowCancel: false }), () => next());
+    }
+    // Opponent (who had Basic first) may draw up to the difference in mulligan counts
+    const extraDraws = Math.max(0, playerMulligans - opponentMulligans);
+    if (extraDraws > 0) {
       const options: { message: string, value: number }[] = [];
-      for (let i = playerMulligans; i >= 0; i--) {
+      for (let i = extraDraws; i >= 0; i--) {
         options.push({ message: `Draw ${i} card(s)`, value: i });
       }
       yield store.prompt(state, new SelectPrompt(
@@ -213,6 +223,17 @@ function* alternativeSetupGame(next: Function, store: StoreLike, state: State): 
     // Both have Basics, proceed with normal setup for both
     yield* alternativeSetupSinglePlayer(player, chooseCardsOptions, state, store, next);
     yield* alternativeSetupSinglePlayer(opponent, chooseCardsOptions, state, store, next);
+    // Show both players' mulligan hands when either mulliganed
+    if (playerMulligans > 0 || opponentMulligans > 0) {
+      if (playerMulliganHands.length > 0) {
+        yield store.prompt(state, new ShowMulliganPrompt(player.id, GameMessage.SETUP_PLAYER_NO_BASIC, playerMulliganHands, { allowCancel: false }), () => next());
+        yield store.prompt(state, new ShowMulliganPrompt(opponent.id, GameMessage.SETUP_OPPONENT_NO_BASIC, playerMulliganHands, { allowCancel: false }), () => next());
+      }
+      if (opponentMulliganHands.length > 0) {
+        yield store.prompt(state, new ShowMulliganPrompt(opponent.id, GameMessage.SETUP_PLAYER_NO_BASIC, opponentMulliganHands, { allowCancel: false }), () => next());
+        yield store.prompt(state, new ShowMulliganPrompt(player.id, GameMessage.SETUP_OPPONENT_NO_BASIC, opponentMulliganHands, { allowCancel: false }), () => next());
+      }
+    }
   }
 
   // Set initial Pokemon Played Turn, so players can't evolve during first turn
@@ -399,15 +420,20 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
     }
     // Opponent sets up
     yield* setupSinglePlayer(opponent, chooseCardsOptions, state, store, next);
-    // Player is shown all opponent's mulligan hands (placeholder prompt)
+    // Show both players' mulligan hands: opponent's first, then player's
     if (opponentMulligans > 0) {
       yield store.prompt(state, new ShowMulliganPrompt(player.id, GameMessage.SETUP_OPPONENT_NO_BASIC, opponentMulliganHands, { allowCancel: false }), () => next());
       yield store.prompt(state, new ShowMulliganPrompt(opponent.id, GameMessage.SETUP_PLAYER_NO_BASIC, opponentMulliganHands, { allowCancel: false }), () => next());
     }
-    // Player chooses how many cards to draw
-    if (opponentMulligans > 0) {
+    if (playerMulliganHands.length > 0) {
+      yield store.prompt(state, new ShowMulliganPrompt(player.id, GameMessage.SETUP_PLAYER_NO_BASIC, playerMulliganHands, { allowCancel: false }), () => next());
+      yield store.prompt(state, new ShowMulliganPrompt(opponent.id, GameMessage.SETUP_OPPONENT_NO_BASIC, playerMulliganHands, { allowCancel: false }), () => next());
+    }
+    // Player (who had Basic first) may draw up to the difference in mulligan counts
+    const extraDraws = Math.max(0, opponentMulligans - playerMulligans);
+    if (extraDraws > 0) {
       const options: { message: string, value: number }[] = [];
-      for (let i = opponentMulligans; i >= 0; i--) {
+      for (let i = extraDraws; i >= 0; i--) {
         options.push({ message: `Draw ${i} card(s)`, value: i });
       }
       yield store.prompt(state, new SelectPrompt(
@@ -440,15 +466,20 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
     }
     // Player sets up
     yield* setupSinglePlayer(player, chooseCardsOptions, state, store, next);
-    // Opponent is shown all player's mulligan hands (placeholder prompt)
+    // Show both players' mulligan hands: player's first, then opponent's
     if (playerMulligans > 0) {
       yield store.prompt(state, new ShowMulliganPrompt(opponent.id, GameMessage.SETUP_OPPONENT_NO_BASIC, playerMulliganHands, { allowCancel: false }), () => next());
       yield store.prompt(state, new ShowMulliganPrompt(player.id, GameMessage.SETUP_PLAYER_NO_BASIC, playerMulliganHands, { allowCancel: false }), () => next());
     }
-    // Opponent chooses how many cards to draw
-    if (playerMulligans > 0) {
+    if (opponentMulliganHands.length > 0) {
+      yield store.prompt(state, new ShowMulliganPrompt(opponent.id, GameMessage.SETUP_PLAYER_NO_BASIC, opponentMulliganHands, { allowCancel: false }), () => next());
+      yield store.prompt(state, new ShowMulliganPrompt(player.id, GameMessage.SETUP_OPPONENT_NO_BASIC, opponentMulliganHands, { allowCancel: false }), () => next());
+    }
+    // Opponent (who had Basic first) may draw up to the difference in mulligan counts
+    const extraDraws = Math.max(0, playerMulligans - opponentMulligans);
+    if (extraDraws > 0) {
       const options: { message: string, value: number }[] = [];
-      for (let i = playerMulligans; i >= 0; i--) {
+      for (let i = extraDraws; i >= 0; i--) {
         options.push({ message: `Draw ${i} card(s)`, value: i });
       }
       yield store.prompt(state, new SelectPrompt(
@@ -468,6 +499,17 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
     // Both have Basics, proceed with normal setup for both
     yield* setupSinglePlayer(player, chooseCardsOptions, state, store, next);
     yield* setupSinglePlayer(opponent, chooseCardsOptions, state, store, next);
+    // Show both players' mulligan hands when either mulliganed
+    if (playerMulligans > 0 || opponentMulligans > 0) {
+      if (playerMulliganHands.length > 0) {
+        yield store.prompt(state, new ShowMulliganPrompt(player.id, GameMessage.SETUP_PLAYER_NO_BASIC, playerMulliganHands, { allowCancel: false }), () => next());
+        yield store.prompt(state, new ShowMulliganPrompt(opponent.id, GameMessage.SETUP_OPPONENT_NO_BASIC, playerMulliganHands, { allowCancel: false }), () => next());
+      }
+      if (opponentMulliganHands.length > 0) {
+        yield store.prompt(state, new ShowMulliganPrompt(opponent.id, GameMessage.SETUP_PLAYER_NO_BASIC, opponentMulliganHands, { allowCancel: false }), () => next());
+        yield store.prompt(state, new ShowMulliganPrompt(player.id, GameMessage.SETUP_OPPONENT_NO_BASIC, opponentMulliganHands, { allowCancel: false }), () => next());
+      }
+    }
   }
 
   // Set initial Pokemon Played Turn, so players can't evolve during first turn
