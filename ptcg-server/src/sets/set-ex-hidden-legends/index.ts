@@ -6,9 +6,12 @@ import { Bellossom } from './bellossom';
 import { Chinchou } from './chinchou';
 import { Clamperl } from './clamperl';
 import { Corsola } from './corsola';
+import { Crobat } from './crobat';
 import { DesertRuins } from './desert-ruins';
 import { Feebas } from './feebas';
 import { Glalie } from './glalie';
+import { Gloom } from './gloom';
+import { Golbat } from './golbat';
 import { Gorebyss } from './gorebyss';
 import { Groudonex } from './groudon-ex';
 import { IslandCave } from './island-cave';
@@ -26,8 +29,13 @@ import { Oddish } from './oddish';
 import { Regirockex } from './regirock-ex';
 import { Rhyhorn } from './rhyhorn';
 import { Rhydon } from './rhydon';
+import { Sealeo } from './sealeo';
+import { Spheal } from './spheal';
+import { Vileplumeex } from './vileplume-ex';
 import { Voltorb } from './voltorb';
 import { Vulpix } from './vulpix';
+import { Walrein } from './walrein';
+import { Zubat } from './zubat';
 
 // Other Prints
 import {
@@ -43,9 +51,12 @@ export const setEXHiddenLegends: Card[] = [
   new Chinchou(),
   new Clamperl(),
   new Corsola(),
+  new Crobat(),
   new DesertRuins(),
   new Feebas(),
   new Glalie(),
+  new Gloom(),
+  new Golbat(),
   new Gorebyss(),
   new Groudonex(),
   new IslandCave(),
@@ -63,8 +74,13 @@ export const setEXHiddenLegends: Card[] = [
   new Regirockex(),
   new Rhyhorn(),
   new Rhydon(),
+  new Sealeo(),
+  new Spheal(),
+  new Vileplumeex(),
   new Voltorb(),
   new Vulpix(),
+  new Walrein(),
+  new Zubat(),
 
   // Other Prints
   new BeldumHL(),

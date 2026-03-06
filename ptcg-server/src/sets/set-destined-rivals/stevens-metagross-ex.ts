@@ -1,59 +1,8 @@
-import { AttachEnergyPrompt, CardTarget, GameError, GameMessage, PlayerType, PokemonCard, PowerType, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, GameError, GameMessage, PlayerType, PokemonCard, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
 import { CardTag, CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
-import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
-import { Effect, PowerEffect } from '../../game/store/effects/game-effects';
-import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
-
-function* useExboot(next: Function, store: StoreLike, state: State, effect: PowerEffect): IterableIterator<State> {
-  const player = effect.player;
-
-  if (player.deck.cards.length === 0) {
-    throw new GameError(GameMessage.CANNOT_USE_POWER);
-  }
-
-  const blocked = player.deck.cards
-    .filter(c => c.name !== 'Psychic Energy' && c.name !== 'Metal Energy')
-    .map(c => player.deck.cards.indexOf(c));
-
-  const blockedTo: CardTarget[] = [];
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-
-    const checkPokemonTypeEffect = new CheckPokemonTypeEffect(cardList);
-    store.reduceEffect(state, checkPokemonTypeEffect);
-
-    if (!checkPokemonTypeEffect.cardTypes.includes(CardType.PSYCHIC) &&
-      !checkPokemonTypeEffect.cardTypes.includes(CardType.METAL)) {
-      blockedTo.push(target);
-    }
-  });
-
-  yield store.prompt(state, new AttachEnergyPrompt(
-    player.id,
-    GameMessage.ATTACH_ENERGY_TO_BENCH,
-    player.deck,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.BENCH, SlotType.ACTIVE],
-    { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-    { allowCancel: false, min: 0, max: 2, blocked, blockedTo }
-  ), transfers => {
-    transfers = transfers || [];
-    for (const transfer of transfers) {
-
-      if (transfers.length > 1) {
-        if (transfers[0].card.name === transfers[1].card.name) {
-          throw new GameError(GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
-        }
-      }
-
-      const target = StateUtils.getTarget(state, player, transfer.to);
-      player.deck.moveCardTo(transfer.card, target);
-      next();
-    }
-  });
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  });
-}
+import { Effect } from '../../game/store/effects/game-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { ABILITY_USED, ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class StevensMetagrossex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -82,11 +31,50 @@ export class StevensMetagrossex extends PokemonCard {
   public name: string = 'Steven\'s Metagross ex';
   public fullName: string = 'Steven\'s Metagross ex DRI';
 
+  public readonly X_BOOT_MARKER = 'X_BOOT_MARKER';
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
     if (WAS_POWER_USED(effect, 0, this)) {
-      const generator = useExboot(() => generator.next(), store, state, effect);
-      return generator.next().value;
+      const player = effect.player;
+
+      if (player.marker.hasMarker(this.X_BOOT_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      ABILITY_USED(player, this);
+      ADD_MARKER(this.X_BOOT_MARKER, player, this);
+
+      return store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_CARDS,
+        player.deck,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH, SlotType.ACTIVE],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        { allowCancel: true, min: 0, max: 2, differentTypes: true, validCardTypes: [CardType.PSYCHIC, CardType.METAL] },
+      ), transfers => {
+        transfers = transfers || [];
+        for (const transfer of transfers) {
+
+          if (transfers.length > 1) {
+            if (transfers[0].card.name === transfers[1].card.name) {
+              throw new GameError(GameMessage.CAN_ONLY_SELECT_TWO_DIFFERENT_ENERGY_TYPES);
+            }
+          }
+
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.deck.moveCardTo(transfer.card, target);
+        }
+        SHUFFLE_DECK(store, state, player);
+      });
     }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.X_BOOT_MARKER, this);
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      const player = effect.player;
+      player.marker.removeMarker(this.X_BOOT_MARKER, this);
+    }
+
     return state;
   }
 

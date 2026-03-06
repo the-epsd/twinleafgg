@@ -39,7 +39,7 @@ import { Larvesta } from './larvesta';
 import { Meloettaex } from './meloetta-ex';
 import { NsPlan } from './ns-plan';
 import { Oshawott } from './oshawott';
-import { AirBalloonSV11, CarracostaAR, AlomomolaAR, CherenSV11, EnergyRetrievalSV11, LarvestaAR, PrismEnergySV11, ProfessorsResearchSV11, SeismitoadAR, TirtougaAR, ServineAR, SnivyAR, TympoleAR, VictiniAR, VolcaronaAR, HaxorusAR, FraxureAR, AxewAR, CobalionAR, DrillburAR, EelektrikAR, CottoneeAR, EmolgaAR, PalpitoadAR, TynamoAR, ExcadrillexFA, FennelFA, GenesectexFA, KyuremexFA, MeloettaexFA, SerperiorexFA, ZekromexFA, ExcadrillexSIR, GenesectexSIR, KyuremexSIR, MeloettaexSIR, SerperiorexSIR, ZekromexSIR, ZekromexBR, JoltikAR, GalvantulaAR, DewottAR, EmboarAR, FrillishAR, OshawottAR, PigniteAR, SamurottAR, TepigAR, VirizionAR, ArchenAR, ArcheopsAR, DeinoAR, TerrakionAR, ZoroarkAR, ZoruaAR, ZweilousAR, ReshiramexFA, KeldeoexFA, WhimsicottexFA, HydreigonexFA, JellicentexFA, BouffalantexFA, HildaFA, HildaSIR, BouffalantexSIR, HydreigonexSIR, JellicentexSIR, KeldeoexSIR, ReshiramexSIR, WhimsicottexSIR, ReshiramexWR, ToolScrapperSV11, NsPlanFA, NsPlanSIR, VictiniRRB, VictiniRRW } from './other-prints';
+import { AirBalloonSV11, CarracostaAR, AlomomolaAR, CherenSV11, EnergyRetrievalSV11, LarvestaAR, PrismEnergySV11, ProfessorsResearchSV11, SeismitoadAR, TirtougaAR, ServineAR, SnivyAR, TympoleAR, VictiniAR, VolcaronaAR, HaxorusAR, FraxureAR, AxewAR, CobalionAR, DrillburAR, EelektrikAR, CottoneeAR, EmolgaAR, PalpitoadAR, TynamoAR, ExcadrillexFA, FennelFA, GenesectexFA, KyuremexFA, MeloettaexFA, SerperiorexFA, ZekromexFA, ExcadrillexSIR, GenesectexSIR, KyuremexSIR, MeloettaexSIR, SerperiorexSIR, ZekromexSIR, ZekromexBR, JoltikAR, GalvantulaAR, DewottAR, EmboarAR, FrillishAR, OshawottAR, PigniteAR, SamurottAR, TepigAR, VirizionAR, ArchenAR, ArcheopsAR, DeinoAR, TerrakionAR, ZoroarkAR, ZoruaAR, ZweilousAR, ReshiramexFA, KeldeoexFA, WhimsicottexFA, HydreigonexFA, JellicentexFA, BouffalantexFA, HildaFA, HildaSIR, BouffalantexSIR, HydreigonexSIR, JellicentexSIR, KeldeoexSIR, ReshiramexSIR, WhimsicottexSIR, ReshiramexWR, ToolScrapperSV11, NsPlanFA, NsPlanSIR, VictiniRRB, VictiniRRW, Pokegear30SV11 } from './other-prints';
 import { Palpitoad } from './palpitoad';
 import { Pignite } from './pignite';
 import { Purrloin } from './purrloin';
@@ -125,7 +125,7 @@ export const setSV11: Card[] = [
 
   new CherenSV11(),
   new ProfessorsResearchSV11(),
-
+  new Pokegear30SV11(),
   new EnergyRetrievalSV11(),
   new ToolScrapperSV11(),
   new AirBalloonSV11(),

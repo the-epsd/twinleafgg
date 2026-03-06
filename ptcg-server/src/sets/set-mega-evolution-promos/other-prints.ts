@@ -15,6 +15,11 @@ import { MegaCharizardXex } from '../set-phantasmal-flames/mega-charizard-x-ex';
 import { Oricorioex } from '../set-phantasmal-flames/oricorio-ex';
 import { MegaKangaskhanex } from '../set-mega-evolution/mega-kangaskhan-ex';
 import { Haunter } from '../set-phantasmal-flames/haunter';
+import { Serperior } from '../set-perfect-order/serperior';
+import { Barbaracle } from '../set-perfect-order/barbaracle';
+import { Tyrantrum } from '../set-perfect-order/tyrantrum';
+import { Doublade } from '../set-perfect-order/doublade';
+
 export class MeganiumMEP extends Meganium {
   public setNumber = '1';
   public fullName: string = 'Meganium MEP';
@@ -114,5 +119,29 @@ export class MegaKangaskhanexMEP extends MegaKangaskhanex {
 export class HaunterMEP extends Haunter {
   public setNumber = '27';
   public fullName: string = 'Haunter MEP';
+  public set = 'MEP';
+}
+
+export class SerperiorMEP extends Serperior {
+  public setNumber = '64';
+  public fullName: string = 'Serperior MEP';
+  public set = 'MEP';
+}
+
+export class BarbaracleMEP extends Barbaracle {
+  public setNumber = '65';
+  public fullName: string = 'Barbaracle MEP';
+  public set = 'MEP';
+}
+
+export class TyrantrumMEP extends Tyrantrum {
+  public setNumber = '66';
+  public fullName: string = 'Tyrantrum MEP';
+  public set = 'MEP';
+}
+
+export class DoubladeMEP extends Doublade {
+  public setNumber = '67';
+  public fullName: string = 'Doublade MEP';
   public set = 'MEP';
 }

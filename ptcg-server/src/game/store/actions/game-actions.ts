@@ -69,6 +69,14 @@ export class RetreatAction implements Action {
 
 }
 
+export class RetreatStartAction implements Action {
+
+  readonly type: string = 'RETREAT_START_ACTION';
+
+  constructor(public clientId: number) { }
+
+}
+
 export class PassTurnAction implements Action {
 
   readonly type: string = 'PASS_TURN';

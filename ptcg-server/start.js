@@ -36,6 +36,8 @@ cardManager.defineSet(sets.setVendingSeries);
 cardManager.defineSet(sets.setGymHeros);
 cardManager.defineSet(sets.setGymChallenge);
 
+cardManager.defineSet(sets.setGameBoyExclusives);
+
 cardManager.defineSet(sets.setBaseSetEnergy);
 
 cardManager.defineSet(sets.setNeoGenesis);

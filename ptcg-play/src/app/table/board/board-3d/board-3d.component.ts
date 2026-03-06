@@ -1214,9 +1214,7 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
         this.gameService.attack(gameId, result.attack);
       } else if (result.retreat) {
         if (!canRetreat) return;
-        this.boardInteractionService.startRetreatSelection(gameId, (benchIndex) => {
-          this.gameService.retreatAction(gameId, benchIndex);
-        });
+        this.gameService.retreatStart(gameId);
       }
     });
   }

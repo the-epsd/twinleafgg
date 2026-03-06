@@ -48,13 +48,13 @@ export class Decks extends Controller {
           const cards = JSON.parse(deck.cards);
           format = getValidFormatsForCardList(cards);
           // Persist so future list requests skip this work (fire-and-forget)
-          Deck.update({ id: deck.id }, { formats: JSON.stringify(format) }).catch(() => {});
+          Deck.update({ id: deck.id }, { formats: JSON.stringify(format) }).catch(() => { });
         }
       } else {
         const cards = JSON.parse(deck.cards);
         format = getValidFormatsForCardList(cards);
         // Persist so future list requests skip this work (fire-and-forget)
-        Deck.update({ id: deck.id }, { formats: JSON.stringify(format) }).catch(() => {});
+        Deck.update({ id: deck.id }, { formats: JSON.stringify(format) }).catch(() => { });
       }
 
       const base: Record<string, any> = {
@@ -775,14 +775,14 @@ const BanLists: { [key: number]: string[] } = {
     'Igglybuff PR 36',
     'Igglybuff SK 67',
     'Igglybuff N2 40',
-    'Arceus VSTAR BRS 123',
-    'Arceus VSTAR BRS 176',
-    'Arceus VSTAR BRS 184',
+    //'Arceus VSTAR BRS 123',
+    //'Arceus VSTAR BRS 176',
+    //'Arceus VSTAR BRS 184',
     'Archeops SIT 147',
     'Archeops NVI 67',
     'Porygon2 GE 49',
-    'Arceus VSTAR PR-SW SWSH307',
-    'Arceus VSTAR CRZ GG70',
+    //'Arceus VSTAR PR-SW SWSH307',
+    //'Arceus VSTAR CRZ GG70',
     'Archeops PR-SW SWSH272',
     'Chatot G SV 54',
     'Ditto FO 18',
@@ -1050,6 +1050,7 @@ const SetReleaseDates: { [key: string]: Date } = {
   'MEG': new Date('2025-09-26'),
   'PFL': new Date('2025-11-14'),
   'ASC': new Date('2026-01-28'),
+  'MC': new Date('2026-03-27'),
   'M3': new Date('2026-03-27'),
   'M4': new Date('2026-05-22')
 };

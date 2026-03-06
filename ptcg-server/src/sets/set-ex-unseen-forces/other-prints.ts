@@ -1,6 +1,7 @@
 import { BoostEnergy } from '../set-aquapolis/boost-energy';
 import { CycloneEnergy } from '../set-ex-power-keepers/cyclone-energy';
 import { DarknessEnergySpecial } from '../set-ex-ruby-and-sapphire/darkness-energy-special';
+import { EnergyRemoval2 } from '../set-ex-power-keepers/energy-removal-2';
 import { MetalEnergySpecial } from '../set-undaunted/metal-energy-special';
 import { PokeBall } from '../set-jungle/pokeball';
 import { WarpEnergy } from '../set-shining-legends/warp-energy';
@@ -23,6 +24,12 @@ export class DarknessEnergySpecialUF extends DarknessEnergySpecial {
   public fullName = 'Darkness Energy Special UF';
   public set = 'UF';
   public setNumber = '96';
+}
+
+export class EnergyRemoval2UF extends EnergyRemoval2 {
+  public fullName = 'Energy Removal 2 UF';
+  public set = 'UF';
+  public setNumber = '82';
 }
 
 export class MetalEnergySpecialUF extends MetalEnergySpecial {

@@ -1,14 +1,18 @@
 import { ChooseEnergyPrompt } from '../prompts/choose-energy-prompt';
+import { ChoosePokemonPrompt } from '../prompts/choose-pokemon-prompt';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { Effect } from '../effects/effect';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
-import { RetreatEffect } from '../effects/game-effects';
+import { RetreatEffect, RetreatStartEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
 import { CheckRetreatCostEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { SpecialCondition } from '../card/card-types';
 import { PokemonCard } from '../..';
+import { Player } from '../state/player';
+import { PlayerType, SlotType } from '../actions/play-card-action';
+import { PokemonCardList } from '../state/pokemon-card-list';
 
 
 function retreatPokemon(store: StoreLike, state: State, effect: RetreatEffect) {
@@ -33,7 +37,103 @@ function flatMap<T, U>(array: T[], fn: (item: T) => U[]): U[] {
   return array.reduce((acc, item) => acc.concat(fn(item)), [] as U[]);
 }
 
+function promptBenchAndRetreat(store: StoreLike, state: State, player: Player): State {
+  return store.prompt(state, new ChoosePokemonPrompt(
+    player.id,
+    GameMessage.CHOOSE_POKEMON_TO_SWITCH,
+    PlayerType.BOTTOM_PLAYER,
+    [SlotType.BENCH],
+    { min: 1, max: 1, allowCancel: true, blocked: [] }
+  ), (benchResult: PokemonCardList[] | null) => {
+    if (benchResult === null) {
+      return;
+    }
+    const benchIndex = player.bench.indexOf(benchResult[0]);
+    if (benchIndex < 0) {
+      return;
+    }
+    const effect = new RetreatEffect(player, benchIndex);
+    retreatPokemon(store, state, effect);
+    const activePokemonCard = player.active.getPokemonCard() as PokemonCard;
+    if (activePokemonCard && !player.movedToActiveThisTurn.includes(activePokemonCard.id)) {
+      player.movedToActiveThisTurn.push(activePokemonCard.id);
+    }
+    if (activePokemonCard) {
+      activePokemonCard.movedToActiveThisTurn = true;
+    }
+  });
+}
+
 export function retreatReducer(store: StoreLike, state: State, effect: Effect): State {
+
+  /* Retreat start: validate + pay cost, then prompt for bench */
+  if (effect instanceof RetreatStartEffect) {
+    const player = effect.player;
+
+    const hasBenchPokemon = player.bench.some(b => b.cards.length > 0);
+    if (!hasBenchPokemon) {
+      throw new GameError(GameMessage.INVALID_TARGET);
+    }
+
+    const sp = player.active.specialConditions;
+    if (sp.includes(SpecialCondition.PARALYZED) || sp.includes(SpecialCondition.ASLEEP)) {
+      throw new GameError(GameMessage.BLOCKED_BY_SPECIAL_CONDITION);
+    }
+
+    if (player.retreatedTurn === state.turn) {
+      throw new GameError(GameMessage.RETREAT_ALREADY_USED);
+    }
+
+    const checkRetreatCost = new CheckRetreatCostEffect(player);
+    state = store.reduceEffect(state, checkRetreatCost);
+
+    if (checkRetreatCost.cost.length === 0) {
+      player.active.clearEffects();
+      return promptBenchAndRetreat(store, state, player);
+    }
+
+    const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+    state = store.reduceEffect(state, checkProvidedEnergy);
+
+    const enoughEnergies = StateUtils.checkEnoughEnergy(checkProvidedEnergy.energyMap, checkRetreatCost.cost);
+    if (enoughEnergies === false) {
+      throw new GameError(GameMessage.NOT_ENOUGH_ENERGY);
+    }
+
+    if (StateUtils.checkExactEnergy(checkProvidedEnergy.energyMap, checkRetreatCost.cost)) {
+      const cards = flatMap(checkProvidedEnergy.energyMap, e => Array.from({ length: e.provides.length }, () => e.card));
+      player.active.clearEffects();
+      player.active.moveCardsTo(cards, player.discard);
+      return promptBenchAndRetreat(store, state, player);
+    }
+
+    if (StateUtils.allEnergyProvidesIdentical(checkProvidedEnergy.energyMap)) {
+      const selection = StateUtils.selectMinimalEnergyForCost(
+        checkProvidedEnergy.energyMap, checkRetreatCost.cost
+      );
+      if (selection && selection.length > 0) {
+        const cards = selection.map(e => e.card);
+        player.active.clearEffects();
+        player.active.moveCardsTo(cards, player.discard);
+        return promptBenchAndRetreat(store, state, player);
+      }
+    }
+
+    return store.prompt(state, new ChooseEnergyPrompt(
+      player.id,
+      GameMessage.CHOOSE_ENERGY_TO_PAY_RETREAT_COST,
+      checkProvidedEnergy.energyMap,
+      checkRetreatCost.cost
+    ), energy => {
+      if (energy === null) {
+        return;
+      }
+      const cards = energy.map(e => e.card);
+      player.active.clearEffects();
+      player.active.moveCardsTo(cards, player.discard);
+      promptBenchAndRetreat(store, state, player);
+    });
+  }
 
   /* Retreat pokemon */
   if (effect instanceof RetreatEffect) {

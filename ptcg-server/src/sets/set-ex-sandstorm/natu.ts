@@ -1,0 +1,41 @@
+import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK } from '../../game/store/prefabs/prefabs';
+import { CardType, Stage } from '../../game/store/card/card-types';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
+import { Effect } from '../../game/store/effects/effect';
+import { State, StoreLike } from '../../game';
+
+export class Natu extends PokemonCard {
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = P;
+  public hp: number = 50;
+  public weakness = [{ type: P }];
+  public retreat = [C];
+
+  public attacks = [{
+    name: 'Peck',
+    cost: [C],
+    damage: 10,
+    text: ''
+  },
+  {
+    name: 'Soothing Wave',
+    cost: [P],
+    damage: 0,
+    text: 'Each Defending Pokémon is now Asleep.'
+  }];
+
+  public set: string = 'SS';
+  public cardImage: string = 'assets/cardback.png';
+  public setNumber: string = '69';
+  public name: string = 'Natu';
+  public fullName: string = 'Natu SS';
+
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+
+    if (AFTER_ATTACK(effect, 1, this)) {
+      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
+    }
+
+    return state;
+  }
+}

@@ -233,6 +233,11 @@ export class GameService {
       .subscribe(() => { }, (error: ApiError) => this.handleError(error));
   }
 
+  public retreatStart(gameId: number) {
+    this.socketService.emit('game:action:retreatStart', { gameId })
+      .subscribe(() => { }, (error: ApiError) => this.handleError(error));
+  }
+
   public passTurnAction(gameId: number) {
     this.socketService.emit('game:action:passTurn', { gameId })
       .subscribe(() => { }, (error: ApiError) => this.handleError(error));

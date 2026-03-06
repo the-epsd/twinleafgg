@@ -790,5 +790,6 @@ export class MarniesMorpekoIR extends MarniesMorpeko {
 
 export class StevensBeldumIR extends StevensBeldum {
   public fullName = 'Steven\'s BeldumIR SVP';
+  public set = 'SVP';
   public setNumber = '207';
 }

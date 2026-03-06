@@ -1,7 +1,7 @@
 import {
   AddPlayerAction, AppendLogAction, Action, PassTurnAction,
   ReorderHandAction, ReorderBenchAction, PlayCardAction, CardTarget,
-  RetreatAction, AttackAction, UseAbilityAction, StateSerializer,
+  RetreatAction, RetreatStartAction, AttackAction, UseAbilityAction, StateSerializer,
   UseStadiumAction, GameLog,
   UseTrainerAbilityAction,
   UseEnergyAbilityAction,
@@ -56,6 +56,7 @@ export class GameSocket {
     this.socket.addListener('game:action:playCard', this.playCard.bind(this));
     this.socket.addListener('game:action:resolvePrompt', this.resolvePrompt.bind(this));
     this.socket.addListener('game:action:retreat', this.retreat.bind(this));
+    this.socket.addListener('game:action:retreatStart', this.retreatStart.bind(this));
     this.socket.addListener('game:action:reorderBench', this.reorderBench.bind(this));
     this.socket.addListener('game:action:reorderHand', this.reorderHand.bind(this));
     this.socket.addListener('game:action:passTurn', this.passTurn.bind(this));
@@ -308,6 +309,11 @@ export class GameSocket {
     this.dispatch(params.gameId, action, response);
   }
 
+  private retreatStart(params: { gameId: number }, response: Response<void>) {
+    const action = new RetreatStartAction(this.client.id);
+    this.dispatch(params.gameId, action, response);
+  }
+
   private passTurn(params: { gameId: number }, response: Response<void>) {
     const action = new PassTurnAction(this.client.id);
     this.dispatch(params.gameId, action, response);
@@ -480,6 +486,7 @@ export class GameSocket {
     this.socket.removeListener('game:action:playCard');
     this.socket.removeListener('game:action:resolvePrompt');
     this.socket.removeListener('game:action:retreat');
+    this.socket.removeListener('game:action:retreatStart');
     this.socket.removeListener('game:action:reorderBench');
     this.socket.removeListener('game:action:reorderHand');
     this.socket.removeListener('game:action:passTurn');

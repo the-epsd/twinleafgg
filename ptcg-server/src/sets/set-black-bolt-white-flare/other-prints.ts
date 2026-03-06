@@ -2,6 +2,7 @@ import { ToolScrapper } from '../set-dragons-exalted/tool-scrapper';
 import { Cheren } from '../set-emerging-powers/cheren';
 import { PrismEnergy } from '../set-next-destinies/prism-energy';
 import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
+import { Pokegear30 } from '../set-scarlet-and-violet/pokegear-30';
 import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
 import { AirBalloon } from '../set-sword-and-shield/air-balloon';
 import { Alomomola } from './alomomola';
@@ -90,6 +91,13 @@ export class EnergyRetrievalSV11 extends EnergyRetrieval {
   public setNumber = '82';
   public fullName: string = 'Energy Retrieval SV11W';
   public set = 'WHT';
+}
+
+export class Pokegear30SV11 extends Pokegear30 {
+  public regulationMark = 'I';
+  public setNumber = '84';
+  public fullName: string = 'Pokegear 3.0 SV11W';
+  public set = 'BLK';
 }
 
 export class ToolScrapperSV11 extends ToolScrapper {

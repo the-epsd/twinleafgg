@@ -16,9 +16,22 @@ import { Umbreon } from './umbreon';
 import {
   CleffaCL,
   CopycatCL,
+  DualBallCL,
   ProfessorElmsTrainingMethodCL,
   SmeargleCL
 } from './other-prints';
+
+// Basic energies
+import {
+  GrassEnergy,
+  FireEnergy,
+  WaterEnergy,
+  LightningEnergy,
+  PsychicEnergy,
+  FightingEnergy,
+  DarknessEnergy,
+  MetalEnergy,
+} from './basic-energies';
 
 export const setCallOfLegends: Card[] = [
   new CheerleadersCheer(),
@@ -37,6 +50,17 @@ export const setCallOfLegends: Card[] = [
   // Other prints
   new CleffaCL(),
   new CopycatCL(),
+  new DualBallCL(),
   new ProfessorElmsTrainingMethodCL(),
   new SmeargleCL(),
+
+  // Basic energies
+  new GrassEnergy(),
+  new FireEnergy(),
+  new WaterEnergy(),
+  new LightningEnergy(),
+  new PsychicEnergy(),
+  new FightingEnergy(),
+  new DarknessEnergy(),
+  new MetalEnergy(),
 ];

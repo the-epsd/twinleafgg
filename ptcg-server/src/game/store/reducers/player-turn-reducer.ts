@@ -1,10 +1,10 @@
 import { Action } from '../actions/action';
-import { PassTurnAction, RetreatAction, AttackAction, UseAbilityAction, UseStadiumAction, UseTrainerAbilityAction, UseEnergyAbilityAction } from '../actions/game-actions';
+import { PassTurnAction, RetreatAction, RetreatStartAction, AttackAction, UseAbilityAction, UseStadiumAction, UseTrainerAbilityAction, UseEnergyAbilityAction } from '../actions/game-actions';
 import { State, GamePhase } from '../state/state';
 import { StoreLike } from '../store-like';
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
-import { RetreatEffect, UseAttackEffect, UseEnergyPowerEffect, UsePowerEffect, UseStadiumEffect, UseTrainerPowerEffect } from '../effects/game-effects';
+import { RetreatEffect, RetreatStartEffect, UseAttackEffect, UseEnergyPowerEffect, UsePowerEffect, UseStadiumEffect, UseTrainerPowerEffect } from '../effects/game-effects';
 import { EndTurnEffect } from '../effects/game-phase-effects';
 import { StateUtils } from '../state-utils';
 import { SlotType } from '../actions/play-card-action';
@@ -41,6 +41,17 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
       const retreatEffect = new RetreatEffect(player, action.benchIndex);
       state = store.reduceEffect(state, retreatEffect);
       player.active.clearEffects();
+      return state;
+    }
+
+    if (action instanceof RetreatStartAction) {
+      const player = state.players[state.activePlayer];
+
+      if (player === undefined || player.id !== action.clientId) {
+        throw new GameError(GameMessage.NOT_YOUR_TURN);
+      }
+
+      state = store.reduceEffect(state, new RetreatStartEffect(player));
       return state;
     }
 
