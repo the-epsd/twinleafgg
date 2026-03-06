@@ -2,7 +2,7 @@ import { PokemonCard, Stage, CardType, PowerType, DamageMap, GameMessage, Player
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect, CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
+import { MoveDamageCountersEffect, PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
@@ -183,6 +183,11 @@ export class Munkidori extends PokemonCard {
 
               const damageToMove = Math.min(30 - totalDamageMoved, Math.min(10, source.damage));
               if (damageToMove > 0) {
+                const moveEffect = new MoveDamageCountersEffect(effect.player);
+                state = store.reduceEffect(state, moveEffect);
+                if (moveEffect.preventDefault) {
+                  continue;
+                }
                 source.damage -= damageToMove;
                 const placeCountersEffect = new PlaceDamageCountersEffect(
                   effect.player,

@@ -7,7 +7,7 @@ import { PokemonCard } from '../card/pokemon-card';
 import { AbstractAttackEffect, AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckHpEffect, CheckPokemonTypeEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
-import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, MoveCardsEffect, PowerEffect, RetreatEffect, SpecialEnergyEffect } from '../effects/game-effects';
+import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, MoveCardsEffect, MoveDamageCountersEffect, PowerEffect, RetreatEffect, SpecialEnergyEffect } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
 import { preventRetreatEffect, preventDamageEffect } from '../effects/effect-of-attack-effects';
@@ -1789,6 +1789,11 @@ export function MOVE_DAMAGE_COUNTERS(
   player: Player,
   options: MoveDamageCountersOptions = {}
 ): State {
+  const moveEffect = new MoveDamageCountersEffect(player);
+  state = store.reduceEffect(state, moveEffect);
+  if (moveEffect.preventDefault) {
+    return state;
+  }
   const {
     playerType = PlayerType.BOTTOM_PLAYER,
     slots = [SlotType.ACTIVE, SlotType.BENCH],

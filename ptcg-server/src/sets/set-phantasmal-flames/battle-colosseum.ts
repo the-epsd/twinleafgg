@@ -4,7 +4,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
-import { PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
+import { MoveDamageCountersEffect, PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 
 export class BattleColosseum extends TrainerCard {
@@ -18,6 +18,13 @@ export class BattleColosseum extends TrainerCard {
   public text: string = 'Prevent all damage counters from being placed on Benched Pokémon (both yours and your opponent\'s) by effects of attacks and Abilities from the opponent\'s Pokémon. (Damage from attacks is still taken.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    if (effect instanceof MoveDamageCountersEffect && StateUtils.getStadiumCard(state) === this) {
+      const activePlayer = state.players[state.activePlayer];
+      const opponentOfActive = StateUtils.getOpponent(state, activePlayer);
+      if (effect.player === opponentOfActive) {
+        effect.preventDefault = true;
+      }
+    }
 
     // Also prevent damage counters from effects like PUT_X_DAMAGE_COUNTERS_IN_ANY_WAY_YOU_LIKE
     if (effect instanceof PutCountersEffect && StateUtils.getStadiumCard(state) === this) {

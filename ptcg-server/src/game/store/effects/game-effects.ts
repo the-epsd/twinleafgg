@@ -26,6 +26,7 @@ export enum GameEffects {
   SPECIAL_ENERGY_EFFECT = 'SPECIAL_ENERGY_EFFECT',
   PUT_COUNTERS_EFFECT = 'PUT_COUNTERS_EFFECT',
   PLACE_DAMAGE_COUNTERS_EFFECT = 'PLACE_DAMAGE_COUNTERS_EFFECT',
+  MOVE_DAMAGE_COUNTERS_EFFECT = 'MOVE_DAMAGE_COUNTERS_EFFECT',
   MOVED_TO_ACTIVE_EFFECT = 'MOVED_TO_ACTIVE_EFFECT'
 }
 
@@ -379,6 +380,16 @@ export class PlaceDamageCountersEffect implements Effect {
     this.target = target;
     this.damage = damage;
     this.source = source;
+  }
+}
+
+export class MoveDamageCountersEffect implements Effect {
+  readonly type: string = GameEffects.MOVE_DAMAGE_COUNTERS_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+
+  constructor(player: Player) {
+    this.player = player;
   }
 }
 
