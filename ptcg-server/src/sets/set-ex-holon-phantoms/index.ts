@@ -15,6 +15,7 @@ import { Horsea } from './horsea';
 import { Latias } from './latias';
 import { Meowth } from './meowth';
 import { Oddish } from './oddish';
+import { Omastar } from './omastar';
 import { Pidgey } from './pidgey';
 import { Pidgeotto } from './pidgeotto';
 import { Pikachu } from './pikachu';
@@ -36,6 +37,7 @@ export const setEXHolonPhantoms: Card[] = [
   new Latias(),
   new Meowth(),
   new Oddish(),
+  new Omastar(),
   new Pidgey(),
   new Pidgeotto(),
   new Pikachu(),

@@ -26,6 +26,7 @@ import { Wartortle } from './wartortle';
 // Other prints
 import {
   EnergyRemoval2RG,
+  LifeHerbRG,
   MultiEnergyRG,
   PokemonReversalRG,
   ProfOaksResearchRG,
@@ -60,6 +61,7 @@ export const setEXFireRedLeafGreen: Card[] = [
 
   // Other prints
   new EnergyRemoval2RG(),
+  new LifeHerbRG(),
   new MultiEnergyRG(),
   new ProfOaksResearchRG(),
   new PokemonReversalRG(),

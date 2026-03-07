@@ -21,6 +21,7 @@ import { Machop } from './machop';
 import { Mewex } from './mew-ex';
 import { Muk } from './muk';
 import { Nuzleaf } from './nuzleaf';
+import { Omanyte } from './omanyte';
 import { Pikachu } from './pikachu';
 import { PowerTree } from './power-tree';
 import { ReactEnergy } from './react-energy';
@@ -60,6 +61,7 @@ export const setEXLegendMaker: Card[] = [
   new Mewex(),
   new Muk(),
   new Nuzleaf(),
+  new Omanyte(),
   new Pikachu(),
   new PowerTree(),
   new ReactEnergy(),

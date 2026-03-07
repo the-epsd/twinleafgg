@@ -13,6 +13,7 @@ import { Lunatone } from './lunatone';
 import { Marill } from './marill';
 import { MultiEnergy } from './multi-energy';
 import { Natu } from './natu';
+import { Omanyte } from './omanyte';
 import { Onix } from './onix';
 import { Pichu } from './pichu';
 import { RootFossil } from './root-fossil';
@@ -50,6 +51,7 @@ export const setEXSandstorm: Card[] = [
   new Marill(),
   new MultiEnergy(),
   new Natu(),
+  new Omanyte(),
   new Onix(),
   new Pichu(),
   new RootFossil(),
