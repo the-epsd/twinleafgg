@@ -6,6 +6,7 @@ import { DoubleFullHeal } from './double-full-heal';
 import { Dunsparce } from './dunsparce';
 import { Elekid } from './elekid';
 import { Gardevoirex } from './gardevoir-ex';
+import { Kabuto } from './kabuto';
 import { LanettesNetSearch } from './lanettes-net-search';
 import { Lombre } from './lombre';
 import { Lotad } from './lotad';
@@ -44,6 +45,7 @@ export const setEXSandstorm: Card[] = [
   new Dunsparce(),
   new Elekid(),
   new Gardevoirex(),
+  new Kabuto(),
   new LanettesNetSearch(),
   new Lombre(),
   new Lotad(),

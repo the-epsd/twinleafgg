@@ -1,7 +1,7 @@
 import { ClawFossil } from '../set-ex-power-keepers/claw-fossil';
 import { Marill } from './marill';
 import { MysteriousFossil } from '../set-fossil/mysterious-fossil';
-import { Ralts } from '../set-ex-dragon-frontiers/ralts';
+import { Ralts2 } from '../set-ex-dragon-frontiers/ralts2';
 import { RareCandy } from '../set-ex-holon-phantoms/rare-candy';
 
 export class ClawFossilSS extends ClawFossil {
@@ -24,7 +24,7 @@ export class MysteriousFossilSS extends MysteriousFossil {
   public fullName = 'Mysterious Fossil SS';
 }
 
-export class RaltsSS extends Ralts {
+export class RaltsSS extends Ralts2 {
   public set = 'SS';
   public setNumber = '74';
   public fullName = 'Ralts SS';

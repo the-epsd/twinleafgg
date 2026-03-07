@@ -12,6 +12,8 @@ import { GiantStump } from './giant-stump';
 import { Girafarig } from './girafarig';
 import { Grimer } from './grimer';
 import { Growlithe } from './growlithe';
+import { Kabuto } from './kabuto';
+import { Kabutops } from './kabutops';
 import { Kecleon } from './kecleon';
 import { Lapras } from './lapras';
 import { Lunatone } from './lunatone';
@@ -22,6 +24,7 @@ import { Mewex } from './mew-ex';
 import { Muk } from './muk';
 import { Nuzleaf } from './nuzleaf';
 import { Omanyte } from './omanyte';
+import { Omastar } from './omastar';
 import { Pikachu } from './pikachu';
 import { PowerTree } from './power-tree';
 import { ReactEnergy } from './react-energy';
@@ -52,6 +55,8 @@ export const setEXLegendMaker: Card[] = [
   new Girafarig(),
   new Grimer(),
   new Growlithe(),
+  new Kabuto(),
+  new Kabutops(),
   new Kecleon(),
   new Lapras(),
   new Lunatone(),
@@ -62,6 +67,7 @@ export const setEXLegendMaker: Card[] = [
   new Muk(),
   new Nuzleaf(),
   new Omanyte(),
+  new Omastar(),
   new Pikachu(),
   new PowerTree(),
   new ReactEnergy(),

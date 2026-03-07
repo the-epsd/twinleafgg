@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy } from './basic-energies';
+import { Aerodactyl } from './aerodactyl';
 import { Armaldo } from './armaldo';
 import { Chimecho } from './chimecho';
 import { Corphish } from './corphish';
@@ -25,6 +26,7 @@ import { Trapinch } from './trapinch';
 import { Vibrava } from './vibrava';
 
 export const setEXHolonPhantoms: Card[] = [
+  new Aerodactyl(),
   new Armaldo(),
   new Chimecho(),
   new Corphish(),
