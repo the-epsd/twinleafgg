@@ -368,6 +368,9 @@ export class GameStatePreserver {
     }
   }
 
+  /** MySQL TEXT limit (65,535 bytes) with safety margin - compress when exceeding to reduce storage */
+  private static readonly MYSQL_TEXT_BYTE_LIMIT = 60 * 1024;
+
   /**
    * Serialize game state with size validation and optional compression
    */
@@ -378,8 +381,11 @@ export class GameStatePreserver {
       let serializedState = this.serializeState(state);
       const originalSize = serializedState.length;
 
-      // Check if state exceeds maximum size
-      if (originalSize > this.config.maxSerializedStateSize) {
+      // Compress when exceeding max size OR when exceeding MySQL TEXT limit (defense in depth)
+      const shouldCompress = originalSize > this.config.maxSerializedStateSize ||
+        originalSize > GameStatePreserver.MYSQL_TEXT_BYTE_LIMIT;
+
+      if (shouldCompress) {
         logger.logStructured({
           level: LogLevel.WARN,
           category: 'serialization',
