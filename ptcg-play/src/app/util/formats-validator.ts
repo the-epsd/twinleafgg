@@ -324,7 +324,8 @@ export class FormatValidator {
           card.set === 'VS' ||
           card.set === 'PPF' ||
           card.set === 'PPB' ||
-          card.set === 'UP';
+          card.set === 'UP' ||
+          card.set === 'GBM';
 
       case Format.SWSH:
         return card.set === 'SWSH' ||
