@@ -17,6 +17,7 @@ import { Ivysaur2 } from './ivysaur2';
 import { Jirachiex } from './jirachi-ex';
 import { Kyogreex } from './kyogre-ex';
 import { Lombre } from './lombre';
+import { Marshtomp } from './marshtomp';
 import { Mudkip } from './mudkip';
 import { MysteriousShard } from './mysterious-shard';
 import { Sceptileex } from './sceptile-ex';
@@ -34,6 +35,7 @@ import { Windstorm } from './windstorm';
 // Other prints
 import {
   BillsMaintenanceCG,
+  DualBallCG,
   EnergySearchCG,
   PokeBallCG,
   PokeNavCG,
@@ -60,6 +62,7 @@ export const setEXCrystalGuardians: Card[] = [
   new Jirachiex(),
   new Kyogreex(),
   new Lombre(),
+  new Marshtomp(),
   new Mudkip(),
   new MysteriousShard(),
   new Sceptileex(),
@@ -76,6 +79,7 @@ export const setEXCrystalGuardians: Card[] = [
 
   // Other prints
   new BillsMaintenanceCG(),
+  new DualBallCG(),
   new EnergySearchCG(),
   new PokeBallCG(),
   new PokeNavCG(),

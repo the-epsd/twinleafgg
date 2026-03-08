@@ -1,4 +1,5 @@
 import { BillsMaintenance } from '../set-ex-firered-leafgreen/bills-maintenance';
+import { DualBall } from '../set-unleashed/dual-ball';
 import { EnergySearch } from '../set-scarlet-and-violet/energy-search';
 import { PokeBall } from '../set-jungle/pokeball';
 import { PokeNav } from '../set-ex-ruby-and-sapphire/pokenav';
@@ -9,6 +10,13 @@ export class BillsMaintenanceCG extends BillsMaintenance {
   public fullName = 'Bills Maintenance CG';
   public set = 'CG';
   public setNumber = '71';
+}
+
+export class DualBallCG extends DualBall {
+  public fullName = 'Dual Ball CG';
+  public set = 'CG';
+  public setNumber = '78';
+  public text = 'Flip 2 coins. For each heads, search your deck for a Basic Pokémon card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
 }
 
 export class EnergySearchCG extends EnergySearch {

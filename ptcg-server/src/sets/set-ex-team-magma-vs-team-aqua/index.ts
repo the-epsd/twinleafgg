@@ -23,6 +23,7 @@ import { TeamAquaTechnicalMachine01 } from './team-aqua-technical-machine-01';
 import { TeamMagmaBall } from './team-magma-ball';
 import { TeamMagmaConspirator } from './team-magma-conspirator';
 import { TeamMagmaHideout } from './team-magma-hideout';
+import { TeamMagmaTechnicalMachine01 } from './team-magma-technical-machine-01';
 import { TeamMagmasBaltoy } from './team-magmas-baltoy';
 import { TeamMagmasBaltoy2 } from './team-magmas-baltoy2';
 import { TeamMagmasBaltoy3 } from './team-magmas-baltoy3';
@@ -60,6 +61,7 @@ export const setEXTeamMagmaVsTeamAqua: Card[] = [
   new TeamAquaTechnicalMachine01(),
   new TeamMagmaBall(),
   new TeamMagmaConspirator(),
+  new TeamMagmaTechnicalMachine01(),
   new TeamMagmaHideout(),
   new TeamMagmasBaltoy(),
   new TeamMagmasBaltoy2(),

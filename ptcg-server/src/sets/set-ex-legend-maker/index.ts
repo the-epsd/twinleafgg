@@ -4,6 +4,7 @@ import { Anorith } from './anorith';
 import { Arcanineex } from './arcanine-ex2';
 import { Armaldoex } from './armaldo-ex';
 import { Banetteex } from './banette-ex';
+import { Bellsprout } from './bellsprout';
 import { CursedStone } from './cursed-stone';
 import { Delcatty } from './delcatty';
 import { Flygonex } from './flygon-ex';
@@ -34,6 +35,7 @@ import { Shuppet } from './shuppet';
 import { Skitty } from './skitty';
 import { Solrock } from './solrock';
 import { StrangeCave } from './strange-cave';
+import { Victreebel } from './victreebel';
 import { Voltorb } from './voltorb';
 import { Wobbuffet } from './wobbuffet';
 import { Wynaut } from './wynaut';
@@ -47,6 +49,7 @@ export const setEXLegendMaker: Card[] = [
   new Arcanineex(),
   new Armaldoex(),
   new Banetteex(),
+  new Bellsprout(),
   new CursedStone(),
   new Delcatty(),
   new Flygonex(),
@@ -77,6 +80,7 @@ export const setEXLegendMaker: Card[] = [
   new Skitty(),
   new Solrock(),
   new StrangeCave(),
+  new Victreebel(),
   new Voltorb(),
   new Wobbuffet(),
   new Wynaut(),

@@ -1,8 +1,7 @@
-import { Attack, CardTarget, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SelectPrompt, SlotType } from '../../game';
-import { CardTag, CardType, SpecialCondition, TrainerType } from '../../game/store/card/card-types';
+import { Attack, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { CardTag, CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { ColorlessCostReducer } from '../../game/store/card/pokemon-interface';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { CheckAttackCostEffect, CheckPokemonAttacksEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 
@@ -11,25 +10,26 @@ import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { AttackEffect } from '../../game/store/effects/game-effects';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
-export class TeamAquaTechnicalMachine01 extends TrainerCard {
+export class TeamMagmaTechnicalMachine01 extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public tags = [CardTag.TECHNICAL_MACHINE];
   public set: string = 'MA';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '79';
-  public name: string = 'Team Aqua Technical Machine 01';
-  public fullName: string = 'Team Aqua Technichal Machine 01 MA';
+  public setNumber: string = '84';
+  public name: string = 'Team Magma Technical Machine 01';
+  public fullName: string = 'Team Magma Technical Machine 01 MA';
 
   public attacks: Attack[] = [{
-    name: 'Miracle',
+    name: 'Crushing Magma',
     cost: [C],
     damage: 10,
-    text: 'Choose 1 Special Condition. The Defending Pokémon is now affected by that Special Condition.'
+    text: 'Choose an Energy card attached to the Defending Pokémon and put that card at the bottom of your opponent\'s deck.'
   }];
 
   public text: string =
-    'Attach this card to 1 of your Pokémon that has Team Aqua in its name. That Pokémon may use this card\'s attack instead of its own. At the end of your turn, discard Team Aqua Technical Machine 01.';
+    'Attach this card to 1 of your Pokémon that has Team Magma in its name. That Pokémon may use this card\'s attack instead of its own. At the end of your turn, discard Team Magma Technical Machine 01.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -83,7 +83,7 @@ export class TeamAquaTechnicalMachine01 extends TrainerCard {
 
           const attachedTo = cardList.getPokemonCard();
 
-          if (!!attachedTo && !attachedTo.tags.includes(CardTag.TEAM_AQUA)) {
+          if (!!attachedTo && !attachedTo.tags.includes(CardTag.TEAM_MAGMA)) {
             cardList.moveCardTo(this, player.discard);
           }
         });
@@ -110,27 +110,23 @@ export class TeamAquaTechnicalMachine01 extends TrainerCard {
 
     if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
 
-      const options: { message: GameMessage, value: SpecialCondition }[] = [
-        { message: GameMessage.SPECIAL_CONDITION_PARALYZED, value: SpecialCondition.PARALYZED },
-        { message: GameMessage.SPECIAL_CONDITION_CONFUSED, value: SpecialCondition.CONFUSED },
-        { message: GameMessage.SPECIAL_CONDITION_ASLEEP, value: SpecialCondition.ASLEEP },
-        { message: GameMessage.SPECIAL_CONDITION_POISONED, value: SpecialCondition.POISONED },
-        { message: GameMessage.SPECIAL_CONDITION_BURNED, value: SpecialCondition.BURNED }
-      ];
+      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
+        return state;
+      }
 
-      return store.prompt(state, new SelectPrompt(
-        player.id,
-        GameMessage.CHOOSE_SPECIAL_CONDITION,
-        options.map(c => c.message),
-        { allowCancel: false }
-      ), choice => {
-        const option = options[choice];
+      return store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_PUT_ON_BOTTOM,
+        opponent.active,
+        { superType: SuperType.ENERGY },
+        { min: 1, max: 1, allowCancel: false }
+      ), selected => {
+        const card = selected[0];
 
-        if (option !== undefined) {
-          const specialConditionEffect = new AddSpecialConditionsEffect(effect, [option.value]);
-          store.reduceEffect(state, specialConditionEffect);
-        }
+        MOVE_CARDS(store, state, StateUtils.findCardList(state, card), opponent.deck, { cards: [card], sourceCard: this, sourceEffect: this.attacks[0], toBottom: true });
+        return state;
       });
     }
 

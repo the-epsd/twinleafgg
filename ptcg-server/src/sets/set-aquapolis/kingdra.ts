@@ -78,6 +78,10 @@ export class Kingdra extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      if (!opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
+        return state;
+      }
+
       if (opponent.active.cards.some(c => c.superType === SuperType.ENERGY)) {
         COIN_FLIP_PROMPT(store, state, player, result => {
           if (result) {

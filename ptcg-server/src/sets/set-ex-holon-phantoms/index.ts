@@ -25,6 +25,11 @@ import { RareCandy } from './rare-candy';
 import { Trapinch } from './trapinch';
 import { Vibrava } from './vibrava';
 
+// Other Prints
+import {
+  DarknessEnergySpecialHP
+} from './other-prints';
+
 export const setEXHolonPhantoms: Card[] = [
   new Aerodactyl(),
   new Armaldo(),
@@ -50,6 +55,9 @@ export const setEXHolonPhantoms: Card[] = [
   new HolonsCastform(),
   new Trapinch(),
   new Vibrava(),
+
+  // Other Prints
+  new DarknessEnergySpecialHP(),
 
   // Basic energies
   new GrassEnergy(),
