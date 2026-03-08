@@ -78,6 +78,11 @@ export class Vaporeon extends PokemonCard {
         return state;
       }
 
+      if (effect.power.useFromDiscard) {
+        return state;
+      }
+
+
       // Check if Vaporeon has Memory Capsule attached
       const hasMemoryCapsule = (vaporeonCardList as PokemonCardList).tools.some(
         (tool) => tool instanceof TrainerCard && tool.name === 'Memory Capsule'

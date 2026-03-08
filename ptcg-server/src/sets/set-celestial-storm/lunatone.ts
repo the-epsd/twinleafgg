@@ -102,6 +102,10 @@ export class Lunatone extends PokemonCard {
           return state;
         }
 
+        if (effect.power.useFromDiscard) {
+          return state;
+        }
+
         if (!effect.power.exemptFromAbilityLock) {
           throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
         }

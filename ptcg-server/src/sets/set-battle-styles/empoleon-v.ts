@@ -96,6 +96,11 @@ export class EmpoleonV extends PokemonCard {
         return state; // Return if the opponent's active Pokémon has a rule box
       }
 
+      if (effect.power.useFromDiscard) {
+        return state;
+      }
+
+
       // Try reducing ability
       try {
         const powerEffect = new PowerEffect(player, this.powers[0], this);

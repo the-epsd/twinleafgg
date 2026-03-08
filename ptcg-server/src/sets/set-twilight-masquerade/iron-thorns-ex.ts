@@ -77,6 +77,10 @@ export class IronThornsex extends PokemonCard {
         return state;
       }
 
+      if (effect.power.useFromDiscard) {
+        return state;
+      }
+
       // Try reducing ability for each player  
       try {
         const powerEffect = new PowerEffect(player, this.powers[0], this);

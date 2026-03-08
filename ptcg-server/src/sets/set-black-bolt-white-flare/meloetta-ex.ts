@@ -10,7 +10,7 @@ import { IS_ABILITY_BLOCKED, NEXT_TURN_ATTACK_BONUS } from '../../game/store/pre
 
 export class Meloettaex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
-  public cardTag = [CardTag.POKEMON_ex];
+  public tags = [CardTag.POKEMON_ex];
   public cardType = P;
   public hp: number = 200;
   public weakness = [{ type: D }];

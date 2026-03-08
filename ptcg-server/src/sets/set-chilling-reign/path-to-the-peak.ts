@@ -60,6 +60,10 @@ export class PathToThePeak extends TrainerCard {
     if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this &&
       !effect.power.exemptFromAbilityLock) {
 
+      if (effect.power.useFromDiscard) {
+        return state;
+      }
+
       const pokemonCard = effect.card;
       if (pokemonCard.tags.includes(CardTag.POKEMON_V) ||
         pokemonCard.tags.includes(CardTag.POKEMON_VMAX) ||

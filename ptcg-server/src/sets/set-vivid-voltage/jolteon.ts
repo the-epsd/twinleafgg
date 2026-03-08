@@ -88,6 +88,10 @@ export class Jolteon extends PokemonCard {
         return state;
       }
 
+      if (effect.power.useFromDiscard) {
+        return state;
+      }
+
       if (IS_ABILITY_BLOCKED(store, state, jolteonOwner, this)) {
         return state;
       }

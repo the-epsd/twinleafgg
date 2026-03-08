@@ -42,6 +42,10 @@ export class TeamRocketsWatchtower extends TrainerCard {
     if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this) {
       const pokemonCard = effect.card;
 
+      if (effect.power.useFromDiscard) {
+        return state;
+      }
+
       if (pokemonCard.cardType === CardType.COLORLESS && !effect.power.exemptFromAbilityLock) {
         if (pokemonCard.powers.some(power => power.powerType === PowerType.ABILITY)) {
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
