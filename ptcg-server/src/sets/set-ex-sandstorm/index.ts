@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Aerodactylex } from './aerodactyl-ex';
 import { Anorith } from './anorith';
 import { Armaldo } from './armaldo';
 import { Azurill } from './azurill';
@@ -38,6 +39,7 @@ import {
 } from './other-prints';
 
 export const setEXSandstorm: Card[] = [
+  new Aerodactylex(),
   new Anorith(),
   new Armaldo(),
   new Azurill(),

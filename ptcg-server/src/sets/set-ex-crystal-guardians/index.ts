@@ -12,6 +12,8 @@ import { Dugtrio } from './dugtrio';
 import { Electrike } from './electrike';
 import { Fearow } from './fearow';
 import { Grovyle } from './grovyle';
+import { Ivysaur } from './ivysaur';
+import { Ivysaur2 } from './ivysaur2';
 import { Jirachiex } from './jirachi-ex';
 import { Kyogreex } from './kyogre-ex';
 import { Lombre } from './lombre';
@@ -26,6 +28,7 @@ import { Swampertex } from './swampert-ex';
 import { Tauros } from './tauros';
 import { Treecko } from './treecko';
 import { Treecko2 } from './treecko2';
+import { Venusaur } from './venusaur';
 import { Windstorm } from './windstorm';
 
 // Other prints
@@ -52,6 +55,8 @@ export const setEXCrystalGuardians: Card[] = [
   new Electrike(),
   new Fearow(),
   new Grovyle(),
+  new Ivysaur(),
+  new Ivysaur2(),
   new Jirachiex(),
   new Kyogreex(),
   new Lombre(),
@@ -66,6 +71,7 @@ export const setEXCrystalGuardians: Card[] = [
   new Tauros(),
   new Treecko(),
   new Treecko2(),
+  new Venusaur(),
   new Windstorm(),
 
   // Other prints
