@@ -4,6 +4,7 @@ import { StoreLike, State, GameMessage, AttachEnergyPrompt, PlayerType, SlotType
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
 export class SylveonVMAX extends PokemonCard {
 
@@ -89,30 +90,24 @@ export class SylveonVMAX extends PokemonCard {
       });
 
       if (WAS_ATTACK_USED(effect, 1, this)) {
-
         const player = effect.player;
+        const playerBench = player.bench;
 
-        let damage = 70;
+        const uniqueTypes = new Set<CardType>();
 
-        let types = 0;
-
-        const countedTypes = new Set();
-
-        if (player.active?.getPokemonCard()?.cardType !== CardType.PSYCHIC) {
-          countedTypes.add(player.active.getPokemonCard()?.cardType);
-        }
-
-        player.bench.forEach(benchSpot => {
-          const card = benchSpot.getPokemonCard();
-          if (card?.cardType !== CardType.PSYCHIC && !countedTypes.has(card?.cardType)) {
-            countedTypes.add(card?.cardType);
-            types++;
+        playerBench.forEach(c => {
+          if (c.getPokemonCard() instanceof PokemonCard) {
+            const card = c.getPokemonCard();
+            const checkEffect = new CheckPokemonTypeEffect(c);
+            store.reduceEffect(state, checkEffect);
+            console.log('Card Types:', checkEffect.cardTypes);
+            console.log('Additional Types:', card?.additionalCardTypes);
+            checkEffect.cardTypes.forEach(type => uniqueTypes.add(type));
           }
         });
 
-        damage += types * 30;
-
-        effect.damage = damage;
+        // Set the damage based on the count of unique Pokémon types
+        effect.damage += 30 * uniqueTypes.size;
 
         return state;
       }
