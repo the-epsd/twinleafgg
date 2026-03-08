@@ -52,6 +52,7 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
   public bottomBenchHighlight$: Observable<boolean>[];
   public boardCardHover$: Observable<boolean>;
   public isUpsideDown: boolean = false;
+  public board2dPerspectiveEnabled = true;
   public stateUtils = StateUtils;
 
   // Add these for use in the template
@@ -119,6 +120,12 @@ export class BoardComponent implements OnDestroy, OnChanges, OnInit {
       untilDestroyed(this)
     ).subscribe(size => {
       document.documentElement.style.setProperty('--card-scale', (size / 100).toString());
+    });
+
+    this.settingsService.board2dPerspectiveEnabled$.pipe(
+      untilDestroyed(this)
+    ).subscribe(enabled => {
+      this.board2dPerspectiveEnabled = enabled;
     });
 
     // Bottom Player

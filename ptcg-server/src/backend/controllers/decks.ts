@@ -10,6 +10,9 @@ import { THEME_DECKS } from '../../game/store/prefabs/theme-decks';
 import { Format, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { ANY_PRINTING_ALLOWED } from '../../game/store/card/any-printing-allowed';
 
+/** Legacy enum value for STANDARD_MAJORS (removed). Filter from deck formats to handle cached data. */
+const LEGACY_STANDARD_MAJORS = 8;
+
 export class Decks extends Controller {
 
   // --- GET /list ---
@@ -63,7 +66,7 @@ export class Decks extends Controller {
         isValid: deck.isValid,
         manualArchetype1: deck.manualArchetype1,
         manualArchetype2: deck.manualArchetype2,
-        format,
+        format: format.filter((f: number) => f !== LEGACY_STANDARD_MAJORS),
         ...(deck.sleeveIdentifier ? { sleeveIdentifier: deck.sleeveIdentifier } : {}),
         ...(sleeveImagePath ? { sleeveImagePath } : {})
       };
@@ -909,7 +912,6 @@ const BanLists: { [key: number]: string[] } = {
   ],
   [Format.STANDARD]: [],
   [Format.STANDARD_NIGHTLY]: [],
-  [Format.STANDARD_MAJORS]: [],
   [Format.BW]: [],
   [Format.XY]: [],
   [Format.SM]: [],
@@ -1055,9 +1057,6 @@ const SetReleaseDates: { [key: string]: Date } = {
   'M4': new Date('2026-05-22')
 };
 
-// --- STANDARD_MAJORS_SETS ---
-const STANDARD_MAJORS_SETS = ['SVP', 'SVI', 'PAL', 'OBF', 'MEW', 'PAR', 'PAF', 'TEF', 'TWM', 'SFA', 'SCR', 'SSP', 'PRE', 'JTG', 'DRI', 'SV11', 'SV11B', 'SV11W', 'BLK', 'WHT', 'MEG', 'MEP', 'M1L', 'M1S', 'PFL'];
-
 // ========== Format Validation Helpers ==========
 // --- isPrintingLegalInStandard ---
 /** Checks if a printing is legal in Standard: set must be in rotation (>= SVI) and released (<= today). Allows J Regulation Mark as long as released. */
@@ -1188,7 +1187,6 @@ function getValidFormats(card: any): number[] {
     Format.ETERNAL,
     Format.STANDARD,
     Format.STANDARD_NIGHTLY,
-    Format.STANDARD_MAJORS,
     Format.EXPANDED,
     Format.GLC,
     Format.SV,
@@ -1240,23 +1238,6 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         }
         return allPrintings.some((c: any) => isPrintingLegalInStandardNightly(c));
       }
-      case Format.STANDARD_MAJORS: {
-        // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
-        // is legal in Standard Majors (is in one of the allowed sets)
-        const cardManager = CardManager.getInstance();
-        const allPrintings = cardManager.getAllCards().filter((c: any) =>
-          c && c.name === card.name
-        );
-
-        // If no printings found, fall back to checking this card's set
-        if (allPrintings.length === 0) {
-          return STANDARD_MAJORS_SETS.includes(card.set);
-        }
-
-        return allPrintings.some((c: any) => {
-          return STANDARD_MAJORS_SETS.includes(c.set);
-        });
-      }
       case Format.EXPANDED: {
         // For anyPrintingAllowed cards, they are known to be legal in Expanded format
         // Just check if this specific printing is not banned
@@ -1306,8 +1287,6 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
     }
     case Format.STANDARD_NIGHTLY:
       return isPrintingLegalInStandardNightly(card);
-    case Format.STANDARD_MAJORS:
-      return STANDARD_MAJORS_SETS.includes(card.set);
     case Format.EXPANDED: {
       const setDate = SetReleaseDates[card.set];
       return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&

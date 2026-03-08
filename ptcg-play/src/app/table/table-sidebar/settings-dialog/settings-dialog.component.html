@@ -14,6 +14,9 @@
       <label *ngIf="has3dBoardAccess">
         <input type="checkbox" [(ngModel)]="use3dBoardDefault"> Start Games with 3D Board
       </label>
+      <label>
+        <input type="checkbox" [(ngModel)]="board2dPerspectiveEnabled"> 3D Board Perspective
+      </label>
       <div class="slider-container">
         <label>Card Size</label>
         <input type="range" [(ngModel)]="cardSize" min="50" max="200" step="10" (change)="onCardSizeChange($event)">

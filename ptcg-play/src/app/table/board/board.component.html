@@ -18,7 +18,7 @@
 <div id="top_div" [class.active]="isTopPlayerActive"></div>
 <div id="bottom_div" [class.active]="isBottomPlayerActive"></div>
 
-<div class="ptcg-board-outer-container responsive-board">
+<div class="ptcg-board-outer-container responsive-board" [class.flat-board]="!board2dPerspectiveEnabled">
   <div class="ptcg-board-container" [class.upside-down]="isUpsideDown" [dropTarget]="boardTarget">
     <div class="ptcg-board-player upside-down">
       <!-- Top Active -->

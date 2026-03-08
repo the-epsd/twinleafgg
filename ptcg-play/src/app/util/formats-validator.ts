@@ -128,7 +128,6 @@ export class FormatValidator {
       Format.ETERNAL,
       Format.STANDARD,
       Format.STANDARD_NIGHTLY,
-      Format.STANDARD_MAJORS,
       Format.EXPANDED,
       Format.GLC,
       Format.SV,
@@ -181,24 +180,6 @@ export class FormatValidator {
           }
           return this.isPrintingLegalInStandardNightly(card);
         }
-        case Format.STANDARD_MAJORS: {
-          // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
-          // is legal in Standard Majors (is in one of the allowed sets)
-          if (allCards) {
-            const allPrintings = allCards.filter(c => c && c.name === card.name);
-
-            // If no printings found, fall back to checking this card's set
-            if (allPrintings.length === 0) {
-              return STANDARD_MAJORS_SETS.includes(card.set);
-            }
-
-            return allPrintings.some(c => {
-              return STANDARD_MAJORS_SETS.includes(c.set);
-            });
-          }
-          // Fallback: check this card's set
-          return STANDARD_MAJORS_SETS.includes(card.set);
-        }
         case Format.EXPANDED: {
           // For anyPrintingAllowed cards, they are known to be legal in Expanded format
           // Just check if this specific printing is not banned
@@ -248,8 +229,6 @@ export class FormatValidator {
       }
       case Format.STANDARD_NIGHTLY:
         return this.isPrintingLegalInStandardNightly(card);
-      case Format.STANDARD_MAJORS:
-        return STANDARD_MAJORS_SETS.includes(card.set);
       case Format.EXPANDED: {
         var setDate = SetReleaseDates[card.set];
         return setDate >= new Date('Mon, 25 Apr 2011 00:00:00 GMT') && setDate <= new Date() &&
@@ -818,7 +797,6 @@ export const BanLists: { [key: number]: string[] } = {
   ],
   [Format.STANDARD]: [],
   [Format.STANDARD_NIGHTLY]: [],
-  [Format.STANDARD_MAJORS]: [],
   [Format.BW]: [],
   [Format.XY]: [],
   [Format.SM]: [],
@@ -1135,4 +1113,3 @@ export const SetReleaseDates: { [key: string]: Date } = {
 };
 
 // ========== Constants ==========
-const STANDARD_MAJORS_SETS = ['SVP', 'SVI', 'PAL', 'OBF', 'MEW', 'PAR', 'PAF', 'TEF', 'TWM', 'SFA', 'SCR', 'SSP', 'PRE', 'JTG', 'DRI', 'SV11', 'SV11B', 'SV11W', 'BLK', 'WHT', 'MEG', 'MEP', 'M1L', 'M1S', 'PFL'];
