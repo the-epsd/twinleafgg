@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { switchMap, finalize, debounceTime } from 'rxjs/operators';
@@ -30,17 +30,34 @@ import { ArchetypeUtils } from '../deck-archetype-service/archetype.utils';
   templateUrl: './deck-edit.component.html',
   styleUrls: ['./deck-edit.component.scss']
 })
-export class DeckEditComponent implements OnInit {
+export class DeckEditComponent implements OnInit, AfterViewInit, OnDestroy {
   // private ngUnsubscribe = new Subject<void>();
   // private autoSaveSubscription: Subscription;
   public loading = false;
   public deck: Deck;
-  public deckItems: DeckItem[] = [];
+  private readonly openingHandSize = 7;
+  private readonly deckSize = 60;
+  private readonly maxDisplayedMulligans = 7;
+  private _deckItems: DeckItem[] = [];
+  public mulliganHistogram: { label: string; probability: number; percentage: number; height: number }[] = [];
   public toolbarFilter: DeckEditToolbarFilter;
   public DeckEditPane = DeckEditPane;
   public isThemeDeck = false;
   public sleeves: SleeveInfo[] = [];
   public selectedSleeveIdentifier?: string;
+  public mulliganHistogramBottom = 72;
+  public mulliganHistogramPinned = false;
+  @ViewChild('deckEditRoot', { static: true }) private deckEditRoot?: ElementRef<HTMLElement>;
+  private deckValidityResizeObserver?: ResizeObserver;
+
+  public set deckItems(value: DeckItem[]) {
+    this._deckItems = value ?? [];
+    this.updateMulliganHistogram();
+  }
+
+  public get deckItems(): DeckItem[] {
+    return this._deckItems;
+  }
 
   constructor(
     private alertService: AlertService,
@@ -96,6 +113,15 @@ export class DeckEditComponent implements OnInit {
         await this.alertService.confirm(this.translate.instant('DECK_EDIT_LOADING_ERROR'));
         this.router.navigate(['/deck']);
       });
+  }
+
+  ngAfterViewInit() {
+    this.observeDeckValidityContainer();
+  }
+
+  ngOnDestroy() {
+    this.deckValidityResizeObserver?.disconnect();
+    this.deckValidityResizeObserver = undefined;
   }
 
   // private setupAutoSave() {
@@ -677,4 +703,94 @@ export class DeckEditComponent implements OnInit {
     if (input === EnergyType.SPECIAL) return 2;
     return Infinity;
   };
+
+  private updateMulliganHistogram(): void {
+    const basics = this.getBasicPokemonCount();
+    const mulliganChance = this.mulliganProbability(basics);
+    const makeChance = 1 - mulliganChance;
+    const bars: { label: string; probability: number; percentage: number; height: number }[] = [];
+
+    for (let mulligans = 0; mulligans < this.maxDisplayedMulligans; mulligans++) {
+      const probability = Math.pow(mulliganChance, mulligans) * makeChance;
+      bars.push({
+        label: mulligans.toString(),
+        probability,
+        percentage: probability * 100,
+        height: 0
+      });
+    }
+
+    bars.push({
+      label: `${this.maxDisplayedMulligans}+`,
+      probability: Math.pow(mulliganChance, this.maxDisplayedMulligans),
+      percentage: Math.pow(mulliganChance, this.maxDisplayedMulligans) * 100,
+      height: 0
+    });
+
+    const maxProbability = bars.reduce((max, bar) => Math.max(max, bar.probability), 0);
+    const maxHeight = 40;
+    this.mulliganHistogram = bars.map(bar => ({
+      ...bar,
+      height: maxProbability > 0 ? Math.max(2, (bar.probability / maxProbability) * maxHeight) : 2
+    }));
+  }
+
+  private getBasicPokemonCount(): number {
+    return this.deckItems.reduce((count, item) => {
+      const card = item.card;
+      if (card.superType !== SuperType.POKEMON) {
+        return count;
+      }
+
+      const pokemon = card as PokemonCard;
+      if (pokemon.stage !== Stage.BASIC) {
+        return count;
+      }
+
+      return count + item.count;
+    }, 0);
+  }
+
+  private mulliganProbability(basics: number): number {
+    const clampedBasics = Math.max(0, Math.min(this.deckSize, basics));
+    let probability = 1;
+
+    for (let i = 0; i < this.openingHandSize; i++) {
+      probability *= (this.deckSize - clampedBasics - i) / (this.deckSize - i);
+    }
+
+    return Math.max(0, Math.min(1, probability));
+  }
+
+  private observeDeckValidityContainer(): void {
+    const root = this.deckEditRoot?.nativeElement;
+    if (!root) {
+      return;
+    }
+
+    const deckValidityContainer = root.querySelector('ptcg-deck-edit-panes .deck-validity-container') as HTMLElement | null;
+    if (!deckValidityContainer) {
+      // The child component can render asynchronously.
+      setTimeout(() => this.observeDeckValidityContainer(), 0);
+      return;
+    }
+
+    const updateHistogramBottom = () => {
+      this.mulliganHistogramBottom = Math.ceil(deckValidityContainer.getBoundingClientRect().height) + 50;
+    };
+
+    updateHistogramBottom();
+
+    if (typeof ResizeObserver !== 'undefined') {
+      this.deckValidityResizeObserver?.disconnect();
+      this.deckValidityResizeObserver = new ResizeObserver(() => updateHistogramBottom());
+      this.deckValidityResizeObserver.observe(deckValidityContainer);
+    }
+  }
+
+  public toggleMulliganHistogramPinned(event: MouseEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.mulliganHistogramPinned = !this.mulliganHistogramPinned;
+  }
 }
