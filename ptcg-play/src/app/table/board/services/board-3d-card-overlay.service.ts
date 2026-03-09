@@ -123,7 +123,7 @@ export class Board3dCardOverlayService {
     cardList?: PokemonCardList
   ): Promise<void> {
     if (breakCard && !isFaceDown) {
-      const breakScanUrl = this.cardsBaseService.getScanUrlFromCardList(breakCard, cardList);
+      const breakScanUrl = this.cardsBaseService.getScanUrlFor3D(breakCard, cardList);
 
       // Validate URL before loading - if empty or invalid, use cardback
       const loadBreakTexture = async () => {
@@ -225,7 +225,7 @@ export class Board3dCardOverlayService {
           toolTexture = await this.assetLoader.loadToolIconTexture(customIconPath);
         } catch (error) {
           // Fall back to card texture if custom icon fails (checks artworksMap for overrides first)
-          const toolScanUrl = this.cardsBaseService.getScanUrlFromCardList(tool, cardList);
+          const toolScanUrl = this.cardsBaseService.getScanUrlFor3D(tool, cardList);
           if (!toolScanUrl || !toolScanUrl.trim()) {
             console.warn('Empty scanUrl for tool card:', tool?.fullName, 'set:', tool?.set, 'setNumber:', tool?.setNumber);
             toolTexture = await this.assetLoader.loadCardBack();
@@ -240,7 +240,7 @@ export class Board3dCardOverlayService {
         }
       } else {
         // Use regular card texture (checks artworksMap for overrides first, like 2D components do)
-        const toolScanUrl = this.cardsBaseService.getScanUrlFromCardList(tool, cardList);
+        const toolScanUrl = this.cardsBaseService.getScanUrlFor3D(tool, cardList);
         if (!toolScanUrl || !toolScanUrl.trim()) {
           console.warn('Empty scanUrl for tool card:', tool?.fullName, 'set:', tool?.set, 'setNumber:', tool?.setNumber);
           toolTexture = await this.assetLoader.loadCardBack();
