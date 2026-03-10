@@ -60,7 +60,7 @@ export class PathToThePeak extends TrainerCard {
     if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this &&
       !effect.power.exemptFromAbilityLock) {
 
-      if (effect.power.useFromDiscard) {
+      if (effect.power.useFromDiscard || effect.power.useFromHand) {
         return state;
       }
 

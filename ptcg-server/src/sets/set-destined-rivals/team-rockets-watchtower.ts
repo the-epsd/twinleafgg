@@ -42,7 +42,7 @@ export class TeamRocketsWatchtower extends TrainerCard {
     if (effect instanceof PowerEffect && StateUtils.getStadiumCard(state) === this) {
       const pokemonCard = effect.card;
 
-      if (effect.power.useFromDiscard) {
+      if (effect.power.useFromDiscard || effect.power.useFromHand) {
         return state;
       }
 

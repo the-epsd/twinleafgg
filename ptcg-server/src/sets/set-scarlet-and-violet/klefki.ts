@@ -95,7 +95,7 @@ export class Klefki extends PokemonCard {
       }
 
       // Mischievous Lock only affects Pokemon in play, not abilities used from discard.
-      if (effect.power.useFromDiscard) {
+      if (effect.power.useFromDiscard || effect.power.useFromHand) {
         return state;
       }
 

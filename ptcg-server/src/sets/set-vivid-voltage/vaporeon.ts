@@ -78,7 +78,7 @@ export class Vaporeon extends PokemonCard {
         return state;
       }
 
-      if (effect.power.useFromDiscard) {
+      if (effect.power.useFromDiscard || effect.power.useFromHand) {
         return state;
       }
 

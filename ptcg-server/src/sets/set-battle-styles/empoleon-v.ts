@@ -96,7 +96,7 @@ export class EmpoleonV extends PokemonCard {
         return state; // Return if the opponent's active Pokémon has a rule box
       }
 
-      if (effect.power.useFromDiscard) {
+      if (effect.power.useFromDiscard || effect.power.useFromHand) {
         return state;
       }
 

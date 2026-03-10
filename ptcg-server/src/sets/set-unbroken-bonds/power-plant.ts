@@ -27,7 +27,7 @@ export class PowerPlant extends TrainerCard {
 
       const isEXorGX = pokemonCard.tags.includes(CardTag.POKEMON_GX) || pokemonCard.tags.includes(CardTag.POKEMON_EX);
 
-      if (effect.power.useFromDiscard) {
+      if (effect.power.useFromDiscard || effect.power.useFromHand) {
         return state;
       }
 
