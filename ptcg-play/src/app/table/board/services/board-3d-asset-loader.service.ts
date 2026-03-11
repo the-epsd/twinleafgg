@@ -326,4 +326,26 @@ export class Board3dAssetLoaderService {
       this.loadCardTexture(url).catch(() => {});
     });
   }
+
+  /**
+   * Preload card textures and wait for completion. Resolves when all loads finish
+   * (success or failure). Use for loading screen preload phase.
+   */
+  async preloadCardTexturesAsync(urls: string[], timeoutMs?: number): Promise<void> {
+    const uniqueUrls = [...new Set(urls)].filter(url => url && url.trim() && !this.textureCache.has(url));
+    if (uniqueUrls.length === 0) {
+      return;
+    }
+
+    const loadAll = Promise.all(
+      uniqueUrls.map(url => this.loadCardTexture(url).catch(() => {}))
+    );
+
+    if (timeoutMs && timeoutMs > 0) {
+      const timeout = new Promise<void>(resolve => setTimeout(() => resolve(), timeoutMs));
+      await Promise.race([loadAll, timeout]);
+    } else {
+      await loadAll;
+    }
+  }
 }

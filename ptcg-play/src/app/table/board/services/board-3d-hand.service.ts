@@ -49,7 +49,7 @@ export class Board3dHandService {
       // Preload hand card textures (fire-and-forget for owner's face-up cards)
       if (isOwner && cards.length > 0) {
         const urls = cards
-          .map(c => this.cardsBaseService.getScanUrlFromCardList(c, hand))
+          .map(c => this.cardsBaseService.getScanUrlFor3D(c, hand))
           .filter((url): url is string => !!url && !!url.trim());
         this.assetLoader.preloadCardTextures(urls);
       }
@@ -89,7 +89,7 @@ export class Board3dHandService {
     const rotation = 0; // No rotation - cards face forward
 
     // Load texture (checks artworksMap for overrides first, like 2D components do)
-    const scanUrl = this.cardsBaseService.getScanUrlFromCardList(card, hand);
+    const scanUrl = this.cardsBaseService.getScanUrlFor3D(card, hand);
     const isFaceDown = !isOwner;
 
     // Progressive loading: show card-back immediately, load front texture in background

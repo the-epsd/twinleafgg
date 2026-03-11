@@ -41,6 +41,7 @@ import { Tyrogue } from './tyrogue';
 import { Umbreonex } from './umbreon-ex';
 import { UnownE } from './unown-e';
 import { Ursaring } from './ursaring';
+import { Wooper } from './wooper';
 
 // Other prints
 import {
@@ -98,6 +99,7 @@ export const setEXUnseenForces: Card[] = [
   new Umbreonex(),
   new UnownE(),
   new Ursaring(),
+  new Wooper(),
 
   // Other prints
   new BoostEnergyUF(),

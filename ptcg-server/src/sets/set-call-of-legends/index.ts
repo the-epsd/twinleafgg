@@ -17,8 +17,11 @@ import {
   CleffaCL,
   CopycatCL,
   DualBallCL,
+  NinetalesCL,
   ProfessorElmsTrainingMethodCL,
-  SmeargleCL
+  QuilavaCL,
+  SmeargleCL,
+  VulpixCL
 } from './other-prints';
 
 // Basic energies
@@ -51,8 +54,11 @@ export const setCallOfLegends: Card[] = [
   new CleffaCL(),
   new CopycatCL(),
   new DualBallCL(),
+  new NinetalesCL(),
   new ProfessorElmsTrainingMethodCL(),
+  new QuilavaCL(),
   new SmeargleCL(),
+  new VulpixCL(),
 
   // Basic energies
   new GrassEnergy(),

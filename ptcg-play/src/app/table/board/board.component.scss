@@ -38,6 +38,17 @@
   -moz-perspective: 55em;
   min-width: 990px;
   margin-top: 1%;
+
+  &.flat-board {
+    perspective: none;
+    -webkit-perspective: none;
+    -moz-perspective: none;
+
+    .ptcg-board-container {
+      transform: none;
+      transform-style: flat;
+    }
+  }
 }
 
 .responsive-board {

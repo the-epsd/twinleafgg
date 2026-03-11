@@ -19,7 +19,6 @@ export class DeckValidityComponent {
   public formats = [
     { value: Format.STANDARD, label: 'LABEL_STANDARD' },
     { value: Format.STANDARD_NIGHTLY, label: 'LABEL_STANDARD_NIGHTLY' },
-    { value: Format.STANDARD_MAJORS, label: 'LABEL_STANDARD_MAJORS' },
     { value: Format.GLC, label: 'LABEL_GLC' },
     { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
     { value: Format.SWSH, label: 'LABEL_SWSH' },

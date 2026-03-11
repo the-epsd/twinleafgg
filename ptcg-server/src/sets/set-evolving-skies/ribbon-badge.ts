@@ -4,10 +4,10 @@
 
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GamePhase } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { ToolEffect } from '../../game/store/effects/play-card-effects';
+import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class RibbonBadge extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -22,36 +22,16 @@ export class RibbonBadge extends TrainerCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Prize reduction when Sylveon V KO'd by opponent's attack
     // Ref: set-vivid-voltage/heros-medal.ts (KnockOutEffect prize reduction with tag + phase check)
-    if (effect instanceof KnockOutEffect && effect.target.tools.includes(this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const sourceCard = effect.target.getPokemonCard();
+    if (effect instanceof KnockOutEffect && effect.target.tools.includes(this) && effect.player.marker.hasMarker(effect.player.DAMAGE_DEALT_MARKER)) {
 
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
-        return state;
+      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
+
+      const pokemonCard = effect.target.getPokemonCard();
+      if (pokemonCard?.name.includes('Sylveon') && pokemonCard?.tags.includes(CardTag.POKEMON_V) || pokemonCard?.tags.includes(CardTag.POKEMON_VMAX) || pokemonCard?.tags.includes(CardTag.POKEMON_VSTAR)) {
+        effect.prizeCount -= 1;
       }
 
-      if (!sourceCard) {
-        return state;
-      }
-
-      // Only applies to Pokemon V with "Sylveon" in its name
-      if (!sourceCard.tags.includes(CardTag.POKEMON_V)) {
-        return state;
-      }
-
-      if (!sourceCard.name.includes('Sylveon')) {
-        return state;
-      }
-
-      try {
-        const toolEffect = new ToolEffect(player, this);
-        store.reduceEffect(state, toolEffect);
-      } catch {
-        return state;
-      }
-
-      effect.prizeCount = Math.max(0, effect.prizeCount - 1);
+      return state;
     }
 
     return state;

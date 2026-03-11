@@ -75,6 +75,11 @@ export class Flareon extends PokemonCard {
         return state;
       }
 
+      if (effect.power.useFromDiscard || effect.power.useFromHand) {
+        return state;
+      }
+
+
       if (IS_ABILITY_BLOCKED(store, state, flareonOwner, this)) {
         return state;
       }

@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { Aerodactylex } from './aerodactyl-ex';
 import { Anorith } from './anorith';
 import { Armaldo } from './armaldo';
 import { Azurill } from './azurill';
@@ -6,6 +7,7 @@ import { DoubleFullHeal } from './double-full-heal';
 import { Dunsparce } from './dunsparce';
 import { Elekid } from './elekid';
 import { Gardevoirex } from './gardevoir-ex';
+import { Kabuto } from './kabuto';
 import { LanettesNetSearch } from './lanettes-net-search';
 import { Lombre } from './lombre';
 import { Lotad } from './lotad';
@@ -13,6 +15,7 @@ import { Lunatone } from './lunatone';
 import { Marill } from './marill';
 import { MultiEnergy } from './multi-energy';
 import { Natu } from './natu';
+import { Omanyte } from './omanyte';
 import { Onix } from './onix';
 import { Pichu } from './pichu';
 import { RootFossil } from './root-fossil';
@@ -36,6 +39,7 @@ import {
 } from './other-prints';
 
 export const setEXSandstorm: Card[] = [
+  new Aerodactylex(),
   new Anorith(),
   new Armaldo(),
   new Azurill(),
@@ -43,6 +47,7 @@ export const setEXSandstorm: Card[] = [
   new Dunsparce(),
   new Elekid(),
   new Gardevoirex(),
+  new Kabuto(),
   new LanettesNetSearch(),
   new Lombre(),
   new Lotad(),
@@ -50,6 +55,7 @@ export const setEXSandstorm: Card[] = [
   new Marill(),
   new MultiEnergy(),
   new Natu(),
+  new Omanyte(),
   new Onix(),
   new Pichu(),
   new RootFossil(),

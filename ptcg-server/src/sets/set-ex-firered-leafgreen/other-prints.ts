@@ -1,4 +1,5 @@
 import { EnergyRemoval2 } from '../set-ex-power-keepers/energy-removal-2';
+import { LifeHerb } from '../set-ex-hidden-legends/life-herb';
 import { MultiEnergy } from '../set-ex-sandstorm/multi-energy';
 import { PokemonReversal } from '../set-ex-unseen-forces/pokemon-reversal';
 import { ProfessorOaksResearch } from '../set-ex-dragon-frontiers/professor-oaks-research';
@@ -9,6 +10,12 @@ export class EnergyRemoval2RG extends EnergyRemoval2 {
   public fullName = 'Energy Removal 2 RG';
   public set = 'RG';
   public setNumber = '89';
+}
+
+export class LifeHerbRG extends LifeHerb {
+  public fullName = 'Life Herb RG';
+  public set = 'RG';
+  public setNumber = '93';
 }
 
 export class MultiEnergyRG extends MultiEnergy {

@@ -13,4 +13,5 @@ export * from './replays';
 export * from './reset-password';
 export * from './sleeves';
 export * from './battlepass';
+export * from './images';
 export * from './memory-health.controller';

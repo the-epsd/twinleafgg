@@ -1,4 +1,6 @@
 <div class="ptcg-match-table">
+  <!-- Loading screen disabled: restore with *ngIf="preloading" -->
+  <ptcg-game-loading *ngIf="false"></ptcg-game-loading>
   <h3 translate>GAMES_RECENT_GAMES_TITLE</h3>
 
   <ptcg-content [loading]="loading">

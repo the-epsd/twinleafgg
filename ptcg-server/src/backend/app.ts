@@ -17,6 +17,7 @@ import {
   Favorites,
   Friends,
   Game,
+  Images,
   Login,
   Messages,
   Profile,
@@ -92,6 +93,7 @@ export class App {
     define('/v1/favorites', Favorites);
     define('/v1/friends', Friends);
     define('/v1/game', Game);
+    define('/v1/images', Images);
     define('/v1/login', Login);
     define('/v1/messages', Messages);
     define('/v1/profile', Profile);

@@ -18,7 +18,7 @@ export class TeamAquaTechnicalMachine01 extends TrainerCard {
   public set: string = 'MA';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '79';
-  public name: string = 'Team Aqua Technichal Machine 01';
+  public name: string = 'Team Aqua Technical Machine 01';
   public fullName: string = 'Team Aqua Technichal Machine 01 MA';
 
   public attacks: Attack[] = [{

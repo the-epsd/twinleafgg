@@ -449,6 +449,24 @@ export class CardsBaseService implements OnDestroy {
     return this.getScanUrl(card);
   }
 
+  /**
+   * Get scan URL for 3D board texture loads. External URLs are wrapped through the
+   * server image proxy to avoid CORS issues with WebGL. Relative/same-origin URLs
+   * are returned unchanged.
+   */
+  public getScanUrlFor3D(card: Card, cardList?: any): string {
+    const baseUrl = this.getScanUrlFromCardList(card, cardList);
+    if (!baseUrl || !baseUrl.trim()) {
+      return baseUrl;
+    }
+    const isExternal = baseUrl.startsWith('http://') || baseUrl.startsWith('https://');
+    if (isExternal) {
+      const apiUrl = this.apiService.getApiUrl();
+      return `${apiUrl}/v1/images/proxy?url=${encodeURIComponent(baseUrl)}`;
+    }
+    return baseUrl;
+  }
+
   public getSleeveUrl(imagePath?: string): string | undefined {
     if (!imagePath) {
       return undefined;

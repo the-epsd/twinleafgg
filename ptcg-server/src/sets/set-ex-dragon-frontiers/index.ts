@@ -12,6 +12,7 @@ import { Elekid } from './elekid';
 import { Feraligatr } from './feraligatr';
 import { Flygonex } from './flygon-ex';
 import { Gardevoirex } from './gardevoir-ex';
+import { HolonEnergyGL } from './holon-energy-gl';
 import { HolonEnergyWP } from './holon-energy-wp';
 import { Horsea } from './horsea';
 import { Jynx } from './jynx';
@@ -26,11 +27,12 @@ import { MewStar } from './mew-star';
 import { MrStonesProject } from './mr-stones-project';
 import { Nidoqueen } from './nidoqueen';
 import { ProfessorOaksResearch } from './professor-oaks-research';
+import { Quagsire } from './quagsire';
 import { Ralts } from './ralts';
 import { Ralts2 } from './ralts2';
 import { Rayquazaex } from './rayquaza-ex';
 import { Seadra } from './seadra';
-import { Shelder } from './shelder';
+import { Shellder } from './shellder';
 import { StrengthCharm } from './strength-charm';
 import { Swablu } from './swablu';
 import { Totodile } from './totodile';
@@ -39,6 +41,7 @@ import { Trapinch2 } from './trapinch2';
 import { Tropius } from './tropius';
 import { Vibrava } from './vibrava';
 import { Vibrava2 } from './vibrava2';
+import { Wooper } from './wooper';
 
 // Other prints
 import {
@@ -62,6 +65,7 @@ export const setEXDragonFrontiers: Card[] = [
   new Feraligatr(),
   new Flygonex(),
   new Gardevoirex(),
+  new HolonEnergyGL(),
   new HolonEnergyWP(),
   new Horsea(),
   new Jynx(),
@@ -76,11 +80,12 @@ export const setEXDragonFrontiers: Card[] = [
   new MrStonesProject(),
   new Nidoqueen(),
   new ProfessorOaksResearch(),
+  new Quagsire(),
   new Ralts(),
   new Ralts2(),
   new Rayquazaex(),
   new Seadra(),
-  new Shelder(),
+  new Shellder(),
   new StrengthCharm(),
   new Swablu(),
   new Totodile(),
@@ -89,6 +94,7 @@ export const setEXDragonFrontiers: Card[] = [
   new Tropius(),
   new Vibrava(),
   new Vibrava2(),
+  new Wooper(),
 
   // Other prints
   new BoostEnergyDF(),

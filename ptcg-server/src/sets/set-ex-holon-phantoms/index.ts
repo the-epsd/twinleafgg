@@ -1,5 +1,6 @@
 import { Card } from '../../game/store/card/card';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy } from './basic-energies';
+import { Aerodactyl } from './aerodactyl';
 import { Armaldo } from './armaldo';
 import { Chimecho } from './chimecho';
 import { Corphish } from './corphish';
@@ -15,6 +16,7 @@ import { Horsea } from './horsea';
 import { Latias } from './latias';
 import { Meowth } from './meowth';
 import { Oddish } from './oddish';
+import { Omastar } from './omastar';
 import { Pidgey } from './pidgey';
 import { Pidgeotto } from './pidgeotto';
 import { Pikachu } from './pikachu';
@@ -23,7 +25,13 @@ import { RareCandy } from './rare-candy';
 import { Trapinch } from './trapinch';
 import { Vibrava } from './vibrava';
 
+// Other Prints
+import {
+  DarknessEnergySpecialHP
+} from './other-prints';
+
 export const setEXHolonPhantoms: Card[] = [
+  new Aerodactyl(),
   new Armaldo(),
   new Chimecho(),
   new Corphish(),
@@ -36,6 +44,7 @@ export const setEXHolonPhantoms: Card[] = [
   new Latias(),
   new Meowth(),
   new Oddish(),
+  new Omastar(),
   new Pidgey(),
   new Pidgeotto(),
   new Pikachu(),
@@ -46,6 +55,9 @@ export const setEXHolonPhantoms: Card[] = [
   new HolonsCastform(),
   new Trapinch(),
   new Vibrava(),
+
+  // Other Prints
+  new DarknessEnergySpecialHP(),
 
   // Basic energies
   new GrassEnergy(),

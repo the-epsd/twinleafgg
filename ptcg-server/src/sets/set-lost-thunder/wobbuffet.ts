@@ -19,7 +19,7 @@ export class Wobbuffet extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public powers = [  {
+  public powers = [{
     name: 'Shady Tail',
     powerType: PowerType.ABILITY,
     text: 'As long as this Pokémon is on your Bench, ◇ (Prism Star) Pokémon in play (both yours and your opponent\'s) can\'t attack and have no Abilities.'
@@ -88,6 +88,10 @@ export class Wobbuffet extends PokemonCard {
           const powerEffect = new PowerEffect(owner, this.powers[0], this);
           store.reduceEffect(state, powerEffect);
         } catch {
+          return state;
+        }
+
+        if (effect.power.useFromDiscard) {
           return state;
         }
 

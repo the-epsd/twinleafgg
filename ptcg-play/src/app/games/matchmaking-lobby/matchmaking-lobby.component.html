@@ -1,3 +1,5 @@
+<!-- Loading screen disabled: restore with *ngIf="preloading" -->
+<ptcg-game-loading *ngIf="false"></ptcg-game-loading>
 <div class="matchmaking-lobby"
   [class.format-standard]="selectedFormat === Format.STANDARD || hoveredFormat === Format.STANDARD"
   [class.format-standard-nightly]="selectedFormat === Format.STANDARD_NIGHTLY || hoveredFormat === Format.STANDARD_NIGHTLY">

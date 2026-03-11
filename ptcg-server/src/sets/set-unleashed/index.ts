@@ -12,6 +12,7 @@ import { Horsea } from './horsea';
 import { InterviewersQuestions } from './interviewers-questions';
 import { Kingdra } from './kingdra';
 import { Lanturn } from './lanturn';
+import { Manaphy } from './manaphy';
 import { PokemonCirculator } from './pokemon-circulator';
 import { Roselia } from './roselia';
 import { Roserade } from './roserade';
@@ -42,6 +43,7 @@ export const setUnleashed: Card[] = [
   new InterviewersQuestions(),
   new Kingdra(),
   new Lanturn(),
+  new Manaphy(),
   new PokemonCirculator(),
   new Roselia(),
   new Roserade(),

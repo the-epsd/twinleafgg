@@ -87,7 +87,12 @@ export const config = {
   },
   sets: {
     scansDir: '',
-    scansUrl: '{cardImage}'
+    scansUrl: '{cardImage}',
+    imageProxyAllowedOrigins: [
+      'https://images.pokemontcg.io',
+      'https://api.pokemontcg.io',
+      'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com'
+    ]
   },
   email: {
     transporter: {

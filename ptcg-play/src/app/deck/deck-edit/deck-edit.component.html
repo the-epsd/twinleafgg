@@ -1,5 +1,5 @@
 <ptcg-content [loading]="loading">
-  <div class="ptcg-deck-edit">
+  <div class="ptcg-deck-edit" #deckEditRoot>
     <ptcg-deck-edit-toolbar *ngIf="deck" [disabled]="isThemeDeck || loading" [deck]="deck"
       (filterChange)="toolbarFilter = $event" (save)="saveDeck()" (import)="importFromClipboard()"
       (export)="exportDeck()" (clearDeck)="clearDeck()" (sleeveSelect)="openSleeveSelector()"
@@ -12,5 +12,27 @@
 
     <ptcg-deck-edit-info [deckItems]="deckItems">
     </ptcg-deck-edit-info>
+
+    <div class="mulligan-histogram" *ngIf="mulliganHistogram.length > 0" [style.bottom.px]="mulliganHistogramBottom"
+      [class.pinned]="mulliganHistogramPinned" (click)="toggleMulliganHistogramPinned($event)">
+      <div class="mulligan-histogram-trigger" tabindex="0"
+        [attr.title]="mulliganHistogramPinned ? 'Click to return to hover mode' : 'Click to pin open'">
+        <div class="mulligan-histogram-trigger-bar mulligan-histogram-trigger-bar-1"></div>
+        <div class="mulligan-histogram-trigger-bar mulligan-histogram-trigger-bar-2"></div>
+        <div class="mulligan-histogram-trigger-bar mulligan-histogram-trigger-bar-3"></div>
+      </div>
+      <div class="mulligan-histogram-panel">
+        <div class="mulligan-histogram-title">Mulligan Chances</div>
+        <div class="mulligan-histogram-bars">
+          <div class="mulligan-histogram-bar-wrapper" *ngFor="let bar of mulliganHistogram">
+            <div class="mulligan-histogram-probability">{{ bar.percentage | number:'1.1-1' }}%</div>
+            <div class="mulligan-histogram-bar" [style.height.px]="bar.height"
+              [attr.title]="bar.label + ' mulligans: ' + (bar.percentage | number:'1.2-2') + '%'">
+            </div>
+            <div class="mulligan-histogram-label">{{ bar.label }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </ptcg-content>

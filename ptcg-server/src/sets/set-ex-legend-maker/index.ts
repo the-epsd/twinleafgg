@@ -4,6 +4,7 @@ import { Anorith } from './anorith';
 import { Arcanineex } from './arcanine-ex2';
 import { Armaldoex } from './armaldo-ex';
 import { Banetteex } from './banette-ex';
+import { Bellsprout } from './bellsprout';
 import { CursedStone } from './cursed-stone';
 import { Delcatty } from './delcatty';
 import { Flygonex } from './flygon-ex';
@@ -12,6 +13,8 @@ import { GiantStump } from './giant-stump';
 import { Girafarig } from './girafarig';
 import { Grimer } from './grimer';
 import { Growlithe } from './growlithe';
+import { Kabuto } from './kabuto';
+import { Kabutops } from './kabutops';
 import { Kecleon } from './kecleon';
 import { Lapras } from './lapras';
 import { Lunatone } from './lunatone';
@@ -21,6 +24,8 @@ import { Machop } from './machop';
 import { Mewex } from './mew-ex';
 import { Muk } from './muk';
 import { Nuzleaf } from './nuzleaf';
+import { Omanyte } from './omanyte';
+import { Omastar } from './omastar';
 import { Pikachu } from './pikachu';
 import { PowerTree } from './power-tree';
 import { ReactEnergy } from './react-energy';
@@ -30,6 +35,7 @@ import { Shuppet } from './shuppet';
 import { Skitty } from './skitty';
 import { Solrock } from './solrock';
 import { StrangeCave } from './strange-cave';
+import { Victreebel } from './victreebel';
 import { Voltorb } from './voltorb';
 import { Wobbuffet } from './wobbuffet';
 import { Wynaut } from './wynaut';
@@ -43,6 +49,7 @@ export const setEXLegendMaker: Card[] = [
   new Arcanineex(),
   new Armaldoex(),
   new Banetteex(),
+  new Bellsprout(),
   new CursedStone(),
   new Delcatty(),
   new Flygonex(),
@@ -51,6 +58,8 @@ export const setEXLegendMaker: Card[] = [
   new Girafarig(),
   new Grimer(),
   new Growlithe(),
+  new Kabuto(),
+  new Kabutops(),
   new Kecleon(),
   new Lapras(),
   new Lunatone(),
@@ -60,6 +69,8 @@ export const setEXLegendMaker: Card[] = [
   new Mewex(),
   new Muk(),
   new Nuzleaf(),
+  new Omanyte(),
+  new Omastar(),
   new Pikachu(),
   new PowerTree(),
   new ReactEnergy(),
@@ -69,6 +80,7 @@ export const setEXLegendMaker: Card[] = [
   new Skitty(),
   new Solrock(),
   new StrangeCave(),
+  new Victreebel(),
   new Voltorb(),
   new Wobbuffet(),
   new Wynaut(),

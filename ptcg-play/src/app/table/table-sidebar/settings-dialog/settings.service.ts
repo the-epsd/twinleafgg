@@ -18,6 +18,7 @@ export class SettingsService {
   private readonly CARD_TEXT_KERNING_KEY = 'cardTextKerning';
   private readonly SFX_ENABLED_KEY = 'sfxEnabled';
   private readonly SFX_VOLUME_KEY = 'sfxVolume';
+  private readonly BOARD_2D_PERSPECTIVE_KEY = 'board2dPerspectiveEnabled';
 
   private holoEnabledSubject = new BehaviorSubject<boolean>(this.loadHoloSetting());
   private cardSizeSubject = new BehaviorSubject<number>(100);
@@ -28,6 +29,7 @@ export class SettingsService {
   private cardTextKerningSubject = new BehaviorSubject<number>(this.loadCardTextKerning());
   private sfxEnabledSubject = new BehaviorSubject<boolean>(this.loadSfxSetting());
   private sfxVolumeSubject = new BehaviorSubject<number>(this.loadSfxVolume());
+  private board2dPerspectiveEnabledSubject = new BehaviorSubject<boolean>(this.loadBoard2dPerspectiveSetting());
 
   cardSize$ = this.cardSizeSubject.asObservable();
   holoEnabled$ = this.holoEnabledSubject.asObservable();
@@ -38,6 +40,7 @@ export class SettingsService {
   cardTextKerning$ = this.cardTextKerningSubject.asObservable();
   sfxEnabled$ = this.sfxEnabledSubject.asObservable();
   sfxVolume$ = this.sfxVolumeSubject.asObservable();
+  board2dPerspectiveEnabled$ = this.board2dPerspectiveEnabledSubject.asObservable();
 
   private loadHoloSetting(): boolean {
     const saved = localStorage.getItem(this.HOLO_ENABLED_KEY);
@@ -56,7 +59,14 @@ export class SettingsService {
 
   private loadHiddenFormats(): Format[] {
     const saved = localStorage.getItem(this.HIDDEN_FORMATS_KEY);
-    return saved ? JSON.parse(saved) : [];
+    let formats: Format[] = saved ? JSON.parse(saved) : [];
+    // Filter out legacy STANDARD_MAJORS (8) - removed format, value 8 now maps to RSPK
+    const filtered = formats.filter(f => f !== 8);
+    if (filtered.length !== formats.length) {
+      formats = filtered;
+      localStorage.setItem(this.HIDDEN_FORMATS_KEY, JSON.stringify(formats));
+    }
+    return formats;
   }
 
   private loadUse3dBoardDefaultSetting(): boolean {
@@ -77,6 +87,11 @@ export class SettingsService {
   private loadSfxVolume(): number {
     const saved = localStorage.getItem(this.SFX_VOLUME_KEY);
     return saved ? parseFloat(saved) : 0.7;
+  }
+
+  private loadBoard2dPerspectiveSetting(): boolean {
+    const saved = localStorage.getItem(this.BOARD_2D_PERSPECTIVE_KEY);
+    return saved ? JSON.parse(saved) : true;
   }
 
   setHoloEnabled(enabled: boolean) {
@@ -131,5 +146,10 @@ export class SettingsService {
     const clampedVolume = Math.max(0, Math.min(1, volume));
     localStorage.setItem(this.SFX_VOLUME_KEY, clampedVolume.toString());
     this.sfxVolumeSubject.next(clampedVolume);
+  }
+
+  setBoard2dPerspectiveEnabled(enabled: boolean) {
+    localStorage.setItem(this.BOARD_2D_PERSPECTIVE_KEY, JSON.stringify(enabled));
+    this.board2dPerspectiveEnabledSubject.next(enabled);
   }
 }

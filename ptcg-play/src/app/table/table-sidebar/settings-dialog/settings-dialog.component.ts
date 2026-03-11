@@ -19,6 +19,7 @@ export class SettingsDialogComponent {
   cardSize = 100;
   hiddenFormats: Format[] = [];
   use3dBoardDefault = false;
+  board2dPerspectiveEnabled = true;
   has3dBoardAccess = false;
   cardTextKerning = 0;
   sfxEnabled = true;
@@ -29,7 +30,6 @@ export class SettingsDialogComponent {
   public availableFormats = [
     { value: Format.STANDARD, label: 'LABEL_STANDARD' },
     { value: Format.STANDARD_NIGHTLY, label: 'LABEL_STANDARD_NIGHTLY' },
-    { value: Format.STANDARD_MAJORS, label: 'LABEL_STANDARD_MAJORS' },
     { value: Format.GLC, label: 'LABEL_GLC' },
     { value: Format.EXPANDED, label: 'LABEL_EXPANDED' },
     { value: Format.UNLIMITED, label: 'LABEL_UNLIMITED' },
@@ -63,6 +63,9 @@ export class SettingsDialogComponent {
     );
     this.settingsService.use3dBoardDefault$.subscribe(
       enabled => this.use3dBoardDefault = enabled
+    );
+    this.settingsService.board2dPerspectiveEnabled$.subscribe(
+      enabled => this.board2dPerspectiveEnabled = enabled
     );
     this.settingsService.cardTextKerning$.subscribe(
       kerning => this.cardTextKerning = kerning
@@ -115,6 +118,7 @@ export class SettingsDialogComponent {
     this.settingsService.setCardSize(this.cardSize);
     this.settingsService.setHiddenFormats(this.hiddenFormats);
     this.settingsService.setUse3dBoardDefault(this.use3dBoardDefault);
+    this.settingsService.setBoard2dPerspectiveEnabled(this.board2dPerspectiveEnabled);
     this.settingsService.setCardTextKerning(this.cardTextKerning);
     this.settingsService.setSfxEnabled(this.sfxEnabled);
     this.settingsService.setSfxVolume(this.sfxVolume / 100); // Convert percentage to 0.0-1.0

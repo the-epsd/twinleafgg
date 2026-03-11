@@ -281,11 +281,11 @@ export class Board3dStateSyncService {
           ? cardList.cards.find(c => c.superType === SuperType.POKEMON && !c.tags?.includes(CardTag.BREAK)) || main
           : main || cardList.cards[0];
         if (mainCard) {
-          const url = this.cardsBaseService.getScanUrlFromCardList(mainCard, cardList);
+          const url = this.cardsBaseService.getScanUrlFor3D(mainCard, cardList);
           if (url && url.trim()) urls.push(url);
         }
       } else {
-        const url = this.cardsBaseService.getScanUrlFromCardList(cardList.cards[0], cardList);
+        const url = this.cardsBaseService.getScanUrlFor3D(cardList.cards[0], cardList);
         if (url && url.trim()) urls.push(url);
       }
     };
@@ -362,7 +362,7 @@ export class Board3dStateSyncService {
     const isFaceDown = cardList.isSecret || (!cardList.isPublic && !isOwner);
 
     // Get card scan URL (checks artworksMap for overrides first, like 2D components do)
-    const scanUrl = this.cardsBaseService.getScanUrlFromCardList(mainCard, cardList);
+    const scanUrl = this.cardsBaseService.getScanUrlFor3D(mainCard, cardList);
 
     // Get sleeve URL if sleeve image path is provided
     const sleeveUrl = sleeveImagePath ? this.cardsBaseService.getSleeveUrl(sleeveImagePath) : undefined;

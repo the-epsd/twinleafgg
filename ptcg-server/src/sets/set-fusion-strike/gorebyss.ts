@@ -21,7 +21,7 @@ export class Gorebyss extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public powers = [  {
+  public powers = [{
     name: 'Rapid Strike Canceler',
     powerType: PowerTypeEnum.ABILITY,
     text: 'Your opponent\'s Rapid Strike Pokémon in play have no Abilities.'
@@ -124,6 +124,10 @@ export class Gorebyss extends PokemonCard {
 
       // The ability user is effect.player; if gorebyss.owner is opponent, block it
       if ((gorebyss as any).owner === effect.player) {
+        return state;
+      }
+
+      if (effect.power.useFromDiscard || effect.power.useFromHand) {
         return state;
       }
 

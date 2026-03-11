@@ -9,6 +9,7 @@ import { DeckService } from '../../api/services/deck.service';
 import { DeckStatsResponse, DeckStatsMatchup, DeckStatsReplay, Deck } from '../../api/interfaces/deck.interface';
 import { AlertService } from '../../shared/alert/alert.service';
 import { ReplayService } from '../../api/services/replay.service';
+import { CardPreloadService } from '../../table/board/services/card-preload.service';
 import { ArchetypeSelectPopupService } from '../archetype-select-popup/archetype-select-popup.service';
 import { Archetype } from 'ptcg-server';
 
@@ -22,6 +23,7 @@ export class DeckStatsComponent implements OnInit {
 
   public deckId: number;
   public loading = false;
+  public preloading = false;
   public stats: DeckStatsResponse | null = null;
   public deck: Deck | null = null;
   public displayedReplayColumns: string[] = ['opponent', 'date', 'result', 'actions'];
@@ -34,6 +36,7 @@ export class DeckStatsComponent implements OnInit {
     private alertService: AlertService,
     private translate: TranslateService,
     private replayService: ReplayService,
+    private cardPreloadService: CardPreloadService,
     private archetypeSelectPopupService: ArchetypeSelectPopupService
   ) { }
 
@@ -96,6 +99,7 @@ export class DeckStatsComponent implements OnInit {
   }
 
   public viewReplay(matchId: number): void {
+    this.preloading = true;
     this.loading = true;
     this.replayService.getMatchReplay(matchId)
       .pipe(
@@ -103,12 +107,25 @@ export class DeckStatsComponent implements OnInit {
         untilDestroyed(this)
       )
       .subscribe({
-        next: gameState => {
+        next: async gameState => {
           if (gameState !== undefined) {
-            this.router.navigate(['/table', gameState.localId]);
+            try {
+              if (gameState.replay) {
+                const urls = this.cardPreloadService.preloadFromReplay(gameState.replay);
+                await this.cardPreloadService.preloadAndWait(urls, 15000);
+              }
+            } catch {
+              // Preload failure: continue to table anyway
+            } finally {
+              this.preloading = false;
+              this.router.navigate(['/table', gameState.localId]);
+            }
+          } else {
+            this.preloading = false;
           }
         },
         error: (error: ApiError) => {
+          this.preloading = false;
           if (!error.handled) {
             this.alertService.toast(this.translate.instant('ERROR_UNKNOWN'));
           }

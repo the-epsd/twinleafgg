@@ -1,0 +1,146 @@
+@import '../../../theme/variables.scss';
+
+$font-sci-fi: 'Orbitron', sans-serif;
+
+@keyframes dotPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes gridPulse {
+  0%, 100% {
+    opacity: 0.03;
+  }
+  50% {
+    opacity: 0.08;
+  }
+}
+
+@keyframes cornerGlow {
+  0%, 100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.game-loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  overflow: hidden;
+  background: radial-gradient(
+    ellipse at center,
+    $twinleaf-900 0%,
+    $twinleaf-950 70%
+  );
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.game-loading-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.game-loading-corner {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 2px solid rgba($twinleaf-green, 0.4);
+  pointer-events: none;
+
+  &-tl {
+    top: 24px;
+    left: 24px;
+    border-right: none;
+    border-bottom: none;
+    animation: cornerGlow 2s ease-in-out infinite;
+  }
+
+  &-br {
+    bottom: 24px;
+    right: 24px;
+    border-left: none;
+    border-top: none;
+    animation: cornerGlow 2s ease-in-out infinite 0.5s;
+  }
+}
+
+.game-loading-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  z-index: 1;
+}
+
+.game-loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 32px;
+
+  .game-loading-dot {
+    width: 10px;
+    height: 10px;
+    background: $twinleaf-green;
+    border-radius: 50%;
+    box-shadow: 0 0 12px rgba($twinleaf-green, 0.6);
+    animation: dotPulse 1.2s ease-in-out infinite;
+
+    @for $i from 1 through 5 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{($i - 1) * 0.15}s;
+      }
+    }
+  }
+}
+
+.game-loading-message {
+  font-family: $font-sci-fi;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $text-primary;
+  margin: 0;
+  text-shadow: 0 0 20px rgba($twinleaf-green, 0.3);
+}
+
+.game-loading-subtext {
+  font-family: 'Urbanist', sans-serif;
+  font-size: 0.875rem;
+  color: $text-secondary;
+  margin: 0;
+  font-weight: 500;
+}

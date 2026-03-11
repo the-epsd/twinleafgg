@@ -27,6 +27,10 @@ export class PowerPlant extends TrainerCard {
 
       const isEXorGX = pokemonCard.tags.includes(CardTag.POKEMON_GX) || pokemonCard.tags.includes(CardTag.POKEMON_EX);
 
+      if (effect.power.useFromDiscard || effect.power.useFromHand) {
+        return state;
+      }
+
       if (!effect.power.exemptFromAbilityLock) {
         if (isEXorGX && pokemonCard.powers.some(power => power.powerType === PowerType.ABILITY)) {
           throw new GameError(GameMessage.BLOCKED_BY_EFFECT);

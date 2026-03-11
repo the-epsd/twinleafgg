@@ -1,4 +1,5 @@
 import { Card } from '../../game/store/card/card';
+import { AncientTechnicalMachineIce } from './ancient-technical-machine-ice';
 import { AncientTechnicalMachineRock } from './ancient-technical-machine-rock';
 import { AncientTomb } from './ancient-tomb';
 import { Beldum } from './beldum';
@@ -44,6 +45,7 @@ import {
 } from './other-prints';
 
 export const setEXHiddenLegends: Card[] = [
+  new AncientTechnicalMachineIce(),
   new AncientTechnicalMachineRock(),
   new AncientTomb(),
   new Beldum(),
