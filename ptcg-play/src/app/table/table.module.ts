@@ -11,7 +11,6 @@ import { MatchResultsSplashComponent } from './match-results-splash/match-result
 import { GameOverComponent } from './game-over/game-over.component';
 import { XpGainScreenComponent } from './xp-gain-screen/xp-gain-screen.component';
 import { SandboxControlComponent } from './sandbox-control/sandbox-control.component';
-
 @NgModule({
   declarations: [
     TableComponent,

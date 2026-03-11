@@ -1,3 +1,5 @@
+<!-- Loading screen disabled: restore with *ngIf="preloading" -->
+<ptcg-game-loading *ngIf="false"></ptcg-game-loading>
 <ptcg-content [loading]="loading">
   <mat-toolbar-row>
     <button mat-icon-button (click)="goBack()" [attr.aria-label]="'Back'">

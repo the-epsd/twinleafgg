@@ -29,6 +29,7 @@ import { TwinleafNextButtonComponent } from './twinleaf-next-button/twinleaf-nex
 import { TwinleafButtonComponent } from './twinleaf-button/twinleaf-button.component';
 import { TwinleafButtonModule } from './twinleaf-button/twinleaf-button.module';
 import { TwinleafFormModule } from './twinleaf-form/twinleaf-form.module';
+import { GameLoadingComponent } from '../table/game-loading/game-loading.component';
 
 @NgModule({
   imports: [
@@ -58,7 +59,8 @@ import { TwinleafFormModule } from './twinleaf-form/twinleaf-form.module';
     ConnectionStatusComponent,
     TwinleafPlayButtonComponent,
     TwinleafPreviousButtonComponent,
-    TwinleafNextButtonComponent
+    TwinleafNextButtonComponent,
+    GameLoadingComponent
   ],
   exports: [
     AlertModule,
@@ -87,6 +89,7 @@ import { TwinleafFormModule } from './twinleaf-form/twinleaf-form.module';
     TwinleafPlayButtonComponent,
     TwinleafPreviousButtonComponent,
     TwinleafNextButtonComponent,
+    GameLoadingComponent,
     TwinleafButtonModule,
     TwinleafFormModule
   ],

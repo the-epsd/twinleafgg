@@ -14,6 +14,7 @@ import { Board3dStackService } from './services/board-3d-stack.service';
 import { Board3dPrizeService } from './services/board-3d-prize.service';
 import { Board3dLightingService } from './services/board-3d-lighting.service';
 import { Board3dPostProcessingService } from './services/board-3d-post-processing.service';
+import { CardPreloadService } from './services/card-preload.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { Board3dPostProcessingService } from './services/board-3d-post-processin
     Board3dStackService,
     Board3dPrizeService,
     Board3dLightingService,
-    Board3dPostProcessingService
+    Board3dPostProcessingService,
+    CardPreloadService
   ],
   exports: [
     Board3dComponent
