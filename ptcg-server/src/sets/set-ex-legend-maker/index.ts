@@ -21,6 +21,7 @@ import { Lunatone } from './lunatone';
 import { Machamp } from './machamp';
 import { Machoke } from './machoke';
 import { Machop } from './machop';
+import { Magnemite } from './magnemite';
 import { Mewex } from './mew-ex';
 import { Muk } from './muk';
 import { Nuzleaf } from './nuzleaf';
@@ -66,6 +67,7 @@ export const setEXLegendMaker: Card[] = [
   new Machamp(),
   new Machoke(),
   new Machop(),
+  new Magnemite(),
   new Mewex(),
   new Muk(),
   new Nuzleaf(),

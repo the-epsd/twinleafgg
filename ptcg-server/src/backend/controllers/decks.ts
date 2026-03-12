@@ -10,9 +10,6 @@ import { THEME_DECKS } from '../../game/store/prefabs/theme-decks';
 import { Format, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { ANY_PRINTING_ALLOWED } from '../../game/store/card/any-printing-allowed';
 
-/** Legacy enum value for STANDARD_MAJORS (removed). Filter from deck formats to handle cached data. */
-const LEGACY_STANDARD_MAJORS = 8;
-
 export class Decks extends Controller {
 
   // --- GET /list ---
@@ -66,7 +63,7 @@ export class Decks extends Controller {
         isValid: deck.isValid,
         manualArchetype1: deck.manualArchetype1,
         manualArchetype2: deck.manualArchetype2,
-        format: format.filter((f: number) => f !== LEGACY_STANDARD_MAJORS),
+        format,
         ...(deck.sleeveIdentifier ? { sleeveIdentifier: deck.sleeveIdentifier } : {}),
         ...(sleeveImagePath ? { sleeveImagePath } : {})
       };
@@ -1209,9 +1206,11 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
     return true;
   }
   if (anyPrintingAllowed && anyPrintingAllowed.includes(card.name)) {
-    switch (format) {
-      case Format.UNLIMITED:
-        return true;
+  switch (format) {
+    case Format.STANDARD_MAJORS:
+      return false; // Deprecated format, hidden from UI
+    case Format.UNLIMITED:
+      return true;
       case Format.ETERNAL:
         return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
       case Format.STANDARD: {
@@ -1272,12 +1271,16 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         return true;
       case Format.RSPK:
         return true;
+      case Format.STANDARD_MAJORS:
+        return false; // Deprecated format, hidden from UI
       case Format.PRE_RELEASE:
         // Pre-Release format allows all cards (like UNLIMITED)
         return true;
     }
   }
   switch (format) {
+    case Format.STANDARD_MAJORS:
+      return false; // Deprecated format, hidden from UI
     case Format.UNLIMITED:
       return true;
     case Format.ETERNAL:
