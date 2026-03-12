@@ -1206,9 +1206,11 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
     return true;
   }
   if (anyPrintingAllowed && anyPrintingAllowed.includes(card.name)) {
-    switch (format) {
-      case Format.UNLIMITED:
-        return true;
+  switch (format) {
+    case Format.STANDARD_MAJORS:
+      return false; // Deprecated format, hidden from UI
+    case Format.UNLIMITED:
+      return true;
       case Format.ETERNAL:
         return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
       case Format.STANDARD: {
@@ -1269,12 +1271,16 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         return true;
       case Format.RSPK:
         return true;
+      case Format.STANDARD_MAJORS:
+        return false; // Deprecated format, hidden from UI
       case Format.PRE_RELEASE:
         // Pre-Release format allows all cards (like UNLIMITED)
         return true;
     }
   }
   switch (format) {
+    case Format.STANDARD_MAJORS:
+      return false; // Deprecated format, hidden from UI
     case Format.UNLIMITED:
       return true;
     case Format.ETERNAL:

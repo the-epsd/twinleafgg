@@ -60,7 +60,7 @@ export class SettingsService {
   private loadHiddenFormats(): Format[] {
     const saved = localStorage.getItem(this.HIDDEN_FORMATS_KEY);
     let formats: Format[] = saved ? JSON.parse(saved) : [];
-    // Filter out legacy STANDARD_MAJORS (8) - removed format, value 8 now maps to RSPK
+    // Filter out STANDARD_MAJORS (8) - deprecated format, hidden from UI
     const filtered = formats.filter(f => f !== 8);
     if (filtered.length !== formats.length) {
       formats = filtered;
