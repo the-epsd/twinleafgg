@@ -2,6 +2,7 @@ import { DarknessEnergySpecial } from '../set-ex-ruby-and-sapphire/darkness-ener
 import { Delcatty } from '../set-ex-ruby-and-sapphire/delcatty';
 import { EnergySwitch } from '../set-scarlet-and-violet/energy-switch';
 import { GreatBall } from '../set-ex-firered-leafgreen/great-ball';
+import { Magneton } from '../set-ex-dragon/magneton';
 import { MetalEnergySpecial } from '../set-undaunted/metal-energy-special';
 import { WarpEnergy } from '../set-shining-legends/warp-energy';
 
@@ -30,6 +31,12 @@ export class GreatBallPK extends GreatBall {
   public fullName = 'Great Ball PK';
   public set = 'PK';
   public setNumber = '77';
+}
+
+export class MagnetonPK extends Magneton {
+  public fullName = 'Magneton PK';
+  public set = 'PK';
+  public setNumber = '16';
 }
 
 export class MetalEnergySpecialPK extends MetalEnergySpecial {
