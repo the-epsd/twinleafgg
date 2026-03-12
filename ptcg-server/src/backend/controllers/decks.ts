@@ -10,9 +10,6 @@ import { THEME_DECKS } from '../../game/store/prefabs/theme-decks';
 import { Format, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { ANY_PRINTING_ALLOWED } from '../../game/store/card/any-printing-allowed';
 
-/** Legacy enum value for STANDARD_MAJORS (removed). Filter from deck formats to handle cached data. */
-const LEGACY_STANDARD_MAJORS = 8;
-
 export class Decks extends Controller {
 
   // --- GET /list ---
@@ -66,7 +63,7 @@ export class Decks extends Controller {
         isValid: deck.isValid,
         manualArchetype1: deck.manualArchetype1,
         manualArchetype2: deck.manualArchetype2,
-        format: format.filter((f: number) => f !== LEGACY_STANDARD_MAJORS),
+        format,
         ...(deck.sleeveIdentifier ? { sleeveIdentifier: deck.sleeveIdentifier } : {}),
         ...(sleeveImagePath ? { sleeveImagePath } : {})
       };
