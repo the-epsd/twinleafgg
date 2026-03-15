@@ -16,7 +16,7 @@ export class MegaSkarmoryex extends PokemonCard {
   public attacks = [{
     name: 'Sonic Ripper',
     cost: [M, M, C],
-    damage: 220,
+    damage: 0,
     text: 'Shuffle all Energy from this Pokemon into your deck. This attack does 220 damage to 1 of your opponent\'s Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)',
   }];
 
