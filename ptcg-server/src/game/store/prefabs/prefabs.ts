@@ -2074,10 +2074,6 @@ export function LOOK_AT_TOP_X_CARDS_AND_ATTACH_UP_TO_Y_ENERGY(
     card instanceof EnergyCard && cardMatchesPartialFilter(card, energyFilter as Partial<Card>)
   ).length;
   const maxAttach = Math.min(maxEnergyToAttach, matchingEnergyCount);
-  if (maxAttach === 0) {
-    moveRemainingTopDeckCards(store, state, player, topCards, remainderDestination);
-    return state;
-  }
 
   const blockedTo = getBlockedTargetsFromFilter(player, targetFilter);
 

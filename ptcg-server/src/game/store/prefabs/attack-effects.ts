@@ -1,4 +1,4 @@
-import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, ConfirmPrompt, DamageMap, EnergyCard, GameMessage, PlayerType, PutDamagePrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, ConfirmPrompt, DamageMap, GameMessage, PlayerType, PutDamagePrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { CardType, SpecialCondition, SuperType, TrainerType } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
 import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, CardsToHandEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, KnockOutOpponentEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
@@ -451,7 +451,7 @@ export function DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  const energyCards = opponent.active.cards.filter(c => c instanceof EnergyCard);
+  const energyCards = opponent.active.cards.filter(c => c.superType === SuperType.ENERGY);
   if (energyCards.length === 0) {
     return state;
   }
