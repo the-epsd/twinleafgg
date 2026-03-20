@@ -16,13 +16,13 @@ export class MegaDragalgeex extends PokemonCard {
   public retreat = [C, C];
   public attacks = [{
     name: 'Corrosive Liquid',
-    cost: [N, C],
+    cost: [C, C],
     damage: 0,
     text: 'Discard all Pokemon Tool cards and Special Energy from all of your opponent\'s Pokemon.'
   },
   {
     name: 'Pernicious Poison',
-    cost: [N, N, C],
+    cost: [W, D],
     damage: 0,
     text: 'Your opponent\'s Active Pokemon is now Poisoned. During Pokemon Checkup, put 16 damage counters on that Pokemon instead of 1.'
   }];
