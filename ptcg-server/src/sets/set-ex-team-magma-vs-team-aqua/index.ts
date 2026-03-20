@@ -8,6 +8,7 @@ import { Maxie } from './maxie';
 import { Raikouex } from './raikou-ex';
 import { Sceptileex } from './sceptile-ex';
 import { Suicuneex } from './suicune-ex';
+import { Swampertex } from './swampert-ex';
 import { TeamAquaBall } from './team-aqua-ball';
 import { TeamAquaConspirator } from './team-aqua-conspirator';
 import { TeamAquaHideout } from './team-aqua-hideout';
@@ -35,6 +36,7 @@ import { TeamMagmasZangoose } from './team-magmas-zangoose';
 
 // Other prints
 import { DualBallMA } from './other-prints';
+import { StrengthCharmMA } from './other-prints';
 import { WarpPointMA } from './other-prints';
 
 export const setEXTeamMagmaVsTeamAqua: Card[] = [
@@ -47,6 +49,7 @@ export const setEXTeamMagmaVsTeamAqua: Card[] = [
   new Raikouex(),
   new Sceptileex(),
   new Suicuneex(),
+  new Swampertex(),
   new TeamAquaBall(),
   new TeamAquaConspirator(),
   new TeamAquaHideout(),
@@ -74,5 +77,6 @@ export const setEXTeamMagmaVsTeamAqua: Card[] = [
 
   // Other prints
   new DualBallMA(),
+  new StrengthCharmMA(),
   new WarpPointMA(),
 ];

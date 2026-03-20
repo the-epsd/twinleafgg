@@ -11,22 +11,14 @@ import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefab
 export class ShadowRiderCalyrexVMAX extends PokemonCard {
 
   public stage: Stage = Stage.VMAX;
-
   public evolvesFrom = 'Shadow Rider Calyrex V';
-
   public regulationMark = 'E';
-
-  public cardType: CardType = CardType.PSYCHIC;
-
+  public cardType: CardType = P;
   public tags = [CardTag.POKEMON_VMAX];
-
   public hp: number = 320;
-
-  public weakness = [{ type: CardType.DARK }];
-
-  public resistance = [{ type: CardType.FIGHTING, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -30 }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Underworld Door',
@@ -38,22 +30,17 @@ export class ShadowRiderCalyrexVMAX extends PokemonCard {
   public attacks = [
     {
       name: 'Max Geist',
-      cost: [CardType.PSYCHIC],
+      cost: [C, C, C],
       damage: 10,
       text: 'This attack does 30 more damage for each [P] Energy attached to all of your Pokémon.'
     }
   ];
 
   public set: string = 'CRE';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '75';
-
   public name: string = 'Shadow Rider Calyrex VMAX';
-
   public fullName: string = 'Shadow Rider Calyrex VMAX CRE';
-
   public readonly UNDERWORLD_DOOR_MARKER = 'UNDERWORLD_DOOR_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -29,6 +29,7 @@ import { Lunatone } from './lunatone';
 import { LushForest } from './forest-of-vitality';
 import { Magnemite } from './magnemite';
 import { Makuhita } from './makuhita';
+import { Marshadow } from './marshadow';
 import { MegaAbomasnowEx } from './mega-abomasnow-ex';
 import { MegaAbsolex } from './mega-absol-ex';
 import { MegaCameruptEx } from './mega-camerupt-ex';
@@ -97,6 +98,7 @@ export const setMegaEvolution: Card[] = [
   new LushForest(),
   new Magnemite(),
   new Makuhita(),
+  new Marshadow(),
   new MegaAbomasnowEx(),
   new MegaAbsolex(),
   new MegaCameruptEx(),

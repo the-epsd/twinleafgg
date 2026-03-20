@@ -131,21 +131,25 @@ export class MeowthexFA extends Meowthex {
 
 export class EnergyRecyclerFA extends EnergyRecycler {
   public fullName = 'Energy Recycler FA POR';
+  public set = 'M3';
   public setNumber = '101';
 }
 
 export class SacredAshFA extends SacredAsh {
   public fullName = 'Sacred Ash FA POR';
+  public set = 'M3';
   public setNumber = '102';
 }
 
 export class PokePadFA extends PokePad {
   public fullName = 'Poke Pad FA POR';
+  public set = 'M3';
   public setNumber = '103';
 }
 
 export class WondrousPatchFA extends WonderPatch {
   public fullName = 'Wondrous Patch FA POR';
+  public set = 'M3';
   public setNumber = '104';
 }
 

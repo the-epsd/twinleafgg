@@ -2,6 +2,7 @@ import { EnergySearch } from '../set-scarlet-and-violet/energy-search';
 import { EnergySwitch } from '../set-scarlet-and-violet/energy-switch';
 import { EnergyRemoval2 } from '../set-ex-power-keepers/energy-removal-2';
 import { MetalEnergySpecial } from '../set-undaunted/metal-energy-special';
+import { PokemonReversal } from '../set-ex-unseen-forces/pokemon-reversal';
 import { RainbowEnergy } from '../set-sun-and-moon/rainbow-energy';
 import { Switch } from '../set-base-set/switch';
 
@@ -31,6 +32,12 @@ export class MetalEnergySpecialRS extends MetalEnergySpecial {
   public setNumber = '94';
   public fullName = 'Metal Energy RS';
   public text = 'Damage done by attacks to the Pokémon that Metal Energy is attached to is reduced by 10 (after applying Weakness and Resistance). Ignore this effect if the Pokémon that Metal Energy is attached to isn\'t [M]. Metal Energy provides [M] Energy. (Doesn\'t count as a basic Energy card.)';
+}
+
+export class PokemonReversalRS extends PokemonReversal {
+  public set = 'RS';
+  public setNumber = '87';
+  public fullName = 'Pokemon Reversal RS';
 }
 
 export class RainbowEnergyRS extends RainbowEnergy {

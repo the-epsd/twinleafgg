@@ -10,6 +10,7 @@ import { Delcattyex } from './delcatty-ex';
 import { Diglett } from './diglett';
 import { Dugtrio } from './dugtrio';
 import { Electrike } from './electrike';
+import { Exploudex } from './exploud-ex';
 import { Fearow } from './fearow';
 import { Grovyle } from './grovyle';
 import { Ivysaur } from './ivysaur';
@@ -55,6 +56,7 @@ export const setEXCrystalGuardians: Card[] = [
   new Diglett(),
   new Dugtrio(),
   new Electrike(),
+  new Exploudex(),
   new Fearow(),
   new Grovyle(),
   new Ivysaur(),

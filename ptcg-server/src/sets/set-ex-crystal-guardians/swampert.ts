@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PowerType, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, DRAW_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, BLOCK_IF_HAS_SPECIAL_CONDITION, DRAW_CARDS, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class Swampert extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -48,6 +49,11 @@ export class Swampert extends PokemonCard {
 
       ABILITY_USED(player, this);
       ADD_MARKER(this.ECHO_DRAW_MARKER, player, this);
+    }
+
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ECHO_DRAW_MARKER, this);
+    if (effect instanceof PlayPokemonEffect && HAS_MARKER(this.ECHO_DRAW_MARKER, effect.player, this)) {
+      effect.player.marker.removeMarker(this.ECHO_DRAW_MARKER, this);
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

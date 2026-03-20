@@ -29,6 +29,7 @@ import {
   EnergySwitchRS,
   EnergyRemoval2RS,
   MetalEnergySpecialRS,
+  PokemonReversalRS,
   RainbowEnergyRS,
   SwitchRS
 } from './other-prints';
@@ -70,6 +71,7 @@ export const setEXRubyAndSapphire: Card[] = [
   new EnergySwitchRS(),
   new EnergyRemoval2RS(),
   new MetalEnergySpecialRS(),
+  new PokemonReversalRS(),
   new RainbowEnergyRS(),
   new SwitchRS(),
 ]; 

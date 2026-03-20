@@ -1,5 +1,6 @@
 import { EscapeRope } from '../set-battle-styles/escape-rope';
 import { DualBall } from '../set-unleashed/dual-ball';
+import { StrengthCharm } from '../set-ex-dragon-frontiers/strength-charm';
 
 export class WarpPointMA extends EscapeRope {
   public set = 'MA';
@@ -14,4 +15,10 @@ export class DualBallMA extends DualBall {
   public setNumber = '72';
   public fullName = 'Dual Ball MA';
   public text = 'Flip 2 coins. For each heads, search your deck for a Basic Pokémon card, show it to your opponent, and put it into your hand. Shuffle your deck afterward.';
+}
+
+export class StrengthCharmMA extends StrengthCharm {
+  public set = 'MA';
+  public setNumber = '74';
+  public fullName = 'Strength Charm MA';
 }

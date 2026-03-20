@@ -14,6 +14,7 @@ import { Kingdra } from './kingdra';
 import { Lugia } from './lugia';
 import { Magnemite } from './magnemite';
 import { MetalEnergySpecial } from './metal-energy-special';
+import { Oddish } from './oddish';
 import { Porygon } from './porygon';
 import { Porygon2 } from './porygon2';
 import { Seadra } from './seadra';
@@ -43,6 +44,7 @@ export const setAquapolis: Card[] = [
   new Lugia(),
   new Magnemite(),
   new MetalEnergySpecial(),
+  new Oddish(),
   new Porygon(),
   new Porygon2(),
   new Seadra(),

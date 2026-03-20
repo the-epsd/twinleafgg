@@ -1,6 +1,7 @@
 import { Card } from '../../game';
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy } from './basic-energies';
 import { Feebas } from './feebas';
+import { Loudred } from './loudred';
 import { LumBerry } from './lum-berry';
 import { Medichamex } from './medicham-ex';
 import { Meditite } from './meditite';
@@ -21,6 +22,7 @@ import {
 
 export const setEXEmerald: Card[] = [
   new Feebas(),
+  new Loudred(),
   new LumBerry(),
   new Medichamex(),
   new Meditite(),

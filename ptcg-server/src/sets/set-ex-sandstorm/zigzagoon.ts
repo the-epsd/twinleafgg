@@ -15,7 +15,7 @@ export class Zigzagoon extends PokemonCard {
     name: 'Collect',
     cost: [C],
     damage: 0,
-    text: ''
+    text: 'Draw a card.'
   },
   {
     name: 'Headbutt',
@@ -24,11 +24,11 @@ export class Zigzagoon extends PokemonCard {
     text: ''
   }];
 
-  public set: string = 'EX';
+  public set: string = 'SS';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public name: string = 'Zigzagoon';
-  public fullName: string = 'Zigzagoon EX';
+  public fullName: string = 'Zigzagoon SS';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

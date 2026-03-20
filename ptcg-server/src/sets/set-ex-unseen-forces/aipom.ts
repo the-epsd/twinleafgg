@@ -5,8 +5,9 @@ import {
   PokemonCardList
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/attack-effects';
-import { ADD_MARKER, DRAW_CARDS, HAS_MARKER, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, DRAW_CARDS, HAS_MARKER, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Aipom extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -38,8 +39,9 @@ export class Aipom extends PokemonCard {
   public readonly SNAPPY_MOVE_MARKER = 'SNAPPY_MOVE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.SNAPPY_MOVE_MARKER, this);
+    if (effect instanceof EndTurnEffect && HAS_MARKER(this.SNAPPY_MOVE_MARKER, effect.player)) {
+      effect.player.marker.removeMarker(this.SNAPPY_MOVE_MARKER);
+    }
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
@@ -61,6 +63,10 @@ export class Aipom extends PokemonCard {
       if (!aipomCard) {
         return state;
       }
+
+      ADD_MARKER(this.SNAPPY_MOVE_MARKER, player, this);
+      ABILITY_USED(player, this);
+      DRAW_CARDS(player, 1);
 
       const pokemons = aipomSlot.getPokemons();
       const otherCards = aipomSlot.cards.filter(card =>
@@ -88,8 +94,6 @@ export class Aipom extends PokemonCard {
       }
 
       aipomSlot.clearEffects();
-      DRAW_CARDS(player, 1);
-      ADD_MARKER(this.SNAPPY_MOVE_MARKER, player, this);
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -14,18 +14,35 @@ There are two projects:
 Server is a simple node.js application written in TypeScript. It uses express with websockets and [typeorm](https://typeorm.io/#/) for database access.
 
 Prerequisites:
-* Node.js 8 LTS or higher
+* Node.js 16 or 18 LTS (Node 20+ is not supported by current engine constraints)
+* npm 7+
 * mysql-5 or sqlite-3
+
+If you are currently on a newer Node version (for example Node 25), switch to Node 16 or 18 before installing dependencies.
+
+Example using `n`:
+
+```
+npm install -g n
+n 18
+```
+
+On macOS, if Node was installed through Homebrew, you may need to unlink it first:
+
+```
+brew unlink node
+```
 
 `config.js` contains all available options and its default values are defined in the `src/config.ts`
 
-1. Install all required dependencies.
+1. Go to the server directory and install dependencies.
 
 ```
+cd ptcg-server
 npm install
 ```
 
-2. Add a file named ".env" in the main ptcg-server directory. Paste these contents.
+2. Add a file named `.env` in the `ptcg-server` directory. Paste these contents.
 
 ```
 STORAGE_TYPE='sqlite'
@@ -34,14 +51,15 @@ SERVER_PASSWORD=''
 SERVER_SECRET='!secret!'
 ```
 
-3. Build the project and start it.
+3. Start the server.
 
 ```
-npm run build
-npm start
+npm run start
 ```
 
 The service should now listen on the specified address and port. It will be http://localhost:8080 by default. This can be changed by editing `config.js` as previously mentioned. This server uses Sqlite-3.
+
+If you get a SQLite foreign key constraint error on startup, delete `ptcg-server/database.sq3` and start the server again. The database file will be regenerated.
 
 ### Client launch
 
@@ -49,18 +67,25 @@ The client is an Angular application.
 https://angular.io/. 
 The source code of the client is located in the `ptcg-play` directory.
 
-The server package is a dependency required by the client. First you must build the server, then the client.
+The server package is a dependency required by the client. Make sure the server dependencies are installed and the server is running before starting the client.
 
-1. When the server is running, you can go now to the `ptcg-play` directory and install dependencies.
+1. With the server running, go to the `ptcg-play` directory and install dependencies.
 
 ```
+cd ../ptcg-play
 npm install
 ```
 
-2. Start the aplication.
+2. Build the client.
 
 ```
-npm start
+npm run build
+```
+
+3. Start the local client.
+
+```
+npm run start:local
 ```
 
 The command above will start the application in the debug mode at http://localhost:4200
