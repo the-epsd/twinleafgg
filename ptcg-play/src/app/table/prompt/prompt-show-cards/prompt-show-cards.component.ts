@@ -31,7 +31,7 @@ export class PromptShowCardsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading = true;
-    timer(3000).pipe(
+    timer(5000).pipe(
       take(1),
       takeUntil(this.destroyed$)
     ).subscribe(() => {
@@ -52,12 +52,18 @@ export class PromptShowCardsComponent implements OnInit, OnDestroy {
   }
 
   private resolvePrompt() {
-    if (!this.isResolved) {
-      this.isResolved = true;
-      const gameId = this.gameState.gameId;
-      const id = this.prompt.id;
-      this.gameService.resolvePrompt(gameId, id, null);
+    if (this.isResolved) {
+      return;
     }
+    const live = this.gameState?.state?.prompts?.find(p => p.id === this.prompt.id);
+    if (live !== undefined && live.result !== undefined) {
+      this.isResolved = true;
+      return;
+    }
+    this.isResolved = true;
+    const gameId = this.gameState.gameId;
+    const id = this.prompt.id;
+    this.gameService.resolvePrompt(gameId, id, null);
   }
 
   public confirm() {
