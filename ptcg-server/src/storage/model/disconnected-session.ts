@@ -14,7 +14,7 @@ export class DisconnectedSession extends BaseEntity {
   @Column()
   public gameId!: number;
 
-  @Column({ type: 'mediumtext' })
+  @Column({ type: 'text' })
   public gameState!: string; // Serialized game state
 
   @Column({ type: 'bigint', transformer: [bigint] })
