@@ -6,7 +6,7 @@ import { PlayerType, SlotType } from '../../game/store/actions/play-card-action'
 import { PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
-import { WAS_POWER_USED, WAS_ATTACK_USED, ABILITY_USED, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { WAS_POWER_USED, WAS_ATTACK_USED, ABILITY_USED, MOVE_CARDS, REMOVE_MARKER_AT_END_OF_TURN, CONFIRMATION_PROMPT, PUT_SPECIFIC_ENERGY_FROM_THIS_POKEMON_INTO_HAND } from '../../game/store/prefabs/prefabs';
 import { GameError } from '../../game/game-error';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
@@ -50,7 +50,7 @@ export class MegaGreninjaex extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
       const basicWInHand = player.hand.cards.find(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(W)
+        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.WATER)
       );
       if (!basicWInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -68,7 +68,7 @@ export class MegaGreninjaex extends PokemonCard {
         player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
-        { superType: SuperType.ENERGY },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, provides: [CardType.WATER] },
         { allowCancel: true, min: 1, max: 1 }
       ), cards => {
         cards = cards || [];
@@ -104,31 +104,12 @@ export class MegaGreninjaex extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const wEnergies = player.active.cards.filter(c =>
-        c instanceof EnergyCard && c.provides.includes(W)
-      );
-      if (wEnergies.length === 0) {
-        return state;
-      }
-      const blocked: number[] = [];
-      player.active.cards.forEach((c, i) => {
-        if (!(c instanceof EnergyCard) || !c.provides.includes(W)) {
-          blocked.push(i);
-        }
-      });
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.active,
-        {},
-        { min: 0, max: 1, allowCancel: true, blocked }
-      ), selected => {
-        const cards = selected || [];
-        if (cards.length > 0) {
-          player.active.moveCardTo(cards[0], player.hand);
+      CONFIRMATION_PROMPT(store, state, player, result => {
+        if (result) {
+          PUT_SPECIFIC_ENERGY_FROM_THIS_POKEMON_INTO_HAND(store, state, effect, [CardType.WATER]);
           effect.damage += 80;
         }
-      });
+      }, GameMessage.WANT_TO_USE_EFFECT_OF_ATTACK);
     }
     return state;
   }

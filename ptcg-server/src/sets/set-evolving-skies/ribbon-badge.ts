@@ -27,7 +27,8 @@ export class RibbonBadge extends TrainerCard {
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
 
       const pokemonCard = effect.target.getPokemonCard();
-      if (pokemonCard?.name.includes('Sylveon') && pokemonCard?.tags.includes(CardTag.POKEMON_V) || pokemonCard?.tags.includes(CardTag.POKEMON_VMAX) || pokemonCard?.tags.includes(CardTag.POKEMON_VSTAR)) {
+      if (pokemonCard?.name.includes('Sylveon') &&
+        (pokemonCard?.tags.includes(CardTag.POKEMON_V) || pokemonCard?.tags.includes(CardTag.POKEMON_VMAX) || pokemonCard?.tags.includes(CardTag.POKEMON_VSTAR))) {
         effect.prizeCount -= 1;
       }
 

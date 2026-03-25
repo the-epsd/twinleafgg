@@ -5,7 +5,7 @@ import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { GameError, GameMessage, StateUtils } from '../../game';
-import { ADD_MARKER, HAS_MARKER, PUT_DAMAGE, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
+import { ADD_MARKER, DEAL_DAMAGE, HAS_MARKER, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class BlackBeltsTraining extends TrainerCard {
@@ -46,7 +46,7 @@ export class BlackBeltsTraining extends TrainerCard {
 
     }
 
-    if (PUT_DAMAGE(effect) && HAS_MARKER(this.BLACK_BELTS_TRAINING_MARKER, effect.player, this) && effect.damage > 0) {
+    if (DEAL_DAMAGE(effect) && HAS_MARKER(this.BLACK_BELTS_TRAINING_MARKER, effect.player, this) && effect.damage > 0) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 

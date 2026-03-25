@@ -89,31 +89,29 @@ export class SylveonVMAX extends PokemonCard {
         }
       });
 
-      if (WAS_ATTACK_USED(effect, 1, this)) {
-        const player = effect.player;
-        const playerBench = player.bench;
+      return state;
+    }
 
-        const uniqueTypes = new Set<CardType>();
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      const player = effect.player;
+      const playerBench = player.bench;
 
-        playerBench.forEach(c => {
-          if (c.getPokemonCard() instanceof PokemonCard) {
-            const card = c.getPokemonCard();
-            const checkEffect = new CheckPokemonTypeEffect(c);
-            store.reduceEffect(state, checkEffect);
-            console.log('Card Types:', checkEffect.cardTypes);
-            console.log('Additional Types:', card?.additionalCardTypes);
-            checkEffect.cardTypes.forEach(type => uniqueTypes.add(type));
-          }
-        });
+      const uniqueTypes = new Set<CardType>();
 
-        // Set the damage based on the count of unique Pokémon types
-        effect.damage += 30 * uniqueTypes.size;
+      playerBench.forEach(c => {
+        if (c.getPokemonCard() instanceof PokemonCard) {
+          const checkEffect = new CheckPokemonTypeEffect(c);
+          store.reduceEffect(state, checkEffect);
+          checkEffect.cardTypes.forEach(type => uniqueTypes.add(type));
+        }
+      });
 
-        return state;
-      }
+      // Set the damage based on the count of unique Pokémon types
+      effect.damage += 30 * uniqueTypes.size;
 
       return state;
     }
+
     return state;
   }
 }
