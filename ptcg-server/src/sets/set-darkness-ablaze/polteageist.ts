@@ -70,12 +70,6 @@ export class Polteageist extends PokemonCard {
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const hasEnergyInHand = player.hand.cards.some(c => {
-        return c.superType === SuperType.ENERGY;
-      });
-
-      if (!hasEnergyInHand)
-        throw new GameError(GameMessage.CANNOT_USE_POWER);
 
       if (player.marker.hasMarker(this.ABILITY_USED_MARKER, this))
         throw new GameError(GameMessage.POWER_ALREADY_USED);

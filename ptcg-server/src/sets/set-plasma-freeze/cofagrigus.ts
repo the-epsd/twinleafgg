@@ -3,7 +3,6 @@ import { CardTag, Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, GameMessage, PlayerType, SlotType, StateUtils, DamageMap, PutDamagePrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
 export class Cofagrigus extends PokemonCard {
 
@@ -40,18 +39,9 @@ export class Cofagrigus extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       const maxAllowedDamage: DamageMap[] = [];
-      let damageLeft = 0;
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        const checkHpEffect = new CheckHpEffect(opponent, cardList);
-        store.reduceEffect(state, checkHpEffect);
-        damageLeft += checkHpEffect.hp - cardList.damage;
-        maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
-      });
-
-      const damage = Math.min(30, damageLeft);
+      const damage = 30;
 
       return store.prompt(state, new PutDamagePrompt(
         effect.player.id,

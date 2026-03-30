@@ -9,6 +9,7 @@ export interface ShowCardsOptions {
 export class ShowCardsPrompt extends Prompt<true> {
 
   readonly type: string = 'Show cards';
+  public blocksDispatch = false;
 
   public options: ShowCardsOptions;
 

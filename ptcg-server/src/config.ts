@@ -14,6 +14,8 @@ export const config = {
     avatarMinSize: 64,
     avatarMaxSize: 512,
     replayFileSize: 512 * 1024,
+    /** JSON body limit for /v1/replays only (base64 replay imports can exceed the general limit). */
+    replayImportJsonBodyLimit: 8 * 1024 * 1024,
     rateLimitCount: 10000,     // Increased from 100 to 1000 HTTP requests
     wsRateLimitCount: 10000,   // Increased from 200 to 2000 WebSocket messages
     rateLimitTime: 60000,     // Keeping this at 1 minute

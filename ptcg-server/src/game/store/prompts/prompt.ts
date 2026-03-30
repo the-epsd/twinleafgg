@@ -5,6 +5,8 @@ export abstract class Prompt<T> {
   readonly abstract type: string;
   public id: number;
   public result: T | undefined;
+  /** If false, unresolved prompt does not block non-resolve Store.dispatch actions. */
+  public blocksDispatch: boolean = true;
 
   constructor(public playerId: number) {
     this.id = 0;

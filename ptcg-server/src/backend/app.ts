@@ -55,8 +55,17 @@ export class App {
       instance.init();
     };
 
-    // Calculate limit: base + avatar size (4x) + replay size (4x for base64 encoding overhead)
-    app.use(json({ limit: 512 + config.backend.avatarFileSize * 4 + config.backend.replayFileSize * 4 }));
+    // General limit: base + avatar size (4x) + replay size (4x for base64 encoding overhead).
+    // /v1/replays uses a higher limit so long-game replay imports are not rejected at the parser.
+    const defaultJsonLimit = 512 + config.backend.avatarFileSize * 4 + config.backend.replayFileSize * 4;
+    const parseJsonDefault = json({ limit: defaultJsonLimit });
+    const parseJsonReplays = json({ limit: config.backend.replayImportJsonBodyLimit });
+    app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
+      if (req.path.startsWith('/v1/replays')) {
+        return parseJsonReplays(req, res, next);
+      }
+      return parseJsonDefault(req, res, next);
+    });
     app.use(cors());
 
     // Health check endpoint - must be first route
@@ -121,7 +130,17 @@ export class App {
         err.type === 'entity.too.large' ||
         (err.message && err.message.includes('too large'))
       )) {
-        console.error('[HTTP Error] PayloadTooLargeError:', err.message);
+        const path = typeof req.originalUrl === 'string'
+          ? req.originalUrl.split('?')[0]
+          : req.path;
+        const contentLength = req.get('content-length');
+        const userId = typeof req.body?.userId === 'number' ? req.body.userId : undefined;
+        console.error('[HTTP Error] PayloadTooLargeError:', err.message, {
+          method: req.method,
+          path,
+          contentLength: contentLength ?? 'unknown',
+          ...(userId !== undefined ? { userId } : {}),
+        });
         if (!res.headersSent) {
           res.status(413).json({ error: ApiErrorEnum.PAYLOAD_TOO_LARGE });
         }

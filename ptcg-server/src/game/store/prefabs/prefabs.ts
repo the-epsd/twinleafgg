@@ -940,6 +940,24 @@ export function DISCARD_SPECIFIC_ENERGY_FROM_THIS_POKEMON(store: StoreLike, stat
   });
 }
 
+export function PUT_SPECIFIC_ENERGY_FROM_THIS_POKEMON_INTO_HAND(store: StoreLike, state: State, effect: AttackEffect, energyMap: CardType[]) {
+  const player = effect.player;
+
+  const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
+  state = store.reduceEffect(state, checkProvidedEnergy);
+
+  state = store.prompt(state, new ChooseEnergyPrompt(
+    player.id,
+    GameMessage.CHOOSE_CARD_TO_HAND,
+    checkProvidedEnergy.energyMap,
+    energyMap,
+    { allowCancel: false }
+  ), energy => {
+    const cards: Card[] = (energy || []).map(e => e.card);
+    MOVE_CARDS(store, state, player.active, player.hand, { cards: cards });
+  });
+}
+
 export function DISCARD_ALL_ENERGY_FROM_POKEMON(store: StoreLike, state: State, effect: AttackEffect, card: Card) {
   const player = effect.player;
   const cardList = StateUtils.findCardList(state, card);
