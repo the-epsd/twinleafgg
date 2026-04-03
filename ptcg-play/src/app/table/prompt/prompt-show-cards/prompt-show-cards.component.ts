@@ -52,18 +52,12 @@ export class PromptShowCardsComponent implements OnInit, OnDestroy {
   }
 
   private resolvePrompt() {
-    if (this.isResolved) {
-      return;
-    }
-    const live = this.gameState?.state?.prompts?.find(p => p.id === this.prompt.id);
-    if (live !== undefined && live.result !== undefined) {
+    if (!this.isResolved) {
       this.isResolved = true;
-      return;
+      const gameId = this.gameState.gameId;
+      const id = this.prompt.id;
+      this.gameService.resolvePrompt(gameId, id, null);
     }
-    this.isResolved = true;
-    const gameId = this.gameState.gameId;
-    const id = this.prompt.id;
-    this.gameService.resolvePrompt(gameId, id, null);
   }
 
   public confirm() {
