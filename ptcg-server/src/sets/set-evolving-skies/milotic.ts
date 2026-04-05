@@ -6,7 +6,7 @@ import { IS_ABILITY_BLOCKED, MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from 
 import { MoveCardsEffect } from '../../game/store/effects/game-effects';
 
 export class Milotic extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Feebas';
   public cardType: CardType = W;
   public hp: number = 120;
