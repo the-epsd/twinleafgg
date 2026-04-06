@@ -94,22 +94,16 @@ function* playCard(next: Function, store: StoreLike, state: State,
 export class Raihan extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'EVS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '152';
-
   public regulationMark = 'E';
-
   public name: string = 'Raihan';
-
   public fullName: string = 'Raihan EVS';
 
   public text: string = `You can play this card only if any of your Pokémon were Knocked Out during your opponent's last turn.
 
-  Attach a basic Energy card from your discard pile to 1 of your Pokémon. If you do, search your deck for a card and put it into your hand. Then, shuffle your deck.`;
+Attach a basic Energy card from your discard pile to 1 of your Pokémon. If you do, search your deck for a card and put it into your hand. Then, shuffle your deck.`;
 
   public readonly RAIHAN_MARKER = 'RAIHAN_MARKER';
 

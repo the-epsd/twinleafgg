@@ -52,21 +52,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class BirdKeeper extends TrainerCard {
 
   public regulationMark = 'D';
-
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'DAA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '159';
-
   public name: string = 'Bird Keeper';
-
   public fullName: string = 'Bird Keeper DAA';
 
   public text: string =
-    'Switch your Active Pokemon with 1 of your Benched Pokemon.';
+    'Switch your Active Pokemon with 1 of your Benched Pokemon. If you do, draw 3 cards.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
