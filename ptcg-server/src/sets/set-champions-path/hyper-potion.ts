@@ -58,7 +58,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   targets.forEach(target => {
     // Heal Pokemon
     const healEffect = new HealEffect(player, target, 120);
-    store.reduceEffect(state, healEffect);
+    state = store.reduceEffect(state, healEffect);
 
     const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, target);
     state = store.reduceEffect(state, checkProvidedEnergy);
@@ -79,7 +79,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
       MOVE_CARDS(store, state, target, player.discard, { cards: cards, sourceCard: self });
     });
   });
-
+  player.supporter.moveCardTo(effect.trainerCard, player.discard);
   return state;
 }
 

@@ -5,6 +5,8 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 
 import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
+import { StateUtils } from '../../game';
 
 export class MegaLopunnyex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -24,6 +26,7 @@ export class MegaLopunnyex extends PokemonCard {
     name: 'Spiky Hopper',
     cost: [C, C],
     damage: 160,
+    shredAttack: true,
     text: 'This attack\'s damage isn\'t affected by any effects on your opponent\'s Active Pokemon.'
   }];
 
@@ -42,9 +45,20 @@ export class MegaLopunnyex extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      // Spike Hopper ignores effects on opponent's Active Pokemon
-      // This is handled by the damage calculation system automatically
-      // No special implementation needed as the text is descriptive
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+
+      const applyWeakness = new ApplyWeaknessEffect(effect, 160);
+      store.reduceEffect(state, applyWeakness);
+      const damage = applyWeakness.damage;
+
+      effect.damage = 0;
+
+      if (damage > 0) {
+        opponent.active.damage += damage;
+        const afterDamage = new AfterDamageEffect(effect, damage);
+        state = store.reduceEffect(state, afterDamage);
+      }
     }
 
     return state;

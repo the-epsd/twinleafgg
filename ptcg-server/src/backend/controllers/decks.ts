@@ -1061,22 +1061,32 @@ const SetReleaseDates: { [key: string]: Date } = {
 };
 
 // ========== Format Validation Helpers ==========
+/** Standard uses regulation mark H onward when a mark is printed (single-letter marks). */
+function standardRegulationMarkAllowed(card: any): boolean {
+  const m = card.regulationMark;
+  if (!m) {
+    return true;
+  }
+  return m >= 'H';
+}
+
 // --- isPrintingLegalInStandard ---
-/** Checks if a printing is legal in Standard: set must be in rotation (>= SVI) and released (<= today). Allows J Regulation Mark as long as released. */
+/** Set must be in rotation (>= TEF), released (<= today), and regulation mark H+ when present. */
 function isPrintingLegalInStandard(card: any): boolean {
   const setDate = SetReleaseDates[card.set];
-  return !!setDate && setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
+  return !!setDate &&
+    setDate >= SetReleaseDates['TEF'] &&
+    setDate <= new Date() &&
+    standardRegulationMarkAllowed(card);
 }
 
 // --- isPrintingLegalInStandardNightly ---
-/** Checks if a printing is legal in Standard Nightly: same as Standard PLUS future sets (SVI+ but not yet released, e.g. M3, M4). SVP is included only if regulation mark is not G. */
+/** Same regulation rules as Standard, plus not-yet-released sets at or after TEF (e.g. M3, M4). */
 function isPrintingLegalInStandardNightly(card: any): boolean {
   const setDate = SetReleaseDates[card.set];
-  // SVP allowed only when regulation mark is not G
-  if (card.set === 'SVP') {
-    return !!setDate && card.regulationMark !== 'G';
-  }
-  return !!setDate && setDate >= SetReleaseDates['TEF'];
+  return !!setDate &&
+    setDate >= SetReleaseDates['TEF'] &&
+    standardRegulationMarkAllowed(card);
 }
 
 // --- getValidFormatsForCardList --- (exported for backfill script)
@@ -1221,7 +1231,7 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
       case Format.STANDARD: {
         // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
-        // is legal in Standard (G, H, I, or J if released)
+        // is legal in Standard (TEF+, released, regulation mark H+ when printed)
         const cardManager = CardManager.getInstance();
         const allPrintings = cardManager.getAllCards().filter((c: any) =>
           c && c.name === card.name

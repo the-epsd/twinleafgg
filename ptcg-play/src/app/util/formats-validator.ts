@@ -158,7 +158,7 @@ export class FormatValidator {
           return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
         case Format.STANDARD: {
           // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
-          // is legal in Standard (G, H, I, or J if released)
+          // is legal in Standard (TEF+, released, regulation mark H+ when printed)
           if (allCards) {
             const allPrintings = allCards.filter(c => c && c.name === card.name);
 
@@ -223,10 +223,8 @@ export class FormatValidator {
         return true;
       case Format.ETERNAL:
         return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
-      case Format.STANDARD: {
-        var setDate = SetReleaseDates[card.set];
-        return setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
-      }
+      case Format.STANDARD:
+        return this.isPrintingLegalInStandard(card);
       case Format.STANDARD_NIGHTLY:
         return this.isPrintingLegalInStandardNightly(card);
       case Format.EXPANDED: {
@@ -389,29 +387,36 @@ export class FormatValidator {
     return false;
   }
 
+  /** Standard uses regulation mark H onward when a mark is printed (single-letter marks). */
+  private static standardRegulationMarkAllowed(card: Card): boolean {
+    const m = (card as any).regulationMark as string | undefined;
+    if (!m) {
+      return true;
+    }
+    return m >= 'H';
+  }
+
   // --- isPrintingLegalInStandard ---
   /**
-   * Checks if a printing is legal in Standard: set must be in rotation (>= SVI) and released (<= today).
-   * Allows J Regulation Mark as long as the set release date has passed.
+   * Set must be in rotation (>= TEF), released (<= today), and regulation mark H+ when present.
    */
   private static isPrintingLegalInStandard(card: Card): boolean {
     const setDate = SetReleaseDates[card.set];
-    return !!setDate && setDate >= SetReleaseDates['SVI'] && setDate <= new Date();
+    return !!setDate &&
+      setDate >= SetReleaseDates['TEF'] &&
+      setDate <= new Date() &&
+      this.standardRegulationMarkAllowed(card);
   }
 
   // --- isPrintingLegalInStandardNightly ---
   /**
-   * Checks if a printing is legal in Standard Nightly: same as Standard (SVI+, released)
-   * PLUS future sets (SVI+ but not yet released, e.g. M3, M4).
-   * SVP is included only if regulation mark is not G.
+   * Same regulation rules as Standard, plus not-yet-released sets at or after TEF (e.g. M3, M4).
    */
   private static isPrintingLegalInStandardNightly(card: Card): boolean {
     const setDate = SetReleaseDates[card.set];
-    // SVP allowed only when regulation mark is not G
-    if (card.set === 'SVP') {
-      return !!setDate && (card as any).regulationMark !== 'G';
-    }
-    return !!setDate && setDate >= SetReleaseDates['TEF'];
+    return !!setDate &&
+      setDate >= SetReleaseDates['TEF'] &&
+      this.standardRegulationMarkAllowed(card);
   }
 
   // --- isDeckValidForFormat ---
