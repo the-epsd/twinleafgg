@@ -84,6 +84,7 @@
   "DECK_EDIT_ALL_TAGS": "All tags",
   "DECK_EDIT_ALL_FORMATS": "All Formats",
   "DECK_EDIT_ALL_SETS": "All sets",
+  "DECK_EDIT_SHOW_LIBRARY_CARD_TYPE": "Show card type on library cards",
   "DECK_EDIT_ATTACK_COST": "Attack Cost",
   "DECK_EDIT_BACK": "Back",
   "DECK_EDIT_CARDS_COUNT": "Your deck contains {{count}} cards.",

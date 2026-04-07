@@ -83,6 +83,11 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+
+            <mat-checkbox *ngIf="isAdmin$ | async" class="filter-checkbox-admin" color="primary"
+              formControlName="showLibraryCardTypeBadge">
+              {{ 'DECK_EDIT_SHOW_LIBRARY_CARD_TYPE' | translate }}
+            </mat-checkbox>
           </div>
         </div>
 

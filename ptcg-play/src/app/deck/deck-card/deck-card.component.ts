@@ -6,7 +6,7 @@ import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { exhaustMap, filter, tap } from 'rxjs/operators';
 import { DeckCardDialogComponent } from '../deck-card-dialog/deck-card-dialog.component';
 import { Subject, merge } from 'rxjs';
-import { Card, SuperType } from 'ptcg-server';
+import { Card, CardType, EnergyCard, PokemonCard, SuperType } from 'ptcg-server';
 
 export const DeckCardType = 'DECK_CARD';
 
@@ -24,6 +24,8 @@ export class DeckCardComponent implements OnDestroy {
   @Input() card: DeckItem;
   @Input() showCardCount: boolean;
   @Input() isLibraryCard: boolean = false;
+  /** When true (e.g. set filter active in deck builder), show elemental type icon on library cards. */
+  @Input() showLibraryTypeBadge: boolean = false;
   @Input() customImageUrl: string; // legacy base-image override (rare)
   @Input() customArtworkUrl: string; // overlay artwork for selected art in deck editor
   @Input() artworksContext: any;
@@ -96,6 +98,60 @@ export class DeckCardComponent implements OnDestroy {
       return false;
     }
     return this.cardsBaseService.isFavoriteCard(this.card.card);
+  }
+
+  get libraryTypeOverlayStyle(): Record<string, string> | null {
+    if (!this.isLibraryCard || !this.showLibraryTypeBadge || !this.card?.card) {
+      return null;
+    }
+    const pos = this.cardTypeToSpritePosition(this.resolveCardTypeForBadge(this.card.card));
+    if (!pos) {
+      return null;
+    }
+    return {
+      background: `transparent url(/assets/type-icons-small.png) ${pos} no-repeat`,
+    };
+  }
+
+  private resolveCardTypeForBadge(card: Card): CardType | null {
+    if (card.superType === SuperType.POKEMON) {
+      return (card as PokemonCard).cardType;
+    }
+    if (card.superType === SuperType.ENERGY) {
+      const energy = card as EnergyCard;
+      return energy.provides?.length ? energy.provides[0] : null;
+    }
+    return null;
+  }
+
+  /** Background positions must match `type-icons.component.html` (type-icons-small.png). */
+  private cardTypeToSpritePosition(cardType: CardType): string | null {
+    switch (cardType) {
+      case CardType.GRASS:
+        return '-156px -7px';
+      case CardType.FIRE:
+        return '-82px -7px';
+      case CardType.WATER:
+        return '-119px -7px';
+      case CardType.LIGHTNING:
+        return '-9px -7px';
+      case CardType.PSYCHIC:
+        return '-156px -47px';
+      case CardType.FIGHTING:
+        return '-9px -47px';
+      case CardType.DARK:
+        return '-45px -47px';
+      case CardType.METAL:
+        return '-82px -47px';
+      case CardType.COLORLESS:
+        return '-45px -7px';
+      case CardType.FAIRY:
+        return '-82px -88px';
+      case CardType.DRAGON:
+        return '-119px -47px';
+      default:
+        return null;
+    }
   }
 
   public toggleFavorite(event: MouseEvent): void {

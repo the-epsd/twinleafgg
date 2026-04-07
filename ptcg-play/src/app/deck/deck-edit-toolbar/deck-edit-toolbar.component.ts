@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import { UntilDestroy } from '@ngneat/until-destroy';
 
 import { Deck } from '../../api/interfaces/deck.interface';
@@ -9,6 +10,7 @@ import { merge } from 'rxjs';
 import { CardTag, CardType, EnergyType, Format, Stage, SuperType, TrainerType, Archetype } from 'ptcg-server';
 import { CardsBaseService } from '../../shared/cards/cards-base.service';
 import { SetReleaseDates } from '../../util/formats-validator';
+import { SessionService } from '../../shared/session/session.service';
 
 @UntilDestroy()
 @Component({
@@ -25,6 +27,9 @@ import { SetReleaseDates } from '../../util/formats-validator';
 export class DeckEditToolbarComponent implements OnInit, OnDestroy {
 
   public orderedSetCodes: string[] = [];
+
+  /** Admin role (roleId === 4); used to show library card-type overlay toggle. */
+  public isAdmin$: Observable<boolean>;
 
   @Input() deck: Deck;
 
@@ -173,6 +178,7 @@ export class DeckEditToolbarComponent implements OnInit, OnDestroy {
 
   initialFormValue = {
     selectedSet: null,
+    showLibraryCardTypeBadge: false,
     formats: [],
     cardTypes: [],
     superTypes: [],
@@ -188,6 +194,7 @@ export class DeckEditToolbarComponent implements OnInit, OnDestroy {
 
   form = this.formBuilder.group({
     selectedSet: [null as string | null],
+    showLibraryCardTypeBadge: [false],
     formats: [[]],
     cardTypes: [[]],
     energyTypes: [[]],
@@ -241,8 +248,15 @@ export class DeckEditToolbarComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: UntypedFormBuilder,
-    private cardsBaseService: CardsBaseService
-  ) { }
+    private cardsBaseService: CardsBaseService,
+    private sessionService: SessionService
+  ) {
+    this.isAdmin$ = this.sessionService.get(session => {
+      const loggedUserId = session.loggedUserId;
+      const loggedUser = loggedUserId && session.users[loggedUserId];
+      return !!(loggedUser && loggedUser.roleId === 4);
+    });
+  }
 
   ngOnInit(): void {
     const codes = [...new Set(this.cardsBaseService.getCards().map(c => c.set).filter((s): s is string => !!s))];
