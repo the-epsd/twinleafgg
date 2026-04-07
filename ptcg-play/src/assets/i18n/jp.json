@@ -71,6 +71,7 @@
   "DECK_EDIT_ALL_TYPES": "すべてのタイプ",
   "DECK_EDIT_ALL_TAGS": "すべてのタグ",
   "DECK_EDIT_ALL_FORMATS": "すべてのフォーマット",
+  "DECK_EDIT_ALL_SETS": "すべてのセット",
   "DECK_EDIT_ATTACK_COST": "攻撃コスト",
   "DECK_EDIT_BACK": "戻る",
   "DECK_EDIT_CARDS_COUNT": "デッキには{{count}}枚のカードが入っています。",

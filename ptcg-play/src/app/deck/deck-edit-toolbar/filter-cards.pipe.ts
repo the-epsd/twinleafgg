@@ -17,6 +17,7 @@ export class FilterCardsPipe implements PipeTransform {
     }
 
     if (!filter.searchValue
+      && !filter.selectedSet
       && filter.superTypes.length === 0
       && filter.stages.length === 0
       && filter.cardTypes.length === 0
@@ -29,8 +30,12 @@ export class FilterCardsPipe implements PipeTransform {
       return items;
     }
 
-    return items.filter(item => {
+    const filtered = items.filter(item => {
       const card = item.card;
+      if (filter.selectedSet && card.set !== filter.selectedSet) {
+        return false;
+      }
+
       if (!!filter.searchValue && !this.matchCardText(card, filter.searchValue)) {
         return false;
       }
@@ -78,6 +83,20 @@ export class FilterCardsPipe implements PipeTransform {
       }
 
       return true;
+    });
+
+    if (!filter.selectedSet) {
+      return filtered;
+    }
+
+    return filtered.slice().sort((a, b) => {
+      const sa = a.card.setNumber ?? '';
+      const sb = b.card.setNumber ?? '';
+      const byNum = sa.localeCompare(sb, undefined, { numeric: true, sensitivity: 'base' });
+      if (byNum !== 0) {
+        return byNum;
+      }
+      return a.card.fullName.localeCompare(b.card.fullName);
     });
   }
 

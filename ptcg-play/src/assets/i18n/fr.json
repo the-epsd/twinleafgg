@@ -92,6 +92,7 @@
   "DECK_EDIT_ALL_TYPES": "Tous les types",
   "DECK_EDIT_ALL_TAGS": "Tous les tags",
   "DECK_EDIT_ALL_FORMATS": "Tous les formats",
+  "DECK_EDIT_ALL_SETS": "Tous les sets",
   "DECK_EDIT_ATTACK_COST": "Coût d'attaque",
   "DECK_EDIT_BACK": "Retour",
   "DECK_EDIT_CARDS_COUNT": "Votre deck contient {{count}} cartes.",

@@ -1,6 +1,7 @@
 import { CardType, SuperType, Format, CardTag, Stage, EnergyType, TrainerType } from 'ptcg-server';
 
 export interface DeckEditToolbarFilter {
+  selectedSet: string | null;
   formats: Format[];
   superTypes: SuperType[];
   cardTypes: CardType[];

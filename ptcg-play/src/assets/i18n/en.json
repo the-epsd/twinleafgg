@@ -83,6 +83,7 @@
   "DECK_EDIT_ALL_TYPES": "All types",
   "DECK_EDIT_ALL_TAGS": "All tags",
   "DECK_EDIT_ALL_FORMATS": "All Formats",
+  "DECK_EDIT_ALL_SETS": "All sets",
   "DECK_EDIT_ATTACK_COST": "Attack Cost",
   "DECK_EDIT_BACK": "Back",
   "DECK_EDIT_CARDS_COUNT": "Your deck contains {{count}} cards.",

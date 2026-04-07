@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { UntilDestroy } from '@ngneat/until-destroy';
 
 import { Deck } from '../../api/interfaces/deck.interface';
@@ -7,6 +7,8 @@ import { ControlContainer, UntypedFormBuilder, FormGroupDirective } from '@angul
 import { filter, map, shareReplay, startWith, tap } from 'rxjs/operators';
 import { merge } from 'rxjs';
 import { CardTag, CardType, EnergyType, Format, Stage, SuperType, TrainerType, Archetype } from 'ptcg-server';
+import { CardsBaseService } from '../../shared/cards/cards-base.service';
+import { SetReleaseDates } from '../../util/formats-validator';
 
 @UntilDestroy()
 @Component({
@@ -20,7 +22,9 @@ import { CardTag, CardType, EnergyType, Format, Stage, SuperType, TrainerType, A
     }
   ]
 })
-export class DeckEditToolbarComponent implements OnDestroy {
+export class DeckEditToolbarComponent implements OnInit, OnDestroy {
+
+  public orderedSetCodes: string[] = [];
 
   @Input() deck: Deck;
 
@@ -168,6 +172,7 @@ export class DeckEditToolbarComponent implements OnDestroy {
   // );
 
   initialFormValue = {
+    selectedSet: null,
     formats: [],
     cardTypes: [],
     superTypes: [],
@@ -182,6 +187,7 @@ export class DeckEditToolbarComponent implements OnDestroy {
   };
 
   form = this.formBuilder.group({
+    selectedSet: [null as string | null],
     formats: [[]],
     cardTypes: [[]],
     energyTypes: [[]],
@@ -233,7 +239,23 @@ export class DeckEditToolbarComponent implements OnDestroy {
     this.onFormChange$,
   ).subscribe();
 
-  constructor(private formBuilder: UntypedFormBuilder) { }
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private cardsBaseService: CardsBaseService
+  ) { }
+
+  ngOnInit(): void {
+    const codes = [...new Set(this.cardsBaseService.getCards().map(c => c.set).filter((s): s is string => !!s))];
+    codes.sort((a, b) => {
+      const ta = SetReleaseDates[a]?.getTime() ?? 0;
+      const tb = SetReleaseDates[b]?.getTime() ?? 0;
+      if (ta !== tb) {
+        return tb - ta;
+      }
+      return a.localeCompare(b);
+    });
+    this.orderedSetCodes = codes;
+  }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -337,6 +359,7 @@ export class DeckEditToolbarComponent implements OnDestroy {
     this.form.patchValue({
       formats: [],
       tags: [],
+      selectedSet: null,
     }, { emitEvent: false });
 
     // Update the form control

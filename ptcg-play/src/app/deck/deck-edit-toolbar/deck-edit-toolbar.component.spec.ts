@@ -5,6 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { DeckEditToolbarComponent } from './deck-edit-toolbar.component';
+import { CardsBaseService } from '../../shared/cards/cards-base.service';
 
 describe('DeckEditToolbarComponent', () => {
   let component: DeckEditToolbarComponent;
@@ -18,6 +19,9 @@ describe('DeckEditToolbarComponent', () => {
         TranslateModule.forRoot()
       ],
       declarations: [ DeckEditToolbarComponent ],
+      providers: [
+        { provide: CardsBaseService, useValue: { getCards: () => [] } }
+      ],
       schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
