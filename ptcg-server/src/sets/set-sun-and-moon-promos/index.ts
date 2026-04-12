@@ -15,6 +15,7 @@ import { SolgaleoGX } from './solgaleo-gx';
 import { TapuKoko } from './tapu-koko';
 import { TapuLele } from './tapu-lele';
 import { TrevenantDusknoirGX } from './trevenant-dusknoir-gx';
+import { TsareenaGX } from './tsareena-gx';
 
 export const setSunAndMoonPromos: Card[] = [
   new CarracostaGX(),
@@ -31,6 +32,7 @@ export const setSunAndMoonPromos: Card[] = [
   new TapuKoko(),
   new TapuLele(),
   new TrevenantDusknoirGX(),
+  new TsareenaGX(),
 
   // Other prints
   new UmbreonDarkraiGXSMP(),
