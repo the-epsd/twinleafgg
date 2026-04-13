@@ -123,6 +123,27 @@ ptcg-card {
   top: 0;
 }
 
+.library-card-type-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid $bg-secondary;
+  box-sizing: border-box;
+  background-color: rgba($bg-primary, 0.92);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+  z-index: 11;
+  pointer-events: none;
+}
+
+.ptcg-deck-card.has-library-type-badge {
+  .favorite-icon-button {
+    right: 36px;
+  }
+}
+
 .favorite-icon-button {
   position: absolute;
   top: 4px;

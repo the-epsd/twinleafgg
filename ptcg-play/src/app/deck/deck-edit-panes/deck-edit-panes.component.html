@@ -13,8 +13,9 @@
   maxBufferPx="1800">
   <ptcg-deck-card *cdkVirtualFor="let card of (cards | filterCards: toolbarFilter)" [dndSortableExternal]="card.spec"
     #ext="dndSortableExternal" [source]="ext.source" (cardClick)="onLibraryCardClick(card)"
-    (cardSelected)="onCardSelectedOnDialog(render.data, $event.card, $event.action)" (addCard)="addCardToDeck(card)"
+    (cardSelected)="onCardSelectedOnDialog(card, $event.card, $event.action)" (addCard)="addCardToDeck(card)"
     (removeCard)="removeCardFromDeck(card)" (favoriteToggled)="refreshLibrary()" [card]="card" [isLibraryCard]="true"
+    [showLibraryTypeBadge]="!!(isAdmin$ | async) && !!toolbarFilter?.showLibraryCardTypeBadge"
     [artworksContext]="{ unlockedArtworks: [] }" [customArtworkUrl]="resolveArtworkUrlFor(card.card)">
   </ptcg-deck-card>
 </cdk-virtual-scroll-viewport>

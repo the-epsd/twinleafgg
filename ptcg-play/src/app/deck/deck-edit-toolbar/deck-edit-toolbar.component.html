@@ -61,6 +61,13 @@
           <h3 class="filter-group-title">General Filters</h3>
           <div class="filter-controls">
             <mat-form-field class="filter-field">
+              <mat-select [placeholder]="'DECK_EDIT_ALL_SETS' | translate" formControlName="selectedSet">
+                <mat-option [value]="null">{{ 'DECK_EDIT_ALL_SETS' | translate }}</mat-option>
+                <mat-option *ngFor="let setCode of orderedSetCodes" [value]="setCode">{{ setCode }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="filter-field">
               <mat-select [multiple]="true" [placeholder]="'DECK_EDIT_ALL_FORMATS' | translate"
                 formControlName="formats">
                 <mat-option *ngFor="let format of formats" [value]="format.value">
@@ -76,6 +83,11 @@
                 </mat-option>
               </mat-select>
             </mat-form-field>
+
+            <mat-checkbox *ngIf="isAdmin$ | async" class="filter-checkbox-admin" color="primary"
+              formControlName="showLibraryCardTypeBadge">
+              {{ 'DECK_EDIT_SHOW_LIBRARY_CARD_TYPE' | translate }}
+            </mat-checkbox>
           </div>
         </div>
 

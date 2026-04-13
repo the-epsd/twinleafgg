@@ -1,7 +1,8 @@
-<div class="ptcg-deck-card">
+<div class="ptcg-deck-card" [class.has-library-type-badge]="!!libraryTypeOverlayStyle">
   <ptcg-card [card]="card.card" [customArtworkUrl]="customArtworkUrl || customImageUrl" [artworksContext]="artworksContext" [dragSource]="source"
     [noHTML5Preview]="true" (click)="showCardInfo();" (mouseenter)="showButtons = true;"
     (mouseleave)="showButtons = false;">
+    <div class="library-card-type-badge" *ngIf="libraryTypeOverlayStyle" [ngStyle]="libraryTypeOverlayStyle"></div>
     <div class="ptcg-deck-card-count" *ngIf="showCardCount && card.count > 0" (click)="onCountClick($event)">
       {{ 'DECK_CARDS_X' | translate:{count: card.count } }}
     </div>

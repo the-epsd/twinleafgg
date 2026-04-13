@@ -16,6 +16,7 @@ import { Card, CardTag, EnergyCard, EnergyType, PokemonCard, SuperType, TrainerC
 import html2canvas from 'html2canvas';
 import { DeckService } from 'src/app/api/services/deck.service';
 import { SettingsService } from 'src/app/table/table-sidebar/settings-dialog/settings.service';
+import { SessionService } from '../../shared/session/session.service';
 
 const DECK_CARD_ITEM_WIDTH = 148;
 const DECK_CARD_ITEM_HEIGHT = 173;
@@ -32,6 +33,9 @@ const DECK_CARD_ITEM_HEIGHT = 173;
 export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit, AfterViewChecked {
 
   @Input() toolbarFilter: DeckEditToolbarFilter;
+
+  /** Matches toolbar / app convention: roleId === 4. */
+  isAdmin$: Observable<boolean>;
   @Output() deckItemsChange = new EventEmitter<DeckItem[]>();
   public showLibrary = true;
 
@@ -73,8 +77,14 @@ export class DeckEditPanesComponent implements OnInit, OnDestroy, AfterViewInit,
     private translate: TranslateService,
     private deckService: DeckService,
     private cdr: ChangeDetectorRef,
-    private settingsService: SettingsService
+    private settingsService: SettingsService,
+    private sessionService: SessionService
   ) {
+    this.isAdmin$ = this.sessionService.get(session => {
+      const loggedUserId = session.loggedUserId;
+      const loggedUser = loggedUserId && session.users[loggedUserId];
+      return !!(loggedUser && loggedUser.roleId === 4);
+    });
     [this.deckTarget, this.deckHighlight$] = this.initDropTarget(DeckEditPane.DECK);
     [this.libraryTarget, this.libraryHighlight$] = this.initDropTarget(DeckEditPane.LIBRARY);
 
