@@ -84,19 +84,28 @@ export class PlayerActionsComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    if (this.gameState && this.clientId) {
-      const state = this.gameState.state;
-      const activePlayer = state.players[state.activePlayer];
-
-      this.isYourTurn = activePlayer
-        && activePlayer.id === this.clientId
-        && state.phase === GamePhase.PLAYER_TURN;
-
-      this.isPlaying = state.players.some(p => p.id === this.clientId);
-      const waitingForPlayers = state.players.length < 2;
-      const isReplay = !!this.gameState.replay;
-      this.isObserver = isReplay || (!this.isPlaying && !waitingForPlayers);
+    if (!this.gameState) {
+      return;
     }
+    if (this.gameState.replay) {
+      this.isObserver = true;
+      this.isPlaying = false;
+      this.isYourTurn = false;
+      return;
+    }
+    if (!this.clientId) {
+      return;
+    }
+    const state = this.gameState.state;
+    const activePlayer = state.players[state.activePlayer];
+
+    this.isYourTurn = activePlayer
+      && activePlayer.id === this.clientId
+      && state.phase === GamePhase.PLAYER_TURN;
+
+    this.isPlaying = state.players.some(p => p.id === this.clientId);
+    const waitingForPlayers = state.players.length < 2;
+    this.isObserver = !this.isPlaying && !waitingForPlayers;
   }
 
 }

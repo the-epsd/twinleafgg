@@ -231,7 +231,6 @@ export class PokemonCardList extends CardList {
       SpecialCondition.PARALYZED,
       SpecialCondition.CONFUSED,
       SpecialCondition.ASLEEP,
-      SpecialCondition.ABILITY_USED,
     ].includes(s) === false);
     this.specialConditions.push(sp);
   }

@@ -2,7 +2,7 @@ import { PlayPokemonEffect } from '../effects/play-card-effects';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { Effect } from '../effects/effect';
-import { BoardEffect, SpecialCondition, Stage } from '../card/card-types';
+import { BoardEffect, Stage } from '../card/card-types';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import { CheckPokemonPlayedTurnEffect, CheckSpecialConditionRemovalEffect } from '../effects/check-effects';
@@ -44,7 +44,6 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       });
       effect.player.hand.moveCardTo(effect.pokemonCard, effect.target);
       effect.target.pokemonPlayedTurn = state.turn;
-      effect.target.removeSpecialCondition(SpecialCondition.ABILITY_USED);
 
       // Emit basic animation event
       emitAnimationEvent(store, 'playBasicAnimation', {
@@ -107,9 +106,6 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
       effect.target.showBasicAnimation = false;
       effect.target.triggerEvolutionAnimation = true;
 
-      if (effect.target.specialConditions.includes(SpecialCondition.ABILITY_USED)) {
-        effect.target.removeSpecialCondition(SpecialCondition.ABILITY_USED);
-      }
       if (effect.target.boardEffect.includes(BoardEffect.ABILITY_USED)) {
         effect.target.removeBoardEffect(BoardEffect.ABILITY_USED);
       }

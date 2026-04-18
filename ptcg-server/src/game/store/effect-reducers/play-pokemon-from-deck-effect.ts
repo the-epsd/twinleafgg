@@ -2,7 +2,6 @@ import { PlayPokemonFromDeckEffect } from '../effects/play-card-effects';
 import { GameError } from '../../game-error';
 import { GameMessage, GameLog } from '../../game-message';
 import { Effect } from '../effects/effect';
-import { SpecialCondition } from '../card/card-types';
 import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 
@@ -33,7 +32,6 @@ export function playPokemonFromDeckReducer(store: StoreLike, state: State, effec
       });
       effect.player.deck.moveCardTo(effect.pokemonCard, effect.target);
       effect.target.pokemonPlayedTurn = state.turn;
-      effect.target.removeSpecialCondition(SpecialCondition.ABILITY_USED);
 
       // Emit basic animation event
       emitAnimationEvent(store, 'playBasicAnimation', {

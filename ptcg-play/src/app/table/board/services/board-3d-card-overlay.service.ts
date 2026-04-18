@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Scene, Vector3, Texture, PerspectiveCamera } from 'three';
-import { PokemonCardList, Card, CardList, BoardEffect, SpecialCondition } from 'ptcg-server';
+import { PokemonCardList, Card, CardList, BoardEffect } from 'ptcg-server';
 import { Board3dCard } from '../board-3d/board-3d-card';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import { Board3dEnergySprite } from '../board-3d/board-3d-energy-sprite';
@@ -73,8 +73,7 @@ export class Board3dCardOverlayService {
     await overlays.marker.updateConditions(cardList.specialConditions);
 
     // Update ability used badge
-    const hasAbilityUsed = cardList.boardEffect.includes(BoardEffect.ABILITY_USED) ||
-      cardList.specialConditions.includes(SpecialCondition.ABILITY_USED);
+    const hasAbilityUsed = cardList.boardEffect.includes(BoardEffect.ABILITY_USED);
     overlays.abilityUsedBadge.updateAbilityUsed(hasAbilityUsed);
 
     // Update BREAK card overlay

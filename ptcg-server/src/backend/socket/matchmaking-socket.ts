@@ -32,10 +32,13 @@ export class MatchmakingSocket {
     // No need to emit here since broadcastQueueUpdate() is called by the service
   }
 
-  public getQueueData(response: Response<{ players: string[], formatCounts: { [format: number]: number } }>): void {
+  public getQueueData(
+    _data: void,
+    response: Response<{ players: string[]; formatCounts: { [format: number]: number } }>
+  ): void {
     response('ok', {
       players: this.matchmakingService.getQueuedPlayers(),
-      formatCounts: this.matchmakingService.getQueueCountsByFormat()
+      formatCounts: this.matchmakingService.getQueueCountsByFormat(),
     });
   }
 

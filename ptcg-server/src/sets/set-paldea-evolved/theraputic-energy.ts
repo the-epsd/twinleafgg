@@ -43,7 +43,7 @@ The Pokémon this card is attached to recovers from being Asleep, Confused, or P
           return state;
         }
 
-        const conditionsToKeep = [SpecialCondition.ABILITY_USED, SpecialCondition.POISONED, SpecialCondition.BURNED];
+        const conditionsToKeep = [SpecialCondition.POISONED, SpecialCondition.BURNED];
         const hasSpecialCondition = cardList.specialConditions.some(condition => !conditionsToKeep.includes(condition));
         if (hasSpecialCondition) {
           cardList.specialConditions = cardList.specialConditions.filter(condition => conditionsToKeep.includes(condition));

@@ -318,30 +318,29 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
     this.boardMesh.receiveShadow = false;
     this.scene.add(this.boardMesh);
 
-    // Add twinleaf board center overlay
+    // Twinleaf emblem at true midfield (midpoint between bottom and top active rows)
     const centerTexture = await this.assetLoader.loadBoardCenterTexture();
-    // Make it 75% smaller, then another 25% smaller: 50 * 0.25 * 0.75 = 9.375
-    const centerGeometry = new PlaneGeometry(9.375, 9.375);
-    const centerMaterial = new MeshStandardMaterial({
+    const emblemSize = Board3dComponent.BOARD_CENTER_EMBLEM_SIZE;
+    const centerGeometry = new PlaneGeometry(emblemSize, emblemSize);
+    const centerMaterial = new MeshBasicMaterial({
       map: centerTexture,
-      color: 0xffffff,
-      roughness: 1,
-      metalness: 0.00,
       transparent: true,
-      opacity: 1.0,
-      depthWrite: true, // Enable depth writing for proper layering
-      depthTest: true
+      depthTest: true,
+      depthWrite: false,
+      side: DoubleSide
     });
 
     this.boardCenterOverlay = new Mesh(centerGeometry, centerMaterial);
-    this.boardCenterOverlay.rotation.x = -Math.PI / 2; // Make it horizontal
-    this.boardCenterOverlay.rotation.z = Math.PI; // Rotate 180 degrees
-    // Mirror horizontally by scaling X axis negatively
+    this.boardCenterOverlay.rotation.x = -Math.PI / 2;
+    this.boardCenterOverlay.rotation.z = Math.PI;
     this.boardCenterOverlay.scale.x = -1;
-    // Position significantly above board to prevent clipping
-    this.boardCenterOverlay.position.y = 0.05; // Move along y-axis
-    this.boardCenterOverlay.position.z = 14.1; // Board is at z=12, so 15.5 = 3.5 units above
-    this.boardCenterOverlay.renderOrder = 100; // Higher render order to appear on top
+
+    const midX =
+      (ZONE_POSITIONS.bottomPlayer.active.x + ZONE_POSITIONS.topPlayer.active.x) / 2;
+    const midZ =
+      (ZONE_POSITIONS.bottomPlayer.active.z + ZONE_POSITIONS.topPlayer.active.z) / 2;
+    this.boardCenterOverlay.position.set(midX, Board3dComponent.BOARD_CENTER_EMBLEM_Y, midZ);
+    this.boardCenterOverlay.renderOrder = 100;
     this.boardCenterOverlay.receiveShadow = false;
     this.scene.add(this.boardCenterOverlay);
 
@@ -353,6 +352,10 @@ export class Board3dComponent implements OnInit, OnChanges, AfterViewInit, OnDes
 
   /** Grid height - below cards (0.1) so grid appears underneath */
   private static readonly BOARD_GRID_Y = 0.1;
+  /** Twinleaf emblem: slightly above grid, under typical card lift */
+  private static readonly BOARD_CENTER_EMBLEM_Y = 0.101;
+  /** Diameter in world units — ~fit between active rows with margin */
+  private static readonly BOARD_CENTER_EMBLEM_SIZE = 7;
 
   /**
    * Create a 1-unit grid overlay on the board surface.
