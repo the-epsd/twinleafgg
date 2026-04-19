@@ -9,6 +9,7 @@ export function cors(): RequestHandler {
       'http://localhost:4200',
       'http://localhost:5173',
       'http://127.0.0.1:5173',
+      'https://beta-27qlv.ondigitalocean.app'
     ];
     const origin = req.headers.origin;
     if (config.backend.allowCors && origin && allowedOrigins.includes(origin)) {
