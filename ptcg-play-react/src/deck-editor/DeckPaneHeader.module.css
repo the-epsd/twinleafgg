@@ -1,0 +1,68 @@
+/**
+ * Shared deck editor pane header (library + build) — one style for both rows.
+ */
+
+.header {
+  flex: 0 0 auto;
+  box-sizing: border-box;
+  min-height: 40px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.title {
+  flex: 1 1 0;
+  min-width: 0;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #444;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.aside {
+  flex: 0 0 auto;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-height: 0;
+}
+
+.status {
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  color: #555;
+  text-transform: none;
+}
+
+.actionBtn {
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid #c4c4c4;
+  background: #fff;
+  color: #222;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.actionBtn:hover {
+  background: #f3f3f3;
+}

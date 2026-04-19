@@ -1,0 +1,14 @@
+/* Ported from hover-highlight + cards-theme drop highlight */
+
+.root:not(:hover) {
+  box-shadow: none;
+}
+
+.enabled {
+  cursor: pointer;
+}
+
+/* Angular _cards-theme: inset 0 0 16px + primary palette A100 (grey → ~#fafafa) */
+.enabled:hover {
+  box-shadow: inset 0 0 16px rgba(250, 250, 250, 0.35);
+}

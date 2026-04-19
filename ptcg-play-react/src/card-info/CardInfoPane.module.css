@@ -1,0 +1,298 @@
+/* Aligned with ptcg-play card-info-pane.component.scss + _cards-theme typography + variables.scss */
+
+.pane {
+  display: flex;
+  color: #fafafa;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857;
+}
+
+/* Sibling CardInfoImageColumn in CardInfoPopup — text body only, no scan column. */
+.paneEmbed {
+  flex: 1 1 67%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  color: #fafafa;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.42857;
+}
+
+.imageCol {
+  cursor: pointer;
+  flex: 1 1 33%;
+  min-width: 100px;
+  padding-right: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.cardScan {
+  width: 100%;
+  display: block;
+}
+
+.textCol {
+  flex: 1 1 67%;
+}
+
+/* Material legacy `title` — Angular ptcg-card-info-pane .title + .subtitle-hp-value */
+.title {
+  align-items: baseline;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  display: flex;
+  padding: 8px;
+  background-color: rgba(37, 41, 53, 0.48);
+  position: relative;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 32px;
+}
+
+.favoriteButton {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  color: #ff6b6b;
+  transition:
+    transform 0.2s,
+    color 0.2s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.favoriteButton:hover {
+  transform: scale(1.1);
+  color: #ff5252;
+}
+
+.subtitle {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: rgba(62, 65, 75, 0.48);
+}
+
+/* body-2 override from Angular app.scss: 14px / 24px / 700 */
+.subtitleStage {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.subtitleSetCode {
+  font-size: 10px;
+  margin: 8px 0;
+  padding: 8px;
+}
+
+.subtitleHp {
+  margin: 0 4px;
+}
+
+.subtitleHpValue {
+  line-height: 32px;
+}
+
+.subtitleHpUnit {
+  margin-right: 4px;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.subtitleCardType {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* Angular source used gap:-12px (invalid); flex uses 0 gap */
+  gap: 0;
+  margin-left: auto;
+}
+
+.subtitleTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.tag {
+  background-color: #52555c;
+  color: #fafafa;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.subtitleEvolvesFrom,
+.subtitleEvolvesTo {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.power,
+.attack {
+  margin: 8px 0;
+  padding: 8px;
+}
+
+.powerHeader {
+  display: flex;
+  align-items: baseline;
+}
+
+.powerType {
+  text-transform: uppercase;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  margin-right: 8px;
+  display: inline-flex;
+  align-items: center;
+  font-weight: 600;
+}
+
+.ability {
+  color: #e3350d;
+}
+
+.pokeBody {
+  color: #4dad5b;
+}
+
+/* body-2 */
+.powerName {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.attackHeader {
+  align-items: center;
+  display: flex;
+}
+
+.attackCost {
+  display: flex;
+}
+
+.attackName {
+  padding: 0 8px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.attackDamage {
+  font-weight: 700;
+}
+
+.attackHeader + .cardText {
+  padding-top: 8px;
+}
+
+.stats {
+  border-radius: 8px;
+  display: flex;
+  padding: 8px;
+  background-color: rgba(62, 65, 75, 0.48);
+}
+
+.statsItem {
+  flex: 1 1 auto;
+  text-align: center;
+}
+
+.statsItemHeader {
+  padding-bottom: 4px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 24px;
+}
+
+.statsItemValue {
+  align-items: flex-end;
+  display: flex;
+  justify-content: center;
+}
+
+.statsItemValueType {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.statsItemValueModifier {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.cardText {
+  white-space: pre-wrap;
+}
+
+.swapButtonContainer {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 10;
+}
+
+/* mat-icon-button–sized control (24px icon), ~40px touch target */
+.swapButton {
+  background-color: rgba(62, 65, 75, 0.9);
+  color: #fafafa;
+  transition:
+    background-color 0.2s,
+    transform 0.2s;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+
+.swapButton:hover:not(:disabled) {
+  background-color: rgba(82, 85, 92, 0.9);
+  transform: scale(1.1);
+}
+
+.swapButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.statsHighlight {
+  flex: 1 1 auto;
+}

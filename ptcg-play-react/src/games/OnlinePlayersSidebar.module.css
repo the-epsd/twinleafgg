@@ -1,0 +1,113 @@
+.aside {
+  width: 300px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 12px;
+  align-self: flex-start;
+  max-height: calc(100dvh - 100px);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e7e7e8;
+  background: #fff;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #e7e7e8;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #252935;
+}
+
+.count {
+  opacity: 0.65;
+  font-weight: 400;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.empty {
+  padding: 16px 14px;
+  font-size: 0.875rem;
+  color: #707278;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+}
+
+.row:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.rowSelf {
+  opacity: 0.9;
+}
+
+.avatarWrap {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  object-fit: cover;
+  background: #f4f4f4;
+  border: 1px solid #d4d5d6;
+}
+
+.dot {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #6ada6a;
+  border: 2px solid #fff;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.name {
+  font-size: 0.875rem;
+  color: #252935;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.rank {
+  font-size: 0.75rem;
+  color: #707278;
+}
+
+.you {
+  font-size: 0.7rem;
+  color: #a0a1a5;
+  margin-left: 4px;
+}

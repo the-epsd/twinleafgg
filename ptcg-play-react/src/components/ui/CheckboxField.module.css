@@ -1,0 +1,23 @@
+.label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #ffb74d;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+  user-select: none;
+}
+
+.label input {
+  width: 18px;
+  height: 18px;
+  accent-color: #ffc107;
+  cursor: pointer;
+}
+
+.label input:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}

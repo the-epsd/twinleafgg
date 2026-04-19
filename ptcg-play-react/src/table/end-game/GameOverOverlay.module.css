@@ -1,0 +1,533 @@
+/* Ported from Angular game-over.component.scss */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes gridPulse {
+  0%,
+  100% {
+    opacity: 0.03;
+  }
+  50% {
+    opacity: 0.06;
+  }
+}
+
+@keyframes glowGreen {
+  0% {
+    box-shadow: 0 0 5px rgba(103, 200, 90, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 20px rgba(103, 200, 90, 0.8),
+      0 0 30px rgba(103, 200, 90, 0.4);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(103, 200, 90, 0.3);
+    transform: scale(1);
+  }
+}
+
+@keyframes glowRed {
+  0% {
+    box-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 20px rgba(239, 68, 68, 0.8),
+      0 0 30px rgba(239, 68, 68, 0.4);
+    transform: scale(1.05);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(239, 68, 68, 0.3);
+    transform: scale(1);
+  }
+}
+
+@keyframes floatAnimation {
+  0% {
+    transform: translateY(0) rotateY(0deg);
+  }
+  25% {
+    transform: translateY(-7px) rotateY(3deg);
+  }
+  50% {
+    transform: translateY(-10px) rotateY(0deg);
+  }
+  75% {
+    transform: translateY(-5px) rotateY(-3deg);
+  }
+  100% {
+    transform: translateY(0) rotateY(0deg);
+  }
+}
+
+@keyframes flipCard {
+  0% {
+    transform: rotateY(180deg);
+  }
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+@keyframes contentFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes overlayEnter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(ellipse at center, #0a0e14 0%, #040816 70%);
+  color: white;
+  overflow: hidden;
+  animation: overlayEnter 0.4s ease-out forwards;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: gridPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.scanline {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.top {
+  position: relative;
+  padding: 24px 30px;
+  min-height: 28vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.victoryHeader {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 2vh;
+}
+
+.title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  animation: slideUp 0.6s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.overlayVictory .title {
+  color: #67c85a;
+  text-shadow: 0 0 25px rgba(103, 200, 90, 0.5);
+}
+
+.overlayDefeat .title {
+  color: #ef4444;
+  text-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
+}
+
+.overlayDraw .title {
+  color: #94a3b8;
+  text-shadow: 0 0 25px rgba(148, 163, 184, 0.4);
+}
+
+.playerAvatars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  z-index: 2;
+}
+
+.playerName {
+  font-family: 'Orbitron', sans-serif;
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.05em;
+  opacity: 0;
+  animation: fadeIn 0.5s 0.4s forwards;
+}
+
+.vsText {
+  font-family: 'Orbitron', sans-serif;
+  margin: 0 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: rgba(0, 255, 255, 0.5);
+  letter-spacing: 0.2em;
+  opacity: 0;
+  animation: fadeIn 0.5s 0.5s forwards;
+}
+
+.content {
+  flex: 1;
+  padding: 20px 40px 30px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 5;
+}
+
+.battleLog {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  margin-bottom: 30px;
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  animation: contentFadeIn 0.6s ease-out 0.4s forwards;
+  opacity: 0;
+}
+
+.statsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  padding-left: 10%;
+}
+
+.statsRow {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.statLabel {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.statValue {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.prizeIndicators {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.prizeIndicator {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.prizeTaken {
+  background-color: rgba(103, 200, 90, 0.15);
+  border-color: #67c85a;
+  color: #67c85a;
+  box-shadow: 0 0 12px rgba(103, 200, 90, 0.4);
+  animation: glowGreen 2s infinite;
+}
+
+.prizeOpponentTaken {
+  background-color: rgba(239, 68, 68, 0.15);
+  border-color: #ef4444;
+  color: #ef4444;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+  animation: glowRed 2s infinite;
+}
+
+.estimatedNote {
+  color: #888;
+  font-size: 0.8em;
+  margin-top: 4px;
+}
+
+.damageNote {
+  color: #888;
+  font-size: 0.8em;
+  margin-left: 8px;
+}
+
+.statValueRow {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.cardFeature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: visible;
+  gap: 30px;
+}
+
+.pokemonSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.cardTitleContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.cardTitle {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+}
+
+.damageBadge {
+  background-color: rgba(103, 200, 90, 0.2);
+  color: #67c85a;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid rgba(103, 200, 90, 0.4);
+}
+
+.noDamageBadge {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.featuredCardContainer {
+  width: 100%;
+  max-width: 180px;
+  aspect-ratio: 2.5 / 3.5;
+  perspective: 1000px;
+  position: relative;
+  overflow: visible;
+}
+
+.cardPerspective {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  border-radius: 8px;
+  overflow: visible;
+}
+
+.cardHolder {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation:
+    floatAnimation 6s ease-in-out infinite,
+    flipCard 1s ease-out;
+  transform-origin: center center;
+  overflow: visible;
+}
+
+.topPokemon {
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  overflow: visible;
+}
+
+.topPokemon :global(img),
+.topPokemon :global(.img) {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cardPlaceholder {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+}
+
+.cardBack {
+  width: 100%;
+  height: 100%;
+  background-color: #1a1f2e;
+  border-radius: 8px;
+  background-image: url('/assets/cardback.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cardError {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.cardError .cardBack {
+  background-color: rgba(74, 74, 74, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: none;
+}
+
+.errorText {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 11px;
+  font-weight: 500;
+  text-align: center;
+  padding: 10px;
+  word-wrap: break-word;
+  max-width: 90%;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.okButton {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.15em;
+  padding: 12px 48px;
+  background: transparent;
+  color: #67c85a;
+  border: 2px solid #67c85a;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 0 15px rgba(103, 200, 90, 0.2);
+}
+
+.okButton:hover {
+  background: rgba(103, 200, 90, 0.15);
+  box-shadow: 0 0 25px rgba(103, 200, 90, 0.5);
+  transform: translateY(-2px);
+}
+
+.okButton:active {
+  transform: translateY(0);
+}
+
+.overlayDefeat .okButton {
+  color: #ef4444;
+  border-color: #ef4444;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+}
+
+.overlayDefeat .okButton:hover {
+  background: rgba(239, 68, 68, 0.15);
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.5);
+}
+
+.overlayDraw .okButton {
+  color: #94a3b8;
+  border-color: #94a3b8;
+  box-shadow: 0 0 15px rgba(148, 163, 184, 0.2);
+}
+
+.overlayDraw .okButton:hover {
+  background: rgba(148, 163, 184, 0.15);
+  box-shadow: 0 0 25px rgba(148, 163, 184, 0.4);
+}

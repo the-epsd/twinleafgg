@@ -1,0 +1,53 @@
+.bar {
+  flex: 0 0 auto;
+  background: #fafafa;
+  border-top: 1px solid #e0e0e0;
+  padding: 10px 14px 12px;
+  color: #333;
+}
+
+.counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  justify-content: center;
+  font-size: 0.82rem;
+  margin-bottom: 10px;
+}
+
+.counts span {
+  opacity: 0.92;
+}
+
+.formats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+}
+
+.formatLabel {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.65;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 4px;
+}
+
+.chip {
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: #fff;
+  border: 1px solid #c4c4c4;
+  color: #333;
+}
+
+.chipMuted {
+  background: #f0f0f0;
+  border-color: #d0d0d0;
+  color: #777;
+}

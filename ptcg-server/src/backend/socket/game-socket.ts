@@ -228,6 +228,7 @@ export class GameSocket {
       game.dispatch(this.client, action);
     } catch (error: any) {
       response('error', error.message);
+      return;
     }
     response('ok');
   }

@@ -1,0 +1,198 @@
+/* Layout follows Angular attach-energy; colours are the earlier React glass / gradient scheme. */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(8, 12, 20, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.panel {
+  box-sizing: border-box;
+  width: min(1000px, calc(100vw - 48px));
+  max-width: calc(100% - 32px);
+  max-height: min(90vh, 880px);
+  padding: 24px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(165deg, rgba(22, 28, 40, 0.98), rgba(14, 18, 28, 0.98));
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+  color: rgba(245, 248, 255, 0.94);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.promptTitle {
+  display: flex;
+  align-items: center;
+  margin: 0 0 16px;
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  align-self: center;
+}
+
+.promptContent {
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: 65vh;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -24px;
+  padding: 0 24px;
+}
+
+.message {
+  margin: 0 0 16px;
+  line-height: 1.45;
+  font-size: 0.95rem;
+  color: rgba(230, 235, 245, 0.88);
+}
+
+.pokemonPane {
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.25);
+  padding: 8px;
+  margin-bottom: 16px;
+}
+
+.pokemonRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 16px 0;
+}
+
+.pokemonRowUpsideDown {
+  transform: rotate(180deg);
+}
+
+.pokeCardWrap {
+  margin: 0 8px;
+  flex: 0 0 auto;
+}
+
+.energyViewport {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(0, 0, 0, 0.25);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.energyList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.cardPrompt {
+  width: 100px;
+  line-height: 0;
+}
+
+.energyDraggable {
+  cursor: grab;
+  touch-action: none;
+  border-radius: 8px;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  transition:
+    border-color 0.12s ease,
+    box-shadow 0.15s ease,
+    opacity 0.12s ease,
+    transform 0.15s ease;
+}
+
+.energyDraggable:active {
+  cursor: grabbing;
+}
+
+.energyDraggableDragging {
+  opacity: 0.3;
+}
+
+.energyDraggableDisabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.dropSlot {
+  position: relative;
+  border-radius: 8px;
+  border: 2px dashed rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  transition:
+    border-color 0.12s ease,
+    box-shadow 0.15s ease,
+    background 0.12s ease,
+    opacity 0.15s ease;
+}
+
+.dropSlotOver:not(.dropSlotDisabled) {
+  border-color: rgba(120, 200, 255, 0.65);
+  background: rgba(80, 140, 255, 0.12);
+  box-shadow: none;
+}
+
+.dropSlotDisabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.slotInner {
+  line-height: 0;
+}
+
+.emptySlot {
+  width: 100px;
+  aspect-ratio: 63 / 88;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  border: none;
+  box-sizing: border-box;
+}
+
+.promptActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 0 0;
+  margin-top: 8px;
+  flex-shrink: 0;
+  min-height: 52px;
+}
+
+.actionsGrow {
+  flex: 1;
+  min-width: 8px;
+}
+
+/* Portaled above modal + scroll areas; follows pointer via @dnd-kit/core */
+.dragOverlay {
+  cursor: grabbing;
+}
+
+.dragOverlayCard {
+  cursor: grabbing;
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.18);
+}
