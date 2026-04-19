@@ -1333,9 +1333,7 @@ export enum SpecialCondition {
   CONFUSED,
   ASLEEP,
   POISONED,
-  BURNED,
-  ABILITY_USED,
-  POWER_GLOW
+  BURNED
 }
 
 export enum BoardEffect {

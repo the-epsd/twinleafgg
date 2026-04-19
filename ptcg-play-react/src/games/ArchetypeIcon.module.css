@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+}
+
+.container.single {
+  justify-content: center;
+}
+
+.sprite {
+  width: 24px;
+  height: 24px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}

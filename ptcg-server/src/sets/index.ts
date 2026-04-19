@@ -189,6 +189,7 @@ export * from './set-phantasmal-flames';
 export * from './set-ascended-heroes';
 export * from './set-perfect-order';
 export * from './set-chaos-rising';
+export * from './set-pitch-black';
 
 //TEST
 export * from './set-test';

@@ -1,0 +1,60 @@
+/* Ported from ptcg-play energy.component.scss — type-icons-small.png */
+
+.energy {
+  display: inline-block;
+  height: 2rem;
+  margin: 1px 1px;
+  width: 2rem;
+  overflow: hidden;
+  transform: scale(0.75);
+  transform-origin: top left;
+  background: transparent url(/assets/type-icons-small.png) -45px -87px no-repeat;
+}
+
+.grass {
+  background-position: -155px -6px;
+}
+
+.fighting {
+  background-position: -8px -46px;
+}
+
+.psychic {
+  background-position: -155px -46px;
+}
+
+.water {
+  background-position: -118px -6px;
+}
+
+.lightning {
+  background-position: -8px -6px;
+}
+
+.metal {
+  background-position: -81px -46px;
+}
+
+.darkness {
+  background-position: -44px -46px;
+}
+
+.fire {
+  background-position: -81px -6px;
+}
+
+.dragon {
+  background-position: -118px -46px;
+}
+
+.fairy {
+  background-position: -81px -87px;
+}
+
+.colorless {
+  background-position: -44px -6px;
+}
+
+.energyless {
+  background-position: -45px -87px;
+}

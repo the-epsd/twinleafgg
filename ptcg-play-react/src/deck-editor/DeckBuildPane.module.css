@@ -1,0 +1,156 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1 1 auto;
+  background: #fff;
+  color: #222;
+  position: relative;
+}
+
+.dropZone {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  padding: 12px 12px 72px;
+  box-sizing: border-box;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: center;
+  gap: var(--deck-gap, 10px);
+  box-sizing: border-box;
+}
+
+.slot {
+  width: var(--deck-slot-w, 118px);
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.cardWrap {
+  position: relative;
+  cursor: grab;
+}
+
+.cardWrapDragging {
+  opacity: 0.55;
+}
+
+/* ptcg-play deck-card.component.scss — quantity + mat-icon circles (scaled to slot width; base card 100px) */
+.countCircle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: calc(var(--deck-slot-w, 118px) * 0.34);
+  bottom: calc(var(--deck-slot-w, 118px) * 0.1);
+  width: calc(var(--deck-slot-w, 118px) * 0.32);
+  height: calc(var(--deck-slot-w, 118px) * 0.32);
+  border: 1px solid #999;
+  background-color: #fff;
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: calc(var(--deck-slot-w, 118px) * 0.18);
+  line-height: 1;
+  color: #222;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  z-index: 9;
+  box-sizing: border-box;
+}
+
+.circleBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: calc(var(--deck-slot-w, 118px) * 0.125);
+  width: calc(var(--deck-slot-w, 118px) * 0.27);
+  height: calc(var(--deck-slot-w, 118px) * 0.27);
+  border: 1px solid #999;
+  background-color: #fff;
+  border-radius: 50%;
+  color: #222;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  z-index: 10;
+  box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.cardWrap:hover .circleBtn:not(:disabled) {
+  opacity: 1;
+}
+
+.cardWrap:hover .circleBtn:disabled {
+  opacity: 0.35;
+}
+
+@media (hover: none) {
+  .circleBtn:not(:disabled) {
+    opacity: 1;
+  }
+
+  .circleBtn:disabled {
+    opacity: 0.35;
+  }
+}
+
+.circleBtn:disabled {
+  cursor: not-allowed;
+}
+
+.circleBtnRemove {
+  right: calc(var(--deck-slot-w, 118px) * 0.7);
+}
+
+.circleBtnAdd {
+  right: calc(var(--deck-slot-w, 118px) * 0.03);
+}
+
+.circleBtnIcon {
+  width: calc(var(--deck-slot-w, 118px) * 0.16);
+  height: calc(var(--deck-slot-w, 118px) * 0.16);
+  display: block;
+  flex-shrink: 0;
+}
+
+.emptyDrop {
+  border: 2px dashed #b0b0b0;
+  border-radius: 8px;
+  padding: 32px 16px;
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+  max-width: 420px;
+  margin: 24px auto;
+}
+
+.footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 8px 12px;
+  background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.92) 40%);
+  pointer-events: none;
+}
+
+.footerInner {
+  pointer-events: auto;
+}
+
+.toast {
+  font-size: 0.8rem;
+  color: #c62828;
+  margin-top: 4px;
+}

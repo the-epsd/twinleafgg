@@ -1,0 +1,96 @@
+import { useCallback, useEffect, useRef, useState } from 'react';
+import type { Card } from 'ptcg-server';
+import { isDeckLibraryFilterEmpty, matchesDeckLibraryFilter } from './filterLibrary';
+import type { DeckEditToolbarFilter } from './types';
+
+const CHUNK_BASE = 400;
+const SCROLL_BOOST_MAX = 8;
+const MS_BUDGET = 14;
+
+function sortSelectedSet(filtered: Card[]): Card[] {
+  return filtered.slice().sort((a, b) => {
+    const sa = a.setNumber ?? '';
+    const sb = b.setNumber ?? '';
+    const byNum = sa.localeCompare(sb, undefined, { numeric: true, sensitivity: 'base' });
+    if (byNum !== 0) {
+      return byNum;
+    }
+    return a.fullName.localeCompare(b.fullName);
+  });
+}
+
+export function useIncrementalFilteredLibrary(allCards: Card[], filter: DeckEditToolbarFilter) {
+  const [cards, setCards] = useState<Card[]>([]);
+  const [done, setDone] = useState(false);
+  const boostRef = useRef(0);
+  const runIdRef = useRef(0);
+
+  const requestScrollBoost = useCallback(() => {
+    boostRef.current = Math.min(boostRef.current + 1, SCROLL_BOOST_MAX);
+  }, []);
+
+  useEffect(() => {
+    const runId = ++runIdRef.current;
+    boostRef.current = 0;
+    setCards([]);
+    setDone(false);
+
+    if (allCards.length === 0) {
+      setDone(true);
+      return;
+    }
+
+    let cursor = 0;
+    let raf = 0;
+
+    const tick = () => {
+      if (runId !== runIdRef.current) {
+        return;
+      }
+
+      const boost = boostRef.current;
+      const chunk = Math.floor(CHUNK_BASE * (1 + boost * 0.35));
+      boostRef.current *= 0.92;
+
+      if (isDeckLibraryFilterEmpty(filter)) {
+        const end = Math.min(cursor + chunk, allCards.length);
+        const slice = allCards.slice(cursor, end);
+        cursor = end;
+        if (slice.length > 0) {
+          setCards((prev) => [...prev, ...slice]);
+        }
+        if (cursor >= allCards.length) {
+          setDone(true);
+          return;
+        }
+      } else {
+        const batch: Card[] = [];
+        const startTime = performance.now();
+        while (cursor < allCards.length && batch.length < chunk && performance.now() - startTime < MS_BUDGET) {
+          const c = allCards[cursor];
+          if (matchesDeckLibraryFilter(c, filter)) {
+            batch.push(c);
+          }
+          cursor++;
+        }
+        if (batch.length > 0) {
+          setCards((prev) => [...prev, ...batch]);
+        }
+        if (cursor >= allCards.length) {
+          if (filter.selectedSet) {
+            setCards((prev) => sortSelectedSet(prev));
+          }
+          setDone(true);
+          return;
+        }
+      }
+
+      raf = requestAnimationFrame(tick);
+    };
+
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [allCards, filter]);
+
+  return { cards, done, requestScrollBoost };
+}

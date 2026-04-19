@@ -199,7 +199,7 @@ export class Board3dAssetLoaderService {
       const texture = await this.textureLoader.loadAsync(centerUrl);
       texture.colorSpace = 'srgb';
       texture.anisotropy = 4;
-      texture.flipY = false; // Don't flip for board texture
+      texture.flipY = false;
 
       this.textureCache.set(centerUrl, texture);
       return texture;

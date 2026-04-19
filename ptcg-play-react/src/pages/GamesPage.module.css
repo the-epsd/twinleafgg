@@ -1,0 +1,27 @@
+.page {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.alerts {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.lobbyCenter {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.alert {
+  color: crimson;
+}

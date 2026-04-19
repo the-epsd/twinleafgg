@@ -186,7 +186,6 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     player.canEvolve = false;
 
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-      cardList.removeSpecialCondition(SpecialCondition.ABILITY_USED);
       cardList.removeBoardEffect(BoardEffect.ABILITY_USED);
       if (card.damageTakenLastTurn !== undefined) {
         card.damageTakenLastTurn = 0;

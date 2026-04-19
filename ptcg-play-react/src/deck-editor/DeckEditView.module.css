@@ -1,0 +1,128 @@
+/* Disables native text/image selection while dragging or scrolling so highlights don’t leak into chrome or adjacent layout. Form fields and card popup re-enable selection. */
+.noSelectWrap {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.noSelectWrap :where(input, textarea, select) {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: #fff;
+}
+
+.errorBanner {
+  flex: 0 0 auto;
+  background: #ffebee;
+  border-bottom: 1px solid #ffcdd2;
+  color: #b71c1c;
+  padding: 8px 14px;
+  font-size: 0.88rem;
+}
+
+.warnBanner {
+  flex: 0 0 auto;
+  background: #fff8e1;
+  border-bottom: 1px solid #ffe082;
+  color: #e65100;
+  padding: 8px 14px;
+  font-size: 0.82rem;
+}
+
+.panes {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.libraryCol {
+  flex: 0 0 min(320px, 34vw);
+  min-width: 240px;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border-right: 1px solid #e0e0e0;
+}
+
+.deckCol {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.libraryColHidden {
+  display: none;
+}
+
+.mobileTabs {
+  display: none;
+  flex: 0 0 auto;
+  flex-direction: row;
+  border-bottom: 1px solid #ddd;
+  background: #fff;
+}
+
+.tab {
+  flex: 1;
+  border: none;
+  padding: 10px 12px;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.82rem;
+  cursor: pointer;
+  background: transparent;
+  color: #666;
+}
+
+.tabActive {
+  color: #111;
+  background: #f0f0f0;
+  border-bottom: 2px solid #888;
+}
+
+@media (max-width: 899px) {
+  .panes {
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .mobileTabs {
+    display: flex;
+  }
+
+  .libraryCol,
+  .deckCol {
+    flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .libraryCol {
+    max-width: none;
+    border-right: none;
+  }
+
+  .paneMobileInactive {
+    display: none !important;
+  }
+}

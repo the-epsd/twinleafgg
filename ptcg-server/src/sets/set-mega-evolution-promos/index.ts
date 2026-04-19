@@ -6,6 +6,8 @@ import { Weavile } from './weavile';
 import { Golduck } from './golduck';
 import { Slowpoke } from './slowpoke';
 import { MegaSlowbroex } from './mega-slowbro-ex';
+import { MegaDelphoxex } from './mega-delphox-ex';
+import { Grisham } from './grisham';
 import { Jett } from './jett';
 
 export const setMegaEvolutionPromos: Card[] = [
@@ -32,6 +34,8 @@ export const setMegaEvolutionPromos: Card[] = [
   new Golduck(),
   new Slowpoke(),
   new MegaSlowbroex(),
+  new MegaDelphoxex(),
+  new Grisham(),
   new Jett(),
   new SerperiorMEP(),
   new BarbaracleMEP(),

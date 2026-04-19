@@ -1,0 +1,273 @@
+.toolbar {
+  flex: 0 0 auto;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  color: #222;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  column-gap: 12px;
+  row-gap: 10px;
+  padding: 12px 16px;
+  min-height: 56px;
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.leftCluster {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 8px 10px;
+  justify-self: start;
+  min-width: 0;
+}
+
+.titleCenter {
+  justify-self: center;
+  text-align: center;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0 8px;
+}
+
+.deckTitle {
+  display: block;
+  font: inherit;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #111;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.searchDesktop {
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 320px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.searchDesktop label.visuallyHidden {
+  margin: 0;
+}
+
+.plainSearchLabel {
+  font-weight: 600;
+  font-size: 0.72rem;
+  color: #444;
+  text-shadow: none;
+  margin-bottom: 6px;
+}
+
+/* Higher specificity than shared TextField so deck toolbar search stays plain */
+.searchDesktop .plainSearchInput,
+.searchMobile .plainSearchInput {
+  width: 100%;
+  background: #fff;
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  color: #222;
+  min-height: 38px;
+  padding: 0 12px;
+  line-height: 36px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+
+.searchDesktop .plainSearchInput::placeholder,
+.searchMobile .plainSearchInput::placeholder {
+  color: #888;
+}
+
+.searchDesktop .plainSearchInput:focus,
+.searchMobile .plainSearchInput:focus {
+  outline: none;
+  border-color: #666;
+  box-shadow: 0 0 0 1px #666;
+}
+
+.searchDesktop .plainSearchInput:disabled,
+.searchMobile .plainSearchInput:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-self: end;
+  align-items: center;
+}
+
+.filterToggle {
+  flex: 0 0 auto;
+  flex-shrink: 0;
+}
+
+.filtersPanel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.28s ease;
+  border-top: 1px solid #e8e8e8;
+  background: #fafafa;
+}
+
+.filtersPanelOpen {
+  max-height: 480px;
+}
+
+.filtersInner {
+  padding: 14px 16px 16px;
+  max-height: 440px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 960px) {
+  .filtersInner {
+    grid-template-columns: 1fr;
+  }
+}
+
+.searchMobile {
+  display: none;
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 768px) {
+  .row {
+    grid-template-columns: 1fr;
+    justify-items: stretch;
+  }
+
+  .leftCluster {
+    justify-self: stretch;
+  }
+
+  .titleCenter {
+    justify-self: center;
+    order: -1;
+  }
+
+  .actions {
+    justify-self: stretch;
+    justify-content: flex-end;
+  }
+
+  .searchDesktop {
+    display: none;
+  }
+
+  .searchMobile {
+    display: block;
+  }
+}
+
+.group {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: #fff;
+}
+
+.groupTitle {
+  margin: 0 0 8px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #555;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 6px;
+}
+
+.superRow {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #c4c4c4;
+}
+
+.superBtn {
+  flex: 1;
+  min-width: 72px;
+  padding: 8px 10px;
+  border: none;
+  border-right: 1px solid #c4c4c4;
+  background: #fff;
+  color: #222;
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.superBtn:last-child {
+  border-right: none;
+}
+
+.superBtn:hover {
+  background: #f3f3f3;
+}
+
+.superBtnActive {
+  background: #e8e8e8;
+  font-weight: 600;
+}
+
+.select {
+  width: 100%;
+  margin-top: 6px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  border: 1px solid #c4c4c4;
+  background: #fff;
+  color: #222;
+  font: inherit;
+  font-size: 0.85rem;
+}
+
+.selectMulti {
+  min-height: 88px;
+}
+
+.adminNote {
+  font-size: 0.75rem;
+  color: #8a5a00;
+  margin-top: 6px;
+}
+
+.filterCheckbox {
+  font-weight: 500;
+  font-size: 0.78rem;
+  color: #333;
+  text-shadow: none;
+  margin-top: 8px;
+}
+
+.filterCheckbox input {
+  accent-color: #333;
+}
