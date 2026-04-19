@@ -1,0 +1,17 @@
+# DigitalOcean App Platform — Vite/React static site (Node 20.19+ required by Vite 8).
+# Build uses production `npm run build`, not `npm run dev`.
+name: ptcg-play-react
+region: nyc
+static_sites:
+  - name: web
+    source_dir: ptcg-play-react
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: the-epsd/twinleafgg
+    build_command: npm ci && npm run build
+    output_dir: dist
+    catchall_document: index.html
+    build_environment_variables:
+      - key: NODE_VERSION
+        value: '20.19.0'
