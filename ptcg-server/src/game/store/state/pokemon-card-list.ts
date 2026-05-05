@@ -88,6 +88,14 @@ export class PokemonCardList extends CardList {
         result.push(card as PokemonCard);
       } else if (card.name === 'Antique Cover Fossil') {
         result.push(card as PokemonCard);
+      } else if (card.name === 'Antique Skull Fossil') {
+        result.push(card as PokemonCard);
+      } else if (card.name === 'Antique Shield Fossil') {
+        result.push(card as PokemonCard);
+      } else if (card.name === 'Antique Jaw Fossil') {
+        result.push(card as PokemonCard);
+      } else if (card.name === 'Antique Sail Fossil') {
+        result.push(card as PokemonCard);
       } else if (card.name === 'Claw Fossil') {
         result.push(card as PokemonCard);
       } else if (card.name === 'Root Fossil') {
