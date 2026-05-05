@@ -15,20 +15,18 @@ export class Hypno extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Hand Control',
-      cost: [P],
-      damage: 0,
-      text: 'Your opponent reveals his or her hand. You may choose a Supporter card you find there. If you do, your opponent plays that Supporter card. However, you make all decisions for that card. (That Supporter card is discarded.)'
-    },
-    {
-      name: 'Hypnoblast',
-      cost: [P, P, P],
-      damage: 60,
-      text: 'Your opponent\'s Active Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hand Control',
+    cost: [P],
+    damage: 0,
+    text: 'Your opponent reveals his or her hand. You may choose a Supporter card you find there. If you do, your opponent plays that Supporter card. However, you make all decisions for that card. (That Supporter card is discarded.)'
+  },
+  {
+    name: 'Hypnoblast',
+    cost: [P, P, P],
+    damage: 60,
+    text: 'Your opponent\'s Active Pokémon is now Asleep.'
+  }];
 
   public set: string = 'FFI';
   public setNumber: string = '36';

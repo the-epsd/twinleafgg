@@ -4,7 +4,6 @@ import { StoreLike, State, ChoosePokemonPrompt, GameMessage, PlayerType, SlotTyp
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Crobat extends PokemonCard {
@@ -61,34 +60,27 @@ export class Crobat extends PokemonCard {
       });
     }
 
+    // Ref: set-paradox-rift/iron-hands-ex.ts (Amp You Very Much — prizeCount; do not clear the attack flag on EndTurnEffect:
+    // resolveWaitItems can end the turn before checkState runs, which would clear usedCriticalBite before KnockOutEffect.)
     if (effect instanceof KnockOutEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const knockedOutOwner = effect.player;
+      const attacker = StateUtils.getOpponent(state, knockedOutOwner);
 
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== attacker) {
         return state;
       }
 
-      // Crobat wasn't attacking
-      const pokemonCard = opponent.active.getPokemonCard();
-      if (pokemonCard !== this) {
+      if (attacker.active.getPokemonCard() !== this) {
         return state;
       }
 
-      // Check if the attack that caused the KnockOutEffect is "Critical Bite"
-      if (this.usedCriticalBite === true) {
-        if (effect.prizeCount > 0) {
-          effect.prizeCount += 2;
-          this.usedCriticalBite = false;
-        }
+      if (this.usedCriticalBite === true && effect.prizeCount > 0) {
+        effect.prizeCount += 2;
+        this.usedCriticalBite = false;
       }
       return state;
     }
 
-    if (effect instanceof EndTurnEffect && this.usedCriticalBite === true) {
-      this.usedCriticalBite = false;
-    }
     return state;
   }
 }

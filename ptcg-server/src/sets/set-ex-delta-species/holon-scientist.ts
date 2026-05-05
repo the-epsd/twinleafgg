@@ -16,9 +16,7 @@ export class HolonScientist extends TrainerCard {
   public setNumber: string = '97';
   public name: string = 'Holon Scientist';
   public fullName: string = 'Holon Scientist DS';
-
-  public text: string =
-    'Discard a card from your hand. If you can\'t discard a card from your hand, you can\'t play this card.\n\nIf you have less cards in your hand than your opponent, draw cards until you have the same number of cards as your opponent.';
+  public text: string = 'Discard a card from your hand. If you can\'t discard a card from your hand, you can\'t play this card.\n\nIf you have less cards in your hand than your opponent, draw cards until you have the same number of cards as your opponent.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -61,14 +59,11 @@ export class HolonScientist extends TrainerCard {
           cards.forEach((card, index) => {
             store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
           });
-
           DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, opponent.hand.cards.length);
         });
       }
-      effect.preventDefault = true;
       return state;
     }
-
     return state;
   }
 }

@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage } from '../../game';
+import { PowerType, StoreLike, State, GameError, GameMessage, GameWinner } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { endGame } from '../../game/store/effect-reducers/check-effect';
 import { WAS_POWER_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
@@ -65,8 +65,11 @@ export class Unown extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      // Win the game
-      state = endGame(store, state, player.id);
+      // Win the game (GameWinner is seat index; player.id is client id — do not mix them)
+      const winner = state.players.indexOf(player) === 0
+        ? GameWinner.PLAYER_1
+        : GameWinner.PLAYER_2;
+      state = endGame(store, state, winner);
     }
 
     return state;
