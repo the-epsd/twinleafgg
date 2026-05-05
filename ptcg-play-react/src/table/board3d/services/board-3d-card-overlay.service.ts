@@ -13,6 +13,7 @@ import { Board3dDamageCounter } from '../board-3d-damage-counter';
 import { Board3dMarker } from '../board-3d-marker';
 import { Board3dAbilityUsedBadge } from '../board-3d-ability-used-badge';
 import type { Board3dCardsAdapter } from '../board3dCardsAdapter';
+import { apply3dCardHolo } from '../board-3d-holo-apply';
 
 export interface CardOverlays {
   energySprite: Board3dEnergySprite;
@@ -165,6 +166,7 @@ export class Board3dCardOverlayService {
       } else {
         overlays.breakCard.updateTexture(breakFrontTexture, breakBackTexture, maskTexture);
       }
+      void apply3dCardHolo(this.assetLoader, overlays.breakCard, breakCard, false);
     } else if (overlays.breakCard) {
       mainCardMesh.getGroup().remove(overlays.breakCard.getGroup());
       overlays.breakCard.dispose();
@@ -263,6 +265,7 @@ export class Board3dCardOverlayService {
 
       mainCardMesh.getGroup().add(toolCardMesh.getGroup());
       overlays.toolCards.push(toolCardMesh);
+      void apply3dCardHolo(this.assetLoader, toolCardMesh, tool, false);
     }
   }
 

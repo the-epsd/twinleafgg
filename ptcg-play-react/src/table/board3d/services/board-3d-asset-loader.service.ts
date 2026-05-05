@@ -1,12 +1,7 @@
-import { TextureLoader, Texture, RepeatWrapping } from 'three';
-
-/** Public-folder paths must be root-relative so they work on nested routes (e.g. /table/1). */
-function publicAssetUrl(path: string): string {
-  const trimmed = path.replace(/^\//, '');
-  const base = import.meta.env.BASE_URL;
-  const prefix = base.endsWith('/') ? base : `${base}/`;
-  return `${prefix}${trimmed}`;
-}
+import { SRGBColorSpace, TextureLoader, Texture, RepeatWrapping } from 'three';
+import type { HoloVariant } from '../../../components/cards/holoVariant';
+import { holoMaskUrl } from '../../../components/cards/holoMaskUrl';
+import { publicAssetUrl } from '../../../utils/publicAssetUrl';
 
 /** Remote scans stay as-is; everything else (e.g. assets/energy/*.png) is resolved for the router base. */
 function resolveTextureRequestUrl(url: string): string {
@@ -27,6 +22,7 @@ export class Board3dAssetLoaderService {
   private boardGridTexture: Texture | null = null;
   private slotGridTexture: Texture | null = null;
   private cardMaskTexture: Texture | null = null;
+  private holo2dMaskByUrl: Map<string, Texture> = new Map();
 
   private readonly MAX_CONCURRENT_LOADS = 6;
   private activeLoads = 0;
@@ -49,6 +45,18 @@ export class Board3dAssetLoaderService {
       const next = this.loadQueue.shift();
       if (next) next();
     }
+  }
+
+  /**
+   * Synchronous return when a scan is already in {@link loadCardTexture}'s cache.
+   * Prevents re-applying a placeholder and clearing holo on every state sync.
+   */
+  getCardTextureIfCached(scanUrl: string | undefined | null): Texture | null {
+    if (!scanUrl || !String(scanUrl).trim()) {
+      return null;
+    }
+    const resolved = resolveTextureRequestUrl(scanUrl);
+    return this.textureCache.get(resolved) ?? null;
   }
 
   /**
@@ -253,6 +261,29 @@ export class Board3dAssetLoaderService {
   }
 
   /**
+   * 2D holo art mask (same assets as 2D CardFace / Angular) for the 3D shader overlay.
+   */
+  async load2dHoloMaskTexture(variant: HoloVariant): Promise<Texture> {
+    const url = holoMaskUrl(variant);
+    if (this.holo2dMaskByUrl.has(url)) {
+      return this.holo2dMaskByUrl.get(url)!;
+    }
+    return this.withConcurrencyLimit(async () => {
+      try {
+        const texture = await this.textureLoader.loadAsync(url);
+        texture.colorSpace = SRGBColorSpace;
+        texture.anisotropy = 4;
+        texture.flipY = true;
+        this.holo2dMaskByUrl.set(url, texture);
+        return texture;
+      } catch (e) {
+        console.error('Failed to load 2D holo mask:', variant, e);
+        return this.loadCardMaskTexture();
+      }
+    });
+  }
+
+  /**
    * Load the aqua grid texture for board slots
    */
   async loadSlotGridTexture(): Promise<Texture> {
@@ -326,6 +357,9 @@ export class Board3dAssetLoaderService {
       this.cardMaskTexture.dispose();
       this.cardMaskTexture = null;
     }
+
+    this.holo2dMaskByUrl.forEach((t) => t.dispose());
+    this.holo2dMaskByUrl.clear();
   }
 
   /**

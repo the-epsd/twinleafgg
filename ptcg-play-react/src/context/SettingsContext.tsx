@@ -132,3 +132,8 @@ export function useSettings(): SettingsContextValue {
   }
   return ctx;
 }
+
+/** For components that work outside `SettingsProvider` (e.g. dev previews). */
+export function useOptionalSettings(): SettingsContextValue | null {
+  return useContext(SettingsContext);
+}

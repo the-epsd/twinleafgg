@@ -12,7 +12,9 @@ import {
   Group,
   DoubleSide,
   Object3D,
+  Clock,
 } from 'three';
+import { updateBoard3dHoloTime } from './board-3d-holo-material';
 import { Subscription } from 'rxjs';
 import gsap from 'gsap';
 import { Board3dAssetLoaderService } from './services/board-3d-asset-loader.service';
@@ -57,6 +59,7 @@ import {
 } from './board-3d-config';
 import {
   board3dMeshIdForPlayTarget,
+  cardIsFossilLikeTrainer,
   cardIsSupporter,
   cardIsTrainerBoardHandPlay,
   worldPositionForSupporterMeshId,
@@ -110,6 +113,7 @@ export class Board3dController {
   private boardGridGroup: Group | null = null;
 
   private animationFrameId: number = 0;
+  private holoClock = new Clock();
   private needsRender: boolean = true;
   private currentHoveredCard: any = null;
   private hasInitializedHand: boolean = false;
@@ -549,6 +553,7 @@ export class Board3dController {
 
   private animate = (): void => {
     this.animationFrameId = requestAnimationFrame(this.animate);
+    updateBoard3dHoloTime(this.holoClock.getElapsedTime());
     this.stateSync.updateBillboards(this.camera);
     this.syncRemoveDamageHudPosition();
     this.postProcessingService.render();
@@ -1901,7 +1906,11 @@ export class Board3dController {
       } else if (result.action === 'playCard' && result.handIndex !== undefined && result.zone) {
         const playedHandCard =
           result.handIndex >= 0 ? this.bottomPlayerHand.cards[result.handIndex] : undefined;
-        if (!this.gameState.replay && playedHandCard?.superType === SuperType.TRAINER) {
+        if (
+          !this.gameState.replay &&
+          playedHandCard?.superType === SuperType.TRAINER &&
+          !cardIsFossilLikeTrainer(playedHandCard)
+        ) {
           this.boardInteractionService.beginTrainerPlayEffectPromptDelay(2000);
         }
         const trainerBoardHandPlay = cardIsTrainerBoardHandPlay(playedHandCard);

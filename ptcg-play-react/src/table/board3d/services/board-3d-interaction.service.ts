@@ -25,7 +25,7 @@ import {
 } from 'ptcg-server';
 import gsap from 'gsap';
 import { Board3dDropZone, DropZoneType, type DropZoneConfig } from '../board-3d-drop-zone';
-import { trainerTypeIsSupporter } from '../board3dMeshIdForPlayTarget';
+import { cardPlaysAsBasicPokemonFromHand, trainerTypeIsSupporter } from '../board3dMeshIdForPlayTarget';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import { Board3dStateSyncService } from './board-3d-state-sync.service';
 import { Board3dHandService } from './board-3d-hand.service';
@@ -408,29 +408,28 @@ export class Board3dInteractionService {
       return false;
     }
 
-    // Handle BENCH_GENERAL zone - only valid for Basic Pokemon with open bench slots
+    // Handle BENCH_GENERAL zone - only valid for Basic Pokemon (and fossils played as Basic) with open bench slots
     if (config.type === DropZoneType.BENCH_GENERAL) {
-      const { superType, stage } = this.currentDragContext;
-      // Only Basic Pokemon can use general bench zone
-      if (superType === SuperType.POKEMON && stage === Stage.BASIC) {
-        // Check if there's at least one open bench slot for this player
+      const { card } = this.currentDragContext;
+      if (cardPlaysAsBasicPokemonFromHand(card)) {
         return this.findNextOpenBenchSlot(config.player) !== null;
       }
-      // Evolution Pokemon, Energy, Tool, and Trainer cards need specific targets
       return false;
     }
 
     // Hand to Board
-    const { superType, stage, trainerType } = this.currentDragContext;
+    const { superType, stage, trainerType, card } = this.currentDragContext;
+
+    // Basic Pokemon and Fossil items that play as Basic onto bench/active
+    if (cardPlaysAsBasicPokemonFromHand(card)) {
+      if (config.type === DropZoneType.BENCH || config.type === DropZoneType.ACTIVE) {
+        return !isOccupied;
+      }
+      return false;
+    }
 
     switch (superType) {
       case SuperType.POKEMON:
-        // Basic Pokemon can only go to empty bench/active slots
-        if (stage === Stage.BASIC) {
-          if (config.type === DropZoneType.BENCH || config.type === DropZoneType.ACTIVE) {
-            return !isOccupied;
-          }
-        }
         // Evolution Pokemon need to target a matching base Pokemon
         if (stage === Stage.STAGE_1 || stage === Stage.STAGE_2 ||
           stage === Stage.VMAX || stage === Stage.VSTAR || stage === Stage.MEGA) {
@@ -473,13 +472,13 @@ export class Board3dInteractionService {
       return;
     }
 
-    const { superType, stage, trainerType } = this.currentDragContext;
+    const { superType, stage, trainerType, card } = this.currentDragContext;
 
     for (const zone of this.dropZones) {
       const config = zone.getConfig();
 
-      // When dragging a Basic Pokemon: Only show BENCH_GENERAL, hide individual BENCH zones
-      if (superType === SuperType.POKEMON && stage === Stage.BASIC) {
+      // When dragging a Basic Pokemon or a Fossil that benches as Basic: BENCH_GENERAL + active
+      if (cardPlaysAsBasicPokemonFromHand(card)) {
         if (config.type === DropZoneType.BENCH_GENERAL) {
           if (this.isValidDropZone(zone)) {
             zone.setValid();
@@ -1586,14 +1585,14 @@ export class Board3dInteractionService {
       return;
     }
 
-    const { superType, stage, trainerType } = this.currentDragContext;
+    const { superType, stage, trainerType, card } = this.currentDragContext;
 
     // Update visual states - show only relevant zones based on card type
     for (const zone of this.dropZones) {
       const config = zone.getConfig();
 
-      // When dragging a Basic Pokemon: Only show BENCH_GENERAL, hide individual BENCH zones
-      if (superType === SuperType.POKEMON && stage === Stage.BASIC) {
+      // Basic Pokemon or Fossil played as Basic
+      if (cardPlaysAsBasicPokemonFromHand(card)) {
         if (config.type === DropZoneType.BENCH_GENERAL) {
           if (this.isValidDropZone(zone)) {
             zone.setValid();

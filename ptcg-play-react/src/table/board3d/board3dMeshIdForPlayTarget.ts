@@ -3,6 +3,7 @@ import {
   Player,
   PlayerType,
   SlotType,
+  Stage,
   SuperType,
   TrainerType,
   TrainerCard,
@@ -32,9 +33,43 @@ export function cardIsSupporter(card: Card | undefined | null): boolean {
   return trainerTypeIsSupporter((card as TrainerCard).trainerType);
 }
 
+/**
+ * Item-style Fossils (and similar) are Trainer cards in hand but play as Basic Pokémon onto the bench.
+ * Matches server cards that set `power.isFossil` on a power (see e.g. Rare Fossil, Antique Shield Fossil).
+ */
+export function cardIsFossilLikeTrainer(card: Card | undefined | null): boolean {
+  if (!card) {
+    return false;
+  }
+  const powers = (card as TrainerCard).powers;
+  if (!Array.isArray(powers)) {
+    return false;
+  }
+  return powers.some(p => p.isFossil === true);
+}
+
+/** True when this card should use bench/active drop targets like a Basic Pokémon (includes trainer-printed fossils). */
+export function cardPlaysAsBasicPokemonFromHand(card: Card | undefined | null): boolean {
+  if (!card) {
+    return false;
+  }
+  if (card.superType === SuperType.POKEMON) {
+    const stage = (card as { stage?: Stage }).stage;
+    return stage === Stage.BASIC;
+  }
+  if (!cardIsFossilLikeTrainer(card)) {
+    return false;
+  }
+  const stage = (card as { stage?: Stage }).stage;
+  return stage === undefined || stage === Stage.BASIC;
+}
+
 /** Trainer cards played from hand onto the large BOARD zone (items, supporters — not stadium/tools). */
 export function cardIsTrainerBoardHandPlay(card: Card | undefined | null): boolean {
   if (!card || card.superType !== SuperType.TRAINER) {
+    return false;
+  }
+  if (cardIsFossilLikeTrainer(card)) {
     return false;
   }
   const tt = (card as TrainerCard).trainerType;

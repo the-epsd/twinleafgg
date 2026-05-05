@@ -78,7 +78,7 @@ function SortableDeckCard({
         {...listeners}
         onClick={() => onOpenInfo()}
       >
-        <CardFace src={scanUrl} name={slot.card.name} loading="lazy" style={{ width: '100%' }}>
+        <CardFace card={slot.card} src={scanUrl} name={slot.card.name} loading="lazy" style={{ width: '100%' }}>
           {slot.count > 0 ? (
             <button
               type="button"

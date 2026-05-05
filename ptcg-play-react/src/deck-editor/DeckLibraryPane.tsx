@@ -71,6 +71,7 @@ function LibraryCardThumb({
     <div className={styles.thumb} style={thumbStyle}>
       <div className={styles.cardFace} onClick={() => onOpenInfo()}>
         <CardFace
+          card={card}
           src={scanUrl}
           name={card.name}
           loading="lazy"
