@@ -76,24 +76,25 @@ export class Articuno extends PokemonCard {
 
     // Delta Plus
     if (effect instanceof KnockOutEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      // KnockOutEffect.player is the owner of the KO'd Pokemon (defender), not the attacker.
+      const knockedOutOwner = effect.player;
+      const attacker = StateUtils.getOpponent(state, knockedOutOwner);
 
-      // Check if the knocked out Pokemon belongs to the opponent (active or bench)
-      const isOpponentPokemon = opponent.active === effect.target ||
-        opponent.bench.includes(effect.target);
+      // KO target must be on the defending player's field (active or bench).
+      const isDefendingPokemon = knockedOutOwner.active === effect.target ||
+        knockedOutOwner.bench.includes(effect.target);
 
-      if (!isOpponentPokemon) {
+      if (!isDefendingPokemon) {
         return state;
       }
 
-      // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+      // Do not activate between turns, or when it's not the attacker's turn.
+      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== attacker) {
         return state;
       }
 
       // Articuno wasn't attacking
-      const pokemonCard = opponent.active.getPokemonCard();
+      const pokemonCard = attacker.active.getPokemonCard();
       if (pokemonCard !== this) {
         return state;
       }

@@ -84,21 +84,21 @@ export class LugiaEx extends PokemonCard {
 
     // Overflow
     if (effect instanceof KnockOutEffect && effect.target === effect.player.active) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const knockedOutOwner = effect.player;
+      const attacker = StateUtils.getOpponent(state, knockedOutOwner);
 
       // Do not activate between turns, or when it's not opponents turn.
-      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== opponent) {
+      if (state.phase !== GamePhase.ATTACK || state.players[state.activePlayer] !== attacker) {
         return state;
       }
 
       // Lugia wasn't attacking
-      const pokemonCard = opponent.active.getPokemonCard();
+      const pokemonCard = attacker.active.getPokemonCard();
       if (pokemonCard !== this) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, attacker, this)) {
         return state;
       }
       if (effect.prizeCount > 0) {
