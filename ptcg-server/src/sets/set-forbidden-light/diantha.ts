@@ -9,19 +9,14 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class Diantha extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public set: string = 'FLI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '105';
-
   public name: string = 'Diantha';
-
   public fullName: string = 'Diantha FLI';
 
   public text: string =
-    'You can play this card only if 1 of your [Y] Pokémon was Knocked Out during your opponent\'s last turn.' +
+    'You can play this card only if 1 of your [Y] Pokémon was Knocked Out during your opponent\'s last turn. ' +
     'Put 2 cards from your discard pile into your hand.';
 
   public readonly DIANTHA_MARKER = 'DIANTHA_MARKER';
