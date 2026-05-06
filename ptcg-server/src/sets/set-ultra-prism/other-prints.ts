@@ -27,6 +27,7 @@ import { XurkitreeGx } from './xurkitree-gx';
 import { CelesteelaGx } from './celesteela-gx';
 import { MissingClover } from './missing-clover';
 import { PeekingRedCard } from '../set-crimson-invasion/peeking-red-card';
+import { CardType } from '../../game';
 export class CosmoemUPR extends Cosmoem {
   public setNumber = '61';
   public fullName: string = 'Cosmoem UPR';
@@ -193,6 +194,13 @@ export class DewpiderUPR extends Dewpider {
   public set: string = 'UPR';
   public setNumber: string = '16';
   public fullName: string = 'Dewpider UPR';
+  public cardType: CardType = G;
+  public attacks = [{
+      name: 'Bubble',
+      cost: [G],
+      damage: 10,
+      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+    }];
 }
 
 export class LeafeonGx2 extends LeafeonGx {

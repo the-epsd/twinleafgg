@@ -2,7 +2,7 @@ import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT } from '
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { State, StoreLike } from '../../game';
+import { Attack, State, StoreLike } from '../../game';
 export class Dratini extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
@@ -10,14 +10,12 @@ export class Dratini extends PokemonCard {
   public weakness = [{ type: N }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Wrap',
-      cost: [G, L],
-      damage: 20,
-      text: 'Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed.'
-    }
-  ];
+  public attacks: Attack[] = [{
+    name: 'Wrap',
+    cost: [G, L],
+    damage: 20,
+    text: 'Flip a coin. If heads, the Defending Pok\u00e9mon is now Paralyzed.'
+  }];
 
   public set: string = 'DRV';
   public setNumber: string = '1';

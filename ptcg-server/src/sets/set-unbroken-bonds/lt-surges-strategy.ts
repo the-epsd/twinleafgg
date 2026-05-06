@@ -32,6 +32,10 @@ export class LtSurgesStrategy extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
+      if (player.supporterTurn > 0) {
+        throw new GameError(GameMessage.SUPPORTER_ALREADY_PLAYED);
+      }
+
       if (player.getPrizeLeft() <= opponent.getPrizeLeft()) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }

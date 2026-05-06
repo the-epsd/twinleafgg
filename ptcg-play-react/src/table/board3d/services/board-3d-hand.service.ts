@@ -1,9 +1,10 @@
 import { CardList, Card } from 'ptcg-server';
-import { Vector3, Scene, Group, Object3D } from 'three';
+import { Vector3, Scene, Group, Object3D, type Texture } from 'three';
 import gsap from 'gsap';
 import { Board3dCard } from '../board-3d-card';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import type { Board3dCardsAdapter } from '../board3dCardsAdapter';
+import { apply3dCardHolo } from '../board-3d-holo-apply';
 
 export type PrepareDrawFlightResult = {
   flyingCard: Object3D;
@@ -180,6 +181,7 @@ export class Board3dHandService {
     const mask = cardGroup.userData.drawRevealMaskTexture;
     if (bc && scan && cardBack !== undefined && mask !== undefined) {
       bc.updateTexture(cardBack, scan, mask);
+      bc.setHolo(null);
     }
   }
 
@@ -208,6 +210,10 @@ export class Board3dHandService {
     cardGroup.scale.set(1.1, 1.1, 1.1);
     if (bc && front && back !== undefined && mask !== undefined) {
       bc.updateTexture(front, back, mask);
+      const data = cardGroup.userData.cardData as Card | undefined;
+      if (data) {
+        void apply3dCardHolo(this.assetLoader, bc, data, false);
+      }
     }
   }
 
@@ -231,6 +237,7 @@ export class Board3dHandService {
     // Load texture (checks artworksMap for overrides first, like 2D components do)
     const scanUrl = this.cardsAdapter.getScanUrlFor3D(card, hand);
     const isFaceDown = !isOwner;
+    const hasScan = !!(scanUrl && scanUrl.trim());
 
     // Progressive loading: show card-back immediately, load front texture in background
     const [backTexture, maskTexture] = await Promise.all([
@@ -238,21 +245,32 @@ export class Board3dHandService {
       this.assetLoader.loadCardMaskTexture()
     ]);
 
-    let frontTexture;
+    let frontTexture: Texture;
+    let awaitingHandScan = false;
     if (isFaceDown) {
       frontTexture = backTexture;
     } else {
-      frontTexture = await this.assetLoader.loadCardBack();
-      const needsFrontLoad = scanUrl && scanUrl.trim();
-      if (needsFrontLoad && !deferProgressiveFrontLoad) {
-        this.assetLoader.loadCardTexture(scanUrl).then(loadedFront => {
-          const handCard = this.handCards.get(index);
-          if (handCard && handCard.getGroup().userData.cardData?.id === card.id) {
-            handCard.updateTexture(loadedFront, backTexture, maskTexture);
-          }
-        }).catch(() => {});
-      } else if (!scanUrl || !scanUrl.trim()) {
-        console.warn('Empty scanUrl for hand card:', card?.fullName, 'set:', card?.set, 'setNumber:', card?.setNumber);
+      const placeholder = await this.assetLoader.loadCardBack();
+      if (hasScan && !deferProgressiveFrontLoad) {
+        const cached = this.assetLoader.getCardTextureIfCached(scanUrl);
+        if (cached) {
+          frontTexture = cached;
+        } else {
+          frontTexture = placeholder;
+          awaitingHandScan = true;
+          this.assetLoader.loadCardTexture(scanUrl).then(loadedFront => {
+            const handCard = this.handCards.get(index);
+            if (handCard && handCard.getGroup().userData.cardData?.id === card.id) {
+              handCard.updateTexture(loadedFront, backTexture, maskTexture);
+              void apply3dCardHolo(this.assetLoader, handCard, card, false);
+            }
+          }).catch(() => {});
+        }
+      } else {
+        frontTexture = placeholder;
+        if (!hasScan) {
+          console.warn('Empty scanUrl for hand card:', card?.fullName, 'set:', card?.set, 'setNumber:', card?.setNumber);
+        }
       }
     }
 
@@ -286,6 +304,16 @@ export class Board3dHandService {
       this.handGroup.add(cardMesh.getGroup());
     }
     this.handCards.set(index, cardMesh);
+
+    if (isFaceDown) {
+      void apply3dCardHolo(this.assetLoader, cardMesh, card, true);
+    } else if (awaitingHandScan || (hasScan && deferProgressiveFrontLoad)) {
+      cardMesh.setHolo(null);
+    } else if (hasScan) {
+      void apply3dCardHolo(this.assetLoader, cardMesh, card, false);
+    } else {
+      void apply3dCardHolo(this.assetLoader, cardMesh, card, true);
+    }
   }
 
   /**

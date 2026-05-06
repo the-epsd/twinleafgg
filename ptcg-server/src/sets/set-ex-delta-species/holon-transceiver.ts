@@ -17,7 +17,6 @@ export class HolonTransceiver extends TrainerCard {
   public setNumber: string = '98';
   public name: string = 'Holon Transceiver';
   public fullName: string = 'Holon Transceiver DS';
-
   public text: string = 'Search your deck for a Supporter card that has Holon in its name, show it to your opponent, and put it into your hand. Shuffle your deck afterward. Or, search your discard pile for a Supporter card that has Holon in its name, show it to your opponent, and put it into your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -58,9 +57,7 @@ export class HolonTransceiver extends TrainerCard {
             ), selected => {
               cards = selected || [];
               SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
-
               MOVE_CARDS(store, state, player.deck, player.hand, { cards: cards, sourceCard: this });
-
               SHUFFLE_DECK(store, state, player);
             });
           }
@@ -85,11 +82,8 @@ export class HolonTransceiver extends TrainerCard {
               { min: 1, max: 1, allowCancel: false, blocked }
             ), selected => {
               cards = selected || [];
-
               SHOW_CARDS_TO_PLAYER(store, state, opponent, cards);
               MOVE_CARDS(store, state, player.discard, player.hand, { cards: cards, sourceCard: this });
-
-              return state;
             });
           }
         });
@@ -115,5 +109,4 @@ export class HolonTransceiver extends TrainerCard {
     }
     return state;
   }
-
 }

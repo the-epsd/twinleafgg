@@ -14,6 +14,19 @@
   background: #f2f2f2;
 }
 
+/* Iridescent rim (aligns with Angular 2D board `.holo` / `.fullart-holo` containers). */
+.innerHolo {
+  background: linear-gradient(
+    75deg,
+    #92f2f2 5%,
+    #a8d0f0 25%,
+    #d6cff1 45%,
+    #eed5f2 65%,
+    #c4f2e5 90%
+  );
+  background-size: 200% 100%;
+}
+
 /* Library: highlight cards already in the active deck (ring only, no elevation). */
 .innerInDeckRing {
   box-shadow: 0 0 0 2px rgba(67, 160, 71, 0.55);
@@ -32,6 +45,45 @@
   border-radius: 0;
   transform: scale(1.014);
   transform-origin: center center;
+  position: relative;
+  z-index: 1;
+}
+
+.holoOverlay {
+  display: block;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  pointer-events: none;
+  animation: holoGradientScroll 2s linear infinite;
+  background: linear-gradient(
+    110deg,
+    transparent 35%,
+    rgba(146, 242, 242, 0.5),
+    rgba(255, 255, 255, 0.6),
+    rgba(214, 207, 241, 0.5),
+    transparent 65%
+  );
+  background-size: 300% 300%;
+  mix-blend-mode: soft-light;
+  -webkit-mask-image: var(--holo-mask);
+  mask-image: var(--holo-mask);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  will-change: background-position;
+}
+
+@keyframes holoGradientScroll {
+  from {
+    background-position: 100% 100%;
+  }
+
+  to {
+    background-position: 0% 0%;
+  }
 }
 
 .fallback {

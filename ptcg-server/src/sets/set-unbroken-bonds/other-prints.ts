@@ -1,4 +1,3 @@
-import { FirefighterPikachu } from '../set-sun-and-moon-promos/firefighter-pikachu';
 import { PheromosaAndBuzzwoleGX as PheromosaBuzzwoleGXUNB1 } from './pheromosa-and-buzzwole-gx';
 import { ReshiramCharizardGX as ReshiramCharizardGXUNB20 } from '../set-unbroken-bonds/reshiram-and-charizard-gx';
 import { MukAlolanMukGX as MukAlolanMukGXUNB61 } from '../set-unbroken-bonds/muk-and-alolan-muk-gx';
@@ -31,11 +30,6 @@ export class DedenneGXUNB extends DedenneGX {
   public fullName = 'Dedenne-GX UNB';
   public set = 'UNB';
   public setNumber = '57';
-}
-export class FirefighterPikachuUNB extends FirefighterPikachu {
-  public setNumber = '106';
-  public fullName: string = 'Firefighter Pikachu UNB';
-  public set = 'UNB';
 }
 
 export class PheromosaBuzzwoleGX2UNB extends PheromosaBuzzwoleGXUNB1 {

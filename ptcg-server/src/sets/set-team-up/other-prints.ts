@@ -38,6 +38,7 @@ import { Nanu } from './nanu';
 import { Nita } from './nita';
 import { SabrinasSuggestion } from './sabrinas-suggestion';
 import { Electrocharger } from './electrocharger';
+import { CardType } from '../../game';
 
 export class BrocksGritTEU extends BrocksGrit {
   public fullName = 'Brock\'s Grit TEU';
@@ -258,12 +259,17 @@ export class AlolanMarowakTEU extends AlolanMarowak {
   public set: string = 'TEU';
   public setNumber: string = '64';
   public fullName: string = 'Alolan Marowak TEU';
+  public cardType: CardType = R;
+  public weakness = [{ type: D }];
+  public resistance = [{ type: F, value: -20 }];
 }
 
 export class AlolanExeggutorTEU extends AlolanExeggutor {
   public set: string = 'TEU';
   public setNumber: string = '114';
   public fullName: string = 'Alolan Exeggutor TEU';
+  public cardType: CardType = N;
+  public weakness = [{ type: Y }];
 }
 
 export class AmpharosGx2 extends AmpharosGx {

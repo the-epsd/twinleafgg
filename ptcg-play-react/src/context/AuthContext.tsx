@@ -38,6 +38,22 @@ interface AuthContextValue extends AuthState {
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
+function isRefreshTokenUsable(token: string): boolean {
+  const parts = token.split(',');
+  if (parts.length !== 3) {
+    return false;
+  }
+
+  const userId = Number(parts[0]);
+  const expire = Number(parts[1]);
+  if (!Number.isInteger(userId) || userId <= 0 || !Number.isInteger(expire)) {
+    return false;
+  }
+
+  const nowSec = Math.floor(Date.now() / 1000);
+  return expire > nowSec;
+}
+
 async function loadUserAndCards(): Promise<{ user: UserInfo; cardsInfo: CardsInfo }> {
   const [profile, cardsRes] = await Promise.all([getProfileMe(), getCardsAll()]);
   return { user: profile.user, cardsInfo: cardsRes.cardsInfo };
@@ -91,6 +107,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setState((s) => ({ ...s, ready: true }));
       return;
     }
+    if (!isRefreshTokenUsable(t)) {
+      clearGameEngineCards();
+      clearAuthTokens();
+      setState((s) => ({
+        ...s,
+        user: null,
+        token: null,
+        cardsInfo: null,
+        serverConfig: null,
+        ready: true,
+      }));
+      return;
+    }
     try {
       const refreshed = await refreshTokenRequest();
       applyToken(refreshed.token);
@@ -132,6 +161,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     refreshTimer.current = setInterval(() => {
       void (async () => {
         try {
+          const token = getStoredToken();
+          if (!token || !isRefreshTokenUsable(token)) {
+            logout();
+            return;
+          }
           const res = await refreshTokenRequest();
           applyToken(res.token);
           getSocketManager().updateAuthToken(res.token);

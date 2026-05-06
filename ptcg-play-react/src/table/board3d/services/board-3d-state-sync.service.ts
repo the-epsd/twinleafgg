@@ -20,6 +20,7 @@ import { Board3dCardOverlayService } from './board-3d-card-overlay.service';
 import { Board3dStackService } from './board-3d-stack.service';
 import { Board3dPrizeService } from './board-3d-prize.service';
 import { ZONE_POSITIONS, getBenchPositions } from '../board-3d-zone-positions';
+import { apply3dCardHolo } from '../board-3d-holo-apply';
 
 export class Board3dStateSyncService {
   private cardsMap: Map<string, Board3dCard> = new Map();
@@ -437,21 +438,29 @@ export class Board3dStateSyncService {
     // Use card-back as front placeholder for face-up cards (will swap when loaded)
     const placeholderFrontTexture = await this.assetLoader.loadCardBack();
     let frontTexture = placeholderFrontTexture;
+    /** True only when the scan is not in memory yet — avoid placeholder + holo clear every sync */
+    let awaitingAsyncScan = false;
 
     if (isFaceDown) {
       frontTexture = backTexture;
     } else {
       const needsFrontLoad = scanUrl && scanUrl.trim();
       if (needsFrontLoad) {
-        // Load front texture in background - will swap when ready
-        this.assetLoader.loadCardTexture(scanUrl).then(loadedFront => {
-          const currentCard = this.cardsMap.get(cardId);
-          if (currentCard && currentCard.getGroup().userData.cardData?.id === mainCard.id) {
-            currentCard.updateTexture(loadedFront, backTexture, maskTexture);
-          }
-        }).catch(() => {
-          // Fallback already shown (card-back)
-        });
+        const cachedFront = this.assetLoader.getCardTextureIfCached(scanUrl);
+        if (cachedFront) {
+          frontTexture = cachedFront;
+        } else {
+          awaitingAsyncScan = true;
+          this.assetLoader.loadCardTexture(scanUrl).then(loadedFront => {
+            const currentCard = this.cardsMap.get(cardId);
+            if (currentCard && currentCard.getGroup().userData.cardData?.id === mainCard.id) {
+              currentCard.updateTexture(loadedFront, backTexture, maskTexture);
+              void apply3dCardHolo(this.assetLoader, currentCard, mainCard, false);
+            }
+          }).catch(() => {
+            // Fallback already shown (card-back)
+          });
+        }
       } else {
         console.warn('Empty scanUrl for card:', mainCard?.fullName, 'set:', mainCard?.set, 'setNumber:', mainCard?.setNumber);
       }
@@ -505,6 +514,16 @@ export class Board3dStateSyncService {
     } else {
       // Clear any existing overlays for non-Pokemon cards
       this.overlayService.clearOverlays(cardId, scene);
+    }
+
+    if (isFaceDown) {
+      void apply3dCardHolo(this.assetLoader, cardMesh, mainCard, true);
+    } else if (awaitingAsyncScan) {
+      cardMesh.setHolo(null);
+    } else if (scanUrl && scanUrl.trim()) {
+      void apply3dCardHolo(this.assetLoader, cardMesh, mainCard, false);
+    } else {
+      void apply3dCardHolo(this.assetLoader, cardMesh, mainCard, true);
     }
   }
 

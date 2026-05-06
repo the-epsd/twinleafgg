@@ -145,6 +145,7 @@ export function GameOverOverlay({ localGame, clientId, getScanUrl, onConfirm }: 
                       {hasValidCardImage(featuredYour) ? (
                         <div className={styles.topPokemon}>
                           <CardFace
+                            card={featuredYour.card}
                             src={getScanUrl(featuredYour.card)}
                             name={featuredYour.card.name}
                             style={{ width: '100%', height: '100%' }}
@@ -182,6 +183,7 @@ export function GameOverOverlay({ localGame, clientId, getScanUrl, onConfirm }: 
                       {hasValidCardImage(featuredOpp) ? (
                         <div className={styles.topPokemon}>
                           <CardFace
+                            card={featuredOpp.card}
                             src={getScanUrl(featuredOpp.card)}
                             name={featuredOpp.card.name}
                             style={{ width: '100%', height: '100%' }}

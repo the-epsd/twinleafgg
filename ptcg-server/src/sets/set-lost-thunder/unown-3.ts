@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, TrainerType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
+import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, GameWinner } from '../../game';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { endGame } from '../../game/store/effect-reducers/check-effect';
@@ -66,8 +66,10 @@ export class Unown3 extends PokemonCard {
 
       ABILITY_USED(player, this);
 
-      // Win the game!
-      state = endGame(store, state, player.id);
+      const winner = state.players.indexOf(player) === 0
+        ? GameWinner.PLAYER_1
+        : GameWinner.PLAYER_2;
+      state = endGame(store, state, winner);
     }
 
     return state;

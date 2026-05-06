@@ -93,6 +93,7 @@ export function CardSwapDialog({
               <div className={styles.cardWrapper}>
                 <div className={styles.swapCardLarge}>
                   <CardFace
+                    card={currentCard}
                     src={getScanUrl(currentCard)}
                     name={currentCard.name}
                     loading="lazy"
@@ -124,7 +125,7 @@ export function CardSwapDialog({
                     <div key={card.fullName} className={styles.cardItem} onClick={() => onSelect(card)}>
                       <div className={styles.cardWrapper}>
                         <div className={styles.swapCardSmall}>
-                          <CardFace src={getScanUrl(card)} name={card.name} loading="lazy" style={{ width: '100%' }} />
+                          <CardFace card={card} src={getScanUrl(card)} name={card.name} loading="lazy" style={{ width: '100%' }} />
                         </div>
                         <button
                           type="button"

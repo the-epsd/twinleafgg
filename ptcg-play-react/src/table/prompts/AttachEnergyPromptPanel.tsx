@@ -83,7 +83,7 @@ function EnergyDraggable(props: {
       {...listeners}
       {...attributes}
     >
-      <CardFace src={getScanUrl(card)} name={card.name} />
+      <CardFace card={card} src={getScanUrl(card)} name={card.name} />
     </div>
   );
 }
@@ -268,7 +268,7 @@ export function AttachEnergyPromptPanel(props: AttachEnergyPromptPanelProps) {
                             {empty ? (
                               <div className={styles.emptySlot} />
                             ) : (
-                              <CardFace src={src} name={card?.name ?? ''} />
+                              <CardFace card={card ?? null} src={src} name={card?.name ?? ''} />
                             )}
                           </div>
                         </PokemonDroppable>
@@ -324,7 +324,7 @@ export function AttachEnergyPromptPanel(props: AttachEnergyPromptPanelProps) {
       <DragOverlay zIndex={2000} dropAnimation={null} className={styles.dragOverlay}>
         {overlayCard ? (
           <div className={cn(styles.cardPrompt, styles.energyDraggable, styles.dragOverlayCard)}>
-            <CardFace src={getScanUrl(overlayCard)} name={overlayCard.name} />
+            <CardFace card={overlayCard} src={getScanUrl(overlayCard)} name={overlayCard.name} />
           </div>
         ) : null}
       </DragOverlay>

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { ADD_MARKER, HAS_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { THIS_ATTACK_DOES_X_DAMAGE_TO_1_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/attack-effects';
@@ -12,7 +12,7 @@ export class Garchomp extends PokemonCard {
   public evolvesFrom = 'Gabite';
   public cardType: CardType = N;
   public hp: number = 150;
-  public weakness = [{ type: Y }];
+  public weakness: Weakness[] = [{ type: Y }];
   public retreat = [];
 
   public attacks = [

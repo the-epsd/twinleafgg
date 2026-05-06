@@ -7,7 +7,7 @@ import { CardType, Stage } from '../../game/store/card/card-types';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { State, StoreLike } from '../../game';
+import { Attack, State, StoreLike } from '../../game';
 export class Toxicroak extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Croagunk';
@@ -16,21 +16,19 @@ export class Toxicroak extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Poison Jab',
-      cost: [P],
-      damage: 30,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
-    },
-    {
-      name: 'Exact Revenge',
-      cost: [C, C],
-      damage: 50,
-      damageCalculation: '+' as '+',
-      text: 'If any of your Fighting Pokémon were Knocked Out by damage from an opponent\'s attack during their last turn, this attack does 70 more damage.'
-    }
-  ];
+  public attacks: Attack[] = [{
+    name: 'Poison Jab',
+    cost: [P],
+    damage: 30,
+    text: 'Your opponent\'s Active Pokémon is now Poisoned.'
+  },
+  {
+    name: 'Exact Revenge',
+    cost: [C, C],
+    damage: 50,
+    damageCalculation: '+' as '+',
+    text: 'If any of your Fighting Pokémon were Knocked Out by damage from an opponent\'s attack during their last turn, this attack does 70 more damage.'
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '57';

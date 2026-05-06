@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, Attack, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -15,23 +15,21 @@ export class Torterra extends PokemonCard {
   public evolvesFrom: string = 'Grotle';
   public cardType: CardType = G;
   public hp: number = 180;
-  public weakness = [{ type: R }];
+  public weakness: Weakness[] = [{ type: R }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Giga Drain',
-      cost: [G, G, C],
-      damage: 50,
-      text: 'Heal from this Pokémon the same amount of damage you did to your opponent\'s Active Pokémon.'
-    },
-    {
-      name: 'Earthquake',
-      cost: [G, G, G, C],
-      damage: 180,
-      text: 'This attack does 20 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
-  ];
+  public attacks: Attack[] = [{
+    name: 'Giga Drain',
+    cost: [G, G, C],
+    damage: 50,
+    text: 'Heal from this Pokémon the same amount of damage you did to your opponent\'s Active Pokémon.'
+  },
+  {
+    name: 'Earthquake',
+    cost: [G, G, G, C],
+    damage: 180,
+    text: 'This attack does 20 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '9';

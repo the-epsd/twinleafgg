@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, MoveEnergyPrompt } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage, PlayerType, SlotType, MoveEnergyPrompt, Attack, Weakness } from '../../game';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -15,30 +15,28 @@ export class PalkiaGx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
   public hp: number = 180;
-  public weakness = [{ type: Y }];
+  public weakness: Weakness[] = [{ type: Y }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Spatial Control',
-      cost: [W],
-      damage: 0,
-      text: 'Move any number of Energy from your Benched Pokémon to this Pokémon.'
-    },
-    {
-      name: 'Hydro Pressure',
-      cost: [C, C, C],
-      damage: 60,
-      damageCalculation: '+' as '+',
-      text: 'This attack does 20 more damage times the amount of [W] Energy attached to this Pokémon.'
-    },
-    {
-      name: 'Zero Vanish-GX',
-      cost: [W, W, W, C, C],
-      damage: 150,
-      text: 'Shuffle all Energy from each of your opponent\'s Pokémon into their deck. (You can\'t use more than 1 GX attack in a game.)'
-    }
-  ];
+  public attacks: Attack[] = [{
+    name: 'Spatial Control',
+    cost: [W],
+    damage: 0,
+    text: 'Move any number of Energy from your Benched Pokémon to this Pokémon.'
+  },
+  {
+    name: 'Hydro Pressure',
+    cost: [C, C, C],
+    damage: 60,
+    damageCalculation: '+' as '+',
+    text: 'This attack does 20 more damage times the amount of [W] Energy attached to this Pokémon.'
+  },
+  {
+    name: 'Zero Vanish-GX',
+    cost: [W, W, W, C, C],
+    damage: 150,
+    text: 'Shuffle all Energy from each of your opponent\'s Pokémon into their deck. (You can\'t use more than 1 GX attack in a game.)'
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '101';

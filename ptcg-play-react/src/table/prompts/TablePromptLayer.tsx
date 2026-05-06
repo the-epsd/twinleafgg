@@ -634,6 +634,7 @@ function ChoosePrizePanel(props: {
                         <div className={styles.prizeEmptySlot} />
                       ) : (
                         <CardFace
+                          card={useBack ? null : card ?? null}
                           src={src}
                           name={card?.name ?? ''}
                           style={{ width: 90, height: 125 }}
@@ -836,7 +837,12 @@ function ChooseCardsPanel(props: {
                   name: card.name,
                 })}
               >
-                <CardFace src={src} name={card.name} style={{ width: 100, height: 140 }} />
+                <CardFace
+                  card={useCardBack ? null : card}
+                  src={src}
+                  name={card.name}
+                  style={{ width: 100, height: 140 }}
+                />
               </button>
             );
           })}
@@ -990,7 +996,7 @@ function ShowCardsPanel(props: {
               style={{ padding: 0, border: 'none', background: 'none', cursor: 'pointer' }}
               onClick={() => setDetail(card)}
             >
-              <CardFace src={getScanUrl(card)} name={card.name} style={{ width: 100, height: 140 }} />
+              <CardFace card={card} src={getScanUrl(card)} name={card.name} style={{ width: 100, height: 140 }} />
             </button>
           ))}
         </div>
@@ -1049,7 +1055,7 @@ function ShowMulliganPanel(props: {
                   style={{ padding: 0, border: 'none', background: 'none', cursor: 'pointer' }}
                   onClick={() => setDetail(card)}
                 >
-                  <CardFace src={getScanUrl(card)} name={card.name} style={{ width: 88, height: 123 }} />
+                  <CardFace card={card} src={getScanUrl(card)} name={card.name} style={{ width: 88, height: 123 }} />
                 </button>
               ))}
             </div>

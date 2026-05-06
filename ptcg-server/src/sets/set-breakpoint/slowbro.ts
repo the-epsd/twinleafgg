@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, GameWinner } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { endGame } from '../../game/store/effect-reducers/check-effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -53,7 +53,10 @@ export class Slowbro extends PokemonCard {
       const player = effect.player;
       const prizesLeft = player.prizes.filter(p => p.cards.length > 0).length;
       if (prizesLeft === 1) {
-        state = endGame(store, state, player.id);
+        const winner = state.players.indexOf(player) === 0
+          ? GameWinner.PLAYER_1
+          : GameWinner.PLAYER_2;
+        state = endGame(store, state, winner);
         return state;
       }
     }

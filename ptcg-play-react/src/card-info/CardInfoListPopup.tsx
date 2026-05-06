@@ -101,6 +101,7 @@ export function CardInfoListPopup({
               onClick={() => setDetailCard(c)}
             >
               <CardFace
+                card={faceDownState ? null : c}
                 src={faceDownState ? '' : getScanUrl(c)}
                 name={c.name}
                 className={styles.cardThumb}

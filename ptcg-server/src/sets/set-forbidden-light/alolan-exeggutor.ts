@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard } from '../../game';
+import { StoreLike, State, EnergyCard, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -15,19 +15,17 @@ export class AlolanExeggutor extends PokemonCard {
 
   public hp: number = 160;
 
-  public weakness = [{ type: R }];
+  public weakness: Weakness[] = [{ type: R }];
 
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Tropical Shake',
-      cost: [G],
-      damage: 20,
-      text: 'This attack does 20 more damage for each type of Basic Energy card in your discard pile. ' +
-        'You can\'t add more than 100 damage in this way.'
-    },
-  ];
+  public attacks = [{
+    name: 'Tropical Shake',
+    cost: [G],
+    damage: 20,
+    text: 'This attack does 20 more damage for each type of Basic Energy card in your discard pile. ' +
+      'You can\'t add more than 100 damage in this way.'
+  }];
 
   public set: string = 'FLI';
 

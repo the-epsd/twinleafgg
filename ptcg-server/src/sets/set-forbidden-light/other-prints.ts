@@ -32,6 +32,7 @@ import { Bonnie } from './bonnie';
 import { CrasherWake } from './crasher-wake';
 import { UltraReconSquad } from './ultra-recon-squad';
 import { Eneporter } from './eneporter';
+import { CardType } from '../../game';
 
 export class LadyFLI extends Lady {
   public fullName = 'Lady FLI';
@@ -201,66 +202,164 @@ export class SnoverFLI extends Snover {
   public set: string = 'FLI';
   public setNumber: string = '3';
   public fullName: string = 'Snover FLI';
+  public cardType: CardType = G;
+  public weakness = [{ type: R }];
+  public attacks = [{
+    name: 'Ice Shard',
+    cost: [G, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'If your opponent\'s Active Pokémon is a Fighting Pokémon, this attack does 40 more damage.'
+  }];
 }
 
 export class HeatranFLI extends Heatran {
   public set: string = 'FLI';
   public setNumber: string = '13';
   public fullName: string = 'Heatran FLI';
+  public cardType: CardType = R;
+  public weakness = [{ type: W }];
+  public attacks = [{
+    name: 'Guard Press',
+    cost: [R, C],
+    damage: 30,
+    text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
+  },
+  {
+    name: 'Boiling Impact',
+    cost: [R, R, C],
+    damage: 130,
+    text: 'Discard 2 Energy from this Pokémon.'
+  }];
 }
 
 export class PalkiaGxFLI extends PalkiaGx {
   public set: string = 'FLI';
   public setNumber: string = '20';
   public fullName: string = 'Palkia-GX FLI';
+  public cardType: CardType = W;
+  public weakness = [{ type: G }];
 }
 
 export class MagnetonFLI extends Magneton {
   public set: string = 'FLI';
   public setNumber: string = '35';
   public fullName: string = 'Magneton FLI';
+  public cardType: CardType = L;
+  public weakness = [{ type: F }];
+  public resistance = [{ type: M, value: -20 }];
+  public attacks = [{
+    name: 'Ram',
+    cost: [L],
+    damage: 20,
+    text: ''
+  },
+  {
+    name: 'Zap Cannon',
+    cost: [L, L, C],
+    damage: 80,
+    text: 'This Pokémon can\'t use Zap Cannon during your next turn.'
+  }];
 }
 
 export class TorterraFLI extends Torterra {
   public set: string = 'FLI';
   public setNumber: string = '58';
   public fullName: string = 'Torterra FLI';
+  public cardType: CardType = F;
+  public weakness = [{ type: G }];
+  public attacks = [{
+    name: 'Giga Drain',
+    cost: [F, F, C],
+    damage: 50,
+    text: 'Heal from this Pokémon the same amount of damage you did to your opponent\'s Active Pokémon.'
+  },
+  {
+    name: 'Earthquake',
+    cost: [F, F, F, C],
+    damage: 180,
+    text: 'This attack does 20 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  }];
 }
 
 export class GibleFLI extends Gible {
   public set: string = 'FLI';
   public setNumber: string = '60';
   public fullName: string = 'Gible FLI';
+  public cardType: CardType = F;
+  public weakness = [{ type: G }];
 }
 
 export class GarchompFLI extends Garchomp {
   public set: string = 'FLI';
   public setNumber: string = '62';
   public fullName: string = 'Garchomp FLI';
+  public cardType: CardType = F;
+  public weakness = [{ type: G }];
 }
 
 export class CroagunkFLI extends Croagunk {
   public set: string = 'FLI';
   public setNumber: string = '63';
   public fullName: string = 'Croagunk FLI';
+  public cardType: CardType = F;
+  public weakness = [{ type: P }];
+  public attacks = [{
+    name: 'Swagger',
+    cost: [F],
+    damage: 10,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 }
 
 export class ToxicroakFLI extends Toxicroak {
   public set: string = 'FLI';
   public setNumber: string = '64';
   public fullName: string = 'Toxicroak FLI';
+  public cardType: CardType = F;
+  public weakness = [{ type: P }];
+  public attacks = [{
+    name: 'Poison Jab',
+    cost: [F],
+    damage: 30,
+    text: 'Your opponent\'s Active Pokémon is now Poisoned.'
+  },
+  {
+    name: 'Exact Revenge',
+    cost: [C, C],
+    damage: 50,
+    damageCalculation: '+' as '+',
+    text: 'If any of your Fighting Pokémon were Knocked Out by damage from an opponent\'s attack during their last turn, this attack does 70 more damage.'
+  }];
 }
 
 export class EmpoleonFLI extends Empoleon {
   public set: string = 'FLI';
   public setNumber: string = '81';
   public fullName: string = 'Empoleon FLI';
+  public cardType: CardType = M;
+  public weakness = [{ type: R }];
+  public attacks = [{
+    name: 'Total Command',
+    cost: [M, C],
+    damage: 20,
+    damageCalculation: 'x' as 'x',
+    text: 'This attack does 20 damage for each Benched Pokémon (both yours and your opponent\'s).'
+  },
+  {
+    name: 'Whirlpool',
+    cost: [M, M, C],
+    damage: 90,
+    text: 'Discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 }
 
 export class PalkiaGx2 extends PalkiaGx {
   public set: string = 'FLI';
   public setNumber: string = '119';
   public fullName: string = 'Palkia-GX FLI 119';
+  public cardType: CardType = W;
+  public weakness = [{ type: G }];
 }
 
 export class ZygardeGx2 extends ZygardeGx {

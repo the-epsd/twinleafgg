@@ -39,7 +39,13 @@ export function CardInfoImageColumn({
   return (
     <div className={styles.imageCol}>
       <div className={styles.cardScan}>
-        <CardFace src={scanSrc} name={card.name} loading="eager" style={{ width: '100%' }} />
+        <CardFace
+          card={facedown ? null : card}
+          src={scanSrc}
+          name={card.name}
+          loading="eager"
+          style={{ width: '100%' }}
+        />
       </div>
       {!isInGame && !facedown && (
         <div className={styles.swapButtonContainer}>

@@ -113,7 +113,7 @@ export class Raichu extends PokemonCard {
 
       state = store.prompt(state, new ConfirmPrompt(
         effect.player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
+        "Do you want to use Metallic Thunder's effect?" as GameMessage,
       ), wantToUse => {
         if (wantToUse) {
 

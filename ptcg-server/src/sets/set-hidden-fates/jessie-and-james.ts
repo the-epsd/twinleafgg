@@ -99,7 +99,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
       if (useAbility) {
         const discardCount = Math.min(1, opponent.hand.cards.length);
         yield store.prompt(state, new ChooseCardsPrompt(
-          player,
+          opponent,
           GameMessage.CHOOSE_CARD_TO_DISCARD,
           opponent.hand,
           {},

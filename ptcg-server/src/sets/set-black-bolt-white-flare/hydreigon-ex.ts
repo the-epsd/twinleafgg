@@ -62,14 +62,14 @@ export class Hydreigonex extends PokemonCard {
     }
 
     if (effect instanceof KnockOutEffect && effect.target.isStage(Stage.BASIC)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const knockedOutOwner = effect.player;
+      const attacker = StateUtils.getOpponent(state, knockedOutOwner);
       // Only during attack phase, and only if Hydreigon ex is attacking
-      if (state.phase !== GamePhase.ATTACK || opponent.active.getPokemonCard() !== this) {
+      if (state.phase !== GamePhase.ATTACK || attacker.active.getPokemonCard() !== this) {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (IS_ABILITY_BLOCKED(store, state, attacker, this)) {
         return state;
       }
 

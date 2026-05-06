@@ -3,11 +3,14 @@ import {
   MeshStandardMaterial,
   MeshBasicMaterial,
   Mesh,
+  PlaneGeometry,
   Texture,
   Group,
   DoubleSide,
-  Vector3
+  Vector3,
+  type ShaderMaterial,
 } from 'three';
+import { createBoard3dHoloMaterial, releaseBoard3dHoloMaterial } from './board-3d-holo-material';
 
 // Outline border thickness (in card units)
 const OUTLINE_THICKNESS = 0.15;
@@ -26,6 +29,8 @@ export class Board3dCard {
   private static outlineMaterialCache: Map<string, MeshBasicMaterial> = new Map();
   private frontMaterialKey?: string;
   private backMaterialKey?: string;
+  private holoMesh: Mesh | null = null;
+  private holoMaterial: ShaderMaterial | null = null;
 
   constructor(
     frontTexture: Texture,
@@ -122,6 +127,32 @@ export class Board3dCard {
 
   public getMesh(): Mesh {
     return this.cardMesh;
+  }
+
+  /**
+   * Iridescent holo layer (2D art mask + animated shader), aligned with 2D CardFace.
+   * Pass `null` to remove.
+   */
+  public setHolo(mask2d: Texture | null): void {
+    if (this.holoMaterial) {
+      releaseBoard3dHoloMaterial(this.holoMaterial);
+      this.holoMaterial = null;
+    }
+    if (this.holoMesh) {
+      this.cardMesh.remove(this.holoMesh);
+      this.holoMesh.geometry.dispose();
+      this.holoMesh = null;
+    }
+    if (!mask2d) {
+      return;
+    }
+    const mat = createBoard3dHoloMaterial(mask2d);
+    this.holoMaterial = mat;
+    const geom = new PlaneGeometry(2.5, 3.5);
+    this.holoMesh = new Mesh(geom, mat);
+    this.holoMesh.renderOrder = 8;
+    this.holoMesh.position.set(0, 0, 0.02);
+    this.cardMesh.add(this.holoMesh);
   }
 
   public setPosition(position: Vector3): void {
@@ -281,6 +312,7 @@ export class Board3dCard {
   }
 
   public dispose(): void {
+    this.setHolo(null);
     // Don't dispose shared materials or outline materials - they're cached and reused
     // Just remove the outline mesh from the group
     if (this.outlineMesh) {
