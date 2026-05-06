@@ -12,6 +12,7 @@ import { Zinnia } from './zinnia';
 import { SalamenceGx } from './salamence-gx';
 import { WhiteKyuremGx } from './white-kyurem-gx';
 import { DragonTalon } from './dragon-talon';
+import { CardType } from '../../game';
 export class FieryFlint3DRM extends FieryFlintDRM60 {
   public setNumber = '76';
   public fullName: string = 'Fiery Flint3 DRM';
@@ -46,6 +47,13 @@ export class DratiniDRM extends Dratini {
   public set: string = 'DRM';
   public setNumber: string = '34';
   public fullName: string = 'Dratini DRM';
+  public cardType: CardType = N;
+  public attacks = [{
+    name: 'Wrap',
+    cost: [L],
+    damage: 10,
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+  }];
 }
 
 export class ReshiramGx2 extends ReshiramGx {

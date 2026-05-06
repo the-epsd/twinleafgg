@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType } from '../../game';
+import { StoreLike, State, PlayerType, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON } from '../../game/store/prefabs/prefabs';
 
@@ -13,7 +13,7 @@ export class AlolanMarowak extends PokemonCard {
   public evolvesFrom: string = 'Cubone';
   public cardType: CardType = R;
   public hp: number = 120;
-  public weakness = [{ type: W }];
+  public weakness: Weakness[] = [{ type: W }];
   public retreat = [C, C];
 
   public attacks = [

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, Attack, Weakness, Resistance } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -9,24 +9,22 @@ export class Magneton extends PokemonCard {
   public evolvesFrom: string = 'Magnemite';
   public cardType: CardType = M;
   public hp: number = 90;
-  public weakness = [{ type: R }];
-  public resistance = [{ type: P, value: -20 }];
+  public weakness: Weakness[] = [{ type: R }];
+  public resistance: Resistance[] = [{ type: P, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Ram',
-      cost: [M],
-      damage: 20,
-      text: ''
-    },
-    {
-      name: 'Zap Cannon',
-      cost: [M, M, C],
-      damage: 80,
-      text: 'This Pokémon can\'t use Zap Cannon during your next turn.'
-    }
-  ];
+  public attacks: Attack[] = [{
+    name: 'Ram',
+    cost: [M],
+    damage: 20,
+    text: ''
+  },
+  {
+    name: 'Zap Cannon',
+    cost: [M, M, C],
+    damage: 80,
+    text: 'This Pokémon can\'t use Zap Cannon during your next turn.'
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '82';

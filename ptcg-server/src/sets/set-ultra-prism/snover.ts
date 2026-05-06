@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State, StateUtils, Attack, Weakness } from '../../game';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -9,18 +9,16 @@ export class Snover extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = W;
   public hp: number = 80;
-  public weakness = [{ type: M }];
+  public weakness: Weakness[] = [{ type: M }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Ice Shard',
-      cost: [W, C],
-      damage: 20,
-      damageCalculation: '+' as '+',
-      text: 'If your opponent\'s Active Pokémon is a Fighting Pokémon, this attack does 40 more damage.'
-    }
-  ];
+  public attacks: Attack[] = [{
+    name: 'Ice Shard',
+    cost: [W, C],
+    damage: 20,
+    damageCalculation: '+' as '+',
+    text: 'If your opponent\'s Active Pokémon is a Fighting Pokémon, this attack does 40 more damage.'
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '37';

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -45,7 +45,7 @@ export class Gible extends PokemonCard {
 
   public hp: number = 50;
 
-  public weakness = [{ type: CardType.FAIRY }];
+  public weakness: Weakness[] = [{ type: CardType.FAIRY }];
 
   public retreat = [CardType.COLORLESS];
 

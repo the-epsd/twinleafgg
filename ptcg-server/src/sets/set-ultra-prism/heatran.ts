@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
+import { PlayerType, StoreLike, State, StateUtils, Attack, Weakness } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -18,24 +18,22 @@ export class Heatran extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
   public hp: number = 130;
-  public weakness = [{ type: R }];
+  public weakness: Weakness[] = [{ type: R }];
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Guard Press',
-      cost: [M, C],
-      damage: 30,
-      text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
-    },
-    {
-      name: 'Boiling Impact',
-      cost: [M, M, C],
-      damage: 130,
-      text: 'Discard 2 Energy from this Pokémon.'
-    }
-  ];
+  public attacks: Attack[] = [{
+    name: 'Guard Press',
+    cost: [M, C],
+    damage: 30,
+    text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
+  },
+  {
+    name: 'Boiling Impact',
+    cost: [M, M, C],
+    damage: 130,
+    text: 'Discard 2 Energy from this Pokémon.'
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '88';

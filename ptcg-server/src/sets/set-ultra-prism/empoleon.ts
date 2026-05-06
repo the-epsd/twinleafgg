@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State, StateUtils, Attack, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
@@ -14,24 +14,22 @@ export class Empoleon extends PokemonCard {
   public evolvesFrom: string = 'Prinplup';
   public cardType: CardType = W;
   public hp: number = 160;
-  public weakness = [{ type: L }];
+  public weakness: Weakness[] = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Total Command',
-      cost: [W, C],
-      damage: 20,
-      damageCalculation: 'x' as 'x',
-      text: 'This attack does 20 damage for each Benched Pokémon (both yours and your opponent\'s).'
-    },
-    {
-      name: 'Whirlpool',
-      cost: [W, W, C],
-      damage: 90,
-      text: 'Discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks: Attack[] = [{
+    name: 'Total Command',
+    cost: [W, C],
+    damage: 20,
+    damageCalculation: 'x' as 'x',
+    text: 'This attack does 20 damage for each Benched Pokémon (both yours and your opponent\'s).'
+  },
+  {
+    name: 'Whirlpool',
+    cost: [W, W, C],
+    damage: 90,
+    text: 'Discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '34';

@@ -4,7 +4,7 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State } from '../../game';
+import { StoreLike, State, Attack } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
@@ -16,14 +16,12 @@ export class Croagunk extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Swagger',
-      cost: [P],
-      damage: 10,
-      text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
-    }
-  ];
+  public attacks: Attack[] = [{
+    name: 'Swagger',
+    cost: [P],
+    damage: 10,
+    text: 'Flip a coin. If heads, discard an Energy from your opponent\'s Active Pokémon.'
+  }];
 
   public set: string = 'UPR';
   public setNumber: string = '56';

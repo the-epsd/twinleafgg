@@ -1,33 +1,28 @@
 import { ADD_SLEEP_TO_PLAYER_ACTIVE, AFTER_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 
-import { CardType, Stage } from '../../game/store/card/card-types';
-import { StateUtils } from '../../game/store/state-utils';
-import { GameMessage } from '../../game/game-message';
+import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { PlayerType, SlotType, State, StoreLike } from '../../game';
+import { State, StoreLike } from '../../game';
 export class Munna extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
-  public hp: number = 60;
+  public hp: number = 70;
   public weakness = [{ type: P }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Sleep Inducer',
-      cost: [C],
-      damage: 0,
-      text: 'Switch the Defending Pokémon with 1 of your opponent\'s Benched Pokémon. The new Defending Pokémon is now Asleep.'
-    },
-    {
-      name: 'Hypnotic Ray',
-      cost: [P, C, C],
-      damage: 30,
-      text: 'The Defending Pokémon is now Asleep.'
-    }
-  ];
+  public attacks = [{
+    name: 'Hypnosis',
+    cost: [C],
+    damage: 0,
+    text: 'The Defending Pokémon is now Asleep.'
+  },
+  {
+    name: 'Dream Eater',
+    cost: [P, P],
+    damage: 60,
+    text: 'If the Defending Pokémon is not Asleep, this attack does nothing.'
+  }];
 
   public set: string = 'BLW';
   public cardImage: string = 'assets/cardback.png';
@@ -36,31 +31,16 @@ export class Munna extends PokemonCard {
   public fullName: string = 'Munna BLW';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
-      if (!hasBench) {
-        return state;
-      }
-
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), targets => {
-        if (targets && targets.length > 0) {
-          opponent.switchPokemon(targets[0]);
-          ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, opponent, this);
-        }
-      });
+    // Ref: set-base-set/haunter.ts (Hypnosis)
+    if (AFTER_ATTACK(effect, 0, this)) {
+      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
     }
 
-    if (AFTER_ATTACK(effect, 1, this)) {
-      ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, effect.opponent, this);
+    // Ref: set-black-and-white/musharna.ts (Dream Eater)
+    if (WAS_ATTACK_USED(effect, 1, this)) {
+      if (!effect.opponent.active.specialConditions.includes(SpecialCondition.ASLEEP)) {
+        effect.damage = 0;
+      }
     }
 
     return state;
