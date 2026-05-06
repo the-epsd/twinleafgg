@@ -59,22 +59,15 @@ function* playCard(next: Function, store: StoreLike, state: State, self: PalPad,
 export class PalPad extends TrainerCard {
 
   public regulationMark = 'G';
-
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'SVI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '182';
-
   public name: string = 'Pal Pad';
-
   public fullName: string = 'Pal Pad SVI';
 
   public text: string =
-    'Shuffle up to 2 Supporter cards from your discard pile into' +
-    'your deck.';
+    'Shuffle up to 2 Supporter cards from your discard pile into your deck.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     const hasSupporter = player.discard.cards.some(c => {

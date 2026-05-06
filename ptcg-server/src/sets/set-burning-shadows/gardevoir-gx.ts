@@ -12,20 +12,13 @@ import { BLOCK_IF_DISCARD_EMPTY, BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, WAS_ATTACK
 export class GardevoirGX extends PokemonCard {
 
   public tags = [CardTag.POKEMON_GX];
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Kirlia';
-
-  public cardType: CardType = CardType.FAIRY;
-
+  public cardType: CardType = Y;
   public hp: number = 230;
-
-  public weakness = [{ type: CardType.METAL }];
-
-  public resistance = [{ type: CardType.DARK, value: -20 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: M }];
+  public resistance = [{ type: D, value: -20 }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Secret Spring',
@@ -37,14 +30,15 @@ export class GardevoirGX extends PokemonCard {
   public attacks = [
     {
       name: 'Infinite Force',
-      cost: [CardType.FAIRY],
+      cost: [Y],
       damage: 30,
+      damageCalculation: '+',
       text: 'This attack does 30 damage times the amount of Energy attached to both Active Pokémon.'
     },
 
     {
       name: 'Twilight-GX',
-      cost: [CardType.FAIRY],
+      cost: [Y],
       damage: 0,
       gxAttack: true,
       text: 'Shuffle 10 cards from your discard pile into your deck. (You can\'t use more than 1 GX attack in a game.)'
@@ -52,13 +46,9 @@ export class GardevoirGX extends PokemonCard {
   ];
 
   public set: string = 'BUS';
-
   public name: string = 'Gardevoir-GX';
-
   public fullName: string = 'Gardevoir-GX BUS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '93';
 
   public readonly SPRING_MARKER = 'SPRING_MARKER';
