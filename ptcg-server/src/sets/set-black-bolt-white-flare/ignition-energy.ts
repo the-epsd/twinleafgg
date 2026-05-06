@@ -18,9 +18,10 @@ export class IgnitionEnergy extends EnergyCard {
   public setNumber: string = '86';
   public name = 'Ignition Energy';
   public fullName = 'Ignition Energy SV11W';
-  public text = `If this card is attached to 1 of your Pokémon, discard it at the end of the turn.
 
-This card provides 1 [C] Energy while it is attached to a Pokémon.
+  public text = `If this card is attached to 1 of your Pokémon, discard it at the end of your turn.
+
+As long as this card is attached to a Pokémon, it provides [C] Energy.
 
 If this card is attached to an Evolution Pokémon, it provides [C][C][C] Energy instead.`;
 

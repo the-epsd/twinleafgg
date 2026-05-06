@@ -63,23 +63,16 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Miracul
 export class MiraculousIntercom extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public tags = [CardTag.ACE_SPEC];
-
   public regulationMark = 'H';
-
   public set: string = 'SSP';
-
   public name: string = 'Miracle Headset';
-
   public fullName: string = 'Miraculous Intercom SSP';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '183';
 
   public text: string =
-    'Choose up to 2 Supporter cards from your discard pile, reveal them, and put them into your hand.';
+    'Put up to 2 Supporter cards from your discard pile into your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

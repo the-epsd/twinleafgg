@@ -12,23 +12,16 @@ import { StoreLike } from '../../game/store/store-like';
 
 export class TeamRocketsGiovanni extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public tags = [CardTag.TEAM_ROCKET];
-
   public regulationMark = 'I';
-
   public set: string = 'DRI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '174';
-
   public name: string = 'Team Rocket\'s Giovanni';
-
   public fullName: string = 'Team Rocket\'s Giovanni DRI';
 
   public text: string =
-    'Switch your Active Team Rocket\'s Pokemon with 1 of your Benched Team Rocket\'s Pokemon. If you do, then switch 1 of your opponent\'s Benched Pokémon with their Active Pokémon.';
+    'Switch your Active Team Rocket\'s Pokemon with 1 of your Benched Team Rocket\'s Pokemon. If you do, switch in 1 of your opponent\'s Benched Pokémon to the Active Spot.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

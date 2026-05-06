@@ -11,23 +11,16 @@ import { PlayerType } from '../../game/store/actions/play-card-action';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 export class TeamRocketsAriana extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public tags = [CardTag.TEAM_ROCKET];
-
   public regulationMark = 'I';
-
   public set: string = 'DRI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '171';
-
   public name: string = 'Team Rocket\'s Ariana';
-
   public fullName: string = 'Team Rocket\'s Ariana DRI';
 
   public text: string =
-    'Draw cards until you have 5 cards in your hand. If all of your Pokémon in play are Team Rocket\'s Pokemon, draw until you have 8 cards in your hand instead.';
+    'Draw cards until you have 5 cards in your hand. If all of your Pokémon in play are Team Rocket\'s Pokemon, draw cards until you have 8 cards in your hand instead.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
