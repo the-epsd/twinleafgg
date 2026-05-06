@@ -1,9 +1,9 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
+import { CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, EnergyCard, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 
 export class Meganium extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -50,19 +50,29 @@ export class Meganium extends PokemonCard {
         return state;
       }
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+      if (hasMeganiumInPlay) {
+
+        try {
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return state;
+        }
+
+        effect.source.cards.forEach(c => {
+          if (c instanceof EnergyCard && !effect.energyMap.some(e => e.card === c)) {
+            const providedTypes = c.provides.filter(type => type === CardType.GRASS);
+            if (providedTypes.length > 0) {
+              effect.energyMap.push({ card: c, provides: [CardType.GRASS, CardType.GRASS] });
+            }
+          }
+        });
         return state;
       }
-
-      effect.source.cards.forEach(c => {
-        if (c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && !effect.energyMap.some(e => e.card === c)) {
-          const providedTypes = (c as EnergyCard).provides.filter(type => type === CardType.GRASS);
-          if (providedTypes.length > 0) {
-            effect.energyMap.push({ card: c as EnergyCard, provides: [CardType.GRASS, CardType.GRASS] });
-          }
-        }
-      });
-
       return state;
     }
     return state;
