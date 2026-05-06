@@ -1057,7 +1057,8 @@ const SetReleaseDates: { [key: string]: Date } = {
   'ASC': new Date('2026-01-28'),
   'MC': new Date('2026-03-27'),
   'M3': new Date('2026-03-27'),
-  'M4': new Date('2026-05-22')
+  'M4': new Date('2026-05-22'),
+  'M5': new Date('2026-05-23')
 };
 
 // ========== Format Validation Helpers ==========
@@ -1222,11 +1223,11 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
     return true;
   }
   if (anyPrintingAllowed && anyPrintingAllowed.includes(card.name)) {
-  switch (format) {
-    case Format.STANDARD_MAJORS:
-      return false; // Deprecated format, hidden from UI
-    case Format.UNLIMITED:
-      return true;
+    switch (format) {
+      case Format.STANDARD_MAJORS:
+        return false; // Deprecated format, hidden from UI
+      case Format.UNLIMITED:
+        return true;
       case Format.ETERNAL:
         return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
       case Format.STANDARD: {
