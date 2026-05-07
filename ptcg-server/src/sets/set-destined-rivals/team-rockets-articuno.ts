@@ -15,9 +15,9 @@ export class TeamRocketsArticuno extends PokemonCard {
   public retreat = [C];
 
   public powers = [{
-    name: 'Resistant Veil',
+    name: 'Repelling Veil',
     powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of your opponent\'s Pokémon\'s attacks done to your Basic Team Rocket\'s Pokémon. (Damage is not an effect.)'
+    text: 'Prevent all effects of attacks used by your opponent\'s Pokémon done to your Basic Team Rocket\'s Pokémon. (Existing effects are not removed. Damage is not an effect.)'
   }];
 
   public attacks = [
@@ -26,7 +26,7 @@ export class TeamRocketsArticuno extends PokemonCard {
       cost: [W, C, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'If this Pokémon has Team Rocket Energy attached, this attack does 60 more damage.'
+      text: 'If this Pokémon has any Team Rocket\'s Energy attached, this attack does 60 more damage.'
     }
   ];
 

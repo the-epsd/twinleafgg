@@ -17,11 +17,11 @@ export class TeamRocketsPorygon2 extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Control R',
+      name: 'R Command',
       cost: [C, C, C],
       damage: 20,
       damageCalculation: 'x',
-      text: 'This attack does 20 damage for each Supporter in your discard pile with "Team Rocket" in its name.'
+      text: 'This attack does 20 damage for each Supporter card that has "Team Rocket" in its name in your discard pile.'
     }
   ];
 

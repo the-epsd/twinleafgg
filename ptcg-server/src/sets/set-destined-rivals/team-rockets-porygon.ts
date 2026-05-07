@@ -21,7 +21,7 @@ export class TeamRocketsPorygon extends PokemonCard {
       name: 'Hacking',
       cost: [C],
       damage: 0,
-      text: 'Discard 1 card from your hand. Then your opponent discards 1 card from their hand.'
+      text: 'Discard a card from your hand. If you do, your opponent discards a card from their hand.'
     }
   ];
 

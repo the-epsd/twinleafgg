@@ -58,21 +58,15 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 export class RotoStick extends TrainerCard {
 
   public regulationMark = 'H';
-
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'PRE';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '127';
-
   public name: string = 'Roto-Stick';
-
   public fullName: string = 'Roto-Stick PRE';
 
   public text: string =
-    'Look at the top 4 cards of your deck. You may choose any number of Supporter cards you find there, reveal them, and put them into your hand. Shuffle the other cards back into your deck.';
+    'Look at the top 4 cards of your deck. You may reveal any number of Supporter cards you find there and put them into your hand. Shuffle the other cards back into your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

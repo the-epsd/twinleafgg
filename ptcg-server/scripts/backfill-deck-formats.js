@@ -1,10 +1,9 @@
 /**
- * Backfill deck.formats for decks where formats is NULL or empty.
+ * Recompute deck.formats for every deck using the current validator (batched).
  * Run via: npm run backfill:deck-formats (or: node start.js --backfill)
  *
  * Processing is done in batches of 50 to avoid memory spikes.
  */
-const { IsNull } = require('typeorm');
 const { Deck } = require('../output/storage');
 const { getValidFormatsForCardList } = require('../output/backend/controllers/decks');
 const { Storage } = require('../output/storage');
@@ -16,38 +15,28 @@ async function run() {
   await storage.connect();
 
   try {
-    const [decks, total] = await Deck.findAndCount({
-      where: [
-        { formats: IsNull() },
-        { formats: '' }
-      ],
-      order: { id: 'ASC' },
-      take: BATCH_SIZE,
-      skip: 0
-    });
+    const total = await Deck.count();
 
     if (total === 0) {
-      console.log('No decks with empty formats found. Backfill complete.');
+      console.log('No decks found. Backfill complete.');
       return;
     }
 
-    console.log(`Found ${total} deck(s) with empty formats. Processing in batches of ${BATCH_SIZE}...`);
+    console.log(`Recomputing formats for ${total} deck(s) in batches of ${BATCH_SIZE}...`);
 
     let processed = 0;
-    let offset = 0;
+    let skip = 0;
 
-    while (true) {
-      const [batch] = await Deck.findAndCount({
-        where: [
-          { formats: IsNull() },
-          { formats: '' }
-        ],
+    while (skip < total) {
+      const batch = await Deck.find({
         order: { id: 'ASC' },
         take: BATCH_SIZE,
-        skip: offset
+        skip
       });
 
-      if (batch.length === 0) break;
+      if (batch.length === 0) {
+        break;
+      }
 
       for (const deck of batch) {
         try {
@@ -61,8 +50,7 @@ async function run() {
         }
       }
 
-      offset += BATCH_SIZE;
-      if (batch.length < BATCH_SIZE) break;
+      skip += BATCH_SIZE;
     }
 
     console.log(`Backfill complete. Updated formats for ${processed} deck(s).`);

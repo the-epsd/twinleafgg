@@ -17,8 +17,6 @@ function* playCard(next: Function, store: StoreLike, state: State,
   const opponent = StateUtils.getOpponent(state, player);
   let cards: Card[] = [];
 
-
-
   let pokemons = 0;
   let energies = 0;
   const blocked: number[] = [];
@@ -71,22 +69,15 @@ function* playCard(next: Function, store: StoreLike, state: State,
 export class NightlyStretcher extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'SFA';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '61';
-
   public regulationMark = 'H';
-
   public name: string = 'Night Stretcher';
-
   public fullName: string = 'Night Stretcher SFA';
 
   public text: string =
-    'Put a Pokémon or a Basic Energy Card from your discard pile into your hand.';
-
+    'Put a Pokémon or a Basic Energy card from your discard pile into your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

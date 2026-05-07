@@ -11,30 +11,21 @@ import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 export class TeamRocketsEnergy extends EnergyCard {
 
   public provides: CardType[] = [CardType.COLORLESS, CardType.COLORLESS];
-
   public blendedEnergies: CardType[] = [CardType.PSYCHIC, CardType.DARK];
-
   public blendedEnergyCount: number = 2;
 
   public tags: CardTag[] = [CardTag.TEAM_ROCKET];
-
   public energyType = EnergyType.SPECIAL;
-
   public regulationMark = 'I';
-
   public set: string = 'DRI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '182';
-
   public name = 'Team Rocket\'s Energy';
-
   public fullName = 'Team Rocket\'s Energy DRI';
 
   public text = `This card can only be attached to a Team Rocket's Pokémon. If this card is attached to anything other than a Team Rocket's Pokémon, discard this card.
 
-  While this card is attached to a Pokémon, this card provides 2 in any combination of [P] and [D] Energy`;
+As long as this card is attached to a Pokémon, it provides 2 in any combination of [P] Energy and [D] Energy.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Prevent attaching to non Team Rocket's Pokemon
