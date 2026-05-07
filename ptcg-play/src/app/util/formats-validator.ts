@@ -12,7 +12,7 @@ export class FormatValidator {
 
     let formats = [];
 
-    // Use allCards if provided (for ANY_PRINTING_ALLOWED checks), otherwise fall back to deck's cards
+    // Prefer full card catalog when provided (e.g. deck editor); STANDARD/STANDARD_NIGHTLY still validate each printing on its own.
     const cardsToCheck = allCards || cards;
 
     cards.filter(c => !!c && (c.superType !== SuperType.ENERGY || (<any>c).energyType === EnergyType.SPECIAL)).forEach(card => {
@@ -156,30 +156,11 @@ export class FormatValidator {
           return true;
         case Format.ETERNAL:
           return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
-        case Format.STANDARD: {
-          // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
-          // is legal in Standard (TEF+, released, regulation mark H+ when printed)
-          if (allCards) {
-            const allPrintings = allCards.filter(c => c && c.name === card.name);
-
-            if (allPrintings.length === 0) {
-              return this.isPrintingLegalInStandard(card);
-            }
-
-            return allPrintings.some(c => this.isPrintingLegalInStandard(c));
-          }
+        case Format.STANDARD:
+          // Per-printing: regulation mark / set legality applies to this copy only (not other printings of the same name).
           return this.isPrintingLegalInStandard(card);
-        }
-        case Format.STANDARD_NIGHTLY: {
-          if (allCards) {
-            const allPrintings = allCards.filter(c => c && c.name === card.name);
-            if (allPrintings.length === 0) {
-              return this.isPrintingLegalInStandardNightly(card);
-            }
-            return allPrintings.some(c => this.isPrintingLegalInStandardNightly(c));
-          }
+        case Format.STANDARD_NIGHTLY:
           return this.isPrintingLegalInStandardNightly(card);
-        }
         case Format.EXPANDED: {
           // For anyPrintingAllowed cards, they are known to be legal in Expanded format
           // Just check if this specific printing is not banned
@@ -1120,6 +1101,7 @@ export const SetReleaseDates: { [key: string]: Date } = {
   'ASC': new Date('2026-01-28'),
   'MC': new Date('2026-03-27'),
   'M3': new Date('2026-03-27'),
+  'POR': new Date('2026-03-27'),
   'M4': new Date('2026-05-22'),
   'M5': new Date('2026-05-23')
 };

@@ -1057,6 +1057,7 @@ const SetReleaseDates: { [key: string]: Date } = {
   'ASC': new Date('2026-01-28'),
   'MC': new Date('2026-03-27'),
   'M3': new Date('2026-03-27'),
+  'POR': new Date('2026-03-27'),
   'M4': new Date('2026-05-22'),
   'M5': new Date('2026-05-23')
 };
@@ -1230,30 +1231,11 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         return true;
       case Format.ETERNAL:
         return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
-      case Format.STANDARD: {
-        // For ANY_PRINTING_ALLOWED cards, check if ANY printing of this card name
-        // is legal in Standard (TEF+, released, regulation mark H+ when printed)
-        const cardManager = CardManager.getInstance();
-        const allPrintings = cardManager.getAllCards().filter((c: any) =>
-          c && c.name === card.name
-        );
-
-        if (allPrintings.length === 0) {
-          return isPrintingLegalInStandard(card);
-        }
-
-        return allPrintings.some((c: any) => isPrintingLegalInStandard(c));
-      }
-      case Format.STANDARD_NIGHTLY: {
-        const cardManager = CardManager.getInstance();
-        const allPrintings = cardManager.getAllCards().filter((c: any) =>
-          c && c.name === card.name
-        );
-        if (allPrintings.length === 0) {
-          return isPrintingLegalInStandardNightly(card);
-        }
-        return allPrintings.some((c: any) => isPrintingLegalInStandardNightly(c));
-      }
+      case Format.STANDARD:
+        // Per-printing: regulation mark / set legality applies to this copy only (not other printings of the same name).
+        return isPrintingLegalInStandard(card);
+      case Format.STANDARD_NIGHTLY:
+        return isPrintingLegalInStandardNightly(card);
       case Format.EXPANDED: {
         // For anyPrintingAllowed cards, they are known to be legal in Expanded format
         // Just check if this specific printing is not banned
