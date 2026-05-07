@@ -30,7 +30,7 @@ export class GalarianObstagoon extends PokemonCard {
       name: 'Merciless Strike',
       cost: [D],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 90 more damage.'
     }
   ];

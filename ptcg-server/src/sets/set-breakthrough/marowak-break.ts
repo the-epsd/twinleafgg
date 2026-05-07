@@ -21,7 +21,7 @@ export class MarowakBreak extends PokemonCard {
       name: 'Bone Revenge',
       cost: [F, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 40 more damage for each Prize card your opponent has taken.'
     }
   ];

@@ -22,7 +22,7 @@ export class PikachuV extends PokemonCard {
       name: 'Lightning Blast',
       cost: [L, L, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard all [L] Energy from this Pokémon. If you do, this attack does 120 more damage.'
     }
   ];

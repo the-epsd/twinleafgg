@@ -23,7 +23,7 @@ export class Grotle extends PokemonCard {
       name: 'Knock Away',
       cost: [G, C, C],
       damage: 40,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

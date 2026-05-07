@@ -14,7 +14,7 @@ export class Carnivine extends PokemonCard {
     name: 'Chomp Down',
     cost: [C, C, C],
     damage: 80,
-    damageCalculation: '+' as '+',
+    damageCalculation: '+',
     text: 'If your opponent\'s Active Pokemon has no Retreat Cost, this attack does 80 more damage.'
   }];
 

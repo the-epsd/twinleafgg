@@ -24,7 +24,7 @@ export class WigglytuffGx extends PokemonCard {
       name: 'Rolling Rush',
       cost: [Y, Y, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     },
     {

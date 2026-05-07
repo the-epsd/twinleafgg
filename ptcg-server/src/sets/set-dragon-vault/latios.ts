@@ -16,7 +16,7 @@ export class Latios extends PokemonCard {
       name: 'Sky Blade',
       cost: [W, C],
       damage: 20,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If Latias is on your Bench, this attack does 20 more damage.'
     },
     {

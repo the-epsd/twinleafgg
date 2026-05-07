@@ -29,7 +29,7 @@ export class GyaradosGx extends PokemonCard {
       name: 'Draconic Disaster',
       cost: [W, C, C, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 100 more damage. Then, discard that Stadium card.'
     },
     {

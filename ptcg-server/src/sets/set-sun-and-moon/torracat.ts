@@ -22,7 +22,7 @@ export class Torracat extends PokemonCard {
       name: 'Fury Swipes',
       cost: [R],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 20 damage for each heads.'
     },
     {

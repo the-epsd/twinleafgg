@@ -29,7 +29,7 @@ export class Bisharp extends PokemonCard {
       name: 'Steel Slice',
       cost: [M, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Metal Pokémon, this attack does 90 more damage.'
     }
   ];

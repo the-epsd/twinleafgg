@@ -30,7 +30,7 @@ export class Magearna extends PokemonCard {
       name: 'Energy Press',
       cost: [M, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

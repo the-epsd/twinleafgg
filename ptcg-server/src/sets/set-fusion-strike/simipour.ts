@@ -27,7 +27,7 @@ export class Simipour extends PokemonCard {
       name: 'Circus Soaking',
       cost: [C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Your opponent reveals their hand. This attack does 60 damage for each Supporter card you find there.'
     }
   ];

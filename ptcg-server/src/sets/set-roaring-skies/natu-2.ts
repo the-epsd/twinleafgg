@@ -21,7 +21,7 @@ export class Natu2 extends PokemonCard {
       name: 'Psywave',
       cost: [P, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 10 damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

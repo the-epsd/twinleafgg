@@ -20,7 +20,7 @@ export class Garbodor extends PokemonCard {
       name: 'Trash Cyclone',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage for each Pokémon Tool card in your discard pile. Then, shuffle those cards into your deck.'
     },
     {

@@ -26,7 +26,7 @@ export class Crabrawler extends PokemonCard {
       name: 'Knuckle Blast',
       cost: [F, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have more Prize cards remaining than your opponent, this attack does 60 more damage.'
     }
   ];

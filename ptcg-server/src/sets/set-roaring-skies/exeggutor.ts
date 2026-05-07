@@ -22,7 +22,7 @@ export class Exeggutor extends PokemonCard {
       name: 'Shake It Off',
       cost: [G],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage times the number of Colorless Pokémon your opponent has in play.'
     },
     {

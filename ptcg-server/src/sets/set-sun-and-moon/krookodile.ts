@@ -22,7 +22,7 @@ export class Krookodile extends PokemonCard {
       name: 'False Accusation',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each card in your opponent\'s hand.'
     },
     {

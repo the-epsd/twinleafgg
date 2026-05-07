@@ -28,7 +28,7 @@ export class KingdraEx extends PokemonCard {
       name: 'Dragon Trail',
       cost: [W, C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each basic [L] Energy attached to this Pokémon.'
     }
   ];

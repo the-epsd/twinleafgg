@@ -22,7 +22,7 @@ export class Lycanroc extends PokemonCard {
       name: 'Midnight Fang',
       cost: [F, C],
       damage: 240,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-',
       text: 'This attack does 80 less damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

@@ -21,7 +21,7 @@ export class MachampV extends PokemonCard {
       name: 'Revenge Buster',
       cost: [F, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your Benched Pokémon have any damage counters on them, this attack does 50 more damage.'
     },
     {

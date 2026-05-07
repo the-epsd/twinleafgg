@@ -29,7 +29,7 @@ export class Crabominable extends PokemonCard {
       name: 'Freezing Punch',
       cost: [F, F, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any [W] Energy attached to it, this attack does 80 more damage.'
     }
   ];

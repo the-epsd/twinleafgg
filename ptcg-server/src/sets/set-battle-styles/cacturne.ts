@@ -30,7 +30,7 @@ export class Cacturne extends PokemonCard {
       name: 'Spiny Punch',
       cost: [G, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any [D] Energy attached, this attack does 70 more damage.'
     }
   ];

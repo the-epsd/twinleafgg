@@ -28,7 +28,7 @@ export class Glalie extends PokemonCard {
       name: 'Raging Floe',
       cost: [W, W, W],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any damage counters on it, this attack does 80 more damage.'
     }
   ];

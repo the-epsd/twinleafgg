@@ -22,7 +22,7 @@ export class MSlowbroEx extends PokemonCard {
       name: 'Loll Roll Spin',
       cost: [W, W, W],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This Pokémon is now Confused. During your next turn, this Pokémon\'s Loll Roll Spin attack does 100 more damage (before applying Weakness and Resistance).'
     }
   ];

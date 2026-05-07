@@ -24,7 +24,7 @@ export class Tentacool extends PokemonCard {
       name: 'Bubble Jutsu',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you played Janine from your hand during this turn, this attack does 50 more damage.'
     }
   ];

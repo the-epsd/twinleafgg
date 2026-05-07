@@ -27,7 +27,7 @@ export class Vespiquen extends PokemonCard {
       name: 'Damage Beat',
       cost: [G, C],
       damage: 20,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Does 20 damage times the number of damage counters on the Defending Pokémon.'
     }
   ];

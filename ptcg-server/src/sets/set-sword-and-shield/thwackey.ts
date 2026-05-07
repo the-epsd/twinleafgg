@@ -27,7 +27,7 @@ export class Thwackey extends PokemonCard {
       name: 'Double Hit',
       cost: [G, G, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 60 damage for each heads.'
     }
   ];

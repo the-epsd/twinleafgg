@@ -26,7 +26,7 @@ export class Claydol extends PokemonCard {
       name: 'Miraculous Spin',
       cost: [F, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 40 damage for each Steven\'s Resolve card in your discard pile.'
     }
   ];

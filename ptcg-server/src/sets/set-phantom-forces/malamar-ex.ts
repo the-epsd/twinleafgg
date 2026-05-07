@@ -31,7 +31,7 @@ export class MalamarEx extends PokemonCard {
       name: 'MAXamar',
       cost: [D, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 60 damage times the number of heads.'
     }
   ];

@@ -30,7 +30,7 @@ export class HisuianArcanineV extends PokemonCard {
       name: 'Rock Bullet',
       cost: [C, C, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each [F] Energy attached to this Pokémon.'
     }
   ];

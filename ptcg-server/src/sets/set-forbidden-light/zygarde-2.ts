@@ -25,7 +25,7 @@ export class Zygarde2 extends PokemonCard {
       name: 'Calm Strike',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have used your GX attack, this attack does 60 more damage.'
     }
   ];

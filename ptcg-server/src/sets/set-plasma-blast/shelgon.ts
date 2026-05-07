@@ -18,7 +18,7 @@ export class Shelgon extends PokemonCard {
       name: 'Knock Away',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     },
     {

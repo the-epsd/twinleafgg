@@ -22,7 +22,7 @@ export class Escavalier extends PokemonCard {
       name: 'Fury Attack',
       cost: [M],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 30 damage for each heads.'
     },
     {

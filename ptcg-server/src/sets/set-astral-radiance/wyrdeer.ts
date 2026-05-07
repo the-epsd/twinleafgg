@@ -31,7 +31,7 @@ export class Wyrdeer extends PokemonCard {
       name: 'Extrasensory',
       cost: [C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have the same number of cards in your hand as your opponent, this attack does 80 more damage.'
     }
   ];

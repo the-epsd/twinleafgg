@@ -29,7 +29,7 @@ export class Gyarados extends PokemonCard {
       name: 'Aqua Tail',
       cost: [W, C, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin for each [W] Energy attached to this Pokémon. This attack does 30 more damage for each heads.'
     }
   ];

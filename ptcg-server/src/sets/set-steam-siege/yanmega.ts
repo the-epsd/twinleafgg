@@ -29,7 +29,7 @@ export class Yanmega extends PokemonCard {
       name: 'Assault Boom',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pok\u00e9mon has a Pok\u00e9mon Tool card attached to it, this attack does 70 more damage.'
     }
   ];

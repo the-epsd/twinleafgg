@@ -26,7 +26,7 @@ export class Meowth extends PokemonCard {
       name: 'Fury Swipes',
       cost: [C, C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 20 damage times the number of heads.'
     }
   ];

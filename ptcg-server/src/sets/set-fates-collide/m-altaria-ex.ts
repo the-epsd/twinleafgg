@@ -25,7 +25,7 @@ export class MAltariaEx extends PokemonCard {
       name: 'Mist Purge',
       cost: [Y, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any Special Energy attached to it, this attack does 30 more damage and heal 30 damage from each of your Pokémon.'
     }
   ];

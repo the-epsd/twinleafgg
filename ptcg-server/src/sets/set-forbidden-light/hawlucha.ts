@@ -28,7 +28,7 @@ export class Hawlucha extends PokemonCard {
       name: 'Sky Drop',
       cost: [C, C, C],
       damage: 80,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-',
       text: 'This attack does 20 less damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];

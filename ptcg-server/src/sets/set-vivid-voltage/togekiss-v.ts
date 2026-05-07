@@ -22,7 +22,7 @@ export class TogekissV extends PokemonCard {
       name: 'White Wind',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 70 more damage.'
     },
     {

@@ -30,7 +30,7 @@ export class Scizor extends PokemonCard {
       name: 'Special Blow',
       cost: [M, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon has any Special Energy attached to it, this attack does 70 more damage.'
     }
   ];

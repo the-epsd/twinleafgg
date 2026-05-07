@@ -18,7 +18,7 @@ export class Stunfisk extends PokemonCard {
       name: 'Trap Bolt',
       cost: [F],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If, before doing damage, your opponent\'s Active Pokémon has more remaining HP than this Pokémon, this attack does 30 more damage.'
     }
   ];

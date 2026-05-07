@@ -29,7 +29,7 @@ export class Krokorok extends PokemonCard {
       name: 'Double Swing',
       cost: [D, C, C],
       damage: 60,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 60 damage times the number of heads.'
     }
   ];

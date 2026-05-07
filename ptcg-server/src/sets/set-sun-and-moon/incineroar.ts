@@ -26,7 +26,7 @@ export class Incineroar extends PokemonCard {
       name: 'Darkest Lariat',
       cost: [R, R, C],
       damage: 100,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 100 damage for each heads.'
     }
   ];

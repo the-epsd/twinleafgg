@@ -29,7 +29,7 @@ export class Florges extends PokemonCard {
       name: 'Petal Dance',
       cost: [Y, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 60 damage for each heads. This Pokémon is now Confused.'
     }
   ];

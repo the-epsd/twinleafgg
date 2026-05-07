@@ -28,7 +28,7 @@ export class Nidoking extends PokemonCard {
       name: 'Power Lariat',
       cost: [P, P, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each Evolution Pokémon on your Bench.'
     }
   ];

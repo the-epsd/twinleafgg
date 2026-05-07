@@ -27,7 +27,7 @@ export class Kecleon extends PokemonCard {
       name: 'Tongue Smack',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 50 more damage.'
     }
   ];

@@ -27,7 +27,7 @@ export class Darkrai extends PokemonCard {
       name: 'Dark Raid',
       cost: [D, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has already used their GX attack, this attack does 80 more damage.'
     }
   ];

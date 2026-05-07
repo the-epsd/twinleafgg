@@ -38,7 +38,7 @@ export class Metagross extends PokemonCard {
       name: 'Iron Cannon',
       cost: [M, M, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard all [M] Energy attached to this Pokémon. If you do, this attack does 80 more damage.'
     }
   ];

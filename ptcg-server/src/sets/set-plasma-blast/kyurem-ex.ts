@@ -18,7 +18,7 @@ export class KyuremEx extends PokemonCard {
       name: 'Outrage',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Does 10 more damage for each damage counter on this Pok\u00e9mon.'
     },
     {

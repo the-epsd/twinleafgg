@@ -21,7 +21,7 @@ export class Golurk extends PokemonCard {
       name: 'Big Hand',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each card in your hand.'
     },
     {

@@ -30,7 +30,7 @@ export class Raticate extends PokemonCard {
       name: 'Shadowy Bite',
       cost: [C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 60 damage times the number of Special Energy cards in your opponent\'s discard pile.'
     }
   ];

@@ -21,7 +21,7 @@ export class Bidoof2 extends PokemonCard {
       name: 'Drench',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any [W] Energy attached to it, this attack does 20 more damage.'
     }
   ];

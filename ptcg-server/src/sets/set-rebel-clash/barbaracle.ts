@@ -27,7 +27,7 @@ export class Barbaracle extends PokemonCard {
       name: 'Hand Press',
       cost: [F, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have more cards in your hand than your opponent, this attack does 80 more damage.'
     }
   ];

@@ -24,7 +24,7 @@ export class MAmpharosEx extends PokemonCard {
       name: 'Exavolt',
       cost: [L, L, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may do 50 more damage and leave your opponent\'s Active Pokémon Paralyzed. If you do, this Pokémon does 30 damage to itself.'
     }
   ];

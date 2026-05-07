@@ -29,7 +29,7 @@ export class Chandelure extends PokemonCard {
       name: 'Vortex of Pain',
       cost: [P, P],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each damage counter on all of your opponent\'s Pokémon.'
     }
   ];

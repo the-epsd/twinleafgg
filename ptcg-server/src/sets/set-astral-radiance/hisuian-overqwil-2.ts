@@ -22,7 +22,7 @@ export class HisuianOverqwil2 extends PokemonCard {
       name: 'Dirty Press',
       cost: [D],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have at least 3 [D] Energy in play, this attack does 90 more damage.'
     },
     {

@@ -23,14 +23,14 @@ export class SteelixEx extends PokemonCard {
       name: 'Wild Edge',
       cost: [M, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may do 50 more damage. If you do, this Pokémon does 20 damage to itself.'
     },
     {
       name: 'Iron Tail',
       cost: [M, C, C, C, C],
       damage: 100,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 100 damage times the number of heads.'
     }
   ];

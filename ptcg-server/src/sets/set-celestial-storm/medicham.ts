@@ -22,7 +22,7 @@ export class Medicham extends PokemonCard {
       name: 'Strike of Enlightenment',
       cost: [F, F],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon\'s remaining HP is 30 or less, this attack does 160 more damage.'
     },
     {

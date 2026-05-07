@@ -22,7 +22,7 @@ export class Kyogre extends PokemonCard {
       name: 'Spring Tides',
       cost: [W, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 30 damage times the number of heads.'
     },
     {

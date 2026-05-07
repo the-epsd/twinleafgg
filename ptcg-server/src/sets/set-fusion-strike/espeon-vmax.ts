@@ -31,7 +31,7 @@ export class EspeonVmax extends PokemonCard {
       name: 'Max Mindstorm',
       cost: [P, C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 60 damage for each Energy attached to all of your opponent\'s Pokémon.'
     }
   ];

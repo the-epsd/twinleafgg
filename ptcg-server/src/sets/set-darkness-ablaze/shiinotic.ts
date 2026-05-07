@@ -31,7 +31,7 @@ export class Shiinotic extends PokemonCard {
       name: 'Fear the Forest',
       cost: [P, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Glimwood Tangle is in play, this attack does 60 more damage.'
     }
   ];

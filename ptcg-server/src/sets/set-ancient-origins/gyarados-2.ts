@@ -21,14 +21,14 @@ export class Gyarados2 extends PokemonCard {
       name: 'Full Retaliation',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each damage counter on each of your Benched Magikarp.'
     },
     {
       name: 'Thrash',
       cost: [W, W, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, this Pokémon does 30 damage to itself.'
     }
   ];

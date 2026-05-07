@@ -31,7 +31,7 @@ export class Clefable extends PokemonCard {
       name: 'Tumbling Attack',
       cost: [Y, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

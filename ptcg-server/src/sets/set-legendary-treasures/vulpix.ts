@@ -21,7 +21,7 @@ export class Vulpix extends PokemonCard {
       name: 'Firebreathing',
       cost: [R, C],
       damage: 20,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];

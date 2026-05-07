@@ -28,7 +28,7 @@ export class Dedenne extends PokemonCard {
       name: 'Electrichain',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have any Lightning Pokémon on your Bench, this attack does 30 more damage.'
     }
   ];

@@ -31,7 +31,7 @@ export class Forretress extends PokemonCard {
       name: 'Iron Crash',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];

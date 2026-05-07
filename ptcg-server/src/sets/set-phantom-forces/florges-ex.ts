@@ -31,7 +31,7 @@ export class FlorgesEx extends PokemonCard {
       name: 'Bright Garden',
       cost: [Y, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage times the number of Grass Pokémon and Fairy Pokémon you have in play.'
     }
   ];

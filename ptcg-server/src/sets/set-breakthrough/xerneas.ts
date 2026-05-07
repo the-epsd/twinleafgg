@@ -26,14 +26,14 @@ export class Xerneas extends PokemonCard {
       name: 'Rainbow Force',
       cost: [Y, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each different type of Pokémon on your Bench.'
     },
     {
       name: 'Power Creation',
       cost: [Y, Y, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon was healed during this turn, this attack does 80 more damage.'
     }
   ];

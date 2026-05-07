@@ -27,7 +27,7 @@ export class Poliwrath extends PokemonCard {
       name: 'Wake-Up Slap',
       cost: [W, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 80 more damage. Then, remove all Special Conditions from that Pokémon.'
     }
   ];

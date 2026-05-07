@@ -25,7 +25,7 @@ export class Hippowdon extends PokemonCard {
       name: 'Dust Cannon',
       cost: [F, F, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];

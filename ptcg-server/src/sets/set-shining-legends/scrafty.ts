@@ -22,7 +22,7 @@ export class Scrafty extends PokemonCard {
       name: 'Dangerous Head',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, this attack does 50 more damage.'
     },
     {

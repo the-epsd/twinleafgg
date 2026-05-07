@@ -25,7 +25,7 @@ export class VenomothGx extends PokemonCard {
       name: 'Shinobi Mastery',
       cost: [G, C, C],
       damage: 110,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you played Koga\'s Trap from your hand during this turn, this attack does 90 more damage. If you played Janine from your hand during this turn, prevent all damage done to this Pokémon by attacks from Basic Pokémon during your opponent\'s next turn.'
     },
     {

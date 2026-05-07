@@ -27,7 +27,7 @@ export class Wormadam2 extends PokemonCard {
       name: 'Twin Bursts',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Mothim is on your Bench, this attack does 60 more damage.'
     }
   ];

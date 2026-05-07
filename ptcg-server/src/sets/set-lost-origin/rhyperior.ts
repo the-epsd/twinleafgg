@@ -21,7 +21,7 @@ export class Rhyperior extends PokemonCard {
       name: 'Geo Cannon',
       cost: [F],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Discard the top card of your deck. If that card is an Energy card, this attack does 100 more damage, and attach that card to this Pokémon.'
     },
     {

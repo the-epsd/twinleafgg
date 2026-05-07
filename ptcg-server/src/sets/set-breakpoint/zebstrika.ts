@@ -30,7 +30,7 @@ export class Zebstrika extends PokemonCard {
       name: 'Crashing Bolt',
       cost: [C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon has Fighting Resistance, this attack does 60 more damage.'
     }
   ];

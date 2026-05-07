@@ -29,7 +29,7 @@ export class Meowstic extends PokemonCard {
       name: 'Psychic',
       cost: [P, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

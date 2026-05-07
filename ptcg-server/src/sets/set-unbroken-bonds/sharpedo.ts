@@ -30,7 +30,7 @@ export class Sharpedo extends PokemonCard {
       name: 'Bad Fangs',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage times the amount of [D] Energy attached to this Pokémon.'
     }
   ];

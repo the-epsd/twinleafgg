@@ -27,7 +27,7 @@ export class Simisear extends PokemonCard {
       name: 'Flame Blast',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Does 20 more damage for each [R] Energy attached to this Pokémon.'
     }
   ];

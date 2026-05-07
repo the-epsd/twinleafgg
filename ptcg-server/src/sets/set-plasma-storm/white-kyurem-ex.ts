@@ -27,7 +27,7 @@ export class WhiteKyuremEx extends PokemonCard {
       name: 'White Inferno',
       cost: [R, R, W, C],
       damage: 100,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Does 10 more damage for each damage counter on this Pokémon.'
     }
   ];

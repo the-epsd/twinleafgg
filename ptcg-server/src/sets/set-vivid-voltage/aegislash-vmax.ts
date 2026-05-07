@@ -23,7 +23,7 @@ export class AegislashVmax extends PokemonCard {
       name: 'Max Hack',
       cost: [M, M, C],
       damage: 160,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each Prize card you have taken.'
     }
   ];

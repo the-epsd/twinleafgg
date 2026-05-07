@@ -18,7 +18,7 @@ export class Duosion extends PokemonCard {
       name: 'Focused Wish',
       cost: [P, C],
       damage: 20,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

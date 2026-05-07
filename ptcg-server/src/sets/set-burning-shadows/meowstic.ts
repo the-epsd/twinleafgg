@@ -27,7 +27,7 @@ export class Meowstic extends PokemonCard {
       name: 'Hand Kinesis',
       cost: [C, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 10 damage for each card in your hand.'
     }
   ];

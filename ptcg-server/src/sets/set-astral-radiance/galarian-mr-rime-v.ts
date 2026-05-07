@@ -29,7 +29,7 @@ export class GalarianMrRimeV extends PokemonCard {
       name: 'Customized Cane',
       cost: [W, W, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has a Pokémon Tool attached, this attack does 90 more damage.'
     }
   ];

@@ -25,7 +25,7 @@ export class FrostRotom extends PokemonCard {
       name: 'Frost Crush',
       cost: [W, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage times the amount of Energy attached to all of your opponent\'s Pokémon.'
     }
   ];

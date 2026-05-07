@@ -23,7 +23,7 @@ export class CharizardVstar extends PokemonCard {
       name: 'Explosive Fire',
       cost: [R, R, C],
       damage: 130,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any damage counters on it, this attack does 100 more damage.'
     },
     {

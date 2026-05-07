@@ -27,7 +27,7 @@ export class Seismitoad extends PokemonCard {
       name: 'Resonance',
       cost: [W, C, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is Confused, this attack does 120 more damage.'
     }
   ];

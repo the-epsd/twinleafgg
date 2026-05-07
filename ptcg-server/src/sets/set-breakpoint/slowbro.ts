@@ -23,7 +23,7 @@ export class Slowbro extends PokemonCard {
       name: 'Careless Head',
       cost: [W],
       damage: 10,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 50 more damage.'
     },
     {

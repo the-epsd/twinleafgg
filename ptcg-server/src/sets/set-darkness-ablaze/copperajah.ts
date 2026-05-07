@@ -30,7 +30,7 @@ export class Copperajah extends PokemonCard {
       name: 'Vengeful Stomp',
       cost: [M, M, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your Benched Pokémon have any damage counters on them, this attack does 120 more damage.'
     }
   ];

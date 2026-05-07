@@ -24,7 +24,7 @@ export class Cinccinoex extends PokemonCard {
     name: 'Energized Slap',
     cost: [C],
     damage: 0,
-    damageCalculation: 'x' as 'x',
+    damageCalculation: 'x',
     text: 'This attack does 40 damage for each Energy attached to this Pokemon.'
   }];
   public regulationMark = 'J';

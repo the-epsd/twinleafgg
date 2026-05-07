@@ -21,7 +21,7 @@ export class Darumaka extends PokemonCard {
       name: 'Damage Rush',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     }
   ];

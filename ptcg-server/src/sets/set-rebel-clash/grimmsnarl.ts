@@ -28,7 +28,7 @@ export class Grimmsnarl extends PokemonCard {
       name: 'Energy Press',
       cost: [D, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

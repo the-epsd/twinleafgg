@@ -22,14 +22,14 @@ export class Diggersby extends PokemonCard {
       name: 'Mountaintop Mining',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may do 40 more damage. If you do, discard the top 2 cards of your deck.'
     },
     {
       name: 'Rock Cannon',
       cost: [C, C, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 80 damage for each heads.'
     }
   ];

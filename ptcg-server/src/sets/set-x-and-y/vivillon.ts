@@ -29,7 +29,7 @@ export class Vivillon extends PokemonCard {
       name: 'Colorful Wind',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each different type of basic Energy attached to this Pokémon.'
     }
   ];

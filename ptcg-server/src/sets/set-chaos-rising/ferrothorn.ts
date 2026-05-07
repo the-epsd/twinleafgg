@@ -23,7 +23,7 @@ export class Ferrothorn extends PokemonCard {
     name: 'Special Whip',
     cost: [M, M, C],
     damage: 70,
-    damageCalculation: '+' as '+',
+    damageCalculation: '+',
     text: 'If this Pokemon has any Special Energy attached, this attack does 70 more damage.'
   }];
   public regulationMark = 'J';

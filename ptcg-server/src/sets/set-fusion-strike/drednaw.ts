@@ -22,7 +22,7 @@ export class Drednaw extends PokemonCard {
       name: 'Hard Bite',
       cost: [W, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 50 more damage.'
     }
   ];

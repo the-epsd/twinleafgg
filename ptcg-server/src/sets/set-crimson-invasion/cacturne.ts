@@ -24,7 +24,7 @@ export class Cacturne extends PokemonCard {
       name: 'Spike Rend',
       cost: [G],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 60 more damage.'
     },
     {

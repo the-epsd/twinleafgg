@@ -22,7 +22,7 @@ export class RayquazaEx2 extends PokemonCard {
       name: 'Intensifying Burn',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, this attack does 50 more damage.'
     },
     {

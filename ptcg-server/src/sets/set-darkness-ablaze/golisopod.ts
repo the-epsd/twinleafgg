@@ -21,7 +21,7 @@ export class Golisopod extends PokemonCard {
       name: 'Hard Times Slash',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 50 more damage for each of your opponent\'s Pokémon V and Pokémon-GX in play.'
     },
     {

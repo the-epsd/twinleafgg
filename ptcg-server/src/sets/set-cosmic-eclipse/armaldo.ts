@@ -22,7 +22,7 @@ export class Armaldo extends PokemonCard {
       name: 'Ancient Blast',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 50 more damage for each Unidentified Fossil card in your discard pile.'
     },
     {

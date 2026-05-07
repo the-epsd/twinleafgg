@@ -21,7 +21,7 @@ export class Reuniclus extends PokemonCard {
       name: 'Link Fusion',
       cost: [P, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Solosis is on your Bench, this attack does 30 more damage. If Duosion is on your Bench, this attack does 60 more damage. If Reuniclus is on your Bench, this attack does 90 more damage.'
     }
   ];

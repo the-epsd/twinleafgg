@@ -22,14 +22,14 @@ export class Beartic extends PokemonCard {
       name: 'Igloo Hold',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     },
     {
       name: 'Mountain Drop',
       cost: [W, W, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 40 more damage.'
     }
   ];

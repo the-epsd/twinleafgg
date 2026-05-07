@@ -29,7 +29,7 @@ export class TornadusVmax extends PokemonCard {
       name: 'Max Wind Spirit',
       cost: [C, C, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If a Stadium is in play, this attack does 120 more damage. Then, discard that Stadium.'
     }
   ];

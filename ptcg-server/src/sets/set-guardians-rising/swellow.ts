@@ -35,7 +35,7 @@ export class Swellow extends PokemonCard {
       name: 'Swallow Dive',
       cost: [C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon used Agility during your last turn, this attack does 80 more damage.'
     }
   ];

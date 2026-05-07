@@ -26,7 +26,7 @@ export class GlalieEx extends PokemonCard {
       name: 'Instant Freeze',
       cost: [W, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have the same number of cards in your hand as your opponent, this attack does 100 more damage.'
     }
   ];

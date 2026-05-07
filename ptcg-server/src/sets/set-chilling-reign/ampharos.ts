@@ -33,7 +33,7 @@ export class Ampharos extends PokemonCard {
       name: 'Searchlight Tail',
       cost: [L, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Your opponent reveals their hand. If you find any Energy cards there, this attack does 90 more damage.'
     }
   ];

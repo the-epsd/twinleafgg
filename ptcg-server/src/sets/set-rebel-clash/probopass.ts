@@ -23,7 +23,7 @@ export class Probopass extends PokemonCard {
       name: 'Gravitational Drop',
       cost: [M],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     },
     {

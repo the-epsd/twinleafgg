@@ -21,7 +21,7 @@ export class Fletchling extends PokemonCard {
       name: 'Acrobatics',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 2 coins. This attack does 10 more damage for each heads.'
     }
   ];

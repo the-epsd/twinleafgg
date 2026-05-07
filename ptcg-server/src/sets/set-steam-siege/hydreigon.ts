@@ -34,7 +34,7 @@ export class Hydreigon extends PokemonCard {
       name: 'Dark Burn',
       cost: [P, D, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard as many [D] Energy attached to your Pokémon as you like. This attack does 50 damage times the amount of [D] Energy you discarded in this way.'
     }
   ];

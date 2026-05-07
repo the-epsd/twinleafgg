@@ -32,7 +32,7 @@ export class Araquanid extends PokemonCard {
       name: 'Bubble Trap',
       cost: [C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If 1 of your Pokémon used Bubble during your last turn, this attack does 80 more damage.'
     }
   ];

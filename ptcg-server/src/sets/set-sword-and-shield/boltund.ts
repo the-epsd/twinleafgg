@@ -28,7 +28,7 @@ export class Boltund extends PokemonCard {
       name: 'Fighting Fangs',
       cost: [L, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon V or Pokémon-GX, this attack does 90 more damage.'
     }
   ];

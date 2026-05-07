@@ -27,7 +27,7 @@ export class Mienshao extends PokemonCard {
       name: 'Double Smash',
       cost: [F, C],
       damage: 70,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 70 damage for each heads.'
     }
   ];

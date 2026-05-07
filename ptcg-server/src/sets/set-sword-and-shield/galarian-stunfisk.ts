@@ -29,7 +29,7 @@ export class GalarianStunfisk extends PokemonCard {
       name: 'Damage Rush',
       cost: [M, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     }
   ];

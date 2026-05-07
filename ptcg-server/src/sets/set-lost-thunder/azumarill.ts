@@ -31,7 +31,7 @@ export class Azumarill extends PokemonCard {
       name: 'Play Rough',
       cost: [Y, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

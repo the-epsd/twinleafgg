@@ -22,7 +22,7 @@ export class Electivire extends PokemonCard {
       name: 'Thunder Punch',
       cost: [L, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 60 more damage. If tails, this Pokémon does 20 damage to itself.'
     },
     {

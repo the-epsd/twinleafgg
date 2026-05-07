@@ -31,7 +31,7 @@ export class Vikavolt extends PokemonCard {
       name: 'Electricannon',
       cost: [L, L, L, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard all [L] Energy from this Pokémon. If you do, this attack does 100 more damage.'
     }
   ];

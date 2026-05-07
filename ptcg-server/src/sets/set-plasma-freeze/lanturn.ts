@@ -19,7 +19,7 @@ export class Lanturn extends PokemonCard {
       name: 'Special Tackle',
       cost: [L],
       damage: 30,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If this Pokémon has any Special Energy attached to it, this attack does 30 more damage.'
     },
     {

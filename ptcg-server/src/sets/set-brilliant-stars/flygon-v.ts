@@ -27,7 +27,7 @@ export class FlygonV extends PokemonCard {
       name: 'Draconic Impulse',
       cost: [G, F, F, C],
       damage: 160,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon VMAX, this attack does 160 more damage, and discard 3 Energy from this Pokémon.'
     }
   ];

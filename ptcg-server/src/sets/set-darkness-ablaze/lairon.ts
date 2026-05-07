@@ -23,7 +23,7 @@ export class Lairon extends PokemonCard {
       name: 'Knock Away',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {

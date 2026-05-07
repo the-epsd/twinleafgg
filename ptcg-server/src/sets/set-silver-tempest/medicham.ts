@@ -30,7 +30,7 @@ export class Medicham extends PokemonCard {
       name: 'Vigorous Kick',
       cost: [C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has any Pokémon VMAX in play, this attack does 90 more damage.'
     }
   ];

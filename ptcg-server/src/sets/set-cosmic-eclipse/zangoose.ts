@@ -26,7 +26,7 @@ export class Zangoose extends PokemonCard {
       name: 'Brutal Edge',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
     }
   ];

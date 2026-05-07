@@ -26,7 +26,7 @@ export class Walrein extends PokemonCard {
       name: 'Big Tusk',
       cost: [W, W, C, C],
       damage: 120,
-      damageCalculation: '-' as const,
+      damageCalculation: '-',
       text: 'This attack does 120 damage minus 10 damage for each damage counter on this Pokémon.'
     }
   ];

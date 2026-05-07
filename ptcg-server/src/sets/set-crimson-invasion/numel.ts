@@ -21,7 +21,7 @@ export class Numel extends PokemonCard {
       name: 'Continuous Headbutt',
       cost: [R, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 30 damage for each heads.'
     }
   ];

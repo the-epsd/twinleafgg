@@ -27,7 +27,7 @@ export class SableyeV extends PokemonCard {
       name: 'Crazy Claws',
       cost: [D, D],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 60 more damage for each damage counter on your opponent\'s Active Pokémon.'
     }
   ];

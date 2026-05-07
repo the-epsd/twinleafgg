@@ -28,7 +28,7 @@ export class DubwoolV extends PokemonCard {
       name: 'Revenge Blast',
       cost: [C, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each Prize card your opponent has taken.'
     }
   ];

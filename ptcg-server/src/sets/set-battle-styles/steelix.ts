@@ -22,7 +22,7 @@ export class Steelix extends PokemonCard {
       name: 'Steel Swing',
       cost: [C, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 80 damage for each heads.'
     },
     {

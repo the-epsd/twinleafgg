@@ -21,7 +21,7 @@ export class ZygardeEx extends PokemonCard {
       name: 'Land\'s Pulse',
       cost: [F],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 20 more damage.'
     },
     {

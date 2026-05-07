@@ -31,7 +31,7 @@ export class GalladeEx extends PokemonCard {
       name: 'Piercing Prizes',
       cost: [P, P, P],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each of your remaining Prize cards.'
     }
   ];

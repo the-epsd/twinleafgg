@@ -23,7 +23,7 @@ export class Chesnaught extends PokemonCard {
       name: 'Spike Lariat',
       cost: [G, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 60 more damage.'
     },
     {

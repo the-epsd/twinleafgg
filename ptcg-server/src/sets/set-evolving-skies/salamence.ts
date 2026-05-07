@@ -33,7 +33,7 @@ export class Salamence extends PokemonCard {
       name: 'Fierce Dragon',
       cost: [R, W],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 120 more damage.'
     }
   ];

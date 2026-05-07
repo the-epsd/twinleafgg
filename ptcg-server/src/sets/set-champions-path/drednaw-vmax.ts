@@ -31,7 +31,7 @@ export class DrednawVmax extends PokemonCard {
       name: 'G-Max Headbutt',
       cost: [W, W, C],
       damage: 160,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 80 more damage.'
     }
   ];

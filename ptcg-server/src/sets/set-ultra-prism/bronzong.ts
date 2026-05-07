@@ -25,7 +25,7 @@ export class Bronzong extends PokemonCard {
       name: 'Psychic Resonance',
       cost: [M, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has any Psychic Pokémon in play, this attack does 60 more damage.'
     }
   ];

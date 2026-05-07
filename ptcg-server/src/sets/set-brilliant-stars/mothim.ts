@@ -22,7 +22,7 @@ export class Mothim extends PokemonCard {
       name: 'Raid',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon evolved from Burmy during this turn, this attack does 90 more damage.'
     },
     {

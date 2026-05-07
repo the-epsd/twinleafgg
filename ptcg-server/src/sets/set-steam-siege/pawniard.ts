@@ -21,7 +21,7 @@ export class Pawniard extends PokemonCard {
       name: 'Charge Order',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 10 damage times the number of your Pawniard.'
     }
   ];

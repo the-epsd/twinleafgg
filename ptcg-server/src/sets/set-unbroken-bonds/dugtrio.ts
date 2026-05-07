@@ -21,7 +21,7 @@ export class Dugtrio extends PokemonCard {
       name: 'Home Ground',
       cost: [F],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have any Stadium card in play, this attack does 60 more damage.'
     }
   ];

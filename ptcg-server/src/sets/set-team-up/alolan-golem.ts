@@ -23,7 +23,7 @@ export class AlolanGolem extends PokemonCard {
       name: 'Electromagnetic Bomb',
       cost: [],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Move any number of [L] Energy from your Benched Pokémon to this Pokémon. This attack does 20 damage for each Energy card you moved in this way.'
     },
     {

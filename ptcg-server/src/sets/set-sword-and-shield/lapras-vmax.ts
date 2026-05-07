@@ -23,7 +23,7 @@ export class LaprasVmax extends PokemonCard {
       name: 'G-Max Pump',
       cost: [C, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each [W] Energy attached to this Pokémon.'
     }
   ];

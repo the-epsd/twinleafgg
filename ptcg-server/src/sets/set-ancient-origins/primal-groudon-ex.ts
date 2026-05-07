@@ -37,7 +37,7 @@ export class PrimalGroudonEx extends PokemonCard {
       name: 'Gaia Volcano',
       cost: [F, F, F, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card.'
     }
   ];

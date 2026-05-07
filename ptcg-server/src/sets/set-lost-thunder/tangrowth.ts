@@ -22,7 +22,7 @@ export class Tangrowth extends PokemonCard {
       name: 'Hefty Whip',
       cost: [G, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon was healed during this turn, this attack does 130 more damage.'
     },
     {

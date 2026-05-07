@@ -23,14 +23,14 @@ export class Appletun extends PokemonCard {
       name: 'Thick Mucus',
       cost: [C],
       damage: 70,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 70 damage for each Special Energy card attached to your opponent\'s Pokémon.'
     },
     {
       name: 'Fighting Tackle',
       cost: [G, R],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 80 more damage.'
     }
   ];

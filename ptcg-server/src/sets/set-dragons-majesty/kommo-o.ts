@@ -32,7 +32,7 @@ export class KommoO extends PokemonCard {
       name: 'Raging Uppercut',
       cost: [F, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pok\u00e9mon has 8 or more damage counters on it, this attack does 120 more damage.'
     }
   ];

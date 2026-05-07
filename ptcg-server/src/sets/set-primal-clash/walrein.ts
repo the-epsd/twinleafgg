@@ -28,7 +28,7 @@ export class Walrein extends PokemonCard {
       name: 'Frozen Splash',
       cost: [W, W, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Fighting Pokémon, this attack does 70 more damage.'
     }
   ];

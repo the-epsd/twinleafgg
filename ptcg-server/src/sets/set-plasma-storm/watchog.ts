@@ -29,7 +29,7 @@ export class Watchog extends PokemonCard {
       name: 'Biting Fang',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

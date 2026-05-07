@@ -21,7 +21,7 @@ export class Smeargle extends PokemonCard {
       name: 'Live Painting',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Reveal any number of basic Energy cards from your hand. This attack does 30 more damage for each type of basic Energy you revealed in this way.'
     }
   ];

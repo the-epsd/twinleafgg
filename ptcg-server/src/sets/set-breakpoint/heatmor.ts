@@ -20,7 +20,7 @@ export class Heatmor extends PokemonCard {
       name: 'Reinforced Flame',
       cost: [R],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 20 more damage.'
     },
     {

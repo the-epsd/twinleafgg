@@ -21,7 +21,7 @@ export class GalarianFarfetchd extends PokemonCard {
       name: 'Rock Smash',
       cost: [F],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {

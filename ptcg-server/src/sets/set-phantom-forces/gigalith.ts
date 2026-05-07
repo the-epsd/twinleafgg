@@ -28,7 +28,7 @@ export class Gigalith extends PokemonCard {
       name: 'Overdrive Smash',
       cost: [F, F, F, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'During your next turn, this Pokémon\'s Overdrive Smash attack does 40 more damage (before applying Weakness and Resistance).'
     }
   ];

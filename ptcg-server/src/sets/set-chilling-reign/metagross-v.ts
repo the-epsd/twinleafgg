@@ -23,14 +23,14 @@ export class MetagrossV extends PokemonCard {
       name: 'Bullet Punch',
       cost: [M],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     },
     {
       name: 'Synchro Hammer',
       cost: [M, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon and your opponent\'s Active Pokémon have the same amount of Energy attached, this attack does 90 more damage.'
     }
   ];

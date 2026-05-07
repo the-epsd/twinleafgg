@@ -27,7 +27,7 @@ export class Primeape extends PokemonCard {
       name: 'Wreck',
       cost: [F, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 80 more damage. Then, discard that Stadium card.'
     }
   ];

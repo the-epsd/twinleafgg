@@ -69,7 +69,7 @@ export class Seismitoad extends PokemonCard {
       name: 'Tremulous Fist',
       cost: [F, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each of your Benched Pokémon that has any damage counters on it.'
     }
   ];

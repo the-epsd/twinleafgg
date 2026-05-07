@@ -20,7 +20,7 @@ export class Larvitar2 extends PokemonCard {
       name: 'Second Strike',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon already has 3 or more damage counters on it, this attack does 70 more damage.'
     }
   ];

@@ -28,7 +28,7 @@ export class Pyroar extends PokemonCard {
       name: 'Dominating Fangs',
       cost: [R, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Lysandre Labs is in play, this attack does 60 more damage.'
     }
   ];

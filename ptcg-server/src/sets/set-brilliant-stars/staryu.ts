@@ -20,7 +20,7 @@ export class Staryu extends PokemonCard {
       name: 'Double Spin',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 10 damage for each heads.'
     }
   ];

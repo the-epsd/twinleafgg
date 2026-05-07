@@ -23,7 +23,7 @@ export class Incineroar extends PokemonCard {
       name: 'Profane Punch',
       cost: [R, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your Benched Pokémon have any damage counters on them, this attack does 80 more damage.'
     },
     {

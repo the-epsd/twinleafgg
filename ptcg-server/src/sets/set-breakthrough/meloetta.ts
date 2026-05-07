@@ -29,7 +29,7 @@ export class Meloetta extends PokemonCard {
       name: 'Prima Rondo',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any [P] Energy attached to it, this attack does 50 more damage.'
     }
   ];

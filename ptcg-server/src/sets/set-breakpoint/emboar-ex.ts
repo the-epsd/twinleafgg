@@ -23,7 +23,7 @@ export class EmboarEx extends PokemonCard {
       name: 'Spiral Punch',
       cost: [R, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin until you get tails. This attack does 20 more damage for each heads.'
     },
     {

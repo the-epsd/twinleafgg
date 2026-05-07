@@ -21,7 +21,7 @@ export class Entei extends PokemonCard {
       name: 'Angry Fang',
       cost: [R, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 10 damage for each damage counter on all of your Benched Single Strike Pokémon.'
     },
     {

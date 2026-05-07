@@ -29,7 +29,7 @@ export class Arbok extends PokemonCard {
       name: 'Rocket Tail',
       cost: [P, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Jessie & James is in your discard pile, this attack does 80 more damage.'
     }
   ];

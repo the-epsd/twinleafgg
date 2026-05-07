@@ -20,7 +20,7 @@ export class Durant extends PokemonCard {
       name: 'Bite Together',
       cost: [G, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Durant is on your Bench, this attack does 60 more damage.'
     }
   ];

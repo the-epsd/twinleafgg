@@ -25,7 +25,7 @@ export class Bisharp extends PokemonCard {
       name: 'Dragon Slayer',
       cost: [D, D, C],
       damage: 80,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If the Defending Pokémon is a Dragon Pokémon, this attack does 40 more damage.'
     }
   ];

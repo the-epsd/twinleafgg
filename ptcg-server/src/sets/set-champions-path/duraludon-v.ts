@@ -30,7 +30,7 @@ export class DuraludonV extends PokemonCard {
       name: 'Gatling Slug',
       cost: [C, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 40 more damage for each [M] Energy attached to this Pokémon.'
     }
   ];

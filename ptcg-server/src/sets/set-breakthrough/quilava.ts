@@ -22,7 +22,7 @@ export class Quilava extends PokemonCard {
       name: 'Mini Eruption',
       cost: [R, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Discard the top card of your deck. If that card is an Energy card, this attack does 30 more damage.'
     }
   ];

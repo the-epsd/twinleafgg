@@ -22,7 +22,7 @@ export class MegaPyroarex extends PokemonCard {
     name: 'Big Bang Fire',
     cost: [R, R, C],
     damage: 290,
-    damageCalculation: '-' as '-',
+    damageCalculation: '-',
     text: 'This attack does 10 less damage for each damage counter on this Pokemon.'
   }];
 

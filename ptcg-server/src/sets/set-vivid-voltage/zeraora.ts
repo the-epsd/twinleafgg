@@ -20,7 +20,7 @@ export class Zeraora extends PokemonCard {
       name: 'Fighting Lightning',
       cost: [L, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon V or Pokémon-GX, this attack does 80 more damage.'
     }
   ];

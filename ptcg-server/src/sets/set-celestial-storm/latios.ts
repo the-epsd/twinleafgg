@@ -22,7 +22,7 @@ export class Latios extends PokemonCard {
       name: 'Dragon Fleet',
       cost: [C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 50 damage for each of your Evolution Dragon Pokémon in play.'
     }
   ];

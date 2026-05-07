@@ -14,7 +14,7 @@ export class Baltoy extends PokemonCard {
     name: 'Continuous Spin',
     cost: [F],
     damage: 30,
-    damageCalculation: 'x' as 'x',
+    damageCalculation: 'x',
     text: 'Flip a coin until you get tails. This attack does 30 damage times the number of heads.'
   }];
 

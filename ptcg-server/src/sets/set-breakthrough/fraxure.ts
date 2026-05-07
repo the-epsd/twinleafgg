@@ -28,7 +28,7 @@ export class Fraxure extends PokemonCard {
       name: 'Dragon Slayer',
       cost: [F, M, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Dragon Pokémon, this attack does 40 more damage (before applying Weakness and Resistance).'
     }
   ];

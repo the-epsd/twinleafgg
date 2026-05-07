@@ -30,7 +30,7 @@ export class Bastiodon extends PokemonCard {
       name: 'Fortress of Rage',
       cost: [M, M, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each of your Benched Pokémon that has any damage counters on it.'
     }
   ];

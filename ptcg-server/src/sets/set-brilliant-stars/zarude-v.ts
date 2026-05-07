@@ -28,7 +28,7 @@ export class ZarudeV extends PokemonCard {
       name: 'Jungle Rage',
       cost: [G, G, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 120 more damage.'
     }
   ];

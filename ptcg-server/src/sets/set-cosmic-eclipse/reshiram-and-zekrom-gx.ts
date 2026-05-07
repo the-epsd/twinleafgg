@@ -28,7 +28,7 @@ export class ReshiramAndZekromGx extends PokemonCard {
       name: 'Fabled Flarebolts',
       cost: [R, L],
       damage: 90,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard up to 3 in any combination of basic Fire and basic [L] Energy cards from your Benched Pokémon. This attack does 90 damage for each card you discarded in this way.'
     },
     {

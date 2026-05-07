@@ -27,7 +27,7 @@ export class AlolanExeggutor2 extends PokemonCard {
       name: 'Egg Splat',
       cost: [G, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard any number of Exeggcute from your hand. This attack does 60 damage for each card you discarded in this way.'
     }
   ];

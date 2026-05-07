@@ -20,7 +20,7 @@ export class Falinks extends PokemonCard {
       name: 'Fighting Headbutt',
       cost: [F],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack\'s damage isn\'t affected by Weakness. If your opponent\'s Active Pokémon is a Pokémon V, this attack does 50 more damage.'
     },
     {

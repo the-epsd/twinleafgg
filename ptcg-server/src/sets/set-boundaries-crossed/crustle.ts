@@ -29,7 +29,7 @@ export class Crustle extends PokemonCard {
       name: 'Stone Edge',
       cost: [F, F, C],
       damage: 70,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

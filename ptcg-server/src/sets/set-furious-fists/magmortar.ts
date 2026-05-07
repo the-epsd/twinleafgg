@@ -28,7 +28,7 @@ export class Magmortar extends PokemonCard {
       name: 'Twin Bursts',
       cost: [R, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Electivire is on your Bench, this attack does 80 more damage.'
     }
   ];

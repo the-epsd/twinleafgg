@@ -23,7 +23,7 @@ export class MTyranitarEx extends PokemonCard {
       name: 'Destroyer King',
       cost: [D, D, C, C],
       damage: 110,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 60 more damage for each damage counter on your opponent\'s Active Pokémon.'
     }
   ];

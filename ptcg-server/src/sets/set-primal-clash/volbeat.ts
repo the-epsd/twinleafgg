@@ -20,14 +20,14 @@ export class Volbeat extends PokemonCard {
       name: 'Acrobatics',
       cost: [G],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     },
     {
       name: 'Pester',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 30 more damage.'
     }
   ];

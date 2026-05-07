@@ -22,7 +22,7 @@ export class Breloom extends PokemonCard {
       name: 'Dynamic Punch',
       cost: [F, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage and your opponent\'s Active Pokémon is now Confused.'
     },
     {

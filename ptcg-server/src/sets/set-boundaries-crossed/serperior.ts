@@ -21,7 +21,7 @@ export class Serperior extends PokemonCard {
       name: 'Double Slash',
       cost: [G, C],
       damage: 50,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
     },
     {

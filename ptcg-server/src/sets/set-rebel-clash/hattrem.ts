@@ -29,7 +29,7 @@ export class Hattrem extends PokemonCard {
       name: 'Brutal Swing',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

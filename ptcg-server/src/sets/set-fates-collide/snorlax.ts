@@ -25,7 +25,7 @@ export class Snorlax extends PokemonCard {
       name: 'Toss and Turn',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack can be used even if this Pokémon is Asleep. If it is, this attack does 90 more damage.'
     },
     {

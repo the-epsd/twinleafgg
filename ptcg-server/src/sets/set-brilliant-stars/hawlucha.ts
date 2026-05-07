@@ -29,7 +29,7 @@ export class Hawlucha extends PokemonCard {
       name: 'Cross-Cut',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 30 more damage.'
     }
   ];

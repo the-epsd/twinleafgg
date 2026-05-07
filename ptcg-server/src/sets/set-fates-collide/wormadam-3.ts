@@ -23,14 +23,14 @@ export class Wormadam3 extends PokemonCard {
       name: 'Strike Back',
       cost: [M],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage times the number of damage counters on this Pokémon.'
     },
     {
       name: 'Iron Head',
       cost: [M, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin until you get tails. This attack does 20 more damage for each heads.'
     }
   ];

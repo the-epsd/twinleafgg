@@ -20,7 +20,7 @@ export class Pancham extends PokemonCard {
       name: 'Karate Chop',
       cost: [F, F],
       damage: 60,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-',
       text: 'This attack does 10 less damage for each damage counter on this Pokémon.'
     }
   ];

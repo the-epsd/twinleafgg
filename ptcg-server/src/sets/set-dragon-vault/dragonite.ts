@@ -24,7 +24,7 @@ export class Dragonite extends PokemonCard {
       name: 'Hurricane Tail',
       cost: [G, C, C, C],
       damage: 60,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 60 damage times the number of heads.'
     }
   ];

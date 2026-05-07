@@ -29,7 +29,7 @@ export class Stunfisk extends PokemonCard {
       name: 'Electric Trap',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage for each of your Pokémon that has any damage counters on it.'
     }
   ];

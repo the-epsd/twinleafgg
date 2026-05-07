@@ -29,7 +29,7 @@ export class Musharna extends PokemonCard {
       name: 'Super Hypnoblast',
       cost: [P, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is Asleep, this attack does 120 more damage.'
     }
   ];

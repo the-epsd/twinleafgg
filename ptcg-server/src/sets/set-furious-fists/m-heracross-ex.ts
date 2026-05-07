@@ -22,7 +22,7 @@ export class MHeracrossEx extends PokemonCard {
       name: 'Big Bang Horn',
       cost: [G, G, C],
       damage: 180,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-',
       text: 'This attack does 180 damage minus 10 damage for each damage counter on this Pok\u00e9mon.'
     }
   ];

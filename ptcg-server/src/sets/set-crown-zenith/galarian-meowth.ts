@@ -22,7 +22,7 @@ export class GalarianMeowth extends PokemonCard {
       name: 'Fasten Claws',
       cost: [M],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

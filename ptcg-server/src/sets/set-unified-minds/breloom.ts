@@ -27,7 +27,7 @@ export class Breloom extends PokemonCard {
       name: 'Pre-Dawn Strike',
       cost: [G],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is Asleep, this attack does 90 more damage.'
     }
   ];

@@ -28,7 +28,7 @@ export class Combusken extends PokemonCard {
       name: 'Midair Strike',
       cost: [R, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

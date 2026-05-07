@@ -30,7 +30,7 @@ export class Shiftry extends PokemonCard {
       name: 'Deranged Dance',
       cost: [G, C, C],
       damage: 20,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'This attack does 20 damage times the number of Benched Pokémon (both yours and your opponent\'s).'
     }
   ];

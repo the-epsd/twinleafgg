@@ -21,7 +21,7 @@ export class Hitmonchan extends PokemonCard {
       name: 'Clean Hit',
       cost: [F],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 50 more damage.'
     },
     {

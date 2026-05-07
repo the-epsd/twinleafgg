@@ -23,7 +23,7 @@ export class Wigglytuff2 extends PokemonCard {
       name: 'Balloon Barrage',
       cost: [C],
       damage: 20,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'This attack does 20 damage times the amount of Energy attached to this Pokémon.'
     },
     {

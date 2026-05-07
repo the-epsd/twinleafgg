@@ -29,7 +29,7 @@ export class GalarianDarmanitan extends PokemonCard {
       name: 'Frozen Heat',
       cost: [W, W, C],
       damage: 110,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard all [W] Energy from this Pokémon. If you do, this attack does 60 more damage.'
     }
   ];

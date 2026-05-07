@@ -22,7 +22,7 @@ export class MMewtwoEx extends PokemonCard {
       name: 'Vanishing Strike',
       cost: [P, F, F, C],
       damage: 150,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 50 more damage, and this attack\'s damage isn\'t affected by Resistance or any effects on your opponent\'s Active Pokémon.'
     }
   ];

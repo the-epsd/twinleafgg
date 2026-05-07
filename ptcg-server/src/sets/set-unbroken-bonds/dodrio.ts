@@ -22,7 +22,7 @@ export class Dodrio extends PokemonCard {
       name: 'Tri Attack',
       cost: [C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 60 damage for each heads.'
     },
     {

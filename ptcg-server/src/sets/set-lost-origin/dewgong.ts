@@ -34,7 +34,7 @@ export class Dewgong extends PokemonCard {
       name: 'Floe Return',
       cost: [C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Shuffle any amount of [W] Energy from your Pokémon into your deck. This attack does 40 damage for each card you shuffled into your deck in this way.'
     }
   ];

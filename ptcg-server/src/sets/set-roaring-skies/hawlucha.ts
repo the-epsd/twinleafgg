@@ -28,7 +28,7 @@ export class Hawlucha extends PokemonCard {
       name: 'Midair Strike',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];

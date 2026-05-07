@@ -28,7 +28,7 @@ export class MrMime extends PokemonCard {
       name: 'Juggling',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 20 damage times the number of heads.'
     }
   ];

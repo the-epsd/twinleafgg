@@ -22,7 +22,7 @@ export class Starmie extends PokemonCard {
       name: 'Synchro Star',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon and your opponent\'s Active Pokémon have the same amount of Energy attached to them, this attack does 60 more damage.'
     }
   ];

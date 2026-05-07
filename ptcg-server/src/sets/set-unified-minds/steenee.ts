@@ -17,7 +17,7 @@ export class Steenee extends PokemonCard {
       name: 'Double Slap',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 30 damage for each heads.'
     },
     {

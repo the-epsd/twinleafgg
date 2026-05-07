@@ -29,7 +29,7 @@ export class Slowbro extends PokemonCard {
       name: 'Facade',
       cost: [P, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon is Burned or Poisoned, this attack does 80 more damage.'
     }
   ];

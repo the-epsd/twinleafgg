@@ -23,7 +23,7 @@ export class HisuianBraviary extends PokemonCard {
       name: 'Psywave',
       cost: [],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage for each Energy attached to your opponent\'s Active Pokémon.'
     },
     {

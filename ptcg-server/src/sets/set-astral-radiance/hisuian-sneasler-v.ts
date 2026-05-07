@@ -27,7 +27,7 @@ export class HisuianSneaslerV extends PokemonCard {
       name: 'Dire Claw',
       cost: [D, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 80 damage for each Special Condition affecting your opponent\'s Active Pokémon.'
     }
   ];

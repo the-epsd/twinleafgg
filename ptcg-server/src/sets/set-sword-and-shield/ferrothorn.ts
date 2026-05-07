@@ -22,7 +22,7 @@ export class Ferrothorn extends PokemonCard {
       name: 'Triple Smash',
       cost: [C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 30 damage for each heads.'
     },
     {

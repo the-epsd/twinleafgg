@@ -20,7 +20,7 @@ export class Druddigon extends PokemonCard {
       name: 'Proud Fang',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has any Pokémon BREAK in play, this attack does 60 more damage.'
     },
     {

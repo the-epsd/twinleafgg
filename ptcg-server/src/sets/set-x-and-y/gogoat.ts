@@ -29,7 +29,7 @@ export class Gogoat extends PokemonCard {
       name: 'Charge Dash',
       cost: [G, C, C],
       damage: 70,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'You may do 20 more damage. If you do, this Pokémon does 20 damage to itself.'
     }
   ];

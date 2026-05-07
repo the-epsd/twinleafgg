@@ -22,7 +22,7 @@ export class GranbullV extends PokemonCard {
       name: 'Chomp',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     },
     {

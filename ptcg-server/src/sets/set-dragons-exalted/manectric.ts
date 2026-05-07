@@ -19,7 +19,7 @@ export class Manectric extends PokemonCard {
       name: 'Energy Crush',
       cost: [L],
       damage: 20,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Does 20 damage times the amount of Energy attached to all of your opponent\'s Pokémon.'
     },
     {

@@ -21,7 +21,7 @@ export class Mudsdale extends PokemonCard {
       name: 'Double Impact',
       cost: [F, F, F],
       damage: 120,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 120 damage for each heads.'
     }
   ];

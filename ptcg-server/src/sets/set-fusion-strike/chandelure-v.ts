@@ -32,7 +32,7 @@ export class ChandelureV extends PokemonCard {
       name: 'Poltergeist',
       cost: [R, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Your opponent reveals their hand. This attack does 40 damage for each Trainer card you find there.'
     }
   ];

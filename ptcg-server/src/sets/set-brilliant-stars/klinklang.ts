@@ -30,7 +30,7 @@ export class Klinklang extends PokemonCard {
       name: 'Tumbling Attack',
       cost: [M, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 90 more damage.'
     }
   ];

@@ -15,7 +15,7 @@ export class Espurr extends PokemonCard {
     name: 'Buddy Attack',
     cost: [P],
     damage: 10,
-    damageCalculation: '+' as '+',
+    damageCalculation: '+',
     text: 'If you played Emma from your hand this turn, this attack does 60 more damage.'
   }];
 

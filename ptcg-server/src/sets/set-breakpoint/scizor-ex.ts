@@ -30,7 +30,7 @@ export class ScizorEx extends PokemonCard {
       name: 'Gale Thrust',
       cost: [M, M],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 60 more damage.'
     }
   ];

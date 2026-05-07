@@ -26,7 +26,7 @@ export class Keldeo extends PokemonCard {
       name: 'Four as One',
       cost: [W, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Cobalion, Terrakion, and Virizion are on your Bench, this attack does 170 more damage.'
     }
   ];

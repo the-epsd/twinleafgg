@@ -26,7 +26,7 @@ export class AltariaEx extends PokemonCard {
       name: 'Powerful Gain',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon was healed during this turn, this attack does 60 more damage and heal 30 damage from this Pokémon.'
     },
     {

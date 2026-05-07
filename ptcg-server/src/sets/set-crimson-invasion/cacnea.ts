@@ -21,7 +21,7 @@ export class Cacnea extends PokemonCard {
       name: 'Sucker Punch',
       cost: [G],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any [D] Energy attached to it, this attack does 30 more damage.'
     }
   ];

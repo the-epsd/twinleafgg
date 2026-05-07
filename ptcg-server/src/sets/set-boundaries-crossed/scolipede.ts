@@ -30,7 +30,7 @@ export class Scolipede extends PokemonCard {
       name: 'Venoshock',
       cost: [P, P, C, C],
       damage: 80,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If the Defending Pokémon is Poisoned, this attack does 40 more damage.'
     }
   ];

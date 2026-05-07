@@ -29,7 +29,7 @@ export class Weezing extends PokemonCard {
       name: 'Smog Burst',
       cost: [D, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each [D] Energy attached to all of your Pokémon.'
     }
   ];

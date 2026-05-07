@@ -28,7 +28,7 @@ export class Gardevoir extends PokemonCard {
       name: 'Sensitive Ray',
       cost: [Y, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you played a Supporter card from your hand during this turn, this attack does 90 more damage.'
     }
   ];

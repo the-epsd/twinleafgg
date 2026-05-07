@@ -25,7 +25,7 @@ export class Stantler extends PokemonCard {
       name: 'Enhanced Horns',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 60 more damage.'
     }
   ];

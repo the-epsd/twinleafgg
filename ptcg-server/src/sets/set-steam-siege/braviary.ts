@@ -24,14 +24,14 @@ export class Braviary extends PokemonCard {
       name: 'Ambush',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 50 more damage.'
     },
     {
       name: 'Sky Drop',
       cost: [C, C, C],
       damage: 120,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-',
       text: 'This attack does 120 damage minus 20 damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];

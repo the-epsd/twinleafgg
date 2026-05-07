@@ -27,7 +27,7 @@ export class Empoleon extends PokemonCard {
       name: 'Emperor\'s Strike',
       cost: [W, W, C],
       damage: 70,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If this Pokémon has fewer remaining HP than the Defending Pokémon, this attack does 60 more damage.'
     }
   ];

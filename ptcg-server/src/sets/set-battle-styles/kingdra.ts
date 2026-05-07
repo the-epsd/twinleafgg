@@ -33,7 +33,7 @@ export class Kingdra extends PokemonCard {
       name: 'Aqua Burst',
       cost: [W],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 40 damage for each [W] Energy attached to this Pokémon.'
     }
   ];

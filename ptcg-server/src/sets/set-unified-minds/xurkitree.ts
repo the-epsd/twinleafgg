@@ -18,7 +18,7 @@ export class Xurkitree extends PokemonCard {
       name: 'Three Mirrors',
       cost: [L],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has exactly 3 Prize cards remaining, this attack does 90 more damage.'
     },
     {

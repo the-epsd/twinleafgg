@@ -22,7 +22,7 @@ export class Seviper extends PokemonCard {
       name: 'Strong Tail',
       cost: [D, D, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you played a Single Strike Supporter card from your hand during this turn, this attack does 90 more damage.'
     }
   ];

@@ -26,7 +26,7 @@ export class Keldeo extends PokemonCard {
       name: 'Resolute Blade',
       cost: [W, W],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each of your opponent\'s Benched Pokémon.'
     }
   ];

@@ -33,7 +33,7 @@ export class Ampharos extends PokemonCard {
       name: 'Electron Crush',
       cost: [L, L, L, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard 3 [L] Energy from this Pokémon. If you do, this attack does 120 more damage.'
     }
   ];

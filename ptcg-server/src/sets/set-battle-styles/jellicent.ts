@@ -22,7 +22,7 @@ export class Jellicent extends PokemonCard {
       name: 'Sediment Sink',
       cost: [W, W],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 10 damage for each [W] Energy card in your discard pile.'
     }
   ];

@@ -26,7 +26,7 @@ export class Kangaskhan extends PokemonCard {
       name: 'Tag Impact',
       cost: [C, C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 50 damage for each of your TAG TEAM Pokémon in play.'
     }
   ];

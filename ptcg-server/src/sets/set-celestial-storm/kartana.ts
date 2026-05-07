@@ -22,7 +22,7 @@ export class Kartana extends PokemonCard {
       name: 'Divine Paper',
       cost: [M, M],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has exactly 6 Prize cards remaining, this attack does 90 more damage.'
     }
   ];

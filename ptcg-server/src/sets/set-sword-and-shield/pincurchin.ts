@@ -21,7 +21,7 @@ export class Pincurchin extends PokemonCard {
       name: 'Shocking Needles',
       cost: [L, L],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 30 damage for each heads. If at least 2 of them are heads, your opponent\'s Active Pokémon is now Paralyzed.'
     }
   ];

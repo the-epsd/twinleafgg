@@ -26,7 +26,7 @@ export class Zacian extends PokemonCard {
       name: 'Amazing Sword',
       cost: [G, P, M],
       damage: 150,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has any Pokémon VMAX in play, this attack does 150 more damage.'
     }
   ];

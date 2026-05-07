@@ -13,7 +13,7 @@ export class Tauros extends PokemonCard {
     name: 'Crowd Targeting',
     cost: [C, C],
     damage: 0,
-    damageCalculation: 'x' as 'x',
+    damageCalculation: 'x',
     text: 'Choose 1 of your opponent\'s Pokemon. Flip a coin for each of your Pokemon that has "Tauros" in its name. This attack does 50 damage for each heads to that Pokemon.'
   }];
   public regulationMark = 'J';

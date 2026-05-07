@@ -29,7 +29,7 @@ export class ChandelureVmax extends PokemonCard {
       name: 'Max Poltergeist',
       cost: [R, C],
       damage: 70,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Your opponent reveals their hand. This attack does 70 damage for each Trainer card you find there.'
     }
   ];

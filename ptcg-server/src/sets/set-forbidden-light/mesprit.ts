@@ -27,7 +27,7 @@ export class Mesprit extends PokemonCard {
       name: 'Mind Splash',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Uxie is on your Bench, this attack does 50 more damage.'
     }
   ];

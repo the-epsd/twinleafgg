@@ -28,7 +28,7 @@ export class Luxio extends PokemonCard {
       name: 'Electricounter',
       cost: [L, L, C],
       damage: 40,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'This attack does 40 damage times the number of Prize cards your opponent has taken.'
     }
   ];

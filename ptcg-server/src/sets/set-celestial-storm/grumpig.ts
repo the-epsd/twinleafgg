@@ -21,7 +21,7 @@ export class Grumpig extends PokemonCard {
       name: 'Mirror Step',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If 1 of your opponent\'s Pokémon in play has the same name as 1 of your Pokémon in play, this attack does 70 more damage.'
     }
   ];

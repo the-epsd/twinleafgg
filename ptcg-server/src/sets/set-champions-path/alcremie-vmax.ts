@@ -32,7 +32,7 @@ export class AlcremieVmax extends PokemonCard {
       name: 'G-Max Whisk',
       cost: [P, P],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard any amount of Energy from your Pokémon. This attack does 60 damage for each card you discarded in this way.'
     }
   ];

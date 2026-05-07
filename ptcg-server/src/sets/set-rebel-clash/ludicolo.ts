@@ -22,7 +22,7 @@ export class Ludicolo extends PokemonCard {
       name: 'Spirited Rushdown',
       cost: [C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 60 damage for each Prize card you have taken.'
     },
     {

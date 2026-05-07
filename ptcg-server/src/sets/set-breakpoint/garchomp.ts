@@ -27,7 +27,7 @@ export class Garchomp extends PokemonCard {
       name: 'Bite Off',
       cost: [F, F],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, this attack does 80 more damage.'
     }
   ];

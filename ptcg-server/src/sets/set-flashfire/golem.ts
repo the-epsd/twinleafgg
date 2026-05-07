@@ -22,7 +22,7 @@ export class Golem extends PokemonCard {
       name: 'Stone Edge',
       cost: [F, F, C],
       damage: 60,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {

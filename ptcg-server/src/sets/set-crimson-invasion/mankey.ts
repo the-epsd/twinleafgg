@@ -20,7 +20,7 @@ export class Mankey extends PokemonCard {
       name: 'Three-Step Strike',
       cost: [F],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 10 damage for each heads.'
     }
   ];

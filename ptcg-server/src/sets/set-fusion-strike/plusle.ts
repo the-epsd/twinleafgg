@@ -22,7 +22,7 @@ export class Plusle extends PokemonCard {
       name: 'Spark Duo',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If 1 of your Minun used an attack during your last turn, this attack does 100 more damage.'
     }
   ];

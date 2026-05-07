@@ -28,7 +28,7 @@ export class GalarianSirfetchd extends PokemonCard {
       name: 'Leek Strike',
       cost: [F, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has a Pokémon Tool attached, this attack does 90 more damage, and this attack\'s damage isn\'t affected by Resistance.'
     }
   ];

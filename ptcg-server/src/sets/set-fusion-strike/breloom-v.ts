@@ -21,7 +21,7 @@ export class BreloomV extends PokemonCard {
       name: 'Counter',
       cost: [G, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon was damaged by an attack during your opponent\'s last turn, this attack does that much more damage.'
     },
     {

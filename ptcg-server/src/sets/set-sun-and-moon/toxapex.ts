@@ -28,7 +28,7 @@ export class Toxapex extends PokemonCard {
       name: 'Venoshock',
       cost: [P, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 50 more damage.'
     }
   ];

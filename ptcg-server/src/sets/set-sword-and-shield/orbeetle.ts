@@ -30,7 +30,7 @@ export class Orbeetle extends PokemonCard {
       name: 'Brainwave',
       cost: [G, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each [P] Energy attached to this Pokémon.'
     }
   ];

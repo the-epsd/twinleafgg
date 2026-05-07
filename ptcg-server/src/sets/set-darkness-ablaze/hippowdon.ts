@@ -21,7 +21,7 @@ export class Hippowdon extends PokemonCard {
       name: 'Triple Smash',
       cost: [F, F, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 80 damage for each heads.'
     },
     {

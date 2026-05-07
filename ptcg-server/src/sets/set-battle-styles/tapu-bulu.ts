@@ -27,7 +27,7 @@ export class TapuBulu extends PokemonCard {
       name: 'Nature\'s Judgment',
       cost: [G, G, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard all Energy from this Pokémon. If you do, this attack does 80 more damage.'
     }
   ];

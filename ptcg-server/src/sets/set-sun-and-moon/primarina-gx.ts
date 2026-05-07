@@ -25,7 +25,7 @@ export class PrimarinaGx extends PokemonCard {
       name: 'Bubble Beat',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage times the amount of [W] Energy attached to your Pokémon.'
     },
     {

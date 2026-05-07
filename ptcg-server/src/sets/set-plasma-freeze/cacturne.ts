@@ -26,7 +26,7 @@ export class Cacturne extends PokemonCard {
       name: 'Payback',
       cost: [G, C],
       damage: 30,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If your opponent has only 1 Prize card left, this attack does 60 more damage and discard an Energy attached to the Defending Pokémon.'
     }
   ];

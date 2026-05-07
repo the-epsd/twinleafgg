@@ -29,7 +29,7 @@ export class AlolanRaichu extends PokemonCard {
       name: 'Psychic',
       cost: [C, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

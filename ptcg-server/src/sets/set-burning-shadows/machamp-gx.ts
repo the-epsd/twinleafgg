@@ -22,7 +22,7 @@ export class MachampGx extends PokemonCard {
       name: 'Cross-Cut',
       cost: [F, F],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 60 more damage.'
     },
     {

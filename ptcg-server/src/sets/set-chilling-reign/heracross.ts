@@ -27,7 +27,7 @@ export class Heracross extends PokemonCard {
       name: 'Single-Horn Throw',
       cost: [G, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 2 coins. If both of them are heads, this attack does 160 more damage.'
     }
   ];

@@ -16,7 +16,7 @@ export class Xerneas extends PokemonCard {
     name: 'Geostorm',
     cost: [P, P, P],
     damage: 0,
-    damageCalculation: 'x' as 'x',
+    damageCalculation: 'x',
     text: 'This attack does 30 damage times the number of [P] Energy attached to all of your Pokemon.'
   }];
 

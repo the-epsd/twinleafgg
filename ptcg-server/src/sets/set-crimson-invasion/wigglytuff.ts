@@ -29,7 +29,7 @@ export class Wigglytuff extends PokemonCard {
       name: 'Punishing Slap',
       cost: [Y, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If any of your opponent\'s Pokémon have any [D] Energy attached to them, this attack does 60 more damage.'
     }
   ];

@@ -27,7 +27,7 @@ export class Carnivine extends PokemonCard {
       name: 'Loom Over',
       cost: [G, G],
       damage: 90,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-',
       text: 'This attack does 10 less damage for each damage counter on this Pokémon.'
     }
   ];

@@ -27,7 +27,7 @@ export class Metagross2 extends PokemonCard {
       name: 'Machine Gun Stomp',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each card in your hand.'
     },
     {

@@ -16,7 +16,7 @@ export class Terrakion extends PokemonCard {
       name: 'Cavern Counter',
       cost: [F, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If all of your Benched Pokémon have at least 1 damage counter on them, this attack does 150 more damage.'
     },
     {

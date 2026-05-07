@@ -22,7 +22,7 @@ export class Gumshoos extends PokemonCard {
       name: 'Stakeout Headbutt',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon moved from the Bench to the Active Spot during your opponent\'s last turn, this attack does 120 more damage.'
     },
     {

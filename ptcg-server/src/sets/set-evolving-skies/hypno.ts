@@ -28,7 +28,7 @@ export class Hypno extends PokemonCard {
       name: 'Wake-Up Slap',
       cost: [P],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 90 more damage. Then, that Pokémon recovers from all Special Conditions.'
     }
   ];

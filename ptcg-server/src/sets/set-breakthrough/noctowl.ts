@@ -23,7 +23,7 @@ export class Noctowl extends PokemonCard {
       name: 'High Flight',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Each player reveals his or her hand. This attack does 20 damage times the number of Item cards revealed.'
     },
     {

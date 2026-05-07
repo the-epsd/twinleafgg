@@ -29,7 +29,7 @@ export class Marowak extends PokemonCard {
       name: 'Bonemerang',
       cost: [F, C],
       damage: 90,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 90 damage for each heads.'
     }
   ];

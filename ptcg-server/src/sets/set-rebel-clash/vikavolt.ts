@@ -21,7 +21,7 @@ export class Vikavolt extends PokemonCard {
       name: 'Powerful Storm',
       cost: [L, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each Energy attached to all of your Pokémon.'
     },
     {

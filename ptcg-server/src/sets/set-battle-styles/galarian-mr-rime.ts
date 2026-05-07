@@ -23,7 +23,7 @@ export class GalarianMrRime extends PokemonCard {
       name: 'Ball Juggling',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Discard any number of Item cards that have the word "Ball" in their name from your hand. This attack does 40 more damage for each card you discarded in this way.'
     },
     {

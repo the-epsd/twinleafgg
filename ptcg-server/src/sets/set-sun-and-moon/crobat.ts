@@ -29,7 +29,7 @@ export class Crobat extends PokemonCard {
       name: 'Surprise Strike',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 60 more damage.'
     }
   ];

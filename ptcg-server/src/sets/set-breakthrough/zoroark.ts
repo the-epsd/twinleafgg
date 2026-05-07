@@ -29,7 +29,7 @@ export class Zoroark extends PokemonCard {
       name: 'Mind Jack',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each of your opponent\'s Benched Pokémon.'
     }
   ];

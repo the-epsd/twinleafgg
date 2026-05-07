@@ -33,7 +33,7 @@ export class Raichu extends PokemonCard {
       name: 'Ace Spark',
       cost: [L, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have used your VSTAR Power, this attack does 120 more damage.'
     }
   ];

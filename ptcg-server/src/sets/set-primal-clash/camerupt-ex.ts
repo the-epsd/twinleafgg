@@ -23,14 +23,14 @@ export class CameruptEx extends PokemonCard {
       name: 'Tumbling Attack',
       cost: [R, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {
       name: 'Explosive Jet',
       cost: [R, R, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard as many [R] Energy attached to your Pokémon as you like. This attack does 50 damage times the number of Energy cards you discarded.'
     }
   ];

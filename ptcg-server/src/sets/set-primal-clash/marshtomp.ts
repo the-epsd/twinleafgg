@@ -27,7 +27,7 @@ export class Marshtomp extends PokemonCard {
       name: 'Endeavor',
       cost: [W, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     }
   ];

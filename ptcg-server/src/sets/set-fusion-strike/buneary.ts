@@ -21,7 +21,7 @@ export class Buneary extends PokemonCard {
       name: 'Double Kick',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 20 damage for each heads.'
     }
   ];

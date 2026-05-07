@@ -23,7 +23,7 @@ export class CopperajahVmax extends PokemonCard {
       name: 'Dangerous Nose',
       cost: [M, M, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, this attack does 100 more damage.'
     },
     {

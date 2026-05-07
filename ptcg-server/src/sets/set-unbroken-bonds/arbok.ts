@@ -26,7 +26,7 @@ export class Arbok extends PokemonCard {
       name: 'Heavy Choke',
       cost: [P, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon used Wrap during your last turn, this attack does 120 more damage.'
     }
   ];

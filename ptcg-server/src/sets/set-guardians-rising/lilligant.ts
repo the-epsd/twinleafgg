@@ -28,7 +28,7 @@ export class Lilligant extends PokemonCard {
       name: 'Petal Dance',
       cost: [G, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 40 damage for each heads. This Pokémon is now Confused.'
     }
   ];

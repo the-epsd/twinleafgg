@@ -328,7 +328,7 @@ export class ToxicroakFLI extends Toxicroak {
     name: 'Exact Revenge',
     cost: [C, C],
     damage: 50,
-    damageCalculation: '+' as '+',
+    damageCalculation: '+',
     text: 'If any of your Fighting Pokémon were Knocked Out by damage from an opponent\'s attack during their last turn, this attack does 70 more damage.'
   }];
 }
@@ -343,7 +343,7 @@ export class EmpoleonFLI extends Empoleon {
     name: 'Total Command',
     cost: [M, C],
     damage: 20,
-    damageCalculation: 'x' as 'x',
+    damageCalculation: 'x',
     text: 'This attack does 20 damage for each Benched Pokémon (both yours and your opponent\'s).'
   },
   {

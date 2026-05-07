@@ -22,7 +22,7 @@ export class TapuLele extends PokemonCard {
       name: 'Energy Burst',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each Energy attached to both Active Pokémon.'
     },
     {

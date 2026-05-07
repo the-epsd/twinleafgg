@@ -18,7 +18,7 @@ export class Gourgeistex extends PokemonCard {
     name: 'Horror Rondo',
     cost: [P],
     damage: 30,
-    damageCalculation: '+' as '+',
+    damageCalculation: '+',
     text: 'This attack does 50 more damage for each of your Benched Pokemon that have any damage counters on them.'
   },
   {

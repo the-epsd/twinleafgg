@@ -30,7 +30,7 @@ export class Aegislash extends PokemonCard {
       name: 'Trash Slash',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 10 damage for each Item card in your discard pile. You can\'t do more than 130 damage in this way.'
     }
   ];

@@ -27,7 +27,7 @@ export class Dugtrio extends PokemonCard {
       name: 'Triple Heads',
       cost: [F, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 60 damage for each heads. If all of them are heads, during your opponent\'s next turn, prevent all damage from and effects of attacks done to this Pokémon.'
     }
   ];

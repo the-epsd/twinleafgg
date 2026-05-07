@@ -26,7 +26,7 @@ export class MegaExcadrillex extends PokemonCard {
       name: 'Maximum Drill',
       cost: [M, M, M],
       damage: 200,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has at least 2 extra Energy attached to it (in addition to this attack\'s cost), this attack does 130 more damage.',
     },
   ];

@@ -23,7 +23,7 @@ export class ThundurusEx extends PokemonCard {
       name: 'Headlock',
       cost: [L, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
     },
     {

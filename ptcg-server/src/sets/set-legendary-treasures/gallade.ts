@@ -26,7 +26,7 @@ export class Gallade extends PokemonCard {
       name: 'Pandemonium Blade',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Does 20 more damage for each of your Benched Pokémon that has any damage counters on it.'
     }
   ];

@@ -22,7 +22,7 @@ export class Grovyle extends PokemonCard {
       name: 'Leaf Blade',
       cost: [G],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];

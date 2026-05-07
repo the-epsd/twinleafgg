@@ -25,7 +25,7 @@ export class Seaking extends PokemonCard {
       name: 'Soaking Horn',
       cost: [W],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon was healed during this turn, this attack does 80 more damage.'
     },
     {

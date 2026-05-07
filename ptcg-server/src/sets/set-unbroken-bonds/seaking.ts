@@ -21,7 +21,7 @@ export class Seaking extends PokemonCard {
       name: 'Enhanced Horn',
       cost: [W],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 30 damage for each heads. If this Pokémon has a Pokémon Tool card attached to it, flip 6 coins instead.'
     }
   ];

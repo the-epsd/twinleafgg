@@ -22,7 +22,7 @@ export class Deoxys extends PokemonCard {
       name: 'Psychic',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     },
     {

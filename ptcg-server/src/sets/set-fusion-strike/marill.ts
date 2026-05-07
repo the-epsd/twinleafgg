@@ -27,7 +27,7 @@ export class Marill extends PokemonCard {
       name: 'Let\'s All Rollout',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each of your Benched Pokémon that has the Let\'s All Rollout attack.'
     }
   ];

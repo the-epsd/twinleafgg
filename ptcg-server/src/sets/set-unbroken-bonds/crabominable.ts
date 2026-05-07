@@ -21,7 +21,7 @@ export class Crabominable extends PokemonCard {
       name: 'Fight Alone',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have fewer Pokémon in play than your opponent, this attack does 50 more damage for each Pokémon fewer you have in play.'
     },
     {

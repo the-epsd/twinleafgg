@@ -28,7 +28,7 @@ export class Salamence extends PokemonCard {
       name: 'Power Howl',
       cost: [W, C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage times the number of cards in your opponent\'s hand.'
     },
     {

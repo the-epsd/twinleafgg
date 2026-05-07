@@ -28,7 +28,7 @@ export class BlackKyurem extends PokemonCard {
       name: 'Dazzling Blizzard',
       cost: [W, W, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have any Stadium card in play, this attack does 100 more damage.'
     }
   ];

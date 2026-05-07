@@ -28,7 +28,7 @@ export class Durant extends PokemonCard {
       name: 'Hard Crunch',
       cost: [M, C, C],
       damage: 40,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If the Defending Pokémon already has any damage counters on it, this attack does 30 more damage.'
     }
   ];

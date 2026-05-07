@@ -21,7 +21,7 @@ export class Toxicroak extends PokemonCard {
       name: 'Revenge',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If any of your Pokémon were Knocked Out by damage from an opponent\'s attack during his or her last turn, this attack does 70 more damage.'
     },
     {

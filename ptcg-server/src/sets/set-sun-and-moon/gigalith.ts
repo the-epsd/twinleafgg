@@ -23,7 +23,7 @@ export class Gigalith extends PokemonCard {
       name: 'Rock Artillery',
       cost: [F, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard any amount of [F] Energy from your Pokémon. This attack does 50 damage for each card you discarded in this way.'
     },
     {

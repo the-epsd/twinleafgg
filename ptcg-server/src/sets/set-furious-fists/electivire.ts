@@ -24,14 +24,14 @@ export class Electivire extends PokemonCard {
       name: 'Tag Team Spark',
       cost: [L],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each Energy attached to your Magmortar.'
     },
     {
       name: 'Gigavolt',
       cost: [L, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
     }
   ];

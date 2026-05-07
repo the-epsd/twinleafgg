@@ -21,7 +21,7 @@ export class Deino2 extends PokemonCard {
       name: 'Slam',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
     }
   ];

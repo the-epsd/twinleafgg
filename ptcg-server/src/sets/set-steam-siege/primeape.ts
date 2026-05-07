@@ -29,7 +29,7 @@ export class Primeape extends PokemonCard {
       name: 'Spirited Throw',
       cost: [F, F],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If, before doing damage, your opponent\'s Active Pok\u00e9mon has more remaining HP than this Pok\u00e9mon, this attack does 60 more damage.'
     }
   ];

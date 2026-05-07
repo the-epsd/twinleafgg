@@ -27,7 +27,7 @@ export class Houndour extends PokemonCard {
       name: 'Ambush',
       cost: [D, C],
       damage: 20,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];

@@ -31,7 +31,7 @@ export class WhimsicottGx extends PokemonCard {
       name: 'Energy Blow',
       cost: [Y],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage times the amount of Energy attached to this Pokémon.'
     },
     {

@@ -28,7 +28,7 @@ export class Honchkrow extends PokemonCard {
       name: 'Nightmare Mambo',
       cost: [D, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is Asleep, this attack does 60 more damage.'
     }
   ];

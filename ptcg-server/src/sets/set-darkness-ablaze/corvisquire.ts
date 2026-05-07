@@ -28,7 +28,7 @@ export class Corvisquire extends PokemonCard {
       name: 'Fury Attack',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 40 damage for each heads.'
     }
   ];

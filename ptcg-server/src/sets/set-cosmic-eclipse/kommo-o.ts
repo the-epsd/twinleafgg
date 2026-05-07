@@ -28,7 +28,7 @@ export class KommoO extends PokemonCard {
       name: 'Scaly Uppercut',
       cost: [L, F],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard a Pokémon Tool card from this Pokémon. If you do, this attack does 90 more damage.'
     }
   ];

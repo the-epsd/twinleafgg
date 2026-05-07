@@ -30,7 +30,7 @@ export class Raichu extends PokemonCard {
       name: 'Electrosmash',
       cost: [L, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

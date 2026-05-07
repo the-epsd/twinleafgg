@@ -29,7 +29,7 @@ export class Heliolisk extends PokemonCard {
       name: 'Parabolic Spark',
       cost: [L, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard as many [L] Energy attached to your Pokémon as you like. This attack does 30 damage times the number of Energy cards you discarded.'
     }
   ];

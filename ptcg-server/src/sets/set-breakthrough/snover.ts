@@ -25,7 +25,7 @@ export class Snover extends PokemonCard {
       name: 'Double Smash',
       cost: [W, C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
     }
   ];

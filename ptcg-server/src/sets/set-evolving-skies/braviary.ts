@@ -22,7 +22,7 @@ export class Braviary extends PokemonCard {
       name: 'Valiant Talons',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 60 more damage.'
     },
     {

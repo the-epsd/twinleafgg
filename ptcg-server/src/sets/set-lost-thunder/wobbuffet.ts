@@ -30,7 +30,7 @@ export class Wobbuffet extends PokemonCard {
       name: 'Knock Away',
       cost: [P, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

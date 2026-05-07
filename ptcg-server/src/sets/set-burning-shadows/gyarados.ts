@@ -22,7 +22,7 @@ export class Gyarados extends PokemonCard {
       name: 'Venting Anger',
       cost: [C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 50 damage for each Magikarp in your discard pile.'
     },
     {

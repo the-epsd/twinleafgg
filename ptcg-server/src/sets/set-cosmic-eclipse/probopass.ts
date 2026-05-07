@@ -34,7 +34,7 @@ export class Probopass extends PokemonCard {
       name: 'Triple Nose',
       cost: [M, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 3 coins. This attack does 40 more damage for each heads.'
     }
   ];

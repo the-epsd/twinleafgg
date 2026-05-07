@@ -25,7 +25,7 @@ export class Metagross extends PokemonCard {
     name: 'Metallic Hammer',
     cost: [M, M, M, C],
     damage: 150,
-    damageCalculation: '+' as '+',
+    damageCalculation: '+',
     text: 'You may discard 3 [M] Energy from this Pokemon. If you do, this attack does 150 more damage.'
   }];
 

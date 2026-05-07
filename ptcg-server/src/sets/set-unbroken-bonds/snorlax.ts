@@ -27,7 +27,7 @@ export class Snorlax extends PokemonCard {
       name: 'Big Counter',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a TAG TEAM, this attack does 120 more damage.'
     }
   ];

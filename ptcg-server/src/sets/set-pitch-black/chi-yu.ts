@@ -16,7 +16,7 @@ export class ChiYu extends PokemonCard {
       name: 'Spiraling Envy',
       cost: [D],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has 2 or more damage counters on it, this attack does 90 more damage. Don\'t apply Weakness for this attack\'s damage.',
     },
   ];

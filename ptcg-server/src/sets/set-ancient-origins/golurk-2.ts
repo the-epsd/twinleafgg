@@ -28,7 +28,7 @@ export class Golurk2 extends PokemonCard {
       name: 'Double Lariat',
       cost: [F, C, C, C],
       damage: 90,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 90 damage times the number of heads.'
     }
   ];

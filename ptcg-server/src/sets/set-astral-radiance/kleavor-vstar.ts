@@ -29,7 +29,7 @@ export class KleavorVstar extends PokemonCard {
       name: 'Rampaging Star',
       cost: [F],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage for each Pokémon in your discard pile. (You can\'t use more than 1 VSTAR Power in a game.)'
     }
   ];

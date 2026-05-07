@@ -32,7 +32,7 @@ export class Haxorus extends PokemonCard {
       name: 'Powerful Axe',
       cost: [R, M],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 40 more damage times the amount of basic Energy attached to this Pokemon.'
     }
   ];

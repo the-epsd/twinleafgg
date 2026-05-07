@@ -29,7 +29,7 @@ export class Carbink extends PokemonCard {
       name: 'Stone Edge',
       cost: [F, F, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

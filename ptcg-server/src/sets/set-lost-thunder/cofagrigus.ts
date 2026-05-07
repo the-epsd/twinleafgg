@@ -22,7 +22,7 @@ export class Cofagrigus extends PokemonCard {
       name: 'Spirit Juggling',
       cost: [P, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Discard any number of your Benched Pokémon. This attack does 30 more damage for each Benched Pokémon you discarded in this way.'
     }
   ];

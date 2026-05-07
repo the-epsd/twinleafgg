@@ -28,7 +28,7 @@ export class Magearna extends PokemonCard {
       name: 'Windup Beam',
       cost: [M, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has a Pokémon Tool attached, this attack does 60 more damage, and your opponent\'s Active Pokémon is now Confused.'
     }
   ];

@@ -23,7 +23,7 @@ export class GrimmsnarlVmax extends PokemonCard {
       name: 'G-Max Drill',
       cost: [D, D, D],
       damage: 170,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 50 more damage for each extra [D] Energy attached to this Pokémon (in addition to this attack\'s cost). You can\'t add more than 100 damage in this way.'
     }
   ];

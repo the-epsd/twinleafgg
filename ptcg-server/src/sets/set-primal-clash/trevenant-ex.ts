@@ -31,7 +31,7 @@ export class TrevenantEx extends PokemonCard {
       name: 'Wood Blast',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each [G] Energy attached to this Pokémon.'
     }
   ];

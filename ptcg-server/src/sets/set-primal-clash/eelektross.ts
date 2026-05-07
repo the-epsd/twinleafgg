@@ -32,7 +32,7 @@ export class Eelektross extends PokemonCard {
       name: 'Electricannon',
       cost: [L, L, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard all [L] Energy attached to this Pokémon. If you do, this attack does 50 more damage.'
     }
   ];

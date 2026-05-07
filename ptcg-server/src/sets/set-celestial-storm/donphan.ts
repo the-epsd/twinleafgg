@@ -22,7 +22,7 @@ export class Donphan extends PokemonCard {
       name: 'Flail',
       cost: [F],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 10 damage for each damage counter on this Pokémon.'
     },
     {

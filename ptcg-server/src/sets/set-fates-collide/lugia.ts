@@ -28,7 +28,7 @@ export class Lugia extends PokemonCard {
       name: 'Intensifying Burn',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, this attack does 60 more damage.'
     }
   ];

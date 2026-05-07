@@ -22,7 +22,7 @@ export class Exeggutor extends PokemonCard {
       name: 'ふみつけ[Stomp]',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'コインを1回投げオモテなら、10ダメージを追加。 Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];

@@ -21,7 +21,7 @@ export class Deino extends PokemonCard {
       name: 'Gnaw Off',
       cost: [P, D],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];

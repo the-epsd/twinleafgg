@@ -22,7 +22,7 @@ export class Seadra extends PokemonCard {
       name: 'Hydro Pump',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage times the amount of [W] Energy attached to this Pokémon.'
     }
   ];

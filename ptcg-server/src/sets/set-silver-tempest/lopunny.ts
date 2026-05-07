@@ -27,7 +27,7 @@ export class Lopunny extends PokemonCard {
       name: 'Double Kick',
       cost: [C, C, C],
       damage: 100,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 100 damage for each heads.'
     }
   ];

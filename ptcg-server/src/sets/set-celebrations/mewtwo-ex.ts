@@ -23,7 +23,7 @@ export class MewtwoEx extends PokemonCard {
       name: 'X Ball',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Does 20 damage times the amount of Energy attached to this Pokémon and the Defending Pokémon.'
     },
     {

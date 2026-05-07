@@ -22,7 +22,7 @@ export class SteelixV extends PokemonCard {
       name: 'Raging Hammer',
       cost: [M, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     },
     {

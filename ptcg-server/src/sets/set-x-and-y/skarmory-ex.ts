@@ -28,7 +28,7 @@ export class SkarmoryEx extends PokemonCard {
       name: 'Tailspin Piledriver',
       cost: [M, M, C],
       damage: 80,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 40 more damage.'
     }
   ];

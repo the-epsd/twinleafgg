@@ -21,7 +21,7 @@ export class Stufful extends PokemonCard {
       name: 'Continuous Tumble',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     }
   ];

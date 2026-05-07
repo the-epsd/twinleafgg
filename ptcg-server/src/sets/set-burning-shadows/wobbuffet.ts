@@ -21,7 +21,7 @@ export class Wobbuffet extends PokemonCard {
       name: 'Shadowy Knot',
       cost: [P, P, P],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 50 damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];

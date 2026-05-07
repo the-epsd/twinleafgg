@@ -27,7 +27,7 @@ export class Nidorino extends PokemonCard {
       name: 'Nido Press',
       cost: [P, P, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Nidorina is on your Bench, this attack does 40 more damage.'
     }
   ];

@@ -23,14 +23,14 @@ export class Scizor extends PokemonCard {
       name: 'X-Scissor',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {
       name: 'Dangerous Claws',
       cost: [C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, this attack does 80 more damage.'
     }
   ];

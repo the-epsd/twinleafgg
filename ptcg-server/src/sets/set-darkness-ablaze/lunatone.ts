@@ -29,7 +29,7 @@ export class Lunatone extends PokemonCard {
       name: 'Psychic',
       cost: [P, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

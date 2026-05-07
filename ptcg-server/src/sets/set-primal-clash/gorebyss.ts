@@ -31,7 +31,7 @@ export class Gorebyss extends PokemonCard {
       name: 'Psychic',
       cost: [W, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

@@ -21,7 +21,7 @@ export class GalladeV extends PokemonCard {
       name: 'Rising Sword',
       cost: [F, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 50 more damage for each Prize card you have taken.'
     },
     {

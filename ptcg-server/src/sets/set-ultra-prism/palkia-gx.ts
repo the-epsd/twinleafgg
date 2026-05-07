@@ -28,7 +28,7 @@ export class PalkiaGx extends PokemonCard {
     name: 'Hydro Pressure',
     cost: [C, C, C],
     damage: 60,
-    damageCalculation: '+' as '+',
+    damageCalculation: '+',
     text: 'This attack does 20 more damage times the amount of [W] Energy attached to this Pokémon.'
   },
   {

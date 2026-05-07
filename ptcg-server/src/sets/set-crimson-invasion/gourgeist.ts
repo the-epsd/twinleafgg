@@ -27,7 +27,7 @@ export class Gourgeist extends PokemonCard {
       name: 'Pumpkin Bomb',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Before doing damage, you may discard any number of Pokémon Tool cards from your Pokémon. This attack does 40 more damage for each card you discarded in this way.'
     }
   ];

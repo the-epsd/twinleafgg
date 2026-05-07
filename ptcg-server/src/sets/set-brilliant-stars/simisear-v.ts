@@ -29,7 +29,7 @@ export class SimisearV extends PokemonCard {
       name: 'Flare Juggling',
       cost: [R, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

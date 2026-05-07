@@ -31,7 +31,7 @@ export class Goodra extends PokemonCard {
       name: 'Heavy Whip',
       cost: [W, Y, C],
       damage: 80,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];

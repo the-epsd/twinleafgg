@@ -20,7 +20,7 @@ export class Drilbur extends PokemonCard {
       name: 'Fury Swipes',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 10 damage times the number of heads.'
     }
   ];

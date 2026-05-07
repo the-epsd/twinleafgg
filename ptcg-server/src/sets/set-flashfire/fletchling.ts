@@ -22,7 +22,7 @@ export class Fletchling extends PokemonCard {
       name: 'Quick Attack',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];

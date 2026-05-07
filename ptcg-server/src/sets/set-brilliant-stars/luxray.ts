@@ -24,7 +24,7 @@ export class Luxray extends PokemonCard {
       name: 'Energy Crush',
       cost: [L],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 50 damage for each Energy attached to all of your opponent\'s Pokémon.'
     },
     {

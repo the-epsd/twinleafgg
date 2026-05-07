@@ -23,7 +23,7 @@ export class MRayquazaEx2 extends PokemonCard {
       name: 'Emerald Break',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage times the number of your Benched Pok\u00e9mon.'
     }
   ];

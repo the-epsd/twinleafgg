@@ -22,14 +22,14 @@ export class Delphox extends PokemonCard {
       name: 'Flare Parade',
       cost: [C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 60 damage for each Serena card in your discard pile.'
     },
     {
       name: 'Energy Crush',
       cost: [C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 50 damage for each Energy attached to all of your opponent\'s Pokémon.'
     }
   ];

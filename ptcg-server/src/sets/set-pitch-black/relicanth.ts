@@ -16,7 +16,7 @@ export class Relicanth extends PokemonCard {
       name: 'Fossil Beatdown',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each of your Benched Pokémon with "Antique" in its name.',
     },
   ];

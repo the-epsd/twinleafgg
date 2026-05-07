@@ -27,7 +27,7 @@ export class Masquerain extends PokemonCard {
       name: 'Hurricane Wing',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 40 damage for each heads.'
     }
   ];

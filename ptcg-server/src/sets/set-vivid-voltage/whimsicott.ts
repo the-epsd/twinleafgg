@@ -30,7 +30,7 @@ export class Whimsicott extends PokemonCard {
       name: 'Flying Fury',
       cost: [P],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Before doing damage, you may discard any number of Pokémon Tools from your Pokémon. This attack does 40 more damage for each card you discarded in this way.'
     }
   ];

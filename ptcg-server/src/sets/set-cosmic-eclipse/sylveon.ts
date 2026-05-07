@@ -36,7 +36,7 @@ export class Sylveon extends PokemonCard {
       name: 'Beloved Pulse',
       cost: [Y, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you played a TAG TEAM Supporter card from your hand during this turn, this attack does 80 more damage.'
     }
   ];

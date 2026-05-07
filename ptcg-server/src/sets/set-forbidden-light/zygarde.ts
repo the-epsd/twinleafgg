@@ -27,7 +27,7 @@ export class Zygarde extends PokemonCard {
       name: 'Peace Maker',
       cost: [F],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has an Ultra Beast in play, this attack does 30 more damage.'
     }
   ];

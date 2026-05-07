@@ -24,7 +24,7 @@ export class MGardevoirEx extends PokemonCard {
       name: 'Brilliant Arrow',
       cost: [Y, C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage times the amount of [Y] Energy attached to all of your Pokémon.'
     }
   ];

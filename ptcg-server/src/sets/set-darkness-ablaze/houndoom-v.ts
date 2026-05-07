@@ -28,7 +28,7 @@ export class HoundoomV extends PokemonCard {
       name: 'Vengeful Flame',
       cost: [R, R, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your Benched Fire Pokémon have any damage counters on them, this attack does 100 more damage.'
     }
   ];

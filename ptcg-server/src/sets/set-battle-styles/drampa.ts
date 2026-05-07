@@ -27,7 +27,7 @@ export class Drampa extends PokemonCard {
       name: 'Spiral Rush',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     }
   ];

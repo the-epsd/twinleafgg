@@ -33,7 +33,7 @@ export class Beedrill extends PokemonCard {
       name: 'Twineedle',
       cost: [G, G],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
     }
   ];

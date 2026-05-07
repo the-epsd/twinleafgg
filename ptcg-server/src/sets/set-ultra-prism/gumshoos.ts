@@ -17,7 +17,7 @@ export class Gumshoos extends PokemonCard {
       name: 'Identify',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Your opponent reveals their hand. If you find a Pokémon there, this attack does 80 more damage.'
     },
     {

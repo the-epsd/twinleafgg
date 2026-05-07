@@ -22,7 +22,7 @@ export class Ursaring extends PokemonCard {
       name: 'Continuous Slap',
       cost: [C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 40 damage for each heads.'
     },
     {

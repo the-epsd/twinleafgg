@@ -16,7 +16,7 @@ export class Drampa extends PokemonCard {
       name: 'Outrage',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     },
     {

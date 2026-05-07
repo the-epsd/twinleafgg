@@ -27,7 +27,7 @@ export class Whiscash extends PokemonCard {
       name: 'Thrash',
       cost: [W, C, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If tails, this Pokémon also does 60 damage to itself. If heads, this attack does 60 more damage.'
     }
   ];

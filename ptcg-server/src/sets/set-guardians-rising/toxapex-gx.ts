@@ -27,7 +27,7 @@ export class ToxapexGx extends PokemonCard {
       name: 'Spike Cannon',
       cost: [P],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 30 damage for each heads.'
     },
     {

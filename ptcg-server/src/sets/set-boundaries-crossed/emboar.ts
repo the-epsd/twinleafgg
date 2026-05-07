@@ -23,7 +23,7 @@ export class Emboar extends PokemonCard {
       name: 'Firebreathing',
       cost: [R, C, C],
       damage: 40,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {

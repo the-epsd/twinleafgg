@@ -23,7 +23,7 @@ export class Rayquaza extends PokemonCard {
       name: 'Amazing Burst',
       cost: [G, L, F],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard all basic Energy from this Pokémon. This attack does 80 damage for each type of basic Energy you discarded in this way.'
     }
   ];

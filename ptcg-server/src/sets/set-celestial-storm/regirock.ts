@@ -20,7 +20,7 @@ export class Regirock extends PokemonCard {
       name: 'Enhanced Stomp',
       cost: [F],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 20 more damage.'
     },
     {

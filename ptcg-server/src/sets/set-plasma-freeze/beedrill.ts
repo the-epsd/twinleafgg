@@ -21,7 +21,7 @@ export class Beedrill extends PokemonCard {
       name: 'Swift Sting',
       cost: [G],
       damage: 20,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If this Pokémon has full HP, this attack does 40 more damage, and the Defending Pokémon is now Confused and Poisoned.'
     },
     {

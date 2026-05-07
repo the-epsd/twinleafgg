@@ -27,7 +27,7 @@ export class Kingler extends PokemonCard {
       name: 'Claw Rend',
       cost: [W, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 60 more damage.'
     }
   ];

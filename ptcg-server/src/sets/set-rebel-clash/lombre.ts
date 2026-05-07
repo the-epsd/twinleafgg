@@ -27,7 +27,7 @@ export class Lombre extends PokemonCard {
       name: 'Fury Swipes',
       cost: [G, C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 40 damage for each heads.'
     }
   ];

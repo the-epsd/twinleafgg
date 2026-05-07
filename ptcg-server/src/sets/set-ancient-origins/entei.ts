@@ -30,7 +30,7 @@ export class Entei extends PokemonCard {
       name: 'Combat Blaze',
       cost: [R, R],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each of your opponent\'s Benched Pokémon.'
     }
   ];

@@ -20,7 +20,7 @@ export class Trapinch extends PokemonCard {
       name: 'Land\'s Pulse',
       cost: [F],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If a Stadium is in play, this attack does 10 more damage.'
     }
   ];

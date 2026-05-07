@@ -21,7 +21,7 @@ export class Vanillish extends PokemonCard {
       name: 'Ice Shard',
       cost: [W],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Fighting Pokémon, this attack does 30 more damage.'
     }
   ];

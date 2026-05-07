@@ -30,7 +30,7 @@ export class RotomVstar extends PokemonCard {
       name: 'Scrap Pulse',
       cost: [L, L],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Put any number of Pokémon Tool cards from your discard pile in the Lost Zone. This attack does 40 more damage for each card you put in the Lost Zone in this way.'
     }
   ];

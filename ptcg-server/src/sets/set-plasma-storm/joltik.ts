@@ -21,7 +21,7 @@ export class Joltik extends PokemonCard {
       name: 'Jump On',
       cost: [L],
       damage: 10,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];

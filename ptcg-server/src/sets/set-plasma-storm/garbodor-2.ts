@@ -23,14 +23,14 @@ export class Garbodor2 extends PokemonCard {
       name: 'Ensnarl',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Does 20 damage times the number of Colorless in the Defending Pokémon\'s Retreat Cost.'
     },
     {
       name: 'Double Ducts',
       cost: [P, C, C, C],
       damage: 80,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 80 damage times the number of heads.'
     }
   ];

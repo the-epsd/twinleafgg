@@ -27,7 +27,7 @@ export class Magmar extends PokemonCard {
       name: 'Heat Breath',
       cost: [R, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

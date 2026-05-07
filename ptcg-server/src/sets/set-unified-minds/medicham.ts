@@ -28,7 +28,7 @@ export class Medicham extends PokemonCard {
       name: 'Master Strike',
       cost: [F, F],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has a Karate Belt card attached to it, this attack does 60 more damage.'
     }
   ];

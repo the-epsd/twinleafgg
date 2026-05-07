@@ -29,7 +29,7 @@ export class Lurantis extends PokemonCard {
       name: 'Sol Slice',
       cost: [G],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any [R] Energy attached to it, this attack does 50 more damage.'
     }
   ];

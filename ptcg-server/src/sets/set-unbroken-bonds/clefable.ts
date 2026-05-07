@@ -23,7 +23,7 @@ export class Clefable extends PokemonCard {
       name: 'Moon-Watching Dance',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each of your Pokémon that has any [Y] Energy attached to it.'
     }
   ];

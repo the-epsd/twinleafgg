@@ -24,7 +24,7 @@ export class TapuKoko extends PokemonCard {
       name: 'Nature Dive',
       cost: [L, L, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is an Ultra Beast, this attack does 100 more damage, and discard 2 Energy from this Pokémon.'
     }
   ];

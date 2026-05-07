@@ -18,7 +18,7 @@ export class Vanilluxe extends PokemonCard {
       name: 'ChillMAX',
       cost: [C],
       damage: 60,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 60 damage for each heads.'
     },
     {

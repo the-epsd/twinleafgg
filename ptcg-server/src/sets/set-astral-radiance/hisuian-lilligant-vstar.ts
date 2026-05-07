@@ -32,7 +32,7 @@ export class HisuianLilligantVstar extends PokemonCard {
       name: 'Parallel Spin',
       cost: [G, G, C],
       damage: 130,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may put an Energy attached to this Pokémon into your hand. If you do, this attack does 100 more damage.'
     }
   ];

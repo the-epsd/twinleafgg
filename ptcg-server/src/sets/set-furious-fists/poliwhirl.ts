@@ -27,7 +27,7 @@ export class Poliwhirl extends PokemonCard {
       name: 'Finishing Blow',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 50 more damage.'
     }
   ];

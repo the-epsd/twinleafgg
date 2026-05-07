@@ -28,7 +28,7 @@ export class Cresselia extends PokemonCard {
       name: 'Psychic',
       cost: [P, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

@@ -22,7 +22,7 @@ export class AlolanRaticate extends PokemonCard {
       name: 'Enhanced Fang',
       cost: [],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 50 more damage.'
     },
     {

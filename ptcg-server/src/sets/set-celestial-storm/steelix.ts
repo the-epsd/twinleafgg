@@ -29,7 +29,7 @@ export class Steelix extends PokemonCard {
       name: 'Tail Crush',
       cost: [M, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];
