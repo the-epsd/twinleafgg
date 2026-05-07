@@ -8,12 +8,12 @@ import { GameError } from '../../game/game-error';
 export class EnergySwatter extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '67';
+  public setNumber: string = '73';
   public name: string = 'Energy Swatter';
   public fullName: string = 'Energy Swatter M3';
-  public text: string = 'Your opponent reveals their hand. Choose an Energy card you find there and put it on the bottom of your opponent\'s deck.';
+  public text: string = 'Your opponent reveals their hand, and you choose an Energy card you find there and put it on the bottom of their deck.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean | undefined {
     const opponent = StateUtils.getOpponent(state, player);

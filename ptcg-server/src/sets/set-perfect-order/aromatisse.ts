@@ -12,23 +12,23 @@ export class Aromatisse extends PokemonCard {
   public retreat = [C];
 
   public powers = [{
-    name: 'Fragrance Collection',
+    name: 'Scent Collection',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may search your deck for up to 2 Basic [P] Energy, reveal them, and put them into your hand. Then, shuffle your deck.'
+    text: 'Once during your turn, you may use this Ability. Search your deck for up to 2 Basic [P] Energy cards, reveal them, and put them into your hand. Then, shuffle your deck. '
   }];
 
   public attacks = [{
-    name: 'Drain Kiss',
+    name: 'Draining Kiss',
     cost: [P, C],
     damage: 50,
-    text: 'Heal 30 damage from this Pokemon.'
+    text: 'Heal 30 damage from this Pokémon.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '35';
+  public setNumber: string = '36';
   public name: string = 'Aromatisse';
   public fullName: string = 'Aromatisse M3';
 

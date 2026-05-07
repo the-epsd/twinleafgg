@@ -15,13 +15,13 @@ export class Haunter extends PokemonCard {
     name: 'Haunt',
     cost: [D],
     damage: 0,
-    text: 'Put 3 damage counters on your opponent\'s Active Pokemon.'
+    text: 'Place 3 damage counters on your opponent\'s Active Pokémon.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '48';
+  public setNumber: string = '49';
   public name: string = 'Haunter';
   public fullName: string = 'Haunter M3';
 

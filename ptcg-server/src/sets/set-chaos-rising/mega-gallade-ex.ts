@@ -26,7 +26,7 @@ export class MegaGalladeex extends PokemonCard {
   }];
 
   public regulationMark: string = 'J';
-  public set: string = 'MEP';
+  public set: string = 'MP';
   public setNumber: string = '68';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Gallade ex';

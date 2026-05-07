@@ -18,7 +18,7 @@ export class Dewgong extends PokemonCard {
     name: 'Wash Out',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn, you may move a [W] Energy from your Benched Pokemon to your Active Pokemon.'
+    text: 'As often as you like during your turn, you may use this Ability. Move a [W] Energy from 1 of your Benched Pokémon to your Active Pokémon. '
   }];
 
   public attacks = [{
@@ -29,7 +29,7 @@ export class Dewgong extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '19';
   public name: string = 'Dewgong';

@@ -14,22 +14,22 @@ export class Yveltalex extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: 'Death Soul',
+    name: 'Soul Destroyer',
     cost: [D, D, C],
     damage: 0,
-    text: 'Knock Out each of your opponent\'s Pokemon that has 50 HP or less remaining.'
+    text: 'Knock Out each of your opponent\'s Pokémon that has 50 HP or less remaining.'
   },
   {
     name: 'Dark Strike',
     cost: [D, D, C],
     damage: 210,
-    text: 'During your next turn, this Pokemon can\'t use Dark Strike.'
+    text: 'During your next turn, this Pokémon can\'t use Dark Strike.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '52';
+  public setNumber: string = '53';
   public name: string = 'Yveltal ex';
   public fullName: string = 'Yveltal ex M3';
 

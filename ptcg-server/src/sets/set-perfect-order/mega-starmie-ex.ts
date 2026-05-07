@@ -15,21 +15,21 @@ export class MegaStarmieex extends PokemonCard {
   public retreat = [C, C];
 
   public attacks = [{
-    name: 'Jet Blow',
+    name: 'Jetting Blow',
     cost: [W],
     damage: 120,
-    text: 'This attack also does 50 damage to 1 of your opponent\'s Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+    text: 'This attack also does 50 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   },
   {
     name: 'Nebula Beam',
     cost: [C, C, C],
     damage: 210,
     shredAttack: true,
-    text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, or any effects on your opponent\'s Active Pokemon.'
+    text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, or any effects on your opponent\'s Active Pokémon.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '21';
   public name: string = 'Mega Starmie ex';

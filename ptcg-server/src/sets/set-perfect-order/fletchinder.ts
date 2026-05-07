@@ -18,7 +18,7 @@ export class Fletchinder extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '13';
   public name: string = 'Fletchinder';

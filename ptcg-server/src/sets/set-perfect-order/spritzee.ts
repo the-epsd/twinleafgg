@@ -14,7 +14,7 @@ export class Spritzee extends PokemonCard {
     name: 'Sweet Scent',
     cost: [C],
     damage: 0,
-    text: 'Heal 30 damage from 1 of your Pokemon.'
+    .'
   },
   {
     name: 'Ram',
@@ -24,9 +24,9 @@ export class Spritzee extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '34';
+  public setNumber: string = '35';
   public name: string = 'Spritzee';
   public fullName: string = 'Spritzee M3';
 

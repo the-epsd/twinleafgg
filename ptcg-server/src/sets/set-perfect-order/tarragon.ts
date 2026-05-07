@@ -68,9 +68,9 @@ function* playCard(next: Function, store: StoreLike, state: State, self: Tarrago
 
 export class Tarragon extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '73';
+  public setNumber: string = '85';
   public regulationMark = 'J';
   public name: string = 'Tarragon';
   public fullName: string = 'Tarragon M3';

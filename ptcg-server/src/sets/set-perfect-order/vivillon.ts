@@ -14,21 +14,22 @@ export class Vivillon extends PokemonCard {
   public retreat = [C];
 
   public powers = [{
-    name: 'Big Wings',
+    name: 'Grand Wing',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may have your opponent shuffle their hand and put all of those cards on the bottom of their deck. Then, your opponent draws 4 cards.'
+    text: 'Once during your turn, you may use this Ability. Your opponent shuffles their hand and puts it on the bottom of their deck. If they put any cards on the bottom of their deck in this way, they draw 4 cards.'
   }];
 
   public attacks = [{
     name: 'Blow Through',
     cost: [G],
     damage: 60,
+    damageCalculation: '+',
     text: 'If there is a Stadium in play, this attack does 60 more damage.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '9';
   public name: string = 'Vivillon';

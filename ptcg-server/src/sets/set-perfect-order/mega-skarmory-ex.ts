@@ -17,12 +17,12 @@ export class MegaSkarmoryex extends PokemonCard {
     name: 'Sonic Ripper',
     cost: [M, M, C],
     damage: 0,
-    text: 'Shuffle all Energy from this Pokemon into your deck. This attack does 220 damage to 1 of your opponent\'s Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)',
+    text: 'Shuffle all Energy from this Pokémon into your deck, and this attack does 220 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)',
   }];
 
   public regulationMark: string = 'J';
-  public set: string = 'M3';
-  public setNumber: string = '54';
+  public set: string = 'POR';
+  public setNumber: string = '55';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Skarmory ex';
   public fullName: string = 'Mega Skarmory ex M3';

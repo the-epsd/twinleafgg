@@ -12,22 +12,22 @@ export class Probopass extends PokemonCard {
   public retreat = [C, C, C];
 
   public attacks = [{
-    name: 'Avalanche',
+    name: 'Rolling Rocks',
     cost: [F, F],
     damage: 60,
     text: ''
   },
   {
-    name: 'Nose Bumper',
+    name: 'Obliterating Nose',
     cost: [F, F, F, C],
     damage: 260,
-    text: 'Discard 3 Energy from this Pokemon.'
+    text: 'Discard 3 Energy from this Pokémon.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '37';
+  public setNumber: string = '38';
   public name: string = 'Probopass';
   public fullName: string = 'Probopass M3';
 

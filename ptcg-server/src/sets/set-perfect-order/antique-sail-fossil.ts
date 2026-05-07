@@ -31,7 +31,7 @@ export class AntiqueSailFossil extends TrainerCard {
 
   public powers: Power[] = [{
     name: 'Antique Sail Fossil',
-    text: 'You may play this card as a 60 HP Basic [C] Pokemon. This Pokemon can\'t be affected by Special Conditions and can\'t retreat. At any time during your turn, you may discard this card from play.',
+    text: 'Play this card as a 60 HP Basic [C] Pokémon. This card can\'t be affected by Special Conditions and can\'t retreat. At any time during your turn, you may discard this card from play.',
     useWhenInPlay: true,
     exemptFromAbilityLock: true,
     isFossil: true,
@@ -41,11 +41,11 @@ export class AntiqueSailFossil extends TrainerCard {
     name: 'Protective Sail',
     powerType: PowerType.ABILITY,
     isFossil: true,
-    text: 'This Pokemon can\'t be affected by the effects of Supporter cards played from your opponent\'s hand.'
+    text: 'Whenever your opponent plays a Supporter card from their hand, prevent all effects of that card done to this Pokémon.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';
   public name: string = 'Antique Sail Fossil';

@@ -7,9 +7,9 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 export class Jacinthe extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '76';
+  public setNumber: string = '75';
   public name: string = 'Jacinthe';
   public fullName: string = 'Jacinthe M3';
   public text: string = 'Heal 150 damage from 1 of your [P] Pokemon.';

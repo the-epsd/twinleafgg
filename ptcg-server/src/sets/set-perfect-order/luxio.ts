@@ -12,22 +12,22 @@ export class Luxio extends PokemonCard {
   public retreat = [C];
 
   public powers = [{
-    name: 'Roar of the Tiger',
+    name: 'Fighting Roar',
     powerType: PowerType.ABILITY,
-    text: 'If your opponent\'s Active Pokemon is a Pokemon ex, you can evolve this Pokemon on your first turn, or on the first turn this Pokemon is put into play.'
+    text: 'If your opponent\'s Active Pokémon is a Pokémon ex, this Pokémon can evolve during your first turn or the turn you play it.'
   }];
 
   public attacks = [{
-    name: 'Zzzap',
+    name: 'Static Shock',
     cost: [L, C],
     damage: 40,
     text: ''
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '26';
+  public setNumber: string = '27';
   public name: string = 'Luxio';
   public fullName: string = 'Luxio M3';
 

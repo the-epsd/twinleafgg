@@ -20,14 +20,14 @@ export class Salazzleex extends PokemonCard {
     text: 'Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.'
   },
   {
-    name: 'Fatal Nail',
+    name: 'Dire Nails',
     cost: [R, R],
     damage: 100,
-    text: 'Your opponent\'s Active Pokemon is now Poisoned and Burned. Switch this Pokemon with 1 of your Benched Pokemon.'
+    text: 'Your opponent\'s Active Pokémon is now Burned and Poisoned. Switch this Pokémon with 1 of your Benched Pokémon.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Salazzle ex';

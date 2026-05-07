@@ -17,7 +17,7 @@ export class Meowthex extends PokemonCard {
   public powers = [{
     name: 'Trump Card Catch',
     powerType: PowerType.ABILITY,
-    text: 'When you play this Pokemon from your hand to your Bench during your turn, you may use this Ability. Search your deck for a Supporter card, reveal it, and put it into your hand. You can\'t use this Ability if you\'ve already used another Ability with "Trump Card" in its name this turn.',
+    text: 'When you play this Pokémon from your hand to your Bench during your turn, you may use this Ability. Search your deck for a Supporter card, reveal it, and put it into your hand. You can\'t use this Ability if you\'ve already used another Ability with "Trump Card" in its name this turn.',
   }];
 
   public attacks = [{
@@ -28,9 +28,9 @@ export class Meowthex extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '61';
+  public setNumber: string = '62';
   public name: string = 'Meowth ex';
   public fullName: string = 'Meowth ex M3';
   public readonly TRUMP_CARD_MARKER = 'TRUMP_CARD_MARKER';

@@ -19,14 +19,14 @@ export class Dartrix extends PokemonCard {
     text: ''
   },
   {
-    name: 'Phaser Shot',
+    name: 'Feather Shot',
     cost: [C, C, C],
     damage: 0,
-    text: 'Discard all Energy attached to this Pokemon. Choose 1 of your opponent\'s Pokemon. This attack does 90 damage to that Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+    text: 'Discard all Energy from this Pokémon, and this attack does 90 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
   public name: string = 'Dartrix';

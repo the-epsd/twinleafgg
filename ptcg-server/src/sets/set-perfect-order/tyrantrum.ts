@@ -14,10 +14,10 @@ export class Tyrantrum extends PokemonCard {
   public retreat = [C, C, C];
 
   public powers = [{
-    name: 'Tyrannoguts',
+    name: 'Tyrannically Gutsy',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'If this Pokemon has any Special Energy attached, it gets +150 HP.'
+    text: 'If this Pokémon has any Special Energy attached, it gets +150 HP.'
   }];
 
   public attacks = [{
@@ -28,9 +28,9 @@ export class Tyrantrum extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '44';
+  public setNumber: string = '45';
   public name: string = 'Tyrantrum';
   public fullName: string = 'Tyrantrum M3';
 

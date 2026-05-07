@@ -23,13 +23,13 @@ export class Aegislash extends PokemonCard {
     name: 'Metal Slash',
     cost: [M, C, C, C],
     damage: 230,
-    text: 'This Pokemon can\'t attack during your next turn.'
+    text: 'During your next turn, this Pokémon can\'t use attacks.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '57';
+  public setNumber: string = '58';
   public name: string = 'Aegislash';
   public fullName: string = 'Aegislash M3';
 

@@ -13,20 +13,20 @@ export class ChienPao extends PokemonCard {
     name: 'Strafe',
     cost: [D],
     damage: 20,
-    text: 'You may switch this Pokemon with 1 of your Benched Pokemon.'
+    text: 'You may switch this Pokémon with 1 of your Benched Pokémon.'
   },
   {
     name: 'Rising Blade',
     cost: [D, D, C],
     damage: 80,
     damageCalculation: '+',
-    text: 'If your opponent\'s Active Pokemon is a Pokemon ex, this attack does 80 more damage.'
+    text: 'If your opponent\'s Active Pokémon is a Pokémon ex, this attack does 80 more damage.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '53';
+  public setNumber: string = '54';
   public name: string = 'Chien-Pao';
   public fullName: string = 'Chien-Pao M3';
 

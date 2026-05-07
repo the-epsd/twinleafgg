@@ -15,13 +15,13 @@ export class Amaura extends PokemonCard {
     name: 'Icy Wind',
     cost: [W, C],
     damage: 50,
-    text: 'Your opponent\'s Active Pokemon is now Asleep.'
+    text: 'Your opponent\'s Active Pokémon is now Asleep.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '22';
+  public setNumber: string = '23';
   public name: string = 'Amaura';
   public fullName: string = 'Amaura M3';
 

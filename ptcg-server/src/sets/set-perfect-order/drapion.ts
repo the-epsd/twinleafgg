@@ -17,16 +17,16 @@ export class Drapion extends PokemonCard {
     text: ''
   },
   {
-    name: 'Hazard Tail',
+    name: 'Hazardous Tail',
     cost: [D, D, D],
     damage: 100,
-    text: 'This Pokemon does 70 damage to itself. Your opponent\'s Active Pokemon is now Poisoned and Paralyzed.'
+    text: 'This Pokémon also does 70 damage to itself. Your opponent\'s Active Pokémon is now Paralyzed and Poisoned.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '51';
+  public setNumber: string = '52';
   public name: string = 'Drapion';
   public fullName: string = 'Drapion M3';
 

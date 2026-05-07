@@ -79,7 +79,7 @@ import { Skorupi } from './skorupi';
 import { Drapion } from './drapion';
 import { ChienPao } from './chien-pao';
 import { Laprasex } from './lapras-ex';
-import { SpewpaIR, RowletIR, TalonflameIR, AurorusIR, DedenneIR, ClefairyIR, EspurrIR, ProbopassIR, TyruntIR, DrapionIR, DoubladeIR, RaticateIR, DecidueyeexFA, SalazzleexFA, MegaStarmieexFA, MegaClefableexFA, MegaZygardeexFA, YveltalexFA, MegaSkarmoryexFA, MeowthexFA, EnergyRecyclerFA, SacredAshFA, PokePadFA, WondrousPatchFA, TarragonFA, NaveenFA, RosasEncouragementFA, JacintheFA, ForestOfVitalityFA, LumioiseCityFA, JacintheSIR, MegaClefableexSIR, MegaStarmieexSIR, MegaZygardeexHR, MegaZygardeexSIR, MeowthexSIR, RosasEncouragementSIR } from './other-prints';
+import { SpewpaIR, RowletIR, TalonflameIR, AurorusIR, DedenneIR, ClefairyIR, EspurrIR, ProbopassIR, TyruntIR, DrapionIR, DoubladeIR, RaticateIR, DecidueyeexFA, SalazzleexFA, MegaStarmieexFA, MegaClefableexFA, MegaZygardeexFA, YveltalexFA, MegaSkarmoryexFA, MeowthexFA, EnergyRecyclerFA, SacredAshFA, PokePadFA, WondrousPatchFA, TarragonFA, NaveenFA, RosasEncouragementFA, JacintheFA, ForestOfVitalityFA, LumioiseCityFA, JacintheSIR, MegaClefableexSIR, MegaStarmieexSIR, MegaZygardeexHR, MegaZygardeexSIR, MeowthexSIR, RosasEncouragementSIR, CrushingHammerPOR, EnergySearchPOR, JudgePOR, PokeBallPOR, PokePadPOR, PokemonCatcherPOR, PotionPOR } from './other-prints';
 
 export const setPerfectOrder: Card[] = [
   new Barbaracle(),
@@ -162,6 +162,15 @@ export const setPerfectOrder: Card[] = [
   new Drapion(),
   new ChienPao(),
   new Laprasex(),
+
+  // Trainer Reprints
+  new CrushingHammerPOR(),
+  new EnergySearchPOR(),
+  new JudgePOR(),
+  new PokeBallPOR(),
+  new PokePadPOR(),
+  new PokemonCatcherPOR(),
+  new PotionPOR(),
 
   // IRs, FAs, SIRs, HR
   new SpewpaIR(),

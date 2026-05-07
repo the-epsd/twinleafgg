@@ -12,16 +12,16 @@ export class Doublade extends PokemonCard {
   public retreat = [C, C];
 
   public attacks = [{
-    name: 'Sword Stash',
+    name: 'Weaponized Swords',
     cost: [C, C],
     damage: 0,
-    text: 'You may reveal any number of Honedge, Doublade, and Aegislash from your hand. This attack does 60 damage for each card you revealed.'
+    text: 'Reveal any number of Honedge, Doublade, and Aegislash from your hand, and this attack does 60 damage for each card you revealed in this way.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '56';
+  public setNumber: string = '57';
   public name: string = 'Doublade';
   public fullName: string = 'Doublade M3';
 

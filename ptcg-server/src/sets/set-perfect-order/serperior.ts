@@ -13,24 +13,24 @@ export class Serperior extends PokemonCard {
   public retreat = [C, C];
 
   public attacks = [{
-    name: 'Royal Command',
+    name: 'Regal Command',
     cost: [G],
-    damage: 0,
+    damage: 20,
     damageCalculation: 'x',
-    text: 'This attack does 20 damage for each Pokemon you have in play.'
+    text: 'This attack does 20 damage for each of your Pokémon in play.'
   },
   {
-    name: 'Solar Winder',
+    name: 'Solar Coiling',
     cost: [G, G, G],
     damage: 100,
     damageCalculation: '+',
-    text: 'If you have Rosa\'s Encouragement in your discard pile, this attack does 150 more damage.'
+    text: 'If Rosa\'s Encouragement is in your discard pile, this attack does 150 more damage.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '7';
+  public setNumber: string = '6';
   public name: string = 'Serperior';
   public fullName: string = 'Serperior M3';
 

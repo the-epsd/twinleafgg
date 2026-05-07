@@ -30,9 +30,9 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: Atta
 export class CoreMemory extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '72';
+  public setNumber: string = '70';
   public name: string = 'Core Memory';
   public fullName: string = 'Core Memory M3';
 
@@ -43,7 +43,7 @@ export class CoreMemory extends TrainerCard {
     text: 'Discard all Energy attached to this Pokémon.'
   }];
 
-  public text: string = 'The Mega Zygarde ex this card is attached to can use the attacks on this card.';
+  public text: string = 'The Mega Zygarde ex this card is attached to can use the attack on this card. (You still need the necessary Energy to use this attack.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

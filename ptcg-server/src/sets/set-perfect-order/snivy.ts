@@ -15,11 +15,11 @@ export class Snivy extends PokemonCard {
     name: 'Reckless Charge',
     cost: [G],
     damage: 30,
-    text: 'This Pokemon does 10 damage to itself.'
+    text: 'This Pokémon also does 10 damage to itself.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
   public name: string = 'Snivy';

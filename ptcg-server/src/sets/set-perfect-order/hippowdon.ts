@@ -11,10 +11,10 @@ export class Hippowdon extends PokemonCard {
   public retreat = [C, C, C, C];
 
   public attacks = [{
-    name: 'Tornado Drill',
+    name: 'Twister Spewing',
     cost: [F, F, C],
     damage: 80,
-    text: 'If you played Tarragon from your hand during this turn, discard the top 3 cards from your opponent\'s deck.'
+    text: 'If you played Tarragon from your hand during this turn, discard the top 3 cards of your opponent\'s deck.'
   },
   {
     name: 'Heavy Impact',
@@ -24,9 +24,9 @@ export class Hippowdon extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '39';
+  public setNumber: string = '40';
   public name: string = 'Hippowdon';
   public fullName: string = 'Hippowdon M3';
 

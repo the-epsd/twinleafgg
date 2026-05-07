@@ -15,7 +15,7 @@ export class Fletchling extends PokemonCard {
     name: 'Chirp',
     cost: [C],
     damage: 0,
-    text: 'Search your deck for up to 2 Pokemon with [F] Resistances, reveal them, and put them into your hand. Then, shuffle your deck.'
+    text: 'Search your deck for up to 2 Pokémon with [F] Resistance, reveal them, and put them into your hand. Then, shuffle your deck.'
   },
   {
     name: 'Peck',
@@ -25,9 +25,9 @@ export class Fletchling extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '65';
+  public setNumber: string = '66';
   public name: string = 'Fletchling';
   public fullName: string = 'Fletchling M3';
 

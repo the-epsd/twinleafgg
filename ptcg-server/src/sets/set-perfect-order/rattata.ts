@@ -15,13 +15,13 @@ export class Rattata extends PokemonCard {
     name: 'Take Down',
     cost: [C],
     damage: 30,
-    text: 'This Pokemon does 10 damage to itself.'
+    text: 'This Pokémon also does 10 damage to itself.'
   }];
 
   public regulationMark = 'J';
   public set: string = 'M3';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '59';
+  public setNumber: string = '60';
   public name: string = 'Rattata';
   public fullName: string = 'Rattata M3';
 

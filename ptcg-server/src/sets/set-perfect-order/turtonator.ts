@@ -13,9 +13,9 @@ export class Turtonator extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Thorny Shell',
+    name: 'Shell Spikes',
     powerType: PowerType.ABILITY,
-    text: 'When this Pokemon takes damage from an attack from your opponent\'s Pokemon while it is in the Active Spot, discard an Energy from the attacking Pokemon.'
+    text: 'If this Pokémon is in the Active Spot and is damaged by an attack from your opponent\'s Pokémon (even if this Pokémon is Knocked Out), discard an Energy from the Attacking Pokémon.'
   }];
 
   public attacks = [{
@@ -27,7 +27,7 @@ export class Turtonator extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Turtonator';

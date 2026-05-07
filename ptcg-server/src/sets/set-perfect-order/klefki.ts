@@ -17,13 +17,13 @@ export class Klefki extends PokemonCard {
     name: 'Memory Lock',
     cost: [M],
     damage: 30,
-    text: 'Choose an attack on your opponent\'s Active Pokemon. During your opponent\'s next turn, the Defending Pokemon can\'t use that attack.'
+    text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. During your opponent\'s next turn, that Pokémon can\'t use that attack.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '58';
+  public setNumber: string = '59';
   public name: string = 'Klefki';
   public fullName: string = 'Klefki M3';
 

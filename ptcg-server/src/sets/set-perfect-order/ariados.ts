@@ -15,14 +15,14 @@ export class Ariados extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: 'Poison Circle',
+    name: 'Poison Ring',
     cost: [G],
     damage: 50,
-    text: 'Your opponent\'s Active Pokemon is now Poisoned. During your opponent\'s next turn, the Defending Pokemon can\'t retreat.'
+    text: 'Your opponent\'s Active Pokémon is now Poisoned. During your opponent\'s next turn, that Pokémon can\'t retreat.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '2';
   public name: string = 'Ariados';
