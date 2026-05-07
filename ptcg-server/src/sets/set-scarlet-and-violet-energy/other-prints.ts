@@ -104,3 +104,51 @@ export class MetalEnergyArt2 extends MetalEnergy {
   public setNumber = '16';
   public fullName: string = 'Metal Energy2 SVE';
 }
+
+export class GrassEnergyArt3 extends GrassEnergy {
+  public set: string = 'SVE';
+  public setNumber = '17';
+  public fullName: string = 'Grass Energy3 SVE';
+}
+
+export class FireEnergyArt3 extends FireEnergy {
+  public set: string = 'SVE';
+  public setNumber = '18';
+  public fullName: string = 'Fire Energy3 SVE';
+}
+
+export class WaterEnergyArt3 extends WaterEnergy {
+  public set: string = 'SVE';
+  public setNumber = '19';
+  public fullName: string = 'Water Energy3 SVE';
+}
+
+export class LightningEnergyArt3 extends LightningEnergy {
+  public set: string = 'SVE';
+  public setNumber = '20';
+  public fullName: string = 'Lightning Energy3 SVE';
+}
+
+export class PsychicEnergyArt3 extends PsychicEnergy {
+  public set: string = 'SVE';
+  public setNumber = '21';
+  public fullName: string = 'Psychic Energy3 SVE';
+}
+
+export class FightingEnergyArt3 extends FightingEnergy {
+  public set: string = 'SVE';
+  public setNumber = '22';
+  public fullName: string = 'Fighting Energy3 SVE';
+}
+
+export class DarknessEnergyArt3 extends DarknessEnergy {
+  public set: string = 'SVE';
+  public setNumber = '23';
+  public fullName: string = 'Darkness Energy3 SVE';
+}
+
+export class MetalEnergyArt3 extends MetalEnergy {
+  public set: string = 'SVE';
+  public setNumber = '24';
+  public fullName: string = 'Metal Energy3 SVE';
+}

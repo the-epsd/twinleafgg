@@ -1,5 +1,30 @@
-import { Card } from '../../game/store/card/card';
-import { DarknessEnergyArt, DarknessEnergyArt2, FightingEnergyArt, FightingEnergyArt2, FireEnergyArt, FireEnergyArt2, GrassEnergyArt, GrassEnergyArt2, LightningEnergyArt, LightningEnergyArt2, MetalEnergyArt, MetalEnergyArt2, PsychicEnergyArt, PsychicEnergyArt2, WaterEnergyArt, WaterEnergyArt2 } from './other-prints';
+import { Card } from "../../game/store/card/card";
+import {
+  DarknessEnergyArt,
+  DarknessEnergyArt2,
+  DarknessEnergyArt3,
+  FightingEnergyArt,
+  FightingEnergyArt2,
+  FightingEnergyArt3,
+  FireEnergyArt,
+  FireEnergyArt2,
+  FireEnergyArt3,
+  GrassEnergyArt,
+  GrassEnergyArt2,
+  GrassEnergyArt3,
+  LightningEnergyArt,
+  LightningEnergyArt2,
+  LightningEnergyArt3,
+  MetalEnergyArt,
+  MetalEnergyArt2,
+  MetalEnergyArt3,
+  PsychicEnergyArt,
+  PsychicEnergyArt2,
+  PsychicEnergyArt3,
+  WaterEnergyArt,
+  WaterEnergyArt2,
+  WaterEnergyArt3,
+} from "./other-prints";
 
 export const setScarletAndVioletEnergy: Card[] = [
   new GrassEnergyArt(),
@@ -18,4 +43,12 @@ export const setScarletAndVioletEnergy: Card[] = [
   new FightingEnergyArt2(),
   new DarknessEnergyArt2(),
   new MetalEnergyArt2(),
+  new GrassEnergyArt3(),
+  new FireEnergyArt3(),
+  new WaterEnergyArt3(),
+  new LightningEnergyArt3(),
+  new PsychicEnergyArt3(),
+  new FightingEnergyArt3(),
+  new DarknessEnergyArt3(),
+  new MetalEnergyArt3(),
 ];
