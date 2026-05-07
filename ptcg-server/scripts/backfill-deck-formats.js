@@ -42,8 +42,9 @@ async function run() {
         try {
           const cards = JSON.parse(deck.cards);
           const format = getValidFormatsForCardList(cards);
-          deck.formats = JSON.stringify(format);
-          await deck.save();
+          const formatStr = JSON.stringify(format);
+          // Avoid BaseEntity.save change-tracking edge cases by using explicit UPDATE values.
+          await Deck.update({ id: deck.id }, { formats: formatStr });
           processed++;
         } catch (err) {
           console.error(`[backfill] Failed deck id=${deck.id}: ${err.message}`);
