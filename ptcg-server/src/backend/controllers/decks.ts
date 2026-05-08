@@ -1094,6 +1094,7 @@ function isPrintingLegalInStandardNightly(card: any): boolean {
 // --- getValidFormatsForCardList --- (exported for backfill script)
 export function getValidFormatsForCardList(cardNames: string[]): number[] {
   const cardManager = CardManager.getInstance();
+  const allCatalog = cardManager.getAllCards();
   const cards = cardNames.map((name: string) => cardManager.getCardByName(name)).filter((c: any) => !!c);
   if (!cards || cards.length === 0) {
     return [];
@@ -1101,7 +1102,7 @@ export function getValidFormatsForCardList(cardNames: string[]): number[] {
   const formats: number[][] = [];
   cards.filter((c: any) => c && (c.superType !== SuperType.ENERGY || c.energyType === EnergyType.SPECIAL)).forEach((card: any) => {
     if (card) {
-      formats.push(getValidFormats(card));
+      formats.push(getValidFormats(card, allCatalog));
     }
   });
   let formatList = formats.length > 0 ? formats.reduce((a, b) => a.filter((c: number) => b.includes(c))) : [];
@@ -1196,7 +1197,7 @@ export function getValidFormatsForCardList(cardNames: string[]): number[] {
 }
 
 // --- getValidFormats ---
-function getValidFormats(card: any): number[] {
+function getValidFormats(card: any, allCards?: any[]): number[] {
   const formats = [Format.UNLIMITED];
   [
     Format.ETERNAL,
@@ -1213,13 +1214,13 @@ function getValidFormats(card: any): number[] {
     Format.RETRO,
     Format.PRE_RELEASE,
   ].forEach((format: number) => {
-    isValid(card, format, ANY_PRINTING_ALLOWED) ? formats.push(format) : null;
+    isValid(card, format, ANY_PRINTING_ALLOWED, allCards) ? formats.push(format) : null;
   });
   return formats;
 }
 
 // --- isValid ---
-function isValid(card: any, format: number, anyPrintingAllowed?: string[]): boolean {
+function isValid(card: any, format: number, anyPrintingAllowed?: string[], allCards?: any[]): boolean {
   if (card.superType === SuperType.ENERGY && card.energyType === EnergyType.BASIC) {
     return true;
   }
@@ -1231,11 +1232,26 @@ function isValid(card: any, format: number, anyPrintingAllowed?: string[]): bool
         return true;
       case Format.ETERNAL:
         return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
-      case Format.STANDARD:
-        // Per-printing: regulation mark / set legality applies to this copy only (not other printings of the same name).
+      case Format.STANDARD: {
+        if (allCards) {
+          const allPrintings = allCards.filter((c: any) => c && c.name === card.name);
+          if (allPrintings.length === 0) {
+            return isPrintingLegalInStandard(card);
+          }
+          return allPrintings.some((c: any) => isPrintingLegalInStandard(c));
+        }
         return isPrintingLegalInStandard(card);
-      case Format.STANDARD_NIGHTLY:
+      }
+      case Format.STANDARD_NIGHTLY: {
+        if (allCards) {
+          const allPrintings = allCards.filter((c: any) => c && c.name === card.name);
+          if (allPrintings.length === 0) {
+            return isPrintingLegalInStandardNightly(card);
+          }
+          return allPrintings.some((c: any) => isPrintingLegalInStandardNightly(c));
+        }
         return isPrintingLegalInStandardNightly(card);
+      }
       case Format.EXPANDED: {
         // For anyPrintingAllowed cards, they are known to be legal in Expanded format
         // Just check if this specific printing is not banned
