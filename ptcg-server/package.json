@@ -10,6 +10,7 @@
     "compile": "node --max-old-space-size=4096 ./node_modules/typescript/bin/tsc && node --max-old-space-size=4096 ./node_modules/typescript/bin/tsc -p tsconfig.dist.json",
     "start": "node --expose-gc --max-old-space-size=4096 start.js",
     "start:prod": "node --expose-gc --max-old-space-size=4096 start.js",
+    "headless": "ts-node src/headless-cli.ts",
     "test": "nyc -e \".ts\" -x \"src/**/*.spec.ts\" jasmine-ts \"src/**/*.spec.ts\"",
     "test:sets": "jasmine-ts \"src/sets/tests/*.spec.ts\"",
     "test:sets:catalog": "ts-node src/sets/tests/run-assigned-tests.ts",

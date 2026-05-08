@@ -21,7 +21,7 @@ export class ShuffleDeckPrompt extends Prompt<number[]> {
       return false;
     }
     const s = result.slice();
-    s.sort();
+    s.sort((a, b) => a - b);
     for (let i = 0; i < s.length; i++) {
       if (s[i] !== i) {
         return false;
