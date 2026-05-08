@@ -27,7 +27,7 @@ export class Arcanine extends PokemonCard {
       name: 'Fighting Tackle',
       cost: [R, R, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 100 more damage.'
     }
   ];

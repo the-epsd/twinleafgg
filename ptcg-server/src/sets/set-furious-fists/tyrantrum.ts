@@ -22,7 +22,7 @@ export class Tyrantrum extends PokemonCard {
       name: 'Chew Up',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pok\u00e9mon has any Special Energy attached to it, this attack does 90 more damage.'
     },
     {

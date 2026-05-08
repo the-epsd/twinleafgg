@@ -22,7 +22,7 @@ export class PikachuVmax extends PokemonCard {
       name: 'G-Max Volt Tackle',
       cost: [L, L, L],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard all Energy from this Pokémon. If you do, this attack does 150 more damage.'
     }
   ];

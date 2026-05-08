@@ -20,7 +20,7 @@ export class DracovishV extends PokemonCard {
       name: 'Slosh \'n\' Crash',
       cost: [G, W],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Before doing damage, discard all Pokémon Tools from your opponent\'s Active Pokémon. If you discarded a Pokémon Tool in this way, this attack does 120 more damage.'
     },
     {

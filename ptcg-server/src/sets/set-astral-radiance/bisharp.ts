@@ -22,7 +22,7 @@ export class Bisharp extends PokemonCard {
       name: 'Vengeful Cut',
       cost: [M],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each damage counter on all of your Benched Pawniard.'
     },
     {

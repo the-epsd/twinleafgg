@@ -21,7 +21,7 @@ export class Shelgon extends PokemonCard {
       name: 'Raging Blade',
       cost: [R, W],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any damage counters on it, this attack does 50 more damage.'
     }
   ];

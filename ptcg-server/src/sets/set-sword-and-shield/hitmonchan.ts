@@ -20,7 +20,7 @@ export class Hitmonchan extends PokemonCard {
       name: 'Coordinated Beatdown',
       cost: [F],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Hitmonlee is on your Bench, this attack does 20 more damage.'
     },
     {

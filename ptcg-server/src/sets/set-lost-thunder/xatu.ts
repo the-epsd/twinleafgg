@@ -22,7 +22,7 @@ export class Xatu extends PokemonCard {
       name: 'Energy Gaze',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Your opponent reveals their hand. If you find any Energy cards there, this attack does 60 more damage.'
     },
     {

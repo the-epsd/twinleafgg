@@ -28,7 +28,7 @@ export class BoltundV extends PokemonCard {
       name: 'Bolt Storm',
       cost: [L, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each [L] Energy attached to all of your Pokémon.'
     }
   ];

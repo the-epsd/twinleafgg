@@ -29,7 +29,7 @@ export class Tangrowth extends PokemonCard {
       name: 'Grass Knot',
       cost: [G, G, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];

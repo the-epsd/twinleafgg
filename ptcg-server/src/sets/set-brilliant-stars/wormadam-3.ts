@@ -22,7 +22,7 @@ export class Wormadam3 extends PokemonCard {
       name: 'Matron\'s Anger',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each Pokémon in your discard pile.'
     },
     {

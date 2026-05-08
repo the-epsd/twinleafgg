@@ -22,7 +22,7 @@ export class Drapion extends PokemonCard {
       name: 'Venoshock',
       cost: [D],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pok\u00e9mon is Poisoned, this attack does 40 more damage.'
     },
     {

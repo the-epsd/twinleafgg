@@ -12,23 +12,23 @@ export class Luxray extends PokemonCard {
   public retreat = [];
 
   public attacks = [{
-    name: 'Pressure',
+    name: 'Incessant Onslaught',
     cost: [L, C],
-    damage: 0,
+    damage: 70,
     damageCalculation: 'x',
     text: 'This attack does 70 damage for each Prize card you have taken.'
   },
   {
-    name: 'Strong Bolt',
+    name: 'Strong Volt',
     cost: [L, C, C],
     damage: 200,
-    text: 'Discard 2 Energy from this Pokemon.'
+    text: 'Discard 2 Energy from this Pokémon.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '27';
+  public setNumber: string = '28';
   public name: string = 'Luxray';
   public fullName: string = 'Luxray M3';
 

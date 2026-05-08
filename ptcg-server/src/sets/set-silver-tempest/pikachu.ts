@@ -21,7 +21,7 @@ export class Pikachu extends PokemonCard {
       name: 'Pika Strike',
       cost: [L],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If 1 of your Dedenne used Dede-Short during your last turn, this attack does 180 more damage.'
     }
   ];

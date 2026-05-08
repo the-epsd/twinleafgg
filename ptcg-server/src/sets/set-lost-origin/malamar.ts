@@ -22,7 +22,7 @@ export class Malamar extends PokemonCard {
       name: 'Synchro Kinesis',
       cost: [P],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Each player reveals their hand. If a card in your opponent\'s hand has the same name as a card in your hand, this attack does 90 more damage.'
     },
     {

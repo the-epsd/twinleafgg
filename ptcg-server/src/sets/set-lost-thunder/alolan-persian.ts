@@ -23,7 +23,7 @@ export class AlolanPersian extends PokemonCard {
       name: 'Empty Threat',
       cost: [],
       damage: 90,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-',
       text: 'This attack does 30 less damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

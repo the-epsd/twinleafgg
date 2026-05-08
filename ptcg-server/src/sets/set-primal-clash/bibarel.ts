@@ -27,7 +27,7 @@ export class Bibarel extends PokemonCard {
       name: 'Continuous Headbutt',
       cost: [C, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 80 damage times the number of heads.'
     }
   ];

@@ -15,13 +15,14 @@ export class Hawlucha extends PokemonCard {
     name: 'Revenge Kick',
     cost: [F],
     damage: 30,
-    text: 'If your Benched Pokemon have any damage counters on them, this attack does 60 more damage.'
+    damageCalculation: '+',
+    text: 'If your Benched Pokémon have any damage counters on them, this attack does 60 more damage.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '45';
+  public setNumber: string = '46';
   public name: string = 'Hawlucha';
   public fullName: string = 'Hawlucha M3';
 

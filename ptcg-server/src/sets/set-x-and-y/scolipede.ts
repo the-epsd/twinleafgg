@@ -23,7 +23,7 @@ export class Scolipede extends PokemonCard {
       name: 'Random Peck',
       cost: [P],
       damage: 20,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     },
     {

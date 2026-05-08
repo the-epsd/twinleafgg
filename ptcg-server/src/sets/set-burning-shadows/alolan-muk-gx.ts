@@ -25,7 +25,7 @@ export class AlolanMukGx extends PokemonCard {
       name: 'Chemical Breath',
       cost: [D, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 70 more damage for each Special Condition affecting your opponent\'s Active Pokémon.'
     },
     {

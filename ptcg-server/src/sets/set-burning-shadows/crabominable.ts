@@ -27,7 +27,7 @@ export class Crabominable extends PokemonCard {
       name: 'Double Stomp',
       cost: [F, F, F],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 2 coins. This attack does 40 more damage for each heads.'
     }
   ];

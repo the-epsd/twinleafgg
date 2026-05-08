@@ -22,7 +22,7 @@ export class MewtwoEx2 extends PokemonCard {
       name: 'Shatter Shot',
       cost: [P],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage times the amount of [P] Energy attached to this Pokémon.'
     },
     {

@@ -27,7 +27,7 @@ export class Electrike extends PokemonCard {
       name: 'Quick Attack',
       cost: [L, C],
       damage: 10,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

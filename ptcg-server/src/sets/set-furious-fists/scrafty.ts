@@ -28,7 +28,7 @@ export class Scrafty extends PokemonCard {
       name: 'Machine Gun Headbutt',
       cost: [D, D],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 50 damage times the number of heads. This Pok\u00e9mon is now Confused.'
     }
   ];

@@ -29,7 +29,7 @@ export class Spiritomb extends PokemonCard {
       name: 'Chain of Spirits',
       cost: [D, D],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 60 more damage for each Spiritomb in your discard pile.'
     }
   ];

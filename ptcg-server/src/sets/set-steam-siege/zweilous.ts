@@ -22,7 +22,7 @@ export class Zweilous extends PokemonCard {
       name: 'Double Hit',
       cost: [C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
     },
     {

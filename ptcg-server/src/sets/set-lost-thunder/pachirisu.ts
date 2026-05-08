@@ -22,7 +22,7 @@ export class Pachirisu extends PokemonCard {
       name: 'Overshort',
       cost: [L],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Before doing damage, discard all Pok\u00e9mon Tool cards from your opponent\'s Active Pok\u00e9mon. If you discarded a Pok\u00e9mon Tool card in this way, this attack does 40 more damage, and your opponent\'s Active Pok\u00e9mon is now Paralyzed.'
     }
   ];

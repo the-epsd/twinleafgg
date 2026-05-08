@@ -27,7 +27,7 @@ export class EeveeV extends PokemonCard {
       name: 'Vee Brave',
       cost: [C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 80 more damage.'
     }
   ];

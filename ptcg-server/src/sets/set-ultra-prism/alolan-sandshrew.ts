@@ -20,7 +20,7 @@ export class AlolanSandshrew extends PokemonCard {
       name: 'Fury Swipes',
       cost: [],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 10 damage for each heads.'
     }
   ];

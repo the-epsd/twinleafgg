@@ -32,7 +32,7 @@ export class SilvallyGx extends PokemonCard {
       name: 'Brave Buddies',
       cost: [C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you played a Supporter card from your hand during this turn, this attack does 70 more damage.'
     },
     {

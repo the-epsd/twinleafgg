@@ -24,7 +24,7 @@ export class AlolanDugtrio extends PokemonCard {
       name: 'Gold Rush',
       cost: [],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard any number of [M] Energy cards from your hand. This attack does 30 damage for each card you discarded in this way.'
     }
   ];

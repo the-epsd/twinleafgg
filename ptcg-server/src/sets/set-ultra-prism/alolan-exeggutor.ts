@@ -30,7 +30,7 @@ export class AlolanExeggutor extends PokemonCard {
       name: 'Draco Meteor Barrage',
       cost: [G, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin for each [G] Energy attached to this Pokémon. This attack does 80 damage for each heads.'
     }
   ];

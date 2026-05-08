@@ -26,7 +26,7 @@ export class Heracross extends PokemonCard {
       name: 'Riled Horn',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has any TAG TEAM Pokémon in play, this attack does 70 more damage.'
     }
   ];

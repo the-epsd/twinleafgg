@@ -23,7 +23,7 @@ export class Malamar extends PokemonCard {
       name: 'Rapid Strike Tentacles',
       cost: [P],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Reveal any number of Rapid Strike cards from your hand. This attack does 40 damage for each card you revealed in this way. Then, shuffle those cards into your deck.'
     }
   ];

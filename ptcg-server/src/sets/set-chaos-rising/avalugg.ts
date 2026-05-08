@@ -16,7 +16,7 @@ export class Avalugg extends PokemonCard {
     name: 'Iceberg Destruction',
     cost: [W],
     damage: 60,
-    damageCalculation: 'x' as 'x',
+    damageCalculation: 'x',
     text: 'Discard the top 6 cards of your deck. This attack does 60 damage for each Basic [W] Energy discarded in this way.'
   },
   {

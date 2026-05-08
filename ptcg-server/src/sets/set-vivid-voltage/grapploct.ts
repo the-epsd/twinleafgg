@@ -32,7 +32,7 @@ export class Grapploct extends PokemonCard {
       name: 'Tentacle Buster',
       cost: [F, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon used Full Nelson during your last turn, this attack does 120 more damage.'
     }
   ];

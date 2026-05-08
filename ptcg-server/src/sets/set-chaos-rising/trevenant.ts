@@ -27,7 +27,7 @@ export class Trevenant extends PokemonCard {
     name: 'Overpain',
     cost: [P, P],
     damage: 60,
-    damageCalculation: '+' as '+',
+    damageCalculation: '+',
     text: 'This attack does 10 more damage for each damage counter on all your opponent\'s Pokemon.'
   }];
 

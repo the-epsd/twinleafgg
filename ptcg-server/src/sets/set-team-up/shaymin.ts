@@ -22,7 +22,7 @@ export class Shaymin extends PokemonCard {
       name: 'Flower Storm',
       cost: [G, G],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage times the amount of basic Energy attached to all of your Pokémon.'
     }
   ];

@@ -36,7 +36,7 @@ export class LycanrocGx extends PokemonCard {
       name: 'Splintered Shards-GX',
       cost: [F],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage for each Energy card in your opponent\'s discard pile. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

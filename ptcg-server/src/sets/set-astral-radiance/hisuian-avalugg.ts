@@ -29,7 +29,7 @@ export class HisuianAvalugg extends PokemonCard {
       name: 'Mountain Gale',
       cost: [W, W, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If a Stadium is in play, this attack does 120 more damage. Then, discard that Stadium.'
     }
   ];

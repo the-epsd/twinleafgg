@@ -27,7 +27,7 @@ export class VirizionGx extends PokemonCard {
       name: 'Sensitive Blade',
       cost: [G, G],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you played a Supporter card from your hand during this turn, this attack does 80 more damage.'
     },
     {

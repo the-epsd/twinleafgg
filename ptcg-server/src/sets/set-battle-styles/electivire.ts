@@ -22,7 +22,7 @@ export class Electivire extends PokemonCard {
       name: 'Tumbling Attack',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {

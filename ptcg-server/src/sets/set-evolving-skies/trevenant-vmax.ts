@@ -23,7 +23,7 @@ export class TrevenantVmax extends PokemonCard {
       name: 'Missing in the Forest',
       cost: [G, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 40 damage for each Supporter card in your opponent\'s discard pile.'
     },
     {

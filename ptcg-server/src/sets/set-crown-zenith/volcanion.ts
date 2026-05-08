@@ -27,7 +27,7 @@ export class Volcanion extends PokemonCard {
       name: 'Hydro Burn',
       cost: [R, R, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any [W] Energy attached, this attack does 80 more damage.'
     }
   ];

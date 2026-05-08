@@ -26,7 +26,7 @@ export class KommoO extends PokemonCard {
       name: 'War Cry',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have fewer Pokémon in play than your opponent, this attack does 90 more damage.'
     },
     {

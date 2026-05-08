@@ -32,7 +32,7 @@ export class ToxtricityV extends PokemonCard {
       name: 'Electric Riot',
       cost: [L, L, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 90 more damage.'
     }
   ];

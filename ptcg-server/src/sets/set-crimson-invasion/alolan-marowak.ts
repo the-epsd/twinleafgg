@@ -30,7 +30,7 @@ export class AlolanMarowak extends PokemonCard {
       name: 'Burning Bonemerang',
       cost: [R, R, C],
       damage: 70,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 70 damage for each heads. If either of them is heads, your opponent\'s Active Pokémon is now Burned.'
     }
   ];

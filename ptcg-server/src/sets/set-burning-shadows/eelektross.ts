@@ -31,7 +31,7 @@ export class Eelektross extends PokemonCard {
       name: 'Vacuum Bolt',
       cost: [L, L, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may do 80 more damage. If you do, this attack does 80 damage to 1 of your Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
     }
   ];

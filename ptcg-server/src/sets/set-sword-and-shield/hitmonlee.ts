@@ -26,7 +26,7 @@ export class Hitmonlee extends PokemonCard {
       name: 'Coordinated Strike',
       cost: [F, F, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Hitmonchan is on your Bench, this attack does 80 more damage.'
     }
   ];

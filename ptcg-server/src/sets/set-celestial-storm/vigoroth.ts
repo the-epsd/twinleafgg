@@ -21,14 +21,14 @@ export class Vigoroth extends PokemonCard {
       name: 'Fury Swipes',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 20 damage for each heads.'
     },
     {
       name: 'Rage',
       cost: [C, C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     }
   ];

@@ -27,7 +27,7 @@ export class Simisear extends PokemonCard {
       name: 'Fling Fire',
       cost: [R],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard up to 2 basic Energy cards from your hand. This attack does 60 damage for each card you discarded in this way.'
     }
   ];

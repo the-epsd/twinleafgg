@@ -20,7 +20,7 @@ export class Shinx extends PokemonCard {
       name: 'Under Pressure',
       cost: [L],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has 3 or fewer Prize cards remaining, this attack does 50 more damage.'
     }
   ];

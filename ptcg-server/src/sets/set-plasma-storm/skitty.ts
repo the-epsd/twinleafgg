@@ -20,7 +20,7 @@ export class Skitty extends PokemonCard {
       name: 'Triple Slap',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 20 damage times the number of heads.'
     }
   ];

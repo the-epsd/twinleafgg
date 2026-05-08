@@ -25,7 +25,7 @@ export class Probopass extends PokemonCard {
       name: 'Heavy Nose',
       cost: [M, C, C],
       damage: 60,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If the Defending Pokémon already has any damage counters on it, this attack does 30 more damage.'
     }
   ];

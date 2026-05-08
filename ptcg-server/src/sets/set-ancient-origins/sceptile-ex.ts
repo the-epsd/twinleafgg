@@ -29,7 +29,7 @@ export class SceptileEx extends PokemonCard {
       name: 'Unseen Claw',
       cost: [G, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 70 more damage.'
     }
   ];

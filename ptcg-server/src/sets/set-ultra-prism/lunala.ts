@@ -24,7 +24,7 @@ export class Lunala extends PokemonCard {
       name: 'Psystorm',
       cost: [P, P, P, P],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage times the amount of Energy attached to all Pokémon.'
     }
   ];

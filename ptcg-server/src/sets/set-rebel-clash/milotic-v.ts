@@ -22,7 +22,7 @@ export class MiloticV extends PokemonCard {
       name: 'Aqua Impact',
       cost: [W, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 50 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     },
     {

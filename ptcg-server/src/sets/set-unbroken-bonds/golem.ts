@@ -28,7 +28,7 @@ export class Golem extends PokemonCard {
       name: 'Heavy Slam',
       cost: [F, C, C, C],
       damage: 180,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-',
       text: 'This attack does 20 less damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];

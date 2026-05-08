@@ -27,7 +27,7 @@ export class WailordV extends PokemonCard {
       name: 'Ocean Waves',
       cost: [W, W, W, W],
       damage: 120,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 120 damage for each heads.'
     }
   ];

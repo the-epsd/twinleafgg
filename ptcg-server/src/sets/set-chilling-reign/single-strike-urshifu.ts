@@ -28,7 +28,7 @@ export class SingleStrikeUrshifu extends PokemonCard {
       name: 'Fists of Strife',
       cost: [D, D, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any damage counters on it, this attack does 100 more damage.'
     }
   ];

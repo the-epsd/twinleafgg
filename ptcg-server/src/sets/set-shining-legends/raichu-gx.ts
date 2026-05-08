@@ -25,7 +25,7 @@ export class RaichuGx extends PokemonCard {
       name: 'Powerful Spark',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage times the amount of [L] Energy attached to your Pokémon.'
     },
     {

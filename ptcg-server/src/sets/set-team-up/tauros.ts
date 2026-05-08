@@ -20,7 +20,7 @@ export class Tauros extends PokemonCard {
       name: 'Raging Herd',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each damage counter on all of your Tauros and Tauros-GX.'
     }
   ];

@@ -31,7 +31,7 @@ export class Rillaboom extends PokemonCard {
       name: 'Raging Repeated Strike',
       cost: [G, G, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Discard any amount of Energy from your Pokémon. This attack does 30 more damage for each card you discarded in this way.'
     }
   ];

@@ -30,7 +30,7 @@ export class Excadrill extends PokemonCard {
       name: 'Straight Claw',
       cost: [M, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard an Energy attached to this Pokémon. If you do, this attack does 30 more damage.'
     }
   ];

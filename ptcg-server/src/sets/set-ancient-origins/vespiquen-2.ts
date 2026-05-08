@@ -28,7 +28,7 @@ export class Vespiquen2 extends PokemonCard {
       name: 'Fury Swipes',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
     }
   ];

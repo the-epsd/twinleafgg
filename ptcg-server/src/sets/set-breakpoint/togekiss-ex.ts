@@ -29,7 +29,7 @@ export class TogekissEx extends PokemonCard {
       name: 'Hurricane Wing',
       cost: [Y, C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
     }
   ];

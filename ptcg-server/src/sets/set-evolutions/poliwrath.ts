@@ -23,7 +23,7 @@ export class Poliwrath extends PokemonCard {
       name: 'Dashing Punch',
       cost: [W],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pok\u00e9mon was on the Bench and became your Active Pok\u00e9mon this turn, this attack does 50 more damage.'
     },
     {

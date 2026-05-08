@@ -29,7 +29,7 @@ export class AlakazamV extends PokemonCard {
       name: 'Mind Ruler',
       cost: [P, P],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage for each card in your opponent\'s hand.'
     }
   ];

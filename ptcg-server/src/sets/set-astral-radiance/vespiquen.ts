@@ -24,7 +24,7 @@ export class Vespiquen extends PokemonCard {
       name: 'Honey Rush',
       cost: [G],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Reveal any number of Sweet Honey cards from your hand. This attack does 60 damage for each card you revealed in this way.'
     },
     {

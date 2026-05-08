@@ -15,15 +15,15 @@ export class Tyrunt extends PokemonCard {
   public attacks = [{
     name: 'Get Angry',
     cost: [F, C],
-    damage: 0,
+    damage: 20,
     damageCalculation: 'x',
     text: 'This attack does 20 damage for each damage counter on this Pokémon.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '43';
+  public setNumber: string = '44';
   public name: string = 'Tyrunt';
   public fullName: string = 'Tyrunt M3';
 

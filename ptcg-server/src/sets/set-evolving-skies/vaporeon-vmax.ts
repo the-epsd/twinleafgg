@@ -31,7 +31,7 @@ export class VaporeonVmax extends PokemonCard {
       name: 'Max Torrent',
       cost: [W, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 100 more damage.'
     }
   ];

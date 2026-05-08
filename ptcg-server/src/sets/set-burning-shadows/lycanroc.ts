@@ -22,7 +22,7 @@ export class Lycanroc extends PokemonCard {
       name: 'Dangerous Claws',
       cost: [F],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, this attack does 30 more damage.'
     },
     {

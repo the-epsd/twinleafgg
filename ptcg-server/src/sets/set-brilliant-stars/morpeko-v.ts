@@ -29,7 +29,7 @@ export class MorpekoV extends PokemonCard {
       name: 'Hangry Spike',
       cost: [D, D, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you played Marnie\'s Pride from your hand during this turn, this attack does 120 more damage.'
     }
   ];

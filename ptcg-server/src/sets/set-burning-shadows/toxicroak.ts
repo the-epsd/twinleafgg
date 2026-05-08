@@ -26,7 +26,7 @@ export class Toxicroak extends PokemonCard {
       name: 'Poison Boost',
       cost: [P, P, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon is Poisoned, this attack does 80 more damage. Then, remove that Special Condition from this Pokémon.'
     }
   ];

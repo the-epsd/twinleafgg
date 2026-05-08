@@ -31,7 +31,7 @@ export class Terrakion extends PokemonCard {
       name: 'Earthen Power',
       cost: [F, F, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have a Stadium in play, this attack does 80 more damage.'
     }
   ];

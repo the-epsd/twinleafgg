@@ -22,7 +22,7 @@ export class Heliolisk extends PokemonCard {
       name: 'Parabolic Counter',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has any Lightning Pokémon in play, this attack does 90 more damage.'
     },
     {

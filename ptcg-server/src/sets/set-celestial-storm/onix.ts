@@ -31,7 +31,7 @@ export class Onix extends PokemonCard {
       name: 'Rage',
       cost: [F, F],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     }
   ];

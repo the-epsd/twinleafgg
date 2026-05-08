@@ -21,7 +21,7 @@ export class Ninetales extends PokemonCard {
       name: 'Hex',
       cost: [R],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, this attack does 90 more damage.'
     },
     {

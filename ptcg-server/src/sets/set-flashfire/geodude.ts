@@ -26,7 +26,7 @@ export class Geodude extends PokemonCard {
       name: 'Flail',
       cost: [C, C],
       damage: 10,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'This attack does 10 damage times the number of damage counters on this Pokémon.'
     }
   ];

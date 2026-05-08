@@ -22,14 +22,14 @@ export class Marowak extends PokemonCard {
       name: 'Bone Rush',
       cost: [F],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 50 damage for each heads.'
     },
     {
       name: 'Assault Boom',
       cost: [C, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon has a Pokémon Tool card attached to it, this attack does 70 more damage.'
     }
   ];

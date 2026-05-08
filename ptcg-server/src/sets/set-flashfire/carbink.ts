@@ -30,7 +30,7 @@ export class Carbink extends PokemonCard {
       name: 'Wonder Blast',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each [Y] Energy attached to this Pokémon.'
     }
   ];

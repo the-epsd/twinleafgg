@@ -32,7 +32,7 @@ export class Parasect extends PokemonCard {
       name: 'X-Scissor',
       cost: [G, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

@@ -34,7 +34,7 @@ export class PheromosaGx extends PokemonCard {
       name: 'Beauty-GX',
       cost: [G, G],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 50 damage for each Prize card your opponent has taken. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

@@ -9,12 +9,12 @@ export class GrowGrassEnergy extends EnergyCard {
   public provides: CardType[] = [CardType.GRASS];
   public energyType = EnergyType.SPECIAL;
   public regulationMark = 'J';
-  public set: string = 'M3';
-  public name = 'Grow [G] Energy';
+  public set: string = 'POR';
+  public name = 'Growing [G] Energy';
   public fullName = 'Grow [G] Energy M3';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '78';
-  public text = 'This card provides [G] Energy while this card is attached to a Pokemon.\n\nThe [G] Pokemon this card is attached to gets +20 HP.';
+  public setNumber: string = '86';
+  public text = 'As long as this card is attached to a Pokémon, it provides [G] Energy.\n\nThe [G] Pokémon this card is attached to gets +20 HP.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Provide [G] Energy

@@ -33,7 +33,7 @@ export class RillaboomVmax extends PokemonCard {
       name: 'Max Beating',
       cost: [G, G, G, C],
       damage: 130,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard up to 3 [G] Energy from this Pokémon. If you do, this attack does 50 more damage for each card you discarded in this way.'
     }
   ];

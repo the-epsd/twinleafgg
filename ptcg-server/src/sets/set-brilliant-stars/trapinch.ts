@@ -21,7 +21,7 @@ export class Trapinch extends PokemonCard {
       name: 'Rising Lunge',
       cost: [F],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];

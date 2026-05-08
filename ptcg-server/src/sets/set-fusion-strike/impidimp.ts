@@ -22,7 +22,7 @@ export class Impidimp extends PokemonCard {
       name: 'Play Rough',
       cost: [D],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

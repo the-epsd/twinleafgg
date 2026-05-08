@@ -31,7 +31,7 @@ export class Cresselia extends PokemonCard {
       name: 'Photon Laser',
       cost: [P, P],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have at least 5 Energy in play, this attack does 90 more damage.'
     }
   ];

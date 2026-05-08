@@ -26,7 +26,7 @@ export class Regirock extends PokemonCard {
       name: 'Unyielding Rock',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, this attack does 60 more damage.'
     }
   ];

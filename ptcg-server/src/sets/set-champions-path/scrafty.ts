@@ -34,7 +34,7 @@ export class Scrafty extends PokemonCard {
       name: 'Bad Brawl',
       cost: [D, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you played Piers from your hand during this turn, this attack does 90 more damage.'
     }
   ];

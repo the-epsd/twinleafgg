@@ -29,7 +29,7 @@ export class Rhyperior extends PokemonCard {
       name: 'Stone Edge',
       cost: [F, F, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];

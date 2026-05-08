@@ -28,7 +28,7 @@ export class Feraligatr extends PokemonCard {
       name: 'Second Strike',
       cost: [W, W, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 80 more damage.'
     }
   ];

@@ -18,7 +18,7 @@ export class Slowbro extends PokemonCard {
       name: 'All Out',
       cost: [P],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have no cards in your hand, this attack does 160 more damage.',
     },
     {

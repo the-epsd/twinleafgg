@@ -27,7 +27,7 @@ export class Cinccino extends PokemonCard {
       name: 'Triple Axel',
       cost: [C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 50 damage for each heads.'
     }
   ];

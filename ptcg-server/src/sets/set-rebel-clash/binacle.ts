@@ -20,7 +20,7 @@ export class Binacle extends PokemonCard {
       name: 'Dual Chop',
       cost: [F, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 50 damage for each heads.'
     }
   ];

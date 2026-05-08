@@ -17,7 +17,7 @@ export class Gigalith extends PokemonCard {
       name: 'Revenge Cannon',
       cost: [F, C, C],
       damage: 10,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Does 10 more damage for each damage counter on each of your Benched Pokémon.'
     },
     {

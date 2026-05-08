@@ -23,7 +23,7 @@ export class Drednaw extends PokemonCard {
       name: 'Vise Bite',
       cost: [W, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     },
     {

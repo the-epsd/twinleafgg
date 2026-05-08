@@ -28,7 +28,7 @@ export class GalarianSlowbro extends PokemonCard {
       name: 'Unhinged Hammer',
       cost: [D, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon is affected by a Special Condition, this attack does 120 more damage.'
     }
   ];

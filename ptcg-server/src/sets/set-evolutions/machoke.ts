@@ -21,7 +21,7 @@ export class Machoke extends PokemonCard {
       name: 'Karate Chop',
       cost: [F, F],
       damage: 60,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-',
       text: 'This attack does 60 damage minus 10 damage for each damage counter on this Pokémon.'
     },
     {

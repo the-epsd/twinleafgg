@@ -21,7 +21,7 @@ export class Zoroark extends PokemonCard {
       name: 'Double Claw',
       cost: [C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 40 damage for each heads.'
     },
     {

@@ -9,16 +9,16 @@ export class Nosepass extends PokemonCard {
   public retreat = [C, C, C];
 
   public attacks = [{
-    name: 'Avalanche',
+    name: 'Rolling Rocks',
     cost: [F, F],
     damage: 40,
     text: ''
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '36';
+  public setNumber: string = '37';
   public name: string = 'Nosepass';
   public fullName: string = 'Nosepass M3';
 }

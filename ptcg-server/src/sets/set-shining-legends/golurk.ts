@@ -22,7 +22,7 @@ export class Golurk extends PokemonCard {
       name: 'Triple Smash',
       cost: [P, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 3 coins. This attack does 60 more damage for each heads.'
     },
     {

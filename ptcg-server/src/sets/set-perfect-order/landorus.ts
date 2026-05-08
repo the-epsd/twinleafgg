@@ -20,13 +20,13 @@ export class Landorus extends PokemonCard {
     name: 'Screw Knuckle',
     cost: [F, F, C],
     damage: 120,
-    text: 'Return an Energy card attached to this Pokemon to your hand.'
+    text: 'Put an Energy card attached to this Pokémon to your hand.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '40';
+  public setNumber: string = '41';
   public name: string = 'Landorus';
   public fullName: string = 'Landorus M3';
 

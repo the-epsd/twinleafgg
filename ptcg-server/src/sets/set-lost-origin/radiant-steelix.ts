@@ -28,7 +28,7 @@ export class RadiantSteelix extends PokemonCard {
       name: 'Destructive Finish',
       cost: [M, M, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Discard cards from the top of your deck until only 1 card remains. This attack does 30 more damage for each Energy card you discarded in this way.'
     }
   ];

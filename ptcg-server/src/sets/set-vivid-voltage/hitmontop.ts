@@ -30,7 +30,7 @@ export class Hitmontop extends PokemonCard {
       name: 'Tornado Kick',
       cost: [F, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you played Bea from your hand during this turn, this attack does 80 more damage.'
     }
   ];

@@ -16,20 +16,20 @@ export class Meowstic extends PokemonCard {
     name: 'Perplex',
     cost: [P],
     damage: 0,
-    text: 'Your opponent\'s Active Pokemon is now Confused.'
+    text: 'Your opponent\'s Active Pokémon is now Confused.'
   },
   {
     name: 'Psychic',
     cost: [P],
     damage: 30,
     damageCalculation: '+',
-    text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokemon.'
+    text: 'This attack does 30 more damage for each Energy attached to your opponent\'s Active Pokémon.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '33';
+  public setNumber: string = '34';
   public name: string = 'Meowstic';
   public fullName: string = 'Meowstic M3';
 

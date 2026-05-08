@@ -29,14 +29,14 @@ export class Zebstrika extends PokemonCard {
       name: 'Coordinated Bolt',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If 1 of your other Rapid Strike Pokémon used an attack during your last turn, this attack does 90 more damage.'
     },
     {
       name: 'Spark Rush',
       cost: [L, C, C],
       damage: 90,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 90 damage for each heads.'
     }
   ];

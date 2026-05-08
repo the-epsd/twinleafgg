@@ -28,7 +28,7 @@ export class Darmanitan extends PokemonCard {
       name: 'Darmani-Hands',
       cost: [R, R, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 4 coins. This attack does 50 more damage for each heads.'
     }
   ];

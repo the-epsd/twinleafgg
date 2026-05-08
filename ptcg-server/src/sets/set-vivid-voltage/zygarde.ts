@@ -26,7 +26,7 @@ export class Zygarde extends PokemonCard {
       name: 'Core Avenger',
       cost: [F, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have more Prize cards remaining than your opponent, this attack does 80 more damage.'
     }
   ];

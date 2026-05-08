@@ -16,7 +16,7 @@ export class Hippopotas extends PokemonCard {
     name: 'Sand Attack',
     cost: [F],
     damage: 10,
-    text: 'During your opponent\'s next turn, if the Defending Pokemon tries to use an attack, your opponent flips a coin. If tails, that attack doesn\'t happen.'
+    text: 'During your opponent\'s next turn, if the Defending Pokémon tries to use an attack, your opponent flips a coin. If tails, that attack doesn\'t happen.'
   },
   {
     name: 'Bite',
@@ -26,9 +26,9 @@ export class Hippopotas extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '38';
+  public setNumber: string = '39';
   public name: string = 'Hippopotas';
   public fullName: string = 'Hippopotas M3';
 

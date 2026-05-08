@@ -22,7 +22,7 @@ export class Sandaconda extends PokemonCard {
       name: 'Big Sand Cannon',
       cost: [F],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard the top 6 cards of your deck. This attack does 60 damage for each [F] Energy card you discarded in this way.'
     },
     {

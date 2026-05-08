@@ -26,7 +26,7 @@ export class Accelgor extends PokemonCard {
       name: 'Raid',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon evolved from Shelmet during this turn, this attack does 40 more damage.'
     },
     {

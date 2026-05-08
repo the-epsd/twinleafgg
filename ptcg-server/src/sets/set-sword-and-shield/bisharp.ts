@@ -22,7 +22,7 @@ export class Bisharp extends PokemonCard {
       name: 'Charge Order',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each of your Benched Pawniard.'
     },
     {

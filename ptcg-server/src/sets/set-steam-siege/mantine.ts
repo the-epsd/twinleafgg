@@ -29,7 +29,7 @@ export class Mantine extends PokemonCard {
       name: 'Dwindling Wave',
       cost: [W, W, W],
       damage: 90,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-',
       text: 'This attack does 90 damage minus 10 damage for each damage counter on this Pokémon.'
     }
   ];

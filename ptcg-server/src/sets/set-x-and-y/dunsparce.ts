@@ -26,7 +26,7 @@ export class Dunsparce extends PokemonCard {
       name: 'Second Bite',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
     }
   ];

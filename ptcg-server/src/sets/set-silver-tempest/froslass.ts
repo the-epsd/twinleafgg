@@ -25,7 +25,7 @@ export class Froslass extends PokemonCard {
       name: 'Frosty Jail',
       cost: [W],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you played Candice from your hand during this turn, this attack does 90 more damage, and your opponent\'s Active Pokémon is now Paralyzed.'
     },
     {

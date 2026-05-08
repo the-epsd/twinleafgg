@@ -17,7 +17,7 @@ export class Roserade2 extends PokemonCard {
       name: 'Crosswise Whip',
       cost: [G],
       damage: 0,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 30 damage times the number of heads.'
     },
     {

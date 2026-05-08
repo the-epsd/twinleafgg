@@ -23,14 +23,14 @@ export class DarkraiEx extends PokemonCard {
       name: 'Dark Pulse',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each [D] Energy attached to all of your Pokémon.'
     },
     {
       name: 'Dark Head',
       cost: [D, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is Asleep, this attack does 80 more damage.'
     }
   ];

@@ -21,7 +21,7 @@ export class Pupitar extends PokemonCard {
       name: 'Payback',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has exactly 1 Prize card remaining, this attack does 90 more damage.'
     }
   ];

@@ -32,7 +32,7 @@ export class OrbeetleVmax extends PokemonCard {
       name: 'G-Max Wave',
       cost: [G, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 50 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

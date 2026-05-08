@@ -22,7 +22,7 @@ export class Diggersby extends PokemonCard {
       name: 'Mining Rush',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard up to 6 cards from the top of your deck. If you do, this attack does 30 damage for each card you discarded in this way.'
     },
     {

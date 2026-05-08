@@ -30,7 +30,7 @@ export class Nidoking extends PokemonCard {
       name: 'King\'s Drum',
       cost: [P, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Nidoqueen is on your Bench, this attack does 100 more damage.'
     }
   ];

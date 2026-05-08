@@ -22,7 +22,7 @@ export class Tynamo extends PokemonCard {
       name: 'Aqua Shock',
       cost: [L],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon has any [W] Energy attached to it, this attack does 30 more damage.'
     }
   ];

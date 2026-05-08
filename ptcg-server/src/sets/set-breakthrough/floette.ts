@@ -30,7 +30,7 @@ export class Floette extends PokemonCard {
       name: 'Magical Leaf',
       cost: [Y, Y],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage and heal 20 damage from this Pokémon.'
     }
   ];

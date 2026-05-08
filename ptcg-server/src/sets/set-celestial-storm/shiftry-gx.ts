@@ -31,7 +31,7 @@ export class ShiftryGx extends PokemonCard {
       name: 'Extrasensory',
       cost: [G, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have the same number of cards in your hand as your opponent, this attack does 90 more damage.'
     },
     {

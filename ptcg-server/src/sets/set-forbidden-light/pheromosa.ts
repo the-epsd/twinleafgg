@@ -27,7 +27,7 @@ export class Pheromosa extends PokemonCard {
       name: 'White Ray',
       cost: [G, G, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have only 1 Prize card remaining, this attack does 90 more damage.'
     }
   ];

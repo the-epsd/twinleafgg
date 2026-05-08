@@ -22,7 +22,7 @@ export class MGlalieEx extends PokemonCard {
       name: 'Cryo Mouth',
       cost: [W, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has 10 or more damage counters on it, this attack does 150 more damage.'
     }
   ];

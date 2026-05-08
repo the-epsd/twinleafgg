@@ -20,7 +20,7 @@ export class Sudowoodo extends PokemonCard {
       name: 'Reply Strongly',
       cost: [F],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon was damaged by an attack during your opponent\'s last turn while it was your Active Pokémon, this attack does 80 more damage.'
     }
   ];

@@ -21,7 +21,7 @@ export class Phanpy extends PokemonCard {
       name: 'Knock Away',
       cost: [F],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

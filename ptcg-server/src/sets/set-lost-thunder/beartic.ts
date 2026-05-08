@@ -21,7 +21,7 @@ export class Beartic extends PokemonCard {
       name: 'Resolute Claws',
       cost: [W, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon-GX or a Pokémon-EX, this attack does 60 more damage (before applying Weakness and Resistance).'
     },
     {

@@ -23,14 +23,14 @@ export class LugiaEx extends PokemonCard {
       name: 'Aero Ball',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage times the amount of Energy attached to both Active Pokémon.'
     },
     {
       name: 'Deep Hurricane',
       cost: [C, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 70 more damage. Then, discard that Stadium card.'
     }
   ];

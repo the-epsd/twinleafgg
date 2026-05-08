@@ -20,7 +20,7 @@ export class Pachirisu extends PokemonCard {
       name: 'Windup Thunder',
       cost: [L, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage for each Pokémon Tool attached to all of your Pokémon.'
     }
   ];

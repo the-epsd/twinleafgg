@@ -14,20 +14,20 @@ export class Raticate extends PokemonCard {
     name: 'Scrape Off',
     cost: [C],
     damage: 20,
-    text: 'Before doing damage, you may discard a Pokemon Tool attached to your opponent\'s Active Pokemon.'
+    text: 'Before doing damage, discard all Pokémon Tools attached to your opponent\'s Active Pokémon.'
   },
   {
-    name: 'Countering Incisors',
+    name: 'Retaliatory Incisors',
     cost: [C],
-    damage: 0,
+    damage: 40,
     damageCalculation: 'x',
     text: 'This attack does 40 damage for each damage counter on all of your Benched Rattata.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '60';
+  public setNumber: string = '61';
   public name: string = 'Raticate';
   public fullName: string = 'Raticate M3';
 

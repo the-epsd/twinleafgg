@@ -21,7 +21,7 @@ export class Wooloo2 extends PokemonCard {
       name: 'Knock Away',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];

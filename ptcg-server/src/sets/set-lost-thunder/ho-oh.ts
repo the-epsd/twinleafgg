@@ -22,7 +22,7 @@ export class HoOh extends PokemonCard {
       name: 'Rainbow Burn',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each type of basic Energy attached to this Pokémon.'
     }
   ];

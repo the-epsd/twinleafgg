@@ -20,7 +20,7 @@ export class TapuBulu extends PokemonCard {
       name: 'Heavy Punch',
       cost: [G, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each of your opponent\'s Benched Pokémon.'
     },
     {

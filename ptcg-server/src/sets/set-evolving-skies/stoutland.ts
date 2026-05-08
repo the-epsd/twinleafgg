@@ -29,7 +29,7 @@ export class Stoutland extends PokemonCard {
       name: 'Knock Away',
       cost: [C, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 100 more damage.'
     }
   ];

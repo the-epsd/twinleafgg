@@ -28,7 +28,7 @@ export class AlolanPersian extends PokemonCard {
       name: 'Claw Rend',
       cost: [D],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 30 more damage.'
     }
   ];

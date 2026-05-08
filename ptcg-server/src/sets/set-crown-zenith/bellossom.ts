@@ -22,7 +22,7 @@ export class Bellossom extends PokemonCard {
       name: 'Flower Spin',
       cost: [G, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 80 damage for each heads. Switch this Pokémon with 1 of your Benched Pokémon.'
     }
   ];

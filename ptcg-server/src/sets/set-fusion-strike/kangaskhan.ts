@@ -28,7 +28,7 @@ export class Kangaskhan extends PokemonCard {
       name: 'Coordinated One-Two Punch',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 100 more damage.'
     }
   ];

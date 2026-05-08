@@ -26,7 +26,7 @@ export class Quagsire extends PokemonCard {
       name: 'Mud Gun',
       cost: [W, C, C],
       damage: 60,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If this Pokémon has any [F] Energy attached to it, this attack does 30 more damage.'
     }
   ];

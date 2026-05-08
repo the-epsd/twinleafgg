@@ -27,7 +27,7 @@ export class HeatranV extends PokemonCard {
       name: 'Magma Fall',
       cost: [R, R, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have a Stadium in play, this attack does 90 more damage.'
     }
   ];

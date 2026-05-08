@@ -26,7 +26,7 @@ export class Exploud extends PokemonCard {
       name: 'Ambush',
       cost: [C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     },
     {

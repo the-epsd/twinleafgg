@@ -20,14 +20,14 @@ export class Kangaskhan extends PokemonCard {
       name: 'Cross-Cut',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 30 more damage.'
     },
     {
       name: 'Hurricane Punch',
       cost: [C, C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 50 damage for each heads.'
     }
   ];

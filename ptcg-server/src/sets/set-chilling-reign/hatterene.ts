@@ -32,7 +32,7 @@ export class Hatterene extends PokemonCard {
       name: 'Psychic',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 50 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

@@ -22,7 +22,7 @@ export class AlolanDiglett extends PokemonCard {
       name: 'Iron Head',
       cost: [],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 10 damage for each heads.'
     }
   ];

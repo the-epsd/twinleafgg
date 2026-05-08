@@ -23,7 +23,7 @@ export class Pangoro extends PokemonCard {
       name: 'Clobber',
       cost: [D, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard an Item card from your hand. If you do, this attack does 40 more damage.'
     },
     {

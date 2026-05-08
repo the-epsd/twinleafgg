@@ -26,7 +26,7 @@ export class Dratini extends PokemonCard {
       name: 'Slam',
       cost: [L, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 20 damage times the number of heads.'
     }
   ];

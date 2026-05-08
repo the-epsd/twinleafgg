@@ -23,7 +23,7 @@ export class Bisharp extends PokemonCard {
       name: 'Retaliate',
       cost: [C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If any of your Pokémon were Knocked Out by damage from an opponent\'s attack during his or her last turn, this attack does 60 more damage.'
     },
     {

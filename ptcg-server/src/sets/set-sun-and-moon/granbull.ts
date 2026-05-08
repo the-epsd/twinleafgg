@@ -29,7 +29,7 @@ export class Granbull extends PokemonCard {
       name: 'Fight Back',
       cost: [Y, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any damage counters on it, this attack does 80 more damage.'
     }
   ];

@@ -22,7 +22,7 @@ export class Tynamo extends PokemonCard {
       name: 'Water Splash',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 10 more damage.'
     }
   ];

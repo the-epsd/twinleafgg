@@ -18,11 +18,11 @@ export class Spewpa extends PokemonCard {
     name: 'Hide',
     cost: [G],
     damage: 0,
-    text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage and effects from attacks done to this Pokemon.'
+    text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage and effects from attacks done to this Pokémon.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
   public name: string = 'Spewpa';

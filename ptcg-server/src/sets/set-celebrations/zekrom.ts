@@ -26,7 +26,7 @@ export class Zekrom extends PokemonCard {
       name: 'White Thunder',
       cost: [L, L, C],
       damage: 80,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If Reshiram is on your Bench, this attack does 80 more damage.'
     }
   ];

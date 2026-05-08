@@ -28,7 +28,7 @@ export class Swalot extends PokemonCard {
       name: 'Swallow Up',
       cost: [P, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If, before doing damage, your opponent\'s Active Pokémon has fewer remaining HP than this Pokémon, this attack does 50 more damage.'
     }
   ];

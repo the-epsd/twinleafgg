@@ -21,7 +21,7 @@ export class FormatValidator {
 
     const formats: Format[][] = [];
 
-    // Prefer full card catalog when provided (e.g. deck editor); STANDARD/STANDARD_NIGHTLY still validate each printing on its own.
+    // Full catalog when provided enables ANY_PRINTING_ALLOWED (Standard/Nightly: legal if any same-name printing qualifies). Other cards stay per-deck-printing for those formats.
     const cardsToCheck = allCards || cards;
 
     cards
@@ -176,11 +176,26 @@ export class FormatValidator {
           return true;
         case Format.ETERNAL:
           return !BanLists[format].includes(`${card.name} ${card.set} ${card.setNumber}`);
-        case Format.STANDARD:
-          // Per-printing: regulation mark / set legality applies to this copy only (not other printings of the same name).
+        case Format.STANDARD: {
+          if (allCards) {
+            const allPrintings = allCards.filter((c) => c && c.name === card.name);
+            if (allPrintings.length === 0) {
+              return this.isPrintingLegalInStandard(card);
+            }
+            return allPrintings.some((c) => this.isPrintingLegalInStandard(c));
+          }
           return this.isPrintingLegalInStandard(card);
-        case Format.STANDARD_NIGHTLY:
+        }
+        case Format.STANDARD_NIGHTLY: {
+          if (allCards) {
+            const allPrintings = allCards.filter((c) => c && c.name === card.name);
+            if (allPrintings.length === 0) {
+              return this.isPrintingLegalInStandardNightly(card);
+            }
+            return allPrintings.some((c) => this.isPrintingLegalInStandardNightly(c));
+          }
           return this.isPrintingLegalInStandardNightly(card);
+        }
         case Format.EXPANDED: {
           // For anyPrintingAllowed cards, they are known to be legal in Expanded format
           // Just check if this specific printing is not banned

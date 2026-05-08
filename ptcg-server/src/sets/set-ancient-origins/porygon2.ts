@@ -27,7 +27,7 @@ export class Porygon2 extends PokemonCard {
       name: 'Tri Attack',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
     }
   ];

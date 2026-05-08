@@ -24,7 +24,7 @@ export class Zarude extends PokemonCard {
       name: 'Shadow Whip',
       cost: [D, D, D],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If any of your Benched Pokémon has any Shadow Darkness Energy attached to them, this attack does 70 more damage.',
     },
   ];

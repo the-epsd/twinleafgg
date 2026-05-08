@@ -15,7 +15,7 @@ export class Diggersby extends PokemonCard {
     name: 'Earthquake',
     cost: [C],
     damage: 140,
-    text: 'This attack does 30 damage to each of your Benched Pokemon. (Don\'t apply Weakness and Resistance for Benched Pokemon.)'
+    text: 'This attack does 30 damage to each of your Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   },
   {
     name: 'Whap Down',
@@ -25,9 +25,9 @@ export class Diggersby extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '64';
+  public setNumber: string = '65';
   public name: string = 'Diggersby';
   public fullName: string = 'Diggersby M3';
 

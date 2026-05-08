@@ -22,7 +22,7 @@ export class Huntail extends PokemonCard {
       name: 'Powerful Storm',
       cost: [W],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage times the amount of Energy attached to all of your Pokémon.'
     },
     {

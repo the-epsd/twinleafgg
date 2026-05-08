@@ -21,7 +21,7 @@ export class Eevee extends PokemonCard {
       name: 'Continuous Steps',
       cost: [C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 30 damage for each heads.'
     }
   ];

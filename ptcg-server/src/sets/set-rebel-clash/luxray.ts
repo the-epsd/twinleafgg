@@ -21,7 +21,7 @@ export class Luxray extends PokemonCard {
       name: 'Raid',
       cost: [L],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon evolved from Luxio during this turn, this attack does 100 more damage.'
     },
     {

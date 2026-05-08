@@ -8,9 +8,9 @@ import { GameError } from '../../game/game-error';
 export class RosasEncouragement extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '75';
+  public setNumber: string = '84';
   public name: string = 'Rosa\'s Encouragement';
   public fullName: string = 'Rosa\'s Encouragement M3';
   public text: string = `You can use this card only if you have more Prize cards remaining than your opponent.

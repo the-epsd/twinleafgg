@@ -20,7 +20,7 @@ export class Magikarp extends PokemonCard {
       name: 'Flail',
       cost: [W],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 10 damage times the number of damage counters on this Pok\u00e9mon.'
     }
   ];

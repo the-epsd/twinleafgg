@@ -30,7 +30,7 @@ export class MawileVstar extends PokemonCard {
       name: 'Sudden Eater',
       cost: [C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon moved from your Bench to the Active Spot this turn, this attack does 90 more damage.'
     }
   ];

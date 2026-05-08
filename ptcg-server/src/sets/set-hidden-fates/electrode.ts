@@ -28,7 +28,7 @@ export class Electrode extends PokemonCard {
       name: 'Electroblast',
       cost: [L, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
     }
   ];

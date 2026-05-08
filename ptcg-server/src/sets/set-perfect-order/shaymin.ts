@@ -10,10 +10,10 @@ export class Shaymin extends PokemonCard {
   public retreat = [];
 
   public attacks = [{
-    name: 'Flower Delivery',
+    name: 'Send Flowers',
     cost: [G],
     damage: 0,
-    text: 'Search your deck for an Energy and attach it to 1 of your Benched [G] Pokemon. Then, shuffle your deck.'
+    text: 'Search your deck for an Energy card and attach it to 1 of your Benched [G] Pokémon. Then, shuffle your deck.'
   },
   {
     name: 'Leaf Step',
@@ -23,7 +23,7 @@ export class Shaymin extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Shaymin';

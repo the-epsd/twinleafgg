@@ -22,7 +22,7 @@ export class Stoutland extends PokemonCard {
       name: 'Bite Off',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, this attack does 60 more damage.'
     },
     {

@@ -21,7 +21,7 @@ export class Machamp extends PokemonCard {
       name: 'Macho Revenge',
       cost: [F, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each Fighting Pokémon in your discard pile.'
     },
     {

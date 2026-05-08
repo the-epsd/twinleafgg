@@ -15,15 +15,15 @@ export class Shinx extends PokemonCard {
   public attacks = [{
     name: 'Double Scratch',
     cost: [L],
-    damage: 0,
+    damage: 10,
     damageCalculation: 'x',
     text: 'Flip 2 coins. This attack does 10 damage for each heads.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '25';
+  public setNumber: string = '26';
   public name: string = 'Shinx';
   public fullName: string = 'Shinx M3';
 

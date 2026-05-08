@@ -22,7 +22,7 @@ export class Aromatisse extends PokemonCard {
       name: 'Dizzying Cologne',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon-EX, this attack does 40 more damage.'
     },
     {

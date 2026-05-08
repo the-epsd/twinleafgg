@@ -27,7 +27,7 @@ export class Poliwrath extends PokemonCard {
       name: 'Swirly Rush',
       cost: [W, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Poliwag and Poliwhirl are on your Bench, this attack does 90 more damage.'
     }
   ];

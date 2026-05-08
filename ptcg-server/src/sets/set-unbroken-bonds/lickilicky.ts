@@ -27,7 +27,7 @@ export class Lickilicky extends PokemonCard {
       name: 'Tonguenado',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 60 damage for each heads.'
     }
   ];

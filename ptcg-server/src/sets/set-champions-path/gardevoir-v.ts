@@ -28,7 +28,7 @@ export class GardevoirV extends PokemonCard {
       name: 'Swelling Pulse',
       cost: [P, P, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon was healed during this turn, this attack does 80 more damage.'
     }
   ];

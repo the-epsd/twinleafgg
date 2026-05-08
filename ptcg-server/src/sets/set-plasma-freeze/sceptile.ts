@@ -20,7 +20,7 @@ export class Sceptile extends PokemonCard {
       name: 'X-Scissor',
       cost: [G, C],
       damage: 30,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     },
     {

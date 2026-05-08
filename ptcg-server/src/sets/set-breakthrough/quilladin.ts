@@ -27,7 +27,7 @@ export class Quilladin extends PokemonCard {
       name: 'Pin Missile',
       cost: [G, G, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 40 damage times the number of heads.'
     }
   ];

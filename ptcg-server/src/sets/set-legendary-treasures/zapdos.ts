@@ -28,7 +28,7 @@ export class Zapdos extends PokemonCard {
       name: 'Thundering Hurricane',
       cost: [L, C, C, C],
       damage: 50,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 50 damage times the number of heads.'
     }
   ];

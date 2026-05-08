@@ -37,7 +37,7 @@ export class Chandelure extends PokemonCard {
       name: 'Past Friends',
       cost: [P, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each Supporter card in your discard pile.'
     }
   ];

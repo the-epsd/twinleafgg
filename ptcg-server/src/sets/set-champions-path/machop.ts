@@ -27,7 +27,7 @@ export class Machop extends PokemonCard {
       name: 'Steady Punch',
       cost: [F, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];

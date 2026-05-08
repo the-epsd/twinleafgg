@@ -21,7 +21,7 @@ export class Helioptile extends PokemonCard {
       name: 'Tail Rap',
       cost: [L, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     }
   ];

@@ -30,7 +30,7 @@ export class Lunala extends PokemonCard {
       name: 'Full Moon Ray',
       cost: [P, P, P],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage times the amount of Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

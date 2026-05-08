@@ -30,7 +30,7 @@ export class Togedemaru extends PokemonCard {
       name: 'Discharge',
       cost: [L],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard all [L] Energy from this Pokémon. This attack does 30 damage for each card you discarded in this way.'
     }
   ];

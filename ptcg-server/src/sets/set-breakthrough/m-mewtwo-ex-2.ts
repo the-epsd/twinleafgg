@@ -23,7 +23,7 @@ export class MMewtwoEx2 extends PokemonCard {
       name: 'Psychic Infinity',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage times the amount of Energy attached to both Active Pokémon. This attack\'s damage isn\'t affected by Weakness.'
     }
   ];

@@ -31,7 +31,7 @@ export class DragoniteEx extends PokemonCard {
       name: 'Jet Sonic',
       cost: [G, G, L],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard an Energy attached to this Pokémon. If you do, this attack does 40 more damage.'
     }
   ];

@@ -28,7 +28,7 @@ export class GalarianPerrserker extends PokemonCard {
       name: 'Claw Dagger',
       cost: [M, M, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 80 damage for each heads.'
     }
   ];

@@ -28,7 +28,7 @@ export class Whiscash extends PokemonCard {
       name: 'Landslip',
       cost: [F, C, C, C],
       damage: 100,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard the top 3 cards of your deck. This attack does 100 damage for each Energy card you discarded in this way.'
     }
   ];

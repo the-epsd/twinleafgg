@@ -21,7 +21,7 @@ export class Groudon extends PokemonCard {
       name: 'Wreck',
       cost: [F, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 50 more damage. Then, discard that Stadium card.'
     },
     {

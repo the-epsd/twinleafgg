@@ -18,7 +18,7 @@ export class Gengar extends PokemonCard {
     name: 'Infinite Shadow',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'If this Pokémon would be Knocked Out by damage from an opponent\'s Pokemon\'s attack, instead of discarding it, return it to your hand. (Discard all other cards attached to this Pokemon that are not Pokemon.)'
+    text: 'If this Pokémon is Knocked Out by damage from an attack from your opponent\'s Pokémon, put it into your hand instead of the discard pile. (Discard all attached cards.)'
   }];
 
   public attacks = [{
@@ -26,13 +26,13 @@ export class Gengar extends PokemonCard {
     cost: [D],
     damage: 10,
     damageCalculation: '+',
-    text: 'This attack does 30 more damage for each of your opponent\'s Benched Pokemon.'
+    text: 'This attack does 30 more damage for each of your opponent\'s Benched Pokémon.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '49';
+  public setNumber: string = '50';
   public name: string = 'Gengar';
   public fullName: string = 'Gengar M3';
 

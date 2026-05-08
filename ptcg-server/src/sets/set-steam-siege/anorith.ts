@@ -29,7 +29,7 @@ export class Anorith extends PokemonCard {
       name: 'X-Scissor',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

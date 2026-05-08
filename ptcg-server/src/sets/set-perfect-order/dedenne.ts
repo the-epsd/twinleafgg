@@ -13,22 +13,22 @@ export class Dedenne extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: 'Tail Generation',
+    name: 'Tail Generator',
     cost: [L],
     damage: 0,
-    text: 'For each Energy attached to all of your opponent\'s Pokemon, you may attach a Basic [L] Energy from your discard pile to your [L] Pokemon in any way you like.'
+    text: 'Choose Basic [L] Energy cards from your discard pile up to the amount of Energy attached to all of your opponent\'s Pokémon and attach them to your [L] Pokémon in any way you like.'
   },
   {
     name: 'Thunder Shock',
     cost: [L, C],
     damage: 30,
-    text: 'Flip a coin. If heads, your opponent\'s Active Pokemon is now Paralyzed.'
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '28';
+  public setNumber: string = '29';
   public name: string = 'Dedenne';
   public fullName: string = 'Dedenne M3';
 

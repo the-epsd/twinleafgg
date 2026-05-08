@@ -30,7 +30,7 @@ export class Gothitelle extends PokemonCard {
       name: 'Link Blast',
       cost: [P, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon and your opponent\'s Active Pokémon have the same amount of Energy attached to them, this attack does 80 more damage.'
     }
   ];

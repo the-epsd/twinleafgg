@@ -18,7 +18,7 @@ export class Roselia2 extends PokemonCard {
       name: 'Needling Sting',
       cost: [G, C],
       damage: 10,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

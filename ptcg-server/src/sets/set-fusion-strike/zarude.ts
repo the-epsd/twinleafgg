@@ -27,7 +27,7 @@ export class Zarude extends PokemonCard {
       name: 'Wild Whip',
       cost: [G, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

@@ -21,7 +21,7 @@ export class Camerupt extends PokemonCard {
       name: 'Continuous Headbutt',
       cost: [R, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 80 damage for each heads.'
     },
     {

@@ -26,7 +26,7 @@ export class Skarmory extends PokemonCard {
       name: 'Calm Strike',
       cost: [M, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have used your GX attack, this attack does 70 more damage.'
     },
     {

@@ -29,7 +29,7 @@ export class Mismagius extends PokemonCard {
       name: 'Dark Arts',
       cost: [P, C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each card in your opponent\'s hand.'
     }
   ];

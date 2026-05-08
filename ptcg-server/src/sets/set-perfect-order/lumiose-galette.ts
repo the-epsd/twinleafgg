@@ -6,12 +6,12 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 export class LumioseGalette extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '71';
+  public setNumber: string = '78';
   public name: string = 'Lumiose Galette';
   public fullName: string = 'Lumiose Galette M3';
-  public text: string = 'Heal 20 damage and 1 Special Condition from your Active Pokemon.';
+  public text: string = 'Heal 20 damage and remove a Special Condition from your Active Pokemon.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean | undefined {
     const hasDamage = player.active.damage > 0;

@@ -23,7 +23,7 @@ export class GlaceonEx extends PokemonCard {
       name: 'Second Bite',
       cost: [W, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each damage counter on your opponent\'s Active Pokémon.'
     },
     {

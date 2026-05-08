@@ -17,7 +17,7 @@ export class Eevee2 extends PokemonCard {
       name: 'Palette of Friends',
       cost: [C, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 10 damage for each different type of Pokémon on your Bench.'
     }
   ];

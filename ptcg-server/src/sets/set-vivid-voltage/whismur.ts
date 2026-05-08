@@ -21,7 +21,7 @@ export class Whismur extends PokemonCard {
       name: 'Continuous Tumble',
       cost: [C, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 40 damage for each heads.'
     }
   ];

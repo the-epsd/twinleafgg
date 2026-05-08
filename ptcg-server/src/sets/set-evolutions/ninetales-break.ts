@@ -22,7 +22,7 @@ export class NinetalesBreak extends PokemonCard {
       name: 'Explosive Fireball',
       cost: [R, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Discard all [R] Energy attached to this Pok\u00e9mon. This attack does 60 more damage for each Energy card discarded in this way.'
     }
   ];

@@ -30,7 +30,7 @@ export class FlygonGx extends PokemonCard {
       name: 'Desert Hurricane',
       cost: [F, F, F],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 120 more damage. Then, discard that Stadium card.'
     },
     {

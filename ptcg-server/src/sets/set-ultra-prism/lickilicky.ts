@@ -18,7 +18,7 @@ export class Lickilicky extends PokemonCard {
       name: 'Dangerous Lick',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin until you get tails. This attack does 50 more damage for each heads. If the first flip is tails, your opponent\'s Active Pokémon is now Paralyzed.'
     },
     {

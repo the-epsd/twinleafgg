@@ -30,7 +30,7 @@ export class Clefairy extends PokemonCard {
       name: 'Wonder Storm',
       cost: [C, C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each [P] Energy attached to all of your Pokémon.'
     }
   ];

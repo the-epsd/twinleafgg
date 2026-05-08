@@ -28,7 +28,7 @@ export class Ludicolo extends PokemonCard {
       name: 'Circular Steps',
       cost: [W, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each other Pokémon in play (both yours and your opponent\'s).'
     }
   ];

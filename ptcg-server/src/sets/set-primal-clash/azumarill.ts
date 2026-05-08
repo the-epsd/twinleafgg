@@ -27,7 +27,7 @@ export class Azumarill extends PokemonCard {
       name: 'Superpower',
       cost: [Y, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may do 30 more damage. If you do, this Pokémon does 30 damage to itself.'
     }
   ];

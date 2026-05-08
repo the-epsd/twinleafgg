@@ -27,7 +27,7 @@ export class Girafarig extends PokemonCard {
       name: 'Psybite',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any [P] Energy attached to it, this attack does 30 more damage.'
     }
   ];

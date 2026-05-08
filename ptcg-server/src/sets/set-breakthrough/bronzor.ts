@@ -21,7 +21,7 @@ export class Bronzor extends PokemonCard {
       name: 'Payback',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has only 1 Prize card left, this attack does 60 more damage.'
     }
   ];

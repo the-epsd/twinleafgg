@@ -37,7 +37,7 @@ export class GumshoosGx extends PokemonCard {
       name: 'Gumshoe Chance-GX',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 50 damage times the amount of Energy attached to your opponent\'s Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

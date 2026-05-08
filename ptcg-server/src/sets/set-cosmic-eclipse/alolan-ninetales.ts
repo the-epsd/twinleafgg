@@ -23,7 +23,7 @@ export class AlolanNinetales extends PokemonCard {
       name: 'Rubbish Blizzard',
       cost: [],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 10 damage for each Pokémon Tool card in your discard pile.'
     }
   ];

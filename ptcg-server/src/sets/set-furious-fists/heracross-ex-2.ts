@@ -29,7 +29,7 @@ export class HeracrossEx2 extends PokemonCard {
       name: 'Giga Power',
       cost: [G, G, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may do 40 more damage. If you do, this Pok\u00e9mon does 20 damage to itself.'
     }
   ];

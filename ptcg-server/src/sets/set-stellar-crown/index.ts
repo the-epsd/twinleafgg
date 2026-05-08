@@ -1,64 +1,99 @@
-import { VenusaurexSCR, BlastoiseexSCR, YamaskSCR, Crabominable2SCR, Gulpin2SCR } from './other-prints';
-import { Card } from '../../game/store/card/card';
-import { Archaludon } from './archaludon';
-import { AreaZeroUnderdepths } from './area-zero-underdepths';
-import { Bouffalant } from './bouffalant';
-import { Briar } from './briar';
-import { Chewtle } from './chewtle';
-import { Cinderaceex } from './cinderace-ex';
-import { Comfey } from './comfey';
-import { Crabominable } from './crabominable';
-import { Crabrawler } from './crabrawler';
-import { Crispin } from './crispin';
-import { DeluxeBomb } from './deluxe-bomb';
-import { Diancie } from './diancie';
-import { Drednaw } from './drednaw';
-import { Drifblim } from './drifblim';
-import { Duraludon } from './duraludon';
-import { Eevee } from './eevee';
-import { Electabuzz } from './electabuzz';
-import { FanRotom } from './fan-rotom';
-import { Galvantulaex } from './galvantula-ex';
-import { Garganaclex } from './garganacl-ex';
-import { GlassTrumpet } from './glass-trumpet';
-import { SparklingCrystal } from './sparkling-crystal';
-import { GravityGemstone } from './gravity-gemstone';
-import { GreatTree } from './grand-tree';
-import { Gulpin } from './gulpin';
-import { Hoothoot } from './hoothoot';
-import { Hydrappleex } from './hydrapple-ex';
-import { IronBoulder } from './iron-boulder';
-import { Joltik } from './joltik';
-import { Klinklang } from './klinklang';
-import { Kofu } from './kofu';
-import { Lacey } from './lacey';
-import { Laprasex } from './lapras-ex';
-import { Medichamex } from './medicham-ex';
-import { Meditite } from './meditite';
-import { MedititeSCR77 } from './meditite77';
-import { Melmetal } from './melmetal';
-import { Meltan } from './meltan';
-import { Milcery } from './milcery';
-import { Noctowl } from './noctowl';
-import { Ponyta } from './ponyta';
-import { ArchaludonIR, AreaZeroUnderdepthsHR, BraveryCharmHR, BriarFA, BriarSIR, BulbasaurIR, CinderaceexFA, CrispinFA, GalvantulaexFA, GalvantulaexSIR, HydrappleexFA, HydrappleexSIR, JoltikIR, KofuFA, LaceyFA, LaceySIR, LaprasexFA, MedichamexFA, MedititeIR, MilceryIR, OrthwormexFA, RabootIR, SquirtleIR, TerapagosexHR, TerapagosexSIR, ZeraoraIR } from './other-prints';
-import { Raboot } from './raboot';
-import { RagingBolt } from './raging-bolt';
-import { Rapidash } from './rapidash';
-import { Salandit } from './salandit';
-import { Salazzle } from './salazzle';
-import { Scorbunny } from './scorbunny';
-import { Slowking } from './slowking';
-import { Slowpoke } from './slowpoke';
-import { Swalot } from './swalot';
-import { Terapagosex } from './terapagos-ex';
-import { Veluza } from './veluza';
-import { Zeraora } from './zeraora';
-import { Marill } from './marill';
-import { AntiqueCoverFossil } from './antique-cover-fossil';
-import { Toedscool } from './toedscool';
+import {
+  VenusaurexSCR,
+  BlastoiseexSCR,
+  YamaskSCR,
+  Crabominable2SCR,
+  Gulpin2SCR,
+} from "./other-prints";
+import { Card } from "../../game/store/card/card";
+import { Applin } from "./applin";
+import { Archaludon } from "./archaludon";
+import { AreaZeroUnderdepths } from "./area-zero-underdepths";
+import { Bouffalant } from "./bouffalant";
+import { Briar } from "./briar";
+import { Chewtle } from "./chewtle";
+import { Cinderaceex } from "./cinderace-ex";
+import { Comfey } from "./comfey";
+import { Crabominable } from "./crabominable";
+import { Crabrawler } from "./crabrawler";
+import { Crispin } from "./crispin";
+import { DeluxeBomb } from "./deluxe-bomb";
+import { Diancie } from "./diancie";
+import { Drednaw } from "./drednaw";
+import { Drifblim } from "./drifblim";
+import { Duraludon } from "./duraludon";
+import { Eevee } from "./eevee";
+import { Electabuzz } from "./electabuzz";
+import { FanRotom } from "./fan-rotom";
+import { Galvantulaex } from "./galvantula-ex";
+import { Garganaclex } from "./garganacl-ex";
+import { GlassTrumpet } from "./glass-trumpet";
+import { SparklingCrystal } from "./sparkling-crystal";
+import { GravityGemstone } from "./gravity-gemstone";
+import { GreatTree } from "./grand-tree";
+import { Gulpin } from "./gulpin";
+import { Hoothoot } from "./hoothoot";
+import { Hydrappleex } from "./hydrapple-ex";
+import { IronBoulder } from "./iron-boulder";
+import { Joltik } from "./joltik";
+import { Klinklang } from "./klinklang";
+import { Kofu } from "./kofu";
+import { Lacey } from "./lacey";
+import { Laprasex } from "./lapras-ex";
+import { Medichamex } from "./medicham-ex";
+import { Meditite } from "./meditite";
+import { MedititeSCR77 } from "./meditite77";
+import { Melmetal } from "./melmetal";
+import { Meltan } from "./meltan";
+import { Milcery } from "./milcery";
+import { Noctowl } from "./noctowl";
+import { Ponyta } from "./ponyta";
+import {
+  ArchaludonIR,
+  AreaZeroUnderdepthsHR,
+  BraveryCharmHR,
+  BriarFA,
+  BriarSIR,
+  BulbasaurIR,
+  CinderaceexFA,
+  CrispinFA,
+  GalvantulaexFA,
+  GalvantulaexSIR,
+  HydrappleexFA,
+  HydrappleexSIR,
+  JoltikIR,
+  KofuFA,
+  LaceyFA,
+  LaceySIR,
+  LaprasexFA,
+  MedichamexFA,
+  MedititeIR,
+  MilceryIR,
+  OrthwormexFA,
+  RabootIR,
+  SquirtleIR,
+  TerapagosexHR,
+  TerapagosexSIR,
+  ZeraoraIR,
+} from "./other-prints";
+import { Raboot } from "./raboot";
+import { RagingBolt } from "./raging-bolt";
+import { Rapidash } from "./rapidash";
+import { Salandit } from "./salandit";
+import { Salazzle } from "./salazzle";
+import { Scorbunny } from "./scorbunny";
+import { Slowking } from "./slowking";
+import { Slowpoke } from "./slowpoke";
+import { Swalot } from "./swalot";
+import { Terapagosex } from "./terapagos-ex";
+import { Veluza } from "./veluza";
+import { Zeraora } from "./zeraora";
+import { Marill } from "./marill";
+import { AntiqueCoverFossil } from "./antique-cover-fossil";
+import { Toedscool } from "./toedscool";
 
 export const setStellarCrown: Card[] = [
+  new Applin(),
   new Archaludon(),
   new AreaZeroUnderdepths(),
   new Bouffalant(),
@@ -149,5 +184,5 @@ export const setStellarCrown: Card[] = [
   new BlastoiseexSCR(),
   new YamaskSCR(),
   new Crabominable2SCR(),
-  new Gulpin2SCR()
+  new Gulpin2SCR(),
 ];

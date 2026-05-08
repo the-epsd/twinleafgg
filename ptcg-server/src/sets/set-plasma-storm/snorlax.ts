@@ -28,7 +28,7 @@ export class Snorlax extends PokemonCard {
       name: 'Teampact',
       cost: [C, C, C, C, C],
       damage: 30,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Does 30 damage times the number of Team Plasma Pokémon you have in play.'
     }
   ];

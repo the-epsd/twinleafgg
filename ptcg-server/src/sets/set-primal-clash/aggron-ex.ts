@@ -23,14 +23,14 @@ export class AggronEx extends PokemonCard {
       name: 'Steel Headbutt',
       cost: [M, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     },
     {
       name: 'Raging Hammer',
       cost: [M, M, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     }
   ];

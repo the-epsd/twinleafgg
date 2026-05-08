@@ -27,7 +27,7 @@ export class Magmortar extends PokemonCard {
       name: 'Ground Burn',
       cost: [R, R, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Each player discards the top card of their deck. This attack does 100 more damage for each Energy card discarded in this way.'
     }
   ];

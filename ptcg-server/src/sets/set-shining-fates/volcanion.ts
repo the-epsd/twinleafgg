@@ -26,7 +26,7 @@ export class Volcanion extends PokemonCard {
       name: 'Dynamite Steam',
       cost: [W, W, W, C],
       damage: 120,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 120 damage for each heads.'
     }
   ];

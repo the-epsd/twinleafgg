@@ -21,7 +21,7 @@ export class Nidorino extends PokemonCard {
       name: 'Double Kick',
       cost: [P, C],
       damage: 30,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
     },
     {

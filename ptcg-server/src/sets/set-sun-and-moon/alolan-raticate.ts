@@ -28,7 +28,7 @@ export class AlolanRaticate extends PokemonCard {
       name: 'Endeavor',
       cost: [D, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
     }
   ];

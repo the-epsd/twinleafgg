@@ -27,7 +27,7 @@ export class Persian extends PokemonCard {
       name: 'Ambush',
       cost: [C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

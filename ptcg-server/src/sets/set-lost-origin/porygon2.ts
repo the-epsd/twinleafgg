@@ -22,7 +22,7 @@ export class Porygon2 extends PokemonCard {
       name: 'Garbage Attack',
       cost: [C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each Pokémon Tool card in the Lost Zone (both yours and your opponent\'s).'
     }
   ];

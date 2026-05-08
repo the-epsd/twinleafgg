@@ -27,7 +27,7 @@ export class Zygarde extends PokemonCard {
       name: 'Raging Blade',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any damage counters on it, this attack does 60 more damage.'
     }
   ];

@@ -22,7 +22,7 @@ export class Jigglypuff extends PokemonCard {
       name: 'Ball Roll',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 20 damage for each heads.'
     }
   ];

@@ -27,7 +27,7 @@ export class Keldeo extends PokemonCard {
       name: 'Hydro Pump',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Does 10 more damage for each [W] Energy attached to this Pokémon.'
     }
   ];

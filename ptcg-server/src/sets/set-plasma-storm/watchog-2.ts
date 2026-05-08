@@ -22,7 +22,7 @@ export class Watchog2 extends PokemonCard {
       name: 'Second Bite',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Does 10 more damage for each damage counter on the Defending Pokémon.'
     },
     {

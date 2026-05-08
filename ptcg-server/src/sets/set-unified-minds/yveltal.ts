@@ -18,7 +18,7 @@ export class Yveltal extends PokemonCard {
       name: 'Blow Through',
       cost: [D],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 20 more damage.'
     },
     {

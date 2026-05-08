@@ -13,12 +13,12 @@ import { ChooseCardsPrompt } from '../../game';
 export class Naveen extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '74';
+  public setNumber: string = '79';
   public name: string = 'Naveen';
   public fullName: string = 'Naveen M3';
-  public text: string = 'Discard any number of cards from your hand. Then, draw cards until you have 5 cards in your hand.';
+  public text: string = 'Draw cards until you have 5 cards in your hand. Before drawing cards, you may discard any number of cards from your hand. (If you can\'t draw any cards in this way, you can\'t use this card.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

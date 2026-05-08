@@ -26,7 +26,7 @@ export class Falinks extends PokemonCard {
       name: 'Cliff Edge Formation',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has exactly 1 Prize card remaining, this attack does 160 more damage.'
     }
   ];

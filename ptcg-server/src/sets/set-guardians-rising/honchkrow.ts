@@ -29,7 +29,7 @@ export class Honchkrow extends PokemonCard {
       name: 'Raven\'s Claw',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each damage counter on all of your opponent\'s Pokémon.'
     }
   ];

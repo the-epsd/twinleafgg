@@ -24,7 +24,7 @@ export class Togekiss extends PokemonCard {
       name: 'Powerful Slap',
       cost: [C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 50 damage times the number of heads.'
     },
     {

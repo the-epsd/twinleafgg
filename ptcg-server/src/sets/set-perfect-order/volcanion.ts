@@ -11,7 +11,7 @@ export class Volcanion extends PokemonCard {
   public retreat = [C, C, C];
 
   public attacks = [{
-    name: 'Volcanic Strength',
+    name: 'Strength',
     cost: [W, C],
     damage: 50,
     text: ''
@@ -19,15 +19,15 @@ export class Volcanion extends PokemonCard {
   {
     name: 'Powerful Steam',
     cost: [W, W, C],
-    damage: 0,
+    damage: 90,
     damageCalculation: 'x',
-    text: 'Flip a coin for each [W] Energy attached to this Pokemon. This attack does 90 damage for each heads.'
+    text: 'Flip a coin for each [W] Energy attached to this Pokémon. This attack does 90 damage for each heads.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '24';
+  public setNumber: string = '25';
   public name: string = 'Volcanion';
   public fullName: string = 'Volcanion M3';
 

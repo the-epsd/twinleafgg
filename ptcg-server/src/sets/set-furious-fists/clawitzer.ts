@@ -31,7 +31,7 @@ export class Clawitzer extends PokemonCard {
       name: 'Splash Cannon',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each [W] Energy attached to this Pokémon.'
     }
   ];

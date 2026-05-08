@@ -28,7 +28,7 @@ export class Dratini2 extends PokemonCard {
       name: 'Jump On',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

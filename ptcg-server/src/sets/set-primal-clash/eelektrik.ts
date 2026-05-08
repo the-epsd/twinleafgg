@@ -28,7 +28,7 @@ export class Eelektrik extends PokemonCard {
       name: 'Buzz Flip',
       cost: [L, L, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 30 damage times the number of heads.'
     }
   ];

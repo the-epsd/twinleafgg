@@ -23,7 +23,7 @@ export class CelesteelaGx extends PokemonCard {
       name: 'Rocket Fall',
       cost: [M, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     },
     {

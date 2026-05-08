@@ -26,7 +26,7 @@ export class Falinks extends PokemonCard {
       name: 'Team Attack',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage for each of your Benched Pokémon that has "Falinks" in its name.'
     }
   ];

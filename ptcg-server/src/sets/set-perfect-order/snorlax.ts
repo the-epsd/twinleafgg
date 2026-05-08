@@ -10,22 +10,22 @@ export class Snorlax extends PokemonCard {
   public retreat = [C, C, C, C];
 
   public attacks = [{
-    name: 'Big Eater',
+    name: 'Gormandizer',
     cost: [C],
     damage: 0,
-    text: 'Flip a coin until you get tails. For each heads, you may search your deck for a Basic Energy and attach it to this Pokemon. Then, shuffle your deck.'
+    text: 'Flip a coin until you get tails. Search your deck for an amount of Basic Energy up to the number of heads and attach it to this Pokémon. Then, shuffle your deck.'
   },
   {
     name: 'Collapse',
     cost: [C, C, C, C],
     damage: 160,
-    text: 'This Pokemon is now Asleep.'
+    text: 'This Pokémon is now Asleep.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '62';
+  public setNumber: string = '63';
   public name: string = 'Snorlax';
   public fullName: string = 'Snorlax M3';
 

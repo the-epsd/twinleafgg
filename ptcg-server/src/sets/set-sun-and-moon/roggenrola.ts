@@ -20,7 +20,7 @@ export class Roggenrola extends PokemonCard {
       name: 'Smack Down',
       cost: [F, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon has Fighting Resistance, this attack does 50 more damage.'
     }
   ];

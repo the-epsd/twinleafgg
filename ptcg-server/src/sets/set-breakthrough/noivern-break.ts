@@ -21,7 +21,7 @@ export class NoivernBreak extends PokemonCard {
       name: 'Synchro Woofer',
       cost: [P, D, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have the same number of cards in your hand as your opponent, this attack does 80 more damage.'
     }
   ];

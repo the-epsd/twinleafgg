@@ -24,7 +24,7 @@ export class TorkoalV extends PokemonCard {
       name: 'Combustion Pillar',
       cost: [R, R, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Discard the top card of your deck. If that card is a [R] Energy card, this attack does 90 more damage.'
     },
     {

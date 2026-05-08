@@ -22,7 +22,7 @@ export class Conkeldurr extends PokemonCard {
       name: 'Facade',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If this Pokémon is Burned or Poisoned, this attack does 60 more damage.'
     },
     {

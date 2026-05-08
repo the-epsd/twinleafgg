@@ -25,7 +25,7 @@ export class MGardevoirEx extends PokemonCard {
       name: 'Despair Ray',
       cost: [Y, C],
       damage: 110,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Discard as many of your Benched Pok\u00e9mon as you like. This attack does 10 more damage for each Benched Pok\u00e9mon you discarded in this way.'
     }
   ];

@@ -28,7 +28,7 @@ export class Claydol extends PokemonCard {
       name: 'Coinciding Figures',
       cost: [P, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you and your opponent have the same number of Benched Pokémon, this attack does 90 more damage.'
     }
   ];

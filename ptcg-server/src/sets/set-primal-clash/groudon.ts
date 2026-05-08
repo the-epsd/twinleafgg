@@ -22,7 +22,7 @@ export class Groudon extends PokemonCard {
       name: 'Rock Smash',
       cost: [F, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     },
     {

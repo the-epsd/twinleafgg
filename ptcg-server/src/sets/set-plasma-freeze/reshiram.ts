@@ -22,7 +22,7 @@ export class Reshiram extends PokemonCard {
       name: 'Fusion Flare',
       cost: [R, C, C, C],
       damage: 80,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If Zekrom is on your Bench, this attack does 40 more damage.'
     }
   ];

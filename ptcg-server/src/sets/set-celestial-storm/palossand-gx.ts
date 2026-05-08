@@ -42,7 +42,7 @@ export class PalossandGx extends PokemonCard {
       name: 'Sandy Fear-GX',
       cost: [F, F, C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Look at the top 13 cards of your opponent\'s deck and discard any number of Pokémon you find there. This attack does 60 damage for each card you discarded in this way. Your opponent shuffles the other cards back into their deck. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

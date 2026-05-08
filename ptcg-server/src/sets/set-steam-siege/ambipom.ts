@@ -22,14 +22,14 @@ export class Ambipom extends PokemonCard {
       name: 'Furry Chance',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Discard the top card of your opponent\'s deck. If that card is an Energy card, this attack does 60 more damage.'
     },
     {
       name: 'Double Hit',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 50 damage times the number of heads.'
     }
   ];

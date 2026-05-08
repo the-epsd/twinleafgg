@@ -22,7 +22,7 @@ export class Trevenant extends PokemonCard {
       name: 'Poltergeist',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Your opponent reveals their hand. This attack does 30 damage for each Trainer card you find there.'
     },
     {

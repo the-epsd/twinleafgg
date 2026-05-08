@@ -26,7 +26,7 @@ export class Articuno2 extends PokemonCard {
       name: 'Tri Edge',
       cost: [W, W, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 3 coins. This attack does 40 more damage for each heads.'
     }
   ];

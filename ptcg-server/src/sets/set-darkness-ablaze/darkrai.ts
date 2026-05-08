@@ -28,7 +28,7 @@ export class Darkrai extends PokemonCard {
       name: 'Vortex of Darkness',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each [D] Energy attached to this Pokémon.'
     }
   ];

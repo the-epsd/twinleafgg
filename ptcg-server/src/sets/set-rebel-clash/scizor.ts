@@ -24,7 +24,7 @@ export class Scizor extends PokemonCard {
       name: 'Raid',
       cost: [M],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon evolved from Scyther during this turn, this attack does 90 more damage.'
     },
     {

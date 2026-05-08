@@ -29,7 +29,7 @@ export class Beedrill extends PokemonCard {
       name: 'Flash Needle',
       cost: [G, G],
       damage: 40,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 40 damage times the number of heads. If all of them are heads, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
     }
   ];

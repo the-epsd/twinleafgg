@@ -24,14 +24,14 @@ export class IncineroarGx extends PokemonCard {
       name: 'Hustling Strike',
       cost: [R],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each of your Benched Fire Pokémon.'
     },
     {
       name: 'Tiger Swing',
       cost: [R, R, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 2 coins. This attack does 50 more damage for each heads.'
     },
     {

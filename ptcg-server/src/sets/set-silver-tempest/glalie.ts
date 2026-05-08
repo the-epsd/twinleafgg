@@ -30,7 +30,7 @@ export class Glalie extends PokemonCard {
       name: 'Big Mouth',
       cost: [C, C, C, C],
       damage: 130,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you played Candice from your hand during this turn, this attack does 130 more damage.'
     }
   ];

@@ -26,7 +26,7 @@ export class Crabrawler extends PokemonCard {
       name: 'Double Lariat',
       cost: [F, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 40 damage for each heads.'
     }
   ];

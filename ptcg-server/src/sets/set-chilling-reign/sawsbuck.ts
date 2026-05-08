@@ -27,7 +27,7 @@ export class Sawsbuck extends PokemonCard {
       name: 'Winter Horn',
       cost: [G, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have a Stadium in play, this attack does 80 more damage.'
     }
   ];

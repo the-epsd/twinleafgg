@@ -27,7 +27,7 @@ export class Hawlucha extends PokemonCard {
       name: 'Acrobatics',
       cost: [F, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 2 coins. This attack does 20 more damage for each heads.'
     }
   ];

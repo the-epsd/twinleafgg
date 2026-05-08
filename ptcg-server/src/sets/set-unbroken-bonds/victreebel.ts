@@ -27,7 +27,7 @@ export class Victreebel extends PokemonCard {
       name: 'Reactive Poison',
       cost: [G],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 60 more damage for each Special Condition affecting your opponent\'s Active Pokémon.'
     },
     {

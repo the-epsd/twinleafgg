@@ -30,7 +30,7 @@ export class MoltresEx extends PokemonCard {
       name: 'Power Flame',
       cost: [R, R, C, C],
       damage: 80,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If this Pokémon has any Plasma Energy attached to it, this attack does 40 more damage.'
     }
   ];

@@ -21,7 +21,7 @@ export class Duosion extends PokemonCard {
       name: 'Double Link',
       cost: [P, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Solosis is on your Bench, this attack does 30 more damage. If Duosion is on your Bench, this attack does 60 more damage.'
     }
   ];

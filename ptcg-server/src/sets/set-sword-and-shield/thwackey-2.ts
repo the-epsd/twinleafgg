@@ -28,7 +28,7 @@ export class Thwackey2 extends PokemonCard {
       name: 'Ambush',
       cost: [G, G, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

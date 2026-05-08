@@ -28,7 +28,7 @@ export class Shuckle extends PokemonCard {
       name: 'Double Stab',
       cost: [G, G, C],
       damage: 40,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
     }
   ];

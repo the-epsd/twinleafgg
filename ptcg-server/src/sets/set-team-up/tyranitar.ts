@@ -29,7 +29,7 @@ export class Tyranitar extends PokemonCard {
       name: 'Bite Off',
       cost: [D, C, C, C],
       damage: 130,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon-GX or a Pokémon-EX, this attack does 100 more damage.'
     }
   ];

@@ -28,7 +28,7 @@ export class Mudsdale extends PokemonCard {
       name: 'Heavy Slam',
       cost: [F, F, C],
       damage: 180,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-',
       text: 'This attack does 30 less damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];

@@ -36,7 +36,7 @@ export class StarmieGx extends PokemonCard {
       name: 'Hydro Pump-GX',
       cost: [C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 40 more damage times the amount of [W] Energy attached to this Pokémon. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

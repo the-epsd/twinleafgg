@@ -35,7 +35,7 @@ export class Swampert2 extends PokemonCard {
       name: 'Hydro Pump',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 30 more damage for each [W] Energy attached to this Pokémon.'
     }
   ];

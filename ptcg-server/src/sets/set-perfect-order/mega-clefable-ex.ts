@@ -14,22 +14,23 @@ export class MegaClefableex extends PokemonCard {
   public retreat = [C];
 
   public powers = [{
-    name: 'Wings of Light',
+    name: 'Luminous Wing',
     powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of your opponent\'s Abilities done to this Pokemon.'
+    text: 'Prevent all effects of your opponent\'s Pokémon\'s Abilities done to this Pokémon. '
   }];
 
   public attacks = [{
-    name: 'Shooting Moon',
+    name: 'Shooting Moons',
     cost: [P, P],
     damage: 120,
-    text: 'You may discard up to 4 Energy cards from you hand. If you do, this attack does 40 more damage for each card discarded in this way.'
+    damageCalculation: '+',
+    text: 'You may discard up to 4 Energy cards from you hand, and this attack does 40 more damage for each card you discarded in this way.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '30';
+  public setNumber: string = '31';
   public name: string = 'Mega Clefable ex';
   public fullName: string = 'Mega Clefable ex M3';
 

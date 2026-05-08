@@ -27,7 +27,7 @@ export class Stufful extends PokemonCard {
       name: 'Jump On',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 40 more damage.'
     }
   ];

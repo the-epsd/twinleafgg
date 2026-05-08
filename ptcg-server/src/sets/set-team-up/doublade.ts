@@ -22,7 +22,7 @@ export class Doublade extends PokemonCard {
       name: 'Tool Drop',
       cost: [C, C],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage for each Pokémon Tool card attached to all Pokémon.'
     }
   ];

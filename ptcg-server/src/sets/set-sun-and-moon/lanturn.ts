@@ -29,7 +29,7 @@ export class Lanturn extends PokemonCard {
       name: 'Aqua Spark',
       cost: [L, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any [W] Energy attached to it, this attack does 60 more damage.'
     }
   ];

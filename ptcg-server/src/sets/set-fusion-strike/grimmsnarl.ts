@@ -28,7 +28,7 @@ export class Grimmsnarl extends PokemonCard {
       name: 'Rear Attack',
       cost: [D, D],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have 2 or fewer Benched Pokémon, this attack does 140 more damage.'
     }
   ];

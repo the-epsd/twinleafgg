@@ -28,7 +28,7 @@ export class Qwilfish extends PokemonCard {
       name: 'Venoshock',
       cost: [C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 60 more damage.'
     }
   ];

@@ -17,20 +17,20 @@ export class Aurorus extends PokemonCard {
     name: 'Tundra Wall',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'While this Pokemon is in play, all of your Pokemon that have a [W] Energy attached take 50 less damage from attacks from your opponent\'s Pokemon. This Ability does not stack.'
+    text: 'All of your Pokémon that have any [W] Energy attached take 50 less damage from attacks from your opponent\'s Pokémon (after applying Weakness and Resistance). The effect of Tundra Wall doesn\'t stack.'
   }];
 
   public attacks = [{
     name: 'Freezing Chill',
     cost: [W, W, C],
     damage: 150,
-    text: 'During your opponent\'s next turn, the Defending Pokemon can\'t attack.'
+    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t use attacks.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '23';
+  public setNumber: string = '24';
   public name: string = 'Aurorus';
   public fullName: string = 'Aurorus M3';
 

@@ -22,7 +22,7 @@ export class Voltorb extends PokemonCard {
       name: 'Continuous Tumble',
       cost: [C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 10 damage times the number of heads.'
     }
   ];

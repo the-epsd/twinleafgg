@@ -38,7 +38,7 @@ export class ScizorGx extends PokemonCard {
       name: 'Cross-Cut-GX',
       cost: [C, C, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 100 more damage. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

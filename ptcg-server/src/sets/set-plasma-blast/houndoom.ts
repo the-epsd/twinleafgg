@@ -27,7 +27,7 @@ export class Houndoom extends PokemonCard {
       name: 'Blazing Claws',
       cost: [D, C, C],
       damage: 60,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If the Defending Pok\u00e9mon is a Team Plasma Pok\u00e9mon, this attack does 60 more damage, and the Defending Pok\u00e9mon is now Burned.'
     }
   ];

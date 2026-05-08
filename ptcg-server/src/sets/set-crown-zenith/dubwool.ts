@@ -30,7 +30,7 @@ export class Dubwool extends PokemonCard {
       name: 'Rolling Dash',
       cost: [C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin until you get tails. This attack does 30 more damage for each heads.'
     }
   ];

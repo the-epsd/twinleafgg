@@ -28,7 +28,7 @@ export class Braviary extends PokemonCard {
       name: 'Dual Cut',
       cost: [C, C, C, C],
       damage: 80,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 80 damage times the number of heads.'
     }
   ];

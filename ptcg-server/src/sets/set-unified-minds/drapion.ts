@@ -23,7 +23,7 @@ export class Drapion extends PokemonCard {
       name: 'Cross Poison',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 50 damage for each heads. If at least 2 of them are heads, your opponent\'s Active Pokémon is now Poisoned.'
     },
     {

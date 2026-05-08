@@ -31,7 +31,7 @@ export class Talonflame extends PokemonCard {
       name: 'Nitro Dive',
       cost: [C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has any [R] Energy attached, this attack does 80 more damage.'
     }
   ];

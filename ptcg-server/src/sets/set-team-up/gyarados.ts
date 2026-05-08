@@ -23,7 +23,7 @@ export class Gyarados extends PokemonCard {
       name: 'Distilled Blast',
       cost: [W],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Reveal the top 7 cards of your deck. This attack does 30 more damage times the amount of [W] Energy you find there. Then, shuffle those Energy cards back into your deck and discard the other cards.'
     },
     {

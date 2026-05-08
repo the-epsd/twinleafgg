@@ -20,7 +20,7 @@ export class Skorupi extends PokemonCard {
       name: 'Pin Missile',
       cost: [P, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 10 damage times the number of heads.'
     }
   ];

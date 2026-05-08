@@ -29,7 +29,7 @@ export class Gligar extends PokemonCard {
       name: 'Shinobi Strike',
       cost: [C, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you played Janine from your hand during this turn, this attack does 90 more damage.'
     }
   ];

@@ -16,7 +16,7 @@ export class Talonflame extends PokemonCard {
     name: 'Sky Hunt',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may flip a coin. If heads, your opponent discards a random card from their hand.'
+    text: 'Once during your turn, you may use this Ability. Flip a coin. If heads, discard a random card from your opponent\'s hand.'
   }];
 
   public attacks = [{
@@ -27,7 +27,7 @@ export class Talonflame extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '14';
   public name: string = 'Talonflame';

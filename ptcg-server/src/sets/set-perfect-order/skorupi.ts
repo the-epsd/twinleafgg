@@ -13,13 +13,13 @@ export class Skorupi extends PokemonCard {
     name: 'Poison Jab',
     cost: [D, D],
     damage: 20,
-    text: 'Your opponent\'s Active Pokemon is now Poisoned.'
+    text: 'Your opponent\'s Active Pokémon is now Poisoned.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '50';
+  public setNumber: string = '51';
   public name: string = 'Skorupi';
   public fullName: string = 'Skorupi M3';
 

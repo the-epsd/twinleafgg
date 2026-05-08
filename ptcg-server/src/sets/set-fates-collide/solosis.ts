@@ -20,7 +20,7 @@ export class Solosis extends PokemonCard {
       name: 'Mini Link',
       cost: [P, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Solosis is on your Bench, this attack does 30 more damage.'
     }
   ];

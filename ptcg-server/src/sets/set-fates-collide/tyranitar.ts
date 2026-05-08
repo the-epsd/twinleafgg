@@ -30,7 +30,7 @@ export class Tyranitar extends PokemonCard {
       name: 'Dark Mountain',
       cost: [D, D, D, D, D],
       damage: 150,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Discard the top 2 cards of your deck. This attack does 50 more damage for each Supporter card discarded in this way.'
     }
   ];

@@ -14,14 +14,14 @@ export class RockFightingEnergy extends EnergyCard {
   public provides: CardType[] = [];
   public energyType = EnergyType.SPECIAL;
   public regulationMark = 'J';
-  public set: string = 'M3';
-  public name = 'Rock Fighting Energy';
+  public set: string = 'POR';
+  public name = 'Rocky Fighting Energy';
   public fullName = 'Rock Fighting Energy M3';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '80';
-  public text = `This card provides [F] Energy while this card is attached to a Pokémon.
-  
-  Prevent all effects of attacks used by your opponent's Pokémon done to the [F] Pokémon this card is attached to. (Existing effects are not removed. Damage is not an effect.)`;
+  public setNumber: string = '87';
+  public text = `As long as this card is attached to a Pokémon, it provides [F] Energy.
+
+Prevent all effects of attacks used by your opponent\'s Pokémon done to the [F] Pokémon this card is attached to. (Existing effects are not removed. Damage is not an effect.)`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

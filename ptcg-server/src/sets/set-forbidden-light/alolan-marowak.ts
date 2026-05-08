@@ -27,7 +27,7 @@ export class AlolanMarowak extends PokemonCard {
       name: 'Alolan Club',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each of your Pokémon in play that has Alolan in its name.'
     }
   ];

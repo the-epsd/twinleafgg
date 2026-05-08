@@ -10,7 +10,7 @@ export class Furfrou extends PokemonCard {
   public retreat = [C];
 
   public attacks = [{
-    name: 'Hand Cut',
+    name: 'Hand Trim',
     cost: [C],
     damage: 0,
     text: 'Discard random cards from your opponent\'s hand until they have 5 cards in their hand.'
@@ -23,9 +23,9 @@ export class Furfrou extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '66';
+  public setNumber: string = '67';
   public name: string = 'Furfrou';
   public fullName: string = 'Furfrou M3';
 

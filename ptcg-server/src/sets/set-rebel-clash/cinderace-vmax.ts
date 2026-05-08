@@ -21,7 +21,7 @@ export class CinderaceVmax extends PokemonCard {
       name: 'Counter',
       cost: [R, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon was damaged by an attack during your opponent\'s last turn, this attack does that much more damage.'
     },
     {

@@ -29,7 +29,7 @@ export class Rotom extends PokemonCard {
       name: 'Poltergeist',
       cost: [L, C],
       damage: 20,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Your opponent reveals his or her hand. This attack does 20 damage times the number of Trainer cards in your opponent\'s hand.'
     }
   ];

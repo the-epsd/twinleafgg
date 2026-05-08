@@ -28,7 +28,7 @@ export class Snorlax extends PokemonCard {
       name: 'Knock Away',
       cost: [C, C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

@@ -29,7 +29,7 @@ export class Zoroark extends PokemonCard {
       name: 'Night Punishment',
       cost: [D, C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each Pokémon in your discard pile. You can\'t do more than 200 damage in this way.'
     }
   ];

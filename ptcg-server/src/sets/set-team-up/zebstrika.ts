@@ -22,7 +22,7 @@ export class Zebstrika extends PokemonCard {
       name: 'Raid',
       cost: [L, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon evolved from Blitzle during this turn, this attack does 90 more damage.'
     },
     {

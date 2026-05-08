@@ -30,7 +30,7 @@ export class Mamoswine extends PokemonCard {
       name: 'Primordial Boom',
       cost: [F, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have a Stadium card in play, this attack does 40 more damage. If your opponent has a Stadium card in play, heal 40 damage from this Pokémon.'
     }
   ];

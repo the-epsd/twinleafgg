@@ -21,7 +21,7 @@ export class Machamp extends PokemonCard {
       name: 'Settle the Score',
       cost: [F, F],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 80 more damage for each Prize card your opponent took on their last turn.'
     },
     {

@@ -27,7 +27,7 @@ export class Enamorus extends PokemonCard {
       name: 'Loving Sympathy',
       cost: [P, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have the same number of cards in your hand as your opponent, this attack does 70 more damage.'
     }
   ];

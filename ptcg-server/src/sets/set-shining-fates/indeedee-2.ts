@@ -27,7 +27,7 @@ export class Indeedee2 extends PokemonCard {
       name: 'Psychic',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each Energy attached to your opponent\'s Active Pokémon.'
     }
   ];

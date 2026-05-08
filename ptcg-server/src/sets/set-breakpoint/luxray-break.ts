@@ -22,7 +22,7 @@ export class LuxrayBreak extends PokemonCard {
       name: 'Wild Fury',
       cost: [L, L, C, C],
       damage: 130,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin until you get tails. This attack does 40 more damage for each heads.'
     }
   ];

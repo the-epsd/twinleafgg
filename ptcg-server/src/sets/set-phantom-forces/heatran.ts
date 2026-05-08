@@ -22,7 +22,7 @@ export class Heatran extends PokemonCard {
       name: 'Steel Drop',
       cost: [M, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 40 more damage.'
     },
     {

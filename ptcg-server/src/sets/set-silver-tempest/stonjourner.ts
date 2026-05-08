@@ -27,7 +27,7 @@ export class Stonjourner extends PokemonCard {
       name: 'Mystery Press',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have no Supporter cards in your discard pile, this attack does 130 more damage.'
     }
   ];

@@ -23,7 +23,7 @@ export class TornadusV extends PokemonCard {
       name: 'Blow Through',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If a Stadium is in play, this attack does 20 more damage.'
     },
     {

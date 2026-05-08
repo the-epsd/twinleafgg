@@ -29,7 +29,7 @@ export class GolisopodGx extends PokemonCard {
       name: 'First Impression',
       cost: [G],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 90 more damage.'
     },
     {

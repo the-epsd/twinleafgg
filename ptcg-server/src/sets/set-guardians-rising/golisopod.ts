@@ -28,7 +28,7 @@ export class Golisopod extends PokemonCard {
       name: 'Resolute Claws',
       cost: [G, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon-GX or a Pokémon-EX, this attack does 70 more damage (before applying Weakness and Resistance).'
     }
   ];

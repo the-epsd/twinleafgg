@@ -20,7 +20,7 @@ export class JangmoO extends PokemonCard {
       name: 'Raging Claws',
       cost: [L, F],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
     }
   ];

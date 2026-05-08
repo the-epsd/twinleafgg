@@ -32,7 +32,7 @@ export class Cobalion extends PokemonCard {
       name: 'Metal Arms',
       cost: [M, M, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pok\u00e9mon has a Pok\u00e9mon Tool card attached to it, this attack does 40 more damage.'
     }
   ];

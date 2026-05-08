@@ -27,7 +27,7 @@ export class Greedent extends PokemonCard {
       name: 'Spill Out',
       cost: [C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Discard your hand. If you discarded 5 or more cards in this way, this attack does 150 more damage.'
     }
   ];

@@ -22,7 +22,7 @@ export class Lycanroc extends PokemonCard {
       name: 'Rogue Fangs',
       cost: [F, F],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each Single Strike Pokémon in your discard pile.'
     }
   ];

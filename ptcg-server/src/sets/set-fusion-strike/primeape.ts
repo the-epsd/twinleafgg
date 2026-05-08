@@ -21,7 +21,7 @@ export class Primeape extends PokemonCard {
       name: 'Gut Punch',
       cost: [F],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is a Pokémon V, this attack does 60 more damage.'
     }
   ];

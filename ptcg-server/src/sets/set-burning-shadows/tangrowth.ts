@@ -28,7 +28,7 @@ export class Tangrowth extends PokemonCard {
       name: 'Crosswise Whip',
       cost: [C, C, C, C],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 50 damage for each heads.'
     }
   ];

@@ -22,7 +22,7 @@ export class Golurk extends PokemonCard {
       name: 'Wreck',
       cost: [P, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 60 more damage. Discard that Stadium card.'
     },
     {

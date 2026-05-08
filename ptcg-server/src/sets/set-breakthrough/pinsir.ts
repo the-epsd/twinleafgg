@@ -30,7 +30,7 @@ export class Pinsir extends PokemonCard {
       name: 'Heavy Suplex',
       cost: [G, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];

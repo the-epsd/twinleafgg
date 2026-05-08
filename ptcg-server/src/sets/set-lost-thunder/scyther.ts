@@ -20,7 +20,7 @@ export class Scyther extends PokemonCard {
       name: 'Fury Cutter',
       cost: [C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 3 coins. If 1 of them is heads, this attack does 20 more damage. If 2 of them are heads, this attack does 50 more damage. If all of them are heads, this attack does 70 more damage.'
     }
   ];

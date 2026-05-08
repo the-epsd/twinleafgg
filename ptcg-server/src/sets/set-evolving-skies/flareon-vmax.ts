@@ -22,7 +22,7 @@ export class FlareonVmax extends PokemonCard {
       name: 'Max Detonate',
       cost: [R, C, C],
       damage: 100,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard the top 5 cards of your deck. This attack does 100 damage for each Energy card you discarded in this way.'
     }
   ];

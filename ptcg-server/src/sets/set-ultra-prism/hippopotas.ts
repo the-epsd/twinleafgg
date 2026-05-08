@@ -20,7 +20,7 @@ export class Hippopotas extends PokemonCard {
       name: 'Eleventh Hour Tackle',
       cost: [F, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there are 3 or fewer cards in your deck, this attack does 130 more damage.'
     }
   ];

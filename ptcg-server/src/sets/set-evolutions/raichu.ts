@@ -30,7 +30,7 @@ export class Raichu extends PokemonCard {
       name: 'Spark Bolt',
       cost: [L, L, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard all Energy attached to this Pok\u00e9mon. If you do, this attack does 70 more damage.'
     }
   ];

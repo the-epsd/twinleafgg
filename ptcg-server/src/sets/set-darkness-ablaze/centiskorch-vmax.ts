@@ -25,7 +25,7 @@ export class CentiskorchVmax extends PokemonCard {
       name: 'G-Max Centiferno',
       cost: [C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 40 more damage for each [R] Energy attached to this Pokémon. If you did any damage with this attack, you may attach a [R] Energy card from your discard pile to this Pokémon.'
     }
   ];

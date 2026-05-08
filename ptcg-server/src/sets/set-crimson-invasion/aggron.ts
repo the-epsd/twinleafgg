@@ -22,7 +22,7 @@ export class Aggron extends PokemonCard {
       name: 'Revenge Cannon',
       cost: [M, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each damage counter on all of your Benched Pokémon.'
     },
     {

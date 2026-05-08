@@ -26,7 +26,7 @@ export class Virizion extends PokemonCard {
       name: 'Prize Count',
       cost: [G, G],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you have more Prize cards left than your opponent, this attack does 80 more damage.'
     }
   ];

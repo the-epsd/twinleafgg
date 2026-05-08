@@ -29,7 +29,7 @@ export class Golurk extends PokemonCard {
       name: 'Superpower',
       cost: [C, C, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may do 40 more damage. If you do, this Pokémon does 20 damage to itself.'
     }
   ];

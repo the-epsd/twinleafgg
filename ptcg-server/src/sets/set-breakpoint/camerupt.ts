@@ -28,7 +28,7 @@ export class Camerupt extends PokemonCard {
       name: 'Eruption',
       cost: [R, R, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Each player discards the top card of his or her deck. This attack does 60 more damage for each Energy card discarded in this way.'
     }
   ];

@@ -16,21 +16,21 @@ export class Decidueyeex extends PokemonCard {
   public retreat = [C, C];
 
   public powers = [{
-    name: 'Sniper Eye',
+    name: 'Sniper\'s Eye',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'If your opponent has exactly 4 cards in their hand, ignore all [C] in this Pokemon\'s attack costs.'
+    text: 'If your opponent has exactly 4 cards in their hand, ignore all [C] Energy in the costs of attacks used by this Pokémon.'
   }];
 
   public attacks = [{
-    name: 'Crush Arrow',
+    name: 'Crushing Arrow',
     cost: [G, C, C, C],
     damage: 240,
-    text: 'Discard an Energy from your opponent\'s Active Pokemon.'
+    text: 'Discard an Energy from your opponent\'s Active Pokémon.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Decidueye ex';

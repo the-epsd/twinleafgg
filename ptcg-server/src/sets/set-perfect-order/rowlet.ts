@@ -15,7 +15,7 @@ export class Rowlet extends PokemonCard {
     name: 'Find a Friend',
     cost: [G],
     damage: 0,
-    text: 'Search your deck for a Pokemon, reveal it, and put it into your hand. Then, shuffle your deck.'
+    text: 'Search your deck for a Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.'
   },
   {
     name: 'Tackle',
@@ -25,7 +25,7 @@ export class Rowlet extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '10';
   public name: string = 'Rowlet';

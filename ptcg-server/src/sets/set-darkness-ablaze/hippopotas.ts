@@ -26,7 +26,7 @@ export class Hippopotas extends PokemonCard {
       name: 'Double Stomp',
       cost: [F, F, F, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
     }
   ];

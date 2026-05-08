@@ -22,7 +22,7 @@ export class Anorith extends PokemonCard {
       name: 'Fossil Drop',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard an Unidentified Fossil card from your hand. If you do, this attack does 120 more damage.'
     }
   ];

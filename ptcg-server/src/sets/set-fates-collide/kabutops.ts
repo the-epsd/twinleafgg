@@ -28,7 +28,7 @@ export class Kabutops extends PokemonCard {
       name: 'X-Scissor',
       cost: [F, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 60 more damage.'
     }
   ];

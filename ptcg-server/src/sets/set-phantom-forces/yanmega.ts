@@ -29,7 +29,7 @@ export class Yanmega extends PokemonCard {
       name: 'Surprise Strike',
       cost: [C, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon was on the Bench and became your Active Pokémon this turn, this attack does 50 more damage.'
     }
   ];

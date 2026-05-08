@@ -22,7 +22,7 @@ export class Coalossal extends PokemonCard {
       name: 'Coal Cannon',
       cost: [C],
       damage: 90,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin for each Energy attached to this Pokémon. This attack does 90 damage for each heads.'
     },
     {

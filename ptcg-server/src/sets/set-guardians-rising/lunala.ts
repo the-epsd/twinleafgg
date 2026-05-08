@@ -23,7 +23,7 @@ export class Lunala extends PokemonCard {
       name: 'Shatter Shot',
       cost: [P],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 40 damage times the amount of [P] Energy attached to this Pokémon.'
     },
     {

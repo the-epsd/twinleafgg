@@ -21,7 +21,7 @@ export class WishiwashiGx extends PokemonCard {
       name: 'School Storm',
       cost: [W, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each of your Wishiwashi and Wishiwashi-GX in play.'
     },
     {

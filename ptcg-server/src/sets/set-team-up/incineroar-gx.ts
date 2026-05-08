@@ -39,7 +39,7 @@ export class IncineroarGx extends PokemonCard {
       name: 'Darkest Tornado-GX',
       cost: [C, C, C],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 50 more damage for each damage counter on this Pokémon. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

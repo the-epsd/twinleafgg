@@ -21,7 +21,7 @@ export class Morpeko2 extends PokemonCard {
       name: 'Explosive Discontent',
       cost: [D],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage for each damage counter on this Pokémon.'
     }
   ];

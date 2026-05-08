@@ -28,7 +28,7 @@ export class Lycanroc extends PokemonCard {
       name: 'Voltage Claw',
       cost: [C, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon has any Special Energy attached to it, this attack does 70 more damage.'
     }
   ];

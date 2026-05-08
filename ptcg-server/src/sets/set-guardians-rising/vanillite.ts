@@ -20,7 +20,7 @@ export class Vanillite extends PokemonCard {
       name: 'Triple Spin',
       cost: [W],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 10 damage for each heads.'
     }
   ];

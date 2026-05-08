@@ -27,7 +27,7 @@ export class Diancie extends PokemonCard {
       name: 'Sensitive Ray',
       cost: [P, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you played a Supporter card from your hand during this turn, this attack does 70 more damage.'
     }
   ];

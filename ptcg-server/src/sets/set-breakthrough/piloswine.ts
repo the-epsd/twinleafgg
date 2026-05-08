@@ -28,7 +28,7 @@ export class Piloswine extends PokemonCard {
       name: 'Gathering Footsteps',
       cost: [F, C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 10 more damage for each Colorless in the Retreat Cost of your Swinub, Piloswine, and Mamoswine.'
     }
   ];

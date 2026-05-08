@@ -22,7 +22,7 @@ export class Gurdurr extends PokemonCard {
       name: 'Dynamic Punch',
       cost: [F, C, C],
       damage: 40,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage and the Defending Pokémon is now Confused.'
     },
     {

@@ -32,7 +32,7 @@ export class Lucario extends PokemonCard {
       name: 'Rush Up',
       cost: [M, M],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you attached a Pokémon Tool card from your hand to this Pokémon during this turn, this attack does 70 more damage.'
     }
   ];

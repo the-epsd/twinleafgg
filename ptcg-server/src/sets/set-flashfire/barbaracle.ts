@@ -22,7 +22,7 @@ export class Barbaracle extends PokemonCard {
       name: 'Rock Rush',
       cost: [F, F],
       damage: 30,
-      damageCalculation: 'x' as const,
+      damageCalculation: 'x',
       text: 'Discard as many [F] Energy cards as you like from your hand. This attack does 30 damage times the number of Energy cards you discarded.'
     },
     {

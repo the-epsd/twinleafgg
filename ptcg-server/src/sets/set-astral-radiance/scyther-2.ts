@@ -21,7 +21,7 @@ export class Scyther2 extends PokemonCard {
       name: 'Quick Blow',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

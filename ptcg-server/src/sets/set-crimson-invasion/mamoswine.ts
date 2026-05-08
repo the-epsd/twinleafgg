@@ -21,14 +21,14 @@ export class Mamoswine extends PokemonCard {
       name: 'Double Stomp',
       cost: [W, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 2 coins. This attack does 30 more damage for each heads.'
     },
     {
       name: 'Forceful Tackle',
       cost: [W, W, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may put up to 9 damage counters on this Pokémon. This attack does 10 more damage for each damage counter you placed in this way.'
     }
   ];

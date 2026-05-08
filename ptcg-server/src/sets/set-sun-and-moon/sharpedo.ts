@@ -29,7 +29,7 @@ export class Sharpedo extends PokemonCard {
       name: 'Aqua Impact',
       cost: [D, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];

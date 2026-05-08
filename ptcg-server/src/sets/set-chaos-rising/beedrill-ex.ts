@@ -17,7 +17,7 @@ export class Beedrillex extends PokemonCard {
     name: 'Bee Rumble',
     cost: [G],
     damage: 110,
-    damageCalculation: 'x' as 'x',
+    damageCalculation: 'x',
     text: 'This attack does 110 damage for each Beedrill you have in play (including Beedrill ex).'
   }];
 

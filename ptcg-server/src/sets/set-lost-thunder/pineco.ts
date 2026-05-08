@@ -21,7 +21,7 @@ export class Pineco extends PokemonCard {
       name: 'Continuous Headbutt',
       cost: [C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 20 damage for each heads.'
     }
   ];

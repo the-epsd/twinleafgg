@@ -23,7 +23,7 @@ export class Poipole extends PokemonCard {
       name: 'Last Scene',
       cost: [P, C, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If each player has exactly 1 Prize card remaining, this attack does 130 more damage.'
     }
   ];

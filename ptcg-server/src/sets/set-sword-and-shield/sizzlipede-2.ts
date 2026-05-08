@@ -21,7 +21,7 @@ export class Sizzlipede2 extends PokemonCard {
       name: 'Relentless Flames',
       cost: [R, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip a coin until you get tails. This attack does 40 damage for each heads.'
     }
   ];

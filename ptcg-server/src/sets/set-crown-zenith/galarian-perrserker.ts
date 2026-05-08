@@ -23,7 +23,7 @@ export class GalarianPerrserker extends PokemonCard {
       name: 'Sharp Claws',
       cost: [M, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 60 more damage.'
     },
     {

@@ -27,7 +27,7 @@ export class Moltres extends PokemonCard {
       name: 'Flying Flare',
       cost: [R, R, C, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may do 40 more damage. If you do, this Pokémon does 20 damage to itself.'
     }
   ];

@@ -23,14 +23,14 @@ export class SimisearVstar extends PokemonCard {
       name: 'Fireball Fever',
       cost: [R, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard up to 5 cards from the top of your deck. This attack does 40 more damage for each card you discarded in this way.'
     },
     {
       name: 'Ember Star',
       cost: [R],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage for each Energy card in your discard pile. (You can\'t use more than 1 VSTAR Power in a game.)'
     }
   ];

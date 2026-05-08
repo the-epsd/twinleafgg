@@ -24,7 +24,7 @@ export class Ferrothorn extends PokemonCard {
       name: 'Swift Swing',
       cost: [M],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 30 damage for each [M] Energy attached to this Pokémon. Switch this Pokémon with 1 of your Benched Pokémon.'
     }
   ];

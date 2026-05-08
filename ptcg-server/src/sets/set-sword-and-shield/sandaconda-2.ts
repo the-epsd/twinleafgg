@@ -29,7 +29,7 @@ export class Sandaconda2 extends PokemonCard {
       name: 'Power Press',
       cost: [F, F],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has at least 1 extra [F] Energy attached (in addition to this attack\'s cost), this attack does 70 more damage.'
     }
   ];

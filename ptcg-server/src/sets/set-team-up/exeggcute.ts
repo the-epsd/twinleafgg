@@ -20,7 +20,7 @@ export class Exeggcute extends PokemonCard {
       name: 'Bullet Seed',
       cost: [G],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 10 damage for each heads.'
     }
   ];

@@ -13,15 +13,15 @@ export class Mawile extends PokemonCard {
   public attacks = [{
     name: 'Double Eater',
     cost: [P, C],
-    damage: 0,
+    damage: 60,
     damageCalculation: 'x',
-    text: 'Discard up to 2 Energy cards from your hand. This attack does 60 damage for each card discarded in this way.'
+    text: 'Discard up to 2 Energy cards from your hand, and this attack does 60 damage for each card you discarded in this way.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '31';
+  public setNumber: string = '32';
   public name: string = 'Mawile';
   public fullName: string = 'Mawile M3';
 

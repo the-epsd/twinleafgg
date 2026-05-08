@@ -18,7 +18,7 @@ export class Scrafty extends PokemonCard {
       name: 'Turf Raid',
       cost: [C, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each of your remaining Prize cards.'
     },
     {

@@ -19,7 +19,7 @@ export class Barbaracle extends PokemonCard {
     name: 'Stone Arms',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may attach a Basic [F] Energy from your hand to 1 of your [F] Pokémon.'
+    text: 'Once during your turn, you may use this Ability. Attach a Basic [F] Energy from your hand to 1 of your [F] Pokémon.'
   }];
 
   public attacks = [{
@@ -30,9 +30,9 @@ export class Barbaracle extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '42';
+  public setNumber: string = '43';
   public name: string = 'Barbaracle';
   public fullName: string = 'Barbaracle M3';
 

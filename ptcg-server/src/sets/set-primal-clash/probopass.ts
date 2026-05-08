@@ -23,14 +23,14 @@ export class Probopass extends PokemonCard {
       name: 'Triple Smash',
       cost: [M],
       damage: 30,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 3 coins. This attack does 30 damage times the number of heads.'
     },
     {
       name: 'Reinforced Nose',
       cost: [M, M, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has a Pokémon Tool card attached to it, this attack does 50 more damage.'
     }
   ];

@@ -26,7 +26,7 @@ export class Clefairy extends PokemonCard {
       name: 'Double Slap',
       cost: [C, C],
       damage: 10,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 10 damage times the number of heads.'
     }
   ];

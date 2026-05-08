@@ -29,7 +29,7 @@ export class Tangrowth extends PokemonCard {
       name: 'Flog',
       cost: [G, G, G, C],
       damage: 110,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 30 more damage.'
     }
   ];

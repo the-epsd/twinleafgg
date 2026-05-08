@@ -22,7 +22,7 @@ export class Nidoqueen extends PokemonCard {
       name: 'Double Kick',
       cost: [P, C],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 2 coins. This attack does 40 damage times the number of heads.'
     },
     {

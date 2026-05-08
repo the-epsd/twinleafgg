@@ -21,7 +21,7 @@ export class Cottonee extends PokemonCard {
       name: 'Lost March',
       cost: [C, C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 20 damage for each of your Pokémon, except p (Prism Star) Pokémon, in the Lost Zone.'
     }
   ];

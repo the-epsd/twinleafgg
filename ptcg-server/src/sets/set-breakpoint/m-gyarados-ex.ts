@@ -23,7 +23,7 @@ export class MGyaradosEx extends PokemonCard {
       name: 'Blast Geyser',
       cost: [C, C, C, C],
       damage: 120,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may do 20 more damage for each [W] Energy attached to this Pokémon. If you do, discard the top 2 cards of your deck.'
     }
   ];

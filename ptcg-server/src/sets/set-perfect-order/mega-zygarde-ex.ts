@@ -16,18 +16,18 @@ export class MegaZygardeex extends PokemonCard {
     name: 'Gaia Wave',
     cost: [F, F, F],
     damage: 200,
-    text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks.',
+    text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).',
   },
   {
-    name: 'Munikis Zero',
+    name: 'Nullifying Zero',
     cost: [F, F, F, F, F],
     damage: 0,
-    text: 'For each of your opponent\'s Pokémon, flip a coin. If heads, this attack does 150 damage to that Pokemon.',
+    text: 'For each of your opponent\'s Pokémon, flip a coin. If heads, this attack does 150 damage to that Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)',
   }];
 
   public regulationMark: string = 'J';
-  public set: string = 'M3';
-  public setNumber: string = '46';
+  public set: string = 'POR';
+  public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Zygarde ex';
   public fullName: string = 'Mega Zygarde ex M3';

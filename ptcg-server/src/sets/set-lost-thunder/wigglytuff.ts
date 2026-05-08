@@ -34,7 +34,7 @@ export class Wigglytuff extends PokemonCard {
       name: 'Charmed Slap',
       cost: [Y, C, C],
       damage: 70,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has a Pokémon Tool card that has "Fairy Charm" in its name attached to it, this attack does 70 more damage.'
     }
   ];

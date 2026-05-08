@@ -27,7 +27,7 @@ export class CrabominableV extends PokemonCard {
       name: 'Destroyer Punch',
       cost: [W, W, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 60 more damage for each damage counter on your opponent\'s Active Pokémon.'
     }
   ];

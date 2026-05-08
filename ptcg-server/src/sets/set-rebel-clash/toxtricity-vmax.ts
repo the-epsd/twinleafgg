@@ -22,7 +22,7 @@ export class ToxtricityVmax extends PokemonCard {
       name: 'G-Max Riot',
       cost: [L, L, C],
       damage: 160,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon is Poisoned, this attack does 80 more damage.'
     }
   ];

@@ -21,7 +21,7 @@ export class Wailord extends PokemonCard {
       name: 'Dwindling Wave',
       cost: [W, W, W, W],
       damage: 200,
-      damageCalculation: '-' as '-',
+      damageCalculation: '-',
       text: 'This attack does 40 less damage for each damage counter on this Pokémon.'
     }
   ];

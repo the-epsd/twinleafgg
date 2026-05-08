@@ -35,7 +35,7 @@ export class Octillery extends PokemonCard {
       name: 'Special Artillery',
       cost: [W, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard a Special Energy from this Pokémon. If you do, this attack does 80 more damage.'
     }
   ];

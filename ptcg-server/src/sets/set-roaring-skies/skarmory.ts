@@ -27,7 +27,7 @@ export class Skarmory extends PokemonCard {
       name: 'Blow Through',
       cost: [C, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 30 more damage.'
     }
   ];

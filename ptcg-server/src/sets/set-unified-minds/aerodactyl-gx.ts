@@ -35,7 +35,7 @@ export class AerodactylGx extends PokemonCard {
       name: 'Wild Dive-GX',
       cost: [F],
       damage: 50,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'This attack does 50 damage times the amount of Energy attached to your opponent\'s Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
     }
   ];

@@ -21,7 +21,7 @@ export class Virizion extends PokemonCard {
       name: 'Four as One',
       cost: [C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If Cobalion, Terrakion, and Keldeo are on your Bench, this attack does 70 more damage.'
     },
     {

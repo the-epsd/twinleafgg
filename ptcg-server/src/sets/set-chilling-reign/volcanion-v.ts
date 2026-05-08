@@ -27,7 +27,7 @@ export class VolcanionV extends PokemonCard {
       name: 'Dynamite Tackle',
       cost: [R, R, C],
       damage: 100,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pokémon has 10 or more damage counters on it, this attack does 150 more damage.'
     }
   ];

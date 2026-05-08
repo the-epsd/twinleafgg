@@ -26,7 +26,7 @@ export class Qwilfish extends PokemonCard {
       name: 'Shocking Sting',
       cost: [W, C],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokemon is affected by a Special Condition, this attack does 50 more damage.'
     }
   ];

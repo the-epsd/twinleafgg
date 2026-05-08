@@ -27,7 +27,7 @@ export class DhelmiseV extends PokemonCard {
       name: 'Anchor Anger',
       cost: [G],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If any of your Grass Pokémon were Knocked Out by damage from an opponent\'s attack during their last turn, this attack does 90 more damage.'
     },
     {

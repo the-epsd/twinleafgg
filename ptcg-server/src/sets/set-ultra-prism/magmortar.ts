@@ -27,7 +27,7 @@ export class Magmortar extends PokemonCard {
       name: 'Fire Blaster',
       cost: [R, R, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard 2 Energy from this Pokémon. If you do, this attack does 80 more damage.'
     }
   ];

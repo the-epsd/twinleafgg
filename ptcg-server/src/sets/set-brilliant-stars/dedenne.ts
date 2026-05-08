@@ -21,7 +21,7 @@ export class Dedenne extends PokemonCard {
       name: 'Dede-Flash',
       cost: [P],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent has exactly 1 Prize card remaining, this attack does 60 more damage, and your opponent\'s Active Pokémon is now Confused.'
     }
   ];

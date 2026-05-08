@@ -27,7 +27,7 @@ export class Aerodactyl extends PokemonCard {
       name: 'Fossil Fangs',
       cost: [C, C, C],
       damage: 90,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If you don\'t have any Pokémon-GX or Pokémon-EX on your Bench, this attack does 90 more damage.'
     }
   ];

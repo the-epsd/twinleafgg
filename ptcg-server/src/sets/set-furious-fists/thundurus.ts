@@ -21,7 +21,7 @@ export class Thundurus extends PokemonCard {
       name: 'Raging Thunder Punch',
       cost: [L, C],
       damage: 30,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon has a Pokémon Tool card attached to it, this attack does 30 more damage.'
     },
     {

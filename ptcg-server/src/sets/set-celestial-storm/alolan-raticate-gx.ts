@@ -24,7 +24,7 @@ export class AlolanRaticateGx extends PokemonCard {
       name: 'Chuck Away',
       cost: [],
       damage: 40,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard up to 2 cards from your hand. This attack does 40 damage for each card you discarded in this way.'
     },
     {

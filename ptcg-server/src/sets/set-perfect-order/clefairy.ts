@@ -13,7 +13,7 @@ export class Clefairy extends PokemonCard {
     name: 'Follow Me',
     cost: [P],
     damage: 0,
-    text: 'Switch 1 of your opponent\'s Benched Pokemon with their Active Pokemon.'
+    text: 'Switch in 1 of your opponent\'s Benched Pokémon to the Active Spot.'
   },
   {
     name: 'Flop',
@@ -23,9 +23,9 @@ export class Clefairy extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '29';
+  public setNumber: string = '30';
   public name: string = 'Clefairy';
   public fullName: string = 'Clefairy M3';
 

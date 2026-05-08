@@ -15,7 +15,7 @@ export class Espurr extends PokemonCard {
     name: 'Nap',
     cost: [C],
     damage: 0,
-    text: 'Heal 20 damage from this Pokemon.'
+    text: 'Heal 20 damage from this Pokémon.'
   },
   {
     name: 'Stampede',
@@ -25,9 +25,9 @@ export class Espurr extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '32';
+  public setNumber: string = '33';
   public name: string = 'Espurr';
   public fullName: string = 'Espurr M3';
 

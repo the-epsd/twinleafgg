@@ -27,7 +27,7 @@ export class CelebiV extends PokemonCard {
       name: 'Line Force',
       cost: [G, C],
       damage: 50,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 20 more damage for each of your Benched Pokémon.'
     }
   ];

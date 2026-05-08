@@ -28,7 +28,7 @@ export class Weavile extends PokemonCard {
       name: 'Claw Rend',
       cost: [D, C, C],
       damage: 60,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 30 more damage.'
     }
   ];

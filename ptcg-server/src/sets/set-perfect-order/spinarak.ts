@@ -16,11 +16,11 @@ export class Spinarak extends PokemonCard {
     name: 'Gooey Thread',
     cost: [G],
     damage: 10,
-    text: 'During your opponent\'s next turn, the Defending Pokemon can\'t retreat.'
+    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.'
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
   public name: string = 'Spinarak';

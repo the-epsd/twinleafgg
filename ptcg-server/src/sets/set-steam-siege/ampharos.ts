@@ -38,7 +38,7 @@ export class Ampharos extends PokemonCard {
       name: 'Gigavolt',
       cost: [L, L, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
     }
   ];

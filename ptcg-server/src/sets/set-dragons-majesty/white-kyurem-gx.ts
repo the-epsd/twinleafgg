@@ -28,7 +28,7 @@ export class WhiteKyuremGx extends PokemonCard {
       name: 'Raging Blade',
       cost: [R, W, C],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If this Pok\u00e9mon has any damage counters on it, this attack does 80 more damage.'
     },
     {

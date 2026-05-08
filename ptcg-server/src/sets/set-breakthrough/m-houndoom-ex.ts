@@ -25,7 +25,7 @@ export class MHoundoomEx extends PokemonCard {
       name: 'Inferno Fang',
       cost: [R, R],
       damage: 80,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'You may discard all [R] Energy attached to this Pokémon. If you do, this attack does 80 more damage.'
     }
   ];

@@ -16,7 +16,7 @@ export class Snover extends PokemonCard {
     name: 'Ice Shard',
     cost: [W, C],
     damage: 20,
-    damageCalculation: '+' as '+',
+    damageCalculation: '+',
     text: 'If your opponent\'s Active Pokémon is a Fighting Pokémon, this attack does 40 more damage.'
   }];
 

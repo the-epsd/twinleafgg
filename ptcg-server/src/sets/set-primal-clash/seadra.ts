@@ -21,7 +21,7 @@ export class Seadra extends PokemonCard {
       name: 'Knockout Needle',
       cost: [W],
       damage: 10,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip 2 coins. If both of them are heads, this attack does 40 more damage.'
     },
     {

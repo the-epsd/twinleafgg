@@ -20,7 +20,7 @@ export class Hydreigon extends PokemonCard {
       name: 'Dragon Counter',
       cost: [P, D],
       damage: 20,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'This attack does 100 more damage for each Prize card your opponent took during their last turn.'
     },
     {

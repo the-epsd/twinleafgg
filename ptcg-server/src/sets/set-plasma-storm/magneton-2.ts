@@ -22,7 +22,7 @@ export class Magneton2 extends PokemonCard {
       name: 'Knock Away',
       cost: [L, C],
       damage: 20,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 20 more damage.'
     }
   ];

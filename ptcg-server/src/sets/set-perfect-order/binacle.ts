@@ -25,9 +25,9 @@ export class Binacle extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '41';
+  public setNumber: string = '42';
   public name: string = 'Binacle';
   public fullName: string = 'Binacle M3';
 

@@ -29,7 +29,7 @@ export class HawluchaEx extends PokemonCard {
       name: 'Moonsault Stomp',
       cost: [F, C, C],
       damage: 60,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'If there is any Stadium card in play, this attack does 40 more damage.'
     }
   ];

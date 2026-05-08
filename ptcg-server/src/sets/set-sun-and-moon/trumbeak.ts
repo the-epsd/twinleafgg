@@ -22,7 +22,7 @@ export class Trumbeak extends PokemonCard {
       name: 'Bullet Seed',
       cost: [C],
       damage: 20,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Flip 4 coins. This attack does 20 damage for each heads.'
     }
   ];

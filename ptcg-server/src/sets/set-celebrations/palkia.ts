@@ -27,7 +27,7 @@ export class Palkia extends PokemonCard {
       name: 'Overdrive Smash',
       cost: [W, C, C],
       damage: 80,
-      damageCalculation: '+' as const,
+      damageCalculation: '+',
       text: 'During your next turn, this Pokémon\'s Overdrive Smash attack does 80 more damage (before applying Weakness and Resistance).'
     }
   ];

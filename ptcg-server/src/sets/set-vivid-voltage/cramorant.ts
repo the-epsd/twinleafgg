@@ -22,7 +22,7 @@ export class Cramorant extends PokemonCard {
       name: 'Continuous Gulp Missile',
       cost: [C, C],
       damage: 60,
-      damageCalculation: 'x' as 'x',
+      damageCalculation: 'x',
       text: 'Discard any number of Arrokuda from your Bench. This attack does 60 damage for each Arrokuda you discarded in this way.'
     }
   ];

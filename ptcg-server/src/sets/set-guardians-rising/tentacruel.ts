@@ -27,7 +27,7 @@ export class Tentacruel extends PokemonCard {
       name: 'Seething Tentacles',
       cost: [C, C, C],
       damage: 40,
-      damageCalculation: '+' as '+',
+      damageCalculation: '+',
       text: 'Flip a coin. If heads, this attack does 40 more damage. If tails, your opponent\'s Active Pokémon is now Paralyzed.'
     }
   ];

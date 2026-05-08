@@ -27,7 +27,7 @@ export class TsareenaGX extends PokemonCard {
     name: 'Jumping Side Kick',
     cost: [G, C, C],
     damage: 90,
-    damageCalculation: '+' as '+',
+    damageCalculation: '+',
     text: 'If your opponent\'s Active Pokémon is Confused, this attack does 90 more damage.',
   },
   {
