@@ -1,32 +1,42 @@
-import { PokemonCard, Stage, CardType, State, StoreLike, StateUtils } from '../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  State,
+  StoreLike,
+  StateUtils,
+} from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckAttackCostEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
+import {
+  CheckAttackCostEffect,
+  CheckRetreatCostEffect,
+} from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Rillaboom extends PokemonCard {
-  public stage: Stage = Stage.BASIC;
+  public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Thwackey';
-  public cardType: CardType = CardType.GRASS;
+  public cardType: CardType = G;
   public hp: number = 180;
-  public weakness = [{ type: CardType.FIRE }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: R }];
+  public retreat = [C, C, C, C];
 
   public attacks = [
     {
       name: 'Drum Beating',
-      cost: [CardType.GRASS],
+      cost: [G],
       damage: 60,
-      text: 'During your opponent\'s next turn, attacks used by the Defending Pokémon cost [C] more, and its Retreat Cost is [C] more.'
+      text: "During your opponent's next turn, attacks used by the Defending Pokémon cost [C] more, and its Retreat Cost is [C] more.",
     },
     {
       name: 'Wood Hammer',
-      cost: [CardType.GRASS, CardType.GRASS],
+      cost: [G, G],
       damage: 180,
-      text: 'This Pokémon also does 50 damage to itself.'
-    }
+      text: 'This Pokémon also does 50 damage to itself.',
+    },
   ];
 
   public regulationMark = 'H';
@@ -36,17 +46,26 @@ export class Rillaboom extends PokemonCard {
   public name: string = 'Rillaboom';
   public fullName: string = 'Rillaboom TWM';
 
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
+  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER =
+    'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+      opponent.active.marker.addMarker(
+        this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER,
+        this,
+      );
     }
 
-    if (effect instanceof CheckRetreatCostEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+    if (
+      effect instanceof CheckRetreatCostEffect &&
+      effect.player.active.marker.hasMarker(
+        this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER,
+        this,
+      )
+    ) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
 
@@ -60,7 +79,13 @@ export class Rillaboom extends PokemonCard {
       }
     }
 
-    if (effect instanceof CheckAttackCostEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
+    if (
+      effect instanceof CheckAttackCostEffect &&
+      effect.player.active.marker.hasMarker(
+        this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER,
+        this,
+      )
+    ) {
       const player = effect.player;
       const pokemonCard = player.active.getPokemonCard();
 
@@ -76,12 +101,20 @@ export class Rillaboom extends PokemonCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
-      effect.player.active.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.active.marker.hasMarker(
+        this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER,
+        this,
+      )
+    ) {
+      effect.player.active.marker.removeMarker(
+        this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER,
+        this,
+      );
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-
       const player = effect.player;
 
       const dealDamage = new DealDamageEffect(effect, 50);
