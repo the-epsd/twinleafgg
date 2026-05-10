@@ -13,6 +13,7 @@ interface QueuedPlayer {
   artworks?: { code: string; artworkId?: number }[];
   deckId?: number;
   sleeveImagePath?: string;
+  sandboxMode?: boolean;
   joinedAt: number;
   lastValidated: number;
 }
@@ -41,7 +42,7 @@ export class MatchmakingService {
     return MatchmakingService.instance;
   }
 
-  public addToQueue(client: Client, socketWrapper: SocketWrapper, format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[], deckId?: number, sleeveImagePath?: string): void {
+  public addToQueue(client: Client, socketWrapper: SocketWrapper, format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[], deckId?: number, sleeveImagePath?: string, sandboxMode?: boolean): void {
     // Remove if already in queue
     this.removeFromQueue(client);
 
@@ -58,6 +59,7 @@ export class MatchmakingService {
       artworks,
       deckId,
       sleeveImagePath,
+      sandboxMode,
       joinedAt: Date.now(),
       lastValidated: Date.now()
     });
@@ -181,13 +183,16 @@ export class MatchmakingService {
       }
 
       try {
+        const bothAdmins = player1.client.user.roleId === 4 && player2.client.user.roleId === 4;
+        const sandboxMode = bothAdmins && player1.sandboxMode === true && player2.sandboxMode === true;
+
         // Create game settings
         const gameSettings: GameSettings = {
           format: player1.format,
           timeLimit: 1800,
           rules: new Rules(),
           recordingEnabled: true,
-          sandboxMode: false
+          sandboxMode
         };
 
         console.log(`[Matchmaking] Creating game between ${player1.client.name} and ${player2.client.name}`);

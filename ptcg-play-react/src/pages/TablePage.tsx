@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import { useDeckCardScanUrl } from '../context/CardImagesContext';
 import { useCoreSession } from '../context/CoreSessionContext';
 import { useSettings } from '../context/SettingsContext';
+import tablePageStyles from './TablePage.module.css';
 import { getSocketManager } from '../socket/socketManager';
 import { ApiError, formatUnknownError } from '../api/apiError';
 import { useSnackbar } from '../context/SnackbarContext';
@@ -21,6 +22,8 @@ import { TablePromptLayer } from '../table/prompts/TablePromptLayer';
 import { TableBoardOverlay } from '../table/hud/TableBoardOverlay';
 import { GameOverOverlay } from '../table/end-game/GameOverOverlay';
 import { MatchResultsSplash } from '../table/end-game/MatchResultsSplash';
+import { SandboxControlPanel } from '../table/sandbox/SandboxControlPanel';
+import { SandboxTableHint } from '../table/sandbox/SandboxTableHint';
 
 const RECONNECT_GAME_ID_KEY = 'ptcg_reconnect_gameId';
 
@@ -57,10 +60,10 @@ export function TablePage() {
     matchId?: string;
   }>();
   const navigate = useNavigate();
-  const { cardsInfo, serverConfig } = useAuth();
+  const { cardsInfo, serverConfig, user } = useAuth();
   const getScanUrl = useDeckCardScanUrl(serverConfig?.scansUrl);
   const { clientId } = useCoreSession();
-  const { has3dBoardAccess, use3dBoardDefault } = useSettings();
+  const { has3dBoardAccess, use3dBoardDefault, defaultSandboxMode } = useSettings();
 
   const hasReplayParam = matchIdParam != null && matchIdParam !== '';
   const replayMatchId = hasReplayParam ? Number(matchIdParam) : NaN;
@@ -453,13 +456,49 @@ export function TablePage() {
 
   const { bottomPlayer, topPlayer, bottomHand, topHand, isPlaying, isObserver } = tableView;
 
+  const sandboxGameEnabled = Boolean(localGame.state.gameSettings?.sandboxMode);
+  const showSandboxDock =
+    user?.roleId === 4 && localGame.replay == null && (sandboxGameEnabled || defaultSandboxMode);
+
   const showEndGame =
     localGame.state.phase === GamePhase.FINISHED &&
     !localGame.gameOver &&
     (clientId != null || localGame.replay != null);
 
   return (
-    <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', position: 'relative' }}>
+    <div
+      style={{
+        flex: 1,
+        minHeight: 0,
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+      }}
+    >
+      <div
+        style={{
+          flex: 1,
+          minWidth: 0,
+          minHeight: 0,
+          display: 'flex',
+          flexDirection: 'column',
+          position: 'relative',
+        }}
+      >
+        {showSandboxDock ? (
+          <div className={tablePageStyles.sandboxDock}>
+            {sandboxGameEnabled ? (
+              <SandboxControlPanel
+                gameId={localGame.gameId}
+                gameState={localGame.state}
+                players={localGame.state.players}
+                clientId={tableClientId}
+              />
+            ) : (
+              <SandboxTableHint />
+            )}
+          </div>
+        ) : null}
       <TablePromptLayer
         localGame={localGame}
         clientId={tableClientId}
@@ -509,6 +548,7 @@ export function TablePage() {
           onConfirm={onGameOverConfirm}
         />
       ) : null}
+      </div>
     </div>
   );
 }

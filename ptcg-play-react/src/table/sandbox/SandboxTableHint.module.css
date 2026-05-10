@@ -1,0 +1,23 @@
+.hint {
+  width: min(320px, 88vw);
+  max-height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 14px 16px;
+  background: #1a1a1a;
+  border-right: 1px solid #444;
+  color: #e8e8e8;
+}
+
+.title {
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.body {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: #c8c8c8;
+}

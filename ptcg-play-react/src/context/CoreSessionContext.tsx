@@ -46,7 +46,8 @@ interface CoreSessionContextValue extends CoreSessionState {
     deck: string[],
     artworks?: { code: string; artworkId?: number }[],
     deckId?: number,
-    sleeveImagePath?: string
+    sleeveImagePath?: string,
+    sandboxMode?: boolean
   ) => Promise<unknown>;
   leaveMatchmaking: () => Promise<unknown>;
 }
@@ -216,7 +217,8 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
       deck: string[],
       artworks?: { code: string; artworkId?: number }[],
       deckId?: number,
-      sleeveImagePath?: string
+      sleeveImagePath?: string,
+      sandboxMode?: boolean
     ) => {
       const socket = getSocketManager();
       return socket.emit('matchmaking:join', {
@@ -225,6 +227,7 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
         artworks,
         deckId,
         sleeveImagePath,
+        ...(sandboxMode === true ? { sandboxMode: true } : {}),
       });
     },
     []

@@ -42,9 +42,24 @@ export class MatchmakingSocket {
     });
   }
 
-  public joinQueue(params: { format: Format, deck: string[], artworks?: { code: string; artworkId?: number }[], deckId?: number, sleeveImagePath?: string }, response: Response<void>): void {
+  public joinQueue(
+    params: {
+      format: Format;
+      deck: string[];
+      artworks?: { code: string; artworkId?: number }[];
+      deckId?: number;
+      sleeveImagePath?: string;
+      sandboxMode?: boolean;
+    },
+    response: Response<void>
+  ): void {
     if (!params || !params.format || !Array.isArray(params.deck) || params.deck.length === 0) {
       response('error', ApiErrorEnum.INVALID_FORMAT);
+      return;
+    }
+
+    if (params.sandboxMode === true && this.client.user.roleId !== 4) {
+      response('error', ApiErrorEnum.ACTION_INVALID);
       return;
     }
 
@@ -55,7 +70,8 @@ export class MatchmakingSocket {
       params.deck,
       params.artworks,
       params.deckId,
-      params.sleeveImagePath
+      params.sleeveImagePath,
+      params.sandboxMode === true ? true : undefined
     );
     response('ok');
   }

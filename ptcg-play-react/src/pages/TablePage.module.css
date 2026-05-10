@@ -1,0 +1,16 @@
+/* Dock sandbox on the play surface (above canvas), same idea as Angular’s absolute sandbox bar */
+.sandboxDock {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 42;
+  pointer-events: none;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.sandboxDock > * {
+  pointer-events: auto;
+}
