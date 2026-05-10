@@ -42,6 +42,7 @@ export class Board3dCard {
   ) {
     this.group = new Group();
     this.group.userData.isCard = true;
+    this.group.userData.board3dCard = this;
 
     // Initialize shared geometry and materials if not already created
     if (!Board3dCard.cardGeometry) {

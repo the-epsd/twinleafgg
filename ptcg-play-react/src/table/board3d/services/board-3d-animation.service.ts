@@ -5,7 +5,10 @@ import {
   Quaternion,
   Scene,
   Mesh,
+  PlaneGeometry,
+  MeshBasicMaterial,
 } from 'three';
+import type { Board3dCard } from '../board-3d-card';
 
 /** World Z: flip in the plane of the hand / table (not Y, which tumbles the card edge-on). */
 const DRAW_FLIP_AXIS_Z = new Vector3(0, 0, 1);
@@ -166,50 +169,117 @@ export class Board3dAnimationService {
   }
 
   /**
-   * Evolution animation (spin, scale, and glow) - matches 2D board: 1080deg spin, scale 1.3, ~1.5s total
+   * Evolution: strong vertical lift on world Y, fast spin on group Z, constant slot scale (no scale pulse).
+   * Full white overlay from frame one; opacity fades to 0 while the card lowers back into its slot.
    */
   evolutionAnimation(card: Object3D): Promise<void> {
     return new Promise(resolve => {
+      const easeAngularBoard = 'cubic-bezier(0.4, 0, 0.1, 1)';
+      const totalDuration = 1.5;
+      const peakAt = 0.6;
+      const settleStart = 0.63;
+      const settleDuration = 0.195;
+      const holdPad = totalDuration - (peakAt + settleDuration);
+
+      const baseY = card.position.y;
+      const startRotZ = card.rotation.z;
+      /** Full rotations about Z during rise phase (10π rad = 5 turns). */
+      const evolutionSpinZRad = Math.PI * 10;
+      /** World Y lift at peak (large arc above the slot). */
+      const peakDeltaY = 5.5;
+      const peakY = baseY + peakDeltaY;
+      const prevRenderOrder = card.renderOrder;
+
+      const board3dCard = card.userData.board3dCard as Board3dCard | undefined;
+      const evolutionFlashMeshes: Mesh[] = [];
+      let flashMat: MeshBasicMaterial | null = null;
+      if (board3dCard) {
+        const geomFront = new PlaneGeometry(2.5, 3.5);
+        const geomBack = new PlaneGeometry(2.5, 3.5);
+        flashMat = new MeshBasicMaterial({
+          color: 0xffffff,
+          transparent: true,
+          opacity: 0,
+          depthWrite: false,
+          depthTest: true,
+        });
+        const meshFront = new Mesh(geomFront, flashMat);
+        meshFront.renderOrder = 12;
+        meshFront.position.set(0, 0, 0.025);
+
+        const meshBack = new Mesh(geomBack, flashMat);
+        meshBack.renderOrder = 12;
+        meshBack.rotation.y = Math.PI;
+        meshBack.position.set(0, 0, -0.025);
+
+        const cardMesh = board3dCard.getMesh();
+        cardMesh.add(meshFront);
+        cardMesh.add(meshBack);
+        evolutionFlashMeshes.push(meshFront, meshBack);
+        flashMat.opacity = 1;
+      }
+
+      const disposeFlash = (): void => {
+        for (const m of evolutionFlashMeshes) {
+          m.parent?.remove(m);
+          m.geometry.dispose();
+        }
+        evolutionFlashMeshes.length = 0;
+        flashMat?.dispose();
+        flashMat = null;
+      };
+
       const timeline = gsap.timeline({
         onComplete: () => {
+          disposeFlash();
+          card.position.y = baseY;
+          card.rotation.z = startRotZ;
+          card.renderOrder = prevRenderOrder;
           this.removeAnimation(timeline);
           resolve();
         }
       });
 
+      card.renderOrder = 1000;
+
       timeline
-        // Rise up (0.4s)
         .to(card.position, {
-          y: 2,
-          duration: 0.4,
-          ease: 'power2.out'
-        })
-        // Triple spin (1080deg = 6*PI) + scale up, overlap with rise
-        .to(card.rotation, {
-          y: Math.PI * 6,
-          duration: 0.8,
-          ease: 'power2.inOut'
-        }, '<')
-        .to(card.scale, {
-          x: 1.3,
-          y: 1.3,
-          z: 1.3,
-          duration: 0.4,
-          ease: 'back.out(1.7)'
-        }, '<')
-        // Settle back down (0.3s)
-        .to(card.position, {
-          y: 0.1,
-          duration: 0.3,
-          ease: 'power2.in'
-        })
-        // Return to normal scale
-        .to(card.scale, {
-          x: 1,
-          y: 1,
-          z: 1,
-          duration: 0.2
-        }, '<');
+          y: peakY,
+          duration: peakAt,
+          ease: easeAngularBoard,
+        }, 0)
+        .to(
+          card.rotation,
+          {
+            z: startRotZ + evolutionSpinZRad,
+            duration: peakAt,
+            ease: easeAngularBoard,
+          },
+          0,
+        );
+
+      if (flashMat) {
+        timeline.to(flashMat, {
+          opacity: 0,
+          duration: settleDuration,
+          ease: easeAngularBoard,
+        }, settleStart);
+      }
+
+      timeline
+        .to(
+          card.position,
+          {
+            y: baseY,
+            duration: settleDuration,
+            ease: easeAngularBoard,
+          },
+          settleStart,
+        );
+
+      if (holdPad > 0) {
+        timeline.to({}, { duration: holdPad }, settleStart + settleDuration);
+      }
 
       this.activeAnimations.push(timeline);
       this.updateAnimationState();

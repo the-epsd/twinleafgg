@@ -562,7 +562,7 @@ export class Board3dController {
 
   /** World → client pixels for floating Remove damage +/- HUD (follows orbit / selected Pokémon). */
   private syncRemoveDamageHudPosition(): void {
-    if (!this.boardInteractionService.isRemoveDamageOverlayActive()) {
+    if (!this.boardInteractionService.isFloatingDamageHudOverlayActive()) {
       this.boardInteractionService.setRemoveDamageHudAnchor(null);
       return;
     }
