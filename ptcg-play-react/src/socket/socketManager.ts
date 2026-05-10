@@ -8,6 +8,10 @@ interface SocketAck<R> {
   data?: R;
 }
 
+function normalizeSocketBaseUrl(url: string): string {
+  return url.replace(/\/$/, '');
+}
+
 function socketAckErrorMessage(data: unknown, fallback: string): string {
   if (data == null || data === '') {
     return fallback;
@@ -37,9 +41,12 @@ function socketAckErrorMessage(data: unknown, fallback: string): string {
 export class PtcgSocketManager {
   private socket: Socket;
   private enabled = false;
+  /** Normalized base URL for the current `this.socket` instance. */
+  private activeBaseUrl: string;
 
   constructor() {
-    this.socket = io(appConfig.apiUrl, {
+    this.activeBaseUrl = normalizeSocketBaseUrl(appConfig.apiUrl);
+    this.socket = io(this.activeBaseUrl, {
       autoConnect: false,
       reconnection: false,
       transports: ['websocket'],
@@ -49,11 +56,16 @@ export class PtcgSocketManager {
   }
 
   setServerUrl(url: string): void {
+    const next = normalizeSocketBaseUrl(url);
+    if (next === this.activeBaseUrl) {
+      return;
+    }
+    this.activeBaseUrl = next;
     if (this.enabled) {
       this.disable();
     }
     this.socket.disconnect();
-    this.socket = io(url.replace(/\/$/, ''), {
+    this.socket = io(next, {
       autoConnect: false,
       reconnection: false,
       transports: ['websocket'],
@@ -112,15 +124,24 @@ export class PtcgSocketManager {
     }
     return new Promise((resolve, reject) => {
       const t = window.setTimeout(() => {
-        this.socket.off('connect', onConnect);
+        cleanup();
         reject(new ApiError(ApiErrorEnum.SOCKET_ERROR, 'Socket connect timeout'));
       }, timeoutMs);
-      const onConnect = () => {
+      const cleanup = () => {
         clearTimeout(t);
         this.socket.off('connect', onConnect);
+        this.socket.off('disconnect', onDisconnect);
+      };
+      const onConnect = () => {
+        cleanup();
         resolve();
       };
+      const onDisconnect = (reason: string) => {
+        cleanup();
+        reject(new ApiError(ApiErrorEnum.SOCKET_ERROR, `Socket closed (${reason})`));
+      };
       this.socket.once('connect', onConnect);
+      this.socket.once('disconnect', onDisconnect);
     });
   }
 

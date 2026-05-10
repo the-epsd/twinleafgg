@@ -25,6 +25,7 @@ import { MatchResultsSplash } from '../table/end-game/MatchResultsSplash';
 import { SandboxControlPanel } from '../table/sandbox/SandboxControlPanel';
 import { SandboxTableHint } from '../table/sandbox/SandboxTableHint';
 import { ShellButton } from '../components/ui/ShellButton';
+import { selfPlayFocusPlayerId } from '../table/selfPlayFocusPlayerId';
 import promptStyles from '../table/prompts/TablePromptLayer.module.css';
 
 const RECONNECT_GAME_ID_KEY = 'ptcg_reconnect_gameId';
@@ -340,7 +341,13 @@ export function TablePage() {
         ? clientId
         : (localGame.state.players[0]?.id ?? 0);
     }
-    return clientId != null && clientId !== 0 ? clientId : undefined;
+    if (clientId == null || clientId === 0) {
+      return undefined;
+    }
+    if (localGame.state.gameSettings?.selfPlay === true) {
+      return selfPlayFocusPlayerId(localGame.state);
+    }
+    return clientId;
   }, [localGame, clientId]);
 
   const tableView = useMemo((): TableView | null => {
@@ -364,7 +371,7 @@ export function TablePage() {
     if (!bottom || !top) {
       return null;
     }
-    if (localGame.switchSide) {
+    if (localGame.switchSide && !localGame.state.gameSettings?.selfPlay) {
       const tmp = bottom;
       bottom = top;
       top = tmp;

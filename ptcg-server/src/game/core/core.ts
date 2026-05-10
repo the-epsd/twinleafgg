@@ -180,6 +180,65 @@ export class Core {
     return game;
   }
 
+  public createSelfPlayGame(
+    client: Client,
+    deck1: string[],
+    deck2: string[],
+    gameSettings: GameSettings = new GameSettings(),
+    deckId1?: number,
+    deckId2?: number,
+    sleeveImagePath1?: string,
+    sleeveImagePath2?: string
+  ): Game {
+    if (this.clients.indexOf(client) === -1) {
+      throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
+    }
+
+    if (this.isBotClient(client)) {
+      const botClient = client as any;
+      if (!botClient.isFormatAllowed(gameSettings.format)) {
+        throw new GameError(GameCoreError.ERROR_BOT_FORMAT_NOT_ALLOWED);
+      }
+    }
+
+    gameSettings.selfPlay = true;
+
+    if (gameSettings.format === Format.RETRO) {
+      gameSettings.rules.attackFirstTurn = true;
+      gameSettings.rules.firstTurnDrawCard = false;
+      gameSettings.rules.supporterCleanupAtEndTurn = true;
+    }
+    if (gameSettings.format === Format.RSPK) {
+      gameSettings.rules.attackFirstTurn = true;
+      gameSettings.rules.firstTurnDrawCard = false;
+      gameSettings.rules.supporterCleanupAtEndTurn = true;
+    }
+    if (gameSettings.format === Format.BW) {
+      gameSettings.rules.attackFirstTurn = true;
+      gameSettings.rules.firstTurnDrawCard = true;
+      gameSettings.rules.firstTurnUseSupporter = true;
+    }
+
+    const taken = new Set(this.clients.map(c => c.id));
+    let opponentId = generateId(this.clients);
+    while (taken.has(opponentId) || opponentId === client.id) {
+      opponentId += 1;
+    }
+
+    const game = new Game(this, generateId(this.games), gameSettings);
+    game.dispatch(client, new AddPlayerAction(client.id, client.name, deck1, undefined, deckId1, sleeveImagePath1));
+    game.dispatch(
+      client,
+      new AddPlayerAction(opponentId, `${client.name} (2)`, deck2, undefined, deckId2, sleeveImagePath2)
+    );
+    game.initSelfPlay(client.user.id);
+
+    this.games.push(game);
+    this.emit(c => c.onGameAdd(game));
+    this.joinGame(client, game);
+    return game;
+  }
+
   public createGameWithDecks(
     client: Client,
     deck: string[],

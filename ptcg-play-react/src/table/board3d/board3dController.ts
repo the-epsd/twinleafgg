@@ -488,7 +488,7 @@ export class Board3dController {
   /**
    * Create a 1-unit grid overlay on the board surface.
    * Aligns with the game board's coordinate system so "move by 1 unit" is visible.
-   * Same thickness as BENCH_OUTLINE_THICKNESS, half opacity.
+   * Same thickness as BENCH_OUTLINE_THICKNESS, 10% opacity.
    * Positioned below cards (y=0.01) so it renders underneath.
    */
   private createBoardGrid(): void {
@@ -507,7 +507,7 @@ export class Board3dController {
     const material = new MeshBasicMaterial({
       color: Board3dController.BENCH_OUTLINE_COLOR,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.1,
       side: DoubleSide,
       depthTest: true
     });

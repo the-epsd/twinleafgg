@@ -10,6 +10,7 @@ import { getFriendsList, getSentFriendRequests, sendFriendRequest } from '../api
 import { updateUserRole } from '../api/profileApi';
 import { ApiError } from '../api/apiError';
 import { CreateGameInviteDialog } from './CreateGameInviteDialog';
+import { SelfPlayGameDialog } from './SelfPlayGameDialog';
 import styles from './OnlinePlayersSidebar.module.css';
 
 const MAX_ROWS = 20;
@@ -33,6 +34,7 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
   const [pendingSentUserIds, setPendingSentUserIds] = useState<Set<number>>(() => new Set());
   const [menuClientId, setMenuClientId] = useState<number | null>(null);
   const [inviteClientId, setInviteClientId] = useState<number | null>(null);
+  const [selfPlayOpen, setSelfPlayOpen] = useState(false);
   const [friendActionUserId, setFriendActionUserId] = useState<number | null>(null);
 
   const rows = useMemo(() => {
@@ -177,6 +179,10 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
                   setInviteClientId(row.clientId);
                   setMenuClientId(null);
                 }}
+                onSelfPlay={() => {
+                  setSelfPlayOpen(true);
+                  setMenuClientId(null);
+                }}
                 onSendFriendRequest={() => void onSendFriendRequest(row.user.userId)}
                 onBanToggle={() => void onBanToggle(row.user)}
               />
@@ -192,6 +198,7 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
           onClose={() => setInviteClientId(null)}
         />
       ) : null}
+      {selfPlayOpen ? <SelfPlayGameDialog open onClose={() => setSelfPlayOpen(false)} /> : null}
     </aside>
   );
 }
@@ -212,6 +219,7 @@ type OnlinePlayerRowProps = {
   navigate: ReturnType<typeof useNavigate>;
   onCloseMenu: () => void;
   onInvite: () => void;
+  onSelfPlay: () => void;
   onSendFriendRequest: () => void;
   onBanToggle: () => void;
 };
@@ -232,6 +240,7 @@ function OnlinePlayerRow({
   navigate,
   onCloseMenu,
   onInvite,
+  onSelfPlay,
   onSendFriendRequest,
   onBanToggle,
 }: OnlinePlayerRowProps) {
@@ -318,6 +327,13 @@ function OnlinePlayerRow({
                 }}
               >
                 {t('BUTTON_SEND_MESSAGE')}
+              </button>
+            </li>
+          ) : null}
+          {isSelf ? (
+            <li role="none">
+              <button type="button" role="menuitem" className={styles.menuItem} onClick={onSelfPlay}>
+                {t('REACT_MENU_SELF_PLAY')}
               </button>
             </li>
           ) : null}
