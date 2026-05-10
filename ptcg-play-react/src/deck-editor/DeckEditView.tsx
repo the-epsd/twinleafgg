@@ -9,7 +9,7 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
-import type { Card } from 'ptcg-server';
+import type { Archetype, Card } from 'ptcg-server';
 import { useAuth } from '../context/AuthContext';
 import { useSettings } from '../context/SettingsContext';
 import { ApiError } from '../api/apiError';
@@ -20,6 +20,7 @@ import { DeckEditInfoValidity } from './DeckEditInfoValidity';
 import { DeckEditToolbar } from './DeckEditToolbar';
 import { DeckLibraryPane } from './DeckLibraryPane';
 import { CardInfoPopup } from '../card-info/CardInfoPopup';
+import { readFavoriteCards } from '../card-info/favoriteCardsStorage';
 import {
   addCardToDeck,
   canAddOne,
@@ -29,6 +30,8 @@ import {
   replaceSlotCard,
   slotsFromFlatNames,
 } from './deckRules';
+import { clipboardImportFromText, formatPtcgoImportFailures } from './clipboardDeckImport';
+import { deckListExportAngularCountedLines } from './deckListExportText';
 import { sortLibraryCatalog } from './filterLibrary';
 import { useIncrementalFilteredLibrary } from './useIncrementalFilteredLibrary';
 import { DECK_DEFAULT_SLOT_W } from './deckCardLayout';
@@ -81,49 +84,6 @@ function useNarrowLayout(breakpointPx: number): boolean {
   return narrow;
 }
 
-function resolveImportLine(line: string, byFullName: Map<string, Card>): string | null {
-  const t = line.trim();
-  if (!t) {
-    return null;
-  }
-  if (byFullName.has(t)) {
-    return t;
-  }
-  const lower = t.toLowerCase();
-  for (const c of byFullName.values()) {
-    if (c.name.toLowerCase() === lower) {
-      return c.fullName;
-    }
-  }
-  return null;
-}
-
-function linesToResolvedFullNames(
-  lines: string[],
-  byFullName: Map<string, Card>,
-): { names: string[]; unknown: string[] } {
-  const names: string[] = [];
-  const unknown: string[] = [];
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (!trimmed) {
-      continue;
-    }
-    const m = trimmed.match(/^(\d+)\s+(.+)$/);
-    const probe = m ? m[2]!.trim() : trimmed;
-    const resolved = resolveImportLine(probe, byFullName);
-    if (resolved) {
-      const n = m ? Math.min(1000, Math.max(1, parseInt(m[1]!, 10))) : 1;
-      for (let i = 0; i < n; i++) {
-        names.push(resolved);
-      }
-    } else {
-      unknown.push(trimmed);
-    }
-  }
-  return { names, unknown };
-}
-
 export type DeckEditViewProps = {
   deckId: number;
 };
@@ -142,6 +102,11 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
   const [deckName, setDeckName] = useState('');
   const [slots, setSlots] = useState<DeckSlot[]>([]);
   const [deckLinesFromServer, setDeckLinesFromServer] = useState<string[] | null>(null);
+  /** Kept in sync with last load; forwarded on save so the API does not clear these fields. */
+  const [manualArchetype1, setManualArchetype1] = useState<Archetype | undefined>(undefined);
+  const [manualArchetype2, setManualArchetype2] = useState<Archetype | undefined>(undefined);
+  const [deckArtworks, setDeckArtworks] = useState<{ code: string; artworkId?: number }[] | undefined>(undefined);
+  const [sleeveIdentifier, setSleeveIdentifier] = useState<string | undefined>(undefined);
   const [importUnknown, setImportUnknown] = useState<string[]>([]);
   const [filter, setFilter] = useState<DeckEditToolbarFilter>(() => defaultToolbarFilter());
   const [loading, setLoading] = useState(true);
@@ -178,6 +143,21 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
 
   const getScanUrl = useDeckCardScanUrl(serverConfig?.scansUrl);
 
+  const saveDeckWithFlatCards = useCallback(
+    async (flatNames: string[]) => {
+      await saveDeck(
+        deckId,
+        deckName.trim(),
+        flatNames,
+        manualArchetype1,
+        manualArchetype2,
+        deckArtworks,
+        sleeveIdentifier,
+      );
+    },
+    [deckId, deckName, manualArchetype1, manualArchetype2, deckArtworks, sleeveIdentifier],
+  );
+
   useEffect(() => {
     if (!Number.isFinite(deckId)) {
       setLoading(false);
@@ -187,19 +167,32 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
     setDeckLinesFromServer(null);
     setSlots([]);
     setImportUnknown([]);
+    setManualArchetype1(undefined);
+    setManualArchetype2(undefined);
+    setDeckArtworks(undefined);
+    setSleeveIdentifier(undefined);
     void (async () => {
       setLoading(true);
       setError(null);
       try {
         const res = await getDeck(deckId);
-        setDeckName(res.deck.name);
-        const lines = (res.deck.cards ?? []).filter(Boolean);
+        const d = res.deck;
+        setDeckName(d.name);
+        const lines = (d.cards ?? []).filter(Boolean);
         setDeckLinesFromServer(lines);
+        setManualArchetype1(d.manualArchetype1 || undefined);
+        setManualArchetype2(d.manualArchetype2 || undefined);
+        setDeckArtworks(d.artworks);
+        setSleeveIdentifier(d.sleeveIdentifier);
       } catch (e) {
         setError(e instanceof ApiError ? e.message : t('REACT_ERROR_LOAD_SINGLE_DECK'));
         setDeckLinesFromServer(null);
         setSlots([]);
         setImportUnknown([]);
+        setManualArchetype1(undefined);
+        setManualArchetype2(undefined);
+        setDeckArtworks(undefined);
+        setSleeveIdentifier(undefined);
       } finally {
         setLoading(false);
       }
@@ -237,16 +230,27 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
       return;
     }
     clipboardFromNavConsumed.current = true;
-    const lines = raw.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
-    const { names, unknown } = linesToResolvedFullNames(lines, byFullName);
-    const { slots: next, unknown: u2 } = slotsFromFlatNames(names, byFullName);
+    const imp = clipboardImportFromText(raw, allCards, byFullName, readFavoriteCards());
+    const { slots: next, unknown: u2 } = slotsFromFlatNames(imp.flatFullNames, byFullName);
+    const failureFmt = formatPtcgoImportFailures(imp.ptcgoFailureCounts);
+    const unknownAll = [...failureFmt, ...imp.fallbackUnknown, ...u2];
     setSlots(next);
-    setImportUnknown([...unknown, ...u2]);
+    setImportUnknown(unknownAll);
     setRuleMessage(
-      unknown.length ? t('DECK_IMPORT_SKIP_UNKNOWN', { count: unknown.length }) : t('DECK_IMPORT_APPLIED_CLIPBOARD'),
+      unknownAll.length ? t('DECK_IMPORT_SKIP_UNKNOWN', { count: unknownAll.length }) : t('DECK_IMPORT_APPLIED_CLIPBOARD'),
     );
     window.setTimeout(() => setRuleMessage(null), 3200);
     navigate(location.pathname, { replace: true, state: {} });
+
+    if (!isThemeDeck) {
+      void (async () => {
+        try {
+          await saveDeckWithFlatCards(flatNamesFromSlots(next));
+        } catch (e) {
+          setError(e instanceof ApiError ? e.message : t('REACT_ERROR_SAVE_DECK'));
+        }
+      })();
+    }
   }, [
     location.pathname,
     location.state,
@@ -254,7 +258,12 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
     disabled,
     cardsCatalogHash,
     byFullName,
+    allCards,
+    deckId,
+    deckName,
+    isThemeDeck,
     navigate,
+    saveDeckWithFlatCards,
     t,
   ]);
 
@@ -302,13 +311,13 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
     setSaving(true);
     setError(null);
     try {
-      await saveDeck(deckId, deckName.trim(), flatNamesFromSlots(slots));
+      await saveDeckWithFlatCards(flatNamesFromSlots(slots));
     } catch (e) {
       setError(e instanceof ApiError ? e.message : t('REACT_ERROR_SAVE_DECK'));
     } finally {
       setSaving(false);
     }
-  }, [deckId, deckName, slots, t]);
+  }, [slots, saveDeckWithFlatCards, t]);
 
   const onDeleteDeck = useCallback(async () => {
     if (!window.confirm(t('DECK_DELETE_SELECTED'))) {
@@ -328,27 +337,34 @@ export function DeckEditView({ deckId }: DeckEditViewProps) {
   }, [deckId, navigate, t]);
 
   const onExport = useCallback(() => {
-    const text = flatNamesFromSlots(slots).join('\n');
+    const text = deckListExportAngularCountedLines(slots);
     void navigator.clipboard.writeText(text);
     setRuleMessage(t('DECK_EXPORTED_TO_CLIPBOARD'));
     window.setTimeout(() => setRuleMessage(null), 2400);
   }, [slots, t]);
 
   const onImport = useCallback(() => {
-    void navigator.clipboard.readText().then((text) => {
-      const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
-      const { names, unknown } = linesToResolvedFullNames(lines, byFullName);
-      const { slots: next, unknown: u2 } = slotsFromFlatNames(names, byFullName);
-      setSlots(next);
-      setImportUnknown([...unknown, ...u2]);
-      setRuleMessage(
-        unknown.length
-          ? t('DECK_IMPORT_SKIP_UNKNOWN', { count: unknown.length })
-          : t('DECK_IMPORT_APPLIED_CLIPBOARD'),
-      );
-      window.setTimeout(() => setRuleMessage(null), 3200);
-    });
-  }, [byFullName, t]);
+    void navigator.clipboard
+      .readText()
+      .then((text) => {
+        const imp = clipboardImportFromText(text, allCards, byFullName, readFavoriteCards());
+        const { slots: next, unknown: u2 } = slotsFromFlatNames(imp.flatFullNames, byFullName);
+        const failureFmt = formatPtcgoImportFailures(imp.ptcgoFailureCounts);
+        const unknownAll = [...failureFmt, ...imp.fallbackUnknown, ...u2];
+        setSlots(next);
+        setImportUnknown(unknownAll);
+        setRuleMessage(
+          unknownAll.length
+            ? t('DECK_IMPORT_SKIP_UNKNOWN', { count: unknownAll.length })
+            : t('DECK_IMPORT_APPLIED_CLIPBOARD'),
+        );
+        window.setTimeout(() => setRuleMessage(null), 3200);
+      })
+      .catch(() => {
+        setRuleMessage(t('ERROR_CLIPBOARD_ACCESS'));
+        window.setTimeout(() => setRuleMessage(null), 3200);
+      });
+  }, [allCards, byFullName, t]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
