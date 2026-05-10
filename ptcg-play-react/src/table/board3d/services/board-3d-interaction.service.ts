@@ -682,7 +682,7 @@ export class Board3dInteractionService {
 
     // Check if target's name is a variant of evolvesFrom (e.g. "Eevee ex" for evolvesFrom "Eevee")
     if (evolutionCard.evolvesFrom && targetPokemon.name &&
-        targetPokemon.name.startsWith(evolutionCard.evolvesFrom + ' ')) {
+      targetPokemon.name.startsWith(evolutionCard.evolvesFrom + ' ')) {
       return true;
     }
 

@@ -78,6 +78,7 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const authToken = getStoredToken();
     if (!isAuthenticated || !authToken) {
+      getSocketManager().disable();
       setCore(initialCore);
       return;
     }
@@ -188,8 +189,6 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
       socket.raw.off('core:usersInfo', onUsersInfo);
       socket.raw.off('core:createGame', onCreateGame);
       socket.raw.off('core:deleteGame', onDeleteGame);
-      socket.disable();
-      setCore(initialCore);
     };
   }, [isAuthenticated]);
 
