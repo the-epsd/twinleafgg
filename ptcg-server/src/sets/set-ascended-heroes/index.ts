@@ -33,6 +33,7 @@ import { Snorunt } from './snorunt';
 import { Spectrier } from './spectrier';
 import { TapuKoko } from './tapu-koko';
 import { TeamRocketsHonchkrow } from './team-rockets-honchkrow';
+import { TeamRocketsKangaskhanex } from './team-rockets-kangaskhan-ex';
 import { Wurmple } from './wurmple';
 import { Silcoon } from './silcoon';
 // Start Deck 100
@@ -116,6 +117,7 @@ export const setAscendedHeroes: Card[] = [
   new Spectrier(),
   new TapuKoko(),
   new TeamRocketsHonchkrow(),
+  new TeamRocketsKangaskhanex(),
   new Wurmple(),
   // Start Deck 100
   new ErikasOddish(),
