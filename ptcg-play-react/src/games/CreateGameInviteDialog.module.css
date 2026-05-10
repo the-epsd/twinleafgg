@@ -1,0 +1,114 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.panel {
+  background: #f8f9fa;
+  color: #111;
+  border-radius: 12px;
+  max-width: min(520px, 92vw);
+  width: 100%;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.22);
+  border: 1px solid #d4d5d6;
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  padding: 16px 20px 10px;
+  margin: 0;
+}
+
+.field {
+  padding: 0 20px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #444;
+}
+
+.select {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font: inherit;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+}
+
+.error {
+  margin: 0 20px 12px;
+  padding: 10px 12px;
+  background: #ffe8e8;
+  border: 1px solid #f5b5b5;
+  border-radius: 8px;
+  color: #8b1c1c;
+  font-size: 0.875rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 20px 18px;
+  border-top: 1px solid #e0e0e0;
+  background: #fff;
+}
+
+.cancelBtn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  font: inherit;
+}
+
+.cancelBtn:hover {
+  background: #f0f0f0;
+}
+
+.confirmBtn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: 1px solid #2d5a3d;
+  background: #459058;
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+.confirmBtn:hover:not(:disabled) {
+  filter: brightness(1.06);
+}
+
+.confirmBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

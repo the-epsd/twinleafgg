@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useCoreSession } from '../context/CoreSessionContext';
 import { MatchmakingLobby } from '../games/MatchmakingLobby';
+import { OnlinePlayersSidebarRail } from '../games/OnlinePlayersSidebarRail';
 import styles from './GamesPage.module.css';
 
 export function GamesPage() {
@@ -20,8 +21,13 @@ export function GamesPage() {
         {toast ? <p className={styles.alert}>{toast}</p> : null}
       </div>
 
-      <div className={styles.lobbyCenter}>
-        <MatchmakingLobby onError={setToast} />
+      <div className={styles.surface}>
+        <div className={styles.lobbyCenter}>
+          <MatchmakingLobby onError={setToast} />
+        </div>
+        <div className={styles.playersDock}>
+          <OnlinePlayersSidebarRail />
+        </div>
       </div>
     </div>
   );

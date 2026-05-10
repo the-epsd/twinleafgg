@@ -24,6 +24,8 @@ import { GameOverOverlay } from '../table/end-game/GameOverOverlay';
 import { MatchResultsSplash } from '../table/end-game/MatchResultsSplash';
 import { SandboxControlPanel } from '../table/sandbox/SandboxControlPanel';
 import { SandboxTableHint } from '../table/sandbox/SandboxTableHint';
+import { ShellButton } from '../components/ui/ShellButton';
+import promptStyles from '../table/prompts/TablePromptLayer.module.css';
 
 const RECONNECT_GAME_ID_KEY = 'ptcg_reconnect_gameId';
 
@@ -73,6 +75,7 @@ export function TablePage() {
   const [localGame, setLocalGame] = useState<LocalGameState | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [endFlowStage, setEndFlowStage] = useState<'splash' | 'stats' | null>(null);
+  const [leaveConfirmKind, setLeaveConfirmKind] = useState<'live' | 'replay' | null>(null);
   const [suppressChoosePrizePrompt, setSuppressChoosePrizePrompt] = useState(false);
   const clientIdRef = useRef(clientId);
   clientIdRef.current = clientId;
@@ -307,6 +310,7 @@ export function TablePage() {
 
   useEffect(() => {
     setEndFlowStage(null);
+    setLeaveConfirmKind(null);
   }, [isReplayRoute, replayMatchId, serverGameId]);
 
   useEffect(() => {
@@ -320,6 +324,12 @@ export function TablePage() {
     }
     setEndFlowStage((s) => (s === null ? 'splash' : s));
   }, [localGame]);
+
+  useEffect(() => {
+    if (localGame?.state.phase === GamePhase.FINISHED) {
+      setLeaveConfirmKind(null);
+    }
+  }, [localGame?.state.phase]);
 
   const tableClientId = useMemo(() => {
     if (!localGame) {
@@ -384,20 +394,37 @@ export function TablePage() {
 
   const onLeave = useCallback(() => {
     const leaveReplay = isReplayRoute || localGame?.replay != null;
-    const msg = leaveReplay ? t('REACT_LEAVE_REPLAY') : t('MAIN_LEAVE_GAME');
-    if (!window.confirm(msg)) {
+    if (!leaveReplay && localGame?.deleted) {
       return;
     }
-    if (leaveReplay) {
+    setLeaveConfirmKind(leaveReplay ? 'replay' : 'live');
+  }, [isReplayRoute, localGame?.deleted, localGame?.replay]);
+
+  const dismissLeaveConfirm = useCallback(() => {
+    setLeaveConfirmKind(null);
+  }, []);
+
+  const onLeaveConfirm = useCallback(() => {
+    const kind = leaveConfirmKind;
+    setLeaveConfirmKind(null);
+    if (!kind) {
+      return;
+    }
+    if (kind === 'replay') {
       navigate('/spectate');
       return;
     }
+    if (localGame?.deleted) {
+      return;
+    }
+    if (!Number.isFinite(serverGameId)) {
+      return;
+    }
+    clearPersistedGameId();
     void getSocketManager()
       .emit('game:concede', { gameId: serverGameId })
       .catch(onGameSocketError);
-    clearPersistedGameId();
-    navigate('/games');
-  }, [isReplayRoute, localGame?.replay, navigate, onGameSocketError, serverGameId, t]);
+  }, [leaveConfirmKind, localGame?.deleted, navigate, onGameSocketError, serverGameId]);
 
   const onSendChat = useCallback(
     (message: string) => {
@@ -547,6 +574,34 @@ export function TablePage() {
           getScanUrl={getScanUrl}
           onConfirm={onGameOverConfirm}
         />
+      ) : null}
+      {leaveConfirmKind !== null ? (
+        <div
+          className={promptStyles.backdrop}
+          role="presentation"
+          style={{ zIndex: 1600 }}
+        >
+          <div className={promptStyles.panel} role="dialog" aria-modal="true">
+            <h2 className={promptStyles.title}>{t('ALERT_CONFIRM_TITLE')}</h2>
+            <p className={promptStyles.message}>
+              {leaveConfirmKind === 'replay'
+                ? t('REACT_LEAVE_REPLAY')
+                : t('MAIN_LEAVE_GAME')}
+            </p>
+            <div className={promptStyles.actions}>
+              <ShellButton type="button" variant="secondary" onClick={dismissLeaveConfirm}>
+                {t('BUTTON_CANCEL')}
+              </ShellButton>
+              <ShellButton
+                type="button"
+                onClick={onLeaveConfirm}
+                disabled={leaveConfirmKind === 'live' && !!localGame.deleted}
+              >
+                {t('BUTTON_OK')}
+              </ShellButton>
+            </div>
+          </div>
+        </div>
       ) : null}
       </div>
     </div>
