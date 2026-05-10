@@ -3,6 +3,7 @@ import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, ChooseCardsPrompt, PokemonCardList, Card, ShuffleDeckPrompt, StateUtils, GameMessage } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -29,8 +30,7 @@ function* useEntrainment(next: Function, store: StoreLike, state: State,
   }
 
   cards.forEach((card, index) => {
-    player.deck.moveCardTo(card, slots[index]);
-    slots[index].pokemonPlayedTurn = state.turn;
+    store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
   });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

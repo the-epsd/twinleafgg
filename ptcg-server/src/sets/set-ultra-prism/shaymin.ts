@@ -8,6 +8,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { GameMessage } from '../../game/game-message';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { State, StoreLike } from '../../game';
 export class Shaymin extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -61,8 +62,7 @@ export class Shaymin extends PokemonCard {
         cards.forEach(card => {
           const emptySlot = player.bench.find(b => b.cards.length === 0);
           if (emptySlot) {
-            player.deck.moveCardTo(card, emptySlot);
-            emptySlot.pokemonPlayedTurn = state.turn;
+            store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, emptySlot));
           }
         });
         return SHUFFLE_DECK(store, state, player);

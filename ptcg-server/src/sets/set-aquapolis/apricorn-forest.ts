@@ -8,6 +8,7 @@ import { Card, ChooseCardsPrompt, EnergyCard, PokemonCard, PokemonCardList, Shuf
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { COIN_FLIP_PROMPT, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class ApricornForest extends TrainerCard {
@@ -80,8 +81,7 @@ export class ApricornForest extends TrainerCard {
 
                 else {
                   cards.forEach((card, index) => {
-                    player.deck.moveCardTo(card, slots[index]);
-                    slots[index].pokemonPlayedTurn = state.turn;
+                    store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
                   });
                 }
                 return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

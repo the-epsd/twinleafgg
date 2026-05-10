@@ -2,6 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, CoinFlipPrompt, GameMessage, PokemonCardList, Card, ChooseCardsPrompt, GameError, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -85,8 +86,7 @@ export class Marowak extends PokemonCard {
         }
 
         cards.forEach((card, index) => {
-          player.deck.moveCardTo(card, slots[index]);
-          slots[index].pokemonPlayedTurn = state.turn;
+          store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
         });
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

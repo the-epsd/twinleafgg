@@ -4,10 +4,11 @@ import { StateUtils } from '../../game/store/state-utils';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
-import { Card, ChooseCardsPrompt, PokemonCardList, ShuffleDeckPrompt } from '../../game';
+import { Card, ChooseCardsPrompt, PokemonCard, PokemonCardList, ShuffleDeckPrompt } from '../../game';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 function* useStadium(next: Function, store: StoreLike, state: State, effect: UseStadiumEffect): IterableIterator<State> {
@@ -33,8 +34,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     cards = selectedCards || [];
 
     cards.forEach((card, index) => {
-      player.deck.moveCardTo(card, slots[index]);
-      slots[index].pokemonPlayedTurn = state.turn;
+      store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
     });
 
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

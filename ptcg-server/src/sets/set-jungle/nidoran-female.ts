@@ -4,6 +4,7 @@ import { Attack } from '../../game/store/card/pokemon-types';
 import { CoinFlipPrompt } from '../../game/store/prompts/coin-flip-prompt';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { Card, ChooseCardsPrompt, GameMessage, PokemonCardList, ShuffleDeckPrompt } from '../../game';
@@ -41,8 +42,7 @@ function* useCallForFamilyNidoran(next: Function, store: StoreLike, state: State
   }
 
   cards.forEach((card, index) => {
-    player.deck.moveCardTo(card, slots[index]);
-    slots[index].pokemonPlayedTurn = state.turn;
+    store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
   });
 
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

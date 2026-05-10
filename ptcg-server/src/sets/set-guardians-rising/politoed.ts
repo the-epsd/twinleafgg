@@ -6,6 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { Card, ConfirmPrompt, GameMessage, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -88,8 +89,7 @@ export class Politoed extends PokemonCard {
           cards.forEach(card => {
             const emptySlot = player.bench.find(b => b.cards.length === 0);
             if (emptySlot) {
-              player.deck.moveCardTo(card, emptySlot);
-              emptySlot.pokemonPlayedTurn = state.turn;
+              store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, emptySlot));
             }
           });
         }

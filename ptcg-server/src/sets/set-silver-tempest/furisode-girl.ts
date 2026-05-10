@@ -2,12 +2,12 @@ import { Card } from '../../game/store/card/card';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { Effect } from '../../game/store/effects/effect';
-import { ConfirmPrompt, PokemonCardList } from '../../game';
+import { ConfirmPrompt, PokemonCard, PokemonCardList } from '../../game';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Stage, TrainerType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { TrainerEffect, PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 
@@ -56,8 +56,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
 
   cards.forEach((card, index) => {
-    player.deck.moveCardTo(card, slots[index]);
-    slots[index].pokemonPlayedTurn = state.turn;
+    store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
 
     state = store.prompt(state, new ConfirmPrompt(
       effect.player.id,

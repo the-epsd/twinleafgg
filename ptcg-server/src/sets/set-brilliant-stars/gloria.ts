@@ -2,7 +2,7 @@ import { Card, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, PokemonCa
 import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { PlayPokemonFromDeckEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 export class Gloria extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -81,8 +81,7 @@ export class Gloria extends TrainerCard {
           cards = selectedCards || [];
 
           cards.forEach((card, index) => {
-            player.deck.moveCardTo(card, slots[index]);
-            slots[index].pokemonPlayedTurn = state.turn;
+            store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
           });
 
           return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

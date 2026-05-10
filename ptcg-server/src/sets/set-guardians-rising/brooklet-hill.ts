@@ -4,6 +4,7 @@ import { GameMessage } from '../../game/game-message';
 import { CardType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
@@ -46,8 +47,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
       }
 
       cards.forEach((card, index) => {
-        player.deck.moveCardTo(card, slots[index]);
-        slots[index].pokemonPlayedTurn = state.turn;
+        store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
       });
 
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
