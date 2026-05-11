@@ -177,7 +177,7 @@ export class Board3dController {
     private cardsAdapter: Board3dCardsAdapter,
     private gameActions: Board3dGameActions,
     private boardInteractionService: BoardInteractionService,
-  ) {}
+  ) { }
 
   setProps(p: Board3dControllerProps): void {
     this.gameState = p.gameState;
@@ -1763,10 +1763,6 @@ export class Board3dController {
       }
 
       if (shouldAnimateDrawEffective && incomingDrawIds.length > 0) {
-        await this.boardInteractionService.awaitTrainerEffectPromptReveal();
-        if (genAtStart !== this.handSyncInvalidationGen) {
-          return;
-        }
         const prizeFlightOrigins = this.buildPrizeFlightOrigins(incomingDrawIds);
         const isFromPrizeForSegments = (id: number) => prizeFlightOrigins.has(id);
         const totalDeckDrawsThisSync = incomingDrawIds.filter(id => !prizeFlightOrigins.has(id)).length;
@@ -1920,10 +1916,10 @@ export class Board3dController {
         const trainerBoardHandPlay = cardIsTrainerBoardHandPlay(playedHandCard);
         const playTarget: CardTarget = trainerBoardHandPlay
           ? {
-              player: result.zone.player,
-              slot: SlotType.BOARD,
-              index: result.zone.index,
-            }
+            player: result.zone.player,
+            slot: SlotType.BOARD,
+            index: result.zone.index,
+          }
           : result.zone;
 
         const flight = result.playCardFlight;
@@ -1947,12 +1943,12 @@ export class Board3dController {
 
           const supporterSlotMeshId = trainerBoardHandPlay
             ? board3dMeshIdForPlayTarget(
-                playTarget,
-                DropZoneType.SUPPORTER,
-                this.bottomPlayer,
-                this.topPlayer,
-                resolvedTrainerType
-              )
+              playTarget,
+              DropZoneType.SUPPORTER,
+              this.bottomPlayer,
+              this.topPlayer,
+              resolvedTrainerType
+            )
             : null;
 
           const flightHiddenMeshIds: string[] = [];

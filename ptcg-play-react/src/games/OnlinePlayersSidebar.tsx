@@ -118,13 +118,14 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
     if (openMenuKey == null) {
       return;
     }
+    const menuKey = openMenuKey;
     function onKey(e: KeyboardEvent) {
       if (e.key === 'Escape') {
         setOpenMenuKey(null);
       }
     }
     function onPointerDown(e: MouseEvent | PointerEvent) {
-      const el = document.querySelector(`[data-player-menu-root="${CSS.escape(openMenuKey)}"]`);
+      const el = document.querySelector(`[data-player-menu-root="${CSS.escape(menuKey)}"]`);
       if (el && !el.contains(e.target as Node)) {
         setOpenMenuKey(null);
       }
