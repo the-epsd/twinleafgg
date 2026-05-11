@@ -1763,6 +1763,10 @@ export class Board3dController {
       }
 
       if (shouldAnimateDrawEffective && incomingDrawIds.length > 0) {
+        await this.boardInteractionService.awaitTrainerEffectPromptReveal();
+        if (genAtStart !== this.handSyncInvalidationGen) {
+          return;
+        }
         const prizeFlightOrigins = this.buildPrizeFlightOrigins(incomingDrawIds);
         const isFromPrizeForSegments = (id: number) => prizeFlightOrigins.has(id);
         const totalDeckDrawsThisSync = incomingDrawIds.filter(id => !prizeFlightOrigins.has(id)).length;

@@ -13,6 +13,38 @@
   border-radius: 8px;
 }
 
+.columnShell {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sectionFriends {
+  flex: 0 1 auto;
+  max-height: min(38vh, 280px);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #e7e7e8;
+}
+
+.sectionOnline {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.friendsList {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -218,6 +250,10 @@
   border: none;
   border-radius: 0;
   background: transparent;
+}
+
+.asideSandbox .sectionFriends {
+  border-bottom-color: #444;
 }
 
 .headerSandbox {

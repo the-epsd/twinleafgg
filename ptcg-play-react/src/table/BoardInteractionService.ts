@@ -1,4 +1,4 @@
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, firstValueFrom, Subject, take } from 'rxjs';
 import {
   ChoosePokemonPrompt,
   GameMessage,
@@ -430,5 +430,16 @@ export class BoardInteractionService {
 
   public shouldHideTrainerEffectPrompts(): boolean {
     return Date.now() < this.trainerEffectPromptHideUntil;
+  }
+
+  /**
+   * Resolves after the post–trainer-play prompt window ends, or immediately if not active.
+   * Used so 3D hand draw flights do not overlap the trainer play moment.
+   */
+  async awaitTrainerEffectPromptReveal(): Promise<void> {
+    if (!this.shouldHideTrainerEffectPrompts()) {
+      return;
+    }
+    await firstValueFrom(this.trainerEffectPromptDelayEnd$.pipe(take(1)));
   }
 } 

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import type { ServerConfig, UserInfo } from 'ptcg-server';
@@ -23,6 +23,14 @@ function otherFriendUserId(f: { user: UserInfo; friend: UserInfo }, myUserId: nu
   return f.user.userId === myUserId ? f.friend.userId : f.user.userId;
 }
 
+function onlineMenuKey(clientId: number): string {
+  return `online-${clientId}`;
+}
+
+function friendMenuKey(userId: number): string {
+  return `friend-${userId}`;
+}
+
 export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSidebarProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -31,15 +39,28 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
   const { showSnackbar } = useSnackbar();
 
   const [friendUserIds, setFriendUserIds] = useState<Set<number>>(() => new Set());
+  const [friendUsersFromApi, setFriendUsersFromApi] = useState<UserInfo[]>([]);
   const [pendingSentUserIds, setPendingSentUserIds] = useState<Set<number>>(() => new Set());
-  const [menuClientId, setMenuClientId] = useState<number | null>(null);
+  const [openMenuKey, setOpenMenuKey] = useState<string | null>(null);
   const [inviteClientId, setInviteClientId] = useState<number | null>(null);
   const [selfPlayOpen, setSelfPlayOpen] = useState(false);
   const [friendActionUserId, setFriendActionUserId] = useState<number | null>(null);
 
-  const rows = useMemo(() => {
+  const friendsHeaderId = `${useId()}-friends`;
+  const onlineHeaderId = `${useId()}-online`;
+
+  const displayFriends = useMemo(() => {
+    const merged = friendUsersFromApi.map((u) => usersById[u.userId] ?? u);
+    merged.sort((a, b) => a.name.localeCompare(b.name));
+    return merged;
+  }, [friendUsersFromApi, usersById]);
+
+  const onlineRows = useMemo(() => {
     const list: { clientId: number; user: UserInfo }[] = [];
     for (const c of clients) {
+      if (friendUserIds.has(c.userId)) {
+        continue;
+      }
       const u = usersById[c.userId];
       if (u) {
         list.push({ clientId: c.clientId, user: u });
@@ -47,7 +68,7 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
     }
     list.sort((a, b) => a.user.name.localeCompare(b.user.name));
     return list.slice(0, MAX_ROWS);
-  }, [clients, usersById]);
+  }, [clients, usersById, friendUserIds]);
 
   const reloadFriends = useCallback(async () => {
     if (!user) {
@@ -56,12 +77,22 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
     try {
       const [fl, sent] = await Promise.all([getFriendsList(), getSentFriendRequests()]);
       const accepted = new Set<number>();
+      const friendUsers: UserInfo[] = [];
+      const seen = new Set<number>();
       for (const f of fl.friends) {
         if (f.status !== 'accepted') {
           continue;
         }
-        accepted.add(otherFriendUserId(f, user.userId));
+        const oid = otherFriendUserId(f, user.userId);
+        accepted.add(oid);
+        if (!seen.has(oid)) {
+          seen.add(oid);
+          const other = f.user.userId === oid ? f.user : f.friend;
+          friendUsers.push(other);
+        }
       }
+      friendUsers.sort((a, b) => a.name.localeCompare(b.name));
+
       const pending = new Set<number>();
       for (const r of sent.requests) {
         if (r.status !== 'pending') {
@@ -72,6 +103,7 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
         }
       }
       setFriendUserIds(accepted);
+      setFriendUsersFromApi(friendUsers);
       setPendingSentUserIds(pending);
     } catch {
       /* ignore */
@@ -83,18 +115,18 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
   }, [reloadFriends]);
 
   useEffect(() => {
-    if (menuClientId == null) {
+    if (openMenuKey == null) {
       return;
     }
     function onKey(e: KeyboardEvent) {
       if (e.key === 'Escape') {
-        setMenuClientId(null);
+        setOpenMenuKey(null);
       }
     }
     function onPointerDown(e: MouseEvent | PointerEvent) {
-      const el = document.querySelector(`[data-player-menu-root="${menuClientId}"]`);
+      const el = document.querySelector(`[data-player-menu-root="${CSS.escape(openMenuKey)}"]`);
       if (el && !el.contains(e.target as Node)) {
-        setMenuClientId(null);
+        setOpenMenuKey(null);
       }
     }
     window.addEventListener('keydown', onKey);
@@ -103,7 +135,7 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
       window.removeEventListener('keydown', onKey);
       document.removeEventListener('pointerdown', onPointerDown);
     };
-  }, [menuClientId]);
+  }, [openMenuKey]);
 
   const isAdmin = user?.roleId === 4;
 
@@ -144,52 +176,112 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
   const menuClass =
     appearance === 'sandbox' ? `${styles.playerMenu} ${styles.playerMenuSandbox}` : styles.playerMenu;
 
+  const headerClass =
+    appearance === 'sandbox' ? `${styles.header} ${styles.headerSandbox}` : styles.header;
+
+  const emptyClass =
+    appearance === 'sandbox' ? `${styles.empty} ${styles.emptySandbox}` : styles.empty;
+
+  const resolveFriendOnlineClientId = useCallback(
+    (userId: number): number | null => {
+      const hit = clients.find((c) => c.userId === userId);
+      return hit ? hit.clientId : null;
+    },
+    [clients],
+  );
+
   return (
-    <aside className={asideClass} aria-label={t('REACT_ONLINE_PLAYERS_TITLE')}>
-      <div className={appearance === 'sandbox' ? `${styles.header} ${styles.headerSandbox}` : styles.header}>
-        <span>{t('REACT_ONLINE_PLAYERS_TITLE')}</span>
-        <span className={styles.count}>({clients.length})</span>
+    <aside className={asideClass} aria-label={t('REACT_SIDEBAR_FRIENDS_AND_ONLINE')}>
+      <div className={styles.columnShell}>
+        <section className={styles.sectionFriends} aria-labelledby={friendsHeaderId}>
+          <div id={friendsHeaderId} className={headerClass}>
+            <span>{t('REACT_FRIENDS_SECTION_TITLE')}</span>
+            <span className={styles.count}>({displayFriends.length})</span>
+          </div>
+          {displayFriends.length === 0 ? (
+            <p className={emptyClass}>{t('REACT_FRIENDS_SECTION_EMPTY')}</p>
+          ) : (
+            <ul className={styles.friendsList}>
+              {displayFriends.map((fu) => {
+                const cid = resolveFriendOnlineClientId(fu.userId);
+                const mk = friendMenuKey(fu.userId);
+                return (
+                  <li key={fu.userId}>
+                    <FriendPlayerRow
+                      user={fu}
+                      onlineClientId={cid}
+                      appearance={appearance}
+                      myClientId={myClientId}
+                      menuOpen={openMenuKey === mk}
+                      menuKey={mk}
+                      onToggleMenu={() => setOpenMenuKey((cur) => (cur === mk ? null : mk))}
+                      menuClass={menuClass}
+                      isAdmin={isAdmin}
+                      serverConfig={serverConfig}
+                      navigate={navigate}
+                      onCloseMenu={() => setOpenMenuKey(null)}
+                      onInvite={() => {
+                        if (cid != null) {
+                          setInviteClientId(cid);
+                        }
+                        setOpenMenuKey(null);
+                      }}
+                      onBanToggle={() => void onBanToggle(fu)}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </section>
+
+        <section className={styles.sectionOnline} aria-labelledby={onlineHeaderId}>
+          <div id={onlineHeaderId} className={headerClass}>
+            <span>{t('REACT_ONLINE_PLAYERS_TITLE')}</span>
+            <span className={styles.count}>({onlineRows.length})</span>
+          </div>
+          {onlineRows.length === 0 ? (
+            <p className={emptyClass}>{t('REACT_ONLINE_PLAYERS_EMPTY')}</p>
+          ) : (
+            <ul className={styles.list}>
+              {onlineRows.map((row) => {
+                const mk = onlineMenuKey(row.clientId);
+                return (
+                  <li key={row.clientId}>
+                    <OnlinePlayerRow
+                      row={row}
+                      appearance={appearance}
+                      isSelf={user?.userId === row.user.userId}
+                      myClientId={myClientId}
+                      menuOpen={openMenuKey === mk}
+                      menuKey={mk}
+                      onToggleMenu={() => setOpenMenuKey((cur) => (cur === mk ? null : mk))}
+                      menuClass={menuClass}
+                      friendUserIds={friendUserIds}
+                      pendingSentUserIds={pendingSentUserIds}
+                      friendBusy={friendActionUserId === row.user.userId}
+                      isAdmin={isAdmin}
+                      serverConfig={serverConfig}
+                      navigate={navigate}
+                      onCloseMenu={() => setOpenMenuKey(null)}
+                      onInvite={() => {
+                        setInviteClientId(row.clientId);
+                        setOpenMenuKey(null);
+                      }}
+                      onSelfPlay={() => {
+                        setSelfPlayOpen(true);
+                        setOpenMenuKey(null);
+                      }}
+                      onSendFriendRequest={() => void onSendFriendRequest(row.user.userId)}
+                      onBanToggle={() => void onBanToggle(row.user)}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          )}
+        </section>
       </div>
-      {rows.length === 0 ? (
-        <p className={appearance === 'sandbox' ? `${styles.empty} ${styles.emptySandbox}` : styles.empty}>
-          {t('REACT_ONLINE_PLAYERS_EMPTY')}
-        </p>
-      ) : (
-        <ul className={styles.list}>
-          {rows.map((row) => (
-            <li key={row.clientId}>
-              <OnlinePlayerRow
-                row={row}
-                appearance={appearance}
-                isSelf={user?.userId === row.user.userId}
-                myClientId={myClientId}
-                menuOpen={menuClientId === row.clientId}
-                onToggleMenu={() =>
-                  setMenuClientId((cur) => (cur === row.clientId ? null : row.clientId))
-                }
-                menuClass={menuClass}
-                friendUserIds={friendUserIds}
-                pendingSentUserIds={pendingSentUserIds}
-                friendBusy={friendActionUserId === row.user.userId}
-                isAdmin={isAdmin}
-                serverConfig={serverConfig}
-                navigate={navigate}
-                onCloseMenu={() => setMenuClientId(null)}
-                onInvite={() => {
-                  setInviteClientId(row.clientId);
-                  setMenuClientId(null);
-                }}
-                onSelfPlay={() => {
-                  setSelfPlayOpen(true);
-                  setMenuClientId(null);
-                }}
-                onSendFriendRequest={() => void onSendFriendRequest(row.user.userId)}
-                onBanToggle={() => void onBanToggle(row.user)}
-              />
-            </li>
-          ))}
-        </ul>
-      )}
 
       {inviteClientId != null ? (
         <CreateGameInviteDialog
@@ -203,12 +295,143 @@ export function OnlinePlayersSidebar({ appearance = 'light' }: OnlinePlayersSide
   );
 }
 
+type FriendPlayerRowProps = {
+  user: UserInfo;
+  onlineClientId: number | null;
+  appearance: 'light' | 'sandbox';
+  myClientId: number;
+  menuOpen: boolean;
+  menuKey: string;
+  onToggleMenu: () => void;
+  menuClass: string;
+  isAdmin: boolean;
+  serverConfig: ServerConfig | null;
+  navigate: ReturnType<typeof useNavigate>;
+  onCloseMenu: () => void;
+  onInvite: () => void;
+  onBanToggle: () => void;
+};
+
+function FriendPlayerRow({
+  user: u,
+  onlineClientId,
+  appearance,
+  myClientId,
+  menuOpen,
+  menuKey,
+  onToggleMenu,
+  menuClass,
+  isAdmin,
+  serverConfig,
+  navigate,
+  onCloseMenu,
+  onInvite,
+  onBanToggle,
+}: FriendPlayerRowProps) {
+  const { t } = useTranslation();
+  const panelId = useId();
+
+  const src = resolveAvatarUrl(u.avatarFile, serverConfig);
+  const rowClass = `${styles.rowButton}${appearance === 'sandbox' ? ` ${styles.rowSandbox}` : ''}`;
+  const avatarClass =
+    appearance === 'sandbox' ? `${styles.avatar} ${styles.avatarSandbox}` : styles.avatar;
+
+  const showInvite = onlineClientId != null && onlineClientId !== myClientId;
+
+  return (
+    <div className={styles.rowWrap} data-player-menu-root={menuKey}>
+      <button
+        type="button"
+        className={`${styles.rowButton} ${rowClass}`}
+        aria-expanded={menuOpen}
+        aria-haspopup="menu"
+        aria-controls={panelId}
+        onClick={onToggleMenu}
+      >
+        <div className={styles.avatarWrap}>
+          {src ? (
+            <img className={avatarClass} src={src} alt="" />
+          ) : (
+            <div className={avatarClass} aria-hidden />
+          )}
+          {onlineClientId != null ? <span className={styles.dot} aria-hidden /> : null}
+        </div>
+        <div className={styles.meta}>
+          <span className={appearance === 'sandbox' ? `${styles.name} ${styles.nameSandbox}` : styles.name}>
+            {u.name}
+          </span>
+          <span className={appearance === 'sandbox' ? `${styles.rank} ${styles.rankSandbox}` : styles.rank}>
+            {t('REACT_ONLINE_PLAYERS_RANK', { rank: u.ranking })}
+          </span>
+        </div>
+        <span className={styles.rowChevron} aria-hidden>
+          ▾
+        </span>
+      </button>
+
+      {menuOpen ? (
+        <ul id={panelId} className={menuClass} role="menu">
+          <li role="none">
+            <button
+              type="button"
+              role="menuitem"
+              className={styles.menuItem}
+              onClick={() => {
+                onCloseMenu();
+                navigate(`/profile/${u.userId}`);
+              }}
+            >
+              {t('BUTTON_SHOW_PROFILE')}
+            </button>
+          </li>
+          <li role="none">
+            <button
+              type="button"
+              role="menuitem"
+              className={styles.menuItem}
+              onClick={() => {
+                onCloseMenu();
+                navigate(`/message/${u.userId}`);
+              }}
+            >
+              {t('BUTTON_SEND_MESSAGE')}
+            </button>
+          </li>
+          {showInvite ? (
+            <li role="none">
+              <button type="button" role="menuitem" className={styles.menuItem} onClick={onInvite}>
+                {t('BUTTON_INVITE')}
+              </button>
+            </li>
+          ) : null}
+          {isAdmin ? (
+            <li role="none">
+              <button
+                type="button"
+                role="menuitem"
+                className={`${styles.menuItem} ${u.roleId === 1 ? styles.menuItemWarn : styles.menuItemDanger}`}
+                onClick={() => {
+                  onCloseMenu();
+                  onBanToggle();
+                }}
+              >
+                {u.roleId === 1 ? t('PROFILE_UNBAN_USER') : t('PROFILE_BAN_USER')}
+              </button>
+            </li>
+          ) : null}
+        </ul>
+      ) : null}
+    </div>
+  );
+}
+
 type OnlinePlayerRowProps = {
   row: { clientId: number; user: UserInfo };
   appearance: 'light' | 'sandbox';
   isSelf: boolean;
   myClientId: number;
   menuOpen: boolean;
+  menuKey: string;
   onToggleMenu: () => void;
   menuClass: string;
   friendUserIds: Set<number>;
@@ -230,6 +453,7 @@ function OnlinePlayerRow({
   isSelf,
   myClientId,
   menuOpen,
+  menuKey,
   onToggleMenu,
   menuClass,
   friendUserIds,
@@ -245,8 +469,6 @@ function OnlinePlayerRow({
   onBanToggle,
 }: OnlinePlayerRowProps) {
   const { t } = useTranslation();
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
   const panelId = useId();
 
   const u = row.user;
@@ -260,13 +482,8 @@ function OnlinePlayerRow({
   const showInvite = !isSelf && row.clientId !== myClientId;
 
   return (
-    <div
-      className={styles.rowWrap}
-      ref={wrapRef}
-      data-player-menu-root={String(row.clientId)}
-    >
+    <div className={styles.rowWrap} data-player-menu-root={menuKey}>
       <button
-        ref={triggerRef}
         type="button"
         className={`${styles.rowButton} ${rowClass}`}
         aria-expanded={menuOpen}
@@ -280,7 +497,7 @@ function OnlinePlayerRow({
           ) : (
             <div className={avatarClass} aria-hidden />
           )}
-          <span className={styles.dot} title="Online" />
+          <span className={styles.dot} aria-hidden />
         </div>
         <div className={styles.meta}>
           <span className={appearance === 'sandbox' ? `${styles.name} ${styles.nameSandbox}` : styles.name}>
@@ -365,7 +582,7 @@ function OnlinePlayerRow({
                     onSendFriendRequest();
                   }}
                 >
-                  {t('REACT_SEND_FRIEND_REQUEST')}
+                  {t('REACT_ADD_TO_FRIEND')}
                 </button>
               )}
             </li>
