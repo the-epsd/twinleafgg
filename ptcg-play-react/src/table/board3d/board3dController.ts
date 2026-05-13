@@ -177,7 +177,7 @@ export class Board3dController {
     private cardsAdapter: Board3dCardsAdapter,
     private gameActions: Board3dGameActions,
     private boardInteractionService: BoardInteractionService,
-  ) {}
+  ) { }
 
   setProps(p: Board3dControllerProps): void {
     this.gameState = p.gameState;
@@ -488,7 +488,7 @@ export class Board3dController {
   /**
    * Create a 1-unit grid overlay on the board surface.
    * Aligns with the game board's coordinate system so "move by 1 unit" is visible.
-   * Same thickness as BENCH_OUTLINE_THICKNESS, half opacity.
+   * Same thickness as BENCH_OUTLINE_THICKNESS, 10% opacity.
    * Positioned below cards (y=0.01) so it renders underneath.
    */
   private createBoardGrid(): void {
@@ -507,7 +507,7 @@ export class Board3dController {
     const material = new MeshBasicMaterial({
       color: Board3dController.BENCH_OUTLINE_COLOR,
       transparent: true,
-      opacity: 0.5,
+      opacity: 0.1,
       side: DoubleSide,
       depthTest: true
     });
@@ -562,7 +562,7 @@ export class Board3dController {
 
   /** World → client pixels for floating Remove damage +/- HUD (follows orbit / selected Pokémon). */
   private syncRemoveDamageHudPosition(): void {
-    if (!this.boardInteractionService.isRemoveDamageOverlayActive()) {
+    if (!this.boardInteractionService.isFloatingDamageHudOverlayActive()) {
       this.boardInteractionService.setRemoveDamageHudAnchor(null);
       return;
     }
@@ -1916,10 +1916,10 @@ export class Board3dController {
         const trainerBoardHandPlay = cardIsTrainerBoardHandPlay(playedHandCard);
         const playTarget: CardTarget = trainerBoardHandPlay
           ? {
-              player: result.zone.player,
-              slot: SlotType.BOARD,
-              index: result.zone.index,
-            }
+            player: result.zone.player,
+            slot: SlotType.BOARD,
+            index: result.zone.index,
+          }
           : result.zone;
 
         const flight = result.playCardFlight;
@@ -1943,12 +1943,12 @@ export class Board3dController {
 
           const supporterSlotMeshId = trainerBoardHandPlay
             ? board3dMeshIdForPlayTarget(
-                playTarget,
-                DropZoneType.SUPPORTER,
-                this.bottomPlayer,
-                this.topPlayer,
-                resolvedTrainerType
-              )
+              playTarget,
+              DropZoneType.SUPPORTER,
+              this.bottomPlayer,
+              this.topPlayer,
+              resolvedTrainerType
+            )
             : null;
 
           const flightHiddenMeshIds: string[] = [];

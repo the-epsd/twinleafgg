@@ -8,6 +8,7 @@ import { GameMessage } from '../../game/game-message';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { BLOCK_IF_DECK_EMPTY, BLOCK_IF_NO_SLOTS, GET_PLAYER_BENCH_SLOTS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { ChooseCardsPrompt, PokemonCard } from '../../game';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 
 export class Archie extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -58,8 +59,7 @@ export class Archie extends TrainerCard {
       ), selected => {
         const cards = selected || [];
         cards.forEach((card, index) => {
-          player.deck.moveCardTo(card, slots[index]);
-          slots[index].pokemonPlayedTurn = state.turn;
+          store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
 
           if (slots[index].getPokemonCard()?.stage === Stage.STAGE_2) {
             slots[index].damage += 20; // Add 2 damage counters

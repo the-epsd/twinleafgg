@@ -6,6 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameMessage, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED, BLOCK_IF_DECK_EMPTY, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Eevee2 extends PokemonCard {
@@ -67,8 +68,7 @@ export class Eevee2 extends PokemonCard {
         const cards = selected || [];
         cards.forEach((card, index) => {
           if (index < emptySlots.length) {
-            player.deck.moveCardTo(card, emptySlots[index]);
-            emptySlots[index].pokemonPlayedTurn = state.turn;
+            store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, emptySlots[index]));
           }
         });
         return SHUFFLE_DECK(store, state, player);

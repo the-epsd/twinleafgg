@@ -1,8 +1,8 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, StateUtils, SelectOptionPrompt } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, StateUtils, SelectOptionPrompt, PokemonCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { PlayPokemonFromDeckEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
@@ -73,13 +73,11 @@ export class Challenge extends TrainerCard {
             const opponentCards = results[1] || [];
 
             playerCards.forEach((card, index) => {
-              player.deck.moveCardTo(card, playerOpenSlots[index]);
-              playerOpenSlots[index].pokemonPlayedTurn = state.turn;
+              store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, playerOpenSlots[index]));
             });
 
             opponentCards.forEach((card, index) => {
-              opponent.deck.moveCardTo(card, opponentOpenSlots[index]);
-              opponentOpenSlots[index].pokemonPlayedTurn = state.turn;
+              store.reduceEffect(state, new PlayPokemonFromDeckEffect(opponent, card as PokemonCard, opponentOpenSlots[index]));
             });
 
             SHUFFLE_DECK(store, state, player);

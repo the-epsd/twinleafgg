@@ -49,8 +49,8 @@ export function createBoard3dHoloMaterial(mask: Texture): ShaderMaterial {
     fragmentShader: holoFragmentShader,
     transparent: true,
     depthWrite: false,
-    /* Same-layer as card: avoid z-fight with thin box; don’t use depth to clip holo. */
-    depthTest: false,
+    /* Respect depth so other cards / drag overlays occlude holo (depthTest:false painted over everything). */
+    depthTest: true,
     side: DoubleSide,
   });
   registeredMaterials.add(mat);

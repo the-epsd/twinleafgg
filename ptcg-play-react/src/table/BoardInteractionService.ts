@@ -3,6 +3,7 @@ import {
   ChoosePokemonPrompt,
   GameMessage,
   PlayerType,
+  PutDamagePrompt,
   RemoveDamagePrompt,
   SlotType,
   type CardTarget,
@@ -10,7 +11,7 @@ import {
   type StateLog,
 } from 'ptcg-server';
 
-type SelectionOverlayKind = 'choose-pokemon' | 'remove-damage' | null;
+type SelectionOverlayKind = 'choose-pokemon' | 'remove-damage' | 'put-damage' | null;
 
 export interface BasicEntranceAnimationEvent {
   playerId: number;
@@ -178,8 +179,34 @@ export class BoardInteractionService {
     this.selectionCallback = null;
   }
 
+  /**
+   * Board overlay for Put damage: distribute counters on eligible Pokémon (+/− HUD).
+   */
+  public startPutDamageSelection(prompt: PutDamagePrompt, extraBlocked: CardTarget[]): void {
+    if (this.isReplayModeActive) {
+      return;
+    }
+
+    this.removeDamageHudAnchor = null;
+    this.overlayKind = 'put-damage';
+    this.promptSubject.next(null);
+    this.selectionModeSubject.next(true);
+    this.selectedTargetsSubject.next([]);
+    this.blockedTargetsSubject.next([...prompt.options.blocked, ...extraBlocked]);
+    this.eligiblePlayerTypeSubject.next(prompt.playerType);
+    this.eligibleSlotsSubject.next(prompt.slots);
+    this.minSelectionsSubject.next(0);
+    this.maxSelectionsSubject.next(1);
+    this.selectionCallback = null;
+  }
+
   public isRemoveDamageOverlayActive(): boolean {
     return this.overlayKind === 'remove-damage';
+  }
+
+  /** Floating +/− HUD for both remove-damage and put-damage prompts (3D anchor). */
+  public isFloatingDamageHudOverlayActive(): boolean {
+    return this.overlayKind === 'remove-damage' || this.overlayKind === 'put-damage';
   }
 
   public setRemoveDamageHudAnchor(pos: { x: number; y: number } | null): void {
@@ -345,7 +372,7 @@ export class BoardInteractionService {
    * Check if the current selection meets requirements
    */
   public isSelectionValid(): boolean {
-    if (this.overlayKind === 'remove-damage') {
+    if (this.overlayKind === 'remove-damage' || this.overlayKind === 'put-damage') {
       return true;
     }
     const currentTargets = this.selectedTargetsSubject.value.length;

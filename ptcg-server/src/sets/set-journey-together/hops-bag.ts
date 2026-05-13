@@ -1,8 +1,8 @@
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, Card, PokemonCardList, ShuffleDeckPrompt } from '../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, Card, PokemonCard, PokemonCardList, ShuffleDeckPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { PlayPokemonFromDeckEffect, TrainerEffect } from '../../game/store/effects/play-card-effects';
 
 export class HopsBag extends TrainerCard {
 
@@ -62,8 +62,7 @@ export class HopsBag extends TrainerCard {
         cards = selectedCards || [];
 
         cards.forEach((card, index) => {
-          player.deck.moveCardTo(card, slots[index]);
-          slots[index].pokemonPlayedTurn = state.turn;
+          store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
         });
 
         player.supporter.moveCardTo(this, player.discard);

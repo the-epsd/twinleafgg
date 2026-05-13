@@ -2,6 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, ChooseCardsPrompt, PowerType, GameLog } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { KnockOutEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CONFIRMATION_PROMPT, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
@@ -68,8 +69,7 @@ export class Gastly extends PokemonCard {
             const cards = selectedCards || [];
     
             cards.forEach((card, index) => {
-              player.deck.moveCardTo(card, openSlots[index]);
-              openSlots[index].pokemonPlayedTurn = state.turn;
+              store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, openSlots[index]));
             });
     
             SHUFFLE_DECK(store, state, player);

@@ -30,6 +30,20 @@
   flex-shrink: 0;
 }
 
+.hint {
+  margin: 4px 0 0 0;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  opacity: 0.85;
+  max-width: 52rem;
+}
+
+.sandboxBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .sliderBlock {
   margin-top: 8px;
 }

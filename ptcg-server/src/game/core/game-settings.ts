@@ -13,4 +13,7 @@ export class GameSettings {
 
   sandboxMode: boolean = false;
 
+  /** One connection controls both seats (second player uses a synthetic client id). */
+  selfPlay: boolean = false;
+
 }

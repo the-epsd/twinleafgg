@@ -1,0 +1,302 @@
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
+import { Format, GameSettings } from 'ptcg-server';
+import { useAuth } from '../context/AuthContext';
+import { useCoreSession } from '../context/CoreSessionContext';
+import { useSnackbar } from '../context/SnackbarContext';
+import { getDeck, getDeckList } from '../api/deckApi';
+import { ApiError } from '../api/apiError';
+import type { DeckListEntry } from '../types/responses';
+import { FormatValidator } from '../deck-editor/formatValidator';
+import { formatOptionLabel } from '../deck-editor/formatLabelI18n';
+import { CREATE_GAME_FORMAT_VALUES } from './matchFormats';
+import styles from './CreateGameInviteDialog.module.css';
+
+const TIME_LIMIT_OPTIONS: { value: number; labelKey: string }[] = [
+  { value: 0, labelKey: 'GAMES_LIMIT_NO_LIMIT' },
+  { value: 600, labelKey: 'GAMES_LIMIT_10_MIN' },
+  { value: 900, labelKey: 'GAMES_LIMIT_15_MIN' },
+  { value: 1200, labelKey: 'GAMES_LIMIT_20_MIN' },
+  { value: 1500, labelKey: 'GAMES_LIMIT_25_MIN' },
+  { value: 1800, labelKey: 'GAMES_LIMIT_30_MIN' },
+];
+
+function decksForFormat(all: DeckListEntry[], format: Format): DeckListEntry[] {
+  return all.filter(
+    (d) => Array.isArray(d.format) && d.format.includes(format) && FormatValidator.isDeckValidForFormat(d, format),
+  );
+}
+
+export type CreateGameInviteDialogProps = {
+  open: boolean;
+  onClose: () => void;
+  invitedClientId: number;
+};
+
+export function CreateGameInviteDialog({ open, onClose, invitedClientId }: CreateGameInviteDialogProps) {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { user } = useAuth();
+  const { createGame } = useCoreSession();
+  const { showSnackbar } = useSnackbar();
+
+  const isAdmin = user?.roleId === 4;
+
+  const [allDecks, setAllDecks] = useState<DeckListEntry[]>([]);
+  const [format, setFormat] = useState<Format>(Format.STANDARD);
+  const [deckId, setDeckId] = useState<number | null>(null);
+  const [timeLimit, setTimeLimit] = useState(1200);
+  const [recordingEnabled, setRecordingEnabled] = useState(true);
+  const [sandboxMode, setSandboxMode] = useState(false);
+  const [loadingDecks, setLoadingDecks] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+    setRecordingEnabled(!isAdmin);
+    setSandboxMode(false);
+    setError(null);
+    setFormat(Format.STANDARD);
+    setTimeLimit(1200);
+  }, [open, isAdmin]);
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+    let cancelled = false;
+    setLoadingDecks(true);
+    void (async () => {
+      try {
+        const res = await getDeckList({ summary: true });
+        if (cancelled) {
+          return;
+        }
+        setAllDecks(res.decks);
+      } catch (e) {
+        if (!cancelled) {
+          setError(e instanceof ApiError ? e.message : t('REACT_ERROR_LOAD_DECKS'));
+          setAllDecks([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoadingDecks(false);
+        }
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [open, t]);
+
+  const validDecks = useMemo(() => decksForFormat(allDecks, format), [allDecks, format]);
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+    if (validDecks.length === 0) {
+      setDeckId(null);
+      return;
+    }
+    setDeckId((prev) => {
+      if (prev != null && validDecks.some((d) => d.id === prev)) {
+        return prev;
+      }
+      return validDecks[0]!.id;
+    });
+  }, [open, validDecks]);
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
+
+  const onConfirm = useCallback(async () => {
+    if (deckId == null || submitting) {
+      return;
+    }
+    setSubmitting(true);
+    setError(null);
+    try {
+      const deckRes = await getDeck(deckId);
+      let cards = deckRes.deck.cards;
+      if (!cards || cards.length === 0) {
+        const full = await getDeck(deckId);
+        cards = full.deck.cards;
+      }
+      if (!cards || cards.length === 0) {
+        setError(t('REACT_ERROR_LOAD_DECKS'));
+        return;
+      }
+      const gs = new GameSettings();
+      gs.format = format;
+      gs.timeLimit = timeLimit;
+      gs.recordingEnabled = recordingEnabled;
+      gs.sandboxMode = isAdmin ? sandboxMode : false;
+
+      const gameState = await createGame(
+        cards,
+        gs,
+        invitedClientId,
+        deckId,
+        deckRes.deck.sleeveImagePath,
+      );
+      showSnackbar(t('REACT_INVITE_GAME_STARTED'));
+      onClose();
+      navigate(`/table/${gameState.gameId}`);
+    } catch (e) {
+      setError(e instanceof ApiError ? e.message : t('REACT_ERROR_CREATE_GAME'));
+    } finally {
+      setSubmitting(false);
+    }
+  }, [
+    deckId,
+    submitting,
+    format,
+    timeLimit,
+    recordingEnabled,
+    sandboxMode,
+    isAdmin,
+    invitedClientId,
+    createGame,
+    navigate,
+    onClose,
+    showSnackbar,
+    t,
+  ]);
+
+  if (!open) {
+    return null;
+  }
+
+  const canSubmit = deckId != null && validDecks.length > 0 && !loadingDecks && !submitting;
+
+  return (
+    <div
+      className={styles.backdrop}
+      role="presentation"
+      onMouseDown={(e) => e.target === e.currentTarget && !submitting && onClose()}
+    >
+      <div
+        className={styles.panel}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="create-game-invite-title"
+        onMouseDown={(e) => e.stopPropagation()}
+      >
+        <h2 id="create-game-invite-title" className={styles.title}>
+          {t('REACT_CREATE_GAME_INVITE_TITLE')}
+        </h2>
+
+        <div className={styles.field}>
+          <label htmlFor="invite-format">{t('LABEL_FORMAT_SHORT')}</label>
+          <select
+            id="invite-format"
+            className={styles.select}
+            value={format}
+            disabled={submitting}
+            onChange={(e) => setFormat(Number(e.target.value) as Format)}
+          >
+            {CREATE_GAME_FORMAT_VALUES.map((f) => (
+              <option key={f} value={f}>
+                {formatOptionLabel(t, f)}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className={styles.field}>
+          <label htmlFor="invite-deck">{t('LABEL_DECK_SHORT')}</label>
+          <select
+            id="invite-deck"
+            className={styles.select}
+            value={deckId ?? ''}
+            disabled={submitting || validDecks.length === 0}
+            onChange={(e) => setDeckId(Number(e.target.value))}
+          >
+            {validDecks.length === 0 ? (
+              <option value="">{t('NO_DECK')}</option>
+            ) : (
+              validDecks.map((d) => (
+                <option key={d.id} value={d.id}>
+                  {d.name}
+                </option>
+              ))
+            )}
+          </select>
+        </div>
+
+        <div className={styles.field}>
+          <label htmlFor="invite-time">{t('REACT_CREATE_GAME_TIME_LIMIT')}</label>
+          <select
+            id="invite-time"
+            className={styles.select}
+            value={timeLimit}
+            disabled={submitting}
+            onChange={(e) => setTimeLimit(Number(e.target.value))}
+          >
+            {TIME_LIMIT_OPTIONS.map((o) => (
+              <option key={o.value} value={o.value}>
+                {t(o.labelKey)}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className={styles.field}>
+          <label className={styles.checkboxRow}>
+            <input
+              type="checkbox"
+              checked={recordingEnabled}
+              disabled={submitting}
+              onChange={(e) => setRecordingEnabled(e.target.checked)}
+            />
+            {t('REACT_CREATE_GAME_RECORDING')}
+          </label>
+        </div>
+
+        {isAdmin ? (
+          <div className={styles.field}>
+            <label className={styles.checkboxRow}>
+              <input
+                type="checkbox"
+                checked={sandboxMode}
+                disabled={submitting}
+                onChange={(e) => setSandboxMode(e.target.checked)}
+              />
+              {t('GAMES_SANDBOX_MODE')}
+            </label>
+          </div>
+        ) : null}
+
+        {error ? (
+          <p className={styles.error} role="alert">
+            {error}
+          </p>
+        ) : null}
+
+        <div className={styles.actions}>
+          <button type="button" className={styles.cancelBtn} disabled={submitting} onClick={onClose}>
+            {t('BUTTON_CANCEL')}
+          </button>
+          <button type="button" className={styles.confirmBtn} disabled={!canSubmit} onClick={() => void onConfirm()}>
+            {submitting ? t('REACT_SUBMITTING') : t('BUTTON_INVITE')}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

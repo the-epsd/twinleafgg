@@ -45,6 +45,7 @@ export function AppLayout() {
           <Link to="/spectate">{t('MAIN_SPECTATE')}</Link>
           <Link to="/deck">{t('DECK_TITLE')}</Link>
           <Link to="/ranking">{t('MAIN_RANKING')}</Link>
+          <Link to="/friends">{t('MAIN_FRIENDS')}</Link>
           <Link to="/message">{t('MAIN_MESSAGES')}</Link>
           <Link to="/battle-pass">{t('MAIN_BATTLE_PASS')}</Link>
           <Link to="/settings">{t('BUTTON_SETTINGS')}</Link>

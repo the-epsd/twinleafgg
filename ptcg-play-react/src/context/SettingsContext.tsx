@@ -19,6 +19,7 @@ import {
   writeSfxEnabled,
   writeSfxVolume,
   writeUse3dBoardDefault,
+  writeDefaultSandboxMode,
   type ClientSettingsSnapshot,
 } from '../settings/settingsStorage';
 
@@ -31,6 +32,7 @@ export type SettingsDraftCommit = Pick<
   | 'use3dBoardDefault'
   | 'board2dPerspectiveEnabled'
   | 'sfxEnabled'
+  | 'defaultSandboxMode'
 > & {
   /**0–100 UI percentage, stored0–1 */
   sfxVolumePercent: number;
@@ -93,6 +95,9 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       writeSfxVolume(draft.sfxVolumePercent / 100);
 
       const use3dResolved = has3dBoardAccess ? draft.use3dBoardDefault : false;
+      const isAdmin = user?.roleId === 4;
+      const sandboxResolved = isAdmin ? draft.defaultSandboxMode : false;
+      writeDefaultSandboxMode(sandboxResolved, isAdmin);
 
       setState({
         holoEnabled: draft.holoEnabled,
@@ -105,21 +110,23 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         cardTextKerning: draft.cardTextKerning,
         sfxEnabled: draft.sfxEnabled,
         sfxVolume: Math.max(0, Math.min(1, draft.sfxVolumePercent / 100)),
+        defaultSandboxMode: sandboxResolved,
       });
     },
-    [has3dBoardAccess],
+    [has3dBoardAccess, user?.roleId],
   );
 
   const value = useMemo<SettingsContextValue>(
     () => ({
       ...state,
+      defaultSandboxMode: user?.roleId === 4 ? state.defaultSandboxMode : false,
       has3dBoardAccess,
       setCardSize,
       setCardTextKerning,
       setSfxVolume,
       commitFromSave,
     }),
-    [state, has3dBoardAccess, setCardSize, setCardTextKerning, setSfxVolume, commitFromSave],
+    [state, user?.roleId, has3dBoardAccess, setCardSize, setCardTextKerning, setSfxVolume, commitFromSave],
   );
 
   return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>;

@@ -1,39 +1,39 @@
-import { Spewpa } from "./spewpa";
-import { Rowlet } from "./rowlet";
-import { Talonflame } from "./talonflame";
-import { Aurorus } from "./aurorus";
-import { Dedenne } from "./dedenne";
-import { Clefairy } from "./clefairy";
-import { Espurr } from "./espurr";
-import { Probopass } from "./probopass";
-import { Tyrunt } from "./tyrunt";
-import { Drapion } from "./drapion";
-import { Doublade } from "./doublade";
-import { Raticate } from "./raticate";
-import { Decidueyeex } from "./decidueye-ex";
-import { Salazzleex } from "./salazzle-ex";
-import { MegaStarmieex } from "./mega-starmie-ex";
-import { MegaClefableex } from "./mega-clefable-ex";
-import { MegaZygardeex } from "./mega-zygarde-ex";
-import { Yveltalex } from "./yveltal-ex";
-import { MegaSkarmoryex } from "./mega-skarmory-ex";
-import { Meowthex } from "./meowth-ex";
-import { EnergyRecycler } from "../set-battle-styles/energy-recycler";
-import { SacredAsh } from "../set-destined-rivals/sacred-ash";
-import { PokePad } from "../set-ascended-heroes/poke-pad";
-import { WonderPatch } from "../set-phantasmal-flames/wonder-patch";
-import { Tarragon } from "./tarragon";
-import { Naveen } from "./naveen";
-import { RosasEncouragement } from "./rosas-encouragement";
-import { Jacinthe } from "./jacinthe";
-import { LushForest } from "../set-mega-evolution/forest-of-vitality";
-import { LumioiseCity } from "./lumioise-city";
-import { CrushingHammer } from "../set-scarlet-and-violet/crushing-hammer";
-import { EnergySearch } from "../set-scarlet-and-violet/energy-search";
-import { Judge } from "../set-scarlet-and-violet/judge";
-import { PokeBall } from "../set-jungle/pokeball";
-import { PokemonCatcher } from "../set-scarlet-and-violet/pokemon-catcher";
-import { Potion } from "../set-scarlet-and-violet/potion";
+import { Spewpa } from './spewpa';
+import { Rowlet } from './rowlet';
+import { Talonflame } from './talonflame';
+import { Aurorus } from './aurorus';
+import { Dedenne } from './dedenne';
+import { Clefairy } from './clefairy';
+import { Espurr } from './espurr';
+import { Probopass } from './probopass';
+import { Tyrunt } from './tyrunt';
+import { Drapion } from './drapion';
+import { Doublade } from './doublade';
+import { Raticate } from './raticate';
+import { Decidueyeex } from './decidueye-ex';
+import { Salazzleex } from './salazzle-ex';
+import { MegaStarmieex } from './mega-starmie-ex';
+import { MegaClefableex } from './mega-clefable-ex';
+import { MegaZygardeex } from './mega-zygarde-ex';
+import { Yveltalex } from './yveltal-ex';
+import { MegaSkarmoryex } from './mega-skarmory-ex';
+import { Meowthex } from './meowth-ex';
+import { EnergyRecycler } from '../set-battle-styles/energy-recycler';
+import { SacredAsh } from '../set-destined-rivals/sacred-ash';
+import { PokePad } from '../set-ascended-heroes/poke-pad';
+import { WonderPatch } from '../set-phantasmal-flames/wonder-patch';
+import { Tarragon } from './tarragon';
+import { Naveen } from './naveen';
+import { RosasEncouragement } from './rosas-encouragement';
+import { Jacinthe } from './jacinthe';
+import { LushForest } from '../set-mega-evolution/forest-of-vitality';
+import { LumioiseCity } from './lumioise-city';
+import { CrushingHammer } from '../set-scarlet-and-violet/crushing-hammer';
+import { EnergySearch } from '../set-scarlet-and-violet/energy-search';
+import { Judge } from '../set-scarlet-and-violet/judge';
+import { PokeBall } from '../set-jungle/pokeball';
+import { PokemonCatcher } from '../set-scarlet-and-violet/pokemon-catcher';
+import { Potion } from '../set-scarlet-and-violet/potion';
 
 // MARK: Trainer Reprints
 
@@ -195,25 +195,25 @@ export class MeowthexFA extends Meowthex {
 
 export class EnergyRecyclerFA extends EnergyRecycler {
   public fullName = 'Energy Recycler FA POR';
-  public set = 'M3';
+  public set = 'POR';
   public setNumber = '108';
 }
 
 export class SacredAshFA extends SacredAsh {
   public fullName = 'Sacred Ash FA POR';
-  public set = 'M3';
+  public set = 'POR';
   public setNumber = '115';
 }
 
 export class PokePadFA extends PokePad {
   public fullName = 'Poke Pad FA POR';
-  public set = 'M3';
+  public set = 'POR';
   public setNumber = '113';
 }
 
 export class WondrousPatchFA extends WonderPatch {
   public fullName = 'Wondrous Patch FA POR';
-  public set = 'M3';
+  public set = 'POR';
   public setNumber = '117';
 }
 
@@ -228,7 +228,7 @@ export class NaveenFA extends Naveen {
 }
 
 export class RosasEncouragementFA extends RosasEncouragement {
-  public fullName = 'Rosa\'s Encouragement FA POR';
+  public fullName = "Rosa's Encouragement FA POR";
   public setNumber = '114';
 }
 
@@ -270,7 +270,7 @@ export class MeowthexSIR extends Meowthex {
 }
 
 export class RosasEncouragementSIR extends RosasEncouragement {
-  public fullName = 'Rosa\'s Encouragement ex SIR POR';
+  public fullName = "Rosa's Encouragement ex SIR POR";
   public setNumber = '123';
 }
 

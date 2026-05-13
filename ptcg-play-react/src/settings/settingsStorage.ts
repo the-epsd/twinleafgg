@@ -12,6 +12,8 @@ export const SETTINGS_KEYS = {
   sfxEnabled: 'sfxEnabled',
   sfxVolume: 'sfxVolume',
   board2dPerspectiveEnabled: 'board2dPerspectiveEnabled',
+  /** React-only: admin preference for matchmade games (both admins must opt in on server). */
+  defaultSandboxMode: 'defaultSandboxMode',
 } as const;
 
 export interface ClientSettingsSnapshot {
@@ -25,6 +27,8 @@ export interface ClientSettingsSnapshot {
   cardTextKerning: number;
   sfxEnabled: boolean;
   sfxVolume: number;
+  /** Admin-only client flag; honored when joining matchmaking (see server). */
+  defaultSandboxMode: boolean;
 }
 
 function loadHoloSetting(): boolean {
@@ -88,6 +92,11 @@ function loadBoard2dPerspectiveSetting(): boolean {
   return saved ? JSON.parse(saved) : true;
 }
 
+function loadDefaultSandboxMode(): boolean {
+  const saved = localStorage.getItem(SETTINGS_KEYS.defaultSandboxMode);
+  return saved ? JSON.parse(saved) : false;
+}
+
 export function readClientSettingsSnapshot(): ClientSettingsSnapshot {
   return {
     holoEnabled: loadHoloSetting(),
@@ -100,6 +109,7 @@ export function readClientSettingsSnapshot(): ClientSettingsSnapshot {
     cardTextKerning: loadCardTextKerning(),
     sfxEnabled: loadSfxSetting(),
     sfxVolume: loadSfxVolume(),
+    defaultSandboxMode: loadDefaultSandboxMode(),
   };
 }
 
@@ -146,4 +156,12 @@ export function writeSfxEnabled(enabled: boolean): void {
 export function writeSfxVolume(volume: number): void {
   const clamped = Math.max(0, Math.min(1, volume));
   localStorage.setItem(SETTINGS_KEYS.sfxVolume, clamped.toString());
+}
+
+export function writeDefaultSandboxMode(enabled: boolean, isAdmin: boolean): void {
+  if (!isAdmin) {
+    localStorage.removeItem(SETTINGS_KEYS.defaultSandboxMode);
+    return;
+  }
+  localStorage.setItem(SETTINGS_KEYS.defaultSandboxMode, JSON.stringify(enabled));
 }

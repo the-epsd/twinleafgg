@@ -2,6 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, GameMessage, ConfirmPrompt, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { EvolveEffect } from '../../game/store/effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { GET_PLAYER_BENCH_SLOTS, IS_ABILITY_BLOCKED, SHUFFLE_DECK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -81,8 +82,7 @@ export class Ninjask extends PokemonCard {
             if (cards.length > 0) {
               const benchSlots = GET_PLAYER_BENCH_SLOTS(player);
               if (benchSlots.length > 0) {
-                player.deck.moveCardTo(cards[0], benchSlots[0]);
-                benchSlots[0].pokemonPlayedTurn = state.turn;
+                store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, cards[0] as PokemonCard, benchSlots[0]));
               }
             }
             SHUFFLE_DECK(store, state, player);

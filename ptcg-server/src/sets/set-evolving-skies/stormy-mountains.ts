@@ -8,6 +8,7 @@ import { Card, ChooseCardsPrompt, PokemonCard, PokemonCardList, ShuffleDeckPromp
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 
 function* useStadium(next: Function, store: StoreLike, state: State, effect: UseStadiumEffect): IterableIterator<State> {
   const player = effect.player;
@@ -44,8 +45,7 @@ function* useStadium(next: Function, store: StoreLike, state: State, effect: Use
     }
 
     cards.forEach((card, index) => {
-      player.deck.moveCardTo(card, slots[index]);
-      slots[index].pokemonPlayedTurn = state.turn;
+      store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
     });
 
     return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

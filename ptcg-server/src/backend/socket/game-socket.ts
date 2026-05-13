@@ -17,6 +17,7 @@ import { Client } from '../../game/client/client.interface';
 import { CoreSocket } from './core-socket';
 import { ApiErrorEnum } from '../common/errors';
 import { Game } from '../../game/core/game';
+import { selfPlayFocusPlayerId } from '../../game/core/self-play-focus';
 import { State } from '../../game/store/state/state';
 import { Core } from '../../game/core/core';
 import { GameState } from '../interfaces/core.interface';
@@ -86,7 +87,8 @@ export class GameSocket {
 
     if (this.core.games.indexOf(game) !== -1) {
       game.setBonusHps(state);
-      state = this.stateSanitizer.sanitize(game.state, game.id);
+      const viewAs = game.gameSettings.selfPlay === true ? selfPlayFocusPlayerId(game.state) : undefined;
+      state = this.stateSanitizer.sanitize(game.state, game.id, viewAs);
 
       // Emit turn start if active player changed
       const activePlayer = state.players[state.activePlayer];
@@ -200,7 +202,7 @@ export class GameSocket {
     }
 
     try {
-      const action = new ConcedeAction(this.client.id);
+      const action = new ConcedeAction(this.actorIdForGameId(gameId));
       game.dispatch(this.client, action);
       response('ok');
     } catch (error) {
@@ -234,27 +236,27 @@ export class GameSocket {
   }
 
   private ability(params: { gameId: number, ability: string, target: CardTarget }, response: Response<void>) {
-    const action = new UseAbilityAction(this.client.id, params.ability, params.target);
+    const action = new UseAbilityAction(this.actorIdForGameId(params.gameId), params.ability, params.target);
     this.dispatch(params.gameId, action, response);
   }
 
   private trainerAbility(params: { gameId: number, ability: string, target: CardTarget }, response: Response<void>) {
-    const action = new UseTrainerAbilityAction(this.client.id, params.ability, params.target);
+    const action = new UseTrainerAbilityAction(this.actorIdForGameId(params.gameId), params.ability, params.target);
     this.dispatch(params.gameId, action, response);
   }
 
   private energyAbility(params: { gameId: number, ability: string, target: CardTarget }, response: Response<void>) {
-    const action = new UseEnergyAbilityAction(this.client.id, params.ability, params.target);
+    const action = new UseEnergyAbilityAction(this.actorIdForGameId(params.gameId), params.ability, params.target);
     this.dispatch(params.gameId, action, response);
   }
 
   private attack(params: { gameId: number, attack: string }, response: Response<void>) {
-    const action = new AttackAction(this.client.id, params.attack);
+    const action = new AttackAction(this.actorIdForGameId(params.gameId), params.attack);
     this.dispatch(params.gameId, action, response);
   }
 
   private stadium(params: { gameId: number }, response: Response<void>) {
-    const action = new UseStadiumAction(this.client.id);
+    const action = new UseStadiumAction(this.actorIdForGameId(params.gameId));
     this.dispatch(params.gameId, action, response);
   }
 
@@ -264,7 +266,7 @@ export class GameSocket {
   }
 
   private playCard(params: { gameId: number, handIndex: number, target: CardTarget }, response: Response<void>) {
-    const action = new PlayCardAction(this.client.id, params.handIndex, params.target);
+    const action = new PlayCardAction(this.actorIdForGameId(params.gameId), params.handIndex, params.target);
     this.dispatch(params.gameId, action, response);
   }
 
@@ -296,27 +298,27 @@ export class GameSocket {
   }
 
   private reorderBench(params: { gameId: number, from: number, to: number }, response: Response<void>) {
-    const action = new ReorderBenchAction(this.client.id, params.from, params.to);
+    const action = new ReorderBenchAction(this.actorIdForGameId(params.gameId), params.from, params.to);
     this.dispatch(params.gameId, action, response);
   }
 
   private reorderHand(params: { gameId: number, order: number[] }, response: Response<void>) {
-    const action = new ReorderHandAction(this.client.id, params.order);
+    const action = new ReorderHandAction(this.actorIdForGameId(params.gameId), params.order);
     this.dispatch(params.gameId, action, response);
   }
 
   private retreat(params: { gameId: number, to: number }, response: Response<void>) {
-    const action = new RetreatAction(this.client.id, params.to);
+    const action = new RetreatAction(this.actorIdForGameId(params.gameId), params.to);
     this.dispatch(params.gameId, action, response);
   }
 
   private retreatStart(params: { gameId: number }, response: Response<void>) {
-    const action = new RetreatStartAction(this.client.id);
+    const action = new RetreatStartAction(this.actorIdForGameId(params.gameId));
     this.dispatch(params.gameId, action, response);
   }
 
   private passTurn(params: { gameId: number }, response: Response<void>) {
-    const action = new PassTurnAction(this.client.id);
+    const action = new PassTurnAction(this.actorIdForGameId(params.gameId));
     this.dispatch(params.gameId, action, response);
   }
 
@@ -325,12 +327,12 @@ export class GameSocket {
     if (message.length === 0 || message.length > 256) {
       response('error', ApiErrorEnum.CANNOT_SEND_MESSAGE);
     }
-    const action = new AppendLogAction(this.client.id, GameLog.LOG_TEXT, { text: message });
+    const action = new AppendLogAction(this.actorIdForGameId(params.gameId), GameLog.LOG_TEXT, { text: message });
     this.dispatch(params.gameId, action, response);
   }
 
   private changeAvatar(params: { gameId: number, avatarName: string }, response: Response<void>) {
-    const action = new ChangeAvatarAction(this.client.id, params.avatarName);
+    const action = new ChangeAvatarAction(this.actorIdForGameId(params.gameId), params.avatarName);
     this.dispatch(params.gameId, action, response);
   }
 
@@ -471,6 +473,14 @@ export class GameSocket {
       timeRemaining,
       gamePhase: game.state.phase
     });
+  }
+
+  private actorIdForGameId(gameId: number): number {
+    const game = this.core.games.find(g => g.id === gameId);
+    if (game === undefined || game.gameSettings.selfPlay !== true) {
+      return this.client.id;
+    }
+    return selfPlayFocusPlayerId(game.state);
   }
 
   public dispose(): void {

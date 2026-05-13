@@ -93,7 +93,8 @@ export const config = {
     imageProxyAllowedOrigins: [
       'https://images.pokemontcg.io',
       'https://api.pokemontcg.io',
-      'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com'
+      'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com',
+      'https://www.serebii.net'
     ]
   },
   email: {

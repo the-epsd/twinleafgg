@@ -1,0 +1,205 @@
+.rail {
+  position: relative;
+  flex-shrink: 0;
+  z-index: 20;
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  pointer-events: auto;
+}
+
+.railCollapsed {
+  width: 32px;
+}
+
+.railExpanded {
+  width: min(380px, 42vw);
+}
+
+.toggle {
+  position: absolute;
+  right: -28px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 21;
+  width: 28px;
+  height: 48px;
+  padding: 0;
+  border: 1px solid #444;
+  border-left: none;
+  border-radius: 0 6px 6px 0;
+  background: #2d2d2d;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle:hover {
+  background: #3a3a3a;
+}
+
+.panel {
+  width: 100%;
+  height: 100%;
+  background: #1e1e1e;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #444;
+  min-width: 0;
+}
+
+.scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.panelHeader {
+  padding: 12px 16px;
+  background: #2d2d2d;
+  border-bottom: 1px solid #444;
+  flex-shrink: 0;
+}
+
+.panelHeader h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.tabBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 8px;
+  background: #252525;
+  border-bottom: 1px solid #333;
+  flex-shrink: 0;
+}
+
+.tab {
+  padding: 6px 10px;
+  font-size: 12px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  background: #2d2d2d;
+  color: #e0e0e0;
+  cursor: pointer;
+}
+
+.tabActive {
+  background: #404040;
+  border-color: #666;
+}
+
+.tabContent {
+  padding: 16px;
+  background: #1e1e1e;
+}
+
+.formGroup {
+  margin-bottom: 16px;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  color: #e0e0e0;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-size: 14px;
+  background: #2d2d2d;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+.input::placeholder {
+  color: #888;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: #666;
+}
+
+.section {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #333;
+}
+
+.section h4 {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #e0e0e0;
+}
+
+.buttonRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+ }
+
+.btn {
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #555;
+  background: #3d5a80;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn:hover {
+  filter: brightness(1.08);
+}
+
+.btnWarn {
+  background: #8b3a3a;
+}
+
+.btnAccent {
+  background: #4a6a4a;
+}
+
+.cardCheckboxList {
+  max-height: 160px;
+  overflow-y: auto;
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 8px;
+  background: #252525;
+}
+
+.cardCheckboxItem {
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #e0e0e0;
+}
+
+.cardCheckboxItem input {
+  margin-right: 8px;
+}
+
+.hint {
+  color: #888;
+  font-size: 12px;
+  display: block;
+  margin-top: 4px;
+}

@@ -7,6 +7,7 @@ import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { Card, GameMessage, ShowCardsPrompt, StoreLike, State, StateUtils } from '../../game';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Kakuna extends PokemonCard {
@@ -74,8 +75,7 @@ export class Kakuna extends PokemonCard {
           cards.forEach(card => {
             const emptySlot = player.bench.find(b => b.cards.length === 0);
             if (emptySlot) {
-              player.deck.moveCardTo(card, emptySlot);
-              emptySlot.pokemonPlayedTurn = state.turn;
+              store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, emptySlot));
             }
           });
         }

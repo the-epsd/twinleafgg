@@ -3,6 +3,7 @@ import { Stage, CardType, SuperType, EnergyType, CardTag } from '../../game/stor
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { PowerEffect } from '../../game/store/effects/game-effects';
 import { Card, CardTarget, ChooseCardsPrompt, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCardList, PowerType, ShuffleDeckPrompt, SlotType, StateUtils } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
@@ -130,8 +131,7 @@ export class WeavileGX extends PokemonCard {
         cards = selected || [];
 
         cards.forEach((card, index) => {
-          player.deck.moveCardTo(card, slots[index]);
-          slots[index].pokemonPlayedTurn = state.turn;
+          store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
         });
 
         return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {

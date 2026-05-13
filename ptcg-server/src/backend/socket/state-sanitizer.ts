@@ -18,20 +18,22 @@ export class StateSanitizer {
 
   /**
    * Clear sensitive data, resolved prompts and old logs.
+   * @param viewingAsPlayerId When set (self-play), sanitize as this seat instead of socket client id.
    */
-  public sanitize(state: State, gameId: number): State {
+  public sanitize(state: State, gameId: number, viewingAsPlayerId?: number): State {
+    const pid = viewingAsPlayerId !== undefined ? viewingAsPlayerId : this.client.id;
     state = deepClone(state, [Card]);
-    state = this.filterPrompts(state);
+    state = this.filterPrompts(state, pid);
     state = this.removeLogs(state, gameId);
-    state = this.hideSecretCards(state);
+    state = this.hideSecretCards(state, pid);
     return state;
   }
 
-  private hideSecretCards(state: State) {
+  private hideSecretCards(state: State, viewerPlayerId: number) {
     if (state.cardNames.length === 0) {
       return state;
     }
-    this.getSecretCardLists(state).forEach(cardList => {
+    this.getSecretCardLists(state, viewerPlayerId).forEach(cardList => {
       cardList.cards = cardList.cards.map((c, i) => this.createUnknownCard(i));
     });
     return state;
@@ -49,8 +51,8 @@ export class StateSanitizer {
     } as any;
   }
 
-  private getSecretCardLists(state: State): CardList[] {
-    const players = state.players.filter(p => p.id === this.client.id);
+  private getSecretCardLists(state: State, viewerPlayerId: number): CardList[] {
+    const players = state.players.filter(p => p.id === viewerPlayerId);
     const cardLists: CardList[] = [];
     players.forEach(player => {
       if (player.deck.isSecret) {
@@ -63,8 +65,8 @@ export class StateSanitizer {
       });
     });
 
-    const opponents = state.players.filter(p => p.id !== this.client.id);
-    const isPlaying = state.players.some(p => p.id === this.client.id);
+    const opponents = state.players.filter(p => p.id !== viewerPlayerId);
+    const isPlaying = state.players.some(p => p.id === viewerPlayerId);
     const isObserver = !isPlaying;
 
     opponents.forEach(opponent => {
@@ -91,7 +93,7 @@ export class StateSanitizer {
     return cardLists;
   }
 
-  private filterPrompts(state: State): State {
+  private filterPrompts(state: State, viewerPlayerId: number): State {
     // Filter resolved prompts, not needed anymore
 
     state.prompts = state.prompts.filter(prompt => {
@@ -104,7 +106,7 @@ export class StateSanitizer {
 
     // Hide opponent's prompts. They may contain sensitive data.
     state.prompts = state.prompts.map(prompt => {
-      if (prompt.playerId !== this.client.id) {
+      if (prompt.playerId !== viewerPlayerId) {
         return new AlertPrompt(prompt.playerId, GameMessage.NOT_YOUR_TURN);
       }
       return prompt;

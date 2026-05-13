@@ -11,6 +11,10 @@ import { Store } from '../store/store';
 import { StoreHandler } from '../store/store-handler';
 import { AbortGameAction, AbortGameReason } from '../store/actions/abort-game-action';
 import { AddPlayerAction } from '../store/actions/add-player-action';
+import { PlayCardAction } from '../store/actions/play-card-action';
+import { ConcedeAction } from '../store/actions/concede-action';
+import { AppendLogAction } from '../store/actions/append-log-action';
+import { ChangeAvatarAction } from '../store/actions/change-avatar-action';
 import { Format } from '../store/card/card-types';
 import { CheckHpEffect } from '../store/effects/check-effects';
 import { logger } from '../../utils/logger';
@@ -43,6 +47,7 @@ export class Game implements StoreHandler {
   private isPaused: boolean = false;
   private pausedAt: number = 0;
   private userIdToPlayerId: Map<number, number> = new Map();
+  private selfPlayUserId: number | null = null;
   private previousPlayerCount: number = 0;
 
   constructor(private core: Core, id: number, public gameSettings: GameSettings) {
@@ -89,6 +94,7 @@ export class Game implements StoreHandler {
     this.disconnectedPlayers.clear();
     this.isPaused = false;
     this.userIdToPlayerId.clear();
+    this.selfPlayUserId = null;
   }
 
   public setBonusHps(state: State): void {
@@ -181,17 +187,19 @@ export class Game implements StoreHandler {
 
   public dispatch(client: Client, action: Action): State {
     let state = this.store.state;
+    const movePid = this.playerIdForInvalidMoves(client, action);
     try {
-      // Pass client roleId for sandbox actions
       const clientRoleId = client.user?.roleId;
       state = this.store.dispatch(action, clientRoleId);
-      state = this.updateInvalidMoves(state, client.id, false);
+      state = this.updateInvalidMoves(state, movePid, false);
 
       if (action instanceof AddPlayerAction) {
-        this.registerPlayer(client);
+        if (!this.gameSettings.selfPlay || action.clientId === client.id) {
+          this.registerPlayer(client);
+        }
       }
     } catch (error) {
-      state = this.updateInvalidMoves(state, client.id, true);
+      state = this.updateInvalidMoves(state, movePid, true);
       throw error;
     }
     return state;
@@ -232,6 +240,14 @@ export class Game implements StoreHandler {
     return Array.from(this.userIdToPlayerId.keys());
   }
 
+  public initSelfPlay(userId: number): void {
+    this.selfPlayUserId = userId;
+  }
+
+  public isSelfPlayForUser(userId: number): boolean {
+    return this.gameSettings.selfPlay === true && this.selfPlayUserId === userId;
+  }
+
   /**
    * Handle player disconnection - preserve state and notify other players
    */
@@ -244,6 +260,22 @@ export class Game implements StoreHandler {
 
     const player = state.players.find(p => p.id === client.id);
     if (!player) {
+      return;
+    }
+
+    if (this.gameSettings.selfPlay === true) {
+      this.disconnectedPlayers.clear();
+      this.disconnectionTimeouts.forEach(t => clearTimeout(t));
+      this.disconnectionTimeouts.clear();
+      if (this.isPaused) {
+        this.resumeGame();
+      }
+      this.clients = this.clients.filter(c => c.id !== client.id);
+      try {
+        this.store.dispatch(new AbortGameAction(client.id, AbortGameReason.DISCONNECTED));
+      } catch (e) {
+        logger.log(`Self-play disconnect abort error: ${String(e)}`);
+      }
       return;
     }
 
@@ -567,6 +599,42 @@ export class Game implements StoreHandler {
     if (client && typeof (client as any).onTimeoutWarning === 'function') {
       (client as any).onTimeoutWarning(this, timeRemaining);
     }
+  }
+
+  private playerIdForInvalidMoves(client: Client, action: Action): number {
+    if (this.gameSettings.selfPlay !== true) {
+      return client.id;
+    }
+    if (action instanceof AddPlayerAction) {
+      return action.clientId;
+    }
+    if (action instanceof PlayCardAction) {
+      return action.id;
+    }
+    if (action instanceof ConcedeAction) {
+      return action.playerId;
+    }
+    if (action instanceof AppendLogAction) {
+      return action.id;
+    }
+    if (action instanceof AbortGameAction) {
+      return action.culpritId;
+    }
+    if (action instanceof ChangeAvatarAction) {
+      return action.id;
+    }
+    if (action instanceof ResolvePromptAction) {
+      const prompt = this.store.state.prompts.find(p => p.id === action.id);
+      return prompt?.playerId ?? client.id;
+    }
+    const a: any = action;
+    if (typeof a.clientId === 'number') {
+      return a.clientId;
+    }
+    if (typeof a.playerId === 'number') {
+      return a.playerId;
+    }
+    return client.id;
   }
 
   private updateInvalidMoves(state: State, playerId: number, isInvalidMove: boolean): State {

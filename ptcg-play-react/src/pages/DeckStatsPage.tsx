@@ -71,8 +71,8 @@ export function DeckStatsPage() {
           deck.id,
           deck.name,
           deck.cards,
-          archetype1 || undefined,
-          archetype2 || undefined,
+          archetype1,
+          archetype2,
           deck.artworks,
           deck.sleeveIdentifier,
         );

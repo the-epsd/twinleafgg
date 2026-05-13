@@ -1,5 +1,6 @@
 import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, GameError, GameMessage, Card, ChooseCardsPrompt, SuperType, ShuffleDeckPrompt, GameLog, ConfirmPrompt, PlayerType, PokemonCardList } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
@@ -106,8 +107,7 @@ export class RadiantEternatus extends PokemonCard {
             }
 
             cards.forEach((card, index) => {
-              player.deck.moveCardTo(card, slots[index]);
-              slots[index].pokemonPlayedTurn = state.turn;
+              store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
               return state;
             });
 

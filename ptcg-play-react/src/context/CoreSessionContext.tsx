@@ -41,12 +41,22 @@ interface CoreSessionContextValue extends CoreSessionState {
     deckId?: number,
     sleeveImagePath?: string
   ) => Promise<GameState>;
+  createSelfPlayGame: (
+    deck: string[],
+    secondDeck: string[],
+    gameSettings: GameSettings,
+    deckId?: number,
+    secondDeckId?: number,
+    sleeveImagePath?: string,
+    secondSleeveImagePath?: string
+  ) => Promise<GameState>;
   joinMatchmaking: (
     format: import('ptcg-server').Format,
     deck: string[],
     artworks?: { code: string; artworkId?: number }[],
     deckId?: number,
-    sleeveImagePath?: string
+    sleeveImagePath?: string,
+    sandboxMode?: boolean
   ) => Promise<unknown>;
   leaveMatchmaking: () => Promise<unknown>;
 }
@@ -68,6 +78,7 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const authToken = getStoredToken();
     if (!isAuthenticated || !authToken) {
+      getSocketManager().disable();
       setCore(initialCore);
       return;
     }
@@ -216,7 +227,8 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
       deck: string[],
       artworks?: { code: string; artworkId?: number }[],
       deckId?: number,
-      sleeveImagePath?: string
+      sleeveImagePath?: string,
+      sandboxMode?: boolean
     ) => {
       const socket = getSocketManager();
       return socket.emit('matchmaking:join', {
@@ -225,6 +237,7 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
         artworks,
         deckId,
         sleeveImagePath,
+        ...(sandboxMode === true ? { sandboxMode: true } : {}),
       });
     },
     []
@@ -235,14 +248,50 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
     return socket.emit('matchmaking:leave', undefined);
   }, []);
 
+  const createSelfPlayGame = useCallback(
+    async (
+      deck: string[],
+      secondDeck: string[],
+      gameSettings: GameSettings,
+      deckId?: number,
+      secondDeckId?: number,
+      sleeveImagePath?: string,
+      secondSleeveImagePath?: string
+    ) => {
+      const socket = getSocketManager();
+      return socket.emit<
+        {
+          deck: string[];
+          secondDeck: string[];
+          gameSettings: GameSettings;
+          deckId?: number;
+          secondDeckId?: number;
+          sleeveImagePath?: string;
+          secondSleeveImagePath?: string;
+        },
+        GameState
+      >('core:createSelfPlayGame', {
+        deck,
+        secondDeck,
+        gameSettings,
+        deckId,
+        secondDeckId,
+        sleeveImagePath,
+        secondSleeveImagePath,
+      });
+    },
+    []
+  );
+
   const value = useMemo<CoreSessionContextValue>(
     () => ({
       ...core,
       createGame,
+      createSelfPlayGame,
       joinMatchmaking,
       leaveMatchmaking,
     }),
-    [core, createGame, joinMatchmaking, leaveMatchmaking]
+    [core, createGame, createSelfPlayGame, joinMatchmaking, leaveMatchmaking]
   );
 
   return <CoreSessionContext.Provider value={value}>{children}</CoreSessionContext.Provider>;

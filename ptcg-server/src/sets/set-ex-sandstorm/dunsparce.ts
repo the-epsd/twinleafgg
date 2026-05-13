@@ -2,6 +2,7 @@ import { ChooseCardsPrompt, GameLog, GameMessage, State, StoreLike } from '../..
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
 import { ADD_PARALYZED_TO_PLAYER_ACTIVE, COIN_FLIP_PROMPT, CONFIRMATION_PROMPT, SHUFFLE_DECK, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -57,8 +58,7 @@ export class Dunsparce extends PokemonCard {
         const cards = selectedCards || [];
 
         cards.forEach((card, index) => {
-          player.deck.moveCardTo(card, openSlots[index]);
-          openSlots[index].pokemonPlayedTurn = state.turn;
+          store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, openSlots[index]));
           store.log(state, GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, { name: player.name, card: card.name });
         });
 

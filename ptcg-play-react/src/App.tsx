@@ -19,6 +19,7 @@ import { SettingsPage } from './pages/SettingsPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { TablePage } from './pages/TablePage';
 import { SpectatePage } from './pages/SpectatePage';
+import { FriendsPage } from './pages/FriendsPage';
 
 function ProfileMeRedirect() {
   const { user } = useAuth();
@@ -51,6 +52,7 @@ export default function App() {
                 <Route path="/deck/:deckId/stats" element={<DeckStatsPage />} />
                 <Route path="/deck/:deckId" element={<DeckEditPage />} />
                 <Route path="/ranking" element={<RankingPage />} />
+                <Route path="/friends" element={<FriendsPage />} />
                 <Route path="/message" element={<MessagesPage />} />
                 <Route path="/message/:userId" element={<MessagesPage />} />
                 <Route path="/battle-pass" element={<BattlePassPage />} />

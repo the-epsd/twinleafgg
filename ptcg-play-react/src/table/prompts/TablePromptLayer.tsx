@@ -12,6 +12,7 @@ import type {
   ChoosePrizePrompt,
   ConfirmCardsPrompt,
   ConfirmPrompt,
+  PutDamagePrompt,
   RemoveDamagePrompt,
   SelectPrompt,
   ShowCardsPrompt,
@@ -27,6 +28,7 @@ import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { CheckboxField } from '../../components/ui/CheckboxField';
 import styles from './TablePromptLayer.module.css';
 import { AttachEnergyPromptPanel } from './AttachEnergyPromptPanel';
+import { PutDamageOverlay } from './PutDamageOverlay';
 import { RemoveDamageOverlay } from './RemoveDamageOverlay';
 import { scanBlockedOwnZeroDamageFromState } from './pokemonPromptRows';
 
@@ -160,6 +162,41 @@ function useRemoveDamageBoardEffect(
   }, [removeDamagePromptId, clientId, boardInteraction, replay]);
 }
 
+function usePutDamageBoardEffect(
+  localGameRef: React.MutableRefObject<LocalGameState>,
+  clientId: number,
+  boardInteraction: BoardInteractionService,
+  putDamagePromptId: number | null,
+  replay: boolean | undefined,
+) {
+  useEffect(() => {
+    if (putDamagePromptId == null) {
+      return;
+    }
+
+    if (replay) {
+      boardInteraction.setReplayMode(true);
+      return () => {
+        boardInteraction.setReplayMode(false);
+      };
+    }
+
+    boardInteraction.setReplayMode(false);
+    const game = localGameRef.current;
+    const prompt = activeGamePrompt(game, clientId);
+    if (!prompt || prompt.id !== putDamagePromptId || prompt.type !== 'Put damage') {
+      return;
+    }
+
+    const pdp = prompt as PutDamagePrompt;
+    boardInteraction.startPutDamageSelection(pdp, []);
+
+    return () => {
+      boardInteraction.endBoardSelection();
+    };
+  }, [putDamagePromptId, clientId, boardInteraction, replay]);
+}
+
 function ChoosePokemonActionBar(props: {
   boardInteraction: BoardInteractionService;
   message: string;
@@ -235,6 +272,11 @@ export function TablePromptLayer({
       ? activePrompt.id
       : null;
 
+  const putDamageId =
+    activePrompt?.type === 'Put damage' && !localGame.replay && !suppressTrainerEffectPrompts
+      ? activePrompt.id
+      : null;
+
   useChoosePokemonBoardEffect(
     localGameRef,
     clientId,
@@ -249,6 +291,14 @@ export function TablePromptLayer({
     clientId,
     boardInteraction,
     removeDamageId,
+    !!localGame.replay,
+  );
+
+  usePutDamageBoardEffect(
+    localGameRef,
+    clientId,
+    boardInteraction,
+    putDamageId,
     !!localGame.replay,
   );
 
@@ -437,6 +487,20 @@ export function TablePromptLayer({
       <RemoveDamageOverlay
         key={rdp.id}
         prompt={rdp}
+        localGame={localGame}
+        boardInteraction={boardInteraction}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
+  if (p.type === 'Put damage') {
+    const pdp = p as PutDamagePrompt;
+    return (
+      <PutDamageOverlay
+        key={pdp.id}
+        prompt={pdp}
         localGame={localGame}
         boardInteraction={boardInteraction}
         gameMessageText={gameMessageText}

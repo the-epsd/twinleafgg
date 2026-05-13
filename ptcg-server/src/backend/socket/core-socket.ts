@@ -27,6 +27,7 @@ export class CoreSocket {
     // core listeners
     this.socket.addListener('core:getInfo', this.getCoreInfo.bind(this));
     this.socket.addListener('core:createGame', this.createGame.bind(this));
+    this.socket.addListener('core:createSelfPlayGame', this.createSelfPlayGame.bind(this));
   }
 
   public onConnect(client: Client): void {
@@ -62,11 +63,11 @@ export class CoreSocket {
     // Check if this client's user ID matches any player in the game
     // This ensures that when a player is added via invitation acceptance,
     // other browser windows of the same user receive the game info update
-    const isClientAPlayer = state.players.some(player => {
-      // Find the client with this player's ID
-      const playerClient = this.core.clients.find(c => c.id === player.id);
-      return playerClient && playerClient.user.id === this.client.user.id;
-    });
+    const isClientAPlayer = game.isSelfPlayForUser(this.client.user.id) ||
+      state.players.some(player => {
+        const playerClient = this.core.clients.find(c => c.id === player.id);
+        return playerClient && playerClient.user.id === this.client.user.id;
+      });
 
     // Send game info updates to clients that are in the game OR are players
     // This fixes the issue where inviting yourself doesn't show the game in the dropdown
@@ -139,6 +140,35 @@ export class CoreSocket {
     response('ok', CoreSocket.buildGameState(game));
   }
 
+  private createSelfPlayGame(
+    params: {
+      deck: string[];
+      secondDeck: string[];
+      gameSettings: GameSettings;
+      deckId?: number;
+      secondDeckId?: number;
+      sleeveImagePath?: string;
+      secondSleeveImagePath?: string;
+    },
+    response: Response<GameState>,
+  ): void {
+    if (params.gameSettings.sandboxMode && this.client.user.roleId !== 4) {
+      response('error', ApiErrorEnum.ACTION_INVALID);
+      return;
+    }
+    const game = this.core.createSelfPlayGame(
+      this.client,
+      params.deck,
+      params.secondDeck,
+      params.gameSettings,
+      params.deckId,
+      params.secondDeckId,
+      params.sleeveImagePath,
+      params.secondSleeveImagePath
+    );
+    response('ok', CoreSocket.buildGameState(game));
+  }
+
   public static buildUserInfo(user: User, connected: boolean = true): UserInfo {
     return {
       connected,
@@ -194,6 +224,7 @@ export class CoreSocket {
   public dispose(): void {
     this.socket.removeListener('core:getInfo');
     this.socket.removeListener('core:createGame');
+    this.socket.removeListener('core:createSelfPlayGame');
   }
 
   private isBotClient(client: Client): boolean {

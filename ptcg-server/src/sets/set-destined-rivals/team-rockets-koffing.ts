@@ -2,6 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, ChooseCardsPrompt, PowerType, GameLog, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { CONFIRMATION_PROMPT, IS_ABILITY_BLOCKED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 
@@ -70,8 +71,7 @@ export class TeamRocketsKoffing extends PokemonCard {
             const cards = selectedCards || [];
 
             cards.forEach((card, index) => {
-              player.deck.moveCardTo(card, openSlots[index]);
-              openSlots[index].pokemonPlayedTurn = state.turn;
+              store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, openSlots[index]));
             });
 
             SHUFFLE_DECK(store, state, player);

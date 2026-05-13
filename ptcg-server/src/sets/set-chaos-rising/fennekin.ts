@@ -1,5 +1,6 @@
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
+import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { PokemonCard, StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -26,8 +27,7 @@ function* useCallForFamily(next: Function, store: StoreLike, state: State, effec
     cards.length = slots.length;
   }
   cards.forEach((card, index) => {
-    player.deck.moveCardTo(card, slots[index]);
-    slots[index].pokemonPlayedTurn = state.turn;
+    store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
   });
   return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
     player.deck.applyOrder(order);

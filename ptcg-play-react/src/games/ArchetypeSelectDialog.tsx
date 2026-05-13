@@ -6,7 +6,7 @@ import { ArchetypeIcon } from './ArchetypeIcon';
 import { ARCHETYPE_SELECT_OPTIONS } from './archetypeSelectOptions';
 import styles from './ArchetypeSelectDialog.module.css';
 
-export type ArchetypeSlotValue = Archetype | null | undefined;
+export type ArchetypeSlotValue = Archetype | undefined;
 
 export type ArchetypeSelectDialogProps = {
   open: boolean;
@@ -16,10 +16,7 @@ export type ArchetypeSelectDialogProps = {
   onSave: (archetype1: ArchetypeSlotValue, archetype2: ArchetypeSlotValue) => void;
 };
 
-function slotSelected(slot: ArchetypeSlotValue, mode: 'auto' | 'none' | 'value', value?: Archetype): boolean {
-  if (mode === 'auto') {
-    return slot === null;
-  }
+function slotSelected(slot: ArchetypeSlotValue, mode: 'none' | 'value', value?: Archetype): boolean {
   if (mode === 'none') {
     return slot === undefined;
   }
@@ -35,16 +32,16 @@ export function ArchetypeSelectDialog({
 }: ArchetypeSelectDialogProps) {
   const { t } = useTranslation();
   const [searchText, setSearchText] = useState('');
-  const [selected1, setSelected1] = useState<ArchetypeSlotValue>(null);
-  const [selected2, setSelected2] = useState<ArchetypeSlotValue>(null);
+  const [selected1, setSelected1] = useState<ArchetypeSlotValue>(undefined);
+  const [selected2, setSelected2] = useState<ArchetypeSlotValue>(undefined);
 
   useEffect(() => {
     if (!open) {
       return;
     }
     setSearchText('');
-    setSelected1(initialArchetype1 ?? null);
-    setSelected2(initialArchetype2 ?? null);
+    setSelected1(initialArchetype1);
+    setSelected2(initialArchetype2);
   }, [open, initialArchetype1, initialArchetype2]);
 
   useEffect(() => {
@@ -117,13 +114,6 @@ export function ArchetypeSelectDialog({
             <div className={styles.quickRow}>
               <button
                 type="button"
-                className={`${styles.option} ${styles.optionQuick} ${slotSelected(selected1, 'auto') ? styles.optionSelected : ''}`}
-                onClick={() => setSelected1(null)}
-              >
-                <span className={styles.optionLabel}>{t('REACT_ARCHETYPE_SELECT_AUTO')}</span>
-              </button>
-              <button
-                type="button"
                 className={`${styles.option} ${styles.optionQuick} ${slotSelected(selected1, 'none') ? styles.optionSelected : ''}`}
                 onClick={() => setSelected1(undefined)}
               >
@@ -162,13 +152,6 @@ export function ArchetypeSelectDialog({
               {t('REACT_ARCHETYPE_SELECT_SECONDARY')}
             </h3>
             <div className={styles.quickRow}>
-              <button
-                type="button"
-                className={`${styles.option} ${styles.optionQuick} ${slotSelected(selected2, 'auto') ? styles.optionSelected : ''}`}
-                onClick={() => setSelected2(null)}
-              >
-                <span className={styles.optionLabel}>{t('REACT_ARCHETYPE_SELECT_AUTO')}</span>
-              </button>
               <button
                 type="button"
                 className={`${styles.option} ${styles.optionQuick} ${slotSelected(selected2, 'none') ? styles.optionSelected : ''}`}

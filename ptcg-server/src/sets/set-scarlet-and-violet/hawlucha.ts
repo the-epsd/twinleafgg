@@ -8,7 +8,11 @@ import {
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { GameMessage } from '../../game/game-message';
-import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import {
+  PlaceDamageCountersEffect,
+  PowerEffect,
+} from '../../game/store/effects/game-effects';
+import { ABILITY_USED } from '../../game/store/prefabs/prefabs';
 
 
 export class Hawlucha extends PokemonCard {
@@ -30,7 +34,7 @@ export class Hawlucha extends PokemonCard {
     powerType: PowerType.ABILITY,
     text: 'When you play this Pokémon from your hand onto your ' +
       'Bench during your turn, you may choose 2 of your ' +
-      'opponent\'s Benched Pokémon and put 1 damage counter' +
+      'opponent\'s Benched Pokémon and put 1 damage counter ' +
       'on each of them.'
   }];
 
@@ -89,20 +93,16 @@ export class Hawlucha extends PokemonCard {
             [SlotType.BENCH],
             { min: 1, max: 2, allowCancel: false },
           ), selected => {
+            ABILITY_USED(player, this);
             const targets = selected || [];
+            // Ref: set-chilling-reign/inteleon.ts (Quick Shooting) — PlaceDamageCountersEffect per target
             targets.forEach(target => {
-              const effectOfAbility = new EffectOfAbilityEffect(player, this.powers[0], this, target);
-              store.reduceEffect(state, effectOfAbility);
-              if (effectOfAbility.target) {
-                target.damage += 10;
-              }
+              state = store.reduceEffect(state, new PlaceDamageCountersEffect(player, target, 10, this));
             });
+            return state;
           });
         }
-
-        return state;
       });
-
     }
     return state;
   }
