@@ -1,29 +1,39 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, GameError, GameMessage, StateUtils, CoinFlipPrompt } from '../../game';
+import {
+  PokemonCard,
+  Stage,
+  CardType,
+  StoreLike,
+  State,
+  GameError,
+  GameMessage,
+  StateUtils,
+  CoinFlipPrompt,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Comfey extends PokemonCard {
-  public stage: Stage = Stage.STAGE_1;
-  public cardType: CardType = CardType.PSYCHIC;
+  public stage: Stage = Stage.BASIC;
+  public cardType: CardType = P;
   public hp: number = 70;
-  public weakness = [{ type: CardType.METAL }];
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: M }];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Flower Shower',
       cost: [CardType.PSYCHIC],
       damage: 0,
-      text: 'Each player draws 3 cards.'
+      text: 'Each player draws 3 cards.',
     },
     {
       name: 'Play Rough',
       cost: [CardType.PSYCHIC],
       damage: 20,
       damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 20 more damage.'
-    }
+      text: 'Flip a coin. If heads, this attack does 20 more damage.',
+    },
   ];
 
   public regulationMark = 'H';
@@ -34,9 +44,7 @@ export class Comfey extends PokemonCard {
   public setNumber: string = '63';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -55,16 +63,17 @@ export class Comfey extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
-      return store.prompt(state, [
-        new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
-      ], result => {
-        if (result === true) {
-          effect.damage += 20;
-        }
-      });
+      return store.prompt(
+        state,
+        [new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)],
+        (result) => {
+          if (result === true) {
+            effect.damage += 20;
+          }
+        },
+      );
     }
 
     return state;
   }
-
 }
