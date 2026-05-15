@@ -122,7 +122,6 @@ export * from './set-steam-siege';
 export * from './set-x-and-y-promos';
 //export
 
-
 //SM Era
 export * from './set-champions-path';
 export * from './set-burning-shadows';
@@ -142,7 +141,6 @@ export * from './set-ultra-prism';
 export * from './set-unbroken-bonds';
 export * from './set-unified-minds';
 export * from './set-detective-pikachu';
-
 
 //SWSH Era
 export * from './set-astral-radiance';
@@ -185,6 +183,7 @@ export * from './set-black-bolt-white-flare';
 //MEG Era
 export * from './set-mega-evolution-promos';
 export * from './set-mega-evolution';
+export * from './set-mega-evolution-energy';
 export * from './set-phantasmal-flames';
 export * from './set-ascended-heroes';
 export * from './set-perfect-order';
