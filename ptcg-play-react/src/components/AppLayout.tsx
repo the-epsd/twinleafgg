@@ -1,7 +1,5 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useLanguage } from '../context/LanguageContext';
-import { SUPPORTED_LANGUAGE_CODES, type SupportedLanguageCode } from '../i18n/languages';
 
 function isDeckEditorPath(pathname: string): boolean {
   return /^\/deck\/[^/]+\/?$/.test(pathname);
@@ -14,7 +12,6 @@ function isTablePath(pathname: string): boolean {
 export function AppLayout() {
   const { t } = useTranslation();
   const { pathname } = useLocation();
-  const { language, setLanguage, labels } = useLanguage();
   const deckEditorFullBleed = isDeckEditorPath(pathname);
   const tableFullBleed = isTablePath(pathname);
 
@@ -44,20 +41,6 @@ export function AppLayout() {
           <Link to="/deck">{t('DECK_TITLE')}</Link>
           <Link to="/settings">{t('BUTTON_SETTINGS')}</Link>
         </nav>
-        <label style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto' }}>
-          <select
-            value={language}
-            onChange={(e) => setLanguage(e.target.value as SupportedLanguageCode)}
-            aria-label={t('LABEL_LANGUAGE')}
-            title={t('LABEL_LANGUAGE')}
-          >
-            {SUPPORTED_LANGUAGE_CODES.map((code) => (
-              <option key={code} value={code}>
-                {labels[code]}
-              </option>
-            ))}
-          </select>
-        </label>
       </header>
       <main
         style={{

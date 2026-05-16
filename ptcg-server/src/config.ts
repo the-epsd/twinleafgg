@@ -18,8 +18,6 @@ export const config = {
     allowServerChange: true,
     refreshTokenInterval: 60 * 60 * 1000,
     enableImageCache: true,
-    defaultLanguage: 'en',
-    languages: { en: 'English', jp: '日本語', fr: 'Français' },
   },
   core: {
     debug: false,

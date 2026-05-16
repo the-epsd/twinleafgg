@@ -1,7 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CardImagesProvider } from './context/CardImagesContext';
-import { LanguageProvider } from './context/LanguageContext';
 import { SnackbarProvider } from './context/SnackbarContext';
 import { SettingsProvider } from './context/SettingsContext';
 import { AppLayout } from './components/AppLayout';
@@ -16,7 +15,6 @@ import { TablePage } from './pages/TablePage';
 export default function App() {
   return (
     <BrowserRouter>
-      <LanguageProvider>
       <SnackbarProvider>
       <AuthProvider>
         <SettingsProvider>
@@ -40,7 +38,6 @@ export default function App() {
         </SettingsProvider>
       </AuthProvider>
       </SnackbarProvider>
-      </LanguageProvider>
     </BrowserRouter>
   );
 }
