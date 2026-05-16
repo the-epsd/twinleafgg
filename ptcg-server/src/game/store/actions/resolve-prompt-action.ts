@@ -5,6 +5,6 @@ export class ResolvePromptAction implements Action {
 
   readonly type: string = 'RESOLVE_PROMPT';
 
-  constructor(public id: number, public result: any, public log?: StateLog) {}
+  constructor(public id: number, public result: any, public log?: StateLog, public encodedResult?: any) {}
 
 }

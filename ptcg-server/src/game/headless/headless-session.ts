@@ -190,7 +190,7 @@ export class HeadlessGameSession {
     if (prompt.validate(decoded, this.state) === false) {
       throw new Error(`[headless] Invalid prompt result for "${prompt.type}"`);
     }
-    return this.dispatch(new ResolvePromptAction(id, decoded));
+    return this.dispatch(new ResolvePromptAction(id, decoded, undefined, rawResult));
   }
 
   public overridePromptOnce(promptType: string, handler: HeadlessPromptOverride): void {

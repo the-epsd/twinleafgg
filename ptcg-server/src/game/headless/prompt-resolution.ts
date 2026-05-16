@@ -57,7 +57,7 @@ export class HeadlessPromptResolver {
     if (prompt.validate(decoded, state) === false) {
       throw new Error(`[headless] Invalid prompt result for "${prompt.type}": ${JSON.stringify(rawResult)}`);
     }
-    return new ResolvePromptAction(prompt.id, decoded);
+    return new ResolvePromptAction(prompt.id, decoded, undefined, rawResult);
   }
 
   public defaultRawResult(state: State, prompt: Prompt<any>): any {
