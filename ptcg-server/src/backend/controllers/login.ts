@@ -110,25 +110,30 @@ export class Login extends Controller {
   @Post('/guest')
   public async onGuest(req: Request, res: Response) {
     const requestedName = typeof req.body?.name === 'string' ? req.body.name : '';
-    const name = this.normalizeGuestName(requestedName);
+    let name = this.normalizeGuestName(requestedName);
     let user = await User.findOne({ where: { name } });
 
-    if (user === undefined) {
-      user = new User();
-      user.name = name;
-      user.email = `${name.toLowerCase()}@guest.local`;
-      user.password = '';
-      user.registered = Date.now();
-      user.lastSeen = Date.now();
+    for (let attempt = 0; user === undefined && attempt < 4; attempt++) {
+      const guest = new User();
+      guest.name = name;
+      guest.email = `${name.toLowerCase()}@guest.local`;
+      guest.password = '';
+      guest.registered = Date.now();
+      guest.lastSeen = Date.now();
       try {
-        await user.save();
+        user = await guest.save();
       } catch (error) {
-        const existing = await User.findOne({ where: { name } });
-        if (existing === undefined) {
-          throw error;
+        user = await User.findOne({ where: { name } });
+        if (user === undefined) {
+          name = this.normalizeGuestName('');
         }
-        user = existing;
       }
+    }
+
+    if (user === undefined) {
+      res.status(400);
+      res.send({ error: ApiErrorEnum.LOGIN_INVALID });
+      return;
     }
 
     const token = generateToken(user.id);
