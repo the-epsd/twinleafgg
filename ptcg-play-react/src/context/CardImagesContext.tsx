@@ -9,7 +9,10 @@ import {
 } from 'react';
 import type { Card } from 'ptcg-server';
 import { appConfig } from '../env/config';
+import { apiGet } from '../api/client';
 import {
+  mergeImageRecords,
+  persistNightlyImages,
   readCardImageMapsFromStorage,
   resolveScanUrl,
   type CardImageMaps,
@@ -22,6 +25,11 @@ type CardImagesContextValue = {
 
 const CardImagesContext = createContext<CardImagesContextValue | null>(null);
 
+async function getServerCardImageMap(): Promise<Record<string, string>> {
+  const res = await apiGet<{ ok: true; images: Record<string, string> }>('/v1/cards/image-map', { skipAuth: true });
+  return res.images;
+}
+
 export function CardImagesProvider({ children }: { children: ReactNode }) {
   const [maps, setMaps] = useState<CardImageMaps>(() => readCardImageMapsFromStorage());
 
@@ -30,7 +38,27 @@ export function CardImagesProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    setMaps(readCardImageMapsFromStorage());
+    let cancelled = false;
+    void (async () => {
+      const base = readCardImageMapsFromStorage();
+      try {
+        const fetched = await getServerCardImageMap();
+        if (cancelled) {
+          return;
+        }
+        const nightly = mergeImageRecords(base.nightly, fetched);
+        persistNightlyImages(nightly);
+        setMaps({ ...base, nightly });
+      } catch {
+        if (!cancelled) {
+          setMaps(base);
+        }
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const value = useMemo<CardImagesContextValue>(
