@@ -65,7 +65,7 @@ export function loadHiddenFormats(): Format[] {
 
 function loadUse3dBoardDefaultSetting(): boolean {
   const saved = localStorage.getItem(SETTINGS_KEYS.use3dBoardDefault);
-  return saved ? JSON.parse(saved) : false;
+  return saved ? JSON.parse(saved) : true;
 }
 
 function loadCardTextKerning(): number {

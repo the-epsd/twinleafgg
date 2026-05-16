@@ -6,7 +6,6 @@ import { GamePhase } from 'ptcg-server';
 import { useAuth } from '../context/AuthContext';
 import { useDeckCardScanUrl } from '../context/CardImagesContext';
 import { useCoreSession } from '../context/CoreSessionContext';
-import { useSettings } from '../context/SettingsContext';
 import { getSocketManager } from '../socket/socketManager';
 import { ApiError, formatUnknownError } from '../api/apiError';
 import { useSnackbar } from '../context/SnackbarContext';
@@ -60,7 +59,6 @@ export function TablePage() {
   const { cardsInfo, serverConfig } = useAuth();
   const getScanUrl = useDeckCardScanUrl(serverConfig?.scansUrl);
   const { clientId } = useCoreSession();
-  const { has3dBoardAccess, use3dBoardDefault } = useSettings();
 
   const hasReplayParam = matchIdParam != null && matchIdParam !== '';
   const replayMatchId = hasReplayParam ? Number(matchIdParam) : NaN;
@@ -421,8 +419,6 @@ export function TablePage() {
     navigate('/games');
   }, [localGame?.replay, navigate]);
 
-  const show3d = has3dBoardAccess && use3dBoardDefault;
-
   if (error) {
     const backTarget = '/games';
     return (
@@ -437,18 +433,6 @@ export function TablePage() {
 
   if (!localGame || !tableView || tableClientId == null) {
     return <div style={{ padding: 24 }}>{t('REACT_LOADING')}</div>;
-  }
-
-  if (!show3d) {
-    const backTarget = '/games';
-    return (
-      <div style={{ padding: 24 }}>
-        <p>{t('REACT_TABLE_3D_DISABLED', 'Enable the 3D board in Settings and ensure your account has access.')}</p>
-        <button type="button" onClick={() => navigate(backTarget)}>
-          {t('BUTTON_BACK')}
-        </button>
-      </div>
-    );
   }
 
   const { bottomPlayer, topPlayer, bottomHand, topHand, isPlaying, isObserver } = tableView;
