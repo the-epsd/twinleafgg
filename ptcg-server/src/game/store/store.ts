@@ -66,18 +66,21 @@ export class Store implements StoreLike {
         throw new GameError(GameMessage.ILLEGAL_ACTION);
       }
       state = sandboxReducer(this, state, action, clientRoleId);
+      this.notifyAction(action, state);
       this.handler.onStateChange(state);
       return state;
     }
 
     if (action instanceof AbortGameAction) {
       state = abortGameReducer(this, state, action);
+      this.notifyAction(action, state);
       this.handler.onStateChange(state);
       return state;
     }
 
     if (action instanceof ConcedeAction) {
       state = concedeReducer(this, state, action);
+      this.notifyAction(action, state);
       this.handler.onStateChange(state);
       return state;
     }
@@ -86,6 +89,7 @@ export class Store implements StoreLike {
       || action instanceof ReorderBenchAction
       || action instanceof ChangeAvatarAction) {
       state = playerStateReducer(this, state, action);
+      this.notifyAction(action, state);
       this.handler.onStateChange(state);
       return state;
     }
@@ -95,12 +99,14 @@ export class Store implements StoreLike {
       if (this.promptItems.length === 0) {
         state = checkState(this, state);
       }
+      this.notifyAction(action, state);
       this.handler.onStateChange(state);
       return state;
     }
 
     if (action instanceof AppendLogAction) {
       this.log(state, action.message, action.params, action.id);
+      this.notifyAction(action, state);
       this.handler.onStateChange(state);
       return state;
     }
@@ -277,8 +283,15 @@ export class Store implements StoreLike {
       throw storeError;
     }
 
+    this.notifyAction(action, state);
     this.handler.onStateChange(state);
     return state;
+  }
+
+  private notifyAction(action: Action, state: State): void {
+    if (this.handler.onAction !== undefined) {
+      this.handler.onAction(action, state);
+    }
   }
 
   private calculatePlayability(state: State): State {

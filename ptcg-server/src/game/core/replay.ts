@@ -1,7 +1,7 @@
 import { gzip, ungzip } from '@progress/pako-esm';
 
 import { State, GameWinner } from '../store/state/state';
-import { ReplayPlayer, ReplayOptions } from './replay.interface';
+import { ReplayPlayer, ReplayOptions, ReplayActionRecord } from './replay.interface';
 import { GameError } from '../game-error';
 import { GameCoreError } from '../game-message';
 import { SerializedState } from '../serializer/serializer.interface';
@@ -15,9 +15,11 @@ export class Replay {
   public player2: ReplayPlayer;
   public winner: GameWinner;
   public created: number;
+  private gameSettings: any | undefined;
   private turnMap: number[] = [];
   private diffs: SerializedState[] = [];
   private indexes: SerializedState[] = [];
+  private actions: ReplayActionRecord[] = [];
   private prevState: SerializedState | undefined;
   private serializer = new StateSerializer();
   private options: ReplayOptions;
@@ -35,6 +37,17 @@ export class Replay {
 
   public getStateCount(): number {
     return this.diffs.length;
+  }
+
+  public getActions(): ReplayActionRecord[] {
+    return this.actions.map(action => ({
+      ...action,
+      payload: this.cloneReplayValue(action.payload)
+    }));
+  }
+
+  public getGameSettings(): any | undefined {
+    return this.cloneReplayValue(this.gameSettings);
   }
 
   public getState(position: number): State {
@@ -75,6 +88,10 @@ export class Replay {
     this.created = created;
   }
 
+  public setGameSettings(gameSettings: any): void {
+    this.gameSettings = this.sanitizeReplayValue(gameSettings);
+  }
+
   public appendState(state: State): void {
     const full = this.serializer.serialize(state);
     const diff = this.serializer.serializeDiff(this.prevState, state);
@@ -95,14 +112,34 @@ export class Replay {
     }
   }
 
+  public appendAction(
+    type: string,
+    payload: any,
+    state: Pick<State, 'turn' | 'phase' | 'activePlayer'>,
+    stateIndex: number
+  ): void {
+    this.actions.push({
+      sequence: this.actions.length,
+      type,
+      turn: state.turn,
+      phase: state.phase,
+      activePlayer: state.activePlayer,
+      stateIndex,
+      payload: this.sanitizeReplayValue(payload)
+    });
+  }
+
   public serialize(): string {
     const json = {
+      version: 2,
       player1: this.player1,
       player2: this.player2,
       winner: this.winner,
       created: this.created,
+      gameSettings: this.gameSettings,
       turnMap: this.turnMap,
-      states: this.swapQuotes(this.diffs)
+      states: this.swapQuotes(this.diffs),
+      actions: this.actions
     };
     return this.compress(JSON.stringify(json));
   }
@@ -114,8 +151,10 @@ export class Replay {
       this.player2 = data.player2;
       this.winner = data.winner;
       this.created = data.created;
+      this.gameSettings = data.gameSettings;
       this.diffs = this.swapQuotes(data.states);
       this.turnMap = data.turnMap;
+      this.actions = Array.isArray(data.actions) ? data.actions : [];
 
       if (this.options.indexEnabled) {
         this.rebuildIndex(this.diffs);
@@ -142,6 +181,77 @@ export class Replay {
   private decompress(data: string): string {
     const text = ungzip(data, { to: 'string' });
     return text;
+  }
+
+  private sanitizeReplayValue(value: any, seen = new WeakSet<object>()): any {
+    if (value === null || value === undefined) {
+      return value;
+    }
+
+    if (typeof value !== 'object') {
+      return value;
+    }
+
+    if (seen.has(value)) {
+      return '[Circular]';
+    }
+    seen.add(value);
+
+    if (Array.isArray(value)) {
+      const arrayValue = value.map(item => this.sanitizeReplayValue(item, seen));
+      seen.delete(value);
+      return arrayValue;
+    }
+
+    if (this.isCardLike(value)) {
+      const cardValue = {
+        kind: 'Card',
+        id: value.id,
+        name: value.name,
+        fullName: value.fullName,
+        superType: value.superType
+      };
+      seen.delete(value);
+      return cardValue;
+    }
+
+    if (Array.isArray(value.cards)) {
+      const list: any = {
+        kind: value.constructor?.name || 'CardList',
+        cards: value.cards.map((card: any) => this.sanitizeReplayValue(card, seen))
+      };
+      this.copyIfPresent(list, value, 'damage');
+      this.copyIfPresent(list, value, 'hp');
+      this.copyIfPresent(list, value, 'specialConditions');
+      seen.delete(value);
+      return list;
+    }
+
+    const result: any = {};
+    Object.keys(value).forEach(key => {
+      const child = value[key];
+      if (typeof child !== 'function') {
+        result[key] = this.sanitizeReplayValue(child, seen);
+      }
+    });
+    seen.delete(value);
+    return result;
+  }
+
+  private cloneReplayValue(value: any): any {
+    return value === undefined ? undefined : JSON.parse(JSON.stringify(value));
+  }
+
+  private isCardLike(value: any): boolean {
+    return typeof value.name === 'string'
+      && typeof value.fullName === 'string'
+      && value.superType !== undefined;
+  }
+
+  private copyIfPresent(target: any, source: any, key: string): void {
+    if (source[key] !== undefined) {
+      target[key] = this.sanitizeReplayValue(source[key]);
+    }
   }
 
   private rebuildIndex(diffs: SerializedState[]): void {

@@ -1,5 +1,6 @@
 import { Action } from '../store/actions/action';
 import { AddPlayerAction } from '../store/actions/add-player-action';
+import { buildReplayActionPayload } from '../core/replay-actions';
 import { AttackAction, PassTurnAction, RetreatAction, UseAbilityAction } from '../store/actions/game-actions';
 import { PlayCardAction, CardTarget, PlayerType, SlotType } from '../store/actions/play-card-action';
 import { ResolvePromptAction } from '../store/actions/resolve-prompt-action';
@@ -82,6 +83,19 @@ class HeadlessStoreHandler implements StoreHandler {
     private events: HeadlessEvent[],
     private promptMode: HeadlessPromptMode
   ) {}
+
+  public onAction(action: Action, state: State): void {
+    this.events.push({
+      type: 'action',
+      payload: {
+        type: action.type,
+        turn: state.turn,
+        phase: state.phase,
+        activePlayer: state.activePlayer,
+        payload: buildReplayActionPayload(action)
+      }
+    });
+  }
 
   public onStateChange(state: State): void {
     this.events.push({ type: 'stateChange' });

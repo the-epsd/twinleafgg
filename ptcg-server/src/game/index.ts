@@ -5,6 +5,8 @@ export * from './core/game-settings';
 export * from './core/player-stats';
 export * from './core/replay.interface';
 export * from './core/replay';
+export * from './core/replay-actions';
+export * from './core/replay-runner';
 export * from './serializer';
 
 export * from './game-error';

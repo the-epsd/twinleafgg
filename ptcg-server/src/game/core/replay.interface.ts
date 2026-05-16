@@ -4,6 +4,15 @@ export interface ReplayOptions {
   appendEnabled: boolean;
 }
 
+export interface ReplayActionRecord {
+  sequence: number;
+  type: string;
+  turn: number;
+  phase: number;
+  activePlayer: number;
+  stateIndex: number;
+  payload: any;
+}
 
 export interface ReplayPlayer {
 

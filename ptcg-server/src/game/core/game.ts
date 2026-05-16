@@ -62,6 +62,12 @@ export class Game implements StoreHandler {
     return this.store;
   }
 
+  public onAction(action: Action, state: State): void {
+    if (this.gameSettings.recordingEnabled) {
+      this.matchRecorder.onAction(action, state);
+    }
+  }
+
   public updateLastActivity(): void {
     this.lastActivity = Date.now();
   }

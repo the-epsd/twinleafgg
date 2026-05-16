@@ -1,0 +1,130 @@
+Replay architecture
+===================
+
+Current state
+-------------
+
+The production replay path is state-based. MatchRecorder appends serialized State
+diffs to Replay after each meaningful state change, and saved/exported replays
+are the compressed JSON blob stored in Match.replayData or Replay.replayData.
+
+This is enough for visual playback because the frontend can move through the
+state timeline with Replay.getState(position). The legacy Angular controls and
+the newer React controls both use that model.
+
+State-only replay is not enough for a future-proof engine replayer. It does not
+explain which player input, prompt answer, shuffle order, coin flip, concession,
+timeout, or system action produced each state. It also makes it hard to audit a
+match or replay it through a changed engine.
+
+Durable replay record
+---------------------
+
+Replay blobs now remain backward-compatible and include an optional actions
+array plus the gameSettings needed to start an action replay from a blank State:
+
+interface ReplayActionRecord {
+  sequence: number;
+  type: string;
+  turn: number;
+  phase: number;
+  activePlayer: number;
+  stateIndex: number;
+  payload: unknown;
+}
+
+states remains the authoritative visual timeline. actions is the authoritative
+intent timeline for new replays. Older replay blobs without actions still
+deserialize with an empty action list.
+
+stateIndex points at the state diff index reached after the action batch was
+flushed. Some engine actions are auto-resolved recursively before a stable state
+is recorded, so several action records can point at the same state index.
+
+Actions that must be represented
+--------------------------------
+
+- Game setup: ADD_PLAYER, INVITE_PLAYER.
+- Turn actions: PLAY_CARD_ACTION, ATTACK_ACTION, USE_ABILITY_ACTION,
+  USE_TRAINER_ABILITY_ACTION, USE_ENERGY_ABILITY_ACTION, USE_STADIUM_ACTION,
+  RETREAT_START_ACTION, RETREAT_ACTION, PASS_TURN.
+- Prompt answers and randomness: RESOLVE_PROMPT. This includes player choices,
+  bot/arbiter choices, shuffle orders, and coin flips. Socket prompt answers now
+  keep the original encoded result as well as the decoded engine result when
+  both are available.
+- Board ordering and cosmetics: REORDER_HAND_ACTION, REORDER_BENCH_ACTION,
+  CHANGE_AVATAR.
+- Logs and chat-like table messages: APPEND_LOG_ACTION.
+- Ending paths: CONCEDE_GAME, ABORT_GAME.
+- Sandbox/admin paths: SANDBOX_MODIFY_PLAYER, SANDBOX_MODIFY_GAME_STATE,
+  SANDBOX_MODIFY_CARD, SANDBOX_MODIFY_POKEMON.
+
+Prompt coverage matters most. The headless branch already has prompt adapters
+for every prompt class, with unsupported prompts called out explicitly. That
+adapter list is the right place to keep the replay result schema aligned with
+the engine.
+
+Design choices
+--------------
+
+- Keep state diffs. They are proven, compact enough, and support smooth frontend
+  playback today.
+- Add action records inside the existing compressed replay JSON instead of
+  adding DB columns. This avoids a migration and keeps import/export unchanged
+  at the transport layer.
+- Store gameSettings in the same replay blob. Action replay must restore the
+  rules/format/time configuration that existed before ADD_PLAYER changed state.
+- Record actions from Store.dispatch, not from socket handlers only. This
+  captures player actions, arbiter auto-resolution, timeouts, reconnection
+  aborts, simple bots, and headless dispatches through one path.
+- Keep action payloads JSON-safe. Card and card-list objects are summarized so
+  replay blobs do not depend on live class instances or circular references.
+- Provide an engine-side replay harness before touching frontend controls. The
+  runner reconstructs Actions from ReplayActionRecord payloads, dispatches them
+  through Store, and can compare checkpoint states against the saved state
+  timeline.
+
+Feasibility
+-----------
+
+A fully functional replayer is feasible with the current engine shape.
+
+The minimum reliable model is a hybrid replay:
+
+1. Use state diffs for guaranteed visual playback and seeking.
+2. Use action records for deterministic engine replay, audit, and future
+   migrations.
+3. Use prompt adapters to encode/decode prompt answers in stable result schemas.
+4. Compare replayed engine states against stored state diffs while the action
+   replayer is being hardened.
+
+The main remaining risk is prompt result stability. Existing socket code decoded
+prompt results before dispatch, so older replays do not have raw prompt inputs.
+New socket/headless prompt answers preserve raw encoded results where available.
+
+Replay runner
+-------------
+
+ReplayActionReplayer is the minimal engine-side runner. It can:
+
+- Restore gameSettings on a blank Store or start from a supplied initial State.
+- Rebuild each Action with buildActionFromReplayRecord.
+- Decode RESOLVE_PROMPT records against the current live prompt when possible.
+- Dispatch sandbox records with an admin role id so admin state edits can be
+  reproduced.
+
+validateReplayActions(replay) replays action records and compares only the last
+action for each stateIndex checkpoint. This matters because a player action and
+one or more prompt resolutions can all point at the same final saved state.
+Comparison removes log timestamps before serialization so clock time does not
+make deterministic replays look different.
+
+Next implementation steps
+-------------------------
+
+1. Use validateReplayActions in a server-side replay smoke test for complete
+   deck games once fixture decks are stable enough for deterministic setup.
+2. Add a CLI/dev endpoint to inspect replay action records and validation
+   mismatches for saved match ids.
+3. Backfill only if needed. Existing state-only replays can still be watched,
+   but they cannot be upgraded into complete action replays without inference.

@@ -281,18 +281,18 @@ export class GameSocket {
     }
 
     try {
-      params.result = prompt.decode(params.result, game.state);
+      const encodedResult = params.result;
+      params.result = prompt.decode(encodedResult, game.state);
       if (prompt.validate(params.result, game.state) === false) {
         response('error', ApiErrorEnum.PROMPT_INVALID_RESULT);
         return;
       }
+      const action = new ResolvePromptAction(params.id, params.result, undefined, encodedResult);
+      this.dispatch(params.gameId, action, response);
     } catch (error: any) {
       response('error', error);
       return;
     }
-
-    const action = new ResolvePromptAction(params.id, params.result);
-    this.dispatch(params.gameId, action, response);
   }
 
   private reorderBench(params: { gameId: number, from: number, to: number }, response: Response<void>) {
