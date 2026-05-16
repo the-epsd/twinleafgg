@@ -14,7 +14,7 @@
     "test": "nyc -e \".ts\" -x \"src/**/*.spec.ts\" jasmine-ts \"src/**/*.spec.ts\"",
     "test:sets": "jasmine-ts \"src/sets/tests/*.spec.ts\"",
     "test:sets:catalog": "ts-node src/sets/tests/run-assigned-tests.ts",
-    "postcompile": "cp -r src/storage/battle-pass-seasons dist/storage/ && cp -r src/storage/battle-pass-seasons output/storage/ && npm run copy:avatars && npm run copy:sleeves",
+    "postcompile": "npm run copy:avatars && npm run copy:sleeves",
     "copy:avatars": "node -e \"require('fs').cpSync('./avatars', './dist/avatars', {recursive: true});\"",
     "copy:sleeves": "node -e \"require('fs').cpSync('./sleeves', './dist/sleeves', {recursive: true});\""
   },

@@ -4,7 +4,7 @@ import { DeckAnalyser } from '../cards/deck-analyser';
 import { Game } from '../core/game';
 import { GameError } from '../game-error';
 import { GameMessage } from '../game-message';
-import { User, Message, Deck } from '../../storage';
+import { User, Deck } from '../../storage';
 import { Core } from '../core/core';
 import { State } from '../store/state/state';
 import { GameSettings } from '../core/game-settings';
@@ -62,10 +62,6 @@ export abstract class BotClient implements Client {
   public abstract onGameLeave(game: Game, client: Client): void;
 
   public abstract onStateChange(game: Game, state: State): void;
-
-  public abstract onMessage(from: Client, message: Message): void;
-
-  public abstract onMessageRead(user: User): void;
 
   createGame(deck: string[], gameSettings?: GameSettings, invited?: Client): Game {
     if (this.core === undefined) {

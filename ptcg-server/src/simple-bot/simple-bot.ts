@@ -3,7 +3,7 @@ import { Client } from '../game/client/client.interface';
 import { Game } from '../game/core/game';
 import { SimpleGameHandler } from './simple-game-handler';
 import { State } from '../game/store/state/state';
-import { User, Message } from '../storage';
+import { User } from '../storage';
 import { SimpleBotOptions } from './simple-bot-options';
 import { Format } from '../game/store/card/card-types';
 import {
@@ -37,10 +37,6 @@ export class SimpleBot extends BotClient {
       this.user = me;
     }
   }
-
-  public onMessage(from: Client, message: Message): void { }
-
-  public onMessageRead(user: User): void { }
 
   public onGameJoin(game: Game, client: Client): void {
     if (client === this) {

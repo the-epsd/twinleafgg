@@ -1,11 +1,10 @@
 import { User } from '../../storage';
 import { CoreClient } from './core-client.interface';
 import { GameClient } from './game-client.interface';
-import { MessageClient } from './message-client.interface';
 import { Game } from '../core/game';
 import { PlayerStats } from '../core/player-stats';
 
-export interface Client extends CoreClient, GameClient, MessageClient {
+export interface Client extends CoreClient, GameClient {
 
   id: number;
   name: string;

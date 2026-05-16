@@ -6,7 +6,6 @@ import { GameMessage, GameCoreError } from '../game-message';
 import { Game } from './game';
 import { GameSettings } from './game-settings';
 import { InvitePlayerAction } from '../store/actions/invite-player-action';
-import { Messager } from './messager';
 import { RankingCalculator } from './ranking-calculator';
 import { Scheduler, generateId } from '../../utils';
 import { config } from '../../config';
@@ -23,12 +22,10 @@ import { User } from '../../storage';
 export class Core {
   public clients: Client[] = [];
   public games: Game[] = [];
-  public messager: Messager;
   private botManager: BotManager;
   private reconnectionManager: ReconnectionManager;
 
   constructor(reconnectionConfig?: ReconnectionConfig) {
-    this.messager = new Messager(this);
     this.botManager = BotManager.getInstance();
 
     const defaultConfig: ReconnectionConfig = {

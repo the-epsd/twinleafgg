@@ -10,22 +10,13 @@ import { WebSocketServer } from './socket/websocket-server';
 import { MemoryOptimizationService } from './services/memory-optimization.service';
 
 import {
-  Avatars,
   Cards,
   ControllerClass,
   Decks,
-  Favorites,
-  Friends,
   Game,
   Images,
   Login,
-  Messages,
-  Profile,
-  Ranking,
   Replays,
-  ResetPassword,
-  BattlePass,
-  Sleeves,
   MemoryHealthController,
 } from './controllers';
 import { ApiErrorEnum } from './common/errors';
@@ -96,21 +87,12 @@ export class App {
     app.use('/sleeves', express.static(config.backend.sleevesDir));
 
     // API routes
-    define('/v1/avatars', Avatars);
     define('/v1/cards', Cards);
     define('/v1/decks', Decks);
-    define('/v1/favorites', Favorites);
-    define('/v1/friends', Friends);
     define('/v1/game', Game);
     define('/v1/images', Images);
     define('/v1/login', Login);
-    define('/v1/messages', Messages);
-    define('/v1/profile', Profile);
-    define('/v1/ranking', Ranking);
     define('/v1/replays', Replays);
-    define('/v1/resetPassword', ResetPassword);
-    define('/v1/battlepass', BattlePass);
-    define('/v1/sleeves', Sleeves);
     define('/v1/memory', MemoryHealthController);
 
     app.use((err: any, req: any, res: any, next: any) => {
