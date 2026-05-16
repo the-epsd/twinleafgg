@@ -1,4 +1,4 @@
-import { Format, Archetype } from '../card/card-types';
+import { Format } from '../card/card-types';
 
 export const THEME_DECKS = [
   {
@@ -8,8 +8,6 @@ export const THEME_DECKS = [
     format: [Format.THEME],
     isValid: true,
     cardTypes: '[]',
-    manualArchetype1: Archetype.DRAGONITE,
-    manualArchetype2: Archetype.PIDGEOTTO,
   },
   {
     id: -2,
@@ -18,8 +16,6 @@ export const THEME_DECKS = [
     format: [Format.THEME],
     isValid: true,
     cardTypes: '[]',
-    manualArchetype1: Archetype.CHARIZARD,
-    manualArchetype2: Archetype.NIDOQUEEN,
   },
   {
     id: -3,
@@ -28,7 +24,6 @@ export const THEME_DECKS = [
     format: [Format.THEME],
     isValid: true,
     cardTypes: '[]',
-    manualArchetype1: Archetype.CHARIZARD,
   },
   {
     id: -4,
@@ -37,8 +32,6 @@ export const THEME_DECKS = [
     format: [Format.THEME],
     isValid: true,
     cardTypes: '[]',
-    manualArchetype1: Archetype.LYCANROC,
-    manualArchetype2: Archetype.DUSKNOIR,
   },
   {
     id: -5,
@@ -47,8 +40,6 @@ export const THEME_DECKS = [
     format: [Format.THEME],
     isValid: true,
     cardTypes: '[]',
-    manualArchetype1: Archetype.GROUDON,
-    manualArchetype2: Archetype.GARCHOMP,
   },
   {
     id: -6,
@@ -57,8 +48,6 @@ export const THEME_DECKS = [
     format: [Format.THEME],
     isValid: true,
     cardTypes: '[]',
-    manualArchetype1: Archetype.KYOGRE,
-    manualArchetype2: Archetype.EMPOLEON,
   },
   {
     id: -7,
@@ -67,8 +56,6 @@ export const THEME_DECKS = [
     format: [Format.THEME],
     isValid: true,
     cardTypes: '[]',
-    manualArchetype1: Archetype.NECROZMA,
-    manualArchetype2: Archetype.MALAMAR,
   },
   {
     id: -8,
@@ -77,7 +64,5 @@ export const THEME_DECKS = [
     format: [Format.THEME],
     isValid: true,
     cardTypes: '[]',
-    manualArchetype1: Archetype.RAIKOU,
-    manualArchetype2: Archetype.AMPHAROS,
   }
 ]; 

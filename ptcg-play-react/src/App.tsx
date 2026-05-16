@@ -7,7 +7,6 @@ import { AppLayout } from './components/AppLayout';
 import { ProtectedRoute } from './routes/ProtectedRoute';
 import { GamesPage } from './pages/GamesPage';
 import { DeckListPage } from './pages/DeckListPage';
-import { DeckStatsPage } from './pages/DeckStatsPage';
 import { DeckEditPage } from './pages/DeckEditPage';
 import { SettingsPage } from './pages/SettingsPage';
 import { TablePage } from './pages/TablePage';
@@ -26,7 +25,6 @@ export default function App() {
                 <Route path="/table/replay/:matchId" element={<TablePage />} />
                 <Route path="/table/:gameId" element={<TablePage />} />
                 <Route path="/deck" element={<DeckListPage />} />
-                <Route path="/deck/:deckId/stats" element={<DeckStatsPage />} />
                 <Route path="/deck/:deckId" element={<DeckEditPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
               </Route>

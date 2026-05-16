@@ -1,6 +1,6 @@
 import { apiGet, apiPost } from './client';
-import type { Archetype, Format } from 'ptcg-server';
-import type { DeckListResponse, DeckResponse, DeckStatsResponse, OkResponse } from '../types/responses';
+import type { Format } from 'ptcg-server';
+import type { DeckListResponse, DeckResponse, OkResponse } from '../types/responses';
 
 export interface DeckListParams {
   summary?: boolean;
@@ -27,15 +27,6 @@ export function getDeck(deckId: number): Promise<DeckResponse> {
   return apiGet<DeckResponse>(`/v1/decks/get/${deckId}`);
 }
 
-export function getDeckStats(deckId: number, replayLimit?: number): Promise<DeckStatsResponse> {
-  const search = new URLSearchParams();
-  if (replayLimit !== undefined) {
-    search.set('limit', String(replayLimit));
-  }
-  const q = search.toString();
-  return apiGet<DeckStatsResponse>(`/v1/decks/stats/${deckId}${q ? `?${q}` : ''}`);
-}
-
 export function createDeck(name: string): Promise<DeckResponse> {
   return apiPost<DeckResponse>('/v1/decks/save', { name, cards: [] });
 }
@@ -44,16 +35,12 @@ export function saveDeck(
   deckId: number,
   name: string,
   cards: string[],
-  manualArchetype1?: Archetype,
-  manualArchetype2?: Archetype,
   artworks?: { code: string; artworkId?: number }[]
 ): Promise<DeckResponse> {
   return apiPost<DeckResponse>('/v1/decks/save', {
     id: deckId,
     name,
     cards,
-    manualArchetype1,
-    manualArchetype2,
     ...(artworks ? { artworks } : {}),
   });
 }

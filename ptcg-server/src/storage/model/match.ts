@@ -26,18 +26,6 @@ export class Match extends BaseEntity {
   @Column({ type: 'blob', transformer: [blob] })
   public replayData: string = '';
 
-  @Column({ type: 'varchar', length: 50, nullable: true })
-  public player1Archetype: string = '';
-
-  @Column({ type: 'varchar', length: 50, nullable: true })
-  public player1Archetype2: string = '';
-
-  @Column({ type: 'varchar', length: 50, nullable: true })
-  public player2Archetype: string = '';
-
-  @Column({ type: 'varchar', length: 50, nullable: true })
-  public player2Archetype2: string = '';
-
   @Column({ type: 'varchar', length: 100, nullable: true })
   public player1DeckName: string = '';
 

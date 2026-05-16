@@ -17,8 +17,6 @@ import { useSettings } from '../context/SettingsContext';
 import { FormAlert } from '../components/ui/FormAlert';
 import { ShellButton } from '../components/ui/ShellButton';
 import { CheckboxField } from '../components/ui/CheckboxField';
-import { ArchetypeIcon } from '../games/ArchetypeIcon';
-import { deckArchetypeForDisplay } from '../games/deckArchetypeDisplay';
 import { deckListExportText } from '../deck-editor/deckListExportText';
 import styles from './DeckListPage.module.css';
 
@@ -523,24 +521,6 @@ export function DeckListPage() {
                         ) : null}
                       </div>
                     ) : null}
-                  </div>
-                  <div className={styles.archetype}>
-                    <ArchetypeIcon archetypes={deckArchetypeForDisplay(d)} scale={3} />
-                    <button
-                      type="button"
-                      className={styles.eyeBtn}
-                      data-no-deck-nav
-                      aria-label={t('REACT_DECK_STATS_ARIA')}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        navigate(`/deck/${d.id}/stats`);
-                      }}
-                    >
-                      <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden fill="currentColor">
-                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
-                      </svg>
-                    </button>
                   </div>
                   <div className={styles.nameRow}>
                     <div className={styles.deckName}>{d.name}</div>
