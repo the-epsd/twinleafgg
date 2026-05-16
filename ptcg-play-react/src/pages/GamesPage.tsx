@@ -150,7 +150,7 @@ export function GamesPage() {
 
         <div className={styles.controls}>
           <label>
-            <span>{t('LABEL_FORMAT')}</span>
+            <span>{t('GAMES_FORMAT')}</span>
             <select value={selectedFormat} onChange={(e) => setSelectedFormat(Number(e.target.value) as Format)}>
               {visibleFormats.map((format) => (
                 <option key={format} value={format}>
