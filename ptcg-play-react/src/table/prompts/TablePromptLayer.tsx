@@ -32,7 +32,7 @@ import { scanBlockedOwnZeroDamageFromState } from './pokemonPromptRows';
 
 const CHOOSE_CARDS_CARD_BACK = '/assets/cardback.png';
 
-/** Visual prize numbers (match Angular board layout). */
+/** Visual prize labels for the 2x3 prize grid. */
 const PRIZE_SLOT_LABELS = [5, 6, 3, 4, 1, 2];
 
 function buildChooseCardsFilterMap(
@@ -472,7 +472,7 @@ export function TablePromptLayer({
         <p className={styles.message}>
           {t(
             'REACT_PROMPT_NOT_IMPLEMENTED',
-            'This prompt is not supported yet in the React client. You may need the Angular app for this action.',
+            'This prompt is not supported yet in the React client.',
           )}
         </p>
       </div>

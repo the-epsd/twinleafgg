@@ -247,7 +247,7 @@
   cursor: not-allowed;
 }
 
-/* Choose prize prompt — parity with Angular prompt-choose-prize (fullscreen +2×3 grid) */
+/* Choose prize prompt: fullscreen 2x3 grid. */
 
 @keyframes prizeFadeIn {
   from {

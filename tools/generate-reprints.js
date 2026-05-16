@@ -7,7 +7,7 @@ const reprintSetName = processArgs[0];
 const reprintFolder = processArgs[1];
 const reprintsFileName = processArgs[2];
 const setsFolderPath = '../ptcg-server/src/sets';
-const cardReplacementsFilePath = '../ptcg-play/src/app/deck/deck-edit/card-replacements.ts';
+const cardReplacementsFilePath = './card-replacements.ts';
 validateProcessArgs();
 const folders = fs.readdirSync(setsFolderPath).filter(r => !r.includes('.'));
 const implemented = readImplementedCards();

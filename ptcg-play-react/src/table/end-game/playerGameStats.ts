@@ -1,6 +1,6 @@
 import type { Card, State } from 'ptcg-server';
 
-/** Mirrors Angular `PlayerGameStats` in session.interface.ts */
+/** Per-player match result statistics. */
 export interface PlayerGameStats {
   prizesTakenCount: number;
   totalDamageDealt: number;

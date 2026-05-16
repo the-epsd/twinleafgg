@@ -41,7 +41,7 @@
   opacity: 0.55;
 }
 
-/* ptcg-play deck-card.component.scss — quantity + mat-icon circles (scaled to slot width; base card 100px) */
+/* Quantity controls scaled to slot width; base card width is 100px. */
 .countCircle {
   display: flex;
   justify-content: center;

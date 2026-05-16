@@ -217,7 +217,7 @@ export class Board3dAnimationService {
   }
 
   /**
-   * Attack motion: rise, brief hold, slam down with scale bounce (~1s, matches Angular board-card CSS).
+   * Attack motion: rise, brief hold, slam down with scale bounce.
    */
   playAttackAnimation(card: Object3D): Promise<void> {
     return new Promise(resolve => {

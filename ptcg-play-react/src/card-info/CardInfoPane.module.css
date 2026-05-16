@@ -1,4 +1,4 @@
-/* Aligned with ptcg-play card-info-pane.component.scss + _cards-theme typography + variables.scss */
+/* Card information pane typography and layout. */
 
 .pane {
   display: flex;
@@ -41,7 +41,7 @@
   flex: 1 1 67%;
 }
 
-/* Material legacy `title` — Angular ptcg-card-info-pane .title + .subtitle-hp-value */
+/* Compact title treatment for card headers. */
 .title {
   align-items: baseline;
   border-top-left-radius: 8px;
@@ -84,7 +84,7 @@
   background-color: rgba(62, 65, 75, 0.48);
 }
 
-/* body-2 override from Angular app.scss: 14px / 24px / 700 */
+/* Emphasized rules text. */
 .subtitleStage {
   font-size: 14px;
   font-weight: 700;
@@ -116,7 +116,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* Angular source used gap:-12px (invalid); flex uses 0 gap */
+  /* Keep energy symbols tightly grouped. */
   gap: 0;
   margin-left: auto;
 }

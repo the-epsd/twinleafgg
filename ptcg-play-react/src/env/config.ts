@@ -38,6 +38,6 @@ export const appConfig = {
 
   refreshTokenIntervalMs: Number(import.meta.env.VITE_REFRESH_TOKEN_MS ?? 3_600_000),
 
-  /** Ranking pagination (matches Angular default when server config not stored). */
+  /** Ranking pagination fallback when server config is not stored. */
   defaultPageSize: Number(import.meta.env.VITE_DEFAULT_PAGE_SIZE ?? 50),
 };

@@ -23,7 +23,7 @@ export type CardFaceProps = {
   children?: ReactNode;
   /** When set, overrides holo resolution from `card` (use `null` to force no holo). */
   holoVariant?: HoloVariant | null;
-  /** When set, holo variant is derived via Angular-style rules. Ignored if `holoVariant` is provided. */
+  /** When set, holo variant is derived from card tags and known holo lists. Ignored if `holoVariant` is provided. */
   card?: Card | null;
   /**
    * When unset, uses `SettingsProvider` or `readClientSettingsSnapshot().holoEnabled`

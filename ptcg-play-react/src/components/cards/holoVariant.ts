@@ -1,6 +1,6 @@
 import { Card, CardTag } from 'ptcg-server';
 
-/** CSS class names aligned with Angular `ptcg-card` / `getCardClass()`. */
+/** CSS class names for card holo treatments. */
 export type HoloVariant = 'holo' | 'trainer-holo' | 'fullart-holo' | 'radiant-holo' | 'ace-spec-holo';
 
 const HOLO_BY_FULL_NAME: ReadonlySet<string> = new Set([
@@ -87,8 +87,7 @@ const TRAINER_HOLO_BY_FULL_NAME: ReadonlySet<string> = new Set([
 ]);
 
 /**
- * Returns the holographic style variant for a card, matching
- * `ptcg-play/.../card.component.ts` `getCardClass()`.
+ * Returns the holographic style variant for a card.
  */
 export function getHoloVariant(
   card: Card | null | undefined,

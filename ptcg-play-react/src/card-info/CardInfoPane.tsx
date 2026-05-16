@@ -46,7 +46,7 @@ export type CardInfoPaneOptions = {
   };
 };
 
-/** Matches Angular `CardInfoPaneAction` (card is always the viewed card). */
+/** Card action returned from the information pane; card is always the viewed card. */
 export type CardInfoTableAction = {
   card: Card;
   attack?: string;
@@ -57,7 +57,7 @@ export type CardInfoTableAction = {
 
 export type CardInfoPaneProps = {
   card: Card;
-  /** In-play list (active/bench Pokémon) — used for HP bonus and damage like Angular `card-info-pane`. */
+  /** In-play list (active/bench Pokémon), used for HP bonus and damage. */
   cardList?: CardList;
   facedown: boolean;
   catalog: Card[];

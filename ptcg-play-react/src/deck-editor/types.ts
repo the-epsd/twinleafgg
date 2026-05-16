@@ -14,7 +14,7 @@ export interface DeckSlot {
   count: number;
 }
 
-/** Mirrors Angular `DeckEditToolbarFilter` (subset used in React). */
+/** Deck editor toolbar filter state. */
 export interface DeckEditToolbarFilter {
   selectedSet: string | null;
   showLibraryCardTypeBadge: boolean;

@@ -1,7 +1,7 @@
 import type { Card, EnergyCard, PokemonCard, TrainerCard } from 'ptcg-server';
 import { CardType, Format, SuperType } from 'ptcg-server';
 
-/** Same ordering as Angular `CardsBaseService.compareCards` (deck library catalog). */
+/** Ordering for the deck library catalog. */
 export function compareLibraryCards(c1: Card, c2: Card): number {
   if (c1.superType !== c2.superType) {
     return c1.superType - c2.superType;
@@ -214,7 +214,7 @@ function sortLibraryBySetNumber(a: Card, b: Card): number {
   return a.fullName.localeCompare(b.fullName);
 }
 
-/** Filter full card catalog for the library (Angular `filterCards` pipe). */
+/** Filter the full card catalog for the deck library. */
 export function filterLibraryCards(cards: Card[], filter: DeckEditToolbarFilter): Card[] {
   if (isDeckLibraryFilterEmpty(filter)) {
     return sortLibraryCatalog(cards);

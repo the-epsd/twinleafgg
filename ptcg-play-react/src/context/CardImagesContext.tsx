@@ -115,7 +115,7 @@ export function CardImagesProvider({ children }: { children: ReactNode }) {
 }
 
 /**
- * Resolves card art URLs like Angular CardsBaseService.getScanUrl (maps + server scansUrl).
+ * Resolves card art URLs from local maps and the server scansUrl template.
  */
 export function useCardImageMaps(): CardImageMaps {
   const c = useContext(CardImagesContext);

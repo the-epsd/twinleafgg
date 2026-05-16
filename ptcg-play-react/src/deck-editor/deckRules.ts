@@ -44,7 +44,7 @@ function compareCardType(cardType: CardType): number {
   return order.indexOf(cardType);
 }
 
-/** Order slots like Angular pre-evolution pass: Pokémon (by type), Trainer, Energy; then name. */
+/** Order slots by Pokémon type, then Trainer, Energy, and name. */
 export function sortDeckSlots(slots: DeckSlot[]): DeckSlot[] {
   return slots.slice().sort((a, b) => {
     const sup = compareSupertype(a.card.superType) - compareSupertype(b.card.superType);

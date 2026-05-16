@@ -2,7 +2,7 @@ import { Archetype } from 'ptcg-server';
 
 export type ArchetypeOption = { value: Archetype; label: string };
 
-/** Same list semantics as Angular ArchetypeSelectPopupComponent (alphabetical by label). */
+/** Archetype options sorted alphabetically by label. */
 export function getArchetypeSelectOptions(): ArchetypeOption[] {
   return Object.values(Archetype)
     .filter((v): v is Archetype => typeof v === 'string')

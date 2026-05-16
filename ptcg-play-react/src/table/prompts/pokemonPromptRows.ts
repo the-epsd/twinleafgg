@@ -26,7 +26,7 @@ function buildRow(cardLists: PokemonCardList[], player: PlayerType, slot: SlotTy
   return { items, playerType: player };
 }
 
-/** Mirrors Angular `PokemonData` row order for prompt panes (opponent bench/active, then player active/bench). */
+/** Row order for prompt panes: opponent bench/active, then player active/bench. */
 export function buildPokemonPromptRows(
   state: State,
   playerId: number,
@@ -74,7 +74,7 @@ export function mapPokemonItems(rows: PokemonRow[], fn: (item: PokemonItem) => P
   }));
 }
 
-/** Live state: your Pokémon in this prompt with 0 damage cannot be selected (Angular remove-damage rule). */
+/** Live state: your Pokémon in this prompt with 0 damage cannot be selected. */
 export function scanBlockedOwnZeroDamageFromState(
   state: State,
   playerId: number,

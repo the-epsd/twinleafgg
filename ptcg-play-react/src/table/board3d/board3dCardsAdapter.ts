@@ -1,7 +1,7 @@
 import type { Card, CardList, Player } from 'ptcg-server';
 import type { CardInfoPaneOptions, CardInfoTableAction } from '../../card-info/CardInfoPane';
 
-/** Data shape aligned with Angular `CardInfoPopupData`. */
+/** Data shape passed into card information popups. */
 export type Board3dCardInfoData = {
   card?: Card;
   cardList?: CardList;
@@ -14,7 +14,7 @@ export type Board3dCardInfoData = {
 export type CardInfoPaneActionResult = (CardInfoTableAction & { cardList?: CardList }) | undefined;
 
 /**
- * Subset of Angular `CardsBaseService` used by the 3D board.
+ * Card lookup and popup adapter used by the 3D board.
  */
 export interface Board3dCardsAdapter {
   getScanUrlFor3D(card: Card, cardList?: unknown): string;
@@ -22,4 +22,3 @@ export interface Board3dCardsAdapter {
   showCardInfo(data?: Board3dCardInfoData): Promise<CardInfoPaneActionResult>;
   showCardInfoList(data?: Board3dCardInfoData): Promise<CardInfoPaneActionResult>;
 }
-

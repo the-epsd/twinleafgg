@@ -1,6 +1,6 @@
 import { Format } from 'ptcg-server';
 
-/** Deck editor + settings “hidden formats” list (same order as Angular settings dialog). */
+/** Deck editor and settings hidden-format list. */
 export const DECK_FORMAT_OPTIONS: { value: Format; labelKey: string }[] = [
   { value: Format.STANDARD, labelKey: 'LABEL_STANDARD' },
   { value: Format.STANDARD_NIGHTLY, labelKey: 'LABEL_STANDARD_NIGHTLY' },

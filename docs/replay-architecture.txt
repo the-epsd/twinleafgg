@@ -9,8 +9,8 @@ diffs to Replay after each meaningful state change, and saved/exported replays
 are the compressed JSON blob stored in Match.replayData or Replay.replayData.
 
 This is enough for visual playback because the frontend can move through the
-state timeline with Replay.getState(position). The legacy Angular controls and
-the newer React controls both use that model.
+state timeline with Replay.getState(position). The client replay controls use
+that model.
 
 State-only replay is not enough for a future-proof engine replayer. It does not
 explain which player input, prompt answer, shuffle order, coin flip, concession,

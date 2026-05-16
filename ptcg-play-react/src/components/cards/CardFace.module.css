@@ -14,7 +14,7 @@
   background: #f2f2f2;
 }
 
-/* Iridescent rim (aligns with Angular 2D board `.holo` / `.fullart-holo` containers). */
+/* Iridescent rim for holo and full-art card variants. */
 .innerHolo {
   background: linear-gradient(
     75deg,

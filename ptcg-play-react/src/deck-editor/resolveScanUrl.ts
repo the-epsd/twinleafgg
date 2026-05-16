@@ -7,7 +7,7 @@ import { cardScanUrl } from './cardScanUrl';
  */
 export const CARDBACK_ASSET_URL = cardbackImportedUrl;
 
-/** Matches Angular CardsBaseService identifier keys. */
+/** Primary card art identifier used by image maps. */
 export function cardImagePrimaryId(card: Card): string {
   return `${card.set} ${card.setNumber}`;
 }
@@ -40,8 +40,7 @@ function ensureAbsolute(url: string, apiBase: string): string {
 }
 
 /**
- * Same resolution order as Angular CardsBaseService.getScanUrl:
- * nightly map, local overrides, custom JSON map, then scansUrl template.
+ * Resolution order: nightly map, local overrides, custom JSON map, then scansUrl template.
  * If nothing resolves, returns {@link CARDBACK_ASSET_URL}.
  */
 export function resolveScanUrl(

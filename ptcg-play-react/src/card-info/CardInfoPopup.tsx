@@ -16,7 +16,7 @@ export type CardInfoPopupProps = {
   getScanUrl: (card: Card) => string;
   onClose: () => void;
   onCardSwap?: (event: { originalCard: Card; replacementCard: Card }) => void;
-  /** Deck builder: not in game — swap + favorites match Angular out-of-table behavior. */
+  /** Deck builder: not in game, with swap and favorite-card actions enabled. */
   isInGame?: boolean;
   options?: CardInfoPaneOptions;
   showTags?: boolean;

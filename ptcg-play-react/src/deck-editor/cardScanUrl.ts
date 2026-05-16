@@ -1,7 +1,7 @@
 import type { Card } from 'ptcg-server';
 
 /**
- * Build card scan URL from server `scansUrl` template (same tokens as Angular CardsBaseService.getScanUrl).
+ * Build card scan URL from the server `scansUrl` template.
  * Relative results are resolved against `apiBase`.
  */
 export function cardScanUrl(card: Card, scansUrl: string | undefined, apiBase: string): string {

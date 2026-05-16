@@ -79,8 +79,8 @@ export function getDisplayAttacks(card: Card): Attack[] {
 }
 
 /**
- * Max HP for a Pokémon in play, matching Angular `CardInfoPaneComponent.getComputedHp`:
- * printed HP on the viewed card plus {@link PokemonCardList.hpBonus} (tools, effects, etc.).
+ * Max HP for a Pokémon in play: printed HP plus {@link PokemonCardList.hpBonus}
+ * from tools, effects, and other state modifiers.
  */
 export function getComputedHp(card: Card, cardList?: CardList): number | null {
   if (!card || card.superType !== SuperType.POKEMON) {
@@ -101,8 +101,7 @@ export function getComputedHp(card: Card, cardList?: CardList): number | null {
 }
 
 /**
- * Remaining HP, matching Angular `CardInfoPaneComponent.getCurrentHp`:
- * {@link getComputedHp} minus {@link PokemonCardList.damage}.
+ * Remaining HP: {@link getComputedHp} minus {@link PokemonCardList.damage}.
  */
 export function getCurrentHp(card: Card, cardList?: CardList): number | null {
   const computed = getComputedHp(card, cardList);

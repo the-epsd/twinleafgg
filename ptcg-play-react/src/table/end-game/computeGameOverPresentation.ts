@@ -391,7 +391,7 @@ function validateDamageAndPrizes(
   let od = opponentDamageDealt;
   try {
     if (playerPrizesTaken < 0 || playerPrizesTaken > maxPrizes) {
-      /* noop — mirror Angular */
+      /* noop */
     }
     if (opponentPrizesTaken < 0 || opponentPrizesTaken > maxPrizes) {
       /* noop */

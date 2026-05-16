@@ -1,6 +1,6 @@
 import { Format } from 'ptcg-server';
 
-/** Match Angular `SettingsService` key strings exactly for cross-client compatibility. */
+/** Stable localStorage keys for client settings. */
 export const SETTINGS_KEYS = {
   holoEnabled: 'holoEnabled',
   showCardName: 'showCardName',

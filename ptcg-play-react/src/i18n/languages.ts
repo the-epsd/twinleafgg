@@ -1,4 +1,4 @@
-/** Matches ptcg-play environment.languages keys */
+/** Supported app language keys. */
 export const SUPPORTED_LANGUAGE_CODES = ['en', 'es', 'jp', 'fr'] as const;
 
 export type SupportedLanguageCode = (typeof SUPPORTED_LANGUAGE_CODES)[number];

@@ -7,7 +7,7 @@ There are two projects:
 
 * **ptcg-server** is the game server. It is responsible for calculating the game state and propagating it to the connected clients by websockets.
 
-* **ptcg-play** is a web application written in Angular. It displays the game state and allows interaction with the server.
+* **ptcg-play-react** is the web client. It displays the game state and allows interaction with the server.
 
 ### Server launch
 
@@ -63,32 +63,24 @@ If you get a SQLite foreign key constraint error on startup, delete `ptcg-server
 
 ### Client launch
 
-The client is an Angular application.
-https://angular.io/. 
-The source code of the client is located in the `ptcg-play` directory.
+The client is a Vite/React application. The source code of the client is located in the `ptcg-play-react` directory.
 
 The server package is a dependency required by the client. Make sure the server dependencies are installed and the server is running before starting the client.
 
-1. With the server running, go to the `ptcg-play` directory and install dependencies.
+1. With the server running, go to the `ptcg-play-react` directory and install dependencies.
 
 ```
-cd ../ptcg-play
+cd ../ptcg-play-react
 npm install
 ```
 
-2. Build the client.
+2. Start the local client.
 
 ```
-npm run build
+npm run dev
 ```
 
-3. Start the local client.
-
-```
-npm run start:local
-```
-
-The command above will start the application in the debug mode at http://localhost:4200
+The command above will start the application at http://localhost:5173 by default.
 
 ### Credits:
 

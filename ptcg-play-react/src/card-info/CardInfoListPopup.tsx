@@ -19,7 +19,7 @@ export type CardInfoListPopupProps = {
   onResolve?: (result: CardInfoTableAction & { cardList?: CardList }) => void;
 };
 
-function sortCardsLikeAngular(cards: Card[]): Card[] {
+function sortCardsForDisplay(cards: Card[]): Card[] {
   return cards.slice().sort((a, b) => {
     const typeOrder = (c: Card): number => {
       if (c.superType === SuperTypeEnum.POKEMON) return 0;
@@ -52,7 +52,7 @@ export function CardInfoListPopup({
   const [detailCard, setDetailCard] = useState<Card | null>(null);
 
   const displayCards = useMemo(
-    () => (sortDiscards ? sortCardsLikeAngular(originalOrder) : originalOrder),
+    () => (sortDiscards ? sortCardsForDisplay(originalOrder) : originalOrder),
     [sortDiscards, originalOrder],
   );
 

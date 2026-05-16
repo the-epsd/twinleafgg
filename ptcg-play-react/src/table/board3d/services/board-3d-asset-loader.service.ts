@@ -261,7 +261,7 @@ export class Board3dAssetLoaderService {
   }
 
   /**
-   * 2D holo art mask (same assets as 2D CardFace / Angular) for the 3D shader overlay.
+   * 2D holo art mask used by CardFace and the 3D shader overlay.
    */
   async load2dHoloMaskTexture(variant: HoloVariant): Promise<Texture> {
     const url = holoMaskUrl(variant);

@@ -13,7 +13,7 @@ export type SnackbarVariant = 'info' | 'error';
 
 export type ShowSnackbarOptions = {
   variant?: SnackbarVariant;
-  /** Defaults to 3000 (Angular AlertService.toast). */
+  /** Defaults to 3000ms. */
   durationMs?: number;
 };
 

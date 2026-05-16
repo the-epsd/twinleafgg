@@ -1,7 +1,7 @@
 import type { ServerConfig } from 'ptcg-server';
 import { appConfig } from '../env/config';
 
-/** Resolve avatar image URL the same way as Angular `ptcg-avatar`. */
+/** Resolve avatar image URLs against the API host unless they are already absolute. */
 export function resolveAvatarUrl(avatarFile: string | undefined, serverConfig: ServerConfig | null): string {
   if (!avatarFile) {
     return '';

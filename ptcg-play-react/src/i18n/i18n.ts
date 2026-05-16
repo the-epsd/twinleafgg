@@ -1,9 +1,9 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import en from '../../../ptcg-play/src/assets/i18n/en.json';
-import es from '../../../ptcg-play/src/assets/i18n/es.json';
-import jp from '../../../ptcg-play/src/assets/i18n/jp.json';
-import fr from '../../../ptcg-play/src/assets/i18n/fr.json';
+import en from './locales/en.json';
+import es from './locales/es.json';
+import jp from './locales/jp.json';
+import fr from './locales/fr.json';
 import { isSupportedLanguage, type SupportedLanguageCode } from './languages';
 
 const resources = {
