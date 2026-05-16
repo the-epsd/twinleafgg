@@ -2,7 +2,6 @@ export const config = {
   backend: {
     address: 'https://play-server.twinleaf.gg',
     port: 8080,
-    registrationEnabled: true,  // Completly disables/enables registration
     allowCors: true,
     tokenExpire: 21600,
     defaultPageSize: 50,

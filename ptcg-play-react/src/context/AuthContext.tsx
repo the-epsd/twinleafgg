@@ -12,7 +12,7 @@ import type { CardsInfo, ServerConfig, UserInfo } from 'ptcg-server';
 import { guestLoginRequest, refreshTokenRequest } from '../api/authApi';
 import { getCardsAll } from '../api/cardsApi';
 import { setAuthInvalidHandler } from '../api/client';
-import { clearAuthTokens, getStoredToken, setStoredApiUrlOverride, setStoredToken } from '../api/storage';
+import { clearAuthTokens, getStoredToken, setStoredToken } from '../api/storage';
 import { appConfig } from '../env/config';
 import { getSocketManager } from '../socket/socketManager';
 import { applyCardsInfoToGameEngine, clearGameEngineCards } from '../table/gameEngineCards';
@@ -25,13 +25,11 @@ interface AuthState {
   cardsInfo: CardsInfo | null;
   serverConfig: ServerConfig | null;
   ready: boolean;
-  apiUrlInput: string;
 }
 
 interface AuthContextValue extends AuthState {
   isAuthenticated: boolean;
   logout: () => void;
-  setApiUrlOverride: (url: string | undefined) => void;
   refreshSession: () => Promise<void>;
 }
 
@@ -54,7 +52,7 @@ function isRefreshTokenUsable(token: string): boolean {
 }
 
 function getOrCreateGuestName(): string {
-  const existing = localStorage.getItem(GUEST_NAME_KEY);
+  const existing = sessionStorage.getItem(GUEST_NAME_KEY);
   if (existing?.startsWith('Guest-')) {
     return existing;
   }
@@ -63,7 +61,7 @@ function getOrCreateGuestName(): string {
       ? crypto.randomUUID().replace(/-/g, '').slice(0, 12)
       : Math.random().toString(36).slice(2, 14);
   const name = `Guest-${suffix}`;
-  localStorage.setItem(GUEST_NAME_KEY, name);
+  sessionStorage.setItem(GUEST_NAME_KEY, name);
   return name;
 }
 
@@ -79,7 +77,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     cardsInfo: null,
     serverConfig: null,
     ready: false,
-    apiUrlInput: '',
   });
   const refreshTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -140,7 +137,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         cardsInfo: null,
         serverConfig: null,
         ready: true,
-        apiUrlInput: '',
       });
     }
   }, [applyToken]);
@@ -181,21 +177,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, [state.token, state.user, applyToken, logout]);
 
-  const setApiUrlOverride = useCallback((url: string | undefined) => {
-    setStoredApiUrlOverride(url);
-    getSocketManager().setServerUrl(appConfig.apiUrl);
-    setState((s) => ({ ...s, apiUrlInput: url ?? '' }));
-  }, []);
-
   const value = useMemo<AuthContextValue>(
     () => ({
       ...state,
       isAuthenticated: !!state.token && !!state.user,
       logout,
-      setApiUrlOverride,
       refreshSession,
     }),
-    [state, logout, setApiUrlOverride, refreshSession]
+    [state, logout, refreshSession]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

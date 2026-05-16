@@ -1,27 +1,7 @@
 import { normalizeDevLocalApiUrl } from './normalizeApiUrl';
 
-function readStoredApiUrlRepaired(): string | null {
-  if (typeof localStorage === 'undefined') {
-    return null;
-  }
-  const raw = localStorage.getItem('apiUrl');
-  if (!raw) {
-    return null;
-  }
-  const rawTrim = raw.trim().replace(/\/$/, '');
-  const normalized = normalizeDevLocalApiUrl(raw);
-  if (normalized !== rawTrim) {
-    localStorage.setItem('apiUrl', normalized);
-  }
-  return normalized;
-}
-
 export const appConfig = {
   get apiUrl(): string {
-    const stored = readStoredApiUrlRepaired();
-    if (stored) {
-      return stored;
-    }
     const envUrl = import.meta.env.VITE_API_URL;
     if (envUrl) {
       return normalizeDevLocalApiUrl(envUrl);
