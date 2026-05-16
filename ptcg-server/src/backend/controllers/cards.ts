@@ -71,6 +71,9 @@ export class Cards extends Controller {
         }
         images[`${setCode} ${setNumber}`] = imageUrl;
         images[`${setCode} ${String(setNumber).padStart(3, '0')}`] = imageUrl;
+        if (card.supertype === 'Energy' && typeof card.name === 'string' && !images[card.name]) {
+          images[card.name] = imageUrl;
+        }
       }
     }
     return images;

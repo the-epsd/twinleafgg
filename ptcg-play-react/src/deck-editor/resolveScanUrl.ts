@@ -67,20 +67,39 @@ export function resolveScanUrlRaw(
 
   const primary = cardImagePrimaryId(card);
   const alt = cardImageAltId(card);
+  const named = [card.fullName, card.name].filter(Boolean);
 
   const nightlyUrl = maps.nightly[primary] ?? maps.nightly[alt];
   if (nightlyUrl) {
     return ensureAbsolute(nightlyUrl, apiBase);
+  }
+  for (const name of named) {
+    const url = maps.nightly[name];
+    if (url) {
+      return ensureAbsolute(url, apiBase);
+    }
   }
 
   const overrideUrl = maps.overrides[primary] ?? maps.overrides[alt];
   if (overrideUrl) {
     return ensureAbsolute(overrideUrl, apiBase);
   }
+  for (const name of named) {
+    const url = maps.overrides[name];
+    if (url) {
+      return ensureAbsolute(url, apiBase);
+    }
+  }
 
   const customUrl = maps.custom[primary] ?? maps.custom[alt];
   if (customUrl) {
     return ensureAbsolute(customUrl, apiBase);
+  }
+  for (const name of named) {
+    const url = maps.custom[name];
+    if (url) {
+      return ensureAbsolute(url, apiBase);
+    }
   }
 
   if (!card.set || !card.setNumber) {
