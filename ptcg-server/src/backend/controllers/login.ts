@@ -120,7 +120,15 @@ export class Login extends Controller {
       user.password = '';
       user.registered = Date.now();
       user.lastSeen = Date.now();
-      await user.save();
+      try {
+        await user.save();
+      } catch (error) {
+        const existing = await User.findOne({ where: { name } });
+        if (existing === undefined) {
+          throw error;
+        }
+        user = existing;
+      }
     }
 
     const token = generateToken(user.id);
