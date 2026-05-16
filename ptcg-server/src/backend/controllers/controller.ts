@@ -31,11 +31,8 @@ export abstract class Controller {
       userId: user.id,
       name: user.name,
       email: user.email,
-      ranking: user.ranking,
-      rank: user.getRank(),
       registered: user.registered,
       lastSeen: user.lastSeen,
-      lastRankingChange: user.lastRankingChange,
       avatarFile: user.avatarFile,
       connected,
       roleId: user.roleId

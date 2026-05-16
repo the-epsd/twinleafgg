@@ -6,9 +6,7 @@ import { GameMessage, GameCoreError } from '../game-message';
 import { Game } from './game';
 import { GameSettings } from './game-settings';
 import { InvitePlayerAction } from '../store/actions/invite-player-action';
-import { RankingCalculator } from './ranking-calculator';
 import { Scheduler, generateId } from '../../utils';
-import { config } from '../../config';
 import { Format } from '../store/card/card-types';
 import { AbortGameAction } from '../store/actions/abort-game-action';
 import { AbortGameReason } from '../store/actions/abort-game-action';
@@ -41,7 +39,6 @@ export class Core {
 
     const cleanerTask = new CleanerTask(this);
     cleanerTask.startTasks();
-    this.startRankingDecrease();
     this.startInactiveGameCleanup();
   }
 
@@ -290,20 +287,6 @@ export class Core {
 
     // Emit user updates to all clients
     this.emit(c => c.onUsersUpdate(users));
-  }
-
-  private startRankingDecrease() {
-    const scheduler = Scheduler.getInstance();
-    const rankingCalculator = new RankingCalculator();
-    scheduler.run(async () => {
-      let users = await rankingCalculator.decreaseRanking();
-
-      // Notify only about users which are currently connected
-      const connectedUserIds = this.clients.map(c => c.user.id);
-      users = users.filter(u => connectedUserIds.includes(u.id));
-
-      this.emit(c => c.onUsersUpdate(users));
-    }, config.core.rankingDecreaseIntervalCount);
   }
 
   private startInactiveGameCleanup(): void {

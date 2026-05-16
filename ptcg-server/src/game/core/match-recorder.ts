@@ -6,7 +6,6 @@ import { Action } from '../store/actions/action';
 import { buildReplayActionPayload } from './replay-actions';
 import { State, GamePhase, GameWinner } from '../store/state/state';
 import { User, Match, Deck } from '../../storage';
-import { RankingCalculator } from './ranking-calculator';
 import { Replay } from './replay';
 import { ReplayPlayer } from './replay.interface';
 
@@ -23,14 +22,12 @@ export class MatchRecorder {
   private finished: boolean = false;
   private client1: Client | undefined;
   private client2: Client | undefined;
-  private ranking: RankingCalculator;
   private replay: Replay;
   private pendingActions: PendingReplayAction[] = [];
   private transactionTimeout: NodeJS.Timeout | undefined;
   private readonly TRANSACTION_TIMEOUT_MS = 30000; // 30 seconds
 
   constructor(private core: Core) {
-    this.ranking = new RankingCalculator();
     this.replay = new Replay({ indexEnabled: false });
   }
 
@@ -91,8 +88,8 @@ export class MatchRecorder {
       match.player2 = this.client2.user;
       match.winner = state.winner;
       match.created = Date.now();
-      match.ranking1 = match.player1.ranking;
-      match.ranking2 = match.player2.ranking;
+      match.ranking1 = 0;
+      match.ranking2 = 0;
       match.rankingStake1 = 0;
       match.rankingStake2 = 0;
 
@@ -115,26 +112,7 @@ export class MatchRecorder {
       this.replay.winner = match.winner;
       match.replayData = this.replay.serialize();
 
-      // Update ranking
-      const users = this.ranking.calculateMatch(match, state);
-
-      // Update match's ranking
-      if (users.length >= 2) {
-        match.rankingStake1 = users[0].ranking - match.ranking1;
-        match.ranking1 = users[0].ranking;
-        match.rankingStake2 = users[1].ranking - match.ranking2;
-        match.ranking2 = users[1].ranking;
-      }
-
       await manager.save(match);
-
-      if (users.length >= 2) {
-        for (const user of users) {
-          const update = { ranking: user.ranking, lastRankingChange: user.lastRankingChange };
-          await manager.update(User, user.id, update);
-        }
-        this.core.emit(c => c.onUsersUpdate(users));
-      }
 
     } catch (error) {
       console.error('[MatchRecorder] Error saving match:', error);
@@ -174,7 +152,7 @@ export class MatchRecorder {
   }
 
   private buildReplayPlayer(player: User): ReplayPlayer {
-    return { userId: player.id, name: player.name, ranking: player.ranking };
+    return { userId: player.id, name: player.name, ranking: 0 };
   }
 
   private flushPendingActions(): void {

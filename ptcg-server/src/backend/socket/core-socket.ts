@@ -147,9 +147,6 @@ export class CoreSocket {
       email: user.email,
       registered: user.registered,
       lastSeen: user.lastSeen,
-      ranking: user.ranking,
-      rank: user.getRank(),
-      lastRankingChange: user.lastRankingChange,
       avatarFile: user.avatarFile,
       roleId: user.roleId
     };

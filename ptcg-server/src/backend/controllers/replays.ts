@@ -290,7 +290,6 @@ export class Replays extends Controller {
 
   private async syncReplayPlayer(player: ReplayPlayer): Promise<ReplayPlayer> {
     const name = String(player.name);
-    const ranking = parseInt(String(player.ranking), 10);
     const userId = 0;
 
     const userRows = await User.find({ where: { name: player.name } });
@@ -299,11 +298,11 @@ export class Replays extends Controller {
       return {
         userId: user.id,
         name: user.name,
-        ranking: user.ranking
+        ranking: 0
       };
     }
 
-    return { userId, name, ranking };
+    return { userId, name, ranking: 0 };
   }
 
   private async buildUserMap(replays: Replay[]): Promise<{[id: number]: User}> {
@@ -335,13 +334,11 @@ export class Replays extends Controller {
     if (user1 === undefined) {
       user1 = new User();
       user1.name = replay.player1.name;
-      user1.ranking = replay.player1.ranking;
     }
 
     if (user2 === undefined) {
       user2 = new User();
       user2.name = replay.player2.name;
-      user2.ranking = replay.player2.ranking;
     }
 
     return {
