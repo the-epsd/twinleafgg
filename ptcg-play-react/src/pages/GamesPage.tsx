@@ -36,7 +36,7 @@ export function GamesPage() {
   const { hiddenFormats } = useSettings();
   const { connected, error, clientId, clients, usersById, games, createGame } = useCoreSession();
   const [decks, setDecks] = useState<DeckListEntry[]>([]);
-  const [selectedFormat, setSelectedFormat] = useState<Format>(Format.STANDARD);
+  const [selectedFormat, setSelectedFormat] = useState<Format>(Format.THEME);
   const [selectedDeckId, setSelectedDeckId] = useState<number | null>(null);
   const [selectedOpponentId, setSelectedOpponentId] = useState<number | null>(null);
   const [pageError, setPageError] = useState<string | null>(null);

@@ -7,6 +7,7 @@ const { CardManager } = require('./output/game/cards/card-manager');
 const { StateSerializer } = require('./output/game/serializer/state-serializer');
 const { config } = require('./output/config');
 const { Format } = require('./output/game/store/card/card-types');
+const { THEME_DECKS } = require('./output/game/store/prefabs/theme-decks');
 const sets = require('./output/sets');
 const process = require('process');
 
@@ -233,6 +234,9 @@ if (process.argv.includes('--backfill')) {
 }
 
 const botManager = BotManager.getInstance();
+const liteBot = new SimpleBot('Lite Bot', {}, [Format.THEME]);
+liteBot.setDeck(Format.THEME, THEME_DECKS[1].cards);
+botManager.registerBot(liteBot);
 // botManager.registerBot(new SimpleBot('Gardevoir'));
 // botManager.registerBot(new SimpleBot('Charizard'));
 // botManager.registerBot(new SimpleBot('LostBox'));
