@@ -20,6 +20,7 @@
 *.log
 *.sql
 *.sqlite
+*.sq3
 
 # OS generated files
 .DS_Store
