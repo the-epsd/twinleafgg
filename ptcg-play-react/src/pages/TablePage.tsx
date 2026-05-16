@@ -386,7 +386,7 @@ export function TablePage() {
       return;
     }
     if (leaveReplay) {
-      navigate('/spectate');
+      navigate('/games');
       return;
     }
     void getSocketManager()
@@ -418,13 +418,13 @@ export function TablePage() {
 
   const onGameOverConfirm = useCallback(() => {
     clearPersistedGameId();
-    navigate(localGame?.replay != null ? '/spectate' : '/games');
+    navigate('/games');
   }, [localGame?.replay, navigate]);
 
   const show3d = has3dBoardAccess && use3dBoardDefault;
 
   if (error) {
-    const backTarget = isReplayRoute ? '/spectate' : '/games';
+    const backTarget = '/games';
     return (
       <div style={{ padding: 24 }}>
         <p>{error}</p>
@@ -440,7 +440,7 @@ export function TablePage() {
   }
 
   if (!show3d) {
-    const backTarget = isReplayRoute ? '/spectate' : '/games';
+    const backTarget = '/games';
     return (
       <div style={{ padding: 24 }}>
         <p>{t('REACT_TABLE_3D_DISABLED', 'Enable the 3D board in Settings and ensure your account has access.')}</p>

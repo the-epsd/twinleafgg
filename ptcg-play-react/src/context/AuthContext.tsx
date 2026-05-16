@@ -9,14 +9,15 @@ import {
   type ReactNode,
 } from 'react';
 import type { CardsInfo, ServerConfig, UserInfo } from 'ptcg-server';
-import { loginRequest, refreshTokenRequest, registerRequest } from '../api/authApi';
+import { guestLoginRequest, refreshTokenRequest } from '../api/authApi';
 import { getCardsAll } from '../api/cardsApi';
 import { setAuthInvalidHandler } from '../api/client';
-import { getProfileMe } from '../api/profileApi';
 import { clearAuthTokens, getStoredToken, setStoredApiUrlOverride, setStoredToken } from '../api/storage';
 import { appConfig } from '../env/config';
 import { getSocketManager } from '../socket/socketManager';
 import { applyCardsInfoToGameEngine, clearGameEngineCards } from '../table/gameEngineCards';
+
+const GUEST_NAME_KEY = 'ptcg_guest_name';
 
 interface AuthState {
   user: UserInfo | null;
@@ -29,8 +30,6 @@ interface AuthState {
 
 interface AuthContextValue extends AuthState {
   isAuthenticated: boolean;
-  login: (name: string, password: string) => Promise<void>;
-  register: (name: string, password: string, email: string, serverPassword?: string) => Promise<void>;
   logout: () => void;
   setApiUrlOverride: (url: string | undefined) => void;
   refreshSession: () => Promise<void>;
@@ -54,9 +53,23 @@ function isRefreshTokenUsable(token: string): boolean {
   return expire > nowSec;
 }
 
-async function loadUserAndCards(): Promise<{ user: UserInfo; cardsInfo: CardsInfo }> {
-  const [profile, cardsRes] = await Promise.all([getProfileMe(), getCardsAll()]);
-  return { user: profile.user, cardsInfo: cardsRes.cardsInfo };
+function getOrCreateGuestName(): string {
+  const existing = localStorage.getItem(GUEST_NAME_KEY);
+  if (existing?.startsWith('Guest-')) {
+    return existing;
+  }
+  const suffix =
+    typeof crypto !== 'undefined' && 'randomUUID' in crypto
+      ? crypto.randomUUID().replace(/-/g, '').slice(0, 12)
+      : Math.random().toString(36).slice(2, 14);
+  const name = `Guest-${suffix}`;
+  localStorage.setItem(GUEST_NAME_KEY, name);
+  return name;
+}
+
+async function loadCards(): Promise<CardsInfo> {
+  const cardsRes = await getCardsAll();
+  return cardsRes.cardsInfo;
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -103,34 +116,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refreshSession = useCallback(async () => {
     const t = getStoredToken();
-    if (!t) {
-      setState((s) => ({ ...s, ready: true }));
-      return;
-    }
-    if (!isRefreshTokenUsable(t)) {
-      clearGameEngineCards();
-      clearAuthTokens();
-      setState((s) => ({
-        ...s,
-        user: null,
-        token: null,
-        cardsInfo: null,
-        serverConfig: null,
-        ready: true,
-      }));
-      return;
-    }
     try {
-      const refreshed = await refreshTokenRequest();
-      applyToken(refreshed.token);
-      const { user, cardsInfo } = await loadUserAndCards();
+      const session = t && isRefreshTokenUsable(t)
+        ? await refreshTokenRequest()
+        : await guestLoginRequest(getOrCreateGuestName());
+      applyToken(session.token);
+      const cardsInfo = await loadCards();
       applyCardsInfoToGameEngine(cardsInfo);
       setState((s) => ({
         ...s,
-        user,
+        user: session.user,
         cardsInfo,
-        serverConfig: refreshed.config ?? s.serverConfig,
-        token: refreshed.token,
+        serverConfig: session.config ?? s.serverConfig,
+        token: session.token,
         ready: true,
       }));
     } catch {
@@ -183,48 +181,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, [state.token, state.user, applyToken, logout]);
 
-  const login = useCallback(
-    async (name: string, password: string) => {
-      const res = await loginRequest(name, password);
-      applyToken(res.token);
-      const { user, cardsInfo } = await loadUserAndCards();
-      applyCardsInfoToGameEngine(cardsInfo);
-      setState((s) => ({
-        ...s,
-        user,
-        cardsInfo,
-        serverConfig: res.config ?? null,
-        token: res.token,
-        ready: true,
-      }));
-    },
-    [applyToken]
-  );
-
-  const register = useCallback(
-    async (name: string, password: string, email: string, serverPassword?: string) => {
-      await registerRequest(name, password, email, serverPassword);
-    },
-    []
-  );
-
   const setApiUrlOverride = useCallback((url: string | undefined) => {
     setStoredApiUrlOverride(url);
     getSocketManager().setServerUrl(appConfig.apiUrl);
- setState((s) => ({ ...s, apiUrlInput: url ?? '' }));
+    setState((s) => ({ ...s, apiUrlInput: url ?? '' }));
   }, []);
 
   const value = useMemo<AuthContextValue>(
     () => ({
       ...state,
       isAuthenticated: !!state.token && !!state.user,
-      login,
-      register,
       logout,
       setApiUrlOverride,
       refreshSession,
     }),
-    [state, login, register, logout, setApiUrlOverride, refreshSession]
+    [state, logout, setApiUrlOverride, refreshSession]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

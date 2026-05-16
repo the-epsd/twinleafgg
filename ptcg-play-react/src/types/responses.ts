@@ -1,13 +1,9 @@
 import type {
   Card,
   CardsInfo,
-  ConversationInfo,
-  MatchInfo,
-  MessageInfo,
   ServerConfig,
   UserInfo,
 } from 'ptcg-server';
-import type { RankingInfo } from 'ptcg-server';
 import type { Archetype, CardTag, CardType, Format } from 'ptcg-server';
 
 export interface OkResponse {
@@ -17,21 +13,7 @@ export interface OkResponse {
 export interface LoginResponseBody extends OkResponse {
   token: string;
   config: ServerConfig;
-  user?: { id: number; name: string; roleId: number };
-}
-
-export interface ProfileResponse extends OkResponse {
   user: UserInfo;
-}
-
-export interface ProfileJsonUrlResponse extends OkResponse {
-  jsonUrl: string;
-}
-
-export interface MatchHistoryResponse extends OkResponse {
-  matches: MatchInfo[];
-  users: UserInfo[];
-  total: number;
 }
 
 export interface CardsHashResponse extends OkResponse {
@@ -110,27 +92,4 @@ export interface DeckStatsResponse extends OkResponse {
   replays: DeckStatsReplay[];
   replayLimit?: number;
   totalReplays?: number;
-}
-
-export interface RankingResponse extends OkResponse {
-  ranking: RankingInfo[];
-  total: number;
-}
-
-export interface ConversationsResponse extends OkResponse {
-  conversations: ConversationInfo[];
-  users: UserInfo[];
-  total: number;
-}
-
-export interface MessagesResponse extends OkResponse {
-  messages: MessageInfo[];
-  users: UserInfo[];
-  total: number;
-}
-
-/** Ack payload for `message:send` socket. */
-export interface MessageSendAck {
-  message: MessageInfo;
-  user: UserInfo;
 }

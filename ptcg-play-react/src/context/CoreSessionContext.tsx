@@ -41,14 +41,6 @@ interface CoreSessionContextValue extends CoreSessionState {
     deckId?: number,
     sleeveImagePath?: string
   ) => Promise<GameState>;
-  joinMatchmaking: (
-    format: import('ptcg-server').Format,
-    deck: string[],
-    artworks?: { code: string; artworkId?: number }[],
-    deckId?: number,
-    sleeveImagePath?: string
-  ) => Promise<unknown>;
-  leaveMatchmaking: () => Promise<unknown>;
 }
 
 const CoreSessionContext = createContext<CoreSessionContextValue | null>(null);
@@ -210,39 +202,12 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
     []
   );
 
-  const joinMatchmaking = useCallback(
-    async (
-      format: import('ptcg-server').Format,
-      deck: string[],
-      artworks?: { code: string; artworkId?: number }[],
-      deckId?: number,
-      sleeveImagePath?: string
-    ) => {
-      const socket = getSocketManager();
-      return socket.emit('matchmaking:join', {
-        format,
-        deck,
-        artworks,
-        deckId,
-        sleeveImagePath,
-      });
-    },
-    []
-  );
-
-  const leaveMatchmaking = useCallback(async () => {
-    const socket = getSocketManager();
-    return socket.emit('matchmaking:leave', undefined);
-  }, []);
-
   const value = useMemo<CoreSessionContextValue>(
     () => ({
       ...core,
       createGame,
-      joinMatchmaking,
-      leaveMatchmaking,
     }),
-    [core, createGame, joinMatchmaking, leaveMatchmaking]
+    [core, createGame]
   );
 
   return <CoreSessionContext.Provider value={value}>{children}</CoreSessionContext.Provider>;

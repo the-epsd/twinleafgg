@@ -2,7 +2,6 @@ import { Link, Outlet, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../context/LanguageContext';
 import { SUPPORTED_LANGUAGE_CODES, type SupportedLanguageCode } from '../i18n/languages';
-import { UserAccountMenu } from './UserAccountMenu';
 
 function isDeckEditorPath(pathname: string): boolean {
   return /^\/deck\/[^/]+\/?$/.test(pathname);
@@ -42,11 +41,7 @@ export function AppLayout() {
         <strong>{t('REACT_SHELL_TITLE')}</strong>
         <nav style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
           <Link to="/games">{t('MAIN_GAMES')}</Link>
-          <Link to="/spectate">{t('MAIN_SPECTATE')}</Link>
           <Link to="/deck">{t('DECK_TITLE')}</Link>
-          <Link to="/ranking">{t('MAIN_RANKING')}</Link>
-          <Link to="/message">{t('MAIN_MESSAGES')}</Link>
-          <Link to="/battle-pass">{t('MAIN_BATTLE_PASS')}</Link>
           <Link to="/settings">{t('BUTTON_SETTINGS')}</Link>
         </nav>
         <label style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto' }}>
@@ -63,7 +58,6 @@ export function AppLayout() {
             ))}
           </select>
         </label>
-        <UserAccountMenu />
       </header>
       <main
         style={{

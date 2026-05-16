@@ -103,11 +103,32 @@ export class Login extends Controller {
       ok: true,
       token,
       config: this.getServerConfig(),
-      user: {
-        id: user.id,
-        name: user.name,
-        roleId: user.roleId
-      }
+      user: this.buildUserInfo(user)
+    });
+  }
+
+  @Post('/guest')
+  public async onGuest(req: Request, res: Response) {
+    const requestedName = typeof req.body?.name === 'string' ? req.body.name : '';
+    const name = this.normalizeGuestName(requestedName);
+    let user = await User.findOne({ where: { name } });
+
+    if (user === undefined) {
+      user = new User();
+      user.name = name;
+      user.email = `${name.toLowerCase()}@guest.local`;
+      user.password = '';
+      user.registered = Date.now();
+      user.lastSeen = Date.now();
+      await user.save();
+    }
+
+    const token = generateToken(user.id);
+    res.send({
+      ok: true,
+      token,
+      config: this.getServerConfig(),
+      user: this.buildUserInfo(user)
     });
   }
 
@@ -115,8 +136,14 @@ export class Login extends Controller {
   @AuthToken()
   public async onRefreshToken(req: Request, res: Response) {
     const userId: number = req.body.userId;
+    const user = await User.findOne({ where: { id: userId } });
+    if (user === undefined) {
+      res.status(401);
+      res.send({ error: ApiErrorEnum.LOGIN_INVALID });
+      return;
+    }
     const token = generateToken(userId);
-    res.send({ ok: true, token, config: this.getServerConfig() });
+    res.send({ ok: true, token, config: this.getServerConfig(), user: this.buildUserInfo(user) });
   }
 
   @Get('/logout')
@@ -144,6 +171,14 @@ export class Login extends Controller {
       refreshTokenInterval: config.backend.refreshTokenInterval,
       board3dWhitelist: board3dWhitelist
     };
+  }
+
+  private normalizeGuestName(name: string): string {
+    const cleaned = name.trim().replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40);
+    if (cleaned.length >= 8 && cleaned.startsWith('Guest-')) {
+      return cleaned;
+    }
+    return `Guest-${Math.random().toString(36).slice(2, 10)}`;
   }
 
 }

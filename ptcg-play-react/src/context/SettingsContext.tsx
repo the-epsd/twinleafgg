@@ -6,7 +6,6 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { useAuth } from './AuthContext';
 import {
   readClientSettingsSnapshot,
   writeBoard2dPerspectiveEnabled,
@@ -48,19 +47,8 @@ interface SettingsContextValue extends ClientSettingsSnapshot {
 
 const SettingsContext = createContext<SettingsContextValue | null>(null);
 
-function computeHas3dAccess(userName: string | undefined, whitelist: string[] | undefined): boolean {
-  if (!userName || !whitelist?.length) {
-    return false;
-  }
-  return whitelist.includes(userName);
-}
-
 export function SettingsProvider({ children }: { children: ReactNode }) {
-  const { user, serverConfig } = useAuth();
-  const has3dBoardAccess = useMemo(
-    () => computeHas3dAccess(user?.name, serverConfig?.board3dWhitelist),
-    [user?.name, serverConfig?.board3dWhitelist],
-  );
+  const has3dBoardAccess = true;
 
   const [state, setState] = useState<ClientSettingsSnapshot>(() => readClientSettingsSnapshot());
 
