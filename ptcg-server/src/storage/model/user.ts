@@ -1,8 +1,6 @@
 import { BaseEntity, Column, Entity, Unique, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { Avatar } from './avatar';
 import { Deck } from './deck';
 import { Replay } from './replay';
-import { Rank, rankLevels } from '../../backend/interfaces/rank.enum';
 import { bigint } from '../transformers/bigint';
 
 @Entity()
@@ -19,9 +17,6 @@ export class User extends BaseEntity {
   public email: string = '';
 
   @Column()
-  public ranking: number = 0;
-
-  @Column()
   public password: string = '';
 
   @Column({ type: 'int', default: 0 })
@@ -33,40 +28,11 @@ export class User extends BaseEntity {
   @Column({ type: 'bigint', transformer: [bigint] })
   public lastSeen: number = 0;
 
-  @Column({ type: 'bigint', transformer: [bigint] })
-  public lastRankingChange: number = 0;
-
-  @Column()
-  public avatarFile: string = '';
-
-  @Column({ nullable: true })
-  public cardImagesJsonUrl: string = '';
-
-  @Column({ nullable: true })
-  public nightlyImagesJsonUrl: string = '';
-
-  @Column({ type: 'varchar', length: 255, nullable: true })
-  public activeBattlePassSeasonId: string | null = null;
-
   @OneToMany(type => Deck, deck => deck.user)
     decks!: Deck[];
 
-  @OneToMany(type => Avatar, avatar => avatar.user)
-    avatars!: Avatar[];
-
   @OneToMany(type => Replay, replay => replay.user)
     replays!: Replay[];
-
-  public getRank(): Rank {
-    let rank = rankLevels[0].rank;
-    for (const level of rankLevels) {
-      if (level.points > this.ranking) {
-        break;
-      }
-      rank = level.rank;
-    }
-    return rank;
-  }
 
   public async updateLastSeen(): Promise<this> {
     this.lastSeen = Date.now();

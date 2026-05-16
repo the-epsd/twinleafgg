@@ -18,10 +18,10 @@ export class Replay extends BaseEntity {
   public name: string = '';
 
   @Column({ type: 'simple-json' })
-    player1: ReplayPlayer = { userId: 0, name: '', ranking: 0 };
+    player1: ReplayPlayer = { userId: 0, name: '' };
 
   @Column({ type: 'simple-json' })
-    player2: ReplayPlayer = { userId: 0, name: '', ranking: 0 };
+    player2: ReplayPlayer = { userId: 0, name: '' };
 
   @Column()
   public winner: GameWinner = GameWinner.NONE;

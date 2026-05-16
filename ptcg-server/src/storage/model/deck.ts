@@ -33,7 +33,4 @@ export class Deck extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   public formats?: string;
 
-  @Column({ nullable: true })
-  public sleeveIdentifier?: string;
-
 }

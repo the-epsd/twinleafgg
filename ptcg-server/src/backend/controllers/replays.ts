@@ -297,12 +297,11 @@ export class Replays extends Controller {
       const user = userRows[0];
       return {
         userId: user.id,
-        name: user.name,
-        ranking: 0
+        name: user.name
       };
     }
 
-    return { userId, name, ranking: 0 };
+    return { userId, name };
   }
 
   private async buildUserMap(replays: Replay[]): Promise<{[id: number]: User}> {

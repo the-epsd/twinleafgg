@@ -25,8 +25,8 @@ export class Replay {
   private options: ReplayOptions;
 
   constructor(options: Partial<ReplayOptions> = {}) {
-    this.player1 = { name: '', userId: 0, ranking: 0 };
-    this.player2 = { name: '', userId: 0, ranking: 0 };
+    this.player1 = { name: '', userId: 0 };
+    this.player2 = { name: '', userId: 0 };
     this.winner = GameWinner.NONE;
     this.created = 0;
     this.options = Object.assign({

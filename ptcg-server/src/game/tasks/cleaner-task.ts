@@ -31,7 +31,7 @@ export class CleanerTask {
     }, config.core.keepMatchIntervalCount);
   }
 
-  // Remove inactive users with ranking equals 0.
+  // Remove inactive empty accounts.
   private startOldUsersDelete() {
     const scheduler = Scheduler.getInstance();
     scheduler.run(async () => {
@@ -42,8 +42,7 @@ export class CleanerTask {
       const usersToDelete = await User.find({
         where: {
           lastSeen: LessThan(yesterday),
-          registered: LessThan(yesterday),
-          ranking: 0
+          registered: LessThan(yesterday)
         },
         relations: ['decks']
       });

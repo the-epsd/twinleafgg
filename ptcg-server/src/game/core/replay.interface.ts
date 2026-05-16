@@ -20,6 +20,4 @@ export interface ReplayPlayer {
 
   name: string;
 
-  ranking: number;
-
 }

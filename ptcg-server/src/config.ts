@@ -31,18 +31,12 @@ export const config = {
     // Wait till next hour before running tasks
     schedulerStartNextHour: false, // Removed wait time
 
-    // Decrease players' ranking every day
-    // If you wish to disable this feature set IntervalCount to 0
-    rankingDecraseRate: 0.975, // 1 - 0.025 for 2.5% decrease
-    rankingDecraseTime: 7 * 24 * 60 * 60 * 1000, // Reduced to 7 days
-    rankingDecreaseIntervalCount: 0, // Check every other scheduler tick
-
     // Deletes matches older than `keepMatchTike` from the database, to keep it small.
     // If you wish to disable this feature set IntervalCount to 0
     keepMatchTime: 14 * 24 * 60 * 60 * 1000, // Reduced to 14 days
     keepMatchIntervalCount: 0,
 
-    // Deletes users that doesn't log in in the `keepUserTime` and their ranking is 0
+    // Deletes empty users that don't log in within `keepUserTime`.
     // If you wish to disable this feature set IntervalCount to 0
     keepUserTime: 14 * 24 * 60 * 60 * 1000, // Increased to 14 days
     keepUserIntervalCount: 0

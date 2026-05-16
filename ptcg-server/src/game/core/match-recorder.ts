@@ -88,10 +88,6 @@ export class MatchRecorder {
       match.player2 = this.client2.user;
       match.winner = state.winner;
       match.created = Date.now();
-      match.ranking1 = 0;
-      match.ranking2 = 0;
-      match.rankingStake1 = 0;
-      match.rankingStake2 = 0;
 
       // Store archetype information based on deck analysis
       const player1Archetypes = await this.getPlayerArchetypes(state.players[0]);
@@ -152,7 +148,7 @@ export class MatchRecorder {
   }
 
   private buildReplayPlayer(player: User): ReplayPlayer {
-    return { userId: player.id, name: player.name, ranking: 0 };
+    return { userId: player.id, name: player.name };
   }
 
   private flushPendingActions(): void {
