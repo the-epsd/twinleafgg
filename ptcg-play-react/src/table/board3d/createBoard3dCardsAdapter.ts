@@ -49,22 +49,14 @@ export function createBoard3dCardsAdapter(input: {
   maps: CardImageMaps;
   scansUrl: string | undefined;
   apiBase: string;
-  sleevesUrl: string | undefined;
   showCardInfo: (data: Board3dCardInfoData) => Promise<CardInfoPaneActionResult>;
   showCardInfoList: (data: Board3dCardInfoData) => Promise<CardInfoPaneActionResult>;
 }): Board3dCardsAdapter {
-  const { maps, scansUrl, apiBase, sleevesUrl, showCardInfo, showCardInfoList } = input;
+  const { maps, scansUrl, apiBase, showCardInfo, showCardInfoList } = input;
 
   return {
     getScanUrlFor3D(card: Card, cardList?: unknown): string {
       return getScanUrlFor3D(card, cardList, maps, scansUrl, apiBase);
-    },
-    getSleeveUrl(imagePath?: string): string | undefined {
-      if (!imagePath || !sleevesUrl) {
-        return undefined;
-      }
-      const base = apiBase.replace(/\/$/, '');
-      return base + sleevesUrl.replace('{path}', imagePath);
     },
     showCardInfo(data: Board3dCardInfoData = {}) {
       return showCardInfo(data);

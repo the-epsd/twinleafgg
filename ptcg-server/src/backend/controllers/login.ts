@@ -162,11 +162,6 @@ export class Login extends Controller {
       apiVersion: 2,
       defaultPageSize: config.backend.defaultPageSize,
       scansUrl: config.sets.scansUrl,
-      avatarsUrl: config.backend.avatarsUrl,
-      sleevesUrl: config.backend.sleevesUrl,
-      avatarFileSize: config.backend.avatarFileSize,
-      avatarMinSize: config.backend.avatarMinSize,
-      avatarMaxSize: config.backend.avatarMaxSize,
       replayFileSize: config.backend.replayFileSize,
       refreshTokenInterval: config.backend.refreshTokenInterval,
       board3dWhitelist: board3dWhitelist

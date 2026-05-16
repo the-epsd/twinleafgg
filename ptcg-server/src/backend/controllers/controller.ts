@@ -33,7 +33,6 @@ export abstract class Controller {
       email: user.email,
       registered: user.registered,
       lastSeen: user.lastSeen,
-      avatarFile: user.avatarFile,
       connected,
       roleId: user.roleId
     };

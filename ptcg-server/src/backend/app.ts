@@ -46,9 +46,9 @@ export class App {
       instance.init();
     };
 
-    // General limit: base + avatar size (4x) + replay size (4x for base64 encoding overhead).
+    // General limit: base + replay size (4x for base64 encoding overhead).
     // /v1/replays uses a higher limit so long-game replay imports are not rejected at the parser.
-    const defaultJsonLimit = 512 + config.backend.avatarFileSize * 4 + config.backend.replayFileSize * 4;
+    const defaultJsonLimit = 512 + config.backend.replayFileSize * 4;
     const parseJsonDefault = json({ limit: defaultJsonLimit });
     const parseJsonReplays = json({ limit: config.backend.replayImportJsonBodyLimit });
     app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -83,9 +83,6 @@ export class App {
     if (config.sets.scansDir) {
       app.use('/scans', express.static(config.sets.scansDir));
     }
-    app.use('/avatars', express.static(config.backend.avatarsDir));
-    app.use('/sleeves', express.static(config.backend.sleevesDir));
-
     // API routes
     define('/v1/cards', Cards);
     define('/v1/decks', Decks);

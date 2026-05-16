@@ -93,11 +93,10 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
         maps,
         scansUrl: serverConfig?.scansUrl,
         apiBase: appConfig.apiUrl,
-        sleevesUrl: serverConfig?.sleevesUrl,
         showCardInfo: queueInfo,
         showCardInfoList: queueList,
       }),
-    [catalog, maps, serverConfig?.scansUrl, serverConfig?.sleevesUrl, queueInfo, queueList],
+    [catalog, maps, serverConfig?.scansUrl, queueInfo, queueList],
   );
 
   const controllerProps: Board3dControllerProps = useMemo(

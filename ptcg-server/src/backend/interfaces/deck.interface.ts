@@ -4,8 +4,6 @@ export interface DeckSaveRequest {
   cards: string[];
   manualArchetype1?: string;
   manualArchetype2?: string;
-  sleeveIdentifier?: string;
-  sleeveImagePath?: string;
 }
 
 export interface Deck {
@@ -16,6 +14,4 @@ export interface Deck {
   cardTypes: string;
   manualArchetype1: string | null;
   manualArchetype2: string | null;
-  sleeveIdentifier?: string;
-  sleeveImagePath?: string;
 }

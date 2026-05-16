@@ -38,8 +38,7 @@ interface CoreSessionContextValue extends CoreSessionState {
     deck: string[],
     gameSettings: GameSettings,
     invitedClientId?: number,
-    deckId?: number,
-    sleeveImagePath?: string
+    deckId?: number
   ) => Promise<GameState>;
 }
 
@@ -178,8 +177,7 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
       deck: string[],
       gameSettings: GameSettings,
       invitedClientId?: number,
-      deckId?: number,
-      sleeveImagePath?: string
+      deckId?: number
     ) => {
       const socket = getSocketManager();
       return socket.emit<
@@ -188,7 +186,6 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
           gameSettings: GameSettings;
           clientId?: number;
           deckId?: number;
-          sleeveImagePath?: string;
         },
         GameState
       >('core:createGame', {
@@ -196,7 +193,6 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
         gameSettings,
         clientId: invitedClientId,
         deckId,
-        sleeveImagePath,
       });
     },
     []

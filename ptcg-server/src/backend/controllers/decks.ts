@@ -5,7 +5,7 @@ import { CardManager, DeckAnalyser, GameWinner } from '../../game';
 import { Controller, Get, Post } from './controller';
 import { DeckSaveRequest } from '../interfaces';
 import { ApiErrorEnum } from '../common/errors';
-import { User, Deck, Match, Sleeve } from '../../storage';
+import { User, Deck, Match } from '../../storage';
 import { THEME_DECKS } from '../../game/store/prefabs/theme-decks';
 import { Format, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { ANY_PRINTING_ALLOWED } from '../../game/store/card/any-printing-allowed';
@@ -35,11 +35,7 @@ export class Decks extends Controller {
       skip: offset
     });
 
-    const sleeves = await Sleeve.find();
-    const sleeveMap = new Map(sleeves.map(sleeve => [sleeve.identifier, sleeve.imagePath]));
-
     const decks = userDecks.map(deck => {
-      const sleeveImagePath = deck.sleeveIdentifier ? sleeveMap.get(deck.sleeveIdentifier) : undefined;
       let format: number[];
       if (deck.formats && deck.formats.trim() !== '') {
         try {
@@ -63,9 +59,7 @@ export class Decks extends Controller {
         isValid: deck.isValid,
         manualArchetype1: deck.manualArchetype1,
         manualArchetype2: deck.manualArchetype2,
-        format,
-        ...(deck.sleeveIdentifier ? { sleeveIdentifier: deck.sleeveIdentifier } : {}),
-        ...(sleeveImagePath ? { sleeveImagePath } : {})
+        format
       };
 
       if (!summary) {
@@ -106,9 +100,6 @@ export class Decks extends Controller {
       return;
     }
 
-    const sleeveImagePath = entity.sleeveIdentifier
-      ? (await Sleeve.findOne({ where: { identifier: entity.sleeveIdentifier } }))?.imagePath
-      : undefined;
     const deck = {
       id: entity.id,
       name: entity.name,
@@ -116,9 +107,7 @@ export class Decks extends Controller {
       cardTypes: JSON.parse(entity.cardTypes),
       cards: JSON.parse(entity.cards),
       manualArchetype1: entity.manualArchetype1,
-      manualArchetype2: entity.manualArchetype2,
-      ...(entity.sleeveIdentifier ? { sleeveIdentifier: entity.sleeveIdentifier } : {}),
-      ...(sleeveImagePath ? { sleeveImagePath } : {})
+      manualArchetype2: entity.manualArchetype2
     };
 
     res.send({ ok: true, deck });
@@ -181,7 +170,6 @@ export class Decks extends Controller {
     deck.cardTypes = JSON.stringify(deckUtils.getDeckType());
     deck.manualArchetype1 = body.manualArchetype1 || '';
     deck.manualArchetype2 = body.manualArchetype2 || '';
-    deck.sleeveIdentifier = body.sleeveIdentifier || '';
     deck.formats = JSON.stringify(getValidFormatsForCardList(resolvedCards));
     try {
       deck = await deck.save();
@@ -191,18 +179,13 @@ export class Decks extends Controller {
       return;
     }
 
-    const savedSleeveImagePath = deck.sleeveIdentifier
-      ? (await Sleeve.findOne({ where: { identifier: deck.sleeveIdentifier } }))?.imagePath
-      : undefined;
     res.send({
       ok: true, deck: {
         id: deck.id,
         name: deck.name,
         cards: resolvedCards,
         manualArchetype1: deck.manualArchetype1,
-        manualArchetype2: deck.manualArchetype2,
-        ...(body.sleeveIdentifier ? { sleeveIdentifier: body.sleeveIdentifier } : {}),
-        ...(savedSleeveImagePath ? { sleeveImagePath: savedSleeveImagePath } : {})
+        manualArchetype2: deck.manualArchetype2
       }
     });
   }

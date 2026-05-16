@@ -622,7 +622,6 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
       const player = createPlayer(action.clientId, action.name, state.gameSettings?.format);
       player.deck = CardList.fromList(action.deck);
       player.deckId = action.deckId;
-      player.sleeveImagePath = action.sleeveImagePath;
       // Attach alternate artwork map to player's lists so clients can resolve images
       if (action.artworksMap) {
         const lists: any[] = [
@@ -639,21 +638,6 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
         lists.forEach(list => { (list as any).artworksMap = action.artworksMap; });
         // Also store on player for robustness
         (player as any).artworksMap = action.artworksMap;
-      }
-      if (action.sleeveImagePath) {
-        const lists: any[] = [
-          player.deck,
-          player.hand,
-          player.discard,
-          player.lostzone,
-          player.stadium,
-          player.supporter,
-          player.active,
-          ...player.bench,
-          ...player.prizes
-        ];
-        lists.forEach(list => { (list as any).sleeveImagePath = action.sleeveImagePath; });
-        (player as any).sleeveImagePath = action.sleeveImagePath;
       }
       player.deck.isSecret = true;
       player.deck.cards.forEach(c => {
@@ -696,7 +680,6 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
         }
         const deckPayload: any = deck;
         const deckCards: string[] = Array.isArray(deckPayload) ? deckPayload : deckPayload?.deck;
-        const sleeveImagePath: string | undefined = Array.isArray(deckPayload) ? undefined : deckPayload?.sleeveImagePath;
         if (!Array.isArray(deckCards) || deckCards.length === 0) {
           store.log(state, GameLog.LOG_GAME_FINISHED_BEFORE_STARTED);
           const winner = GameWinner.NONE;
@@ -714,21 +697,6 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
 
         player.deck = CardList.fromList(deckCards);
         player.deck.isSecret = true;
-        if (sleeveImagePath) {
-          const lists: any[] = [
-            player.deck,
-            player.hand,
-            player.discard,
-            player.lostzone,
-            player.stadium,
-            player.supporter,
-            player.active,
-            ...player.bench,
-            ...player.prizes
-          ];
-          lists.forEach(list => { (list as any).sleeveImagePath = sleeveImagePath; });
-          (player as any).sleeveImagePath = sleeveImagePath;
-        }
         player.deck.cards.forEach(c => {
           state.cardNames.push(c.fullName);
           c.id = state.cardNames.length - 1;

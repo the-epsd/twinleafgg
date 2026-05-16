@@ -13,8 +13,7 @@ export type UpdateCardCallback = (
   rotation: number,
   scene: Scene,
   cardTarget?: any,
-  scale?: number,
-  sleeveImagePath?: string
+  scale?: number
 ) => Promise<void>;
 
 // Callback type for getting cards by ID
@@ -45,7 +44,6 @@ export class Board3dStackService {
     position: Vector3,
     rotation: number,
     scene: Scene,
-    sleeveImagePath: string | undefined,
     deckCardList: CardList,
     updateCardCallback: UpdateCardCallback,
     getCardByIdCallback: GetCardByIdCallback
@@ -59,18 +57,7 @@ export class Board3dStackService {
       this.deckStacks.delete(stackId);
     }
 
-    // Load sleeve texture if available, otherwise use cardback
-    let cardBackTexture: Texture;
-    if (sleeveImagePath) {
-      const sleeveUrl = this.cardsAdapter.getSleeveUrl(sleeveImagePath);
-      if (sleeveUrl) {
-        cardBackTexture = await this.assetLoader.loadSleeveTexture(sleeveUrl);
-      } else {
-        cardBackTexture = await this.assetLoader.loadCardBack();
-      }
-    } else {
-      cardBackTexture = await this.assetLoader.loadCardBack();
-    }
+    const cardBackTexture: Texture = await this.assetLoader.loadCardBack();
     const geometry = new Board3dCard(
       cardBackTexture,
       cardBackTexture,
@@ -127,8 +114,7 @@ export class Board3dStackService {
         rotation,
         scene,
         undefined, // No cardTarget
-        1.0,
-        sleeveImagePath
+        1.0
       );
 
       // Mark top card as deck for click detection and set full deck CardList
@@ -189,8 +175,7 @@ export class Board3dStackService {
       rotation,
       scene,
       undefined, // No cardTarget
-      1.0,
-      undefined // No sleeve for discard
+      1.0
     );
 
     // Mark top card as discard for click detection
@@ -297,8 +282,7 @@ export class Board3dStackService {
       rotation,
       scene,
       undefined, // No cardTarget
-      1.0,
-      undefined // No sleeve for Lost Zone
+      1.0
     );
 
     // Mark top card as Lost Zone for click detection

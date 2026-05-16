@@ -2,7 +2,6 @@ import { Action } from '../store/actions/action';
 import { AbortGameAction } from '../store/actions/abort-game-action';
 import { AddPlayerAction } from '../store/actions/add-player-action';
 import { AppendLogAction } from '../store/actions/append-log-action';
-import { ChangeAvatarAction } from '../store/actions/change-avatar-action';
 import { ConcedeAction } from '../store/actions/concede-action';
 import {
   AttackAction,
@@ -57,13 +56,10 @@ export function buildActionFromReplayRecord(record: ReplayActionRecord, state?: 
         payload.name,
         payload.deck,
         payload.artworksMap,
-        payload.deckId,
-        payload.sleeveImagePath
+        payload.deckId
       );
     case 'APPEND_LOG_ACTION':
       return new AppendLogAction(payload.id, payload.message, payload.params);
-    case 'CHANGE_AVATAR':
-      return new ChangeAvatarAction(payload.id, payload.avatarName, payload.log);
     case 'CONCEDE_GAME':
       return new ConcedeAction(payload.playerId);
     case 'ATTACK_ACTION':

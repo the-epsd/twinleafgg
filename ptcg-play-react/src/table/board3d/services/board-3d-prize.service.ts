@@ -31,9 +31,6 @@ export class Board3dPrizeService {
     // Ensure we have 6 prize slots
     const prizeSlots = prizes || [];
 
-    // Get sleeve image path from player (fallback if not on individual prizes)
-    const playerSleeveImagePath = (player as any)?.sleeveImagePath;
-
     // Load all 6 prize slots in parallel
     const prizePromises = Array.from({ length: 6 }, (_, index) => {
       const prizeId = `${playerPrefix}_prize_${index}`;
@@ -51,9 +48,6 @@ export class Board3dPrizeService {
           basePosition.z + offsetZ
         );
 
-        // Extract sleeve image path from prize CardList, fallback to player-level sleeve
-        const sleeveImagePath = (prize as any)?.sleeveImagePath || playerSleeveImagePath;
-
         return updateCardCallback(
           prize,
           prizeId,
@@ -62,8 +56,7 @@ export class Board3dPrizeService {
           rotation,
           scene,
           undefined, // No cardTarget for prizes
-          1.0, // Normal scale
-          sleeveImagePath
+          1.0 // Normal scale
         ).then(() => {
           // Mark prize card for click detection
           const prizeCardMesh = getCardByIdCallback(prizeId);

@@ -119,7 +119,6 @@ export function GamesPage() {
         settings,
         selectedOpponentId,
         deck.deck.id,
-        deck.deck.sleeveImagePath,
       );
       navigate(`/table/${game.gameId}`);
     } catch (e) {

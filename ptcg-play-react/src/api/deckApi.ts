@@ -46,8 +46,7 @@ export function saveDeck(
   cards: string[],
   manualArchetype1?: Archetype,
   manualArchetype2?: Archetype,
-  artworks?: { code: string; artworkId?: number }[],
-  sleeveIdentifier?: string
+  artworks?: { code: string; artworkId?: number }[]
 ): Promise<DeckResponse> {
   return apiPost<DeckResponse>('/v1/decks/save', {
     id: deckId,
@@ -56,7 +55,6 @@ export function saveDeck(
     manualArchetype1,
     manualArchetype2,
     ...(artworks ? { artworks } : {}),
-    ...(sleeveIdentifier ? { sleeveIdentifier } : {}),
   });
 }
 

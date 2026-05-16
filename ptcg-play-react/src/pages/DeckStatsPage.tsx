@@ -74,7 +74,6 @@ export function DeckStatsPage() {
           archetype1 || undefined,
           archetype2 || undefined,
           deck.artworks,
-          deck.sleeveIdentifier,
         );
         setDeck(res.deck);
         setToast(t('DECK_EDIT_SAVED'));

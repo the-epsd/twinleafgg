@@ -176,9 +176,7 @@ export class Board3dStateSyncService {
 
     // Active and Supporter - run in parallel (independent zones)
     const activePromise = player.active && player.active.cards.length > 0
-      ? (() => {
-          const sleeveImagePath = this.getSleeveImagePath(player.active, player);
-          return this.updateCard(
+      ? this.updateCard(
             player.active!,
             `${playerPrefix}_active`,
             ZONE_POSITIONS[position].active,
@@ -186,10 +184,8 @@ export class Board3dStateSyncService {
             rotation,
             scene,
             { player: playerType, slot: SlotType.ACTIVE, index: 0 },
-            1.5,
-            sleeveImagePath
-          );
-        })()
+            1.5
+          )
       : Promise.resolve(undefined).then(() => {
           this.removeCard(`${playerPrefix}_active`, scene);
         });
@@ -221,7 +217,6 @@ export class Board3dStateSyncService {
     const benchPromises = player.bench.map((benchCard, i) => {
       const cardId = `${playerPrefix}_bench_${i}`;
       if (benchCard && benchCard.cards.length > 0) {
-        const sleeveImagePath = this.getSleeveImagePath(benchCard, player);
         return this.updateCard(
           benchCard,
           cardId,
@@ -230,8 +225,7 @@ export class Board3dStateSyncService {
           rotation,
           scene,
           { player: playerType, slot: SlotType.BENCH, index: i },
-          1.0,
-          sleeveImagePath
+          1.0
         );
       } else {
         this.removeCard(cardId, scene);
@@ -248,7 +242,6 @@ export class Board3dStateSyncService {
         ZONE_POSITIONS[position].deck,
         rotation,
         scene,
-        (player.deck as any)?.sleeveImagePath,
         player.deck,
         this.updateCard.bind(this),
         this.getCardById.bind(this)
@@ -368,15 +361,6 @@ export class Board3dStateSyncService {
   }
 
   /**
-   * Extract sleeve image path from CardList with fallback to player's sleeve
-   */
-  private getSleeveImagePath(cardList: CardList | undefined, player: Player): string | undefined {
-    const cardListSleeve = (cardList as any)?.sleeveImagePath;
-    const playerSleeve = (player as any)?.sleeveImagePath;
-    return cardListSleeve || playerSleeve;
-  }
-
-  /**
    * Update or create a card in the scene
    */
   private async updateCard(
@@ -387,8 +371,7 @@ export class Board3dStateSyncService {
     rotation: number,
     scene: Scene,
     cardTarget?: CardTarget,
-    scale: number = 1.0,
-    sleeveImagePath?: string
+    scale: number = 1.0
   ): Promise<void> {
     // Determine the main card to display
     let mainCard: Card;
@@ -418,20 +401,9 @@ export class Board3dStateSyncService {
     // Get card scan URL (checks artworksMap for overrides first, like 2D components do)
     const scanUrl = this.cardsAdapter.getScanUrlFor3D(mainCard, cardList);
 
-    // Get sleeve URL if sleeve image path is provided
-    const sleeveUrl = sleeveImagePath ? this.cardsAdapter.getSleeveUrl(sleeveImagePath) : undefined;
-
-    // Load textures - use sleeve if available, otherwise use cardback
-    const loadBackTexture = async () => {
-      if (sleeveUrl) {
-        return this.assetLoader.loadSleeveTexture(sleeveUrl);
-      }
-      return this.assetLoader.loadCardBack();
-    };
-
     // Progressive loading: show card-back immediately, load front texture in background
     const [backTexture, maskTexture] = await Promise.all([
-      loadBackTexture(),
+      this.assetLoader.loadCardBack(),
       this.assetLoader.loadCardMaskTexture()
     ]);
 

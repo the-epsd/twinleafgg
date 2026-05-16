@@ -16,8 +16,6 @@ export class Player {
 
   deckId?: number;
 
-  sleeveImagePath?: string;
-
   deck: CardList = new CardList();
 
   hand: CardList = new CardList();
@@ -56,8 +54,6 @@ export class Player {
   stadiumUsedTurn: number = 0;
 
   marker = new Marker();
-
-  avatarName: string = '';
 
   usedVSTAR: boolean = false;
 

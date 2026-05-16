@@ -2,11 +2,6 @@ export interface ServerConfig {
   apiVersion: number;
   defaultPageSize: number;
   scansUrl: string;
-  avatarsUrl: string;
-  sleevesUrl: string;
-  avatarFileSize: number;
-  avatarMinSize: number;
-  avatarMaxSize: number;
   replayFileSize: number;
   refreshTokenInterval: number;
   board3dWhitelist: string[];

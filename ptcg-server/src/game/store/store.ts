@@ -3,7 +3,6 @@ import { AbortGameAction } from './actions/abort-game-action';
 import { AppendLogAction } from './actions/append-log-action';
 import { ConcedeAction } from './actions/concede-action';
 import { Card } from './card/card';
-import { ChangeAvatarAction } from './actions/change-avatar-action';
 import { Effect } from './effects/effect';
 import { GameError } from '../game-error';
 import { GameMessage, GameLog } from '../game-message';
@@ -86,9 +85,8 @@ export class Store implements StoreLike {
     }
 
     if (action instanceof ReorderHandAction
-      || action instanceof ReorderBenchAction
-      || action instanceof ChangeAvatarAction) {
-      state = playerStateReducer(this, state, action);
+      || action instanceof ReorderBenchAction) {
+      state = playerStateReducer(state, action);
       this.notifyAction(action, state);
       this.handler.onStateChange(state);
       return state;

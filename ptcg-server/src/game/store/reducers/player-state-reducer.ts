@@ -1,11 +1,9 @@
 import { Action } from '../actions/action';
-import { ChangeAvatarAction } from '../actions/change-avatar-action';
 import { ReorderBenchAction } from '../actions/reorder-actions';
 import { State } from '../state/state';
-import { StoreLike } from '../store-like';
 
 
-export function playerStateReducer(store: StoreLike, state: State, action: Action): State {
+export function playerStateReducer(state: State, action: Action): State {
 
   if (action instanceof ReorderBenchAction) {
     const player = state.players.find(p => p.id === action.id);
@@ -31,22 +29,6 @@ export function playerStateReducer(store: StoreLike, state: State, action: Actio
 
   //   return state;
   // }
-
-  if (action instanceof ChangeAvatarAction) {
-
-    const player = state.players.find(p => p.id === action.id);
-    if (player === undefined) {
-      return state;
-    }
-
-    player.avatarName = action.avatarName;
-
-    if (action.log) {
-      store.log(state, action.log.message, action.log.params, player.id);
-    }
-
-    return state;
-  }
 
   return state;
 }

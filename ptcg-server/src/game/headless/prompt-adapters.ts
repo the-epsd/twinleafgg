@@ -59,7 +59,7 @@ export const HEADLESS_PROMPT_ADAPTERS: HeadlessPromptAdapter[] = [
   adapter(ConfirmCardsPrompt, true, 'true'),
   adapter(ConfirmPrompt, true, 'boolean'),
   adapter(DiscardEnergyPrompt, true, '{ from: CardTarget, index: number }[] | null'),
-  adapter(InvitePlayerPrompt, false, 'string[] | { deck: string[], sleeveImagePath?: string } | null', 'InvitePlayerPrompt belongs to socket matchmaking; headless games should use newGame/setupScenario instead.'),
+  adapter(InvitePlayerPrompt, false, 'string[] | { deck: string[] } | null', 'InvitePlayerPrompt belongs to socket matchmaking; headless games should use newGame/setupScenario instead.'),
   adapter(MoveDamagePrompt, true, '{ from: CardTarget, to: CardTarget }[] | null'),
   adapter(MoveEnergyPrompt, true, '{ from: CardTarget, to: CardTarget, index: number }[] | null'),
   adapter(OrderCardsPrompt, true, 'number[] | null'),

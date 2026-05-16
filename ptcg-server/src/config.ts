@@ -6,13 +6,6 @@ export const config = {
     allowCors: true,
     tokenExpire: 21600,
     defaultPageSize: 50,
-    avatarsDir: '',
-    avatarsUrl: '/avatars/{name}',
-    sleevesDir: 'sleeves',
-    sleevesUrl: '/sleeves/{path}',
-    avatarFileSize: 256 * 1024,
-    avatarMinSize: 64,
-    avatarMaxSize: 512,
     replayFileSize: 512 * 1024,
     /** JSON body limit for /v1/replays only (base64 replay imports can exceed the general limit). */
     replayImportJsonBodyLimit: 8 * 1024 * 1024,

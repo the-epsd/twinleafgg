@@ -115,29 +115,6 @@ export class Board3dAssetLoaderService {
   }
 
   /**
-   * Load a sleeve texture - direct from URL, same as 2D.
-   */
-  async loadSleeveTexture(sleeveUrl: string): Promise<Texture> {
-    const resolved = resolveTextureRequestUrl(sleeveUrl);
-    if (this.textureCache.has(resolved)) {
-      return this.textureCache.get(resolved)!;
-    }
-    try {
-      const isExternal = resolved.startsWith('http://') || resolved.startsWith('https://');
-      const loader = isExternal ? new TextureLoader().setCrossOrigin('anonymous') : this.textureLoader;
-      const texture = await loader.loadAsync(resolved);
-      texture.colorSpace = 'srgb';
-      texture.anisotropy = 4;
-      texture.flipY = true;
-      this.textureCache.set(resolved, texture);
-      return texture;
-    } catch (error) {
-      console.warn('Failed to load sleeve texture:', resolved);
-      return this.loadCardBack();
-    }
-  }
-
-  /**
    * Load the generic card back texture
    */
   async loadCardBack(): Promise<Texture> {

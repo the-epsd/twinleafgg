@@ -12,7 +12,6 @@ import { SandboxModifyGameStateAction } from '../../game/store/actions/sandbox-m
 import { SandboxModifyCardAction } from '../../game/store/actions/sandbox-modify-card-action';
 import { SandboxModifyPokemonAction } from '../../game/store/actions/sandbox-modify-pokemon-action';
 import { Base64 } from '../../utils';
-import { ChangeAvatarAction } from '../../game/store/actions/change-avatar-action';
 import { Client } from '../../game/client/client.interface';
 import { CoreSocket } from './core-socket';
 import { ApiErrorEnum } from '../common/errors';
@@ -61,7 +60,6 @@ export class GameSocket {
     this.socket.addListener('game:action:reorderHand', this.reorderHand.bind(this));
     this.socket.addListener('game:action:passTurn', this.passTurn.bind(this));
     this.socket.addListener('game:action:appendLog', this.appendLog.bind(this));
-    this.socket.addListener('game:action:changeAvatar', this.changeAvatar.bind(this));
     // Sandbox actions
     this.socket.addListener('game:sandbox:modifyPlayer', this.sandboxModifyPlayer.bind(this));
     this.socket.addListener('game:sandbox:modifyGameState', this.sandboxModifyGameState.bind(this));
@@ -258,8 +256,8 @@ export class GameSocket {
     this.dispatch(params.gameId, action, response);
   }
 
-  private playGame(params: { gameId: number, deck: string[], artworks?: { code: string; artworkId?: number }[], sleeveImagePath?: string }, response: Response<void>) {
-    const action = new AddPlayerAction(this.client.id, this.client.user.name, params.deck, undefined, undefined, params.sleeveImagePath);
+  private playGame(params: { gameId: number, deck: string[], artworks?: { code: string; artworkId?: number }[] }, response: Response<void>) {
+    const action = new AddPlayerAction(this.client.id, this.client.user.name, params.deck);
     this.dispatch(params.gameId, action, response);
   }
 
@@ -326,11 +324,6 @@ export class GameSocket {
       response('error', ApiErrorEnum.CANNOT_SEND_MESSAGE);
     }
     const action = new AppendLogAction(this.client.id, GameLog.LOG_TEXT, { text: message });
-    this.dispatch(params.gameId, action, response);
-  }
-
-  private changeAvatar(params: { gameId: number, avatarName: string }, response: Response<void>) {
-    const action = new ChangeAvatarAction(this.client.id, params.avatarName);
     this.dispatch(params.gameId, action, response);
   }
 
@@ -492,7 +485,6 @@ export class GameSocket {
     this.socket.removeListener('game:action:reorderHand');
     this.socket.removeListener('game:action:passTurn');
     this.socket.removeListener('game:action:appendLog');
-    this.socket.removeListener('game:action:changeAvatar');
     this.socket.removeListener('game:sandbox:modifyPlayer');
     this.socket.removeListener('game:sandbox:modifyGameState');
     this.socket.removeListener('game:sandbox:modifyCard');

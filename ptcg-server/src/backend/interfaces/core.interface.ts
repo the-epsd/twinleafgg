@@ -50,6 +50,5 @@ export interface UserInfo {
   connected: boolean;
   registered: number;
   lastSeen: number;
-  avatarFile: string;
   roleId: number;
 }
