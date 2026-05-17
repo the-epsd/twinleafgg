@@ -29,8 +29,6 @@ export interface CoreInfo {
   clients: ClientInfo[];
   users: UserInfo[];
   games: GameInfo[];
-  /** When the user has an active disconnected session, the game id they can rejoin. */
-  reconnectableGameId?: number;
 }
 
 export interface GameState {

@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Connection, createConnection, EntityManager } from 'typeorm';
-import { Deck, DisconnectedSession, Match, Replay, User } from './';
+import { Deck, Match, Replay, User } from './';
 
 export class Storage {
 
@@ -23,7 +23,6 @@ export class Storage {
       timezone: 'Z',
       entities: [
         Deck,
-        DisconnectedSession,
         Match,
         Replay,
         User

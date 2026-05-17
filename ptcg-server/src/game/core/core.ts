@@ -12,8 +12,6 @@ import { AbortGameAction } from '../store/actions/abort-game-action';
 import { AbortGameReason } from '../store/actions/abort-game-action';
 import { GamePhase } from '../store/state/state';
 import { BotManager } from '../bots/bot-manager';
-import { ReconnectionManager } from '../../backend/services/reconnection-manager';
-import { ReconnectionConfig } from '../../backend/interfaces/reconnection.interface';
 import { logger } from '../../utils/logger';
 import { User } from '../../storage';
 
@@ -21,21 +19,9 @@ export class Core {
   public clients: Client[] = [];
   public games: Game[] = [];
   private botManager: BotManager;
-  private reconnectionManager: ReconnectionManager;
 
-  constructor(reconnectionConfig?: ReconnectionConfig) {
+  constructor() {
     this.botManager = BotManager.getInstance();
-
-    const defaultConfig: ReconnectionConfig = {
-      preservationTimeoutMs: 5 * 60 * 1000,
-      maxAutoReconnectAttempts: 3,
-      reconnectIntervals: [5000, 10000, 15000],
-      healthCheckIntervalMs: 30 * 1000,
-      cleanupIntervalMs: 60 * 1000,
-      maxPreservedSessionsPerUser: 1,
-      disconnectForfeitMs: 60 * 1000
-    };
-    this.reconnectionManager = new ReconnectionManager(reconnectionConfig || defaultConfig);
 
     const cleanerTask = new CleanerTask(this);
     cleanerTask.startTasks();
@@ -44,23 +30,6 @@ export class Core {
 
   public getBotManager(): BotManager {
     return this.botManager;
-  }
-
-  public getReconnectionManager(): ReconnectionManager {
-    return this.reconnectionManager;
-  }
-
-  /**
-   * Returns the game id the user can rejoin if they have a disconnected slot (for core:getInfo).
-   */
-  public getReconnectableGameId(userId: number): number | undefined {
-    for (const game of this.games) {
-      const playerId = game.getPlayerIdForUser(userId);
-      if (playerId !== undefined && game.isPlayerDisconnected(playerId) && game.state.phase !== GamePhase.FINISHED) {
-        return game.id;
-      }
-    }
-    return undefined;
   }
 
   public async connect(client: Client): Promise<Client> {
@@ -88,21 +57,11 @@ export class Core {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
     }
 
-    // Handle disconnection for all games without removing them
-    client.games.forEach(game => {
-      const isPlayer = game.state.players.some(player => player.id === client.id);
-      if (isPlayer) {
-        game.handlePlayerDisconnection(client);
-        return;
+    for (const game of [...client.games]) {
+      if (this.games.includes(game) && client.games.includes(game)) {
+        this.leaveGame(client, game);
       }
-
-      const gameClientIndex = game.clients.indexOf(client);
-      if (gameClientIndex !== -1) {
-        game.clients.splice(gameClientIndex, 1);
-        this.emit(c => c.onGameLeave(game, client));
-      }
-    });
-    client.games = [];
+    }
 
     // Remove client from core
     this.clients.splice(index, 1);
@@ -296,21 +255,6 @@ export class Core {
         if (game.isInactive(inactiveTimeout)) {
           console.log(`[Game Cleanup] Checking inactive game ${game.id}`);
 
-          // Check if this game has preserved sessions before cleaning up
-          try {
-            const activeSessions = await this.reconnectionManager.getActiveDisconnectedSessions();
-            const gameHasPreservedSessions = activeSessions.some(session => session.gameId === game.id);
-
-            if (gameHasPreservedSessions) {
-              console.log(`[Game Cleanup] Skipping cleanup of game ${game.id} - has preserved sessions`);
-              continue;
-            }
-          } catch (error) {
-            console.log(`[Game Cleanup] Error checking preserved sessions for game ${game.id}: ${error}`);
-            // If we can't check, skip cleanup to be safe
-            continue;
-          }
-
           console.log(`[Game Cleanup] Cleaning up inactive game ${game.id}`);
           // Force end the game
           const state = game.state;
@@ -334,9 +278,6 @@ export class Core {
    * Dispose of the Core and cleanup resources
    */
   public dispose(): void {
-    if (this.reconnectionManager) {
-      this.reconnectionManager.dispose();
-    }
     logger.log('[Core] Disposed');
   }
 

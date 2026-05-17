@@ -21,24 +21,6 @@ import { TableBoardOverlay } from '../table/hud/TableBoardOverlay';
 import { GameOverOverlay } from '../table/end-game/GameOverOverlay';
 import { MatchResultsSplash } from '../table/end-game/MatchResultsSplash';
 
-const RECONNECT_GAME_ID_KEY = 'ptcg_reconnect_gameId';
-
-function persistGameId(gameId: number): void {
-  try {
-    localStorage.setItem(RECONNECT_GAME_ID_KEY, String(gameId));
-  } catch {
-    /* ignore */
-  }
-}
-
-function clearPersistedGameId(): void {
-  try {
-    localStorage.removeItem(RECONNECT_GAME_ID_KEY);
-  } catch {
-    /* ignore */
-  }
-}
-
 type TableView = {
   bottomPlayer: Player;
   topPlayer: Player;
@@ -156,9 +138,6 @@ export function TablePage() {
           if (!g || g.gameId !== gameId) return g;
           const next = mergeStateChange(g, data.stateData, data.playerStats);
           boardInteraction.updateGameLogs(next.logs);
-          if (next.state.phase === GamePhase.FINISHED) {
-            clearPersistedGameId();
-          }
           return next;
         });
       };
@@ -232,10 +211,6 @@ export function TablePage() {
         const local = gameStateToLocal(gs);
         setLocalGame(local);
         boardInteraction.updateGameLogs(local.logs);
-        const isPlayer = local.state.players.some((p) => p.id === clientIdRef.current);
-        if (isPlayer) {
-          persistGameId(serverGameId);
-        }
         unregister = registerGameSocket(serverGameId);
       } catch (e) {
         if (!cancelled) {
@@ -249,7 +224,6 @@ export function TablePage() {
       cancelled = true;
       unregister?.();
       boardInteraction.endBoardSelection();
-      clearPersistedGameId();
     };
   }, [isReplayRoute, serverGameId, cardsInfo, boardInteraction, registerGameSocket, t]);
 
@@ -286,19 +260,6 @@ export function TablePage() {
       boardInteraction.endBoardSelection();
     };
   }, [isReplayRoute, replayMatchId, cardsInfo, boardInteraction, t]);
-
-  useEffect(() => {
-    if (!localGame || localGame.replay || !clientId) {
-      return;
-    }
-    if (!Number.isFinite(serverGameId) || localGame.gameId !== serverGameId) {
-      return;
-    }
-    const isPlayer = localGame.state.players.some((p) => p.id === clientId);
-    if (isPlayer) {
-      persistGameId(serverGameId);
-    }
-  }, [localGame, clientId, serverGameId]);
 
   useEffect(() => {
     setEndFlowStage(null);
@@ -390,7 +351,6 @@ export function TablePage() {
     void getSocketManager()
       .emit('game:concede', { gameId: serverGameId })
       .catch(onGameSocketError);
-    clearPersistedGameId();
     navigate('/games');
   }, [isReplayRoute, localGame?.replay, navigate, onGameSocketError, serverGameId, t]);
 
@@ -415,7 +375,6 @@ export function TablePage() {
   );
 
   const onGameOverConfirm = useCallback(() => {
-    clearPersistedGameId();
     navigate('/games');
   }, [localGame?.replay, navigate]);
 

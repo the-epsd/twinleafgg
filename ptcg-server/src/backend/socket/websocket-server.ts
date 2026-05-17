@@ -5,18 +5,13 @@ import { SocketClient } from './socket-client';
 import { User } from '../../storage';
 import { authMiddleware } from './auth-middleware';
 import { config } from '../../config';
-import { ReconnectionManager } from '../services/reconnection-manager';
 import { logger } from '../../utils/logger';
 
 export type Middleware = (socket: Socket, next: (err?: any) => void) => void;
 
 export class WebSocketServer {
   public server: Server | undefined;
-  private reconnectionManager: ReconnectionManager;
-
-  constructor(private core: Core) {
-    this.reconnectionManager = new ReconnectionManager(config.reconnection);
-  }
+  constructor(private core: Core) {}
 
   public async listen(httpServer: http.Server): Promise<void> {
     const opts: Partial<ServerOptions> = {
@@ -41,22 +36,11 @@ export class WebSocketServer {
 
       try {
         const socketClient = new SocketClient(user, this.core, server, socket);
-        const reconnectionTarget = this.findReconnectionTarget(user.id);
-        if (reconnectionTarget) {
-          socketClient.id = reconnectionTarget.playerId;
-        }
-
         await this.core.connect(socketClient);
         socketClient.attachListeners();
 
         socket.on('disconnect', async (reason) => {
           try {
-            try {
-              await this.core.getReconnectionManager().handleDisconnection(socketClient, String(reason));
-            } catch (error) {
-              logger.log(`[Socket] Error preserving disconnection state: ${error}`);
-            }
-            // Simple disconnection - just disconnect from core
             await this.core.disconnect(socketClient, String(reason));
             socketClient.dispose();
             user.updateLastSeen();
@@ -72,37 +56,10 @@ export class WebSocketServer {
     });
   }
 
-
-
-
-
-
-
-  /**
-   * Get the reconnection manager instance
-   */
-  public getReconnectionManager(): ReconnectionManager {
-    return this.reconnectionManager;
-  }
-
-  private findReconnectionTarget(userId: number): { gameId: number; playerId: number } | undefined {
-    for (const game of this.core.games) {
-      const playerId = game.getPlayerIdForUser(userId);
-      if (playerId && game.isPlayerDisconnected(playerId)) {
-        return { gameId: game.id, playerId };
-      }
-    }
-
-    return undefined;
-  }
-
   /**
    * Dispose of the WebSocketServer and cleanup resources
    */
   public dispose(): void {
-    if (this.reconnectionManager) {
-      this.reconnectionManager.dispose();
-    }
     if (this.server) {
       this.server.close();
     }
