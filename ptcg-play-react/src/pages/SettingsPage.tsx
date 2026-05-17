@@ -5,6 +5,7 @@ import { Format } from 'ptcg-server';
 import { useSettings } from '../context/SettingsContext';
 import { DECK_FORMAT_OPTIONS } from '../deck-editor/deckFormatOptions';
 import { ShellButton } from '../components/ui/ShellButton';
+import { appConfig } from '../env/config';
 import styles from './SettingsPage.module.css';
 
 export function SettingsPage() {
@@ -156,21 +157,23 @@ export function SettingsPage() {
           <span className={styles.sliderValue}>{sfxPercent}%</span>
         </div>
 
-        <div className={styles.hiddenFormats}>
-          <span className={styles.sectionLabel}>Hidden Formats</span>
-          <div className={styles.formatList}>
-            {DECK_FORMAT_OPTIONS.map(({ value, labelKey }) => (
-              <label key={value}>
-                <input
-                  type="checkbox"
-                  checked={isFormatHidden(value)}
-                  onChange={(e) => onHiddenFormatsChange(value, e.target.checked)}
-                />
-                {t(labelKey)}
-              </label>
-            ))}
+        {appConfig.showFormatUi ? (
+          <div className={styles.hiddenFormats}>
+            <span className={styles.sectionLabel}>Hidden Formats</span>
+            <div className={styles.formatList}>
+              {DECK_FORMAT_OPTIONS.map(({ value, labelKey }) => (
+                <label key={value}>
+                  <input
+                    type="checkbox"
+                    checked={isFormatHidden(value)}
+                    onChange={(e) => onHiddenFormatsChange(value, e.target.checked)}
+                  />
+                  {t(labelKey)}
+                </label>
+              ))}
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
 
       <div className={styles.actions}>

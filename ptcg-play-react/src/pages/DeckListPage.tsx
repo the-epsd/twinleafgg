@@ -18,6 +18,7 @@ import { FormAlert } from '../components/ui/FormAlert';
 import { ShellButton } from '../components/ui/ShellButton';
 import { CheckboxField } from '../components/ui/CheckboxField';
 import { deckListExportText } from '../deck-editor/deckListExportText';
+import { appConfig } from '../env/config';
 import styles from './DeckListPage.module.css';
 
 const LS_DEFAULT_DECK_ID = 'defaultDeckId';
@@ -172,6 +173,7 @@ export function DeckListPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { hiddenFormats } = useSettings();
+  const showFormatUi = appConfig.showFormatUi;
 
   const [decks, setDecks] = useState<DeckListEntry[]>([]);
   const [loading, setLoading] = useState(true);
@@ -403,7 +405,7 @@ export function DeckListPage() {
     <div className={styles.page}>
       <div className={styles.toolbar}>
         <h1 className={styles.title}>{t('DECK_TITLE')}</h1>
-        {selectedFormat !== 'theme' && (
+        {showFormatUi && selectedFormat !== 'theme' && (
           <div className={styles.themeToggle}>
             <CheckboxField
               id="show-theme-decks"
@@ -420,52 +422,54 @@ export function DeckListPage() {
       {toast ? <div className={styles.toast}>{toast}</div> : null}
 
       <div className={styles.formatRow}>
-        <div className={styles.formatTabs}>
-          {visiblePrimaryTabs.map((tab) => (
-            <button
-              key={tab}
-              type="button"
-              className={`${styles.formatTab} ${selectedFormat === tab ? styles.formatTabActive : ''}`}
-              onClick={() => setSelectedFormat(tab)}
+        {showFormatUi ? (
+          <div className={styles.formatTabs}>
+            {visiblePrimaryTabs.map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                className={`${styles.formatTab} ${selectedFormat === tab ? styles.formatTabActive : ''}`}
+                onClick={() => setSelectedFormat(tab)}
+              >
+                {t(formatLabelKey(tab))}
+              </button>
+            ))}
+            <div
+              className={`${styles.moreWrap} ${!showMoreFormatsBtn ? styles.moreHidden : ''}`}
+              onClick={(e) => e.stopPropagation()}
             >
-              {t(formatLabelKey(tab))}
-            </button>
-          ))}
-          <div
-            className={`${styles.moreWrap} ${!showMoreFormatsBtn ? styles.moreHidden : ''}`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              type="button"
-              className={styles.moreSummary}
-              onClick={(e) => {
-                e.stopPropagation();
-                setMoreOpen((v) => !v);
-              }}
-            >
-              {t('MORE_FORMATS')}
-            </button>
-            {moreOpen ? (
-              <div className={styles.moreMenu} role="menu">
-                {MORE_TAB_KEYS.filter((k) => !isFormatTabHidden(k, hiddenFormats)).map((tab) => (
-                  <button
-                    key={tab}
-                    type="button"
-                    role="menuitem"
-                    className={`${styles.moreMenuItem} ${selectedFormat === tab ? styles.moreMenuItemActive : ''}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedFormat(tab);
-                      setMoreOpen(false);
-                    }}
-                  >
-                    {t(formatLabelKey(tab))}
-                  </button>
-                ))}
-              </div>
-            ) : null}
+              <button
+                type="button"
+                className={styles.moreSummary}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setMoreOpen((v) => !v);
+                }}
+              >
+                {t('MORE_FORMATS')}
+              </button>
+              {moreOpen ? (
+                <div className={styles.moreMenu} role="menu">
+                  {MORE_TAB_KEYS.filter((k) => !isFormatTabHidden(k, hiddenFormats)).map((tab) => (
+                    <button
+                      key={tab}
+                      type="button"
+                      role="menuitem"
+                      className={`${styles.moreMenuItem} ${selectedFormat === tab ? styles.moreMenuItemActive : ''}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedFormat(tab);
+                        setMoreOpen(false);
+                      }}
+                    >
+                      {t(formatLabelKey(tab))}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
+            </div>
           </div>
-        </div>
+        ) : null}
         <div className={styles.actions}>
           <ShellButton variant="plain" onClick={() => void onCreate()}>
             {t('DECK_CREATE')}
@@ -514,7 +518,7 @@ export function DeckListPage() {
                         <span className={styles.defaultStar} title={t('DEFAULT')} aria-hidden>
                           {'★'}
                         </span>
-                        {selectedFormat !== 'all' ? (
+                        {showFormatUi && selectedFormat !== 'all' ? (
                           <div className={styles.defaultTip}>
                             {getFormatDisplayName(selectedFormat)} {t('DEFAULT')}
                           </div>
@@ -571,7 +575,7 @@ export function DeckListPage() {
                               {t('DECK_SET_AS_DEFAULT')}
                             </button>
                           ) : null}
-                          {selectedFormat !== 'all' && !isFormatDefaultDeck(d.id) && d.isValid ? (
+                          {showFormatUi && selectedFormat !== 'all' && !isFormatDefaultDeck(d.id) && d.isValid ? (
                             <button
                               type="button"
                               className={styles.menuItem}

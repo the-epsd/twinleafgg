@@ -9,6 +9,7 @@ import { useSettings } from '../context/SettingsContext';
 import { formatOptionLabel } from '../deck-editor/formatLabelI18n';
 import { MATCH_FORMAT_VALUES } from '../games/matchFormats';
 import type { DeckListEntry } from '../types/responses';
+import { appConfig } from '../env/config';
 import styles from './GamesPage.module.css';
 
 function decksForFormat(all: DeckListEntry[], format: Format): DeckListEntry[] {
@@ -149,16 +150,18 @@ export function GamesPage() {
         </div>
 
         <div className={styles.controls}>
-          <label>
-            <span>{t('GAMES_FORMAT')}</span>
-            <select value={selectedFormat} onChange={(e) => setSelectedFormat(Number(e.target.value) as Format)}>
-              {visibleFormats.map((format) => (
-                <option key={format} value={format}>
-                  {formatOptionLabel(t, format)}
-                </option>
-              ))}
-            </select>
-          </label>
+          {appConfig.showFormatUi ? (
+            <label>
+              <span>{t('GAMES_FORMAT')}</span>
+              <select value={selectedFormat} onChange={(e) => setSelectedFormat(Number(e.target.value) as Format)}>
+                {visibleFormats.map((format) => (
+                  <option key={format} value={format}>
+                    {formatOptionLabel(t, format)}
+                  </option>
+                ))}
+              </select>
+            </label>
+          ) : null}
 
           <label>
             <span>{t('DECK_TITLE')}</span>

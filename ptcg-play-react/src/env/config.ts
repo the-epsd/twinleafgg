@@ -16,6 +16,5 @@ export const appConfig = {
 
   apiVersion: 2 as const,
 
-  /** Ranking pagination fallback when server config is not stored. */
-  defaultPageSize: Number(import.meta.env.VITE_DEFAULT_PAGE_SIZE ?? 50),
+  showFormatUi: import.meta.env.VITE_SHOW_FORMAT_UI === 'true',
 };
