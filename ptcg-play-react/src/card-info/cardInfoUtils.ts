@@ -1,6 +1,6 @@
 import type { Attack, Card, CardList, PokemonCard, Power } from 'ptcg-server';
 import { CardTag, CardType, PokemonCardList, PowerType, Stage, SuperType } from 'ptcg-server';
-import i18n from '../i18n/i18n';
+import { t } from '../i18n/strings';
 
 const CHARACTER_NAME_PREFIXES = [
   "Marnie's",
@@ -124,28 +124,28 @@ export function stageLabel(card: PokemonCard): string {
   switch (card.stage) {
     case Stage.BASIC:
       return pokemonTags(card).includes(CardTag.BABY)
-        ? i18n.t('CARDS_BABY_POKEMON')
-        : i18n.t('CARDS_BASIC');
+        ? t('CARDS_BABY_POKEMON')
+        : t('CARDS_BASIC');
     case Stage.RESTORED:
-      return i18n.t('CARDS_RESTORED');
+      return t('CARDS_RESTORED');
     case Stage.STAGE_1:
-      return i18n.t('CARDS_STAGE_1');
+      return t('CARDS_STAGE_1');
     case Stage.STAGE_2:
-      return i18n.t('CARDS_STAGE_2');
+      return t('CARDS_STAGE_2');
     case Stage.MEGA:
-      return i18n.t('CARDS_MEGA');
+      return t('CARDS_MEGA');
     case Stage.BREAK:
-      return i18n.t('CARDS_BREAK');
+      return t('CARDS_BREAK');
     case Stage.LV_X:
-      return i18n.t('CARDS_LV_X');
+      return t('CARDS_LV_X');
     case Stage.VMAX:
-      return i18n.t('CARDS_VMAX');
+      return t('CARDS_VMAX');
     case Stage.VSTAR:
-      return i18n.t('CARDS_VSTAR');
+      return t('CARDS_VSTAR');
     case Stage.VUNION:
-      return i18n.t('CARDS_VUNION');
+      return t('CARDS_VUNION');
     case Stage.LEGEND:
-      return i18n.t('CARDS_LEGEND');
+      return t('CARDS_LEGEND');
     default:
       return '';
   }
@@ -157,15 +157,15 @@ export function powerTypeLabel(powerType: PowerType): string {
     case PowerType.ENERGY_ABILITY:
       return '';
     case PowerType.ABILITY:
-      return i18n.t('CARDS_ABILITY');
+      return t('CARDS_ABILITY');
     case PowerType.POKEPOWER:
-      return i18n.t('CARDS_POKE_POWER');
+      return t('CARDS_POKE_POWER');
     case PowerType.POKEMON_POWER:
-      return i18n.t('CARDS_POKEMON_POWER');
+      return t('CARDS_POKEMON_POWER');
     case PowerType.POKEBODY:
-      return i18n.t('CARDS_POKE_BODY');
+      return t('CARDS_POKE_BODY');
     case PowerType.ANCIENT_TRAIT:
-      return i18n.t('CARDS_ANCIENT_TRAIT');
+      return t('CARDS_ANCIENT_TRAIT');
     default:
       return '';
   }

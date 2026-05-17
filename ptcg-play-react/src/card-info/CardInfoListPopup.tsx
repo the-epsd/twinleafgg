@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../i18n/strings';
 import type { Card, CardList } from 'ptcg-server';
 import { SuperType as SuperTypeEnum } from 'ptcg-server';
 import { CardFace } from '../components/cards/CardFace';

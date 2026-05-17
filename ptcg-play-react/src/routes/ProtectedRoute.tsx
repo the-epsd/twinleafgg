@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../i18n/strings';
 import { Outlet } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { CoreSessionProvider } from '../context/CoreSessionContext';

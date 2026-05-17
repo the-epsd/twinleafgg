@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import type { TFunction } from 'i18next';
+import { useTranslation } from '../../i18n/strings';
+import type { TFunction } from '../../i18n/strings';
 import { merge } from 'rxjs';
 import type { DamageMap, RemoveDamagePrompt } from 'ptcg-server';
 import { PokemonCardList } from 'ptcg-server';

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import type { MouseEvent } from 'react';
-import { useTranslation } from 'react-i18next';
-import type { TFunction } from 'i18next';
+import { useTranslation } from '../../i18n/strings';
+import type { TFunction } from '../../i18n/strings';
 import { merge } from 'rxjs';
 import type {
   AlertPrompt,

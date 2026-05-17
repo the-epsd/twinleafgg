@@ -1,5 +1,5 @@
 import { Link, Outlet, useLocation } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../i18n/strings';
 
 function isDeckEditorPath(pathname: string): boolean {
   return /^\/deck\/[^/]+\/?$/.test(pathname);

@@ -1,4 +1,4 @@
-import type { TFunction } from 'i18next';
+import type { TFunction } from '../i18n/strings';
 import { Format } from 'ptcg-server';
 
 const FORMAT_LABEL_KEYS: Partial<Record<Format, string>> = {

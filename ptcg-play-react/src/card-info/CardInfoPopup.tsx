@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../i18n/strings';
 import type { Card, CardList } from 'ptcg-server';
 import type { CardInfoPaneOptions, CardInfoTableAction } from './CardInfoPane';
 import { CardInfoPane } from './CardInfoPane';

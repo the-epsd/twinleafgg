@@ -1,4 +1,4 @@
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../i18n/strings';
 import { useParams } from 'react-router-dom';
 import { DeckEditView } from '../deck-editor/DeckEditView';
 

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../../i18n/strings';
 import type { StateLog } from 'ptcg-server';
 import type { Player } from 'ptcg-server';
 import { GamePhase } from 'ptcg-server';

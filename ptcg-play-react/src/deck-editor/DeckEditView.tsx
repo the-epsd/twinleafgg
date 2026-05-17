@@ -7,7 +7,7 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../i18n/strings';
 import { useLocation, useNavigate } from 'react-router-dom';
 import type { Card } from 'ptcg-server';
 import { useAuth } from '../context/AuthContext';

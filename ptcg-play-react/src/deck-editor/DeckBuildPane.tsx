@@ -2,7 +2,7 @@ import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useCallback, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../i18n/strings';
 import type { Card } from 'ptcg-server';
 import { CardFace } from '../components/cards';
 import { DECK_CARD_AR, DECK_CARD_GAP_PX, DECK_DEFAULT_SLOT_W, DECK_MAX_SLOT_W } from './deckCardLayout';

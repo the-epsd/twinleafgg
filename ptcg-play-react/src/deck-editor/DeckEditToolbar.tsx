@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../i18n/strings';
 import type { Card } from 'ptcg-server';
 import { CardTag, Format, SuperType } from 'ptcg-server';
 import { CheckboxField } from '../components/ui/CheckboxField';

@@ -10,7 +10,7 @@ import {
   useSensors,
 } from '@dnd-kit/core';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { TFunction } from 'i18next';
+import type { TFunction } from '../../i18n/strings';
 import type { AttachEnergyPrompt, Card } from 'ptcg-server';
 import { PlayerType } from 'ptcg-server';
 import type { LocalGameState } from '../types/localGameState';

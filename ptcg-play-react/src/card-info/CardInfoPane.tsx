@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../i18n/strings';
 import type { Card, CardList, EnergyCard, PokemonCard, TrainerCard } from 'ptcg-server';
 import { CardType, EnergyType, PowerType, SuperType, TrainerType } from 'ptcg-server';
 import { CardSwapDialog } from './CardSwapDialog';

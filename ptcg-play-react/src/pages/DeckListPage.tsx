@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import type { TFunction } from 'i18next';
-import { useTranslation } from 'react-i18next';
+import type { TFunction } from '../i18n/strings';
+import { useTranslation } from '../i18n/strings';
 import { Link, useNavigate } from 'react-router-dom';
 import { Format } from 'ptcg-server';
 import {

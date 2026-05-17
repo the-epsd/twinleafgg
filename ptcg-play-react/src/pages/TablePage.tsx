@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../i18n/strings';
 import type { CardList, Player } from 'ptcg-server';
 import { GamePhase } from 'ptcg-server';
 import { useAuth } from '../context/AuthContext';

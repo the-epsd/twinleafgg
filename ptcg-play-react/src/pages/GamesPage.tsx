@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from '../i18n/strings';
 import { Format, GamePhase, GameSettings } from 'ptcg-server';
 import { getDeck, getDeckList } from '../api/deckApi';
 import { ApiError } from '../api/apiError';

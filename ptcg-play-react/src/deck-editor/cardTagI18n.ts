@@ -1,4 +1,4 @@
-import type { TFunction } from 'i18next';
+import type { TFunction } from '../i18n/strings';
 import { CardTag } from 'ptcg-server';
 
 /** Translation keys under TAG_* in locale JSON (subset used in deck filter UI). */
