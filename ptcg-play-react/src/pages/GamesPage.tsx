@@ -174,7 +174,7 @@ export function GamesPage() {
                 <option value="">{t('NO_DECK')}</option>
               ) : (
                 playableDecks.map((deck) => (
-                  <option key={deck.id} value={deck.id}>
+                  <option key={`${deck.id}:${deck.name}`} value={deck.id}>
                     {deck.name}
                   </option>
                 ))
@@ -192,8 +192,8 @@ export function GamesPage() {
               {opponents.length === 0 ? (
                 <option value="">{t('GAMES_NO_OPPONENTS', { defaultValue: 'No opponents online' })}</option>
               ) : (
-                opponents.map((opponent) => (
-                  <option key={opponent.clientId} value={opponent.clientId}>
+                opponents.map((opponent, index) => (
+                  <option key={`${opponent.clientId}:${opponent.user.userId}:${index}`} value={opponent.clientId}>
                     {opponent.user.name}
                   </option>
                 ))
