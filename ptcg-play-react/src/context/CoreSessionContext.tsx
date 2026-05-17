@@ -69,7 +69,12 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
     const onJoin = (data: ClientUserData) => {
       setCore((c) => {
         const usersById = { ...c.usersById, [data.user.userId]: data.user };
-        const clients = [...c.clients, { clientId: data.clientId, userId: data.user.userId }];
+        const nextClient = { clientId: data.clientId, userId: data.user.userId };
+        const existingIndex = c.clients.findIndex((client) => client.clientId === data.clientId);
+        const clients =
+          existingIndex === -1
+            ? [...c.clients, nextClient]
+            : c.clients.map((client, index) => (index === existingIndex ? nextClient : client));
         return { ...c, usersById, clients };
       });
     };
