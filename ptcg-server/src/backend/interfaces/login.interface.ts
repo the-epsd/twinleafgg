@@ -3,6 +3,5 @@ export interface ServerConfig {
   defaultPageSize: number;
   scansUrl: string;
   replayFileSize: number;
-  refreshTokenInterval: number;
   board3dWhitelist: string[];
 }

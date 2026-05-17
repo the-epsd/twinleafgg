@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { AuthToken, generateToken } from '../services';
+import { generateToken } from '../services';
 import { Controller, Get, Post } from './controller';
 import { ApiErrorEnum } from '../common/errors';
 import { ServerConfig } from '../interfaces';
@@ -48,20 +48,6 @@ export class Login extends Controller {
     });
   }
 
-  @Get('/refreshToken')
-  @AuthToken()
-  public async onRefreshToken(req: Request, res: Response) {
-    const userId: number = req.body.userId;
-    const user = await User.findOne({ where: { id: userId } });
-    if (user === undefined) {
-      res.status(401);
-      res.send({ error: ApiErrorEnum.LOGIN_INVALID });
-      return;
-    }
-    const token = generateToken(userId);
-    res.send({ ok: true, token, config: this.getServerConfig(), user: this.buildUserInfo(user) });
-  }
-
   @Get('/info')
   public onInfo(req: Request, res: Response) {
     res.send({ ok: true, config: this.getServerConfig() });
@@ -73,7 +59,6 @@ export class Login extends Controller {
       defaultPageSize: config.backend.defaultPageSize,
       scansUrl: config.sets.scansUrl,
       replayFileSize: config.backend.replayFileSize,
-      refreshTokenInterval: config.backend.refreshTokenInterval,
       board3dWhitelist: board3dWhitelist
     };
   }

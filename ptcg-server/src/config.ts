@@ -16,7 +16,6 @@ export const config = {
     production: true,
     apiVersion: 2,
     allowServerChange: true,
-    refreshTokenInterval: 60 * 60 * 1000,
     enableImageCache: true,
   },
   core: {
