@@ -5,6 +5,8 @@ import { CardManager } from '../../game/cards/card-manager';
 import { StateSerializer } from '../../game/serializer/state-serializer';
 import { Card } from '../../game/store/card/card';
 
+const Module = require('module');
+
 const setsDir = path.resolve(__dirname, '..');
 const EXPORT_PATH_REGEX = /export \* from '\.\/([^']+)'/g;
 const IMPORT_PATH_REGEX = /from '\.\/([^']+)'/g;
@@ -119,7 +121,7 @@ function loadSetModule(moduleName: string): void {
     return;
   }
 
-  const mod = require(path.join(setsDir, moduleName));
+  const mod = requirePreferTs(path.join(setsDir, moduleName, 'index.ts'));
   for (const key of Object.keys(mod)) {
     const value = mod[key];
     if (Array.isArray(value) && value.length > 0 && value[0] instanceof Card) {
@@ -157,7 +159,7 @@ export function registerAllCards(): void {
     return;
   }
 
-  const sets = require(path.join(setsDir, 'index'));
+  const sets = requirePreferTs(path.join(setsDir, 'index.ts'));
   const entries = Object.keys(sets)
     .filter(key => key.startsWith('set') && Array.isArray(sets[key]))
     .map(key => ({ key: `sets.${key}`, cards: sets[key] as Card[] }));
@@ -169,4 +171,28 @@ export function registerAllCards(): void {
   entries.forEach(entry => defineSet(entry.cards));
   allCardsRegistered = true;
   updateKnownCards();
+}
+
+function requirePreferTs(filePath: string): any {
+  const originalResolve = (Module as any)._resolveFilename;
+  (Module as any)._resolveFilename = function (request: string, parent: any, isMain: boolean, options: any) {
+    if (parent?.filename?.startsWith(setsDir) && request.startsWith('.') && !path.extname(request)) {
+      const absolute = path.resolve(path.dirname(parent.filename), request);
+      const tsFile = `${absolute}.ts`;
+      const tsIndex = path.join(absolute, 'index.ts');
+      if (fs.existsSync(tsFile)) {
+        return tsFile;
+      }
+      if (fs.existsSync(tsIndex)) {
+        return tsIndex;
+      }
+    }
+    return originalResolve.call(this, request, parent, isMain, options);
+  };
+
+  try {
+    return require(filePath);
+  } finally {
+    (Module as any)._resolveFilename = originalResolve;
+  }
 }

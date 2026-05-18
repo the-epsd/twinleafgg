@@ -58,7 +58,7 @@ export class Meowthex extends PokemonCard {
   public cardImage: string = "assets/cardback.png";
   public setNumber: string = "62";
   public name: string = "Meowth ex";
-  public fullName: string = "Meowth ex M3";
+  public fullName: string = "Meowth ex POR";
   public readonly TRUMP_CARD_MARKER = "TRUMP_CARD_MARKER";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

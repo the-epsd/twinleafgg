@@ -1,7 +1,8 @@
 import { Action } from '../store/actions/action';
 import { AddPlayerAction } from '../store/actions/add-player-action';
 import { buildReplayActionPayload } from '../core/replay-actions';
-import { AttackAction, PassTurnAction, RetreatAction, UseAbilityAction } from '../store/actions/game-actions';
+import { ConcedeAction } from '../store/actions/concede-action';
+import { AttackAction, PassTurnAction, RetreatAction, UseAbilityAction, UseStadiumAction } from '../store/actions/game-actions';
 import { PlayCardAction, CardTarget, PlayerType, SlotType } from '../store/actions/play-card-action';
 import { ResolvePromptAction } from '../store/actions/resolve-prompt-action';
 import { EnergyCard } from '../store/card/energy-card';
@@ -11,6 +12,12 @@ import { State, GamePhase } from '../store/state/state';
 import { CardList } from '../store/state/card-list';
 import { Player } from '../store/state/player';
 import { PokemonCardList } from '../store/state/pokemon-card-list';
+import { Prompt } from '../store/prompts/prompt';
+import { CoinFlipPrompt } from '../store/prompts/coin-flip-prompt';
+import { ShuffleDeckPrompt } from '../store/prompts/shuffle-prompt';
+import { ShuffleHandPrompt } from '../store/prompts/shuffle-hand-prompt';
+import { ShufflePrizesPrompt } from '../store/prompts/shuffle-prizes-prompt';
+import { WaitPrompt } from '../store/prompts/wait-prompt';
 import { Store } from '../store/store';
 import { StoreHandler } from '../store/store-handler';
 import { StateSerializer } from '../serializer/state-serializer';
@@ -35,6 +42,9 @@ export interface HeadlessPlayerScenarioConfig {
   hand?: string[];
   deck?: string[];
   discard?: string[];
+  lostzone?: string[];
+  stadium?: string[];
+  supporter?: string[];
   prizeCount?: number;
 }
 
@@ -112,7 +122,7 @@ class HeadlessStoreHandler implements StoreHandler {
         resolved = false;
         const pending = state.prompts.filter(prompt => prompt.result === undefined);
         for (const prompt of pending) {
-          if (this.promptMode !== 'auto' && prompt.type !== 'WaitPrompt') {
+          if (this.promptMode !== 'auto' && !isMechanicalPrompt(prompt)) {
             continue;
           }
           this.getStore().dispatch(this.resolver.resolve(state, prompt));
@@ -127,6 +137,14 @@ class HeadlessStoreHandler implements StoreHandler {
       this.isResolving = false;
     }
   }
+}
+
+function isMechanicalPrompt(prompt: Prompt<any>): boolean {
+  return prompt instanceof CoinFlipPrompt
+    || prompt instanceof ShuffleDeckPrompt
+    || prompt instanceof ShuffleHandPrompt
+    || prompt instanceof ShufflePrizesPrompt
+    || prompt instanceof WaitPrompt;
 }
 
 export class HeadlessGameSession {
@@ -181,6 +199,16 @@ export class HeadlessGameSession {
   public useAbility(playerIndex: number, name: string, target: CardTarget): State {
     const player = this.getPlayer(playerIndex);
     return this.dispatch(new UseAbilityAction(player.id, name, target));
+  }
+
+  public useStadium(playerIndex: number): State {
+    const player = this.getPlayer(playerIndex);
+    return this.dispatch(new UseStadiumAction(player.id));
+  }
+
+  public concede(playerIndex: number): State {
+    const player = this.getPlayer(playerIndex);
+    return this.dispatch(new ConcedeAction(player.id));
   }
 
   public passTurn(playerIndex?: number): State {
@@ -265,7 +293,14 @@ function collectScenarioCardNames(config: HeadlessScenarioConfig): string[] {
 function collectPlayerCardNames(config: HeadlessPlayerScenarioConfig): string[] {
   const cards = collectPokemonSlotCardNames(config.active);
   config.bench?.forEach(slot => cards.push(...collectPokemonSlotCardNames(slot)));
-  cards.push(...(config.hand ?? []), ...(config.deck ?? []), ...(config.discard ?? []));
+  cards.push(
+    ...(config.hand ?? []),
+    ...(config.deck ?? []),
+    ...(config.discard ?? []),
+    ...(config.lostzone ?? []),
+    ...(config.stadium ?? []),
+    ...(config.supporter ?? [])
+  );
   return cards;
 }
 
@@ -323,6 +358,9 @@ function buildScenarioPlayer(state: State, id: number, config: HeadlessPlayerSce
   addCardsToList(state, player.hand, config.hand);
   addCardsToList(state, player.deck, config.deck);
   addCardsToList(state, player.discard, config.discard);
+  addCardsToList(state, player.lostzone, config.lostzone);
+  addCardsToList(state, player.stadium, config.stadium);
+  addCardsToList(state, player.supporter, config.supporter);
 
   return player;
 }
@@ -371,9 +409,12 @@ function summarizeState(state: State): any {
     players: state.players.map(player => ({
       id: player.id,
       name: player.name,
-      hand: player.hand.cards.map(card => card.fullName),
+      hand: player.hand.cards.map(summarizeCard),
       deckCount: player.deck.cards.length,
-      discard: player.discard.cards.map(card => card.fullName),
+      discard: player.discard.cards.map(summarizeCard),
+      lostZone: player.lostzone.cards.map(summarizeCard),
+      stadium: player.stadium.cards.map(summarizeCard),
+      playZone: player.supporter.cards.map(summarizeCard),
       prizesLeft: player.getPrizeLeft(),
       active: summarizePokemonList(player.active),
       bench: player.bench.map(summarizePokemonList),
@@ -392,11 +433,92 @@ function summarizePokemonList(list: PokemonCardList): any {
   const pokemon = list.getPokemonCard();
   return {
     pokemon: pokemon?.fullName,
-    cards: list.cards.map(card => card.fullName),
+    pokemonCard: summarizeCard(pokemon),
+    cards: list.cards.map(summarizeCard),
     damage: list.damage,
     hp: list.hp,
-    energy: list.energies.cards.map(card => card.fullName),
-    tools: list.tools.map(card => card.fullName),
+    retreat: pokemon?.retreat ?? [],
+    energy: list.energies.cards.map(summarizeCard),
+    tools: list.tools.map(summarizeCard),
     specialConditions: list.specialConditions
   };
+}
+
+function summarizeCard(card: any): any {
+  if (!card) {
+    return undefined;
+  }
+  return {
+    id: card.id,
+    name: card.name,
+    fullName: card.fullName,
+    set: card.set,
+    setNumber: card.setNumber,
+    cardImage: card.cardImage,
+    imageUrl: getCardImageUrl(card),
+    superType: card.superType,
+    cardType: card.cardType,
+    trainerType: card.trainerType,
+    energyType: card.energyType,
+    stage: card.stage,
+    evolvesFrom: card.evolvesFrom,
+    attacks: Array.isArray(card.attacks)
+      ? card.attacks.map((attack: any) => ({
+        name: attack.name,
+        cost: attack.cost,
+        damage: attack.damage,
+        text: attack.text
+      }))
+      : undefined,
+    powers: Array.isArray(card.powers)
+      ? card.powers.map((power: any) => ({
+        name: power.name,
+        powerType: power.powerType,
+        text: power.text
+      }))
+      : undefined
+  };
+}
+
+function getCardImageUrl(card: any): string | undefined {
+  const setInfo = getPokemonTcgSetInfo(card?.set);
+  if (!setInfo || !card?.setNumber) {
+    return undefined;
+  }
+  if (setInfo.source === 'scrydex') {
+    return `https://images.scrydex.com/pokemon/${setInfo.id}-${card.setNumber}/large`;
+  }
+  return `https://images.pokemontcg.io/${setInfo.id}/${card.setNumber}.png`;
+}
+
+function getPokemonTcgSetInfo(setCode: string | undefined): { id: string; source?: 'scrydex' } | undefined {
+  const map: Record<string, string | { id: string; source?: 'scrydex' }> = {
+    SIT: 'swsh12',
+    ASR: 'swsh10',
+    LOR: 'swsh11',
+    SVI: 'sv1',
+    SVE: 'sve',
+    PAL: 'sv2',
+    OBF: 'sv3',
+    MEW: 'sv3pt5',
+    PAR: 'sv4',
+    PAF: 'sv4pt5',
+    TEF: 'sv5',
+    TWM: 'sv6',
+    SFA: 'sv6pt5',
+    SCR: 'sv7',
+    SSP: 'sv8',
+    PRE: 'sv8pt5',
+    DRI: 'sv10',
+    MEG: 'me1',
+    M1L: 'me1',
+    M1S: 'me1',
+    ASC: { id: 'me2pt5', source: 'scrydex' },
+    POR: { id: 'me3', source: 'scrydex' },
+  };
+  const info = setCode ? map[setCode] : undefined;
+  if (!info) {
+    return undefined;
+  }
+  return typeof info === 'string' ? { id: info } : info;
 }

@@ -56,6 +56,18 @@ export class HeadlessCommandRunner {
         return game.snapshot();
       }
 
+      case 'useStadium': {
+        const game = this.requireSession();
+        game.useStadium(this.getPlayerIndex(payload));
+        return game.snapshot();
+      }
+
+      case 'concede': {
+        const game = this.requireSession();
+        game.concede(this.getPlayerIndex(payload));
+        return game.snapshot();
+      }
+
       case 'passTurn': {
         const game = this.requireSession();
         const playerIndex = payload.player === undefined && payload.playerIndex === undefined

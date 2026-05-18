@@ -80,7 +80,7 @@ export class HeadlessPromptResolver {
       return null;
     }
     if (prompt instanceof CoinFlipPrompt) {
-      return true;
+      return Math.round(Math.random()) === 0;
     }
     if (prompt instanceof ShuffleDeckPrompt) {
       return this.resolveShuffleRaw(state, prompt);
@@ -142,18 +142,29 @@ export class HeadlessPromptResolver {
 
   private resolveShuffleRaw(state: State, prompt: ShuffleDeckPrompt): number[] {
     const player = state.players.find(p => p.id === prompt.playerId);
-    return player ? player.deck.cards.map((_, index) => index) : [];
+    return player ? this.shuffleIndexes(player.deck.cards.length) : [];
   }
 
   private resolveShuffleHandRaw(state: State, prompt: ShuffleHandPrompt): number[] {
     const player = state.players.find(p => p.id === prompt.playerId);
-    return player ? player.hand.cards.map((_, index) => index) : [];
+    return player ? this.shuffleIndexes(player.hand.cards.length) : [];
   }
 
   private resolveShufflePrizesRaw(state: State, prompt: ShufflePrizesPrompt): number[] {
     const player = state.players.find(p => p.id === prompt.playerId);
     const count = player ? player.prizes.reduce((sum, prize) => sum + prize.cards.length, 0) : 0;
-    return Array.from({ length: count }, (_, index) => index);
+    return this.shuffleIndexes(count);
+  }
+
+  private shuffleIndexes(count: number): number[] {
+    const order = Array.from({ length: count }, (_, index) => index);
+    for (let i = count - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = order[i];
+      order[i] = order[j];
+      order[j] = tmp;
+    }
+    return order;
   }
 
   private resolveChooseCardsRaw(prompt: ChooseCardsPrompt): number[] | null {

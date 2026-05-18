@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { HEADLESS_PROMPT_ADAPTERS } from './prompt-adapters';
+import { HEADLESS_PROMPT_ADAPTERS, serializeHeadlessPrompt } from './prompt-adapters';
 import { createHeadlessGame } from './headless-session';
 import { HeadlessPromptResolver } from './prompt-resolution';
 import { GameMessage } from '../game-message';
@@ -87,7 +87,36 @@ describe('Headless prompt adapters', () => {
     expect(prompt.supported).toBe(true);
     expect(prompt.resultSchema).toBe('{ index: number, attack: string } | null');
     expect(prompt.fields.cards[0].fullName).toBe('Raichu SIT');
+    expect(prompt.fields.cards[0].imageUrl).toBe('https://images.pokemontcg.io/swsh12/50.png');
     expect(prompt.fields.cards[0].attacks[0].name).toBe('Ambushing Spark');
+  });
+
+  it('serializes prize prompts with selectable prize indexes', () => {
+    const game = createHeadlessGame({
+      player1: {
+        name: 'Agent A',
+        active: { card: 'Ralts SIT' },
+        deck: ['Water Energy SVE']
+      },
+      player2: {
+        name: 'Agent B',
+        active: { card: 'Ralts SIT' },
+        deck: ['Water Energy SVE']
+      },
+      turn: 2,
+      activePlayer: 0
+    });
+    const player = game.state.players[0];
+    const prompt = new ChoosePrizePrompt(player.id, GameMessage.CHOOSE_PRIZE_CARD, {
+      count: 2,
+      isSecret: false
+    });
+    const serialized = serializeHeadlessPrompt(game.state, prompt);
+
+    expect(serialized.fields.options.count).toBe(2);
+    expect(serialized.fields.prizes.length).toBe(6);
+    expect(serialized.fields.prizes[0].index).toBe(0);
+    expect(serialized.fields.prizes[0].cards[0].fullName).toBe('Water Energy SVE');
   });
 
   it('provides valid deterministic defaults for every supported prompt fixture', () => {

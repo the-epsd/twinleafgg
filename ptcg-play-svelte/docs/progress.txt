@@ -1,0 +1,96 @@
+Twinleaf Local Svelte progress
+
+Goal
+- Build a lightweight Svelte 5 local self-play frontend.
+- Import two decks, run ptcg-server headless game logic in manual prompt mode, render a smooth 2D board, support core actions/prompts, and validate behavior with action-level tests.
+
+Architecture decisions
+- Keep the existing React app untouched.
+- Create a separate ptcg-play-svelte app.
+- Keep Node-only ptcg-server headless/card-registration code out of the browser bundle.
+- Run a tiny local HTTP engine service in the Svelte package instead of auth/lobby/socket infrastructure.
+- Browser UI talks to the engine through plain JSON GameView/PromptView objects.
+- Svelte components should not import ptcg-server types or classes.
+- Use manual prompt mode for player agency.
+- Include friendly prompt UIs for common prompt types plus a JSON fallback so rare card-specific prompts do not permanently block a game.
+
+Progress log
+- Created initial Svelte package skeleton and local documentation file.
+- Added a local Node engine controller/server boundary.
+- Confirmed the headless engine can start a manual-prompt deck game and can drive action commands in a scenario.
+- Kept the browser bundle decoupled from ptcg-server by spawning the existing headless CLI from the local engine process.
+- Added Vitest action-level tests for start-game setup prompts, manually resolving setup into a player turn, a deck-based self-play turn flow, attack/pass commands, and CardTarget mapping.
+- Added action-level coverage for KO flow in manual mode: attack into knockout, choose prize, then choose replacement active Pokemon.
+- Added Pokemon ability support in the action panel and action-level coverage for using an active Pokemon ability through the local engine boundary.
+- Fixed headless set loading to prefer TypeScript card sources over stale sibling JavaScript files while running under ts-node, unblocking modern trainer cards such as Nest Ball SVI.
+- Added action-level coverage for a real Item search flow: play Nest Ball SVI, resolve ChooseCardsPrompt, resolve the follow-up ShuffleDeckPrompt, and verify bench/discard/deck state.
+- Added action-level coverage for a chained Item flow with Ultra Ball SVI: discard two cards, choose a Pokemon from deck, continue the reveal prompt, resolve shuffle, and verify final zones.
+- Passed Pokemon stage/evolvesFrom metadata through the headless JSON view and updated board targeting so basics go to empty slots while evolutions target matching occupied slots.
+- Production build currently succeeds with a small client bundle.
+- Added rich card summaries to the headless snapshot so active Pokemon expose attacks/powers and public zones expose card metadata.
+- Added friendly prompt controls for setup prompts, card/target selection, attack choice, energy movement, and damage movement/application.
+- Added friendly prize prompt controls and expanded headless prompt serialization so prize choices expose selectable indexes.
+- Removed the stale board component pass and aligned CSS to the actual App.svelte board layout.
+- Browser QA on fixed local ports confirmed import/start game, setup prompt resolution, attaching energy to active Pokemon, attack error surfacing, and passing turn to the other player.
+- Local dev ports are standardized as engine http://localhost:8095 and web http://localhost:5174.
+- Reworked the board presentation after comparing against the React table: visual card faces/backs, sparse playmat, compact badges for state, full-width table composition, and no nested text-card layout.
+- Added lightweight target filtering on the board: energy highlights only own occupied Pokemon, Pokemon highlights only own empty Pokemon slots, and ordinary plays no longer present opponent zones as valid targets.
+- Added a small label layer so common engine constants render as readable UI text in prompts, errors, and the log.
+- Prompt card selection now honors simple engine filter fields, so invalid choices in card-search prompts are visibly disabled instead of relying on trial-and-error.
+- Added action-level evolution coverage with Charmander BS into Charmeleon BS through the same playCard command used by the UI.
+- Added public zone representation for discard, lost zone, stadium, and play zone in the headless JSON view.
+- Added a lightweight zone viewer so players can inspect public discard/lost-zone/stadium cards from the board without adding deck persistence or account state.
+- Exposed useStadium through the headless command runner, local engine API, and Svelte action panel.
+- Added action-level stadium coverage with Artazon PAL: play stadium, use stadium, resolve manual deck-search, resolve shuffle, and verify bench/deck/stadium state.
+- Reworked the table chrome again after visual review: the game view now treats the board as the main full-screen surface, moves controls/logs into compact dark overlays, shrinks the prompt dock, removes the app header from active games, de-emphasizes empty zone labels, and uses card-shaped deck/discard piles instead of loose counter pills.
+- Replaced raw prompt class names like CoinFlipPrompt with player-facing labels like Coin flip / Choose attack / Choose prize.
+- Extracted and tested play target filtering in src/lib/game/playTargets.ts.
+- Added a card-image error fallback so failed or incomplete scan URLs fall back to a readable card tile instead of a blank face.
+- Replaced debug-oriented generic prompt labels like "selected indexes" and "Submit null" with player-facing card selection controls; shuffle/order prompts now use a simple continue action instead of asking the player to select every deck index.
+- Added rendered visual QA through local headless Chrome against http://localhost:5174, including setup resolution into a player-turn board with real card faces, compact HUD, hands, active Pokemon, deck/discard/prize piles, and log panel.
+- Added a friendly ChooseEnergyPrompt path for retreat/attack/card costs, with player-facing energy labels and a Pay cost action instead of generic index language.
+- Added retreat affordance filtering so retreat buttons are disabled unless the active Pokemon has enough attached energy and the target Bench slot is occupied.
+- Added action-level retreat coverage through the local engine boundary, verifying active/bench switch, retreat-cost discard, and retreat logs.
+- Exposed concede through the headless command runner and local API so a local self-play game can end without reloading the page.
+- Added active-game controls for Concede and Change decks, and made the game status show the winner when the engine reaches Finished.
+- Added action-level concession coverage, verifying Finished phase, winner index, concession log, and winner log.
+- Reworked the playmat so active Pokemon face each other in the center, bench slots are managed as single bench rows, and clicking the active player's Active Pokemon opens a focused action panel for attacks, abilities, retreat, pass, and concede.
+- Moved each player's lost zone above prize cards on the left side of their board area, with deck/discard stacked on the right and discard below deck. Lost zone styling is intentionally muted because it is rarely used.
+- Replaced the tiny Ralts default deck with a 60-card Dragapult-style self-play default, using implemented print substitutions where needed: Budew PRE, Fezandipiti ex SFA, Night Stretcher SFA, SVE energies, Lillie's Determination M1L, and Meowth ex POR.
+- Corrected the Perfect Order Meowth ex implementation from `Meowth ex M3` to `Meowth ex POR`, matching its actual `set = "POR"` declaration so the headless set loader can load it by fullName.
+- Deck import now ignores section/count headers and normalizes collector-number deck lines such as "Dreepy TWM 128" down to the engine's expected "Dreepy TWM" card key.
+- Consolidated local play prompt behavior toward one practical policy: mechanical shuffles auto-resolve in the headless layer, meaningful choices still prompt the player, and reveal/acknowledgement prompts stay visible in the Svelte UI with a 3-second auto-continue timer.
+- Fixed headless shuffle auto-resolution to answer the engine's existing ShuffleDeckPrompt/ShufflePrizesPrompt/ShuffleHandPrompt with a real Fisher-Yates order instead of identity order, matching the core Arbiter pattern. No shuffle logic was added to the frontend.
+- Removed player-facing auto-select buttons from prompt card/prize/energy selection; players now click the cards or Pokemon they want, while tests use prompt metadata internally.
+- Reworked generic hand-card play into a distinct play area to the left of each player's deck/discard stack, instead of routing Trainers through Active Pokemon or drawing another card-shaped slot with a text label.
+- Cleaned the board layout toward a real playmat: Active Pokemon stay centered and facing each other, benches render as one managed row of occupied Pokemon with a single invisible drop surface for new Basics, side pile counters remain readable from the current perspective, and the actual Twinleaf board-center asset replaces the temporary Pokeball graphic.
+- Tightened widescreen sizing so board card dimensions are bounded by available table height rather than scaling mainly from viewport width; the visible hand now has reserved vertical space and the center mark is capped.
+- Fixed modern scan URL generation for MEG/M1L/M1S and ScryDex-backed ASC/POR cards, restoring images for cards such as Rare Candy MEG, Meowth ex POR, and Poke Pad POR where the old PokemonTCG image host pattern returned 404s.
+
+Current status
+- Importing two decks starts a manual-prompt local game.
+- Setup can be resolved into a player turn in action-level tests.
+- Deck-based tests can attach energy, pass to the other player, attack, resolve the resulting attack prompt, and return control to the first player.
+- Manual KO tests can pause for prize selection, resolve the prize, pause for replacement active selection, and resume the next player's turn.
+- Ability tests can use Regidrago ASR's Dragon's Hoard through the same local command boundary and verify hand/deck/log state changes.
+- Trainer tests can use Nest Ball SVI through the same local command boundary and verify the manual deck-search plus shuffle sequence.
+- Trainer tests can use Ultra Ball SVI through a multi-prompt sequence, which gives better coverage for real manual card-choice chains.
+- Evolution tests can place a stage 1 Pokemon onto the matching active Pokemon once the engine considers evolution legal.
+- Retreat tests can switch the active Pokemon with an occupied Bench Pokemon and discard the retreat cost.
+- Stadium tests can use Artazon PAL through the local command boundary and verify the resulting manual prompt chain.
+- Concession tests can finish a game through the same local command boundary and verify the winner.
+- Scenario tests can attack and pass turns through the same local engine boundary.
+- Headless prompt adapter tests cover rich card prompt fields and prize prompt serialization.
+- The browser can drive the first self-play loop on the fixed local ports.
+- Browser QA also verified target filtering: invalid opponent energy attach is ignored, valid active attach works, second-player attack opens a manual ChooseAttackPrompt, and resolving that prompt returns to the next player with damage shown.
+- The browser bundle remains small because ptcg-server runs outside the browser.
+- Known modern set codes now produce PokemonTCG image URLs in headless snapshots, so supported cards can render as real scans.
+- Svelte build passes and the Svelte action/unit suite currently has 20 passing tests.
+- Targeted ptcg-server headless prompt adapter specs pass.
+- Full ptcg-server compile passes after the local headless changes.
+
+Known gaps
+- Prompt controls are intentionally generic; rare cards may still need the Advanced JSON fallback until their prompt shape is promoted into a friendly control.
+- The board is a lightweight 2D implementation, not yet feature-complete polish against every React drag animation and zone affordance.
+- No auth, lobby, matchmaking, deck persistence, network rooms, or React migration layer are included by design.
+- Full ptcg-server test suite still has unrelated base64 expectation failures under the current Node/runtime; do not treat that as this frontend's pass/fail signal.
