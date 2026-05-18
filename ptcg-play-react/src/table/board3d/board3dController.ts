@@ -234,6 +234,7 @@ export class Board3dController {
     this.clientId = p.clientId;
     this.player = p.player;
     this.onKoSequenceActiveChange = p.onKoSequenceActiveChange;
+    this.interactionService.setHandPlayZoneGameSettings(p.gameState.state.gameSettings);
   }
 
   init(canvas: HTMLCanvasElement, initial: Board3dControllerProps): void {

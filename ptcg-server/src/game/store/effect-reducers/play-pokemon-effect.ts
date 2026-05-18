@@ -35,7 +35,8 @@ export function playPokemonReducer(store: StoreLike, state: State, effect: Effec
   /* Play pokemon card */
   if (effect instanceof PlayPokemonEffect) {
     const stage = effect.pokemonCard.stage;
-    const isBasic = stage === Stage.BASIC;
+    const sandboxAllBasic = Boolean(state.gameSettings?.sandboxMode && state.gameSettings?.sandboxAllPokemonBasic);
+    const isBasic = stage === Stage.BASIC || sandboxAllBasic;
 
     if (isBasic && effect.target.cards.length === 0) {
       store.log(state, GameLog.LOG_PLAYER_PLAYS_BASIC_POKEMON, {

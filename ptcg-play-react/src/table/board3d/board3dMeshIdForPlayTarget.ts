@@ -9,6 +9,7 @@ import {
   TrainerCard,
   type Card,
   type CardTarget,
+  type GameSettings,
 } from 'ptcg-server';
 import { DropZoneType } from './board-3d-drop-zone';
 import { ZONE_POSITIONS } from './board-3d-zone-positions';
@@ -48,10 +49,23 @@ export function cardIsFossilLikeTrainer(card: Card | undefined | null): boolean 
   return powers.some(p => p.isFossil === true);
 }
 
+/** Subset of {@link GameSettings} needed for 3D hand→bench targeting (sandbox “all Pokémon as Basic”). */
+export type HandPlayPokemonZoneGameSettings = Pick<GameSettings, 'sandboxMode' | 'sandboxAllPokemonBasic'> | null | undefined;
+
 /** True when this card should use bench/active drop targets like a Basic Pokémon (includes trainer-printed fossils). */
-export function cardPlaysAsBasicPokemonFromHand(card: Card | undefined | null): boolean {
+export function cardPlaysAsBasicPokemonFromHand(
+  card: Card | undefined | null,
+  gameSettings?: HandPlayPokemonZoneGameSettings,
+): boolean {
   if (!card) {
     return false;
+  }
+  if (
+    gameSettings?.sandboxMode &&
+    gameSettings.sandboxAllPokemonBasic &&
+    card.superType === SuperType.POKEMON
+  ) {
+    return true;
   }
   if (card.superType === SuperType.POKEMON) {
     const stage = (card as { stage?: Stage }).stage;

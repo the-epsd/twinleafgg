@@ -2866,6 +2866,11 @@ export function CAN_PLAY_POKEMON_CARD(store: StoreLike, state: State, player: Pl
 
     // Check if there's space on bench (max 5 bench Pokemon)
     const benchCount = player.bench.filter(b => b.cards.length > 0).length;
+    const sandboxAllBasic = Boolean(state.gameSettings?.sandboxMode && state.gameSettings?.sandboxAllPokemonBasic);
+    if (sandboxAllBasic && benchCount < 5) {
+      return true;
+    }
+
     if (benchCount >= 5 && pokemonCard.stage === Stage.BASIC) {
       return false;
     }

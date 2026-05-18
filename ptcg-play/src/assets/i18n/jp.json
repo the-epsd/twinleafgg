@@ -496,6 +496,9 @@
     }
   },
   "GAMES_SANDBOX_MODE": "サンドボックスモード",
+  "GAMES_SANDBOX_ALL_POKEMON_BASIC": "すべてのポケモンをたねポケモンとして扱う（ベンチとセットアップ）",
+  "GAMES_SANDBOX_ATTACKS_NO_ENERGY": "ワザにエネルギーを必要としない",
+  "GAMES_SANDBOX_RETREAT_NO_ENERGY": "にげるときエネルギーを必要としない",
   "REACT_SETTINGS_SANDBOX_MATCHMAKING_HINT": "有効にすると、マッチメイクの対戦でサンドボックスは、相手も管理者でこの設定がオンな場合のみ使われます。",
   "SANDBOX_HINT_TITLE": "サンドボックス",
   "REACT_SANDBOX_GAME_NOT_ENABLED_BODY": "この対戦はサンドボックスではないためツールは使えません。マッチメイクでは両者が管理者で設定のサンドボックスを有効にする必要があります。従来クライアントで「サンドボックス」付きの対戦を作成することもできます。",

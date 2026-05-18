@@ -5,6 +5,7 @@ import { ConcedeAction } from './actions/concede-action';
 import { Card } from './card/card';
 import { ChangeAvatarAction } from './actions/change-avatar-action';
 import { Effect } from './effects/effect';
+import { CheckAttackCostEffect, CheckRetreatCostEffect } from './effects/check-effects';
 import { GameError } from '../game-error';
 import { GameMessage, GameLog } from '../game-message';
 import { Prompt } from './prompts/prompt';
@@ -117,6 +118,16 @@ export class Store implements StoreLike {
   public reduceEffect(state: State, effect: Effect): State {
 
     state = this.propagateEffect(state, effect);
+
+    const gs = state.gameSettings;
+    if (gs?.sandboxMode) {
+      if (effect instanceof CheckAttackCostEffect && gs.sandboxAttacksCostNoEnergy) {
+        effect.cost = [];
+      }
+      if (effect instanceof CheckRetreatCostEffect && gs.sandboxRetreatCostsNoEnergy) {
+        effect.cost = [];
+      }
+    }
 
     if (effect.preventDefault === true) {
       return state;

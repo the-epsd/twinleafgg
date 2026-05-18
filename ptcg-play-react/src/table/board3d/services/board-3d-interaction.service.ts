@@ -25,7 +25,11 @@ import {
 } from 'ptcg-server';
 import gsap from 'gsap';
 import { Board3dDropZone, DropZoneType, type DropZoneConfig } from '../board-3d-drop-zone';
-import { cardPlaysAsBasicPokemonFromHand, trainerTypeIsSupporter } from '../board3dMeshIdForPlayTarget';
+import {
+  cardPlaysAsBasicPokemonFromHand,
+  trainerTypeIsSupporter,
+  type HandPlayPokemonZoneGameSettings,
+} from '../board3dMeshIdForPlayTarget';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import { Board3dStateSyncService } from './board-3d-state-sync.service';
 import { Board3dHandService } from './board-3d-hand.service';
@@ -119,6 +123,9 @@ export class Board3dInteractionService {
   private slotGridTexture: Texture | null = null;
   private currentBenchSizes: { bottom: number; top: number } = { bottom: 5, top: 5 };
 
+  /** Matches server {@link GameSettings} flags for sandbox bench targeting. */
+  private handPlayZoneGameSettings: HandPlayPokemonZoneGameSettings = undefined;
+
   constructor(
     private assetLoader: Board3dAssetLoaderService,
     private stateSync: Board3dStateSyncService,
@@ -126,6 +133,15 @@ export class Board3dInteractionService {
   ) {
     this.raycaster = new Raycaster();
     this.mouse = new Vector2();
+  }
+
+  /** Called when game state updates so sandbox “all Pokémon as Basic” affects drop targeting. */
+  setHandPlayZoneGameSettings(gs: HandPlayPokemonZoneGameSettings): void {
+    this.handPlayZoneGameSettings = gs;
+  }
+
+  private playsAsBasicPokemonFromHand(card: Card | undefined | null): boolean {
+    return cardPlaysAsBasicPokemonFromHand(card, this.handPlayZoneGameSettings);
   }
 
   /**
@@ -440,7 +456,7 @@ export class Board3dInteractionService {
     // Handle BENCH_GENERAL zone - only valid for Basic Pokemon (and fossils played as Basic) with open bench slots
     if (config.type === DropZoneType.BENCH_GENERAL) {
       const { card } = this.currentDragContext;
-      if (cardPlaysAsBasicPokemonFromHand(card)) {
+      if (this.playsAsBasicPokemonFromHand(card)) {
         return this.findNextOpenBenchSlot(config.player) !== null;
       }
       return false;
@@ -450,7 +466,7 @@ export class Board3dInteractionService {
     const { superType, stage, trainerType, card } = this.currentDragContext;
 
     // Basic Pokemon and Fossil items that play as Basic onto bench/active
-    if (cardPlaysAsBasicPokemonFromHand(card)) {
+    if (this.playsAsBasicPokemonFromHand(card)) {
       if (config.type === DropZoneType.BENCH || config.type === DropZoneType.ACTIVE) {
         return !isOccupied;
       }
@@ -507,7 +523,7 @@ export class Board3dInteractionService {
       const config = zone.getConfig();
 
       // When dragging a Basic Pokemon or a Fossil that benches as Basic: BENCH_GENERAL + active
-      if (cardPlaysAsBasicPokemonFromHand(card)) {
+      if (this.playsAsBasicPokemonFromHand(card)) {
         if (config.type === DropZoneType.BENCH_GENERAL) {
           if (this.isValidDropZone(zone)) {
             zone.setValid();
@@ -847,7 +863,8 @@ export class Board3dInteractionService {
       const isEvolutionCard = this.currentDragContext &&
         this.currentDragContext.superType === SuperType.POKEMON &&
         this.currentDragContext.stage !== undefined &&
-        this.currentDragContext.stage !== Stage.BASIC;
+        this.currentDragContext.stage !== Stage.BASIC &&
+        !cardPlaysAsBasicPokemonFromHand(this.currentDragContext.card, this.handPlayZoneGameSettings);
 
       // Check if retreat drag (board card for active/bench swap)
       const isRetreatDrag = this.currentDragContext?.source === 'board';
@@ -1084,14 +1101,19 @@ export class Board3dInteractionService {
       const config = dropZone.getConfig();
       const zone = this.configToCardTarget(config);
 
+      const ctx = this.currentDragContext;
+      const actsAsBasicFromHand =
+        ctx && cardPlaysAsBasicPokemonFromHand(ctx.card, this.handPlayZoneGameSettings);
+
       const isAttachDropHand =
-        this.currentDragContext?.source === 'hand' &&
-        this.currentDragContext &&
-        (this.currentDragContext.superType === SuperType.ENERGY ||
-          this.currentDragContext.trainerType === TrainerType.TOOL ||
-          (this.currentDragContext.superType === SuperType.POKEMON &&
-            this.currentDragContext.stage !== undefined &&
-            this.currentDragContext.stage !== Stage.BASIC)) &&
+        ctx?.source === 'hand' &&
+        ctx &&
+        !actsAsBasicFromHand &&
+        (ctx.superType === SuperType.ENERGY ||
+          ctx.trainerType === TrainerType.TOOL ||
+          (ctx.superType === SuperType.POKEMON &&
+            ctx.stage !== undefined &&
+            ctx.stage !== Stage.BASIC)) &&
         (config.type === DropZoneType.ACTIVE || config.type === DropZoneType.BENCH);
 
       const useHandPlayFlight =
@@ -1621,7 +1643,7 @@ export class Board3dInteractionService {
       const config = zone.getConfig();
 
       // Basic Pokemon or Fossil played as Basic
-      if (cardPlaysAsBasicPokemonFromHand(card)) {
+      if (this.playsAsBasicPokemonFromHand(card)) {
         if (config.type === DropZoneType.BENCH_GENERAL) {
           if (this.isValidDropZone(zone)) {
             zone.setValid();

@@ -1,4 +1,4 @@
-import { Format, GameSettings, Rules } from '../../game';
+import { Format, GameSettings } from '../../game';
 import { CardArtwork } from '../../storage';
 import { In } from 'typeorm';
 import { Core } from '../../game/core/core';
@@ -186,15 +186,12 @@ export class MatchmakingService {
         const bothAdmins = player1.client.user.roleId === 4 && player2.client.user.roleId === 4;
         const sandboxMode = bothAdmins && player1.sandboxMode === true && player2.sandboxMode === true;
 
-        // Create game settings
-        const gameSettings: GameSettings = {
-          format: player1.format,
-          timeLimit: 1800,
-          rules: new Rules(),
-          recordingEnabled: true,
-          sandboxMode,
-          selfPlay: false
-        };
+        const gameSettings = new GameSettings();
+        gameSettings.format = player1.format;
+        gameSettings.timeLimit = 1800;
+        gameSettings.recordingEnabled = true;
+        gameSettings.sandboxMode = sandboxMode;
+        gameSettings.selfPlay = false;
 
         console.log(`[Matchmaking] Creating game between ${player1.client.name} and ${player2.client.name}`);
 
