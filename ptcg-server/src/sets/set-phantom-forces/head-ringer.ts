@@ -31,7 +31,7 @@ export class HeadRinger extends TrainerCard {
   public name: string = 'Head Ringer';
   public fullName: string = 'Head Ringer Team Flare Hyper Gear PHF';
   public text: string =
-    "Attach this Pokemon Tool to 1 of your opponent's Pokemon-EX that doesn't already have a Pokemon Tool attached to it.\n\nThe attacks of the Pokémon this card is attached to cost [C][C] more.\n\nWhen this card is removed from a Pokémon for any reason, put this card in its owner's discard pile.";
+    "Attach this Pokemon Tool to 1 of your opponent's Pokemon-EX that doesn't already have a Pokemon Tool attached to it.\n\nThe attacks of the Pokémon this card is attached to cost [C] more.\n\nWhen this card is removed from a Pokémon for any reason, put this card in its owner's discard pile.";
 
   // Refs: set-furious-fists/politoed.ts (CheckAttackCostEffect), set-stellar-crown/gravity-gemstone.ts (tool cost modification)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -110,7 +110,7 @@ export class HeadRinger extends TrainerCard {
       );
     }
 
-    // Add [C][C] to attack costs of the Pokemon this is attached to
+    // Add [C] to attack costs of the Pokemon this is attached to
     if (effect instanceof CheckAttackCostEffect) {
       const player = effect.player;
 
@@ -123,7 +123,6 @@ export class HeadRinger extends TrainerCard {
         return state;
       }
 
-      effect.cost.push(CardType.COLORLESS);
       effect.cost.push(CardType.COLORLESS);
     }
 
