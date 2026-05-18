@@ -75,7 +75,7 @@ export function GameOverOverlay({ localGame, clientId, getScanUrl, onConfirm }: 
               <div className={styles.prizeIndicators}>
                 {vm.prizeIndicators.map((prizeNum) => (
                   <div
-                    key={prizeNum}
+                    key={`yours-${prizeNum}`}
                     className={`${styles.prizeIndicator} ${vm.playerPrizesTaken >= prizeNum ? styles.prizeTaken : ''}`}
                   >
                     {prizeNum}
@@ -91,7 +91,7 @@ export function GameOverOverlay({ localGame, clientId, getScanUrl, onConfirm }: 
               <div className={styles.prizeIndicators}>
                 {vm.prizeIndicators.map((prizeNum) => (
                   <div
-                    key={prizeNum}
+                    key={`opp-${prizeNum}`}
                     className={`${styles.prizeIndicator} ${vm.opponentPrizesTaken >= prizeNum ? styles.prizeOpponentTaken : ''}`}
                   >
                     {prizeNum}

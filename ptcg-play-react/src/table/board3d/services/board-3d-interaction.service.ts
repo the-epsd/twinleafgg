@@ -31,6 +31,7 @@ import { Board3dStateSyncService } from './board-3d-state-sync.service';
 import { Board3dHandService } from './board-3d-hand.service';
 import { Board3dCard } from '../board-3d-card';
 import { ZONE_POSITIONS, SNAP_DISTANCE, getBenchPositions } from '../board-3d-zone-positions';
+import { BOARD3D_DECK_BULK_VISUAL_UD } from '../board3d-constants';
 
 export type PlayCardFlightPayload = {
   board3dCard: Board3dCard;
@@ -100,6 +101,13 @@ export class Board3dInteractionService {
   // Current drag context
   private currentDragContext: DragContext | null = null;
 
+  /** Parent for hand play flights (R3F: hand+stacks group; legacy: same as scene). */
+  private worldContentRoot!: Object3D;
+
+  setWorldContentRoot(root: Object3D): void {
+    this.worldContentRoot = root;
+  }
+
   // Pokemon hover tracking during drag (for energy/tool cards and evolution cards)
   private hoveredPokemonCard: Object3D | null = null;
   private hoveredPokemonBoard3dCard: Board3dCard | null = null;
@@ -132,6 +140,9 @@ export class Board3dInteractionService {
       if (object instanceof InstancedMesh) {
         return;
       }
+      if (object.userData?.[BOARD3D_DECK_BULK_VISUAL_UD]) {
+        return;
+      }
       // Only include objects that can be interacted with
       if (object.userData && (object.userData.isCard || object.userData.isDropZone)) {
         let p: Object3D | null = object;
@@ -147,14 +158,37 @@ export class Board3dInteractionService {
   }
 
   /**
+   * Resolve card / overlay hit from a concrete Three.js object (R3F pointer hit path).
+   */
+  resolveInteractiveCardFromSurface(surface: Object3D): Object3D | null {
+    let obj: Object3D | null = surface;
+    while (obj) {
+      if (obj.userData?.isEnergyIcon || obj.userData?.isToolCard) {
+        return obj;
+      }
+      if (obj.userData?.isCard) {
+        if (obj.userData?.[BOARD3D_DECK_BULK_VISUAL_UD]) {
+          obj = obj.parent;
+          continue;
+        }
+        return obj;
+      }
+      obj = obj.parent;
+    }
+    return null;
+  }
+
+  /**
    * Update mouse position and find card under cursor
    * Optimized with throttling and caching
+   * @param r3fSurfaceHit When provided (mesh pointer path), skip raycast and resolve card from this object.
    */
   onMouseMove(
     event: MouseEvent,
     camera: Camera,
     scene: Scene,
-    canvas: HTMLCanvasElement
+    canvas: HTMLCanvasElement,
+    r3fSurfaceHit?: Object3D | null
   ): Object3D | null {
     // Get canvas bounds for accurate coordinates
     const rect = canvas.getBoundingClientRect();
@@ -167,7 +201,7 @@ export class Board3dInteractionService {
     const mouseMoved = Math.abs(mouseX - this.lastMousePosition.x) > 0.001 ||
       Math.abs(mouseY - this.lastMousePosition.y) > 0.001;
 
-    if (!mouseMoved && this.cachedRaycastResult !== undefined) {
+    if (!mouseMoved && this.cachedRaycastResult !== undefined && r3fSurfaceHit == null) {
       return this.cachedRaycastResult;
     }
 
@@ -175,7 +209,7 @@ export class Board3dInteractionService {
     const currentTime = performance.now();
     const timeSinceLastRaycast = currentTime - this.lastRaycastTime;
 
-    if (timeSinceLastRaycast < this.raycastThrottleMs && !mouseMoved) {
+    if (timeSinceLastRaycast < this.raycastThrottleMs && !mouseMoved && r3fSurfaceHit == null) {
       return this.cachedRaycastResult;
     }
 
@@ -186,6 +220,12 @@ export class Board3dInteractionService {
 
     // Update raycaster
     this.raycaster.setFromCamera(this.mouse, camera);
+
+    if (r3fSurfaceHit != null) {
+      const card = this.resolveInteractiveCardFromSurface(r3fSurfaceHit);
+      this.cachedRaycastResult = card;
+      return card;
+    }
 
     // Use cached interactive objects if available, otherwise fall back to scene traversal
     const objectsToTest = this.interactiveObjects.length > 0
@@ -228,20 +268,7 @@ export class Board3dInteractionService {
    * Energy icons and tool cards (overlays) take priority so clicking them shows that card's info.
    */
   private getCardFromIntersection(intersection: Intersection): Object3D | null {
-    let obj: Object3D | null = intersection.object;
-
-    while (obj) {
-      // Energy icon or tool overlay: return immediately to show that card's info
-      if (obj.userData?.isEnergyIcon || obj.userData?.isToolCard) {
-        return obj;
-      }
-      if (obj.userData && obj.userData.isCard) {
-        return obj;
-      }
-      obj = obj.parent;
-    }
-
-    return null;
+    return this.resolveInteractiveCardFromSurface(intersection.object);
   }
 
   /**
@@ -300,17 +327,19 @@ export class Board3dInteractionService {
 
   /**
    * Handle mouse down - prepare for potential drag (deferred until threshold)
+   * @param r3fSurfaceHit Optional R3F hit object under the pointer (avoids duplicate raycast).
    */
   onMouseDown(
     event: MouseEvent,
     camera: Camera,
     scene: Scene,
-    canvas: HTMLCanvasElement
+    canvas: HTMLCanvasElement,
+    r3fSurfaceHit?: Object3D | null
   ): Object3D | null {
     // Track mouse down position for click detection
     this.mouseDownPosition.set(event.clientX, event.clientY);
 
-    const card = this.onMouseMove(event, camera, scene, canvas);
+    const card = this.onMouseMove(event, camera, scene, canvas, r3fSurfaceHit);
     this.mouseDownCard = card;
 
     // Clear any previous pending drag
@@ -1097,7 +1126,7 @@ export class Board3dInteractionService {
 
         if (this.draggedCard && isAttachDropHand) {
           if (handIndex >= 0) {
-            this.handService.removeCard(handIndex, scene);
+            this.handService.removeCard(handIndex);
           }
           result = {
             action: 'playCard',
@@ -1110,7 +1139,7 @@ export class Board3dInteractionService {
             this.currentDragContext?.card,
             this.currentDragContext?.trainerType
           );
-          const ejected = this.handService.detachCardForBoardPlay(handIndex, scene);
+          const ejected = this.handService.detachCardForBoardPlay(handIndex, this.worldContentRoot);
           if (ejected) {
             result = {
               action: 'playCard',

@@ -26,7 +26,7 @@ export const CUSTOM_ENERGY_ICONS: { [key: string]: string } = {
   'Enriching Energy': 'assets/energy/enriching.webp',
   'Legacy Energy': 'assets/energy/legacy.png',
   'Neo Upper Energy': 'assets/energy/neo-upper.png',
-  Electrode: 'assets/energy/electrode.png',
+  'Electrode': 'assets/energy/electrode.png',
   "Holon's Castform": 'assets/energy/holons-castform.png',
   "Holon's Magnemite": 'assets/energy/holons-magnemite.png',
   "Holon's Magneton": 'assets/energy/holons-magneton.png',
@@ -34,7 +34,7 @@ export const CUSTOM_ENERGY_ICONS: { [key: string]: string } = {
   "Holon's Electrode": 'assets/energy/holons-electrode.png',
   'Rock Fighting Energy': 'assets/energy/rock-fighting.webp',
   'Growth Grass Energy': 'assets/energy/growth-grass.webp',
-  'Telepath Psychic Energy': 'assets/energy/telepath-psychic.webp',
+  'Telepathic Psychic Energy': 'assets/energy/telepath-psychic.webp',
 };
 
 export function getCustomEnergyIconPath(card: Card, isAttachedAsEnergy: boolean = false): string | null {

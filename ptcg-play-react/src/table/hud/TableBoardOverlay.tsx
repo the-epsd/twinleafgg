@@ -22,6 +22,8 @@ export type TableBoardOverlayProps = {
   onSwitchSides: () => void;
   onSendChat: (message: string) => void;
   onReplayStep: (position: number, state: LocalGameState['state'], logs: LocalGameState['logs']) => void;
+  /** Averaged WebGL board frame rate from the 3D canvas (null until first sample). */
+  boardFps: number | null;
 };
 
 export function TableBoardOverlay(props: TableBoardOverlayProps) {
@@ -38,6 +40,7 @@ export function TableBoardOverlay(props: TableBoardOverlayProps) {
     onSwitchSides,
     onSendChat,
     onReplayStep,
+    boardFps,
   } = props;
 
   const state = localGame.state;
@@ -66,8 +69,14 @@ export function TableBoardOverlay(props: TableBoardOverlayProps) {
       </div>
       <div className={styles.rightColumn}>
         <div className={styles.rightColumnTop}>
-          <div className={styles.turnBadge}>
-            {t('TABLE_TABLE_NAME', { id: localGame.gameId })} — {t('TABLE_TURN_NUMBER', { turn: state.turn })}
+          <div className={styles.turnBadgeGroup}>
+            <div className={styles.turnBadge}>
+              {t('TABLE_TABLE_NAME', { id: localGame.gameId })} —{' '}
+              {t('TABLE_TURN_NUMBER', { turn: state.turn })}
+            </div>
+            <div className={styles.boardFpsLine} aria-live="polite">
+              {boardFps != null ? t('TABLE_BOARD_FPS', { fps: boardFps }) : t('TABLE_BOARD_FPS_MEASURING')}
+            </div>
           </div>
           {showReplay && localGame.replay ? (
             <TableReplayControls localGame={localGame} replay={localGame.replay} onStep={onReplayStep} />

@@ -327,6 +327,8 @@
   "TABLE_TABLE_NAME": "Table #{{id}}",
   "TABLE_TIME_LEFT": "Temps restant :",
   "TABLE_TURN_NUMBER": "Tour {{turn}}",
+  "TABLE_BOARD_FPS": "Plateau : {{fps}} FPS",
+  "TABLE_BOARD_FPS_MEASURING": "Plateau : …",
   "TABLE_FORCE_DISCONNECT": "Forcer la Déconnexion",
   "TABLE_FORCE_DISCONNECT_CONFIRM": "Êtes-vous sûr de vouloir forcer la déconnexion ? Cela simulera une déconnexion réseau pour tester le système de reconnexion.",
   "FORCE_DISCONNECT_MESSAGE": "Déconnexion forcée - vous pouvez maintenant tester la reconnexion en actualisant la page ou en attendant la reconnexion automatique.",

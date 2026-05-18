@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { Scene, WebGLRenderer } from 'three';
+import { Html } from '@react-three/drei';
+import { useThree } from '@react-three/fiber';
 import styles from './Board3DCanvas.module.css';
 
 export type Board3dStatsData = {
@@ -110,5 +112,20 @@ export function Board3dStats({
         </label>
       </div>
     </div>
+  );
+}
+
+/** Overlay stats when the board runs inside a React Three Fiber `<Canvas>`. */
+export function Board3dStatsR3f({ onWireframeToggle }: { onWireframeToggle: (enabled: boolean) => void }) {
+  const scene = useThree(s => s.scene);
+  const gl = useThree(s => s.gl);
+  return (
+    <Html
+      prepend
+      transform={false}
+      style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
+    >
+      <Board3dStats scene={scene} renderer={gl} onWireframeToggle={onWireframeToggle} />
+    </Html>
   );
 }
