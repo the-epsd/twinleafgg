@@ -35,7 +35,13 @@ import { Board3dStateSyncService } from './board-3d-state-sync.service';
 import { Board3dHandService } from './board-3d-hand.service';
 import { Board3dCard } from '../board-3d-card';
 import { ZONE_POSITIONS, SNAP_DISTANCE, getBenchPositions } from '../board-3d-zone-positions';
-import { BOARD3D_DECK_BULK_VISUAL_UD } from '../board3d-constants';
+import {
+  BOARD3D_CARD_SLOT_BASE_HEIGHT,
+  BOARD3D_CARD_SLOT_BASE_WIDTH,
+  BOARD3D_DECK_BULK_VISUAL_UD,
+  BOARD3D_DROP_ZONE_TARGET_SCALE,
+  BOARD3D_STADIUM_DROP_ZONE_EXTRA_SCALE,
+} from '../board3d-constants';
 
 export type PlayCardFlightPayload = {
   board3dCard: Board3dCard;
@@ -1524,12 +1530,22 @@ export class Board3dInteractionService {
     // Top player zones (for board-to-board visibility, but typically not interactive)
     // Uncomment if needed: await this.createPlayerDropZones(scene, PlayerType.TOP_PLAYER, ZONE_POSITIONS.topPlayer, topSize);
 
-    // Shared stadium zone (between both players)
+    // Shared stadium zone — wider hit target than other slots (still centered on stadium mesh)
+    const stW =
+      BOARD3D_CARD_SLOT_BASE_WIDTH *
+      BOARD3D_DROP_ZONE_TARGET_SCALE *
+      BOARD3D_STADIUM_DROP_ZONE_EXTRA_SCALE;
+    const stH =
+      BOARD3D_CARD_SLOT_BASE_HEIGHT *
+      BOARD3D_DROP_ZONE_TARGET_SCALE *
+      BOARD3D_STADIUM_DROP_ZONE_EXTRA_SCALE;
     const stadiumZone = new Board3dDropZone({
       type: DropZoneType.STADIUM,
       position: ZONE_POSITIONS.stadium,
       player: PlayerType.BOTTOM_PLAYER, // Use bottom player for ownership, but it's shared
       index: 0,
+      width: stW,
+      height: stH,
       texture: this.slotGridTexture ?? undefined
     });
     this.dropZones.push(stadiumZone);
@@ -1596,8 +1612,9 @@ export class Board3dInteractionService {
       // Calculate width to span all bench positions with some padding
       const minX = Math.min(...benchPositions.map(pos => pos.x));
       const maxX = Math.max(...benchPositions.map(pos => pos.x));
-      const benchWidth = Math.max((maxX - minX) + 4.0, 20.0); // At least 20 units wide, add padding
-      const benchHeight = 6.0; // Extended height for easier targeting above and below bench
+      const dzScale = BOARD3D_DROP_ZONE_TARGET_SCALE;
+      const benchWidth = Math.max((maxX - minX) + 4.0, 20.0) * dzScale;
+      const benchHeight = 6.0 * dzScale;
 
       const generalBenchZone = new Board3dDropZone({
         type: DropZoneType.BENCH_GENERAL,
@@ -1614,13 +1631,14 @@ export class Board3dInteractionService {
     // Stadium zone is now shared - created in createDropZoneIndicators()
 
     // Board zone (for Items/Supporters) - large area covering player's side
+    const dzScale = BOARD3D_DROP_ZONE_TARGET_SCALE;
     const boardZone = new Board3dDropZone({
       type: DropZoneType.BOARD,
       position: positions.board,
       player,
       index: 0,
-      width: 30.0,
-      height: 14.0,
+      width: 30.0 * dzScale,
+      height: 14.0 * dzScale,
       texture: this.slotGridTexture ?? undefined
     });
     this.dropZones.push(boardZone);

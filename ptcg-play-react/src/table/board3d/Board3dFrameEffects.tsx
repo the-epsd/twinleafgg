@@ -7,7 +7,8 @@ import { updateBoard3dHoloTime } from './board-3d-holo-material';
 import type { Board3dStateSyncService } from './services/board-3d-state-sync.service';
 import { BoardInteractionService } from '../BoardInteractionService';
 
-const DAMAGE_HUD_LOCAL = new Vector3(0, 2.2, 0);
+/** Screen-space “below the card”: opposite of the old top offset in group-local space. */
+const DAMAGE_HUD_LOCAL = new Vector3(0, -2.35, 0);
 
 function collectLights(scene: { traverse: (cb: (o: unknown) => void) => void }): Light[] {
   const found: Light[] = [];
@@ -51,7 +52,7 @@ function Board3dPerFrameHooks({
       boardInteraction.setRemoveDamageHudAnchor(null);
       return;
     }
-    DAMAGE_HUD_LOCAL.set(0, 2.2, 0);
+    DAMAGE_HUD_LOCAL.set(0, -2.35, 0);
     group.localToWorld(DAMAGE_HUD_LOCAL);
     DAMAGE_HUD_LOCAL.project(camera as PerspectiveCamera);
     const rect = gl.domElement.getBoundingClientRect();

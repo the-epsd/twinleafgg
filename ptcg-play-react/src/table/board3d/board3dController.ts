@@ -47,6 +47,13 @@ import {
   type State,
 } from 'ptcg-server';
 import type { Board3dCardsAdapter } from './board3dCardsAdapter';
+import {
+  BOARD3D_CARD_SLOT_BASE_HEIGHT,
+  BOARD3D_CARD_SLOT_BASE_WIDTH,
+  BOARD3D_DROP_ZONE_TARGET_SCALE,
+  BOARD_3D_BENCH_SLOT_OUTLINE_COLOR,
+  BOARD_3D_BENCH_SLOT_OUTLINE_OPACITY,
+} from './board3d-constants';
 import type { CardInfoPaneOptions } from '../../card-info/CardInfoPane';
 import type { Board3dGameActions } from './board3dGameActions';
 import { BoardInteractionService, type BasicEntranceAnimationEvent } from '../BoardInteractionService';
@@ -305,11 +312,14 @@ export class Board3dController {
     this.selectionSubs.push(
       ...subscribeBoard3dInteractionStreams(this.boardInteractionService, {
         updateSelectionVisuals: () => this.updateSelectionVisuals(),
+        refreshPutDamagePlacementOverlays: () => this.refreshPutDamagePlacementOverlays(),
         playBoardAttackAnimation: (ev) => this.playBoardAttackAnimation(ev),
         playBoardBasicAnimation: (ev) => this.playBoardBasicAnimation(ev),
         playBoardEvolutionAnimation: (ev) => this.playBoardEvolutionAnimation(ev),
       }),
     );
+
+    this.stateSync.setBoardInteractionForDamagePreview(this.boardInteractionService);
   }
 
   private runInitR3f(): void {
@@ -337,11 +347,14 @@ export class Board3dController {
     this.selectionSubs.push(
       ...subscribeBoard3dInteractionStreams(this.boardInteractionService, {
         updateSelectionVisuals: () => this.updateSelectionVisuals(),
+        refreshPutDamagePlacementOverlays: () => this.refreshPutDamagePlacementOverlays(),
         playBoardAttackAnimation: (ev) => this.playBoardAttackAnimation(ev),
         playBoardBasicAnimation: (ev) => this.playBoardBasicAnimation(ev),
         playBoardEvolutionAnimation: (ev) => this.playBoardEvolutionAnimation(ev),
       }),
     );
+
+    this.stateSync.setBoardInteractionForDamagePreview(this.boardInteractionService);
   }
 
   /** Called from React when props change after mount. */
@@ -436,6 +449,7 @@ export class Board3dController {
     this.disposeOtherSpotOutlines();
     this.disposeBoardGrid();
 
+    this.stateSync.setBoardInteractionForDamagePreview(null);
     this.stateSync.dispose(this.scene);
     this.handService.dispose(this.worldContentRoot);
     this.interactionService.dispose(this.scene);
@@ -683,7 +697,7 @@ export class Board3dController {
       this.boardInteractionService.setRemoveDamageHudAnchor(null);
       return;
     }
-    const worldPos = new Vector3(0, 2.2, 0);
+    const worldPos = new Vector3(0, -2.35, 0);
     group.localToWorld(worldPos);
     worldPos.project(this.camera);
     const rect = this.canvasEl.getBoundingClientRect();
@@ -1072,14 +1086,16 @@ export class Board3dController {
     });
   }
 
-  /** Slot dimensions (must match Board3dDropZone) */
+  /** Bench ribbon tuning */
   private static readonly BENCH_OUTLINE_THICKNESS = 0.02;
   private static readonly BENCH_OUTLINE_Y = 0.15;
   private static readonly BENCH_OUTLINE_COLOR = 0xffffff;
 
-  /** Card/slot dimensions for outlines */
-  private static readonly CARD_SLOT_WIDTH = 2.8;
-  private static readonly CARD_SLOT_HEIGHT = 3.8;
+  /** Card/slot dimensions for outlines (match enlarged {@link Board3dDropZone} defaults). */
+  private static readonly CARD_SLOT_WIDTH =
+    BOARD3D_CARD_SLOT_BASE_WIDTH * BOARD3D_DROP_ZONE_TARGET_SCALE;
+  private static readonly CARD_SLOT_HEIGHT =
+    BOARD3D_CARD_SLOT_BASE_HEIGHT * BOARD3D_DROP_ZONE_TARGET_SCALE;
 
   /**
    * Create per-slot outline meshes for bench and all other board slots.
@@ -1095,13 +1111,25 @@ export class Board3dController {
     // Bench slots
     const topPositions = getBenchPositions(topBenchSize, PlayerType.TOP_PLAYER);
     for (const pos of topPositions) {
-      const group = this.createSpotOutlineGroup(pos, w, h);
+      const group = this.createSpotOutlineGroup(
+        pos,
+        w,
+        h,
+        BOARD_3D_BENCH_SLOT_OUTLINE_COLOR,
+        BOARD_3D_BENCH_SLOT_OUTLINE_OPACITY,
+      );
       this.topBenchSpotOutlines.push(group);
       this.scene.add(group);
     }
     const bottomPositions = getBenchPositions(bottomBenchSize, PlayerType.BOTTOM_PLAYER);
     for (const pos of bottomPositions) {
-      const group = this.createSpotOutlineGroup(pos, w, h);
+      const group = this.createSpotOutlineGroup(
+        pos,
+        w,
+        h,
+        BOARD_3D_BENCH_SLOT_OUTLINE_COLOR,
+        BOARD_3D_BENCH_SLOT_OUTLINE_OPACITY,
+      );
       this.bottomBenchSpotOutlines.push(group);
       this.scene.add(group);
     }
@@ -1116,6 +1144,7 @@ export class Board3dController {
       this.addSpotOutline(zp.supporter, w, h);
       this.addSpotOutline(zp.deck, w, h);
       this.addSpotOutline(zp.discard, w, h);
+      this.addSpotOutline(zp.lostZone, w, h);
     }
 
     // Prize slots (6 per player, 2x3 grid - match board-3d-prize.service layout)
@@ -1140,7 +1169,13 @@ export class Board3dController {
   /**
    * Create a Group with 4 thin plane meshes forming a rectangle outline.
    */
-  private createSpotOutlineGroup(position: Vector3, width: number, height: number): Group {
+  private createSpotOutlineGroup(
+    position: Vector3,
+    width: number,
+    height: number,
+    outlineColor: number = Board3dController.BENCH_OUTLINE_COLOR,
+    outlineOpacity: number = 0,
+  ): Group {
     const t = Board3dController.BENCH_OUTLINE_THICKNESS;
     const y = Board3dController.BENCH_OUTLINE_Y;
     const minX = position.x - width / 2;
@@ -1149,9 +1184,9 @@ export class Board3dController {
     const maxZ = position.z + height / 2;
 
     const material = new MeshBasicMaterial({
-      color: Board3dController.BENCH_OUTLINE_COLOR,
+      color: outlineColor,
       transparent: true,
-      opacity: 0,
+      opacity: outlineOpacity,
       side: DoubleSide,
       depthTest: true
     });
@@ -2238,6 +2273,11 @@ export class Board3dController {
     // Update hand cards
     this.updateHandSelectionVisuals(isSelectionMode);
 
+    this.markDirty();
+  }
+
+  private refreshPutDamagePlacementOverlays(): void {
+    this.stateSync.refreshPutDamagePlacementOverlays(this.boardInteractionService);
     this.markDirty();
   }
 

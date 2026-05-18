@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import type { Card, CardList } from 'ptcg-server';
 import { SuperType as SuperTypeEnum } from 'ptcg-server';
 import { CardFace } from '../components/cards/CardFace';
+import { CARDBACK_ASSET_URL } from '../deck-editor/resolveScanUrl';
 import type { CardInfoPaneOptions, CardInfoTableAction } from './CardInfoPane';
 import { CardInfoPopup } from './CardInfoPopup';
 import styles from './CardInfoListPopup.module.css';
@@ -98,12 +99,13 @@ export function CardInfoListPopup({
               key={`${c.fullName}-${c.id}`}
               type="button"
               className={styles.cardBtn}
+              aria-label={faceDownState ? t('CARDS_UNKNOWN') : c.name}
               onClick={() => setDetailCard(c)}
             >
               <CardFace
                 card={faceDownState ? null : c}
-                src={faceDownState ? '' : getScanUrl(c)}
-                name={c.name}
+                src={faceDownState ? CARDBACK_ASSET_URL : getScanUrl(c)}
+                name=""
                 className={styles.cardThumb}
               />
             </button>

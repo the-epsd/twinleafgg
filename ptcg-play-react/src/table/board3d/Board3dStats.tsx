@@ -16,11 +16,9 @@ export type Board3dStatsData = {
 export function Board3dStats({
   scene,
   renderer,
-  onWireframeToggle,
 }: {
   scene: Scene | null;
   renderer: WebGLRenderer | null;
-  onWireframeToggle: (enabled: boolean) => void;
 }) {
   const [stats, setStats] = useState<Board3dStatsData>({
     fps: 0,
@@ -30,7 +28,6 @@ export function Board3dStats({
     geometries: 0,
     textures: 0,
   });
-  const [showWireframes, setShowWireframes] = useState(false);
   const frameTimesRef = useRef<number[]>([]);
   const lastFrameRef = useRef(performance.now());
   const lastStatsUpdateRef = useRef(performance.now());
@@ -97,26 +94,12 @@ export function Board3dStats({
         FPS: {stats.fps} | Tris: {stats.triangles} | Draws: {stats.drawCalls} | Obj:{' '}
         {stats.objectCount}
       </div>
-      <div className={`${styles.statLine} ${styles.wireframeToggle}`}>
-        <label>
-          <input
-            type="checkbox"
-            checked={showWireframes}
-            onChange={(e) => {
-              const v = e.target.checked;
-              setShowWireframes(v);
-              onWireframeToggle(v);
-            }}
-          />
-          Wireframes
-        </label>
-      </div>
     </div>
   );
 }
 
 /** Overlay stats when the board runs inside a React Three Fiber `<Canvas>`. */
-export function Board3dStatsR3f({ onWireframeToggle }: { onWireframeToggle: (enabled: boolean) => void }) {
+export function Board3dStatsR3f() {
   const scene = useThree(s => s.scene);
   const gl = useThree(s => s.gl);
   return (
@@ -125,7 +108,7 @@ export function Board3dStatsR3f({ onWireframeToggle }: { onWireframeToggle: (ena
       transform={false}
       style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}
     >
-      <Board3dStats scene={scene} renderer={gl} onWireframeToggle={onWireframeToggle} />
+      <Board3dStats scene={scene} renderer={gl} />
     </Html>
   );
 }

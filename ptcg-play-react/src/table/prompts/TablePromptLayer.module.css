@@ -134,21 +134,21 @@
 }
 
 .removeDamageRoundBtn {
-  width: 40px;
-  height: 40px;
+  width: 46px;
+  height: 46px;
   padding: 0 !important;
   border-radius: 50% !important;
-  font-size: 1.25rem !important;
+  font-size: 1.35rem !important;
   line-height: 1 !important;
 }
 
 .removeDamagePending {
-  min-width: 28px;
+  min-width: 32px;
   text-align: center;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  color: rgba(255, 200, 120, 0.95);
+  color: rgba(255, 210, 140, 0.98);
 }
 
 .removeDamageFloatingHud {
@@ -160,13 +160,13 @@
   flex-direction: row;
   align-items: center;
   gap: 10px;
-  padding: 8px 12px;
-  transform: translate(-50%, -100%);
-  margin-top: -10px;
+  padding: 10px 14px;
+  /* Anchor is bottom-center of card; top/left set in JS; translate centers on x */
+  transform: translate(-50%, 0);
   border-radius: 999px;
-  background: rgba(8, 12, 20, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+  background: rgba(8, 12, 20, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
   pointer-events: auto;
 }
 

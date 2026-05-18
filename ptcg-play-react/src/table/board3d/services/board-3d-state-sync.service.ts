@@ -45,6 +45,9 @@ export class Board3dStateSyncService {
   /** Cards removed while R3F owns the board subtree; dispose after React detaches primitives. */
   private pendingR3fBoardCardDisposals: Board3dCard[] = [];
 
+  /** When set, Put damage prompt placement previews can be painted on Pokémon overlays. */
+  private boardInteractionForDamagePreview: BoardInteractionService | null = null;
+
   constructor(
     private assetLoader: Board3dAssetLoaderService,
     private cardsAdapter: Board3dCardsAdapter,
@@ -64,6 +67,14 @@ export class Board3dStateSyncService {
     this.worldMount = worldMount;
     this.boardCardsMount = boardCardsMount;
     this.interactionScene = interactionScene;
+  }
+
+  /**
+   * Enables reading Put damage placement preview during {@link Board3dCardOverlayService#updateOverlays}.
+   * Clear on board controller destroy.
+   */
+  setBoardInteractionForDamagePreview(interaction: BoardInteractionService | null): void {
+    this.boardInteractionForDamagePreview = interaction;
   }
 
   getStackService(): Board3dStackService {
@@ -261,21 +272,21 @@ export class Board3dStateSyncService {
     // Active and Supporter - run in parallel (independent zones)
     const activePromise = player.active && player.active.cards.length > 0
       ? (() => {
-          const sleeveImagePath = this.getSleeveImagePath(player.active, player);
-          return this.updateCard(
-            player.active!,
-            `${playerPrefix}_active`,
-            ZONE_POSITIONS[position].active,
-            isOwner,
-            rotation,
-            { player: playerType, slot: SlotType.ACTIVE, index: 0 },
-            1.5,
-            sleeveImagePath
-          );
-        })()
+        const sleeveImagePath = this.getSleeveImagePath(player.active, player);
+        return this.updateCard(
+          player.active!,
+          `${playerPrefix}_active`,
+          ZONE_POSITIONS[position].active,
+          isOwner,
+          rotation,
+          { player: playerType, slot: SlotType.ACTIVE, index: 0 },
+          1.5,
+          sleeveImagePath
+        );
+      })()
       : Promise.resolve(undefined).then(() => {
-          this.removeCard(`${playerPrefix}_active`);
-        });
+        this.removeCard(`${playerPrefix}_active`);
+      });
 
     const freezeSupporterClear =
       freezeSupporterClearForPlayerId != null &&
@@ -284,17 +295,17 @@ export class Board3dStateSyncService {
     const supporterPromise =
       player.supporter && player.supporter.cards.length > 0
         ? this.updateCard(
-            player.supporter,
-            `${playerPrefix}_supporter`,
-            ZONE_POSITIONS[position].supporter,
-            isOwner,
-            rotation
-          )
+          player.supporter,
+          `${playerPrefix}_supporter`,
+          ZONE_POSITIONS[position].supporter,
+          isOwner,
+          rotation
+        )
         : freezeSupporterClear
           ? Promise.resolve()
           : Promise.resolve(undefined).then(() => {
-              this.removeCard(`${playerPrefix}_supporter`);
-            });
+            this.removeCard(`${playerPrefix}_supporter`);
+          });
 
     await Promise.all([activePromise, supporterPromise]);
 
@@ -360,23 +371,23 @@ export class Board3dStateSyncService {
     }
 
     // Lost Zone (stacked with latest on top)
-    // if (player.lostzone && player.lostzone.cards.length > 0) {
-    //   await this.stackService.updateLostZoneStack(
-    //     player.lostzone,
-    //     `${playerPrefix}_lostzone`,
-    //     ZONE_POSITIONS[position].lostZone,
-    //     rotation,
-    //     scene,
-    //     this.updateCard.bind(this),
-    //     this.getCardById.bind(this),
-    //     this.removeCard.bind(this)
-    //   );
-    // } else {
-    //   // Remove Lost Zone stack and top card
-    //   const lostZoneStackId = `${playerPrefix}_lostzone`;
-    //   this.stackService.removeLostZoneStack(lostZoneStackId, scene);
-    //   this.removeCard(`${lostZoneStackId}_top`, scene);
-    // }
+    const lostZoneStackId = `${playerPrefix}_lostzone`;
+    if (player.lostzone && player.lostzone.cards.length > 0) {
+      await this.stackService.updateLostZoneStack(
+        player.lostzone,
+        lostZoneStackId,
+        ZONE_POSITIONS[position].lostZone,
+        rotation,
+        this.worldMount,
+        isOwner,
+        this.updateCard.bind(this),
+        this.getCardById.bind(this),
+        this.removeCard.bind(this)
+      );
+    } else {
+      this.stackService.removeLostZoneStack(lostZoneStackId, this.worldMount);
+      this.removeCard(`${lostZoneStackId}_top`);
+    }
 
     // Prize cards (show in 2x3 grid)
     if (player.prizes) {
@@ -598,13 +609,21 @@ export class Board3dStateSyncService {
 
     // Update overlays for PokemonCardList
     if (cardList instanceof PokemonCardList) {
+      let pendingPlaceDamage = 0;
+      if (
+        cardTarget &&
+        this.boardInteractionForDamagePreview?.isPutDamageOverlayActive()
+      ) {
+        pendingPlaceDamage = this.boardInteractionForDamagePreview.getPutDamagePlacementDelta(cardTarget);
+      }
       await this.overlayService.updateOverlays(
         cardId,
         cardList,
         cardMesh,
         breakCard,
         isFaceDown,
-        this.interactionScene
+        this.interactionScene,
+        pendingPlaceDamage,
       );
     } else {
       // Clear any existing overlays for non-Pokemon cards
@@ -696,6 +715,9 @@ export class Board3dStateSyncService {
       this.stackService.forEachDiscardStackId((stackId) => {
         allStacksToRemove.push({ stackId, isDeck: false });
       });
+      this.stackService.forEachLostZoneStackId((stackId) => {
+        this.stackService.removeLostZoneStack(stackId, worldMount);
+      });
       allStacksToRemove.forEach(({ stackId, isDeck }) => {
         this.stackService.removeStack(stackId, worldMount, isDeck);
       });
@@ -766,6 +788,22 @@ export class Board3dStateSyncService {
           // Remove if player ID doesn't exist OR position doesn't match expected position
           if (!expectedPosition || expectedPosition !== position) {
             stacksToRemove.push({ stackId, isDeck: false });
+          }
+        }
+      }
+    });
+
+    // Lost Zone stacks (`${position}_${id}_lostzone`)
+    this.stackService.forEachLostZoneStackId((stackId) => {
+      const parts = stackId.split('_');
+      if (parts.length >= 3) {
+        const position = parts[0] as 'topPlayer' | 'bottomPlayer';
+        const playerIdStr = parts[1];
+        const playerId = parseInt(playerIdStr, 10);
+        if (!isNaN(playerId)) {
+          const expectedPosition = expectedPositions.get(playerId);
+          if (!expectedPosition || expectedPosition !== position) {
+            this.stackService.removeLostZoneStack(stackId, worldMount);
           }
         }
       }
@@ -847,6 +885,24 @@ export class Board3dStateSyncService {
 
   updateBillboards(camera: PerspectiveCamera): void {
     this.overlayService.updateBillboards(camera);
+  }
+
+  /**
+   * Refreshes only the red “placing damage” chips when the Put damage prompt preview changes
+   * (full {@link syncState} does not run because game state is unchanged).
+   */
+  refreshPutDamagePlacementOverlays(interaction: BoardInteractionService): void {
+    const active = interaction.isPutDamageOverlayActive();
+    this.cardsMap.forEach((card, meshId) => {
+      const group = card.getGroup();
+      const ud = group.userData;
+      const ct = ud.cardTarget as CardTarget | undefined;
+      if (!ud.isBoardCard || !ct) {
+        return;
+      }
+      const pending = active ? interaction.getPutDamagePlacementDelta(ct) : 0;
+      this.overlayService.updatePendingPlaceDamageOnly(meshId, pending);
+    });
   }
 
   /**

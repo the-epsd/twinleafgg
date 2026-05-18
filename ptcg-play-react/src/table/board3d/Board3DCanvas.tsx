@@ -12,7 +12,6 @@ import { createBoard3dCardsAdapter } from './createBoard3dCardsAdapter';
 import type { Board3dCardsAdapter } from './board3dCardsAdapter';
 import type { Board3dGameActions } from './board3dGameActions';
 import { Board3dExperience } from './Board3dExperience';
-import { Board3dLightingPanel } from './Board3dLightingPanel';
 import {
   BOARD3D_LIGHTING_DEFAULTS,
   board3dToneMappingConstant,
@@ -80,7 +79,7 @@ function useStableGameActions(actions: Board3dGameActions): Board3dGameActions {
 export function Board3DCanvas(props: Board3DCanvasProps) {
   const controllerRef = useRef<Board3dController | null>(null);
   const boardCanvasDpr = useBoardCanvasDpr();
-  const [lightingSettings, setLightingSettings] = useState(cloneBoard3dLightingDefaults);
+  const lightingSettings = useMemo(() => cloneBoard3dLightingDefaults(), []);
   const [cardPrompt, setCardPrompt] = useState<CardPromptState>(null);
   const onControllerReady = useCallback((c: Board3dController | null) => {
     controllerRef.current = c;
@@ -174,7 +173,6 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
             onBoardFps={props.onBoardFps}
           />
         </Canvas>
-        <Board3dLightingPanel settings={lightingSettings} onChange={setLightingSettings} />
       </div>
 
       {cardPrompt?.kind === 'info' && cardPrompt.data.card ? (

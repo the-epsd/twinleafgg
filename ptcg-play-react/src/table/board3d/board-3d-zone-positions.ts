@@ -1,5 +1,6 @@
 import { Vector3 } from 'three';
 import { PlayerType } from 'ptcg-server';
+import { BOARD3D_DROP_ZONE_SNAP_DISTANCE } from './board3d-constants';
 
 // Zone positions in 3D world space
 // Layout: Stadium shared at center-left, Active near center, Bench behind Active
@@ -147,7 +148,7 @@ export const MOBILE_ORIGINAL_BENCH_POSITIONS = {
   ]
 };
 
-export const SNAP_DISTANCE = 3.5;
+export const SNAP_DISTANCE = BOARD3D_DROP_ZONE_SNAP_DISTANCE;
 
 /** Aspect ratio (width/height) below which mobile positions are used */
 const MOBILE_ASPECT_THRESHOLD = 0.8;

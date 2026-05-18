@@ -19,8 +19,7 @@
   top: 16px;
   right: 16px;
   bottom: 16px;
-  /* Half of previous sidebar: was min(252px, 100vw - 32px) */
-  width: calc(min(252px, 100vw - 32px) / 2);
+  width: min(236px, calc(100vw - 32px));
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -114,7 +113,7 @@
   flex: 0 1 auto;
   width: 100%;
   min-height: 72px;
-  max-height: min(26vh, 200px);
+  max-height: min(42vh, 360px);
   overflow: hidden;
   display: flex;
   flex-direction: column;

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { StateLog } from 'ptcg-server';
 import type { Player } from 'ptcg-server';
@@ -42,6 +42,8 @@ export function TableGameLogPanel(props: TableGameLogPanelProps) {
     }
   };
   const listRef = useRef<HTMLUListElement>(null);
+  /** When true, new log lines snap the list to the bottom; scrolling up clears this. */
+  const stickToBottomRef = useRef(true);
 
   const activeId =
     localGame.state.phase === GamePhase.PLAYER_TURN
@@ -51,14 +53,32 @@ export function TableGameLogPanel(props: TableGameLogPanelProps) {
   useEffect(() => {
     const el = listRef.current;
     if (!el) return;
-    el.scrollTop = el.scrollHeight;
-  }, [localGame.logs.length, localGame.logs]);
+    const thresholdPx = 56;
+    const updateStick = () => {
+      stickToBottomRef.current = el.scrollHeight - el.scrollTop - el.clientHeight <= thresholdPx;
+    };
+    updateStick();
+    el.addEventListener('scroll', updateStick, { passive: true });
+    return () => el.removeEventListener('scroll', updateStick);
+  }, [collapsed]);
+
+  useLayoutEffect(() => {
+    const el = listRef.current;
+    if (!el || collapsed) return;
+    if (stickToBottomRef.current) {
+      el.scrollTop = el.scrollHeight;
+    }
+  }, [localGame.logs.length, collapsed]);
 
   const send = () => {
-    const message = draft.trim().replace(/[^\x00-\x7F]/g, '');
+    const message = draft
+      .trim()
+      .replace(/\s+/g, ' ')
+      .replace(/[^\x00-\x7F]/g, '');
     if (!message || localGame.deleted) {
       return;
     }
+    stickToBottomRef.current = true;
     onSendChat(message);
     setDraft('');
   };
@@ -87,9 +107,9 @@ export function TableGameLogPanel(props: TableGameLogPanelProps) {
       {collapsed ? (
         <p className={styles.collapsedTitle}>{t('TABLE_LOGS')}</p>
       ) : (
-        <div id="table-game-log-panel-body">
+        <div id="table-game-log-panel-body" className={styles.panelBody}>
           <h4 className={styles.header}>{t('TABLE_LOGS')}</h4>
-          <ul ref={listRef} className={styles.list}>
+          <ul ref={listRef} className={styles.list} aria-label={t('TABLE_LOGS')}>
             {localGame.logs.map((log) => {
               if (isLogHidden(log, clientId)) {
                 return null;
@@ -119,9 +139,9 @@ export function TableGameLogPanel(props: TableGameLogPanelProps) {
             })}
           </ul>
           <div className={styles.footer}>
-            <input
+            <textarea
               className={styles.input}
-              type="text"
+              rows={2}
               maxLength={256}
               autoComplete="off"
               placeholder={t('MESSAGES_ENTER_MESSAGE')}
@@ -129,7 +149,7 @@ export function TableGameLogPanel(props: TableGameLogPanelProps) {
               disabled={!!localGame.deleted}
               onChange={(e) => setDraft(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter') {
+                if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();
                   send();
                 }

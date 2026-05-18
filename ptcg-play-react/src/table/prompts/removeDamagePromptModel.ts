@@ -6,6 +6,11 @@ export function targetsEqual(a: CardTarget, b: CardTarget): boolean {
   return a.player === b.player && a.slot === b.slot && a.index === b.index;
 }
 
+/** Stable key for maps keyed by board {@link CardTarget}. */
+export function cardTargetKey(t: CardTarget): string {
+  return `${t.player}:${t.slot}:${t.index}`;
+}
+
 export function findItemByTarget(rows: PokemonRow[], target: CardTarget | undefined): PokemonItem | undefined {
   if (target === undefined) {
     return undefined;

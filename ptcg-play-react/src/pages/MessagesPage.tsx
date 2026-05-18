@@ -146,8 +146,19 @@ export function MessagesPage() {
   }
 
   return (
-    <div style={{ display: 'flex', gap: 16, alignItems: 'flex-start' }}>
-      <aside style={{ width: 260, flexShrink: 0, borderRight: '1px solid #ddd', paddingRight: 12 }}>
+    <div
+      style={{
+        display: 'flex',
+        flex: 1,
+        minHeight: 0,
+        gap: 16,
+        alignItems: 'stretch',
+        width: '100%',
+        maxWidth: 960,
+        margin: '0 auto',
+      }}
+    >
+      <aside style={{ width: 280, flexShrink: 0, borderRight: '1px solid #ddd', paddingRight: 12, overflowY: 'auto' }}>
         <h2 style={{ marginTop: 0 }}>{t('MESSAGES_CONVERSATIONS_ASIDE')}</h2>
         {listError && <p style={{ color: 'crimson', fontSize: 14 }}>{listError}</p>}
         {listLoading && <p>{t('MESSAGES_LOADING_LIST')}</p>}
@@ -180,7 +191,7 @@ export function MessagesPage() {
         </ul>
       </aside>
 
-      <section style={{ flex: 1, minWidth: 0 }}>
+      <section style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
         {!peerId ? (
           <p>{t('MESSAGES_HINT_SELECT')}</p>
         ) : (
@@ -195,17 +206,18 @@ export function MessagesPage() {
             {threadLoading ? (
               <p>{t('MESSAGES_LOADING_THREAD')}</p>
             ) : (
-              <div
-                style={{
-                  border: '1px solid #ddd',
-                  borderRadius: 4,
-                  padding: 12,
-                  maxHeight: 420,
-                  overflowY: 'auto',
-                  marginBottom: 12,
-                  background: '#fafafa',
-                }}
-              >
+            <div
+              style={{
+                flex: 1,
+                minHeight: 180,
+                border: '1px solid #ddd',
+                borderRadius: 4,
+                padding: 12,
+                overflowY: 'auto',
+                marginBottom: 12,
+                background: '#fafafa',
+              }}
+            >
                 {messages.map((m) => (
                   <div
                     key={m.messageId}
@@ -234,14 +246,24 @@ export function MessagesPage() {
                 ))}
               </div>
             )}
-            <div style={{ display: 'flex', gap: 8 }}>
+            <div style={{ display: 'flex', gap: 8, flexShrink: 0, alignItems: 'flex-end' }}>
               <textarea
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
                 onKeyDown={onKeyDown}
                 rows={3}
                 placeholder={t('MESSAGES_PLACEHOLDER_COMPOSER')}
-                style={{ flex: 1, resize: 'vertical' }}
+                style={{
+                  flex: 1,
+                  resize: 'vertical',
+                  minHeight: 72,
+                  maxHeight: 200,
+                  fontFamily: 'inherit',
+                  fontSize: 14,
+                  padding: '8px 10px',
+                  borderRadius: 6,
+                  border: '1px solid #ccc',
+                }}
               />
               <button type="button" disabled={sending} onClick={() => void onSend()}>
                 {t('MESSAGES_SEND_MESSAGE')}

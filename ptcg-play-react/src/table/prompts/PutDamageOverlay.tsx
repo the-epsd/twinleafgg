@@ -15,7 +15,7 @@ import {
   computePutInvalid,
   computePutRemaining,
 } from './putDamagePromptModel';
-import { findItemByTarget, patchDamageForTarget, targetsEqual } from './removeDamagePromptModel';
+import { findItemByTarget, patchDamageForTarget, targetsEqual, cardTargetKey } from './removeDamagePromptModel';
 import { buildPokemonPromptRows, mapPokemonItems } from './pokemonPromptRows';
 import type { PokemonRow } from './pokemonPromptRows';
 import styles from './TablePromptLayer.module.css';
@@ -62,7 +62,8 @@ export function PutDamageOverlay(props: PutDamageOverlayProps) {
         if (hasSelection && p) {
           el.style.display = 'flex';
           el.style.left = `${p.x}px`;
-          el.style.top = `${p.y}px`;
+          /* Anchor is bottom of card; sit controls just under that point */
+          el.style.top = `${p.y + 10}px`;
         } else {
           el.style.display = 'none';
         }
@@ -96,6 +97,28 @@ export function PutDamageOverlay(props: PutDamageOverlayProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- prompt instance only
   }, [prompt.id]);
 
+  useEffect(() => {
+    const m = new Map<string, number>();
+    for (const row of rows) {
+      for (const item of row.items) {
+        const initial = initialDamageMap.find(
+          (i) =>
+            i.target.player === item.target.player &&
+            i.target.slot === item.target.slot &&
+            i.target.index === item.target.index,
+        );
+        if (initial === undefined) {
+          continue;
+        }
+        const delta = item.cardList.damage - initial.damage;
+        if (delta > 0) {
+          m.set(cardTargetKey(item.target), delta);
+        }
+      }
+    }
+    boardInteraction.setPutDamagePlacementPreview(m);
+  }, [rows, initialDamageMap, boardInteraction]);
+
   const boardSelected = useMemo(() => {
     const list = boardInteraction.getSelectedTargets();
     return list[0];
@@ -110,7 +133,8 @@ export function PutDamageOverlay(props: PutDamageOverlayProps) {
     [prompt.damage, placed],
   );
 
-  const hudDisplayValue = remaining;
+  /** Show cumulative damage placed (0 → budget), not remaining budget counting down. */
+  const hudDisplayValue = placed;
 
   const { remove: removeDisabled, add: addDisabled } = useMemo(
     () =>

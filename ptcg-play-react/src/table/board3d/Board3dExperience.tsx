@@ -122,7 +122,7 @@ export function Board3dExperience({
           boardInteraction={boardInteraction}
           bloom={lightingSettings.bloom}
         />
-        <Board3dStatsR3f onWireframeToggle={(enabled) => ctrlRef.current?.onWireframeToggle(enabled)} />
+        <Board3dStatsR3f />
       </Board3dControllerRefContext.Provider>
     </Selection>
   );

@@ -67,7 +67,7 @@ export function RemoveDamageOverlay(props: RemoveDamageOverlayProps) {
         if (hasSelection && p) {
           el.style.display = 'flex';
           el.style.left = `${p.x}px`;
-          el.style.top = `${p.y}px`;
+          el.style.top = `${p.y + 10}px`;
         } else {
           el.style.display = 'none';
         }

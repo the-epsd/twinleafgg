@@ -66,9 +66,16 @@ export class Board3dStackService {
     }
   }
 
-  /** Iterate discard pile instanced stack ids (not deck). */
+  /** Iterate discard instanced stack ids (bulk under top mesh). */
   forEachDiscardStackId(cb: (stackId: string) => void): void {
     for (const id of this.discardStacks.keys()) {
+      cb(id);
+    }
+  }
+
+  /** Iterate Lost Zone instanced stack ids (bulk under top mesh). */
+  forEachLostZoneStackId(cb: (stackId: string) => void): void {
+    for (const id of this.lostZoneStacks.keys()) {
       cb(id);
     }
   }
@@ -343,6 +350,7 @@ export class Board3dStackService {
     position: Vector3,
     rotation: number,
     attachRoot: Object3D,
+    isOwner: boolean,
     updateCardCallback: UpdateCardCallback,
     getCardByIdCallback: GetCardByIdCallback,
     removeCardCallback: RemoveCardCallback
@@ -381,7 +389,7 @@ export class Board3dStackService {
       topCardList,
       topCardId,
       new Vector3(position.x, position.y + Board3dStackService.LOST_ZONE_HEIGHT_OFFSET + ((cardCount - 1) * Board3dStackService.STACK_HEIGHT_INCREMENT), position.z),
-      true, // Always visible
+      isOwner,
       rotation,
       undefined, // No cardTarget
       1.0,
@@ -393,6 +401,8 @@ export class Board3dStackService {
     if (topCardMesh) {
       topCardMesh.getGroup().userData.isLostZone = true;
       topCardMesh.getGroup().userData.cardList = lostZone;
+      topCardMesh.getGroup().renderOrder = 100;
+      topCardMesh.getMesh().renderOrder = 100;
     }
 
     // Remaining cards (if any) as instanced stack underneath

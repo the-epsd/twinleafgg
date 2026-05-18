@@ -65,7 +65,7 @@ export function TablePage() {
   const navigate = useNavigate();
   const { cardsInfo, serverConfig, user } = useAuth();
   const getScanUrl = useDeckCardScanUrl(serverConfig?.scansUrl);
-  const { clientId } = useCoreSession();
+  const { clientId, connected: coreConnected } = useCoreSession();
   const { has3dBoardAccess, use3dBoardDefault, defaultSandboxMode } = useSettings();
 
   const hasReplayParam = matchIdParam != null && matchIdParam !== '';
@@ -346,11 +346,12 @@ export function TablePage() {
         ? clientId
         : (localGame.state.players[0]?.id ?? 0);
     }
-    if (clientId == null || clientId === 0) {
-      return undefined;
-    }
+    // Self-play uses in-game focus; must not wait on core:getInfo (clientId may still be 0).
     if (localGame.state.gameSettings?.selfPlay === true) {
       return selfPlayFocusPlayerId(localGame.state);
+    }
+    if (clientId == null || clientId === 0) {
+      return undefined;
     }
     return clientId;
   }, [localGame, clientId]);
@@ -477,7 +478,38 @@ export function TablePage() {
     );
   }
 
-  if (!localGame || !tableView || tableClientId == null) {
+  if (!localGame) {
+    return <div style={{ padding: 24 }}>{t('REACT_LOADING')}</div>;
+  }
+
+  if (tableClientId == null) {
+    return (
+      <div style={{ padding: 24 }}>
+        {coreConnected ? t('REACT_LOADING') : t('REACT_CONNECTING', 'Connecting...')}
+      </div>
+    );
+  }
+
+  /** Only normal (non–self-play) games wait for a second human; self-play has no “opponent joining”. */
+  const waitingForLiveOpponent =
+    localGame.replay == null &&
+    localGame.state.gameSettings?.selfPlay !== true &&
+    localGame.state.players.length < 2;
+
+  if (waitingForLiveOpponent) {
+    const backTarget = isReplayRoute ? '/spectate' : '/games';
+    return (
+      <div style={{ padding: 24 }}>
+        <p>{t('REACT_WAITING_FOR_OPPONENT', 'Waiting for opponent to join...')}</p>
+        <ShellButton type="button" variant="secondary" onClick={() => navigate(backTarget)}>
+          {t('BUTTON_BACK')}
+        </ShellButton>
+      </div>
+    );
+  }
+
+  /** Should not happen when ≥2 players and tableClientId is set; keep a safe fallback. */
+  if (!tableView) {
     return <div style={{ padding: 24 }}>{t('REACT_LOADING')}</div>;
   }
 
@@ -538,14 +570,18 @@ export function TablePage() {
             )}
           </div>
         ) : null}
-      <TablePromptLayer
-        localGame={localGame}
+      <Board3DCanvas
+        gameState={localGame}
+        topPlayer={topPlayer}
+        bottomPlayer={bottomPlayer}
+        bottomPlayerHand={bottomHand}
+        topPlayerHand={topHand}
         clientId={tableClientId}
         catalog={cardsInfo?.cards ?? []}
-        getScanUrl={getScanUrl}
         boardInteraction={boardInteraction}
-        onResolvePrompt={onResolvePrompt}
-        suppressChoosePrizePrompt={suppressChoosePrizePrompt}
+        gameActions={gameActions}
+        onKoSequenceActiveChange={onKoSequenceActiveChange}
+        onBoardFps={onBoardFps}
       />
       <TableBoardOverlay
         localGame={localGame}
@@ -561,18 +597,14 @@ export function TablePage() {
         onReplayStep={onReplayStep}
         boardFps={boardFps}
       />
-      <Board3DCanvas
-        gameState={localGame}
-        topPlayer={topPlayer}
-        bottomPlayer={bottomPlayer}
-        bottomPlayerHand={bottomHand}
-        topPlayerHand={topHand}
+      <TablePromptLayer
+        localGame={localGame}
         clientId={tableClientId}
         catalog={cardsInfo?.cards ?? []}
+        getScanUrl={getScanUrl}
         boardInteraction={boardInteraction}
-        gameActions={gameActions}
-        onKoSequenceActiveChange={onKoSequenceActiveChange}
-        onBoardFps={onBoardFps}
+        onResolvePrompt={onResolvePrompt}
+        suppressChoosePrizePrompt={suppressChoosePrizePrompt}
       />
       {showEndGame && endFlowStage === 'splash' ? (
         <MatchResultsSplash

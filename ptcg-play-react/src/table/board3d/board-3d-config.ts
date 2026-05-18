@@ -135,7 +135,7 @@ export function getAspectRatioCategory(aspect: number): AspectRatioCategory {
  */
 export function getBoardConfig(aspect: number): Board3dConfig {
   const category = getAspectRatioCategory(aspect);
-  
+
   switch (category) {
     case 'widescreen':
       return WIDESCREEN_CONFIG;
@@ -157,7 +157,7 @@ export function getBoardConfig(aspect: number): Board3dConfig {
 export function getCameraConfig(aspect: number, isUpsideDown: boolean = false): CameraConfig {
   const config = getBoardConfig(aspect);
   const zMultiplier = isUpsideDown ? -1 : 1;
-  
+
   return {
     ...config.camera,
     position: {
