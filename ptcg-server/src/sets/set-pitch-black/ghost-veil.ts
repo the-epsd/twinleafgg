@@ -3,7 +3,7 @@ import { Player } from '../../game/store/state/player';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
-import { AbstractAttackEffect } from '../../game/store/effects/attack-effects';
+import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import {
   PlaceDamageCountersEffect,
   PutDamageCountersEffect,
@@ -48,6 +48,20 @@ export function reduceGhostVeil(store: StoreLike, state: State, effect: Effect, 
     if (effect.player === owner) {
       return state;
     }
+
+    // Allow Weakness & Resistance
+    if (effect instanceof ApplyWeaknessEffect) {
+      return state;
+    }
+    // Allow damage
+    if (effect instanceof PutDamageEffect) {
+      return state;
+    }
+    // Allow damage
+    if (effect instanceof DealDamageEffect) {
+      return state;
+    }
+
     effect.preventDefault = true;
     return state;
   }
