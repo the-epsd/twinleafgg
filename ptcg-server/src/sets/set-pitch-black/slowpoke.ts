@@ -14,20 +14,18 @@ export class Slowpoke extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Unlimited Disposal',
-      cost: [P],
-      damage: 0,
-      text: 'You may discard as many cards from your hand as you like.',
-    },
-    {
-      name: 'Headbutt',
-      cost: [C, C],
-      damage: 20,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'Unlimited Disposal',
+    cost: [P],
+    damage: 0,
+    text: 'You may discard as many cards from your hand as you like.',
+  },
+  {
+    name: 'Headbutt',
+    cost: [C, C],
+    damage: 20,
+    text: '',
+  }];
 
   public set: string = 'M5';
   public setNumber: string = '28';

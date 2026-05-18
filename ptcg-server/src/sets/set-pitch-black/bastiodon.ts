@@ -23,14 +23,12 @@ export class Bastiodon extends PokemonCard {
     text: 'While this Pokémon is on your Bench, prevent all damage done to your Pokémon by attacks from your opponent\'s Pokémon that have 2 or fewer Energy attached.',
   }];
 
-  public attacks = [
-    {
-      name: 'Hammer In',
-      cost: [M, M, C],
-      damage: 160,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'Hammer In',
+    cost: [M, M, C],
+    damage: 160,
+    text: '',
+  }];
 
   public set: string = 'M5';
   public setNumber: string = '60';

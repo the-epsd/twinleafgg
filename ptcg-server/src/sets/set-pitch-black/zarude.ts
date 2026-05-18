@@ -13,21 +13,19 @@ export class Zarude extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Overhead Throw',
-      cost: [D],
-      damage: 30,
-      text: 'This attack also does 30 damage to 1 of your Benched Pokémon.',
-    },
-    {
-      name: 'Shadow Whip',
-      cost: [D, D, D],
-      damage: 100,
-      damageCalculation: '+',
-      text: 'If any of your Benched Pokémon has any Shadow Darkness Energy attached to them, this attack does 70 more damage.',
-    },
-  ];
+  public attacks = [{
+    name: 'Overhead Throw',
+    cost: [D],
+    damage: 30,
+    text: 'This attack also does 30 damage to 1 of your Benched Pokémon.',
+  },
+  {
+    name: 'Shadow Whip',
+    cost: [D, D, D],
+    damage: 100,
+    damageCalculation: '+',
+    text: 'If any of your Benched Pokémon has any Shadow Darkness Energy attached to them, this attack does 70 more damage.',
+  }];
 
   public set: string = 'M5';
   public setNumber: string = '54';

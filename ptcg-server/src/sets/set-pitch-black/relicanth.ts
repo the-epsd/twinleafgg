@@ -11,15 +11,13 @@ export class Relicanth extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Fossil Beatdown',
-      cost: [C],
-      damage: 10,
-      damageCalculation: '+',
-      text: 'This attack does 30 more damage for each of your Benched Pokémon with "Antique" in its name.',
-    },
-  ];
+  public attacks = [{
+    name: 'Fossil Beatdown',
+    cost: [C],
+    damage: 10,
+    damageCalculation: '+',
+    text: 'This attack does 30 more damage for each of your Benched Pokémon with "Antique" in its name.',
+  }];
 
   public set: string = 'M5';
   public setNumber: string = '16';

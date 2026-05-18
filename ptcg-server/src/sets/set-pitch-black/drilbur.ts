@@ -11,20 +11,18 @@ export class Drilbur extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Call for Family',
-      cost: [C],
-      damage: 0,
-      text: 'Search your deck for 2 Basic Pokémon and put them onto your Bench. Shuffle your deck afterwards.',
-    },
-    {
-      name: 'Dig Claws',
-      cost: [C, C, C],
-      damage: 50,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'Call for Family',
+    cost: [C],
+    damage: 0,
+    text: 'Search your deck for 2 Basic Pokémon and put them onto your Bench. Shuffle your deck afterwards.',
+  },
+  {
+    name: 'Dig Claws',
+    cost: [C, C, C],
+    damage: 50,
+    text: '',
+  }];
 
   public set: string = 'M5';
   public setNumber: string = '44';

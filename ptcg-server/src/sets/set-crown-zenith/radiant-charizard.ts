@@ -6,20 +6,12 @@ import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class RadiantCharizard extends PokemonCard {
-
-  public tags = [CardTag.RADIANT];
-
-  public regulationMark = 'F';
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.FIRE;
-
+  public tags = [CardTag.RADIANT];
+  public cardType: CardType = R;
   public hp: number = 160;
-
-  public weakness = [{ type: CardType.WATER }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: W }];
+  public retreat = [C, C, C];
 
   public powers = [{
     name: 'Excited Heart',
@@ -27,31 +19,19 @@ export class RadiantCharizard extends PokemonCard {
     text: 'This Pokémon\'s attacks cost [C] less for each Prize card your opponent has taken.'
   }];
 
-  public attacks = [
-    {
-      name: 'Combustion Blast',
-      cost: [CardType.FIRE, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 250,
-      text: 'During your next turn, this Pokémon can\'t use Combustion Blast.'
-    }
-  ];
+  public attacks = [{
+    name: 'Combustion Blast',
+    cost: [R, C, C, C, C],
+    damage: 250,
+    text: 'During your next turn, this Pokémon can\'t use Combustion Blast.'
+  }];
 
+  public regulationMark = 'F';
   public set: string = 'CRZ';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '20';
-
   public name: string = 'Radiant Charizard';
-
   public fullName: string = 'Radiant Charizard CRZ';
-
-  // public getColorlessReduction(state: State): number {
-  //   const player = state.players[state.activePlayer];
-  //   const opponent = StateUtils.getOpponent(state, player);
-  //   const remainingPrizes = opponent.getPrizeLeft();
-  //   return 6 - remainingPrizes;
-  // }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

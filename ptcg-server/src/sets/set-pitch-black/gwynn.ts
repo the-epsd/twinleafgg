@@ -64,21 +64,13 @@ function* playGwynn(next: Function, store: StoreLike, state: State, effect: Trai
 
 export class Gwynn extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-
   public regulationMark: string = 'J';
-
   public set: string = 'M5';
-
   public setNumber: string = '78';
-
   public cardImage: string = 'assets/cardback.png';
-
   public name: string = 'Gwynn';
-
   public fullName: string = 'Gwynn M5';
-
-  public text: string =
-    'Discard 2 Pokémon from your hand (excluding any Rule Box Pokémon). Draw 3 cards for each Pokémon discarded in this way.';
+  public text: string = 'Discard 2 Pokémon from your hand (excluding any Rule Box Pokémon). Draw 3 cards for each Pokémon discarded in this way.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
