@@ -88,19 +88,16 @@ import { Zubat } from './zubat';
 import { Zweilous } from './zweilous';
 import { AZ } from './az';
 import { BattleCompressor } from './battle-compressor';
-import { BattleCompressorTeamFlareGear } from './battle-compressor-team-flare-gear';
 import { DimensionValley } from './dimension-valley';
 import { GengarSpiritLink } from './gengar-spirit-link';
 import { HandScope } from './hand-scope';
-import { HeadRingerTeamFlareHyperGear } from './head-ringer-team-flare-hyper-gear';
-import { JammingNetTeamFlareHyperGear } from './jamming-net-team-flare-hyper-gear';
+import { HeadRinger } from './head-ringer';
+import { JammingNet } from './jamming-net';
 import { LysandresTrumpCard } from './lysandres-trump-card';
 import { ManectricSpiritLink } from './manectric-spirit-link';
-import { RoboSubstituteTeamFlareGear } from './robo-substitute-team-flare-gear';
-import { RoboSubstitute } from './robo-substitutue';
+import { RoboSubstitute } from './robo-substitute';
 import { SteelShelter } from './steel-shelter';
 import { TargetWhistle } from './target-whistle';
-import { TargetWhistleTeamFlareGear } from './target-whistle-team-flare-gear';
 import { Tierno } from './tierno';
 import { TrickCoin } from './trick-coin';
 import { VsSeeker } from './vs-seeker';
@@ -224,19 +221,16 @@ export const setPhantomForces: Card[] = [
   // Trainers
   new AZ(),
   new BattleCompressor(),
-  new BattleCompressorTeamFlareGear(),
   new DimensionValley(),
   new GengarSpiritLink(),
   new HandScope(),
-  new HeadRingerTeamFlareHyperGear(),
-  new JammingNetTeamFlareHyperGear(),
+  new HeadRinger(),
+  new JammingNet(),
   new LysandresTrumpCard(),
   new ManectricSpiritLink(),
-  new RoboSubstituteTeamFlareGear(),
   new RoboSubstitute(),
   new SteelShelter(),
   new TargetWhistle(),
-  new TargetWhistleTeamFlareGear(),
   new Tierno(),
   new TrickCoin(),
   new VsSeeker(),

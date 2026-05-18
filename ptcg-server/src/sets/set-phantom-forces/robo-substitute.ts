@@ -1,12 +1,34 @@
-import { GameError, GameMessage, PokemonCard, PokemonCardList, Power, PowerType, State, StateUtils, StoreLike, TrainerCard } from '../..';
-import { CardType, PokemonType, Stage, SuperType, TrainerType } from '../../game/store/card/card-types';
+import {
+  GameError,
+  GameMessage,
+  PokemonCard,
+  PokemonCardList,
+  Power,
+  PowerType,
+  State,
+  StateUtils,
+  StoreLike,
+  TrainerCard,
+} from '../..';
+import {
+  CardType,
+  PokemonType,
+  Stage,
+  SuperType,
+  TrainerType,
+} from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect, RetreatEffect } from '../../game/store/effects/game-effects';
-import { PlayItemEffect, PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import {
+  KnockOutEffect,
+  RetreatEffect,
+} from '../../game/store/effects/game-effects';
+import {
+  PlayItemEffect,
+  PlayPokemonEffect,
+} from '../../game/store/effects/play-card-effects';
 import { WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class RoboSubstitute extends TrainerCard {
-
   public trainerType = TrainerType.ITEM;
   public superType = SuperType.TRAINER;
 
@@ -45,57 +67,74 @@ export class RoboSubstitute extends TrainerCard {
       name: 'Robo Substitute',
       text: `Play this card as if it were a 30 HP [C] Basic Pokémon. At any time during your turn (before your attack), you may discard this card from play. 
       
-      This card can't retreat. If this card is Knocked Out, your opponent can't take any Prize cards for it.`,
+This card can't retreat. If this card is Knocked Out, your opponent can't take any Prize cards for it.`,
       useWhenInPlay: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.TRAINER_ABILITY
-    }
+      powerType: PowerType.TRAINER_ABILITY,
+    },
   ];
 
   // public text = 'Play this card as if it were a 30 HP [C] Basic Pokémon. At any time during your turn (before your attack), you may discard this card from play. This card can\'t retreat. If this card is Knocked Out, your opponent can\'t take any Prize cards for it.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
       const player = effect.player;
 
-      if (player.bench.every(b => b.cards.length === 0)) {
+      if (player.bench.every((b) => b.cards.length === 0)) {
         // technical implementation does not matter exactly because this ends the game
-        effect.player.active.moveCardsTo(effect.player.active.cards, player.deck);
+        effect.player.active.moveCardsTo(
+          effect.player.active.cards,
+          player.deck,
+        );
       } else {
         player.switchPokemon(cardList);
         const pokeDollCardList = StateUtils.findCardList(state, this);
-        pokeDollCardList.moveCardsTo(pokeDollCardList.cards, effect.player.discard);
+        pokeDollCardList.moveCardsTo(
+          pokeDollCardList.cards,
+          effect.player.discard,
+        );
       }
     }
 
     if (effect instanceof PlayItemEffect && effect.trainerCard === this) {
       const player = effect.player;
 
-      const emptySlots = player.bench.filter(b => b.cards.length === 0);
+      const emptySlots = player.bench.filter((b) => b.cards.length === 0);
       if (emptySlots.length === 0) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const playPokemonEffect = new PlayPokemonEffect(player, this as PokemonCard, emptySlots[0]);
+      const playPokemonEffect = new PlayPokemonEffect(
+        player,
+        this as PokemonCard,
+        emptySlots[0],
+      );
       store.reduceEffect(state, playPokemonEffect);
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
+    if (
+      effect instanceof RetreatEffect &&
+      effect.player.active.cards.includes(this)
+    ) {
       throw new GameError(GameMessage.CANNOT_RETREAT);
     }
 
-    if (effect instanceof KnockOutEffect && effect.target.cards.includes(this)) {
+    if (
+      effect instanceof KnockOutEffect &&
+      effect.target.cards.includes(this)
+    ) {
       effect.prizeCount = 0;
       return state;
     }
 
-    if (effect instanceof RetreatEffect && effect.player.active.cards.includes(this)) {
+    if (
+      effect instanceof RetreatEffect &&
+      effect.player.active.cards.includes(this)
+    ) {
       throw new GameError(GameMessage.CANNOT_RETREAT);
     }
 
     return state;
   }
-
 }

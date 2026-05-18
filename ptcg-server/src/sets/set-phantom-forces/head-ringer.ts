@@ -3,22 +3,35 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { CardTag, CardType, TrainerType } from '../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../game';
+import {
+  CardTag,
+  CardType,
+  TrainerType,
+} from '../../game/store/card/card-types';
+import {
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckAttackCostEffect } from '../../game/store/effects/check-effects';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
 import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
-export class HeadRingerTeamFlareHyperGear extends TrainerCard {
+export class HeadRinger extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'PHF';
   public setNumber: string = '97';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Head Ringer Team Flare Hyper Gear';
+  public name: string = 'Head Ringer';
   public fullName: string = 'Head Ringer Team Flare Hyper Gear PHF';
-  public text: string = 'Attach this Pokemon Tool to 1 of your opponent\'s Pokemon-EX that doesn\'t already have a Pokemon Tool attached to it. The attacks of the Pokémon this card is attached to cost [C][C] more. When this card is removed from a Pokémon for any reason, put this card in its owner\'s discard pile.';
+  public text: string =
+    "Attach this Pokemon Tool to 1 of your opponent's Pokemon-EX that doesn't already have a Pokemon Tool attached to it.\n\nThe attacks of the Pokémon this card is attached to cost [C][C] more.\n\nWhen this card is removed from a Pokémon for any reason, put this card in its owner's discard pile.";
 
   // Refs: set-furious-fists/politoed.ts (CheckAttackCostEffect), set-stellar-crown/gravity-gemstone.ts (tool cost modification)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -30,7 +43,10 @@ export class HeadRingerTeamFlareHyperGear extends TrainerCard {
       // Check if opponent has any Pokemon-EX without a tool
       let hasValidTarget = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.tags.includes(CardTag.POKEMON_EX) && cardList.tools.length === 0) {
+        if (
+          card.tags.includes(CardTag.POKEMON_EX) &&
+          cardList.tools.length === 0
+        ) {
           hasValidTarget = true;
         }
       });
@@ -43,34 +59,55 @@ export class HeadRingerTeamFlareHyperGear extends TrainerCard {
       effect.preventDefault = true;
 
       // Build blocked list using CardTarget format
-      const blocked: { player: PlayerType, slot: SlotType, index: number }[] = [];
+      const blocked: { player: PlayerType; slot: SlotType; index: number }[] =
+        [];
       const opponentActive = opponent.active;
       const opponentActivePokemon = opponentActive.getPokemonCard();
 
-      if (!opponentActivePokemon || !opponentActivePokemon.tags.includes(CardTag.POKEMON_EX) || opponentActive.tools.length > 0) {
-        blocked.push({ player: PlayerType.TOP_PLAYER, slot: SlotType.ACTIVE, index: 0 });
+      if (
+        !opponentActivePokemon ||
+        !opponentActivePokemon.tags.includes(CardTag.POKEMON_EX) ||
+        opponentActive.tools.length > 0
+      ) {
+        blocked.push({
+          player: PlayerType.TOP_PLAYER,
+          slot: SlotType.ACTIVE,
+          index: 0,
+        });
       }
 
       opponent.bench.forEach((benchSlot, index) => {
         const pokemonCard = benchSlot.getPokemonCard();
-        if (!pokemonCard || !pokemonCard.tags.includes(CardTag.POKEMON_EX) || benchSlot.tools.length > 0) {
-          blocked.push({ player: PlayerType.TOP_PLAYER, slot: SlotType.BENCH, index });
+        if (
+          !pokemonCard ||
+          !pokemonCard.tags.includes(CardTag.POKEMON_EX) ||
+          benchSlot.tools.length > 0
+        ) {
+          blocked.push({
+            player: PlayerType.TOP_PLAYER,
+            slot: SlotType.BENCH,
+            index,
+          });
         }
       });
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), targets => {
-        if (targets && targets.length > 0) {
-          const target = targets[0];
-          player.hand.moveCardTo(this, target);
-          target.tools.push(this);
-        }
-      });
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (targets) => {
+          if (targets && targets.length > 0) {
+            const target = targets[0];
+            player.hand.moveCardTo(this, target);
+            target.tools.push(this);
+          }
+        },
+      );
     }
 
     // Add [C][C] to attack costs of the Pokemon this is attached to
