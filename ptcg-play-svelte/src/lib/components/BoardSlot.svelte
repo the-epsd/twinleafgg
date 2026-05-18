@@ -7,6 +7,7 @@
   export let canDrop = false;
   export let promptSelectable = false;
   export let promptSelected = false;
+  export let placement = '';
 
   $: remainingHp = slot.hp ? Math.max(0, slot.hp - slot.damage) : 0;
 </script>
@@ -18,7 +19,7 @@
   class:can-drop={canDrop}
   class:prompt-selectable={promptSelectable}
   class:prompt-selected={promptSelected}
-  class="board-slot"
+  class={`board-slot ${placement}`}
   data-testid={`slot-${slot.ownerIndex}-${slot.slot}-${slot.index}`}
   title={slot.pokemon?.fullName ?? (slot.slot === 'active' ? 'Active' : `Bench ${slot.index + 1}`)}
   on:click

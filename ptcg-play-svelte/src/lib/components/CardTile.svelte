@@ -8,6 +8,7 @@
   export let disabled = false;
   export let interactive = false;
   export let faceDown = false;
+  export let playable = false;
   export let testId = '';
 
   let failedImageUrl = '';
@@ -31,13 +32,16 @@
     type="button"
     class:selected
     class:compact
+    class:playable
     class={`card-tile ${typeClass}`}
     draggable={draggable && !disabled}
     {disabled}
     data-testid={testId || undefined}
     title={card?.fullName ?? label}
     on:dragstart
+    on:dragend
     on:click
+    on:selectstart|preventDefault
   >
     {#if showImage}
       <img src={imageUrl} alt="" loading="lazy" decoding="async" draggable="false" on:error={() => (failedImageUrl = imageUrl ?? '')} />
@@ -52,6 +56,7 @@
   <div
     class:selected
     class:compact
+    class:playable
     class={`card-tile ${typeClass}`}
     data-testid={testId || undefined}
     title={card?.fullName ?? label}

@@ -7,6 +7,7 @@
   export let game: GameView;
   export let prompt: PromptView;
   export let resolving = false;
+  export let autoContinue = false;
 
   const dispatch = createEventDispatcher<{ resolve: unknown }>();
   let jsonResult = '';
@@ -40,11 +41,11 @@
   $: autoContinuePrompt = ['AlertPrompt', 'ShowCardsPrompt', 'ConfirmCardsPrompt', 'ShowMulliganPrompt'].includes(prompt.className);
   $: {
     const key = `${prompt.id}:${prompt.className}`;
-    if (autoContinuePrompt && !resolving && autoContinueKey !== key) {
+    if (autoContinue && autoContinuePrompt && !resolving && autoContinueKey !== key) {
       clearAutoContinue();
       autoContinueKey = key;
       autoContinueTimer = setTimeout(() => submit(true), 3000);
-    } else if (!autoContinuePrompt && autoContinueKey) {
+    } else if ((!autoContinue || !autoContinuePrompt) && autoContinueKey) {
       clearAutoContinue();
     }
   }
@@ -263,7 +264,9 @@
         {/each}
       </div>
     {/if}
-    <p class="prompt-hint">Auto-continues in 3 seconds.</p>
+    {#if autoContinue}
+      <p class="prompt-hint">Auto-continues in 3 seconds.</p>
+    {/if}
     <button disabled={resolving} on:click={() => submit(true)}>Continue</button>
   {:else if prompt.className === 'WaitPrompt'}
     <button disabled={resolving} on:click={() => submit(null)}>Continue</button>
