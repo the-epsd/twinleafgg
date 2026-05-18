@@ -1,10 +1,11 @@
 import { CardList, Card } from 'ptcg-server';
-import { Vector3, Scene, Group, Object3D, type Texture } from 'three';
+import { Vector3, Group, Object3D, type Texture } from 'three';
 import gsap from 'gsap';
 import { Board3dCard } from '../board-3d-card';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import type { Board3dCardsAdapter } from '../board3dCardsAdapter';
 import { apply3dCardHolo } from '../board-3d-holo-apply';
+import type { Board3dHandSlotSnapshot } from '../board3dSceneModel';
 
 export type PrepareDrawFlightResult = {
   flyingCard: Object3D;
@@ -15,6 +16,9 @@ export class Board3dHandService {
   private handCards: Map<number, Board3dCard> = new Map();
   private handGroup: Group;
   private isUpdating: boolean = false;
+  /** When true, hand card groups are parented via R3F (portal); defer dispose until drain. */
+  private r3fDeclarativeHand = false;
+  private pendingR3fHandDisposals: Board3dCard[] = [];
   /** When >0, multi-draw prepare steps run; keeps {@link isUpdating} true for the whole sequence. */
   private batchDrawPrepareDepth: number = 0;
 
@@ -33,13 +37,27 @@ export class Board3dHandService {
     this.handGroup.rotation.set(0, 0, 0);
   }
 
+  setR3fDeclarativeHand(enabled: boolean): void {
+    this.r3fDeclarativeHand = enabled;
+  }
+
+  drainPendingR3fHandDisposals(): void {
+    if (this.pendingR3fHandDisposals.length === 0) {
+      return;
+    }
+    for (const card of this.pendingR3fHandDisposals) {
+      card.dispose();
+    }
+    this.pendingR3fHandDisposals = [];
+  }
+
   /**
    * Update hand cards based on player's hand
    */
   async updateHand(
     hand: CardList,
     isOwner: boolean,
-    scene: Scene,
+    attachRoot: Object3D,
     playableCardIds?: number[]
   ): Promise<void> {
     // Prevent concurrent updates
@@ -60,13 +78,13 @@ export class Board3dHandService {
         this.assetLoader.preloadCardTextures(urls);
       }
 
-      // Ensure handGroup is in scene before operations
-      if (!scene.children.includes(this.handGroup)) {
-        scene.add(this.handGroup);
+      // Ensure handGroup is attached before operations
+      if (!attachRoot.children.includes(this.handGroup)) {
+        attachRoot.add(this.handGroup);
       }
 
       // Clear old cards (kills animations and properly disposes)
-      this.clearHand(scene);
+      this.clearHand(attachRoot);
 
       // Create new cards in parallel
       const cardPromises = cards.map((card, i) => {
@@ -85,7 +103,8 @@ export class Board3dHandService {
   async updateHandPrepareDrawFlight(
     hand: CardList,
     isOwner: boolean,
-    scene: Scene,
+    handSlot: Object3D,
+    worldAttachRoot: Object3D,
     deckWorldPosition: Vector3,
     playableCardIds?: number[]
   ): Promise<PrepareDrawFlightResult | null> {
@@ -108,11 +127,11 @@ export class Board3dHandService {
         this.assetLoader.preloadCardTextures(urls);
       }
 
-      if (!scene.children.includes(this.handGroup)) {
-        scene.add(this.handGroup);
+      if (!handSlot.children.includes(this.handGroup)) {
+        handSlot.add(this.handGroup);
       }
 
-      this.clearHand(scene);
+      this.clearHand(handSlot);
 
       const cardPromises = cards.map((card, i) => {
         const isPlayable = isOwner && playableCardIds?.includes(card.id);
@@ -150,7 +169,7 @@ export class Board3dHandService {
       cardGroup.userData.drawRevealMaskTexture = maskForDeck;
       cardGroup.userData.drawBoard3dCard = board3dCard;
 
-      scene.attach(cardGroup);
+      worldAttachRoot.attach(cardGroup);
       cardGroup.position.copy(deckWorldPosition);
       cardGroup.rotation.set(0, 0, 0);
       cardGroup.quaternion.identity();
@@ -300,7 +319,7 @@ export class Board3dHandService {
       cardMesh.setOutline(true, 0x4ade80);
     }
 
-    if (addToHandGroup) {
+    if (addToHandGroup && !this.r3fDeclarativeHand) {
       this.handGroup.add(cardMesh.getGroup());
     }
     this.handCards.set(index, cardMesh);
@@ -360,7 +379,8 @@ export class Board3dHandService {
   async prepareBatchDrawFlightStep(
     hand: CardList,
     isOwner: boolean,
-    scene: Scene,
+    handSlot: Object3D,
+    worldAttachRoot: Object3D,
     flightOriginWorld: Vector3,
     playableCardIds: number[] | undefined,
     stablePrefixLen: number,
@@ -387,19 +407,19 @@ export class Board3dHandService {
         this.assetLoader.preloadCardTextures(urls);
       }
 
-      if (!scene.children.includes(this.handGroup)) {
-        scene.add(this.handGroup);
+      if (!handSlot.children.includes(this.handGroup)) {
+        handSlot.add(this.handGroup);
       }
 
-      this.clearHand(scene);
+      this.clearHand(handSlot);
 
       for (let j = 0; j < stablePrefixLen; j++) {
         const isPlayable = isOwner && playableCardIds?.includes(cards[j].id);
         await this.createHandCard(cards[j], j, cards.length, isOwner, isPlayable, hand, false);
       }
     } else {
-      if (!scene.children.includes(this.handGroup)) {
-        scene.add(this.handGroup);
+      if (!handSlot.children.includes(this.handGroup)) {
+        handSlot.add(this.handGroup);
       }
     }
 
@@ -442,7 +462,7 @@ export class Board3dHandService {
     cardGroup.userData.drawRevealMaskTexture = maskForDeck;
     cardGroup.userData.drawBoard3dCard = board3dCard;
 
-    scene.attach(cardGroup);
+    worldAttachRoot.attach(cardGroup);
     cardGroup.position.copy(flightOriginWorld);
     cardGroup.rotation.set(0, 0, 0);
     cardGroup.quaternion.identity();
@@ -471,7 +491,19 @@ export class Board3dHandService {
   /**
    * Clear all hand cards
    */
-  private clearHand(scene?: Scene): void {
+  private clearHand(_attachRoot?: Object3D): void {
+    if (this.r3fDeclarativeHand) {
+      this.handCards.forEach(card => {
+        const cardGroup = card.getGroup();
+        gsap.killTweensOf(cardGroup.position);
+        gsap.killTweensOf(cardGroup.rotation);
+        gsap.killTweensOf(cardGroup.scale);
+        this.pendingR3fHandDisposals.push(card);
+      });
+      this.handCards.clear();
+      return;
+    }
+
     this.handCards.forEach(card => {
       const cardGroup = card.getGroup();
 
@@ -483,9 +515,8 @@ export class Board3dHandService {
       // Check if card is actually in handGroup before removing
       if (cardGroup.parent === this.handGroup) {
         this.handGroup.remove(cardGroup);
-      } else if (scene && cardGroup.parent) {
-        // Card might have been moved (e.g., during drag) - remove from scene directly
-        scene.remove(cardGroup);
+      } else if (cardGroup.parent) {
+        cardGroup.removeFromParent();
       }
 
       card.dispose();
@@ -495,10 +526,8 @@ export class Board3dHandService {
 
   /**
    * Remove a specific card by index (after it's played)
-   * @param index Hand index of the card to remove
-   * @param scene Optional scene for fallback removal when card was moved (e.g. during drag)
    */
-  removeCard(index: number, scene?: Scene): void {
+  removeCard(index: number): void {
     const card = this.handCards.get(index);
     if (card) {
       const cardGroup = card.getGroup();
@@ -511,12 +540,15 @@ export class Board3dHandService {
       // Check if card is actually in handGroup before removing
       if (cardGroup.parent === this.handGroup) {
         this.handGroup.remove(cardGroup);
-      } else if (scene && cardGroup.parent) {
-        // Card may have been moved (e.g. during drag) - remove from scene
+      } else if (cardGroup.parent) {
         cardGroup.parent.remove(cardGroup);
       }
 
-      card.dispose();
+      if (this.r3fDeclarativeHand) {
+        this.pendingR3fHandDisposals.push(card);
+      } else {
+        card.dispose();
+      }
       this.handCards.delete(index);
 
       // Reposition remaining cards to re-center the hand
@@ -528,7 +560,7 @@ export class Board3dHandService {
    * Detach a hand card to the scene for a play animation without disposing it.
    * Caller must dispose the Board3dCard after the animation (or on play failure, call syncHand).
    */
-  detachCardForBoardPlay(index: number, scene: Scene): Board3dCard | null {
+  detachCardForBoardPlay(index: number, attachRoot: Object3D): Board3dCard | null {
     const board3d = this.handCards.get(index);
     if (!board3d) {
       return null;
@@ -539,7 +571,7 @@ export class Board3dHandService {
     gsap.killTweensOf(cardGroup.rotation);
     gsap.killTweensOf(cardGroup.scale);
 
-    scene.attach(cardGroup);
+    attachRoot.attach(cardGroup);
     cardGroup.userData.isHandCard = false;
     cardGroup.userData.playingToBoard = true;
     delete cardGroup.userData.handIndex;
@@ -598,6 +630,16 @@ export class Board3dHandService {
     this.handCards = newMap;
   }
 
+  getHandSlotSnapshots(): Board3dHandSlotSnapshot[] {
+    return Array.from(this.handCards.entries())
+      .sort((a, b) => a[0] - b[0])
+      .map(([handIndex, bridgeRef]) => ({
+        handIndex,
+        cardId: bridgeRef.getGroup().userData.cardData?.id,
+        bridgeRef,
+      }));
+  }
+
   /**
    * Get hand group for adding to scene
    */
@@ -615,10 +657,11 @@ export class Board3dHandService {
   /**
    * Dispose all resources and reset for next use
    */
-  dispose(scene: Scene): void {
-    this.clearHand(scene);
-    if (scene.children.includes(this.handGroup)) {
-      scene.remove(this.handGroup);
+  dispose(attachRoot: Object3D): void {
+    this.clearHand(attachRoot);
+    this.drainPendingR3fHandDisposals();
+    if (attachRoot.children.includes(this.handGroup)) {
+      attachRoot.remove(this.handGroup);
     }
 
     // Recreate handGroup for next component instance

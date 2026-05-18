@@ -656,6 +656,8 @@
   "TABLE_TABLE_NAME": "Mesa n.º {{id}}",
   "TABLE_TIME_LEFT": "Tiempo restante:",
   "TABLE_TURN_NUMBER": "Turno {{turn}}",
+  "TABLE_BOARD_FPS": "Tablero: {{fps}} FPS",
+  "TABLE_BOARD_FPS_MEASURING": "Tablero: …",
   "TAG_ACE_SPEC": "ACE SPEC",
   "TAG_ANCIENT": "Ancestral",
   "TAG_BREAK": "Pokémon BREAK",

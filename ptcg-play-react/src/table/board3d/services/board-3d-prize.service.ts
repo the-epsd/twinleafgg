@@ -1,9 +1,9 @@
-import { Scene, Vector3 } from 'three';
+import { Object3D, Vector3 } from 'three';
 import { Player, CardList } from 'ptcg-server';
 import { Board3dStackService, type UpdateCardCallback, type GetCardByIdCallback } from './board-3d-stack.service';
 
 // Callback type for removing cards (to avoid circular dependency)
-export type RemoveCardCallback = (cardId: string, scene: Scene) => void;
+export type RemoveCardCallback = (cardId: string) => void;
 
 export class Board3dPrizeService {
   constructor(private stackService: Board3dStackService) { }
@@ -17,16 +17,16 @@ export class Board3dPrizeService {
     basePosition: Vector3,
     isOwner: boolean,
     rotation: number,
-    scene: Scene,
+    attachRoot: Object3D,
     player: Player,
     updateCardCallback: UpdateCardCallback,
     removeCardCallback: RemoveCardCallback,
     getCardByIdCallback: GetCardByIdCallback
   ): Promise<void> {
-    // Clean up old prize stack if it exists (from previous stack-based rendering)
-    // Note: This uses deckStacks from stackService, which is a legacy pattern
+    // Clean up old prize stack if it exists (from previous stack-based rendering).
+    // removeStack(..., isDeck: true) matches legacy ids via the deck branch on stackService.
     const oldStackId = `${playerPrefix}_prizes`;
-    this.stackService.removeStack(oldStackId, scene, true);
+    this.stackService.removeStack(oldStackId, attachRoot, true);
 
     // Ensure we have 6 prize slots
     const prizeSlots = prizes || [];
@@ -60,7 +60,6 @@ export class Board3dPrizeService {
           gridPosition,
           isOwner,
           rotation,
-          scene,
           undefined, // No cardTarget for prizes
           1.0, // Normal scale
           sleeveImagePath
@@ -72,7 +71,7 @@ export class Board3dPrizeService {
           }
         });
       } else {
-        removeCardCallback(prizeId, scene);
+        removeCardCallback(prizeId);
         return Promise.resolve();
       }
     });
@@ -83,7 +82,7 @@ export class Board3dPrizeService {
   /**
    * Dispose all resources
    */
-  dispose(scene: Scene): void {
+  dispose(_scene: Object3D): void {
     // Prizes use cardsMap from main service, so no direct cleanup needed here
     // The main service will handle card disposal
   }

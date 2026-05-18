@@ -337,6 +337,8 @@
   "TABLE_TABLE_NAME": "Table #{{id}}",
   "TABLE_TIME_LEFT": "Time left:",
   "TABLE_TURN_NUMBER": "Turn {{turn}}",
+  "TABLE_BOARD_FPS": "Board: {{fps}} FPS",
+  "TABLE_BOARD_FPS_MEASURING": "Board: …",
   "TABLE_FORCE_DISCONNECT": "Force Disconnect",
   "TABLE_FORCE_DISCONNECT_CONFIRM": "Are you sure you want to force disconnect? This will simulate a network disconnection to test the reconnection system.",
   "FORCE_DISCONNECT_MESSAGE": "Forced disconnect - you can now test reconnection by refreshing the page or waiting for auto-reconnect.",

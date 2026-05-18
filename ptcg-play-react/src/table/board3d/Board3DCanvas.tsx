@@ -1,15 +1,23 @@
-import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { Canvas } from '@react-three/fiber';
+import { PCFSoftShadowMap, SRGBColorSpace } from 'three';
 import type { Card, CardList, Player } from 'ptcg-server';
 import { useCardImageMaps, useDeckCardScanUrl } from '../../context/CardImagesContext';
 import { useAuth } from '../../context/AuthContext';
 import type { LocalGameState } from '../types/localGameState';
 import { BoardInteractionService } from '../BoardInteractionService';
-import { Board3dController, type Board3dControllerProps } from './board3dController';
+import type { Board3dController } from './board3dController';
 import { createBoard3dRuntime } from './createBoard3dRuntime';
 import { createBoard3dCardsAdapter } from './createBoard3dCardsAdapter';
 import type { Board3dCardsAdapter } from './board3dCardsAdapter';
 import type { Board3dGameActions } from './board3dGameActions';
-import { Board3dStats } from './Board3dStats';
+import { Board3dExperience } from './Board3dExperience';
+import { Board3dLightingPanel } from './Board3dLightingPanel';
+import {
+  BOARD3D_LIGHTING_DEFAULTS,
+  board3dToneMappingConstant,
+  cloneBoard3dLightingDefaults,
+} from './board3dLightingConfig';
 import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { CardInfoListPopup } from '../../card-info/CardInfoListPopup';
 import type { Board3dCardInfoData, CardInfoPaneActionResult } from './board3dCardsAdapter';
@@ -27,6 +35,7 @@ export type Board3DCanvasProps = {
   boardInteraction: BoardInteractionService;
   gameActions: Board3dGameActions;
   onKoSequenceActiveChange?: (active: boolean) => void;
+  onBoardFps?: (fps: number) => void;
 };
 
 type CardPromptState =
@@ -41,6 +50,13 @@ type CardPromptState =
       data: Board3dCardInfoData;
       resolve: (v: CardInfoPaneActionResult) => void;
     };
+
+function useBoardCanvasDpr(): [number, number] {
+  return useMemo((): [number, number] => {
+    const cap = typeof window !== 'undefined' ? Math.min(window.devicePixelRatio, 1.5) : 1;
+    return [1, cap];
+  }, []);
+}
 
 function useStableGameActions(actions: Board3dGameActions): Board3dGameActions {
   const ref = useRef(actions);
@@ -62,10 +78,13 @@ function useStableGameActions(actions: Board3dGameActions): Board3dGameActions {
 }
 
 export function Board3DCanvas(props: Board3DCanvasProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const controllerRef = useRef<Board3dController | null>(null);
+  const boardCanvasDpr = useBoardCanvasDpr();
+  const [lightingSettings, setLightingSettings] = useState(cloneBoard3dLightingDefaults);
   const [cardPrompt, setCardPrompt] = useState<CardPromptState>(null);
-  const [, bumpGlContext] = useReducer((x: number) => x + 1, 0);
+  const onControllerReady = useCallback((c: Board3dController | null) => {
+    controllerRef.current = c;
+  }, []);
 
   const maps = useCardImageMaps();
   const { serverConfig, cardsInfo } = useAuth();
@@ -100,7 +119,9 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
     [catalog, maps, serverConfig?.scansUrl, serverConfig?.sleevesUrl, queueInfo, queueList],
   );
 
-  const controllerProps: Board3dControllerProps = useMemo(
+  const runtime = useMemo(() => createBoard3dRuntime(cardsAdapter), [cardsAdapter]);
+
+  const controllerProps = useMemo(
     () => ({
       gameState: props.gameState,
       topPlayer: props.topPlayer,
@@ -121,51 +142,39 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
     ],
   );
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) {
-      return;
-    }
-    const runtime = createBoard3dRuntime(cardsAdapter);
-    const ctrl = new Board3dController(
-      runtime.assetLoader,
-      runtime.stateSync,
-      runtime.animationService,
-      runtime.interactionService,
-      runtime.handService,
-      runtime.wireframeService,
-      runtime.lightingService,
-      runtime.postProcessingService,
-      cardsAdapter,
-      gameActionsStable,
-      props.boardInteraction,
-    );
-    controllerRef.current = ctrl;
-    ctrl.init(canvas, controllerProps);
-    bumpGlContext();
-
-    return () => {
-      ctrl.destroy();
-      controllerRef.current = null;
-    };
-  }, [cardsAdapter, gameActionsStable, props.boardInteraction]);
-
-  useEffect(() => {
-    controllerRef.current?.refreshProps(controllerProps);
-  }, [controllerProps]);
-
-  const scene = controllerRef.current?.scene ?? null;
-  const renderer = controllerRef.current?.renderer ?? null;
-
   return (
     <div className={styles.root}>
       <div className={styles.board3dContainer}>
-        <canvas ref={canvasRef} className={styles.board3dCanvas} />
-        <Board3dStats
-          scene={scene}
-          renderer={renderer}
-          onWireframeToggle={(enabled) => controllerRef.current?.onWireframeToggle(enabled)}
-        />
+        <Canvas
+          className={styles.board3dCanvas}
+          shadows={lightingSettings.directional.castShadow}
+          gl={{
+            antialias: true,
+            alpha: true,
+            powerPreference: 'high-performance',
+          }}
+          dpr={boardCanvasDpr}
+          onCreated={({ gl }) => {
+            gl.shadowMap.enabled = lightingSettings.directional.castShadow;
+            gl.shadowMap.type = PCFSoftShadowMap;
+            gl.sortObjects = false;
+            gl.outputColorSpace = SRGBColorSpace;
+            gl.toneMapping = board3dToneMappingConstant(BOARD3D_LIGHTING_DEFAULTS.renderer.toneMapping);
+            gl.toneMappingExposure = BOARD3D_LIGHTING_DEFAULTS.renderer.toneMappingExposure;
+          }}
+        >
+          <Board3dExperience
+            runtime={runtime}
+            cardsAdapter={cardsAdapter}
+            gameActions={gameActionsStable}
+            boardInteraction={props.boardInteraction}
+            controllerProps={controllerProps}
+            onControllerReady={onControllerReady}
+            lightingSettings={lightingSettings}
+            onBoardFps={props.onBoardFps}
+          />
+        </Canvas>
+        <Board3dLightingPanel settings={lightingSettings} onChange={setLightingSettings} />
       </div>
 
       {cardPrompt?.kind === 'info' && cardPrompt.data.card ? (

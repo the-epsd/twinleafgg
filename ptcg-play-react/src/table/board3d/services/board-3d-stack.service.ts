@@ -1,8 +1,19 @@
-import { Scene, Vector3, InstancedMesh, Matrix4, MeshStandardMaterial, Quaternion, Euler, Texture } from 'three';
+import {
+  Object3D,
+  Vector3,
+  InstancedMesh,
+  Matrix4,
+  MeshStandardMaterial,
+  Quaternion,
+  Euler,
+  Texture,
+  Group,
+} from 'three';
 import { CardList } from 'ptcg-server';
 import { Board3dCard } from '../board-3d-card';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import type { Board3dCardsAdapter } from '../board3dCardsAdapter';
+import { BOARD3D_DECK_BULK_VISUAL_UD } from '../board3d-constants';
 
 // Callback type for updating cards (to avoid circular dependency)
 export type UpdateCardCallback = (
@@ -11,7 +22,6 @@ export type UpdateCardCallback = (
   position: Vector3,
   isOwner: boolean,
   rotation: number,
-  scene: Scene,
   cardTarget?: any,
   scale?: number,
   sleeveImagePath?: string
@@ -21,13 +31,18 @@ export type UpdateCardCallback = (
 export type GetCardByIdCallback = (cardId: string) => any;
 
 // Callback type for removing cards (to avoid circular dependency)
-export type RemoveCardCallback = (cardId: string, scene: Scene) => void;
+export type RemoveCardCallback = (cardId: string) => void;
 
 export class Board3dStackService {
   /** Vertical spacing between cards in stack (discard/deck instanced layers). */
   public static readonly STACK_HEIGHT_INCREMENT = 0.015;
   private static readonly LOST_ZONE_HEIGHT_OFFSET = 0.1; // Y offset to render Lost Zone cards above other cards
-  private deckStacks: Map<string, InstancedMesh> = new Map();
+  /** Face-down deck layers under anchor (indices 0 .. cardCount-2); not in cardsMap. */
+  private deckBulkMeshes: Map<string, Board3dCard[]> = new Map();
+  /** Parent group at deck base world position; bulk cards are children for shuffle pivot. */
+  private deckAnchors: Map<string, Group> = new Map();
+  /** Normalized sleeve key last used per deck stack (invalidate bulk textures on change). */
+  private deckSleeveKey: Map<string, string> = new Map();
   private discardStacks: Map<string, InstancedMesh> = new Map();
   private lostZoneStacks: Map<string, InstancedMesh> = new Map();
 
@@ -36,79 +51,154 @@ export class Board3dStackService {
     private cardsAdapter: Board3dCardsAdapter
   ) { }
 
+  getDeckAnchor(stackId: string): Group | undefined {
+    return this.deckAnchors.get(stackId);
+  }
+
+  getDeckStackIds(): string[] {
+    return Array.from(this.deckAnchors.keys());
+  }
+
+  /** Iterate deck anchors (for cleanup without touching discard stacks). */
+  forEachDeckStackId(cb: (stackId: string) => void): void {
+    for (const id of this.deckAnchors.keys()) {
+      cb(id);
+    }
+  }
+
+  /** Iterate discard pile instanced stack ids (not deck). */
+  forEachDiscardStackId(cb: (stackId: string) => void): void {
+    for (const id of this.discardStacks.keys()) {
+      cb(id);
+    }
+  }
+
+  /** Bulk deck card groups under the anchor (bottom → top−1), for shuffle animation. */
+  getDeckBulkGroups(stackId: string): Group[] {
+    const arr = this.deckBulkMeshes.get(stackId);
+    if (!arr || arr.length === 0) {
+      return [];
+    }
+    return arr.map((c) => c.getGroup());
+  }
+
+  private disposeDeckAt(stackId: string, attachRoot: Object3D): void {
+    const bulkArr = this.deckBulkMeshes.get(stackId);
+    if (bulkArr) {
+      for (const c of bulkArr) {
+        c.dispose();
+      }
+      this.deckBulkMeshes.delete(stackId);
+    }
+    const anchor = this.deckAnchors.get(stackId);
+    if (anchor) {
+      attachRoot.remove(anchor);
+    }
+    this.deckAnchors.delete(stackId);
+    this.deckSleeveKey.delete(stackId);
+  }
+
   /**
-   * Update or create a deck stack using instanced rendering
+   * Update or create a deck stack: real face-down {@link Board3dCard} per slot under deck anchor,
+   * plus clickable `{stackId}_top` via {@link UpdateCardCallback}.
    */
   async updateDeckStack(
     stackId: string,
     cardCount: number,
     position: Vector3,
     rotation: number,
-    scene: Scene,
+    attachRoot: Object3D,
     sleeveImagePath: string | undefined,
     deckCardList: CardList,
     updateCardCallback: UpdateCardCallback,
     getCardByIdCallback: GetCardByIdCallback
   ): Promise<void> {
-    // Remove old stack if it exists
-    const oldStack = this.deckStacks.get(stackId);
-    if (oldStack) {
-      scene.remove(oldStack);
-      oldStack.geometry.dispose();
-      (oldStack.material as MeshStandardMaterial).dispose();
-      this.deckStacks.delete(stackId);
+    const bulkNeeded = Math.max(0, cardCount - 1);
+    const sleeveKey = sleeveImagePath ?? '';
+
+    let anchor = this.deckAnchors.get(stackId);
+    let bulkArr = this.deckBulkMeshes.get(stackId);
+    const prevSleeve = this.deckSleeveKey.get(stackId);
+    const sleeveChanged = prevSleeve !== undefined && prevSleeve !== sleeveKey;
+
+    if (!anchor) {
+      anchor = new Group();
+      anchor.userData.deckStackId = stackId;
+      attachRoot.add(anchor);
+      this.deckAnchors.set(stackId, anchor);
+      bulkArr = [];
+      this.deckBulkMeshes.set(stackId, bulkArr);
     }
 
-    // Load sleeve texture if available, otherwise use cardback
-    let cardBackTexture: Texture;
-    if (sleeveImagePath) {
-      const sleeveUrl = this.cardsAdapter.getSleeveUrl(sleeveImagePath);
-      if (sleeveUrl) {
-        cardBackTexture = await this.assetLoader.loadSleeveTexture(sleeveUrl);
+    anchor.position.copy(position);
+
+    if (!bulkArr) {
+      bulkArr = [];
+      this.deckBulkMeshes.set(stackId, bulkArr);
+    }
+
+    if (sleeveChanged && bulkArr.length > 0) {
+      while (bulkArr.length > 0) {
+        const c = bulkArr.pop()!;
+        c.dispose();
+      }
+    }
+
+    this.deckSleeveKey.set(stackId, sleeveKey);
+
+    bulkArr = this.deckBulkMeshes.get(stackId)!;
+
+    let cardBackTexture: Texture | undefined;
+    let maskTexture: Texture | undefined;
+    if (bulkNeeded > 0) {
+      if (sleeveImagePath) {
+        const sleeveUrl = this.cardsAdapter.getSleeveUrl(sleeveImagePath);
+        if (sleeveUrl) {
+          cardBackTexture = await this.assetLoader.loadSleeveTexture(sleeveUrl);
+        } else {
+          cardBackTexture = await this.assetLoader.loadCardBack();
+        }
       } else {
         cardBackTexture = await this.assetLoader.loadCardBack();
       }
-    } else {
-      cardBackTexture = await this.assetLoader.loadCardBack();
+      maskTexture = await this.assetLoader.loadCardMaskTexture();
     }
-    const geometry = new Board3dCard(
-      cardBackTexture,
-      cardBackTexture,
-      new Vector3(0, 0, 0),
-      rotation,
-      1.0
-    ).getMesh().geometry;
 
-    const count = Math.min(cardCount, 60); // Max 60 instances
-    const instancedMesh = new InstancedMesh(
-      geometry,
-      new MeshStandardMaterial({ map: cardBackTexture }),
-      count
-    );
+    while (bulkArr.length > bulkNeeded) {
+      const c = bulkArr.pop()!;
+      c.dispose();
+    }
 
-    // Position and rotate each card in the stack
-    // Top player (rotation=180): add 180° on Z so face-down card backs match other top player cards
-    const rotationRad = (rotation * Math.PI) / 180;
-    const flipZ = rotation === 180 ? Math.PI : 0;
-    const quaternion = new Quaternion().setFromEuler(new Euler(-Math.PI / 2, rotationRad, flipZ));
-
-    for (let i = 0; i < count; i++) {
-      const matrix = new Matrix4();
-      const pos = new Vector3(
-        position.x,
-        position.y + (i * Board3dStackService.STACK_HEIGHT_INCREMENT), // Stack height
-        position.z
+    while (bulkArr.length < bulkNeeded) {
+      const i = bulkArr.length;
+      const boardCard = new Board3dCard(
+        cardBackTexture!,
+        cardBackTexture!,
+        new Vector3(0, i * Board3dStackService.STACK_HEIGHT_INCREMENT, 0),
+        rotation,
+        1,
+        maskTexture,
       );
-      // Compose matrix from position, rotation, and scale
-      matrix.compose(pos, quaternion, new Vector3(1, 1, 1));
-      instancedMesh.setMatrixAt(i, matrix);
+      const g = boardCard.getGroup();
+      g.userData[BOARD3D_DECK_BULK_VISUAL_UD] = true;
+      anchor.add(g);
+      if (rotation === 180) {
+        g.rotation.z = Math.PI;
+      }
+      bulkArr.push(boardCard);
     }
 
-    instancedMesh.instanceMatrix.needsUpdate = true;
-    instancedMesh.castShadow = true;
-
-    scene.add(instancedMesh);
-    this.deckStacks.set(stackId, instancedMesh);
+    for (let i = 0; i < bulkArr.length; i++) {
+      const boardCard = bulkArr[i];
+      const g = boardCard.getGroup();
+      boardCard.setPosition(new Vector3(0, i * Board3dStackService.STACK_HEIGHT_INCREMENT, 0));
+      boardCard.setRotation(rotation);
+      if (rotation === 180) {
+        g.rotation.z = Math.PI;
+      } else {
+        g.rotation.z = 0;
+      }
+    }
 
     // Create clickable top card overlay (face-down)
     if (cardCount > 0 && deckCardList) {
@@ -125,7 +215,6 @@ export class Board3dStackService {
         new Vector3(position.x, position.y + ((cardCount - 1) * Board3dStackService.STACK_HEIGHT_INCREMENT), position.z),
         false, // Not owner - ensures face-down
         rotation,
-        scene,
         undefined, // No cardTarget
         1.0,
         sleeveImagePath
@@ -153,14 +242,14 @@ export class Board3dStackService {
     stackId: string,
     position: Vector3,
     rotation: number,
-    scene: Scene,
+    attachRoot: Object3D,
     updateCardCallback: UpdateCardCallback,
     getCardByIdCallback: GetCardByIdCallback
   ): Promise<void> {
     // Remove old stack if it exists
     const oldStack = this.discardStacks.get(stackId);
     if (oldStack) {
-      scene.remove(oldStack);
+      attachRoot.remove(oldStack);
       oldStack.geometry.dispose();
       (oldStack.material as MeshStandardMaterial).dispose();
       this.discardStacks.delete(stackId);
@@ -187,7 +276,6 @@ export class Board3dStackService {
       new Vector3(position.x, position.y + ((cardCount - 1) * Board3dStackService.STACK_HEIGHT_INCREMENT), position.z),
       true, // Always visible
       rotation,
-      scene,
       undefined, // No cardTarget
       1.0,
       undefined // No sleeve for discard
@@ -240,7 +328,7 @@ export class Board3dStackService {
       instancedMesh.instanceMatrix.needsUpdate = true;
       instancedMesh.castShadow = true;
 
-      scene.add(instancedMesh);
+      attachRoot.add(instancedMesh);
       this.discardStacks.set(stackId, instancedMesh);
     }
   }
@@ -254,7 +342,7 @@ export class Board3dStackService {
     stackId: string,
     position: Vector3,
     rotation: number,
-    scene: Scene,
+    attachRoot: Object3D,
     updateCardCallback: UpdateCardCallback,
     getCardByIdCallback: GetCardByIdCallback,
     removeCardCallback: RemoveCardCallback
@@ -262,7 +350,7 @@ export class Board3dStackService {
     // Remove old stack if it exists
     const oldStack = this.lostZoneStacks.get(stackId);
     if (oldStack) {
-      scene.remove(oldStack);
+      attachRoot.remove(oldStack);
       oldStack.geometry.dispose();
       (oldStack.material as MeshStandardMaterial).dispose();
       this.lostZoneStacks.delete(stackId);
@@ -280,7 +368,7 @@ export class Board3dStackService {
     // Remove old top card before re-adding to prevent double rendering
     const existingTopCard = getCardByIdCallback(topCardId);
     if (existingTopCard) {
-      removeCardCallback(topCardId, scene);
+      removeCardCallback(topCardId);
     }
 
     // Create top card as regular card for clickability
@@ -295,7 +383,6 @@ export class Board3dStackService {
       new Vector3(position.x, position.y + Board3dStackService.LOST_ZONE_HEIGHT_OFFSET + ((cardCount - 1) * Board3dStackService.STACK_HEIGHT_INCREMENT), position.z),
       true, // Always visible
       rotation,
-      scene,
       undefined, // No cardTarget
       1.0,
       undefined // No sleeve for Lost Zone
@@ -346,7 +433,7 @@ export class Board3dStackService {
       instancedMesh.instanceMatrix.needsUpdate = true;
       instancedMesh.castShadow = true;
 
-      scene.add(instancedMesh);
+      attachRoot.add(instancedMesh);
       this.lostZoneStacks.set(stackId, instancedMesh);
     }
   }
@@ -354,24 +441,27 @@ export class Board3dStackService {
   /**
    * Remove a stack by ID
    */
-  removeStack(stackId: string, scene: Scene, isDeck: boolean): void {
-    const stackMap = isDeck ? this.deckStacks : this.discardStacks;
-    const oldStack = stackMap.get(stackId);
+  removeStack(stackId: string, attachRoot: Object3D, isDeck: boolean): void {
+    if (isDeck) {
+      this.disposeDeckAt(stackId, attachRoot);
+      return;
+    }
+    const oldStack = this.discardStacks.get(stackId);
     if (oldStack) {
-      scene.remove(oldStack);
+      attachRoot.remove(oldStack);
       oldStack.geometry.dispose();
       (oldStack.material as MeshStandardMaterial).dispose();
-      stackMap.delete(stackId);
+      this.discardStacks.delete(stackId);
     }
   }
 
   /**
    * Remove a Lost Zone stack by ID
    */
-  removeLostZoneStack(stackId: string, scene: Scene): void {
+  removeLostZoneStack(stackId: string, attachRoot: Object3D): void {
     const oldStack = this.lostZoneStacks.get(stackId);
     if (oldStack) {
-      scene.remove(oldStack);
+      attachRoot.remove(oldStack);
       oldStack.geometry.dispose();
       (oldStack.material as MeshStandardMaterial).dispose();
       this.lostZoneStacks.delete(stackId);
@@ -381,14 +471,20 @@ export class Board3dStackService {
   /**
    * Dispose all resources
    */
-  dispose(scene: Scene): void {
+  dispose(scene: Object3D): void {
     // Clean up deck stacks
-    this.deckStacks.forEach(stack => {
-      scene.remove(stack);
-      stack.geometry.dispose();
-      (stack.material as MeshStandardMaterial).dispose();
+    this.deckAnchors.forEach((anchor, stackId) => {
+      anchor.removeFromParent();
+      const bulk = this.deckBulkMeshes.get(stackId);
+      if (bulk) {
+        for (const c of bulk) {
+          c.dispose();
+        }
+      }
     });
-    this.deckStacks.clear();
+    this.deckAnchors.clear();
+    this.deckBulkMeshes.clear();
+    this.deckSleeveKey.clear();
 
     // Clean up discard stacks
     this.discardStacks.forEach(stack => {

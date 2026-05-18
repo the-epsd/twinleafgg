@@ -1,4 +1,4 @@
-import { Scene, Vector3, Texture, PerspectiveCamera } from 'three';
+import { Scene, Vector3, Texture, PerspectiveCamera, Group } from 'three';
 import {
   PokemonCardList,
   Card,
@@ -14,6 +14,10 @@ import { Board3dMarker } from '../board-3d-marker';
 import { Board3dAbilityUsedBadge } from '../board-3d-ability-used-badge';
 import type { Board3dCardsAdapter } from '../board3dCardsAdapter';
 import { apply3dCardHolo } from '../board-3d-holo-apply';
+
+function overlayAttachRoot(host: Board3dCard | Group): Group {
+  return host instanceof Board3dCard ? host.getGroup() : host;
+}
 
 export interface CardOverlays {
   energySprite: Board3dEnergySprite;
@@ -36,11 +40,12 @@ export class Board3dCardOverlayService {
   async updateOverlays(
     cardId: string,
     cardList: PokemonCardList,
-    cardMesh: Board3dCard,
+    cardHost: Board3dCard | Group,
     breakCard: Card | undefined,
     isFaceDown: boolean,
     scene: Scene
   ): Promise<void> {
+    const root = overlayAttachRoot(cardHost);
     let overlays = this.cardOverlays.get(cardId);
     if (!overlays) {
       overlays = {
@@ -51,10 +56,10 @@ export class Board3dCardOverlayService {
         toolCards: [],
       };
       this.cardOverlays.set(cardId, overlays);
-      cardMesh.getGroup().add(overlays.energySprite.getGroup());
-      cardMesh.getGroup().add(overlays.damageCounter.getGroup());
-      cardMesh.getGroup().add(overlays.marker.getGroup());
-      cardMesh.getGroup().add(overlays.abilityUsedBadge.getGroup());
+      root.add(overlays.energySprite.getGroup());
+      root.add(overlays.damageCounter.getGroup());
+      root.add(overlays.marker.getGroup());
+      root.add(overlays.abilityUsedBadge.getGroup());
     }
 
     if (cardList.energies && cardList.energies.cards.length > 0) {
@@ -64,7 +69,7 @@ export class Board3dCardOverlayService {
     }
 
     overlays.damageCounter.updateDamage(cardList.damage, {
-      deferAppearAnimation: !cardMesh.getGroup().visible,
+      deferAppearAnimation: !root.visible,
     });
 
     await overlays.marker.updateConditions(cardList.specialConditions);
@@ -72,8 +77,8 @@ export class Board3dCardOverlayService {
     const hasAbilityUsed = cardList.boardEffect.includes(BoardEffect.ABILITY_USED);
     overlays.abilityUsedBadge.updateAbilityUsed(hasAbilityUsed);
 
-    await this.updateBreakOverlay(cardId, overlays, cardMesh, breakCard, isFaceDown, scene, cardList);
-    await this.updateToolOverlay(cardId, overlays, cardList.tools, cardMesh, scene, cardList);
+    await this.updateBreakOverlay(cardId, overlays, root, breakCard, isFaceDown, scene, cardList);
+    await this.updateToolOverlay(cardId, overlays, cardList.tools, root, scene, cardList);
   }
 
   private energyTextureKey(card: Card, energyCardList: CardList): string | null {
@@ -125,7 +130,7 @@ export class Board3dCardOverlayService {
   private async updateBreakOverlay(
     cardId: string,
     overlays: CardOverlays,
-    mainCardMesh: Board3dCard,
+    attachRoot: Group,
     breakCard: Card | undefined,
     isFaceDown: boolean,
     scene: Scene,
@@ -162,13 +167,13 @@ export class Board3dCardOverlayService {
           1.0,
           maskTexture
         );
-        mainCardMesh.getGroup().add(overlays.breakCard.getGroup());
+        attachRoot.add(overlays.breakCard.getGroup());
       } else {
         overlays.breakCard.updateTexture(breakFrontTexture, breakBackTexture, maskTexture);
       }
       void apply3dCardHolo(this.assetLoader, overlays.breakCard, breakCard, false);
     } else if (overlays.breakCard) {
-      mainCardMesh.getGroup().remove(overlays.breakCard.getGroup());
+      attachRoot.remove(overlays.breakCard.getGroup());
       overlays.breakCard.dispose();
       overlays.breakCard = undefined;
     }
@@ -178,12 +183,12 @@ export class Board3dCardOverlayService {
     cardId: string,
     overlays: CardOverlays,
     tools: Card[],
-    mainCardMesh: Board3dCard,
+    attachRoot: Group,
     scene: Scene,
     cardList?: PokemonCardList
   ): Promise<void> {
     for (const toolCard of overlays.toolCards) {
-      mainCardMesh.getGroup().remove(toolCard.getGroup());
+      attachRoot.remove(toolCard.getGroup());
       toolCard.dispose();
     }
     overlays.toolCards = [];
@@ -263,7 +268,7 @@ export class Board3dCardOverlayService {
       toolCardMesh.getGroup().renderOrder = 150;
       toolCardMesh.getMesh().renderOrder = 150;
 
-      mainCardMesh.getGroup().add(toolCardMesh.getGroup());
+      attachRoot.add(toolCardMesh.getGroup());
       overlays.toolCards.push(toolCardMesh);
       void apply3dCardHolo(this.assetLoader, toolCardMesh, tool, false);
     }

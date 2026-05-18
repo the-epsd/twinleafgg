@@ -78,6 +78,7 @@ export function TablePage() {
   const [endFlowStage, setEndFlowStage] = useState<'splash' | 'stats' | null>(null);
   const [leaveConfirmKind, setLeaveConfirmKind] = useState<'live' | 'replay' | null>(null);
   const [suppressChoosePrizePrompt, setSuppressChoosePrizePrompt] = useState(false);
+  const [boardFps, setBoardFps] = useState<number | null>(null);
   const clientIdRef = useRef(clientId);
   clientIdRef.current = clientId;
 
@@ -93,6 +94,10 @@ export function TablePage() {
 
   const onKoSequenceActiveChange = useCallback((active: boolean) => {
     setSuppressChoosePrizePrompt(active);
+  }, []);
+
+  const onBoardFps = useCallback((fps: number) => {
+    setBoardFps(fps);
   }, []);
 
   const socketGameActions: Board3dGameActions = useMemo(() => {
@@ -554,6 +559,7 @@ export function TablePage() {
         onSwitchSides={toggleSwitchSides}
         onSendChat={onSendChat}
         onReplayStep={onReplayStep}
+        boardFps={boardFps}
       />
       <Board3DCanvas
         gameState={localGame}
@@ -566,6 +572,7 @@ export function TablePage() {
         boardInteraction={boardInteraction}
         gameActions={gameActions}
         onKoSequenceActiveChange={onKoSequenceActiveChange}
+        onBoardFps={onBoardFps}
       />
       {showEndGame && endFlowStage === 'splash' ? (
         <MatchResultsSplash

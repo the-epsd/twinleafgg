@@ -41,6 +41,33 @@
   width: 100%;
 }
 
+.turnBadgeGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.boardFpsLine {
+  flex: 0 0 auto;
+  font-size: 0.6rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.88;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(210, 225, 255, 0.92);
+  text-align: right;
+  line-height: 1.2;
+  width: fit-content;
+  max-width: 100%;
+}
+
 /* Vertically centers leave / end turn, chat log, and local player bar in the column */
 .rightColumnCenter {
   flex: 1 1 auto;

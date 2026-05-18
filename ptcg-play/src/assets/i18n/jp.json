@@ -312,6 +312,8 @@
   "TABLE_TABLE_NAME": "テーブル #{{id}}",
   "TABLE_TIME_LEFT": "残り時間:",
   "TABLE_TURN_NUMBER": "ターン {{turn}}",
+  "TABLE_BOARD_FPS": "ボード: {{fps}} FPS",
+  "TABLE_BOARD_FPS_MEASURING": "ボード: …",
   "TABLE_FORCE_DISCONNECT": "強制切断",
   "TABLE_FORCE_DISCONNECT_CONFIRM": "強制切断してもよろしいですか？これは再接続システムをテストするためにネットワーク切断をシミュレートします。",
   "FORCE_DISCONNECT_MESSAGE": "強制切断されました - ページを更新するか自動再接続を待つことで再接続をテストできます。",
