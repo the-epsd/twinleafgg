@@ -3,8 +3,21 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, GameError, PlayerType, SlotType, MoveEnergyPrompt, CardTarget } from '../../game';
+import {
+  TrainerType,
+  EnergyType,
+  SuperType,
+} from '../../game/store/card/card-types';
+import {
+  StoreLike,
+  State,
+  StateUtils,
+  GameMessage,
+  GameError,
+  PlayerType,
+  SlotType,
+  MoveEnergyPrompt,
+} from '../../game';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
@@ -16,7 +29,8 @@ export class Eneporter extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Eneporter';
   public fullName: string = 'Eneporter FLI';
-  public text: string = 'Move a Special Energy from 1 of your opponent\'s Pokémon to another of their Pokémon.';
+  public text: string =
+    "Move a Special Energy from 1 of your opponent's Pokémon to another of their Pokémon.";
 
   // Ref: set-ultra-prism/roserade.ts (Flower Tornado - MoveEnergyPrompt pattern)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -30,7 +44,12 @@ export class Eneporter extends TrainerCard {
 
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         totalPokemon++;
-        if (cardList.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
+        if (
+          cardList.cards.some(
+            (c) =>
+              c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL,
+          )
+        ) {
           hasSpecialEnergy = true;
         }
       });
@@ -39,38 +58,28 @@ export class Eneporter extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      // Build blocked map: block all non-special-energy cards
-      const blockedMap: { source: CardTarget, blocked: number[] }[] = [];
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card, target) => {
-        const blocked: number[] = [];
-        cardList.cards.forEach((c, index) => {
-          if (!(c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL)) {
-            blocked.push(index);
+      store.prompt(
+        state,
+        new MoveEnergyPrompt(
+          player.id,
+          GameMessage.MOVE_ENERGY_CARDS,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.SPECIAL },
+          { allowCancel: false, min: 1, max: 1 },
+        ),
+        (transfers) => {
+          if (transfers === null) {
+            return;
           }
-        });
-        if (blocked.length > 0) {
-          blockedMap.push({ source: target, blocked });
-        }
-      });
 
-      store.prompt(state, new MoveEnergyPrompt(
-        player.id,
-        GameMessage.MOVE_ENERGY_CARDS,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: false, min: 1, max: 1, blockedMap }
-      ), transfers => {
-        if (transfers === null) {
-          return;
-        }
-
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, opponent, transfer.from);
-          const target = StateUtils.getTarget(state, opponent, transfer.to);
-          source.moveCardTo(transfer.card, target);
-        }
-      });
+          for (const transfer of transfers) {
+            const source = StateUtils.getTarget(state, opponent, transfer.from);
+            const target = StateUtils.getTarget(state, opponent, transfer.to);
+            source.moveCardTo(transfer.card, target);
+          }
+        },
+      );
     }
 
     return state;
