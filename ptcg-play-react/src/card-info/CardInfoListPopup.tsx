@@ -131,9 +131,9 @@ export function CardInfoListPopup({
           onTableAction={
             onResolve
               ? (action) => {
-                  onResolve({ ...action, cardList });
-                  onClose();
-                }
+                onResolve({ ...action, cardList });
+                onClose();
+              }
               : undefined
           }
         />
