@@ -31,11 +31,9 @@
     title: string,
     faceDown?: boolean,
   ) => void;
-  export let topCanShowPlayArea = false;
-  export let bottomCanShowPlayArea = false;
-  export let allowPlayAreaDrop: (event: DragEvent, player: PlayerView) => void;
-  export let dropToPlayArea: (player: PlayerView, event: DragEvent) => void;
-  export let playToArea: (player: PlayerView) => void;
+  export let canPlayOnBoard = false;
+  export let allowBoardPlayDrop: (event: DragEvent) => void;
+  export let dropToBoardPlay: (event: DragEvent) => void;
   export let boardTilt = 8;
   export let boardPerspective = 1250;
   export let boardScaleY = 98;
@@ -49,8 +47,21 @@
   ].join('; ');
 </script>
 
-<section class="playmat" style={boardPerspectiveStyle}>
-  <div class="game-board-plane">
+<section
+  class="playmat"
+  class:can-play-on-board={canPlayOnBoard}
+  style={boardPerspectiveStyle}
+  role="presentation"
+  on:dragover={allowBoardPlayDrop}
+  on:drop={dropToBoardPlay}
+>
+  <div
+    class="game-board-plane"
+    class:can-play-on-board={canPlayOnBoard}
+    role="presentation"
+    on:dragover={allowBoardPlayDrop}
+    on:drop={dropToBoardPlay}
+  >
     <div class="bench-zone opponent" class:empty={topBenchSlots.length === 0}>
       <button
         type="button"
@@ -96,17 +107,6 @@
           </div>
         </div>
         <div class="right-field">
-          <button
-            type="button"
-            class="play-card-zone top-play-zone"
-            class:can-drop={topCanShowPlayArea}
-            aria-disabled={!topCanShowPlayArea}
-            aria-label={`Play selected card for ${topPlayer.name}`}
-            title={`Play selected card for ${topPlayer.name}`}
-            on:click={() => playToArea(topPlayer)}
-            on:dragover={(event) => allowPlayAreaDrop(event, topPlayer)}
-            on:drop={(event) => dropToPlayArea(topPlayer, event)}
-          ></button>
           <div class="right-piles">
             <span class="stack-pile deck-pile" title={`${topPlayer.name} deck`}>{topPlayer.deckCount}</span>
             <button
@@ -141,17 +141,6 @@
           </div>
         </div>
         <div class="right-field">
-          <button
-            type="button"
-            class="play-card-zone bottom-play-zone"
-            class:can-drop={bottomCanShowPlayArea}
-            aria-disabled={!bottomCanShowPlayArea}
-            aria-label={`Play selected card for ${bottomPlayer.name}`}
-            title={`Play selected card for ${bottomPlayer.name}`}
-            on:click={() => playToArea(bottomPlayer)}
-            on:dragover={(event) => allowPlayAreaDrop(event, bottomPlayer)}
-            on:drop={(event) => dropToPlayArea(bottomPlayer, event)}
-          ></button>
           <div class="right-piles">
             <span class="stack-pile deck-pile" title={`${bottomPlayer.name} deck`}>{bottomPlayer.deckCount}</span>
             <button

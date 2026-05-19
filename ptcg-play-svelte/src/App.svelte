@@ -42,6 +42,7 @@
   let boardPerspective = 1250;
   let boardScaleY = 94;
   let boardLift = 0;
+  let debugZones = false;
   let openZone:
     | { playerIndex: number; zone: 'discard' | 'lostZone' | 'stadium' | 'playZone'; title: string; faceDown?: boolean }
     | null = null;
@@ -135,23 +136,9 @@
     : undefined;
   $: topBenchSlots = topPlayer ? benchSlotsFor(topPlayer, setupPrompt, setupBenchIndexes) : [];
   $: bottomBenchSlots = bottomPlayer ? benchSlotsFor(bottomPlayer, setupPrompt, setupBenchIndexes) : [];
-  $: topCanShowPlayArea =
-    topPlayer &&
-    canShowPlayAreaState(
-      topPlayer,
-      selectedCard,
-      selectedHand?.playerIndex,
-      draggingCard,
-      draggingHand?.playerIndex,
-      game?.activePlayerIndex,
-      !!currentPrompt,
-      gameFinished,
-      !!setupPrompt,
-    );
-  $: bottomCanShowPlayArea =
-    bottomPlayer &&
-    canShowPlayAreaState(
-      bottomPlayer,
+  $: canPlayOnBoard =
+    !!bottomPlayer &&
+    canPlayOnBoardState(
       selectedCard,
       selectedHand?.playerIndex,
       draggingCard,
@@ -330,7 +317,15 @@
   }
 
   function onHandDrag(playerIndex: number, handIndex: number, event: DragEvent) {
-    selectHandCard(playerIndex, handIndex);
+    if (setupPrompt && playerIndex === setupPrompt.playerIndex) {
+      if (!isSetupStartable(game?.players[playerIndex]?.hand[handIndex], handIndex)) {
+        return;
+      }
+    } else if (!canAct(playerIndex)) {
+      return;
+    }
+    selectedHand = { playerIndex, handIndex };
+    focusedSlot = null;
     draggingHand = { playerIndex, handIndex };
     event.dataTransfer?.setData('text/plain', `${playerIndex}:${handIndex}`);
     if (event.dataTransfer) {
@@ -348,8 +343,8 @@
     }
   }
 
-  function allowPlayAreaDrop(event: DragEvent, player: PlayerView) {
-    if (canShowPlayArea(player)) {
+  function allowBoardPlayDrop(event: DragEvent) {
+    if (canPlayOnBoard) {
       event.preventDefault();
     }
   }
@@ -380,6 +375,7 @@
 
   function dropToSlot(slot: PokemonSlotView, event: DragEvent) {
     event.preventDefault();
+    event.stopPropagation();
     clearDragState();
     if (canPlaceSetupActive(slot)) {
       placeSetupActive();
@@ -388,14 +384,18 @@
     playToSlot(slot);
   }
 
-  function dropToPlayArea(player: PlayerView, event: DragEvent) {
+  function dropToBoardPlay(event: DragEvent) {
+    if (!canPlayOnBoard) {
+      return;
+    }
     event.preventDefault();
     clearDragState();
-    playToArea(player);
+    playSelectedToBoard();
   }
 
   function dropToBenchArea(player: PlayerView, event: DragEvent) {
     event.preventDefault();
+    event.stopPropagation();
     clearDragState();
     if (canPlaceSetupBench(player)) {
       placeSetupBench();
@@ -441,22 +441,7 @@
     return canAct(player.index) && canPlayCardToPlayArea(selectedCard, selectedHand?.playerIndex);
   }
 
-  function canShowPlayArea(player: PlayerView) {
-    return canShowPlayAreaState(
-      player,
-      selectedCard,
-      selectedHand?.playerIndex,
-      draggingCard,
-      draggingHand?.playerIndex,
-      game?.activePlayerIndex,
-      !!currentPrompt,
-      gameFinished,
-      !!setupPrompt,
-    );
-  }
-
-  function canShowPlayAreaState(
-    player: PlayerView,
+  function canPlayOnBoardState(
     selected: CardView | undefined,
     selectedPlayerIndex: number | undefined,
     dragging: CardView | undefined,
@@ -466,20 +451,24 @@
     finished: boolean,
     inSetup: boolean,
   ) {
-    if (inSetup || hasPrompt || finished || activePlayerIndex !== player.index) {
+    if (inSetup || hasPrompt || finished || activePlayerIndex === undefined) {
       return false;
     }
+    const selectedCanPlay =
+      selectedPlayerIndex === activePlayerIndex && canPlayCardToPlayArea(selected, selectedPlayerIndex);
+    const draggingCanPlay =
+      draggingPlayerIndex === activePlayerIndex && canPlayCardToPlayArea(dragging, draggingPlayerIndex);
     return (
-      canPlayCardToPlayArea(selected, selectedPlayerIndex) ||
-      (draggingPlayerIndex !== undefined && canPlayCardToPlayArea(dragging, draggingPlayerIndex))
+      selectedCanPlay ||
+      draggingCanPlay
     );
   }
 
-  function playToArea(player: PlayerView) {
-    if (!canPlayToArea(player)) {
+  function playSelectedToBoard() {
+    if (!game || !activePlayer || !canPlayToArea(activePlayer)) {
       return;
     }
-    void playToTarget(targetFor(game?.activePlayerIndex ?? player.index, player.index, SlotType.ACTIVE));
+    void playToTarget(targetFor(game.activePlayerIndex, game.activePlayerIndex, SlotType.ACTIVE));
   }
 
   function showZone(
@@ -703,7 +692,7 @@
       {/if}
     </section>
   {:else if bottomPlayer && topPlayer}
-    <section class="table-shell">
+    <section class="table-shell" class:debug-zones={debugZones}>
       <div class="game-status">
         <strong>{winnerName ? `${winnerName} wins` : game.phaseLabel}</strong>
         <span>Turn {game.turn}</span>
@@ -747,6 +736,10 @@
         <label>
           <input type="checkbox" bind:checked={autoConfirmPrompts} />
           Auto-confirm reveals
+        </label>
+        <label>
+          <input type="checkbox" bind:checked={debugZones} />
+          Debug zones
         </label>
         <div class="sidebar-turn-actions">
           <button disabled={busy || !!currentPrompt || gameFinished} on:click={passTurn}>Pass turn</button>
@@ -826,11 +819,9 @@
           {canPlaceSetupActive}
           {placeSetupActive}
           {showZone}
-          topCanShowPlayArea={!!topCanShowPlayArea}
-          bottomCanShowPlayArea={!!bottomCanShowPlayArea}
-          {allowPlayAreaDrop}
-          {dropToPlayArea}
-          {playToArea}
+          {canPlayOnBoard}
+          {allowBoardPlayDrop}
+          {dropToBoardPlay}
           {boardTilt}
           {boardPerspective}
           {boardScaleY}

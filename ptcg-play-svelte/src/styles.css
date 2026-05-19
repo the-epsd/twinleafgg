@@ -143,8 +143,8 @@ input[type="number"] {
 
 .table-shell {
   --card-w: clamp(70px, min(5vw, 9vh), 98px);
-  --board-top-inset: clamp(24px, 3.3vh, 42px);
-  --board-bottom-inset: clamp(154px, 16.8vh, 212px);
+  --board-top-inset: clamp(58px, 7.2vh, 84px);
+  --board-bottom-inset: clamp(166px, 19.5vh, 232px);
   --hand-separator-gap: calc(var(--card-w) * 0.045);
   --hand-hover-pad: calc(var(--card-w) * 0.065);
   --board-edge-pad: calc(var(--card-w) * 0.32);
@@ -171,6 +171,18 @@ input[type="number"] {
 
 .table-shell img {
   -webkit-user-drag: none;
+}
+
+.debug-zones .player-panel {
+  outline: 2px solid rgba(236, 72, 153, 0.78);
+  outline-offset: -2px;
+  background: rgba(236, 72, 153, 0.08);
+}
+
+.debug-zones .hand {
+  outline: 2px dashed rgba(236, 72, 153, 0.86);
+  outline-offset: -4px;
+  background: rgba(236, 72, 153, 0.08);
 }
 
 .table-toolbar {
@@ -231,7 +243,7 @@ input[type="number"] {
 
 .player-panel {
   position: absolute;
-  z-index: 5;
+  z-index: 10;
   min-width: 0;
   display: flex;
   align-items: center;
@@ -239,7 +251,7 @@ input[type="number"] {
 }
 
 .player-panel.top {
-  --card-w: clamp(126px, min(7.9vw, 15vh), 176px);
+  --card-w: clamp(112px, min(7vw, 13.2vh), 154px);
   top: 0;
   left: 14px;
   right: 158px;
@@ -249,7 +261,7 @@ input[type="number"] {
 }
 
 .player-panel.bottom {
-  --card-w: clamp(128px, min(8.7vw, 16.8vh), 172px);
+  --card-w: clamp(116px, min(7.8vw, 14.5vh), 150px);
   top: calc(100vh - var(--board-bottom-inset) + var(--hand-separator-gap) - var(--hand-hover-pad));
   left: 14px;
   right: 158px;
@@ -284,8 +296,11 @@ input[type="number"] {
 }
 
 .playmat {
-  --active-w: calc(var(--card-w) * 1.42);
-  --pile-w: calc(var(--card-w) * 1.16);
+  --active-w: calc(var(--card-w) * 1.48);
+  --active-h: calc(var(--active-w) * 1.397);
+  --bench-card-w: calc(var(--card-w) * 1.24);
+  --bench-row-h: calc(var(--bench-card-w) * 1.42);
+  --pile-w: calc(var(--card-w) * 1.28);
   --prize-card-w: calc(var(--card-w) * 0.96);
   --bench-gap: calc(var(--card-w) * 0.18);
   position: absolute;
@@ -295,12 +310,21 @@ input[type="number"] {
   perspective-origin: 50% 68%;
 }
 
+.debug-zones .playmat {
+  outline: 2px solid rgba(37, 99, 235, 0.9);
+  outline-offset: -2px;
+  background: rgba(37, 99, 235, 0.05);
+}
+
 .game-board-plane {
   position: absolute;
   inset: 0;
   display: grid;
-  grid-template-rows: calc(var(--card-w) * 1.42) minmax(calc(var(--active-w) * 2.45), 1fr) calc(var(--card-w) * 1.42);
-  gap: calc(var(--card-w) * 0.26);
+  grid-template-rows:
+    calc(var(--bench-row-h) + (var(--card-w) * 0.34))
+    minmax(calc((var(--active-h) * 2) + (var(--card-w) * 0.24)), 1fr)
+    calc(var(--bench-row-h) + (var(--card-w) * 0.34));
+  gap: calc(var(--card-w) * 0.12);
   align-items: center;
   padding: calc(var(--card-w) * 0.16) var(--board-edge-pad-x);
   background: rgba(226, 228, 232, 0.56);
@@ -309,6 +333,14 @@ input[type="number"] {
   transform-origin: 50% 58%;
   transform-style: preserve-3d;
   will-change: transform;
+}
+
+.debug-zones .game-board-plane {
+  outline: 2px solid rgba(14, 165, 233, 0.9);
+  outline-offset: -4px;
+  background:
+    linear-gradient(rgba(14, 165, 233, 0.08), rgba(14, 165, 233, 0.08)),
+    rgba(226, 228, 232, 0.56);
 }
 
 .game-board-plane::before {
@@ -425,8 +457,8 @@ input[type="number"] {
   display: grid;
   justify-content: center;
   align-content: center;
-  width: min(100%, calc((var(--card-w) * 8) + (var(--bench-gap) * 7) + 24px));
-  min-height: calc(var(--card-w) * 1.38);
+  width: min(62%, calc((var(--bench-card-w) * 6) + (var(--bench-gap) * 5) + 24px));
+  min-height: var(--bench-row-h);
   justify-self: center;
   padding: calc(var(--card-w) * 0.12) 12px;
   border-radius: 7px;
@@ -435,8 +467,24 @@ input[type="number"] {
   box-shadow: none;
 }
 
+.bench-zone.opponent {
+  align-self: end;
+  align-content: center;
+}
+
+.bench-zone:not(.opponent) {
+  align-self: start;
+  align-content: center;
+}
+
+.debug-zones .bench-zone {
+  border-color: rgba(16, 185, 129, 0.86);
+  background: rgba(16, 185, 129, 0.08);
+  box-shadow: inset 0 0 0 1px rgba(16, 185, 129, 0.46);
+}
+
 .bench-zone.empty {
-  min-height: calc(var(--card-w) * 1.38);
+  min-height: var(--bench-row-h);
 }
 
 .bench-drop-surface {
@@ -449,6 +497,11 @@ input[type="number"] {
   border: 1px dashed transparent;
   background: transparent;
   pointer-events: none;
+}
+
+.debug-zones .bench-drop-surface {
+  border-color: rgba(5, 150, 105, 0.82);
+  background: rgba(5, 150, 105, 0.08);
 }
 
 .bench-drop-surface.can-drop {
@@ -467,7 +520,11 @@ input[type="number"] {
   align-items: center;
   gap: var(--bench-gap);
   width: 100%;
-  min-height: calc(var(--card-w) * 1.18);
+  min-height: var(--bench-row-h);
+}
+
+.bench-row .board-slot {
+  width: var(--bench-card-w);
 }
 
 .bench-row.opponent .card-tile,
@@ -479,13 +536,19 @@ input[type="number"] {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-rows: var(--active-w) minmax(calc(var(--card-w) * 0.34), 1fr) var(--active-w);
+  grid-template-rows: var(--active-h) minmax(calc(var(--card-w) * 0.24), 1fr) var(--active-h);
   grid-template-columns: minmax(0, 1fr) var(--active-w) minmax(0, 1fr);
   align-items: center;
   justify-items: center;
-  row-gap: calc(var(--card-w) * 0.14);
+  row-gap: 0;
   column-gap: 0;
   min-height: 0;
+}
+
+.debug-zones .active-duel {
+  outline: 2px solid rgba(245, 158, 11, 0.86);
+  outline-offset: 4px;
+  background: rgba(245, 158, 11, 0.06);
 }
 
 .active-duel > .board-slot.active:not(.empty) {
@@ -515,6 +578,11 @@ input[type="number"] {
   pointer-events: auto;
 }
 
+.debug-zones .stadium-card {
+  outline: 2px solid rgba(217, 70, 239, 0.9);
+  outline-offset: 4px;
+}
+
 .stadium-card .card-tile {
   width: 100%;
   height: 100%;
@@ -540,45 +608,16 @@ input[type="number"] {
   margin-left: calc(var(--card-w) * 0.92);
 }
 
-.play-card-zone {
-  position: relative;
-  z-index: 3;
-  width: calc(var(--pile-w) * 2.95);
-  height: calc(var(--pile-w) * 2.15);
-  display: block;
-  padding: 0;
-  border-radius: 6px;
-  border: 1px dashed transparent;
-  background: transparent;
-  box-shadow: none;
-  opacity: 0;
-  pointer-events: auto;
-  transition: opacity 100ms ease, background 100ms ease, box-shadow 100ms ease;
-}
-
-.play-card-zone[aria-disabled='true'] {
-  opacity: 0;
-  cursor: default;
-  pointer-events: none;
-}
-
-.top-play-zone {
-  grid-row: auto;
-  grid-column: auto;
-}
-
-.bottom-play-zone {
-  grid-row: auto;
-  grid-column: auto;
-}
-
-.play-card-zone.can-drop {
-  opacity: 1;
-  border-style: solid;
-  border-color: rgba(41, 161, 139, 0.88);
-  background: rgba(41, 161, 139, 0.12);
-  box-shadow: 0 0 0 3px rgba(41, 161, 139, 0.16), 0 10px 22px rgba(23, 30, 38, 0.14);
+.game-board-plane.can-play-on-board {
   cursor: pointer;
+}
+
+.game-board-plane.can-play-on-board::before {
+  border-color: rgba(41, 161, 139, 0.72);
+  background: rgba(41, 161, 139, 0.05);
+  box-shadow:
+    inset 0 0 0 2px rgba(41, 161, 139, 0.14),
+    0 10px 26px rgba(23, 30, 38, 0.08);
 }
 
 .center-stack {
@@ -593,6 +632,12 @@ input[type="number"] {
   pointer-events: none;
 }
 
+.debug-zones .center-stack {
+  outline: 2px solid rgba(99, 102, 241, 0.86);
+  outline-offset: -2px;
+  background: rgba(99, 102, 241, 0.05);
+}
+
 .field-piles {
   position: absolute;
   left: 0;
@@ -603,6 +648,12 @@ input[type="number"] {
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: start;
   pointer-events: none;
+}
+
+.debug-zones .field-piles {
+  outline: 2px dashed rgba(168, 85, 247, 0.84);
+  outline-offset: 3px;
+  background: rgba(168, 85, 247, 0.06);
 }
 
 .top-piles {
@@ -619,6 +670,14 @@ input[type="number"] {
   display: grid;
   gap: calc(var(--card-w) * 0.12);
   pointer-events: none;
+}
+
+.debug-zones .left-piles,
+.debug-zones .right-piles,
+.debug-zones .right-field {
+  outline: 2px solid rgba(234, 88, 12, 0.78);
+  outline-offset: 3px;
+  background: rgba(234, 88, 12, 0.06);
 }
 
 .top-piles .left-piles {
@@ -638,17 +697,6 @@ input[type="number"] {
 .top-piles .right-field {
   grid-column: 1;
   grid-row: 1;
-  grid-template-columns: var(--pile-w) calc(var(--pile-w) * 2.95);
-}
-
-.top-piles .right-field .right-piles {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.top-piles .right-field .play-card-zone {
-  grid-column: 2;
-  grid-row: 1;
 }
 
 .bottom-piles .left-piles {
@@ -664,9 +712,7 @@ input[type="number"] {
 
 .right-field {
   display: grid;
-  grid-template-columns: calc(var(--pile-w) * 2.95) var(--pile-w);
   align-items: center;
-  gap: calc(var(--pile-w) * 0.16);
   pointer-events: none;
 }
 
@@ -695,9 +741,13 @@ input[type="number"] {
   font-size: calc(var(--pile-w) * 0.25);
 }
 
+.debug-zones .stack-pile {
+  outline: 2px solid rgba(220, 38, 38, 0.72);
+  outline-offset: 3px;
+}
+
 button.stack-pile,
-.stadium-card,
-.play-card-zone {
+.stadium-card {
   pointer-events: auto;
 }
 
@@ -774,6 +824,12 @@ button.stack-pile,
   pointer-events: none;
 }
 
+.debug-zones .prize-grid {
+  outline: 2px solid rgba(250, 204, 21, 0.9);
+  outline-offset: 4px;
+  background: rgba(250, 204, 21, 0.08);
+}
+
 .prize-grid span {
   position: absolute;
   left: calc(var(--col) * var(--prize-card-w) * 0.98);
@@ -835,6 +891,12 @@ button.stack-pile,
   background: transparent;
   box-shadow: none;
   display: block;
+}
+
+.debug-zones .board-slot {
+  outline: 2px solid rgba(34, 197, 94, 0.78);
+  outline-offset: 4px;
+  background: rgba(34, 197, 94, 0.06);
 }
 
 .board-slot.active {
@@ -915,6 +977,7 @@ button.stack-pile,
 
 .hand {
   position: relative;
+  z-index: 1;
   min-width: 0;
   min-height: calc(var(--card-w) * 1.42);
   flex: 1;
@@ -922,7 +985,7 @@ button.stack-pile,
   justify-content: center;
   align-items: center;
   gap: calc(var(--card-w) * 0.1);
-  overflow-x: auto;
+  overflow: visible;
   padding: 10px 4px;
   pointer-events: auto;
   scrollbar-width: thin;
@@ -975,7 +1038,7 @@ button.stack-pile,
 }
 
 .player-panel.top .hand.concealed::after {
-  top: calc(100% - 24px);
+  top: calc(100% + 6px);
 }
 
 .player-panel.bottom .hand {
@@ -986,6 +1049,8 @@ button.stack-pile,
 }
 
 .card-tile {
+  position: relative;
+  z-index: 0;
   width: var(--card-w, clamp(58px, 5.3vw, 88px));
   aspect-ratio: 63 / 88;
   display: grid;
@@ -1000,6 +1065,7 @@ button.stack-pile,
 }
 
 button.card-tile:hover:not(:disabled) {
+  z-index: 4;
   transform: translateY(-6px);
   box-shadow:
     0 0 0 2px rgba(143, 232, 206, 0.72),
@@ -1017,6 +1083,7 @@ button.card-tile:hover:not(:disabled) {
 }
 
 .card-tile.selected {
+  z-index: 3;
   outline: 0;
   box-shadow:
     0 0 0 3px rgba(143, 232, 206, 0.9),
