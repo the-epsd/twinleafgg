@@ -21,6 +21,7 @@ import { playCardReducer } from './reducers/play-card-reducer';
 import { playEnergyReducer } from './effect-reducers/play-energy-effect';
 import { playPokemonReducer } from './effect-reducers/play-pokemon-effect';
 import { playPokemonFromDeckReducer } from './effect-reducers/play-pokemon-from-deck-effect';
+import { playPokemonFromDiscardReducer } from './effect-reducers/play-pokemon-from-discard-effect';
 import { playTrainerReducer } from './effect-reducers/play-trainer-effect';
 import { playerTurnReducer } from './reducers/player-turn-reducer';
 import { gamePhaseReducer } from './effect-reducers/game-phase-effect';
@@ -137,6 +138,7 @@ export class Store implements StoreLike {
     state = playEnergyReducer(this, state, effect);
     state = playPokemonReducer(this, state, effect);
     state = playPokemonFromDeckReducer(this, state, effect);
+    state = playPokemonFromDiscardReducer(this, state, effect);
     state = playTrainerReducer(this, state, effect);
     state = retreatReducer(this, state, effect);
     state = gameReducer(this, state, effect);
