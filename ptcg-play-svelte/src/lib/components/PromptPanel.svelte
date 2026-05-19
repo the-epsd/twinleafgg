@@ -8,8 +8,15 @@
   export let prompt: PromptView;
   export let resolving = false;
   export let autoContinue = false;
+  export let activeAttachEnergyIndex: number | null = null;
+  export let attachAssignments: Array<{ energyIndex: number; target: CardTarget }> = [];
 
-  const dispatch = createEventDispatcher<{ resolve: unknown }>();
+  const dispatch = createEventDispatcher<{
+    resolve: unknown;
+    attachEnergySelect: number | null;
+    attachEnergyReset: void;
+    attachEnergyUnassign: number;
+  }>();
   let jsonResult = '';
   let selectedIndexes: number[] = [];
   let selectedTargets: CardTarget[] = [];
@@ -20,6 +27,8 @@
   let mulliganDrawKey = '';
   let autoContinueKey = '';
   let autoContinueTimer: ReturnType<typeof setTimeout> | undefined;
+  let hidden = false;
+  let promptKey = '';
 
   $: fields = prompt.fields ?? {};
   $: options = (fields.options as any) ?? {};
@@ -30,6 +39,7 @@
   $: cards = extractCards(fields);
   $: prizeChoices = extractPrizes(fields, prompt.playerIndex);
   $: selectableTargets = getSelectableTargets(game, prompt);
+  $: attachTargets = getAttachTargets(game, prompt);
   $: selectionPoolSize = cards.length || prizeChoices.length || selectableTargets.length || 1;
   $: maxSelections = normalizeSelectionLimit(options.max, normalizeSelectionLimit(options.count, selectionPoolSize));
   $: minSelections = normalizeSelectionLimit(
@@ -44,7 +54,26 @@
   );
   $: blockedIndexes = new Set<number>(Array.isArray(options.blocked) ? options.blocked : []);
   $: selectedIndexes = selectedIndexes.filter((index) => isIndexSelectable(index)).slice(0, maxSelections);
+  $: selectedCards = selectedIndexes
+    .map((index) => ({ index, card: cardForSelection(index) }))
+    .filter((item) => item.card);
+  $: selectedSlotCount =
+    maxSelections <= 4
+      ? maxSelections
+      : Math.min(maxSelections, Math.max(minSelections, selectedIndexes.length + 1, 1));
+  $: selectedSlots = Array.from({ length: selectedSlotCount }, (_, index) => selectedCards[index] ?? null);
   $: autoContinuePrompt = ['AlertPrompt', 'ShowCardsPrompt', 'ConfirmCardsPrompt', 'ShowMulliganPrompt'].includes(prompt.className);
+  $: {
+    const key = `${prompt.id}:${prompt.className}`;
+    if (promptKey !== key) {
+      promptKey = key;
+      hidden = false;
+      selectedIndexes = [];
+      selectedTargets = [];
+      sourceTarget = null;
+      jsonResult = '';
+    }
+  }
   $: {
     const key = `${prompt.id}:${mulliganDrawValues.map((item) => item.value).join(',')}`;
     if (isMulliganDrawPrompt && mulliganDrawKey !== key) {
@@ -141,10 +170,10 @@
   }
 
   function submitAttachEnergy() {
-    if (selectedTargets.length === 0) {
+    if (attachAssignments.length < minSelections) {
       return;
     }
-    submit([{ to: selectedTargets[0], index: attachEnergyIndex }]);
+    submit(attachAssignments.map((assignment) => ({ to: assignment.target, index: assignment.energyIndex })));
   }
 
   function submitDiscardEnergy() {
@@ -180,6 +209,81 @@
       return;
     }
     submit(selectedTargets.map((target) => ({ from: sourceTarget, to: target })));
+  }
+
+  function chooseAttachEnergy(index: number) {
+    dispatch('attachEnergySelect', index);
+  }
+
+  function assignAttachEnergy(index: number, target: CardTarget) {
+    if (!attachEnergyAvailable(index) || !canAssignAttachTarget(target, index)) {
+      return;
+    }
+    const withoutEnergy = attachAssignments.filter((assignment) => assignment.energyIndex !== index);
+    const nextAssignment = { energyIndex: index, target };
+    attachAssignments = maxSelections <= 1
+      ? [nextAssignment]
+      : [...withoutEnergy, nextAssignment].slice(0, maxSelections);
+    activeAttachEnergyIndex = null;
+  }
+
+  function removeAttachAssignment(index: number) {
+    dispatch('attachEnergyUnassign', index);
+  }
+
+  function resetAttachAssignments() {
+    dispatch('attachEnergyReset');
+  }
+
+  function attachEnergyAvailable(index: number) {
+    return !blockedIndexes.has(index) && !attachAssignments.some((assignment) => assignment.energyIndex === index);
+  }
+
+  function canAssignAttachTarget(target: CardTarget, energyIndex = activeAttachEnergyIndex) {
+    if (energyIndex === null || !attachEnergyAvailable(energyIndex)) {
+      return false;
+    }
+    if (maxSelections > 1 && attachAssignments.length >= maxSelections) {
+      return false;
+    }
+    if (options.differentTargets && attachAssignments.some((assignment) => sameTarget(assignment.target, target))) {
+      return false;
+    }
+    if (options.sameTarget && attachAssignments.length > 0 && !sameTarget(attachAssignments[0].target, target)) {
+      return false;
+    }
+    return true;
+  }
+
+  function dragAttachEnergy(event: DragEvent, index: number) {
+    event.dataTransfer?.setData('text/plain', String(index));
+    event.dataTransfer?.setData('application/x-twinleaf-energy-index', String(index));
+    event.dataTransfer?.setDragImage?.((event.currentTarget as HTMLElement), 24, 32);
+    dispatch('attachEnergySelect', index);
+  }
+
+  function allowAttachDrop(event: DragEvent, target: CardTarget) {
+    const index = dragEnergyIndex(event) ?? activeAttachEnergyIndex;
+    if (index !== null && canAssignAttachTarget(target, index)) {
+      event.preventDefault();
+    }
+  }
+
+  function dropAttachEnergy(event: DragEvent, target: CardTarget) {
+    const index = dragEnergyIndex(event) ?? activeAttachEnergyIndex;
+    if (index === null) {
+      return;
+    }
+    event.preventDefault();
+    assignAttachEnergy(index, target);
+  }
+
+  function dragEnergyIndex(event: DragEvent) {
+    const raw =
+      event.dataTransfer?.getData('application/x-twinleaf-energy-index')
+      || event.dataTransfer?.getData('text/plain');
+    const value = Number(raw);
+    return Number.isInteger(value) ? value : null;
   }
 
   function normalizeSelectionLimit(raw: unknown, fallback: number) {
@@ -222,6 +326,18 @@
       return true;
     }
     return matchesCardFilter(cards.find((card: any, cardIndex: number) => (card.index ?? cardIndex) === index), fields.filter);
+  }
+
+  function cardForSelection(index: number) {
+    return cards.find((card: any, cardIndex: number) => (card.index ?? cardIndex) === index);
+  }
+
+  function attachAssignmentFor(index: number) {
+    return attachAssignments.find((assignment) => assignment.energyIndex === index);
+  }
+
+  function targetLabel(target: CardTarget) {
+    return attachTargets.find((item) => sameTarget(item.target, target))?.label ?? 'selected Pokemon';
   }
 
   function matchesCardFilter(card: any, filter: unknown) {
@@ -288,12 +404,56 @@
     }
     return result;
   }
+
+  function getAttachTargets(current: GameView, currentPrompt: PromptView): Array<{ label: string; target: CardTarget; card?: any }> {
+    const playerType = Number((currentPrompt.fields as any).playerType ?? 0);
+    const slots = Array.isArray((currentPrompt.fields as any).slots)
+      ? ((currentPrompt.fields as any).slots as number[])
+      : [SlotType.ACTIVE, SlotType.BENCH];
+    const blockedTo = Array.isArray((currentPrompt.fields as any).options?.blockedTo)
+      ? ((currentPrompt.fields as any).options.blockedTo as CardTarget[])
+      : [];
+    const result: Array<{ label: string; target: CardTarget; card?: any }> = [];
+    for (const player of current.players) {
+      const isPromptPlayer = player.index === currentPrompt.playerIndex;
+      if (playerType === 2 && !isPromptPlayer) continue;
+      if (playerType === 1 && isPromptPlayer) continue;
+      if (slots.includes(SlotType.ACTIVE) && !player.active.empty) {
+        const target = targetFor(currentPrompt.playerIndex, player.index, SlotType.ACTIVE, 0);
+        if (!blockedTo.some((item) => sameTarget(item, target))) {
+          result.push({ label: `${player.name} active`, target, card: player.active.pokemon });
+        }
+      }
+      if (slots.includes(SlotType.BENCH)) {
+        for (const bench of player.bench) {
+          if (bench.empty) continue;
+          const target = targetFor(currentPrompt.playerIndex, player.index, SlotType.BENCH, bench.index);
+          if (!blockedTo.some((item) => sameTarget(item, target))) {
+            result.push({ label: `${player.name} bench ${bench.index + 1}`, target, card: bench.pokemon });
+          }
+        }
+      }
+    }
+    return result;
+  }
 </script>
 
-<section class="prompt-panel">
+{#if hidden}
+  <section class="prompt-panel prompt-panel-collapsed">
+    <button type="button" class="ghost-button" on:click={() => (hidden = false)}>
+      Show {labelFor(prompt.className).toLowerCase()}
+    </button>
+  </section>
+{:else}
+<section class="prompt-panel" class:search-prompt={prompt.className === 'ChooseCardsPrompt'}>
   <div class="prompt-title">
-    <strong>{labelFor(prompt.className)}</strong>
-    <span>{labelFor(prompt.message || prompt.type)}</span>
+    <div>
+      <strong>{labelFor(prompt.className)}</strong>
+      <span>{labelFor(prompt.message || prompt.type)}</span>
+    </div>
+    {#if prompt.className === 'ChooseCardsPrompt'}
+      <button type="button" class="ghost-button" on:click={() => (hidden = true)}>Hide</button>
+    {/if}
   </div>
   {#if !prompt.supported}
     <p class="prompt-warning">{prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.'}</p>
@@ -418,6 +578,51 @@
         <button disabled={resolving} on:click={() => submit(null)}>Cancel</button>
       {/if}
     </div>
+  {:else if prompt.className === 'ChooseCardsPrompt' && cards.length}
+    <div class="search-selection">
+      <div class="search-selection-meta">
+        <strong>Selected</strong>
+        <span>{selectedIndexes.length}/{maxSelections}</span>
+      </div>
+      <div class="selected-card-slots" aria-label="Selected cards">
+        {#each selectedSlots as slot, slotIndex}
+          {#if slot}
+            <button
+              type="button"
+              class="selected-card-slot filled"
+              disabled={resolving}
+              title={`Remove ${slot.card.fullName ?? slot.card.name}`}
+              on:click={() => toggleIndex(slot.index)}
+            >
+              <CardTile card={slot.card} compact />
+            </button>
+          {:else}
+            <div class="selected-card-slot empty">
+              <span>{slotIndex + 1}</span>
+            </div>
+          {/if}
+        {/each}
+      </div>
+    </div>
+    <div class="search-card-grid">
+      {#each cards as card, index}
+        <button
+          type="button"
+          class:selected={selectedIndexes.includes(card.index ?? index)}
+          class:blocked={!isIndexSelectable(card.index ?? index)}
+          disabled={resolving || !isIndexSelectable(card.index ?? index)}
+          on:click={() => toggleIndex(card.index ?? index)}
+        >
+          <CardTile card={card} compact />
+        </button>
+      {/each}
+    </div>
+    <div class="prompt-actions search-actions">
+      <button disabled={resolving || selectedIndexes.length < minSelections} on:click={submitSelectedIndexes}>Confirm selection</button>
+      {#if options.allowCancel}
+        <button disabled={resolving} on:click={() => submit(null)}>Cancel</button>
+      {/if}
+    </div>
   {:else if prompt.className === 'ChooseEnergyPrompt' && cards.length}
     <p class="prompt-hint">{energyCostLabel(fields.cost)}</p>
     <div class="prompt-card-list">
@@ -438,7 +643,49 @@
         <button disabled={resolving} on:click={() => submit(null)}>Cancel</button>
       {/if}
     </div>
-  {:else if ['AttachEnergyPrompt', 'DiscardEnergyPrompt', 'MoveEnergyPrompt'].includes(prompt.className)}
+  {:else if prompt.className === 'AttachEnergyPrompt'}
+    <div class="attach-energy-ui">
+      <div class="attach-energy-pane">
+        <div class="attach-energy-heading">
+          <strong>Energy</strong>
+          <span>{attachAssignments.length}/{maxSelections} assigned</span>
+        </div>
+        <p class="prompt-hint">
+          Select or drag an energy, then click the highlighted Pokemon on the board.
+        </p>
+        <div class="attach-energy-list">
+          {#each cards as card, index}
+            {@const energyIndex = card.index ?? index}
+            {@const assignment = attachAssignmentFor(energyIndex)}
+            <button
+              type="button"
+              class="attach-energy-card"
+              class:selected={activeAttachEnergyIndex === energyIndex}
+              class:assigned={!!assignment}
+              class:blocked={!attachEnergyAvailable(energyIndex) && !assignment}
+              disabled={resolving || (!attachEnergyAvailable(energyIndex) && !assignment)}
+              draggable={!resolving && attachEnergyAvailable(energyIndex)}
+              title={assignment ? `Assigned to ${targetLabel(assignment.target)}` : `Select ${card.fullName ?? card.name}`}
+              on:click={() => (assignment ? removeAttachAssignment(energyIndex) : chooseAttachEnergy(energyIndex))}
+              on:dragstart={(event) => dragAttachEnergy(event, energyIndex)}
+            >
+              <CardTile card={card} compact />
+              {#if assignment}
+                <span class="attach-assignment-label">{targetLabel(assignment.target)}</span>
+              {/if}
+            </button>
+          {/each}
+        </div>
+      </div>
+    </div>
+    <div class="prompt-actions">
+      <button disabled={resolving || attachAssignments.length === 0} on:click={resetAttachAssignments}>Reset</button>
+      <button disabled={resolving || attachAssignments.length < minSelections} on:click={submitAttachEnergy}>Attach</button>
+      {#if options.allowCancel}
+        <button disabled={resolving} on:click={() => submit(null)}>Cancel</button>
+      {/if}
+    </div>
+  {:else if ['DiscardEnergyPrompt', 'MoveEnergyPrompt'].includes(prompt.className)}
     <label class="inline-field">
       Energy index
       <input type="number" min="0" bind:value={attachEnergyIndex} />
@@ -548,11 +795,14 @@
     </div>
   {/if}
 
-  <details>
-    <summary>Advanced</summary>
-    <p>{prompt.resultSchema}</p>
-    <textarea bind:value={jsonResult} placeholder="JSON result, for example null or [0]"></textarea>
-    <button disabled={resolving} on:click={submitJson}>Resolve with JSON</button>
-    <pre>{JSON.stringify(fields, null, 2)}</pre>
-  </details>
+  {#if prompt.className !== 'ChooseCardsPrompt'}
+    <details>
+      <summary>Advanced</summary>
+      <p>{prompt.resultSchema}</p>
+      <textarea bind:value={jsonResult} placeholder="JSON result, for example null or [0]"></textarea>
+      <button disabled={resolving} on:click={submitJson}>Resolve with JSON</button>
+      <pre>{JSON.stringify(fields, null, 2)}</pre>
+    </details>
+  {/if}
 </section>
+{/if}

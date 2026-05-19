@@ -34,6 +34,8 @@
   let autoConfirmPrompts = true;
   let autoConfirmPromptKey = '';
   let selectedBoardTargets: CardTarget[] = [];
+  let attachPromptEnergyIndex: number | null = null;
+  let attachPromptAssignments: Array<{ energyIndex: number; target: CardTarget }> = [];
   let viewIndex = 0;
   let setupActiveIndex: number | null = null;
   let setupBenchIndexes: number[] = [];
@@ -52,7 +54,20 @@
   $: topPlayer = game?.players.find((player) => player.index !== bottomPlayer?.index);
   $: currentPrompt = game?.prompts[0];
   $: boardTargetPrompt = currentPrompt?.className === 'ChoosePokemonPrompt' ? currentPrompt : null;
+  $: attachPrompt = currentPrompt?.className === 'AttachEnergyPrompt' ? currentPrompt : null;
   $: boardPromptTargets = boardTargetPrompt && game ? getBoardPromptTargets(game, boardTargetPrompt) : [];
+  $: attachPromptCards = attachPrompt ? extractPromptCards(attachPrompt.fields) : [];
+  $: attachPromptMin = normalizePromptLimit((attachPrompt?.fields.options as any)?.min, 0);
+  $: attachPromptMax = normalizePromptLimit((attachPrompt?.fields.options as any)?.max, attachPromptCards.length || 1);
+  $: attachPromptTargets = attachPrompt && game ? getAttachPromptTargets(game, attachPrompt) : [];
+  $: attachPromptAssignments = attachPromptAssignments.filter((assignment) =>
+    attachPromptCards.some((card, index) => (card.index ?? index) === assignment.energyIndex)
+      && attachPromptTargets.some((target) => sameTarget(target, assignment.target)),
+  ).slice(0, attachPromptMax);
+  $: attachPromptEnergyIndex =
+    attachPromptEnergyIndex !== null && isAttachEnergyAvailable(attachPromptEnergyIndex)
+      ? attachPromptEnergyIndex
+      : null;
   $: boardPromptMin = normalizePromptLimit((boardTargetPrompt?.fields.options as any)?.min, 1);
   $: boardPromptMax = normalizePromptLimit((boardTargetPrompt?.fields.options as any)?.max, 1);
   $: canConfirmBoardPrompt = !!boardTargetPrompt && selectedBoardTargets.length >= boardPromptMin;
@@ -88,11 +103,15 @@
     setupActiveIndex = null;
     setupBenchIndexes = [];
     selectedBoardTargets = [];
+    attachPromptEnergyIndex = null;
+    attachPromptAssignments = [];
   } else if (!currentPrompt && setupPromptKey) {
     setupPromptKey = '';
     setupActiveIndex = null;
     setupBenchIndexes = [];
     selectedBoardTargets = [];
+    attachPromptEnergyIndex = null;
+    attachPromptAssignments = [];
   }
 
   function resetPerspective() {
@@ -214,6 +233,11 @@
   }
 
   function clickSlot(slot: PokemonSlotView) {
+    if (attachPrompt && isBoardPromptSelectable(slot)) {
+      assignAttachPromptTarget(slot);
+      return;
+    }
+
     if (boardTargetPrompt && isBoardPromptSelectable(slot)) {
       selectBoardPromptSlot(slot);
       return;
@@ -338,7 +362,7 @@
   }
 
   function allowDrop(event: DragEvent, slot: PokemonSlotView) {
-    if (isPlayableTarget(slot) || canPlaceSetupActive(slot)) {
+    if (isPlayableTarget(slot) || canPlaceSetupActive(slot) || (attachPrompt && isBoardPromptSelectable(slot))) {
       event.preventDefault();
     }
   }
@@ -377,6 +401,10 @@
     event.preventDefault();
     event.stopPropagation();
     clearDragState();
+    if (attachPrompt && isBoardPromptSelectable(slot)) {
+      assignAttachPromptTarget(slot);
+      return;
+    }
     if (canPlaceSetupActive(slot)) {
       placeSetupActive();
       return;
@@ -524,7 +552,80 @@
     return result;
   }
 
+  function extractPromptCards(fields: Record<string, unknown>) {
+    const cardList = (fields.cardList as any[]) ?? (fields.cards as any[]);
+    if (Array.isArray(cardList)) {
+      return cardList;
+    }
+    const energy = fields.energy as any[];
+    if (Array.isArray(energy)) {
+      return energy.map((item, index) => ({ index: item.index ?? index, ...(item.card ?? {}) }));
+    }
+    return [];
+  }
+
+  function getAttachPromptTargets(current: GameView, prompt: PromptView) {
+    const playerType = Number((prompt.fields as any).playerType ?? PlayerType.ANY);
+    const slots = Array.isArray((prompt.fields as any).slots)
+      ? ((prompt.fields as any).slots as number[])
+      : [SlotType.ACTIVE, SlotType.BENCH];
+    const blockedTo = Array.isArray((prompt.fields as any).options?.blockedTo)
+      ? ((prompt.fields as any).options.blockedTo as CardTarget[])
+      : [];
+    const result: CardTarget[] = [];
+    for (const player of current.players) {
+      const isPromptPlayer = player.index === prompt.playerIndex;
+      if (playerType === PlayerType.BOTTOM_PLAYER && !isPromptPlayer) continue;
+      if (playerType === PlayerType.TOP_PLAYER && isPromptPlayer) continue;
+      if (slots.includes(SlotType.ACTIVE) && !player.active.empty) {
+        const target = targetForPromptSlot(prompt, player.active);
+        if (!blockedTo.some((item) => sameTarget(item, target))) {
+          result.push(target);
+        }
+      }
+      if (slots.includes(SlotType.BENCH)) {
+        for (const bench of player.bench) {
+          if (bench.empty) continue;
+          const target = targetForPromptSlot(prompt, bench);
+          if (!blockedTo.some((item) => sameTarget(item, target))) {
+            result.push(target);
+          }
+        }
+      }
+    }
+    return result;
+  }
+
+  function isAttachEnergyAvailable(index: number) {
+    const blocked = new Set<number>(Array.isArray((attachPrompt?.fields.options as any)?.blocked) ? (attachPrompt?.fields.options as any).blocked : []);
+    return !blocked.has(index) && !attachPromptAssignments.some((assignment) => assignment.energyIndex === index);
+  }
+
+  function canAssignAttachPromptTarget(target: CardTarget, energyIndex = attachPromptEnergyIndex) {
+    if (!attachPrompt || energyIndex === null || !isAttachEnergyAvailable(energyIndex)) {
+      return false;
+    }
+    if (attachPromptMax > 1 && attachPromptAssignments.length >= attachPromptMax) {
+      return false;
+    }
+    const options = (attachPrompt.fields.options as any) ?? {};
+    if (options.differentTargets && attachPromptAssignments.some((assignment) => sameTarget(assignment.target, target))) {
+      return false;
+    }
+    if (options.sameTarget && attachPromptAssignments.length > 0 && !sameTarget(attachPromptAssignments[0].target, target)) {
+      return false;
+    }
+    return attachPromptTargets.some((item) => sameTarget(item, target));
+  }
+
   function isBoardPromptSelectable(slot: PokemonSlotView) {
+    if (attachPrompt) {
+      if (slot.empty) {
+        return false;
+      }
+      const target = targetForPromptSlot(attachPrompt, slot);
+      return canAssignAttachPromptTarget(target);
+    }
     if (!boardTargetPrompt || slot.empty) {
       return false;
     }
@@ -533,6 +634,13 @@
   }
 
   function isBoardPromptSelected(slot: PokemonSlotView) {
+    if (attachPrompt) {
+      if (slot.empty) {
+        return false;
+      }
+      const target = targetForPromptSlot(attachPrompt, slot);
+      return attachPromptAssignments.some((assignment) => sameTarget(assignment.target, target));
+    }
     if (!boardTargetPrompt || slot.empty) {
       return false;
     }
@@ -561,6 +669,35 @@
       return;
     }
     void resolvePrompt(selectedBoardTargets);
+  }
+
+  function assignAttachPromptTarget(slot: PokemonSlotView) {
+    if (!attachPrompt || attachPromptEnergyIndex === null || !isBoardPromptSelectable(slot)) {
+      return;
+    }
+    const target = targetForPromptSlot(attachPrompt, slot);
+    const withoutEnergy = attachPromptAssignments.filter((assignment) => assignment.energyIndex !== attachPromptEnergyIndex);
+    const nextAssignment = { energyIndex: attachPromptEnergyIndex, target };
+    attachPromptAssignments = attachPromptMax <= 1
+      ? [nextAssignment]
+      : [...withoutEnergy, nextAssignment].slice(0, attachPromptMax);
+    attachPromptEnergyIndex = null;
+  }
+
+  function selectAttachPromptEnergy(index: number | null) {
+    attachPromptEnergyIndex = attachPromptEnergyIndex === index ? null : index;
+  }
+
+  function removeAttachPromptAssignment(index: number) {
+    attachPromptAssignments = attachPromptAssignments.filter((assignment) => assignment.energyIndex !== index);
+    if (attachPromptEnergyIndex === index) {
+      attachPromptEnergyIndex = null;
+    }
+  }
+
+  function resetAttachPromptAssignments() {
+    attachPromptAssignments = [];
+    attachPromptEnergyIndex = null;
   }
 
   function isSetupStartable(card: CardView | undefined, handIndex: number) {
@@ -775,8 +912,22 @@
           {/if}
         </div>
       {:else if currentPrompt && !(autoConfirmPrompts && autoConfirmPrompt)}
-        <div class="prompt-dock">
-          <PromptPanel game={game} prompt={currentPrompt} resolving={resolvingPrompt} on:resolve={(event) => resolvePrompt(event.detail)} />
+        <div
+          class="prompt-dock"
+          class:search-prompt-dock={currentPrompt.className === 'ChooseCardsPrompt'}
+          class:attach-energy-prompt-dock={currentPrompt.className === 'AttachEnergyPrompt'}
+        >
+          <PromptPanel
+            game={game}
+            prompt={currentPrompt}
+            resolving={resolvingPrompt}
+            activeAttachEnergyIndex={attachPromptEnergyIndex}
+            attachAssignments={attachPromptAssignments}
+            on:resolve={(event) => resolvePrompt(event.detail)}
+            on:attachEnergySelect={(event) => selectAttachPromptEnergy(event.detail)}
+            on:attachEnergyUnassign={(event) => removeAttachPromptAssignment(event.detail)}
+            on:attachEnergyReset={resetAttachPromptAssignments}
+          />
         </div>
       {/if}
 
