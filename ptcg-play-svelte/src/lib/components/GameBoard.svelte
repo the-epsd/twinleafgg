@@ -32,12 +32,58 @@
     faceDown?: boolean,
   ) => void;
   export let canPlayOnBoard = false;
+  export let clickBoardPlay: (event: MouseEvent) => void;
   export let allowBoardPlayDrop: (event: DragEvent) => void;
   export let dropToBoardPlay: (event: DragEvent) => void;
   export let boardTilt = 8;
   export let boardPerspective = 1250;
   export let boardScaleY = 98;
   export let boardLift = 0;
+
+  let topLostPileElement: HTMLButtonElement | undefined;
+  let topDiscardPileElement: HTMLButtonElement | undefined;
+  let bottomLostPileElement: HTMLButtonElement | undefined;
+  let bottomDiscardPileElement: HTMLButtonElement | undefined;
+  let projectedHoverPile = '';
+
+  type ProjectedPileKey = 'top-lost' | 'top-discard' | 'bottom-lost' | 'bottom-discard';
+
+  function projectedPiles(): Array<[ProjectedPileKey, HTMLButtonElement | undefined, () => void]> {
+    return [
+      ['top-lost', topLostPileElement, () => showZone(topPlayer.index, 'lostZone', `${topPlayer.name} lost zone`)],
+      ['top-discard', topDiscardPileElement, () => showZone(topPlayer.index, 'discard', `${topPlayer.name} discard`)],
+      ['bottom-lost', bottomLostPileElement, () => showZone(bottomPlayer.index, 'lostZone', `${bottomPlayer.name} lost zone`)],
+      ['bottom-discard', bottomDiscardPileElement, () => showZone(bottomPlayer.index, 'discard', `${bottomPlayer.name} discard`)],
+    ];
+  }
+
+  function containsPoint(element: HTMLElement | undefined, event: MouseEvent) {
+    if (!element) {
+      return false;
+    }
+    const rect = element.getBoundingClientRect();
+    return (
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom
+    );
+  }
+
+  function clickProjectedPile(event: MouseEvent) {
+    const pile = projectedPiles().find(([, element]) => containsPoint(element, event));
+    if (!pile) {
+      return false;
+    }
+    event.preventDefault();
+    event.stopPropagation();
+    pile[2]();
+    return true;
+  }
+
+  function updateProjectedPileHover(event: MouseEvent) {
+    projectedHoverPile = projectedPiles().find(([, element]) => containsPoint(element, event))?.[0] ?? '';
+  }
 
   function deckPileStyle(deckCount: number, direction: -1 | 1) {
     const layers = visibleDeckLayers(deckCount).length;
@@ -61,13 +107,33 @@
     `--board-scale-y: ${boardScaleY / 100}`,
     `--board-lift: ${boardLift}px`,
   ].join('; ');
+
+  function clickBoardSurface(event: MouseEvent) {
+    if (clickProjectedPile(event)) {
+      return;
+    }
+    if (!canPlayOnBoard) {
+      return;
+    }
+    if (
+      event.target instanceof Element &&
+      event.target.closest('button, a, input, textarea, select, .board-slot, .card-tile, .bench-drop-surface, .stack-pile, .stadium-card')
+    ) {
+      return;
+    }
+    clickBoardPlay(event);
+  }
 </script>
 
 <section
   class="playmat"
   class:can-play-on-board={canPlayOnBoard}
+  class:has-projected-pile-hover={projectedHoverPile !== ''}
   style={boardPerspectiveStyle}
   role="presentation"
+  on:click={clickBoardSurface}
+  on:mousemove={updateProjectedPileHover}
+  on:mouseleave={() => (projectedHoverPile = '')}
   on:dragover={allowBoardPlayDrop}
   on:drop={dropToBoardPlay}
 >
@@ -112,7 +178,9 @@
           <button
             type="button"
             class="stack-pile lost-pile"
+            class:projected-hover={projectedHoverPile === 'top-lost'}
             title={`${topPlayer.name} lost zone`}
+            bind:this={topLostPileElement}
             on:click={() => showZone(topPlayer.index, 'lostZone', `${topPlayer.name} lost zone`)}
           >
             {#if topPlayer.lostZone.length}
@@ -138,7 +206,9 @@
             <button
               type="button"
               class="stack-pile discard-pile"
+              class:projected-hover={projectedHoverPile === 'top-discard'}
               title={`${topPlayer.name} discard`}
+              bind:this={topDiscardPileElement}
               on:click={() => showZone(topPlayer.index, 'discard', `${topPlayer.name} discard`)}
             >
               {#if topPlayer.discard.length}
@@ -155,7 +225,9 @@
           <button
             type="button"
             class="stack-pile lost-pile"
+            class:projected-hover={projectedHoverPile === 'bottom-lost'}
             title={`${bottomPlayer.name} lost zone`}
+            bind:this={bottomLostPileElement}
             on:click={() => showZone(bottomPlayer.index, 'lostZone', `${bottomPlayer.name} lost zone`)}
           >
             {#if bottomPlayer.lostZone.length}
@@ -181,7 +253,9 @@
             <button
               type="button"
               class="stack-pile discard-pile"
+              class:projected-hover={projectedHoverPile === 'bottom-discard'}
               title={`${bottomPlayer.name} discard`}
+              bind:this={bottomDiscardPileElement}
               on:click={() => showZone(bottomPlayer.index, 'discard', `${bottomPlayer.name} discard`)}
             >
               {#if bottomPlayer.discard.length}

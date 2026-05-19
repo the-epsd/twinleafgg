@@ -313,6 +313,10 @@ input[type="number"] {
   transform-style: preserve-3d;
 }
 
+.playmat.has-projected-pile-hover {
+  cursor: pointer;
+}
+
 .debug-zones .playmat {
   outline: 2px solid rgba(37, 99, 235, 0.9);
   outline-offset: -2px;
@@ -546,6 +550,7 @@ input[type="number"] {
   position: relative;
   z-index: 3;
   transform-style: preserve-3d;
+  pointer-events: none;
   display: grid;
   grid-template-rows: var(--active-h) minmax(calc(var(--card-w) * 0.24), 1fr) var(--active-h);
   grid-template-columns: minmax(0, 1fr) var(--active-w) minmax(0, 1fr);
@@ -581,6 +586,7 @@ input[type="number"] {
   position: relative;
   z-index: 4;
   transform: translateZ(32px);
+  pointer-events: auto;
 }
 
 .stadium-card {
@@ -764,7 +770,14 @@ input[type="number"] {
   outline-offset: 3px;
 }
 
-button.stack-pile,
+.stack-pile.projected-hover {
+  border-color: rgba(55, 150, 132, 0.85);
+}
+
+button.stack-pile {
+  pointer-events: none;
+}
+
 .stadium-card {
   pointer-events: auto;
 }
@@ -1067,7 +1080,7 @@ button.stack-pile,
   gap: clamp(2px, calc(var(--card-w) * 0.03), 5px);
   min-height: clamp(18px, calc(var(--card-w) * 0.16), 26px);
   padding: clamp(1px, calc(var(--card-w) * 0.018), 3px) clamp(3px, calc(var(--card-w) * 0.04), 6px) clamp(1px, calc(var(--card-w) * 0.018), 3px) clamp(6px, calc(var(--card-w) * 0.055), 10px);
-  border-radius: 0 6px 0 7px;
+  border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.94);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 244, 247, 0.96));
   box-shadow:
@@ -1091,9 +1104,9 @@ button.stack-pile,
 .damage-counter {
   display: inline-grid;
   place-items: center;
-  min-width: clamp(25px, calc(var(--card-w) * 0.25), 38px);
-  height: clamp(21px, calc(var(--card-w) * 0.22), 32px);
-  padding: 0 clamp(6px, calc(var(--card-w) * 0.07), 10px);
+  width: clamp(27px, calc(var(--card-w) * 0.27), 40px);
+  height: clamp(27px, calc(var(--card-w) * 0.27), 40px);
+  padding: 0;
   border-radius: 999px;
   border: 1px solid rgba(128, 76, 18, 0.46);
   background:
@@ -1107,11 +1120,9 @@ button.stack-pile,
   font-size: clamp(12px, calc(var(--card-w) * 0.14), 18px);
   font-weight: 950;
   line-height: 1;
-  text-shadow:
-    0 2px 0 rgba(54, 45, 33, 0.76),
-    1px 0 0 rgba(54, 45, 33, 0.76),
-    -1px 0 0 rgba(54, 45, 33, 0.76),
-    0 -1px 0 rgba(54, 45, 33, 0.76);
+  -webkit-text-stroke: clamp(1px, calc(var(--card-w) * 0.012), 1.5px) #1f1f1f;
+  paint-order: stroke fill;
+  text-shadow: none;
 }
 
 .energy-badges {
