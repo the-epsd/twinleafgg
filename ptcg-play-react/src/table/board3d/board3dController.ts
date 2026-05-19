@@ -1319,13 +1319,16 @@ export class Board3dController {
   private playBoardAttackAnimation(ev: BasicEntranceAnimationEvent): void {
     const meshId = this.boardMeshIdFromAnimationEvent(ev);
     if (!meshId) {
+      this.boardInteractionService.setPendingAttackAnimationPromise(Promise.resolve());
       return;
     }
     const boardCard = this.stateSync.getCardById(meshId);
     if (!boardCard) {
+      this.boardInteractionService.setPendingAttackAnimationPromise(Promise.resolve());
       return;
     }
-    void this.animationService.playAttackAnimation(boardCard.getGroup());
+    const p = this.animationService.playAttackAnimation(boardCard.getGroup());
+    this.boardInteractionService.setPendingAttackAnimationPromise(p);
   }
 
   /**

@@ -31,6 +31,7 @@ import { AttachEnergyPromptPanel } from './AttachEnergyPromptPanel';
 import { PutDamageOverlay } from './PutDamageOverlay';
 import { RemoveDamageOverlay } from './RemoveDamageOverlay';
 import { scanBlockedOwnZeroDamageFromState } from './pokemonPromptRows';
+import { BOARD3D_ATTACK_ANIMATION_DURATION_SEC } from '../board3d/services/board-3d-animation.service';
 
 const CHOOSE_CARDS_CARD_BACK = '/assets/cardback.png';
 
@@ -74,6 +75,61 @@ export type TablePromptLayerProps = {
 function gameMessageText(t: TFunction, message: string | number): string {
   const key = `GAME_MESSAGES.${message}`;
   return t(key, { defaultValue: String(message) });
+}
+
+/** Matches legacy server WaitPrompt message used before attack damage (see game-effect useAttack). */
+function isAttackAnimationWaitPrompt(wp: WaitPrompt): boolean {
+  const m = wp.message;
+  if (m === undefined || m === null) {
+    return false;
+  }
+  return String(m).toLowerCase().includes('attack animation');
+}
+
+function AttackAnimationWaitPrompt(props: {
+  promptId: number;
+  boardInteraction: BoardInteractionService;
+  resolve: (id: number, result: unknown) => void | Promise<void>;
+}) {
+  const { promptId, boardInteraction, resolve } = props;
+  useEffect(() => {
+    let cancelled = false;
+    const finish = () => {
+      if (cancelled) return;
+      cancelled = true;
+      void resolve(promptId, null);
+    };
+
+    const sleep = (ms: number) => new Promise<void>((r) => window.setTimeout(r, ms));
+
+    void (async () => {
+      const pollUntil = Date.now() + 900;
+      let p: Promise<void> | null = null;
+      while (Date.now() < pollUntil && !cancelled) {
+        p = boardInteraction.getPendingAttackAnimationPromise();
+        if (p) {
+          break;
+        }
+        await sleep(16);
+      }
+      if (cancelled) {
+        return;
+      }
+      if (p) {
+        await p;
+        finish();
+        return;
+      }
+      await sleep(BOARD3D_ATTACK_ANIMATION_DURATION_SEC * 1000);
+      finish();
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [promptId, boardInteraction, resolve]);
+
+  return null;
 }
 
 function useLocalGameRef(localGame: LocalGameState) {
@@ -395,6 +451,17 @@ export function TablePromptLayer({
 
   if (p.type === 'WaitPrompt') {
     const wp = p as WaitPrompt;
+    // Server used to block attacks on this prompt; 3D board plays motion from the socket event instead.
+    if (isAttackAnimationWaitPrompt(wp)) {
+      return (
+        <AttackAnimationWaitPrompt
+          key={wp.id}
+          promptId={wp.id}
+          boardInteraction={boardInteraction}
+          resolve={resolve}
+        />
+      );
+    }
     return (
       <WaitPromptPanel key={wp.id} prompt={wp} t={t} gameMessageText={gameMessageText} resolve={resolve} />
     );

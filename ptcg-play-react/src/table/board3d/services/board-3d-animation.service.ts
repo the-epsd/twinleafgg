@@ -17,6 +17,9 @@ const HAND_DRAW_SCALE = 1.1;
 /** Stage scale during deck→board draw flight (keep in sync with batch spread in board3dController). */
 export const HAND_DRAW_STAGE_SCALE = 2.15;
 
+/** Total duration (seconds) of {@link Board3dAnimationService.playAttackAnimation}; keep in sync with server attack WaitPrompt. */
+export const BOARD3D_ATTACK_ANIMATION_DURATION_SEC = 1.35;
+
 /** Card mesh width in world units at scale 1 (match board-3d-config / hand service). */
 const HAND_CARD_MESH_WIDTH_WORLD = 2.75;
 /** Center-to-center spacing as a multiple of card width (no overlap, small gap). */
@@ -287,13 +290,24 @@ export class Board3dAnimationService {
   }
 
   /**
-   * Attack motion: rise, brief hold, slam down with scale bounce (~1s, matches Angular board-card CSS).
+   * Attack motion: same keyframe proportions as Angular `board-card.component.scss` `@keyframes attackAnimation`,
+   * stretched to {@link BOARD3D_ATTACK_ANIMATION_DURATION_SEC}, `cubic-bezier(0.4, 0, 0.1, 1)`.
    */
   playAttackAnimation(card: Object3D): Promise<void> {
     return new Promise(resolve => {
+      const easeAttack = 'cubic-bezier(0.4, 0, 0.1, 1)';
+      const totalDuration = BOARD3D_ATTACK_ANIMATION_DURATION_SEC;
+      /** Segment lengths (fractions of total match SCSS keyframe stops). */
+      const d01 = 0.35 * totalDuration;
+      const d12 = 0.25 * totalDuration;
+      const d23 = 0.15 * totalDuration;
+      const d34 = 0.10 * totalDuration;
+      const d45 = 0.15 * totalDuration;
+
       const baseY = card.position.y;
       const baseScale = card.scale.x;
-      const riseDelta = 0.52;
+      /** Ref: variables.scss — card max 100px wide, $card-aspect-ratio 1.37; Angular uses -30px on Y. */
+      const riseDelta = (30 / (100 * 1.37)) * 3.5;
       const peakScale = baseScale * 1.3;
       const slamScale = baseScale * 0.92;
       const bounceScale = baseScale * 1.12;
@@ -311,54 +325,33 @@ export class Board3dAnimationService {
 
       card.renderOrder = 100;
 
-      timeline
-        .to(card.position, {
-          y: baseY + riseDelta,
-          duration: 0.35,
-          ease: 'power2.out',
-        })
-        .to(
-          card.scale,
-          {
-            x: peakScale,
-            y: peakScale,
-            z: peakScale,
-            duration: 0.35,
-            ease: 'power2.out',
-          },
-          '<',
-        )
-        .to({}, { duration: 0.25 })
-        .to(card.position, {
-          y: baseY,
-          duration: 0.15,
-          ease: 'power3.in',
-        })
-        .to(
-          card.scale,
-          {
-            x: slamScale,
-            y: slamScale,
-            z: slamScale,
-            duration: 0.15,
-            ease: 'power3.in',
-          },
-          '<',
-        )
-        .to(card.scale, {
-          x: bounceScale,
-          y: bounceScale,
-          z: bounceScale,
-          duration: 0.1,
-          ease: 'power2.out',
-        })
-        .to(card.scale, {
-          x: baseScale,
-          y: baseScale,
-          z: baseScale,
-          duration: 0.15,
-          ease: 'power2.out',
-        });
+      const t60 = d01 + d12;
+      const t75 = t60 + d23;
+      const t85 = t75 + d34;
+
+      timeline.to(card.position, { y: baseY + riseDelta, duration: d01, ease: easeAttack }, 0);
+      timeline.to(
+        card.scale,
+        { x: peakScale, y: peakScale, z: peakScale, duration: d01, ease: easeAttack },
+        0,
+      );
+      timeline.to({}, { duration: d12 }, d01);
+      timeline.to(card.position, { y: baseY, duration: d23, ease: easeAttack }, t60);
+      timeline.to(
+        card.scale,
+        { x: slamScale, y: slamScale, z: slamScale, duration: d23, ease: easeAttack },
+        t60,
+      );
+      timeline.to(
+        card.scale,
+        { x: bounceScale, y: bounceScale, z: bounceScale, duration: d34, ease: easeAttack },
+        t75,
+      );
+      timeline.to(
+        card.scale,
+        { x: baseScale, y: baseScale, z: baseScale, duration: d45, ease: easeAttack },
+        t85,
+      );
 
       this.activeAnimations.push(timeline);
       this.updateAnimationState();
