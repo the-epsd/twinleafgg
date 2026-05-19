@@ -2729,15 +2729,17 @@ export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Pl
         break;
       }
       case TrainerType.TOOL: {
-        // Check if there are Pokemon that can accept a tool
-        let canAttachTool = false;
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
-          if (Array.isArray(cardList.tools) && cardList.tools.length < pokemonCard.maxTools) {
-            canAttachTool = true;
+        // Cards with canPlay (e.g. tools that attach to opponent's Pokemon) use that instead
+        if (!trainerCard.canPlay) {
+          let canAttachTool = false;
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+            if (Array.isArray(cardList.tools) && cardList.tools.length < pokemonCard.maxTools) {
+              canAttachTool = true;
+            }
+          });
+          if (!canAttachTool) {
+            return false;
           }
-        });
-        if (!canAttachTool) {
-          return false;
         }
         break;
       }
@@ -2866,6 +2868,11 @@ export function CAN_PLAY_POKEMON_CARD(store: StoreLike, state: State, player: Pl
 
     // Check if there's space on bench (max 5 bench Pokemon)
     const benchCount = player.bench.filter(b => b.cards.length > 0).length;
+    const sandboxAllBasic = Boolean(state.gameSettings?.sandboxMode && state.gameSettings?.sandboxAllPokemonBasic);
+    if (sandboxAllBasic && benchCount < 5) {
+      return true;
+    }
+
     if (benchCount >= 5 && pokemonCard.stage === Stage.BASIC) {
       return false;
     }

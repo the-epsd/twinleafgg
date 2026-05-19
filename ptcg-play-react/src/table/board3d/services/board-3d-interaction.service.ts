@@ -20,17 +20,30 @@ import {
   TrainerType,
   Card,
   PokemonCard,
+  PokemonCardList,
   TrainerCard,
   type CardTarget,
 } from 'ptcg-server';
 import gsap from 'gsap';
 import { Board3dDropZone, DropZoneType, type DropZoneConfig } from '../board-3d-drop-zone';
-import { cardPlaysAsBasicPokemonFromHand, trainerTypeIsSupporter } from '../board3dMeshIdForPlayTarget';
+import {
+  cardPlaysAsBasicPokemonFromHand,
+  trainerTypeIsSupporter,
+  type HandPlayPokemonZoneGameSettings,
+} from '../board3dMeshIdForPlayTarget';
+import { isOpponentAttachTool, isOpponentPokemonExToolTarget } from '../opponent-attach-tool.util';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import { Board3dStateSyncService } from './board-3d-state-sync.service';
 import { Board3dHandService } from './board-3d-hand.service';
 import { Board3dCard } from '../board-3d-card';
 import { ZONE_POSITIONS, SNAP_DISTANCE, getBenchPositions } from '../board-3d-zone-positions';
+import {
+  BOARD3D_CARD_SLOT_BASE_HEIGHT,
+  BOARD3D_CARD_SLOT_BASE_WIDTH,
+  BOARD3D_DECK_BULK_VISUAL_UD,
+  BOARD3D_DROP_ZONE_TARGET_SCALE,
+  BOARD3D_STADIUM_DROP_ZONE_EXTRA_SCALE,
+} from '../board3d-constants';
 
 export type PlayCardFlightPayload = {
   board3dCard: Board3dCard;
@@ -100,6 +113,13 @@ export class Board3dInteractionService {
   // Current drag context
   private currentDragContext: DragContext | null = null;
 
+  /** Parent for hand play flights (R3F: hand+stacks group; legacy: same as scene). */
+  private worldContentRoot!: Object3D;
+
+  setWorldContentRoot(root: Object3D): void {
+    this.worldContentRoot = root;
+  }
+
   // Pokemon hover tracking during drag (for energy/tool cards and evolution cards)
   private hoveredPokemonCard: Object3D | null = null;
   private hoveredPokemonBoard3dCard: Board3dCard | null = null;
@@ -111,6 +131,9 @@ export class Board3dInteractionService {
   private slotGridTexture: Texture | null = null;
   private currentBenchSizes: { bottom: number; top: number } = { bottom: 5, top: 5 };
 
+  /** Matches server {@link GameSettings} flags for sandbox bench targeting. */
+  private handPlayZoneGameSettings: HandPlayPokemonZoneGameSettings = undefined;
+
   constructor(
     private assetLoader: Board3dAssetLoaderService,
     private stateSync: Board3dStateSyncService,
@@ -118,6 +141,15 @@ export class Board3dInteractionService {
   ) {
     this.raycaster = new Raycaster();
     this.mouse = new Vector2();
+  }
+
+  /** Called when game state updates so sandbox “all Pokémon as Basic” affects drop targeting. */
+  setHandPlayZoneGameSettings(gs: HandPlayPokemonZoneGameSettings): void {
+    this.handPlayZoneGameSettings = gs;
+  }
+
+  private playsAsBasicPokemonFromHand(card: Card | undefined | null): boolean {
+    return cardPlaysAsBasicPokemonFromHand(card, this.handPlayZoneGameSettings);
   }
 
   /**
@@ -130,6 +162,9 @@ export class Board3dInteractionService {
       // Exclude InstancedMesh objects - they are decorative stack meshes and should not intercept clicks
       // Only the top card (regular Mesh) should be clickable
       if (object instanceof InstancedMesh) {
+        return;
+      }
+      if (object.userData?.[BOARD3D_DECK_BULK_VISUAL_UD]) {
         return;
       }
       // Only include objects that can be interacted with
@@ -147,14 +182,37 @@ export class Board3dInteractionService {
   }
 
   /**
+   * Resolve card / overlay hit from a concrete Three.js object (R3F pointer hit path).
+   */
+  resolveInteractiveCardFromSurface(surface: Object3D): Object3D | null {
+    let obj: Object3D | null = surface;
+    while (obj) {
+      if (obj.userData?.isEnergyIcon || obj.userData?.isToolCard) {
+        return obj;
+      }
+      if (obj.userData?.isCard) {
+        if (obj.userData?.[BOARD3D_DECK_BULK_VISUAL_UD]) {
+          obj = obj.parent;
+          continue;
+        }
+        return obj;
+      }
+      obj = obj.parent;
+    }
+    return null;
+  }
+
+  /**
    * Update mouse position and find card under cursor
    * Optimized with throttling and caching
+   * @param r3fSurfaceHit When provided (mesh pointer path), skip raycast and resolve card from this object.
    */
   onMouseMove(
     event: MouseEvent,
     camera: Camera,
     scene: Scene,
-    canvas: HTMLCanvasElement
+    canvas: HTMLCanvasElement,
+    r3fSurfaceHit?: Object3D | null
   ): Object3D | null {
     // Get canvas bounds for accurate coordinates
     const rect = canvas.getBoundingClientRect();
@@ -167,7 +225,7 @@ export class Board3dInteractionService {
     const mouseMoved = Math.abs(mouseX - this.lastMousePosition.x) > 0.001 ||
       Math.abs(mouseY - this.lastMousePosition.y) > 0.001;
 
-    if (!mouseMoved && this.cachedRaycastResult !== undefined) {
+    if (!mouseMoved && this.cachedRaycastResult !== undefined && r3fSurfaceHit == null) {
       return this.cachedRaycastResult;
     }
 
@@ -175,7 +233,7 @@ export class Board3dInteractionService {
     const currentTime = performance.now();
     const timeSinceLastRaycast = currentTime - this.lastRaycastTime;
 
-    if (timeSinceLastRaycast < this.raycastThrottleMs && !mouseMoved) {
+    if (timeSinceLastRaycast < this.raycastThrottleMs && !mouseMoved && r3fSurfaceHit == null) {
       return this.cachedRaycastResult;
     }
 
@@ -186,6 +244,12 @@ export class Board3dInteractionService {
 
     // Update raycaster
     this.raycaster.setFromCamera(this.mouse, camera);
+
+    if (r3fSurfaceHit != null) {
+      const card = this.resolveInteractiveCardFromSurface(r3fSurfaceHit);
+      this.cachedRaycastResult = card;
+      return card;
+    }
 
     // Use cached interactive objects if available, otherwise fall back to scene traversal
     const objectsToTest = this.interactiveObjects.length > 0
@@ -228,20 +292,7 @@ export class Board3dInteractionService {
    * Energy icons and tool cards (overlays) take priority so clicking them shows that card's info.
    */
   private getCardFromIntersection(intersection: Intersection): Object3D | null {
-    let obj: Object3D | null = intersection.object;
-
-    while (obj) {
-      // Energy icon or tool overlay: return immediately to show that card's info
-      if (obj.userData?.isEnergyIcon || obj.userData?.isToolCard) {
-        return obj;
-      }
-      if (obj.userData && obj.userData.isCard) {
-        return obj;
-      }
-      obj = obj.parent;
-    }
-
-    return null;
+    return this.resolveInteractiveCardFromSurface(intersection.object);
   }
 
   /**
@@ -266,6 +317,77 @@ export class Board3dInteractionService {
       if (target.player === player && target.slot === slotType && target.index === index) {
         return obj;
       }
+    }
+    return null;
+  }
+
+  /**
+   * Resolve attach/evolution drop target from the Pokemon board card under the pointer.
+   * Opponent slots have no drop zones; raycast is required to target their Active/Bench.
+   */
+  private allowedAttachTargetPlayer(ctx: DragContext): PlayerType | null {
+    if (ctx.superType === SuperType.ENERGY) {
+      return PlayerType.BOTTOM_PLAYER;
+    }
+    if (ctx.trainerType === TrainerType.TOOL) {
+      return isOpponentAttachTool(ctx.card) ? PlayerType.TOP_PLAYER : PlayerType.BOTTOM_PLAYER;
+    }
+    if (ctx.superType === SuperType.POKEMON && ctx.stage !== undefined && ctx.stage !== Stage.BASIC) {
+      return PlayerType.BOTTOM_PLAYER;
+    }
+    return null;
+  }
+
+  private findPokemonAttachTargetFromPointer(
+    event: MouseEvent,
+    camera: Camera,
+    canvas: HTMLCanvasElement,
+    ctx: DragContext
+  ): CardTarget | null {
+    const allowedPlayer = this.allowedAttachTargetPlayer(ctx);
+    if (allowedPlayer === null) {
+      return null;
+    }
+
+    const rect = canvas.getBoundingClientRect();
+    this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    this.raycaster.setFromCamera(this.mouse, camera);
+
+    const isEvolutionCard =
+      ctx.superType === SuperType.POKEMON &&
+      ctx.stage !== undefined &&
+      ctx.stage !== Stage.BASIC &&
+      !cardPlaysAsBasicPokemonFromHand(ctx.card, this.handPlayZoneGameSettings);
+
+    const intersects = this.raycaster.intersectObjects(this.interactiveObjects, true);
+    for (const intersect of intersects) {
+      const card = this.getCardFromIntersection(intersect);
+      if (!card?.userData.isCard || !card.userData.cardTarget) {
+        continue;
+      }
+      const target = card.userData.cardTarget as CardTarget;
+      if (target.slot !== SlotType.ACTIVE && target.slot !== SlotType.BENCH) {
+        continue;
+      }
+      if (target.player !== allowedPlayer) {
+        continue;
+      }
+      if (
+        ctx.trainerType === TrainerType.TOOL &&
+        isOpponentAttachTool(ctx.card) &&
+        !isOpponentPokemonExToolTarget(card.userData.cardList as PokemonCardList)
+      ) {
+        continue;
+      }
+      if (isEvolutionCard) {
+        const evolutionCard = ctx.card as PokemonCard;
+        const targetPokemonCard = card.userData.cardData as PokemonCard;
+        if (!targetPokemonCard || !this.isValidEvolutionTarget(evolutionCard, targetPokemonCard)) {
+          continue;
+        }
+      }
+      return target;
     }
     return null;
   }
@@ -300,17 +422,19 @@ export class Board3dInteractionService {
 
   /**
    * Handle mouse down - prepare for potential drag (deferred until threshold)
+   * @param r3fSurfaceHit Optional R3F hit object under the pointer (avoids duplicate raycast).
    */
   onMouseDown(
     event: MouseEvent,
     camera: Camera,
     scene: Scene,
-    canvas: HTMLCanvasElement
+    canvas: HTMLCanvasElement,
+    r3fSurfaceHit?: Object3D | null
   ): Object3D | null {
     // Track mouse down position for click detection
     this.mouseDownPosition.set(event.clientX, event.clientY);
 
-    const card = this.onMouseMove(event, camera, scene, canvas);
+    const card = this.onMouseMove(event, camera, scene, canvas, r3fSurfaceHit);
     this.mouseDownCard = card;
 
     // Clear any previous pending drag
@@ -411,7 +535,7 @@ export class Board3dInteractionService {
     // Handle BENCH_GENERAL zone - only valid for Basic Pokemon (and fossils played as Basic) with open bench slots
     if (config.type === DropZoneType.BENCH_GENERAL) {
       const { card } = this.currentDragContext;
-      if (cardPlaysAsBasicPokemonFromHand(card)) {
+      if (this.playsAsBasicPokemonFromHand(card)) {
         return this.findNextOpenBenchSlot(config.player) !== null;
       }
       return false;
@@ -421,7 +545,7 @@ export class Board3dInteractionService {
     const { superType, stage, trainerType, card } = this.currentDragContext;
 
     // Basic Pokemon and Fossil items that play as Basic onto bench/active
-    if (cardPlaysAsBasicPokemonFromHand(card)) {
+    if (this.playsAsBasicPokemonFromHand(card)) {
       if (config.type === DropZoneType.BENCH || config.type === DropZoneType.ACTIVE) {
         return !isOccupied;
       }
@@ -450,14 +574,25 @@ export class Board3dInteractionService {
         }
         // Tool cards need to target a Pokemon
         if (trainerType === TrainerType.TOOL) {
-          return (config.type === DropZoneType.BENCH || config.type === DropZoneType.ACTIVE) && isOccupied;
+          if (config.type !== DropZoneType.BENCH && config.type !== DropZoneType.ACTIVE) {
+            return false;
+          }
+          if (!isOccupied) {
+            return false;
+          }
+          const opponentTool = isOpponentAttachTool(card);
+          return opponentTool
+            ? config.player === PlayerType.TOP_PLAYER
+            : config.player === PlayerType.BOTTOM_PLAYER;
         }
         // Item cards go to board zone
         return config.type === DropZoneType.BOARD;
 
       case SuperType.ENERGY:
-        // Energy attaches to Pokemon
-        return (config.type === DropZoneType.BENCH || config.type === DropZoneType.ACTIVE) && isOccupied;
+        // Energy attaches to your own Pokemon
+        return (config.type === DropZoneType.BENCH || config.type === DropZoneType.ACTIVE)
+          && isOccupied
+          && config.player === PlayerType.BOTTOM_PLAYER;
 
       default:
         return false;
@@ -478,7 +613,7 @@ export class Board3dInteractionService {
       const config = zone.getConfig();
 
       // When dragging a Basic Pokemon or a Fossil that benches as Basic: BENCH_GENERAL + active
-      if (cardPlaysAsBasicPokemonFromHand(card)) {
+      if (this.playsAsBasicPokemonFromHand(card)) {
         if (config.type === DropZoneType.BENCH_GENERAL) {
           if (this.isValidDropZone(zone)) {
             zone.setValid();
@@ -818,7 +953,8 @@ export class Board3dInteractionService {
       const isEvolutionCard = this.currentDragContext &&
         this.currentDragContext.superType === SuperType.POKEMON &&
         this.currentDragContext.stage !== undefined &&
-        this.currentDragContext.stage !== Stage.BASIC;
+        this.currentDragContext.stage !== Stage.BASIC &&
+        !cardPlaysAsBasicPokemonFromHand(this.currentDragContext.card, this.handPlayZoneGameSettings);
 
       // Check if retreat drag (board card for active/bench swap)
       const isRetreatDrag = this.currentDragContext?.source === 'board';
@@ -1048,22 +1184,39 @@ export class Board3dInteractionService {
       return null; // No action needed, card returned to hand
     }
 
-    // Otherwise, check for valid drop zone
-    const dropZone = this.findValidDropZone(worldPos);
+    const ctx = this.currentDragContext;
+    const actsAsBasicFromHand =
+      ctx && cardPlaysAsBasicPokemonFromHand(ctx.card, this.handPlayZoneGameSettings);
+    const isAttachDropHand =
+      ctx?.source === 'hand' &&
+      ctx &&
+      !actsAsBasicFromHand &&
+      (ctx.superType === SuperType.ENERGY ||
+        ctx.trainerType === TrainerType.TOOL ||
+        (ctx.superType === SuperType.POKEMON &&
+          ctx.stage !== undefined &&
+          ctx.stage !== Stage.BASIC));
 
-    if (dropZone) {
-      const config = dropZone.getConfig();
-      const zone = this.configToCardTarget(config);
+    // Attach drops: prefer Pokemon under pointer (opponent board has no drop zones)
+    const opponentAttachTool =
+      ctx?.trainerType === TrainerType.TOOL && ctx && isOpponentAttachTool(ctx.card);
+    let zone: CardTarget | undefined;
+    if (isAttachDropHand && ctx) {
+      zone = this.findPokemonAttachTargetFromPointer(event, camera, canvas, ctx) ?? undefined;
+    }
+    if (!zone) {
+      const dropZone = this.findValidDropZone(worldPos);
+      if (dropZone) {
+        const config = dropZone.getConfig();
+        if (!opponentAttachTool || config.player === PlayerType.TOP_PLAYER) {
+          zone = this.configToCardTarget(config);
+        }
+      }
+    }
 
-      const isAttachDropHand =
-        this.currentDragContext?.source === 'hand' &&
-        this.currentDragContext &&
-        (this.currentDragContext.superType === SuperType.ENERGY ||
-          this.currentDragContext.trainerType === TrainerType.TOOL ||
-          (this.currentDragContext.superType === SuperType.POKEMON &&
-            this.currentDragContext.stage !== undefined &&
-            this.currentDragContext.stage !== Stage.BASIC)) &&
-        (config.type === DropZoneType.ACTIVE || config.type === DropZoneType.BENCH);
+    if (zone) {
+      const dropZoneForFlight = this.findValidDropZone(worldPos);
+      const config = dropZoneForFlight?.getConfig();
 
       const useHandPlayFlight =
         this.currentDragContext?.source === 'hand' && this.draggedCard && !isAttachDropHand;
@@ -1081,7 +1234,7 @@ export class Board3dInteractionService {
       if (this.currentDragContext?.source === 'board') {
         // Retreat action
         const originalTarget = this.currentDragContext.originalTarget;
-        if (originalTarget) {
+        if (originalTarget && config) {
           result = {
             action: 'retreat',
             benchIndex: originalTarget.slot === SlotType.ACTIVE
@@ -1097,20 +1250,20 @@ export class Board3dInteractionService {
 
         if (this.draggedCard && isAttachDropHand) {
           if (handIndex >= 0) {
-            this.handService.removeCard(handIndex, scene);
+            this.handService.removeCard(handIndex);
           }
           result = {
             action: 'playCard',
             handIndex,
             zone
           };
-        } else if (this.draggedCard && handIndex >= 0) {
+        } else if (this.draggedCard && handIndex >= 0 && config) {
           const landing = this.getHandPlayLandingTransform(
             config,
             this.currentDragContext?.card,
             this.currentDragContext?.trainerType
           );
-          const ejected = this.handService.detachCardForBoardPlay(handIndex, scene);
+          const ejected = this.handService.detachCardForBoardPlay(handIndex, this.worldContentRoot);
           if (ejected) {
             result = {
               action: 'playCard',
@@ -1471,14 +1624,29 @@ export class Board3dInteractionService {
     );
 
     // Top player zones (for board-to-board visibility, but typically not interactive)
-    // Uncomment if needed: await this.createPlayerDropZones(scene, PlayerType.TOP_PLAYER, ZONE_POSITIONS.topPlayer, topSize);
+    await this.createPlayerDropZones(
+      scene,
+      PlayerType.TOP_PLAYER,
+      ZONE_POSITIONS.topPlayer,
+      topSize
+    );
 
-    // Shared stadium zone (between both players)
+    // Shared stadium zone — wider hit target than other slots (still centered on stadium mesh)
+    const stW =
+      BOARD3D_CARD_SLOT_BASE_WIDTH *
+      BOARD3D_DROP_ZONE_TARGET_SCALE *
+      BOARD3D_STADIUM_DROP_ZONE_EXTRA_SCALE;
+    const stH =
+      BOARD3D_CARD_SLOT_BASE_HEIGHT *
+      BOARD3D_DROP_ZONE_TARGET_SCALE *
+      BOARD3D_STADIUM_DROP_ZONE_EXTRA_SCALE;
     const stadiumZone = new Board3dDropZone({
       type: DropZoneType.STADIUM,
       position: ZONE_POSITIONS.stadium,
       player: PlayerType.BOTTOM_PLAYER, // Use bottom player for ownership, but it's shared
       index: 0,
+      width: stW,
+      height: stH,
       texture: this.slotGridTexture ?? undefined
     });
     this.dropZones.push(stadiumZone);
@@ -1545,8 +1713,9 @@ export class Board3dInteractionService {
       // Calculate width to span all bench positions with some padding
       const minX = Math.min(...benchPositions.map(pos => pos.x));
       const maxX = Math.max(...benchPositions.map(pos => pos.x));
-      const benchWidth = Math.max((maxX - minX) + 4.0, 20.0); // At least 20 units wide, add padding
-      const benchHeight = 6.0; // Extended height for easier targeting above and below bench
+      const dzScale = BOARD3D_DROP_ZONE_TARGET_SCALE;
+      const benchWidth = Math.max((maxX - minX) + 4.0, 20.0) * dzScale;
+      const benchHeight = 6.0 * dzScale;
 
       const generalBenchZone = new Board3dDropZone({
         type: DropZoneType.BENCH_GENERAL,
@@ -1563,13 +1732,14 @@ export class Board3dInteractionService {
     // Stadium zone is now shared - created in createDropZoneIndicators()
 
     // Board zone (for Items/Supporters) - large area covering player's side
+    const dzScale = BOARD3D_DROP_ZONE_TARGET_SCALE;
     const boardZone = new Board3dDropZone({
       type: DropZoneType.BOARD,
       position: positions.board,
       player,
       index: 0,
-      width: 30.0,
-      height: 14.0,
+      width: 30.0 * dzScale,
+      height: 14.0 * dzScale,
       texture: this.slotGridTexture ?? undefined
     });
     this.dropZones.push(boardZone);
@@ -1592,7 +1762,7 @@ export class Board3dInteractionService {
       const config = zone.getConfig();
 
       // Basic Pokemon or Fossil played as Basic
-      if (cardPlaysAsBasicPokemonFromHand(card)) {
+      if (this.playsAsBasicPokemonFromHand(card)) {
         if (config.type === DropZoneType.BENCH_GENERAL) {
           if (this.isValidDropZone(zone)) {
             zone.setValid();

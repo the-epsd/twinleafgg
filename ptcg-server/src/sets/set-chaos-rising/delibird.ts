@@ -34,16 +34,24 @@ export class Delibird extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      // Ref: set-unified-minds/zygarde.ts (Boost Fang), set-emerging-powers/tornadus.ts (energy move)
+      // AttachEnergyPrompt `playerType` is from the prompted player's POV (BOTTOM_PLAYER = their field).
+      // TOP_PLAYER here would incorrectly offer the other player's Pokémon in the attach UI.
       return store.prompt(state, new AttachEnergyPrompt(
         opponent.id,
         GameMessage.ATTACH_ENERGY_CARDS,
         opponent.hand,
-        PlayerType.TOP_PLAYER,
+        PlayerType.BOTTOM_PLAYER,
         [SlotType.ACTIVE, SlotType.BENCH],
         { superType: SuperType.ENERGY },
         { allowCancel: true, min: 0, max: 3 }
-      ), () => {
-        return store.prompt(state, new AttachEnergyPrompt(
+      ), transfers => {
+        transfers = transfers || [];
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, opponent, transfer.to);
+          opponent.hand.moveCardTo(transfer.card, target);
+        }
+        store.prompt(state, new AttachEnergyPrompt(
           player.id,
           GameMessage.ATTACH_ENERGY_CARDS,
           player.hand,
@@ -51,7 +59,13 @@ export class Delibird extends PokemonCard {
           [SlotType.ACTIVE, SlotType.BENCH],
           { superType: SuperType.ENERGY },
           { allowCancel: true, min: 0, max: 3 }
-        ), () => state);
+        ), transfersSelf => {
+          transfersSelf = transfersSelf || [];
+          for (const transfer of transfersSelf) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.hand.moveCardTo(transfer.card, target);
+          }
+        });
       });
     }
     return state;

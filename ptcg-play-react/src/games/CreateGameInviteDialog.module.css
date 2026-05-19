@@ -61,6 +61,13 @@
   font-size: 0.9rem;
 }
 
+.sandboxOptions {
+  padding: 0 20px 12px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .error {
   margin: 0 20px 12px;
   padding: 10px 12px;

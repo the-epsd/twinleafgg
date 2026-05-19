@@ -6,7 +6,13 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, ADD_MARKER, PREVENT_DAMAGE_IF_TARGET_HAS_MARKER, CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  COIN_FLIP_PROMPT,
+  ADD_MARKER,
+  PREVENT_DAMAGE_IF_TARGET_HAS_MARKER,
+  CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN,
+} from '../../game/store/prefabs/prefabs';
 
 export class Applin2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -20,8 +26,8 @@ export class Applin2 extends PokemonCard {
       name: 'Withdraw',
       cost: [C],
       damage: 0,
-      text: 'Flip a coin. If heads, during your opponent\'s next turn, prevent all damage done to this Pokémon by attacks.'
-    }
+      text: "Flip a coin. If heads, during your opponent's next turn, prevent all damage done to this Pokémon by attacks.",
+    },
   ];
 
   public regulationMark: string = 'D';
@@ -29,7 +35,7 @@ export class Applin2 extends PokemonCard {
   public setNumber: string = '21';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Applin';
-  public fullName: string = 'Applin RCL 21';
+  public fullName: string = 'Applin RCL';
 
   public readonly WITHDRAW_MARKER = 'APPLIN2_RCL_WITHDRAW_MARKER';
   public readonly CLEAR_WITHDRAW_MARKER = 'APPLIN2_RCL_CLEAR_WITHDRAW_MARKER';
@@ -41,7 +47,7 @@ export class Applin2 extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
           ADD_MARKER(this.WITHDRAW_MARKER, player.active, this);
           ADD_MARKER(this.CLEAR_WITHDRAW_MARKER, opponent, this);
@@ -50,7 +56,13 @@ export class Applin2 extends PokemonCard {
     }
 
     PREVENT_DAMAGE_IF_TARGET_HAS_MARKER(effect, this.WITHDRAW_MARKER, this);
-    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state, effect, this.CLEAR_WITHDRAW_MARKER, this.WITHDRAW_MARKER, this);
+    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(
+      state,
+      effect,
+      this.CLEAR_WITHDRAW_MARKER,
+      this.WITHDRAW_MARKER,
+      this,
+    );
 
     return state;
   }

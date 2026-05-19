@@ -10,6 +10,7 @@ import {
   type CardType,
   type StateLog,
 } from 'ptcg-server';
+import { cardTargetKey } from './prompts/removeDamagePromptModel';
 
 type SelectionOverlayKind = 'choose-pokemon' | 'remove-damage' | 'put-damage' | null;
 
@@ -76,6 +77,14 @@ export class BoardInteractionService {
 
   /** Client pixel position for Remove damage floating +/- HUD (updated by Board3dController each frame). */
   private removeDamageHudAnchor: { x: number; y: number } | null = null;
+
+  /**
+   * Per {@link CardTarget} HP damage assigned in the active Put damage prompt (preview before OK).
+   * Keys from {@link cardTargetKey}; values are delta HP vs prompt-open snapshot.
+   */
+  private putDamagePlacementPreview = new Map<string, number>();
+  /** Notifies 3D board to refresh red “placing damage” chips. */
+  public readonly putDamagePlacementPreview$ = new Subject<void>();
 
   // Track if we're in replay mode
   private isReplayModeActive = false;
@@ -189,6 +198,7 @@ export class BoardInteractionService {
 
     this.removeDamageHudAnchor = null;
     this.overlayKind = 'put-damage';
+    this.clearPutDamagePlacementPreview();
     this.promptSubject.next(null);
     this.selectionModeSubject.next(true);
     this.selectedTargetsSubject.next([]);
@@ -217,6 +227,30 @@ export class BoardInteractionService {
     return this.removeDamageHudAnchor;
   }
 
+  public isPutDamageOverlayActive(): boolean {
+    return this.overlayKind === 'put-damage';
+  }
+
+  /** Updates preview amounts for Put damage distribution; refreshes 3D red chips. */
+  public setPutDamagePlacementPreview(placementByTarget: ReadonlyMap<string, number>): void {
+    this.putDamagePlacementPreview.clear();
+    for (const [k, v] of placementByTarget) {
+      if (v > 0) {
+        this.putDamagePlacementPreview.set(k, v);
+      }
+    }
+    this.putDamagePlacementPreview$.next();
+  }
+
+  public getPutDamagePlacementDelta(target: CardTarget): number {
+    return this.putDamagePlacementPreview.get(cardTargetKey(target)) ?? 0;
+  }
+
+  private clearPutDamagePlacementPreview(): void {
+    this.putDamagePlacementPreview.clear();
+    this.putDamagePlacementPreview$.next();
+  }
+
   /** Update blocked targets while editing (e.g. your Pokémon reaches 0 damage). */
   public setBlockedTargets(blocked: CardTarget[]): void {
     this.blockedTargetsSubject.next(blocked);
@@ -240,6 +274,7 @@ export class BoardInteractionService {
   public endBoardSelection(): void {
     this.removeDamageHudAnchor = null;
     this.overlayKind = null;
+    this.clearPutDamagePlacementPreview();
     this.selectionModeSubject.next(false);
     this.promptSubject.next(null);
     this.selectedTargetsSubject.next([]);
@@ -392,6 +427,20 @@ export class BoardInteractionService {
 
   public triggerAttackAnimation(event: BasicEntranceAnimationEvent) {
     this.attackAnimationSubject.next(event);
+  }
+
+  /**
+   * Latest 3D attack {@link Board3dAnimationService.playAttackAnimation} promise (set when the motion starts).
+   * Not cleared when done so late subscribers can still await a settled promise. Overwritten on each new attack.
+   */
+  private pendingAttackAnimationPromise: Promise<void> | null = null;
+
+  public setPendingAttackAnimationPromise(p: Promise<void> | null): void {
+    this.pendingAttackAnimationPromise = p;
+  }
+
+  public getPendingAttackAnimationPromise(): Promise<void> | null {
+    return this.pendingAttackAnimationPromise;
   }
 
   public triggerCoinFlipAnimation(result: boolean, playerId: number) {

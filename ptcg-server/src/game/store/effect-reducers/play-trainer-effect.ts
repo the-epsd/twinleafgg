@@ -129,6 +129,11 @@ export function playTrainerReducer(store: StoreLike, state: State, effect: Effec
     const target = effect.target;
     const trainerCard = effect.trainerCard;
     const pokemonCard = target.getPokemonCard();
+    const targetOwner = StateUtils.findOwner(state, target);
+
+    if (targetOwner !== player && !trainerCard.attachesToOpponentsPokemon) {
+      throw new GameError(GameMessage.INVALID_TARGET);
+    }
 
     if (pokemonCard === undefined) {
       throw new GameError(GameMessage.INVALID_TARGET);

@@ -132,7 +132,6 @@ import { Snorlax } from './snorlax';
 import { SnorlaxV } from './snorlax-v';
 import { SnorlaxVmax } from './snorlax-vmax';
 import { Sobble } from './sobble';
-import { Sobble2 } from './sobble-2';
 import { Sobble3 } from './sobble-3';
 import { Stonjourner } from './stonjourner';
 import { StonjournerV } from './stonjourner-v';
@@ -359,7 +358,6 @@ export const setSwordAndShield: Card[] = [
   new SnorlaxV(),
   new SnorlaxVmax(),
   new Sobble(),
-  new Sobble2(),
   new Sobble3(),
   new Stonjourner(),
   new StonjournerV(),

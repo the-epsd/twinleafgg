@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import type { CardList, Player } from 'ptcg-server';
+import type { Card, CardList, Player } from 'ptcg-server';
 import { GamePhase } from 'ptcg-server';
 import { useAuth } from '../context/AuthContext';
 import { useDeckCardScanUrl } from '../context/CardImagesContext';
@@ -29,6 +29,8 @@ import { selfPlayFocusPlayerId } from '../table/selfPlayFocusPlayerId';
 import promptStyles from '../table/prompts/TablePromptLayer.module.css';
 
 const RECONNECT_GAME_ID_KEY = 'ptcg_reconnect_gameId';
+
+const EMPTY_CATALOG: Card[] = [];
 
 function persistGameId(gameId: number): void {
   try {
@@ -64,8 +66,9 @@ export function TablePage() {
   }>();
   const navigate = useNavigate();
   const { cardsInfo, serverConfig, user } = useAuth();
+  const catalog = useMemo(() => cardsInfo?.cards ?? EMPTY_CATALOG, [cardsInfo?.cards]);
   const getScanUrl = useDeckCardScanUrl(serverConfig?.scansUrl);
-  const { clientId } = useCoreSession();
+  const { clientId, connected: coreConnected } = useCoreSession();
   const { has3dBoardAccess, use3dBoardDefault, defaultSandboxMode } = useSettings();
 
   const hasReplayParam = matchIdParam != null && matchIdParam !== '';
@@ -78,6 +81,7 @@ export function TablePage() {
   const [endFlowStage, setEndFlowStage] = useState<'splash' | 'stats' | null>(null);
   const [leaveConfirmKind, setLeaveConfirmKind] = useState<'live' | 'replay' | null>(null);
   const [suppressChoosePrizePrompt, setSuppressChoosePrizePrompt] = useState(false);
+  const [boardFps, setBoardFps] = useState<number | null>(null);
   const clientIdRef = useRef(clientId);
   clientIdRef.current = clientId;
 
@@ -93,6 +97,10 @@ export function TablePage() {
 
   const onKoSequenceActiveChange = useCallback((active: boolean) => {
     setSuppressChoosePrizePrompt(active);
+  }, []);
+
+  const onBoardFps = useCallback((fps: number) => {
+    setBoardFps(fps);
   }, []);
 
   const socketGameActions: Board3dGameActions = useMemo(() => {
@@ -341,11 +349,12 @@ export function TablePage() {
         ? clientId
         : (localGame.state.players[0]?.id ?? 0);
     }
-    if (clientId == null || clientId === 0) {
-      return undefined;
-    }
+    // Self-play uses in-game focus; must not wait on core:getInfo (clientId may still be 0).
     if (localGame.state.gameSettings?.selfPlay === true) {
       return selfPlayFocusPlayerId(localGame.state);
+    }
+    if (clientId == null || clientId === 0) {
+      return undefined;
     }
     return clientId;
   }, [localGame, clientId]);
@@ -472,7 +481,38 @@ export function TablePage() {
     );
   }
 
-  if (!localGame || !tableView || tableClientId == null) {
+  if (!localGame) {
+    return <div style={{ padding: 24 }}>{t('REACT_LOADING')}</div>;
+  }
+
+  if (tableClientId == null) {
+    return (
+      <div style={{ padding: 24 }}>
+        {coreConnected ? t('REACT_LOADING') : t('REACT_CONNECTING', 'Connecting...')}
+      </div>
+    );
+  }
+
+  /** Only normal (non–self-play) games wait for a second human; self-play has no “opponent joining”. */
+  const waitingForLiveOpponent =
+    localGame.replay == null &&
+    localGame.state.gameSettings?.selfPlay !== true &&
+    localGame.state.players.length < 2;
+
+  if (waitingForLiveOpponent) {
+    const backTarget = isReplayRoute ? '/spectate' : '/games';
+    return (
+      <div style={{ padding: 24 }}>
+        <p>{t('REACT_WAITING_FOR_OPPONENT', 'Waiting for opponent to join...')}</p>
+        <ShellButton type="button" variant="secondary" onClick={() => navigate(backTarget)}>
+          {t('BUTTON_BACK')}
+        </ShellButton>
+      </div>
+    );
+  }
+
+  /** Should not happen when ≥2 players and tableClientId is set; keep a safe fallback. */
+  if (!tableView) {
     return <div style={{ padding: 24 }}>{t('REACT_LOADING')}</div>;
   }
 
@@ -533,14 +573,18 @@ export function TablePage() {
             )}
           </div>
         ) : null}
-      <TablePromptLayer
-        localGame={localGame}
+      <Board3DCanvas
+        gameState={localGame}
+        topPlayer={topPlayer}
+        bottomPlayer={bottomPlayer}
+        bottomPlayerHand={bottomHand}
+        topPlayerHand={topHand}
         clientId={tableClientId}
-        catalog={cardsInfo?.cards ?? []}
-        getScanUrl={getScanUrl}
+        catalog={catalog}
         boardInteraction={boardInteraction}
-        onResolvePrompt={onResolvePrompt}
-        suppressChoosePrizePrompt={suppressChoosePrizePrompt}
+        gameActions={gameActions}
+        onKoSequenceActiveChange={onKoSequenceActiveChange}
+        onBoardFps={onBoardFps}
       />
       <TableBoardOverlay
         localGame={localGame}
@@ -554,18 +598,16 @@ export function TablePage() {
         onSwitchSides={toggleSwitchSides}
         onSendChat={onSendChat}
         onReplayStep={onReplayStep}
+        boardFps={boardFps}
       />
-      <Board3DCanvas
-        gameState={localGame}
-        topPlayer={topPlayer}
-        bottomPlayer={bottomPlayer}
-        bottomPlayerHand={bottomHand}
-        topPlayerHand={topHand}
+      <TablePromptLayer
+        localGame={localGame}
         clientId={tableClientId}
-        catalog={cardsInfo?.cards ?? []}
+        catalog={catalog}
+        getScanUrl={getScanUrl}
         boardInteraction={boardInteraction}
-        gameActions={gameActions}
-        onKoSequenceActiveChange={onKoSequenceActiveChange}
+        onResolvePrompt={onResolvePrompt}
+        suppressChoosePrizePrompt={suppressChoosePrizePrompt}
       />
       {showEndGame && endFlowStage === 'splash' ? (
         <MatchResultsSplash

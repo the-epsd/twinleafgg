@@ -21,13 +21,32 @@ import { Board3dStackService } from './board-3d-stack.service';
 import { Board3dPrizeService } from './board-3d-prize.service';
 import { ZONE_POSITIONS, getBenchPositions } from '../board-3d-zone-positions';
 import { apply3dCardHolo } from '../board-3d-holo-apply';
+import type { Board3dBoardCardSnapshot, Board3dHandSlotSnapshot, Board3dSceneModelSnapshot } from '../board3dSceneModel';
+import { emptySceneModelSnapshot } from '../board3dSceneModel';
 
 export class Board3dStateSyncService {
   private cardsMap: Map<string, Board3dCard> = new Map();
+
+  private sceneModelSnapshot: Board3dSceneModelSnapshot = emptySceneModelSnapshot();
+  private sceneModelListeners = new Set<() => void>();
+
+  /** Deck/discard stacks and other non-React-managed meshes attach here. */
+  private worldMount!: Object3D;
+  /**
+   * Board card groups: imperative adds when non-null (legacy); when null, React Three Fiber primitives parent groups.
+   */
+  private boardCardsMount: Object3D | null = null;
+  private interactionScene!: Scene;
   private skippedCardIdForSync: string | null = null;
   private skippedScaleCardIdForSync: string | null = null;
   /** Hide these board meshes while a hand card animates (avoid double image at discard + supporter, etc.). */
   private handPlayFlightHiddenCardIds: ReadonlySet<string> | null = null;
+
+  /** Cards removed while R3F owns the board subtree; dispose after React detaches primitives. */
+  private pendingR3fBoardCardDisposals: Board3dCard[] = [];
+
+  /** When set, Put damage prompt placement previews can be painted on Pokémon overlays. */
+  private boardInteractionForDamagePreview: BoardInteractionService | null = null;
 
   constructor(
     private assetLoader: Board3dAssetLoaderService,
@@ -39,13 +58,93 @@ export class Board3dStateSyncService {
   ) { }
 
   /**
+   * Call before {@link syncState} (and whenever the controller switches R3F vs legacy attachment).
+   * @param worldMount Parent for stacks; hand attaches under the same subtree in the controller.
+   * @param boardCardsMount When null, board cards are mounted only via React Three Fiber primitives.
+   * @param interactionScene Full scene (e.g. for raycast / wireframe); used where a Scene reference is still required.
+   */
+  setAttachmentTargets(worldMount: Object3D, boardCardsMount: Object3D | null, interactionScene: Scene): void {
+    this.worldMount = worldMount;
+    this.boardCardsMount = boardCardsMount;
+    this.interactionScene = interactionScene;
+  }
+
+  /**
+   * Enables reading Put damage placement preview during {@link Board3dCardOverlayService#updateOverlays}.
+   * Clear on board controller destroy.
+   */
+  setBoardInteractionForDamagePreview(interaction: BoardInteractionService | null): void {
+    this.boardInteractionForDamagePreview = interaction;
+  }
+
+  getStackService(): Board3dStackService {
+    return this.stackService;
+  }
+
+  getBoardCardMapEntries(): [string, Board3dCard][] {
+    const byStringKey = new Map<string, Board3dCard>();
+    for (const [k, card] of this.cardsMap) {
+      byStringKey.set(String(k), card);
+    }
+    return Array.from(byStringKey.entries());
+  }
+
+  /** Latest immutable scene model for React (`useSyncExternalStore`). */
+  getSceneModelSnapshot(): Board3dSceneModelSnapshot {
+    return this.sceneModelSnapshot;
+  }
+
+  subscribeSceneModel(onStoreChange: () => void): () => void {
+    this.sceneModelListeners.add(onStoreChange);
+    return () => {
+      this.sceneModelListeners.delete(onStoreChange);
+    };
+  }
+
+  /**
+   * Publish board cards from {@link cardsMap} plus hand slots (caller supplies hand from {@link Board3dHandService}).
+   * Call after {@link syncState} (and after hand-only updates in R3F).
+   */
+  publishSceneModel(handSlots: Board3dHandSlotSnapshot[]): void {
+    const boardCards: Board3dBoardCardSnapshot[] = [];
+    for (const [meshId, bridgeRef] of this.getBoardCardMapEntries()) {
+      const g = bridgeRef.getGroup();
+      const ud = g.userData;
+      boardCards.push({
+        meshId,
+        transform: {
+          position: { x: g.position.x, y: g.position.y, z: g.position.z },
+          rotationY: g.rotation.y,
+          scale: g.scale.x,
+        },
+        cardTarget: ud.cardTarget,
+        mainCardId: ud.cardData?.id,
+        visibility: g.visible,
+        faceDown: !!ud.isFaceDown,
+        isBoardCard: !!ud.isBoardCard,
+        isStadium: !!ud.isStadium,
+        isPrize: !!ud.isPrize,
+        bridgeRef,
+      });
+    }
+    const nextVersion = this.sceneModelSnapshot.version + 1;
+    this.sceneModelSnapshot = {
+      version: nextVersion,
+      boardCards,
+      handSlots,
+    };
+    for (const l of this.sceneModelListeners) {
+      l();
+    }
+  }
+
+  /**
    * Synchronize the entire game state to the 3D scene
    * @param topPlayer Optional: When provided (e.g., in replay/spectator mode with switchSide), use this player directly for top position
    * @param bottomPlayer Optional: When provided (e.g., in replay/spectator mode with switchSide), use this player directly for bottom position
    */
   async syncState(
     gameState: LocalGameState,
-    scene: Scene,
     currentPlayerId: number,
     topPlayer?: Player,
     bottomPlayer?: Player,
@@ -96,7 +195,7 @@ export class Board3dStateSyncService {
     const omniscient = !!gameState.replay;
 
     // Clear old cards that no longer match the current player assignments
-    this.cleanupOldCards(state, topPlayerToSync, bottomPlayerToSync, scene);
+    this.cleanupOldCards(state, topPlayerToSync, bottomPlayerToSync, this.worldMount);
 
     // Preload textures for visible cards (fire-and-forget for faster display during sync)
     const preloadUrls = this.collectVisibleCardUrls(
@@ -115,7 +214,6 @@ export class Board3dStateSyncService {
         bottomPlayerToSync,
         'bottomPlayer',
         isOwner,
-        scene,
         freezeDiscardVisualForPlayerId ?? null,
         freezeSupporterClearForPlayerId ?? null
       );
@@ -128,7 +226,6 @@ export class Board3dStateSyncService {
         topPlayerToSync,
         'topPlayer',
         isOwner,
-        scene,
         freezeDiscardVisualForPlayerId ?? null,
         freezeSupporterClearForPlayerId ?? null
       );
@@ -144,7 +241,6 @@ export class Board3dStateSyncService {
         ZONE_POSITIONS.stadium,
         true, // Always visible
         0,    // No rotation (horizontal orientation)
-        scene,
         undefined, // No cardTarget
         1.0  // Same scale as bench/supporter cards
       );
@@ -155,7 +251,7 @@ export class Board3dStateSyncService {
         stadiumCardMesh.getGroup().userData.isStadium = true;
       }
     } else {
-      this.removeCard('shared_stadium', scene);
+      this.removeCard('shared_stadium');
     }
   }
 
@@ -166,7 +262,6 @@ export class Board3dStateSyncService {
     player: Player,
     position: 'topPlayer' | 'bottomPlayer',
     isOwner: boolean,
-    scene: Scene,
     freezeDiscardVisualForPlayerId: number | null,
     freezeSupporterClearForPlayerId: number | null
   ): Promise<void> {
@@ -177,22 +272,21 @@ export class Board3dStateSyncService {
     // Active and Supporter - run in parallel (independent zones)
     const activePromise = player.active && player.active.cards.length > 0
       ? (() => {
-          const sleeveImagePath = this.getSleeveImagePath(player.active, player);
-          return this.updateCard(
-            player.active!,
-            `${playerPrefix}_active`,
-            ZONE_POSITIONS[position].active,
-            isOwner,
-            rotation,
-            scene,
-            { player: playerType, slot: SlotType.ACTIVE, index: 0 },
-            1.5,
-            sleeveImagePath
-          );
-        })()
+        const sleeveImagePath = this.getSleeveImagePath(player.active, player);
+        return this.updateCard(
+          player.active!,
+          `${playerPrefix}_active`,
+          ZONE_POSITIONS[position].active,
+          isOwner,
+          rotation,
+          { player: playerType, slot: SlotType.ACTIVE, index: 0 },
+          1.5,
+          sleeveImagePath
+        );
+      })()
       : Promise.resolve(undefined).then(() => {
-          this.removeCard(`${playerPrefix}_active`, scene);
-        });
+        this.removeCard(`${playerPrefix}_active`);
+      });
 
     const freezeSupporterClear =
       freezeSupporterClearForPlayerId != null &&
@@ -201,18 +295,17 @@ export class Board3dStateSyncService {
     const supporterPromise =
       player.supporter && player.supporter.cards.length > 0
         ? this.updateCard(
-            player.supporter,
-            `${playerPrefix}_supporter`,
-            ZONE_POSITIONS[position].supporter,
-            isOwner,
-            rotation,
-            scene
-          )
+          player.supporter,
+          `${playerPrefix}_supporter`,
+          ZONE_POSITIONS[position].supporter,
+          isOwner,
+          rotation
+        )
         : freezeSupporterClear
           ? Promise.resolve()
           : Promise.resolve(undefined).then(() => {
-              this.removeCard(`${playerPrefix}_supporter`, scene);
-            });
+            this.removeCard(`${playerPrefix}_supporter`);
+          });
 
     await Promise.all([activePromise, supporterPromise]);
 
@@ -228,13 +321,12 @@ export class Board3dStateSyncService {
           benchPositions[i],
           isOwner,
           rotation,
-          scene,
           { player: playerType, slot: SlotType.BENCH, index: i },
           1.0,
           sleeveImagePath
         );
       } else {
-        this.removeCard(cardId, scene);
+        this.removeCard(cardId);
         return Promise.resolve();
       }
     });
@@ -247,7 +339,7 @@ export class Board3dStateSyncService {
         player.deck.cards.length,
         ZONE_POSITIONS[position].deck,
         rotation,
-        scene,
+        this.worldMount,
         (player.deck as any)?.sleeveImagePath,
         player.deck,
         this.updateCard.bind(this),
@@ -267,35 +359,35 @@ export class Board3dStateSyncService {
           discardStackId,
           ZONE_POSITIONS[position].discard,
           rotation,
-          scene,
+          this.worldMount,
           this.updateCard.bind(this),
           this.getCardById.bind(this)
         );
       } else {
         const discardStackId = `${playerPrefix}_discard`;
-        this.stackService.removeStack(discardStackId, scene, false);
-        this.removeCard(`${discardStackId}_top`, scene);
+        this.stackService.removeStack(discardStackId, this.worldMount, false);
+        this.removeCard(`${discardStackId}_top`);
       }
     }
 
     // Lost Zone (stacked with latest on top)
-    // if (player.lostzone && player.lostzone.cards.length > 0) {
-    //   await this.stackService.updateLostZoneStack(
-    //     player.lostzone,
-    //     `${playerPrefix}_lostzone`,
-    //     ZONE_POSITIONS[position].lostZone,
-    //     rotation,
-    //     scene,
-    //     this.updateCard.bind(this),
-    //     this.getCardById.bind(this),
-    //     this.removeCard.bind(this)
-    //   );
-    // } else {
-    //   // Remove Lost Zone stack and top card
-    //   const lostZoneStackId = `${playerPrefix}_lostzone`;
-    //   this.stackService.removeLostZoneStack(lostZoneStackId, scene);
-    //   this.removeCard(`${lostZoneStackId}_top`, scene);
-    // }
+    const lostZoneStackId = `${playerPrefix}_lostzone`;
+    if (player.lostzone && player.lostzone.cards.length > 0) {
+      await this.stackService.updateLostZoneStack(
+        player.lostzone,
+        lostZoneStackId,
+        ZONE_POSITIONS[position].lostZone,
+        rotation,
+        this.worldMount,
+        isOwner,
+        this.updateCard.bind(this),
+        this.getCardById.bind(this),
+        this.removeCard.bind(this)
+      );
+    } else {
+      this.stackService.removeLostZoneStack(lostZoneStackId, this.worldMount);
+      this.removeCard(`${lostZoneStackId}_top`);
+    }
 
     // Prize cards (show in 2x3 grid)
     if (player.prizes) {
@@ -305,10 +397,12 @@ export class Board3dStateSyncService {
         ZONE_POSITIONS[position].prizes,
         isOwner,
         rotation,
-        scene,
+        this.worldMount,
         player,
         this.updateCard.bind(this),
-        this.removeCard.bind(this),
+        (prizeId: string) => {
+          this.removeCard(prizeId);
+        },
         this.getCardById.bind(this)
       );
     }
@@ -385,11 +479,12 @@ export class Board3dStateSyncService {
     position: Vector3,
     isOwner: boolean,
     rotation: number,
-    scene: Scene,
     cardTarget?: CardTarget,
     scale: number = 1.0,
     sleeveImagePath?: string
   ): Promise<void> {
+    cardId = String(cardId);
+
     // Determine the main card to display
     let mainCard: Card;
     let breakCard: Card | undefined;
@@ -482,6 +577,7 @@ export class Board3dStateSyncService {
       // Update userData with latest cardList
       cardMesh.getGroup().userData.cardData = mainCard;
       cardMesh.getGroup().userData.cardList = cardList;
+      cardMesh.getGroup().userData.isFaceDown = isFaceDown;
     } else {
       // Create new card
       cardMesh = new Board3dCard(
@@ -497,11 +593,14 @@ export class Board3dStateSyncService {
       cardMesh.getGroup().userData.cardData = mainCard;
       cardMesh.getGroup().userData.cardList = cardList;
       cardMesh.getGroup().userData.isBoardCard = true;
+      cardMesh.getGroup().userData.isFaceDown = isFaceDown;
       if (cardTarget) {
         cardMesh.getGroup().userData.cardTarget = cardTarget;
       }
 
-      scene.add(cardMesh.getGroup());
+      if (this.boardCardsMount) {
+        this.boardCardsMount.add(cardMesh.getGroup());
+      }
       this.cardsMap.set(cardId, cardMesh);
     }
 
@@ -510,10 +609,25 @@ export class Board3dStateSyncService {
 
     // Update overlays for PokemonCardList
     if (cardList instanceof PokemonCardList) {
-      await this.overlayService.updateOverlays(cardId, cardList, cardMesh, breakCard, isFaceDown, scene);
+      let pendingPlaceDamage = 0;
+      if (
+        cardTarget &&
+        this.boardInteractionForDamagePreview?.isPutDamageOverlayActive()
+      ) {
+        pendingPlaceDamage = this.boardInteractionForDamagePreview.getPutDamagePlacementDelta(cardTarget);
+      }
+      await this.overlayService.updateOverlays(
+        cardId,
+        cardList,
+        cardMesh,
+        breakCard,
+        isFaceDown,
+        this.interactionScene,
+        pendingPlaceDamage,
+      );
     } else {
       // Clear any existing overlays for non-Pokemon cards
-      this.overlayService.clearOverlays(cardId, scene);
+      this.overlayService.clearOverlays(cardId, this.interactionScene);
     }
 
     if (isFaceDown) {
@@ -531,16 +645,35 @@ export class Board3dStateSyncService {
   /**
    * Remove a card from the scene
    */
-  private removeCard(cardId: string, scene: Scene): void {
+  private removeCard(cardId: string): void {
+    cardId = String(cardId);
     const card = this.cardsMap.get(cardId);
-    if (card) {
-      scene.remove(card.getGroup());
-      card.dispose();
-      this.cardsMap.delete(cardId);
+    if (!card) {
+      this.overlayService.clearOverlays(cardId, this.interactionScene);
+      return;
     }
+    this.cardsMap.delete(cardId);
+    this.overlayService.clearOverlays(cardId, this.interactionScene);
+    if (this.boardCardsMount !== null) {
+      card.getGroup().removeFromParent();
+      card.dispose();
+    } else {
+      this.pendingR3fBoardCardDisposals.push(card);
+    }
+  }
 
-    // Also clean up overlays
-    this.overlayService.clearOverlays(cardId, scene);
+  /**
+   * After R3F re-renders without removed cards, detach + dispose meshes that left {@link cardsMap}.
+   * Call from the controller after board cards are removed in R3F mode (e.g. next frame) so React can unmount primitives first.
+   */
+  drainPendingR3fBoardCardDisposals(): void {
+    if (this.pendingR3fBoardCardDisposals.length === 0) {
+      return;
+    }
+    for (const card of this.pendingR3fBoardCardDisposals) {
+      card.dispose();
+    }
+    this.pendingR3fBoardCardDisposals = [];
   }
 
   /**
@@ -551,7 +684,7 @@ export class Board3dStateSyncService {
     state: any,
     topPlayerToSync: Player | undefined,
     bottomPlayerToSync: Player | undefined,
-    scene: Scene
+    worldMount: Object3D
   ): void {
     // Build map of expected positions for each player ID
     // This ensures we check both player ID validity AND position correctness
@@ -572,18 +705,21 @@ export class Board3dStateSyncService {
           cardsToRemove.push(cardId);
         }
       });
-      cardsToRemove.forEach(cardId => this.removeCard(cardId, scene));
+      cardsToRemove.forEach(cardId => this.removeCard(cardId));
 
       // Clear all stacks (no valid players, so remove everything)
       const allStacksToRemove: Array<{ stackId: string; isDeck: boolean }> = [];
-      (this.stackService as any).deckStacks?.forEach((stack: any, stackId: string) => {
+      this.stackService.forEachDeckStackId((stackId) => {
         allStacksToRemove.push({ stackId, isDeck: true });
       });
-      (this.stackService as any).discardStacks?.forEach((stack: any, stackId: string) => {
+      this.stackService.forEachDiscardStackId((stackId) => {
         allStacksToRemove.push({ stackId, isDeck: false });
       });
+      this.stackService.forEachLostZoneStackId((stackId) => {
+        this.stackService.removeLostZoneStack(stackId, worldMount);
+      });
       allStacksToRemove.forEach(({ stackId, isDeck }) => {
-        this.stackService.removeStack(stackId, scene, isDeck);
+        this.stackService.removeStack(stackId, worldMount, isDeck);
       });
       return;
     }
@@ -617,14 +753,14 @@ export class Board3dStateSyncService {
     });
 
     // Remove cards that don't match
-    cardsToRemove.forEach(cardId => this.removeCard(cardId, scene));
+    cardsToRemove.forEach(cardId => this.removeCard(cardId));
 
     // Clean up stacks (deck/discard) for removed players or wrong positions
     // Stack IDs are formatted as: ${position}_${playerId}_deck or ${position}_${playerId}_discard
     const stacksToRemove: Array<{ stackId: string; isDeck: boolean }> = [];
 
     // Check deck stacks
-    (this.stackService as any).deckStacks?.forEach((stack: any, stackId: string) => {
+    this.stackService.forEachDeckStackId((stackId) => {
       const parts = stackId.split('_');
       if (parts.length >= 3) {
         const position = parts[0] as 'topPlayer' | 'bottomPlayer';
@@ -641,7 +777,7 @@ export class Board3dStateSyncService {
     });
 
     // Check discard stacks
-    (this.stackService as any).discardStacks?.forEach((stack: any, stackId: string) => {
+    this.stackService.forEachDiscardStackId((stackId) => {
       const parts = stackId.split('_');
       if (parts.length >= 3) {
         const position = parts[0] as 'topPlayer' | 'bottomPlayer';
@@ -657,9 +793,25 @@ export class Board3dStateSyncService {
       }
     });
 
+    // Lost Zone stacks (`${position}_${id}_lostzone`)
+    this.stackService.forEachLostZoneStackId((stackId) => {
+      const parts = stackId.split('_');
+      if (parts.length >= 3) {
+        const position = parts[0] as 'topPlayer' | 'bottomPlayer';
+        const playerIdStr = parts[1];
+        const playerId = parseInt(playerIdStr, 10);
+        if (!isNaN(playerId)) {
+          const expectedPosition = expectedPositions.get(playerId);
+          if (!expectedPosition || expectedPosition !== position) {
+            this.stackService.removeLostZoneStack(stackId, worldMount);
+          }
+        }
+      }
+    });
+
     // Remove stacks for removed players or wrong positions
     stacksToRemove.forEach(({ stackId, isDeck }) => {
-      this.stackService.removeStack(stackId, scene, isDeck);
+      this.stackService.removeStack(stackId, worldMount, isDeck);
     });
   }
 
@@ -688,8 +840,8 @@ export class Board3dStateSyncService {
   }
 
   /** Remove a board card and its overlays (e.g. after KO ghost animation). */
-  removeBoardCardById(cardId: string, scene: Scene): void {
-    this.removeCard(cardId, scene);
+  removeBoardCardById(cardId: string): void {
+    this.removeCard(cardId);
   }
 
   /**
@@ -733,6 +885,24 @@ export class Board3dStateSyncService {
 
   updateBillboards(camera: PerspectiveCamera): void {
     this.overlayService.updateBillboards(camera);
+  }
+
+  /**
+   * Refreshes only the red “placing damage” chips when the Put damage prompt preview changes
+   * (full {@link syncState} does not run because game state is unchanged).
+   */
+  refreshPutDamagePlacementOverlays(interaction: BoardInteractionService): void {
+    const active = interaction.isPutDamageOverlayActive();
+    this.cardsMap.forEach((card, meshId) => {
+      const group = card.getGroup();
+      const ud = group.userData;
+      const ct = ud.cardTarget as CardTarget | undefined;
+      if (!ud.isBoardCard || !ct) {
+        return;
+      }
+      const pending = active ? interaction.getPutDamagePlacementDelta(ct) : 0;
+      this.overlayService.updatePendingPlaceDamageOnly(meshId, pending);
+    });
   }
 
   /**
@@ -782,9 +952,14 @@ export class Board3dStateSyncService {
     // Clean up prizes (minimal - uses cardsMap)
     this.prizeService.dispose(scene);
 
+    for (const card of this.pendingR3fBoardCardDisposals) {
+      card.dispose();
+    }
+    this.pendingR3fBoardCardDisposals = [];
+
     // Clean up cards
     this.cardsMap.forEach(card => {
-      scene.remove(card.getGroup());
+      card.getGroup().removeFromParent();
       card.dispose();
     });
     this.cardsMap.clear();

@@ -1,4 +1,4 @@
-import { Scene, Vector3, Texture, PerspectiveCamera } from 'three';
+import { Scene, Vector3, Texture, PerspectiveCamera, Group } from 'three';
 import {
   PokemonCardList,
   Card,
@@ -10,14 +10,20 @@ import { Board3dCard } from '../board-3d-card';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import { Board3dEnergySprite } from '../board-3d-energy-sprite';
 import { Board3dDamageCounter } from '../board-3d-damage-counter';
+import { Board3dPendingPlaceDamage } from '../board-3d-pending-place-damage';
 import { Board3dMarker } from '../board-3d-marker';
 import { Board3dAbilityUsedBadge } from '../board-3d-ability-used-badge';
 import type { Board3dCardsAdapter } from '../board3dCardsAdapter';
 import { apply3dCardHolo } from '../board-3d-holo-apply';
 
+function overlayAttachRoot(host: Board3dCard | Group): Group {
+  return host instanceof Board3dCard ? host.getGroup() : host;
+}
+
 export interface CardOverlays {
   energySprite: Board3dEnergySprite;
   damageCounter: Board3dDamageCounter;
+  pendingPlaceDamage: Board3dPendingPlaceDamage;
   marker: Board3dMarker;
   abilityUsedBadge: Board3dAbilityUsedBadge;
   breakCard?: Board3dCard;
@@ -36,25 +42,29 @@ export class Board3dCardOverlayService {
   async updateOverlays(
     cardId: string,
     cardList: PokemonCardList,
-    cardMesh: Board3dCard,
+    cardHost: Board3dCard | Group,
     breakCard: Card | undefined,
     isFaceDown: boolean,
-    scene: Scene
+    scene: Scene,
+    pendingPlaceDamage: number = 0,
   ): Promise<void> {
+    const root = overlayAttachRoot(cardHost);
     let overlays = this.cardOverlays.get(cardId);
     if (!overlays) {
       overlays = {
         energySprite: new Board3dEnergySprite(),
         damageCounter: new Board3dDamageCounter(),
+        pendingPlaceDamage: new Board3dPendingPlaceDamage(),
         marker: new Board3dMarker(this.assetLoader),
         abilityUsedBadge: new Board3dAbilityUsedBadge(),
         toolCards: [],
       };
       this.cardOverlays.set(cardId, overlays);
-      cardMesh.getGroup().add(overlays.energySprite.getGroup());
-      cardMesh.getGroup().add(overlays.damageCounter.getGroup());
-      cardMesh.getGroup().add(overlays.marker.getGroup());
-      cardMesh.getGroup().add(overlays.abilityUsedBadge.getGroup());
+      root.add(overlays.energySprite.getGroup());
+      root.add(overlays.damageCounter.getGroup());
+      root.add(overlays.pendingPlaceDamage.getGroup());
+      root.add(overlays.marker.getGroup());
+      root.add(overlays.abilityUsedBadge.getGroup());
     }
 
     if (cardList.energies && cardList.energies.cards.length > 0) {
@@ -64,16 +74,17 @@ export class Board3dCardOverlayService {
     }
 
     overlays.damageCounter.updateDamage(cardList.damage, {
-      deferAppearAnimation: !cardMesh.getGroup().visible,
+      deferAppearAnimation: !root.visible,
     });
+    overlays.pendingPlaceDamage.update(pendingPlaceDamage);
 
     await overlays.marker.updateConditions(cardList.specialConditions);
 
     const hasAbilityUsed = cardList.boardEffect.includes(BoardEffect.ABILITY_USED);
     overlays.abilityUsedBadge.updateAbilityUsed(hasAbilityUsed);
 
-    await this.updateBreakOverlay(cardId, overlays, cardMesh, breakCard, isFaceDown, scene, cardList);
-    await this.updateToolOverlay(cardId, overlays, cardList.tools, cardMesh, scene, cardList);
+    await this.updateBreakOverlay(cardId, overlays, root, breakCard, isFaceDown, scene, cardList);
+    await this.updateToolOverlay(cardId, overlays, cardList.tools, root, scene, cardList);
   }
 
   private energyTextureKey(card: Card, energyCardList: CardList): string | null {
@@ -122,10 +133,20 @@ export class Board3dCardOverlayService {
     });
   }
 
+  /** Lightweight refresh when Put damage placement preview changes (no full card sync). */
+  updatePendingPlaceDamageOnly(cardId: string, pendingPlaceDamage: number): void {
+    cardId = String(cardId);
+    const overlays = this.cardOverlays.get(cardId);
+    if (!overlays) {
+      return;
+    }
+    overlays.pendingPlaceDamage.update(pendingPlaceDamage);
+  }
+
   private async updateBreakOverlay(
     cardId: string,
     overlays: CardOverlays,
-    mainCardMesh: Board3dCard,
+    attachRoot: Group,
     breakCard: Card | undefined,
     isFaceDown: boolean,
     scene: Scene,
@@ -162,13 +183,13 @@ export class Board3dCardOverlayService {
           1.0,
           maskTexture
         );
-        mainCardMesh.getGroup().add(overlays.breakCard.getGroup());
+        attachRoot.add(overlays.breakCard.getGroup());
       } else {
         overlays.breakCard.updateTexture(breakFrontTexture, breakBackTexture, maskTexture);
       }
       void apply3dCardHolo(this.assetLoader, overlays.breakCard, breakCard, false);
     } else if (overlays.breakCard) {
-      mainCardMesh.getGroup().remove(overlays.breakCard.getGroup());
+      attachRoot.remove(overlays.breakCard.getGroup());
       overlays.breakCard.dispose();
       overlays.breakCard = undefined;
     }
@@ -178,12 +199,12 @@ export class Board3dCardOverlayService {
     cardId: string,
     overlays: CardOverlays,
     tools: Card[],
-    mainCardMesh: Board3dCard,
+    attachRoot: Group,
     scene: Scene,
     cardList?: PokemonCardList
   ): Promise<void> {
     for (const toolCard of overlays.toolCards) {
-      mainCardMesh.getGroup().remove(toolCard.getGroup());
+      attachRoot.remove(toolCard.getGroup());
       toolCard.dispose();
     }
     overlays.toolCards = [];
@@ -263,7 +284,7 @@ export class Board3dCardOverlayService {
       toolCardMesh.getGroup().renderOrder = 150;
       toolCardMesh.getMesh().renderOrder = 150;
 
-      mainCardMesh.getGroup().add(toolCardMesh.getGroup());
+      attachRoot.add(toolCardMesh.getGroup());
       overlays.toolCards.push(toolCardMesh);
       void apply3dCardHolo(this.assetLoader, toolCardMesh, tool, false);
     }
@@ -283,6 +304,7 @@ export class Board3dCardOverlayService {
     if (overlays) {
       overlays.energySprite.dispose();
       overlays.damageCounter.dispose();
+      overlays.pendingPlaceDamage.dispose();
       overlays.marker.dispose();
       overlays.abilityUsedBadge.dispose();
       if (overlays.breakCard) {

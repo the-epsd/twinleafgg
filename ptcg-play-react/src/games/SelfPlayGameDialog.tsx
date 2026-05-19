@@ -49,6 +49,9 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
   const [timeLimit, setTimeLimit] = useState(1200);
   const [recordingEnabled, setRecordingEnabled] = useState(true);
   const [sandboxMode, setSandboxMode] = useState(false);
+  const [sandboxAllPokemonBasic, setSandboxAllPokemonBasic] = useState(false);
+  const [sandboxAttacksCostNoEnergy, setSandboxAttacksCostNoEnergy] = useState(false);
+  const [sandboxRetreatCostsNoEnergy, setSandboxRetreatCostsNoEnergy] = useState(false);
   const [loadingDecks, setLoadingDecks] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -59,10 +62,21 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
     }
     setRecordingEnabled(!isAdmin);
     setSandboxMode(false);
+    setSandboxAllPokemonBasic(false);
+    setSandboxAttacksCostNoEnergy(false);
+    setSandboxRetreatCostsNoEnergy(false);
     setError(null);
     setFormat(Format.STANDARD);
     setTimeLimit(1200);
   }, [open, isAdmin]);
+
+  useEffect(() => {
+    if (!sandboxMode) {
+      setSandboxAllPokemonBasic(false);
+      setSandboxAttacksCostNoEnergy(false);
+      setSandboxRetreatCostsNoEnergy(false);
+    }
+  }, [sandboxMode]);
 
   useEffect(() => {
     if (!open) {
@@ -158,6 +172,11 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
       gs.timeLimit = timeLimit;
       gs.recordingEnabled = recordingEnabled;
       gs.sandboxMode = isAdmin ? sandboxMode : false;
+      if (gs.sandboxMode) {
+        gs.sandboxAllPokemonBasic = sandboxAllPokemonBasic;
+        gs.sandboxAttacksCostNoEnergy = sandboxAttacksCostNoEnergy;
+        gs.sandboxRetreatCostsNoEnergy = sandboxRetreatCostsNoEnergy;
+      }
       gs.selfPlay = true;
 
       const gameState = await createSelfPlayGame(
@@ -185,6 +204,9 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
     timeLimit,
     recordingEnabled,
     sandboxMode,
+    sandboxAllPokemonBasic,
+    sandboxAttacksCostNoEnergy,
+    sandboxRetreatCostsNoEnergy,
     isAdmin,
     createSelfPlayGame,
     navigate,
@@ -320,6 +342,37 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
               />
               {t('GAMES_SANDBOX_MODE')}
             </label>
+            {sandboxMode ? (
+              <div className={styles.sandboxOptions}>
+                <label className={styles.checkboxRow}>
+                  <input
+                    type="checkbox"
+                    checked={sandboxAllPokemonBasic}
+                    disabled={submitting}
+                    onChange={(e) => setSandboxAllPokemonBasic(e.target.checked)}
+                  />
+                  {t('GAMES_SANDBOX_ALL_POKEMON_BASIC')}
+                </label>
+                <label className={styles.checkboxRow}>
+                  <input
+                    type="checkbox"
+                    checked={sandboxAttacksCostNoEnergy}
+                    disabled={submitting}
+                    onChange={(e) => setSandboxAttacksCostNoEnergy(e.target.checked)}
+                  />
+                  {t('GAMES_SANDBOX_ATTACKS_NO_ENERGY')}
+                </label>
+                <label className={styles.checkboxRow}>
+                  <input
+                    type="checkbox"
+                    checked={sandboxRetreatCostsNoEnergy}
+                    disabled={submitting}
+                    onChange={(e) => setSandboxRetreatCostsNoEnergy(e.target.checked)}
+                  />
+                  {t('GAMES_SANDBOX_RETREAT_NO_ENERGY')}
+                </label>
+              </div>
+            ) : null}
           </div>
         ) : null}
 

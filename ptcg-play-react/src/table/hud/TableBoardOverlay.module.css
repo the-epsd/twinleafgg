@@ -19,8 +19,7 @@
   top: 16px;
   right: 16px;
   bottom: 16px;
-  /* Half of previous sidebar: was min(252px, 100vw - 32px) */
-  width: calc(min(252px, 100vw - 32px) / 2);
+  width: min(236px, calc(100vw - 32px));
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -39,6 +38,33 @@
   align-items: flex-end;
   gap: 6px;
   width: 100%;
+}
+
+.turnBadgeGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.boardFpsLine {
+  flex: 0 0 auto;
+  font-size: 0.6rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.88;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(210, 225, 255, 0.92);
+  text-align: right;
+  line-height: 1.2;
+  width: fit-content;
+  max-width: 100%;
 }
 
 /* Vertically centers leave / end turn, chat log, and local player bar in the column */
@@ -87,7 +113,7 @@
   flex: 0 1 auto;
   width: 100%;
   min-height: 72px;
-  max-height: min(26vh, 200px);
+  max-height: min(42vh, 360px);
   overflow: hidden;
   display: flex;
   flex-direction: column;

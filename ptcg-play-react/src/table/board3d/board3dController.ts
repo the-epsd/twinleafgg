@@ -17,6 +17,7 @@ import {
 import { updateBoard3dHoloTime } from './board-3d-holo-material';
 import { Subscription } from 'rxjs';
 import gsap from 'gsap';
+import type { ThreeEvent } from '@react-three/fiber';
 import { Board3dAssetLoaderService } from './services/board-3d-asset-loader.service';
 import { Board3dStateSyncService } from './services/board-3d-state-sync.service';
 import { Board3dStackService } from './services/board-3d-stack.service';
@@ -46,6 +47,14 @@ import {
   type State,
 } from 'ptcg-server';
 import type { Board3dCardsAdapter } from './board3dCardsAdapter';
+import {
+  BOARD3D_CARD_SLOT_BASE_HEIGHT,
+  BOARD3D_CARD_SLOT_BASE_WIDTH,
+  BOARD3D_DROP_ZONE_TARGET_SCALE,
+  BOARD_3D_BENCH_SLOT_OUTLINE_COLOR,
+  BOARD_3D_BENCH_SLOT_OUTLINE_OPACITY,
+  BOARD_3D_CENTER_EMBLEM_Y,
+} from './board3d-constants';
 import type { CardInfoPaneOptions } from '../../card-info/CardInfoPane';
 import type { Board3dGameActions } from './board3dGameActions';
 import { BoardInteractionService, type BasicEntranceAnimationEvent } from '../BoardInteractionService';
@@ -66,6 +75,9 @@ import {
 } from './board3dMeshIdForPlayTarget';
 import { DropZoneType } from './board-3d-drop-zone';
 import { getBenchPositions, ZONE_POSITIONS } from './board-3d-zone-positions';
+import { r3fPointerEventAsMouse } from './board3dR3fPointer';
+import { subscribeBoard3dInteractionStreams } from './board3dControllerSubscriptions';
+import { playDeckShufflePreview } from './board3dDeckShufflePreview';
 
 export interface Board3dControllerProps {
   gameState: LocalGameState;
@@ -84,6 +96,15 @@ type HandDrawFlightSegment = { ids: number[]; preset: DrawFlightVisualPreset };
 /** Prize→hand flight start: which side of the table (view) and 0–5 grid index. */
 type PrizeFlightOrigin = { side: 'bottom' | 'top'; grid: number };
 
+/** Context when the board runs inside React Three Fiber (shared gl/scene/camera). */
+export type Board3dR3fInitContext = {
+  gl: WebGLRenderer;
+  scene: Scene;
+  camera: PerspectiveCamera;
+  worldContentRoot: Object3D;
+  handSlot: Object3D;
+};
+
 export class Board3dController {
   gameState!: LocalGameState;
   topPlayer!: Player;
@@ -100,9 +121,9 @@ export class Board3dController {
   private camera!: PerspectiveCamera;
   public renderer!: WebGLRenderer; // Made public for stats component
 
-  // Board elements
-  private boardMesh!: Mesh;
-  private boardCenterOverlay!: Mesh;
+  // Board elements (legacy canvas mode only; R3F uses Board3dStaticScene)
+  private boardMesh?: Mesh;
+  private boardCenterOverlay?: Mesh;
 
   // Per-slot outlines (always visible, independent of drop zones)
   private topBenchSpotOutlines: Group[] = [];
@@ -118,6 +139,15 @@ export class Board3dController {
   private currentHoveredCard: any = null;
   private hasInitializedHand: boolean = false;
   private resizeObserver: ResizeObserver | null = null;
+
+  private r3fMode = false;
+  /** Deck/discard stacks and flight attachments (and R3F board-card subtree parent). */
+  private worldContentRoot!: Object3D;
+  /** Group that contains the hand fan (child of worldContentRoot in R3F). */
+  private handSlot!: Object3D;
+
+  /** When R3F mesh `onPointerDown` handles the same DOM event, skip duplicate canvas listener. */
+  private r3fMeshPointerDownTs = -1;
 
   // Player perspective - true when viewing from opposite side (like 2D board's isUpsideDown)
   private isUpsideDown: boolean = false;
@@ -179,6 +209,30 @@ export class Board3dController {
     private boardInteractionService: BoardInteractionService,
   ) { }
 
+  getStateSync(): Board3dStateSyncService {
+    return this.stateSync;
+  }
+
+  /** R3F mesh pointer surface: forwards native pointer + hit object into the interaction pipeline. */
+  handleR3fMeshPointerDown(ev: ThreeEvent<PointerEvent>): void {
+    if (!this.r3fMode) {
+      return;
+    }
+    this.r3fMeshPointerDownTs = ev.nativeEvent.timeStamp;
+    const canvas = this.canvasEl;
+    const card = this.interactionService.onMouseDown(
+      r3fPointerEventAsMouse(ev),
+      this.camera,
+      this.scene,
+      canvas,
+      ev.object,
+    );
+    if (card) {
+      canvas.style.cursor = 'grabbing';
+      this.markDirty();
+    }
+  }
+
   setProps(p: Board3dControllerProps): void {
     this.gameState = p.gameState;
     this.topPlayer = p.topPlayer;
@@ -188,6 +242,7 @@ export class Board3dController {
     this.clientId = p.clientId;
     this.player = p.player;
     this.onKoSequenceActiveChange = p.onKoSequenceActiveChange;
+    this.interactionService.setHandPlayZoneGameSettings(p.gameState.state.gameSettings);
   }
 
   init(canvas: HTMLCanvasElement, initial: Board3dControllerProps): void {
@@ -197,11 +252,33 @@ export class Board3dController {
     this.afterCanvasReady();
   }
 
+  /** Initialize when React Three Fiber owns the renderer, scene, and camera. */
+  initFromR3f(ctx: Board3dR3fInitContext, initial: Board3dControllerProps): void {
+    this.r3fMode = true;
+    this.canvasEl = ctx.gl.domElement;
+    this.renderer = ctx.gl;
+    this.scene = ctx.scene;
+    this.camera = ctx.camera;
+    this.worldContentRoot = ctx.worldContentRoot;
+    this.handSlot = ctx.handSlot;
+    this.setProps(initial);
+    this.stateSync.setAttachmentTargets(this.worldContentRoot, null, this.scene);
+    this.interactionService.setWorldContentRoot(this.worldContentRoot);
+    this.runInitR3f();
+    this.afterCanvasReadyR3f();
+  }
+
   private runInit(): void {
+    this.r3fMode = false;
+    this.handService.setR3fDeclarativeHand(false);
     // Initialize scene components
     this.initScene();
     this.initCamera();
     this.initRenderer();
+    this.worldContentRoot = this.scene;
+    this.handSlot = this.scene;
+    this.stateSync.setAttachmentTargets(this.worldContentRoot, this.worldContentRoot, this.scene);
+    this.interactionService.setWorldContentRoot(this.worldContentRoot);
     this.lightingService.initialize(this.scene);
     this.createBoardAsync();
     this.postProcessingService.initialize(this.renderer, this.scene, this.camera, this.canvasEl);
@@ -210,7 +287,7 @@ export class Board3dController {
     this.wireframeService.initialize(this.scene);
 
     // Initialize hand service
-    this.scene.add(this.handService.getHandGroup());
+    this.handSlot.add(this.handService.getHandGroup());
 
     // Create drop zone indicators (async) with actual bench sizes
     const bottomBenchSize = this.bottomPlayer?.bench?.length ?? 5;
@@ -234,18 +311,51 @@ export class Board3dController {
     }
 
     this.selectionSubs.push(
-      this.boardInteractionService.selectionMode$.subscribe(() => this.updateSelectionVisuals()),
-      this.boardInteractionService.selectedTargets$.subscribe(() => this.updateSelectionVisuals()),
-      this.boardInteractionService.attackAnimation$.subscribe((ev) => {
-        this.playBoardAttackAnimation(ev);
-      }),
-      this.boardInteractionService.basicAnimation$.subscribe((ev) => {
-        this.playBoardBasicAnimation(ev);
-      }),
-      this.boardInteractionService.evolutionAnimation$.subscribe((ev) => {
-        this.playBoardEvolutionAnimation(ev);
+      ...subscribeBoard3dInteractionStreams(this.boardInteractionService, {
+        updateSelectionVisuals: () => this.updateSelectionVisuals(),
+        refreshPutDamagePlacementOverlays: () => this.refreshPutDamagePlacementOverlays(),
+        playBoardAttackAnimation: (ev) => this.playBoardAttackAnimation(ev),
+        playBoardBasicAnimation: (ev) => this.playBoardBasicAnimation(ev),
+        playBoardEvolutionAnimation: (ev) => this.playBoardEvolutionAnimation(ev),
       }),
     );
+
+    this.stateSync.setBoardInteractionForDamagePreview(this.boardInteractionService);
+  }
+
+  private runInitR3f(): void {
+    this.wireframeService.initialize(this.scene);
+    this.handSlot.add(this.handService.getHandGroup());
+
+    const bottomBenchSize = this.bottomPlayer?.bench?.length ?? 5;
+    const topBenchSize = this.topPlayer?.bench?.length ?? 5;
+    this.interactionService.createDropZoneIndicators(this.scene, bottomBenchSize, topBenchSize).then(rebuilt => {
+      if (rebuilt) {
+        this.createBenchSpotOutlines(bottomBenchSize, topBenchSize);
+      }
+      this.markDirty();
+    });
+
+    if (this.gameState) {
+      this.syncGameState();
+    }
+
+    if (this.bottomPlayerHand) {
+      this.syncHand();
+      this.hasInitializedHand = true;
+    }
+
+    this.selectionSubs.push(
+      ...subscribeBoard3dInteractionStreams(this.boardInteractionService, {
+        updateSelectionVisuals: () => this.updateSelectionVisuals(),
+        refreshPutDamagePlacementOverlays: () => this.refreshPutDamagePlacementOverlays(),
+        playBoardAttackAnimation: (ev) => this.playBoardAttackAnimation(ev),
+        playBoardBasicAnimation: (ev) => this.playBoardBasicAnimation(ev),
+        playBoardEvolutionAnimation: (ev) => this.playBoardEvolutionAnimation(ev),
+      }),
+    );
+
+    this.stateSync.setBoardInteractionForDamagePreview(this.boardInteractionService);
   }
 
   /** Called from React when props change after mount. */
@@ -301,6 +411,11 @@ export class Board3dController {
     }
   }
 
+  private afterCanvasReadyR3f(): void {
+    this.lastAnimationCheck = performance.now();
+    this.addEventListeners();
+  }
+
   private afterCanvasReady(): void {
     this.lastAnimationCheck = performance.now();
     this.animate();
@@ -329,29 +444,26 @@ export class Board3dController {
     this.koSequenceLock = false;
     this.koDiscardVisualFreezePlayerId = null;
 
-    // Clean up wireframes
     this.wireframeService.dispose(this.scene);
 
-    // Clean up spot outline meshes
     this.disposeBenchOutlines();
     this.disposeOtherSpotOutlines();
     this.disposeBoardGrid();
 
-    // Clean up service state to prevent stale references on mode switch
+    this.stateSync.setBoardInteractionForDamagePreview(null);
     this.stateSync.dispose(this.scene);
-    this.handService.dispose(this.scene);
+    this.handService.dispose(this.worldContentRoot);
     this.interactionService.dispose(this.scene);
-    this.lightingService.dispose(this.scene);
-    this.postProcessingService.dispose();
 
-    // Clean up resources
-    this.disposeScene();
-    this.renderer?.dispose();
+    if (!this.r3fMode) {
+      this.lightingService.dispose(this.scene);
+      this.postProcessingService.dispose();
+      this.disposeScene();
+      this.renderer?.dispose();
+    }
 
-    // Remove event listeners
     this.removeEventListeners();
 
-    // Clean up ResizeObserver
     this.resizeObserver?.disconnect();
 
     for (const s of this.selectionSubs) {
@@ -467,8 +579,8 @@ export class Board3dController {
       (ZONE_POSITIONS.bottomPlayer.active.x + ZONE_POSITIONS.topPlayer.active.x) / 2;
     const midZ =
       (ZONE_POSITIONS.bottomPlayer.active.z + ZONE_POSITIONS.topPlayer.active.z) / 2;
-    this.boardCenterOverlay.position.set(midX, Board3dController.BOARD_CENTER_EMBLEM_Y, midZ);
-    this.boardCenterOverlay.renderOrder = 100;
+    this.boardCenterOverlay.position.set(midX, BOARD_3D_CENTER_EMBLEM_Y, midZ);
+    this.boardCenterOverlay.renderOrder = 50;
     this.boardCenterOverlay.receiveShadow = false;
     this.scene.add(this.boardCenterOverlay);
 
@@ -480,8 +592,6 @@ export class Board3dController {
 
   /** Grid height - below cards (0.1) so grid appears underneath */
   private static readonly BOARD_GRID_Y = 0.1;
-  /** Twinleaf emblem: slightly above grid, under typical card lift */
-  private static readonly BOARD_CENTER_EMBLEM_Y = 0.101;
   /** Diameter in world units — ~fit between active rows with margin */
   private static readonly BOARD_CENTER_EMBLEM_SIZE = 7;
 
@@ -552,6 +662,9 @@ export class Board3dController {
   }
 
   private animate = (): void => {
+    if (this.r3fMode) {
+      return;
+    }
     this.animationFrameId = requestAnimationFrame(this.animate);
     updateBoard3dHoloTime(this.holoClock.getElapsedTime());
     this.stateSync.updateBillboards(this.camera);
@@ -559,6 +672,13 @@ export class Board3dController {
     this.postProcessingService.render();
     this.needsRender = false;
   };
+
+  /** Legacy hook for tests; R3F uses {@link Board3dFrameEffects} instead. */
+  tick(): void {
+    if (!this.r3fMode) {
+      return;
+    }
+  }
 
   /** World → client pixels for floating Remove damage +/- HUD (follows orbit / selected Pokémon). */
   private syncRemoveDamageHudPosition(): void {
@@ -576,7 +696,7 @@ export class Board3dController {
       this.boardInteractionService.setRemoveDamageHudAnchor(null);
       return;
     }
-    const worldPos = new Vector3(0, 2.2, 0);
+    const worldPos = new Vector3(0, -2.35, 0);
     group.localToWorld(worldPos);
     worldPos.project(this.camera);
     const rect = this.canvasEl.getBoundingClientRect();
@@ -603,8 +723,11 @@ export class Board3dController {
     const container = canvas.parentElement;
     if (!container) return;
 
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    this.applyViewportDimensions(container.clientWidth, container.clientHeight);
+  }
+
+  /** Resize camera (and legacy renderer/composer); R3F sets gl size separately. */
+  applyViewportDimensions(width: number, height: number): void {
     if (width === 0 || height === 0) return;
 
     const aspect = width / height;
@@ -612,13 +735,13 @@ export class Board3dController {
     this.camera.aspect = aspect;
     this.camera.updateProjectionMatrix();
 
-    this.renderer.setSize(width, height);
-    this.postProcessingService.setSize(width, height);
+    if (!this.r3fMode) {
+      this.renderer.setSize(width, height);
+      this.postProcessingService.setSize(width, height);
+    }
 
-    // Get camera configuration based on aspect ratio and perspective
     const cameraConfig = getCameraConfig(aspect, this.isUpsideDown);
 
-    // Update camera position and lookAt from config
     this.camera.position.set(
       cameraConfig.position.x,
       cameraConfig.position.y,
@@ -692,6 +815,21 @@ export class Board3dController {
     this.markDirty();
   }
 
+  /** Visual-only deck shuffle preview for tuning animation (e.g. S key in R3F). */
+  triggerDeckShufflePreview(): void {
+    if (!this.r3fMode) {
+      return;
+    }
+    const stackService = this.stateSync.getStackService();
+    for (const stackId of stackService.getDeckStackIds()) {
+      playDeckShufflePreview({
+        stackService,
+        getCardById: (id) => this.stateSync.getCardById(id),
+        stackId,
+      });
+    }
+  }
+
   private refreshActiveTopCardSnapshot(): void {
     for (const p of [this.bottomPlayer, this.topPlayer]) {
       if (!p) {
@@ -715,7 +853,7 @@ export class Board3dController {
       if (!player) {
         return null;
       }
-      if (this.gameState.replay) {
+      if (this.gameState?.replay) {
         return null;
       }
       if (this.trainerToDiscardResolvePlayerId != null || this.koSequenceLock) {
@@ -772,7 +910,7 @@ export class Board3dController {
 
       await this.animationService.playKnockOutToDiscardSequence(group, target);
       group.renderOrder = prevOrder;
-      this.stateSync.removeBoardCardById(spec.ghostKey, this.scene);
+      this.stateSync.removeBoardCardById(spec.ghostKey);
     } finally {
       this.koSequenceLock = false;
       this.koDiscardVisualFreezePlayerId = null;
@@ -828,7 +966,6 @@ export class Board3dController {
 
         await this.stateSync.syncState(
           this.gameState,
-          this.scene,
           this.clientId,
           this.topPlayer,
           this.bottomPlayer,
@@ -867,8 +1004,14 @@ export class Board3dController {
         this.updateDropZoneOccupancy();
         this.updateDropZonesForBenchSize();
         this.interactionService.updateInteractiveObjects(this.scene);
-
         this.markDirty();
+        if (this.r3fMode) {
+          this.stateSync.publishSceneModel(this.handService.getHandSlotSnapshots());
+          requestAnimationFrame(() => {
+            this.stateSync.drainPendingR3fBoardCardDisposals();
+            this.handService.drainPendingR3fHandDisposals();
+          });
+        }
       } catch (error) {
         if (pendingKo != null) {
           this.koSequenceLock = false;
@@ -942,14 +1085,16 @@ export class Board3dController {
     });
   }
 
-  /** Slot dimensions (must match Board3dDropZone) */
+  /** Bench ribbon tuning */
   private static readonly BENCH_OUTLINE_THICKNESS = 0.02;
   private static readonly BENCH_OUTLINE_Y = 0.15;
   private static readonly BENCH_OUTLINE_COLOR = 0xffffff;
 
-  /** Card/slot dimensions for outlines */
-  private static readonly CARD_SLOT_WIDTH = 2.8;
-  private static readonly CARD_SLOT_HEIGHT = 3.8;
+  /** Card/slot dimensions for outlines (match enlarged {@link Board3dDropZone} defaults). */
+  private static readonly CARD_SLOT_WIDTH =
+    BOARD3D_CARD_SLOT_BASE_WIDTH * BOARD3D_DROP_ZONE_TARGET_SCALE;
+  private static readonly CARD_SLOT_HEIGHT =
+    BOARD3D_CARD_SLOT_BASE_HEIGHT * BOARD3D_DROP_ZONE_TARGET_SCALE;
 
   /**
    * Create per-slot outline meshes for bench and all other board slots.
@@ -965,13 +1110,25 @@ export class Board3dController {
     // Bench slots
     const topPositions = getBenchPositions(topBenchSize, PlayerType.TOP_PLAYER);
     for (const pos of topPositions) {
-      const group = this.createSpotOutlineGroup(pos, w, h);
+      const group = this.createSpotOutlineGroup(
+        pos,
+        w,
+        h,
+        BOARD_3D_BENCH_SLOT_OUTLINE_COLOR,
+        BOARD_3D_BENCH_SLOT_OUTLINE_OPACITY,
+      );
       this.topBenchSpotOutlines.push(group);
       this.scene.add(group);
     }
     const bottomPositions = getBenchPositions(bottomBenchSize, PlayerType.BOTTOM_PLAYER);
     for (const pos of bottomPositions) {
-      const group = this.createSpotOutlineGroup(pos, w, h);
+      const group = this.createSpotOutlineGroup(
+        pos,
+        w,
+        h,
+        BOARD_3D_BENCH_SLOT_OUTLINE_COLOR,
+        BOARD_3D_BENCH_SLOT_OUTLINE_OPACITY,
+      );
       this.bottomBenchSpotOutlines.push(group);
       this.scene.add(group);
     }
@@ -986,6 +1143,7 @@ export class Board3dController {
       this.addSpotOutline(zp.supporter, w, h);
       this.addSpotOutline(zp.deck, w, h);
       this.addSpotOutline(zp.discard, w, h);
+      this.addSpotOutline(zp.lostZone, w, h);
     }
 
     // Prize slots (6 per player, 2x3 grid - match board-3d-prize.service layout)
@@ -1010,7 +1168,13 @@ export class Board3dController {
   /**
    * Create a Group with 4 thin plane meshes forming a rectangle outline.
    */
-  private createSpotOutlineGroup(position: Vector3, width: number, height: number): Group {
+  private createSpotOutlineGroup(
+    position: Vector3,
+    width: number,
+    height: number,
+    outlineColor: number = Board3dController.BENCH_OUTLINE_COLOR,
+    outlineOpacity: number = 0,
+  ): Group {
     const t = Board3dController.BENCH_OUTLINE_THICKNESS;
     const y = Board3dController.BENCH_OUTLINE_Y;
     const minX = position.x - width / 2;
@@ -1019,9 +1183,9 @@ export class Board3dController {
     const maxZ = position.z + height / 2;
 
     const material = new MeshBasicMaterial({
-      color: Board3dController.BENCH_OUTLINE_COLOR,
+      color: outlineColor,
       transparent: true,
-      opacity: 0,
+      opacity: outlineOpacity,
       side: DoubleSide,
       depthTest: true
     });
@@ -1154,13 +1318,16 @@ export class Board3dController {
   private playBoardAttackAnimation(ev: BasicEntranceAnimationEvent): void {
     const meshId = this.boardMeshIdFromAnimationEvent(ev);
     if (!meshId) {
+      this.boardInteractionService.setPendingAttackAnimationPromise(Promise.resolve());
       return;
     }
     const boardCard = this.stateSync.getCardById(meshId);
     if (!boardCard) {
+      this.boardInteractionService.setPendingAttackAnimationPromise(Promise.resolve());
       return;
     }
-    void this.animationService.playAttackAnimation(boardCard.getGroup());
+    const p = this.animationService.playAttackAnimation(boardCard.getGroup());
+    this.boardInteractionService.setPendingAttackAnimationPromise(p);
   }
 
   /**
@@ -1479,7 +1646,8 @@ export class Board3dController {
           const prep = await this.handService.prepareBatchDrawFlightStep(
             this.bottomPlayerHand,
             isOwner,
-            this.scene,
+            this.handSlot,
+            this.worldContentRoot,
             flightStart,
             playableCardIds,
             stableKRun,
@@ -1543,7 +1711,8 @@ export class Board3dController {
             const prep = await this.handService.prepareBatchDrawFlightStep(
               this.bottomPlayerHand,
               isOwner,
-              this.scene,
+              this.handSlot,
+              this.worldContentRoot,
               flightStart,
               playableCardIds,
               stableKRun,
@@ -1645,7 +1814,7 @@ export class Board3dController {
         await this.handService.updateHand(
           this.bottomPlayerHand,
           isOwnerImm,
-          this.scene,
+          this.handSlot,
           playableImm
         );
         if (genAtStart !== this.handSyncInvalidationGen) {
@@ -1793,7 +1962,7 @@ export class Board3dController {
           await this.handService.updateHand(
             this.bottomPlayerHand,
             isOwner,
-            this.scene,
+            this.handSlot,
             playableCardIds
           );
         }
@@ -1801,7 +1970,7 @@ export class Board3dController {
         await this.handService.updateHand(
           this.bottomPlayerHand,
           isOwner,
-          this.scene,
+          this.handSlot,
           playableCardIds
         );
       }
@@ -1818,6 +1987,12 @@ export class Board3dController {
       }
       this.interactionService.updateInteractiveObjects(this.scene);
       this.markDirty();
+      if (this.r3fMode) {
+        this.stateSync.publishSceneModel(this.handService.getHandSlotSnapshots());
+        requestAnimationFrame(() => {
+          this.handService.drainPendingR3fHandDisposals();
+        });
+      }
     } catch (error) {
       console.error('[Board3D] Failed to sync 3D hand:', error);
     } finally {
@@ -1829,21 +2004,61 @@ export class Board3dController {
   private addEventListeners(): void {
     const canvas = this.canvasEl;
 
-    // Drag-and-drop events
-    canvas.addEventListener('mousedown', this.onMouseDown);
-    canvas.addEventListener('mousemove', this.onMouseMove);
-    canvas.addEventListener('mouseup', this.onMouseUp);
-    canvas.addEventListener('mouseleave', this.onMouseLeave);
+    if (this.r3fMode) {
+      // `pointerdown`: raycast for hand, prizes, stacks, drop zones; board cards also fire mesh `onPointerDown`
+      // with the same timestamp — {@link handleR3fMeshPointerDown} + {@link r3fMeshPointerDownTs} dedup.
+      canvas.addEventListener('pointerdown', this.onPointerDown);
+      canvas.addEventListener('pointermove', this.onPointerMove);
+      canvas.addEventListener('pointerup', this.onPointerUp);
+      canvas.addEventListener('pointercancel', this.onPointerCancel);
+      canvas.addEventListener('pointerleave', this.onPointerLeave);
+    } else {
+      canvas.addEventListener('mousedown', this.onMouseDown);
+      canvas.addEventListener('mousemove', this.onMouseMove);
+      canvas.addEventListener('mouseup', this.onMouseUp);
+      canvas.addEventListener('mouseleave', this.onMouseLeave);
+    }
   }
 
   private removeEventListeners(): void {
     const canvas = this.canvasEl;
 
-    canvas.removeEventListener('mousedown', this.onMouseDown);
-    canvas.removeEventListener('mousemove', this.onMouseMove);
-    canvas.removeEventListener('mouseup', this.onMouseUp);
-    canvas.removeEventListener('mouseleave', this.onMouseLeave);
+    if (this.r3fMode) {
+      canvas.removeEventListener('pointerdown', this.onPointerDown);
+      canvas.removeEventListener('pointermove', this.onPointerMove);
+      canvas.removeEventListener('pointerup', this.onPointerUp);
+      canvas.removeEventListener('pointercancel', this.onPointerCancel);
+      canvas.removeEventListener('pointerleave', this.onPointerLeave);
+    } else {
+      canvas.removeEventListener('mousedown', this.onMouseDown);
+      canvas.removeEventListener('mousemove', this.onMouseMove);
+      canvas.removeEventListener('mouseup', this.onMouseUp);
+      canvas.removeEventListener('mouseleave', this.onMouseLeave);
+    }
   }
+
+  private onPointerDown = (event: PointerEvent): void => {
+    if (this.r3fMode && event.timeStamp === this.r3fMeshPointerDownTs) {
+      return;
+    }
+    this.onMouseDown(event as unknown as MouseEvent);
+  };
+
+  private onPointerMove = (event: PointerEvent): void => {
+    this.onMouseMove(event as unknown as MouseEvent);
+  };
+
+  private onPointerUp = (event: PointerEvent): void => {
+    this.onMouseUp(event as unknown as MouseEvent);
+  };
+
+  private onPointerCancel = (): void => {
+    this.onMouseLeave();
+  };
+
+  private onPointerLeave = (): void => {
+    this.onMouseLeave();
+  };
 
   private onMouseDown = (event: MouseEvent): void => {
     const canvas = this.canvasEl;
@@ -2060,6 +2275,11 @@ export class Board3dController {
     // Update hand cards
     this.updateHandSelectionVisuals(isSelectionMode);
 
+    this.markDirty();
+  }
+
+  private refreshPutDamagePlacementOverlays(): void {
+    this.stateSync.refreshPutDamagePlacementOverlays(this.boardInteractionService);
     this.markDirty();
   }
 

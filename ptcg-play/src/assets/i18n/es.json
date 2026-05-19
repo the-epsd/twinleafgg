@@ -656,6 +656,8 @@
   "TABLE_TABLE_NAME": "Mesa n.º {{id}}",
   "TABLE_TIME_LEFT": "Tiempo restante:",
   "TABLE_TURN_NUMBER": "Turno {{turn}}",
+  "TABLE_BOARD_FPS": "Tablero: {{fps}} FPS",
+  "TABLE_BOARD_FPS_MEASURING": "Tablero: …",
   "TAG_ACE_SPEC": "ACE SPEC",
   "TAG_ANCIENT": "Ancestral",
   "TAG_BREAK": "Pokémon BREAK",
@@ -957,6 +959,9 @@
     "LOG_SHUFFLE_POKEMON_INTO_DECK": "{{name}} baraja {{card}} en su mazo con el efecto de {{effect}}."
   },
   "GAMES_SANDBOX_MODE": "Modo sandbox",
+  "GAMES_SANDBOX_ALL_POKEMON_BASIC": "Tratar cada Pokémon como Básico (banquillo y preparación)",
+  "GAMES_SANDBOX_ATTACKS_NO_ENERGY": "Los ataques no cuestan Energía",
+  "GAMES_SANDBOX_RETREAT_NO_ENERGY": "Retirarse no cuesta Energía",
   "REACT_SETTINGS_SANDBOX_MATCHMAKING_HINT": "Si está activado, las partidas emparejadas usan modo sandbox solo si tu rival también es admin y tiene esta opción activada.",
   "SANDBOX_HINT_TITLE": "Sandbox",
   "REACT_SANDBOX_GAME_NOT_ENABLED_BODY": "Esta partida no está en modo sandbox; las herramientas no están disponibles. En emparejamiento, ambos jugadores deben ser admins con sandbox activado en Ajustes. También puedes crear una partida sandbox desde el cliente clásico (crear partida con sandbox marcado).",

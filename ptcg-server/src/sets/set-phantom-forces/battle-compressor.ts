@@ -11,7 +11,12 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   let cards: Card[] = [];
 
@@ -22,45 +27,43 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   effect.preventDefault = true;
   player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DISCARD,
-    player.deck,
-    {},
-    { min: 1, max: 3, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DISCARD,
+      player.deck,
+      {},
+      { min: 1, max: 3, allowCancel: false },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
+
+  MOVE_CARDS(store, state, player.deck, player.discard, {
+    cards,
+    sourceCard: effect.trainerCard,
   });
 
-  MOVE_CARDS(store, state, player.deck, player.discard, { cards, sourceCard: effect.trainerCard });
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
 export class BattleCompressor extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'PHF';
-
   public name: string = 'Battle Compressor';
-
   public fullName: string = 'Battle Compressor PHF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '92';
 
   public text: string =
-    'Search your deck for up to 3 cards and discard them. Shuffle your ' +
-    'deck afterward.';
-
+    'Search your deck for up to 3 cards and discard them. Shuffle your deck afterward.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
@@ -68,5 +71,4 @@ export class BattleCompressor extends TrainerCard {
 
     return state;
   }
-
 }

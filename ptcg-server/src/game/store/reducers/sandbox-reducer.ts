@@ -8,7 +8,9 @@ import { SandboxModifyGameStateAction } from '../actions/sandbox-modify-game-sta
 import { SandboxModifyCardAction, CardZone } from '../actions/sandbox-modify-card-action';
 import { SandboxModifyPokemonAction } from '../actions/sandbox-modify-pokemon-action';
 import { CardManager } from '../../cards/card-manager';
+import { Card } from '../card/card';
 import { CardList } from '../state/card-list';
+import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { SpecialCondition } from '../card/card-types';
 
@@ -189,28 +191,23 @@ export function sandboxReducer(store: StoreLike, state: State, action: Action, c
     }
 
     if (action.action === 'add') {
-      const targetZone = getZone(player, action.toZone || CardZone.HAND);
-      if (targetZone) {
-        // Clone the card
-        card = cardManager.getCardByName(action.cardName);
-        if (card) {
-          if (action.toZone === CardZone.PRIZES && action.prizeIndex !== undefined) {
-            if (player.prizes[action.prizeIndex]) {
-              player.prizes[action.prizeIndex].cards.push(card);
-            }
-          } else {
+      card = cardManager.getCardByName(action.cardName);
+      if (card) {
+        if (action.toZone === CardZone.PRIZES) {
+          addCardToPrizes(player, card, action.prizeIndex);
+        } else {
+          const targetZone = getZone(player, action.toZone || CardZone.HAND);
+          if (targetZone) {
             targetZone.cards.push(card);
           }
         }
       }
     } else if (action.action === 'remove') {
-      const sourceZone = getZone(player, action.fromZone || CardZone.HAND);
-      if (sourceZone) {
-        if (action.fromZone === CardZone.PRIZES && action.fromIndex !== undefined) {
-          if (player.prizes[action.fromIndex] && player.prizes[action.fromIndex].cards.length > 0) {
-            player.prizes[action.fromIndex].cards.pop();
-          }
-        } else {
+      if (action.fromZone === CardZone.PRIZES) {
+        removeCardFromPrizes(player, action.cardName, action.fromIndex);
+      } else {
+        const sourceZone = getZone(player, action.fromZone || CardZone.HAND);
+        if (sourceZone) {
           const index = sourceZone.cards.findIndex(c => c.fullName === action.cardName);
           if (index !== -1) {
             sourceZone.cards.splice(index, 1);
@@ -218,18 +215,26 @@ export function sandboxReducer(store: StoreLike, state: State, action: Action, c
         }
       }
     } else if (action.action === 'move') {
-      const sourceZone = getZone(player, action.fromZone || CardZone.HAND);
-      const targetZone = getZone(player, action.toZone || CardZone.HAND);
-      if (sourceZone && targetZone) {
-        const index = action.fromIndex !== undefined ? action.fromIndex :
-          sourceZone.cards.findIndex(c => c.fullName === action.cardName);
-        if (index !== -1 && index < sourceZone.cards.length) {
-          const cardToMove = sourceZone.cards.splice(index, 1)[0];
-          if (action.toZone === CardZone.PRIZES && action.prizeIndex !== undefined) {
-            if (player.prizes[action.prizeIndex]) {
-              player.prizes[action.prizeIndex].cards.push(cardToMove);
-            }
-          } else {
+      let cardToMove: Card | undefined;
+      if (action.fromZone === CardZone.PRIZES) {
+        cardToMove = removeCardFromPrizes(player, action.cardName, action.fromIndex);
+      } else {
+        const sourceZone = getZone(player, action.fromZone || CardZone.HAND);
+        if (sourceZone) {
+          const index = action.fromIndex !== undefined
+            ? action.fromIndex
+            : sourceZone.cards.findIndex(c => c.fullName === action.cardName);
+          if (index !== -1 && index < sourceZone.cards.length) {
+            cardToMove = sourceZone.cards.splice(index, 1)[0];
+          }
+        }
+      }
+      if (cardToMove) {
+        if (action.toZone === CardZone.PRIZES) {
+          addCardToPrizes(player, cardToMove, action.prizeIndex);
+        } else {
+          const targetZone = getZone(player, action.toZone || CardZone.HAND);
+          if (targetZone) {
             targetZone.cards.push(cardToMove);
           }
         }
@@ -356,7 +361,7 @@ export function sandboxReducer(store: StoreLike, state: State, action: Action, c
   return state;
 }
 
-function getZone(player: any, zone: CardZone): CardList | undefined {
+function getZone(player: Player, zone: CardZone): CardList | undefined {
   switch (zone) {
     case CardZone.HAND:
       return player.hand;
@@ -373,5 +378,50 @@ function getZone(player: any, zone: CardZone): CardList | undefined {
     default:
       return undefined;
   }
+}
+
+function findPrizeCardLocation(
+  player: Player,
+  cardName: string,
+  prizeSlotIndex?: number,
+): { prizeIndex: number; cardIndex: number } | undefined {
+  if (prizeSlotIndex !== undefined) {
+    const prize = player.prizes[prizeSlotIndex];
+    if (!prize) {
+      return undefined;
+    }
+    const cardIndex = prize.cards.findIndex(c => c.fullName === cardName);
+    if (cardIndex === -1) {
+      return undefined;
+    }
+    return { prizeIndex: prizeSlotIndex, cardIndex };
+  }
+  for (let i = 0; i < player.prizes.length; i++) {
+    const cardIndex = player.prizes[i].cards.findIndex(c => c.fullName === cardName);
+    if (cardIndex !== -1) {
+      return { prizeIndex: i, cardIndex };
+    }
+  }
+  return undefined;
+}
+
+function findEmptyPrizeIndex(player: Player): number {
+  return player.prizes.findIndex(p => p.cards.length === 0);
+}
+
+function addCardToPrizes(player: Player, card: Card, prizeIndex?: number): void {
+  const slot = prizeIndex !== undefined ? prizeIndex : findEmptyPrizeIndex(player);
+  if (slot === -1 || !player.prizes[slot]) {
+    return;
+  }
+  player.prizes[slot].cards.push(card);
+}
+
+function removeCardFromPrizes(player: Player, cardName: string, prizeSlotIndex?: number): Card | undefined {
+  const location = findPrizeCardLocation(player, cardName, prizeSlotIndex);
+  if (!location) {
+    return undefined;
+  }
+  return player.prizes[location.prizeIndex].cards.splice(location.cardIndex, 1)[0];
 }
 

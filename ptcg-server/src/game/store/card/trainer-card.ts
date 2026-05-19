@@ -29,6 +29,9 @@ export abstract class TrainerCard extends Card {
   //Used on items and supporters that are "put into play", specifically for reference on Chaos Gym
   public putIntoPlay: boolean = false;
 
+  /** When true, this tool may target the opponent's Pokemon (card reduceEffect enforces legality). */
+  public attachesToOpponentsPokemon: boolean = false;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttackEffect) {
       for (let i = 0; i < this.attacks.length; i++) {

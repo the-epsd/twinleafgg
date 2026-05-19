@@ -14,20 +14,20 @@ export class Rookidee extends PokemonCard {
       name: 'Flap',
       cost: [C],
       damage: 10,
-      text: ''
+      text: '',
     },
     {
       name: 'Glide',
       cost: [C, C],
       damage: 30,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark = 'D';
   public set: string = 'SSH';
-  public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '150';
+  public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rookidee';
   public fullName: string = 'Rookidee SSH';
 }

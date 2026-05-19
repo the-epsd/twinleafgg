@@ -15,7 +15,7 @@ import { GameMessage, GameLog } from '../../game-message';
 import { PlayerType } from '../actions/play-card-action';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { StoreLike } from '../store-like';
-import { SuperType, Stage, CardTag } from '../card/card-types';
+import { SuperType, Stage, CardTag, Format } from '../card/card-types';
 import { endGame } from '../effect-reducers/check-effect';
 import { initNextTurn } from '../effect-reducers/game-phase-effect';
 import { SelectPrompt } from '../prompts/select-prompt';
@@ -23,7 +23,29 @@ import { WhoBeginsEffect } from '../effects/game-phase-effects';
 import { PokemonCard } from '../card/pokemon-card';
 import { ShowMulliganPrompt } from '../prompts/show-mulligan-prompt';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
-import { Format } from '../card/card-types';
+
+function sandboxAllPokemonBasicEnabled(state: State): boolean {
+  return Boolean(state.gameSettings?.sandboxMode && state.gameSettings?.sandboxAllPokemonBasic);
+}
+
+function isStartingPokemonCandidate(state: State, c: Card): boolean {
+  if (c.tags.includes(CardTag.PLAY_DURING_SETUP)) {
+    return true;
+  }
+  if (c instanceof PokemonCard) {
+    return c.stage === Stage.BASIC || sandboxAllPokemonBasicEnabled(state);
+  }
+  return false;
+}
+
+function handHasStartingPokemon(state: State, player: Player): boolean {
+  const basicPokemon = { superType: SuperType.POKEMON, stage: Stage.BASIC };
+  const hasVanillaBasic = player.hand.count(basicPokemon) > 0;
+  const hasSandboxPokemon =
+    sandboxAllPokemonBasicEnabled(state) && player.hand.cards.some(card => card instanceof PokemonCard);
+  const hasSetupTag = player.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+  return hasVanillaBasic || hasSandboxPokemon || hasSetupTag;
+}
 
 function putStartingPokemonsAndPrizes(player: Player, cards: Card[], state: State): void {
   if (cards.length === 0) {
@@ -48,7 +70,6 @@ function putStartingPokemonsAndPrizes(player: Player, cards: Card[], state: Stat
 function* alternativeSetupGame(next: Function, store: StoreLike, state: State): IterableIterator<State> {
   const player = state.players[0];
   const opponent = state.players[1];
-  const basicPokemon = { superType: SuperType.POKEMON, stage: Stage.BASIC };
   const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
 
   // 1. Decide who goes first
@@ -95,8 +116,8 @@ function* alternativeSetupGame(next: Function, store: StoreLike, state: State): 
   });
 
   // 3. Mulligan logic
-  let playerHasBasic = player.hand.count(basicPokemon) > 0 || player.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
-  let opponentHasBasic = opponent.hand.count(basicPokemon) > 0 || opponent.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+  let playerHasBasic = handHasStartingPokemon(state, player);
+  let opponentHasBasic = handHasStartingPokemon(state, opponent);
 
   // Track mulligan hands for each player
   const playerMulliganHands: Card[][] = [];
@@ -122,8 +143,8 @@ function* alternativeSetupGame(next: Function, store: StoreLike, state: State): 
       opponent.deck.moveTo(opponent.hand, 13);
       next();
     });
-    playerHasBasic = player.hand.count(basicPokemon) > 0 || player.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
-    opponentHasBasic = opponent.hand.count(basicPokemon) > 0 || opponent.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+    playerHasBasic = handHasStartingPokemon(state, player);
+    opponentHasBasic = handHasStartingPokemon(state, opponent);
   }
 
   // 5. If only one player has a Basic, that player sets up, the other continues to mulligan
@@ -140,7 +161,7 @@ function* alternativeSetupGame(next: Function, store: StoreLike, state: State): 
         opponent.deck.moveTo(opponent.hand, 13);
         next();
       });
-      opponentHasBasic = opponent.hand.count(basicPokemon) > 0 || opponent.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+      opponentHasBasic = handHasStartingPokemon(state, opponent);
     }
     // Opponent sets up
     yield* alternativeSetupSinglePlayer(opponent, chooseCardsOptions, state, store, next);
@@ -186,7 +207,7 @@ function* alternativeSetupGame(next: Function, store: StoreLike, state: State): 
         player.deck.moveTo(player.hand, 13);
         next();
       });
-      playerHasBasic = player.hand.count(basicPokemon) > 0 || player.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+      playerHasBasic = handHasStartingPokemon(state, player);
     }
     // Player sets up
     yield* alternativeSetupSinglePlayer(player, chooseCardsOptions, state, store, next);
@@ -255,7 +276,7 @@ function* alternativeSetupGame(next: Function, store: StoreLike, state: State): 
 function* alternativeSetupSinglePlayer(player: Player, chooseCardsOptions: any, state: State, store: StoreLike, next: Function) {
   const blocked: number[] = [];
   player.hand.cards.forEach((c, index) => {
-    if (!(c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC))) {
+    if (!isStartingPokemonCandidate(state, c)) {
       blocked.push(index);
     }
   });
@@ -324,7 +345,6 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
 
   const player = state.players[0];
   const opponent = state.players[1];
-  const basicPokemon = { superType: SuperType.POKEMON, stage: Stage.BASIC };
   const chooseCardsOptions = { min: 1, max: 6, allowCancel: false };
 
   // 1. Decide who goes first
@@ -371,8 +391,8 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
   });
 
   // 3. Mulligan logic
-  let playerHasBasic = player.hand.count(basicPokemon) > 0 || player.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
-  let opponentHasBasic = opponent.hand.count(basicPokemon) > 0 || opponent.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+  let playerHasBasic = handHasStartingPokemon(state, player);
+  let opponentHasBasic = handHasStartingPokemon(state, opponent);
 
   // Track mulligan hands for each player
   const playerMulliganHands: Card[][] = [];
@@ -398,8 +418,8 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
       opponent.deck.moveTo(opponent.hand, 7);
       next();
     });
-    playerHasBasic = player.hand.count(basicPokemon) > 0 || player.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
-    opponentHasBasic = opponent.hand.count(basicPokemon) > 0 || opponent.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+    playerHasBasic = handHasStartingPokemon(state, player);
+    opponentHasBasic = handHasStartingPokemon(state, opponent);
   }
 
   // 5. If only one player has a Basic, that player sets up, the other continues to mulligan
@@ -416,7 +436,7 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
         opponent.deck.moveTo(opponent.hand, 7);
         next();
       });
-      opponentHasBasic = opponent.hand.count(basicPokemon) > 0 || opponent.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+      opponentHasBasic = handHasStartingPokemon(state, opponent);
     }
     // Opponent sets up
     yield* setupSinglePlayer(opponent, chooseCardsOptions, state, store, next);
@@ -462,7 +482,7 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
         player.deck.moveTo(player.hand, 7);
         next();
       });
-      playerHasBasic = player.hand.count(basicPokemon) > 0 || player.hand.cards.some(c => c.tags.includes(CardTag.PLAY_DURING_SETUP));
+      playerHasBasic = handHasStartingPokemon(state, player);
     }
     // Player sets up
     yield* setupSinglePlayer(player, chooseCardsOptions, state, store, next);
@@ -531,7 +551,7 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
 function* setupSinglePlayer(player: Player, chooseCardsOptions: any, state: State, store: StoreLike, next: Function) {
   const blocked: number[] = [];
   player.hand.cards.forEach((c, index) => {
-    if (!(c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC))) {
+    if (!isStartingPokemonCandidate(state, c)) {
       blocked.push(index);
     }
   });
@@ -550,7 +570,7 @@ function* allowExtraBenchPlacement(player: Player, chooseCardsOptions: any, stat
   player.active.cards.forEach(c => inPlayIds.add(c.id));
   const newBasics = player.hand.cards
     .map((c, idx) => ({ c, idx }))
-    .filter(({ c }) => (c.tags.includes(CardTag.PLAY_DURING_SETUP) || (c instanceof PokemonCard && c.stage === Stage.BASIC)) && !inPlayIds.has(c.id));
+    .filter(({ c }) => isStartingPokemonCandidate(state, c) && !inPlayIds.has(c.id));
   if (newBasics.length > 0) {
     const blocked = player.hand.cards.map((c, idx) => newBasics.some(nb => nb.idx === idx) ? -1 : idx).filter(idx => idx !== -1);
     // Use CHOOSE_STARTING_POKEMONS as fallback prompt message

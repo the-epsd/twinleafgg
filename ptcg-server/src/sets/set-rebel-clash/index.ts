@@ -3,7 +3,6 @@ import { Abomasnow } from './abomasnow';
 import { Aegislash } from './aegislash';
 import { Alcremie } from './alcremie';
 import { Appletun } from './appletun';
-import { Applin } from './applin';
 import { Applin2 } from './applin-2';
 import { Arcanine } from './arcanine';
 import { Arrokuda } from './arrokuda';
@@ -219,7 +218,6 @@ export const setRebelClash: Card[] = [
   new Aegislash(),
   new Alcremie(),
   new Appletun(),
-  new Applin(),
   new Applin2(),
   new Arcanine(),
   new Arrokuda(),

@@ -12,20 +12,18 @@ export class Inkay extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Procurement',
-      cost: [D],
-      damage: 0,
-      text: 'Search your deck for an Item card and put it into your hand. Then, shuffle your deck.',
-    },
-    {
-      name: 'Spinning Attack',
-      cost: [D, D],
-      damage: 30,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'Procurement',
+    cost: [D],
+    damage: 0,
+    text: 'Search your deck for an Item card and put it into your hand. Then, shuffle your deck.',
+  },
+  {
+    name: 'Spinning Attack',
+    cost: [D, D],
+    damage: 30,
+    text: '',
+  }];
 
   public set: string = 'M5';
   public setNumber: string = '49';

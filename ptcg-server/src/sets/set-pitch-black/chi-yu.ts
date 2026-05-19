@@ -11,15 +11,13 @@ export class ChiYu extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Spiraling Envy',
-      cost: [D],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'If this Pokémon has 2 or more damage counters on it, this attack does 90 more damage. Don\'t apply Weakness for this attack\'s damage.',
-    },
-  ];
+  public attacks = [{
+    name: 'Spiraling Envy',
+    cost: [D],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'If this Pokémon has 2 or more damage counters on it, this attack does 90 more damage. Don\'t apply Weakness for this attack\'s damage.',
+  }];
 
   public set: string = 'M5';
   public setNumber: string = '57';

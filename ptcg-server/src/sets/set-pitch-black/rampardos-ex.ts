@@ -27,10 +27,6 @@ export class Rampardosex extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public readonly DESTRUCTIVE_HEADBUTT_MARKER = 'RAMPARDOS_EX_DESTRUCTIVE_HEADBUTT_MARKER';
-  public readonly RAMPAGING_HAMMER_MARKER = 'RAMPARDOS_EX_RAMPAGING_HAMMER_MARKER';
-  public readonly CLEAR_RAMPAGING_HAMMER_MARKER = 'RAMPARDOS_EX_CLEAR_RAMPAGING_HAMMER_MARKER';
-
   public powers = [{
     name: 'Destructive Headbutt',
     powerType: PowerType.ABILITY,
@@ -38,14 +34,12 @@ export class Rampardosex extends PokemonCard {
     text: 'Once during your turn, if this Pokémon is in the Active Spot, you may flip a coin. If heads, discard 1 Energy from your opponent\'s Active Pokémon.',
   }];
 
-  public attacks = [
-    {
-      name: 'Rampaging Hammer',
-      cost: [F, F],
-      damage: 150,
-      text: 'During your next turn, attacks used by this Pokémon deal 150 more damage to your opponent\'s Active Pokémon.',
-    },
-  ];
+  public attacks = [{
+    name: 'Rampaging Hammer',
+    cost: [F, F],
+    damage: 150,
+    text: 'During your next turn, attacks used by this Pokémon deal 150 more damage to your opponent\'s Active Pokémon.',
+  }];
 
   public set: string = 'M5';
   public setNumber: string = '43';
@@ -53,6 +47,10 @@ export class Rampardosex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rampardos ex';
   public fullName: string = 'Rampardos ex M5';
+
+  public readonly DESTRUCTIVE_HEADBUTT_MARKER = 'RAMPARDOS_EX_DESTRUCTIVE_HEADBUTT_MARKER';
+  public readonly RAMPAGING_HAMMER_MARKER = 'RAMPARDOS_EX_RAMPAGING_HAMMER_MARKER';
+  public readonly CLEAR_RAMPAGING_HAMMER_MARKER = 'RAMPARDOS_EX_CLEAR_RAMPAGING_HAMMER_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {

@@ -15,7 +15,7 @@ import { Cobalion } from './cobalion';
 import { Cottonee } from './cottonee';
 import { Deino } from './deino';
 import { Dewott } from './dewott';
-import { Drillbur } from './drillbur';
+import { Drilbur } from './drilbur';
 import { Eelektrik } from './eelektrik';
 import { Emboar } from './emboar';
 import { Emolga } from './emolga';
@@ -205,7 +205,7 @@ export class EelektrikAR extends Eelektrik {
   public fullName: string = 'EelektrikAR SV11B';
 }
 
-export class DrillburAR extends Drillbur {
+export class DrilburAR extends Drilbur {
   public setNumber = '124';
   public set = 'BLK';
   public fullName: string = 'DrillburAR SV11B';
@@ -282,7 +282,7 @@ export class FennelFA extends Fennel {
 export class NsPlanFA extends NsPlan {
   public setNumber = '163';
   public set = 'BLK';
-  public fullName: string = 'N\'s PlotFA SV11B';
+  public fullName: string = "N's PlotFA SV11B";
 }
 
 // SV11B SIRs
@@ -326,7 +326,7 @@ export class GenesectexSIR extends Genesectex {
 export class NsPlanSIR extends NsPlan {
   public setNumber = '170';
   public set = 'BLK';
-  public fullName: string = 'N\'s PlotSIR SV11B';
+  public fullName: string = "N's PlotSIR SV11B";
 }
 
 export class VictiniRRB extends Victini {

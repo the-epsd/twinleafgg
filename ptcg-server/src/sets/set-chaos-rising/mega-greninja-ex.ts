@@ -43,13 +43,19 @@ export class MegaGreninjaex extends PokemonCard {
   public readonly MORTAL_SHURIKEN_MARKER = 'MORTAL_SHURIKEN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    // Ref: set-fusion-strike/inteleon-vmax.ts (Double Gunner — discard energy, then choose targets)
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+
       if (player.active.getPokemonCard() !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      const basicWInHand = player.hand.cards.find(c =>
+      if (player.marker.hasMarker(this.MORTAL_SHURIKEN_MARKER, this)) {
+        throw new GameError(GameMessage.POWER_ALREADY_USED);
+      }
+
+      const basicWInHand = player.hand.cards.some(c =>
         c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.WATER)
       );
       if (!basicWInHand) {
@@ -60,41 +66,37 @@ export class MegaGreninjaex extends PokemonCard {
       if (!hasOpponentPokemon) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      if (player.marker.hasMarker(this.MORTAL_SHURIKEN_MARKER, this)) {
-        throw new GameError(GameMessage.POWER_ALREADY_USED);
-      }
 
-      state = store.prompt(state, new ChooseCardsPrompt(
+      return store.prompt(state, new ChooseCardsPrompt(
         player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, provides: [CardType.WATER] },
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
         { allowCancel: true, min: 1, max: 1 }
       ), cards => {
         cards = cards || [];
         if (cards.length === 0) {
-          player.marker.addMarker(this.MORTAL_SHURIKEN_MARKER, this);
           return state;
         }
-        player.marker.addMarker(this.MORTAL_SHURIKEN_MARKER, this);
-        MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
-      });
 
-      state = store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-        PlayerType.TOP_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false }
-      ), selected => {
-        const targets = selected || [];
-        if (targets.length > 0) {
-          const placeCounters = new PlaceDamageCountersEffect(player, targets[0], 60, this);
-          store.reduceEffect(state, placeCounters);
-        }
-        ABILITY_USED(player, this);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
+
+        return store.prompt(state, new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false }
+        ), selected => {
+          const targets = selected || [];
+          if (targets.length > 0) {
+            const placeCounters = new PlaceDamageCountersEffect(player, targets[0], 60, this);
+            store.reduceEffect(state, placeCounters);
+          }
+          player.marker.addMarker(this.MORTAL_SHURIKEN_MARKER, this);
+          ABILITY_USED(player, this);
+        });
       });
-      return state;
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.MORTAL_SHURIKEN_MARKER, this);

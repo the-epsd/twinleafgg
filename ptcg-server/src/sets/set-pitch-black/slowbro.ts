@@ -13,21 +13,19 @@ export class Slowbro extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'All Out',
-      cost: [P],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'If you have no cards in your hand, this attack does 160 more damage.',
-    },
-    {
-      name: 'Zen Headbutt',
-      cost: [C, C, C],
-      damage: 110,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'All Out',
+    cost: [P],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'If you have no cards in your hand, this attack does 160 more damage.',
+  },
+  {
+    name: 'Zen Headbutt',
+    cost: [C, C, C],
+    damage: 110,
+    text: '',
+  }];
 
   public set: string = 'M5';
   public setNumber: string = '29';

@@ -29,43 +29,45 @@ export function AppLayout() {
         overflow: 'hidden',
       }}
     >
-      <header
-        style={{
-          display: 'flex',
-          gap: 16,
-          alignItems: 'center',
-          padding: '12px 20px',
-          borderBottom: '1px solid #ccc',
-          flexShrink: 0,
-        }}
-      >
-        <strong>{t('REACT_SHELL_TITLE')}</strong>
-        <nav style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-          <Link to="/games">{t('MAIN_GAMES')}</Link>
-          <Link to="/spectate">{t('MAIN_SPECTATE')}</Link>
-          <Link to="/deck">{t('DECK_TITLE')}</Link>
-          <Link to="/ranking">{t('MAIN_RANKING')}</Link>
-          <Link to="/friends">{t('MAIN_FRIENDS')}</Link>
-          <Link to="/message">{t('MAIN_MESSAGES')}</Link>
-          <Link to="/battle-pass">{t('MAIN_BATTLE_PASS')}</Link>
-          <Link to="/settings">{t('BUTTON_SETTINGS')}</Link>
-        </nav>
-        <label style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto' }}>
-          <select
-            value={language}
-            onChange={(e) => setLanguage(e.target.value as SupportedLanguageCode)}
-            aria-label={t('LABEL_LANGUAGE')}
-            title={t('LABEL_LANGUAGE')}
-          >
-            {SUPPORTED_LANGUAGE_CODES.map((code) => (
-              <option key={code} value={code}>
-                {labels[code]}
-              </option>
-            ))}
-          </select>
-        </label>
-        <UserAccountMenu />
-      </header>
+      {!tableFullBleed && (
+        <header
+          style={{
+            display: 'flex',
+            gap: 16,
+            alignItems: 'center',
+            padding: '12px 20px',
+            borderBottom: '1px solid #ccc',
+            flexShrink: 0,
+          }}
+        >
+          <strong>{t('REACT_SHELL_TITLE')}</strong>
+          <nav style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            <Link to="/games">{t('MAIN_GAMES')}</Link>
+            <Link to="/spectate">{t('MAIN_SPECTATE')}</Link>
+            <Link to="/deck">{t('DECK_TITLE')}</Link>
+            <Link to="/ranking">{t('MAIN_RANKING')}</Link>
+            <Link to="/friends">{t('MAIN_FRIENDS')}</Link>
+            <Link to="/message">{t('MAIN_MESSAGES')}</Link>
+            <Link to="/battle-pass">{t('MAIN_BATTLE_PASS')}</Link>
+            <Link to="/settings">{t('BUTTON_SETTINGS')}</Link>
+          </nav>
+          <label style={{ display: 'flex', alignItems: 'center', gap: 6, marginLeft: 'auto' }}>
+            <select
+              value={language}
+              onChange={(e) => setLanguage(e.target.value as SupportedLanguageCode)}
+              aria-label={t('LABEL_LANGUAGE')}
+              title={t('LABEL_LANGUAGE')}
+            >
+              {SUPPORTED_LANGUAGE_CODES.map((code) => (
+                <option key={code} value={code}>
+                  {labels[code]}
+                </option>
+              ))}
+            </select>
+          </label>
+          <UserAccountMenu />
+        </header>
+      )}
       <main
         style={{
           padding: deckEditorFullBleed || tableFullBleed ? 0 : 20,

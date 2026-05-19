@@ -29,21 +29,19 @@ export class AntiqueSkullFossil extends TrainerCard {
   public maxTools: number = 1;
   public evolvesFromBase: string[] = [];
 
-  public powers: Power[] = [
-    {
-      name: 'Spiky Skull',
-      powerType: PowerType.ABILITY,
-      text: 'If this Pokémon is in the Active Spot and takes damage from an attack from your opponent\'s Pokémon, put 3 damage counters on the attacking Pokémon.',
-    },
-    {
-      name: 'Antique Skull Fossil',
-      text: `Play this card as if it were a 60-HP Basic [C] Pokémon. This card can't be affected by any Special Conditions and can't retreat. At any time during your turn, you may discard this card from play.`,
-      useWhenInPlay: true,
-      exemptFromAbilityLock: true,
-      isFossil: true,
-      powerType: PowerType.TRAINER_ABILITY,
-    },
-  ];
+  public powers: Power[] = [{
+    name: 'Spiky Skull',
+    powerType: PowerType.ABILITY,
+    text: 'If this Pokémon is in the Active Spot and takes damage from an attack from your opponent\'s Pokémon, put 3 damage counters on the attacking Pokémon.',
+  },
+  {
+    name: 'Antique Skull Fossil',
+    text: `Play this card as if it were a 60-HP Basic [C] Pokémon. This card can't be affected by any Special Conditions and can't retreat. At any time during your turn, you may discard this card from play.`,
+    useWhenInPlay: true,
+    exemptFromAbilityLock: true,
+    isFossil: true,
+    powerType: PowerType.TRAINER_ABILITY,
+  }];
 
   public set: string = 'M5';
   public setNumber: string = '71';

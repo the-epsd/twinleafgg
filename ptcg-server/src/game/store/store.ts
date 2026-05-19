@@ -5,6 +5,7 @@ import { ConcedeAction } from './actions/concede-action';
 import { Card } from './card/card';
 import { ChangeAvatarAction } from './actions/change-avatar-action';
 import { Effect } from './effects/effect';
+import { CheckAttackCostEffect, CheckRetreatCostEffect } from './effects/check-effects';
 import { GameError } from '../game-error';
 import { GameMessage, GameLog } from '../game-message';
 import { Prompt } from './prompts/prompt';
@@ -20,6 +21,7 @@ import { playCardReducer } from './reducers/play-card-reducer';
 import { playEnergyReducer } from './effect-reducers/play-energy-effect';
 import { playPokemonReducer } from './effect-reducers/play-pokemon-effect';
 import { playPokemonFromDeckReducer } from './effect-reducers/play-pokemon-from-deck-effect';
+import { playPokemonFromDiscardReducer } from './effect-reducers/play-pokemon-from-discard-effect';
 import { playTrainerReducer } from './effect-reducers/play-trainer-effect';
 import { playerTurnReducer } from './reducers/player-turn-reducer';
 import { gamePhaseReducer } from './effect-reducers/game-phase-effect';
@@ -118,6 +120,16 @@ export class Store implements StoreLike {
 
     state = this.propagateEffect(state, effect);
 
+    const gs = state.gameSettings;
+    if (gs?.sandboxMode) {
+      if (effect instanceof CheckAttackCostEffect && gs.sandboxAttacksCostNoEnergy) {
+        effect.cost = [];
+      }
+      if (effect instanceof CheckRetreatCostEffect && gs.sandboxRetreatCostsNoEnergy) {
+        effect.cost = [];
+      }
+    }
+
     if (effect.preventDefault === true) {
       return state;
     }
@@ -126,6 +138,7 @@ export class Store implements StoreLike {
     state = playEnergyReducer(this, state, effect);
     state = playPokemonReducer(this, state, effect);
     state = playPokemonFromDeckReducer(this, state, effect);
+    state = playPokemonFromDiscardReducer(this, state, effect);
     state = playTrainerReducer(this, state, effect);
     state = retreatReducer(this, state, effect);
     state = gameReducer(this, state, effect);

@@ -3,11 +3,10 @@ import {
   AttachEnergyEffect, PlayPokemonEffect, PlayStadiumEffect,
   PlaySupporterEffect, AttachPokemonToolEffect, PlayItemEffect
 } from '../effects/play-card-effects';
-import { CardList } from '../state/card-list';
 import { EnergyCard } from '../card/energy-card';
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
-import { PlayCardAction, PlayerType, SlotType, CardTarget } from '../actions/play-card-action';
+import { PlayCardAction, CardTarget } from '../actions/play-card-action';
 import { PokemonCard } from '../card/pokemon-card';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { State, GamePhase } from '../state/state';
@@ -16,17 +15,13 @@ import { TrainerCard } from '../card/trainer-card';
 import { TrainerType } from '../card/card-types';
 import { Effect } from '../effects/effect';
 import { StateUtils } from '../state-utils';
+import { Player } from '../state/player';
 
-function findCardList(state: State, target: CardTarget): CardList | undefined {
-  const player = target.player === PlayerType.BOTTOM_PLAYER
-    ? state.players[state.activePlayer]
-    : state.players[state.activePlayer ? 0 : 1];
-
-  switch (target.slot) {
-    case SlotType.ACTIVE:
-      return player.active;
-    case SlotType.BENCH:
-      return player.bench[target.index];
+function findPokemonTarget(state: State, player: Player, target: CardTarget): PokemonCardList | undefined {
+  try {
+    return StateUtils.getTarget(state, player, target);
+  } catch {
+    return undefined;
   }
 }
 
@@ -47,7 +42,7 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
       }
 
       if (handCard instanceof EnergyCard) {
-        const target = findCardList(state, action.target);
+        const target = findPokemonTarget(state, player, action.target);
         if (!(target instanceof PokemonCardList) || target.cards.length === 0) {
           throw new GameError(GameMessage.INVALID_TARGET);
         }
@@ -69,7 +64,7 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
       }
 
       if (handCard instanceof PokemonCard) {
-        const target = findCardList(state, action.target);
+        const target = findPokemonTarget(state, player, action.target);
         if (!(target instanceof PokemonCardList)) {
           throw new GameError(GameMessage.INVALID_TARGET);
         }
@@ -79,7 +74,7 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
       }
 
       if (handCard instanceof TrainerCard) {
-        const target = findCardList(state, action.target);
+        const target = findPokemonTarget(state, player, action.target);
         let effect: Effect;
         switch (handCard.trainerType) {
           case TrainerType.SUPPORTER:

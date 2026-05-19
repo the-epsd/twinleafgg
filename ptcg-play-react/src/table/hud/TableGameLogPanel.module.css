@@ -1,6 +1,8 @@
 .root {
   display: flex;
   flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
   height: 100%;
   max-height: inherit;
   background: rgba(0, 0, 0, 0.75);
@@ -70,21 +72,31 @@
   opacity: 0.85;
 }
 
+/* Flex column so .list scrolls and .footer (composer) stays visible inside max-height parents */
+.panelBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
 .header {
+  flex-shrink: 0;
   margin: 0 0 4px;
   font-size: 0.7rem;
   font-weight: 700;
 }
 
 .list {
-  flex: 1;
+  flex: 1 1 auto;
+  min-height: 0;
   overflow: auto;
   margin: 0;
   padding: 0 2px 0 0;
   list-style: none;
   font-size: 0.65rem;
   line-height: 1.3;
-  min-height: 48px;
 }
 
 .row {
@@ -113,10 +125,11 @@
 }
 
 .footer {
+  flex-shrink: 0;
   display: flex;
   gap: 5px;
   margin-top: 6px;
-  align-items: center;
+  align-items: flex-end;
 }
 
 .compactSend {
@@ -135,6 +148,10 @@
   background: rgba(255, 255, 255, 0.06);
   color: inherit;
   font-size: 0.68rem;
+  font-family: inherit;
+  line-height: 1.35;
+  resize: vertical;
+  max-height: 140px;
 }
 
 .input::placeholder {

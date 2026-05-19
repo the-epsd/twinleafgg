@@ -15,21 +15,19 @@ export class MegaExcadrillex extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Dig And Break',
-      cost: [M, M],
-      damage: 90,
-      text: 'Discard the top 2 cards from your opponent\'s deck.',
-    },
-    {
-      name: 'Maximum Drill',
-      cost: [M, M, M],
-      damage: 200,
-      damageCalculation: '+',
-      text: 'If this Pokémon has at least 2 extra Energy attached to it (in addition to this attack\'s cost), this attack does 130 more damage.',
-    },
-  ];
+  public attacks = [{
+    name: 'Dig And Break',
+    cost: [M, M],
+    damage: 90,
+    text: 'Discard the top 2 cards from your opponent\'s deck.',
+  },
+  {
+    name: 'Maximum Drill',
+    cost: [M, M, M],
+    damage: 200,
+    damageCalculation: '+',
+    text: 'If this Pokémon has at least 2 extra Energy attached to it (in addition to this attack\'s cost), this attack does 130 more damage.',
+  }];
 
   public set: string = 'M5';
   public setNumber: string = '63';

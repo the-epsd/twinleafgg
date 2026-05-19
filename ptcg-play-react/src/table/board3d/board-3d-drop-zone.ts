@@ -9,6 +9,14 @@ import {
   Texture,
   Group
 } from 'three';
+import {
+  BOARD3D_CARD_SLOT_BASE_HEIGHT,
+  BOARD3D_CARD_SLOT_BASE_WIDTH,
+  BOARD_3D_BENCH_GENERAL_DROP_ZONE_IDLE_OPACITY,
+  BOARD_3D_BENCH_DROP_ZONE_IDLE_OPACITY,
+  BOARD3D_DROP_ZONE_SNAP_DISTANCE,
+  BOARD3D_DROP_ZONE_TARGET_SCALE,
+} from './board3d-constants';
 import { PlayerType, SlotType } from 'ptcg-server';
 import gsap from 'gsap';
 
@@ -49,7 +57,7 @@ const STATE_COLORS = {
   [DropZoneState.OCCUPIED]: { color: 0xffaa00, emissive: 0xffaa00, opacity: 0.1 }
 };
 
-// Base opacity for zones with texture (always visible)
+// Base opacity for zones with texture at rest (non-bench zones stay subtle)
 const TEXTURE_BASE_OPACITY = 0.01;
 
 // Outline color for board spot borders (white)
@@ -68,15 +76,13 @@ export class Board3dDropZone {
   private pulseAnimation: gsap.core.Tween | null = null;
   private hasTexture: boolean = false;
 
-  // Default card dimensions in world units
-  private static readonly DEFAULT_WIDTH = 2.8;
-  private static readonly DEFAULT_HEIGHT = 3.8;
-
   constructor(config: DropZoneConfig) {
     this.config = config;
 
-    const width = config.width ?? Board3dDropZone.DEFAULT_WIDTH;
-    const height = config.height ?? Board3dDropZone.DEFAULT_HEIGHT;
+    const defaultW = BOARD3D_CARD_SLOT_BASE_WIDTH * BOARD3D_DROP_ZONE_TARGET_SCALE;
+    const defaultH = BOARD3D_CARD_SLOT_BASE_HEIGHT * BOARD3D_DROP_ZONE_TARGET_SCALE;
+    const width = config.width ?? defaultW;
+    const height = config.height ?? defaultH;
 
     // Create plane geometry for the drop zone
     const geometry = new PlaneGeometry(width, height);
@@ -84,8 +90,10 @@ export class Board3dDropZone {
     // Store texture flag
     this.hasTexture = !!config.texture;
 
-    // Create material with initial state - always visible with texture if provided
-    const baseOpacity = this.hasTexture ? TEXTURE_BASE_OPACITY : STATE_COLORS[DropZoneState.HIDDEN].opacity;
+    // Create material with initial state — bench planes need readable idle opacity
+    const baseOpacity = this.hasTexture
+      ? this.getIdleTextureOpacity()
+      : STATE_COLORS[DropZoneState.HIDDEN].opacity;
     // Higher emissive intensity for BENCH_GENERAL zones for better visibility
     const emissiveIntensity = config.type === DropZoneType.BENCH_GENERAL ? 1.0 : 0.5;
     this.material = new MeshStandardMaterial({
@@ -157,6 +165,16 @@ export class Board3dDropZone {
     }
   }
 
+  private getIdleTextureOpacity(): number {
+    if (this.config.type === DropZoneType.BENCH) {
+      return BOARD_3D_BENCH_DROP_ZONE_IDLE_OPACITY;
+    }
+    if (this.config.type === DropZoneType.BENCH_GENERAL) {
+      return BOARD_3D_BENCH_GENERAL_DROP_ZONE_IDLE_OPACITY;
+    }
+    return TEXTURE_BASE_OPACITY;
+  }
+
   getMesh(): Mesh {
     return this.mesh;
   }
@@ -198,7 +216,7 @@ export class Board3dDropZone {
 
     // If texture is present, ensure minimum opacity for visibility
     const targetOpacity = this.hasTexture
-      ? Math.max(opacity, TEXTURE_BASE_OPACITY)
+      ? Math.max(opacity, this.getIdleTextureOpacity())
       : opacity;
 
     if (animate) {
@@ -256,7 +274,7 @@ export class Board3dDropZone {
   /**
    * Check if a position is within snap distance of this zone
    */
-  isNearPosition(position: Vector3, snapDistance: number = 3.5): boolean {
+  isNearPosition(position: Vector3, snapDistance: number = BOARD3D_DROP_ZONE_SNAP_DISTANCE): boolean {
     const zonePos = this.config.position;
     const dx = position.x - zonePos.x;
     const dz = position.z - zonePos.z;
@@ -279,8 +297,10 @@ export class Board3dDropZone {
    */
   isPositionInBounds(position: Vector3): boolean {
     const zonePos = this.config.position;
-    const width = this.config.width ?? Board3dDropZone.DEFAULT_WIDTH;
-    const height = this.config.height ?? Board3dDropZone.DEFAULT_HEIGHT;
+    const defaultW = BOARD3D_CARD_SLOT_BASE_WIDTH * BOARD3D_DROP_ZONE_TARGET_SCALE;
+    const defaultH = BOARD3D_CARD_SLOT_BASE_HEIGHT * BOARD3D_DROP_ZONE_TARGET_SCALE;
+    const width = this.config.width ?? defaultW;
+    const height = this.config.height ?? defaultH;
 
     // Check if position is within rectangular bounds
     // X bounds: [centerX - width/2, centerX + width/2]
@@ -307,7 +327,7 @@ export class Board3dDropZone {
   hide(): void {
     // If texture is present, keep it visible at minimum opacity
     if (this.hasTexture) {
-      this.material.opacity = TEXTURE_BASE_OPACITY;
+      this.material.opacity = this.getIdleTextureOpacity();
       this.currentState = DropZoneState.HIDDEN;
     } else {
       this.setState(DropZoneState.HIDDEN);

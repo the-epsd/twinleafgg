@@ -4,11 +4,30 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { Stage, CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { ChooseCardsPrompt, ConfirmPrompt, GameMessage, PowerType, ShuffleDeckPrompt, ShowCardsPrompt, StoreLike, State, StateUtils } from '../../game';
+import {
+  Stage,
+  CardType,
+  SuperType,
+  TrainerType,
+} from '../../game/store/card/card-types';
+import {
+  ChooseCardsPrompt,
+  ConfirmPrompt,
+  GameMessage,
+  PowerType,
+  ShuffleDeckPrompt,
+  ShowCardsPrompt,
+  StoreLike,
+  State,
+  StateUtils,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, COIN_FLIP_PROMPT } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  COIN_FLIP_PROMPT,
+} from '../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED } from '../../game/store/prefabs/attack-effects';
 
 export class Rotom extends PokemonCard {
@@ -18,27 +37,29 @@ export class Rotom extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public powers = [  {
-    name: 'Roto Choice',
-    powerType: PowerType.ABILITY,
-    text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may search your deck for up to 2 Item cards that have the word "Rotom" in their name, reveal them, and put them into your hand. Then, shuffle your deck.'
-  }];
+  public powers = [
+    {
+      name: 'Roto Choice',
+      powerType: PowerType.ABILITY,
+      text: 'When you play this Pokémon from your hand onto your Bench during your turn, you may search your deck for up to 2 Item cards that have the word "Rotom" in their name, reveal them, and put them into your hand. Then, shuffle your deck.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Thunder Shock',
       cost: [L, C],
       damage: 30,
-      text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
-    }
+      text: "Flip a coin. If heads, your opponent's Active Pokémon is now Paralyzed.",
+    },
   ];
 
   public regulationMark: string = 'D';
   public set: string = 'SHF';
-  public setNumber: string = 'SV038';
+  public setNumber: string = '34';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Rotom';
-  public fullName: string = 'Rotom SHF';
+  public fullName: string = 'Rotom SHF 34';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Roto Choice
@@ -51,60 +72,78 @@ export class Rotom extends PokemonCard {
         return state;
       }
 
-      const rotomItems = player.deck.cards.filter(c =>
-        c instanceof TrainerCard &&
-        c.trainerType === TrainerType.ITEM &&
-        c.name.includes('Rotom')
+      const rotomItems = player.deck.cards.filter(
+        (c) =>
+          c instanceof TrainerCard &&
+          c.trainerType === TrainerType.ITEM &&
+          c.name.includes('Rotom'),
       );
 
       if (rotomItems.length === 0) {
         return state;
       }
 
-      state = store.prompt(state, new ConfirmPrompt(
-        player.id,
-        GameMessage.WANT_TO_USE_ABILITY,
-      ), wantToUse => {
-        if (!wantToUse) {
-          return;
-        }
-
-        const opponent = StateUtils.getOpponent(state, player);
-
-        // Build blocked list for non-Rotom items
-        const blocked: number[] = [];
-        player.deck.cards.forEach((c, index) => {
-          if (!(c instanceof TrainerCard) ||
-            c.trainerType !== TrainerType.ITEM ||
-            !c.name.includes('Rotom')) {
-            blocked.push(index);
-          }
-        });
-
-        state = store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_HAND,
-          player.deck,
-          { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
-          { min: 0, max: 2, allowCancel: false, blocked }
-        ), selected => {
-          const cards = selected || [];
-
-          if (cards.length > 0) {
-            store.prompt(state, [new ShowCardsPrompt(
-              opponent.id,
-              GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
-              cards
-            )], () => {
-              player.deck.moveCardsTo(cards, player.hand);
-            });
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (!wantToUse) {
+            return;
           }
 
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
+          const opponent = StateUtils.getOpponent(state, player);
+
+          // Build blocked list for non-Rotom items
+          const blocked: number[] = [];
+          player.deck.cards.forEach((c, index) => {
+            if (
+              !(c instanceof TrainerCard) ||
+              c.trainerType !== TrainerType.ITEM ||
+              !c.name.includes('Rotom')
+            ) {
+              blocked.push(index);
+            }
           });
-        });
-      });
+
+          state = store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_HAND,
+              player.deck,
+              { superType: SuperType.TRAINER, trainerType: TrainerType.ITEM },
+              { min: 0, max: 2, allowCancel: false, blocked },
+            ),
+            (selected) => {
+              const cards = selected || [];
+
+              if (cards.length > 0) {
+                store.prompt(
+                  state,
+                  [
+                    new ShowCardsPrompt(
+                      opponent.id,
+                      GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
+                      cards,
+                    ),
+                  ],
+                  () => {
+                    player.deck.moveCardsTo(cards, player.hand);
+                  },
+                );
+              }
+
+              return store.prompt(
+                state,
+                new ShuffleDeckPrompt(player.id),
+                (order) => {
+                  player.deck.applyOrder(order);
+                },
+              );
+            },
+          );
+        },
+      );
     }
 
     // Attack 1: Thunder Shock
@@ -112,7 +151,7 @@ export class Rotom extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      COIN_FLIP_PROMPT(store, state, player, result => {
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
         if (result) {
           YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_PARALYZED(store, state, effect);
         }

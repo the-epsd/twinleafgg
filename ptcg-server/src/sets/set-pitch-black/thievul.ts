@@ -17,20 +17,18 @@ export class Thievul extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Skill Thief',
-      cost: [C, C],
-      damage: 0,
-      text: 'If you have no cards in your hand, choose 1 of your opponent\'s Pokémon\'s attacks and use it as this attack.',
-    },
-    {
-      name: 'Razor Fang',
-      cost: [D, C, C],
-      damage: 80,
-      text: '',
-    },
-  ];
+  public attacks = [{
+    name: 'Skill Thief',
+    cost: [C, C],
+    damage: 0,
+    text: 'If you have no cards in your hand, choose 1 of your opponent\'s Pokémon\'s attacks and use it as this attack.',
+  },
+  {
+    name: 'Razor Fang',
+    cost: [D, C, C],
+    damage: 80,
+    text: '',
+  }];
 
   public set: string = 'M5';
   public setNumber: string = '52';

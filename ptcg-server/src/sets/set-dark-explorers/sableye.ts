@@ -50,7 +50,7 @@ export class Sableye extends PokemonCard {
       });
     }
 
-    if (AFTER_ATTACK(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 1, this)) {
       const player = effect.player;
 
       const blocked: number[] = [];

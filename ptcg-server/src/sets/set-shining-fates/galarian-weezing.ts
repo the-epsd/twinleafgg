@@ -1,6 +1,10 @@
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
-import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
+import {
+  CardType,
+  SpecialCondition,
+  Stage,
+} from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
@@ -12,61 +16,61 @@ import { StoreLike } from '../../game/store/store-like';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GalarianWeezing extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_1;
-
   public regulationMark = 'D';
-
-  public cardType: CardType = CardType.DARK;
-
+  public cardType: CardType = D;
   public evolvesFrom = 'Koffing';
-
   public hp: number = 130;
+  public weakness = [{ type: F }];
+  public retreat = [C, C, C];
 
-  public weakness = [{ type: CardType.FIGHTING }];
+  public powers = [
+    {
+      name: 'Neutralizing Gas',
+      powerType: PowerType.ABILITY,
+      text: "As long as this Pokémon is in the Active Spot, your opponent's Pokémon in play have no Abilities, except for Neutralizing Gas.",
+    },
+  ];
 
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
-
-  public powers = [{
-    name: 'Neutralizing Gas',
-    powerType: PowerType.ABILITY,
-    text: 'As long as this Pokémon is in the Active Spot, your opponent\'s Pokémon in play have no Abilities, except for Neutralizing Gas.'
-  }];
-
-  public attacks = [{
-    name: 'Severe Poison',
-    cost: [CardType.DARK],
-    damage: 0,
-    text: 'Your opponent\'s Active Pokémon is now Poisoned. Put 4 damage counters instead of 1 on that Pokémon during Pokémon Checkup.'
-  }];
+  public attacks = [
+    {
+      name: 'Severe Poison',
+      cost: [D],
+      damage: 0,
+      text: "Your opponent's Active Pokémon is now Poisoned. Put 4 damage counters instead of 1 on that Pokémon during Pokémon Checkup.",
+    },
+  ];
 
   public set: string = 'SHF';
-
   public name: string = 'Galarian Weezing';
-
   public fullName: string = 'Galarian Weezing SHF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '42';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const specialCondition = new AddSpecialConditionsEffect(effect, [SpecialCondition.POISONED]);
+      const specialCondition = new AddSpecialConditionsEffect(effect, [
+        SpecialCondition.POISONED,
+      ]);
       specialCondition.poisonDamage = 40;
       store.reduceEffect(state, specialCondition);
     }
 
-    if (effect instanceof PowerEffect && effect.power.powerType === PowerType.ABILITY && effect.power.name !== 'Neutralizing Gas') {
+    if (
+      effect instanceof PowerEffect &&
+      effect.power.powerType === PowerType.ABILITY &&
+      effect.power.name !== 'Neutralizing Gas'
+    ) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
 
-      if (!player.active.cards.includes(this) &&
-        !opponent.active.cards.includes(this)) {
+      if (
+        !player.active.cards.includes(this) &&
+        !opponent.active.cards.includes(this)
+      ) {
         return state;
       }
 

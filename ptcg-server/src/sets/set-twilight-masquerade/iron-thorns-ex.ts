@@ -4,53 +4,35 @@ import { PowerType, StoreLike, State, GameError, GameMessage, AttachEnergyPrompt
 import { Effect } from '../../game/store/effects/effect';
 import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class IronThornsex extends PokemonCard {
-
   public tags = [CardTag.POKEMON_ex, CardTag.FUTURE];
-
-  public regulationMark = 'H';
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.LIGHTNING;
-
+  public cardType: CardType = L;
   public hp: number = 230;
-
-  public weakness = [{ type: CardType.FIGHTING }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C, C, C, C];
 
   public powers = [{
     name: 'Initialization',
     powerType: PowerType.ABILITY,
     exemptFromInitialize: true,
-    text: 'As long as this Pokémon is in the Active Spot, Pokémon with a Rule Box in play ' +
-      '(both yours and your opponent\'s) have no Abilities, except for Future Pokémon. ' +
-      '(Pokémon ex, Pokémon V, etc. have Rule Boxes.) '
+    text: 'As long as this Pokémon is in the Active Spot, Pokémon with a Rule Box in play (both yours and your opponent\'s) have no Abilities, except for Future Pokémon. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)'
   }];
 
-  public attacks = [
-    {
-      name: 'Volt Cyclone',
-      cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
-      damage: 140,
-      text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Volt Cyclone',
+    cost: [L, C, C],
+    damage: 140,
+    text: 'Move an Energy from this Pokémon to 1 of your Benched Pokémon.'
+  }];
 
+  public regulationMark = 'H';
   public set: string = 'TWM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '77';
-
   public name: string = 'Iron Thorns ex';
-
   public fullName: string = 'Iron Thorns ex TWM';
-
-  private readonly BOLT_CYCLONE_MARKER = 'BOLT_CYCLONE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -58,22 +40,16 @@ export class IronThornsex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      const ruleBoxTags = [
-        CardTag.POKEMON_ex,
-        CardTag.POKEMON_V,
-        CardTag.POKEMON_VSTAR,
-        CardTag.POKEMON_VMAX,
-        CardTag.RADIANT
-      ];
-
       // Iron Thorns ex is not active Pokemon
       if (player.active.getPokemonCard() !== this
         && opponent.active.getPokemonCard() !== this) {
         return state;
       }
 
-      // Pokemon isn't a rule box - don't bother checking to block ability
-      if (!ruleBoxTags.some(tag => effect.card.tags.includes(tag))) {
+      const ruleBoxScratch = new PokemonCardList();
+      ruleBoxScratch.cards.push(effect.card);
+      // Pokémon without a Rule Box — don't block ability
+      if (!ruleBoxScratch.hasRuleBox()) {
         return state;
       }
 
@@ -106,12 +82,7 @@ export class IronThornsex extends PokemonCard {
       }
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-      ADD_MARKER(this.BOLT_CYCLONE_MARKER, effect.player, this);
-      return state;
-    }
-
-    if (effect instanceof AfterAttackEffect && HAS_MARKER(this.BOLT_CYCLONE_MARKER, effect.player, this)) {
+    if (effect instanceof AfterAttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const hasBench = player.bench.some(b => b.cards.length > 0);
 
@@ -136,8 +107,6 @@ export class IronThornsex extends PokemonCard {
         }
       });
     }
-
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.BOLT_CYCLONE_MARKER, this);
 
     return state;
   }

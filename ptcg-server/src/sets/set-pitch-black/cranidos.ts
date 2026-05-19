@@ -13,14 +13,12 @@ export class Cranidos extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Fling Off',
-      cost: [F, F],
-      damage: 70,
-      text: 'Your opponent switches their Active Pokémon with 1 of their Benched Pokémon.',
-    },
-  ];
+  public attacks = [{
+    name: 'Fling Off',
+    cost: [F, F],
+    damage: 70,
+    text: 'Your opponent switches their Active Pokémon with 1 of their Benched Pokémon.',
+  }];
 
   public set: string = 'M5';
   public setNumber: string = '42';
