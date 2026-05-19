@@ -1057,7 +1057,7 @@ button.stack-pile,
   display: grid;
   justify-items: end;
   gap: clamp(2px, calc(var(--card-w) * 0.025), 5px);
-  max-width: calc(100% - clamp(6px, calc(var(--card-w) * 0.07), 14px));
+  max-width: 100%;
   pointer-events: none;
 }
 
@@ -1065,16 +1065,16 @@ button.stack-pile,
   display: inline-flex;
   align-items: center;
   gap: clamp(2px, calc(var(--card-w) * 0.03), 5px);
-  min-height: clamp(22px, calc(var(--card-w) * 0.21), 32px);
-  padding: clamp(2px, calc(var(--card-w) * 0.025), 4px) clamp(4px, calc(var(--card-w) * 0.055), 8px) clamp(2px, calc(var(--card-w) * 0.025), 4px) clamp(7px, calc(var(--card-w) * 0.08), 12px);
-  border-radius: 0 6px 0 999px;
+  min-height: clamp(18px, calc(var(--card-w) * 0.16), 26px);
+  padding: clamp(1px, calc(var(--card-w) * 0.018), 3px) clamp(3px, calc(var(--card-w) * 0.04), 6px) clamp(1px, calc(var(--card-w) * 0.018), 3px) clamp(6px, calc(var(--card-w) * 0.055), 10px);
+  border-radius: 0 6px 0 7px;
   border: 1px solid rgba(255, 255, 255, 0.94);
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 244, 247, 0.96));
   box-shadow:
     0 5px 13px rgba(21, 28, 36, 0.28),
     inset 0 1px 0 rgba(255, 255, 255, 0.9);
   color: #111820;
-  font-size: clamp(13px, calc(var(--card-w) * 0.14), 20px);
+  font-size: clamp(11px, calc(var(--card-w) * 0.105), 16px);
   font-weight: 950;
   line-height: 1;
   white-space: nowrap;
@@ -1082,8 +1082,8 @@ button.stack-pile,
 }
 
 .pokemon-hp-bubble img {
-  width: clamp(16px, calc(var(--card-w) * 0.17), 25px);
-  height: clamp(16px, calc(var(--card-w) * 0.17), 25px);
+  width: clamp(13px, calc(var(--card-w) * 0.12), 19px);
+  height: clamp(13px, calc(var(--card-w) * 0.12), 19px);
   object-fit: contain;
   filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.28));
 }
@@ -1464,7 +1464,7 @@ button.card-tile.selected:disabled {
   left: calc((100vw - var(--board-right-rail)) / 2);
   top: calc((var(--board-top-inset) + 100vh - var(--board-bottom-inset)) / 2);
   z-index: 14;
-  width: min(760px, calc(100vw - 220px));
+  width: min(560px, calc(100vw - 220px));
   max-height: min(72vh, 680px);
   transform: translate(-50%, -50%);
 }
@@ -1530,10 +1530,10 @@ button.card-tile.selected:disabled {
 
 .setup-dock {
   position: absolute;
-  left: 50%;
+  left: calc((100vw - var(--board-right-rail)) / 2);
   top: 23%;
   z-index: 14;
-  width: min(620px, calc(100vw - 220px));
+  width: min(540px, calc(100vw - 220px));
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 8px 16px;

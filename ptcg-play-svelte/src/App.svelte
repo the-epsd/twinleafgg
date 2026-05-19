@@ -343,6 +343,13 @@
     if (!canAct(playerIndex)) {
       return;
     }
+    const card = game?.players[playerIndex]?.hand[handIndex];
+    if (canPlayCardToPlayArea(card, playerIndex)) {
+      selectedHand = { playerIndex, handIndex };
+      focusedSlot = null;
+      void playHandToBoard(playerIndex, handIndex);
+      return;
+    }
     selectedHand =
       selectedHand?.playerIndex === playerIndex && selectedHand.handIndex === handIndex
         ? null
@@ -507,6 +514,16 @@
       return;
     }
     void playToTarget(targetFor(game.activePlayerIndex, game.activePlayerIndex, SlotType.ACTIVE));
+  }
+
+  async function playHandToBoard(playerIndex: number, handIndex: number) {
+    if (!game || playerIndex !== game.activePlayerIndex || !canAct(playerIndex)) {
+      return;
+    }
+    busy = true;
+    const res = await localGameApi.playCard(playerIndex, handIndex, targetFor(playerIndex, playerIndex, SlotType.ACTIVE));
+    busy = false;
+    applyResponse(res);
   }
 
   function showZone(
