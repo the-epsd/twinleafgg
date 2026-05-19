@@ -31,15 +31,15 @@
     title: string,
     faceDown?: boolean,
   ) => void;
-  export let canShowPlayArea: (player: PlayerView) => boolean;
+  export let topCanShowPlayArea = false;
+  export let bottomCanShowPlayArea = false;
   export let allowPlayAreaDrop: (event: DragEvent, player: PlayerView) => void;
   export let dropToPlayArea: (player: PlayerView, event: DragEvent) => void;
   export let playToArea: (player: PlayerView) => void;
-
-  let boardTilt = 8;
-  let boardPerspective = 1250;
-  let boardScaleY = 94;
-  let boardLift = 0;
+  export let boardTilt = 8;
+  export let boardPerspective = 1250;
+  export let boardScaleY = 98;
+  export let boardLift = 0;
 
   $: boardPerspectiveStyle = [
     `--board-tilt: ${boardTilt}deg`,
@@ -47,13 +47,6 @@
     `--board-scale-y: ${boardScaleY / 100}`,
     `--board-lift: ${boardLift}px`,
   ].join('; ');
-
-  function resetPerspective() {
-    boardTilt = 8;
-    boardPerspective = 1250;
-    boardScaleY = 94;
-    boardLift = 0;
-  }
 </script>
 
 <section class="playmat" style={boardPerspectiveStyle}>
@@ -85,6 +78,98 @@
       </div>
     </div>
 
+    <div class="center-stack">
+      <div class="field-piles top-piles">
+        <div class="left-piles">
+          <button
+            type="button"
+            class="stack-pile lost-pile"
+            title={`${topPlayer.name} lost zone`}
+            on:click={() => showZone(topPlayer.index, 'lostZone', `${topPlayer.name} lost zone`)}
+          >
+            {topPlayer.lostZone.length} L
+          </button>
+          <div class="prize-grid" title={`${topPlayer.name} prizes`} aria-label={`${topPlayer.name} prizes`}>
+            {#each Array(6) as _, index}
+              <span class:claimed={index >= topPlayer.prizesLeft} style={`--row: ${Math.floor(index / 2)}; --col: ${index % 2};`}></span>
+            {/each}
+          </div>
+        </div>
+        <div class="right-field">
+          <button
+            type="button"
+            class="play-card-zone top-play-zone"
+            class:can-drop={topCanShowPlayArea}
+            aria-disabled={!topCanShowPlayArea}
+            aria-label={`Play selected card for ${topPlayer.name}`}
+            title={`Play selected card for ${topPlayer.name}`}
+            on:click={() => playToArea(topPlayer)}
+            on:dragover={(event) => allowPlayAreaDrop(event, topPlayer)}
+            on:drop={(event) => dropToPlayArea(topPlayer, event)}
+          ></button>
+          <div class="right-piles">
+            <span class="stack-pile deck-pile" title={`${topPlayer.name} deck`}>{topPlayer.deckCount}</span>
+            <button
+              type="button"
+              class="stack-pile discard-pile"
+              title={`${topPlayer.name} discard`}
+              on:click={() => showZone(topPlayer.index, 'discard', `${topPlayer.name} discard`)}
+            >
+              {#if topPlayer.discard.length}
+                <CardTile card={topPlayer.discard[topPlayer.discard.length - 1]} compact />
+              {/if}
+              <span class="pile-count">{topPlayer.discard.length}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-piles bottom-piles">
+        <div class="left-piles">
+          <button
+            type="button"
+            class="stack-pile lost-pile"
+            title={`${bottomPlayer.name} lost zone`}
+            on:click={() => showZone(bottomPlayer.index, 'lostZone', `${bottomPlayer.name} lost zone`)}
+          >
+            {bottomPlayer.lostZone.length} L
+          </button>
+          <div class="prize-grid" title={`${bottomPlayer.name} prizes`} aria-label={`${bottomPlayer.name} prizes`}>
+            {#each Array(6) as _, index}
+              <span class:claimed={index >= bottomPlayer.prizesLeft} style={`--row: ${Math.floor(index / 2)}; --col: ${index % 2};`}></span>
+            {/each}
+          </div>
+        </div>
+        <div class="right-field">
+          <button
+            type="button"
+            class="play-card-zone bottom-play-zone"
+            class:can-drop={bottomCanShowPlayArea}
+            aria-disabled={!bottomCanShowPlayArea}
+            aria-label={`Play selected card for ${bottomPlayer.name}`}
+            title={`Play selected card for ${bottomPlayer.name}`}
+            on:click={() => playToArea(bottomPlayer)}
+            on:dragover={(event) => allowPlayAreaDrop(event, bottomPlayer)}
+            on:drop={(event) => dropToPlayArea(bottomPlayer, event)}
+          ></button>
+          <div class="right-piles">
+            <span class="stack-pile deck-pile" title={`${bottomPlayer.name} deck`}>{bottomPlayer.deckCount}</span>
+            <button
+              type="button"
+              class="stack-pile discard-pile"
+              title={`${bottomPlayer.name} discard`}
+              on:click={() => showZone(bottomPlayer.index, 'discard', `${bottomPlayer.name} discard`)}
+            >
+              {#if bottomPlayer.discard.length}
+                <CardTile card={bottomPlayer.discard[bottomPlayer.discard.length - 1]} compact />
+              {/if}
+              <span class="pile-count">{bottomPlayer.discard.length}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="active-duel">
       <BoardSlot
         slot={topActiveSlot}
@@ -108,98 +193,6 @@
           <CardTile card={currentStadium} compact />
         </button>
       {/if}
-
-      <div class="center-stack">
-        <div class="field-piles top-piles">
-          <div class="left-piles">
-            <button
-              type="button"
-              class="stack-pile lost-pile"
-              title={`${topPlayer.name} lost zone`}
-              on:click={() => showZone(topPlayer.index, 'lostZone', `${topPlayer.name} lost zone`)}
-            >
-              {topPlayer.lostZone.length} L
-            </button>
-            <div class="prize-grid" title={`${topPlayer.name} prizes`} aria-label={`${topPlayer.name} prizes`}>
-              {#each Array(6) as _, index}
-                <span class:claimed={index >= topPlayer.prizesLeft} style={`--row: ${Math.floor(index / 2)}; --col: ${index % 2};`}></span>
-              {/each}
-            </div>
-          </div>
-          <div class="right-field">
-            <button
-              type="button"
-              class="play-card-zone top-play-zone"
-              class:can-drop={canShowPlayArea(topPlayer)}
-              disabled={!canShowPlayArea(topPlayer)}
-              aria-label={`Play selected card for ${topPlayer.name}`}
-              title={`Play selected card for ${topPlayer.name}`}
-              on:click={() => playToArea(topPlayer)}
-              on:dragover={(event) => allowPlayAreaDrop(event, topPlayer)}
-              on:drop={(event) => dropToPlayArea(topPlayer, event)}
-            ></button>
-            <div class="right-piles">
-              <span class="stack-pile deck-pile" title={`${topPlayer.name} deck`}>{topPlayer.deckCount}</span>
-              <button
-                type="button"
-                class="stack-pile discard-pile"
-                title={`${topPlayer.name} discard`}
-                on:click={() => showZone(topPlayer.index, 'discard', `${topPlayer.name} discard`)}
-              >
-                {#if topPlayer.discard.length}
-                  <CardTile card={topPlayer.discard[topPlayer.discard.length - 1]} compact />
-                {/if}
-                <span class="pile-count">{topPlayer.discard.length}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div class="field-piles bottom-piles">
-          <div class="left-piles">
-            <button
-              type="button"
-              class="stack-pile lost-pile"
-              title={`${bottomPlayer.name} lost zone`}
-              on:click={() => showZone(bottomPlayer.index, 'lostZone', `${bottomPlayer.name} lost zone`)}
-            >
-              {bottomPlayer.lostZone.length} L
-            </button>
-            <div class="prize-grid" title={`${bottomPlayer.name} prizes`} aria-label={`${bottomPlayer.name} prizes`}>
-              {#each Array(6) as _, index}
-                <span class:claimed={index >= bottomPlayer.prizesLeft} style={`--row: ${Math.floor(index / 2)}; --col: ${index % 2};`}></span>
-              {/each}
-            </div>
-          </div>
-          <div class="right-field">
-            <button
-              type="button"
-              class="play-card-zone bottom-play-zone"
-              class:can-drop={canShowPlayArea(bottomPlayer)}
-              disabled={!canShowPlayArea(bottomPlayer)}
-              aria-label={`Play selected card for ${bottomPlayer.name}`}
-              title={`Play selected card for ${bottomPlayer.name}`}
-              on:click={() => playToArea(bottomPlayer)}
-              on:dragover={(event) => allowPlayAreaDrop(event, bottomPlayer)}
-              on:drop={(event) => dropToPlayArea(bottomPlayer, event)}
-            ></button>
-            <div class="right-piles">
-              <span class="stack-pile deck-pile" title={`${bottomPlayer.name} deck`}>{bottomPlayer.deckCount}</span>
-              <button
-                type="button"
-                class="stack-pile discard-pile"
-                title={`${bottomPlayer.name} discard`}
-                on:click={() => showZone(bottomPlayer.index, 'discard', `${bottomPlayer.name} discard`)}
-              >
-                {#if bottomPlayer.discard.length}
-                  <CardTile card={bottomPlayer.discard[bottomPlayer.discard.length - 1]} compact />
-                {/if}
-                <span class="pile-count">{bottomPlayer.discard.length}</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <BoardSlot
         slot={bottomActiveSlot}
@@ -253,28 +246,4 @@
     </div>
   </div>
 
-  <details class="board-perspective-controls">
-    <summary>Board perspective</summary>
-    <label>
-      Tilt
-      <input type="range" min="0" max="18" step="1" bind:value={boardTilt} />
-      <span>{boardTilt}deg</span>
-    </label>
-    <label>
-      Depth
-      <input type="range" min="700" max="2200" step="50" bind:value={boardPerspective} />
-      <span>{boardPerspective}px</span>
-    </label>
-    <label>
-      Height
-      <input type="range" min="86" max="100" step="1" bind:value={boardScaleY} />
-      <span>{boardScaleY}%</span>
-    </label>
-    <label>
-      Lift
-      <input type="range" min="-48" max="48" step="2" bind:value={boardLift} />
-      <span>{boardLift}px</span>
-    </label>
-    <button type="button" on:click={resetPerspective}>Reset</button>
-  </details>
 </section>

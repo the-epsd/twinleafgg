@@ -38,6 +38,10 @@
   let setupActiveIndex: number | null = null;
   let setupBenchIndexes: number[] = [];
   let setupPromptKey = '';
+  let boardTilt = 8;
+  let boardPerspective = 1250;
+  let boardScaleY = 94;
+  let boardLift = 0;
   let openZone:
     | { playerIndex: number; zone: 'discard' | 'lostZone' | 'stadium' | 'playZone'; title: string; faceDown?: boolean }
     | null = null;
@@ -89,6 +93,13 @@
     setupBenchIndexes = [];
     selectedBoardTargets = [];
   }
+
+  function resetPerspective() {
+    boardTilt = 8;
+    boardPerspective = 1250;
+    boardScaleY = 94;
+    boardLift = 0;
+  }
   $: if (game && followActive) {
     viewIndex = setupPrompt?.playerIndex ?? game.activePlayerIndex;
   }
@@ -124,6 +135,32 @@
     : undefined;
   $: topBenchSlots = topPlayer ? benchSlotsFor(topPlayer, setupPrompt, setupBenchIndexes) : [];
   $: bottomBenchSlots = bottomPlayer ? benchSlotsFor(bottomPlayer, setupPrompt, setupBenchIndexes) : [];
+  $: topCanShowPlayArea =
+    topPlayer &&
+    canShowPlayAreaState(
+      topPlayer,
+      selectedCard,
+      selectedHand?.playerIndex,
+      draggingCard,
+      draggingHand?.playerIndex,
+      game?.activePlayerIndex,
+      !!currentPrompt,
+      gameFinished,
+      !!setupPrompt,
+    );
+  $: bottomCanShowPlayArea =
+    bottomPlayer &&
+    canShowPlayAreaState(
+      bottomPlayer,
+      selectedCard,
+      selectedHand?.playerIndex,
+      draggingCard,
+      draggingHand?.playerIndex,
+      game?.activePlayerIndex,
+      !!currentPrompt,
+      gameFinished,
+      !!setupPrompt,
+    );
   $: if (currentPrompt || gameFinished) {
     focusedSlot = null;
   }
@@ -405,11 +442,36 @@
   }
 
   function canShowPlayArea(player: PlayerView) {
+    return canShowPlayAreaState(
+      player,
+      selectedCard,
+      selectedHand?.playerIndex,
+      draggingCard,
+      draggingHand?.playerIndex,
+      game?.activePlayerIndex,
+      !!currentPrompt,
+      gameFinished,
+      !!setupPrompt,
+    );
+  }
+
+  function canShowPlayAreaState(
+    player: PlayerView,
+    selected: CardView | undefined,
+    selectedPlayerIndex: number | undefined,
+    dragging: CardView | undefined,
+    draggingPlayerIndex: number | undefined,
+    activePlayerIndex: number | undefined,
+    hasPrompt: boolean,
+    finished: boolean,
+    inSetup: boolean,
+  ) {
+    if (inSetup || hasPrompt || finished || activePlayerIndex !== player.index) {
+      return false;
+    }
     return (
-      !!draggingHand &&
-      draggingHand.playerIndex === player.index &&
-      canAct(player.index) &&
-      canPlayCardToPlayArea(draggingCard, draggingHand.playerIndex)
+      canPlayCardToPlayArea(selected, selectedPlayerIndex) ||
+      (draggingPlayerIndex !== undefined && canPlayCardToPlayArea(dragging, draggingPlayerIndex))
     );
   }
 
@@ -651,6 +713,33 @@
       </div>
 
       <div class="table-toolbar">
+        <details class="board-perspective-controls">
+          <summary aria-label="Board perspective settings" title="Board perspective settings">⚙</summary>
+          <div class="board-perspective-menu">
+            <strong>Board perspective</strong>
+            <label>
+              Tilt
+              <input type="range" min="0" max="18" step="1" bind:value={boardTilt} />
+              <span>{boardTilt}deg</span>
+            </label>
+            <label>
+              Depth
+              <input type="range" min="700" max="2200" step="50" bind:value={boardPerspective} />
+              <span>{boardPerspective}px</span>
+            </label>
+            <label>
+              Height
+              <input type="range" min="86" max="100" step="1" bind:value={boardScaleY} />
+              <span>{boardScaleY}%</span>
+            </label>
+            <label>
+              Lift
+              <input type="range" min="-48" max="48" step="2" bind:value={boardLift} />
+              <span>{boardLift}px</span>
+            </label>
+            <button type="button" on:click={resetPerspective}>Reset</button>
+          </div>
+        </details>
         <label>
           <input type="checkbox" bind:checked={followActive} />
           Follow active player
@@ -737,10 +826,15 @@
           {canPlaceSetupActive}
           {placeSetupActive}
           {showZone}
-          {canShowPlayArea}
+          topCanShowPlayArea={!!topCanShowPlayArea}
+          bottomCanShowPlayArea={!!bottomCanShowPlayArea}
           {allowPlayAreaDrop}
           {dropToPlayArea}
           {playToArea}
+          {boardTilt}
+          {boardPerspective}
+          {boardScaleY}
+          {boardLift}
         />
 
         <section class="player-panel bottom">

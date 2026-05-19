@@ -17,7 +17,7 @@
   $: hasPlayableFilter = playableIndexes.length > 0;
 </script>
 
-<div class:disabled class:concealed class="hand">
+<div class:disabled class:concealed class="hand" data-card-count={player.hand.length}>
   {#each player.hand as card, index}
     {@const cardDisabled = disabled || (hasPlayableFilter && (!playableSet.has(index) || placedSet.has(index)))}
     {#if !placedSet.has(index)}
