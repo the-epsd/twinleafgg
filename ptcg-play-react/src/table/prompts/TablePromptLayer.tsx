@@ -74,6 +74,28 @@ function gameMessageText(t: TFunction, message: string | number): string {
   return t(key, { defaultValue: String(message) });
 }
 
+function parseMulliganDrawValue(value: string): number | null {
+  const match = /^Draw\s+(\d+)\s+card\(s\)$/i.exec(value.trim());
+  return match ? Number(match[1]) : null;
+}
+
+function mulliganDrawOptions(sp: SelectPrompt): Array<{ label: string; value: number; index: number }> | null {
+  if (sp.message !== 'WANT_TO_DRAW_CARDS') {
+    return null;
+  }
+
+  const options = sp.values.map((label, index) => {
+    const value = parseMulliganDrawValue(label);
+    return value === null ? null : { label, value, index };
+  });
+
+  if (options.some((option) => option === null)) {
+    return null;
+  }
+
+  return options as Array<{ label: string; value: number; index: number }>;
+}
+
 function useLocalGameRef(localGame: LocalGameState) {
   const ref = useRef(localGame);
   ref.current = localGame;
@@ -889,6 +911,17 @@ function SelectPromptPanel(props: {
 }) {
   const { prompt: sp, t, gameMessageText, resolve } = props;
   const [idx, setIdx] = useState(sp.options.defaultValue ?? 0);
+  const mulliganOptions = useMemo(() => mulliganDrawOptions(sp), [sp]);
+  const minMulliganDraw = useMemo(
+    () => Math.min(...(mulliganOptions ?? [{ value: 0 }]).map((option) => option.value)),
+    [mulliganOptions],
+  );
+  const maxMulliganDraw = useMemo(
+    () => Math.max(...(mulliganOptions ?? [{ value: 0 }]).map((option) => option.value)),
+    [mulliganOptions],
+  );
+  const currentMulliganDraw =
+    mulliganOptions?.find((option) => option.index === idx)?.value ?? maxMulliganDraw;
 
   useEffect(() => {
     setIdx(sp.options.defaultValue ?? 0);
@@ -899,14 +932,50 @@ function SelectPromptPanel(props: {
       <div className={styles.panel} role="dialog" aria-modal="true">
         <h2 className={styles.title}>{t('PROMPT_SELECT_TITLE', { defaultValue: 'Choose' })}</h2>
         <p className={styles.message}>{gameMessageText(t, sp.message)}</p>
-        <div className={styles.selectList}>
-          {sp.values.map((value, i) => (
-            <label key={i} className={styles.selectOption}>
-              <input type="radio" name={`select-${sp.id}`} checked={idx === i} onChange={() => setIdx(i)} />
-              <span>{t(value, { defaultValue: value })}</span>
-            </label>
-          ))}
-        </div>
+        {mulliganOptions ? (
+          <div className={styles.mulliganSlider}>
+            <div className={styles.mulliganSliderMeta}>
+              <span>{t('GAME_MESSAGES.MULLIGAN', { defaultValue: 'Mulligan' })}</span>
+              <strong>
+                {t('GAME_MESSAGES.MULLIGAN_CARDS', {
+                  defaultValue: 'Draw {{value}} card(s)',
+                  value: currentMulliganDraw,
+                })}
+              </strong>
+            </div>
+            <input
+              type="range"
+              min={minMulliganDraw}
+              max={maxMulliganDraw}
+              step={1}
+              value={currentMulliganDraw}
+              aria-label={t('GAME_MESSAGES.MULLIGAN_CARDS', {
+                defaultValue: 'Draw {{value}} card(s)',
+                value: currentMulliganDraw,
+              })}
+              onChange={(event) => {
+                const drawCount = Number(event.currentTarget.value);
+                const option = mulliganOptions.find((item) => item.value === drawCount);
+                if (option) {
+                  setIdx(option.index);
+                }
+              }}
+            />
+            <div className={styles.mulliganSliderScale} aria-hidden="true">
+              <span>{minMulliganDraw}</span>
+              <span>{maxMulliganDraw}</span>
+            </div>
+          </div>
+        ) : (
+          <div className={styles.selectList}>
+            {sp.values.map((value, i) => (
+              <label key={i} className={styles.selectOption}>
+                <input type="radio" name={`select-${sp.id}`} checked={idx === i} onChange={() => setIdx(i)} />
+                <span>{t(value, { defaultValue: value })}</span>
+              </label>
+            ))}
+          </div>
+        )}
         <div className={styles.actions}>
           {sp.options.allowCancel ? (
             <ShellButton type="button" variant="secondary" onClick={() => resolve(sp.id, null)}>

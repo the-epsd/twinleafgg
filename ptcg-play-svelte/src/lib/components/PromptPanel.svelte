@@ -16,11 +16,17 @@
   let sourceTarget: CardTarget | null = null;
   let damageAmount = 10;
   let attachEnergyIndex = 0;
+  let mulliganDrawAmount = 0;
+  let mulliganDrawKey = '';
   let autoContinueKey = '';
   let autoContinueTimer: ReturnType<typeof setTimeout> | undefined;
 
   $: fields = prompt.fields ?? {};
   $: options = (fields.options as any) ?? {};
+  $: mulliganDrawValues = getMulliganDrawValues(prompt, fields.values);
+  $: isMulliganDrawPrompt = mulliganDrawValues.length > 0;
+  $: minMulliganDraw = isMulliganDrawPrompt ? Math.min(...mulliganDrawValues.map((item) => item.value)) : 0;
+  $: maxMulliganDraw = isMulliganDrawPrompt ? Math.max(...mulliganDrawValues.map((item) => item.value)) : 0;
   $: cards = extractCards(fields);
   $: prizeChoices = extractPrizes(fields, prompt.playerIndex);
   $: selectableTargets = getSelectableTargets(game, prompt);
@@ -39,6 +45,17 @@
   $: blockedIndexes = new Set<number>(Array.isArray(options.blocked) ? options.blocked : []);
   $: selectedIndexes = selectedIndexes.filter((index) => isIndexSelectable(index)).slice(0, maxSelections);
   $: autoContinuePrompt = ['AlertPrompt', 'ShowCardsPrompt', 'ConfirmCardsPrompt', 'ShowMulliganPrompt'].includes(prompt.className);
+  $: {
+    const key = `${prompt.id}:${mulliganDrawValues.map((item) => item.value).join(',')}`;
+    if (isMulliganDrawPrompt && mulliganDrawKey !== key) {
+      const defaultIndex = normalizeSelectionLimit(options.defaultValue, 0);
+      mulliganDrawAmount = mulliganDrawValues.find((item) => item.index === defaultIndex)?.value ?? maxMulliganDraw;
+      mulliganDrawKey = key;
+    } else if (!isMulliganDrawPrompt && mulliganDrawKey) {
+      mulliganDrawKey = '';
+      mulliganDrawAmount = 0;
+    }
+  }
   $: {
     const key = `${prompt.id}:${prompt.className}`;
     if (autoContinue && autoContinuePrompt && !resolving && autoContinueKey !== key) {
@@ -151,6 +168,13 @@
     submit(selectedTargets.map((target) => ({ target, damage: damageAmount })));
   }
 
+  function submitMulliganDraw() {
+    const option = mulliganDrawValues.find((item) => item.value === Number(mulliganDrawAmount));
+    if (option) {
+      submit(option.index);
+    }
+  }
+
   function submitMoveDamage() {
     if (!sourceTarget || selectedTargets.length === 0) {
       return;
@@ -169,6 +193,25 @@
 
   function energyCostLabel(cost: unknown) {
     return Array.isArray(cost) && cost.length ? `Cost: ${cost.length} energy` : 'Choose energy';
+  }
+
+  function parseMulliganDrawValue(value: unknown) {
+    if (typeof value !== 'string') {
+      return null;
+    }
+    const match = /^Draw\s+(\d+)\s+card\(s\)$/i.exec(value.trim());
+    return match ? Number(match[1]) : null;
+  }
+
+  function getMulliganDrawValues(currentPrompt: PromptView, values: unknown) {
+    if (currentPrompt.message !== 'WANT_TO_DRAW_CARDS' || !Array.isArray(values)) {
+      return [];
+    }
+    const parsed = values.map((value, index) => {
+      const drawValue = parseMulliganDrawValue(value);
+      return drawValue === null ? null : { value: drawValue, index };
+    });
+    return parsed.every(Boolean) ? (parsed as Array<{ value: number; index: number }>) : [];
   }
 
   function isIndexSelectable(index: number) {
@@ -279,6 +322,31 @@
     <div class="prompt-actions">
       <button disabled={resolving} on:click={() => submit(true)}>Heads</button>
       <button disabled={resolving} on:click={() => submit(false)}>Tails</button>
+    </div>
+  {:else if ['SelectOptionPrompt', 'SelectPrompt'].includes(prompt.className) && isMulliganDrawPrompt}
+    <div class="mulligan-slider">
+      <div class="mulligan-slider-meta">
+        <span>Mulligan</span>
+        <strong>Draw {mulliganDrawAmount} card{Number(mulliganDrawAmount) === 1 ? '' : 's'}</strong>
+      </div>
+      <input
+        type="range"
+        min={minMulliganDraw}
+        max={maxMulliganDraw}
+        step="1"
+        bind:value={mulliganDrawAmount}
+        aria-label={`Draw ${mulliganDrawAmount} cards`}
+      />
+      <div class="mulligan-slider-scale" aria-hidden="true">
+        <span>{minMulliganDraw}</span>
+        <span>{maxMulliganDraw}</span>
+      </div>
+    </div>
+    <div class="prompt-actions">
+      <button disabled={resolving} on:click={submitMulliganDraw}>Continue</button>
+      {#if options.allowCancel}
+        <button disabled={resolving} on:click={() => submit(null)}>Cancel</button>
+      {/if}
     </div>
   {:else if ['SelectOptionPrompt', 'SelectPrompt'].includes(prompt.className) && Array.isArray(fields.values)}
     <div class="prompt-grid">

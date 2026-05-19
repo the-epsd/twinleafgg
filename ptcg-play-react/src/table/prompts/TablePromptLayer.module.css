@@ -70,6 +70,46 @@
   background: rgba(255, 255, 255, 0.08);
 }
 
+.mulliganSlider {
+  display: grid;
+  gap: 12px;
+  margin: 16px 0 8px;
+  padding: 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.mulliganSliderMeta,
+.mulliganSliderScale {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mulliganSliderMeta {
+  color: rgba(210, 220, 238, 0.82);
+  font-size: 0.85rem;
+}
+
+.mulliganSliderMeta strong {
+  color: rgba(245, 248, 255, 0.96);
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.mulliganSlider input[type='range'] {
+  width: 100%;
+  accent-color: #7aa7ff;
+}
+
+.mulliganSliderScale {
+  color: rgba(210, 220, 238, 0.68);
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
 .cardRow {
   display: flex;
   flex-wrap: wrap;

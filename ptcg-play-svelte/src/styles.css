@@ -142,9 +142,10 @@ input[type="number"] {
 }
 
 .table-shell {
-  --card-w: clamp(70px, min(5vw, 9vh), 98px);
   --board-top-inset: clamp(58px, 7.2vh, 84px);
   --board-bottom-inset: clamp(166px, 19.5vh, 232px);
+  --board-h: calc(100vh - var(--board-top-inset) - var(--board-bottom-inset));
+  --card-w: clamp(58px, min(8vw, calc(var(--board-h) / 9.05)), 104px);
   --hand-separator-gap: calc(var(--card-w) * 0.045);
   --hand-hover-pad: calc(var(--card-w) * 0.065);
   --board-edge-pad: calc(var(--card-w) * 0.32);
@@ -321,9 +322,9 @@ input[type="number"] {
   inset: 0;
   display: grid;
   grid-template-rows:
-    calc(var(--bench-row-h) + (var(--card-w) * 0.34))
-    minmax(calc((var(--active-h) * 2) + (var(--card-w) * 0.24)), 1fr)
-    calc(var(--bench-row-h) + (var(--card-w) * 0.34));
+    minmax(calc(var(--bench-row-h) + (var(--card-w) * 0.22)), 0.85fr)
+    minmax(calc((var(--active-h) * 2) + (var(--card-w) * 0.24)), 1.45fr)
+    minmax(calc(var(--bench-row-h) + (var(--card-w) * 0.22)), 0.85fr);
   gap: calc(var(--card-w) * 0.12);
   align-items: center;
   padding: calc(var(--card-w) * 0.16) var(--board-edge-pad-x);
@@ -470,11 +471,13 @@ input[type="number"] {
 .bench-zone.opponent {
   align-self: end;
   align-content: center;
+  height: 100%;
 }
 
 .bench-zone:not(.opponent) {
   align-self: start;
   align-content: center;
+  height: 100%;
 }
 
 .debug-zones .bench-zone {
@@ -975,6 +978,56 @@ button.stack-pile,
   color: white;
 }
 
+.energy-badges {
+  --energy-gap: 2px;
+  --energy-icon-size: calc((var(--card-w) - (var(--energy-gap) * 3)) / 4);
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  z-index: 5;
+  width: 100%;
+  min-height: var(--energy-icon-size);
+  display: flex;
+  align-items: center;
+  gap: var(--energy-gap);
+  pointer-events: none;
+}
+
+.bench-row .energy-badges {
+  --energy-icon-size: calc((var(--bench-card-w) - (var(--energy-gap) * 3)) / 4);
+}
+
+.board-slot.active .energy-badges {
+  --energy-icon-size: calc((var(--active-w) - (var(--energy-gap) * 3)) / 4);
+}
+
+.energy-badges img {
+  flex: 0 0 var(--energy-icon-size);
+  width: var(--energy-icon-size);
+  height: var(--energy-icon-size);
+  border-radius: 999px;
+  object-fit: contain;
+  filter: drop-shadow(0 3px 4px rgba(23, 30, 38, 0.38));
+}
+
+.energy-badges.stacked-energy {
+  display: block;
+}
+
+.energy-badges.stacked-energy img {
+  position: absolute;
+  left: var(--energy-offset);
+  bottom: 0;
+  z-index: var(--energy-z);
+}
+
+.bench-row.opponent .energy-badges,
+.top-active-slot .energy-badges {
+  inset: -10px 0 auto auto;
+  justify-content: flex-end;
+  transform: rotate(180deg);
+}
+
 .hand {
   position: relative;
   z-index: 1;
@@ -1078,6 +1131,11 @@ button.card-tile:hover:not(:disabled) {
   width: var(--card-w, clamp(62px, 5.7vw, 92px));
 }
 
+.discard-pile .card-tile.compact {
+  width: 100%;
+  height: 100%;
+}
+
 .hand.concealed .card-tile.compact {
   width: calc(var(--card-w) * 0.8);
 }
@@ -1106,7 +1164,7 @@ button.card-tile.selected:disabled {
 .card-tile img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: fill;
   display: block;
   pointer-events: none;
   -webkit-user-drag: none;
@@ -1401,6 +1459,44 @@ button.card-tile.selected:disabled {
 .prompt-grid button.selected {
   outline: 2px solid #29a18b;
   outline-offset: 1px;
+}
+
+.mulligan-slider {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mulligan-slider-meta,
+.mulligan-slider-scale {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.mulligan-slider-meta {
+  color: rgba(245, 248, 255, 0.68);
+  font-size: 13px;
+}
+
+.mulligan-slider-meta strong {
+  color: rgba(245, 248, 255, 0.94);
+  font-variant-numeric: tabular-nums;
+}
+
+.mulligan-slider input[type='range'] {
+  width: 100%;
+  accent-color: #29a18b;
+}
+
+.mulligan-slider-scale {
+  color: rgba(245, 248, 255, 0.58);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
 }
 
 .prompt-hint,
