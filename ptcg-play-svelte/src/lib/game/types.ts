@@ -34,6 +34,7 @@ export type CardView = {
   energyType?: string | number;
   stage?: string | number;
   evolvesFrom?: string;
+  hp?: number;
   attacks?: AttackView[];
   powers?: PowerView[];
 };

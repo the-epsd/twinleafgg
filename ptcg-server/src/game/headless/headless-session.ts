@@ -462,6 +462,7 @@ function summarizeCard(card: any): any {
     energyType: card.energyType,
     stage: card.stage,
     evolvesFrom: card.evolvesFrom,
+    hp: typeof card.hp === 'number' ? card.hp : undefined,
     attacks: Array.isArray(card.attacks)
       ? card.attacks.map((attack: any) => ({
         name: attack.name,

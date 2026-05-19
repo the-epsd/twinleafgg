@@ -828,6 +828,13 @@ button.stack-pile,
   transform: translate(var(--deck-top-x), var(--deck-top-y)) rotate(180deg);
 }
 
+.top-piles .deck-card-layer {
+  transform: translate(
+    calc(var(--deck-step-x) * var(--deck-layer)),
+    calc(var(--deck-step-y) * var(--deck-layer))
+  ) rotate(180deg);
+}
+
 .discard-pile {
   color: #3d4652;
   background: rgba(255, 255, 255, 0.42);
@@ -913,8 +920,7 @@ button.stack-pile,
 }
 
 .prize-grid span.claimed {
-  opacity: 0.18;
-  filter: grayscale(0.8);
+  visibility: hidden;
 }
 
 .stadium-marker {
@@ -1041,6 +1047,71 @@ button.stack-pile,
 .slot-badges .damage {
   background: #d94b4b;
   color: white;
+}
+
+.pokemon-status {
+  position: absolute;
+  top: clamp(3px, calc(var(--card-w) * 0.035), 7px);
+  right: clamp(3px, calc(var(--card-w) * 0.035), 7px);
+  z-index: 6;
+  display: grid;
+  justify-items: end;
+  gap: clamp(2px, calc(var(--card-w) * 0.025), 5px);
+  max-width: calc(100% - clamp(6px, calc(var(--card-w) * 0.07), 14px));
+  pointer-events: none;
+}
+
+.pokemon-hp-bubble {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(2px, calc(var(--card-w) * 0.03), 5px);
+  min-height: clamp(22px, calc(var(--card-w) * 0.21), 32px);
+  padding: clamp(2px, calc(var(--card-w) * 0.025), 4px) clamp(4px, calc(var(--card-w) * 0.055), 8px) clamp(2px, calc(var(--card-w) * 0.025), 4px) clamp(7px, calc(var(--card-w) * 0.08), 12px);
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.94);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 244, 247, 0.96));
+  box-shadow:
+    0 5px 13px rgba(21, 28, 36, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  color: #111820;
+  font-size: clamp(13px, calc(var(--card-w) * 0.14), 20px);
+  font-weight: 950;
+  line-height: 1;
+  white-space: nowrap;
+  letter-spacing: 0;
+}
+
+.pokemon-hp-bubble img {
+  width: clamp(16px, calc(var(--card-w) * 0.17), 25px);
+  height: clamp(16px, calc(var(--card-w) * 0.17), 25px);
+  object-fit: contain;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.28));
+}
+
+.damage-counter {
+  display: inline-grid;
+  place-items: center;
+  min-width: clamp(25px, calc(var(--card-w) * 0.25), 38px);
+  height: clamp(21px, calc(var(--card-w) * 0.22), 32px);
+  padding: 0 clamp(6px, calc(var(--card-w) * 0.07), 10px);
+  border-radius: 999px;
+  border: 1px solid rgba(128, 76, 18, 0.46);
+  background:
+    radial-gradient(circle at 34% 24%, rgba(255, 232, 121, 0.9), transparent 34%),
+    linear-gradient(180deg, #ffb03d 0%, #f39023 54%, #c97018 100%);
+  box-shadow:
+    0 3px 8px rgba(95, 48, 13, 0.28),
+    inset 0 2px 2px rgba(255, 236, 155, 0.7),
+    inset 0 -2px 3px rgba(128, 60, 10, 0.34);
+  color: #fff8df;
+  font-size: clamp(12px, calc(var(--card-w) * 0.14), 18px);
+  font-weight: 950;
+  line-height: 1;
+  text-shadow:
+    0 2px 0 rgba(54, 45, 33, 0.76),
+    1px 0 0 rgba(54, 45, 33, 0.76),
+    -1px 0 0 rgba(54, 45, 33, 0.76),
+    0 -1px 0 rgba(54, 45, 33, 0.76);
 }
 
 .energy-badges {
@@ -1636,6 +1707,75 @@ button.card-tile.selected:disabled {
 .prompt-grid button.selected {
   outline: 2px solid #29a18b;
   outline-offset: 1px;
+}
+
+.prize-prompt-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(10px, 1.2vw, 16px);
+  align-items: start;
+  min-width: 0;
+}
+
+.prize-choice-card {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: rgba(245, 248, 255, 0.82);
+}
+
+.prize-choice-card .card-tile {
+  width: 100%;
+  max-width: clamp(96px, 8.8vw, 132px);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    filter 140ms ease;
+}
+
+.prize-choice-card span {
+  min-width: 0;
+  max-width: 100%;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.prize-choice-card:hover:not(:disabled) .card-tile {
+  transform: translateY(-4px);
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.32),
+    0 0 0 2px rgba(143, 232, 206, 0.3),
+    0 0 26px rgba(41, 161, 139, 0.24);
+}
+
+.prize-choice-card.selected .card-tile {
+  transform: translateY(-5px);
+  box-shadow:
+    0 18px 36px rgba(0, 0, 0, 0.34),
+    0 0 0 3px rgba(143, 232, 206, 0.72),
+    0 0 30px rgba(41, 161, 139, 0.38);
+}
+
+.prize-choice-card.selected span {
+  background: rgba(143, 232, 206, 0.16);
+  color: rgba(213, 255, 244, 0.95);
+}
+
+.prize-choice-card.blocked {
+  opacity: 0.36;
 }
 
 .search-selection {

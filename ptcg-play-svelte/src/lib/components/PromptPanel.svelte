@@ -548,20 +548,22 @@
     </div>
   {:else if prompt.className === 'ChoosePrizePrompt'}
     <p class="prompt-hint">Choose {minSelections}{#if maxSelections !== minSelections}-{maxSelections}{/if} prize card{maxSelections === 1 ? '' : 's'}.</p>
-    <div class="prompt-grid prize-grid">
+    <div class="prize-prompt-grid">
       {#each prizeChoices as prize}
         <button
+          type="button"
+          class="prize-choice-card"
           class:selected={selectedIndexes.includes(prize.index)}
           class:blocked={!isIndexSelectable(prize.index)}
           disabled={resolving || !isIndexSelectable(prize.index)}
           on:click={() => toggleIndex(prize.index)}
         >
-          <strong>Prize {prize.index + 1}</strong>
           {#if prize.cards?.[0]}
             <CardTile card={prize.cards[0]} compact />
           {:else}
-            <span>Face down</span>
+            <CardTile card={undefined} compact faceDown />
           {/if}
+          <span>Prize {prize.index + 1}</span>
         </button>
       {/each}
     </div>

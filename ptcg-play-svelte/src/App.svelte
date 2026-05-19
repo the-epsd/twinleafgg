@@ -122,7 +122,7 @@
     boardLift = 0;
   }
   $: if (game && followActive) {
-    viewIndex = setupPrompt?.playerIndex ?? game.activePlayerIndex;
+    viewIndex = currentPrompt?.playerIndex ?? game.activePlayerIndex;
   }
   $: gameFinished = game?.phase === 7;
   $: winnerName =

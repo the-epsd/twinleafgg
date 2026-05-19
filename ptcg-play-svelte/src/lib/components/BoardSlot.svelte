@@ -47,6 +47,9 @@
 
   $: remainingHp = slot.hp ? Math.max(0, slot.hp - slot.damage) : 0;
   $: stackedEnergy = slot.energy.length > 4;
+  $: displayHp = slot.hp || pokemonHp(slot.pokemon);
+  $: pokemonTypeIcon = pokemonTypeIconSrc(slot.pokemon?.cardType);
+  $: pokemonTypeLabel = pokemonTypeLabelFor(slot.pokemon?.cardType);
 
   function energyIconSrc(card: { name?: string; fullName?: string }) {
     const name = card.name || card.fullName || '';
@@ -65,6 +68,63 @@
     const offsetPercent = progress * 75;
     const offsetPixels = progress * 1.5;
     return `--energy-offset: calc(${offsetPercent}% + ${offsetPixels}px); --energy-z: ${index + 1};`;
+  }
+
+  function normalizedTypeName(cardType: string | number | undefined) {
+    if (cardType === undefined || cardType === null) {
+      return undefined;
+    }
+    if (typeof cardType === 'number') {
+      return (
+        [
+          undefined,
+          'grass',
+          'fire',
+          'water',
+          'lightning',
+          'psychic',
+          'fighting',
+          'darkness',
+          'metal',
+          'colorless',
+          'fairy',
+          'dragon',
+        ][cardType] ?? undefined
+      );
+    }
+    const normalized = cardType.toLowerCase().replace(/[^a-z]/g, '');
+    if (normalized === 'dark') {
+      return 'darkness';
+    }
+    return (
+      {
+        grass: 'grass',
+        fire: 'fire',
+        water: 'water',
+        lightning: 'lightning',
+        psychic: 'psychic',
+        fighting: 'fighting',
+        darkness: 'darkness',
+        metal: 'metal',
+        colorless: 'colorless',
+        fairy: 'fairy',
+        dragon: 'dragon',
+      }[normalized] ?? undefined
+    );
+  }
+
+  function pokemonTypeIconSrc(cardType: string | number | undefined) {
+    const type = normalizedTypeName(cardType);
+    return type ? `/assets/energy-icons/${type}.webp` : undefined;
+  }
+
+  function pokemonTypeLabelFor(cardType: string | number | undefined) {
+    const type = normalizedTypeName(cardType);
+    return type ? type[0].toUpperCase() + type.slice(1) : 'Pokemon';
+  }
+
+  function pokemonHp(card: { hp?: unknown } | undefined) {
+    return typeof card?.hp === 'number' && Number.isFinite(card.hp) ? card.hp : 0;
   }
 </script>
 
@@ -86,6 +146,23 @@
 
   {#if slot.pokemon}
     <CardTile card={slot.pokemon} />
+    {#if displayHp || pokemonTypeIcon || slot.damage}
+      <div class="pokemon-status">
+        {#if displayHp || pokemonTypeIcon}
+          <span class="pokemon-hp-bubble" title={`${displayHp ? `${displayHp} HP` : 'Pokemon'}${pokemonTypeIcon ? ` · ${pokemonTypeLabel}` : ''}`}>
+            {#if displayHp}
+              <span>{displayHp} HP</span>
+            {/if}
+            {#if pokemonTypeIcon}
+              <img src={pokemonTypeIcon} alt={pokemonTypeLabel} />
+            {/if}
+          </span>
+        {/if}
+        {#if slot.damage}
+          <span class="damage-counter" title={`${slot.damage} damage`}>{slot.damage}</span>
+        {/if}
+      </div>
+    {/if}
     {#if slot.energy.length}
       <div class="energy-badges" class:stacked-energy={stackedEnergy} title={`${slot.energy.length} attached energy`}>
         {#each slot.energy as energy, energyIndex}
@@ -98,13 +175,7 @@
         {/each}
       </div>
     {/if}
-    <div class="slot-badges">
-      {#if slot.hp}
-        <span>{remainingHp}/{slot.hp}</span>
-      {/if}
-      {#if slot.damage}
-        <span class="damage">{slot.damage}</span>
-      {/if}
+    <div class="slot-badges" title={displayHp ? `${Math.max(0, displayHp - slot.damage)}/${displayHp} HP remaining` : undefined}>
       {#if slot.tools.length}
         <span>{slot.tools.length} T</span>
       {/if}

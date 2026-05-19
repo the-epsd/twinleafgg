@@ -200,6 +200,7 @@ function summarizeCard(card: Card | undefined): any {
     trainerType: (card as any).trainerType,
     energyType: (card as any).energyType,
     stage: (card as any).stage,
+    hp: typeof (card as any).hp === 'number' ? (card as any).hp : undefined,
     attacks: Array.isArray((card as any).attacks)
       ? (card as any).attacks.map((attack: any) => ({
         name: attack.name,

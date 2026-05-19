@@ -255,6 +255,7 @@ function normalizeCard(card: any): CardView | undefined {
     energyType: card.energyType,
     stage: card.stage,
     evolvesFrom: card.evolvesFrom,
+    hp: typeof card.hp === 'number' ? card.hp : undefined,
     attacks: card.attacks,
     powers: card.powers,
   };
