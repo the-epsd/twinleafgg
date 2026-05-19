@@ -1,6 +1,6 @@
 import { GameError } from '../../game-error';
 import { GameLog, GameMessage } from '../../game-message';
-import { BoardEffect, CardTag, CardType, SpecialCondition, SuperType } from '../card/card-types';
+import { CardTag, CardType, SpecialCondition, SuperType } from '../card/card-types';
 import { Resistance, Weakness } from '../card/pokemon-types';
 import { ApplyWeaknessEffect, DealDamageEffect } from '../effects/attack-effects';
 import {
@@ -532,16 +532,6 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
   if (effect instanceof MoveCardsEffect) {
     const source = effect.source;
     const destination = effect.destination;
-
-    // If source is a PokemonCardList, always clean up when moving cards
-    if (source instanceof PokemonCardList) {
-      source.clearEffects();
-      source.damage = 0;
-      source.specialConditions = [];
-      source.marker.markers = [];
-      source.tools = [];
-      source.removeBoardEffect(BoardEffect.ABILITY_USED);
-    }
 
     // Helper to get owner of a CardList
     const getOwner = (cardList: CardList) => {
