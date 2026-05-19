@@ -45,6 +45,7 @@
   let boardScaleY = 94;
   let boardLift = 0;
   let debugZones = false;
+  let showLogs = false;
   let openZone:
     | { playerIndex: number; zone: 'discard' | 'lostZone' | 'stadium' | 'playZone'; title: string; faceDown?: boolean }
     | null = null;
@@ -136,25 +137,34 @@
   $: currentStadium = game ? game.players.flatMap((player) => player.stadium)[0] : undefined;
   $: currentStadiumOwner = game?.players.find((player) => player.stadium.length);
   $: viewedCards = openZone && game ? (game.players[openZone.playerIndex]?.[openZone.zone] ?? []) : [];
+  $: attachPreviewKey = attachPrompt
+    ? attachPromptAssignments.map((assignment) => `${assignment.energyIndex}:${assignment.target.player}:${assignment.target.slot}:${assignment.target.index}`).join('|')
+    : '';
   $: focusedPlayer = focusedSlot && game ? game.players[focusedSlot.ownerIndex] : undefined;
   $: focusedPokemon = focusedSlot?.pokemon;
   $: focusedIsActive = focusedSlot?.slot === 'active';
   $: focusedCanAct = !!focusedPlayer && canAct(focusedPlayer.index);
   $: focusedBenchTargets = focusedPlayer?.bench.filter((slot) => !slot.empty) ?? [];
   $: topActiveSlot = topPlayer
-    ? previewSlot(
-        topPlayer.active,
-        topPlayer.index === setupPrompt?.playerIndex && setupActiveIndex !== null ? topPlayer.hand[setupActiveIndex] : undefined,
+    ? previewAttachEnergySlot(
+        previewSlot(
+          topPlayer.active,
+          topPlayer.index === setupPrompt?.playerIndex && setupActiveIndex !== null ? topPlayer.hand[setupActiveIndex] : undefined,
+        ),
+        attachPreviewKey,
       )
     : undefined;
   $: bottomActiveSlot = bottomPlayer
-    ? previewSlot(
-        bottomPlayer.active,
-        bottomPlayer.index === setupPrompt?.playerIndex && setupActiveIndex !== null ? bottomPlayer.hand[setupActiveIndex] : undefined,
+    ? previewAttachEnergySlot(
+        previewSlot(
+          bottomPlayer.active,
+          bottomPlayer.index === setupPrompt?.playerIndex && setupActiveIndex !== null ? bottomPlayer.hand[setupActiveIndex] : undefined,
+        ),
+        attachPreviewKey,
       )
     : undefined;
-  $: topBenchSlots = topPlayer ? benchSlotsFor(topPlayer, setupPrompt, setupBenchIndexes) : [];
-  $: bottomBenchSlots = bottomPlayer ? benchSlotsFor(bottomPlayer, setupPrompt, setupBenchIndexes) : [];
+  $: topBenchSlots = topPlayer ? benchSlotsFor(topPlayer, setupPrompt, setupBenchIndexes).map((slot) => previewAttachEnergySlot(slot, attachPreviewKey)) : [];
+  $: bottomBenchSlots = bottomPlayer ? benchSlotsFor(bottomPlayer, setupPrompt, setupBenchIndexes).map((slot) => previewAttachEnergySlot(slot, attachPreviewKey)) : [];
   $: canPlayOnBoard =
     !!bottomPlayer &&
     canPlayOnBoardState(
@@ -784,6 +794,26 @@
     };
   }
 
+  function previewAttachEnergySlot(slot: PokemonSlotView, _previewKey = ''): PokemonSlotView {
+    if (!attachPrompt) {
+      return slot;
+    }
+    const target = targetForPromptSlot(attachPrompt, slot);
+    const pending = attachPromptAssignments
+      .filter((assignment) => sameTarget(assignment.target, target))
+      .map((assignment) => {
+        const card = attachPromptCards.find((item, index) => (item.index ?? index) === assignment.energyIndex);
+        return card ? ({ ...card, pendingAttach: true } as CardView) : undefined;
+      })
+      .filter((card): card is CardView => !!card);
+    return pending.length
+      ? {
+          ...slot,
+          energy: [...slot.energy, ...pending],
+        }
+      : slot;
+  }
+
   function benchSlotsFor(player: PlayerView, prompt = setupPrompt, benchIndexes = setupBenchIndexes) {
     const occupied = occupiedBench(player);
     if (!prompt || player.index !== prompt.playerIndex) {
@@ -877,6 +907,10 @@
         <label>
           <input type="checkbox" bind:checked={debugZones} />
           Debug zones
+        </label>
+        <label>
+          <input type="checkbox" bind:checked={showLogs} />
+          Show logs
         </label>
         <div class="sidebar-turn-actions">
           <button disabled={busy || !!currentPrompt || gameFinished} on:click={passTurn}>Pass turn</button>
@@ -1060,12 +1094,14 @@
           </section>
         {/if}
 
-        <aside class="log-panel">
-          <h2>Log</h2>
-          {#each game.logs.slice(-18).reverse() as log}
-            <p>{labelFor(log.message)}</p>
-          {/each}
-        </aside>
+        {#if showLogs}
+          <aside class="log-panel">
+            <h2>Log</h2>
+            {#each game.logs.slice(-18).reverse() as log}
+              <p>{labelFor(log.message)}</p>
+            {/each}
+          </aside>
+        {/if}
 
         <ZoneViewer
           open={!!openZone}

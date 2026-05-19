@@ -12,6 +12,7 @@
 </script>
 
 {#if open}
+  <button type="button" class="zone-viewer-backdrop" aria-label="Close zone viewer" on:click={() => dispatch('close')}></button>
   <section class="zone-viewer" aria-label={title}>
     <div class="zone-viewer-header">
       <strong>{title}</strong>

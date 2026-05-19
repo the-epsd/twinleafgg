@@ -89,7 +89,12 @@
     {#if slot.energy.length}
       <div class="energy-badges" class:stacked-energy={stackedEnergy} title={`${slot.energy.length} attached energy`}>
         {#each slot.energy as energy, energyIndex}
-          <img src={energyIconSrc(energy)} alt={energy.name || 'Energy'} style={energyStackStyle(energyIndex)} />
+          <img
+            src={energyIconSrc(energy)}
+            alt={energy.name || 'Energy'}
+            class:pending-energy={(energy as any).pendingAttach}
+            style={energyStackStyle(energyIndex)}
+          />
         {/each}
       </div>
     {/if}

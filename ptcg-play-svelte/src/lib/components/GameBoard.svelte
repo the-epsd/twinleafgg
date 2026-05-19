@@ -41,16 +41,17 @@
 
   function deckPileStyle(deckCount: number, direction: -1 | 1) {
     const layers = visibleDeckLayers(deckCount).length;
+    const step = Math.max(0.8, Math.min(1.6, boardTilt * 0.16));
     return [
-      `--deck-step-x: ${(direction * 1.35).toFixed(2)}px`,
-      `--deck-step-y: -1.35px`,
-      `--deck-top-x: ${(direction * layers * 1.35).toFixed(2)}px`,
-      `--deck-top-y: ${(-layers * 1.35).toFixed(2)}px`,
+      `--deck-step-x: ${(direction * step).toFixed(2)}px`,
+      `--deck-step-y: ${(-step).toFixed(2)}px`,
+      `--deck-top-x: ${(direction * layers * step).toFixed(2)}px`,
+      `--deck-top-y: ${(-layers * step).toFixed(2)}px`,
     ].join('; ');
   }
 
   function visibleDeckLayers(deckCount: number) {
-    const count = deckCount <= 0 ? 0 : Math.min(4, Math.max(1, Math.ceil(deckCount / 15)));
+    const count = deckCount <= 0 ? 0 : Math.min(8, Math.max(1, Math.ceil(deckCount / 8)));
     return Array.from({ length: count }, (_, index) => count - index);
   }
 
@@ -82,7 +83,8 @@
         type="button"
         class="bench-drop-surface"
         class:can-drop={canPlayToBenchArea(topPlayer) || canPlaceSetupBench(topPlayer)}
-        disabled={!canPlayToBenchArea(topPlayer) && !canPlaceSetupBench(topPlayer)}
+        tabindex="-1"
+        aria-hidden="true"
         aria-label={`Play a Pokemon to ${topPlayer.name}'s bench`}
         title={`Play a Pokemon to ${topPlayer.name}'s bench`}
         on:click={() => (canPlaceSetupBench(topPlayer) ? placeSetupBench() : playToBenchArea(topPlayer))}
@@ -113,7 +115,10 @@
             title={`${topPlayer.name} lost zone`}
             on:click={() => showZone(topPlayer.index, 'lostZone', `${topPlayer.name} lost zone`)}
           >
-            {topPlayer.lostZone.length} L
+            {#if topPlayer.lostZone.length}
+              <CardTile card={topPlayer.lostZone[topPlayer.lostZone.length - 1]} compact />
+            {/if}
+            <span class="pile-count">{topPlayer.lostZone.length}</span>
           </button>
           <div class="prize-grid" title={`${topPlayer.name} prizes`} aria-label={`${topPlayer.name} prizes`}>
             {#each Array(6) as _, index}
@@ -153,7 +158,10 @@
             title={`${bottomPlayer.name} lost zone`}
             on:click={() => showZone(bottomPlayer.index, 'lostZone', `${bottomPlayer.name} lost zone`)}
           >
-            {bottomPlayer.lostZone.length} L
+            {#if bottomPlayer.lostZone.length}
+              <CardTile card={bottomPlayer.lostZone[bottomPlayer.lostZone.length - 1]} compact />
+            {/if}
+            <span class="pile-count">{bottomPlayer.lostZone.length}</span>
           </button>
           <div class="prize-grid" title={`${bottomPlayer.name} prizes`} aria-label={`${bottomPlayer.name} prizes`}>
             {#each Array(6) as _, index}
@@ -239,7 +247,8 @@
         type="button"
         class="bench-drop-surface"
         class:can-drop={canPlayToBenchArea(bottomPlayer) || canPlaceSetupBench(bottomPlayer)}
-        disabled={!canPlayToBenchArea(bottomPlayer) && !canPlaceSetupBench(bottomPlayer)}
+        tabindex="-1"
+        aria-hidden="true"
         aria-label={`Play a Pokemon to ${bottomPlayer.name}'s bench`}
         title={`Play a Pokemon to ${bottomPlayer.name}'s bench`}
         on:click={() => (canPlaceSetupBench(bottomPlayer) ? placeSetupBench() : playToBenchArea(bottomPlayer))}

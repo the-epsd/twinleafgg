@@ -17,7 +17,6 @@
     attachEnergyReset: void;
     attachEnergyUnassign: number;
   }>();
-  let jsonResult = '';
   let selectedIndexes: number[] = [];
   let selectedTargets: CardTarget[] = [];
   let sourceTarget: CardTarget | null = null;
@@ -71,7 +70,6 @@
       selectedIndexes = [];
       selectedTargets = [];
       sourceTarget = null;
-      jsonResult = '';
     }
   }
   $: {
@@ -144,15 +142,6 @@
     selectedIndexes = [];
     selectedTargets = [];
     sourceTarget = null;
-    jsonResult = '';
-  }
-
-  function submitJson() {
-    try {
-      submit(jsonResult.trim() ? JSON.parse(jsonResult) : null);
-    } catch (error) {
-      alert(error instanceof Error ? error.message : String(error));
-    }
   }
 
   function submitSelectedIndexes() {
@@ -440,19 +429,25 @@
 
 {#if hidden}
   <section class="prompt-panel prompt-panel-collapsed">
-    <button type="button" class="ghost-button" on:click={() => (hidden = false)}>
-      Show {labelFor(prompt.className).toLowerCase()}
-    </button>
+    <button type="button" on:click={() => (hidden = false)}>Show</button>
   </section>
 {:else}
-<section class="prompt-panel" class:search-prompt={prompt.className === 'ChooseCardsPrompt'}>
+<section
+  class="prompt-panel"
+  class:search-prompt={prompt.className === 'ChooseCardsPrompt'}
+  class:attach-energy-prompt={prompt.className === 'AttachEnergyPrompt'}
+>
   <div class="prompt-title">
     <div>
       <strong>{labelFor(prompt.className)}</strong>
-      <span>{labelFor(prompt.message || prompt.type)}</span>
+      {#if prompt.className === 'AttachEnergyPrompt'}
+        <span>{attachAssignments.length}/{maxSelections} assigned</span>
+      {:else}
+        <span>{labelFor(prompt.message || prompt.type)}</span>
+      {/if}
     </div>
-    {#if prompt.className === 'ChooseCardsPrompt'}
-      <button type="button" class="ghost-button" on:click={() => (hidden = true)}>Hide</button>
+    {#if prompt.className === 'AttachEnergyPrompt'}
+      <button type="button" on:click={() => (hidden = true)}>Hide</button>
     {/if}
   </div>
   {#if !prompt.supported}
@@ -618,6 +613,7 @@
       {/each}
     </div>
     <div class="prompt-actions search-actions">
+      <button type="button" on:click={() => (hidden = true)}>Hide</button>
       <button disabled={resolving || selectedIndexes.length < minSelections} on:click={submitSelectedIndexes}>Confirm selection</button>
       {#if options.allowCancel}
         <button disabled={resolving} on:click={() => submit(null)}>Cancel</button>
@@ -646,13 +642,6 @@
   {:else if prompt.className === 'AttachEnergyPrompt'}
     <div class="attach-energy-ui">
       <div class="attach-energy-pane">
-        <div class="attach-energy-heading">
-          <strong>Energy</strong>
-          <span>{attachAssignments.length}/{maxSelections} assigned</span>
-        </div>
-        <p class="prompt-hint">
-          Select or drag an energy, then click the highlighted Pokemon on the board.
-        </p>
         <div class="attach-energy-list">
           {#each cards as card, index}
             {@const energyIndex = card.index ?? index}
@@ -795,14 +784,5 @@
     </div>
   {/if}
 
-  {#if prompt.className !== 'ChooseCardsPrompt'}
-    <details>
-      <summary>Advanced</summary>
-      <p>{prompt.resultSchema}</p>
-      <textarea bind:value={jsonResult} placeholder="JSON result, for example null or [0]"></textarea>
-      <button disabled={resolving} on:click={submitJson}>Resolve with JSON</button>
-      <pre>{JSON.stringify(fields, null, 2)}</pre>
-    </details>
-  {/if}
 </section>
 {/if}

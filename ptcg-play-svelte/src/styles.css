@@ -144,6 +144,7 @@ input[type="number"] {
 .table-shell {
   --board-top-inset: clamp(58px, 7.2vh, 84px);
   --board-bottom-inset: clamp(166px, 19.5vh, 232px);
+  --board-right-rail: 150px;
   --board-h: calc(100vh - var(--board-top-inset) - var(--board-bottom-inset));
   --card-w: clamp(58px, min(8vw, calc(var(--board-h) / 9.05)), 104px);
   --hand-separator-gap: calc(var(--card-w) * 0.045);
@@ -305,10 +306,11 @@ input[type="number"] {
   --prize-card-w: calc(var(--card-w) * 0.96);
   --bench-gap: calc(var(--card-w) * 0.18);
   position: absolute;
-  inset: var(--board-top-inset) 150px var(--board-bottom-inset) 0;
+  inset: var(--board-top-inset) var(--board-right-rail) var(--board-bottom-inset) 0;
   min-width: 0;
   perspective: var(--board-perspective, 1250px);
   perspective-origin: 50% 68%;
+  transform-style: preserve-3d;
 }
 
 .debug-zones .playmat {
@@ -329,7 +331,7 @@ input[type="number"] {
   align-items: center;
   padding: calc(var(--card-w) * 0.16) var(--board-edge-pad-x);
   background: rgba(226, 228, 232, 0.56);
-  overflow: hidden;
+  overflow: visible;
   transform: rotateX(var(--board-tilt, 8deg)) scaleY(var(--board-scale-y, 0.94)) translateY(var(--board-lift, 0px));
   transform-origin: 50% 58%;
   transform-style: preserve-3d;
@@ -455,6 +457,7 @@ input[type="number"] {
 .bench-zone {
   position: relative;
   z-index: 1;
+  transform-style: preserve-3d;
   display: grid;
   justify-content: center;
   align-content: center;
@@ -493,12 +496,13 @@ input[type="number"] {
 .bench-drop-surface {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   display: block;
   padding: 0;
   border-radius: 7px;
   border: 1px dashed transparent;
   background: transparent;
+  transform: translateZ(12px);
   pointer-events: none;
 }
 
@@ -517,17 +521,20 @@ input[type="number"] {
 
 .bench-row {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  transform: translateZ(16px);
   display: flex;
   justify-content: center;
   align-items: center;
   gap: var(--bench-gap);
   width: 100%;
   min-height: var(--bench-row-h);
+  pointer-events: none;
 }
 
 .bench-row .board-slot {
   width: var(--bench-card-w);
+  pointer-events: auto;
 }
 
 .bench-row.opponent .card-tile,
@@ -537,7 +544,8 @@ input[type="number"] {
 
 .active-duel {
   position: relative;
-  z-index: 1;
+  z-index: 3;
+  transform-style: preserve-3d;
   display: grid;
   grid-template-rows: var(--active-h) minmax(calc(var(--card-w) * 0.24), 1fr) var(--active-h);
   grid-template-columns: minmax(0, 1fr) var(--active-w) minmax(0, 1fr);
@@ -566,6 +574,13 @@ input[type="number"] {
 .bottom-active-slot {
   grid-row: 3;
   grid-column: 2;
+}
+
+.top-active-slot,
+.bottom-active-slot {
+  position: relative;
+  z-index: 4;
+  transform: translateZ(32px);
 }
 
 .stadium-card {
@@ -826,13 +841,14 @@ button.stack-pile,
 
 .pile-count {
   position: absolute;
-  right: -7px;
-  bottom: -7px;
-  z-index: 2;
+  left: 50%;
+  top: 50%;
+  z-index: 3;
   min-width: 24px;
   min-height: 24px;
   display: grid;
   place-items: center;
+  transform: translate(-50%, -50%);
   padding: 2px 6px;
   border-radius: 999px;
   background: rgba(248, 249, 250, 0.88);
@@ -841,27 +857,32 @@ button.stack-pile,
   box-shadow: 0 3px 10px rgba(23, 30, 38, 0.16);
   font-size: calc(var(--pile-w) * 0.18);
   font-weight: 850;
+  transition: transform 160ms ease;
 }
 
 .deck-pile .pile-count {
-  left: 50%;
-  top: 50%;
   right: auto;
   bottom: auto;
   z-index: 7;
   transform: translate(calc(-50% + var(--deck-top-x)), calc(-50% + var(--deck-top-y)));
-  transition: transform 160ms ease;
 }
 
 .lost-pile {
-  width: calc(var(--prize-card-w) * 1.82);
-  height: calc(var(--prize-card-w) * 0.76);
+  width: calc(var(--prize-card-w) * 1.397);
+  aspect-ratio: 88 / 63;
   margin-block: calc(var(--card-w) * 0.08);
   color: rgba(48, 55, 65, 0.74);
   background: rgba(255, 255, 255, 0.16);
   border-color: rgba(18, 21, 26, 0.08);
   box-shadow: none;
   font-size: calc(var(--card-w) * 0.17);
+  overflow: visible;
+}
+
+.lost-pile .card-tile {
+  width: var(--prize-card-w);
+  height: calc(var(--prize-card-w) * 1.397);
+  transform: rotate(-90deg);
 }
 
 .prize-grid {
@@ -1052,6 +1073,10 @@ button.stack-pile,
   border-radius: 999px;
   object-fit: contain;
   filter: drop-shadow(0 3px 4px rgba(23, 30, 38, 0.38));
+}
+
+.energy-badges img.pending-energy {
+  opacity: 0.5;
 }
 
 .energy-badges.stacked-energy {
@@ -1365,8 +1390,8 @@ button.card-tile.selected:disabled {
 
 .prompt-dock {
   position: absolute;
-  left: 50%;
-  top: 25%;
+  left: calc((100vw - var(--board-right-rail)) / 2);
+  top: calc((var(--board-top-inset) + 100vh - var(--board-bottom-inset)) / 2);
   z-index: 14;
   width: min(760px, calc(100vw - 220px));
   max-height: min(72vh, 680px);
@@ -1374,24 +1399,30 @@ button.card-tile.selected:disabled {
 }
 
 .prompt-dock.search-prompt-dock {
-  top: 30%;
   width: min(1120px, calc(100vw - 220px));
-  height: min(82vh, 820px);
-  max-height: none;
+  height: auto;
+  max-height: min(88vh, 900px);
 }
 
 .prompt-dock.attach-energy-prompt-dock {
-  left: 14px;
-  top: 50%;
-  width: min(320px, calc(100vw - 190px));
-  max-height: min(68vh, 620px);
-  transform: translateY(-50%);
+  top: 10px;
+  bottom: auto;
+  width: min(640px, calc(100vw - 190px));
+  max-height: min(28vh, 230px);
+  transform: translateX(-50%);
+}
+
+.prompt-dock:has(.prompt-panel-collapsed) {
+  left: calc((100vw - var(--board-right-rail)) / 2);
+  top: calc(var(--board-top-inset) + 48px);
+  width: max-content;
+  transform: translate(-50%, -50%);
 }
 
 .board-prompt-dock {
   position: absolute;
-  left: 50%;
-  top: 23%;
+  left: calc((100vw - var(--board-right-rail)) / 2);
+  top: calc((var(--board-top-inset) + 100vh - var(--board-bottom-inset)) / 2);
   z-index: 12;
   width: min(520px, calc(100vw - 220px));
   display: grid;
@@ -1477,16 +1508,68 @@ button.card-tile.selected:disabled {
 .prompt-panel.search-prompt {
   grid-template-rows: auto auto minmax(0, 1fr) auto;
   gap: 14px;
-  height: 100%;
+  height: auto;
+  max-height: inherit;
   padding: 16px;
   overflow: hidden;
+}
+
+.prompt-panel.attach-energy-prompt {
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr);
+  align-items: end;
+  gap: 8px 12px;
+  padding: 8px 10px;
+  overflow: hidden;
+}
+
+.prompt-panel.attach-energy-prompt .prompt-title {
+  grid-column: 1 / -1;
+  align-items: center;
+}
+
+.prompt-panel.attach-energy-prompt .prompt-title strong {
+  font-size: 14px;
+}
+
+.prompt-panel.attach-energy-prompt .prompt-title span {
+  font-size: 11px;
+}
+
+.prompt-panel.attach-energy-prompt .attach-energy-ui {
+  min-width: 0;
+}
+
+.prompt-panel.attach-energy-prompt .prompt-actions {
+  align-self: end;
+  flex-direction: column;
+  gap: 6px;
+  width: 96px;
+}
+
+.prompt-panel.attach-energy-prompt .prompt-actions button {
+  width: 100%;
 }
 
 .prompt-panel-collapsed {
   width: max-content;
   justify-self: center;
-  padding: 8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
   overflow: visible;
+}
+
+.prompt-panel-collapsed button {
+  min-width: clamp(96px, calc(var(--card-w) * 1.45), 150px);
+  min-height: clamp(40px, calc(var(--card-w) * 0.54), 56px);
+  padding: clamp(9px, calc(var(--card-w) * 0.14), 14px) clamp(14px, calc(var(--card-w) * 0.24), 24px);
+  border-radius: 8px;
+  font-size: clamp(14px, calc(var(--card-w) * 0.17), 18px);
+  font-weight: 800;
+  box-shadow: 0 12px 32px rgba(23, 30, 38, 0.2);
 }
 
 .prompt-title {
@@ -1581,6 +1664,7 @@ button.card-tile.selected:disabled {
   display: flex;
   gap: 10px;
   overflow-x: auto;
+  overflow-y: hidden;
   padding: 3px 1px 6px;
 }
 
@@ -1627,12 +1711,17 @@ button.card-tile.selected:disabled {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(clamp(116px, 9vw, 142px), 1fr));
   gap: 12px;
+  align-content: start;
+  align-items: start;
   min-height: 0;
+  max-height: min(52vh, 560px);
   overflow: auto;
   padding: 2px 4px 8px 2px;
 }
 
 .search-card-grid button {
+  align-self: start;
+  display: block;
   padding: 0;
   border-radius: 7px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1702,6 +1791,27 @@ button.card-tile.selected:disabled {
 
 .attach-energy-list {
   grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+}
+
+.attach-energy-prompt .attach-energy-pane {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.attach-energy-prompt .attach-energy-list {
+  grid-auto-flow: column;
+  grid-auto-columns: clamp(72px, 8vw, 92px);
+  grid-template-columns: none;
+  max-height: none;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 1px 1px 5px;
+}
+
+.attach-energy-prompt .attach-energy-card {
+  gap: 4px;
+  padding: 3px;
 }
 
 .attach-target-grid {
@@ -1856,18 +1966,38 @@ button.card-tile.selected:disabled {
 .zone-viewer {
   position: absolute;
   z-index: 10;
-  right: 154px;
-  top: 54px;
-  width: min(460px, calc(100vw - 184px));
-  max-height: min(54vh, 460px);
+  left: calc((100vw - var(--board-right-rail)) / 2);
+  top: calc((var(--board-top-inset) + 100vh - var(--board-bottom-inset)) / 2);
+  width: min(1120px, calc(100vw - 220px));
+  max-height: min(88vh, 900px);
+  transform: translate(-50%, -50%);
   display: grid;
-  gap: 9px;
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 14px;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.zone-viewer-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  cursor: default;
+}
+
+.zone-viewer-backdrop:hover:not(:disabled) {
+  border-color: transparent;
 }
 
 .zone-viewer-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto auto;
-  gap: 8px;
+  gap: 12px;
   align-items: center;
   color: rgba(245, 248, 255, 0.68);
 }
@@ -1882,10 +2012,14 @@ button.card-tile.selected:disabled {
 
 .zone-card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
-  gap: 8px;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(116px, 9vw, 142px), 1fr));
+  gap: 12px;
+  align-content: start;
+  align-items: start;
+  min-height: 0;
+  max-height: min(70vh, 720px);
   overflow: auto;
-  padding: 2px;
+  padding: 2px 4px 8px 2px;
 }
 
 .zone-card-grid .card-tile {
