@@ -1,7 +1,7 @@
-import type { MutableRefObject } from 'react';
-import { Suspense, useLayoutEffect, useMemo, useRef } from 'react';
+import { Suspense, useLayoutEffect, useRef } from 'react';
 import { useThree } from '@react-three/fiber';
 import type { Group, PerspectiveCamera } from 'three';
+import { Selection } from '@react-three/postprocessing';
 import {
   Board3dController,
   type Board3dControllerProps,
@@ -11,6 +11,7 @@ import type { Board3dRuntime } from './createBoard3dRuntime';
 import type { Board3dCardsAdapter } from './board3dCardsAdapter';
 import type { Board3dGameActions } from './board3dGameActions';
 import type { Board3dLightingSettings } from './board3dLightingConfig';
+import { isBoard3dBloomActive } from './board3dLightingConfig';
 import { Board3dLightingRig } from './Board3dLightingRig';
 import { BoardInteractionService } from '../BoardInteractionService';
 import { Board3dCameraRig } from './Board3dCameraRig';
@@ -22,7 +23,6 @@ import { Board3dControllerRefContext } from './Board3dControllerContext';
 import { Board3dFpsBridge } from './Board3dFpsBridge';
 import { Board3dShufflePreviewKey } from './Board3dShufflePreviewKey';
 import { Board3dPrizeLayer } from './Board3dPrizeLayer';
-import { Selection } from '@react-three/postprocessing';
 
 export type Board3dExperienceProps = {
   runtime: Board3dRuntime;
@@ -50,9 +50,18 @@ export function Board3dExperience({
   const handRef = useRef<Group>(null!);
   const ctrlRef = useRef<Board3dController | null>(null);
 
-  const { gl, scene, camera, size } = useThree();
+  const gl = useThree((s) => s.gl);
+  const scene = useThree((s) => s.scene);
+  const camera = useThree((s) => s.camera);
+  const viewportWidth = useThree((s) => s.size.width);
+  const viewportHeight = useThree((s) => s.size.height);
 
-  const stableRuntime = useMemo(() => runtime, [runtime]);
+  const gameActionsRef = useRef(gameActions);
+  gameActionsRef.current = gameActions;
+  const boardInteractionRef = useRef(boardInteraction);
+  boardInteractionRef.current = boardInteraction;
+
+  const bloomActive = isBoard3dBloomActive(lightingSettings.bloom);
 
   useLayoutEffect(() => {
     const world = worldRef.current;
@@ -70,17 +79,17 @@ export function Board3dExperience({
     };
 
     const ctrl = new Board3dController(
-      stableRuntime.assetLoader,
-      stableRuntime.stateSync,
-      stableRuntime.animationService,
-      stableRuntime.interactionService,
-      stableRuntime.handService,
-      stableRuntime.wireframeService,
-      stableRuntime.lightingService,
-      stableRuntime.postProcessingService,
+      runtime.assetLoader,
+      runtime.stateSync,
+      runtime.animationService,
+      runtime.interactionService,
+      runtime.handService,
+      runtime.wireframeService,
+      runtime.lightingService,
+      runtime.postProcessingService,
       cardsAdapter,
-      gameActions,
-      boardInteraction,
+      gameActionsRef.current,
+      boardInteractionRef.current,
     );
 
     ctrl.initFromR3f(ctx, controllerProps);
@@ -92,38 +101,42 @@ export function Board3dExperience({
       ctrlRef.current = null;
       onControllerReady?.(null);
     };
-  }, [gl, scene, camera, stableRuntime, cardsAdapter, gameActions, boardInteraction, onControllerReady]);
+  }, [gl, scene, camera, runtime, cardsAdapter, onControllerReady]);
 
   useLayoutEffect(() => {
-    ctrlRef.current?.applyViewportDimensions(size.width, size.height);
-  }, [size.width, size.height]);
+    ctrlRef.current?.applyViewportDimensions(viewportWidth, viewportHeight);
+  }, [viewportWidth, viewportHeight]);
 
   useLayoutEffect(() => {
     ctrlRef.current?.refreshProps(controllerProps);
   }, [controllerProps]);
 
-  return (
-    <Selection>
-      <Board3dControllerRefContext.Provider value={ctrlRef}>
-        {onBoardFps ? <Board3dFpsBridge onFps={onBoardFps} /> : null}
-        <Board3dShufflePreviewKey />
-        <Board3dCameraRig clientId={controllerProps.clientId} topPlayer={controllerProps.topPlayer} />
-        <Board3dLightingRig settings={lightingSettings} />
-        <Suspense fallback={null}>
-          <Board3dStaticScene />
-        </Suspense>
-        <group ref={worldRef}>
-          <group ref={handRef} />
-          <Board3dBoardCardsLayer stateSync={stableRuntime.stateSync} />
-          <Board3dPrizeLayer />
-        </group>
-        <Board3dFrameEffects
-          stateSync={stableRuntime.stateSync}
-          boardInteraction={boardInteraction}
-          bloom={lightingSettings.bloom}
-        />
-        <Board3dStatsR3f />
-      </Board3dControllerRefContext.Provider>
-    </Selection>
+  const tree = (
+    <Board3dControllerRefContext.Provider value={ctrlRef}>
+      {onBoardFps ? <Board3dFpsBridge onFps={onBoardFps} /> : null}
+      <Board3dShufflePreviewKey />
+      <Board3dCameraRig clientId={controllerProps.clientId} topPlayer={controllerProps.topPlayer} />
+      <Board3dLightingRig settings={lightingSettings} />
+      <Suspense fallback={null}>
+        <Board3dStaticScene bloomActive={bloomActive} />
+      </Suspense>
+      <group ref={worldRef}>
+        <group ref={handRef} />
+        <Board3dBoardCardsLayer stateSync={runtime.stateSync} />
+        <Board3dPrizeLayer />
+      </group>
+      <Board3dFrameEffects
+        stateSync={runtime.stateSync}
+        boardInteraction={boardInteraction}
+        bloom={lightingSettings.bloom}
+      />
+      <Board3dStatsR3f />
+    </Board3dControllerRefContext.Provider>
   );
+
+  if (bloomActive) {
+    return <Selection>{tree}</Selection>;
+  }
+
+  return tree;
 }

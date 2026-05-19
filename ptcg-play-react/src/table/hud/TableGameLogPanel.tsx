@@ -110,7 +110,7 @@ export function TableGameLogPanel(props: TableGameLogPanelProps) {
         <div id="table-game-log-panel-body" className={styles.panelBody}>
           <h4 className={styles.header}>{t('TABLE_LOGS')}</h4>
           <ul ref={listRef} className={styles.list} aria-label={t('TABLE_LOGS')}>
-            {localGame.logs.map((log) => {
+            {localGame.logs.map((log, logIndex) => {
               if (isLogHidden(log, clientId)) {
                 return null;
               }
@@ -122,7 +122,7 @@ export function TableGameLogPanel(props: TableGameLogPanelProps) {
               });
               const ts = log.params?.timestamp != null ? String(log.params.timestamp) : '';
               return (
-                <li key={log.id} className={styles.row}>
+                <li key={`${log.id}-${logIndex}`} className={styles.row}>
                   {ts ? <span className={styles.ts}>[{ts}]</span> : null}
                   <span
                     className={cn(

@@ -1,7 +1,7 @@
 /** Grid overlay Y — below cards so grid appears underneath */
 export const BOARD_3D_GRID_Y = 0.1;
-/** Twinleaf emblem: slightly above grid, under typical card lift */
-export const BOARD_3D_CENTER_EMBLEM_Y = 0.101;
+/** Twinleaf emblem: below tool overlays (~0.07–0.08) so center Active tools aren't occluded */
+export const BOARD_3D_CENTER_EMBLEM_Y = 0.068;
 /** Diameter in world units — ~fit between active rows with margin */
 export const BOARD_3D_CENTER_EMBLEM_SIZE = 7;
 /** Match bench / slot outline ribbon thickness */

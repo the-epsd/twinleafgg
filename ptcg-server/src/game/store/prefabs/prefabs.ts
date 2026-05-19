@@ -2729,15 +2729,17 @@ export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Pl
         break;
       }
       case TrainerType.TOOL: {
-        // Check if there are Pokemon that can accept a tool
-        let canAttachTool = false;
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
-          if (Array.isArray(cardList.tools) && cardList.tools.length < pokemonCard.maxTools) {
-            canAttachTool = true;
+        // Cards with canPlay (e.g. tools that attach to opponent's Pokemon) use that instead
+        if (!trainerCard.canPlay) {
+          let canAttachTool = false;
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+            if (Array.isArray(cardList.tools) && cardList.tools.length < pokemonCard.maxTools) {
+              canAttachTool = true;
+            }
+          });
+          if (!canAttachTool) {
+            return false;
           }
-        });
-        if (!canAttachTool) {
-          return false;
         }
         break;
       }

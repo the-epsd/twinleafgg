@@ -4,116 +4,56 @@
 
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
-import {
-  GameError,
-  GameMessage,
-  PlayerType,
-  SlotType,
-  StoreLike,
-  State,
-  StateUtils,
-} from '../../game';
+import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
-import { ChoosePokemonPrompt } from '../../game/store/prompts/choose-pokemon-prompt';
+import { AttachPokemonToolEffect } from '../../game/store/effects/play-card-effects';
 import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { StoreLike, State, Player, StateUtils, PlayerType, GameError, GameMessage } from '../../game';
 
-// Refs: set-phantom-forces/head-ringer-team-flare-hyper-gear.ts (PlayItemEffect attach-to-opponent pattern),
-//       set-temporal-forces/maximum-belt.ts (DealDamageEffect source tool interception)
+function isPokemonEx(pokemon: PokemonCard): boolean {
+  return pokemon.tags.includes(CardTag.POKEMON_EX);
+}
+
 export class JammingNet extends TrainerCard {
-  public trainerType: TrainerType = TrainerType.ITEM;
+  public trainerType: TrainerType = TrainerType.TOOL;
+  public attachesToOpponentsPokemon = true;
   public set: string = 'PHF';
   public setNumber: string = '98';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jamming Net';
   public fullName: string = 'Jamming Net Team Flare Hyper Gear PHF';
-  public text: string =
-    "Attach this Pokemon Tool to 1 of your opponent's Pokemon-EX that doesn't already have a Pokemon Tool attached to it.\n\nThe attacks of the Pokémon this card is attached to do 20 less damage to all Defending Pokémon (before applying Weakness and Resistance). (Don't apply Weakness and Resistance for Benched Pokémon.)\n\nWhen this card is removed from a Pokémon for any reason, put this card in its owner's discard pile.";
+  public text: string = 'Attach this Pokemon Tool to 1 of your opponent\'s Pokemon-EX that doesn\'t already have a Pokemon Tool attached to it.\n\nThe attacks of the Pokémon this card is attached to do 20 less damage to all Defending Pokémon (before applying Weakness and Resistance). (Don\'t apply Weakness and Resistance for Benched Pokémon.)\n\nWhen this card is removed from a Pokémon for any reason, put this card in its owner\'s discard pile.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+    let hasValidTarget = false;
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
+      if (isPokemonEx(card) && cardList.tools.length === 0) {
+        hasValidTarget = true;
+      }
+    });
+    return hasValidTarget;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Handle playing this card from hand - attach to opponent's Pokemon-EX
-    // Ref: set-phantom-forces/head-ringer-team-flare-hyper-gear.ts (PlayItemEffect attach-to-opponent)
-    if (effect instanceof PlayItemEffect && effect.trainerCard === this) {
+    if (effect instanceof AttachPokemonToolEffect && effect.trainerCard.fullName === this.fullName) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
+      const targetOwner = StateUtils.findOwner(state, effect.target);
 
-      // Check if opponent has any Pokemon-EX without a tool
-      let hasValidTarget = false;
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (
-          card.tags.includes(CardTag.POKEMON_EX) &&
-          cardList.tools.length === 0
-        ) {
-          hasValidTarget = true;
-        }
-      });
-
-      if (!hasValidTarget) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      if (targetOwner !== opponent) {
+        throw new GameError(GameMessage.INVALID_TARGET);
       }
 
-      // Prevent default item discard behavior
-      effect.preventDefault = true;
-
-      // Build blocked list using CardTarget format
-      const blocked: { player: PlayerType; slot: SlotType; index: number }[] =
-        [];
-      const opponentActive = opponent.active;
-      const opponentActivePokemon = opponentActive.getPokemonCard();
-
-      if (
-        !opponentActivePokemon ||
-        !opponentActivePokemon.tags.includes(CardTag.POKEMON_EX) ||
-        opponentActive.tools.length > 0
-      ) {
-        blocked.push({
-          player: PlayerType.TOP_PLAYER,
-          slot: SlotType.ACTIVE,
-          index: 0,
-        });
+      const pokemonCard = effect.target.getPokemonCard();
+      if (!pokemonCard || !isPokemonEx(pokemonCard) || effect.target.tools.length > 0) {
+        throw new GameError(GameMessage.INVALID_TARGET);
       }
-
-      opponent.bench.forEach((benchSlot, index) => {
-        const pokemonCard = benchSlot.getPokemonCard();
-        if (
-          !pokemonCard ||
-          !pokemonCard.tags.includes(CardTag.POKEMON_EX) ||
-          benchSlot.tools.length > 0
-        ) {
-          blocked.push({
-            player: PlayerType.TOP_PLAYER,
-            slot: SlotType.BENCH,
-            index,
-          });
-        }
-      });
-
-      return store.prompt(
-        state,
-        new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_ATTACH_CARDS,
-          PlayerType.TOP_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { min: 1, max: 1, allowCancel: false, blocked },
-        ),
-        (targets) => {
-          if (targets && targets.length > 0) {
-            const target = targets[0];
-            player.hand.moveCardTo(this, target);
-            target.tools.push(this);
-          }
-        },
-      );
     }
 
     // Reduce attack damage by 20 when the Pokemon this is attached to attacks
-    // Ref: set-temporal-forces/maximum-belt.ts (DealDamageEffect source tool interception)
-    if (
-      effect instanceof DealDamageEffect &&
-      effect.source.tools.includes(this)
-    ) {
+    if (effect instanceof DealDamageEffect && effect.source.tools.includes(this)) {
       if (IS_TOOL_BLOCKED(store, state, effect.player, this)) {
         return state;
       }

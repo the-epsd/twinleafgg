@@ -1032,7 +1032,7 @@ function SelectPromptPanel(props: {
         <p className={styles.message}>{gameMessageText(t, sp.message)}</p>
         <div className={styles.selectList}>
           {sp.values.map((value, i) => (
-            <label key={i} className={styles.selectOption}>
+            <label key={`${sp.id}-${i}`} className={styles.selectOption}>
               <input type="radio" name={`select-${sp.id}`} checked={idx === i} onChange={() => setIdx(i)} />
               <span>{t(value, { defaultValue: value })}</span>
             </label>
@@ -1120,9 +1120,9 @@ function ShowCardsPanel(props: {
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.message}>{gameMessageText(t, prompt.message)}</p>
         <div className={styles.cardRow}>
-          {prompt.cards.map((card: Card) => (
+          {prompt.cards.map((card: Card, cardIndex) => (
             <button
-              key={card.id + String(card.fullName)}
+              key={`${cardIndex}-${card.id}-${card.fullName}`}
               type="button"
               style={{ padding: 0, border: 'none', background: 'none', cursor: 'pointer' }}
               onClick={() => setDetail(card)}

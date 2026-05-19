@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import type { CardList, Player } from 'ptcg-server';
+import type { Card, CardList, Player } from 'ptcg-server';
 import { GamePhase } from 'ptcg-server';
 import { useAuth } from '../context/AuthContext';
 import { useDeckCardScanUrl } from '../context/CardImagesContext';
@@ -29,6 +29,8 @@ import { selfPlayFocusPlayerId } from '../table/selfPlayFocusPlayerId';
 import promptStyles from '../table/prompts/TablePromptLayer.module.css';
 
 const RECONNECT_GAME_ID_KEY = 'ptcg_reconnect_gameId';
+
+const EMPTY_CATALOG: Card[] = [];
 
 function persistGameId(gameId: number): void {
   try {
@@ -64,6 +66,7 @@ export function TablePage() {
   }>();
   const navigate = useNavigate();
   const { cardsInfo, serverConfig, user } = useAuth();
+  const catalog = useMemo(() => cardsInfo?.cards ?? EMPTY_CATALOG, [cardsInfo?.cards]);
   const getScanUrl = useDeckCardScanUrl(serverConfig?.scansUrl);
   const { clientId, connected: coreConnected } = useCoreSession();
   const { has3dBoardAccess, use3dBoardDefault, defaultSandboxMode } = useSettings();
@@ -577,7 +580,7 @@ export function TablePage() {
         bottomPlayerHand={bottomHand}
         topPlayerHand={topHand}
         clientId={tableClientId}
-        catalog={cardsInfo?.cards ?? []}
+        catalog={catalog}
         boardInteraction={boardInteraction}
         gameActions={gameActions}
         onKoSequenceActiveChange={onKoSequenceActiveChange}
@@ -600,7 +603,7 @@ export function TablePage() {
       <TablePromptLayer
         localGame={localGame}
         clientId={tableClientId}
-        catalog={cardsInfo?.cards ?? []}
+        catalog={catalog}
         getScanUrl={getScanUrl}
         boardInteraction={boardInteraction}
         onResolvePrompt={onResolvePrompt}

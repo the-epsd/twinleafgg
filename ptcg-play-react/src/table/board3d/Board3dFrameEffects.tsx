@@ -6,6 +6,7 @@ import { EffectComposer, SelectiveBloom } from '@react-three/postprocessing';
 import { updateBoard3dHoloTime } from './board-3d-holo-material';
 import type { Board3dStateSyncService } from './services/board-3d-state-sync.service';
 import { BoardInteractionService } from '../BoardInteractionService';
+import { isBoard3dBloomActive } from './board3dLightingConfig';
 
 /** Screen-space “below the card”: opposite of the old top offset in group-local space. */
 const DAMAGE_HUD_LOCAL = new Vector3(0, -2.35, 0);
@@ -32,7 +33,8 @@ function Board3dPerFrameHooks({
   stateSync: Board3dStateSyncService;
   boardInteraction: BoardInteractionService;
 }) {
-  const { camera, gl } = useThree();
+  const camera = useThree((s) => s.camera);
+  const gl = useThree((s) => s.gl);
 
   useFrame((state) => {
     updateBoard3dHoloTime(state.clock.elapsedTime);
@@ -64,14 +66,12 @@ function Board3dPerFrameHooks({
   return null;
 }
 
-const BLOOM_OFF_THRESHOLD = 1e-4;
-
 function Board3dBloomPipeline({
   bloom,
 }: {
   bloom: { intensity: number; luminanceThreshold: number };
 }) {
-  const { scene } = useThree();
+  const scene = useThree((s) => s.scene);
   const [lights, setLights] = useState<Light[]>([]);
 
   useLayoutEffect(() => {
@@ -124,7 +124,7 @@ export function Board3dFrameEffects({
   boardInteraction: BoardInteractionService;
   bloom: { intensity: number; luminanceThreshold: number };
 }) {
-  const postActive = bloom.intensity > BLOOM_OFF_THRESHOLD;
+  const postActive = isBoard3dBloomActive(bloom);
 
   return (
     <>

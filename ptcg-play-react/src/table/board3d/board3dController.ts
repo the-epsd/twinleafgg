@@ -53,6 +53,7 @@ import {
   BOARD3D_DROP_ZONE_TARGET_SCALE,
   BOARD_3D_BENCH_SLOT_OUTLINE_COLOR,
   BOARD_3D_BENCH_SLOT_OUTLINE_OPACITY,
+  BOARD_3D_CENTER_EMBLEM_Y,
 } from './board3d-constants';
 import type { CardInfoPaneOptions } from '../../card-info/CardInfoPane';
 import type { Board3dGameActions } from './board3dGameActions';
@@ -578,8 +579,8 @@ export class Board3dController {
       (ZONE_POSITIONS.bottomPlayer.active.x + ZONE_POSITIONS.topPlayer.active.x) / 2;
     const midZ =
       (ZONE_POSITIONS.bottomPlayer.active.z + ZONE_POSITIONS.topPlayer.active.z) / 2;
-    this.boardCenterOverlay.position.set(midX, Board3dController.BOARD_CENTER_EMBLEM_Y, midZ);
-    this.boardCenterOverlay.renderOrder = 100;
+    this.boardCenterOverlay.position.set(midX, BOARD_3D_CENTER_EMBLEM_Y, midZ);
+    this.boardCenterOverlay.renderOrder = 50;
     this.boardCenterOverlay.receiveShadow = false;
     this.scene.add(this.boardCenterOverlay);
 
@@ -591,8 +592,6 @@ export class Board3dController {
 
   /** Grid height - below cards (0.1) so grid appears underneath */
   private static readonly BOARD_GRID_Y = 0.1;
-  /** Twinleaf emblem: slightly above grid, under typical card lift */
-  private static readonly BOARD_CENTER_EMBLEM_Y = 0.101;
   /** Diameter in world units — ~fit between active rows with margin */
   private static readonly BOARD_CENTER_EMBLEM_SIZE = 7;
 
