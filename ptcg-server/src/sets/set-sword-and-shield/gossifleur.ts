@@ -1,45 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PokemonCardList, Card, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
-import { AttackEffect } from '../../game/store/effects/game-effects';
+import { Stage, CardType } from '../../game/store/card/card-types';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-
-function* useCallForFamily(next: Function, store: StoreLike, state: State,
-  effect: AttackEffect): IterableIterator<State> {
-  const player = effect.player;
-  const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
-  const max = Math.min(slots.length, 3);
-
-  if (max === 0) {
-    return state;
-  }
-
-  let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_PUT_ONTO_BENCH,
-    player.deck,
-    { superType: SuperType.POKEMON, stage: Stage.BASIC },
-    { min: 0, max, allowCancel: false }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
-
-  if (cards.length > slots.length) {
-    cards.length = slots.length;
-  }
-
-  cards.forEach((card, index) => {
-    store.reduceEffect(state, new PlayPokemonFromDeckEffect(player, card as PokemonCard, slots[index]));
-  });
-
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-    player.deck.applyOrder(order);
-  });
-}
+import {
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 
 export class Gossifleur extends PokemonCard {
   public regulationMark = 'D';
@@ -54,14 +20,14 @@ export class Gossifleur extends PokemonCard {
       name: 'Call For Family',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for up to 3 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.'
+      text: 'Search your deck for up to 3 Basic Pokémon and put them onto your Bench. Then, shuffle your deck.',
     },
     {
       name: 'Razor Leaf',
       cost: [G],
       damage: 10,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'SSH';
@@ -72,11 +38,16 @@ export class Gossifleur extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const generator = useCallForFamily(() => generator.next(), store, state, effect);
-      return generator.next().value;
+      const player = effect.player;
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH(
+        store,
+        state,
+        player,
+        { stage: Stage.BASIC },
+        { min: 0, max: 3 },
+      );
     }
 
     return state;
   }
-
 }

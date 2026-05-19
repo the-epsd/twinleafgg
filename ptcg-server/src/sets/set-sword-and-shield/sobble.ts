@@ -4,46 +4,35 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
 
 export class Sobble extends PokemonCard {
-
   public regulationMark = 'D';
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 70;
-
-  public weakness = [{ type: CardType.LIGHTNING }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: L }];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Pound',
-      cost: [CardType.COLORLESS],
+      cost: [C],
       damage: 10,
-      text: ''
+      text: '',
     },
     {
       name: 'Water Gun',
-      cost: [CardType.WATER, CardType.COLORLESS],
+      cost: [W, C],
       damage: 20,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'SSH';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '55';
-
   public name: string = 'Sobble';
-
   public fullName: string = 'Sobble SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;
   }
-
 }

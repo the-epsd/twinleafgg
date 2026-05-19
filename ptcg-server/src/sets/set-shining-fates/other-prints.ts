@@ -73,11 +73,11 @@ import { Rotom } from './rotom';
 import { Morpeko2 } from './morpeko-2';
 import { MorpekoV } from '../set-sword-and-shield/morpeko-v';
 import { MorpekoVmax } from '../set-sword-and-shield/morpeko-vmax';
-import { IndeedeeV } from './indeedee-v';
+import { IndeedeeV } from '../set-sword-and-shield/indeedee-v';
 import { Trapinch } from '../set-darkness-ablaze/trapinch';
 import { Koffing } from './koffing';
 import { GalarianWeezing } from './galarian-weezing';
-import { Cufant } from './cufant';
+import { Cufant } from '../set-darkness-ablaze/cufant';
 import { DittoV } from './ditto-v';
 import { DittoVmax } from './ditto-vmax';
 import { CramorantV } from '../set-sword-and-shield/cramorant-v';
@@ -128,12 +128,23 @@ import { Blipbug } from '../set-sword-and-shield/blipbug';
 import { Chewtle } from '../set-sword-and-shield/chewtle';
 import { Drizzile } from '../set-sword-and-shield/drizzile';
 import { Sobble3 } from '../set-sword-and-shield/sobble-3';
+import { Applin2 } from '../set-rebel-clash/applin-2';
+import { Gossifleur } from '../set-sword-and-shield/gossifleur';
+import { Raboot } from '../set-sword-and-shield/raboot';
+import { Sizzlipede } from '../set-sword-and-shield/sizzlipede';
+import { GalarianMrMime } from '../set-darkness-ablaze/galarian-mr-mime';
+import { Arrokuda } from '../set-rebel-clash/arrokuda';
+import { Toxel } from '../set-darkness-ablaze/toxel';
+import { Sinistea } from '../set-darkness-ablaze/sinistea';
+import { Rolycoly } from '../set-rebel-clash/rolycoly';
+import { Carkol } from '../set-rebel-clash/carkol';
+import { Falinks } from '../set-rebel-clash/falinks';
+import { Impidimp } from '../set-rebel-clash/impidimp';
+import { Cinccino } from '../set-sword-and-shield/cinccino';
+import { Skwovet } from '../set-rebel-clash/skwovet';
+import { Rookidee } from '../set-sword-and-shield/rookidee';
 
-export class BirdKeeperSHF extends BirdKeeper {
-  public fullName = 'Bird Keeper SHF';
-  public set = 'SHF';
-  public setNumber = '66';
-}
+// MARK: Normal frame reprints
 
 export class FrosmothSHF extends Frosmoth {
   public fullName = 'Frosmoth SHF';
@@ -141,16 +152,230 @@ export class FrosmothSHF extends Frosmoth {
   public setNumber = '30';
 }
 
+export class Rowlet2 extends Rowlet {
+  public set: string = 'SHF';
+  public setNumber: string = '6';
+  public fullName: string = 'Rowlet SHF 6';
+}
+
+export class Decidueye2 extends Decidueye {
+  public set: string = 'SHF';
+  public setNumber: string = '8';
+  public fullName: string = 'Decidueye SHF 8';
+}
+
+export class DhelmiseVSHF extends DhelmiseV {
+  public set: string = 'SHF';
+  public setNumber: string = '9';
+  public fullName: string = 'Dhelmise V SHF';
+}
+
+export class Grookey2 extends Grookey {
+  public set: string = 'SHF';
+  public setNumber: string = '11';
+  public fullName: string = 'Grookey SHF 11';
+}
+
+export class Rillaboom2 extends Rillaboom {
+  public set: string = 'SHF';
+  public setNumber: string = '13';
+  public fullName: string = 'Rillaboom SHF 13';
+}
+
+export class CinderaceVSHF extends CinderaceV {
+  public set: string = 'SHF';
+  public setNumber: string = '18';
+  public fullName: string = 'Cinderace V SHF';
+}
+
+export class CinderaceVmaxSHF extends CinderaceVmax {
+  public set: string = 'SHF';
+  public setNumber: string = '19';
+  public fullName: string = 'Cinderace VMAX SHF';
+}
+
+export class SnomSHF extends Snom {
+  public set: string = 'SHF';
+  public setNumber: string = '29';
+  public fullName: string = 'Snom SHF 29';
+}
+
+export class ShinxSHF extends Shinx {
+  public set: string = 'SHF';
+  public setNumber: string = '31';
+  public fullName: string = 'Shinx SHF';
+}
+
+export class LuxioSHF extends Luxio {
+  public set: string = 'SHF';
+  public setNumber: string = '32';
+  public fullName: string = 'Luxio SHF';
+}
+
+export class LuxraySHF extends Luxray {
+  public set: string = 'SHF';
+  public setNumber: string = '33';
+  public fullName: string = 'Luxray SHF';
+}
+
+export class Morpeko3 extends Morpeko2 {
+  public set: string = 'SHF';
+  public setNumber: string = '36';
+  public fullName: string = 'Morpeko SHF 36';
+}
+
+export class MorpekoVSHF extends MorpekoV {
+  public set: string = 'SHF';
+  public setNumber: string = '37';
+  public fullName: string = 'Morpeko V SHF';
+}
+
+export class MorpekoVmaxSHF extends MorpekoVmax {
+  public set: string = 'SHF';
+  public setNumber: string = '38';
+  public fullName: string = 'Morpeko VMAX SHF';
+}
+
+export class IndeedeeV2 extends IndeedeeV {
+  public set: string = 'SHF';
+  public setNumber: string = '39';
+  public fullName: string = 'Indeedee V SHF 39';
+}
+
+export class TrapinchSHF extends Trapinch {
+  public set: string = 'SHF';
+  public setNumber: string = '40';
+  public fullName: string = 'Trapinch SHF';
+}
+
+export class CrobatVSHF extends CrobatV {
+  public set: string = 'SHF';
+  public setNumber: string = '44';
+  public fullName: string = 'Crobat V SHF';
+}
+
+export class Nickit2 extends Nickit {
+  public set: string = 'SHF';
+  public setNumber: string = '47';
+  public fullName: string = 'Nickit SHF 47';
+}
+
+export class CufantSHF extends Cufant {
+  public set: string = 'SHF';
+  public setNumber: string = '49';
+  public fullName: string = 'Cufant SHF 49';
+}
+
+export class CramorantVSHF extends CramorantV {
+  public set: string = 'SHF';
+  public setNumber: string = '54';
+  public fullName: string = 'Cramorant V SHF';
+}
+
+export class BosssOrdersSHF extends BossOrders {
+  public set: string = 'SHF';
+  public setNumber: string = '58';
+  public fullName: string = "Boss's Orders SHF";
+}
+
+export class ProfessorsResearchSHF extends ProfessorsResearch {
+  public set: string = 'SHF';
+  public setNumber: string = '60';
+  public fullName: string = "Professor's Research SHF";
+}
+
+// MARK: Full arts
+export class AlcremieVSHF extends AlcremieV {
+  public set: string = 'SHF';
+  public setNumber: string = '64';
+  public fullName: string = 'Alcremie V SHF';
+}
+
+export class BallGuy2 extends BallGuy {
+  public set: string = 'SHF';
+  public setNumber: string = '65';
+  public fullName: string = 'Ball Guy SHF 65';
+}
+
+export class BirdKeeperSHF extends BirdKeeper {
+  public fullName = 'Bird Keeper SHF';
+  public set = 'SHF';
+  public setNumber = '66';
+}
+
+export class CaraLissSHF extends CaraLiss {
+  public set: string = 'SHF';
+  public setNumber: string = '67';
+  public fullName: string = 'Cara Liss SHF';
+}
+
+export class GymTrainer2 extends GymTrainer {
+  public set: string = 'SHF';
+  public setNumber: string = '68';
+  public fullName: string = 'Gym Trainer SHF 68';
+}
+
+export class PiersSHF extends Piers {
+  public set: string = 'SHF';
+  public setNumber: string = '69';
+  public fullName: string = 'Piers SHF';
+}
+
+export class PokeKidSHF extends PokeKid {
+  public set: string = 'SHF';
+  public setNumber: string = '70';
+  public fullName: string = 'Poké Kid SHF';
+}
+
+export class RoseSHF extends Rose {
+  public set: string = 'SHF';
+  public setNumber: string = '71';
+  public fullName: string = 'Rose SHF';
+}
+
+export class SkylaSHF extends Skyla {
+  public set: string = 'SHF';
+  public setNumber: string = '72';
+  public fullName: string = 'Skyla SHF';
+}
+
+// MARK: Rainbow rares
+
+export class AlcremieVmaxSHF extends AlcremieVmax {
+  public set: string = 'SHF';
+  public setNumber: string = '73';
+  public fullName: string = 'Alcremie VMAX SHF';
+}
+
+// MARK: Shiny single prizers
 export class RowletSHF extends Rowlet {
   public set: string = 'SHF';
-  public setNumber: string = 'SV001';
+  public setNumber: string = 'SV1';
   public fullName: string = 'Rowlet SHF';
+}
+
+export class DartrixSHFSV extends Dartrix {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV2';
+  public fullName: string = 'Dartrix SHF SV2';
+}
+
+export class DecidueyeSHF extends Decidueye {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV3';
+  public fullName: string = 'Decidueye SHF';
 }
 
 export class GrookeySHF extends Grookey {
   public set: string = 'SHF';
-  public setNumber: string = 'SV004';
+  public setNumber: string = 'SV4';
   public fullName: string = 'Grookey SHF';
+}
+
+export class Thwackey2 extends Thwackey {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV5';
+  public fullName: string = 'Thwackey SHF 12';
 }
 
 export class RillaboomSHF extends Rillaboom {
@@ -159,274 +384,574 @@ export class RillaboomSHF extends Rillaboom {
   public fullName: string = 'Rillaboom SHF SV6';
 }
 
+export class BlipbugSHF extends Blipbug {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV7';
+  public fullName: string = 'Blipbug SHF';
+}
+
 export class DottlerSHF extends Dottler {
   public set: string = 'SHF';
-  public setNumber: string = 'SV008';
+  public setNumber: string = 'SV8';
   public fullName: string = 'Dottler SHF';
+}
+
+export class OrbeetleSHF extends Orbeetle {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV9';
+  public fullName: string = 'Orbeetle SHF';
+}
+
+export class GossifleurSHF extends Gossifleur {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV10';
+  public fullName: string = 'Gossifleur SHF SV10';
 }
 
 export class EldegossSHF extends Eldegoss {
   public set: string = 'SHF';
-  public setNumber: string = 'SV011';
+  public setNumber: string = 'SV11';
   public fullName: string = 'Eldegoss SHF';
 }
 
-// export class ApplinSHF extends Applin2 {
-//   public set: string = 'SHF';
-//   public setNumber: string = 'SV012';
-//   public fullName: string = 'Applin SHF';
-// }
+export class ApplinSHF extends Applin2 {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV12';
+  public fullName: string = 'Applin SHF';
+}
+
+export class FlappleSHF extends Flapple {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV13';
+  public fullName: string = 'Flapple SHF';
+}
+
+export class AppletunSHF extends Appletun {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV14';
+  public fullName: string = 'Appletun SHF';
+}
 
 export class ScorbunnySHF extends Scorbunny {
   public set: string = 'SHF';
-  public setNumber: string = 'SV015';
+  public setNumber: string = 'SV15';
   public fullName: string = 'Scorbunny SHF';
+}
+
+export class RabootSHF extends Raboot {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV16';
+  public fullName: string = 'Raboot SHF SV16';
+}
+
+export class CinderaceSHF extends Cinderace {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV17';
+  public fullName: string = 'Cinderace SHF';
+}
+
+export class SizzlipedeSHF extends Sizzlipede {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV18';
+  public fullName: string = 'Sizzlipede SHF';
+}
+
+export class CentiskorchSHF extends Centiskorch {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV19';
+  public fullName: string = 'Centiskorch SHF';
+}
+
+export class GalarianMrMimeSHF extends GalarianMrMime {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV20';
+  public fullName: string = 'Galarian Mr. Mime SHF';
+}
+
+export class GalarianMrRimeSHF extends GalarianMrRime {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV21';
+  public fullName: string = 'Galarian Mr. Rime SHF';
 }
 
 export class SuicuneSHF extends Suicune {
   public set: string = 'SHF';
-  public setNumber: string = 'SV022';
+  public setNumber: string = 'SV22';
   public fullName: string = 'Suicune SHF';
 }
 
 export class GalarianDarumakaSHF extends GalarianDarumaka {
   public set: string = 'SHF';
-  public setNumber: string = 'SV023';
+  public setNumber: string = 'SV23';
   public fullName: string = 'Galarian Darumaka SHF';
 }
 
 export class GalarianDarmanitanSHF extends GalarianDarmanitan {
   public set: string = 'SHF';
-  public setNumber: string = 'SV024';
+  public setNumber: string = 'SV24';
   public fullName: string = 'Galarian Darmanitan SHF';
+}
+
+export class SobbleSHF extends Sobble3 {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV25';
+  public fullName: string = 'Sobble SHF';
+}
+
+export class DrizzileSHF extends Drizzile {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV26';
+  public fullName: string = 'Drizzile SHF';
+}
+
+export class InteleonSHF extends Inteleon {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV27';
+  public fullName: string = 'Inteleon SHF';
+}
+
+export class ChewtleSHF extends Chewtle {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV28';
+  public fullName: string = 'Chewtle SHF';
 }
 
 export class DrednawSHF extends Drednaw {
   public set: string = 'SHF';
-  public setNumber: string = 'SV029';
+  public setNumber: string = 'SV29';
   public fullName: string = 'Drednaw SHF';
 }
 
 export class CramorantSHF extends Cramorant {
   public set: string = 'SHF';
-  public setNumber: string = 'SV030';
+  public setNumber: string = 'SV30';
   public fullName: string = 'Cramorant SHF';
+}
+
+export class ArrokudaSHF extends Arrokuda {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV31';
+  public fullName: string = 'Arrokuda SHF';
+}
+
+export class BarraskewdaSHF extends Barraskewda {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV32';
+  public fullName: string = 'Barraskewda SHF';
+}
+
+export class SnomSV extends Snom {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV33';
+  public fullName: string = 'Snom SHFSV';
+}
+
+export class FrosmothSHF2 extends Frosmoth {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV34';
+  public fullName: string = 'Frosmoth SHF SV034';
+}
+
+export class EiscueSHF extends Eiscue {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV35';
+  public fullName: string = 'Eiscue SHF';
+}
+
+export class DracovishSHF extends Dracovish {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV36';
+  public fullName: string = 'Dracovish SHF';
 }
 
 export class ArctovishSHF extends Arctovish {
   public set: string = 'SHF';
-  public setNumber: string = 'SV037';
+  public setNumber: string = 'SV37';
   public fullName: string = 'Arctovish SHF';
+}
+
+export class Rotom2 extends Rotom {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV38';
+  public fullName: string = 'Rotom SHF';
 }
 
 export class YamperSHF extends Yamper {
   public set: string = 'SHF';
-  public setNumber: string = 'SV039';
+  public setNumber: string = 'SV39';
   public fullName: string = 'Yamper SHF';
 }
 
 export class BoltundSHF extends Boltund {
   public set: string = 'SHF';
-  public setNumber: string = 'SV040';
+  public setNumber: string = 'SV40';
   public fullName: string = 'Boltund SHF';
+}
+
+export class ToxelSHF extends Toxel {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV41';
+  public fullName: string = 'Toxel SHF';
 }
 
 export class ToxtricitySHF extends Toxtricity {
   public set: string = 'SHF';
-  public setNumber: string = 'SV042';
+  public setNumber: string = 'SV42';
   public fullName: string = 'Toxtricity SHF';
 }
 
 export class PincurchinSHF extends Pincurchin {
   public set: string = 'SHF';
-  public setNumber: string = 'SV043';
+  public setNumber: string = 'SV43';
   public fullName: string = 'Pincurchin SHF';
 }
 
 export class MorpekoSHF extends Morpeko {
   public set: string = 'SHF';
-  public setNumber: string = 'SV044';
+  public setNumber: string = 'SV44';
   public fullName: string = 'Morpeko SHF';
 }
 
 export class DracozoltSHF extends Dracozolt {
   public set: string = 'SHF';
-  public setNumber: string = 'SV045';
+  public setNumber: string = 'SV45';
   public fullName: string = 'Dracozolt SHF';
+}
+
+export class ArctozoltSHF extends Arctozolt {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV46';
+  public fullName: string = 'Arctozolt SHF';
 }
 
 export class GalarianPonytaSHF extends GalarianPonyta {
   public set: string = 'SHF';
-  public setNumber: string = 'SV047';
+  public setNumber: string = 'SV47';
   public fullName: string = 'Galarian Ponyta SHF';
+}
+
+export class GalarianRapidashSHF extends GalarianRapidash {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV48';
+  public fullName: string = 'Galarian Rapidash SHF';
 }
 
 export class GalarianCorsolaSHF extends GalarianCorsola {
   public set: string = 'SHF';
-  public setNumber: string = 'SV049';
+  public setNumber: string = 'SV49';
   public fullName: string = 'Galarian Corsola SHF';
+}
+
+export class GalarianCursolaSHF extends GalarianCursola {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV50';
+  public fullName: string = 'Galarian Cursola SHF';
 }
 
 export class DedenneSHF extends Dedenne {
   public set: string = 'SHF';
-  public setNumber: string = 'SV051';
+  public setNumber: string = 'SV51';
   public fullName: string = 'Dedenne SHF';
+}
+
+export class SinisteaSHF extends Sinistea {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV52';
+  public fullName: string = 'Sinistea SHF';
 }
 
 export class PolteageistSHF extends Polteageist {
   public set: string = 'SHF';
-  public setNumber: string = 'SV053';
+  public setNumber: string = 'SV53';
   public fullName: string = 'Polteageist SHF';
 }
 
 export class HatennaSHF extends Hatenna {
   public set: string = 'SHF';
-  public setNumber: string = 'SV054';
+  public setNumber: string = 'SV54';
   public fullName: string = 'Hatenna SHF';
 }
 
 export class HattremSHF extends Hattrem {
   public set: string = 'SHF';
-  public setNumber: string = 'SV055';
+  public setNumber: string = 'SV55';
   public fullName: string = 'Hattrem SHF';
+}
+
+export class HattereneSHF extends Hatterene {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV56';
+  public fullName: string = 'Hatterene SHF';
 }
 
 export class MilcerySHF extends Milcery {
   public set: string = 'SHF';
-  public setNumber: string = 'SV057';
+  public setNumber: string = 'SV57';
   public fullName: string = 'Milcery SHF';
 }
 
 export class AlcremieSHF extends Alcremie {
   public set: string = 'SHF';
-  public setNumber: string = 'SV058';
+  public setNumber: string = 'SV58';
   public fullName: string = 'Alcremie SHF';
 }
 
 export class IndeedeeSHF extends Indeedee {
   public set: string = 'SHF';
-  public setNumber: string = 'SV059';
+  public setNumber: string = 'SV59';
   public fullName: string = 'Indeedee SHF';
 }
 
 export class DreepySHF extends Dreepy {
   public set: string = 'SHF';
-  public setNumber: string = 'SV060';
+  public setNumber: string = 'SV60';
   public fullName: string = 'Dreepy SHF';
 }
 
 export class DrakloakSHF extends Drakloak {
   public set: string = 'SHF';
-  public setNumber: string = 'SV061';
+  public setNumber: string = 'SV61';
   public fullName: string = 'Drakloak SHF';
+}
+
+export class DragapultSHF extends Dragapult {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV62';
+  public fullName: string = 'Dragapult SHF';
 }
 
 export class GalarianFarfetchdSHF extends GalarianFarfetchd {
   public set: string = 'SHF';
-  public setNumber: string = 'SV063';
-  public fullName: string = 'Galarian Farfetch\'d SHF';
+  public setNumber: string = 'SV63';
+  public fullName: string = "Galarian Farfetch'd SHF";
 }
 
 export class GalarianSirfetchdSHF extends GalarianSirfetchd {
   public set: string = 'SHF';
-  public setNumber: string = 'SV064';
-  public fullName: string = 'Galarian Sirfetch\'d SHF';
+  public setNumber: string = 'SV64';
+  public fullName: string = "Galarian Sirfetch'd SHF";
 }
 
 export class GalarianYamaskSHF extends GalarianYamask {
   public set: string = 'SHF';
-  public setNumber: string = 'SV065';
+  public setNumber: string = 'SV65';
   public fullName: string = 'Galarian Yamask SHF';
 }
 
 export class GalarianRunerigusSHF extends GalarianRunerigus {
   public set: string = 'SHF';
-  public setNumber: string = 'SV066';
+  public setNumber: string = 'SV66';
   public fullName: string = 'Galarian Runerigus SHF';
+}
+
+export class RolycolySHF extends Rolycoly {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV67';
+  public fullName: string = 'Rolycoly SHF';
+}
+
+export class CarkolSHF extends Carkol {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV68';
+  public fullName: string = 'Carkol SHF';
+}
+
+export class CoalossalSHF extends Coalossal {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV69';
+  public fullName: string = 'Coalossal SHF';
 }
 
 export class SilicobraSHF extends Silicobra {
   public set: string = 'SHF';
-  public setNumber: string = 'SV070';
+  public setNumber: string = 'SV70';
   public fullName: string = 'Silicobra SHF';
 }
 
 export class SandacondaSHF extends Sandaconda {
   public set: string = 'SHF';
-  public setNumber: string = 'SV071';
+  public setNumber: string = 'SV71';
   public fullName: string = 'Sandaconda SHF';
 }
 
 export class ClobbopusSHF extends Clobbopus {
   public set: string = 'SHF';
-  public setNumber: string = 'SV072';
+  public setNumber: string = 'SV72';
   public fullName: string = 'Clobbopus SHF';
 }
 
 export class GrapploctSHF extends Grapploct {
   public set: string = 'SHF';
-  public setNumber: string = 'SV073';
+  public setNumber: string = 'SV73';
   public fullName: string = 'Grapploct SHF';
+}
+
+export class FalinksSHF extends Falinks {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV74';
+  public fullName: string = 'Falinks SHF';
 }
 
 export class StonjournerSHF extends Stonjourner {
   public set: string = 'SHF';
-  public setNumber: string = 'SV075';
+  public setNumber: string = 'SV75';
   public fullName: string = 'Stonjourner SHF';
+}
+
+export class Koffing2 extends Koffing {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV76';
+  public fullName: string = 'Koffing SHF SV76';
+}
+
+export class GalarianWeezing2 extends GalarianWeezing {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV77';
+  public fullName: string = 'Galarian Weezing SHF SV77';
+}
+
+export class GalarianZigzagoonSHF extends GalarianZigzagoon {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV78';
+  public fullName: string = 'Galarian Zigzagoon SHF';
 }
 
 export class GalarianLinooneSHF extends GalarianLinoone {
   public set: string = 'SHF';
-  public setNumber: string = 'SV079';
+  public setNumber: string = 'SV79';
   public fullName: string = 'Galarian Linoone SHF';
+}
+
+export class GalarianObstagoonSHF extends GalarianObstagoon {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV80';
+  public fullName: string = 'Galarian Obstagoon SHF';
 }
 
 export class NickitSHF extends Nickit {
   public set: string = 'SHF';
-  public setNumber: string = 'SV081';
+  public setNumber: string = 'SV81';
   public fullName: string = 'Nickit SHF';
 }
 
 export class ThievulSHF extends Thievul {
   public set: string = 'SHF';
-  public setNumber: string = 'SV082';
+  public setNumber: string = 'SV82';
   public fullName: string = 'Thievul SHF';
+}
+
+export class ImpidimpSHF extends Impidimp {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV83';
+  public fullName: string = 'Impidimp SHF';
 }
 
 export class MorgremSHF extends Morgrem {
   public set: string = 'SHF';
-  public setNumber: string = 'SV084';
+  public setNumber: string = 'SV84';
   public fullName: string = 'Morgrem SHF';
+}
+
+export class GrimmsnarlSHF extends Grimmsnarl {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV85';
+  public fullName: string = 'Grimmsnarl SHF';
+}
+
+export class GalarianMeowthSHF extends GalarianMeowth {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV86';
+  public fullName: string = 'Galarian Meowth SHF';
+}
+
+export class GalarianPerrserkerSHF extends GalarianPerrserker {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV87';
+  public fullName: string = 'Galarian Perrserker SHF';
+}
+
+export class GalarianStunfiskSHF extends GalarianStunfisk {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV88';
+  public fullName: string = 'Galarian Stunfisk SHF';
 }
 
 export class CorviknightSHF extends Corviknight {
   public set: string = 'SHF';
-  public setNumber: string = 'SV089';
+  public setNumber: string = 'SV89';
   public fullName: string = 'Corviknight SHF';
+}
+
+export class Cufant2 extends Cufant {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV90';
+  public fullName: string = 'Cufant SHF';
+}
+
+export class CopperajahSHF extends Copperajah {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV91';
+  public fullName: string = 'Copperajah SHF';
 }
 
 export class DuraludonSHF extends Duraludon {
   public set: string = 'SHF';
-  public setNumber: string = 'SV092';
+  public setNumber: string = 'SV92';
   public fullName: string = 'Duraludon SHF';
 }
 
 export class MinccinoSHF extends Minccino {
   public set: string = 'SHF';
-  public setNumber: string = 'SV093';
+  public setNumber: string = 'SV93';
   public fullName: string = 'Minccino SHF';
+}
+
+export class CinccinoSHF extends Cinccino {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV94';
+  public fullName: string = 'Cinccino SHF';
+}
+
+export class DucklettSHF extends Swanna {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV95';
+  public fullName: string = 'Ducklett SHF';
 }
 
 export class SwannaSHF extends Swanna {
   public set: string = 'SHF';
-  public setNumber: string = 'SV096';
+  public setNumber: string = 'SV96';
   public fullName: string = 'Swanna SHF';
 }
 
 export class BunnelbySHF extends Bunnelby {
   public set: string = 'SHF';
-  public setNumber: string = 'SV097';
+  public setNumber: string = 'SV97';
   public fullName: string = 'Bunnelby SHF';
+}
+
+export class OranguruSHF extends Oranguru {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV98';
+  public fullName: string = 'Oranguru SHF';
+}
+
+export class SkwovetSHF extends Skwovet {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV99';
+  public fullName: string = 'Skwovet SHF';
+}
+
+export class GreedentSHF extends Greedent {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV100';
+  public fullName: string = 'Greedent SHF';
+}
+
+export class RookideeSHF extends Rookidee {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV101';
+  public fullName: string = 'Rookidee SHF';
 }
 
 export class CorvisquireSHF extends Corvisquire {
@@ -446,6 +971,8 @@ export class DubwoolSHF extends Dubwool {
   public setNumber: string = 'SV104';
   public fullName: string = 'Dubwool SHF';
 }
+
+// MARK: Shiny V/VMAX
 
 export class RillaboomVSHF extends RillaboomV {
   public set: string = 'SHF';
@@ -501,6 +1028,18 @@ export class ToxtricityVmaxSHF extends ToxtricityVmax {
   public fullName: string = 'Toxtricity VMAX SHF';
 }
 
+export class IndeedeeVSHFSV extends IndeedeeV {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV114';
+  public fullName: string = 'Indeedee V SHF';
+}
+
+export class FalinksVSHF extends FalinksV {
+  public set: string = 'SHF';
+  public setNumber: string = 'SV115';
+  public fullName: string = 'Falinks V SHF';
+}
+
 export class GrimmsnarlVSHF extends GrimmsnarlV {
   public set: string = 'SHF';
   public setNumber: string = 'SV116';
@@ -513,263 +1052,25 @@ export class GrimmsnarlVmaxSHF extends GrimmsnarlVmax {
   public fullName: string = 'Grimmsnarl VMAX SHF';
 }
 
-export class Rowlet2 extends Rowlet {
-  public set: string = 'SHF';
-  public setNumber: string = '6';
-  public fullName: string = 'Rowlet SHF 6';
-}
-
-export class Dartrix2 extends Dartrix {
-  public set: string = 'SHF';
-  public setNumber: string = '7';
-  public fullName: string = 'Dartrix SHF 7';
-}
-
-export class Decidueye2 extends Decidueye {
-  public set: string = 'SHF';
-  public setNumber: string = '8';
-  public fullName: string = 'Decidueye SHF 8';
-}
-
-export class DhelmiseVSHF extends DhelmiseV {
-  public set: string = 'SHF';
-  public setNumber: string = '9';
-  public fullName: string = 'Dhelmise V SHF';
-}
-
-export class Grookey2 extends Grookey {
-  public set: string = 'SHF';
-  public setNumber: string = '11';
-  public fullName: string = 'Grookey SHF 11';
-}
-
-export class Thwackey2 extends Thwackey {
-  public set: string = 'SHF';
-  public setNumber: string = '12';
-  public fullName: string = 'Thwackey SHF 12';
-}
-
-export class Rillaboom2 extends Rillaboom {
-  public set: string = 'SHF';
-  public setNumber: string = '13';
-  public fullName: string = 'Rillaboom SHF 13';
-}
-
-export class CinderaceVmaxSHF extends CinderaceVmax {
-  public set: string = 'SHF';
-  public setNumber: string = '19';
-  public fullName: string = 'Cinderace VMAX SHF';
-}
-
-export class Snom2 extends Snom {
-  public set: string = 'SHF';
-  public setNumber: string = '29';
-  public fullName: string = 'Snom SHF 29';
-}
-
-export class ShinxSHF extends Shinx {
-  public set: string = 'SHF';
-  public setNumber: string = '31';
-  public fullName: string = 'Shinx SHF';
-}
-
-export class LuxraySHF extends Luxray {
-  public set: string = 'SHF';
-  public setNumber: string = '33';
-  public fullName: string = 'Luxray SHF';
-}
-
-export class Rotom2 extends Rotom {
-  public set: string = 'SHF';
-  public setNumber: string = '34';
-  public fullName: string = 'Rotom SHF 34';
-}
-
-export class Morpeko3 extends Morpeko2 {
-  public set: string = 'SHF';
-  public setNumber: string = '36';
-  public fullName: string = 'Morpeko SHF 36';
-}
-
-export class MorpekoVSHF extends MorpekoV {
-  public set: string = 'SHF';
-  public setNumber: string = '37';
-  public fullName: string = 'Morpeko V SHF';
-}
-
-export class MorpekoVmaxSHF extends MorpekoVmax {
-  public set: string = 'SHF';
-  public setNumber: string = '38';
-  public fullName: string = 'Morpeko VMAX SHF';
-}
-
-export class IndeedeeV2 extends IndeedeeV {
-  public set: string = 'SHF';
-  public setNumber: string = '39';
-  public fullName: string = 'Indeedee V SHF 39';
-}
-
-export class TrapinchSHF extends Trapinch {
-  public set: string = 'SHF';
-  public setNumber: string = '40';
-  public fullName: string = 'Trapinch SHF';
-}
-
-export class Koffing2 extends Koffing {
-  public set: string = 'SHF';
-  public setNumber: string = '41';
-  public fullName: string = 'Koffing SHF 41';
-}
-
-export class GalarianWeezing2 extends GalarianWeezing {
-  public set: string = 'SHF';
-  public setNumber: string = '42';
-  public fullName: string = 'Galarian Weezing SHF 42';
-}
-
-export class Nickit2 extends Nickit {
-  public set: string = 'SHF';
-  public setNumber: string = '47';
-  public fullName: string = 'Nickit SHF 47';
-}
-
-export class Cufant2 extends Cufant {
-  public set: string = 'SHF';
-  public setNumber: string = '49';
-  public fullName: string = 'Cufant SHF 49';
-}
-
 export class DittoV2 extends DittoV {
   public set: string = 'SHF';
-  public setNumber: string = '50';
+  public setNumber: string = 'SV118';
   public fullName: string = 'Ditto V SHF 50';
 }
 
 export class DittoVmax2 extends DittoVmax {
   public set: string = 'SHF';
-  public setNumber: string = '51';
+  public setNumber: string = 'SV119';
   public fullName: string = 'Ditto VMAX SHF 51';
 }
 
-export class CramorantVSHF extends CramorantV {
+export class DubwoolVSHF extends DubwoolV {
   public set: string = 'SHF';
-  public setNumber: string = '54';
-  public fullName: string = 'Cramorant V SHF';
+  public setNumber: string = 'SV120';
+  public fullName: string = 'Dubwool V SHF';
 }
 
-export class BosssOrdersSHF extends BossOrders {
-  public set: string = 'SHF';
-  public setNumber: string = '58';
-  public fullName: string = 'Boss\'s Orders SHF';
-}
-
-export class ProfessorsResearchSHF extends ProfessorsResearch {
-  public set: string = 'SHF';
-  public setNumber: string = '60';
-  public fullName: string = 'Professor\'s Research SHF';
-}
-
-export class AlcremieVSHF extends AlcremieV {
-  public set: string = 'SHF';
-  public setNumber: string = '64';
-  public fullName: string = 'Alcremie V SHF';
-}
-
-export class BallGuy2 extends BallGuy {
-  public set: string = 'SHF';
-  public setNumber: string = '65';
-  public fullName: string = 'Ball Guy SHF 65';
-}
-
-export class CaraLissSHF extends CaraLiss {
-  public set: string = 'SHF';
-  public setNumber: string = '67';
-  public fullName: string = 'Cara Liss SHF';
-}
-
-export class GymTrainer2 extends GymTrainer {
-  public set: string = 'SHF';
-  public setNumber: string = '68';
-  public fullName: string = 'Gym Trainer SHF 68';
-}
-
-export class PiersSHF extends Piers {
-  public set: string = 'SHF';
-  public setNumber: string = '69';
-  public fullName: string = 'Piers SHF';
-}
-
-export class PokeKidSHF extends PokeKid {
-  public set: string = 'SHF';
-  public setNumber: string = '70';
-  public fullName: string = 'Poké Kid SHF';
-}
-
-export class RoseSHF extends Rose {
-  public set: string = 'SHF';
-  public setNumber: string = '71';
-  public fullName: string = 'Rose SHF';
-}
-
-export class SkylaSHF extends Skyla {
-  public set: string = 'SHF';
-  public setNumber: string = '72';
-  public fullName: string = 'Skyla SHF';
-}
-
-export class AlcremieVmaxSHF extends AlcremieVmax {
-  public set: string = 'SHF';
-  public setNumber: string = '73';
-  public fullName: string = 'Alcremie VMAX SHF';
-}
-
-export class OrbeetleSHF extends Orbeetle {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV009';
-  public fullName: string = 'Orbeetle SHF';
-}
-
-export class GreedentSHF extends Greedent {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV100';
-  public fullName: string = 'Greedent SHF';
-}
-
-export class HattereneSHF extends Hatterene {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV056';
-  public fullName: string = 'Hatterene SHF';
-}
-
-export class GrimmsnarlSHF extends Grimmsnarl {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV085';
-  public fullName: string = 'Grimmsnarl SHF';
-}
-
-export class OranguruSHF extends Oranguru {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV098';
-  public fullName: string = 'Oranguru SHF';
-}
-
-export class GalarianStunfiskSHF extends GalarianStunfisk {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV088';
-  public fullName: string = 'Galarian Stunfisk SHF';
-}
-
-export class InteleonSHF extends Inteleon {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV027';
-  public fullName: string = 'Inteleon SHF';
-}
-
-export class LuxioSHF extends Luxio {
-  public set: string = 'SHF';
-  public setNumber: string = '32';
-  public fullName: string = 'Luxio SHF';
-}
+// MARK: Gold cards
 
 export class EternatusVSHF extends EternatusV {
   public set: string = 'SHF';
@@ -781,172 +1082,4 @@ export class EternatusVmaxSHF extends EternatusVMAX {
   public set: string = 'SHF';
   public setNumber: string = 'SV122';
   public fullName: string = 'Eternatus VMAX SHF';
-}
-
-export class CrobatVSHF extends CrobatV {
-  public set: string = 'SHF';
-  public setNumber: string = '44';
-  public fullName: string = 'Crobat V SHF';
-}
-
-export class CoalossalSHF extends Coalossal {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV069';
-  public fullName: string = 'Coalossal SHF';
-}
-
-export class CinderaceVSHF extends CinderaceV {
-  public set: string = 'SHF';
-  public setNumber: string = '18';
-  public fullName: string = 'Cinderace V SHF';
-}
-
-export class CinderaceSHF extends Cinderace {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV017';
-  public fullName: string = 'Cinderace SHF';
-}
-
-export class FrosmothSHF2 extends Frosmoth {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV034';
-  public fullName: string = 'Frosmoth SHF SV034';
-}
-
-export class GalarianObstagoonSHF extends GalarianObstagoon {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV080';
-  public fullName: string = 'Galarian Obstagoon SHF';
-}
-
-export class AppletunSHF extends Appletun {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV014';
-  public fullName: string = 'Appletun SHF';
-}
-
-export class GalarianZigzagoonSHF extends GalarianZigzagoon {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV078';
-  public fullName: string = 'Galarian Zigzagoon SHF';
-}
-
-export class GalarianMeowthSHF extends GalarianMeowth {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV086';
-  public fullName: string = 'Galarian Meowth SHF';
-}
-
-export class GalarianRapidashSHF extends GalarianRapidash {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV048';
-  public fullName: string = 'Galarian Rapidash SHF';
-}
-
-export class FlappleSHF extends Flapple {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV013';
-  public fullName: string = 'Flapple SHF';
-}
-
-export class DecidueyeSHF extends Decidueye {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV003';
-  public fullName: string = 'Decidueye SHF';
-}
-
-export class DracovishSHF extends Dracovish {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV036';
-  public fullName: string = 'Dracovish SHF';
-}
-
-export class ArctozoltSHF extends Arctozolt {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV046';
-  public fullName: string = 'Arctozolt SHF';
-}
-
-export class GalarianCursolaSHF extends GalarianCursola {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV050';
-  public fullName: string = 'Galarian Cursola SHF';
-}
-
-export class GalarianPerrserkerSHF extends GalarianPerrserker {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV087';
-  public fullName: string = 'Galarian Perrserker SHF';
-}
-
-export class GalarianMrRimeSHF extends GalarianMrRime {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV021';
-  public fullName: string = 'Galarian Mr. Rime SHF';
-}
-
-export class CentiskorchSHF extends Centiskorch {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV019';
-  public fullName: string = 'Centiskorch SHF';
-}
-
-export class BarraskewdaSHF extends Barraskewda {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV032';
-  public fullName: string = 'Barraskewda SHF';
-}
-
-export class FalinksVSHF extends FalinksV {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV115';
-  public fullName: string = 'Falinks V SHF';
-}
-
-export class DragapultSHF extends Dragapult {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV062';
-  public fullName: string = 'Dragapult SHF';
-}
-
-export class EiscueSHF extends Eiscue {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV035';
-  public fullName: string = 'Eiscue SHF';
-}
-
-export class DubwoolVSHF extends DubwoolV {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV120';
-  public fullName: string = 'Dubwool V SHF';
-}
-
-export class CopperajahSHF extends Copperajah {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV091';
-  public fullName: string = 'Copperajah SHF';
-}
-
-export class BlipbugSHF extends Blipbug {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV007';
-  public fullName: string = 'Blipbug SHF';
-}
-
-export class ChewtleSHF extends Chewtle {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV028';
-  public fullName: string = 'Chewtle SHF';
-}
-
-export class DrizzileSHF extends Drizzile {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV026';
-  public fullName: string = 'Drizzile SHF';
-}
-
-export class SobbleSHF extends Sobble3 {
-  public set: string = 'SHF';
-  public setNumber: string = 'SV025';
-  public fullName: string = 'Sobble SHF';
 }
