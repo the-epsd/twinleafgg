@@ -247,6 +247,45 @@
   cursor: not-allowed;
 }
 
+.chooseEnergySlots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 16px 0 4px;
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.chooseEnergySlot {
+  width: 87px;
+  height: 120px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(22, 26, 36);
+  cursor: default;
+  line-height: 0;
+}
+
+.chooseEnergySlot:not(:disabled) {
+  cursor: pointer;
+}
+
+.chooseEnergySlot:not(:disabled):hover {
+  border-color: rgba(120, 200, 255, 0.5);
+}
+
+.chooseEnergySlotIcon {
+  width: 36px;
+  height: 36px;
+}
+
 /* Choose prize prompt — parity with Angular prompt-choose-prize (fullscreen +2×3 grid) */
 
 @keyframes prizeFadeIn {

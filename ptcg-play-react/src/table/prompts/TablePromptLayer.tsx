@@ -18,6 +18,7 @@ import type {
   ShowCardsPrompt,
   ShowMulliganPrompt,
   WaitPrompt,
+  ChooseEnergyPrompt,
 } from 'ptcg-server';
 import type { LocalGameState } from '../types/localGameState';
 import { activeGamePrompt } from '../activeGamePrompt';
@@ -28,6 +29,7 @@ import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { CheckboxField } from '../../components/ui/CheckboxField';
 import styles from './TablePromptLayer.module.css';
 import { AttachEnergyPromptPanel } from './AttachEnergyPromptPanel';
+import { ChooseEnergyPromptPanel } from './ChooseEnergyPromptPanel';
 import { PutDamageOverlay } from './PutDamageOverlay';
 import { RemoveDamageOverlay } from './RemoveDamageOverlay';
 import { scanBlockedOwnZeroDamageFromState } from './pokemonPromptRows';
@@ -583,6 +585,22 @@ export function TablePromptLayer({
         key={aep.id}
         prompt={aep}
         localGame={localGame}
+        getScanUrl={getScanUrl}
+        t={t}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
+  if (p.type === 'Choose energy') {
+    const cep = p as ChooseEnergyPrompt;
+    return (
+      <ChooseEnergyPromptPanel
+        key={cep.id}
+        prompt={cep}
+        localGame={localGame}
+        catalog={catalog}
         getScanUrl={getScanUrl}
         t={t}
         gameMessageText={gameMessageText}
