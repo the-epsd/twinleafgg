@@ -151,7 +151,7 @@
         {#if displayHp || pokemonTypeIcon}
           <span class="pokemon-hp-bubble" title={`${displayHp ? `${displayHp} HP` : 'Pokemon'}${pokemonTypeIcon ? ` · ${pokemonTypeLabel}` : ''}`}>
             {#if displayHp}
-              <span>{displayHp} HP</span>
+              <span>{displayHp}</span>
             {/if}
             {#if pokemonTypeIcon}
               <img src={pokemonTypeIcon} alt={pokemonTypeLabel} />
