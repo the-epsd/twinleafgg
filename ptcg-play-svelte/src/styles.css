@@ -755,28 +755,62 @@ button.stack-pile,
 }
 
 .deck-pile {
+  --deck-step-x: 1.35px;
+  --deck-step-y: -1.35px;
+  --deck-top-x: 0px;
+  --deck-top-y: 0px;
   z-index: 1;
   isolation: isolate;
   color: #f7f8ff;
   background: transparent;
-  overflow: hidden;
+  border-color: transparent;
+  box-shadow: none;
+  overflow: visible;
+  transform-style: preserve-3d;
 }
 
-.deck-pile::before {
-  content: "";
+.deck-card-face,
+.deck-card-layer {
   position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.deck-card-face,
+.deck-card-layer {
   inset: 0;
-  z-index: 0;
   border-radius: inherit;
   background:
     linear-gradient(rgba(9, 18, 38, 0.16), rgba(9, 18, 38, 0.16)),
     url("/assets/cardback.png") center / cover no-repeat;
 }
 
-.top-piles .deck-pile::before,
+.deck-card-face {
+  z-index: 6;
+  transform: translate(var(--deck-top-x), var(--deck-top-y));
+  box-shadow:
+    0 3px 8px rgba(23, 30, 38, 0.12),
+    0 0 0 1px rgba(18, 21, 26, 0.2);
+}
+
+.deck-card-layer {
+  z-index: var(--deck-layer);
+  opacity: calc(0.5 + (var(--deck-layer) * 0.08));
+  filter: brightness(0.86) saturate(0.9);
+  transform: translate(
+    calc(var(--deck-step-x) * var(--deck-layer)),
+    calc(var(--deck-step-y) * var(--deck-layer))
+  );
+  box-shadow: none;
+}
+
 .top-piles .discard-pile .card-tile,
 .top-piles .prize-grid {
   transform: rotate(180deg);
+}
+
+.top-piles .deck-card-face {
+  transform: translate(var(--deck-top-x), var(--deck-top-y)) rotate(180deg);
 }
 
 .discard-pile {
@@ -807,6 +841,16 @@ button.stack-pile,
   box-shadow: 0 3px 10px rgba(23, 30, 38, 0.16);
   font-size: calc(var(--pile-w) * 0.18);
   font-weight: 850;
+}
+
+.deck-pile .pile-count {
+  left: 50%;
+  top: 50%;
+  right: auto;
+  bottom: auto;
+  z-index: 7;
+  transform: translate(calc(-50% + var(--deck-top-x)), calc(-50% + var(--deck-top-y)));
+  transition: transform 160ms ease;
 }
 
 .lost-pile {

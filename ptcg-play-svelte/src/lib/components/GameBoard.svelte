@@ -39,6 +39,21 @@
   export let boardScaleY = 98;
   export let boardLift = 0;
 
+  function deckPileStyle(deckCount: number, direction: -1 | 1) {
+    const layers = visibleDeckLayers(deckCount).length;
+    return [
+      `--deck-step-x: ${(direction * 1.35).toFixed(2)}px`,
+      `--deck-step-y: -1.35px`,
+      `--deck-top-x: ${(direction * layers * 1.35).toFixed(2)}px`,
+      `--deck-top-y: ${(-layers * 1.35).toFixed(2)}px`,
+    ].join('; ');
+  }
+
+  function visibleDeckLayers(deckCount: number) {
+    const count = deckCount <= 0 ? 0 : Math.min(4, Math.max(1, Math.ceil(deckCount / 15)));
+    return Array.from({ length: count }, (_, index) => count - index);
+  }
+
   $: boardPerspectiveStyle = [
     `--board-tilt: ${boardTilt}deg`,
     `--board-perspective: ${boardPerspective}px`,
@@ -108,7 +123,13 @@
         </div>
         <div class="right-field">
           <div class="right-piles">
-            <span class="stack-pile deck-pile" title={`${topPlayer.name} deck`}>{topPlayer.deckCount}</span>
+            <span class="stack-pile deck-pile" style={deckPileStyle(topPlayer.deckCount, -1)} title={`${topPlayer.name} deck`}>
+              {#each visibleDeckLayers(topPlayer.deckCount) as layer, layerIndex}
+                <span class="deck-card-layer" style={`--deck-layer: ${layerIndex};`}></span>
+              {/each}
+              <span class="deck-card-face"></span>
+              <span class="pile-count">{topPlayer.deckCount}</span>
+            </span>
             <button
               type="button"
               class="stack-pile discard-pile"
@@ -142,7 +163,13 @@
         </div>
         <div class="right-field">
           <div class="right-piles">
-            <span class="stack-pile deck-pile" title={`${bottomPlayer.name} deck`}>{bottomPlayer.deckCount}</span>
+            <span class="stack-pile deck-pile" style={deckPileStyle(bottomPlayer.deckCount, 1)} title={`${bottomPlayer.name} deck`}>
+              {#each visibleDeckLayers(bottomPlayer.deckCount) as layer, layerIndex}
+                <span class="deck-card-layer" style={`--deck-layer: ${layerIndex};`}></span>
+              {/each}
+              <span class="deck-card-face"></span>
+              <span class="pile-count">{bottomPlayer.deckCount}</span>
+            </span>
             <button
               type="button"
               class="stack-pile discard-pile"
