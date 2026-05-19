@@ -104,12 +104,14 @@ export class MegaGreninjaex extends PokemonCard {
       effect.player.marker.removeMarker(this.MORTAL_SHURIKEN_MARKER, this);
     }
 
+    // Ref: set-fusion-strike/inteleon-vmax.ts (Aqua Bullet — optional energy to hand for more damage)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       CONFIRMATION_PROMPT(store, state, player, result => {
         if (result) {
-          PUT_SPECIFIC_ENERGY_FROM_THIS_POKEMON_INTO_HAND(store, state, effect, [CardType.WATER]);
-          effect.damage += 80;
+          PUT_SPECIFIC_ENERGY_FROM_THIS_POKEMON_INTO_HAND(store, state, effect, [CardType.WATER], {
+            onEnergyMoved: () => { effect.damage += 80; }
+          });
         }
       }, GameMessage.WANT_TO_USE_EFFECT_OF_ATTACK);
     }
