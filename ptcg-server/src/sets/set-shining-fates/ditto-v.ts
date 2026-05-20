@@ -4,9 +4,26 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, Card, ChooseCardsPrompt, GameMessage, GameError, SlotType } from '../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  Card,
+  ChooseCardsPrompt,
+  GameMessage,
+  GameError,
+  SlotType,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+} from '../../game/store/prefabs/prefabs';
 
 export class DittoV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];
@@ -16,25 +33,27 @@ export class DittoV extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public powers = [  {
-    name: 'V Transformation',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn, you may choose a Basic Pokémon V from your discard pile and switch it with this Pokémon. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'V Transformation',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn, you may choose a Basic Pokémon V from your discard pile and switch it with this Pokémon. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Stick On',
       cost: [C],
       damage: 0,
-      text: 'Attach a basic Energy card from your discard pile to this Pokémon.'
-    }
+      text: 'Attach a basic Energy card from your discard pile to this Pokémon.',
+    },
   ];
 
   public regulationMark: string = 'D';
   public set: string = 'SHF';
-  public setNumber: string = 'SV118';
+  public setNumber: string = '50';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ditto V';
   public fullName: string = 'Ditto V SHF';
@@ -52,11 +71,13 @@ export class DittoV extends PokemonCard {
       }
 
       // Check if there's a Basic V in discard (not Ditto V itself)
-      const hasBasicVInDiscard = player.discard.cards.some(c => {
-        return c instanceof PokemonCard
-          && c.stage === Stage.BASIC
-          && c.tags.includes(CardTag.POKEMON_V)
-          && c !== this;
+      const hasBasicVInDiscard = player.discard.cards.some((c) => {
+        return (
+          c instanceof PokemonCard &&
+          c.stage === Stage.BASIC &&
+          c.tags.includes(CardTag.POKEMON_V) &&
+          c !== this
+        );
       });
 
       if (!hasBasicVInDiscard) {
@@ -81,34 +102,40 @@ export class DittoV extends PokemonCard {
       // Blocked indices: non-Basic-V cards in discard
       const blocked: number[] = [];
       player.discard.cards.forEach((card, index) => {
-        if (!(card instanceof PokemonCard)
-          || (card as PokemonCard).stage !== Stage.BASIC
-          || !(card as PokemonCard).tags.includes(CardTag.POKEMON_V)
-          || card === this) {
+        if (
+          !(card instanceof PokemonCard) ||
+          (card as PokemonCard).stage !== Stage.BASIC ||
+          !(card as PokemonCard).tags.includes(CardTag.POKEMON_V) ||
+          card === this
+        ) {
           blocked.push(index);
         }
       });
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_POKEMON_TO_DISCARD,
-        player.discard,
-        {},
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), selected => {
-        const cards: Card[] = selected || [];
-        if (cards.length === 0) return;
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_POKEMON_TO_DISCARD,
+          player.discard,
+          {},
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const cards: Card[] = selected || [];
+          if (cards.length === 0) return;
 
-        const replacement = cards[0];
+          const replacement = cards[0];
 
-        if (benchIndex >= 0) {
-          player.bench[benchIndex].moveCardTo(this, player.discard);
-          player.discard.moveCardTo(replacement, player.bench[benchIndex]);
-        } else {
-          player.active.moveCardTo(this, player.discard);
-          player.discard.moveCardTo(replacement, player.active);
-        }
-      });
+          if (benchIndex >= 0) {
+            player.bench[benchIndex].moveCardTo(this, player.discard);
+            player.discard.moveCardTo(replacement, player.bench[benchIndex]);
+          } else {
+            player.active.moveCardTo(this, player.discard);
+            player.discard.moveCardTo(replacement, player.active);
+          }
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.V_TRANSFORMATION_MARKER, this);
@@ -117,14 +144,11 @@ export class DittoV extends PokemonCard {
     // Ref: set-vivid-voltage/swellow.ts (ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(
-        store, state, player, 1, undefined,
-        {
-          destinationSlots: [SlotType.ACTIVE],
-          energyFilter: { energyType: EnergyType.BASIC },
-          min: 0
-        }
-      );
+      ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(store, state, player, 1, undefined, {
+        destinationSlots: [SlotType.ACTIVE],
+        energyFilter: { energyType: EnergyType.BASIC },
+        min: 0,
+      });
     }
 
     return state;
