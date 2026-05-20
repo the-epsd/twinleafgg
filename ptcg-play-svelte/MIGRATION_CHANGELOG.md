@@ -139,6 +139,9 @@ intended to help reviewers and future agents understand why files moved.
 - Added `Toolbar.svelte` in runes mode and moved the table toolbar controls out
   of `App.svelte`, including the board perspective controls, toggles, turn
   actions, and inline error display.
+- Moved `Toolbar.svelte` and `BoardPerspectiveControls.svelte` styling out of
+  `styles.css` and into their components, including the perspective summary,
+  slider menu, sidebar turn actions, danger button, and inline toolbar error.
 - Added `ActiveFocus.svelte` in runes mode and moved the focused-Pokemon action
   modal out of `App.svelte`. The modal remains presentational: it receives the
   focused slot, action availability, and callbacks for ability, attack, retreat,
@@ -236,3 +239,7 @@ intended to help reviewers and future agents understand why files moved.
   layout smoke after moving `ImportScreen` CSS. The desktop import screen keeps
   two deck columns and the mobile viewport collapses to one deck column, with
   both deck textareas and the start button visible.
+- Re-ran `npm run build`, `npm test -- --run`, and a headless Chrome toolbar
+  smoke after moving toolbar styles. The game reaches setup, the toolbar and
+  perspective menu have non-zero layout boxes, the perspective controls open,
+  and the expected toolbar labels/buttons are present.
