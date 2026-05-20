@@ -1,7 +1,7 @@
 <script lang="ts">
   import BenchZone from './BenchZone.svelte';
   import BoardSlot from './BoardSlot.svelte';
-  import CardTile from './CardTile.svelte';
+  import CenterPiles from './CenterPiles.svelte';
   import StadiumCard from './StadiumCard.svelte';
   import type { CardView, PlayerView, PokemonSlotView } from '../game/types';
 
@@ -120,22 +120,6 @@
     projectedHoverPile = projectedPiles().find(([, element]) => containsPoint(element, event))?.[0] ?? '';
   }
 
-  function deckPileStyle(deckCount: number, direction: -1 | 1) {
-    const layers = visibleDeckLayers(deckCount).length;
-    const step = Math.max(0.8, Math.min(1.6, boardTilt * 0.16));
-    return [
-      `--deck-step-x: ${(direction * step).toFixed(2)}px`,
-      `--deck-step-y: ${(-step).toFixed(2)}px`,
-      `--deck-top-x: ${(direction * layers * step).toFixed(2)}px`,
-      `--deck-top-y: ${(-layers * step).toFixed(2)}px`,
-    ].join('; ');
-  }
-
-  function visibleDeckLayers(deckCount: number) {
-    const count = deckCount <= 0 ? 0 : Math.min(8, Math.max(1, Math.ceil(deckCount / 8)));
-    return Array.from({ length: count }, (_, index) => count - index);
-  }
-
   let boardPerspectiveStyle = $derived([
     `--board-tilt: ${boardTilt}deg`,
     `--board-perspective: ${boardPerspective}px`,
@@ -157,6 +141,14 @@
       return;
     }
     clickBoardPlay(event);
+  }
+
+  function showLostZone(player: PlayerView) {
+    showZone(player.index, 'lostZone', `${player.name} lost zone`);
+  }
+
+  function showDiscard(player: PlayerView) {
+    showZone(player.index, 'discard', `${player.name} discard`);
   }
 </script>
 
@@ -197,101 +189,18 @@
       {dropToSlot}
     />
 
-    <div class="center-stack">
-      <div class="field-piles top-piles">
-        <div class="left-piles">
-          <button
-            type="button"
-            class="stack-pile lost-pile"
-            class:projected-hover={projectedHoverPile === 'top-lost'}
-            title={`${topPlayer.name} lost zone`}
-            bind:this={topLostPileElement}
-            onclick={() => showZone(topPlayer.index, 'lostZone', `${topPlayer.name} lost zone`)}
-          >
-            {#if topPlayer.lostZone.length}
-              <CardTile card={topPlayer.lostZone[topPlayer.lostZone.length - 1]} compact />
-            {/if}
-            <span class="pile-count">{topPlayer.lostZone.length}</span>
-          </button>
-          <div class="prize-grid" title={`${topPlayer.name} prizes`} aria-label={`${topPlayer.name} prizes`}>
-            {#each Array(6) as _, index}
-              <span class:claimed={index >= topPlayer.prizesLeft} style={`--row: ${Math.floor(index / 2)}; --col: ${index % 2};`}></span>
-            {/each}
-          </div>
-        </div>
-        <div class="right-field">
-          <div class="right-piles">
-            <span class="stack-pile deck-pile" style={deckPileStyle(topPlayer.deckCount, -1)} title={`${topPlayer.name} deck`}>
-              {#each visibleDeckLayers(topPlayer.deckCount) as layer, layerIndex}
-                <span class="deck-card-layer" style={`--deck-layer: ${layerIndex};`}></span>
-              {/each}
-              <span class="deck-card-face"></span>
-              <span class="pile-count">{topPlayer.deckCount}</span>
-            </span>
-            <button
-              type="button"
-              class="stack-pile discard-pile"
-              class:projected-hover={projectedHoverPile === 'top-discard'}
-              title={`${topPlayer.name} discard`}
-              bind:this={topDiscardPileElement}
-              onclick={() => showZone(topPlayer.index, 'discard', `${topPlayer.name} discard`)}
-            >
-              {#if topPlayer.discard.length}
-                <CardTile card={topPlayer.discard[topPlayer.discard.length - 1]} compact />
-              {/if}
-              <span class="pile-count">{topPlayer.discard.length}</span>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="field-piles bottom-piles">
-        <div class="left-piles">
-          <button
-            type="button"
-            class="stack-pile lost-pile"
-            class:projected-hover={projectedHoverPile === 'bottom-lost'}
-            title={`${bottomPlayer.name} lost zone`}
-            bind:this={bottomLostPileElement}
-            onclick={() => showZone(bottomPlayer.index, 'lostZone', `${bottomPlayer.name} lost zone`)}
-          >
-            {#if bottomPlayer.lostZone.length}
-              <CardTile card={bottomPlayer.lostZone[bottomPlayer.lostZone.length - 1]} compact />
-            {/if}
-            <span class="pile-count">{bottomPlayer.lostZone.length}</span>
-          </button>
-          <div class="prize-grid" title={`${bottomPlayer.name} prizes`} aria-label={`${bottomPlayer.name} prizes`}>
-            {#each Array(6) as _, index}
-              <span class:claimed={index >= bottomPlayer.prizesLeft} style={`--row: ${Math.floor(index / 2)}; --col: ${index % 2};`}></span>
-            {/each}
-          </div>
-        </div>
-        <div class="right-field">
-          <div class="right-piles">
-            <span class="stack-pile deck-pile" style={deckPileStyle(bottomPlayer.deckCount, 1)} title={`${bottomPlayer.name} deck`}>
-              {#each visibleDeckLayers(bottomPlayer.deckCount) as layer, layerIndex}
-                <span class="deck-card-layer" style={`--deck-layer: ${layerIndex};`}></span>
-              {/each}
-              <span class="deck-card-face"></span>
-              <span class="pile-count">{bottomPlayer.deckCount}</span>
-            </span>
-            <button
-              type="button"
-              class="stack-pile discard-pile"
-              class:projected-hover={projectedHoverPile === 'bottom-discard'}
-              title={`${bottomPlayer.name} discard`}
-              bind:this={bottomDiscardPileElement}
-              onclick={() => showZone(bottomPlayer.index, 'discard', `${bottomPlayer.name} discard`)}
-            >
-              {#if bottomPlayer.discard.length}
-                <CardTile card={bottomPlayer.discard[bottomPlayer.discard.length - 1]} compact />
-              {/if}
-              <span class="pile-count">{bottomPlayer.discard.length}</span>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <CenterPiles
+      {topPlayer}
+      {bottomPlayer}
+      {boardTilt}
+      {projectedHoverPile}
+      bind:topLostPileElement
+      bind:topDiscardPileElement
+      bind:bottomLostPileElement
+      bind:bottomDiscardPileElement
+      {showLostZone}
+      {showDiscard}
+    />
 
     <div class="active-duel">
       <BoardSlot

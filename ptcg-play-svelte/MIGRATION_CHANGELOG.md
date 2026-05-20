@@ -154,6 +154,11 @@ intended to help reviewers and future agents understand why files moved.
   top/bottom stadium card buttons. The stadium CSS moved from `styles.css` into
   the component while preserving the existing class names and rotated top-card
   layout.
+- Added `CenterPiles.svelte` in runes mode as the presentational owner for the
+  center lost-zone, prize, deck, and discard piles. The pile/deck/prize CSS
+  moved from `styles.css` into the component. `GameBoard.svelte` still owns the
+  projected-pile hit-test state for now, passing the four pile element refs
+  through `bind:` so the existing click workaround behaves the same.
 
 ### Verification
 
@@ -207,3 +212,10 @@ intended to help reviewers and future agents understand why files moved.
   make all four direct pile clicks reliable. The manual projected hit-test stays
   in place until the center pile layering is rebuilt or moved into a dedicated
   `CenterPiles.svelte` that can own the workaround explicitly.
+- Re-ran `npm run build` and `npm test -- --run` after the `CenterPiles`
+  extraction; both passed with the existing 9 files / 39 tests.
+- Re-ran the independent headless Chrome + Playwright smoke after the
+  `CenterPiles` extraction. The setup board renders with non-zero center pile
+  layout boxes, and all four projected lost/discard pile clicks open the
+  expected zone viewer. The only console error remains the existing missing
+  favicon request.
