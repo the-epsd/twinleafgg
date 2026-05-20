@@ -131,6 +131,10 @@ intended to help reviewers and future agents understand why files moved.
   and player-prefixed validation errors. `App.svelte` now binds
   `ImportScreen` directly to the deck import store and no longer owns sample
   deck text or parse-error aggregation.
+- Added `src/state/promptLifecycle.svelte.ts` as the coordinator for
+  prompt-scoped reset state, command-selection cleanup, and auto-confirm prompt
+  claiming. `App.svelte` now delegates prompt key bookkeeping to that store
+  instead of owning separate `$state` keys and reset helper functions.
 
 ### Presentational Component Extraction
 
@@ -414,3 +418,5 @@ intended to help reviewers and future agents understand why files moved.
   extracting board-area playability; both passed.
 - Re-ran `npm run build` and the targeted `deckImportModel.test.ts` suite after
   extracting import-screen deck state and parsing; both passed.
+- Re-ran `npm run build` and the targeted `promptLifecycleModel.test.ts` suite
+  after extracting prompt lifecycle state; both passed.

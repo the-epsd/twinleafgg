@@ -34,10 +34,10 @@
     type CardView,
     type PlayerView,
     type PokemonSlotView,
-    type PromptView,
   } from './lib/game/types';
   import { deckImportStore } from './state/deckImport.svelte';
   import { gameStore } from './state/game.svelte';
+  import { promptLifecycleStore } from './state/promptLifecycle.svelte';
   import { promptSelectionStore } from './state/promptSelection.svelte';
   import { canAssignAttachTarget, isAttachEnergyAvailable as isAttachEnergyAvailableModel } from './state/promptSelectionModel';
   import { selectionStore } from './state/selection.svelte';
@@ -75,9 +75,6 @@
   let zoneViewerOpen = $derived(zoneViewerStore.open);
   let zoneViewerTitle = $derived(zoneViewerStore.title);
   let zoneViewerFaceDown = $derived(zoneViewerStore.faceDown);
-  let autoConfirmPromptKey = $state('');
-  let setupPromptKey = $state('');
-
   let activePlayer = $derived(game?.players[game.activePlayerIndex]);
   let bottomPlayer = $derived(game?.players[viewIndex] ?? game?.players[0]);
   let topPlayer = $derived(game?.players.find((player) => player.index !== bottomPlayer?.index));
@@ -219,14 +216,8 @@
     }
   });
   $effect(() => {
-    if (autoConfirmPrompts && autoConfirmPrompt && currentPrompt && !resolvingPrompt) {
-      const key = `${currentPrompt.id}:${currentPrompt.className}`;
-      if (autoConfirmPromptKey !== key) {
-        autoConfirmPromptKey = key;
-        void resolvePrompt(true);
-      }
-    } else if (!autoConfirmPrompt) {
-      autoConfirmPromptKey = '';
+    if (promptLifecycleStore.shouldAutoConfirm(currentPrompt, autoConfirmPrompts && autoConfirmPrompt, resolvingPrompt)) {
+      void resolvePrompt(true);
     }
   });
 
@@ -243,33 +234,16 @@
 
   async function runGameCommand(command: () => Promise<Awaited<ReturnType<typeof localGameApi.state>>>) {
     const response = await gameStore.run(command);
-    syncPromptScopedState(response.view?.prompts[0] ?? gameStore.game?.prompts[0]);
-    resetCommandSelection(response.view?.prompts.length ?? gameStore.game?.prompts.length ?? 0);
+    promptLifecycleStore.syncPromptScopedState(response.view?.prompts[0] ?? gameStore.game?.prompts[0]);
+    promptLifecycleStore.resetCommandSelection(response.view?.prompts.length ?? gameStore.game?.prompts.length ?? 0);
     return response;
   }
 
   async function resolveGamePrompt(command: () => Promise<Awaited<ReturnType<typeof localGameApi.state>>>) {
     const response = await gameStore.resolve(command);
-    syncPromptScopedState(response.view?.prompts[0] ?? gameStore.game?.prompts[0]);
-    resetCommandSelection(response.view?.prompts.length ?? gameStore.game?.prompts.length ?? 0);
+    promptLifecycleStore.syncPromptScopedState(response.view?.prompts[0] ?? gameStore.game?.prompts[0]);
+    promptLifecycleStore.resetCommandSelection(response.view?.prompts.length ?? gameStore.game?.prompts.length ?? 0);
     return response;
-  }
-
-  function syncPromptScopedState(prompt: PromptView | undefined) {
-    const nextPromptKey = prompt ? `${prompt.id}:${prompt.className}` : '';
-    if (setupPromptKey === nextPromptKey) {
-      return;
-    }
-    setupPromptKey = nextPromptKey;
-    setupSelectionStore.reset();
-    promptSelectionStore.reset();
-  }
-
-  function resetCommandSelection(promptCount: number) {
-    selectionStore.clearHandAndFocus();
-    if (!promptCount) {
-      setupSelectionStore.reset();
-    }
   }
 
   async function playToTarget(target: CardTarget) {
@@ -414,7 +388,7 @@
   function resetGame() {
     gameStore.reset();
     selectionStore.clearAll();
-    syncPromptScopedState(undefined);
+    promptLifecycleStore.reset();
     zoneViewerStore.close();
     viewSettingsStore.resetView();
   }
