@@ -1,8 +1,7 @@
 <script lang="ts">
+  import ActiveDuel from './ActiveDuel.svelte';
   import BenchZone from './BenchZone.svelte';
-  import BoardSlot from './BoardSlot.svelte';
   import CenterPiles from './CenterPiles.svelte';
-  import StadiumCard from './StadiumCard.svelte';
   import type { CardView, PlayerView, PokemonSlotView } from '../game/types';
 
   type ZoneName = 'discard' | 'lostZone' | 'stadium' | 'playZone';
@@ -202,39 +201,23 @@
       {showDiscard}
     />
 
-    <div class="active-duel">
-      <BoardSlot
-        slot={topActiveSlot}
-        active
-        placement="top-active-slot"
-        canDrop={isPlayableTarget(topPlayer.active) || canPlaceSetupActive(topPlayer.active)}
-        promptSelectable={isBoardPromptSelectable(topPlayer.active)}
-        promptSelected={isBoardPromptSelected(topPlayer.active)}
-        onclick={() => (canPlaceSetupActive(topPlayer.active) ? placeSetupActive() : clickSlot(topPlayer.active))}
-        ondragover={(event) => allowDrop(event, topPlayer.active)}
-        ondrop={(event) => dropToSlot(topPlayer.active, event)}
-      />
-
-      {#if currentStadium && currentStadiumOwner?.index === topPlayer.index}
-        <StadiumCard card={currentStadium} owner={topPlayer} placement="top" {showZone} />
-      {/if}
-
-      <BoardSlot
-        slot={bottomActiveSlot}
-        active
-        placement="bottom-active-slot"
-        canDrop={isPlayableTarget(bottomPlayer.active) || canPlaceSetupActive(bottomPlayer.active)}
-        promptSelectable={isBoardPromptSelectable(bottomPlayer.active)}
-        promptSelected={isBoardPromptSelected(bottomPlayer.active)}
-        onclick={() => (canPlaceSetupActive(bottomPlayer.active) ? placeSetupActive() : clickSlot(bottomPlayer.active))}
-        ondragover={(event) => allowDrop(event, bottomPlayer.active)}
-        ondrop={(event) => dropToSlot(bottomPlayer.active, event)}
-      />
-
-      {#if currentStadium && currentStadiumOwner?.index === bottomPlayer.index}
-        <StadiumCard card={currentStadium} owner={bottomPlayer} placement="bottom" {showZone} />
-      {/if}
-    </div>
+    <ActiveDuel
+      {topPlayer}
+      {bottomPlayer}
+      {topActiveSlot}
+      {bottomActiveSlot}
+      {currentStadium}
+      {currentStadiumOwner}
+      {isPlayableTarget}
+      {isBoardPromptSelectable}
+      {isBoardPromptSelected}
+      {clickSlot}
+      {allowDrop}
+      {dropToSlot}
+      {canPlaceSetupActive}
+      {placeSetupActive}
+      {showZone}
+    />
 
     <BenchZone
       player={bottomPlayer}

@@ -403,53 +403,6 @@ input[type="number"] {
   font-size: 11px;
 }
 
-.top-active-slot .card-tile {
-  transform: rotate(180deg);
-}
-
-.active-duel {
-  position: relative;
-  z-index: 3;
-  transform-style: preserve-3d;
-  pointer-events: none;
-  display: grid;
-  grid-template-rows: var(--active-h) minmax(calc(var(--card-w) * 0.24), 1fr) var(--active-h);
-  grid-template-columns: minmax(0, 1fr) var(--active-w) minmax(0, 1fr);
-  align-items: center;
-  justify-items: center;
-  row-gap: 0;
-  column-gap: 0;
-  min-height: 0;
-}
-
-.debug-zones .active-duel {
-  outline: 2px solid rgba(245, 158, 11, 0.86);
-  outline-offset: 4px;
-  background: rgba(245, 158, 11, 0.06);
-}
-
-.active-duel > .board-slot.active:not(.empty) {
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), 0 12px 26px rgba(23, 30, 38, 0.22);
-}
-
-.top-active-slot {
-  grid-row: 1;
-  grid-column: 2;
-}
-
-.bottom-active-slot {
-  grid-row: 3;
-  grid-column: 2;
-}
-
-.top-active-slot,
-.bottom-active-slot {
-  position: relative;
-  z-index: 4;
-  transform: translateZ(32px);
-  pointer-events: auto;
-}
-
 .game-board-plane.can-play-on-board {
   cursor: pointer;
 }
@@ -692,12 +645,6 @@ input[type="number"] {
   left: var(--energy-offset);
   bottom: 0;
   z-index: var(--energy-z);
-}
-
-.top-active-slot .energy-badges {
-  inset: -10px 0 auto auto;
-  justify-content: flex-end;
-  transform: rotate(180deg);
 }
 
 .hand {
@@ -1755,10 +1702,6 @@ button.card-tile.selected:disabled {
 
   .game-board-plane {
     padding-inline: 12px;
-  }
-
-  .active-duel {
-    grid-template-rows: var(--active-w) minmax(58px, auto) var(--active-w);
   }
 
   .active-focus {

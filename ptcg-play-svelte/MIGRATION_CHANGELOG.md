@@ -159,6 +159,11 @@ intended to help reviewers and future agents understand why files moved.
   moved from `styles.css` into the component. `GameBoard.svelte` still owns the
   projected-pile hit-test state for now, passing the four pile element refs
   through `bind:` so the existing click workaround behaves the same.
+- Added `ActiveDuel.svelte` in runes mode as the presentational owner for the
+  active Pokemon slots and stadium placement. Active-duel layout, top-active
+  rotation, active-slot pointer targeting, and mobile row sizing moved from
+  `styles.css` into the component with scoped `:global(...)` selectors for the
+  child `BoardSlot` root classes.
 
 ### Verification
 
@@ -219,3 +224,7 @@ intended to help reviewers and future agents understand why files moved.
   layout boxes, and all four projected lost/discard pile clicks open the
   expected zone viewer. The only console error remains the existing missing
   favicon request.
+- Re-ran `npm run build`, `npm test -- --run`, and the independent headless
+  Chrome + Playwright setup smoke after the `ActiveDuel` extraction. The active
+  duel and both active slot boxes render with non-zero layout, active slots keep
+  `pointer-events: auto`, and no app page errors were reported.
