@@ -281,6 +281,11 @@
       return;
     }
 
+    if (canPlayOnBoard) {
+      playSelectedToBoard();
+      return;
+    }
+
     if (!slot.empty && slot.pokemon) {
       selectionStore.focusSlot(slot);
     }
@@ -353,7 +358,7 @@
   }
 
   function allowDrop(event: DragEvent, slot: PokemonSlotView) {
-    if (isPlayableTarget(slot) || canPlaceSetupActive(slot) || (attachPrompt && isBoardPromptSelectable(slot))) {
+    if (isPlayableTarget(slot) || canPlayOnBoard || canPlaceSetupActive(slot) || (attachPrompt && isBoardPromptSelectable(slot))) {
       event.preventDefault();
     }
   }
@@ -365,7 +370,7 @@
   }
 
   function allowBenchDrop(event: DragEvent, player: PlayerView) {
-    if (canPlayToBenchArea(player) || canPlaceSetupBench(player)) {
+    if (canPlayToBenchArea(player) || canPlayOnBoard || canPlaceSetupBench(player)) {
       event.preventDefault();
     }
   }
@@ -392,7 +397,14 @@
       placeSetupActive();
       return;
     }
-    playToSlot(slot);
+    if (isPlayableTarget(slot)) {
+      playToSlot(slot);
+      return;
+    }
+    if (canPlayOnBoard) {
+      playSelectedToBoard();
+      return;
+    }
   }
 
   function dropToBoardPlay(event: DragEvent) {
@@ -418,6 +430,10 @@
     clearDragState();
     if (canPlaceSetupBench(player)) {
       placeSetupBench();
+      return;
+    }
+    if (canPlayOnBoard) {
+      playSelectedToBoard();
       return;
     }
     playToBenchArea(player);

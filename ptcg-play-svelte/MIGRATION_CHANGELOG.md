@@ -439,3 +439,15 @@ intended to help reviewers and future agents understand why files moved.
   rendered the setup dock and playmat, placed a playable Basic Pokemon into the
   active slot, cleared selection after placement, and reported no app/page
   console errors aside from the filtered favicon request.
+
+## 2026-05-20
+
+### Trainer Card Board Target Fix
+
+- Fixed a regression where selected or dragged Trainer/generic play cards only
+  worked when the user clicked or dropped on the bare playmat. Slot and bench
+  child handlers now preserve normal slot/bench plays first, then fall back to
+  the generic board play action when `canPlayOnBoard` is true. This lets a
+  Trainer card play when dropped or clicked onto the active slot, bench area, or
+  other board child surfaces.
+- Re-ran `npm run build` and `npm test -- --run`; both passed.
