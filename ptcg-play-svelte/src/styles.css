@@ -77,71 +77,11 @@ input[type="number"] {
   -webkit-user-drag: none;
 }
 
-.debug-zones .player-panel {
-  outline: 2px solid rgba(236, 72, 153, 0.78);
-  outline-offset: -2px;
-  background: rgba(236, 72, 153, 0.08);
-}
-
 .board {
   position: relative;
   min-height: 0;
   height: 100vh;
   display: block;
-}
-
-.player-panel {
-  position: absolute;
-  z-index: 10;
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  pointer-events: none;
-}
-
-.player-panel.top {
-  --card-w: clamp(112px, min(7vw, 13.2vh), 154px);
-  top: 0;
-  left: 14px;
-  right: 158px;
-  height: calc(var(--board-top-inset) - var(--hand-separator-gap));
-  overflow: visible;
-  align-items: end;
-}
-
-.player-panel.bottom {
-  --card-w: clamp(116px, min(7.8vw, 14.5vh), 150px);
-  top: calc(100vh - var(--board-bottom-inset) + var(--hand-separator-gap) - var(--hand-hover-pad));
-  left: 14px;
-  right: 158px;
-  bottom: 8px;
-  align-items: start;
-}
-
-.player-summary {
-  display: grid;
-  gap: 2px;
-  width: 126px;
-  flex: 0 0 126px;
-  padding: 8px 9px;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(12, 15, 19, 0.76);
-  box-shadow: 0 10px 24px rgba(12, 15, 19, 0.14);
-  color: rgba(245, 248, 255, 0.7);
-  font-size: 10px;
-  line-height: 1.25;
-  backdrop-filter: blur(10px);
-  pointer-events: auto;
-}
-
-.player-summary strong {
-  color: rgba(245, 248, 255, 0.96);
-  font-size: 12px;
-}
-
-.player-summary.active {
-  box-shadow: 0 0 0 2px rgba(122, 210, 185, 0.55), 0 10px 24px rgba(12, 15, 19, 0.14);
 }
 
 .playmat {

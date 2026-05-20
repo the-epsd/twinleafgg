@@ -195,6 +195,11 @@ intended to help reviewers and future agents understand why files moved.
   status pill and moved its styling out of `styles.css`. This gives `App.svelte`
   another small presentational boundary while preserving the existing game
   status text and placement.
+- Added `PlayerPanel.svelte` in runes mode as the shell for top and bottom hand
+  panels, using Svelte 5 snippets for child content. Moved player-panel
+  placement/debug styling into the component and removed stale
+  `.player-summary` rules left behind by the earlier `PlayerSummary.svelte`
+  deletion.
 
 ### Verification
 
@@ -298,3 +303,7 @@ intended to help reviewers and future agents understand why files moved.
   pill renders with non-zero layout and still reports the setup phase, current
   turn, and active player with no app page or console errors aside from the
   known favicon request.
+- Re-ran `npm run build`, `npm test -- --run`, and an independent headless
+  Chrome + Playwright setup smoke after extracting `PlayerPanel`. Both top and
+  bottom player panels and the bottom hand render with non-zero layout, and no
+  app page or console errors were reported aside from the known favicon request.

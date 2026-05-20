@@ -6,6 +6,7 @@
   import Hand from './lib/components/Hand.svelte';
   import ImportScreen from './lib/components/ImportScreen.svelte';
   import LogPanel from './lib/components/LogPanel.svelte';
+  import PlayerPanel from './lib/components/PlayerPanel.svelte';
   import PromptHost from './lib/components/prompts/PromptHost.svelte';
   import SetupDock from './lib/components/SetupDock.svelte';
   import Toolbar from './lib/components/Toolbar.svelte';
@@ -781,7 +782,7 @@
       {/if}
 
       <div class="board">
-        <section class="player-panel top">
+        <PlayerPanel side="top">
           <Hand
             player={topPlayer}
             selectedHand={selectedHand}
@@ -793,7 +794,7 @@
             onDrag={onHandDrag}
             onDragEnd={clearDragState}
           />
-        </section>
+        </PlayerPanel>
 
         <GameBoard
           {topPlayer}
@@ -829,7 +830,7 @@
           {boardLift}
         />
 
-        <section class="player-panel bottom">
+        <PlayerPanel side="bottom">
           <Hand
             player={bottomPlayer}
             selectedHand={selectedHand}
@@ -840,7 +841,7 @@
             onDrag={onHandDrag}
             onDragEnd={clearDragState}
           />
-        </section>
+        </PlayerPanel>
 
         {#if focusedSlot}
           <ActiveFocus
