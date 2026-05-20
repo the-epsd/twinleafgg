@@ -135,6 +135,11 @@ intended to help reviewers and future agents understand why files moved.
   prompt-scoped reset state, command-selection cleanup, and auto-confirm prompt
   claiming. `App.svelte` now delegates prompt key bookkeeping to that store
   instead of owning separate `$state` keys and reset helper functions.
+- Added `src/state/gameSession.svelte.ts` as the session command boundary that
+  runs/resolves engine commands through `gameStore`, then applies prompt
+  lifecycle synchronization and selection cleanup in one place. `App.svelte`
+  now chooses commands but no longer owns the repeated post-command cleanup
+  sequence.
 
 ### Presentational Component Extraction
 
@@ -420,3 +425,5 @@ intended to help reviewers and future agents understand why files moved.
   extracting import-screen deck state and parsing; both passed.
 - Re-ran `npm run build` and the targeted `promptLifecycleModel.test.ts` suite
   after extracting prompt lifecycle state; both passed.
+- Re-ran `npm run build` and `npm test -- --run` after extracting the
+  `gameSessionStore` command boundary; both passed.

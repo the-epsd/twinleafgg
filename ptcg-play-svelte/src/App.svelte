@@ -37,6 +37,7 @@
   } from './lib/game/types';
   import { deckImportStore } from './state/deckImport.svelte';
   import { gameStore } from './state/game.svelte';
+  import { gameSessionStore } from './state/gameSession.svelte';
   import { promptLifecycleStore } from './state/promptLifecycle.svelte';
   import { promptSelectionStore } from './state/promptSelection.svelte';
   import { canAssignAttachTarget, isAttachEnergyAvailable as isAttachEnergyAvailableModel } from './state/promptSelectionModel';
@@ -229,28 +230,14 @@
     }
 
     selectionStore.setSelectedHand(null);
-    await runGameCommand(() => localGameApi.start(decks.player1Cards, decks.player2Cards));
-  }
-
-  async function runGameCommand(command: () => Promise<Awaited<ReturnType<typeof localGameApi.state>>>) {
-    const response = await gameStore.run(command);
-    promptLifecycleStore.syncPromptScopedState(response.view?.prompts[0] ?? gameStore.game?.prompts[0]);
-    promptLifecycleStore.resetCommandSelection(response.view?.prompts.length ?? gameStore.game?.prompts.length ?? 0);
-    return response;
-  }
-
-  async function resolveGamePrompt(command: () => Promise<Awaited<ReturnType<typeof localGameApi.state>>>) {
-    const response = await gameStore.resolve(command);
-    promptLifecycleStore.syncPromptScopedState(response.view?.prompts[0] ?? gameStore.game?.prompts[0]);
-    promptLifecycleStore.resetCommandSelection(response.view?.prompts.length ?? gameStore.game?.prompts.length ?? 0);
-    return response;
+    await gameSessionStore.run(() => localGameApi.start(decks.player1Cards, decks.player2Cards));
   }
 
   async function playToTarget(target: CardTarget) {
     if (!selectedHand || !game || !canAct(selectedHand.playerIndex)) {
       return;
     }
-    await runGameCommand(() => localGameApi.playCard(selectedHand!.playerIndex, selectedHand!.handIndex, target));
+    await gameSessionStore.run(() => localGameApi.playCard(selectedHand!.playerIndex, selectedHand!.handIndex, target));
   }
 
   function playToSlot(slot: PokemonSlotView) {
@@ -299,32 +286,32 @@
 
   async function attack(name: string) {
     if (!game || !focusedPlayer || !focusedIsActive || !focusedCanAct) return;
-    await runGameCommand(() => localGameApi.attack(focusedPlayer!.index, name));
+    await gameSessionStore.run(() => localGameApi.attack(focusedPlayer!.index, name));
   }
 
   async function useAbility(name: string, target: CardTarget) {
     if (!game || !focusedPlayer || !focusedCanAct) return;
-    await runGameCommand(() => localGameApi.useAbility(focusedPlayer!.index, name, target));
+    await gameSessionStore.run(() => localGameApi.useAbility(focusedPlayer!.index, name, target));
   }
 
   async function concede() {
     if (!game || !activePlayer || gameFinished) return;
-    await runGameCommand(() => localGameApi.concede(game.activePlayerIndex));
+    await gameSessionStore.run(() => localGameApi.concede(game.activePlayerIndex));
   }
 
   async function passTurn() {
     if (!game) return;
-    await runGameCommand(() => localGameApi.passTurn(game.activePlayerIndex));
+    await gameSessionStore.run(() => localGameApi.passTurn(game.activePlayerIndex));
   }
 
   async function retreat(to: number) {
     if (!game) return;
-    await runGameCommand(() => localGameApi.retreat(game.activePlayerIndex, to));
+    await gameSessionStore.run(() => localGameApi.retreat(game.activePlayerIndex, to));
   }
 
   async function resolvePrompt(value: unknown) {
     if (!currentPrompt) return;
-    await resolveGamePrompt(() => localGameApi.resolvePrompt(currentPrompt.id, value));
+    await gameSessionStore.resolve(() => localGameApi.resolvePrompt(currentPrompt.id, value));
   }
 
   function selectHandCard(playerIndex: number, handIndex: number) {
@@ -386,9 +373,7 @@
   }
 
   function resetGame() {
-    gameStore.reset();
-    selectionStore.clearAll();
-    promptLifecycleStore.reset();
+    gameSessionStore.reset();
     zoneViewerStore.close();
     viewSettingsStore.resetView();
   }
