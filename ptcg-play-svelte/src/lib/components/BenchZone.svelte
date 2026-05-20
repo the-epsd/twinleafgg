@@ -42,7 +42,7 @@
     dropToSlot,
   }: Props = $props();
 
-  let canDropToBench = $derived(canPlayToBenchArea(player) || canPlayOnBoard || canPlaceSetupBench(player));
+  let canDropToBench = $derived(canPlayToBenchArea(player) || canPlaceSetupBench(player));
   let canPlayBoardCard = $derived(canPlayOnBoard && !canPlayToBenchArea(player) && !canPlaceSetupBench(player));
 
   function playToBench(event: MouseEvent) {

@@ -57,7 +57,7 @@
     slot={topActiveSlot}
     active
     placement="top-active-slot"
-    canDrop={isPlayableTarget(topPlayer.active) || canPlayOnBoard || canPlaceSetupActive(topPlayer.active)}
+    canDrop={isPlayableTarget(topPlayer.active) || canPlaceSetupActive(topPlayer.active)}
     promptSelectable={isBoardPromptSelectable(topPlayer.active)}
     promptSelected={isBoardPromptSelected(topPlayer.active)}
     onclick={() => clickActive(topPlayer.active)}
@@ -73,7 +73,7 @@
     slot={bottomActiveSlot}
     active
     placement="bottom-active-slot"
-    canDrop={isPlayableTarget(bottomPlayer.active) || canPlayOnBoard || canPlaceSetupActive(bottomPlayer.active)}
+    canDrop={isPlayableTarget(bottomPlayer.active) || canPlaceSetupActive(bottomPlayer.active)}
     promptSelectable={isBoardPromptSelectable(bottomPlayer.active)}
     promptSelected={isBoardPromptSelected(bottomPlayer.active)}
     onclick={() => clickActive(bottomPlayer.active)}
