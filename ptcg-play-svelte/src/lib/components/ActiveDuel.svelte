@@ -89,6 +89,9 @@
 <style>
   .active-duel {
     position: relative;
+    grid-area: battle;
+    align-self: stretch;
+    justify-self: stretch;
     z-index: 3;
     transform-style: preserve-3d;
     pointer-events: none;

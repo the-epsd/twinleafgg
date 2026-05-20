@@ -15,16 +15,24 @@
 
 <style>
   .table-shell {
+    --board-card-w: clamp(58px, min(8vw, 8.1vh), 104px);
+    --card-w: var(--board-card-w);
+    --hand-card-w: min(clamp(96px, min(7.8vw, 14.5vh), 150px), calc(var(--board-card-w) * 1.55));
+    --board-row-gap: calc(var(--board-card-w) * 0.16);
+    --active-gap: calc(var(--board-card-w) * 0.24);
+    --bench-card-w: calc(var(--board-card-w) * 1.24);
+    --bench-row-h: calc(var(--bench-card-w) * 1.42);
     --board-top-inset: clamp(58px, 7.2vh, 84px);
-    --board-bottom-inset: clamp(166px, 19.5vh, 232px);
+    --hand-separator-gap: calc(var(--board-card-w) * 0.045);
+    --hand-hover-pad: calc(var(--board-card-w) * 0.065);
+    --board-bottom-inset: calc((var(--hand-card-w) * 1.397) + (var(--hand-hover-pad) * 2.5) + 14px);
     --board-right-rail: 150px;
+    --table-side-gap: 14px;
+    --player-panel-right: calc(var(--board-right-rail) + 8px);
     --board-h: calc(100vh - var(--board-top-inset) - var(--board-bottom-inset));
-    --card-w: clamp(58px, min(8vw, calc(var(--board-h) / 9.05)), 104px);
-    --hand-separator-gap: calc(var(--card-w) * 0.045);
-    --hand-hover-pad: calc(var(--card-w) * 0.065);
-    --board-edge-pad: calc(var(--card-w) * 0.32);
-    --board-outline-pad-y: calc(var(--card-w) * 0.06);
-    --board-content-pad: calc(var(--card-w) * 0.18);
+    --board-edge-pad: calc(var(--board-card-w) * 0.32);
+    --board-outline-pad-y: calc(var(--board-card-w) * 0.06);
+    --board-content-pad: calc(var(--board-card-w) * 0.18);
     --board-edge-pad-x: var(--board-edge-pad);
     --board-content-inset-y: calc(var(--board-outline-pad-y) + var(--board-content-pad));
     --board-content-inset-x: calc(var(--board-edge-pad-x) + var(--board-content-pad));

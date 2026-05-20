@@ -89,15 +89,17 @@
 <style>
   .bench-zone {
     position: relative;
+    grid-area: bottom-bench;
+    align-self: end;
     z-index: 1;
     transform-style: preserve-3d;
     display: grid;
     justify-content: center;
     align-content: center;
-    width: min(62%, calc((var(--bench-card-w) * 6) + (var(--bench-gap) * 5) + 24px));
+    width: min(100%, calc((var(--bench-card-w) * 6) + (var(--bench-gap) * 5) + (var(--board-card-w) * 0.3)));
     min-height: var(--bench-row-h);
     justify-self: center;
-    padding: 0 12px;
+    padding: 0 calc(var(--board-card-w) * 0.15);
     border-radius: 7px;
     border: 1px solid transparent;
     background: transparent;
@@ -105,16 +107,13 @@
   }
 
   .bench-zone.opponent {
+    grid-area: top-bench;
     align-self: end;
     align-content: center;
   }
 
   .bench-zone:not(.opponent) {
-    position: absolute;
-    left: 50%;
-    bottom: var(--board-content-inset-y);
     align-content: center;
-    transform: translateX(-50%);
   }
 
   :global(.debug-zones) .bench-zone {

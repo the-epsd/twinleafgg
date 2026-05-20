@@ -143,11 +143,8 @@
 
 <style>
   .center-stack {
-    position: absolute;
-    inset: var(--board-content-inset-y) var(--board-content-inset-x);
     z-index: 2;
-    min-height: 0;
-    display: block;
+    display: contents;
     color: #1d232b;
     font-size: 12px;
     opacity: 0.96;
@@ -155,20 +152,11 @@
   }
 
   :global(.debug-zones) .center-stack {
-    outline: 2px solid rgba(99, 102, 241, 0.86);
-    outline-offset: -2px;
-    background: rgba(99, 102, 241, 0.05);
+    color: #1d232b;
   }
 
   .field-piles {
-    position: absolute;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: max-content;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
-    align-items: start;
+    display: contents;
     pointer-events: none;
   }
 
@@ -179,11 +167,10 @@
   }
 
   .top-piles {
-    top: 0;
+    align-items: start;
   }
 
   .bottom-piles {
-    bottom: 0;
     align-items: end;
   }
 
@@ -203,8 +190,9 @@
   }
 
   .top-piles .left-piles {
-    grid-column: 3;
-    grid-row: 1;
+    grid-area: top-right;
+    align-self: start;
+    justify-self: end;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
@@ -217,19 +205,22 @@
   }
 
   .top-piles .right-field {
-    grid-column: 1;
-    grid-row: 1;
+    grid-area: top-left;
+    align-self: start;
+    justify-self: start;
   }
 
   .bottom-piles .left-piles {
-    grid-column: 1;
-    grid-row: 1;
+    grid-area: bottom-left;
+    align-self: end;
+    justify-self: start;
     justify-items: center;
   }
 
   .bottom-piles .right-field {
-    grid-column: 3;
-    grid-row: 1;
+    grid-area: bottom-right;
+    align-self: end;
+    justify-self: end;
   }
 
   .right-field {

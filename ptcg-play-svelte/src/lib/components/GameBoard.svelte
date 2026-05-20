@@ -246,14 +246,19 @@
 
 <style>
   .playmat {
-    --active-w: calc(var(--card-w) * 1.48);
+    --active-preferred-w: calc(var(--board-card-w) * 1.48);
+    --active-fit-w: max(
+      calc(var(--board-card-w) * 1.15),
+      calc((var(--board-h) - (var(--bench-row-h) * 2) - (var(--board-row-gap) * 2) - var(--active-gap)) / 2.794)
+    );
+    --active-w: min(var(--active-preferred-w), var(--active-fit-w));
     --active-h: calc(var(--active-w) * 1.397);
-    --bench-card-w: calc(var(--card-w) * 1.24);
-    --bench-row-h: calc(var(--bench-card-w) * 1.42);
-    --pile-w: calc(var(--card-w) * 1.28);
-    --prize-card-w: calc(var(--card-w) * 0.96);
+    --pile-w: calc(var(--board-card-w) * 1.28);
+    --prize-card-w: calc(var(--board-card-w) * 0.96);
+    --prize-grid-w: calc(var(--prize-card-w) * 1.98);
     --prize-grid-h: calc((var(--prize-card-w) * 1.397) + (var(--prize-card-w) * 1.42));
-    --bench-gap: calc(var(--card-w) * 0.18);
+    --side-field-w: max(var(--prize-grid-w), var(--pile-w));
+    --bench-gap: calc(var(--board-card-w) * 0.18);
     position: absolute;
     inset: var(--board-top-inset) var(--board-right-rail) var(--board-bottom-inset) 0;
     min-width: 0;
@@ -276,13 +281,22 @@
     position: absolute;
     inset: 0;
     display: grid;
+    grid-template-areas:
+      "top-left top-bench top-right"
+      "battle-left battle battle-right"
+      "bottom-left bottom-bench bottom-right";
+    grid-template-columns:
+      minmax(var(--side-field-w), calc(var(--side-field-w) + (var(--board-card-w) * 0.42)))
+      minmax(0, 1fr)
+      minmax(var(--side-field-w), calc(var(--side-field-w) + (var(--board-card-w) * 0.42)));
     grid-template-rows:
-      minmax(calc(var(--bench-row-h) + (var(--card-w) * 0.22)), 0.85fr)
-      minmax(calc((var(--active-h) * 2) + (var(--card-w) * 0.24)), 1.45fr)
-      minmax(calc(var(--bench-row-h) + (var(--card-w) * 0.22)), 0.85fr);
-    gap: calc(var(--card-w) * 0.12);
-    align-items: center;
-    padding: calc(var(--card-w) * 0.16) var(--board-edge-pad-x);
+      var(--bench-row-h)
+      minmax(calc((var(--active-h) * 2) + var(--active-gap)), 1fr)
+      var(--bench-row-h);
+    gap: var(--board-row-gap);
+    align-items: stretch;
+    justify-items: stretch;
+    padding: calc(var(--board-card-w) * 0.16) var(--board-edge-pad-x);
     background: rgba(226, 228, 232, 0.56);
     overflow: visible;
     transform: rotateX(var(--board-tilt, 8deg)) scaleY(var(--board-scale-y, 0.94)) translateY(var(--board-lift, 0px));

@@ -492,3 +492,23 @@ intended to help reviewers and future agents understand why files moved.
   mocked board at a 2048x1280 viewport: bottom bench zone, bottom prize grid,
   and bottom discard pile share the same bottom edge, with the rendered bench
   card within roughly 1.3px due to card border/aspect rounding.
+
+### Responsive Board Geometry
+
+- Reworked the playmat around a named CSS grid for top field, battle, and
+  bottom field zones. Benches, Active Pokemon, and side pile groups now share
+  the same board geometry instead of mixing grid rows with absolute pile/bench
+  overlays.
+- Introduced shared board/hand sizing tokens in `TableShell.svelte`.
+  `--board-card-w` is the canonical board card size, `--card-w` remains a
+  compatibility alias, and hand card width is capped relative to board card
+  width so short landscape screens do not let the hand consume disproportionate
+  space.
+- Active Pokemon keep the preferred larger size when space allows, but their
+  width is capped by the available battle-row height to preserve a gap above
+  the bench.
+- Re-ran `npm run build` and `npm test -- --run`; both passed. A mocked
+  headless Chrome layout smoke at 1512x982, 1280x800, 1440x900, 1366x768,
+  1024x768, and 1920x1080 verified exact bottom bench/prize/discard baseline
+  alignment, more than 10px between bottom Active and bench, and hand card
+  sizing at or below the 1.55x board-card cap.

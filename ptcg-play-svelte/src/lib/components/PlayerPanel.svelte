@@ -30,20 +30,20 @@
   }
 
   .player-panel.top {
-    --card-w: clamp(112px, min(7vw, 13.2vh), 154px);
+    --card-w: var(--hand-card-w);
     top: 0;
-    left: 14px;
-    right: 158px;
+    left: var(--table-side-gap);
+    right: var(--player-panel-right);
     height: calc(var(--board-top-inset) - var(--hand-separator-gap));
     overflow: visible;
     align-items: end;
   }
 
   .player-panel.bottom {
-    --card-w: clamp(116px, min(7.8vw, 14.5vh), 150px);
+    --card-w: var(--hand-card-w);
     top: calc(100vh - var(--board-bottom-inset) + var(--hand-separator-gap) - var(--hand-hover-pad));
-    left: 14px;
-    right: 158px;
+    left: var(--table-side-gap);
+    right: var(--player-panel-right);
     bottom: 8px;
     align-items: start;
   }
