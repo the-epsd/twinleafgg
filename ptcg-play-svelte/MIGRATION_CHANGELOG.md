@@ -213,6 +213,11 @@ intended to help reviewers and future agents understand why files moved.
 - Routed `App.svelte` prompt selection mutations through `promptSelectionStore`.
   App still decides prompt eligibility from the current game view, but no longer
   owns the mutable board-target/attach-assignment arrays directly.
+- Moved `GameBoard.svelte` playmat and board-plane styling out of `styles.css`
+  and into the component, including perspective variables, projected pile hover
+  cursor, board outline/highlight states, debug-zone overlays, center board
+  image, and mobile plane padding. Removed the stale `.stadium-marker` rules,
+  which no current Svelte component renders.
 
 ### Verification
 
@@ -334,3 +339,8 @@ intended to help reviewers and future agents understand why files moved.
   active slot, the active setup preview has non-zero layout, selection clears
   after placement, and no app page or console errors were reported aside from
   the known favicon request.
+- Re-ran `npm run build`, `npm test -- --run`, and an independent headless
+  Chrome + Playwright board smoke after moving `GameBoard` styles. The playmat
+  and transformed board plane render with non-zero layout, and clicking the
+  projected bottom lost-zone pile still opens the zone viewer with no app page
+  or console errors aside from the known favicon request.

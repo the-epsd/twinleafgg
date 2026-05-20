@@ -238,3 +238,103 @@
   </div>
 
 </section>
+
+<style>
+  .playmat {
+    --active-w: calc(var(--card-w) * 1.48);
+    --active-h: calc(var(--active-w) * 1.397);
+    --bench-card-w: calc(var(--card-w) * 1.24);
+    --bench-row-h: calc(var(--bench-card-w) * 1.42);
+    --pile-w: calc(var(--card-w) * 1.28);
+    --prize-card-w: calc(var(--card-w) * 0.96);
+    --bench-gap: calc(var(--card-w) * 0.18);
+    position: absolute;
+    inset: var(--board-top-inset) var(--board-right-rail) var(--board-bottom-inset) 0;
+    min-width: 0;
+    perspective: var(--board-perspective, 1250px);
+    perspective-origin: 50% 68%;
+    transform-style: preserve-3d;
+  }
+
+  .playmat.has-projected-pile-hover {
+    cursor: pointer;
+  }
+
+  :global(.debug-zones) .playmat {
+    outline: 2px solid rgba(37, 99, 235, 0.9);
+    outline-offset: -2px;
+    background: rgba(37, 99, 235, 0.05);
+  }
+
+  .game-board-plane {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-rows:
+      minmax(calc(var(--bench-row-h) + (var(--card-w) * 0.22)), 0.85fr)
+      minmax(calc((var(--active-h) * 2) + (var(--card-w) * 0.24)), 1.45fr)
+      minmax(calc(var(--bench-row-h) + (var(--card-w) * 0.22)), 0.85fr);
+    gap: calc(var(--card-w) * 0.12);
+    align-items: center;
+    padding: calc(var(--card-w) * 0.16) var(--board-edge-pad-x);
+    background: rgba(226, 228, 232, 0.56);
+    overflow: visible;
+    transform: rotateX(var(--board-tilt, 8deg)) scaleY(var(--board-scale-y, 0.94)) translateY(var(--board-lift, 0px));
+    transform-origin: 50% 58%;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  :global(.debug-zones) .game-board-plane {
+    outline: 2px solid rgba(14, 165, 233, 0.9);
+    outline-offset: -4px;
+    background:
+      linear-gradient(rgba(14, 165, 233, 0.08), rgba(14, 165, 233, 0.08)),
+      rgba(226, 228, 232, 0.56);
+  }
+
+  .game-board-plane::before {
+    content: "";
+    position: absolute;
+    inset: var(--board-outline-pad-y) var(--board-edge-pad-x);
+    z-index: 0;
+    border: 2px solid rgba(44, 54, 64, 0.28);
+    border-radius: 18px;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 255, 255, 0.34),
+      0 10px 26px rgba(23, 30, 38, 0.08);
+    pointer-events: none;
+  }
+
+  .game-board-plane::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 0;
+    width: clamp(180px, min(21vw, 32vh), 300px);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    background: url("/assets/twinleaf-board-center.png") center / contain no-repeat;
+    opacity: 0.34;
+    pointer-events: none;
+  }
+
+  .game-board-plane.can-play-on-board {
+    cursor: pointer;
+  }
+
+  .game-board-plane.can-play-on-board::before {
+    border-color: rgba(41, 161, 139, 0.72);
+    background: rgba(41, 161, 139, 0.05);
+    box-shadow:
+      inset 0 0 0 2px rgba(41, 161, 139, 0.14),
+      0 10px 26px rgba(23, 30, 38, 0.08);
+  }
+
+  @media (max-width: 980px) {
+    .game-board-plane {
+      padding-inline: 12px;
+    }
+  }
+</style>
