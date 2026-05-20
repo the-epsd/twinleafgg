@@ -2,19 +2,33 @@
   import CardTile from './CardTile.svelte';
   import type { PlayerView } from '../game/types';
 
-  export let player: PlayerView;
-  export let selectedHand: { playerIndex: number; handIndex: number } | null = null;
-  export let disabled = false;
-  export let concealed = false;
-  export let playableIndexes: number[] = [];
-  export let placedIndexes: number[] = [];
-  export let onSelect: (playerIndex: number, handIndex: number) => void;
-  export let onDrag: (playerIndex: number, handIndex: number, event: DragEvent) => void;
-  export let onDragEnd: () => void = () => {};
+  type Props = {
+    player: PlayerView;
+    selectedHand?: { playerIndex: number; handIndex: number } | null;
+    disabled?: boolean;
+    concealed?: boolean;
+    playableIndexes?: number[];
+    placedIndexes?: number[];
+    onSelect: (playerIndex: number, handIndex: number) => void;
+    onDrag: (playerIndex: number, handIndex: number, event: DragEvent) => void;
+    onDragEnd?: () => void;
+  };
 
-  $: playableSet = new Set(playableIndexes);
-  $: placedSet = new Set(placedIndexes);
-  $: hasPlayableFilter = playableIndexes.length > 0;
+  let {
+    player,
+    selectedHand = null,
+    disabled = false,
+    concealed = false,
+    playableIndexes = [],
+    placedIndexes = [],
+    onSelect,
+    onDrag,
+    onDragEnd = () => {},
+  }: Props = $props();
+
+  let playableSet = $derived(new Set(playableIndexes));
+  let placedSet = $derived(new Set(placedIndexes));
+  let hasPlayableFilter = $derived(playableIndexes.length > 0);
 </script>
 
 <div class:disabled class:concealed class="hand" data-card-count={player.hand.length}>
@@ -31,9 +45,9 @@
         interactive={!cardDisabled && !concealed}
         faceDown={concealed}
         testId={`hand-card-${player.index}-${index}`}
-        on:click={() => onSelect(player.index, index)}
-        on:dragstart={(event) => onDrag(player.index, index, event)}
-        on:dragend={onDragEnd}
+        onclick={() => onSelect(player.index, index)}
+        ondragstart={(event) => onDrag(player.index, index, event)}
+        ondragend={onDragEnd}
       />
     {/if}
   {/each}

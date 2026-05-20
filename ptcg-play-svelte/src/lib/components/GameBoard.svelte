@@ -3,48 +3,81 @@
   import CardTile from './CardTile.svelte';
   import type { CardView, PlayerView, PokemonSlotView } from '../game/types';
 
-  export let topPlayer: PlayerView;
-  export let bottomPlayer: PlayerView;
-  export let topBenchSlots: PokemonSlotView[] = [];
-  export let bottomBenchSlots: PokemonSlotView[] = [];
-  export let topActiveSlot: PokemonSlotView;
-  export let bottomActiveSlot: PokemonSlotView;
-  export let currentStadium: CardView | undefined;
-  export let currentStadiumOwner: PlayerView | undefined;
-  export let canPlayToBenchArea: (player: PlayerView) => boolean;
-  export let canPlaceSetupBench: (player: PlayerView) => boolean;
-  export let playToBenchArea: (player: PlayerView) => void;
-  export let placeSetupBench: () => void;
-  export let allowBenchDrop: (event: DragEvent, player: PlayerView) => void;
-  export let dropToBenchArea: (player: PlayerView, event: DragEvent) => void;
-  export let isPlayableTarget: (slot: PokemonSlotView) => boolean;
-  export let isBoardPromptSelectable: (slot: PokemonSlotView) => boolean;
-  export let isBoardPromptSelected: (slot: PokemonSlotView) => boolean;
-  export let clickSlot: (slot: PokemonSlotView) => void;
-  export let allowDrop: (event: DragEvent, slot: PokemonSlotView) => void;
-  export let dropToSlot: (slot: PokemonSlotView, event: DragEvent) => void;
-  export let canPlaceSetupActive: (slot: PokemonSlotView) => boolean;
-  export let placeSetupActive: () => void;
-  export let showZone: (
-    playerIndex: number,
-    zone: 'discard' | 'lostZone' | 'stadium' | 'playZone',
-    title: string,
-    faceDown?: boolean,
-  ) => void;
-  export let canPlayOnBoard = false;
-  export let clickBoardPlay: (event: MouseEvent) => void;
-  export let allowBoardPlayDrop: (event: DragEvent) => void;
-  export let dropToBoardPlay: (event: DragEvent) => void;
-  export let boardTilt = 8;
-  export let boardPerspective = 1250;
-  export let boardScaleY = 98;
-  export let boardLift = 0;
+  type ZoneName = 'discard' | 'lostZone' | 'stadium' | 'playZone';
 
-  let topLostPileElement: HTMLButtonElement | undefined;
-  let topDiscardPileElement: HTMLButtonElement | undefined;
-  let bottomLostPileElement: HTMLButtonElement | undefined;
-  let bottomDiscardPileElement: HTMLButtonElement | undefined;
-  let projectedHoverPile = '';
+  type Props = {
+    topPlayer: PlayerView;
+    bottomPlayer: PlayerView;
+    topBenchSlots?: PokemonSlotView[];
+    bottomBenchSlots?: PokemonSlotView[];
+    topActiveSlot: PokemonSlotView;
+    bottomActiveSlot: PokemonSlotView;
+    currentStadium?: CardView;
+    currentStadiumOwner?: PlayerView;
+    canPlayToBenchArea: (player: PlayerView) => boolean;
+    canPlaceSetupBench: (player: PlayerView) => boolean;
+    playToBenchArea: (player: PlayerView) => void;
+    placeSetupBench: () => void;
+    allowBenchDrop: (event: DragEvent, player: PlayerView) => void;
+    dropToBenchArea: (player: PlayerView, event: DragEvent) => void;
+    isPlayableTarget: (slot: PokemonSlotView) => boolean;
+    isBoardPromptSelectable: (slot: PokemonSlotView) => boolean;
+    isBoardPromptSelected: (slot: PokemonSlotView) => boolean;
+    clickSlot: (slot: PokemonSlotView) => void;
+    allowDrop: (event: DragEvent, slot: PokemonSlotView) => void;
+    dropToSlot: (slot: PokemonSlotView, event: DragEvent) => void;
+    canPlaceSetupActive: (slot: PokemonSlotView) => boolean;
+    placeSetupActive: () => void;
+    showZone: (playerIndex: number, zone: ZoneName, title: string, faceDown?: boolean) => void;
+    canPlayOnBoard?: boolean;
+    clickBoardPlay: (event: MouseEvent) => void;
+    allowBoardPlayDrop: (event: DragEvent) => void;
+    dropToBoardPlay: (event: DragEvent) => void;
+    boardTilt?: number;
+    boardPerspective?: number;
+    boardScaleY?: number;
+    boardLift?: number;
+  };
+
+  let {
+    topPlayer,
+    bottomPlayer,
+    topBenchSlots = [],
+    bottomBenchSlots = [],
+    topActiveSlot,
+    bottomActiveSlot,
+    currentStadium,
+    currentStadiumOwner,
+    canPlayToBenchArea,
+    canPlaceSetupBench,
+    playToBenchArea,
+    placeSetupBench,
+    allowBenchDrop,
+    dropToBenchArea,
+    isPlayableTarget,
+    isBoardPromptSelectable,
+    isBoardPromptSelected,
+    clickSlot,
+    allowDrop,
+    dropToSlot,
+    canPlaceSetupActive,
+    placeSetupActive,
+    showZone,
+    canPlayOnBoard = false,
+    clickBoardPlay,
+    allowBoardPlayDrop,
+    dropToBoardPlay,
+    boardTilt = 8,
+    boardPerspective = 1250,
+    boardScaleY = 98,
+    boardLift = 0,
+  }: Props = $props();
+
+  let topLostPileElement = $state<HTMLButtonElement>();
+  let topDiscardPileElement = $state<HTMLButtonElement>();
+  let bottomLostPileElement = $state<HTMLButtonElement>();
+  let bottomDiscardPileElement = $state<HTMLButtonElement>();
+  let projectedHoverPile = $state('');
 
   type ProjectedPileKey = 'top-lost' | 'top-discard' | 'bottom-lost' | 'bottom-discard';
 
@@ -101,12 +134,12 @@
     return Array.from({ length: count }, (_, index) => count - index);
   }
 
-  $: boardPerspectiveStyle = [
+  let boardPerspectiveStyle = $derived([
     `--board-tilt: ${boardTilt}deg`,
     `--board-perspective: ${boardPerspective}px`,
     `--board-scale-y: ${boardScaleY / 100}`,
     `--board-lift: ${boardLift}px`,
-  ].join('; ');
+  ].join('; '));
 
   function clickBoardSurface(event: MouseEvent) {
     if (clickProjectedPile(event)) {
@@ -131,18 +164,18 @@
   class:has-projected-pile-hover={projectedHoverPile !== ''}
   style={boardPerspectiveStyle}
   role="presentation"
-  on:click={clickBoardSurface}
-  on:mousemove={updateProjectedPileHover}
-  on:mouseleave={() => (projectedHoverPile = '')}
-  on:dragover={allowBoardPlayDrop}
-  on:drop={dropToBoardPlay}
+  onclick={clickBoardSurface}
+  onmousemove={updateProjectedPileHover}
+  onmouseleave={() => (projectedHoverPile = '')}
+  ondragover={allowBoardPlayDrop}
+  ondrop={dropToBoardPlay}
 >
   <div
     class="game-board-plane"
     class:can-play-on-board={canPlayOnBoard}
     role="presentation"
-    on:dragover={allowBoardPlayDrop}
-    on:drop={dropToBoardPlay}
+    ondragover={allowBoardPlayDrop}
+    ondrop={dropToBoardPlay}
   >
     <div class="bench-zone opponent" class:empty={topBenchSlots.length === 0}>
       <button
@@ -153,9 +186,9 @@
         aria-hidden="true"
         aria-label={`Play a Pokemon to ${topPlayer.name}'s bench`}
         title={`Play a Pokemon to ${topPlayer.name}'s bench`}
-        on:click={() => (canPlaceSetupBench(topPlayer) ? placeSetupBench() : playToBenchArea(topPlayer))}
-        on:dragover={(event) => allowBenchDrop(event, topPlayer)}
-        on:drop={(event) => dropToBenchArea(topPlayer, event)}
+        onclick={() => (canPlaceSetupBench(topPlayer) ? placeSetupBench() : playToBenchArea(topPlayer))}
+        ondragover={(event) => allowBenchDrop(event, topPlayer)}
+        ondrop={(event) => dropToBenchArea(topPlayer, event)}
       ></button>
       <div class="bench-row opponent">
         {#each topBenchSlots as slot}
@@ -164,9 +197,9 @@
             canDrop={isPlayableTarget(slot)}
             promptSelectable={isBoardPromptSelectable(slot)}
             promptSelected={isBoardPromptSelected(slot)}
-            on:click={() => clickSlot(slot)}
-            on:dragover={(event) => allowDrop(event, slot)}
-            on:drop={(event) => dropToSlot(slot, event)}
+            onclick={() => clickSlot(slot)}
+            ondragover={(event) => allowDrop(event, slot)}
+            ondrop={(event) => dropToSlot(slot, event)}
           />
         {/each}
       </div>
@@ -181,7 +214,7 @@
             class:projected-hover={projectedHoverPile === 'top-lost'}
             title={`${topPlayer.name} lost zone`}
             bind:this={topLostPileElement}
-            on:click={() => showZone(topPlayer.index, 'lostZone', `${topPlayer.name} lost zone`)}
+            onclick={() => showZone(topPlayer.index, 'lostZone', `${topPlayer.name} lost zone`)}
           >
             {#if topPlayer.lostZone.length}
               <CardTile card={topPlayer.lostZone[topPlayer.lostZone.length - 1]} compact />
@@ -209,7 +242,7 @@
               class:projected-hover={projectedHoverPile === 'top-discard'}
               title={`${topPlayer.name} discard`}
               bind:this={topDiscardPileElement}
-              on:click={() => showZone(topPlayer.index, 'discard', `${topPlayer.name} discard`)}
+              onclick={() => showZone(topPlayer.index, 'discard', `${topPlayer.name} discard`)}
             >
               {#if topPlayer.discard.length}
                 <CardTile card={topPlayer.discard[topPlayer.discard.length - 1]} compact />
@@ -228,7 +261,7 @@
             class:projected-hover={projectedHoverPile === 'bottom-lost'}
             title={`${bottomPlayer.name} lost zone`}
             bind:this={bottomLostPileElement}
-            on:click={() => showZone(bottomPlayer.index, 'lostZone', `${bottomPlayer.name} lost zone`)}
+            onclick={() => showZone(bottomPlayer.index, 'lostZone', `${bottomPlayer.name} lost zone`)}
           >
             {#if bottomPlayer.lostZone.length}
               <CardTile card={bottomPlayer.lostZone[bottomPlayer.lostZone.length - 1]} compact />
@@ -256,7 +289,7 @@
               class:projected-hover={projectedHoverPile === 'bottom-discard'}
               title={`${bottomPlayer.name} discard`}
               bind:this={bottomDiscardPileElement}
-              on:click={() => showZone(bottomPlayer.index, 'discard', `${bottomPlayer.name} discard`)}
+              onclick={() => showZone(bottomPlayer.index, 'discard', `${bottomPlayer.name} discard`)}
             >
               {#if bottomPlayer.discard.length}
                 <CardTile card={bottomPlayer.discard[bottomPlayer.discard.length - 1]} compact />
@@ -276,9 +309,9 @@
         canDrop={isPlayableTarget(topPlayer.active) || canPlaceSetupActive(topPlayer.active)}
         promptSelectable={isBoardPromptSelectable(topPlayer.active)}
         promptSelected={isBoardPromptSelected(topPlayer.active)}
-        on:click={() => (canPlaceSetupActive(topPlayer.active) ? placeSetupActive() : clickSlot(topPlayer.active))}
-        on:dragover={(event) => allowDrop(event, topPlayer.active)}
-        on:drop={(event) => dropToSlot(topPlayer.active, event)}
+        onclick={() => (canPlaceSetupActive(topPlayer.active) ? placeSetupActive() : clickSlot(topPlayer.active))}
+        ondragover={(event) => allowDrop(event, topPlayer.active)}
+        ondrop={(event) => dropToSlot(topPlayer.active, event)}
       />
 
       {#if currentStadium && currentStadiumOwner?.index === topPlayer.index}
@@ -286,7 +319,7 @@
           type="button"
           class="stadium-card top-stadium-card"
           title={currentStadium.fullName}
-          on:click={() => showZone(topPlayer.index, 'stadium', `${topPlayer.name} stadium`)}
+          onclick={() => showZone(topPlayer.index, 'stadium', `${topPlayer.name} stadium`)}
         >
           <CardTile card={currentStadium} compact />
         </button>
@@ -299,9 +332,9 @@
         canDrop={isPlayableTarget(bottomPlayer.active) || canPlaceSetupActive(bottomPlayer.active)}
         promptSelectable={isBoardPromptSelectable(bottomPlayer.active)}
         promptSelected={isBoardPromptSelected(bottomPlayer.active)}
-        on:click={() => (canPlaceSetupActive(bottomPlayer.active) ? placeSetupActive() : clickSlot(bottomPlayer.active))}
-        on:dragover={(event) => allowDrop(event, bottomPlayer.active)}
-        on:drop={(event) => dropToSlot(bottomPlayer.active, event)}
+        onclick={() => (canPlaceSetupActive(bottomPlayer.active) ? placeSetupActive() : clickSlot(bottomPlayer.active))}
+        ondragover={(event) => allowDrop(event, bottomPlayer.active)}
+        ondrop={(event) => dropToSlot(bottomPlayer.active, event)}
       />
 
       {#if currentStadium && currentStadiumOwner?.index === bottomPlayer.index}
@@ -309,7 +342,7 @@
           type="button"
           class="stadium-card bottom-stadium-card"
           title={currentStadium.fullName}
-          on:click={() => showZone(bottomPlayer.index, 'stadium', `${bottomPlayer.name} stadium`)}
+          onclick={() => showZone(bottomPlayer.index, 'stadium', `${bottomPlayer.name} stadium`)}
         >
           <CardTile card={currentStadium} compact />
         </button>
@@ -325,9 +358,9 @@
         aria-hidden="true"
         aria-label={`Play a Pokemon to ${bottomPlayer.name}'s bench`}
         title={`Play a Pokemon to ${bottomPlayer.name}'s bench`}
-        on:click={() => (canPlaceSetupBench(bottomPlayer) ? placeSetupBench() : playToBenchArea(bottomPlayer))}
-        on:dragover={(event) => allowBenchDrop(event, bottomPlayer)}
-        on:drop={(event) => dropToBenchArea(bottomPlayer, event)}
+        onclick={() => (canPlaceSetupBench(bottomPlayer) ? placeSetupBench() : playToBenchArea(bottomPlayer))}
+        ondragover={(event) => allowBenchDrop(event, bottomPlayer)}
+        ondrop={(event) => dropToBenchArea(bottomPlayer, event)}
       ></button>
       <div class="bench-row">
         {#each bottomBenchSlots as slot}
@@ -336,9 +369,9 @@
             canDrop={isPlayableTarget(slot)}
             promptSelectable={isBoardPromptSelectable(slot)}
             promptSelected={isBoardPromptSelected(slot)}
-            on:click={() => clickSlot(slot)}
-            on:dragover={(event) => allowDrop(event, slot)}
-            on:drop={(event) => dropToSlot(slot, event)}
+            onclick={() => clickSlot(slot)}
+            ondragover={(event) => allowDrop(event, slot)}
+            ondrop={(event) => dropToSlot(slot, event)}
           />
         {/each}
       </div>

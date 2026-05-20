@@ -1,22 +1,42 @@
 <script lang="ts">
   import type { CardView } from '../game/types';
 
-  export let card: CardView | undefined;
-  export let compact = false;
-  export let selected = false;
-  export let draggable = false;
-  export let disabled = false;
-  export let interactive = false;
-  export let faceDown = false;
-  export let playable = false;
-  export let testId = '';
+  type Props = {
+    card?: CardView;
+    compact?: boolean;
+    selected?: boolean;
+    draggable?: boolean;
+    disabled?: boolean;
+    interactive?: boolean;
+    faceDown?: boolean;
+    playable?: boolean;
+    testId?: string;
+    onclick?: (event: MouseEvent) => void;
+    ondragstart?: (event: DragEvent) => void;
+    ondragend?: (event: DragEvent) => void;
+  };
 
-  let failedImageUrl = '';
+  let {
+    card,
+    compact = false,
+    selected = false,
+    draggable = false,
+    disabled = false,
+    interactive = false,
+    faceDown = false,
+    playable = false,
+    testId = '',
+    onclick,
+    ondragstart,
+    ondragend,
+  }: Props = $props();
 
-  $: imageUrl = faceDown ? '/assets/cardback.png' : card?.imageUrl;
-  $: showImage = !!imageUrl && failedImageUrl !== imageUrl;
-  $: label = faceDown ? 'Card' : (card?.name ?? 'Empty');
-  $: typeClass = faceDown
+  let failedImageUrl = $state('');
+
+  let imageUrl = $derived(faceDown ? '/assets/cardback.png' : card?.imageUrl);
+  let showImage = $derived(!!imageUrl && failedImageUrl !== imageUrl);
+  let label = $derived(faceDown ? 'Card' : (card?.name ?? 'Empty'));
+  let typeClass = $derived(faceDown
     ? 'back'
     : card?.energyType !== undefined || card?.name?.includes('Energy')
       ? 'energy'
@@ -24,7 +44,11 @@
         ? 'trainer'
         : card
           ? 'pokemon'
-          : 'empty';
+          : 'empty');
+
+  function preventSelection(event: Event) {
+    event.preventDefault();
+  }
 </script>
 
 {#if interactive}
@@ -38,13 +62,13 @@
     {disabled}
     data-testid={testId || undefined}
     title={card?.fullName ?? label}
-    on:dragstart
-    on:dragend
-    on:click
-    on:selectstart|preventDefault
+    {onclick}
+    {ondragstart}
+    {ondragend}
+    onselectstart={preventSelection}
   >
     {#if showImage}
-      <img src={imageUrl} alt="" loading="lazy" decoding="async" draggable="false" on:error={() => (failedImageUrl = imageUrl ?? '')} />
+      <img src={imageUrl} alt="" loading="lazy" decoding="async" draggable="false" onerror={() => (failedImageUrl = imageUrl ?? '')} />
     {:else}
       <span class="fallback-name">{label}</span>
       {#if card?.set}
@@ -62,7 +86,7 @@
     title={card?.fullName ?? label}
   >
     {#if showImage}
-      <img src={imageUrl} alt="" loading="lazy" decoding="async" draggable="false" on:error={() => (failedImageUrl = imageUrl ?? '')} />
+      <img src={imageUrl} alt="" loading="lazy" decoding="async" draggable="false" onerror={() => (failedImageUrl = imageUrl ?? '')} />
     {:else}
       <span class="fallback-name">{label}</span>
       {#if card?.set}
