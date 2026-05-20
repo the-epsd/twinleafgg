@@ -23,6 +23,14 @@ import type { Board3dCardInfoData, CardInfoPaneActionResult } from './board3dCar
 import styles from './Board3DCanvas.module.css';
 import { appConfig } from '../../env/config';
 
+const EMPTY_CATALOG: Card[] = [];
+
+const BOARD_CANVAS_GL = {
+  antialias: true,
+  alpha: true,
+  powerPreference: 'high-performance' as const,
+};
+
 export type Board3DCanvasProps = {
   gameState: LocalGameState;
   topPlayer: Player;
@@ -90,7 +98,8 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
   const getScanUrl = useDeckCardScanUrl(serverConfig?.scansUrl);
   const gameActionsStable = useStableGameActions(props.gameActions);
 
-  const catalog = props.catalog.length ? props.catalog : cardsInfo?.cards ?? [];
+  const catalog =
+    props.catalog.length > 0 ? props.catalog : (cardsInfo?.cards ?? EMPTY_CATALOG);
 
   const queueInfo = useCallback((data: Board3dCardInfoData) => {
     return new Promise<CardInfoPaneActionResult>((resolve) => {
@@ -141,26 +150,27 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
     ],
   );
 
+  const onCanvasCreated = useCallback(
+    ({ gl }: { gl: import('three').WebGLRenderer }) => {
+      gl.shadowMap.enabled = lightingSettings.directional.castShadow;
+      gl.shadowMap.type = PCFSoftShadowMap;
+      gl.sortObjects = false;
+      gl.outputColorSpace = SRGBColorSpace;
+      gl.toneMapping = board3dToneMappingConstant(BOARD3D_LIGHTING_DEFAULTS.renderer.toneMapping);
+      gl.toneMappingExposure = BOARD3D_LIGHTING_DEFAULTS.renderer.toneMappingExposure;
+    },
+    [lightingSettings.directional.castShadow],
+  );
+
   return (
     <div className={styles.root}>
       <div className={styles.board3dContainer}>
         <Canvas
           className={styles.board3dCanvas}
           shadows={lightingSettings.directional.castShadow}
-          gl={{
-            antialias: true,
-            alpha: true,
-            powerPreference: 'high-performance',
-          }}
+          gl={BOARD_CANVAS_GL}
           dpr={boardCanvasDpr}
-          onCreated={({ gl }) => {
-            gl.shadowMap.enabled = lightingSettings.directional.castShadow;
-            gl.shadowMap.type = PCFSoftShadowMap;
-            gl.sortObjects = false;
-            gl.outputColorSpace = SRGBColorSpace;
-            gl.toneMapping = board3dToneMappingConstant(BOARD3D_LIGHTING_DEFAULTS.renderer.toneMapping);
-            gl.toneMappingExposure = BOARD3D_LIGHTING_DEFAULTS.renderer.toneMappingExposure;
-          }}
+          onCreated={onCanvasCreated}
         >
           <Board3dExperience
             runtime={runtime}

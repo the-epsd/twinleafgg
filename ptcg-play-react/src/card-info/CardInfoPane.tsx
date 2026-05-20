@@ -272,7 +272,11 @@ export function CardInfoPane({
                       <EnergyTypeIcon type={CardType.NONE} style={{ transform: 'translateY(3px)' }} />
                     ) : (
                       attack.cost.map((cost, i) => (
-                        <EnergyTypeIcon key={i} type={cost} style={{ transform: 'translateY(3px)' }} />
+                        <EnergyTypeIcon
+                          key={`${attack.name}-cost-${i}`}
+                          type={cost}
+                          style={{ transform: 'translateY(3px)' }}
+                        />
                       ))
                     )}
                   </div>

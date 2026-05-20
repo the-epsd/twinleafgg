@@ -18,6 +18,7 @@ import type {
   ShowCardsPrompt,
   ShowMulliganPrompt,
   WaitPrompt,
+  ChooseEnergyPrompt,
 } from 'ptcg-server';
 import type { LocalGameState } from '../types/localGameState';
 import { activeGamePrompt } from '../activeGamePrompt';
@@ -28,9 +29,11 @@ import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { CheckboxField } from '../../components/ui/CheckboxField';
 import styles from './TablePromptLayer.module.css';
 import { AttachEnergyPromptPanel } from './AttachEnergyPromptPanel';
+import { ChooseEnergyPromptPanel } from './ChooseEnergyPromptPanel';
 import { PutDamageOverlay } from './PutDamageOverlay';
 import { RemoveDamageOverlay } from './RemoveDamageOverlay';
 import { scanBlockedOwnZeroDamageFromState } from './pokemonPromptRows';
+import { BOARD3D_ATTACK_ANIMATION_DURATION_SEC } from '../board3d/services/board-3d-animation.service';
 
 const CHOOSE_CARDS_CARD_BACK = '/assets/cardback.png';
 
@@ -74,6 +77,61 @@ export type TablePromptLayerProps = {
 function gameMessageText(t: TFunction, message: string | number): string {
   const key = `GAME_MESSAGES.${message}`;
   return t(key, { defaultValue: String(message) });
+}
+
+/** Matches legacy server WaitPrompt message used before attack damage (see game-effect useAttack). */
+function isAttackAnimationWaitPrompt(wp: WaitPrompt): boolean {
+  const m = wp.message;
+  if (m === undefined || m === null) {
+    return false;
+  }
+  return String(m).toLowerCase().includes('attack animation');
+}
+
+function AttackAnimationWaitPrompt(props: {
+  promptId: number;
+  boardInteraction: BoardInteractionService;
+  resolve: (id: number, result: unknown) => void | Promise<void>;
+}) {
+  const { promptId, boardInteraction, resolve } = props;
+  useEffect(() => {
+    let cancelled = false;
+    const finish = () => {
+      if (cancelled) return;
+      cancelled = true;
+      void resolve(promptId, null);
+    };
+
+    const sleep = (ms: number) => new Promise<void>((r) => window.setTimeout(r, ms));
+
+    void (async () => {
+      const pollUntil = Date.now() + 900;
+      let p: Promise<void> | null = null;
+      while (Date.now() < pollUntil && !cancelled) {
+        p = boardInteraction.getPendingAttackAnimationPromise();
+        if (p) {
+          break;
+        }
+        await sleep(16);
+      }
+      if (cancelled) {
+        return;
+      }
+      if (p) {
+        await p;
+        finish();
+        return;
+      }
+      await sleep(BOARD3D_ATTACK_ANIMATION_DURATION_SEC * 1000);
+      finish();
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [promptId, boardInteraction, resolve]);
+
+  return null;
 }
 
 function useLocalGameRef(localGame: LocalGameState) {
@@ -395,6 +453,17 @@ export function TablePromptLayer({
 
   if (p.type === 'WaitPrompt') {
     const wp = p as WaitPrompt;
+    // Server used to block attacks on this prompt; 3D board plays motion from the socket event instead.
+    if (isAttackAnimationWaitPrompt(wp)) {
+      return (
+        <AttackAnimationWaitPrompt
+          key={wp.id}
+          promptId={wp.id}
+          boardInteraction={boardInteraction}
+          resolve={resolve}
+        />
+      );
+    }
     return (
       <WaitPromptPanel key={wp.id} prompt={wp} t={t} gameMessageText={gameMessageText} resolve={resolve} />
     );
@@ -516,6 +585,22 @@ export function TablePromptLayer({
         key={aep.id}
         prompt={aep}
         localGame={localGame}
+        getScanUrl={getScanUrl}
+        t={t}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
+  if (p.type === 'Choose energy') {
+    const cep = p as ChooseEnergyPrompt;
+    return (
+      <ChooseEnergyPromptPanel
+        key={cep.id}
+        prompt={cep}
+        localGame={localGame}
+        catalog={catalog}
         getScanUrl={getScanUrl}
         t={t}
         gameMessageText={gameMessageText}
@@ -965,7 +1050,7 @@ function SelectPromptPanel(props: {
         <p className={styles.message}>{gameMessageText(t, sp.message)}</p>
         <div className={styles.selectList}>
           {sp.values.map((value, i) => (
-            <label key={i} className={styles.selectOption}>
+            <label key={`${sp.id}-${i}`} className={styles.selectOption}>
               <input type="radio" name={`select-${sp.id}`} checked={idx === i} onChange={() => setIdx(i)} />
               <span>{t(value, { defaultValue: value })}</span>
             </label>
@@ -1053,9 +1138,9 @@ function ShowCardsPanel(props: {
         <h2 className={styles.title}>{title}</h2>
         <p className={styles.message}>{gameMessageText(t, prompt.message)}</p>
         <div className={styles.cardRow}>
-          {prompt.cards.map((card: Card) => (
+          {prompt.cards.map((card: Card, cardIndex) => (
             <button
-              key={card.id + String(card.fullName)}
+              key={`${cardIndex}-${card.id}-${card.fullName}`}
               type="button"
               style={{ padding: 0, border: 'none', background: 'none', cursor: 'pointer' }}
               onClick={() => setDetail(card)}

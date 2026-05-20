@@ -429,6 +429,20 @@ export class BoardInteractionService {
     this.attackAnimationSubject.next(event);
   }
 
+  /**
+   * Latest 3D attack {@link Board3dAnimationService.playAttackAnimation} promise (set when the motion starts).
+   * Not cleared when done so late subscribers can still await a settled promise. Overwritten on each new attack.
+   */
+  private pendingAttackAnimationPromise: Promise<void> | null = null;
+
+  public setPendingAttackAnimationPromise(p: Promise<void> | null): void {
+    this.pendingAttackAnimationPromise = p;
+  }
+
+  public getPendingAttackAnimationPromise(): Promise<void> | null {
+    return this.pendingAttackAnimationPromise;
+  }
+
   public triggerCoinFlipAnimation(result: boolean, playerId: number) {
     this.coinFlipAnimationSubject.next({ result, playerId });
   }

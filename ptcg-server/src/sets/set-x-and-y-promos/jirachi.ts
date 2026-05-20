@@ -7,9 +7,8 @@ import { Attack } from '../../game/store/card/pokemon-types';
 import { AbstractAttackEffect, DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Jirachi extends PokemonCard {
 
@@ -28,7 +27,7 @@ export class Jirachi extends PokemonCard {
   public attacks: Attack[] = [{
     name: 'Stardust',
     cost: [CardType.COLORLESS],
-    damage: 0,
+    damage: 10,
     text: 'Discard a Special Energy attached to your opponent\'s Active Pokémon.If you do, prevent all effects of attacks, including damage, done to this Pokémon during your opponent\'s next turn.'
   }, {
     name: 'Dream Dance',
@@ -49,7 +48,7 @@ export class Jirachi extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[0]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
@@ -89,7 +88,7 @@ export class Jirachi extends PokemonCard {
       });
     }
 
-    if (WAS_ATTACK_USED(effect, 1, this)) {
+    if (effect instanceof AttackEffect && effect.attack === this.attacks[1]) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       const active = opponent.active;

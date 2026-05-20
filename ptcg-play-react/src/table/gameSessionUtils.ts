@@ -37,7 +37,8 @@ export function mergeStateChange(
   playerStats: import('ptcg-server').PlayerStats[] | undefined,
 ): LocalGameState {
   const state = decodeStateData(stateData);
-  const logs = [...prev.logs, ...state.logs];
+  // State snapshots already include the full log history; appending would duplicate ids.
+  const logs = [...state.logs];
   const enhancedPlayerStats = extractEnhancedPlayerStatsFromState(state);
   return {
     ...prev,

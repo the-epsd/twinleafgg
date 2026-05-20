@@ -95,6 +95,13 @@ export const BOARD3D_LIGHTING_DEFAULTS: Board3dLightingSettings = {
   },
 };
 
+/** Bloom intensities at or below this are treated as off (no postprocessing selection). */
+export const BOARD3D_BLOOM_OFF_THRESHOLD = 1e-4;
+
+export function isBoard3dBloomActive(bloom: Board3dLightingSettings['bloom']): boolean {
+  return bloom.intensity > BOARD3D_BLOOM_OFF_THRESHOLD;
+}
+
 export function cloneBoard3dLightingDefaults(): Board3dLightingSettings {
   return structuredClone(BOARD3D_LIGHTING_DEFAULTS);
 }

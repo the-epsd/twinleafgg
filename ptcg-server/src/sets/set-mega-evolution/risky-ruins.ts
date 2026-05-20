@@ -2,10 +2,7 @@ import { State, StateUtils, StoreLike } from '../../game';
 import { CardType, Stage, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import {
-  PlayPokemonEffect,
-  PlayPokemonFromDeckEffect,
-} from '../../game/store/effects/play-card-effects';
+import { PlayPokemonEffect, PlayPokemonFromDeckEffect, PlayPokemonFromDiscardEffect } from '../../game/store/effects/play-card-effects';
 
 export class DangerousRuins extends TrainerCard {
   public regulationMark = 'I';
@@ -21,7 +18,8 @@ export class DangerousRuins extends TrainerCard {
   reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (
       (effect instanceof PlayPokemonEffect ||
-        effect instanceof PlayPokemonFromDeckEffect) &&
+        effect instanceof PlayPokemonFromDeckEffect ||
+        effect instanceof PlayPokemonFromDiscardEffect) &&
       StateUtils.getStadiumCard(state) === this
     ) {
       if (

@@ -4,7 +4,7 @@ import { BoardEffect, CardTag, CardType, EnergyType, Format, SpecialCondition, S
 import { Attack } from '../card/pokemon-types';
 import { GamePhase } from '../state/state';
 import { PokemonCard } from '../card/pokemon-card';
-import { AbstractAttackEffect, AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
+import { AbstractAttackEffect, AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, CardsToHandEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
 import { AddSpecialConditionsPowerEffect, CheckHpEffect, CheckPokemonTypeEffect, CheckPrizesDestinationEffect, CheckProvidedEnergyEffect, CheckTableStateEffect } from '../effects/check-effects';
 import { Effect } from '../effects/effect';
 import { AttackEffect, DrawPrizesEffect, EvolveEffect, KnockOutEffect, MoveCardsEffect, MoveDamageCountersEffect, PowerEffect, RetreatEffect, SpecialEnergyEffect } from '../effects/game-effects';
@@ -940,13 +940,19 @@ export function DISCARD_SPECIFIC_ENERGY_FROM_THIS_POKEMON(store: StoreLike, stat
   });
 }
 
-export function PUT_SPECIFIC_ENERGY_FROM_THIS_POKEMON_INTO_HAND(store: StoreLike, state: State, effect: AttackEffect, energyMap: CardType[]) {
+export function PUT_SPECIFIC_ENERGY_FROM_THIS_POKEMON_INTO_HAND(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  energyMap: CardType[],
+  options?: { onEnergyMoved?: () => void }
+): State {
   const player = effect.player;
 
   const checkProvidedEnergy = new CheckProvidedEnergyEffect(player);
   state = store.reduceEffect(state, checkProvidedEnergy);
 
-  state = store.prompt(state, new ChooseEnergyPrompt(
+  return store.prompt(state, new ChooseEnergyPrompt(
     player.id,
     GameMessage.CHOOSE_CARD_TO_HAND,
     checkProvidedEnergy.energyMap,
@@ -954,7 +960,12 @@ export function PUT_SPECIFIC_ENERGY_FROM_THIS_POKEMON_INTO_HAND(store: StoreLike
     { allowCancel: false }
   ), energy => {
     const cards: Card[] = (energy || []).map(e => e.card);
-    MOVE_CARDS(store, state, player.active, player.hand, { cards: cards });
+    if (cards.length > 0) {
+      const toHandEffect = new CardsToHandEffect(effect, cards);
+      toHandEffect.target = player.active;
+      store.reduceEffect(state, toHandEffect);
+      options?.onEnergyMoved?.();
+    }
   });
 }
 
@@ -2729,15 +2740,17 @@ export function CAN_PLAY_TRAINER_CARD(store: StoreLike, state: State, player: Pl
         break;
       }
       case TrainerType.TOOL: {
-        // Check if there are Pokemon that can accept a tool
-        let canAttachTool = false;
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
-          if (Array.isArray(cardList.tools) && cardList.tools.length < pokemonCard.maxTools) {
-            canAttachTool = true;
+        // Cards with canPlay (e.g. tools that attach to opponent's Pokemon) use that instead
+        if (!trainerCard.canPlay) {
+          let canAttachTool = false;
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard, target) => {
+            if (Array.isArray(cardList.tools) && cardList.tools.length < pokemonCard.maxTools) {
+              canAttachTool = true;
+            }
+          });
+          if (!canAttachTool) {
+            return false;
           }
-        });
-        if (!canAttachTool) {
-          return false;
         }
         break;
       }

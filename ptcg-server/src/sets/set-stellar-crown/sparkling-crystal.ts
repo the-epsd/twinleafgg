@@ -47,17 +47,22 @@ export class SparklingCrystal extends TrainerCard {
         const availableEnergy = [...checkEnergy.energyMap.flatMap(e => e.provides)];
 
         if (effect.cost.length > 0) {
-          // A list of matched energies.
+          // A list of matched energies (one entry per printed cost slot we can cover).
           const contained: CardType[] = [];
           for (const costType of effect.cost) {
-            if (costType == 9 && availableEnergy.length > 0) {
+            if (costType === CardType.COLORLESS && availableEnergy.length > 0) {
               contained.push(availableEnergy.splice(0, 1)[0]);
-            } else {
-              const i = availableEnergy.indexOf(costType);
-              if (i > -1) {
-                //Remove from the available pool and add to the contained energy pool
-                contained.push(availableEnergy.splice(i, 1)[0]);
-              }
+              continue;
+            }
+            let i = availableEnergy.indexOf(costType);
+            if (i > -1) {
+              contained.push(availableEnergy.splice(i, 1)[0]);
+              continue;
+            }
+            // Rainbow / Double Dragon / similar: provides CardType.ANY units that must pay typed costs too.
+            i = availableEnergy.indexOf(CardType.ANY);
+            if (i > -1) {
+              contained.push(availableEnergy.splice(i, 1)[0]);
             }
           }
           //If the contained pool is met or one less than the cost, then it's good.

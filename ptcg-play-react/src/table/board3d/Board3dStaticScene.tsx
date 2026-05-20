@@ -64,7 +64,12 @@ function buildMergedBoardGridGeometry(): BufferGeometry {
   return merged;
 }
 
-export function Board3dStaticScene() {
+export type Board3dStaticSceneProps = {
+  /** When true, emblem is wrapped in postprocessing {@link Select} for selective bloom. */
+  bloomActive?: boolean;
+};
+
+export function Board3dStaticScene({ bloomActive = false }: Board3dStaticSceneProps) {
   const emblemPath = publicAssetUrl('assets/twinleaf-board-center.png');
   const centerTex = useTexture(emblemPath);
 
@@ -126,6 +131,18 @@ export function Board3dStaticScene() {
   const midX = (ZONE_POSITIONS.bottomPlayer.active.x + ZONE_POSITIONS.topPlayer.active.x) / 2;
   const midZ = (ZONE_POSITIONS.bottomPlayer.active.z + ZONE_POSITIONS.topPlayer.active.z) / 2;
 
+  const emblemMesh = (
+    <mesh
+      geometry={emblemPlaneGeometry}
+      material={emblemMaterial}
+      rotation={[-Math.PI / 2, 0, Math.PI + Math.PI / 2 + Math.PI / 2]}
+      scale={[1, 1, 1]}
+      position={[midX, BOARD_3D_CENTER_EMBLEM_Y, midZ]}
+      renderOrder={50}
+      receiveShadow={false}
+    />
+  );
+
   return (
     <group>
       <mesh
@@ -136,17 +153,7 @@ export function Board3dStaticScene() {
         receiveShadow={false}
       />
 
-      <Select enabled>
-        <mesh
-          geometry={emblemPlaneGeometry}
-          material={emblemMaterial}
-          rotation={[-Math.PI / 2, 0, Math.PI + Math.PI / 2 + Math.PI / 2]}
-          scale={[1, 1, 1]}
-          position={[midX, BOARD_3D_CENTER_EMBLEM_Y, midZ]}
-          renderOrder={100}
-          receiveShadow={false}
-        />
-      </Select>
+      {bloomActive ? <Select enabled>{emblemMesh}</Select> : emblemMesh}
 
       <mesh
         geometry={gridMergedGeometry}

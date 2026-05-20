@@ -20,6 +20,7 @@ import {
   TrainerType,
   Card,
   PokemonCard,
+  PokemonCardList,
   TrainerCard,
   type CardTarget,
 } from 'ptcg-server';
@@ -30,6 +31,7 @@ import {
   trainerTypeIsSupporter,
   type HandPlayPokemonZoneGameSettings,
 } from '../board3dMeshIdForPlayTarget';
+import { isOpponentAttachTool, isOpponentPokemonExToolTarget } from '../opponent-attach-tool.util';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import { Board3dStateSyncService } from './board-3d-state-sync.service';
 import { Board3dHandService } from './board-3d-hand.service';
@@ -320,6 +322,77 @@ export class Board3dInteractionService {
   }
 
   /**
+   * Resolve attach/evolution drop target from the Pokemon board card under the pointer.
+   * Opponent slots have no drop zones; raycast is required to target their Active/Bench.
+   */
+  private allowedAttachTargetPlayer(ctx: DragContext): PlayerType | null {
+    if (ctx.superType === SuperType.ENERGY) {
+      return PlayerType.BOTTOM_PLAYER;
+    }
+    if (ctx.trainerType === TrainerType.TOOL) {
+      return isOpponentAttachTool(ctx.card) ? PlayerType.TOP_PLAYER : PlayerType.BOTTOM_PLAYER;
+    }
+    if (ctx.superType === SuperType.POKEMON && ctx.stage !== undefined && ctx.stage !== Stage.BASIC) {
+      return PlayerType.BOTTOM_PLAYER;
+    }
+    return null;
+  }
+
+  private findPokemonAttachTargetFromPointer(
+    event: MouseEvent,
+    camera: Camera,
+    canvas: HTMLCanvasElement,
+    ctx: DragContext
+  ): CardTarget | null {
+    const allowedPlayer = this.allowedAttachTargetPlayer(ctx);
+    if (allowedPlayer === null) {
+      return null;
+    }
+
+    const rect = canvas.getBoundingClientRect();
+    this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+    this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+    this.raycaster.setFromCamera(this.mouse, camera);
+
+    const isEvolutionCard =
+      ctx.superType === SuperType.POKEMON &&
+      ctx.stage !== undefined &&
+      ctx.stage !== Stage.BASIC &&
+      !cardPlaysAsBasicPokemonFromHand(ctx.card, this.handPlayZoneGameSettings);
+
+    const intersects = this.raycaster.intersectObjects(this.interactiveObjects, true);
+    for (const intersect of intersects) {
+      const card = this.getCardFromIntersection(intersect);
+      if (!card?.userData.isCard || !card.userData.cardTarget) {
+        continue;
+      }
+      const target = card.userData.cardTarget as CardTarget;
+      if (target.slot !== SlotType.ACTIVE && target.slot !== SlotType.BENCH) {
+        continue;
+      }
+      if (target.player !== allowedPlayer) {
+        continue;
+      }
+      if (
+        ctx.trainerType === TrainerType.TOOL &&
+        isOpponentAttachTool(ctx.card) &&
+        !isOpponentPokemonExToolTarget(card.userData.cardList as PokemonCardList)
+      ) {
+        continue;
+      }
+      if (isEvolutionCard) {
+        const evolutionCard = ctx.card as PokemonCard;
+        const targetPokemonCard = card.userData.cardData as PokemonCard;
+        if (!targetPokemonCard || !this.isValidEvolutionTarget(evolutionCard, targetPokemonCard)) {
+          continue;
+        }
+      }
+      return target;
+    }
+    return null;
+  }
+
+  /**
    * Get currently hovered card
    */
   getCurrentHoveredCard(): Object3D | null {
@@ -501,14 +574,25 @@ export class Board3dInteractionService {
         }
         // Tool cards need to target a Pokemon
         if (trainerType === TrainerType.TOOL) {
-          return (config.type === DropZoneType.BENCH || config.type === DropZoneType.ACTIVE) && isOccupied;
+          if (config.type !== DropZoneType.BENCH && config.type !== DropZoneType.ACTIVE) {
+            return false;
+          }
+          if (!isOccupied) {
+            return false;
+          }
+          const opponentTool = isOpponentAttachTool(card);
+          return opponentTool
+            ? config.player === PlayerType.TOP_PLAYER
+            : config.player === PlayerType.BOTTOM_PLAYER;
         }
         // Item cards go to board zone
         return config.type === DropZoneType.BOARD;
 
       case SuperType.ENERGY:
-        // Energy attaches to Pokemon
-        return (config.type === DropZoneType.BENCH || config.type === DropZoneType.ACTIVE) && isOccupied;
+        // Energy attaches to your own Pokemon
+        return (config.type === DropZoneType.BENCH || config.type === DropZoneType.ACTIVE)
+          && isOccupied
+          && config.player === PlayerType.BOTTOM_PLAYER;
 
       default:
         return false;
@@ -1100,27 +1184,39 @@ export class Board3dInteractionService {
       return null; // No action needed, card returned to hand
     }
 
-    // Otherwise, check for valid drop zone
-    const dropZone = this.findValidDropZone(worldPos);
+    const ctx = this.currentDragContext;
+    const actsAsBasicFromHand =
+      ctx && cardPlaysAsBasicPokemonFromHand(ctx.card, this.handPlayZoneGameSettings);
+    const isAttachDropHand =
+      ctx?.source === 'hand' &&
+      ctx &&
+      !actsAsBasicFromHand &&
+      (ctx.superType === SuperType.ENERGY ||
+        ctx.trainerType === TrainerType.TOOL ||
+        (ctx.superType === SuperType.POKEMON &&
+          ctx.stage !== undefined &&
+          ctx.stage !== Stage.BASIC));
 
-    if (dropZone) {
-      const config = dropZone.getConfig();
-      const zone = this.configToCardTarget(config);
+    // Attach drops: prefer Pokemon under pointer (opponent board has no drop zones)
+    const opponentAttachTool =
+      ctx?.trainerType === TrainerType.TOOL && ctx && isOpponentAttachTool(ctx.card);
+    let zone: CardTarget | undefined;
+    if (isAttachDropHand && ctx) {
+      zone = this.findPokemonAttachTargetFromPointer(event, camera, canvas, ctx) ?? undefined;
+    }
+    if (!zone) {
+      const dropZone = this.findValidDropZone(worldPos);
+      if (dropZone) {
+        const config = dropZone.getConfig();
+        if (!opponentAttachTool || config.player === PlayerType.TOP_PLAYER) {
+          zone = this.configToCardTarget(config);
+        }
+      }
+    }
 
-      const ctx = this.currentDragContext;
-      const actsAsBasicFromHand =
-        ctx && cardPlaysAsBasicPokemonFromHand(ctx.card, this.handPlayZoneGameSettings);
-
-      const isAttachDropHand =
-        ctx?.source === 'hand' &&
-        ctx &&
-        !actsAsBasicFromHand &&
-        (ctx.superType === SuperType.ENERGY ||
-          ctx.trainerType === TrainerType.TOOL ||
-          (ctx.superType === SuperType.POKEMON &&
-            ctx.stage !== undefined &&
-            ctx.stage !== Stage.BASIC)) &&
-        (config.type === DropZoneType.ACTIVE || config.type === DropZoneType.BENCH);
+    if (zone) {
+      const dropZoneForFlight = this.findValidDropZone(worldPos);
+      const config = dropZoneForFlight?.getConfig();
 
       const useHandPlayFlight =
         this.currentDragContext?.source === 'hand' && this.draggedCard && !isAttachDropHand;
@@ -1138,7 +1234,7 @@ export class Board3dInteractionService {
       if (this.currentDragContext?.source === 'board') {
         // Retreat action
         const originalTarget = this.currentDragContext.originalTarget;
-        if (originalTarget) {
+        if (originalTarget && config) {
           result = {
             action: 'retreat',
             benchIndex: originalTarget.slot === SlotType.ACTIVE
@@ -1161,7 +1257,7 @@ export class Board3dInteractionService {
             handIndex,
             zone
           };
-        } else if (this.draggedCard && handIndex >= 0) {
+        } else if (this.draggedCard && handIndex >= 0 && config) {
           const landing = this.getHandPlayLandingTransform(
             config,
             this.currentDragContext?.card,
@@ -1528,7 +1624,12 @@ export class Board3dInteractionService {
     );
 
     // Top player zones (for board-to-board visibility, but typically not interactive)
-    // Uncomment if needed: await this.createPlayerDropZones(scene, PlayerType.TOP_PLAYER, ZONE_POSITIONS.topPlayer, topSize);
+    await this.createPlayerDropZones(
+      scene,
+      PlayerType.TOP_PLAYER,
+      ZONE_POSITIONS.topPlayer,
+      topSize
+    );
 
     // Shared stadium zone — wider hit target than other slots (still centered on stadium mesh)
     const stW =
