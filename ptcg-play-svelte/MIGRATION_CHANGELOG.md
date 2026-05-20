@@ -480,3 +480,15 @@ intended to help reviewers and future agents understand why files moved.
   deterministic headless Chrome smoke with a mocked `ChooseCardsPrompt` view:
   prompt cards fill their grid buttons, clicking two cards updates the selected
   count to `2/2`, both selected slots fill, and no app/page errors are reported.
+
+### Board Bench Baseline Fix
+
+- Anchored the bottom bench zone to the same board content baseline used by the
+  bottom discard/deck/prize pile layer, rather than relying on the board grid
+  row height to coincidentally line up on each viewport. The bench zone now has
+  no vertical padding, so bench cards span to the vertical edges of the bench
+  target area.
+- Re-ran `npm run build` and `npm test -- --run`; both passed. Measured a
+  mocked board at a 2048x1280 viewport: bottom bench zone, bottom prize grid,
+  and bottom discard pile share the same bottom edge, with the rendered bench
+  card within roughly 1.3px due to card border/aspect rounding.

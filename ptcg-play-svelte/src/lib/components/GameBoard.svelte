@@ -252,6 +252,7 @@
     --bench-row-h: calc(var(--bench-card-w) * 1.42);
     --pile-w: calc(var(--card-w) * 1.28);
     --prize-card-w: calc(var(--card-w) * 0.96);
+    --prize-grid-h: calc((var(--prize-card-w) * 1.397) + (var(--prize-card-w) * 1.42));
     --bench-gap: calc(var(--card-w) * 0.18);
     position: absolute;
     inset: var(--board-top-inset) var(--board-right-rail) var(--board-bottom-inset) 0;
