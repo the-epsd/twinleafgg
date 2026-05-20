@@ -197,3 +197,13 @@ intended to help reviewers and future agents understand why files moved.
   Chrome + Playwright smoke after the `BenchZone`/`StadiumCard` extraction.
   The smoke reaches the setup dock and board, confirms both bench zones and the
   active duel have non-zero layout boxes, and reports no app page errors.
+- Investigated the `GameBoard` projected pile hit-test. In headless Chrome,
+  `elementFromPoint` at the pile centers lands on `.playmat` or
+  `.game-board-plane` for most lost/discard piles because the transformed
+  center pile stack has `pointer-events: none` through the container chain.
+  Changing only `button.stack-pile` to `pointer-events: auto` lets the bottom
+  discard pile work, but the top lost, top discard, and bottom lost centers
+  still fall through. Making the container chain pointer-aware also failed to
+  make all four direct pile clicks reliable. The manual projected hit-test stays
+  in place until the center pile layering is rebuilt or moved into a dedicated
+  `CenterPiles.svelte` that can own the workaround explicitly.
