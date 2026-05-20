@@ -40,6 +40,17 @@
     .power-type .poke-body {
       color: mat.get-color-from-palette($ptcg, poke-body);
     }
+
+    .reminder {
+      font-style: italic;
+      font-size: 85%;
+      color: $text-secondary;
+    }
+
+    .boss-mon {
+      font-style: italic;
+      font-weight: bold;
+    }
   }
 
   ptcg-card-list-pane {

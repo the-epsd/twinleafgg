@@ -1,14 +1,34 @@
-import { Component, OnChanges, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Card, SuperType, Stage, PowerType, EnergyType, TrainerType, TrainerCard, PokemonCardList, EnergyCard, CardTag, PokemonCard, Player } from 'ptcg-server';
-import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
-import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import {
+  Component,
+  OnChanges,
+  Input,
+  Output,
+  EventEmitter,
+  OnDestroy,
+} from "@angular/core";
+import {
+  Card,
+  SuperType,
+  Stage,
+  PowerType,
+  EnergyType,
+  TrainerType,
+  TrainerCard,
+  PokemonCardList,
+  EnergyCard,
+  CardTag,
+  PokemonCard,
+  Player,
+} from "ptcg-server";
+import { MatLegacyDialog as MatDialog } from "@angular/material/legacy-dialog";
+import { Subscription } from "rxjs";
+import { Router } from "@angular/router";
 
-import { CardImagePopupComponent } from '../card-image-popup/card-image-popup.component';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { SettingsService } from '../../../table/table-sidebar/settings-dialog/settings.service';
-import { CardsBaseService } from '../cards-base.service';
-import { CardSwapDialogComponent } from '../card-swap-dialog/card-swap-dialog.component';
+import { CardImagePopupComponent } from "../card-image-popup/card-image-popup.component";
+import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import { SettingsService } from "../../../table/table-sidebar/settings-dialog/settings.service";
+import { CardsBaseService } from "../cards-base.service";
+import { CardSwapDialogComponent } from "../card-swap-dialog/card-swap-dialog.component";
 
 export interface CardInfoPaneOptions {
   enableAbility?: {
@@ -261,8 +281,39 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
   };
 
   transformEnergyText(text: string): string {
-    return text.replace(/\[([WFYRGLPMDCN])\]/g, (match, type) =>
-      `<img align="top" style="transform: ${this.ENERGY_ICON_TRANSFORM}" src="assets/energy-icons/${this.energyImageMap[type]}.webp" alt="${this.energyImageMap[type]} Energy" width="${this.ENERGY_ICON_SIZE}">`
+    return text.replace(
+      /\[([WFYRGLPMDCN])\]/g,
+      (match, type) =>
+        `<img align="top" style="transform: ${this.ENERGY_ICON_TRANSFORM}" src="assets/energy-icons/${this.energyImageMap[type]}.webp" alt="${this.energyImageMap[type]} Energy" width="${this.ENERGY_ICON_SIZE}">`,
+    );
+  }
+
+  formatReminderText(text: string): string {
+    return text
+      .replace("(", '<span class="reminder">(')
+      .replace(")", ")</span>");
+  }
+
+  formatBossMonMechanics(text: string): string {
+    return text
+      .replace(
+        /Pokémon (ex|VMAX|VSTAR|V|BREAK)/g,
+        (match, mechanic) =>
+          `Pokémon <span class="boss-mon">${mechanic}</span>`,
+      )
+      .replace(
+        /Pokémon-(EX|GX)/g,
+        (match, mechanic) =>
+          `Pokémon-<span class="boss-mon">${mechanic}</span>`,
+      )
+      .replace("GX attack", '<span class="boss-mon">GX</span> attack')
+      .replace("VSTAR Power", '<span class="boss-mon">VSTAR</span> Power')
+      .replace("TAG TEAM", '<span class="boss-mon">TAG TEAM</span>');
+  }
+
+  formatCardText(text: string): string {
+    return this.transformEnergyText(
+      this.formatBossMonMechanics(this.formatReminderText(text)),
     );
   }
 
@@ -454,7 +505,7 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
   }
 
   public getDisplayTags(): string[] {
-    if (!this.showTags || !this.card || this.card.superType !== SuperType.POKEMON) {
+    if (!this.showTags || !this.card) {
       return [];
     }
 
