@@ -222,6 +222,13 @@ intended to help reviewers and future agents understand why files moved.
   wrappers for the table surface and board layer. Moved the table CSS variables,
   table background, no-select/image-drag rules, and board container layout out
   of `styles.css` and into those components.
+- Moved the shared prompt UI stylesheet out of `styles.css` and into
+  `PromptHost.svelte` using explicit `:global(...)` selectors for the prompt
+  class contract shared by the prompt components. This keeps prompt panel,
+  prompt action, card-list, search, prize, attach-energy, and mulligan styles
+  loaded with the prompt subsystem instead of the app-wide stylesheet.
+- Removed the stale `.turn-actions` rule while moving prompt styles; the current
+  toolbar uses `Toolbar.svelte`/`.sidebar-turn-actions` component-local styles.
 
 ### Verification
 
@@ -353,3 +360,8 @@ intended to help reviewers and future agents understand why files moved.
   `BoardLayer`. The table shell, board layer, playmat, bottom player panel, and
   setup dock all render with non-zero layout and no app page or console errors
   aside from the known favicon request.
+- Re-ran `npm run build`, `npm test -- --run`, and an independent headless
+  Chrome + Playwright prompt smoke after moving shared prompt styles into
+  `PromptHost`. The initial `ConfirmPrompt` panel, title, and actions all
+  render with non-zero layout, resolve through the `Yes` button, and reach setup
+  with no app page or console errors aside from the known favicon request.
