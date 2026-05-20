@@ -21,7 +21,9 @@
     canPlayCardToBoardArea,
     canPlayCardToPlayArea,
     canPlayCardToSlot,
+    canPlayerAct,
     canRetreatToSlot,
+    playableBenchSlot,
   } from './lib/game/playTargets';
   import { benchSlotsFor, previewAttachEnergySlot, previewSlot } from './lib/game/preview';
   import { extractPromptCards, promptBlockedIndexes, promptOptions } from './lib/game/prompts';
@@ -429,7 +431,7 @@
   }
 
   function benchAreaTarget(player: PlayerView) {
-    return player.bench.find((slot) => slot.empty && isPlayableTarget(slot));
+    return playableBenchSlot(player, selectedCard, selectedHand?.playerIndex, !!setupPrompt);
   }
 
   function canPlayToBenchArea(player: PlayerView) {
@@ -475,7 +477,12 @@
   }
 
   function canAct(playerIndex: number) {
-    return game?.activePlayerIndex === playerIndex && !currentPrompt && !gameFinished;
+    return canPlayerAct({
+      playerIndex,
+      activePlayerIndex: game?.activePlayerIndex,
+      hasPrompt: !!currentPrompt,
+      finished: gameFinished,
+    });
   }
 
   function isAttachEnergyAvailable(index: number) {

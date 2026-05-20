@@ -140,6 +140,10 @@ intended to help reviewers and future agents understand why files moved.
   lifecycle synchronization and selection cleanup in one place. `App.svelte`
   now chooses commands but no longer owns the repeated post-command cleanup
   sequence.
+- Moved active-player action gating and playable-bench-slot lookup into
+  `src/lib/game/playTargets.ts`. `App.svelte` still routes click/drop events,
+  but the remaining card-action predicates now live with the card targeting
+  model.
 
 ### Presentational Component Extraction
 
@@ -427,3 +431,5 @@ intended to help reviewers and future agents understand why files moved.
   after extracting prompt lifecycle state; both passed.
 - Re-ran `npm run build` and `npm test -- --run` after extracting the
   `gameSessionStore` command boundary; both passed.
+- Re-ran `npm run build` and the targeted `playTargets.test.ts` suite after
+  extracting active-player and bench-slot predicates; both passed.

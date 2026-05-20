@@ -1,4 +1,4 @@
-import type { CardView, PokemonSlotView } from './types';
+import type { CardView, PlayerView, PokemonSlotView } from './types';
 
 const BASIC_STAGE = 2;
 
@@ -11,6 +11,13 @@ export type BoardPlayAreaContext = {
   hasPrompt: boolean;
   finished: boolean;
   inSetup: boolean;
+};
+
+export type PlayerActionContext = {
+  playerIndex: number;
+  activePlayerIndex: number | undefined;
+  hasPrompt: boolean;
+  finished: boolean;
 };
 
 export function isEnergyCard(card: CardView | undefined): boolean {
@@ -63,6 +70,10 @@ export function canPlayCardToPlayArea(card: CardView | undefined, actorIndex: nu
   return actorIndex !== undefined && isTrainerOrGenericPlayCard(card);
 }
 
+export function canPlayerAct(context: PlayerActionContext): boolean {
+  return context.activePlayerIndex === context.playerIndex && !context.hasPrompt && !context.finished;
+}
+
 export function canPlayCardToBoardArea(context: BoardPlayAreaContext): boolean {
   if (context.inSetup || context.hasPrompt || context.finished || context.activePlayerIndex === undefined) {
     return false;
@@ -74,6 +85,18 @@ export function canPlayCardToBoardArea(context: BoardPlayAreaContext): boolean {
     context.draggingPlayerIndex === context.activePlayerIndex &&
     canPlayCardToPlayArea(context.dragging, context.draggingPlayerIndex);
   return selectedCanPlay || draggingCanPlay;
+}
+
+export function playableBenchSlot(
+  player: PlayerView,
+  card: CardView | undefined,
+  actorIndex: number | undefined,
+  inSetup: boolean,
+): PokemonSlotView | undefined {
+  if (inSetup) {
+    return undefined;
+  }
+  return player.bench.find((slot) => slot.empty && canPlayCardToSlot(card, actorIndex, slot));
 }
 
 export function canRetreatToSlot(active: PokemonSlotView | undefined, bench: PokemonSlotView): boolean {

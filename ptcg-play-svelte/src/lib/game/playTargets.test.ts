@@ -4,12 +4,14 @@ import {
   canPlayCardToBoardArea,
   canPlayCardToPlayArea,
   canPlayCardToSlot,
+  canPlayerAct,
   canRetreatToSlot,
   isBasicPokemonCard,
   isEnergyCard,
   isPokemonCard,
+  playableBenchSlot,
 } from './playTargets';
-import { SlotType, targetFor, type CardView, type PokemonSlotView } from './types';
+import { SlotType, targetFor, type CardView, type PlayerView, type PokemonSlotView } from './types';
 
 const energy: CardView = { name: 'Psychic Energy', fullName: 'Psychic Energy SVE', energyType: 5 };
 const pokemon: CardView = { name: 'Ralts', fullName: 'Ralts SIT', stage: 2 };
@@ -109,7 +111,39 @@ describe('play target rules', () => {
     expect(canRetreatToSlot(active, slot(0, 'bench', 0, true))).toBe(false);
     expect(canRetreatToSlot(active, slot(1, 'bench', 0, false))).toBe(false);
   });
+
+  it('allows player actions only for the active player outside prompts and finished games', () => {
+    expect(canPlayerAct({ playerIndex: 0, activePlayerIndex: 0, hasPrompt: false, finished: false })).toBe(true);
+    expect(canPlayerAct({ playerIndex: 1, activePlayerIndex: 0, hasPrompt: false, finished: false })).toBe(false);
+    expect(canPlayerAct({ playerIndex: 0, activePlayerIndex: 0, hasPrompt: true, finished: false })).toBe(false);
+    expect(canPlayerAct({ playerIndex: 0, activePlayerIndex: 0, hasPrompt: false, finished: true })).toBe(false);
+  });
+
+  it('finds the first playable empty bench slot outside setup', () => {
+    const currentPlayer = player(0, [slot(0, 'bench', 0, false), slot(0, 'bench', 1, true)]);
+    expect(playableBenchSlot(currentPlayer, pokemon, 0, false)?.index).toBe(1);
+    expect(playableBenchSlot(currentPlayer, pokemon, 0, true)).toBeUndefined();
+    expect(playableBenchSlot(currentPlayer, pokemon, 1, false)).toBeUndefined();
+  });
 });
+
+function player(index: number, bench: PokemonSlotView[]): PlayerView {
+  return {
+    index,
+    id: index + 1,
+    name: `Player ${index + 1}`,
+    hand: [],
+    deckCount: 0,
+    discard: [],
+    lostZone: [],
+    stadium: [],
+    playZone: [],
+    prizesLeft: 6,
+    active: slot(index, 'active', 0, true),
+    bench,
+    playableCardIds: [],
+  };
+}
 
 function slot(ownerIndex: number, kind: 'active' | 'bench', index: number, empty: boolean): PokemonSlotView {
   return {
