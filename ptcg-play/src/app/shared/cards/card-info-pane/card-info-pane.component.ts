@@ -83,6 +83,8 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
     "N's",
     "Hop's",
     "Team Rocket's",
+    "Team Magma's",
+    "Team Aqua's",
     "Lillie's",
     "Larry's",
     "Misty's",
