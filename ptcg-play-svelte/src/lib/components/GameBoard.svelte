@@ -1,6 +1,8 @@
 <script lang="ts">
+  import BenchZone from './BenchZone.svelte';
   import BoardSlot from './BoardSlot.svelte';
   import CardTile from './CardTile.svelte';
+  import StadiumCard from './StadiumCard.svelte';
   import type { CardView, PlayerView, PokemonSlotView } from '../game/types';
 
   type ZoneName = 'discard' | 'lostZone' | 'stadium' | 'playZone';
@@ -177,33 +179,23 @@
     ondragover={allowBoardPlayDrop}
     ondrop={dropToBoardPlay}
   >
-    <div class="bench-zone opponent" class:empty={topBenchSlots.length === 0}>
-      <button
-        type="button"
-        class="bench-drop-surface"
-        class:can-drop={canPlayToBenchArea(topPlayer) || canPlaceSetupBench(topPlayer)}
-        tabindex="-1"
-        aria-hidden="true"
-        aria-label={`Play a Pokemon to ${topPlayer.name}'s bench`}
-        title={`Play a Pokemon to ${topPlayer.name}'s bench`}
-        onclick={() => (canPlaceSetupBench(topPlayer) ? placeSetupBench() : playToBenchArea(topPlayer))}
-        ondragover={(event) => allowBenchDrop(event, topPlayer)}
-        ondrop={(event) => dropToBenchArea(topPlayer, event)}
-      ></button>
-      <div class="bench-row opponent">
-        {#each topBenchSlots as slot}
-          <BoardSlot
-            {slot}
-            canDrop={isPlayableTarget(slot)}
-            promptSelectable={isBoardPromptSelectable(slot)}
-            promptSelected={isBoardPromptSelected(slot)}
-            onclick={() => clickSlot(slot)}
-            ondragover={(event) => allowDrop(event, slot)}
-            ondrop={(event) => dropToSlot(slot, event)}
-          />
-        {/each}
-      </div>
-    </div>
+    <BenchZone
+      player={topPlayer}
+      slots={topBenchSlots}
+      opponent
+      {canPlayToBenchArea}
+      {canPlaceSetupBench}
+      {playToBenchArea}
+      {placeSetupBench}
+      {allowBenchDrop}
+      {dropToBenchArea}
+      {isPlayableTarget}
+      {isBoardPromptSelectable}
+      {isBoardPromptSelected}
+      {clickSlot}
+      {allowDrop}
+      {dropToSlot}
+    />
 
     <div class="center-stack">
       <div class="field-piles top-piles">
@@ -315,14 +307,7 @@
       />
 
       {#if currentStadium && currentStadiumOwner?.index === topPlayer.index}
-        <button
-          type="button"
-          class="stadium-card top-stadium-card"
-          title={currentStadium.fullName}
-          onclick={() => showZone(topPlayer.index, 'stadium', `${topPlayer.name} stadium`)}
-        >
-          <CardTile card={currentStadium} compact />
-        </button>
+        <StadiumCard card={currentStadium} owner={topPlayer} placement="top" {showZone} />
       {/if}
 
       <BoardSlot
@@ -338,44 +323,26 @@
       />
 
       {#if currentStadium && currentStadiumOwner?.index === bottomPlayer.index}
-        <button
-          type="button"
-          class="stadium-card bottom-stadium-card"
-          title={currentStadium.fullName}
-          onclick={() => showZone(bottomPlayer.index, 'stadium', `${bottomPlayer.name} stadium`)}
-        >
-          <CardTile card={currentStadium} compact />
-        </button>
+        <StadiumCard card={currentStadium} owner={bottomPlayer} placement="bottom" {showZone} />
       {/if}
     </div>
 
-    <div class="bench-zone" class:empty={bottomBenchSlots.length === 0}>
-      <button
-        type="button"
-        class="bench-drop-surface"
-        class:can-drop={canPlayToBenchArea(bottomPlayer) || canPlaceSetupBench(bottomPlayer)}
-        tabindex="-1"
-        aria-hidden="true"
-        aria-label={`Play a Pokemon to ${bottomPlayer.name}'s bench`}
-        title={`Play a Pokemon to ${bottomPlayer.name}'s bench`}
-        onclick={() => (canPlaceSetupBench(bottomPlayer) ? placeSetupBench() : playToBenchArea(bottomPlayer))}
-        ondragover={(event) => allowBenchDrop(event, bottomPlayer)}
-        ondrop={(event) => dropToBenchArea(bottomPlayer, event)}
-      ></button>
-      <div class="bench-row">
-        {#each bottomBenchSlots as slot}
-          <BoardSlot
-            {slot}
-            canDrop={isPlayableTarget(slot)}
-            promptSelectable={isBoardPromptSelectable(slot)}
-            promptSelected={isBoardPromptSelected(slot)}
-            onclick={() => clickSlot(slot)}
-            ondragover={(event) => allowDrop(event, slot)}
-            ondrop={(event) => dropToSlot(slot, event)}
-          />
-        {/each}
-      </div>
-    </div>
+    <BenchZone
+      player={bottomPlayer}
+      slots={bottomBenchSlots}
+      {canPlayToBenchArea}
+      {canPlaceSetupBench}
+      {playToBenchArea}
+      {placeSetupBench}
+      {allowBenchDrop}
+      {dropToBenchArea}
+      {isPlayableTarget}
+      {isBoardPromptSelectable}
+      {isBoardPromptSelected}
+      {clickSlot}
+      {allowDrop}
+      {dropToSlot}
+    />
   </div>
 
 </section>

@@ -146,6 +146,14 @@ intended to help reviewers and future agents understand why files moved.
 - Replaced remaining `on:` event directives in the active Svelte component tree
   with Svelte 5 event attributes. `src/lib/components/` now has no
   `export let`, no `createEventDispatcher`, and no `on:` event directives.
+- Added `BenchZone.svelte` in runes mode as the presentational owner for each
+  player bench row and its bench drop surface. The existing board callbacks are
+  still passed from `GameBoard.svelte`; the bench-zone CSS moved from
+  `styles.css` into the component.
+- Added `StadiumCard.svelte` in runes mode as the presentational owner for the
+  top/bottom stadium card buttons. The stadium CSS moved from `styles.css` into
+  the component while preserving the existing class names and rotated top-card
+  layout.
 
 ### Verification
 
@@ -185,3 +193,7 @@ intended to help reviewers and future agents understand why files moved.
 - Re-ran the independent smoke through `Start local game` and the initial
   `Go first?` confirmation. The setup dock and board render with no page errors;
   the only console error is the existing missing favicon request.
+- Re-ran `npm run build`, `npm test -- --run`, and the independent headless
+  Chrome + Playwright smoke after the `BenchZone`/`StadiumCard` extraction.
+  The smoke reaches the setup dock and board, confirms both bench zones and the
+  active duel have non-zero layout boxes, and reports no app page errors.
