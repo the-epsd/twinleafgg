@@ -121,8 +121,17 @@ import { RollerSkates } from './roller-skates';
 import { ShadowCircle } from './shadow-circle';
 import { Shauna } from './shauna';
 import { SuperPotion } from './super-potion';
-import { GrassEnergy } from './basic-energies';
-import { DoubleColorlessEnergy } from './double-colorless-energy';
+import {
+  GrassEnergy,
+  FireEnergy,
+  WaterEnergy,
+  LightningEnergy,
+  PsychicEnergy,
+  FightingEnergy,
+  DarknessEnergy,
+  MetalEnergy,
+  FairyEnergy,
+} from './basic-energies';
 
 import {
   ProfessorSycamoreXY,
@@ -140,10 +149,11 @@ import {
   BlastoiseEx2,
   EmolgaEx2,
   SkarmoryEx2,
+  DoubleColorlessEnergyXY,
 } from './other-prints';
 
 export const setXY: Card[] = [
-  // Pokemon
+  // MARK: Pokemon
   new Aegislash(),
   new Aegislash2(),
   new Arbok(),
@@ -256,7 +266,7 @@ export const setXY: Card[] = [
   new Zoroark(),
   new Zorua(),
 
-  // Trainers
+  // MARK: Trainers
   new Cassius(),
   new Evosoda(),
   new FairyGarden(),
@@ -269,11 +279,19 @@ export const setXY: Card[] = [
   new Shauna(),
   new SuperPotion(),
 
-  // Energy
+  // MARK: Energy
   new GrassEnergy(),
-  new DoubleColorlessEnergy(),
+  new FireEnergy(),
+  new WaterEnergy(),
+  new LightningEnergy(),
+  new PsychicEnergy(),
+  new FightingEnergy(),
+  new DarknessEnergy(),
+  new MetalEnergy(),
+  new FairyEnergy(),
+  new DoubleColorlessEnergyXY(),
 
-  // Other Prints (Reprints & Alt Arts)
+  // MARK: Other Prints (Reprints & Alt Arts)
   new ProfessorSycamoreXY(),
   new YveltalXY(),
   new XerneasXY(),

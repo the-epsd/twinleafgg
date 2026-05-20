@@ -13,6 +13,7 @@ import { VenusaurEx } from './venusaur-ex';
 import { BlastoiseEx } from './blastoise-ex';
 import { EmolgaEx } from './emolga-ex';
 import { SkarmoryEx } from './skarmory-ex';
+import { DoubleColorlessEnergy } from '../set-base-set/double-colorless-energy';
 
 export class ProfessorSycamoreXY extends ProfessorJuniper {
   public set: string = 'XY';
@@ -54,6 +55,12 @@ export class TeamFlareGruntXY extends TeamFlareGrunt {
   public setNumber = '129';
   public fullName: string = 'Team Flare Grunt XY';
   public set = 'XY';
+}
+
+export class DoubleColorlessEnergyXY extends DoubleColorlessEnergy {
+  public set: string = 'XY';
+  public fullName = 'Double Colorless Energy XY';
+  public setNumber: string = '130';
 }
 
 export class RainbowEnergyPLXY extends RainbowEnergyPL {
