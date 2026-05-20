@@ -229,6 +229,10 @@ intended to help reviewers and future agents understand why files moved.
   loaded with the prompt subsystem instead of the app-wide stylesheet.
 - Removed the stale `.turn-actions` rule while moving prompt styles; the current
   toolbar uses `Toolbar.svelte`/`.sidebar-turn-actions` component-local styles.
+- Added `AppHeader.svelte` in runes mode for the import-screen header and moved
+  its styling into the component. Moved the last mobile `body` overflow rule
+  into `styles/reset.css`, removed the now-empty `styles.css`, and removed the
+  `styles.css` import from `main.ts`.
 
 ### Verification
 
@@ -365,3 +369,9 @@ intended to help reviewers and future agents understand why files moved.
   `PromptHost`. The initial `ConfirmPrompt` panel, title, and actions all
   render with non-zero layout, resolve through the `Yes` button, and reach setup
   with no app page or console errors aside from the known favicon request.
+- Re-ran `npm run build`, `npm test -- --run`, and an independent headless
+  Chrome + Playwright import-screen smoke after retiring `styles.css`. The
+  app header and import screen render with non-zero layout on desktop and
+  mobile, the desktop deck grid remains two columns, the mobile grid remains one
+  column, and no app page or console errors were reported aside from the known
+  favicon request.

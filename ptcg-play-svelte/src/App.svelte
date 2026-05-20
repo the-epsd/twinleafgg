@@ -1,5 +1,6 @@
 <script lang="ts">
   import ActiveFocus from './lib/components/ActiveFocus.svelte';
+  import AppHeader from './lib/components/AppHeader.svelte';
   import BoardLayer from './lib/components/BoardLayer.svelte';
   import BoardPromptDock from './lib/components/BoardPromptDock.svelte';
   import GameBoard from './lib/components/GameBoard.svelte';
@@ -684,12 +685,7 @@
 
 <main>
   {#if !game}
-    <header class="app-header">
-      <div>
-        <h1>Twinleaf Local</h1>
-        <p>Manual-prompt, two-deck self-play client.</p>
-      </div>
-    </header>
+    <AppHeader />
 
     <ImportScreen bind:deck1Text bind:deck2Text {busy} {error} startGame={startGame} />
   {:else if bottomPlayer && topPlayer}

@@ -45,3 +45,9 @@ button.primary,
 main {
   min-height: 100vh;
 }
+
+@media (max-width: 980px) {
+  body {
+    overflow: auto;
+  }
+}
