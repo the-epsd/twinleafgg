@@ -180,6 +180,9 @@ intended to help reviewers and future agents understand why files moved.
 - Removed the unused `.slot-badges .damage` rule while moving `BoardSlot`
   styles. No rendered slot badge uses that class; actual damage display is the
   separate `.damage-counter` element.
+- Moved `ActiveFocus.svelte` modal, backdrop, card sizing, title, close button,
+  and action-group styling out of `styles.css` and into the component. The
+  component now owns its responsive focus-modal layout directly.
 
 ### Verification
 
@@ -262,3 +265,7 @@ intended to help reviewers and future agents understand why files moved.
   and placed into the active slot, the active slot/card boxes remain non-zero,
   and no app page or console errors were reported aside from the known favicon
   request.
+- Re-ran `npm run build` and `npm test -- --run` after moving `ActiveFocus`
+  styles; both passed. A headless setup-path probe was also run, but the normal
+  setup prompt suppresses focus actions, so it does not render the focus modal
+  without driving further game state.

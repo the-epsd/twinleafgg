@@ -99,3 +99,123 @@
     </div>
   </section>
 {/if}
+
+<style>
+  .active-focus-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    width: auto;
+    height: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: rgba(29, 35, 43, 0.1);
+  }
+
+  .active-focus {
+    position: absolute;
+    z-index: 11;
+    left: 50%;
+    top: 50%;
+    width: min(720px, calc(100vw - 190px));
+    max-height: min(78vh, 620px);
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-template-columns: minmax(120px, 0.42fr) minmax(0, 1fr);
+    gap: 14px;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(12, 15, 19, 0.88);
+    color: rgba(245, 248, 255, 0.86);
+    box-shadow: 0 24px 68px rgba(12, 15, 19, 0.38);
+    backdrop-filter: blur(14px);
+  }
+
+  .focus-card {
+    display: grid;
+    place-items: center;
+  }
+
+  .focus-card :global(.card-tile) {
+    width: min(190px, 22vw);
+  }
+
+  .focus-content {
+    min-width: 0;
+    display: grid;
+    align-content: start;
+    gap: 12px;
+  }
+
+  .focus-title {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: start;
+  }
+
+  .focus-title strong,
+  .focus-title span {
+    display: block;
+  }
+
+  .focus-title strong {
+    color: rgba(245, 248, 255, 0.98);
+    font-size: 17px;
+  }
+
+  .focus-title span,
+  .action-group > span {
+    color: rgba(245, 248, 255, 0.62);
+    font-size: 11px;
+  }
+
+  .focus-close {
+    border-radius: 5px;
+    padding: 6px 8px;
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(245, 248, 255, 0.92);
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+  .focus-actions {
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .action-group {
+    min-width: min(210px, 100%);
+    display: grid;
+    gap: 6px;
+    align-content: start;
+  }
+
+  .action-group button {
+    border-radius: 5px;
+    padding: 8px 10px;
+    border-color: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(245, 248, 255, 0.94);
+    box-shadow: 0 8px 18px rgba(12, 15, 19, 0.12);
+    font-size: 11px;
+    font-weight: 750;
+    text-align: left;
+  }
+
+  @media (max-width: 980px) {
+    .active-focus {
+      width: min(94vw, 720px);
+      grid-template-columns: 104px minmax(0, 1fr);
+    }
+
+    .focus-card :global(.card-tile) {
+      width: 104px;
+    }
+  }
+</style>
