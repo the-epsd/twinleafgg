@@ -23,13 +23,13 @@ export class DittoVmax extends PokemonCard {
       name: 'Max Transform',
       cost: [C, C, C],
       damage: 0,
-      text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks and use it as this attack.'
-    }
+      text: "Choose 1 of your opponent's Active Pokémon's attacks and use it as this attack.",
+    },
   ];
 
   public regulationMark: string = 'D';
   public set: string = 'SHF';
-  public setNumber: string = 'SV119';
+  public setNumber: string = '51';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ditto VMAX';
   public fullName: string = 'Ditto VMAX SHF';
@@ -46,17 +46,18 @@ export class DittoVmax extends PokemonCard {
         return state;
       }
 
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_COPY,
-        [opponentPokemon],
-        { allowCancel: false }
-      ), attack => {
-        if (attack !== null) {
-          const useAttackEffect = new UseAttackEffect(player, attack);
-          store.reduceEffect(state, useAttackEffect);
-        }
-      });
+      return store.prompt(
+        state,
+        new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, [opponentPokemon], {
+          allowCancel: false,
+        }),
+        (attack) => {
+          if (attack !== null) {
+            const useAttackEffect = new UseAttackEffect(player, attack);
+            store.reduceEffect(state, useAttackEffect);
+          }
+        },
+      );
     }
 
     return state;

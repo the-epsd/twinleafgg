@@ -98,18 +98,11 @@ export class Cinccino extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(
-        store,
-        state,
-        player,
-        1,
-        undefined,
-        {
-          destinationSlots: [SlotType.BENCH],
-          energyFilter: { energyType: EnergyType.BASIC },
-          min: 0,
-        },
-      );
+      ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(store, state, player, 1, undefined, {
+        destinationSlots: [SlotType.BENCH],
+        energyFilter: { energyType: EnergyType.BASIC },
+        min: 0,
+      });
     }
 
     return state;
