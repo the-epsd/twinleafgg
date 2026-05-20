@@ -183,6 +183,10 @@ intended to help reviewers and future agents understand why files moved.
 - Moved `ActiveFocus.svelte` modal, backdrop, card sizing, title, close button,
   and action-group styling out of `styles.css` and into the component. The
   component now owns its responsive focus-modal layout directly.
+- Moved `SetupDock.svelte`, `BoardPromptDock.svelte`, and `LogPanel.svelte`
+  styling out of `styles.css` and into component `<style>` blocks. The shared
+  prompt/zone panel base remains global for now, while these already-extracted
+  panels own their placement, typography, responsive behavior, and chrome.
 
 ### Verification
 
@@ -269,3 +273,9 @@ intended to help reviewers and future agents understand why files moved.
   styles; both passed. A headless setup-path probe was also run, but the normal
   setup prompt suppresses focus actions, so it does not render the focus modal
   without driving further game state.
+- Re-ran `npm run build`, `npm test -- --run`, and an independent headless
+  Chrome + Playwright setup smoke after moving the setup dock, board prompt
+  dock, and log panel styles. The setup dock renders with a non-zero layout box,
+  the logs can be shown, the log panel renders with a non-zero layout box, and
+  no app page or console errors were reported aside from the known favicon
+  request.

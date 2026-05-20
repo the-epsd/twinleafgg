@@ -20,3 +20,44 @@
     Confirm setup
   </button>
 </div>
+
+<style>
+  .setup-dock {
+    position: absolute;
+    left: calc((100vw - var(--board-right-rail)) / 2);
+    top: 23%;
+    z-index: 14;
+    width: min(540px, calc(100vw - 220px));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px 16px;
+    align-items: center;
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(12, 15, 19, 0.88);
+    color: rgba(245, 248, 255, 0.72);
+    box-shadow: 0 24px 68px rgba(12, 15, 19, 0.34);
+    backdrop-filter: blur(14px);
+    transform: translate(-50%, -50%);
+  }
+
+  .setup-dock strong {
+    color: rgba(143, 232, 206, 0.96);
+    font-size: 18px;
+  }
+
+  .setup-dock span {
+    grid-column: 1;
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .setup-dock button {
+    grid-row: 1 / span 2;
+    grid-column: 2;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+</style>
