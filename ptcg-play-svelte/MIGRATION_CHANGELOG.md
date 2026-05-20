@@ -218,6 +218,10 @@ intended to help reviewers and future agents understand why files moved.
   cursor, board outline/highlight states, debug-zone overlays, center board
   image, and mobile plane padding. Removed the stale `.stadium-marker` rules,
   which no current Svelte component renders.
+- Added `TableShell.svelte` and `BoardLayer.svelte` in runes mode as snippet
+  wrappers for the table surface and board layer. Moved the table CSS variables,
+  table background, no-select/image-drag rules, and board container layout out
+  of `styles.css` and into those components.
 
 ### Verification
 
@@ -344,3 +348,8 @@ intended to help reviewers and future agents understand why files moved.
   and transformed board plane render with non-zero layout, and clicking the
   projected bottom lost-zone pile still opens the zone viewer with no app page
   or console errors aside from the known favicon request.
+- Re-ran `npm run build`, `npm test -- --run`, and an independent headless
+  Chrome + Playwright setup-board smoke after extracting `TableShell` and
+  `BoardLayer`. The table shell, board layer, playmat, bottom player panel, and
+  setup dock all render with non-zero layout and no app page or console errors
+  aside from the known favicon request.

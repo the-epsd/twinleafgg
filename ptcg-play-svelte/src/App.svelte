@@ -1,5 +1,6 @@
 <script lang="ts">
   import ActiveFocus from './lib/components/ActiveFocus.svelte';
+  import BoardLayer from './lib/components/BoardLayer.svelte';
   import BoardPromptDock from './lib/components/BoardPromptDock.svelte';
   import GameBoard from './lib/components/GameBoard.svelte';
   import GameStatus from './lib/components/GameStatus.svelte';
@@ -10,6 +11,7 @@
   import PromptDock from './lib/components/prompts/PromptDock.svelte';
   import PromptHost from './lib/components/prompts/PromptHost.svelte';
   import SetupDock from './lib/components/SetupDock.svelte';
+  import TableShell from './lib/components/TableShell.svelte';
   import Toolbar from './lib/components/Toolbar.svelte';
   import ZoneViewer from './lib/components/ZoneViewer.svelte';
   import { parseDeckList, SAMPLE_DECK } from './lib/game/deckImport';
@@ -691,7 +693,7 @@
 
     <ImportScreen bind:deck1Text bind:deck2Text {busy} {error} startGame={startGame} />
   {:else if bottomPlayer && topPlayer}
-    <section class="table-shell" class:debug-zones={debugZones}>
+    <TableShell {debugZones}>
       <GameStatus
         phaseLabel={game.phaseLabel}
         turn={game.turn}
@@ -751,7 +753,7 @@
         </PromptDock>
       {/if}
 
-      <div class="board">
+      <BoardLayer>
         <PlayerPanel side="top">
           <Hand
             player={topPlayer}
@@ -841,7 +843,7 @@
           faceDown={openZone?.faceDown ?? false}
           close={() => (openZone = null)}
         />
-      </div>
-    </section>
+      </BoardLayer>
+    </TableShell>
   {/if}
 </main>
