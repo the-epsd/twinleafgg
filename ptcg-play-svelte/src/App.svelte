@@ -7,6 +7,7 @@
   import ImportScreen from './lib/components/ImportScreen.svelte';
   import LogPanel from './lib/components/LogPanel.svelte';
   import PlayerPanel from './lib/components/PlayerPanel.svelte';
+  import PromptDock from './lib/components/prompts/PromptDock.svelte';
   import PromptHost from './lib/components/prompts/PromptHost.svelte';
   import SetupDock from './lib/components/SetupDock.svelte';
   import Toolbar from './lib/components/Toolbar.svelte';
@@ -138,6 +139,13 @@
       : game?.winner === 3
         ? 'Draw'
         : undefined,
+  );
+  let currentPromptDockMode = $derived(
+    currentPrompt?.className === 'ChooseCardsPrompt'
+      ? 'search'
+      : currentPrompt?.className === 'AttachEnergyPrompt'
+        ? 'attachEnergy'
+        : 'default',
   );
   let selectedCard = $derived(selectedHand && game ? game.players[selectedHand.playerIndex]?.hand[selectedHand.handIndex] : undefined);
   let draggingCard = $derived(draggingHand && game ? game.players[draggingHand.playerIndex]?.hand[draggingHand.handIndex] : undefined);
@@ -762,11 +770,7 @@
           confirm={confirmBoardPromptTargets}
         />
       {:else if currentPrompt && !(autoConfirmPrompts && autoConfirmPrompt)}
-        <div
-          class="prompt-dock"
-          class:search-prompt-dock={currentPrompt.className === 'ChooseCardsPrompt'}
-          class:attach-energy-prompt-dock={currentPrompt.className === 'AttachEnergyPrompt'}
-        >
+        <PromptDock mode={currentPromptDockMode}>
           <PromptHost
             game={game}
             prompt={currentPrompt}
@@ -778,7 +782,7 @@
             onattachEnergyUnassign={removeAttachPromptAssignment}
             onattachEnergyReset={resetAttachPromptAssignments}
           />
-        </div>
+        </PromptDock>
       {/if}
 
       <div class="board">

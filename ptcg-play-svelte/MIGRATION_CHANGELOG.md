@@ -200,6 +200,11 @@ intended to help reviewers and future agents understand why files moved.
   placement/debug styling into the component and removed stale
   `.player-summary` rules left behind by the earlier `PlayerSummary.svelte`
   deletion.
+- Added `PromptDock.svelte` in runes mode as the prompt overlay wrapper, using a
+  snippet child and a typed `mode` prop for default, search, and attach-energy
+  prompt sizing. Moved prompt dock placement CSS out of `styles.css`, leaving
+  `App.svelte` responsible only for selecting the dock mode from the current
+  prompt class.
 
 ### Verification
 
@@ -307,3 +312,8 @@ intended to help reviewers and future agents understand why files moved.
   Chrome + Playwright setup smoke after extracting `PlayerPanel`. Both top and
   bottom player panels and the bottom hand render with non-zero layout, and no
   app page or console errors were reported aside from the known favicon request.
+- Re-ran `npm run build`, `npm test -- --run`, and an independent headless
+  Chrome + Playwright prompt smoke after extracting `PromptDock`. The initial
+  `ConfirmPrompt` renders inside the dock with a non-zero layout box, resolves
+  through the `Yes` button, and reaches setup without app page or console errors
+  aside from the known favicon request.
