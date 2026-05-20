@@ -238,6 +238,10 @@ intended to help reviewers and future agents understand why files moved.
   `autoConfirmPrompts`, `debugZones`, `showLogs`, `viewIndex`, tilt,
   perspective, scale, and lift). `App.svelte` now reads those fields as derived
   state and binds the toolbar controls directly to the store-owned values.
+- Added `src/state/zoneViewer.svelte.ts` as the Svelte 5 `$state` owner for
+  zone viewer open/close state and viewed-zone metadata. `App.svelte` now
+  routes zone show/close actions through this store and derives zone viewer
+  props from it.
 
 ### Verification
 
@@ -385,3 +389,8 @@ intended to help reviewers and future agents understand why files moved.
   perspective slider updates the playmat CSS variable, debug zones apply the
   shell class, show-logs renders the log panel, and no app page or console
   errors were reported aside from the known favicon request.
+- Re-ran `npm run build`, `npm test -- --run`, and an independent headless
+  Chrome + Playwright zone-viewer smoke after extracting `zoneViewerStore`.
+  Clicking a projected lost-zone pile opens the correct zone viewer, the close
+  button removes it, and no app page or console errors were reported aside from
+  the known favicon request.

@@ -38,6 +38,7 @@
   import { selectionStore } from './state/selection.svelte';
   import { setupSelectionStore } from './state/setupSelection.svelte';
   import { viewSettingsStore } from './state/viewSettings.svelte';
+  import { zoneViewerStore } from './state/zoneViewer.svelte';
 
   let deck1Text = $state(SAMPLE_DECK);
   let deck2Text = $state(SAMPLE_DECK);
@@ -62,12 +63,11 @@
   let boardLift = $derived(viewSettingsStore.boardLift);
   let debugZones = $derived(viewSettingsStore.debugZones);
   let showLogs = $derived(viewSettingsStore.showLogs);
+  let zoneViewerOpen = $derived(zoneViewerStore.open);
+  let zoneViewerTitle = $derived(zoneViewerStore.title);
+  let zoneViewerFaceDown = $derived(zoneViewerStore.faceDown);
   let autoConfirmPromptKey = $state('');
   let setupPromptKey = $state('');
-  let openZone = $state<
-    | { playerIndex: number; zone: 'discard' | 'lostZone' | 'stadium' | 'playZone'; title: string; faceDown?: boolean }
-    | null
-  >(null);
 
   let activePlayer = $derived(game?.players[game.activePlayerIndex]);
   let bottomPlayer = $derived(game?.players[viewIndex] ?? game?.players[0]);
@@ -145,7 +145,7 @@
   let draggingCard = $derived(draggingHand && game ? game.players[draggingHand.playerIndex]?.hand[draggingHand.handIndex] : undefined);
   let currentStadium = $derived(game ? game.players.flatMap((player) => player.stadium)[0] : undefined);
   let currentStadiumOwner = $derived(game?.players.find((player) => player.stadium.length));
-  let viewedCards = $derived(openZone && game ? (game.players[openZone.playerIndex]?.[openZone.zone] ?? []) : []);
+  let viewedCards = $derived(zoneViewerStore.cardsFor(game));
   let focusedPlayer = $derived(focusedSlot && game ? game.players[focusedSlot.ownerIndex] : undefined);
   let focusedIsActive = $derived(focusedSlot?.slot === 'active');
   let focusedCanAct = $derived(!!focusedPlayer && canAct(focusedPlayer.index));
@@ -398,7 +398,7 @@
     gameStore.reset();
     selectionStore.clearAll();
     syncPromptScopedState(undefined);
-    openZone = null;
+    zoneViewerStore.close();
     viewSettingsStore.resetView();
   }
 
@@ -514,7 +514,7 @@
     title: string,
     faceDown = false,
   ) {
-    openZone = { playerIndex, zone, title, faceDown };
+    zoneViewerStore.show(playerIndex, zone, title, faceDown);
   }
 
   function normalizePromptLimit(value: unknown, fallback: number) {
@@ -829,11 +829,11 @@
         {/if}
 
         <ZoneViewer
-          open={!!openZone}
-          title={openZone?.title ?? ''}
+          open={zoneViewerOpen}
+          title={zoneViewerTitle}
           cards={viewedCards}
-          faceDown={openZone?.faceDown ?? false}
-          close={() => (openZone = null)}
+          faceDown={zoneViewerFaceDown}
+          close={() => zoneViewerStore.close()}
         />
       </BoardLayer>
     </TableShell>
