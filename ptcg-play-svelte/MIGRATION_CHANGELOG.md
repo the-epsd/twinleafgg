@@ -171,6 +171,15 @@ intended to help reviewers and future agents understand why files moved.
   rotation, active-slot pointer targeting, and mobile row sizing moved from
   `styles.css` into the component with scoped `:global(...)` selectors for the
   child `BoardSlot` root classes.
+- Moved `CardTile.svelte`, `BoardSlot.svelte`, and `Hand.svelte` base styling
+  out of `styles.css` and into their component `<style>` blocks. Container
+  styles that intentionally size cards inside prompts, zone viewers, and focus
+  panels remain in the legacy stylesheet for now, but the card, slot, energy
+  badge, HP/damage badge, hand fan, concealed hand, and debug-zone styling now
+  lives beside the markup that owns those classes.
+- Removed the unused `.slot-badges .damage` rule while moving `BoardSlot`
+  styles. No rendered slot badge uses that class; actual damage display is the
+  separate `.damage-counter` element.
 
 ### Verification
 
@@ -243,3 +252,13 @@ intended to help reviewers and future agents understand why files moved.
   smoke after moving toolbar styles. The game reaches setup, the toolbar and
   perspective menu have non-zero layout boxes, the perspective controls open,
   and the expected toolbar labels/buttons are present.
+- Re-ran `npm run build` and `npm test -- --run` after moving the CardTile,
+  BoardSlot, and Hand base styles. The build initially surfaced the stale
+  `.slot-badges .damage` selector, which was removed because the component no
+  longer renders it.
+- Re-ran an independent headless Chrome + Playwright smoke after the card,
+  slot, and hand style move. The game reaches setup, the bottom hand and hand
+  cards have non-zero layout boxes, a playable setup Pokemon can be selected
+  and placed into the active slot, the active slot/card boxes remain non-zero,
+  and no app page or console errors were reported aside from the known favicon
+  request.

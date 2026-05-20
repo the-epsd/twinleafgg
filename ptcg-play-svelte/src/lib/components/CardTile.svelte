@@ -95,3 +95,92 @@
     {/if}
   </div>
 {/if}
+
+<style>
+  .card-tile {
+    position: relative;
+    z-index: 0;
+    width: var(--card-w, clamp(58px, 5.3vw, 88px));
+    aspect-ratio: 63 / 88;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    overflow: hidden;
+    border: 0;
+    border-radius: 5px;
+    background: #f7f8fa;
+    box-shadow: 0 3px 8px rgba(23, 30, 38, 0.28);
+    transition: transform 120ms ease, box-shadow 120ms ease, outline-color 120ms ease, filter 120ms ease;
+  }
+
+  button.card-tile:hover:not(:disabled) {
+    z-index: 4;
+    transform: translateY(-6px);
+    box-shadow:
+      0 0 0 2px rgba(143, 232, 206, 0.72),
+      0 0 20px rgba(41, 161, 139, 0.34),
+      0 12px 22px rgba(23, 30, 38, 0.22);
+    filter: saturate(1.05);
+  }
+
+  .card-tile.compact {
+    width: var(--card-w, clamp(62px, 5.7vw, 92px));
+  }
+
+  .card-tile.selected {
+    z-index: 3;
+    outline: 0;
+    box-shadow:
+      0 0 0 3px rgba(143, 232, 206, 0.9),
+      0 0 22px rgba(41, 161, 139, 0.38),
+      0 8px 18px rgba(23, 30, 38, 0.2);
+  }
+
+  .card-tile.playable {
+    outline: 0;
+    box-shadow:
+      0 0 0 2px rgba(143, 232, 206, 0.62),
+      0 0 18px rgba(41, 161, 139, 0.28),
+      0 6px 14px rgba(23, 30, 38, 0.18);
+  }
+
+  button.card-tile.selected:disabled {
+    opacity: 1;
+  }
+
+  .card-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+    display: block;
+    pointer-events: none;
+    -webkit-user-drag: none;
+  }
+
+  .fallback-name,
+  .fallback-set {
+    padding: 0 7px;
+    text-align: center;
+    line-height: 1.08;
+  }
+
+  .fallback-name {
+    align-self: end;
+    font-size: 11px;
+    font-weight: 900;
+  }
+
+  .fallback-set {
+    align-self: start;
+    color: #66707c;
+    font-size: 9px;
+  }
+
+  .card-tile.energy {
+    background: linear-gradient(#fff7cc, #e7c95b);
+  }
+
+  .card-tile.trainer {
+    background: linear-gradient(#fafafa, #d8dde4);
+  }
+</style>
