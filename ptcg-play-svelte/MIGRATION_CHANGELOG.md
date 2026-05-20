@@ -444,10 +444,20 @@ intended to help reviewers and future agents understand why files moved.
 
 ### Trainer Card Board Target Fix
 
-- Fixed a regression where selected or dragged Trainer/generic play cards only
-  worked when the user clicked or dropped on the bare playmat. Slot and bench
-  child handlers now preserve normal slot/bench plays first, then fall back to
-  the generic board play action when `canPlayOnBoard` is true. This lets a
-  Trainer card play when dropped or clicked onto the active slot, bench area, or
-  other board child surfaces.
+- Fixed a regression where selected or dragged Trainer/generic play cards never
+  enabled board play. The `canPlayCardToBoardArea` call in `App.svelte` was
+  passing `selectedCard`/`draggingCard` keys to a model that expects
+  `selected`/`dragging`, so the board-play predicate always saw empty card
+  values. The call now uses explicit model keys and a `satisfies
+  BoardPlayAreaContext` guard.
+- Aligned child board surfaces with the Pokemon bench path: slot and bench
+  handlers preserve normal slot/bench plays first, then fall back to the
+  generic board play action when `canPlayOnBoard` is true. The bench drop
+  surface now enables pointer events for selected Trainer/generic cards and
+  calls the board-play action instead of the Pokemon-only bench action.
 - Re-ran `npm run build` and `npm test -- --run`; both passed.
+- Added a deterministic headless Chrome smoke with a mocked local engine view:
+  selecting a Trainer turns on `can-play-on-board`, activates the same bench
+  surface used by Pokemon benching, and emits an ACTIVE/generic `playCard`
+  command; selecting a Basic Pokemon on the same surface still emits a BENCH
+  `playCard` command.

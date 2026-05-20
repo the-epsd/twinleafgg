@@ -24,6 +24,7 @@
     canPlayerAct,
     canRetreatToSlot,
     playableBenchSlot,
+    type BoardPlayAreaContext,
   } from './lib/game/playTargets';
   import { benchSlotsFor, previewAttachEnergySlot, previewSlot } from './lib/game/preview';
   import { extractPromptCards, promptBlockedIndexes, promptOptions } from './lib/game/prompts';
@@ -203,15 +204,15 @@
   let canPlayOnBoard = $derived(
     !!bottomPlayer &&
     canPlayCardToBoardArea({
-      selectedCard,
+      selected: selectedCard,
       selectedPlayerIndex: selectedHand?.playerIndex,
-      draggingCard,
+      dragging: draggingCard,
       draggingPlayerIndex: draggingHand?.playerIndex,
       activePlayerIndex: game?.activePlayerIndex,
       hasPrompt: !!currentPrompt,
       finished: gameFinished,
       inSetup: !!setupPrompt,
-    }),
+    } satisfies BoardPlayAreaContext),
   );
   $effect(() => {
     if (currentPrompt || gameFinished) {

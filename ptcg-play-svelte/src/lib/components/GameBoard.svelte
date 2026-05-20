@@ -175,6 +175,8 @@
       slots={topBenchSlots}
       opponent
       {canPlayToBenchArea}
+      {canPlayOnBoard}
+      {clickBoardPlay}
       {canPlaceSetupBench}
       {playToBenchArea}
       {placeSetupBench}
@@ -208,6 +210,7 @@
       {bottomActiveSlot}
       {currentStadium}
       {currentStadiumOwner}
+      {canPlayOnBoard}
       {isPlayableTarget}
       {isBoardPromptSelectable}
       {isBoardPromptSelected}
@@ -223,6 +226,8 @@
       player={bottomPlayer}
       slots={bottomBenchSlots}
       {canPlayToBenchArea}
+      {canPlayOnBoard}
+      {clickBoardPlay}
       {canPlaceSetupBench}
       {playToBenchArea}
       {placeSetupBench}
