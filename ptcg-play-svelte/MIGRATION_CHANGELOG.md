@@ -433,3 +433,9 @@ intended to help reviewers and future agents understand why files moved.
   `gameSessionStore` command boundary; both passed.
 - Re-ran `npm run build` and the targeted `playTargets.test.ts` suite after
   extracting active-player and bench-slot predicates; both passed.
+- Re-ran the final verification pass after the Svelte 5 architecture slices:
+  `npm run build`, `npm test -- --run`, the legacy syntax/cast/style scan, and
+  an independent headless Chrome + Playwright import-to-setup smoke. The smoke
+  rendered the setup dock and playmat, placed a playable Basic Pokemon into the
+  active slot, cleared selection after placement, and reported no app/page
+  console errors aside from the filtered favicon request.
