@@ -44,37 +44,11 @@
   color: #126b5d;
 }
 
-.import-screen {
-  min-height: 100vh;
-  display: grid;
-  gap: 16px;
-  align-content: center;
-  padding: 72px 24px 24px;
-}
-
-.deck-import {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.deck-import label,
 .inline-field {
   display: grid;
   gap: 8px;
   color: #29313c;
   font-weight: 800;
-}
-
-textarea {
-  width: 100%;
-  min-height: 54vh;
-  resize: vertical;
-  border-radius: 8px;
-  border: 1px solid rgba(26, 31, 39, 0.18);
-  background: #f7f8fa;
-  color: #1d232b;
-  padding: 12px;
 }
 
 input[type="number"] {
@@ -1548,8 +1522,7 @@ button.card-tile.selected:disabled {
   min-height: 88px;
 }
 
-.prompt-panel pre,
-.error {
+.prompt-panel pre {
   white-space: pre-wrap;
 }
 
@@ -1646,17 +1619,11 @@ button.card-tile.selected:disabled {
   font-size: 12px;
 }
 
-.error,
 .inline-error {
   border-radius: 8px;
   background: #fff0f1;
   border: 1px solid #d87883;
   color: #7d2732;
-}
-
-.error {
-  margin: 0;
-  padding: 12px;
 }
 
 .inline-error {
@@ -1688,7 +1655,6 @@ button.card-tile.selected:disabled {
     overflow: auto;
   }
 
-  .deck-import,
   .board {
     grid-template-columns: 1fr;
   }

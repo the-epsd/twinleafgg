@@ -123,6 +123,10 @@ intended to help reviewers and future agents understand why files moved.
 - Added `ImportScreen.svelte` in runes mode with `$bindable` deck text props.
   The import screen markup/classes are unchanged, but the state boundary is now
   explicit.
+- Moved `ImportScreen.svelte`'s import-screen layout, deck grid, textarea, error
+  box, and mobile deck-grid CSS out of `styles.css` and into the component.
+  This removes the old global `textarea`, `.import-screen`, `.deck-import`, and
+  `.error` import-screen rules.
 - Added `BoardPerspectiveControls.svelte` in runes mode with `$bindable`
   perspective values and a reset callback. This keeps the toolbar markup in
   `App.svelte` smaller without changing the controls.
@@ -228,3 +232,7 @@ intended to help reviewers and future agents understand why files moved.
   Chrome + Playwright setup smoke after the `ActiveDuel` extraction. The active
   duel and both active slot boxes render with non-zero layout, active slots keep
   `pointer-events: auto`, and no app page errors were reported.
+- Re-ran `npm run build`, `npm test -- --run`, and a headless Chrome import
+  layout smoke after moving `ImportScreen` CSS. The desktop import screen keeps
+  two deck columns and the mobile viewport collapses to one deck column, with
+  both deck textareas and the start button visible.
