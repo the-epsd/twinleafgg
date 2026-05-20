@@ -18,7 +18,7 @@
   import { parseDeckList, SAMPLE_DECK } from './lib/game/deckImport';
   import { localGameApi } from './lib/game/httpClient';
   import { labelFor } from './lib/game/labels';
-  import { canPlayCardToPlayArea, canPlayCardToSlot, canRetreatToSlot, isBasicPokemonCard } from './lib/game/playTargets';
+  import { canPlayCardToPlayArea, canPlayCardToSlot, canRetreatToSlot } from './lib/game/playTargets';
   import { benchSlotsFor, previewAttachEnergySlot, previewSlot } from './lib/game/preview';
   import { extractPromptCards, promptBlockedIndexes, promptOptions } from './lib/game/prompts';
   import { getSetupPromptUiState, promptLimit, setupPromptResult } from './lib/game/setupPrompt';
@@ -37,6 +37,12 @@
   import { canAssignAttachTarget, isAttachEnergyAvailable as isAttachEnergyAvailableModel } from './state/promptSelectionModel';
   import { selectionStore } from './state/selection.svelte';
   import { setupSelectionStore } from './state/setupSelection.svelte';
+  import {
+    canPlaceSetupActive as canPlaceSetupActiveModel,
+    canPlaceSetupBench as canPlaceSetupBenchModel,
+    isSetupStartable as isSetupStartableModel,
+    type SetupPlacementContext,
+  } from './state/setupSelectionModel';
   import { viewSettingsStore } from './state/viewSettings.svelte';
   import { zoneViewerStore } from './state/zoneViewer.svelte';
 
@@ -117,6 +123,15 @@
       ? selectedHand.handIndex
       : undefined,
   );
+  let setupPlacementContext = $derived<SetupPlacementContext>({
+    promptPlayerIndex: setupPrompt?.playerIndex,
+    selectedHandIndex: setupSelectedIndex,
+    hasEngineActive: setupHasEngineActive,
+    activeIndex: setupActiveIndex,
+    benchIndexes: setupBenchIndexes,
+    minSelections: setupMinSelections,
+    benchCapacity: setupUi.benchCapacity,
+  });
 
   function resetPerspective() {
     viewSettingsStore.resetPerspective();
@@ -615,22 +630,15 @@
   }
 
   function isSetupStartable(card: CardView | undefined, handIndex: number) {
-    return !!setupPrompt && !setupBlockedIndexes.has(handIndex) && isBasicPokemonCard(card);
+    return isSetupStartableModel(card, handIndex, setupBlockedIndexes, !!setupPrompt);
   }
 
   function selectedSetupHandIndex() {
-    return setupSelectedIndex;
+    return setupPlacementContext.selectedHandIndex;
   }
 
   function canPlaceSetupActive(slot: PokemonSlotView) {
-    const handIndex = selectedSetupHandIndex();
-    return (
-      !!setupPrompt &&
-      !setupHasEngineActive &&
-      slot.ownerIndex === setupPrompt.playerIndex &&
-      slot.slot === 'active' &&
-      handIndex !== undefined
-    );
+    return canPlaceSetupActiveModel(slot, setupPlacementContext);
   }
 
   function placeSetupActive() {
@@ -643,18 +651,7 @@
   }
 
   function canPlaceSetupBench(player: PlayerView) {
-    const handIndex = selectedSetupHandIndex();
-    const hasActive = setupHasEngineActive || setupActiveIndex !== null || setupMinSelections === 0;
-    const benchCapacity = setupUi.benchCapacity;
-    return (
-      !!setupPrompt &&
-      player.index === setupPrompt.playerIndex &&
-      hasActive &&
-      handIndex !== undefined &&
-      handIndex !== setupActiveIndex &&
-      !setupBenchIndexes.includes(handIndex) &&
-      setupBenchIndexes.length < benchCapacity
-    );
+    return canPlaceSetupBenchModel(player, setupPlacementContext);
   }
 
   function placeSetupBench() {

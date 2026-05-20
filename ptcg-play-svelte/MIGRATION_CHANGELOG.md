@@ -117,6 +117,11 @@ intended to help reviewers and future agents understand why files moved.
 - Added `src/state/setupSelectionModel.ts` for pure setup placement transforms.
   This keeps deterministic placement rules testable without importing a rune
   module directly into Vitest.
+- Moved setup-startability, active-placement, and bench-placement predicates
+  into `setupSelectionModel.ts` behind a typed `SetupPlacementContext`.
+  `App.svelte` now derives the current setup context and delegates those setup
+  rules to the model while keeping command execution and prompt resolution in
+  the app shell for now.
 
 ### Presentational Component Extraction
 
@@ -394,3 +399,5 @@ intended to help reviewers and future agents understand why files moved.
   Clicking a projected lost-zone pile opens the correct zone viewer, the close
   button removes it, and no app page or console errors were reported aside from
   the known favicon request.
+- Re-ran `npm run build` and the targeted `setupSelection.test.ts` suite after
+  extracting setup placement predicates; both passed.
