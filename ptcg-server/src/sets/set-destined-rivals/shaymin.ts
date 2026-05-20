@@ -17,18 +17,22 @@ export class Shaymin extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Flower Curtain',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all damage done to your Benched Pokémon without a Rule Box by attacks from your opponent\'s Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Flower Curtain',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all damage done to your Benched Pokémon that don't have a Rule Box by attacks from your opponent's Pokémon. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Smash Kick',
-    cost: [C, C],
-    damage: 30,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Smash Kick',
+      cost: [C, C],
+      damage: 30,
+      text: '',
+    },
+  ];
 
   public set: string = 'DRI';
   public cardImage: string = 'assets/cardback.png';
@@ -72,11 +76,15 @@ export class Shaymin extends PokemonCard {
 
       // Try to reduce PowerEffect, to check if something is blocking our ability
       try {
-        const stub = new PowerEffect(defendingPlayer, {
-          name: 'test',
-          powerType: PowerType.ABILITY,
-          text: ''
-        }, this);
+        const stub = new PowerEffect(
+          defendingPlayer,
+          {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: '',
+          },
+          this,
+        );
         store.reduceEffect(state, stub);
       } catch {
         return state;
