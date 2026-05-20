@@ -15,7 +15,6 @@
   import TableShell from './lib/components/TableShell.svelte';
   import Toolbar from './lib/components/Toolbar.svelte';
   import ZoneViewer from './lib/components/ZoneViewer.svelte';
-  import { parseDeckList, SAMPLE_DECK } from './lib/game/deckImport';
   import { localGameApi } from './lib/game/httpClient';
   import { labelFor } from './lib/game/labels';
   import {
@@ -37,6 +36,7 @@
     type PokemonSlotView,
     type PromptView,
   } from './lib/game/types';
+  import { deckImportStore } from './state/deckImport.svelte';
   import { gameStore } from './state/game.svelte';
   import { promptSelectionStore } from './state/promptSelection.svelte';
   import { canAssignAttachTarget, isAttachEnergyAvailable as isAttachEnergyAvailableModel } from './state/promptSelectionModel';
@@ -51,8 +51,6 @@
   import { viewSettingsStore } from './state/viewSettings.svelte';
   import { zoneViewerStore } from './state/zoneViewer.svelte';
 
-  let deck1Text = $state(SAMPLE_DECK);
-  let deck2Text = $state(SAMPLE_DECK);
   let game = $derived(gameStore.game);
   let error = $derived(gameStore.error);
   let busy = $derived(gameStore.busy);
@@ -233,15 +231,14 @@
   });
 
   async function startGame() {
-    const p1 = parseDeckList(deck1Text);
-    const p2 = parseDeckList(deck2Text);
-    if (p1.errors.length || p2.errors.length) {
-      gameStore.setError([...p1.errors.map((e) => `Player 1: ${e}`), ...p2.errors.map((e) => `Player 2: ${e}`)].join('\n'));
+    const decks = deckImportStore.parseLocalGameDecks();
+    if (!decks.ok) {
+      gameStore.setError(decks.error);
       return;
     }
 
     selectionStore.setSelectedHand(null);
-    await runGameCommand(() => localGameApi.start(p1.cards, p2.cards));
+    await runGameCommand(() => localGameApi.start(decks.player1Cards, decks.player2Cards));
   }
 
   async function runGameCommand(command: () => Promise<Awaited<ReturnType<typeof localGameApi.state>>>) {
@@ -662,7 +659,13 @@
   {#if !game}
     <AppHeader />
 
-    <ImportScreen bind:deck1Text bind:deck2Text {busy} {error} startGame={startGame} />
+    <ImportScreen
+      bind:deck1Text={deckImportStore.deck1Text}
+      bind:deck2Text={deckImportStore.deck2Text}
+      {busy}
+      {error}
+      startGame={startGame}
+    />
   {:else if bottomPlayer && topPlayer}
     <TableShell {debugZones}>
       <GameStatus

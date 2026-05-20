@@ -126,6 +126,11 @@ intended to help reviewers and future agents understand why files moved.
   as `canPlayCardToBoardArea`. This keeps selected/dragged generic-play-card
   rules with the rest of the card targeting model instead of embedding that
   decision in `App.svelte`.
+- Added `src/state/deckImport.svelte.ts` as the Svelte 5 `$state` owner for
+  import-screen deck text, plus `deckImportModel.ts` for local-game deck parsing
+  and player-prefixed validation errors. `App.svelte` now binds
+  `ImportScreen` directly to the deck import store and no longer owns sample
+  deck text or parse-error aggregation.
 
 ### Presentational Component Extraction
 
@@ -407,3 +412,5 @@ intended to help reviewers and future agents understand why files moved.
   extracting setup placement predicates; both passed.
 - Re-ran `npm run build` and the targeted `playTargets.test.ts` suite after
   extracting board-area playability; both passed.
+- Re-ran `npm run build` and the targeted `deckImportModel.test.ts` suite after
+  extracting import-screen deck state and parsing; both passed.
