@@ -18,7 +18,8 @@ export class TeamPlasmaGrunt extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Team Plasma Grunt';
   public fullName: string = 'Team Plasma Grunt PLS';
-  public text: string = 'Discard a Team Plasma card from your hand. (if you can\'t discard a Team Plasma card, you can\'t play this card.) Draw 4 cards. You may play only 1 Supporter card during your turn (before your attack).';
+  public text: string =
+    "Discard a Team Plasma card from your hand. (If you can't discard a Team Plasma card, you can't play this card.) Draw 4 cards.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-cosmic-eclipse/cynthia-and-caitlin.ts (supporter discard + draw pattern)
@@ -31,8 +32,8 @@ export class TeamPlasmaGrunt extends TrainerCard {
       }
 
       // Check if there are Team Plasma cards in hand (excluding this card)
-      const plasmaCards = player.hand.cards.filter(c =>
-        c !== this && c.tags && c.tags.includes(CardTag.TEAM_PLASMA)
+      const plasmaCards = player.hand.cards.filter(
+        (c) => c !== this && c.tags && c.tags.includes(CardTag.TEAM_PLASMA),
       );
 
       if (plasmaCards.length === 0) {
@@ -49,20 +50,24 @@ export class TeamPlasmaGrunt extends TrainerCard {
         }
       });
 
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        {},
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), selected => {
-        selected = selected || [];
-        if (selected.length > 0) {
-          player.hand.moveCardsTo(selected, player.discard);
-          DRAW_CARDS(player, 4);
-        }
-        player.supporter.moveCardTo(this, player.discard);
-      });
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          {},
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          selected = selected || [];
+          if (selected.length > 0) {
+            player.hand.moveCardsTo(selected, player.discard);
+            DRAW_CARDS(player, 4);
+          }
+          player.supporter.moveCardTo(this, player.discard);
+        },
+      );
     }
 
     return state;
