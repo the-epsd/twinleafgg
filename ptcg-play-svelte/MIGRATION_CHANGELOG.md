@@ -461,3 +461,22 @@ intended to help reviewers and future agents understand why files moved.
   surface used by Pokemon benching, and emits an ACTIVE/generic `playCard`
   command; selecting a Basic Pokemon on the same surface still emits a BENCH
   `playCard` command.
+
+### Prompt Card Selection Fix
+
+- Fixed the ChooseCards prompt card-frame regression introduced when
+  `CardTile.svelte` moved to scoped component styles. The legacy stylesheet's
+  `.search-card-grid .card-tile { width: 100%; }` rule used to win over
+  `.card-tile.compact`; after componentization, the compact card width won and
+  left small cards inside wide prompt buttons. The prompt host now uses more
+  specific prompt-scoped selectors for search, selected-slot, and generic
+  prompt card lists so cards fill their prompt frames again.
+- Fixed a Svelte 5 effect-loop bug in `ChooseCardsPrompt`, `CardListPrompt`,
+  `ChooseEnergyPrompt`, and `ChoosePrizePrompt`. Their pruning effects read and
+  wrote `selectedIndexes` on every run, causing `effect_update_depth_exceeded`
+  and preventing clicked cards from staying selected. The shared prompt helper
+  now prunes indexes and only writes when the value actually changes.
+- Re-ran `npm run build` and `npm test -- --run`; both passed. Added a
+  deterministic headless Chrome smoke with a mocked `ChooseCardsPrompt` view:
+  prompt cards fill their grid buttons, clicking two cards updates the selected
+  count to `2/2`, both selected slots fill, and no app/page errors are reported.

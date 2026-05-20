@@ -257,7 +257,8 @@
     padding: 4px;
   }
 
-  :global(.prompt-card-list .card-tile) {
+  :global(.prompt-panel .prompt-card-list button > .card-tile),
+  :global(.prompt-panel .prompt-card-list button > .card-tile.compact) {
     width: 100%;
   }
 
@@ -386,7 +387,8 @@
       0 14px 28px rgba(0, 0, 0, 0.28);
   }
 
-  :global(.selected-card-slot.filled .card-tile) {
+  :global(.prompt-panel .selected-card-slot.filled > .card-tile),
+  :global(.prompt-panel .selected-card-slot.filled > .card-tile.compact) {
     width: 100%;
   }
 
@@ -443,7 +445,8 @@
     opacity: 0.28;
   }
 
-  :global(.search-card-grid .card-tile) {
+  :global(.prompt-panel .search-card-grid button > .card-tile),
+  :global(.prompt-panel .search-card-grid button > .card-tile.compact) {
     width: 100%;
   }
 

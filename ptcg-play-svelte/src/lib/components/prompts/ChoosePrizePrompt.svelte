@@ -1,7 +1,7 @@
 <script lang="ts">
   import CardTile from '../CardTile.svelte';
   import { labelFor } from '../../game/labels';
-  import { promptBlockedIndexes, promptOptions } from '../../game/prompts';
+  import { promptBlockedIndexes, promptOptions, prunePromptIndexes, samePromptIndexes } from '../../game/prompts';
   import type { CardView, GameView, PromptView } from '../../game/types';
 
   type PrizeChoice = {
@@ -27,7 +27,10 @@
   let blockedIndexes = $derived(new Set<number>(promptBlockedIndexes(prompt)));
 
   $effect(() => {
-    selectedIndexes = selectedIndexes.filter((index) => isIndexSelectable(index)).slice(0, maxSelections);
+    const nextIndexes = prunePromptIndexes(selectedIndexes, isIndexSelectable, maxSelections);
+    if (!samePromptIndexes(selectedIndexes, nextIndexes)) {
+      selectedIndexes = nextIndexes;
+    }
   });
 
   function toggleIndex(index: number) {

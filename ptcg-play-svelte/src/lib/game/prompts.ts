@@ -108,3 +108,11 @@ export function extractPromptCards(fields: Record<string, unknown> | null | unde
   }
   return [];
 }
+
+export function samePromptIndexes(left: number[], right: number[]) {
+  return left.length === right.length && left.every((value, index) => value === right[index]);
+}
+
+export function prunePromptIndexes(indexes: number[], isSelectable: (index: number) => boolean, maxSelections: number) {
+  return indexes.filter((index) => isSelectable(index)).slice(0, maxSelections);
+}

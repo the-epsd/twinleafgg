@@ -6,7 +6,9 @@ import {
   promptBlockedIndexes,
   promptBlockedTargets,
   promptOptions,
+  prunePromptIndexes,
   promptSlots,
+  samePromptIndexes,
 } from './prompts';
 import { SlotType, targetFor, type PromptView } from './types';
 
@@ -49,6 +51,12 @@ describe('prompt helpers', () => {
     expect(extractPromptCards({ energy: [{ index: 2, card: { name: 'Psychic Energy', fullName: 'Psychic Energy SVE' } }] })).toEqual([
       { index: 2, name: 'Psychic Energy', fullName: 'Psychic Energy SVE' },
     ]);
+  });
+
+  it('prunes selected prompt indexes without hiding value equality', () => {
+    expect(prunePromptIndexes([1, 2, 3], (index) => index !== 2, 2)).toEqual([1, 3]);
+    expect(samePromptIndexes([1, 3], [1, 3])).toBe(true);
+    expect(samePromptIndexes([1, 3], [3, 1])).toBe(false);
   });
 });
 
