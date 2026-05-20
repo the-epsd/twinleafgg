@@ -233,6 +233,11 @@ intended to help reviewers and future agents understand why files moved.
   its styling into the component. Moved the last mobile `body` overflow rule
   into `styles/reset.css`, removed the now-empty `styles.css`, and removed the
   `styles.css` import from `main.ts`.
+- Added `src/state/viewSettings.svelte.ts` as the Svelte 5 `$state` owner for
+  view preferences and board perspective controls (`followActive`,
+  `autoConfirmPrompts`, `debugZones`, `showLogs`, `viewIndex`, tilt,
+  perspective, scale, and lift). `App.svelte` now reads those fields as derived
+  state and binds the toolbar controls directly to the store-owned values.
 
 ### Verification
 
@@ -375,3 +380,8 @@ intended to help reviewers and future agents understand why files moved.
   mobile, the desktop deck grid remains two columns, the mobile grid remains one
   column, and no app page or console errors were reported aside from the known
   favicon request.
+- Re-ran `npm run build`, `npm test -- --run`, and an independent headless
+  Chrome + Playwright toolbar smoke after extracting `viewSettingsStore`. The
+  perspective slider updates the playmat CSS variable, debug zones apply the
+  shell class, show-logs renders the log panel, and no app page or console
+  errors were reported aside from the known favicon request.

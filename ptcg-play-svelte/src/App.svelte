@@ -37,6 +37,7 @@
   import { canAssignAttachTarget, isAttachEnergyAvailable as isAttachEnergyAvailableModel } from './state/promptSelectionModel';
   import { selectionStore } from './state/selection.svelte';
   import { setupSelectionStore } from './state/setupSelection.svelte';
+  import { viewSettingsStore } from './state/viewSettings.svelte';
 
   let deck1Text = $state(SAMPLE_DECK);
   let deck2Text = $state(SAMPLE_DECK);
@@ -52,17 +53,17 @@
   let selectedBoardTargets = $derived(promptSelectionStore.selectedBoardTargets);
   let attachPromptEnergyIndex = $derived(promptSelectionStore.activeAttachEnergyIndex);
   let attachPromptAssignments = $derived(promptSelectionStore.attachAssignments);
-  let followActive = $state(true);
-  let autoConfirmPrompts = $state(true);
+  let followActive = $derived(viewSettingsStore.followActive);
+  let autoConfirmPrompts = $derived(viewSettingsStore.autoConfirmPrompts);
+  let viewIndex = $derived(viewSettingsStore.viewIndex);
+  let boardTilt = $derived(viewSettingsStore.boardTilt);
+  let boardPerspective = $derived(viewSettingsStore.boardPerspective);
+  let boardScaleY = $derived(viewSettingsStore.boardScaleY);
+  let boardLift = $derived(viewSettingsStore.boardLift);
+  let debugZones = $derived(viewSettingsStore.debugZones);
+  let showLogs = $derived(viewSettingsStore.showLogs);
   let autoConfirmPromptKey = $state('');
-  let viewIndex = $state(0);
   let setupPromptKey = $state('');
-  let boardTilt = $state(8);
-  let boardPerspective = $state(1250);
-  let boardScaleY = $state(94);
-  let boardLift = $state(0);
-  let debugZones = $state(false);
-  let showLogs = $state(false);
   let openZone = $state<
     | { playerIndex: number; zone: 'discard' | 'lostZone' | 'stadium' | 'playZone'; title: string; faceDown?: boolean }
     | null
@@ -118,14 +119,11 @@
   );
 
   function resetPerspective() {
-    boardTilt = 8;
-    boardPerspective = 1250;
-    boardScaleY = 94;
-    boardLift = 0;
+    viewSettingsStore.resetPerspective();
   }
   $effect(() => {
     if (game && followActive) {
-      viewIndex = currentPrompt?.playerIndex ?? game.activePlayerIndex;
+      viewSettingsStore.followPlayer(currentPrompt?.playerIndex ?? game.activePlayerIndex);
     }
   });
   let gameFinished = $derived(game?.phase === 7);
@@ -393,8 +391,7 @@
   }
 
   function switchSides() {
-    followActive = false;
-    viewIndex = topPlayer?.index ?? 0;
+    viewSettingsStore.switchToPlayer(topPlayer?.index ?? 0);
   }
 
   function resetGame() {
@@ -402,8 +399,7 @@
     selectionStore.clearAll();
     syncPromptScopedState(undefined);
     openZone = null;
-    followActive = true;
-    viewIndex = 0;
+    viewSettingsStore.resetView();
   }
 
   function dropToSlot(slot: PokemonSlotView, event: DragEvent) {
@@ -699,14 +695,14 @@
       />
 
       <Toolbar
-        bind:boardTilt
-        bind:boardPerspective
-        bind:boardScaleY
-        bind:boardLift
-        bind:followActive
-        bind:autoConfirmPrompts
-        bind:debugZones
-        bind:showLogs
+        bind:boardTilt={viewSettingsStore.boardTilt}
+        bind:boardPerspective={viewSettingsStore.boardPerspective}
+        bind:boardScaleY={viewSettingsStore.boardScaleY}
+        bind:boardLift={viewSettingsStore.boardLift}
+        bind:followActive={viewSettingsStore.followActive}
+        bind:autoConfirmPrompts={viewSettingsStore.autoConfirmPrompts}
+        bind:debugZones={viewSettingsStore.debugZones}
+        bind:showLogs={viewSettingsStore.showLogs}
         {busy}
         promptActive={!!currentPrompt}
         {gameFinished}
