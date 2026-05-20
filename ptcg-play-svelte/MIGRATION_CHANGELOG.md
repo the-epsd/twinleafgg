@@ -187,6 +187,10 @@ intended to help reviewers and future agents understand why files moved.
   styling out of `styles.css` and into component `<style>` blocks. The shared
   prompt/zone panel base remains global for now, while these already-extracted
   panels own their placement, typography, responsive behavior, and chrome.
+- Moved `ZoneViewer.svelte` modal, backdrop, header, card grid, empty state,
+  and zone card sizing rules out of `styles.css` and into the component. This
+  removes the zone viewer from the shared prompt-panel base and leaves that
+  base scoped to prompt rendering only.
 
 ### Verification
 
@@ -279,3 +283,9 @@ intended to help reviewers and future agents understand why files moved.
   the logs can be shown, the log panel renders with a non-zero layout box, and
   no app page or console errors were reported aside from the known favicon
   request.
+- Re-ran `npm run build`, `npm test -- --run`, and an independent headless
+  Chrome + Playwright zone-viewer smoke after moving `ZoneViewer` styles. The
+  setup board renders, clicking a projected lost-zone pile opens the zone
+  viewer, the viewer and empty-state text have non-zero layout, closing the
+  viewer removes it, and no app page or console errors were reported aside from
+  the known favicon request.
