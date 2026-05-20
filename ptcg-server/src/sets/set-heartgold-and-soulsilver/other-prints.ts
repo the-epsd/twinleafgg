@@ -12,12 +12,10 @@ import { PokemonReversal } from '../set-ex-unseen-forces/pokemon-reversal';
 import { RainbowEnergy } from '../set-sun-and-moon/rainbow-energy';
 import { Switch } from '../set-scarlet-and-violet/switch';
 
-
 export class DoubleColorlessEnergyHS extends DoubleColorlessEnergy {
   public fullName = 'Double Colorless Energy HS';
   public set = 'HS';
   public setNumber = '103';
-  public text = 'Double Colorless Energy provides [C][C] Energy.';
 }
 
 export class FishermanHS extends Fisherman {
@@ -98,6 +96,6 @@ export class PokeBallHS extends PokeBall {
 
 export class ProfessorElmsTrainingMethodHS extends ProfessorElmsTrainingMethod {
   public setNumber = '100';
-  public fullName: string = 'Professor Elm\'s Training Method HS';
+  public fullName: string = "Professor Elm's Training Method HS";
   public set = 'HS';
 }

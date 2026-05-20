@@ -32,7 +32,6 @@ import { Ilima } from './ilima';
 export class DoubleColorlessEnergySUM extends DoubleColorlessEnergy {
   public setNumber = '136';
   public fullName: string = 'Double Colorless Energy SUM';
-  public text = 'Double Colorless Energy provides [C][C] Energy.';
   public set = 'SUM';
 }
 
