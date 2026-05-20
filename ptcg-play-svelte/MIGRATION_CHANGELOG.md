@@ -122,6 +122,10 @@ intended to help reviewers and future agents understand why files moved.
   `App.svelte` now derives the current setup context and delegates those setup
   rules to the model while keeping command execution and prompt resolution in
   the app shell for now.
+- Moved the board-area playability predicate into `src/lib/game/playTargets.ts`
+  as `canPlayCardToBoardArea`. This keeps selected/dragged generic-play-card
+  rules with the rest of the card targeting model instead of embedding that
+  decision in `App.svelte`.
 
 ### Presentational Component Extraction
 
@@ -401,3 +405,5 @@ intended to help reviewers and future agents understand why files moved.
   the known favicon request.
 - Re-ran `npm run build` and the targeted `setupSelection.test.ts` suite after
   extracting setup placement predicates; both passed.
+- Re-ran `npm run build` and the targeted `playTargets.test.ts` suite after
+  extracting board-area playability; both passed.

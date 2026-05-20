@@ -2,6 +2,17 @@ import type { CardView, PokemonSlotView } from './types';
 
 const BASIC_STAGE = 2;
 
+export type BoardPlayAreaContext = {
+  selected: CardView | undefined;
+  selectedPlayerIndex: number | undefined;
+  dragging: CardView | undefined;
+  draggingPlayerIndex: number | undefined;
+  activePlayerIndex: number | undefined;
+  hasPrompt: boolean;
+  finished: boolean;
+  inSetup: boolean;
+};
+
 export function isEnergyCard(card: CardView | undefined): boolean {
   return !!card && (card.energyType !== undefined || /\bEnergy\b/i.test(card.name));
 }
@@ -50,6 +61,19 @@ export function canPlayCardToSlot(
 
 export function canPlayCardToPlayArea(card: CardView | undefined, actorIndex: number | undefined): boolean {
   return actorIndex !== undefined && isTrainerOrGenericPlayCard(card);
+}
+
+export function canPlayCardToBoardArea(context: BoardPlayAreaContext): boolean {
+  if (context.inSetup || context.hasPrompt || context.finished || context.activePlayerIndex === undefined) {
+    return false;
+  }
+  const selectedCanPlay =
+    context.selectedPlayerIndex === context.activePlayerIndex &&
+    canPlayCardToPlayArea(context.selected, context.selectedPlayerIndex);
+  const draggingCanPlay =
+    context.draggingPlayerIndex === context.activePlayerIndex &&
+    canPlayCardToPlayArea(context.dragging, context.draggingPlayerIndex);
+  return selectedCanPlay || draggingCanPlay;
 }
 
 export function canRetreatToSlot(active: PokemonSlotView | undefined, bench: PokemonSlotView): boolean {

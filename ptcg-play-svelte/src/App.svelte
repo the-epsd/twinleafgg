@@ -18,7 +18,12 @@
   import { parseDeckList, SAMPLE_DECK } from './lib/game/deckImport';
   import { localGameApi } from './lib/game/httpClient';
   import { labelFor } from './lib/game/labels';
-  import { canPlayCardToPlayArea, canPlayCardToSlot, canRetreatToSlot } from './lib/game/playTargets';
+  import {
+    canPlayCardToBoardArea,
+    canPlayCardToPlayArea,
+    canPlayCardToSlot,
+    canRetreatToSlot,
+  } from './lib/game/playTargets';
   import { benchSlotsFor, previewAttachEnergySlot, previewSlot } from './lib/game/preview';
   import { extractPromptCards, promptBlockedIndexes, promptOptions } from './lib/game/prompts';
   import { getSetupPromptUiState, promptLimit, setupPromptResult } from './lib/game/setupPrompt';
@@ -199,16 +204,16 @@
     : []);
   let canPlayOnBoard = $derived(
     !!bottomPlayer &&
-    canPlayOnBoardState(
+    canPlayCardToBoardArea({
       selectedCard,
-      selectedHand?.playerIndex,
+      selectedPlayerIndex: selectedHand?.playerIndex,
       draggingCard,
-      draggingHand?.playerIndex,
-      game?.activePlayerIndex,
-      !!currentPrompt,
-      gameFinished,
-      !!setupPrompt,
-    ),
+      draggingPlayerIndex: draggingHand?.playerIndex,
+      activePlayerIndex: game?.activePlayerIndex,
+      hasPrompt: !!currentPrompt,
+      finished: gameFinished,
+      inSetup: !!setupPrompt,
+    }),
   );
   $effect(() => {
     if (currentPrompt || gameFinished) {
@@ -491,29 +496,6 @@
       return false;
     }
     return canAct(player.index) && canPlayCardToPlayArea(selectedCard, selectedHand?.playerIndex);
-  }
-
-  function canPlayOnBoardState(
-    selected: CardView | undefined,
-    selectedPlayerIndex: number | undefined,
-    dragging: CardView | undefined,
-    draggingPlayerIndex: number | undefined,
-    activePlayerIndex: number | undefined,
-    hasPrompt: boolean,
-    finished: boolean,
-    inSetup: boolean,
-  ) {
-    if (inSetup || hasPrompt || finished || activePlayerIndex === undefined) {
-      return false;
-    }
-    const selectedCanPlay =
-      selectedPlayerIndex === activePlayerIndex && canPlayCardToPlayArea(selected, selectedPlayerIndex);
-    const draggingCanPlay =
-      draggingPlayerIndex === activePlayerIndex && canPlayCardToPlayArea(dragging, draggingPlayerIndex);
-    return (
-      selectedCanPlay ||
-      draggingCanPlay
-    );
   }
 
   function playSelectedToBoard() {

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   canEvolveSlot,
+  canPlayCardToBoardArea,
   canPlayCardToPlayArea,
   canPlayCardToSlot,
   canRetreatToSlot,
@@ -48,6 +49,57 @@ describe('play target rules', () => {
     expect(canPlayCardToPlayArea(trainer, 0)).toBe(true);
     expect(canPlayCardToSlot(trainer, 0, slot(0, 'active', 0, false))).toBe(false);
     expect(canPlayCardToSlot(trainer, 0, slot(0, 'bench', 0, false))).toBe(false);
+  });
+
+  it('allows selected or dragged generic play cards on the board area only for the active player', () => {
+    expect(
+      canPlayCardToBoardArea({
+        selected: trainer,
+        selectedPlayerIndex: 0,
+        dragging: undefined,
+        draggingPlayerIndex: undefined,
+        activePlayerIndex: 0,
+        hasPrompt: false,
+        finished: false,
+        inSetup: false,
+      }),
+    ).toBe(true);
+    expect(
+      canPlayCardToBoardArea({
+        selected: undefined,
+        selectedPlayerIndex: undefined,
+        dragging: trainer,
+        draggingPlayerIndex: 0,
+        activePlayerIndex: 0,
+        hasPrompt: false,
+        finished: false,
+        inSetup: false,
+      }),
+    ).toBe(true);
+    expect(
+      canPlayCardToBoardArea({
+        selected: trainer,
+        selectedPlayerIndex: 1,
+        dragging: undefined,
+        draggingPlayerIndex: undefined,
+        activePlayerIndex: 0,
+        hasPrompt: false,
+        finished: false,
+        inSetup: false,
+      }),
+    ).toBe(false);
+    expect(
+      canPlayCardToBoardArea({
+        selected: trainer,
+        selectedPlayerIndex: 0,
+        dragging: undefined,
+        draggingPlayerIndex: undefined,
+        activePlayerIndex: 0,
+        hasPrompt: true,
+        finished: false,
+        inSetup: false,
+      }),
+    ).toBe(false);
   });
 
   it('allows retreat only to occupied own bench slots when enough energy is attached', () => {
