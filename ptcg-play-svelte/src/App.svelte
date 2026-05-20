@@ -2,6 +2,7 @@
   import ActiveFocus from './lib/components/ActiveFocus.svelte';
   import BoardPromptDock from './lib/components/BoardPromptDock.svelte';
   import GameBoard from './lib/components/GameBoard.svelte';
+  import GameStatus from './lib/components/GameStatus.svelte';
   import Hand from './lib/components/Hand.svelte';
   import ImportScreen from './lib/components/ImportScreen.svelte';
   import LogPanel from './lib/components/LogPanel.svelte';
@@ -716,13 +717,13 @@
     <ImportScreen bind:deck1Text bind:deck2Text {busy} {error} startGame={startGame} />
   {:else if bottomPlayer && topPlayer}
     <section class="table-shell" class:debug-zones={debugZones}>
-      <div class="game-status">
-        <strong>{winnerName ? `${winnerName} wins` : game.phaseLabel}</strong>
-        <span>Turn {game.turn}</span>
-        {#if !gameFinished}
-          <span>{activePlayer?.name}</span>
-        {/if}
-      </div>
+      <GameStatus
+        phaseLabel={game.phaseLabel}
+        turn={game.turn}
+        activePlayerName={activePlayer?.name}
+        {winnerName}
+        {gameFinished}
+      />
 
       <Toolbar
         bind:boardTilt

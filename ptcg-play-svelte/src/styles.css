@@ -20,26 +20,11 @@
   display: none;
 }
 
-.game-status,
 .prompt-actions {
   display: flex;
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
-}
-
-.game-status {
-  pointer-events: auto;
-  padding: 5px 9px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.76);
-  box-shadow: 0 1px 12px rgba(23, 30, 38, 0.08);
-  color: #343b46;
-  font-size: 12px;
-}
-
-.game-status strong {
-  color: #126b5d;
 }
 
 .inline-field {
@@ -825,24 +810,6 @@ input[type="number"] {
 
 .prompt-panel pre {
   white-space: pre-wrap;
-}
-
-.game-status {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  z-index: 9;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(12, 15, 19, 0.76);
-  color: rgba(245, 248, 255, 0.72);
-  box-shadow: 0 10px 24px rgba(12, 15, 19, 0.14);
-  backdrop-filter: blur(10px);
-  font-size: 11px;
-}
-
-.game-status strong {
-  color: rgba(143, 232, 206, 0.96);
 }
 
 @media (max-width: 980px) {

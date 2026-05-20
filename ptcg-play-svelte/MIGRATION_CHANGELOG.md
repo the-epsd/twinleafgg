@@ -191,6 +191,10 @@ intended to help reviewers and future agents understand why files moved.
   and zone card sizing rules out of `styles.css` and into the component. This
   removes the zone viewer from the shared prompt-panel base and leaves that
   base scoped to prompt rendering only.
+- Added `GameStatus.svelte` in runes mode for the phase/turn/active-player
+  status pill and moved its styling out of `styles.css`. This gives `App.svelte`
+  another small presentational boundary while preserving the existing game
+  status text and placement.
 
 ### Verification
 
@@ -289,3 +293,8 @@ intended to help reviewers and future agents understand why files moved.
   viewer, the viewer and empty-state text have non-zero layout, closing the
   viewer removes it, and no app page or console errors were reported aside from
   the known favicon request.
+- Re-ran `npm run build`, `npm test -- --run`, and an independent headless
+  Chrome + Playwright setup smoke after extracting `GameStatus`. The status
+  pill renders with non-zero layout and still reports the setup phase, current
+  turn, and active player with no app page or console errors aside from the
+  known favicon request.
