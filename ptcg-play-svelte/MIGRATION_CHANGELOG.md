@@ -205,6 +205,14 @@ intended to help reviewers and future agents understand why files moved.
   prompt sizing. Moved prompt dock placement CSS out of `styles.css`, leaving
   `App.svelte` responsible only for selecting the dock mode from the current
   prompt class.
+- Added `src/state/promptSelection.svelte.ts` as the Svelte 5 `$state` owner
+  for board prompt targets and attach-energy prompt assignments. Added
+  `promptSelectionModel.ts` for pure target toggling, attach assignment pruning,
+  attach-energy availability checks, and target assignment transforms so this
+  prompt state can be tested outside a rune module.
+- Routed `App.svelte` prompt selection mutations through `promptSelectionStore`.
+  App still decides prompt eligibility from the current game view, but no longer
+  owns the mutable board-target/attach-assignment arrays directly.
 
 ### Verification
 
@@ -317,3 +325,12 @@ intended to help reviewers and future agents understand why files moved.
   `ConfirmPrompt` renders inside the dock with a non-zero layout box, resolves
   through the `Yes` button, and reaches setup without app page or console errors
   aside from the known favicon request.
+- Added `promptSelection.test.ts` for the prompt selection model. Re-ran
+  `npm run build` and `npm test -- --run` after the prompt selection store
+  extraction; both passed with 10 files / 44 tests.
+- Re-ran an independent headless Chrome + Playwright setup smoke after the
+  prompt selection store extraction. The initial confirm prompt resolves,
+  setup renders, a playable Basic can still be selected and placed into the
+  active slot, the active setup preview has non-zero layout, selection clears
+  after placement, and no app page or console errors were reported aside from
+  the known favicon request.

@@ -30,6 +30,8 @@
     type PromptView,
   } from './lib/game/types';
   import { gameStore } from './state/game.svelte';
+  import { promptSelectionStore } from './state/promptSelection.svelte';
+  import { canAssignAttachTarget, isAttachEnergyAvailable as isAttachEnergyAvailableModel } from './state/promptSelectionModel';
   import { selectionStore } from './state/selection.svelte';
   import { setupSelectionStore } from './state/setupSelection.svelte';
 
@@ -44,12 +46,12 @@
   let focusedSlot = $derived(selectionStore.focusedSlot);
   let setupActiveIndex = $derived(setupSelectionStore.activeIndex);
   let setupBenchIndexes = $derived(setupSelectionStore.benchIndexes);
+  let selectedBoardTargets = $derived(promptSelectionStore.selectedBoardTargets);
+  let attachPromptEnergyIndex = $derived(promptSelectionStore.activeAttachEnergyIndex);
+  let attachPromptAssignments = $derived(promptSelectionStore.attachAssignments);
   let followActive = $state(true);
   let autoConfirmPrompts = $state(true);
   let autoConfirmPromptKey = $state('');
-  let selectedBoardTargets = $state<CardTarget[]>([]);
-  let attachPromptEnergyIndex = $state<number | null>(null);
-  let attachPromptAssignments = $state<Array<{ energyIndex: number; target: CardTarget }>>([]);
   let viewIndex = $state(0);
   let setupPromptKey = $state('');
   let boardTilt = $state(8);
@@ -75,19 +77,10 @@
   let attachPromptMax = $derived(normalizePromptLimit(promptOptions(attachPrompt).max, attachPromptCards.length || 1));
   let attachPromptTargets = $derived(attachPrompt && game ? getAttachPromptTargets(game, attachPrompt) : []);
   $effect(() => {
-    const nextAssignments = attachPromptAssignments.filter((assignment) =>
-      attachPromptCards.some((card, index) => (card.index ?? index) === assignment.energyIndex)
-        && attachPromptTargets.some((target) => sameTarget(target, assignment.target)),
-    ).slice(0, attachPromptMax);
-    if (!sameAttachAssignments(attachPromptAssignments, nextAssignments)) {
-      attachPromptAssignments = nextAssignments;
-    }
+    promptSelectionStore.pruneAttachAssignments(attachPromptCards, attachPromptTargets, attachPromptMax);
   });
   $effect(() => {
-    attachPromptEnergyIndex =
-      attachPromptEnergyIndex !== null && isAttachEnergyAvailable(attachPromptEnergyIndex)
-        ? attachPromptEnergyIndex
-        : null;
+    promptSelectionStore.clearUnavailableAttachEnergy(isAttachEnergyAvailable);
   });
   let boardPromptMin = $derived(normalizePromptLimit(promptOptions(boardTargetPrompt).min, 1));
   let boardPromptMax = $derived(normalizePromptLimit(promptOptions(boardTargetPrompt).max, 1));
@@ -251,9 +244,7 @@
     }
     setupPromptKey = nextPromptKey;
     setupSelectionStore.reset();
-    selectedBoardTargets = [];
-    attachPromptEnergyIndex = null;
-    attachPromptAssignments = [];
+    promptSelectionStore.reset();
   }
 
   function resetCommandSelection(promptCount: number) {
@@ -537,34 +528,22 @@
 
   function isAttachEnergyAvailable(index: number) {
     const blocked = new Set<number>(promptBlockedIndexes(attachPrompt));
-    return !blocked.has(index) && !attachPromptAssignments.some((assignment) => assignment.energyIndex === index);
-  }
-
-  function sameAttachAssignments(
-    left: Array<{ energyIndex: number; target: CardTarget }>,
-    right: Array<{ energyIndex: number; target: CardTarget }>,
-  ) {
-    return left.length === right.length
-      && left.every((assignment, index) =>
-        assignment.energyIndex === right[index].energyIndex && sameTarget(assignment.target, right[index].target),
-      );
+    return isAttachEnergyAvailableModel(index, [...blocked], attachPromptAssignments);
   }
 
   function canAssignAttachPromptTarget(target: CardTarget, energyIndex = attachPromptEnergyIndex) {
-    if (!attachPrompt || energyIndex === null || !isAttachEnergyAvailable(energyIndex)) {
+    if (!attachPrompt) {
       return false;
     }
-    if (attachPromptMax > 1 && attachPromptAssignments.length >= attachPromptMax) {
-      return false;
-    }
-    const options = promptOptions(attachPrompt);
-    if (options.differentTargets && attachPromptAssignments.some((assignment) => sameTarget(assignment.target, target))) {
-      return false;
-    }
-    if (options.sameTarget && attachPromptAssignments.length > 0 && !sameTarget(attachPromptAssignments[0].target, target)) {
-      return false;
-    }
-    return attachPromptTargets.some((item) => sameTarget(item, target));
+    return canAssignAttachTarget(
+      target,
+      energyIndex,
+      attachPromptAssignments,
+      attachPromptTargets,
+      attachPromptMax,
+      promptOptions(attachPrompt),
+      isAttachEnergyAvailable,
+    );
   }
 
   function isBoardPromptSelectable(slot: PokemonSlotView) {
@@ -606,11 +585,7 @@
       void resolvePrompt([target]);
       return;
     }
-    selectedBoardTargets = selectedBoardTargets.some((item) => sameTarget(item, target))
-      ? selectedBoardTargets.filter((item) => !sameTarget(item, target))
-      : selectedBoardTargets.length < boardPromptMax
-        ? [...selectedBoardTargets, target]
-        : selectedBoardTargets;
+    promptSelectionStore.toggleBoardTarget(target, boardPromptMax);
   }
 
   function confirmBoardPromptTargets() {
@@ -625,28 +600,19 @@
       return;
     }
     const target = targetForPromptSlot(attachPrompt, slot);
-    const withoutEnergy = attachPromptAssignments.filter((assignment) => assignment.energyIndex !== attachPromptEnergyIndex);
-    const nextAssignment = { energyIndex: attachPromptEnergyIndex, target };
-    attachPromptAssignments = attachPromptMax <= 1
-      ? [nextAssignment]
-      : [...withoutEnergy, nextAssignment].slice(0, attachPromptMax);
-    attachPromptEnergyIndex = null;
+    promptSelectionStore.assignAttachTarget(target, attachPromptMax);
   }
 
   function selectAttachPromptEnergy(index: number | null) {
-    attachPromptEnergyIndex = attachPromptEnergyIndex === index ? null : index;
+    promptSelectionStore.toggleAttachEnergy(index);
   }
 
   function removeAttachPromptAssignment(index: number) {
-    attachPromptAssignments = attachPromptAssignments.filter((assignment) => assignment.energyIndex !== index);
-    if (attachPromptEnergyIndex === index) {
-      attachPromptEnergyIndex = null;
-    }
+    promptSelectionStore.removeAttachAssignment(index);
   }
 
   function resetAttachPromptAssignments() {
-    attachPromptAssignments = [];
-    attachPromptEnergyIndex = null;
+    promptSelectionStore.resetAttachAssignments();
   }
 
   function isSetupStartable(card: CardView | undefined, handIndex: number) {
