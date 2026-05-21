@@ -139,9 +139,7 @@ import { OrderPad } from './order-pad';
 import { PokemonFanClub } from './pokemon-fan-club';
 import { Volkner } from './volkner';
 import { SuperBoostEnergy } from './super-boost-energy';
-import { UnitEnergyGrassfirewater } from './unit-energy-grassfirewater';
 import { UnitEnergyGRW } from './unit-energy-grw';
-import { UnitEnergyLightningpsychicmetal } from './unit-energy-lightningpsychicmetal';
 import { UnitEnergyLPM } from './unit-energy-lpm';
 
 import {
@@ -332,9 +330,7 @@ export const setUltraPrism: Card[] = [
 
   // Energy
   new SuperBoostEnergy(),
-  new UnitEnergyGrassfirewater(),
   new UnitEnergyGRW(),
-  new UnitEnergyLightningpsychicmetal(),
   new UnitEnergyLPM(),
 
   // Other Prints (Reprints & Alt Arts)

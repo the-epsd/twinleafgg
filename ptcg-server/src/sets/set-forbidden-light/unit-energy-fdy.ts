@@ -7,22 +7,16 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class UnitEnergyFDY extends EnergyCard {
-
   public provides: CardType[] = [CardType.COLORLESS];
-
   public energyType = EnergyType.SPECIAL;
-
   public set: string = 'FLI';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '118';
-
   public name = 'Unit Energy FDY';
-
   public fullName = 'Unit Energy FDY FLI';
 
-  public text = 'This card provides [C] Energy.' +
+  public text =
+    'This card provides [C] Energy.' +
     '\n\n' +
     'While this card is attached to a Pokémon, it provides [F], [D], and [Y] Energy but provides only 1 Energy at a time.';
 
@@ -38,15 +32,15 @@ export class UnitEnergyFDY extends EnergyCard {
       }
 
       // Find the first energy type that's not already provided by other energies
-      const neededType = this.blendedEnergies.find(type =>
-        !effect.energyMap.some(energy => energy.provides.includes(type))
+      const neededType = this.blendedEnergies.find(
+        (type) => !effect.energyMap.some((energy) => energy.provides.includes(type)),
       );
 
       if (neededType) {
         // Only provide the specific energy type that's needed
         effect.energyMap.push({
           card: this,
-          provides: [neededType]
+          provides: [neededType],
         });
       }
     }
