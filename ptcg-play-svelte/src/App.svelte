@@ -27,7 +27,7 @@
     type BoardPlayAreaContext,
   } from './lib/game/playTargets';
   import { benchSlotsFor, previewAttachEnergySlot, previewSlot } from './lib/game/preview';
-  import { extractPromptCards, promptBlockedIndexes, promptOptions } from './lib/game/prompts';
+  import { extractPromptCards, promptBlockedIndexes, promptInstanceKey, promptOptions } from './lib/game/prompts';
   import { getSetupPromptUiState, promptLimit, setupPromptResult } from './lib/game/setupPrompt';
   import { getAttachPromptTargets, getBoardPromptTargets, sameTarget, targetForPromptSlot } from './lib/game/targets';
   import {
@@ -696,17 +696,19 @@
         />
       {:else if currentPrompt && !(autoConfirmPrompts && autoConfirmPrompt)}
         <PromptDock mode={currentPromptDockMode}>
-          <PromptHost
-            game={game}
-            prompt={currentPrompt}
-            resolving={resolvingPrompt}
-            activeAttachEnergyIndex={attachPromptEnergyIndex}
-            attachAssignments={attachPromptAssignments}
-            onresolve={resolvePrompt}
-            onattachEnergySelect={selectAttachPromptEnergy}
-            onattachEnergyUnassign={removeAttachPromptAssignment}
-            onattachEnergyReset={resetAttachPromptAssignments}
-          />
+          {#key promptInstanceKey(currentPrompt)}
+            <PromptHost
+              game={game}
+              prompt={currentPrompt}
+              resolving={resolvingPrompt}
+              activeAttachEnergyIndex={attachPromptEnergyIndex}
+              attachAssignments={attachPromptAssignments}
+              onresolve={resolvePrompt}
+              onattachEnergySelect={selectAttachPromptEnergy}
+              onattachEnergyUnassign={removeAttachPromptAssignment}
+              onattachEnergyReset={resetAttachPromptAssignments}
+            />
+          {/key}
         </PromptDock>
       {/if}
 

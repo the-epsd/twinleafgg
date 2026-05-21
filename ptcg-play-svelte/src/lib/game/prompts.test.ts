@@ -5,6 +5,7 @@ import {
   isKnownPrompt,
   promptBlockedIndexes,
   promptBlockedTargets,
+  promptInstanceKey,
   promptOptions,
   prunePromptIndexes,
   promptSlots,
@@ -17,6 +18,13 @@ describe('prompt helpers', () => {
     expect(isKnownPrompt(prompt('ConfirmPrompt'))).toBe(true);
     expect(isKnownPrompt(prompt('ChooseCardsPrompt'))).toBe(true);
     expect(isKnownPrompt(prompt('ChoosePokemonPrompt'))).toBe(false);
+  });
+
+  it('keys prompt component instances by prompt identity', () => {
+    expect(promptInstanceKey(prompt('ChooseEnergyPrompt', {}, 9))).toBe('9:ChooseEnergyPrompt:');
+    expect(promptInstanceKey({ ...prompt('ChooseCardsPrompt', {}, 9), message: 'CHOOSE_STARTING_POKEMONS' }))
+      .toBe('9:ChooseCardsPrompt:CHOOSE_STARTING_POKEMONS');
+    expect(promptInstanceKey(undefined)).toBe('');
   });
 
   it('normalizes prompt options and slots', () => {
@@ -60,9 +68,9 @@ describe('prompt helpers', () => {
   });
 });
 
-function prompt(className: string, fields: Record<string, unknown> = {}): PromptView {
+function prompt(className: string, fields: Record<string, unknown> = {}, id = 1): PromptView {
   return {
-    id: 1,
+    id,
     className,
     type: className,
     playerId: 1,

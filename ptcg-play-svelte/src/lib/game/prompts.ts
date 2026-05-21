@@ -67,6 +67,12 @@ export function isKnownPrompt(prompt: PromptView): prompt is KnownPrompt {
   );
 }
 
+export function promptInstanceKey(
+  prompt: Pick<PromptView, 'id' | 'className' | 'message'> | null | undefined,
+) {
+  return prompt ? `${prompt.id}:${prompt.className}:${prompt.message ?? ''}` : '';
+}
+
 export function promptOptions(prompt: Pick<PromptView, 'fields'> | null | undefined): Record<string, unknown> {
   return fieldOptions(prompt?.fields);
 }
