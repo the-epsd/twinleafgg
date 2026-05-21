@@ -3,15 +3,15 @@
     phaseLabel: string;
     turn: number;
     activePlayerName?: string;
-    winnerName?: string;
+    resultLabel?: string;
     gameFinished?: boolean;
   };
 
-  let { phaseLabel, turn, activePlayerName = '', winnerName = '', gameFinished = false }: Props = $props();
+  let { phaseLabel, turn, activePlayerName = '', resultLabel = '', gameFinished = false }: Props = $props();
 </script>
 
 <div class="game-status">
-  <strong>{winnerName ? `${winnerName} wins` : phaseLabel}</strong>
+  <strong>{resultLabel || phaseLabel}</strong>
   <span>Turn {turn}</span>
   {#if !gameFinished}
     <span>{activePlayerName}</span>

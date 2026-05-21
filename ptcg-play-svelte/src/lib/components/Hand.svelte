@@ -80,6 +80,7 @@
     justify-content: center;
     min-height: calc(var(--card-w) * 1.42);
     overflow: visible;
+    pointer-events: none;
   }
 
   .hand.concealed :global(.card-tile) {

@@ -3,6 +3,7 @@
   import AppHeader from './lib/components/AppHeader.svelte';
   import BoardLayer from './lib/components/BoardLayer.svelte';
   import BoardPromptDock from './lib/components/BoardPromptDock.svelte';
+  import EndGamePrompt from './lib/components/EndGamePrompt.svelte';
   import GameBoard from './lib/components/GameBoard.svelte';
   import GameStatus from './lib/components/GameStatus.svelte';
   import Hand from './lib/components/Hand.svelte';
@@ -203,9 +204,16 @@
   let winnerName = $derived(
     game?.winner === 0 || game?.winner === 1
       ? game.players[game.winner]?.name
-      : game?.winner === 3
-        ? 'Draw'
-        : undefined,
+      : undefined,
+  );
+  let gameResultLabel = $derived(
+    game?.winner === 3
+      ? 'Draw'
+      : winnerName
+        ? `${winnerName} wins`
+        : gameFinished
+          ? 'Game finished'
+          : '',
   );
   let currentPromptDockMode = $derived(
     currentPrompt?.className === 'ChooseCardsPrompt'
@@ -888,7 +896,7 @@
         phaseLabel={game.phaseLabel}
         turn={game.turn}
         activePlayerName={activePlayer?.name}
-        {winnerName}
+        resultLabel={gameResultLabel}
         {gameFinished}
       />
 
@@ -912,6 +920,10 @@
         switchDisabled={mode === 'remote'}
         {resetGame}
       />
+
+      {#if gameFinished}
+        <EndGamePrompt resultLabel={gameResultLabel} turn={game.turn} onconfirm={resetGame} />
+      {/if}
 
       {#if setupPrompt}
         <SetupDock

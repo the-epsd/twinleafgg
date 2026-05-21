@@ -62,6 +62,9 @@
   class:prompt-selected={promptSelected}
   class={`board-slot ${placement}`}
   data-testid={`slot-${slot.ownerIndex}-${slot.slot}-${slot.index}`}
+  data-owner-index={slot.ownerIndex}
+  data-slot-kind={slot.slot}
+  data-slot-index={slot.index}
   title={slot.pokemon?.fullName ?? (slot.slot === 'active' ? 'Active' : `Bench ${slot.index + 1}`)}
   {onclick}
   {ondragover}

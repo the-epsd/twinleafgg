@@ -15,8 +15,7 @@
   import WaitPrompt from './WaitPrompt.svelte';
   import type { AttachAssignment } from '../../game/preview';
   import { extractPromptCards } from '../../game/prompts';
-  import type { CardTarget, GameView, PromptView } from '../../game/types';
-  import type { DamagePlacement } from '../../../state/promptSelectionModel';
+  import type { GameView, PromptView } from '../../game/types';
 
   type Props = {
     game: GameView;
@@ -25,14 +24,12 @@
     autoContinue?: boolean;
     activeAttachEnergyIndex?: number | null;
     attachAssignments?: AttachAssignment[];
-    damagePlacements?: DamagePlacement[];
     damagePlacedTotal?: number;
     canConfirmDamagePrompt?: boolean;
     onresolve: (value: unknown) => void;
     onattachEnergySelect: (index: number | null) => void;
     onattachEnergyUnassign: (index: number) => void;
     onattachEnergyReset: () => void;
-    ondamagePlace: (target: CardTarget) => void;
     ondamageReset: () => void;
     ondamageConfirm: () => void;
   };
@@ -44,14 +41,12 @@
     autoContinue = false,
     activeAttachEnergyIndex = null,
     attachAssignments = [],
-    damagePlacements = [],
     damagePlacedTotal = 0,
     canConfirmDamagePrompt = false,
     onresolve,
     onattachEnergySelect,
     onattachEnergyUnassign,
     onattachEnergyReset,
-    ondamagePlace,
     ondamageReset,
     ondamageConfirm,
   }: Props = $props();
@@ -98,11 +93,9 @@
     {game}
     {prompt}
     {resolving}
-    {damagePlacements}
     {damagePlacedTotal}
     {canConfirmDamagePrompt}
     {onresolve}
-    {ondamagePlace}
     {ondamageReset}
     {ondamageConfirm}
   />
