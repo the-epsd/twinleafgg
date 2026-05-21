@@ -25,6 +25,10 @@ import { ShowMulliganPrompt } from '../prompts/show-mulligan-prompt';
 import { ConfirmPrompt } from '../prompts/confirm-prompt';
 import { Format } from '../card/card-types';
 
+type SetupChooseCardsPrompt = ChooseCardsPrompt & {
+  onResolve?: (cards: Card[], state: State) => void;
+};
+
 function putStartingPokemonsAndPrizes(player: Player, cards: Card[], state: State): void {
   if (cards.length === 0) {
     return;
@@ -497,8 +501,7 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
     }
   } else {
     // Both have Basics, proceed with normal setup for both
-    yield* setupSinglePlayer(player, chooseCardsOptions, state, store, next);
-    yield* setupSinglePlayer(opponent, chooseCardsOptions, state, store, next);
+    yield* setupPlayersConcurrently([player, opponent], chooseCardsOptions, state, store, next);
     // Show both players' mulligan hands when either mulliganed
     if (playerMulligans > 0 || opponentMulligans > 0) {
       if (playerMulliganHands.length > 0) {
@@ -529,17 +532,46 @@ export function* setupGame(next: Function, store: StoreLike, state: State): Iter
 
 // Helper: Setup for a single player (choose Active, Bench, place Prizes)
 function* setupSinglePlayer(player: Player, chooseCardsOptions: any, state: State, store: StoreLike, next: Function) {
+  yield store.prompt(state, createSetupChooseCardsPrompt(player, chooseCardsOptions), choice => {
+    next();
+  });
+}
+
+// Helper: Setup for multiple players at once. Store prompt groups wait for all
+// prompts to resolve, which lets remote clients choose their setup concurrently.
+function* setupPlayersConcurrently(players: Player[], chooseCardsOptions: any, state: State, store: StoreLike, next: Function) {
+  const prompts = players.map(player => createSetupChooseCardsPrompt(player, chooseCardsOptions));
+
+  yield store.prompt(state, prompts, () => {
+    next();
+  });
+}
+
+function createSetupChooseCardsPrompt(player: Player, chooseCardsOptions: any): SetupChooseCardsPrompt {
+  const prompt = new ChooseCardsPrompt(player, GameMessage.CHOOSE_STARTING_POKEMONS,
+    player.hand, {}, { ...chooseCardsOptions, blocked: setupBlockedCardIndexes(player) }) as SetupChooseCardsPrompt;
+  let applied = false;
+  Object.defineProperty(prompt, 'onResolve', {
+    enumerable: false,
+    value: (cards: Card[], state: State) => {
+      if (applied) {
+        return;
+      }
+      putStartingPokemonsAndPrizes(player, cards, state);
+      applied = true;
+    }
+  });
+  return prompt;
+}
+
+function setupBlockedCardIndexes(player: Player): number[] {
   const blocked: number[] = [];
   player.hand.cards.forEach((c, index) => {
     if (!(c.tags.includes((CardTag.PLAY_DURING_SETUP)) || (c instanceof PokemonCard && c.stage === Stage.BASIC))) {
       blocked.push(index);
     }
   });
-  yield store.prompt(state, new ChooseCardsPrompt(player, GameMessage.CHOOSE_STARTING_POKEMONS,
-    player.hand, {}, { ...chooseCardsOptions, blocked }), choice => {
-    putStartingPokemonsAndPrizes(player, choice, state);
-    next();
-  });
+  return blocked;
 }
 
 // Helper: Allow extra Bench placement after drawing extra cards

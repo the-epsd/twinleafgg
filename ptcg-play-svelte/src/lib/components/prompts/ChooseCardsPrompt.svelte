@@ -1,6 +1,5 @@
 <script lang="ts">
   import CardTile from '../CardTile.svelte';
-  import { labelFor } from '../../game/labels';
   import {
     extractPromptCards,
     promptBlockedIndexes,
@@ -113,8 +112,7 @@
   <section class="prompt-panel search-prompt">
     <div class="prompt-title">
       <div>
-        <strong>{labelFor(prompt.className)}</strong>
-        <span>{labelFor(prompt.message || prompt.type)}</span>
+        <strong>Choose Cards</strong>
       </div>
     </div>
     {#if !prompt.supported}

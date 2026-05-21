@@ -68,6 +68,14 @@ export class StateSanitizer {
     const isObserver = !isPlaying;
 
     opponents.forEach(opponent => {
+      if (opponent.active.isSecret) {
+        cardLists.push(opponent.active);
+      }
+      opponent.bench.forEach(bench => {
+        if (bench.isSecret) {
+          cardLists.push(bench);
+        }
+      });
       // Show hands for admins and TOs only when they are observers
       if (!opponent.hand.isPublic && (!isObserver || (this.client.user.roleId !== 4 && this.client.user.roleId !== 5))) {
         cardLists.push(opponent.hand);

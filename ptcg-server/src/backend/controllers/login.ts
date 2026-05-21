@@ -17,10 +17,26 @@ export class Login extends Controller {
     let name = baseName;
     let user = await User.findOne({ where: { name } });
 
+    if (user !== undefined && !this.isUserConnected(user)) {
+      await user.updateLastSeen();
+      const token = generateToken(user.id);
+      res.send({
+        ok: true,
+        token,
+        config: this.getServerConfig(),
+        user: this.buildUserInfo(user)
+      });
+      return;
+    }
+
     for (let attempt = 0; attempt < 4; attempt++) {
-      if (user !== undefined) {
+      if (user !== undefined && this.isUserConnected(user)) {
         name = this.nameWithCollisionSuffix(baseName, attempt + 1);
         user = await User.findOne({ where: { name } });
+        if (user !== undefined && !this.isUserConnected(user)) {
+          await user.updateLastSeen();
+          break;
+        }
         if (user !== undefined) {
           continue;
         }
@@ -85,6 +101,10 @@ export class Login extends Controller {
   private nameWithCollisionSuffix(name: string, attempt: number): string {
     const suffix = `-${Math.random().toString(36).slice(2, 6) || attempt}`;
     return `${name.slice(0, Math.max(1, 40 - suffix.length))}${suffix}`;
+  }
+
+  private isUserConnected(user: User): boolean {
+    return this.core.clients.some(client => client.user.id === user.id);
   }
 
 }

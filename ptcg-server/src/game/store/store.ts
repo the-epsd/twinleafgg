@@ -212,6 +212,10 @@ export class Store implements StoreLike {
 
     try {
       prompt.result = action.result;
+      const onResolve = (prompt as any).onResolve;
+      if (typeof onResolve === 'function') {
+        onResolve.call(prompt, action.result, state);
+      }
 
       const results = promptItem.ids.map(id => {
         const p = state.prompts.find(item => item.id === id);
