@@ -35,6 +35,7 @@ export type CardView = {
   stage?: string | number;
   evolvesFrom?: string;
   hp?: number;
+  retreat?: unknown[];
   attacks?: AttackView[];
   powers?: PowerView[];
 };

@@ -43,7 +43,7 @@ class GameStore {
     }
   }
 
-  private apply(response: EngineResponse) {
+  apply(response: EngineResponse) {
     if (response.ok) {
       this.game = response.view;
       this.error = '';

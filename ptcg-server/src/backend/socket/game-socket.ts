@@ -13,7 +13,6 @@ import { SandboxModifyCardAction } from '../../game/store/actions/sandbox-modify
 import { SandboxModifyPokemonAction } from '../../game/store/actions/sandbox-modify-pokemon-action';
 import { Base64 } from '../../utils';
 import { Client } from '../../game/client/client.interface';
-import { CoreSocket } from './core-socket';
 import { ApiErrorEnum } from '../common/errors';
 import { Game } from '../../game/core/game';
 import { State } from '../../game/store/state/state';
@@ -112,7 +111,7 @@ export class GameSocket {
     }
     this.cache.lastLogIdCache[game.id] = 0;
     this.core.joinGame(this.client, game);
-    response('ok', CoreSocket.buildGameState(game));
+    response('ok', this.buildClientGameState(game));
   }
 
   private leaveGame(gameId: number, response: Response<void>): void {
@@ -150,7 +149,24 @@ export class GameSocket {
       response('error', ApiErrorEnum.GAME_INVALID_ID);
       return;
     }
-    response('ok', CoreSocket.buildGameState(game));
+    response('ok', this.buildClientGameState(game));
+  }
+
+  private buildClientGameState(game: Game): GameState {
+    game.setBonusHps(game.state);
+    const state = this.stateSanitizer.sanitize(game.state, game.id);
+    const serializer = new StateSerializer();
+    const serializedState = serializer.serialize(state);
+    const base64 = new Base64();
+    return {
+      gameId: game.id,
+      stateData: base64.encode(serializedState),
+      clientIds: game.clients.map(client => client.id),
+      recordingEnabled: game.gameSettings.recordingEnabled,
+      timeLimit: game.gameSettings.timeLimit,
+      playerStats: game.playerStats,
+      format: game.format
+    };
   }
 
   private dispatch(gameId: number, action: Action, response: Response<void>) {

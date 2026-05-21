@@ -28,3 +28,14 @@ export function parseLocalGameDecks(deck1Text: string, deck2Text: string): Local
     player2Cards: p2.cards,
   };
 }
+
+export function parseLocalGameDeck(deckText: string, label: string): { ok: true; cards: string[] } | { ok: false; error: string } {
+  const parsed = parseDeckList(deckText);
+  if (parsed.errors.length) {
+    return {
+      ok: false,
+      error: parsed.errors.map((error) => `${label}: ${error}`).join('\n'),
+    };
+  }
+  return { ok: true, cards: parsed.cards };
+}

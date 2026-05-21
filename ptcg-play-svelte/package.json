@@ -17,6 +17,7 @@
   "dependencies": {
     "@sveltejs/vite-plugin-svelte": "^6.2.1",
     "ptcg-server": "file:../ptcg-server",
+    "socket.io-client": "^4.8.3",
     "svelte": "^5.45.6",
     "vite": "^7.2.7"
   },

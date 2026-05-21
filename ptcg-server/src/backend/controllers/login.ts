@@ -13,10 +13,18 @@ export class Login extends Controller {
   @Post('/guest')
   public async onGuest(req: Request, res: Response) {
     const requestedName = typeof req.body?.name === 'string' ? req.body.name : '';
-    let name = this.normalizeGuestName(requestedName);
+    const baseName = this.normalizeGuestName(requestedName);
+    let name = baseName;
     let user = await User.findOne({ where: { name } });
 
-    for (let attempt = 0; user === undefined && attempt < 4; attempt++) {
+    for (let attempt = 0; attempt < 4; attempt++) {
+      if (user !== undefined) {
+        name = this.nameWithCollisionSuffix(baseName, attempt + 1);
+        user = await User.findOne({ where: { name } });
+        if (user !== undefined) {
+          continue;
+        }
+      }
       const guest = new User();
       guest.name = name;
       guest.email = `${name.toLowerCase()}@guest.local`;
@@ -28,8 +36,11 @@ export class Login extends Controller {
       } catch (error) {
         user = await User.findOne({ where: { name } });
         if (user === undefined) {
-          name = this.normalizeGuestName('');
+          name = this.nameWithCollisionSuffix(baseName, attempt + 1);
         }
+      }
+      if (user !== undefined) {
+        break;
       }
     }
 
@@ -65,10 +76,15 @@ export class Login extends Controller {
 
   private normalizeGuestName(name: string): string {
     const cleaned = name.trim().replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40);
-    if (cleaned.length >= 8 && cleaned.startsWith('Guest-')) {
+    if (cleaned.length >= 2) {
       return cleaned;
     }
     return `Guest-${Math.random().toString(36).slice(2, 10)}`;
+  }
+
+  private nameWithCollisionSuffix(name: string, attempt: number): string {
+    const suffix = `-${Math.random().toString(36).slice(2, 6) || attempt}`;
+    return `${name.slice(0, Math.max(1, 40 - suffix.length))}${suffix}`;
   }
 
 }

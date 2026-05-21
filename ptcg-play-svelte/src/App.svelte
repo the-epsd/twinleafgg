@@ -15,6 +15,7 @@
   import TableShell from './lib/components/TableShell.svelte';
   import Toolbar from './lib/components/Toolbar.svelte';
   import ZoneViewer from './lib/components/ZoneViewer.svelte';
+  import type { GameCommandApi } from './lib/game/gameApi';
   import { localGameApi } from './lib/game/httpClient';
   import { labelFor } from './lib/game/labels';
   import {
@@ -43,6 +44,7 @@
   import { gameSessionStore } from './state/gameSession.svelte';
   import { promptLifecycleStore } from './state/promptLifecycle.svelte';
   import { promptSelectionStore } from './state/promptSelection.svelte';
+  import { remoteSessionStore } from './state/remoteSession.svelte';
   import {
     canAssignAttachTarget,
     damagePlacementsToResult,
@@ -64,6 +66,9 @@
   let game = $derived(gameStore.game);
   let error = $derived(gameStore.error);
   let busy = $derived(gameStore.busy);
+  let sessionBusy = $derived(busy || remoteSessionStore.busy || remoteSessionStore.connecting);
+  let mode = $derived(remoteSessionStore.mode);
+  let commandApi = $derived<GameCommandApi>(mode === 'remote' ? remoteSessionStore.api : localGameApi);
   let resolvingPrompt = $derived(gameStore.resolvingPrompt);
   let selectedHand = $derived(selectionStore.selectedHand);
   let draggingHand = $derived(selectionStore.draggingHand);
@@ -89,6 +94,7 @@
   let bottomPlayer = $derived(game?.players[viewIndex] ?? game?.players[0]);
   let topPlayer = $derived(game?.players.find((player) => player.index !== bottomPlayer?.index));
   let currentPrompt = $derived(game?.prompts[0]);
+  let invitePrompt = $derived(currentPrompt?.className === 'InvitePlayerPrompt' ? currentPrompt : null);
   let boardTargetPrompt = $derived(currentPrompt?.className === 'ChoosePokemonPrompt' ? currentPrompt : null);
   let attachPrompt = $derived(currentPrompt?.className === 'AttachEnergyPrompt' ? currentPrompt : null);
   let damagePrompt = $derived(currentPrompt?.className === 'PutDamagePrompt' ? currentPrompt : null);
@@ -175,8 +181,13 @@
     viewSettingsStore.resetPerspective();
   }
   $effect(() => {
-    if (game && followActive) {
+    if (game && followActive && mode === 'local') {
       viewSettingsStore.followPlayer(currentPrompt?.playerIndex ?? game.activePlayerIndex);
+    }
+  });
+  $effect(() => {
+    if (mode === 'remote' && remoteSessionStore.playerIndex !== null) {
+      viewSettingsStore.switchToPlayer(remoteSessionStore.playerIndex);
     }
   });
   let gameFinished = $derived(game?.phase === 7);
@@ -260,6 +271,9 @@
   });
 
   async function startGame() {
+    if (mode !== 'local') {
+      return;
+    }
     const decks = deckImportStore.parseLocalGameDecks();
     if (!decks.ok) {
       gameStore.setError(decks.error);
@@ -270,11 +284,53 @@
     await gameSessionStore.run(() => localGameApi.start(decks.player1Cards, decks.player2Cards));
   }
 
+  async function connectOnline() {
+    await remoteSessionStore.connect();
+  }
+
+  function disconnectOnline() {
+    remoteSessionStore.disconnect();
+  }
+
+  async function inviteOnline(clientId: number) {
+    const deck = deckImportStore.parseRemoteDeck();
+    if (!deck.ok) {
+      gameStore.setError(deck.error);
+      return;
+    }
+    selectionStore.setSelectedHand(null);
+    await gameSessionStore.run(() => remoteSessionStore.invite(clientId, deck.cards));
+  }
+
+  async function joinOnlineGame(gameId: number) {
+    selectionStore.setSelectedHand(null);
+    await gameSessionStore.run(() => remoteSessionStore.joinGame(gameId));
+  }
+
+  async function acceptInvite() {
+    if (!invitePrompt) {
+      return;
+    }
+    const deck = deckImportStore.parseRemoteDeck();
+    if (!deck.ok) {
+      gameStore.setError(deck.error);
+      return;
+    }
+    await gameSessionStore.resolve(() => remoteSessionStore.api.resolvePrompt(invitePrompt.id, deck.cards));
+  }
+
+  async function declineInvite() {
+    if (!invitePrompt) {
+      return;
+    }
+    await gameSessionStore.resolve(() => remoteSessionStore.api.resolvePrompt(invitePrompt.id, null));
+  }
+
   async function playToTarget(target: CardTarget) {
     if (!selectedHand || !game || !canAct(selectedHand.playerIndex)) {
       return;
     }
-    await gameSessionStore.run(() => localGameApi.playCard(selectedHand!.playerIndex, selectedHand!.handIndex, target));
+    await gameSessionStore.run(() => commandApi.playCard(selectedHand!.playerIndex, selectedHand!.handIndex, target));
   }
 
   function playToSlot(slot: PokemonSlotView) {
@@ -333,32 +389,32 @@
 
   async function attack(name: string) {
     if (!game || !focusedPlayer || !focusedIsActive || !focusedCanAct) return;
-    await gameSessionStore.run(() => localGameApi.attack(focusedPlayer!.index, name));
+    await gameSessionStore.run(() => commandApi.attack(focusedPlayer!.index, name));
   }
 
   async function useAbility(name: string, target: CardTarget) {
     if (!game || !focusedPlayer || !focusedCanAct) return;
-    await gameSessionStore.run(() => localGameApi.useAbility(focusedPlayer!.index, name, target));
+    await gameSessionStore.run(() => commandApi.useAbility(focusedPlayer!.index, name, target));
   }
 
   async function concede() {
     if (!game || !activePlayer || gameFinished) return;
-    await gameSessionStore.run(() => localGameApi.concede(game.activePlayerIndex));
+    await gameSessionStore.run(() => commandApi.concede(game.activePlayerIndex));
   }
 
   async function passTurn() {
     if (!game) return;
-    await gameSessionStore.run(() => localGameApi.passTurn(game.activePlayerIndex));
+    await gameSessionStore.run(() => commandApi.passTurn(game.activePlayerIndex));
   }
 
   async function retreat(to: number) {
     if (!game) return;
-    await gameSessionStore.run(() => localGameApi.retreat(game.activePlayerIndex, to));
+    await gameSessionStore.run(() => commandApi.retreat(game.activePlayerIndex, to));
   }
 
   async function resolvePrompt(value: unknown) {
     if (!currentPrompt) return;
-    await gameSessionStore.resolve(() => localGameApi.resolvePrompt(currentPrompt.id, value));
+    await gameSessionStore.resolve(() => commandApi.resolvePrompt(currentPrompt.id, value));
   }
 
   function selectHandCard(playerIndex: number, handIndex: number) {
@@ -416,11 +472,15 @@
   }
 
   function switchSides() {
+    if (mode === 'remote') {
+      return;
+    }
     viewSettingsStore.switchToPlayer(topPlayer?.index ?? 0);
   }
 
   function resetGame() {
     gameSessionStore.reset();
+    remoteSessionStore.leaveActiveGame();
     zoneViewerStore.close();
     viewSettingsStore.resetView();
   }
@@ -545,6 +605,9 @@
   }
 
   function canAct(playerIndex: number) {
+    if (mode === 'remote' && remoteSessionStore.playerIndex !== playerIndex) {
+      return false;
+    }
     return canPlayerAct({
       playerIndex,
       activePlayerIndex: game?.activePlayerIndex,
@@ -739,13 +802,40 @@
   {#if !game}
     <AppHeader />
 
-    <ImportScreen
-      bind:deck1Text={deckImportStore.deck1Text}
-      bind:deck2Text={deckImportStore.deck2Text}
-      {busy}
-      {error}
-      startGame={startGame}
-    />
+      <ImportScreen
+        {mode}
+        bind:deck1Text={deckImportStore.deck1Text}
+        bind:deck2Text={deckImportStore.deck2Text}
+        bind:displayName={remoteSessionStore.displayName}
+        busy={sessionBusy}
+        onlineBusy={remoteSessionStore.connecting || remoteSessionStore.busy}
+        connected={remoteSessionStore.connected}
+        {error}
+        onlineError={remoteSessionStore.error}
+        opponents={remoteSessionStore.opponents}
+        games={remoteSessionStore.myGames}
+        setMode={(nextMode) => remoteSessionStore.setMode(nextMode)}
+        startGame={startGame}
+        {connectOnline}
+        {disconnectOnline}
+        {inviteOnline}
+        joinOnlineGame={joinOnlineGame}
+      />
+  {:else if invitePrompt}
+    <AppHeader />
+    <section class="remote-invite-screen">
+      <div class="invite-panel">
+        <strong>Game invitation</strong>
+        <span>Choose your deck to join this match.</span>
+        <div>
+          <button disabled={resolvingPrompt} onclick={acceptInvite}>Accept</button>
+          <button disabled={resolvingPrompt} onclick={declineInvite}>Decline</button>
+        </div>
+      </div>
+      {#if error}
+        <pre class="invite-error">{error}</pre>
+      {/if}
+    </section>
   {:else if bottomPlayer && topPlayer}
     <TableShell {debugZones}>
       <GameStatus
@@ -765,7 +855,7 @@
         bind:autoConfirmPrompts={viewSettingsStore.autoConfirmPrompts}
         bind:debugZones={viewSettingsStore.debugZones}
         bind:showLogs={viewSettingsStore.showLogs}
-        {busy}
+        busy={sessionBusy}
         promptActive={!!currentPrompt}
         {gameFinished}
         {error}
@@ -773,6 +863,7 @@
         {passTurn}
         {concede}
         {switchSides}
+        switchDisabled={mode === 'remote'}
         {resetGame}
       />
 
@@ -791,6 +882,17 @@
           resolving={resolvingPrompt}
           confirm={confirmBoardPromptTargets}
         />
+      {:else if invitePrompt}
+        <PromptDock>
+          <div class="invite-panel">
+            <strong>Game invitation</strong>
+            <span>Choose your deck to join this match.</span>
+            <div>
+              <button disabled={resolvingPrompt} onclick={acceptInvite}>Accept</button>
+              <button disabled={resolvingPrompt} onclick={declineInvite}>Decline</button>
+            </div>
+          </div>
+        </PromptDock>
       {:else if currentPrompt && !(autoConfirmPrompts && autoConfirmPrompt)}
         <PromptDock mode={currentPromptDockMode}>
           {#key promptInstanceKey(currentPrompt)}
@@ -882,7 +984,7 @@
           <ActiveFocus
             slot={focusedSlot}
             benchTargets={focusedBenchTargets}
-            {busy}
+            busy={sessionBusy}
             promptActive={!!currentPrompt}
             canAct={focusedCanAct}
             {canRetreatToSlot}
@@ -910,3 +1012,50 @@
     </TableShell>
   {/if}
 </main>
+
+<style>
+  .invite-panel {
+    display: grid;
+    gap: 10px;
+    min-width: min(360px, calc(100vw - 32px));
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(26, 31, 39, 0.16);
+    background: #f7f8fa;
+    color: #1d232b;
+    box-shadow: 0 12px 32px rgba(12, 15, 19, 0.18);
+  }
+
+  .invite-panel strong {
+    font-size: 14px;
+  }
+
+  .invite-panel span {
+    color: #566272;
+    font-size: 13px;
+  }
+
+  .invite-panel div {
+    display: flex;
+    gap: 8px;
+  }
+
+  .remote-invite-screen {
+    min-height: 100vh;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 72px 24px 24px;
+  }
+
+  .invite-error {
+    margin: 0;
+    padding: 12px;
+    border-radius: 8px;
+    background: #fff0f1;
+    border: 1px solid #d87883;
+    color: #7d2732;
+    white-space: pre-wrap;
+  }
+</style>

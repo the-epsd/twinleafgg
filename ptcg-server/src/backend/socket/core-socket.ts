@@ -10,6 +10,7 @@ import { SocketWrapper, Response } from './socket-wrapper';
 import { deepCompare } from '../../utils/utils';
 import { Base64 } from '../../utils';
 import { ApiErrorEnum } from '../common/errors';
+import { StateSanitizer } from './state-sanitizer';
 
 export class CoreSocket {
 
@@ -17,12 +18,14 @@ export class CoreSocket {
   private socket: SocketWrapper;
   private core: Core;
   private cache: SocketCache;
+  private stateSanitizer: StateSanitizer;
 
   constructor(client: Client, socket: SocketWrapper, core: Core, cache: SocketCache) {
     this.cache = cache;
     this.client = client;
     this.socket = socket;
     this.core = core;
+    this.stateSanitizer = new StateSanitizer(client, cache);
 
     // core listeners
     this.socket.addListener('core:getInfo', this.getCoreInfo.bind(this));
@@ -134,7 +137,25 @@ export class CoreSocket {
     }
 
     const game = this.core.createGame(this.client, params.deck, params.gameSettings, invited, params.deckId);
-    response('ok', CoreSocket.buildGameState(game));
+    response('ok', this.buildClientGameState(game));
+  }
+
+  private buildClientGameState(game: Game): GameState {
+    game.setBonusHps(game.state);
+    const state = this.stateSanitizer.sanitize(game.state, game.id);
+    const serializer = new StateSerializer();
+    const serializedState = serializer.serialize(state);
+    const base64 = new Base64();
+    const stateData = base64.encode(serializedState);
+    return {
+      gameId: game.id,
+      stateData,
+      clientIds: game.clients.map(client => client.id),
+      recordingEnabled: game.gameSettings.recordingEnabled,
+      timeLimit: game.gameSettings.timeLimit,
+      playerStats: game.playerStats,
+      format: game.format
+    };
   }
 
   public static buildUserInfo(user: User, connected: boolean = true): UserInfo {
@@ -163,6 +184,7 @@ export class CoreSocket {
       turn: state.turn,
       activePlayer: state.activePlayer,
       players,
+      clientIds: game.clients.map(client => client.id),
       playerUserIds: game.getPlayerUserIds()
     };
   }

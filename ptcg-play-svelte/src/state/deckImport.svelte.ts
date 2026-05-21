@@ -1,5 +1,5 @@
 import { SAMPLE_DECK } from '../lib/game/deckImport';
-import { parseLocalGameDecks } from './deckImportModel';
+import { parseLocalGameDeck, parseLocalGameDecks } from './deckImportModel';
 
 class DeckImportStore {
   deck1Text = $state(SAMPLE_DECK);
@@ -7,6 +7,10 @@ class DeckImportStore {
 
   parseLocalGameDecks() {
     return parseLocalGameDecks(this.deck1Text, this.deck2Text);
+  }
+
+  parseRemoteDeck() {
+    return parseLocalGameDeck(this.deck1Text, 'Your deck');
   }
 
   reset() {

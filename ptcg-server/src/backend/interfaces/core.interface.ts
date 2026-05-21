@@ -15,6 +15,8 @@ export interface GameInfo {
   turn: number;
   activePlayer: number;
   players: PlayerInfo[];
+  /** Connected clients attached to this game, including invited clients that have not submitted a deck yet. */
+  clientIds?: number[];
   /** User ids of players in this game (so client can recognize "I am in this game" after reload). */
   playerUserIds?: number[];
 }

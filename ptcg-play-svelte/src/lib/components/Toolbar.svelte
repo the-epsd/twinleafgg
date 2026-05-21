@@ -19,6 +19,7 @@
     passTurn: () => void;
     concede: () => void;
     switchSides: () => void;
+    switchDisabled?: boolean;
     resetGame: () => void;
   };
 
@@ -39,6 +40,7 @@
     passTurn,
     concede,
     switchSides,
+    switchDisabled = false,
     resetGame,
   }: Props = $props();
 </script>
@@ -71,7 +73,7 @@
     <button disabled={busy || promptActive || gameFinished} onclick={passTurn}>Pass turn</button>
     <button class="danger" disabled={busy || promptActive || gameFinished} onclick={concede}>Concede</button>
   </div>
-  <button onclick={switchSides}>Switch sides</button>
+  <button disabled={switchDisabled} onclick={switchSides}>Switch sides</button>
   <button onclick={resetGame}>Change decks</button>
   {#if error}
     <span class="inline-error">{labelFor(error)}</span>

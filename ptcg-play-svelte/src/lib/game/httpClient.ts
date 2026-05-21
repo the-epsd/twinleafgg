@@ -1,3 +1,4 @@
+import type { GameCommandApi } from './gameApi';
 import type { CardTarget, EngineResponse } from './types';
 
 type Command = {
@@ -15,7 +16,10 @@ async function send(command: Command): Promise<EngineResponse> {
   return data;
 }
 
-export const localGameApi = {
+export const localGameApi: GameCommandApi & {
+  start(player1Deck: string[], player2Deck: string[]): Promise<EngineResponse>;
+  state(): Promise<EngineResponse>;
+} = {
   start(player1Deck: string[], player2Deck: string[]) {
     return send({
       type: 'startGame',

@@ -22,6 +22,12 @@ class GameSessionStore {
     promptLifecycleStore.reset();
   }
 
+  syncExternalUpdate() {
+    if (gameStore.game) {
+      this.afterCommand({ ok: true, view: gameStore.game });
+    }
+  }
+
   private afterCommand(response: EngineResponse) {
     promptLifecycleStore.syncPromptScopedState(response.view?.prompts[0] ?? gameStore.game?.prompts[0]);
     promptLifecycleStore.resetCommandSelection(response.view?.prompts.length ?? gameStore.game?.prompts.length ?? 0);
