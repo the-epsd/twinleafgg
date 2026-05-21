@@ -861,6 +861,7 @@
         bind:deck1Text={deckImportStore.deck1Text}
         bind:deck2Text={deckImportStore.deck2Text}
         bind:displayName={remoteSessionStore.displayName}
+        bind:serverUrl={remoteSessionStore.serverUrl}
         busy={sessionBusy}
         onlineBusy={remoteSessionStore.connecting || remoteSessionStore.busy}
         connected={remoteSessionStore.connected}

@@ -19,6 +19,7 @@
     deck1Text: string;
     deck2Text: string;
     displayName: string;
+    serverUrl: string;
     busy?: boolean;
     onlineBusy?: boolean;
     connected?: boolean;
@@ -39,6 +40,7 @@
     deck1Text = $bindable(),
     deck2Text = $bindable(),
     displayName = $bindable(),
+    serverUrl = $bindable(),
     busy = false,
     onlineBusy = false,
     connected = false,
@@ -95,6 +97,10 @@
         <label>
           Display name
           <input bind:value={displayName} spellcheck="false" />
+        </label>
+        <label>
+          Server URL
+          <input bind:value={serverUrl} spellcheck="false" placeholder="https://your-service.up.railway.app" />
         </label>
         <label>
           Your deck
