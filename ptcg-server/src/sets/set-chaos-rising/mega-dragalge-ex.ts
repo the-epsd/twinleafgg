@@ -8,7 +8,7 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/stor
 export class MegaDragalgeex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Skrelp';
-  public tags = [CardTag.POKEMON_ex, CardTag.MEGA];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_SV_MEGA];
   public hp: number = 330;
   public cardType: CardType = N;
   public weakness: { type: CardType }[] = [];
