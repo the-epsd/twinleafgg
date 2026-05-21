@@ -9,6 +9,7 @@
     canDrop?: boolean;
     promptSelectable?: boolean;
     promptSelected?: boolean;
+    promptDamage?: number;
     placement?: '' | 'top-active-slot' | 'bottom-active-slot';
     onclick?: (event: MouseEvent) => void;
     ondragover?: (event: DragEvent) => void;
@@ -21,6 +22,7 @@
     canDrop = false,
     promptSelectable = false,
     promptSelected = false,
+    promptDamage = 0,
     placement = '',
     onclick,
     ondragover,
@@ -66,24 +68,22 @@
   {ondrop}
 >
   <div class="slot-label">{slot.slot === 'active' ? 'Active' : `B${slot.index + 1}`}</div>
+  {#if promptDamage > 0}
+    <div class="prompt-damage-badge">+{promptDamage}</div>
+  {/if}
 
   {#if slot.pokemon}
-    <CardTile card={slot.pokemon} />
-    {#if displayHp || pokemonTypeIcon || slot.damage}
+    <CardTile card={slot.pokemon} damage={slot.damage} />
+    {#if displayHp || pokemonTypeIcon}
       <div class="pokemon-status">
-        {#if displayHp || pokemonTypeIcon}
-          <span class="pokemon-hp-bubble" title={`${displayHp ? `${displayHp} HP` : 'Pokemon'}${pokemonTypeIcon ? ` · ${pokemonTypeLabel}` : ''}`}>
-            {#if displayHp}
-              <span>{displayHp}</span>
-            {/if}
-            {#if pokemonTypeIcon}
-              <img src={pokemonTypeIcon} alt={pokemonTypeLabel} />
-            {/if}
-          </span>
-        {/if}
-        {#if slot.damage}
-          <span class="damage-counter" title={`${slot.damage} damage`}>{slot.damage}</span>
-        {/if}
+        <span class="pokemon-hp-bubble" title={`${displayHp ? `${displayHp} HP` : 'Pokemon'}${pokemonTypeIcon ? ` · ${pokemonTypeLabel}` : ''}`}>
+          {#if displayHp}
+            <span>{displayHp}</span>
+          {/if}
+          {#if pokemonTypeIcon}
+            <img src={pokemonTypeIcon} alt={pokemonTypeLabel} />
+          {/if}
+        </span>
       </div>
     {/if}
     {#if slot.energy.length}
@@ -113,6 +113,7 @@
 
 <style>
   .board-slot {
+    --slot-card-w: var(--card-w);
     position: relative;
     width: var(--card-w);
     min-width: 0;
@@ -132,6 +133,7 @@
   }
 
   .board-slot.active {
+    --slot-card-w: var(--active-w);
     width: var(--active-w);
   }
 
@@ -170,6 +172,25 @@
     font-weight: 800;
     opacity: 0;
     transition: opacity 120ms ease;
+  }
+
+  .prompt-damage-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 7;
+    min-width: 34px;
+    padding: 5px 8px;
+    border-radius: 999px;
+    transform: translate(-50%, -50%);
+    background: #c2410c;
+    color: #fff7ed;
+    box-shadow: 0 8px 18px rgba(94, 36, 12, 0.28);
+    font-size: 14px;
+    font-weight: 900;
+    line-height: 1;
+    text-align: center;
+    pointer-events: none;
   }
 
   .board-slot:hover .slot-label,
@@ -215,7 +236,7 @@
     z-index: 6;
     display: grid;
     justify-items: end;
-    gap: clamp(2px, calc(var(--card-w) * 0.025), 5px);
+    gap: clamp(2px, calc(var(--slot-card-w) * 0.025), 5px);
     max-width: 100%;
     pointer-events: none;
   }
@@ -223,9 +244,9 @@
   .pokemon-hp-bubble {
     display: inline-flex;
     align-items: center;
-    gap: clamp(2px, calc(var(--card-w) * 0.03), 5px);
-    min-height: clamp(18px, calc(var(--card-w) * 0.16), 26px);
-    padding: clamp(1px, calc(var(--card-w) * 0.018), 3px) clamp(3px, calc(var(--card-w) * 0.04), 6px) clamp(1px, calc(var(--card-w) * 0.018), 3px) clamp(6px, calc(var(--card-w) * 0.055), 10px);
+    gap: clamp(2px, calc(var(--slot-card-w) * 0.03), 5px);
+    min-height: clamp(18px, calc(var(--slot-card-w) * 0.16), 26px);
+    padding: clamp(1px, calc(var(--slot-card-w) * 0.018), 3px) clamp(3px, calc(var(--slot-card-w) * 0.04), 6px) clamp(1px, calc(var(--slot-card-w) * 0.018), 3px) clamp(6px, calc(var(--slot-card-w) * 0.055), 10px);
     border-radius: 5px;
     border: 1px solid rgba(255, 255, 255, 0.94);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 244, 247, 0.96));
@@ -233,7 +254,7 @@
       0 5px 13px rgba(21, 28, 36, 0.28),
       inset 0 1px 0 rgba(255, 255, 255, 0.9);
     color: #111820;
-    font-size: clamp(11px, calc(var(--card-w) * 0.105), 16px);
+    font-size: clamp(11px, calc(var(--slot-card-w) * 0.105), 16px);
     font-weight: 950;
     line-height: 1;
     white-space: nowrap;
@@ -241,42 +262,18 @@
   }
 
   .pokemon-hp-bubble img {
-    width: clamp(13px, calc(var(--card-w) * 0.12), 19px);
-    height: clamp(13px, calc(var(--card-w) * 0.12), 19px);
+    width: clamp(13px, calc(var(--slot-card-w) * 0.12), 19px);
+    height: clamp(13px, calc(var(--slot-card-w) * 0.12), 19px);
     object-fit: contain;
     filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.28));
   }
 
-  .damage-counter {
-    display: inline-grid;
-    place-items: center;
-    width: clamp(27px, calc(var(--card-w) * 0.27), 40px);
-    height: clamp(27px, calc(var(--card-w) * 0.27), 40px);
-    padding: 0;
-    border-radius: 999px;
-    border: 1px solid rgba(128, 76, 18, 0.46);
-    background:
-      radial-gradient(circle at 34% 24%, rgba(255, 232, 121, 0.9), transparent 34%),
-      linear-gradient(180deg, #ffb03d 0%, #f39023 54%, #c97018 100%);
-    box-shadow:
-      0 3px 8px rgba(95, 48, 13, 0.28),
-      inset 0 2px 2px rgba(255, 236, 155, 0.7),
-      inset 0 -2px 3px rgba(128, 60, 10, 0.34);
-    color: #fff8df;
-    font-size: clamp(12px, calc(var(--card-w) * 0.14), 18px);
-    font-weight: 950;
-    line-height: 1;
-    -webkit-text-stroke: clamp(1px, calc(var(--card-w) * 0.012), 1.5px) #1f1f1f;
-    paint-order: stroke fill;
-    text-shadow: none;
-  }
-
   .energy-badges {
-    --energy-gap: 2px;
-    --energy-icon-size: calc((var(--card-w) - (var(--energy-gap) * 3)) / 4);
+    --energy-gap: clamp(2px, calc(var(--slot-card-w) * 0.018), 3px);
+    --energy-icon-size: calc((var(--slot-card-w) - (var(--energy-gap) * 3)) / 4);
     position: absolute;
     left: 0;
-    bottom: -10px;
+    bottom: calc(var(--slot-card-w) * -0.095);
     z-index: 5;
     width: 100%;
     min-height: var(--energy-icon-size);
@@ -284,10 +281,6 @@
     align-items: center;
     gap: var(--energy-gap);
     pointer-events: none;
-  }
-
-  .board-slot.active .energy-badges {
-    --energy-icon-size: calc((var(--active-w) - (var(--energy-gap) * 3)) / 4);
   }
 
   .energy-badges img {

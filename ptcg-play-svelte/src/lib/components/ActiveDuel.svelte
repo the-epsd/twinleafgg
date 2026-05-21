@@ -15,6 +15,7 @@
     isPlayableTarget: (slot: PokemonSlotView) => boolean;
     isBoardPromptSelectable: (slot: PokemonSlotView) => boolean;
     isBoardPromptSelected: (slot: PokemonSlotView) => boolean;
+    boardPromptDamage: (slot: PokemonSlotView) => number;
     clickSlot: (slot: PokemonSlotView) => void;
     allowDrop: (event: DragEvent, slot: PokemonSlotView) => void;
     dropToSlot: (slot: PokemonSlotView, event: DragEvent) => void;
@@ -33,6 +34,7 @@
     isPlayableTarget,
     isBoardPromptSelectable,
     isBoardPromptSelected,
+    boardPromptDamage,
     clickSlot,
     allowDrop,
     dropToSlot,
@@ -58,6 +60,7 @@
     canDrop={isPlayableTarget(topPlayer.active) || canPlaceSetupActive(topPlayer.active)}
     promptSelectable={isBoardPromptSelectable(topPlayer.active)}
     promptSelected={isBoardPromptSelected(topPlayer.active)}
+    promptDamage={boardPromptDamage(topPlayer.active)}
     onclick={() => clickActive(topPlayer.active)}
     ondragover={(event) => allowDrop(event, topPlayer.active)}
     ondrop={(event) => dropToSlot(topPlayer.active, event)}
@@ -74,6 +77,7 @@
     canDrop={isPlayableTarget(bottomPlayer.active) || canPlaceSetupActive(bottomPlayer.active)}
     promptSelectable={isBoardPromptSelectable(bottomPlayer.active)}
     promptSelected={isBoardPromptSelected(bottomPlayer.active)}
+    promptDamage={boardPromptDamage(bottomPlayer.active)}
     onclick={() => clickActive(bottomPlayer.active)}
     ondragover={(event) => allowDrop(event, bottomPlayer.active)}
     ondrop={(event) => dropToSlot(bottomPlayer.active, event)}
@@ -136,8 +140,18 @@
   }
 
   .active-duel :global(.top-active-slot .energy-badges) {
-    inset: -10px 0 auto auto;
+    inset: calc(var(--slot-card-w) * -0.095) 0 auto auto;
     justify-content: flex-end;
+    transform: rotate(180deg);
+  }
+
+  .active-duel :global(.top-active-slot .pokemon-status) {
+    inset: auto auto 0 0;
+    align-items: start;
+    justify-items: start;
+  }
+
+  .active-duel :global(.top-active-slot .damage-counter-value) {
     transform: rotate(180deg);
   }
 

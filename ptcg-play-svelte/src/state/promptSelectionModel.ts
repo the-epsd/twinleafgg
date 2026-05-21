@@ -66,6 +66,67 @@ export function toggleBoardTarget(selectedTargets: CardTarget[], target: CardTar
       : selectedTargets;
 }
 
+export type DamagePlacement = {
+  target: CardTarget;
+  damage: number;
+};
+
+export function totalPlacedDamage(placements: DamagePlacement[]) {
+  return placements.reduce((sum, placement) => sum + placement.damage, 0);
+}
+
+export function damageForTarget(placements: DamagePlacement[], target: CardTarget) {
+  return placements.find((placement) => sameTarget(placement.target, target))?.damage ?? 0;
+}
+
+export function sameDamagePlacements(left: DamagePlacement[], right: DamagePlacement[]) {
+  return left.length === right.length
+    && left.every((placement, index) =>
+      placement.damage === right[index].damage && sameTarget(placement.target, right[index].target),
+    );
+}
+
+export function maxDamageForTarget(maxAllowedDamage: DamagePlacement[], target: CardTarget) {
+  return maxAllowedDamage.find((placement) => sameTarget(placement.target, target))?.damage ?? Infinity;
+}
+
+export function addDamagePlacement(
+  placements: DamagePlacement[],
+  target: CardTarget,
+  amount: number,
+  requiredDamage: number,
+  maxTargetDamage = Infinity,
+) {
+  if (amount <= 0 || totalPlacedDamage(placements) + amount > requiredDamage) {
+    return placements;
+  }
+
+  const currentDamage = damageForTarget(placements, target);
+  if (currentDamage + amount > maxTargetDamage) {
+    return placements;
+  }
+
+  if (currentDamage === 0) {
+    return [...placements, { target, damage: amount }];
+  }
+
+  return placements.map((placement) =>
+    sameTarget(placement.target, target)
+      ? { ...placement, damage: placement.damage + amount }
+      : placement,
+  );
+}
+
+export function pruneDamagePlacements(placements: DamagePlacement[], targets: CardTarget[]) {
+  return placements.filter((placement) => targets.some((target) => sameTarget(target, placement.target)));
+}
+
+export function damagePlacementsToResult(placements: DamagePlacement[]) {
+  return placements
+    .filter((placement) => placement.damage > 0)
+    .map((placement) => ({ target: placement.target, damage: placement.damage }));
+}
+
 export function assignAttachTarget(
   assignments: AttachAssignment[],
   energyIndex: number,

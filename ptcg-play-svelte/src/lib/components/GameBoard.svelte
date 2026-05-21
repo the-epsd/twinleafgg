@@ -24,6 +24,7 @@
     isPlayableTarget: (slot: PokemonSlotView) => boolean;
     isBoardPromptSelectable: (slot: PokemonSlotView) => boolean;
     isBoardPromptSelected: (slot: PokemonSlotView) => boolean;
+    boardPromptDamage: (slot: PokemonSlotView) => number;
     clickSlot: (slot: PokemonSlotView) => void;
     allowDrop: (event: DragEvent, slot: PokemonSlotView) => void;
     dropToSlot: (slot: PokemonSlotView, event: DragEvent) => void;
@@ -58,6 +59,7 @@
     isPlayableTarget,
     isBoardPromptSelectable,
     isBoardPromptSelected,
+    boardPromptDamage,
     clickSlot,
     allowDrop,
     dropToSlot,
@@ -185,6 +187,7 @@
       {isPlayableTarget}
       {isBoardPromptSelectable}
       {isBoardPromptSelected}
+      {boardPromptDamage}
       {clickSlot}
       {allowDrop}
       {dropToSlot}
@@ -213,6 +216,7 @@
       {isPlayableTarget}
       {isBoardPromptSelectable}
       {isBoardPromptSelected}
+      {boardPromptDamage}
       {clickSlot}
       {allowDrop}
       {dropToSlot}
@@ -235,6 +239,7 @@
       {isPlayableTarget}
       {isBoardPromptSelectable}
       {isBoardPromptSelected}
+      {boardPromptDamage}
       {clickSlot}
       {allowDrop}
       {dropToSlot}

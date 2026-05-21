@@ -17,6 +17,7 @@
     isPlayableTarget: (slot: PokemonSlotView) => boolean;
     isBoardPromptSelectable: (slot: PokemonSlotView) => boolean;
     isBoardPromptSelected: (slot: PokemonSlotView) => boolean;
+    boardPromptDamage: (slot: PokemonSlotView) => number;
     clickSlot: (slot: PokemonSlotView) => void;
     allowDrop: (event: DragEvent, slot: PokemonSlotView) => void;
     dropToSlot: (slot: PokemonSlotView, event: DragEvent) => void;
@@ -37,6 +38,7 @@
     isPlayableTarget,
     isBoardPromptSelectable,
     isBoardPromptSelected,
+    boardPromptDamage,
     clickSlot,
     allowDrop,
     dropToSlot,
@@ -78,6 +80,7 @@
         canDrop={isPlayableTarget(slot)}
         promptSelectable={isBoardPromptSelectable(slot)}
         promptSelected={isBoardPromptSelected(slot)}
+        promptDamage={boardPromptDamage(slot)}
         onclick={() => clickSlot(slot)}
         ondragover={(event) => allowDrop(event, slot)}
         ondrop={(event) => dropToSlot(slot, event)}
@@ -167,6 +170,7 @@
   }
 
   .bench-row :global(.board-slot) {
+    --slot-card-w: var(--bench-card-w);
     width: var(--bench-card-w);
     pointer-events: auto;
   }
@@ -175,13 +179,19 @@
     transform: rotate(180deg);
   }
 
-  .bench-row :global(.energy-badges) {
-    --energy-icon-size: calc((var(--bench-card-w) - (var(--energy-gap) * 3)) / 4);
+  .bench-row.opponent :global(.energy-badges) {
+    inset: calc(var(--slot-card-w) * -0.095) 0 auto auto;
+    justify-content: flex-end;
+    transform: rotate(180deg);
   }
 
-  .bench-row.opponent :global(.energy-badges) {
-    inset: -10px 0 auto auto;
-    justify-content: flex-end;
+  .bench-row.opponent :global(.pokemon-status) {
+    inset: auto auto 0 0;
+    align-items: start;
+    justify-items: start;
+  }
+
+  .bench-row.opponent :global(.damage-counter-value) {
     transform: rotate(180deg);
   }
 </style>

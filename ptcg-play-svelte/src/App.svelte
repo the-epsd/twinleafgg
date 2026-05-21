@@ -43,7 +43,13 @@
   import { gameSessionStore } from './state/gameSession.svelte';
   import { promptLifecycleStore } from './state/promptLifecycle.svelte';
   import { promptSelectionStore } from './state/promptSelection.svelte';
-  import { canAssignAttachTarget, isAttachEnergyAvailable as isAttachEnergyAvailableModel } from './state/promptSelectionModel';
+  import {
+    canAssignAttachTarget,
+    damagePlacementsToResult,
+    isAttachEnergyAvailable as isAttachEnergyAvailableModel,
+    totalPlacedDamage,
+    type DamagePlacement,
+  } from './state/promptSelectionModel';
   import { selectionStore } from './state/selection.svelte';
   import { setupSelectionStore } from './state/setupSelection.svelte';
   import {
@@ -85,16 +91,44 @@
   let currentPrompt = $derived(game?.prompts[0]);
   let boardTargetPrompt = $derived(currentPrompt?.className === 'ChoosePokemonPrompt' ? currentPrompt : null);
   let attachPrompt = $derived(currentPrompt?.className === 'AttachEnergyPrompt' ? currentPrompt : null);
+  let damagePrompt = $derived(currentPrompt?.className === 'PutDamagePrompt' ? currentPrompt : null);
   let boardPromptTargets = $derived(boardTargetPrompt && game ? getBoardPromptTargets(game, boardTargetPrompt) : []);
   let attachPromptCards = $derived(attachPrompt ? extractPromptCards(attachPrompt.fields) : []);
   let attachPromptMin = $derived(normalizePromptLimit(promptOptions(attachPrompt).min, 0));
   let attachPromptMax = $derived(normalizePromptLimit(promptOptions(attachPrompt).max, attachPromptCards.length || 1));
   let attachPromptTargets = $derived(attachPrompt && game ? getAttachPromptTargets(game, attachPrompt) : []);
+  let damagePromptTargets = $derived(damagePrompt && game ? getBoardPromptTargets(game, damagePrompt) : []);
+  let damagePromptOptions = $derived(promptOptions(damagePrompt));
+  let damagePromptStep = $derived(normalizePromptLimit(damagePromptOptions.damageMultiple, 10));
+  let damagePromptRequired = $derived(normalizePromptLimit(damagePrompt?.fields.damage, 0));
+  let damagePromptMaxAllowed = $derived(normalizeDamagePlacements(damagePrompt?.fields.maxAllowedDamage));
+  let damagePlacements = $derived(promptSelectionStore.damagePlacements);
+  let damagePlacedTotal = $derived(totalPlacedDamage(damagePlacements));
+  let canConfirmDamagePrompt = $derived(
+    !!damagePrompt
+      && damagePlacedTotal > 0
+      && (
+        damagePromptOptions.allowPlacePartialDamage
+          ? damagePlacedTotal <= damagePromptRequired
+          : damagePlacedTotal === damagePromptRequired
+      ),
+  );
+  let damagePromptInstanceKey = $derived(promptInstanceKey(damagePrompt));
+  let lastDamagePromptInstanceKey = $state('');
   $effect(() => {
     promptSelectionStore.pruneAttachAssignments(attachPromptCards, attachPromptTargets, attachPromptMax);
   });
   $effect(() => {
     promptSelectionStore.clearUnavailableAttachEnergy(isAttachEnergyAvailable);
+  });
+  $effect(() => {
+    promptSelectionStore.pruneDamagePlacements(damagePromptTargets);
+  });
+  $effect(() => {
+    if (damagePromptInstanceKey !== lastDamagePromptInstanceKey) {
+      promptSelectionStore.resetDamagePlacements();
+      lastDamagePromptInstanceKey = damagePromptInstanceKey;
+    }
   });
   let boardPromptMin = $derived(normalizePromptLimit(promptOptions(boardTargetPrompt).min, 1));
   let boardPromptMax = $derived(normalizePromptLimit(promptOptions(boardTargetPrompt).max, 1));
@@ -253,6 +287,11 @@
   function clickSlot(slot: PokemonSlotView) {
     if (attachPrompt && isBoardPromptSelectable(slot)) {
       assignAttachPromptTarget(slot);
+      return;
+    }
+
+    if (damagePrompt && isBoardPromptSelectable(slot)) {
+      placeDamageOnSlot(slot);
       return;
     }
 
@@ -493,6 +532,18 @@
     return promptLimit(value, fallback);
   }
 
+  function normalizeDamagePlacements(value: unknown): DamagePlacement[] {
+    return Array.isArray(value)
+      ? value.filter((item): item is DamagePlacement =>
+          item
+            && typeof item === 'object'
+            && 'target' in item
+            && 'damage' in item
+            && typeof item.damage === 'number',
+        )
+      : [];
+  }
+
   function canAct(playerIndex: number) {
     return canPlayerAct({
       playerIndex,
@@ -530,6 +581,13 @@
       const target = targetForPromptSlot(attachPrompt, slot);
       return canAssignAttachPromptTarget(target);
     }
+    if (damagePrompt) {
+      if (slot.empty || damagePlacedTotal >= damagePromptRequired) {
+        return false;
+      }
+      const target = targetForPromptSlot(damagePrompt, slot);
+      return damagePromptTargets.some((item) => sameTarget(item, target));
+    }
     if (!boardTargetPrompt || slot.empty) {
       return false;
     }
@@ -544,6 +602,13 @@
       }
       const target = targetForPromptSlot(attachPrompt, slot);
       return attachPromptAssignments.some((assignment) => sameTarget(assignment.target, target));
+    }
+    if (damagePrompt) {
+      if (slot.empty) {
+        return false;
+      }
+      const target = targetForPromptSlot(damagePrompt, slot);
+      return promptSelectionStore.damageForTarget(target) > 0;
     }
     if (!boardTargetPrompt || slot.empty) {
       return false;
@@ -562,6 +627,38 @@
       return;
     }
     promptSelectionStore.toggleBoardTarget(target, boardPromptMax);
+  }
+
+  function boardPromptDamage(slot: PokemonSlotView) {
+    if (!damagePrompt || slot.empty) {
+      return 0;
+    }
+    return promptSelectionStore.damageForTarget(targetForPromptSlot(damagePrompt, slot));
+  }
+
+  function placeDamage(target: CardTarget) {
+    if (!damagePrompt || !damagePromptTargets.some((item) => sameTarget(item, target))) {
+      return;
+    }
+    promptSelectionStore.placeDamage(target, damagePromptStep, damagePromptRequired, damagePromptMaxAllowed);
+  }
+
+  function placeDamageOnSlot(slot: PokemonSlotView) {
+    if (!damagePrompt || slot.empty) {
+      return;
+    }
+    placeDamage(targetForPromptSlot(damagePrompt, slot));
+  }
+
+  function resetDamagePrompt() {
+    promptSelectionStore.resetDamagePlacements();
+  }
+
+  function confirmDamagePrompt() {
+    if (!canConfirmDamagePrompt) {
+      return;
+    }
+    void resolvePrompt(damagePlacementsToResult(damagePlacements));
   }
 
   function confirmBoardPromptTargets() {
@@ -703,10 +800,16 @@
               resolving={resolvingPrompt}
               activeAttachEnergyIndex={attachPromptEnergyIndex}
               attachAssignments={attachPromptAssignments}
+              {damagePlacements}
+              {damagePlacedTotal}
+              {canConfirmDamagePrompt}
               onresolve={resolvePrompt}
               onattachEnergySelect={selectAttachPromptEnergy}
               onattachEnergyUnassign={removeAttachPromptAssignment}
               onattachEnergyReset={resetAttachPromptAssignments}
+              ondamagePlace={placeDamage}
+              ondamageReset={resetDamagePrompt}
+              ondamageConfirm={confirmDamagePrompt}
             />
           {/key}
         </PromptDock>
@@ -745,6 +848,7 @@
           {isPlayableTarget}
           {isBoardPromptSelectable}
           {isBoardPromptSelected}
+          boardPromptDamage={boardPromptDamage}
           {clickSlot}
           {allowDrop}
           {dropToSlot}

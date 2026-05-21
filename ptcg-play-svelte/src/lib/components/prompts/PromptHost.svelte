@@ -15,7 +15,8 @@
   import WaitPrompt from './WaitPrompt.svelte';
   import type { AttachAssignment } from '../../game/preview';
   import { extractPromptCards } from '../../game/prompts';
-  import type { GameView, PromptView } from '../../game/types';
+  import type { CardTarget, GameView, PromptView } from '../../game/types';
+  import type { DamagePlacement } from '../../../state/promptSelectionModel';
 
   type Props = {
     game: GameView;
@@ -24,10 +25,16 @@
     autoContinue?: boolean;
     activeAttachEnergyIndex?: number | null;
     attachAssignments?: AttachAssignment[];
+    damagePlacements?: DamagePlacement[];
+    damagePlacedTotal?: number;
+    canConfirmDamagePrompt?: boolean;
     onresolve: (value: unknown) => void;
     onattachEnergySelect: (index: number | null) => void;
     onattachEnergyUnassign: (index: number) => void;
     onattachEnergyReset: () => void;
+    ondamagePlace: (target: CardTarget) => void;
+    ondamageReset: () => void;
+    ondamageConfirm: () => void;
   };
 
   let {
@@ -37,10 +44,16 @@
     autoContinue = false,
     activeAttachEnergyIndex = null,
     attachAssignments = [],
+    damagePlacements = [],
+    damagePlacedTotal = 0,
+    canConfirmDamagePrompt = false,
     onresolve,
     onattachEnergySelect,
     onattachEnergyUnassign,
     onattachEnergyReset,
+    ondamagePlace,
+    ondamageReset,
+    ondamageConfirm,
   }: Props = $props();
 
   let isAlertLike = $derived(
@@ -81,7 +94,18 @@
 {:else if isEnergyTransferPrompt}
   <EnergyTransferPrompt {game} {prompt} {resolving} {onresolve} />
 {:else if isDamagePrompt}
-  <DamagePrompt {game} {prompt} {resolving} {onresolve} />
+  <DamagePrompt
+    {game}
+    {prompt}
+    {resolving}
+    {damagePlacements}
+    {damagePlacedTotal}
+    {canConfirmDamagePrompt}
+    {onresolve}
+    {ondamagePlace}
+    {ondamageReset}
+    {ondamageConfirm}
+  />
 {:else if isShuffleOrderPrompt}
   <ShuffleOrderPrompt {prompt} {resolving} {onresolve} />
 {:else if prompt.className === 'AttachEnergyPrompt'}

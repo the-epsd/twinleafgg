@@ -1,11 +1,16 @@
 import { describe, expect, it } from 'vitest';
 import { SlotType, type CardTarget, type CardView } from '../lib/game/types';
 import {
+  addDamagePlacement,
   assignAttachTarget,
   canAssignAttachTarget,
+  damagePlacementsToResult,
+  damageForTarget,
   isAttachEnergyAvailable,
   pruneAttachAssignments,
+  pruneDamagePlacements,
   sameAttachAssignments,
+  totalPlacedDamage,
   toggleBoardTarget,
 } from './promptSelectionModel';
 
@@ -77,5 +82,31 @@ describe('prompt selection model', () => {
     expect(canAssignAttachTarget(targetB, 5, assignments, [targetA, targetB], 2, { differentTargets: true }, available)).toBe(true);
     expect(canAssignAttachTarget(targetA, 5, assignments, [targetA, targetB], 2, { differentTargets: true }, available)).toBe(false);
     expect(canAssignAttachTarget(targetC, 5, assignments, [targetA, targetB], 2, {}, available)).toBe(false);
+  });
+
+  it('places damage in fixed increments without exceeding prompt limits', () => {
+    const first = addDamagePlacement([], targetB, 10, 60, 60);
+    const second = addDamagePlacement(first, targetB, 10, 60, 60);
+    const third = addDamagePlacement(second, targetC, 10, 60, 20);
+    const cappedByTarget = addDamagePlacement(third, targetC, 20, 60, 20);
+    const cappedByTotal = addDamagePlacement([
+      { target: targetB, damage: 50 },
+      { target: targetC, damage: 10 },
+    ], targetB, 10, 60, 60);
+
+    expect(second).toEqual([{ target: targetB, damage: 20 }]);
+    expect(third).toEqual([
+      { target: targetB, damage: 20 },
+      { target: targetC, damage: 10 },
+    ]);
+    expect(cappedByTarget).toBe(third);
+    expect(cappedByTotal).toEqual([
+      { target: targetB, damage: 50 },
+      { target: targetC, damage: 10 },
+    ]);
+    expect(totalPlacedDamage(third)).toBe(30);
+    expect(damageForTarget(third, targetB)).toBe(20);
+    expect(damagePlacementsToResult(third)).toEqual(third);
+    expect(pruneDamagePlacements(third, [targetB])).toEqual([{ target: targetB, damage: 20 }]);
   });
 });
