@@ -12,7 +12,6 @@
     bottomActiveSlot: PokemonSlotView;
     currentStadium?: CardView;
     currentStadiumOwner?: PlayerView;
-    canPlayOnBoard?: boolean;
     isPlayableTarget: (slot: PokemonSlotView) => boolean;
     isBoardPromptSelectable: (slot: PokemonSlotView) => boolean;
     isBoardPromptSelected: (slot: PokemonSlotView) => boolean;
@@ -31,7 +30,6 @@
     bottomActiveSlot,
     currentStadium,
     currentStadiumOwner,
-    canPlayOnBoard = false,
     isPlayableTarget,
     isBoardPromptSelectable,
     isBoardPromptSelected,

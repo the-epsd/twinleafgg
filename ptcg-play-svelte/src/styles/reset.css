@@ -48,6 +48,7 @@ main {
 
 @media (max-width: 980px) {
   body {
-    overflow: auto;
+    overflow-x: auto;
+    overflow-y: auto;
   }
 }

@@ -210,7 +210,6 @@
       {bottomActiveSlot}
       {currentStadium}
       {currentStadiumOwner}
-      {canPlayOnBoard}
       {isPlayableTarget}
       {isBoardPromptSelectable}
       {isBoardPromptSelected}

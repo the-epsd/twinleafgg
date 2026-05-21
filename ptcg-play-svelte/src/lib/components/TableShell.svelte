@@ -18,6 +18,7 @@
     --board-card-w: clamp(58px, min(8vw, 8.1vh), 104px);
     --card-w: var(--board-card-w);
     --hand-card-w: min(clamp(96px, min(7.8vw, 14.5vh), 150px), calc(var(--board-card-w) * 1.55));
+    --min-table-width: 760px;
     --board-row-gap: calc(var(--board-card-w) * 0.16);
     --active-gap: calc(var(--board-card-w) * 0.24);
     --bench-card-w: calc(var(--board-card-w) * 1.24);
@@ -36,6 +37,8 @@
     --board-edge-pad-x: var(--board-edge-pad);
     --board-content-inset-y: calc(var(--board-outline-pad-y) + var(--board-content-pad));
     --board-content-inset-x: calc(var(--board-edge-pad-x) + var(--board-content-pad));
+    width: max(100vw, var(--min-table-width));
+    min-width: var(--min-table-width);
     min-height: 100vh;
     position: relative;
     overflow: hidden;
