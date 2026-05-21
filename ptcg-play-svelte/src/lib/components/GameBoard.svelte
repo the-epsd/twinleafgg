@@ -296,7 +296,7 @@
     gap: var(--board-row-gap);
     align-items: stretch;
     justify-items: stretch;
-    padding: calc(var(--board-card-w) * 0.16) var(--board-edge-pad-x);
+    padding: var(--board-content-inset-y) var(--board-content-inset-x);
     background: rgba(226, 228, 232, 0.56);
     overflow: visible;
     transform: rotateX(var(--board-tilt, 8deg)) scaleY(var(--board-scale-y, 0.94)) translateY(var(--board-lift, 0px));

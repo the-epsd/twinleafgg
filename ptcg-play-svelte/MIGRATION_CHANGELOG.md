@@ -507,6 +507,9 @@ intended to help reviewers and future agents understand why files moved.
 - Active Pokemon keep the preferred larger size when space allows, but their
   width is capped by the available battle-row height to preserve a gap above
   the bench.
+- Board grid content now uses the paired content inset tokens on both axes, so
+  side piles get the same inner buffer from the board outline as the top and
+  bottom field zones.
 - Re-ran `npm run build` and `npm test -- --run`; both passed. A mocked
   headless Chrome layout smoke at 1512x982, 1280x800, 1440x900, 1366x768,
   1024x768, and 1920x1080 verified exact bottom bench/prize/discard baseline
