@@ -4,11 +4,22 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
+import {
+  StoreLike,
+  State,
+  GameMessage,
+  ChoosePokemonPrompt,
+  PlayerType,
+  SlotType,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DEVOLVE_POKEMON, HEAL_X_DAMAGE_FROM_THIS_POKEMON } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DEVOLVE_POKEMON,
+  HEAL_X_DAMAGE_FROM_THIS_POKEMON,
+} from '../../game/store/prefabs/prefabs';
 
-export class Celebi extends PokemonCard {
+export class CelebiPrismStar extends PokemonCard {
   public tags = [CardTag.PRISM_STAR];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
@@ -21,20 +32,20 @@ export class Celebi extends PokemonCard {
       name: 'Time Distortion',
       cost: [C],
       damage: 0,
-      text: 'Devolve any number of your Benched Pokémon as many times as you like. Put each Evolution card removed this way into your hand.'
+      text: 'Devolve any number of your Benched Pokémon as many times as you like. Put each Evolution card removed this way into your hand.',
     },
     {
       name: 'Leech Seed',
       cost: [G],
       damage: 20,
-      text: 'Heal 20 damage from this Pokémon.'
-    }
+      text: 'Heal 20 damage from this Pokémon.',
+    },
   ];
 
   public set: string = 'LOT';
   public setNumber: string = '19';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Celebi \u25c7';
+  public name: string = 'Celebi Prism Star';
   public fullName: string = 'Celebi \u25c7 LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -43,27 +54,33 @@ export class Celebi extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasEvolved = player.bench.some(b => b.cards.length > 0 && b.getPokemons().length > 1);
+      const hasEvolved = player.bench.some((b) => b.cards.length > 0 && b.getPokemons().length > 1);
 
       if (hasEvolved) {
         const devolveLoop = () => {
-          const evolvedBench = player.bench.filter(b => b.cards.length > 0 && b.getPokemons().length > 1);
+          const evolvedBench = player.bench.filter(
+            (b) => b.cards.length > 0 && b.getPokemons().length > 1,
+          );
           if (evolvedBench.length === 0) {
             return;
           }
 
-          store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON,
-            PlayerType.BOTTOM_PLAYER,
-            [SlotType.BENCH],
-            { min: 0, max: 1, allowCancel: true }
-          ), selected => {
-            if (selected && selected.length > 0 && selected[0].getPokemons().length > 1) {
-              DEVOLVE_POKEMON(store, state, selected[0], player.hand);
-              devolveLoop();
-            }
-          });
+          store.prompt(
+            state,
+            new ChoosePokemonPrompt(
+              player.id,
+              GameMessage.CHOOSE_POKEMON,
+              PlayerType.BOTTOM_PLAYER,
+              [SlotType.BENCH],
+              { min: 0, max: 1, allowCancel: true },
+            ),
+            (selected) => {
+              if (selected && selected.length > 0 && selected[0].getPokemons().length > 1) {
+                DEVOLVE_POKEMON(store, state, selected[0], player.hand);
+                devolveLoop();
+              }
+            },
+          );
         };
 
         devolveLoop();

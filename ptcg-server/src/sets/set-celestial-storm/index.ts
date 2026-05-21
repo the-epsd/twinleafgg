@@ -36,15 +36,14 @@ import { Gulpin } from './gulpin';
 import { Heatran } from './heatran';
 import { Huntail } from './huntail';
 import { Illumise } from './illumise';
-import { Jirachi } from './jirachi';
 import { JirachiPrismStar } from './jirachi-prism-star';
 import { Kartana } from './kartana';
 import { Kecleon } from './kecleon';
 import { Kyogre } from './kyogre';
 import { Lanturn } from './lanturn';
 import { Larvitar } from './larvitar';
-import { Latias } from './latias';
-import { Latios } from './latios';
+import { LatiasPrismStar } from './latias-prism-star';
+import { LatiosPrismStar } from './latios-prism-star';
 import { Lombre } from './lombre';
 import { Lotad } from './lotad';
 import { Loudred } from './loudred';
@@ -192,7 +191,7 @@ import {
 } from './other-prints';
 
 export const setCelestialStorm: Card[] = [
-  // Pokemon
+  // MARK: Pokemon
   new AlolanRaticateGx(),
   new AlolanRattata(),
   new Ariados(),
@@ -230,15 +229,14 @@ export const setCelestialStorm: Card[] = [
   new Heatran(),
   new Huntail(),
   new Illumise(),
-  new Jirachi(),
   new JirachiPrismStar(),
   new Kartana(),
   new Kecleon(),
   new Kyogre(),
   new Lanturn(),
   new Larvitar(),
-  new Latias(),
-  new Latios(),
+  new LatiasPrismStar(),
+  new LatiosPrismStar(),
   new Lombre(),
   new Lotad(),
   new Loudred(),
@@ -316,7 +314,7 @@ export const setCelestialStorm: Card[] = [
   new Whismur2(),
   new Wingull(),
 
-  // Trainers
+  // MARK: Trainers
   new ApricornMaker(),
   new BeastBall(),
   new Copycat(),
@@ -336,7 +334,7 @@ export const setCelestialStorm: Card[] = [
   new TateAndLiza(),
   new TheMaskedRoyal(),
 
-  // Other Prints (Reprints & Alt Arts)
+  // MARK: Secret rares
   new AcroBikeCES(),
   new AcroBikeCESAlt(),
   new AcroBikeCESSR(),

@@ -5,7 +5,7 @@ import { AlolanExeggutor } from './alolan-exeggutor';
 import { AlolanMarowak } from './alolan-marowak';
 import { Amaura } from './amaura';
 import { Araquanid } from './araquanid';
-import { Arceus } from './arceus';
+import { ArceusPrismStar } from './arceus-prism-star';
 import { Aurorus } from './aurorus';
 import { Avalugg } from './avalugg';
 import { Azelf } from './azelf';
@@ -22,7 +22,6 @@ import { Dedenne } from './dedenne';
 import { Delphox } from './delphox';
 import { Dewpider } from './dewpider';
 import { DialgaGX } from './dialga-gx';
-import { Diancie } from './diancie';
 import { DianciePrismStar } from './diancie-prism-star';
 import { Diggersby } from './diggersby';
 import { Honedge2 } from './honedge-2';
@@ -84,7 +83,6 @@ import { Tyrunt } from './tyrunt';
 import { UltraNecrozmaGX } from './ultra-necrozma-gx';
 import { Uxie } from './uxie';
 import { Vivillon } from './vivillon';
-import { Volcanion } from './volcanion';
 import { VolcanionPrismStar } from './volcanion-prism-star';
 import { XerneasGX } from './xerneas-gx';
 import { Xurkitree } from './xurkitree';
@@ -98,14 +96,13 @@ import { CrasherWake } from './crasher-wake';
 import { Diantha } from './diantha';
 import { Eneporter } from './eneporter';
 import { FossilExcavationMap } from './fossil-excavation-map';
-import { Lysandre } from './lysandre';
 import { LysandreLabs } from './lysandre-labs';
 import { LysandrePrismStar } from './lysandre-prism-star';
 import { MetalFryingPan } from './metal-frying-pan';
 import { MysteriousTreasure } from './mysterious-treasure';
 import { UltraReconSquad } from './ultra-recon-squad';
 import { UltraSpace } from './ultra-space';
-import { BeastEnergy } from './beast-energy-prism-star';
+import { BeastEnergyPrismStar } from './beast-energy-prism-star';
 import { UnitEnergyFDY } from './unit-energy-fdy';
 
 import {
@@ -157,14 +154,14 @@ import {
 } from './other-prints';
 
 export const setForbiddenLight: Card[] = [
-  // Pokemon
+  // MARK: Pokemon
   new Abomasnow(),
   new Aegislash(),
   new AlolanExeggutor(),
   new AlolanMarowak(),
   new Amaura(),
   new Araquanid(),
-  new Arceus(),
+  new ArceusPrismStar(),
   new Aurorus(),
   new Avalugg(),
   new Azelf(),
@@ -181,7 +178,6 @@ export const setForbiddenLight: Card[] = [
   new Delphox(),
   new Dewpider(),
   new DialgaGX(),
-  new Diancie(),
   new DianciePrismStar(),
   new Diggersby(),
   new Doublade(),
@@ -243,7 +239,6 @@ export const setForbiddenLight: Card[] = [
   new UltraNecrozmaGX(),
   new Uxie(),
   new Vivillon(),
-  new Volcanion(),
   new VolcanionPrismStar(),
   new XerneasGX(),
   new Xurkitree(),
@@ -252,14 +247,13 @@ export const setForbiddenLight: Card[] = [
   new Zygarde2(),
   new ZygardeGx(),
 
-  // Trainers
+  // MARK: Trainers
   new BeastRing(),
   new Bonnie(),
   new CrasherWake(),
   new Diantha(),
   new Eneporter(),
   new FossilExcavationMap(),
-  new Lysandre(),
   new LysandreLabs(),
   new LysandrePrismStar(),
   new MetalFryingPan(),
@@ -267,11 +261,11 @@ export const setForbiddenLight: Card[] = [
   new UltraReconSquad(),
   new UltraSpace(),
 
-  // Energy
-  new BeastEnergy(),
+  // MARK: Special Energy
+  new BeastEnergyPrismStar(),
   new UnitEnergyFDY(),
 
-  // Other Prints (Reprints & Alt Arts)
+  // MARK: Secret rares
   new LadyFLI(),
   new MysteriousTreasureFLI(),
   new JudgeULFLI(),

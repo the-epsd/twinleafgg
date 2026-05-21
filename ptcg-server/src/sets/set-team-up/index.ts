@@ -103,7 +103,6 @@ import { Primeape } from './primeape';
 import { Psyduck } from './psyduck';
 import { Pupitar } from './pupitar';
 import { Rapidash } from './rapidash';
-import { Shaymin } from './shaymin';
 import { ShayminPrismStar } from './shaymin-prism-star';
 import { Skarmory } from './skarmory';
 import { Spiritomb } from './spiritomb';
@@ -111,7 +110,6 @@ import { Squirtle } from './squirtle';
 import { Squirtle2 } from './squirtle-2';
 import { Starmie } from './starmie';
 import { Staryu } from './staryu';
-import { TapuKoko } from './tapu-koko';
 import { TapuKokoPrismStar } from './tapu-koko-prism-star';
 import { Tauros } from './tauros';
 import { Tentacool } from './tentacool';
@@ -132,7 +130,6 @@ import { Zeraora } from './zeraora';
 import { Zoroark } from './zoroark';
 import { Zorua } from './zorua';
 import { BillsAnalysis } from './bills-analysis';
-import { BlackMarket } from './black-market';
 import { BlackMarketPrismStar } from './black-market-prism-star';
 import { BuffPadding } from './buff-padding';
 import { Dana } from './dana';
@@ -154,7 +151,6 @@ import { ReturnLabel } from './return-label';
 import { SabrinasSuggestion } from './sabrinas-suggestion';
 import { ViridianForest } from './viridian-forest';
 import { WaterMemory } from './water-memory';
-import { WondrousLabyrinth } from './wondrous-labyrinth';
 import { WondrousLabyrinthPrismStar } from './wondrous-labyrinth-prism-star';
 
 import {
@@ -216,7 +212,7 @@ import {
 import { Galvantula } from './galvantula';
 
 export const setTeamUp: Card[] = [
-  // Pokemon
+  // MARK: Pokemon
   new Absol(),
   new Aegislash(),
   new Aerodactyl(),
@@ -322,7 +318,6 @@ export const setTeamUp: Card[] = [
   new Psyduck(),
   new Pupitar(),
   new Rapidash(),
-  new Shaymin(),
   new ShayminPrismStar(),
   new Skarmory(),
   new Spiritomb(),
@@ -330,7 +325,6 @@ export const setTeamUp: Card[] = [
   new Squirtle2(),
   new Starmie(),
   new Staryu(),
-  new TapuKoko(),
   new TapuKokoPrismStar(),
   new Tauros(),
   new Tentacool(),
@@ -351,9 +345,8 @@ export const setTeamUp: Card[] = [
   new Zoroark(),
   new Zorua(),
 
-  // Trainers
+  // MARK: Trainers
   new BillsAnalysis(),
-  new BlackMarket(),
   new BlackMarketPrismStar(),
   new BuffPadding(),
   new Dana(),
@@ -375,10 +368,9 @@ export const setTeamUp: Card[] = [
   new SabrinasSuggestion(),
   new ViridianForest(),
   new WaterMemory(),
-  new WondrousLabyrinth(),
   new WondrousLabyrinthPrismStar(),
 
-  // Other Prints (Reprints & Alt Arts)
+  // MARK: Secret rares
   new BrocksGritTEU(),
   new PikachuZekromGXTEU(),
   new ErikasHospitalityTEU(),

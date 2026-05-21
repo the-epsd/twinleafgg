@@ -4,13 +4,30 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, PlayerType } from '../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  PlayerType,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
-import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON } from '../../game/store/prefabs/prefabs';
+import {
+  AbstractAttackEffect,
+  ApplyWeaknessEffect,
+  DealDamageEffect,
+  PutDamageEffect,
+} from '../../game/store/effects/attack-effects';
+import {
+  WAS_ATTACK_USED,
+  IS_ABILITY_BLOCKED,
+  ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON,
+} from '../../game/store/prefabs/prefabs';
 
-export class Arceus extends PokemonCard {
+export class ArceusPrismStar extends PokemonCard {
   public tags = [CardTag.PRISM_STAR];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = C;
@@ -18,32 +35,37 @@ export class Arceus extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'First Law',
-    powerType: PowerType.ABILITY,
-    text: 'Prevent all effects of your opponent\'s attacks, except damage, done to this Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'First Law',
+      powerType: PowerType.ABILITY,
+      text: "Prevent all effects of your opponent's attacks, except damage, done to this Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Trinity Star',
       cost: [C],
       damage: 30,
-      text: 'You can use this attack only if you have Grass, Water, and Lightning Pokémon on your Bench. Search your deck for up to 3 basic Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.'
-    }
+      text: 'You can use this attack only if you have [G], [W], and [L] Pokémon on your Bench. Search your deck for up to 3 basic Energy cards and attach them to your Pokémon in any way you like. Then, shuffle your deck.',
+    },
   ];
 
   public set: string = 'FLI';
   public setNumber: string = '96';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Arceus ◇';
+  public name: string = 'Arceus Prism Star';
   public fullName: string = 'Arceus ◇ FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: First Law (passive - prevent effects except damage)
     // Ref: set-team-up/dratini.ts (Defensive Scales)
-    if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof AbstractAttackEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const player = StateUtils.findOwner(state, effect.target);
       if (IS_ABILITY_BLOCKED(store, state, player, this)) {
         return state;
@@ -87,23 +109,26 @@ export class Arceus extends PokemonCard {
         }
         const checkType = new CheckPokemonTypeEffect(cardList);
         store.reduceEffect(state, checkType);
-        if (checkType.cardTypes.includes(CardType.GRASS)) { hasGrass = true; }
-        if (checkType.cardTypes.includes(CardType.WATER)) { hasWater = true; }
-        if (checkType.cardTypes.includes(CardType.LIGHTNING)) { hasLightning = true; }
+        if (checkType.cardTypes.includes(CardType.GRASS)) {
+          hasGrass = true;
+        }
+        if (checkType.cardTypes.includes(CardType.WATER)) {
+          hasWater = true;
+        }
+        if (checkType.cardTypes.includes(CardType.LIGHTNING)) {
+          hasLightning = true;
+        }
       });
 
       if (!hasGrass || !hasWater || !hasLightning) {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 
-      ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON(
-        store, state, player, 3, 3,
-        {
-          energyFilter: { energyType: EnergyType.BASIC },
-          allowCancel: false,
-          min: 0
-        }
-      );
+      ATTACH_UP_TO_X_ENERGY_FROM_DECK_TO_Y_OF_YOUR_POKEMON(store, state, player, 3, 3, {
+        energyFilter: { energyType: EnergyType.BASIC },
+        allowCancel: false,
+        min: 0,
+      });
     }
 
     return state;

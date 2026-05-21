@@ -83,7 +83,7 @@ import {
 } from './other-prints';
 
 export const setDragonsMajesty: Card[] = [
-  // Pokemon
+  // MARK: Pokemon
   new Altaria(),
   new AltariaGx(),
   new Bagon(),
@@ -140,7 +140,7 @@ export const setDragonsMajesty: Card[] = [
   new Zekrom(),
   new Zygarde(),
 
-  // Trainers
+  // MARK: Trainers
   new BlaineSLastStand(),
   new DragonTalon(),
   new FieryFlint(),
@@ -149,7 +149,7 @@ export const setDragonsMajesty: Card[] = [
   new WelaVolcanoPark(),
   new Zinnia(),
 
-  // Other Prints (Reprints & Alt Arts)
+  // MARK: Secret rares
   new FieryFlint3DRM(),
   new SwitchRaft2DRM(),
   new UltraNecrozmaGXDRM(),
