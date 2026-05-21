@@ -1,5 +1,6 @@
 import type { CardsInfo, GameState, State } from 'ptcg-server';
 import { Base64, CardManager, StateSerializer } from 'ptcg-server';
+import { resolveCardImageUrl } from './cardImages';
 import { SlotType, targetFor, type CardView, type GameView, type LogView, type PlayerView, type PokemonSlotView, type PromptView } from './types';
 
 const phaseLabels: Record<number, string> = {
@@ -223,7 +224,7 @@ function normalizeCard(card: any): CardView | undefined {
     set: card.set,
     setNumber: card.setNumber,
     cardImage: card.cardImage,
-    imageUrl: card.imageUrl,
+    imageUrl: resolveCardImageUrl(card),
     superType: card.superType,
     cardType: card.cardType,
     trainerType: card.trainerType,

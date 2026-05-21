@@ -45,18 +45,15 @@
   }: Props = $props();
 
   let canDropToBench = $derived(canPlayToBenchArea(player) || canPlaceSetupBench(player));
-  let canPlayBoardCard = $derived(canPlayOnBoard && !canPlayToBenchArea(player) && !canPlaceSetupBench(player));
 
-  function playToBench(event: MouseEvent) {
+  function playToBench() {
     if (canPlaceSetupBench(player)) {
       placeSetupBench();
       return;
     }
-    if (canPlayOnBoard) {
-      clickBoardPlay(event);
-      return;
+    if (canPlayToBenchArea(player)) {
+      playToBenchArea(player);
     }
-    playToBenchArea(player);
   }
 </script>
 
@@ -67,8 +64,8 @@
     class:can-drop={canDropToBench}
     tabindex="-1"
     aria-hidden="true"
-    aria-label={canPlayBoardCard ? 'Play selected card' : `Play a Pokemon to ${player.name}'s bench`}
-    title={canPlayBoardCard ? 'Play selected card' : `Play a Pokemon to ${player.name}'s bench`}
+    aria-label={`Play a Basic Pokemon to ${player.name}'s bench`}
+    title={`Play a Basic Pokemon to ${player.name}'s bench`}
     onclick={playToBench}
     ondragover={(event) => allowBenchDrop(event, player)}
     ondrop={(event) => dropToBenchArea(player, event)}

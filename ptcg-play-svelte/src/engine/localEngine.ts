@@ -2,6 +2,7 @@ import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
 import path from 'node:path';
 import readline from 'node:readline';
 import { fileURLToPath } from 'node:url';
+import { resolveCardImageUrl } from '../lib/game/cardImages';
 import {
   SlotType,
   targetFor,
@@ -248,7 +249,7 @@ function normalizeCard(card: any): CardView | undefined {
     set: card.set,
     setNumber: card.setNumber,
     cardImage: card.cardImage,
-    imageUrl: card.imageUrl,
+    imageUrl: resolveCardImageUrl(card),
     superType: card.superType,
     cardType: card.cardType,
     trainerType: card.trainerType,

@@ -136,6 +136,15 @@
       lastDamagePromptInstanceKey = damagePromptInstanceKey;
     }
   });
+  $effect(() => {
+    if (!damagePrompt || !game) {
+      return;
+    }
+    window.addEventListener('click', clickDamagePromptSlotAtPoint, true);
+    return () => {
+      window.removeEventListener('click', clickDamagePromptSlotAtPoint, true);
+    };
+  });
   let boardPromptMin = $derived(normalizePromptLimit(promptOptions(boardTargetPrompt).min, 1));
   let boardPromptMax = $derived(normalizePromptLimit(promptOptions(boardTargetPrompt).max, 1));
   let canConfirmBoardPrompt = $derived(!!boardTargetPrompt && selectedBoardTargets.length >= boardPromptMin);
@@ -454,7 +463,7 @@
   }
 
   function allowDrop(event: DragEvent, slot: PokemonSlotView) {
-    if (isPlayableTarget(slot) || canPlayOnBoard || canPlaceSetupActive(slot) || (attachPrompt && isBoardPromptSelectable(slot))) {
+    if (isPlayableTarget(slot) || canPlaceSetupActive(slot) || (attachPrompt && isBoardPromptSelectable(slot))) {
       event.preventDefault();
     }
   }
@@ -466,7 +475,7 @@
   }
 
   function allowBenchDrop(event: DragEvent, player: PlayerView) {
-    if (canPlayToBenchArea(player) || canPlayOnBoard || canPlaceSetupBench(player)) {
+    if (canPlayToBenchArea(player) || canPlaceSetupBench(player)) {
       event.preventDefault();
     }
   }
@@ -501,10 +510,6 @@
       playToSlot(slot);
       return;
     }
-    if (canPlayOnBoard) {
-      playSelectedToBoard();
-      return;
-    }
   }
 
   function dropToBoardPlay(event: DragEvent) {
@@ -530,10 +535,6 @@
     clearDragState();
     if (canPlaceSetupBench(player)) {
       placeSetupBench();
-      return;
-    }
-    if (canPlayOnBoard) {
-      playSelectedToBoard();
       return;
     }
     playToBenchArea(player);
@@ -711,6 +712,51 @@
       return;
     }
     placeDamage(targetForPromptSlot(damagePrompt, slot));
+  }
+
+  function clickDamagePromptSlotAtPoint(event: MouseEvent) {
+    if (!damagePrompt || resolvingPrompt) {
+      return;
+    }
+    if (event.target instanceof Element && event.target.closest('.prompt-dock, .board-prompt-dock')) {
+      return;
+    }
+    const slot = boardPromptSlotAtPoint(event.clientX, event.clientY);
+    if (!slot || !isBoardPromptSelectable(slot)) {
+      return;
+    }
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    placeDamageOnSlot(slot);
+  }
+
+  function boardPromptSlotAtPoint(x: number, y: number) {
+    const slotElement = document.elementsFromPoint(x, y).find((element) =>
+      element instanceof HTMLElement
+        && element.classList.contains('board-slot')
+        && element.classList.contains('prompt-selectable'),
+    );
+    return slotElement instanceof HTMLElement ? boardSlotFromElement(slotElement) : null;
+  }
+
+  function boardSlotFromElement(element: HTMLElement): PokemonSlotView | null {
+    if (!game) {
+      return null;
+    }
+    const ownerIndex = Number(element.dataset.ownerIndex);
+    const slotKind = element.dataset.slotKind;
+    const slotIndex = Number(element.dataset.slotIndex);
+    const player = game.players.find((item) => item.index === ownerIndex);
+    if (!player || !Number.isFinite(slotIndex)) {
+      return null;
+    }
+    if (slotKind === 'active') {
+      return player.active;
+    }
+    if (slotKind === 'bench') {
+      return player.bench.find((slot) => slot.index === slotIndex) ?? null;
+    }
+    return null;
   }
 
   function resetDamagePrompt() {
@@ -902,14 +948,12 @@
               resolving={resolvingPrompt}
               activeAttachEnergyIndex={attachPromptEnergyIndex}
               attachAssignments={attachPromptAssignments}
-              {damagePlacements}
               {damagePlacedTotal}
               {canConfirmDamagePrompt}
               onresolve={resolvePrompt}
               onattachEnergySelect={selectAttachPromptEnergy}
               onattachEnergyUnassign={removeAttachPromptAssignment}
               onattachEnergyReset={resetAttachPromptAssignments}
-              ondamagePlace={placeDamage}
               ondamageReset={resetDamagePrompt}
               ondamageConfirm={confirmDamagePrompt}
             />

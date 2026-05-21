@@ -1,6 +1,7 @@
 import type { CardView, PlayerView, PokemonSlotView } from './types';
 
 const BASIC_STAGE = 2;
+const TOOL_TRAINER_TYPE = 3;
 
 export type BoardPlayAreaContext = {
   selected: CardView | undefined;
@@ -39,6 +40,10 @@ export function isBasicPokemonCard(card: CardView | undefined): card is CardView
   return card.stage === BASIC_STAGE || (card.stage === undefined && !card.evolvesFrom);
 }
 
+function isToolTrainerCard(card: CardView | undefined): boolean {
+  return card?.trainerType === TOOL_TRAINER_TYPE;
+}
+
 export function canEvolveSlot(card: CardView | undefined, slot: PokemonSlotView): boolean {
   return isPokemonCard(card) && !slot.empty && !!card?.evolvesFrom && slot.pokemon?.name === card.evolvesFrom;
 }
@@ -54,11 +59,26 @@ export function canPlayCardToSlot(
   if (slot.ownerIndex !== actorIndex) {
     return false;
   }
-  return slot.slot === 'bench' || slot.slot === 'active';
+  if (slot.slot !== 'bench' && slot.slot !== 'active') {
+    return false;
+  }
+  if (isBasicPokemonCard(card)) {
+    return slot.slot === 'bench' && slot.empty;
+  }
+  if (isPokemonCard(card)) {
+    return canEvolveSlot(card, slot);
+  }
+  if (isEnergyCard(card)) {
+    return !slot.empty;
+  }
+  if (isToolTrainerCard(card)) {
+    return !slot.empty;
+  }
+  return false;
 }
 
 export function canPlayCardToPlayArea(card: CardView | undefined, actorIndex: number | undefined): boolean {
-  return actorIndex !== undefined && !!card;
+  return actorIndex !== undefined && isTrainerOrGenericPlayCard(card) && !isToolTrainerCard(card);
 }
 
 export function canPlayerAct(context: PlayerActionContext): boolean {
@@ -84,11 +104,11 @@ export function playableBenchSlot(
   actorIndex: number | undefined,
   inSetup: boolean,
 ): PokemonSlotView | undefined {
-  if (inSetup) {
+  if (inSetup || !isBasicPokemonCard(card)) {
     return undefined;
   }
   const slots = player.bench.filter((slot) => canPlayCardToSlot(card, actorIndex, slot));
-  return slots.find((slot) => slot.empty) ?? slots[0];
+  return slots.find((slot) => slot.empty);
 }
 
 export function canRetreatToSlot(active: PokemonSlotView | undefined, bench: PokemonSlotView): boolean {
