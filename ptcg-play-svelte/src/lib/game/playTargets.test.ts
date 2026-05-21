@@ -27,30 +27,30 @@ describe('play target rules', () => {
     expect(isBasicPokemonCard(evolution)).toBe(false);
   });
 
-  it('allows energy only on the acting player occupied Pokemon', () => {
+  it('allows hand-card play attempts on the acting player Pokemon slots', () => {
     expect(canPlayCardToSlot(energy, 0, slot(0, 'active', 0, false))).toBe(true);
-    expect(canPlayCardToSlot(energy, 0, slot(0, 'bench', 0, true))).toBe(false);
+    expect(canPlayCardToSlot(energy, 0, slot(0, 'bench', 0, true))).toBe(true);
     expect(canPlayCardToSlot(energy, 0, slot(1, 'active', 0, false))).toBe(false);
   });
 
-  it('allows Pokemon only on the acting player empty Pokemon slots', () => {
+  it('does not use printed Pokemon stage rules to block play attempts', () => {
     expect(canPlayCardToSlot(pokemon, 0, slot(0, 'bench', 0, true))).toBe(true);
     expect(canPlayCardToSlot(pokemon, 0, slot(0, 'active', 0, true))).toBe(true);
-    expect(canPlayCardToSlot(pokemon, 0, slot(0, 'bench', 0, false))).toBe(false);
+    expect(canPlayCardToSlot(pokemon, 0, slot(0, 'bench', 0, false))).toBe(true);
     expect(canPlayCardToSlot(pokemon, 0, slot(1, 'bench', 0, true))).toBe(false);
   });
 
-  it('allows evolution Pokemon on matching occupied slots', () => {
+  it('keeps evolution matching as display-only helper behavior', () => {
     expect(canEvolveSlot(evolution, slot(0, 'active', 0, false))).toBe(true);
     expect(canPlayCardToSlot(evolution, 0, slot(0, 'active', 0, false))).toBe(true);
-    expect(canPlayCardToSlot(evolution, 0, slot(0, 'bench', 0, true))).toBe(false);
-    expect(canPlayCardToSlot({ ...evolution, evolvesFrom: 'Charmander' }, 0, slot(0, 'active', 0, false))).toBe(false);
+    expect(canPlayCardToSlot(evolution, 0, slot(0, 'bench', 0, true))).toBe(true);
+    expect(canPlayCardToSlot({ ...evolution, evolvesFrom: 'Charmander' }, 0, slot(0, 'active', 0, false))).toBe(true);
   });
 
-  it('keeps trainer fallback on the generic play area', () => {
+  it('does not block trainer play attempts to Pokemon slots', () => {
     expect(canPlayCardToPlayArea(trainer, 0)).toBe(true);
-    expect(canPlayCardToSlot(trainer, 0, slot(0, 'active', 0, false))).toBe(false);
-    expect(canPlayCardToSlot(trainer, 0, slot(0, 'bench', 0, false))).toBe(false);
+    expect(canPlayCardToSlot(trainer, 0, slot(0, 'active', 0, false))).toBe(true);
+    expect(canPlayCardToSlot(trainer, 0, slot(0, 'bench', 0, false))).toBe(true);
   });
 
   it('allows selected or dragged generic play cards on the board area only for the active player', () => {
@@ -104,10 +104,10 @@ describe('play target rules', () => {
     ).toBe(false);
   });
 
-  it('allows retreat only to occupied own bench slots when enough energy is attached', () => {
+  it('allows retreat attempts only to occupied own bench slots', () => {
     const active = { ...slot(0, 'active', 0, false), retreat: [9], energy: [energy] };
     expect(canRetreatToSlot(active, slot(0, 'bench', 0, false))).toBe(true);
-    expect(canRetreatToSlot({ ...active, energy: [] }, slot(0, 'bench', 0, false))).toBe(false);
+    expect(canRetreatToSlot({ ...active, energy: [] }, slot(0, 'bench', 0, false))).toBe(true);
     expect(canRetreatToSlot(active, slot(0, 'bench', 0, true))).toBe(false);
     expect(canRetreatToSlot(active, slot(1, 'bench', 0, false))).toBe(false);
   });
@@ -119,7 +119,7 @@ describe('play target rules', () => {
     expect(canPlayerAct({ playerIndex: 0, activePlayerIndex: 0, hasPrompt: false, finished: true })).toBe(false);
   });
 
-  it('finds the first playable empty bench slot outside setup', () => {
+  it('prefers the first open bench slot for generic bench-area attempts outside setup', () => {
     const currentPlayer = player(0, [slot(0, 'bench', 0, false), slot(0, 'bench', 1, true)]);
     expect(playableBenchSlot(currentPlayer, pokemon, 0, false)?.index).toBe(1);
     expect(playableBenchSlot(currentPlayer, pokemon, 0, true)).toBeUndefined();

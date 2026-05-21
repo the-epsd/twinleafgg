@@ -2338,17 +2338,13 @@ export class Board3dController {
     // Normal click behavior - show info pane
     // Determine options based on card location
     let options: CardInfoPaneOptions = {};
-    let canRetreat = false;
-
     if (isHandCard) {
       // Hand cards: enable abilities with useFromHand (like Luxray's Swelling Flash)
       options = { enableAbility: { useFromHand: true }, enableAttack: false };
     } else if (cardTarget) {
       if (cardTarget.slot === SlotType.ACTIVE) {
-        // Active Pokemon: enable abilities (useWhenInPlay), attacks, and retreat (if not already retreated this turn)
-        canRetreat = !!(this.bottomPlayer && this.gameState?.state &&
-          this.bottomPlayer.retreatedTurn !== this.gameState.state.turn);
-        options = { enableAbility: { useWhenInPlay: true }, enableAttack: true, enableRetreat: canRetreat };
+        // Active Pokemon: surface retreat; the engine owns whether it is currently legal.
+        options = { enableAbility: { useWhenInPlay: true }, enableAttack: true, enableRetreat: true };
       } else if (cardTarget.slot === SlotType.BENCH) {
         // Bench Pokemon: enable abilities (useWhenInPlay), no attacks
         options = { enableAbility: { useWhenInPlay: true }, enableAttack: false };
@@ -2379,7 +2375,6 @@ export class Board3dController {
       } else if (result.attack) {
         this.gameActions.attack(gameId, result.attack);
       } else if (result.retreat) {
-        if (!canRetreat) return;
         this.gameActions.retreatStart(gameId);
       }
     });

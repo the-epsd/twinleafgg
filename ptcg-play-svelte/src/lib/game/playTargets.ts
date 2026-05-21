@@ -54,20 +54,11 @@ export function canPlayCardToSlot(
   if (slot.ownerIndex !== actorIndex) {
     return false;
   }
-  if (isEnergyCard(card)) {
-    return !slot.empty;
-  }
-  if (isPokemonCard(card)) {
-    if (slot.slot !== 'bench' && slot.slot !== 'active') {
-      return false;
-    }
-    return slot.empty ? isBasicPokemonCard(card) : canEvolveSlot(card, slot);
-  }
-  return false;
+  return slot.slot === 'bench' || slot.slot === 'active';
 }
 
 export function canPlayCardToPlayArea(card: CardView | undefined, actorIndex: number | undefined): boolean {
-  return actorIndex !== undefined && isTrainerOrGenericPlayCard(card);
+  return actorIndex !== undefined && !!card;
 }
 
 export function canPlayerAct(context: PlayerActionContext): boolean {
@@ -96,12 +87,13 @@ export function playableBenchSlot(
   if (inSetup) {
     return undefined;
   }
-  return player.bench.find((slot) => slot.empty && canPlayCardToSlot(card, actorIndex, slot));
+  const slots = player.bench.filter((slot) => canPlayCardToSlot(card, actorIndex, slot));
+  return slots.find((slot) => slot.empty) ?? slots[0];
 }
 
 export function canRetreatToSlot(active: PokemonSlotView | undefined, bench: PokemonSlotView): boolean {
   if (!active || active.empty || bench.empty || bench.ownerIndex !== active.ownerIndex) {
     return false;
   }
-  return active.energy.length >= active.retreat.length;
+  return true;
 }

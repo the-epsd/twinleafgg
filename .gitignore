@@ -38,8 +38,6 @@ Thumbs.db
 # Claude Code artifacts
 .claude/
 
-*.md
-
 # Python
 /__pycache__
 /env
