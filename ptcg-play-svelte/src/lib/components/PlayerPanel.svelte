@@ -34,14 +34,14 @@
     top: 0;
     left: var(--table-side-gap);
     right: var(--player-panel-right);
-    height: calc(var(--board-top-inset) - var(--hand-separator-gap));
+    height: var(--opponent-hand-height);
     overflow: visible;
     align-items: end;
   }
 
   .player-panel.bottom {
     --card-w: var(--hand-card-w);
-    top: calc(100vh - var(--board-bottom-inset) + var(--hand-separator-gap) - var(--hand-hover-pad));
+    top: calc(100vh - var(--board-bottom-inset) + var(--hand-board-gap) - var(--hand-hover-pad));
     left: var(--table-side-gap);
     right: var(--player-panel-right);
     bottom: 8px;

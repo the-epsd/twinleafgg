@@ -23,8 +23,9 @@
     --active-gap: calc(var(--board-card-w) * 0.24);
     --bench-card-w: calc(var(--board-card-w) * 1.24);
     --bench-row-h: calc(var(--bench-card-w) * 1.42);
-    --board-top-inset: clamp(58px, 7.2vh, 84px);
-    --hand-separator-gap: calc(var(--board-card-w) * 0.045);
+    --opponent-hand-height: clamp(58px, 7.2vh, 84px);
+    --hand-board-gap: 0px;
+    --board-top-inset: calc(var(--opponent-hand-height) + var(--hand-board-gap));
     --hand-hover-pad: calc(var(--board-card-w) * 0.065);
     --board-bottom-inset: calc((var(--hand-card-w) * 1.397) + (var(--hand-hover-pad) * 2.5) + 14px);
     --board-right-rail: 150px;

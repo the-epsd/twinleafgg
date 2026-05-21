@@ -127,7 +127,7 @@
   }
 
   :global(.player-panel.top) .hand.concealed::after {
-    top: calc(100% + 6px);
+    top: calc(100% + 2px);
   }
 
   :global(.player-panel.bottom) .hand {
