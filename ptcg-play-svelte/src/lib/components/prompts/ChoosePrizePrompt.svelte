@@ -1,5 +1,9 @@
 <script lang="ts">
   import CardTile from '../CardTile.svelte';
+  import PromptPanel from './primitives/PromptPanel.svelte';
+  import PromptMeta from './primitives/PromptMeta.svelte';
+  import PromptIcon from './primitives/PromptIcon.svelte';
+  import SelectableCard from './primitives/SelectableCard.svelte';
   import { labelFor } from '../../game/labels';
   import { promptBlockedIndexes, promptOptions, prunePromptIndexes, samePromptIndexes } from '../../game/prompts';
   import type { CardView, GameView, PromptView } from '../../game/types';
@@ -71,25 +75,20 @@
   }
 </script>
 
-<section class="prompt-panel">
-  <div class="prompt-title">
-    <div>
-      <strong>{labelFor(prompt.className)}</strong>
-      <span>{labelFor(prompt.message || prompt.type)}</span>
-    </div>
-  </div>
-  {#if !prompt.supported}
-    <p class="prompt-warning">{prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.'}</p>
-  {/if}
+<PromptPanel
+  title={labelFor(prompt.className)}
+  subtitle={labelFor(prompt.message || prompt.type)}
+  warning={!prompt.supported ? (prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.') : undefined}
+>
+  {#snippet icon()}<PromptIcon name="prize" />{/snippet}
+  <PromptMeta label="Prizes" current={selectedIndexes.length} max={maxSelections} min={minSelections} />
 
-  <p class="prompt-hint">Choose {minSelections}{#if maxSelections !== minSelections}-{maxSelections}{/if} prize card{maxSelections === 1 ? '' : 's'}.</p>
   <div class="prize-prompt-grid">
     {#each prizeChoices as prize}
-      <button
-        type="button"
-        class="prize-choice-card"
-        class:selected={selectedIndexes.includes(prize.index)}
-        class:blocked={!isIndexSelectable(prize.index)}
+      <SelectableCard
+        emphasis="lift"
+        selected={selectedIndexes.includes(prize.index)}
+        blocked={!isIndexSelectable(prize.index)}
         disabled={resolving || !isIndexSelectable(prize.index)}
         onclick={() => toggleIndex(prize.index)}
       >
@@ -98,16 +97,17 @@
         {:else}
           <CardTile card={undefined} compact faceDown />
         {/if}
-        <span>Prize {prize.index + 1}</span>
-      </button>
+        {#snippet label()}Prize {prize.index + 1}{/snippet}
+      </SelectableCard>
     {/each}
   </div>
-  <div class="prompt-actions">
-    <button disabled={resolving || selectedIndexes.length < minSelections} onclick={submitSelectedIndexes}>
-      Take selected prize{minSelections === 1 ? '' : 's'}
-    </button>
+
+  {#snippet actions()}
     {#if options.allowCancel}
       <button disabled={resolving} onclick={() => onresolve(null)}>Cancel</button>
     {/if}
-  </div>
-</section>
+    <button class="primary" disabled={resolving || selectedIndexes.length < minSelections} onclick={submitSelectedIndexes}>
+      Confirm
+    </button>
+  {/snippet}
+</PromptPanel>

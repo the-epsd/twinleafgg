@@ -1,4 +1,5 @@
 <script lang="ts">
+  import PromptPanel from './primitives/PromptPanel.svelte';
   import { labelFor } from '../../game/labels';
   import { promptOptions } from '../../game/prompts';
   import type { PromptView } from '../../game/types';
@@ -64,17 +65,11 @@
   }
 </script>
 
-<section class="prompt-panel">
-  <div class="prompt-title">
-    <div>
-      <strong>{labelFor(prompt.className)}</strong>
-      <span>{labelFor(prompt.message || prompt.type)}</span>
-    </div>
-  </div>
-  {#if !prompt.supported}
-    <p class="prompt-warning">{prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.'}</p>
-  {/if}
-
+<PromptPanel
+  title={labelFor(prompt.className)}
+  subtitle={labelFor(prompt.message || prompt.type)}
+  warning={!prompt.supported ? (prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.') : undefined}
+>
   {#if isMulliganDrawPrompt}
     <div class="mulligan-slider">
       <div class="mulligan-slider-meta">
@@ -94,12 +89,6 @@
         <span>{maxMulliganDraw}</span>
       </div>
     </div>
-    <div class="prompt-actions">
-      <button disabled={resolving} onclick={submitMulliganDraw}>Continue</button>
-      {#if options.allowCancel}
-        <button disabled={resolving} onclick={() => onresolve(null)}>Cancel</button>
-      {/if}
-    </div>
   {:else if values.length}
     <div class="prompt-grid">
       {#each values as value, index}
@@ -107,4 +96,13 @@
       {/each}
     </div>
   {/if}
-</section>
+
+  {#snippet actions()}
+    {#if options.allowCancel}
+      <button disabled={resolving} onclick={() => onresolve(null)}>Cancel</button>
+    {/if}
+    {#if isMulliganDrawPrompt}
+      <button class="primary" disabled={resolving} onclick={submitMulliganDraw}>Confirm</button>
+    {/if}
+  {/snippet}
+</PromptPanel>

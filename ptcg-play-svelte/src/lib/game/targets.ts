@@ -32,6 +32,17 @@ export function getSelectableTargets(current: GameView, prompt: PromptView): Pro
   }));
 }
 
+export function getDamageTransferTargets(
+  current: GameView,
+  prompt: PromptView,
+  blockedOption: 'blockedFrom' | 'blockedTo',
+): PromptTargetOption[] {
+  return getPromptTargets(current, prompt, blockedOption).map(({ player, slot, target }) => ({
+    label: slot.slot === 'active' ? `${player.name} active` : `${player.name} bench ${slot.index + 1}`,
+    target,
+  }));
+}
+
 export function getAttachTargets(current: GameView, prompt: PromptView): AttachPromptTargetOption[] {
   return getPromptTargets(current, prompt, 'blockedTo').map(({ player, slot, target }) => ({
     label: slot.slot === 'active' ? `${player.name} active` : `${player.name} bench ${slot.index + 1}`,
@@ -43,7 +54,7 @@ export function getAttachTargets(current: GameView, prompt: PromptView): AttachP
 function getPromptTargets(
   current: GameView,
   prompt: PromptView,
-  blockedOption: 'blocked' | 'blockedTo',
+  blockedOption: 'blocked' | 'blockedFrom' | 'blockedTo',
 ): Array<{ player: GameView['players'][number]; slot: PokemonSlotView; target: CardTarget }> {
   const playerType = Number(prompt.fields.playerType ?? PlayerType.ANY);
   const slots = Array.isArray(prompt.fields.slots)

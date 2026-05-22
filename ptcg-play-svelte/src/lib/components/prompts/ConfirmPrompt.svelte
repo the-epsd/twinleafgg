@@ -1,4 +1,6 @@
 <script lang="ts">
+  import PromptPanel from './primitives/PromptPanel.svelte';
+  import PromptIcon from './primitives/PromptIcon.svelte';
   import { labelFor } from '../../game/labels';
   import type { PromptView } from '../../game/types';
 
@@ -11,19 +13,15 @@
   let { prompt, resolving = false, onresolve }: Props = $props();
 </script>
 
-<section class="prompt-panel">
-  <div class="prompt-title">
-    <div>
-      <strong>{labelFor(prompt.className)}</strong>
-      <span>{labelFor(prompt.message || prompt.type)}</span>
-    </div>
-  </div>
-  {#if !prompt.supported}
-    <p class="prompt-warning">{prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.'}</p>
-  {/if}
+<PromptPanel
+  title={labelFor(prompt.className)}
+  subtitle={labelFor(prompt.message || prompt.type)}
+  warning={!prompt.supported ? (prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.') : undefined}
+>
+  {#snippet icon()}<PromptIcon name="check" />{/snippet}
 
-  <div class="prompt-actions">
-    <button disabled={resolving} onclick={() => onresolve(true)}>Yes</button>
+  {#snippet actions()}
     <button disabled={resolving} onclick={() => onresolve(false)}>No</button>
-  </div>
-</section>
+    <button class="primary" disabled={resolving} onclick={() => onresolve(true)}>Yes</button>
+  {/snippet}
+</PromptPanel>

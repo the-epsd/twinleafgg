@@ -1,5 +1,9 @@
 <script lang="ts">
   import CardTile from '../CardTile.svelte';
+  import PromptPanel from './primitives/PromptPanel.svelte';
+  import PromptMeta from './primitives/PromptMeta.svelte';
+  import PromptIcon from './primitives/PromptIcon.svelte';
+  import SelectableCard from './primitives/SelectableCard.svelte';
   import {
     extractPromptCards,
     promptBlockedIndexes,
@@ -23,7 +27,6 @@
   let { prompt, resolving = false, onresolve }: Props = $props();
 
   let selectedIndexes = $state<number[]>([]);
-  let hidden = $state(false);
   let promptKey = $state('');
   let fields = $derived(prompt.fields ?? {});
   let options = $derived(promptOptions(prompt));
@@ -48,7 +51,6 @@
     const key = `${prompt.id}:${prompt.className}`;
     if (promptKey !== key) {
       promptKey = key;
-      hidden = false;
       selectedIndexes = [];
     }
   });
@@ -104,65 +106,55 @@
   }
 </script>
 
-{#if hidden}
-  <section class="prompt-panel prompt-panel-collapsed">
-    <button type="button" onclick={() => (hidden = false)}>Show</button>
-  </section>
-{:else}
-  <section class="prompt-panel search-prompt">
-    <div class="prompt-title">
-      <div>
-        <strong>Choose Cards</strong>
-      </div>
-    </div>
-    {#if !prompt.supported}
-      <p class="prompt-warning">{prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.'}</p>
-    {/if}
+<PromptPanel
+  title="Choose Cards"
+  variant="search"
+  warning={!prompt.supported ? (prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.') : undefined}
+>
+  {#snippet icon()}<PromptIcon name="cards" />{/snippet}
 
-    <div class="search-selection">
-      <div class="search-selection-meta">
-        <strong>Selected</strong>
-        <span>{selectedIndexes.length}/{maxSelections}</span>
-      </div>
-      <div class="selected-card-slots" aria-label="Selected cards">
-        {#each selectedSlots as slot, slotIndex}
-          {#if slot}
-            <button
-              type="button"
-              class="selected-card-slot filled"
-              disabled={resolving}
-              title={`Remove ${slot.card.fullName ?? slot.card.name}`}
-              onclick={() => toggleIndex(slot.index)}
-            >
-              <CardTile card={slot.card} compact />
-            </button>
-          {:else}
-            <div class="selected-card-slot empty">
-              <span>{slotIndex + 1}</span>
-            </div>
-          {/if}
-        {/each}
-      </div>
-    </div>
-    <div class="search-card-grid">
-      {#each cards as card, index}
+  <PromptMeta label="Selected" current={selectedIndexes.length} max={maxSelections} min={minSelections} />
+
+  <div class="selected-card-slots" aria-label="Selected cards">
+    {#each selectedSlots as slot, slotIndex}
+      {#if slot}
         <button
           type="button"
-          class:selected={selectedIndexes.includes(card.index ?? index)}
-          class:blocked={!isIndexSelectable(card.index ?? index)}
-          disabled={resolving || !isIndexSelectable(card.index ?? index)}
-          onclick={() => toggleIndex(card.index ?? index)}
+          class="selected-card-slot filled"
+          disabled={resolving}
+          title={`Remove ${slot.card.fullName ?? slot.card.name}`}
+          onclick={() => toggleIndex(slot.index)}
         >
-          <CardTile card={card} compact />
+          <CardTile card={slot.card} compact />
         </button>
-      {/each}
-    </div>
-    <div class="prompt-actions">
-      <button type="button" onclick={() => (hidden = true)}>Hide</button>
-      <button disabled={resolving || selectedIndexes.length < minSelections} onclick={submitSelectedIndexes}>Confirm selection</button>
-      {#if options.allowCancel}
-        <button disabled={resolving} onclick={() => onresolve(null)}>Cancel</button>
+      {:else}
+        <div class="selected-card-slot empty">
+          <span>{slotIndex + 1}</span>
+        </div>
       {/if}
-    </div>
-  </section>
-{/if}
+    {/each}
+  </div>
+
+  <div class="search-card-grid">
+    {#each cards as card, index}
+      {@const cardIndex = card.index ?? index}
+      <SelectableCard
+        selected={selectedIndexes.includes(cardIndex)}
+        blocked={!isIndexSelectable(cardIndex)}
+        disabled={resolving || !isIndexSelectable(cardIndex)}
+        onclick={() => toggleIndex(cardIndex)}
+      >
+        <CardTile {card} compact />
+      </SelectableCard>
+    {/each}
+  </div>
+
+  {#snippet actions()}
+    {#if options.allowCancel}
+      <button disabled={resolving} onclick={() => onresolve(null)}>Cancel</button>
+    {/if}
+    <button class="primary" disabled={resolving || selectedIndexes.length < minSelections} onclick={submitSelectedIndexes}>
+      Confirm
+    </button>
+  {/snippet}
+</PromptPanel>

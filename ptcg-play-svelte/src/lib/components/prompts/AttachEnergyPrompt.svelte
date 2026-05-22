@@ -1,5 +1,8 @@
 <script lang="ts">
   import CardTile from '../CardTile.svelte';
+  import PromptPanel from './primitives/PromptPanel.svelte';
+  import PromptIcon from './primitives/PromptIcon.svelte';
+  import SelectableCard from './primitives/SelectableCard.svelte';
   import { labelFor } from '../../game/labels';
   import type { AttachAssignment } from '../../game/preview';
   import { extractPromptCards, promptBlockedIndexes, promptOptions } from '../../game/prompts';
@@ -30,8 +33,6 @@
     onattachEnergyReset,
   }: Props = $props();
 
-  let hidden = $state(false);
-  let promptKey = $state('');
   let options = $derived(promptOptions(prompt));
   let cards = $derived(extractPromptCards(prompt.fields));
   let selectionPoolSize = $derived(cards.length || 1);
@@ -39,14 +40,6 @@
   let minSelections = $derived(normalizeSelectionLimit(options.min, 0));
   let blockedIndexes = $derived(new Set<number>(promptBlockedIndexes(prompt)));
   let attachTargets = $derived(getAttachTargets(game, prompt));
-
-  $effect(() => {
-    const key = `${prompt.id}:${prompt.className}`;
-    if (promptKey !== key) {
-      promptKey = key;
-      hidden = false;
-    }
-  });
 
   function submitAttachEnergy() {
     if (attachAssignments.length >= minSelections) {
@@ -91,56 +84,55 @@
   }
 </script>
 
-{#if hidden}
-  <section class="prompt-panel prompt-panel-collapsed">
-    <button type="button" onclick={() => (hidden = false)}>Show</button>
-  </section>
-{:else}
-  <section class="prompt-panel attach-energy-prompt">
-    <div class="prompt-title">
-      <div>
-        <strong>{labelFor(prompt.className)}</strong>
-        <span>{attachAssignments.length}/{maxSelections} assigned</span>
-      </div>
-      <button type="button" onclick={() => (hidden = true)}>Hide</button>
-    </div>
-    {#if !prompt.supported}
-      <p class="prompt-warning">{prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.'}</p>
-    {/if}
+<PromptPanel
+  title={labelFor(prompt.className)}
+  subtitle={`${attachAssignments.length}/${maxSelections} assigned`}
+  variant="compact"
+  warning={!prompt.supported ? (prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.') : undefined}
+>
+  {#snippet icon()}<PromptIcon name="energy" />{/snippet}
 
-    <div class="attach-energy-ui">
-      <div class="attach-energy-pane">
-        <div class="attach-energy-list">
-          {#each cards as card, index}
-            {@const energyIndex = card.index ?? index}
-            {@const assignment = attachAssignmentFor(energyIndex)}
-            <button
-              type="button"
-              class="attach-energy-card"
-              class:selected={activeAttachEnergyIndex === energyIndex}
-              class:assigned={!!assignment}
-              class:blocked={!attachEnergyAvailable(energyIndex) && !assignment}
-              disabled={resolving || (!attachEnergyAvailable(energyIndex) && !assignment)}
-              draggable={!resolving && attachEnergyAvailable(energyIndex)}
-              title={assignment ? `Assigned to ${targetLabel(assignment.target)}` : `Select ${card.fullName ?? card.name}`}
-              onclick={() => (assignment ? removeAttachAssignment(energyIndex) : chooseAttachEnergy(energyIndex))}
-              ondragstart={(event) => dragAttachEnergy(event, energyIndex)}
-            >
-              <CardTile card={card} compact />
-              {#if assignment}
-                <span class="attach-assignment-label">{targetLabel(assignment.target)}</span>
-              {/if}
-            </button>
-          {/each}
-        </div>
-      </div>
-    </div>
-    <div class="prompt-actions">
-      <button disabled={resolving || attachAssignments.length === 0} onclick={resetAttachAssignments}>Reset</button>
-      <button disabled={resolving || attachAssignments.length < minSelections} onclick={submitAttachEnergy}>Attach</button>
-      {#if options.allowCancel}
-        <button disabled={resolving} onclick={() => onresolve(null)}>Cancel</button>
-      {/if}
-    </div>
-  </section>
-{/if}
+  <div class="attach-energy-list">
+    {#each cards as card, index}
+      {@const energyIndex = card.index ?? index}
+      {@const assignment = attachAssignmentFor(energyIndex)}
+      <SelectableCard
+        selected={activeAttachEnergyIndex === energyIndex}
+        assigned={!!assignment}
+        blocked={!attachEnergyAvailable(energyIndex) && !assignment}
+        disabled={resolving || (!attachEnergyAvailable(energyIndex) && !assignment)}
+        draggable={!resolving && attachEnergyAvailable(energyIndex)}
+        title={assignment ? `Assigned to ${targetLabel(assignment.target)}` : `Select ${card.fullName ?? card.name}`}
+        onclick={() => (assignment ? removeAttachAssignment(energyIndex) : chooseAttachEnergy(energyIndex))}
+        ondragstart={(event) => dragAttachEnergy(event, energyIndex)}
+      >
+        <CardTile {card} compact />
+        {#if assignment}
+          {#snippet label()}{targetLabel(assignment.target)}{/snippet}
+        {/if}
+      </SelectableCard>
+    {/each}
+  </div>
+
+  {#snippet actions()}
+    <button disabled={resolving || attachAssignments.length === 0} onclick={resetAttachAssignments}>Reset</button>
+    {#if options.allowCancel}
+      <button disabled={resolving} onclick={() => onresolve(null)}>Cancel</button>
+    {/if}
+    <button class="primary" disabled={resolving || attachAssignments.length < minSelections} onclick={submitAttachEnergy}>
+      Confirm
+    </button>
+  {/snippet}
+</PromptPanel>
+
+<style>
+  .attach-energy-list {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: clamp(72px, 8vw, 92px);
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 2px 2px 6px;
+  }
+</style>

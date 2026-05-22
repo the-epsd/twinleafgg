@@ -1,5 +1,9 @@
 <script lang="ts">
   import CardTile from '../CardTile.svelte';
+  import PromptPanel from './primitives/PromptPanel.svelte';
+  import PromptMeta from './primitives/PromptMeta.svelte';
+  import PromptIcon from './primitives/PromptIcon.svelte';
+  import SelectableCard from './primitives/SelectableCard.svelte';
   import { labelFor } from '../../game/labels';
   import { extractPromptCards, promptBlockedIndexes, promptOptions, prunePromptIndexes, samePromptIndexes } from '../../game/prompts';
   import type { PromptView } from '../../game/types';
@@ -54,40 +58,36 @@
     const value = Number(raw);
     return Number.isFinite(value) ? value : fallback;
   }
-
-  function energyCostLabel(cost: unknown) {
-    return Array.isArray(cost) && cost.length ? `Cost: ${cost.length} energy` : 'Choose energy';
-  }
 </script>
 
-<section class="prompt-panel">
-  <div class="prompt-title">
-    <div>
-      <strong>{labelFor(prompt.className)}</strong>
-      <span>{labelFor(prompt.message || prompt.type)}</span>
-    </div>
-  </div>
-  {#if !prompt.supported}
-    <p class="prompt-warning">{prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.'}</p>
-  {/if}
+<PromptPanel
+  title={labelFor(prompt.className)}
+  subtitle={labelFor(prompt.message || prompt.type)}
+  warning={!prompt.supported ? (prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.') : undefined}
+>
+  {#snippet icon()}<PromptIcon name="energy" />{/snippet}
+  <PromptMeta label="Energy to pay" current={selectedIndexes.length} max={maxSelections} min={minSelections} />
 
-  <p class="prompt-hint">{energyCostLabel(prompt.fields.cost)}</p>
   <div class="prompt-card-list">
     {#each cards as card, index}
-      <button
-        class:selected={selectedIndexes.includes(card.index ?? index)}
-        class:blocked={!isIndexSelectable(card.index ?? index)}
-        disabled={resolving || !isIndexSelectable(card.index ?? index)}
-        onclick={() => toggleIndex(card.index ?? index)}
+      {@const cardIndex = card.index ?? index}
+      <SelectableCard
+        selected={selectedIndexes.includes(cardIndex)}
+        blocked={!isIndexSelectable(cardIndex)}
+        disabled={resolving || !isIndexSelectable(cardIndex)}
+        onclick={() => toggleIndex(cardIndex)}
       >
-        <CardTile card={card} compact />
-      </button>
+        <CardTile {card} compact />
+      </SelectableCard>
     {/each}
   </div>
-  <div class="prompt-actions">
-    <button disabled={resolving || selectedIndexes.length < minSelections} onclick={submitSelectedIndexes}>Pay cost</button>
+
+  {#snippet actions()}
     {#if options.allowCancel}
       <button disabled={resolving} onclick={() => onresolve(null)}>Cancel</button>
     {/if}
-  </div>
-</section>
+    <button class="primary" disabled={resolving || selectedIndexes.length < minSelections} onclick={submitSelectedIndexes}>
+      Confirm
+    </button>
+  {/snippet}
+</PromptPanel>

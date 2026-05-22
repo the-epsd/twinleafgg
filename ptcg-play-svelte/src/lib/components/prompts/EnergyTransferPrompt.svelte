@@ -1,4 +1,6 @@
 <script lang="ts">
+  import PromptPanel from './primitives/PromptPanel.svelte';
+  import PromptIcon from './primitives/PromptIcon.svelte';
   import { labelFor } from '../../game/labels';
   import { promptOptions } from '../../game/prompts';
   import { getSelectableTargets, sameTarget } from '../../game/targets';
@@ -21,6 +23,11 @@
   let selectionPoolSize = $derived(selectableTargets.length || 1);
   let maxSelections = $derived(normalizeSelectionLimit(options.max, normalizeSelectionLimit(options.count, selectionPoolSize)));
 
+  let isDiscard = $derived(prompt.className === 'DiscardEnergyPrompt');
+  let canSubmit = $derived(
+    !!sourceTarget && (isDiscard || selectedTargets.length > 0),
+  );
+
   function toggleTarget(target: CardTarget) {
     const exists = selectedTargets.some((item) => sameTarget(item, target));
     if (exists) {
@@ -36,14 +43,13 @@
     }
   }
 
-  function submitDiscardEnergy() {
-    if (sourceTarget) {
-      onresolve([{ from: sourceTarget, index: attachEnergyIndex }]);
+  function submit() {
+    if (!sourceTarget) {
+      return;
     }
-  }
-
-  function submitMoveEnergy() {
-    if (sourceTarget && selectedTargets.length > 0) {
+    if (isDiscard) {
+      onresolve([{ from: sourceTarget, index: attachEnergyIndex }]);
+    } else if (selectedTargets.length > 0) {
       onresolve([{ from: sourceTarget, to: selectedTargets[0], index: attachEnergyIndex }]);
     }
   }
@@ -54,46 +60,47 @@
   }
 </script>
 
-<section class="prompt-panel">
-  <div class="prompt-title">
-    <div>
-      <strong>{labelFor(prompt.className)}</strong>
-      <span>{labelFor(prompt.message || prompt.type)}</span>
-    </div>
-  </div>
-  {#if !prompt.supported}
-    <p class="prompt-warning">{prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.'}</p>
-  {/if}
+<PromptPanel
+  title={labelFor(prompt.className)}
+  subtitle={labelFor(prompt.message || prompt.type)}
+  warning={!prompt.supported ? (prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.') : undefined}
+>
+  {#snippet icon()}<PromptIcon name="energy" />{/snippet}
 
   <label class="inline-field">
     Energy index
     <input type="number" min="0" bind:value={attachEnergyIndex} />
   </label>
-  <p class="prompt-hint">Choose source, then destination when needed.</p>
+  <p class="prompt-hint">Choose source{isDiscard ? '' : ', then destination'}.</p>
   <div class="prompt-grid">
     {#each selectableTargets as item}
-      <button class:selected={sourceTarget && sameTarget(sourceTarget, item.target)} disabled={resolving} onclick={() => (sourceTarget = item.target)}>
+      <button
+        class:selected={sourceTarget && sameTarget(sourceTarget, item.target)}
+        disabled={resolving}
+        onclick={() => (sourceTarget = item.target)}
+      >
         From {item.label}
       </button>
     {/each}
   </div>
-  <div class="prompt-grid">
-    {#each selectableTargets as item}
-      <button
-        class:selected={selectedTargets.some((target) => sameTarget(target, item.target))}
-        disabled={resolving}
-        onclick={() => toggleTarget(item.target)}
-      >
-        {item.label}
-      </button>
-    {/each}
-  </div>
-  {#if prompt.className === 'DiscardEnergyPrompt'}
-    <button disabled={resolving || !sourceTarget} onclick={submitDiscardEnergy}>Discard</button>
-  {:else}
-    <button disabled={resolving || !sourceTarget || selectedTargets.length === 0} onclick={submitMoveEnergy}>Move</button>
+  {#if !isDiscard}
+    <div class="prompt-grid">
+      {#each selectableTargets as item}
+        <button
+          class:selected={selectedTargets.some((target) => sameTarget(target, item.target))}
+          disabled={resolving}
+          onclick={() => toggleTarget(item.target)}
+        >
+          To {item.label}
+        </button>
+      {/each}
+    </div>
   {/if}
-  {#if options.allowCancel}
-    <button disabled={resolving} onclick={() => onresolve(null)}>Cancel</button>
-  {/if}
-</section>
+
+  {#snippet actions()}
+    {#if options.allowCancel}
+      <button disabled={resolving} onclick={() => onresolve(null)}>Cancel</button>
+    {/if}
+    <button class="primary" disabled={resolving || !canSubmit} onclick={submit}>Confirm</button>
+  {/snippet}
+</PromptPanel>
