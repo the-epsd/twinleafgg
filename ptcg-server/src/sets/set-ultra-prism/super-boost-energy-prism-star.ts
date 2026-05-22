@@ -14,6 +14,7 @@ export class SuperBoostEnergyPrismStar extends EnergyCard {
   public cardImage = 'assets/cardback.png';
   public name = 'Super Boost Energy Prism Star';
   public fullName = 'Super Boost Energy UPR';
+  public legacyFullName: string = 'Super Boost Energy ◇ UPR';
 
   public text =
     'This card provides [C] Energy.\n\n' +

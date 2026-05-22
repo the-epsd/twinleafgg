@@ -46,6 +46,7 @@ export class LunalaPrismStar extends PokemonCard {
   public cardImage = 'assets/cardback.png';
   public name: string = 'Lunala Prism Star';
   public fullName: string = 'Lunala Prism Star UPR';
+  public legacyFullName: string = 'Lunala \u25c7 UPR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Full Moon Star

@@ -11,17 +11,17 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { EnergyCard } from '../../game/store/card/energy-card';
 
 export class HeatFactoryPrismStar extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.STADIUM;
   public tags = [CardTag.PRISM_STAR];
   public set: string = 'LOT';
   public setNumber: string = '178';
   public name: string = 'Heat Factory Prism Star';
   public fullName: string = 'Heat Factory Prism Star LOT';
+  public legacyFullName: string = 'Heat Factory \u25c7 LOT';
   public cardImage: string = 'assets/cardback.png';
 
   public text: string =
-    'Once during each player\'s turn, that player may discard a [R] Energy card from their hand. If they do, they draw 3 cards.\n\nWhenever any player plays an Item or Supporter card from their hand, prevent all effects of that card done to this Stadium card.';
+    "Once during each player's turn, that player may discard a [R] Energy card from their hand. If they do, they draw 3 cards.\n\nWhenever any player plays an Item or Supporter card from their hand, prevent all effects of that card done to this Stadium card.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
@@ -44,30 +44,34 @@ export class HeatFactoryPrismStar extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        { superType: SuperType.ENERGY },
-        { allowCancel: true, min: 1, max: 1, blocked }
-      ), selected => {
-        selected = selected || [];
-        if (selected.length === 0) {
-          player.stadiumUsedTurn = stadiumUsedTurn;
-          return;
-        }
-        player.hand.moveCardsTo(selected, player.discard);
-        player.deck.moveTo(player.hand, 3);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          { superType: SuperType.ENERGY },
+          { allowCancel: true, min: 1, max: 1, blocked },
+        ),
+        (selected) => {
+          selected = selected || [];
+          if (selected.length === 0) {
+            player.stadiumUsedTurn = stadiumUsedTurn;
+            return;
+          }
+          player.hand.moveCardsTo(selected, player.discard);
+          player.deck.moveTo(player.hand, 3);
+        },
+      );
     }
 
     // Prevent effects of Item and Supporter cards on this Stadium
-    if (effect instanceof MoveCardsEffect
-      && StateUtils.getStadiumCard(state) === this) {
-
-      if (effect.sourceCard instanceof TrainerCard &&
-        (effect.sourceCard.trainerType === TrainerType.SUPPORTER || effect.sourceCard.trainerType === TrainerType.ITEM)) {
-
+    if (effect instanceof MoveCardsEffect && StateUtils.getStadiumCard(state) === this) {
+      if (
+        effect.sourceCard instanceof TrainerCard &&
+        (effect.sourceCard.trainerType === TrainerType.SUPPORTER ||
+          effect.sourceCard.trainerType === TrainerType.ITEM)
+      ) {
         const stadiumCard = StateUtils.getStadiumCard(state);
         if (stadiumCard !== undefined) {
           const cardList = StateUtils.findCardList(state, stadiumCard);
@@ -75,11 +79,9 @@ export class HeatFactoryPrismStar extends TrainerCard {
             effect.preventDefault = true;
           }
         }
-
       }
     }
 
     return state;
   }
-
 }

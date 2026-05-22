@@ -37,6 +37,7 @@ export class DianciePrismStar extends PokemonCard {
   public cardImage = 'assets/cardback.png';
   public name: string = 'Diancie Prism Star';
   public fullName: string = 'Diancie Prism Star FLI';
+  public legacyFullName: string = 'Diancie ◇ FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect) {
