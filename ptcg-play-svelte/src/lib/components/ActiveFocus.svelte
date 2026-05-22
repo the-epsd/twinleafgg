@@ -110,7 +110,7 @@
     padding: 0;
     border: 0;
     border-radius: 0;
-    background: rgba(29, 35, 43, 0.1);
+    background: var(--overlay-backdrop-bg);
   }
 
   .active-focus {
@@ -126,11 +126,11 @@
     gap: 14px;
     padding: 12px;
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    background: rgba(12, 15, 19, 0.88);
-    color: rgba(245, 248, 255, 0.86);
-    box-shadow: 0 24px 68px rgba(12, 15, 19, 0.38);
-    backdrop-filter: blur(14px);
+    border: 1px solid var(--surface-glass-border);
+    background: var(--surface-glass-bg);
+    color: var(--text-secondary);
+    box-shadow: var(--surface-glass-shadow);
+    backdrop-filter: blur(var(--backdrop-blur));
   }
 
   .focus-card {
@@ -162,22 +162,22 @@
   }
 
   .focus-title strong {
-    color: rgba(245, 248, 255, 0.98);
+    color: var(--text-primary);
     font-size: 17px;
   }
 
   .focus-title span,
   .action-group > span {
-    color: rgba(245, 248, 255, 0.62);
+    color: var(--text-muted);
     font-size: 11px;
   }
 
   .focus-close {
     border-radius: 5px;
     padding: 6px 8px;
-    border-color: rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(245, 248, 255, 0.92);
+    border-color: var(--button-border);
+    background: var(--button-bg);
+    color: var(--button-text);
     font-size: 10px;
     font-weight: 800;
   }
@@ -199,9 +199,9 @@
   .action-group button {
     border-radius: 5px;
     padding: 8px 10px;
-    border-color: rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(245, 248, 255, 0.94);
+    border-color: var(--button-border);
+    background: var(--button-bg);
+    color: var(--button-text);
     box-shadow: 0 8px 18px rgba(12, 15, 19, 0.12);
     font-size: 11px;
     font-weight: 750;

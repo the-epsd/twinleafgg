@@ -31,15 +31,15 @@
     pointer-events: auto;
     padding: 5px 9px;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(12, 15, 19, 0.76);
-    color: rgba(245, 248, 255, 0.72);
-    box-shadow: 0 10px 24px rgba(12, 15, 19, 0.14);
-    backdrop-filter: blur(10px);
+    border: 1px solid var(--surface-toolbar-border);
+    background: var(--surface-toolbar-bg);
+    color: var(--text-secondary);
+    box-shadow: var(--surface-toolbar-shadow);
+    backdrop-filter: blur(var(--backdrop-blur));
     font-size: 11px;
   }
 
   .game-status strong {
-    color: rgba(143, 232, 206, 0.96);
+    color: var(--accent-strong);
   }
 </style>

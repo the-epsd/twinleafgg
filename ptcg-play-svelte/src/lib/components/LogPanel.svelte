@@ -29,12 +29,12 @@
     max-height: min(28vh, 220px);
     overflow: auto;
     padding: 9px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--surface-toolbar-border);
     border-radius: 6px;
-    background: rgba(12, 15, 19, 0.76);
-    color: rgba(245, 248, 255, 0.9);
-    box-shadow: 0 10px 24px rgba(12, 15, 19, 0.18);
-    backdrop-filter: blur(10px);
+    background: var(--surface-toolbar-bg);
+    color: var(--text-secondary);
+    box-shadow: var(--surface-toolbar-shadow);
+    backdrop-filter: blur(var(--backdrop-blur));
     font-size: 10px;
     line-height: 1.25;
   }
@@ -42,7 +42,7 @@
   .log-panel h2 {
     margin: 0 0 7px;
     font-size: 11px;
-    color: rgba(245, 248, 255, 0.94);
+    color: var(--text-primary);
   }
 
   .log-panel p {

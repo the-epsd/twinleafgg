@@ -175,21 +175,21 @@
     gap: 4px;
     padding: 4px;
     border-radius: 8px;
-    border: 1px solid rgba(26, 31, 39, 0.12);
-    background: #eef1f4;
+    border: 1px solid var(--surface-inset-border);
+    background: var(--surface-inset-bg);
   }
 
   .mode-tabs button {
     border: 0;
     border-radius: 6px;
     background: transparent;
-    color: #44505e;
+    color: var(--text-secondary);
   }
 
   .mode-tabs button.active {
-    background: #ffffff;
-    color: #1d232b;
-    box-shadow: 0 1px 4px rgba(23, 30, 38, 0.12);
+    background: var(--button-bg);
+    color: var(--button-text);
+    box-shadow: var(--surface-toolbar-shadow);
   }
 
   .deck-import {
@@ -205,7 +205,7 @@
   .online-main label {
     display: grid;
     gap: 8px;
-    color: #29313c;
+    color: var(--text-primary);
     font-weight: 800;
   }
 
@@ -214,18 +214,18 @@
     min-height: 54vh;
     resize: vertical;
     border-radius: 8px;
-    border: 1px solid rgba(26, 31, 39, 0.18);
-    background: #f7f8fa;
-    color: #1d232b;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--input-text);
     padding: 12px;
   }
 
   input {
     min-height: 40px;
     border-radius: 8px;
-    border: 1px solid rgba(26, 31, 39, 0.18);
-    background: #f7f8fa;
-    color: #1d232b;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--input-text);
     padding: 0 12px;
   }
 
@@ -260,8 +260,8 @@
     gap: 10px;
     padding: 12px;
     border-radius: 8px;
-    border: 1px solid rgba(26, 31, 39, 0.12);
-    background: #f7f8fa;
+    border: 1px solid var(--surface-inset-border);
+    background: var(--surface-inset-bg);
   }
 
   .online-panel h2 {
@@ -281,7 +281,7 @@
     gap: 12px;
     text-align: left;
     border-radius: 6px;
-    background: #ffffff;
+    background: var(--button-bg);
   }
 
   .list span,
@@ -294,7 +294,7 @@
 
   .empty {
     margin: 0;
-    color: #657181;
+    color: var(--text-muted);
     font-size: 13px;
   }
 
@@ -302,9 +302,9 @@
     margin: 0;
     padding: 12px;
     border-radius: 8px;
-    background: #fff0f1;
-    border: 1px solid #d87883;
-    color: #7d2732;
+    background: var(--danger-bg);
+    border: 1px solid var(--danger-border);
+    color: var(--danger-strong);
     white-space: pre-wrap;
   }
 

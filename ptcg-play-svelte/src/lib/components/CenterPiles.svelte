@@ -145,14 +145,14 @@
   .center-stack {
     z-index: 2;
     display: contents;
-    color: #1d232b;
+    color: var(--text-primary);
     font-size: 12px;
     opacity: 0.96;
     pointer-events: none;
   }
 
   :global(.debug-zones) .center-stack {
-    color: #1d232b;
+    color: var(--text-primary);
   }
 
   .field-piles {
@@ -246,10 +246,10 @@
     place-items: center;
     padding: 0;
     border-radius: 5px;
-    color: #111821;
+    color: var(--pile-text);
     font-weight: 800;
-    background: rgba(248, 249, 250, 0.34);
-    border: 1px solid rgba(18, 21, 26, 0.14);
+    background: var(--pile-bg);
+    border: 1px solid var(--pile-border);
     box-shadow: 0 4px 10px rgba(23, 30, 38, 0.14);
     font-size: calc(var(--pile-w) * 0.25);
   }
@@ -294,7 +294,7 @@
     inset: 0;
     border-radius: inherit;
     background:
-      linear-gradient(rgba(9, 18, 38, 0.16), rgba(9, 18, 38, 0.16)),
+      var(--cardback-shade),
       url("/assets/cardback.png") center / cover no-repeat;
   }
 
@@ -334,8 +334,8 @@
   }
 
   .discard-pile {
-    color: #3d4652;
-    background: rgba(255, 255, 255, 0.42);
+    color: var(--discard-text);
+    background: var(--discard-bg);
     overflow: visible;
   }
 
@@ -356,9 +356,9 @@
     transform: translate(-50%, -50%);
     padding: 2px 6px;
     border-radius: 999px;
-    background: rgba(248, 249, 250, 0.88);
-    border: 1px solid rgba(18, 21, 26, 0.12);
-    color: #303842;
+    background: var(--pile-count-bg);
+    border: 1px solid var(--pile-count-border);
+    color: var(--pile-count-text);
     box-shadow: 0 3px 10px rgba(23, 30, 38, 0.16);
     font-size: calc(var(--pile-w) * 0.18);
     font-weight: 850;
@@ -376,9 +376,9 @@
     width: calc(var(--prize-card-w) * 1.397);
     aspect-ratio: 88 / 63;
     margin-block: calc(var(--card-w) * 0.08);
-    color: rgba(48, 55, 65, 0.74);
-    background: rgba(255, 255, 255, 0.16);
-    border-color: rgba(18, 21, 26, 0.08);
+    color: var(--lost-text);
+    background: var(--lost-bg);
+    border-color: var(--lost-border);
     box-shadow: none;
     font-size: calc(var(--card-w) * 0.17);
     overflow: visible;
@@ -410,9 +410,9 @@
     width: var(--prize-card-w);
     aspect-ratio: 63 / 88;
     border-radius: 4px;
-    border: 1px solid rgba(18, 21, 26, 0.2);
+    border: 1px solid var(--prize-border);
     background:
-      linear-gradient(rgba(9, 18, 38, 0.18), rgba(9, 18, 38, 0.18)),
+      var(--cardback-shade),
       url("/assets/cardback.png") center / cover no-repeat;
     box-shadow: 0 3px 8px rgba(23, 30, 38, 0.16);
   }

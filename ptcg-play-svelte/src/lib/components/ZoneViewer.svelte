@@ -47,12 +47,12 @@
     gap: 14px;
     padding: 16px;
     overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--surface-glass-border);
     border-radius: 6px;
-    background: rgba(12, 15, 19, 0.76);
-    color: rgba(245, 248, 255, 0.9);
-    box-shadow: 0 10px 24px rgba(12, 15, 19, 0.18);
-    backdrop-filter: blur(10px);
+    background: var(--surface-glass-bg);
+    color: var(--text-secondary);
+    box-shadow: var(--surface-glass-shadow);
+    backdrop-filter: blur(var(--backdrop-blur));
   }
 
   .zone-viewer-backdrop {
@@ -76,12 +76,12 @@
     grid-template-columns: minmax(0, 1fr) auto auto;
     gap: 12px;
     align-items: center;
-    color: rgba(245, 248, 255, 0.68);
+    color: var(--text-muted);
   }
 
   .zone-viewer-header strong {
     min-width: 0;
-    color: rgba(245, 248, 255, 0.96);
+    color: var(--text-primary);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -105,7 +105,7 @@
 
   .zone-empty {
     margin: 0;
-    color: rgba(245, 248, 255, 0.66);
+    color: var(--text-muted);
     font-size: 12px;
   }
 </style>

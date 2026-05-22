@@ -141,19 +141,19 @@
   }
 
   .board-slot.empty {
-    border: 1px dashed rgba(30, 36, 43, 0.13);
-    background: rgba(255, 255, 255, 0.08);
+    border: 1px dashed var(--slot-empty-border);
+    background: var(--slot-empty-bg);
   }
 
   .board-slot.can-drop,
   .board-slot.prompt-selectable {
-    outline: 2px solid rgba(41, 161, 139, 0.82);
+    outline: 2px solid var(--selection-border-strong);
     outline-offset: 6px;
-    background: rgba(41, 161, 139, 0.12);
+    background: var(--selection-bg);
   }
 
   .board-slot.prompt-selected {
-    outline-color: #f2b844;
+    outline-color: var(--warning-base);
   }
 
   .board-slot > :global(.card-tile) {
@@ -168,9 +168,9 @@
     z-index: 3;
     transform: translateX(-50%);
     padding: 2px 6px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.78);
-    color: #59616b;
+    border-radius: var(--radius-pill);
+    background: var(--slot-label-bg);
+    color: var(--slot-label-text);
     font-size: 10px;
     font-weight: 800;
     opacity: 0;
@@ -225,9 +225,10 @@
     min-width: 19px;
     min-height: 19px;
     padding: 1px 5px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.84);
-    box-shadow: 0 2px 10px rgba(23, 30, 38, 0.12);
+    border-radius: var(--radius-pill);
+    background: var(--slot-badge-bg);
+    box-shadow: var(--slot-badge-shadow);
+    color: var(--text-primary);
     font-size: 9px;
     font-weight: 800;
   }
@@ -251,12 +252,10 @@
     min-height: clamp(18px, calc(var(--slot-card-w) * 0.16), 26px);
     padding: clamp(1px, calc(var(--slot-card-w) * 0.018), 3px) clamp(3px, calc(var(--slot-card-w) * 0.04), 6px) clamp(1px, calc(var(--slot-card-w) * 0.018), 3px) clamp(6px, calc(var(--slot-card-w) * 0.055), 10px);
     border-radius: 5px;
-    border: 1px solid rgba(255, 255, 255, 0.94);
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 244, 247, 0.96));
-    box-shadow:
-      0 5px 13px rgba(21, 28, 36, 0.28),
-      inset 0 1px 0 rgba(255, 255, 255, 0.9);
-    color: #111820;
+    border: 1px solid var(--slot-status-border);
+    background: var(--slot-status-bg);
+    box-shadow: var(--slot-status-shadow);
+    color: var(--slot-status-text);
     font-size: clamp(11px, calc(var(--slot-card-w) * 0.105), 16px);
     font-weight: 950;
     line-height: 1;

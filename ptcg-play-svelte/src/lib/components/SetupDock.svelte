@@ -34,16 +34,16 @@
     align-items: center;
     padding: 16px;
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(12, 15, 19, 0.88);
-    color: rgba(245, 248, 255, 0.72);
-    box-shadow: 0 24px 68px rgba(12, 15, 19, 0.34);
-    backdrop-filter: blur(14px);
+    border: 1px solid var(--surface-glass-border);
+    background: var(--surface-glass-bg);
+    color: var(--text-secondary);
+    box-shadow: var(--surface-glass-shadow);
+    backdrop-filter: blur(var(--backdrop-blur));
     transform: translate(-50%, -50%);
   }
 
   .setup-dock strong {
-    color: rgba(143, 232, 206, 0.96);
+    color: var(--accent-strong);
     font-size: 18px;
   }
 

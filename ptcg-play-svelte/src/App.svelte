@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import ActiveFocus from './lib/components/ActiveFocus.svelte';
   import AppHeader from './lib/components/AppHeader.svelte';
   import BoardLayer from './lib/components/BoardLayer.svelte';
@@ -88,6 +89,14 @@
   let boardLift = $derived(viewSettingsStore.boardLift);
   let debugZones = $derived(viewSettingsStore.debugZones);
   let showLogs = $derived(viewSettingsStore.showLogs);
+  let theme = $derived(viewSettingsStore.theme);
+  let themePreference = $derived(viewSettingsStore.themePreference);
+  onMount(() => viewSettingsStore.startThemeSync());
+  $effect(() => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.dataset.themePreference = themePreference;
+    document.documentElement.style.colorScheme = theme;
+  });
   let zoneViewerOpen = $derived(zoneViewerStore.open);
   let zoneViewerTitle = $derived(zoneViewerStore.title);
   let zoneViewerFaceDown = $derived(zoneViewerStore.faceDown);
@@ -215,7 +224,7 @@
           ? 'Game finished'
           : '',
   );
-  let currentPromptDockMode = $derived(
+  let currentPromptDockMode = $derived<'default' | 'search' | 'attachEnergy'>(
     currentPrompt?.className === 'ChooseCardsPrompt'
       ? 'search'
       : currentPrompt?.className === 'AttachEnergyPrompt'
@@ -910,6 +919,7 @@
         bind:autoConfirmPrompts={viewSettingsStore.autoConfirmPrompts}
         bind:debugZones={viewSettingsStore.debugZones}
         bind:showLogs={viewSettingsStore.showLogs}
+        bind:themePreference={viewSettingsStore.themePreference}
         busy={sessionBusy}
         promptActive={!!currentPrompt}
         {gameFinished}

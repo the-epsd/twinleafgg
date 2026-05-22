@@ -36,16 +36,16 @@
     align-items: center;
     padding: 12px 14px;
     border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    background: rgba(12, 15, 19, 0.84);
-    color: rgba(245, 248, 255, 0.72);
-    box-shadow: 0 18px 48px rgba(12, 15, 19, 0.26);
-    backdrop-filter: blur(14px);
+    border: 1px solid var(--surface-glass-border);
+    background: var(--surface-glass-bg);
+    color: var(--text-secondary);
+    box-shadow: var(--surface-glass-shadow);
+    backdrop-filter: blur(var(--backdrop-blur));
     transform: translate(-50%, -50%);
   }
 
   .board-prompt-dock strong {
-    color: rgba(143, 232, 206, 0.96);
+    color: var(--accent-strong);
     font-size: 15px;
   }
 

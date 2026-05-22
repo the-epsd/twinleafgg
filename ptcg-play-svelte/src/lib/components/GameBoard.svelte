@@ -301,7 +301,7 @@
     align-items: stretch;
     justify-items: stretch;
     padding: var(--board-content-inset-y) var(--board-content-inset-x);
-    background: rgba(226, 228, 232, 0.56);
+    background: var(--board-plane-bg);
     overflow: visible;
     transform: rotateX(var(--board-tilt, 8deg)) scaleY(var(--board-scale-y, 0.94)) translateY(var(--board-lift, 0px));
     transform-origin: 50% 58%;
@@ -312,9 +312,7 @@
   :global(.debug-zones) .game-board-plane {
     outline: 2px solid rgba(14, 165, 233, 0.9);
     outline-offset: -4px;
-    background:
-      linear-gradient(rgba(14, 165, 233, 0.08), rgba(14, 165, 233, 0.08)),
-      rgba(226, 228, 232, 0.56);
+    background: var(--board-plane-debug-bg);
   }
 
   .game-board-plane::before {
@@ -322,11 +320,11 @@
     position: absolute;
     inset: var(--board-outline-pad-y) var(--board-edge-pad-x);
     z-index: 0;
-    border: 2px solid rgba(44, 54, 64, 0.28);
+    border: 2px solid var(--board-border);
     border-radius: 18px;
     box-shadow:
-      inset 0 0 0 1px rgba(255, 255, 255, 0.34),
-      0 10px 26px rgba(23, 30, 38, 0.08);
+      inset 0 0 0 1px var(--board-inset-highlight),
+      var(--board-shadow);
     pointer-events: none;
   }
 
@@ -340,7 +338,7 @@
     aspect-ratio: 1;
     transform: translate(-50%, -50%);
     background: url("/assets/twinleaf-board-center.png") center / contain no-repeat;
-    opacity: 0.34;
+    opacity: var(--board-center-opacity);
     pointer-events: none;
   }
 
@@ -349,11 +347,9 @@
   }
 
   .game-board-plane.can-play-on-board::before {
-    border-color: rgba(41, 161, 139, 0.72);
-    background: rgba(41, 161, 139, 0.05);
-    box-shadow:
-      inset 0 0 0 2px rgba(41, 161, 139, 0.14),
-      0 10px 26px rgba(23, 30, 38, 0.08);
+    border-color: var(--selection-border-strong);
+    background: var(--board-play-bg);
+    box-shadow: var(--board-play-shadow);
   }
 
   @media (max-width: 980px) {

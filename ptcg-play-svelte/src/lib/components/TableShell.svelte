@@ -44,9 +44,7 @@
     position: relative;
     overflow: hidden;
     padding: 0;
-    background:
-      radial-gradient(circle at 50% 48%, rgba(255, 255, 255, 0.34), transparent 32%),
-      #dfe1e5;
+    background: var(--app-backdrop-bg);
     -webkit-user-select: none;
     user-select: none;
   }

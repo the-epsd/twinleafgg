@@ -7,6 +7,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow: hidden;
+  background: var(--app-bg);
+  color: var(--app-text);
 }
 
 button,
@@ -16,16 +18,17 @@ input {
 }
 
 button {
-  border: 1px solid rgba(26, 31, 39, 0.18);
-  background: rgba(255, 255, 255, 0.9);
-  color: #1d232b;
-  border-radius: 8px;
+  border: 1px solid var(--button-border);
+  background: var(--button-bg);
+  color: var(--button-text);
+  border-radius: var(--radius-md);
   padding: 7px 10px;
   cursor: pointer;
+  transition: border-color var(--transition-fast), background var(--transition-fast);
 }
 
 button:hover:not(:disabled) {
-  border-color: rgba(55, 150, 132, 0.85);
+  border-color: var(--button-hover-border);
 }
 
 button:disabled,
@@ -36,9 +39,9 @@ button:disabled,
 
 button.primary,
 .primary {
-  background: #278371;
-  border-color: #1e6f60;
-  color: #ffffff;
+  background: var(--button-primary-bg);
+  border-color: var(--button-primary-border);
+  color: var(--button-primary-text);
   font-weight: 800;
 }
 

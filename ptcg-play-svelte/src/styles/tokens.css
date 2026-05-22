@@ -1,6 +1,240 @@
 :root {
   color-scheme: light;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #dfe1e5;
-  color: #1d232b;
+
+  --radius-sm: 5px;
+  --radius-md: 7px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  --disabled-opacity: 0.32;
+
+  --transition-fast: 140ms ease;
+
+  --app-bg: #dfe1e5;
+  --app-text: #1d232b;
+  --app-backdrop-bg:
+    radial-gradient(circle at 50% 48%, rgba(255, 255, 255, 0.34), transparent 32%),
+    #dfe1e5;
+
+  --surface-glass-bg: rgba(255, 255, 255, 0.86);
+  --surface-glass-border: rgba(26, 31, 39, 0.10);
+  --surface-glass-shadow: 0 24px 68px rgba(26, 31, 39, 0.18);
+
+  --surface-inset-bg: rgba(26, 31, 39, 0.04);
+  --surface-inset-border: rgba(26, 31, 39, 0.08);
+
+  --surface-toolbar-bg: rgba(255, 255, 255, 0.82);
+  --surface-toolbar-border: rgba(26, 31, 39, 0.08);
+  --surface-toolbar-shadow: 0 10px 24px rgba(26, 31, 39, 0.10);
+
+  --text-primary: #1d232b;
+  --text-secondary: rgba(29, 35, 43, 0.74);
+  --text-muted: rgba(29, 35, 43, 0.56);
+  --text-on-accent: #ffffff;
+
+  --accent-base: #1e7f6c;
+  --accent-strong: #196656;
+  --accent-soft: rgba(30, 127, 108, 0.22);
+  --accent-tint: rgba(30, 127, 108, 0.10);
+  --accent-glow-soft: 0 0 18px rgba(30, 127, 108, 0.18);
+  --accent-glow-strong: 0 0 26px rgba(30, 127, 108, 0.28);
+
+  --warning-base: #c47a0d;
+  --warning-soft: rgba(196, 122, 13, 0.10);
+  --warning-text: #8a5402;
+  --warning-strong: #8a5402;
+
+  --danger-bg: #fff0f1;
+  --danger-border: #d87883;
+  --danger-text: #a02838;
+  --danger-strong: #7d2732;
+
+  --selection-outline: 2px solid var(--accent-base);
+  --selection-border-strong: var(--accent-base);
+  --selection-bg: var(--accent-tint);
+  --selection-shadow:
+    0 0 0 2px rgba(30, 127, 108, 0.24),
+    0 0 20px rgba(30, 127, 108, 0.16);
+  --selection-shadow-lift:
+    0 14px 28px rgba(26, 31, 39, 0.18),
+    0 0 0 3px rgba(30, 127, 108, 0.58),
+    0 0 24px rgba(30, 127, 108, 0.22);
+
+  --button-bg: rgba(255, 255, 255, 0.95);
+  --button-border: rgba(26, 31, 39, 0.18);
+  --button-text: #1d232b;
+  --button-hover-border: var(--accent-base);
+
+  --button-primary-bg: #1e7f6c;
+  --button-primary-border: #176356;
+  --button-primary-text: #ffffff;
+
+  --button-ghost-bg: rgba(26, 31, 39, 0.04);
+  --button-ghost-border: rgba(26, 31, 39, 0.10);
+  --button-ghost-text: #1d232b;
+
+  --input-bg: #f7f8fa;
+  --input-border: rgba(26, 31, 39, 0.18);
+  --input-text: #1d232b;
+
+  --overlay-backdrop-bg: rgba(29, 35, 43, 0.10);
+
+  --board-plane-bg: rgba(226, 228, 232, 0.56);
+  --board-plane-debug-bg:
+    linear-gradient(rgba(14, 165, 233, 0.08), rgba(14, 165, 233, 0.08)),
+    rgba(226, 228, 232, 0.56);
+  --board-border: rgba(44, 54, 64, 0.28);
+  --board-inset-highlight: rgba(255, 255, 255, 0.34);
+  --board-shadow: 0 10px 26px rgba(23, 30, 38, 0.08);
+  --board-play-bg: rgba(41, 161, 139, 0.05);
+  --board-play-shadow:
+    inset 0 0 0 2px rgba(41, 161, 139, 0.14),
+    0 10px 26px rgba(23, 30, 38, 0.08);
+  --board-center-opacity: 0.34;
+  --slot-empty-bg: rgba(255, 255, 255, 0.08);
+  --slot-empty-border: rgba(30, 36, 43, 0.13);
+  --slot-label-bg: rgba(255, 255, 255, 0.78);
+  --slot-label-text: #59616b;
+  --slot-status-bg: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(241, 244, 247, 0.96));
+  --slot-status-border: rgba(255, 255, 255, 0.94);
+  --slot-status-text: #111820;
+  --slot-status-shadow:
+    0 5px 13px rgba(21, 28, 36, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --slot-badge-bg: rgba(255, 255, 255, 0.84);
+  --slot-badge-shadow: 0 2px 10px rgba(23, 30, 38, 0.12);
+  --pile-bg: rgba(248, 249, 250, 0.34);
+  --pile-border: rgba(18, 21, 26, 0.14);
+  --pile-text: #111821;
+  --discard-bg: rgba(255, 255, 255, 0.42);
+  --discard-text: #3d4652;
+  --lost-bg: rgba(255, 255, 255, 0.16);
+  --lost-border: rgba(18, 21, 26, 0.08);
+  --lost-text: rgba(48, 55, 65, 0.74);
+  --pile-count-bg: rgba(248, 249, 250, 0.88);
+  --pile-count-border: rgba(18, 21, 26, 0.12);
+  --pile-count-text: #303842;
+  --prize-border: rgba(18, 21, 26, 0.20);
+  --cardback-shade: linear-gradient(rgba(9, 18, 38, 0.18), rgba(9, 18, 38, 0.18));
+
+  --backdrop-blur: 12px;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --app-bg: #1a1f27;
+  --app-text: #f5f8ff;
+  --app-backdrop-bg:
+    radial-gradient(circle at 50% 48%, rgba(96, 114, 134, 0.16), transparent 34%),
+    #1a1f27;
+
+  --surface-glass-bg: rgba(12, 15, 19, 0.88);
+  --surface-glass-border: rgba(255, 255, 255, 0.08);
+  --surface-glass-shadow: 0 24px 68px rgba(12, 15, 19, 0.34);
+
+  --surface-inset-bg: rgba(255, 255, 255, 0.05);
+  --surface-inset-border: rgba(255, 255, 255, 0.10);
+
+  --surface-toolbar-bg: rgba(12, 15, 19, 0.76);
+  --surface-toolbar-border: rgba(255, 255, 255, 0.08);
+  --surface-toolbar-shadow: 0 10px 24px rgba(12, 15, 19, 0.18);
+
+  --text-primary: rgba(245, 248, 255, 0.94);
+  --text-secondary: rgba(245, 248, 255, 0.74);
+  --text-muted: rgba(245, 248, 255, 0.58);
+  --text-on-accent: #ffffff;
+
+  --accent-base: #29a18b;
+  --accent-strong: rgba(143, 232, 206, 0.96);
+  --accent-soft: rgba(143, 232, 206, 0.22);
+  --accent-tint: rgba(143, 232, 206, 0.10);
+  --accent-glow-soft: 0 0 22px rgba(41, 161, 139, 0.20);
+  --accent-glow-strong: 0 0 30px rgba(41, 161, 139, 0.38);
+
+  --warning-base: rgba(242, 184, 68, 0.78);
+  --warning-soft: rgba(242, 184, 68, 0.10);
+  --warning-text: #ffe0a6;
+  --warning-strong: rgba(255, 225, 150, 0.95);
+
+  --danger-bg: rgba(136, 34, 48, 0.16);
+  --danger-border: rgba(255, 120, 134, 0.40);
+  --danger-text: #ffd8dc;
+  --danger-strong: #ffd8dc;
+
+  --selection-outline: 2px solid var(--accent-base);
+  --selection-border-strong: rgba(143, 232, 206, 0.78);
+  --selection-bg: var(--accent-tint);
+  --selection-shadow:
+    0 0 0 2px rgba(143, 232, 206, 0.30),
+    0 0 24px rgba(41, 161, 139, 0.22);
+  --selection-shadow-lift:
+    0 18px 36px rgba(0, 0, 0, 0.34),
+    0 0 0 3px rgba(143, 232, 206, 0.72),
+    0 0 30px rgba(41, 161, 139, 0.38);
+
+  --button-bg: rgba(255, 255, 255, 0.08);
+  --button-border: rgba(255, 255, 255, 0.14);
+  --button-text: var(--text-primary);
+  --button-hover-border: var(--accent-base);
+
+  --button-primary-bg: #278371;
+  --button-primary-border: #1e6f60;
+  --button-primary-text: #ffffff;
+
+  --button-ghost-bg: rgba(255, 255, 255, 0.07);
+  --button-ghost-border: rgba(255, 255, 255, 0.12);
+  --button-ghost-text: rgba(245, 248, 255, 0.86);
+
+  --input-bg: rgba(255, 255, 255, 0.06);
+  --input-border: rgba(255, 255, 255, 0.12);
+  --input-text: var(--text-primary);
+
+  --overlay-backdrop-bg: rgba(5, 8, 12, 0.36);
+
+  --board-plane-bg: rgba(25, 31, 38, 0.72);
+  --board-plane-debug-bg:
+    linear-gradient(rgba(14, 165, 233, 0.10), rgba(14, 165, 233, 0.10)),
+    rgba(25, 31, 38, 0.72);
+  --board-border: rgba(211, 221, 232, 0.20);
+  --board-inset-highlight: rgba(255, 255, 255, 0.10);
+  --board-shadow: 0 16px 34px rgba(0, 0, 0, 0.24);
+  --board-play-bg: rgba(143, 232, 206, 0.08);
+  --board-play-shadow:
+    inset 0 0 0 2px rgba(143, 232, 206, 0.18),
+    0 16px 34px rgba(0, 0, 0, 0.24);
+  --board-center-opacity: 0.24;
+  --slot-empty-bg: rgba(255, 255, 255, 0.045);
+  --slot-empty-border: rgba(230, 239, 248, 0.14);
+  --slot-label-bg: rgba(13, 17, 22, 0.84);
+  --slot-label-text: rgba(245, 248, 255, 0.72);
+  --slot-status-bg: linear-gradient(180deg, rgba(22, 28, 35, 0.98), rgba(13, 17, 22, 0.96));
+  --slot-status-border: rgba(255, 255, 255, 0.20);
+  --slot-status-text: rgba(245, 248, 255, 0.94);
+  --slot-status-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.10);
+  --slot-badge-bg: rgba(13, 17, 22, 0.84);
+  --slot-badge-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+  --pile-bg: rgba(255, 255, 255, 0.06);
+  --pile-border: rgba(255, 255, 255, 0.12);
+  --pile-text: rgba(245, 248, 255, 0.82);
+  --discard-bg: rgba(255, 255, 255, 0.08);
+  --discard-text: rgba(245, 248, 255, 0.78);
+  --lost-bg: rgba(255, 255, 255, 0.055);
+  --lost-border: rgba(255, 255, 255, 0.10);
+  --lost-text: rgba(245, 248, 255, 0.62);
+  --pile-count-bg: rgba(12, 15, 19, 0.90);
+  --pile-count-border: rgba(255, 255, 255, 0.13);
+  --pile-count-text: rgba(245, 248, 255, 0.90);
+  --prize-border: rgba(255, 255, 255, 0.16);
+  --cardback-shade: linear-gradient(rgba(4, 8, 16, 0.24), rgba(4, 8, 16, 0.24));
+
+  --backdrop-blur: 10px;
+}
+
+html {
+  background: var(--app-bg);
+  color: var(--app-text);
 }

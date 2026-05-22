@@ -104,11 +104,11 @@
     display: grid;
     place-items: center;
     transform: translate(-50%, -50%);
-    border-radius: 999px;
-    border: 1px solid rgba(18, 21, 26, 0.14);
-    background: rgba(248, 249, 250, 0.88);
-    color: #303842;
-    box-shadow: 0 4px 12px rgba(23, 30, 38, 0.16);
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--pile-count-border);
+    background: var(--pile-count-bg);
+    color: var(--pile-count-text);
+    box-shadow: var(--surface-toolbar-shadow);
     font-size: 17px;
     font-weight: 900;
     pointer-events: none;

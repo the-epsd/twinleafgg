@@ -47,7 +47,7 @@
 <style>
   .board-perspective-controls {
     position: relative;
-    color: #26303b;
+    color: var(--text-primary);
     font-size: 11px;
     font-weight: 750;
   }
@@ -57,16 +57,16 @@
     place-items: center;
     width: 100%;
     height: 34px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
+    border: 1px solid var(--button-border);
     border-radius: 6px;
-    background: rgba(12, 15, 19, 0.76);
-    box-shadow: 0 10px 24px rgba(12, 15, 19, 0.16);
-    color: rgba(245, 248, 255, 0.94);
+    background: var(--button-bg);
+    box-shadow: var(--surface-toolbar-shadow);
+    color: var(--button-text);
     cursor: pointer;
     font-size: 17px;
     line-height: 1;
     user-select: none;
-    backdrop-filter: blur(12px);
+    backdrop-filter: blur(var(--backdrop-blur));
   }
 
   .board-perspective-controls summary::marker,
@@ -75,7 +75,7 @@
   }
 
   .board-perspective-controls[open] summary {
-    background: rgba(22, 27, 34, 0.9);
+    background: var(--surface-inset-bg);
   }
 
   .board-perspective-menu {
@@ -88,7 +88,7 @@
     border: 0;
     background: transparent;
     box-shadow: none;
-    color: rgba(245, 248, 255, 0.9);
+    color: var(--text-secondary);
   }
 
   .board-perspective-menu strong {
@@ -110,7 +110,7 @@
 
   .board-perspective-menu span {
     justify-self: end;
-    color: rgba(245, 248, 255, 0.62);
+    color: var(--text-muted);
     font-variant-numeric: tabular-nums;
     text-align: right;
   }
@@ -120,9 +120,9 @@
     margin-top: 8px;
     border-radius: 6px;
     padding: 6px 8px;
-    border-color: rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.08);
-    color: rgba(245, 248, 255, 0.94);
+    border-color: var(--button-border);
+    background: var(--button-bg);
+    color: var(--button-text);
     font-size: 11px;
   }
 </style>
