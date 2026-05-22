@@ -8,7 +8,6 @@
   import ChoosePrizePrompt from './ChoosePrizePrompt.svelte';
   import CoinFlipPrompt from './CoinFlipPrompt.svelte';
   import ConfirmPrompt from './ConfirmPrompt.svelte';
-  import DamagePrompt from './DamagePrompt.svelte';
   import EnergyTransferPrompt from './EnergyTransferPrompt.svelte';
   import SelectPrompt from './SelectPrompt.svelte';
   import ShuffleOrderPrompt from './ShuffleOrderPrompt.svelte';
@@ -50,10 +49,6 @@
       || prompt.className === 'ShowMulliganPrompt',
   );
   let isEnergyTransferPrompt = $derived(prompt.className === 'DiscardEnergyPrompt' || prompt.className === 'MoveEnergyPrompt');
-  let isDamagePrompt = $derived(
-    prompt.className === 'MoveDamagePrompt'
-      || prompt.className === 'RemoveDamagePrompt',
-  );
   let isShuffleOrderPrompt = $derived((prompt.className.includes('Shuffle') || prompt.className.includes('Order'))
     && extractPromptCards(prompt.fields).length > 0);
   let hasPromptCards = $derived(extractPromptCards(prompt.fields).length > 0);
@@ -79,8 +74,6 @@
   <ChooseEnergyPrompt {prompt} {resolving} {onresolve} />
 {:else if isEnergyTransferPrompt}
   <EnergyTransferPrompt {game} {prompt} {resolving} {onresolve} />
-{:else if isDamagePrompt}
-  <DamagePrompt {game} {prompt} {resolving} {onresolve} />
 {:else if isShuffleOrderPrompt}
   <ShuffleOrderPrompt {prompt} {resolving} {onresolve} />
 {:else if prompt.className === 'AttachEnergyPrompt'}

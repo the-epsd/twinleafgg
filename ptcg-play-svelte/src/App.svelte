@@ -5,6 +5,7 @@
   import BoardLayer from './lib/components/BoardLayer.svelte';
   import BoardPromptDock from './lib/components/BoardPromptDock.svelte';
   import DamagePromptStrip from './lib/components/prompts/DamagePromptStrip.svelte';
+  import DamageTransferStrip from './lib/components/prompts/DamageTransferStrip.svelte';
   import EndGamePrompt from './lib/components/EndGamePrompt.svelte';
   import GameBoard from './lib/components/GameBoard.svelte';
   import GameStatus from './lib/components/GameStatus.svelte';
@@ -33,8 +34,9 @@
   import { benchSlotsFor, previewAttachEnergySlot, previewSlot } from './lib/game/preview';
   import { extractPromptCards, promptBlockedIndexes, promptInstanceKey, promptOptions } from './lib/game/prompts';
   import { getSetupPromptUiState, promptLimit, setupPromptResult } from './lib/game/setupPrompt';
-  import { getAttachPromptTargets, getBoardPromptTargets, sameTarget, targetForPromptSlot } from './lib/game/targets';
+  import { getAttachPromptTargets, getBoardPromptTargets, getDamageTransferTargets, sameTarget, targetForPromptSlot } from './lib/game/targets';
   import {
+    PlayerType,
     SlotType,
     targetFor,
     type CardTarget,
@@ -46,6 +48,7 @@
   import { gameStore } from './state/game.svelte';
   import { gameSessionStore } from './state/gameSession.svelte';
   import { promptLifecycleStore } from './state/promptLifecycle.svelte';
+  import { damageTransferStore } from './state/damageTransfer.svelte';
   import { promptSelectionStore } from './state/promptSelection.svelte';
   import { remoteSessionStore } from './state/remoteSession.svelte';
   import {
@@ -154,6 +157,67 @@
     window.addEventListener('click', clickDamagePromptSlotAtPoint, true);
     return () => {
       window.removeEventListener('click', clickDamagePromptSlotAtPoint, true);
+    };
+  });
+
+  let transferPrompt = $derived(
+    currentPrompt?.className === 'MoveDamagePrompt' || currentPrompt?.className === 'RemoveDamagePrompt'
+      ? currentPrompt
+      : null,
+  );
+  let transferPromptOptions = $derived(promptOptions(transferPrompt));
+  let transferPromptSources = $derived(transferPrompt && game ? getDamageTransferTargets(game, transferPrompt, 'blockedFrom') : []);
+  let transferPromptDestinations = $derived(transferPrompt && game ? getDamageTransferTargets(game, transferPrompt, 'blockedTo') : []);
+  let transferPromptMin = $derived(normalizePromptLimit(transferPromptOptions.min, 1));
+  let transferPromptMax = $derived(normalizePromptLimit(transferPromptOptions.max, 1));
+  let transferPromptStep = $derived(normalizePromptLimit(transferPromptOptions.damageMultiple, 10));
+  let transferPromptSameTarget = $derived(!!transferPromptOptions.sameTarget);
+  function damageOfTransferTarget(target: CardTarget): number {
+    if (!transferPrompt || !game) {
+      return 0;
+    }
+    const promptPlayerIndex = transferPrompt.playerIndex;
+    const ownerIndex = target.player === PlayerType.BOTTOM_PLAYER
+      ? promptPlayerIndex
+      : 1 - promptPlayerIndex;
+    const player = game.players[ownerIndex];
+    if (!player) {
+      return 0;
+    }
+    const slot = target.slot === SlotType.ACTIVE ? player.active : player.bench[target.index];
+    return slot?.damage ?? 0;
+  }
+  let transferSourceDamage = $derived(damageTransferStore.source ? damageOfTransferTarget(damageTransferStore.source) : 0);
+  let transferPromptEffectiveMax = $derived(
+    damageTransferStore.source
+      ? Math.min(transferPromptMax, Math.floor(transferSourceDamage / transferPromptStep))
+      : transferPromptMax,
+  );
+  let transferPromptInstanceKey = $derived(promptInstanceKey(transferPrompt));
+  let lastTransferPromptInstanceKey = $state('');
+  let transferSourceLabel = $derived(
+    damageTransferStore.source
+      ? (transferPromptSources.find((item) => sameTarget(item.target, damageTransferStore.source!))?.label ?? null)
+      : null,
+  );
+  let transferDestinationLabel = $derived(
+    damageTransferStore.destination
+      ? (transferPromptDestinations.find((item) => sameTarget(item.target, damageTransferStore.destination!))?.label ?? null)
+      : null,
+  );
+  $effect(() => {
+    if (transferPromptInstanceKey !== lastTransferPromptInstanceKey) {
+      damageTransferStore.reset();
+      lastTransferPromptInstanceKey = transferPromptInstanceKey;
+    }
+  });
+  $effect(() => {
+    if (!transferPrompt || !game) {
+      return;
+    }
+    window.addEventListener('click', clickTransferPromptSlotAtPoint, true);
+    return () => {
+      window.removeEventListener('click', clickTransferPromptSlotAtPoint, true);
     };
   });
   let boardPromptMin = $derived(normalizePromptLimit(promptOptions(boardTargetPrompt).min, 1));
@@ -375,6 +439,11 @@
 
     if (damagePrompt && isBoardPromptSelectable(slot)) {
       placeDamageOnSlot(slot);
+      return;
+    }
+
+    if (transferPrompt && isTransferSlotSelectable(slot)) {
+      activateTransferSlot(slot);
       return;
     }
 
@@ -670,6 +739,9 @@
       const target = targetForPromptSlot(damagePrompt, slot);
       return damagePromptTargets.some((item) => sameTarget(item, target));
     }
+    if (transferPrompt) {
+      return isTransferSlotSelectable(slot);
+    }
     if (!boardTargetPrompt || slot.empty) {
       return false;
     }
@@ -692,6 +764,9 @@
       const target = targetForPromptSlot(damagePrompt, slot);
       return promptSelectionStore.damageForTarget(target) > 0;
     }
+    if (transferPrompt) {
+      return isTransferSlotSelected(slot);
+    }
     if (!boardTargetPrompt || slot.empty) {
       return false;
     }
@@ -712,10 +787,20 @@
   }
 
   function boardPromptDamage(slot: PokemonSlotView) {
-    if (!damagePrompt || slot.empty) {
-      return 0;
+    if (damagePrompt && !slot.empty) {
+      return promptSelectionStore.damageForTarget(targetForPromptSlot(damagePrompt, slot));
     }
-    return promptSelectionStore.damageForTarget(targetForPromptSlot(damagePrompt, slot));
+    if (transferPrompt && !slot.empty && damageTransferStore.counterCount > 0) {
+      const target = targetForPromptSlot(transferPrompt, slot);
+      const moved = damageTransferStore.counterCount * transferPromptStep;
+      if (damageTransferStore.isSource(target)) {
+        return -moved;
+      }
+      if (damageTransferStore.isDestination(target)) {
+        return moved;
+      }
+    }
+    return 0;
   }
 
   function placeDamage(target: CardTarget) {
@@ -736,7 +821,7 @@
     if (!damagePrompt || resolvingPrompt) {
       return;
     }
-    if (event.target instanceof Element && event.target.closest('.prompt-dock, .board-prompt-dock')) {
+    if (event.target instanceof Element && event.target.closest('.prompt-dock, .board-prompt-dock, .prompt-strip')) {
       return;
     }
     const slot = boardPromptSlotAtPoint(event.clientX, event.clientY);
@@ -746,6 +831,82 @@
     event.preventDefault();
     event.stopImmediatePropagation();
     placeDamageOnSlot(slot);
+  }
+
+  function isTransferSourceCandidate(target: CardTarget) {
+    if (!transferPromptSources.some((item) => sameTarget(item.target, target))) {
+      return false;
+    }
+    return damageOfTransferTarget(target) >= transferPromptStep;
+  }
+
+  function isTransferDestinationCandidate(target: CardTarget) {
+    return transferPromptDestinations.some((item) => sameTarget(item.target, target));
+  }
+
+  function isTransferSlotSelectable(slot: PokemonSlotView) {
+    if (!transferPrompt || slot.empty) {
+      return false;
+    }
+    const target = targetForPromptSlot(transferPrompt, slot);
+    if (!damageTransferStore.source) {
+      return isTransferSourceCandidate(target);
+    }
+    if (damageTransferStore.counterCount >= transferPromptEffectiveMax) {
+      return false;
+    }
+    if (transferPromptSameTarget && damageTransferStore.destination) {
+      return damageTransferStore.isDestination(target);
+    }
+    return isTransferDestinationCandidate(target);
+  }
+
+  function isTransferSlotSelected(slot: PokemonSlotView) {
+    if (!transferPrompt || slot.empty) {
+      return false;
+    }
+    const target = targetForPromptSlot(transferPrompt, slot);
+    return damageTransferStore.isSource(target) || damageTransferStore.isDestination(target);
+  }
+
+  function activateTransferSlot(slot: PokemonSlotView) {
+    if (!transferPrompt || slot.empty || !isTransferSlotSelectable(slot)) {
+      return;
+    }
+    const target = targetForPromptSlot(transferPrompt, slot);
+    if (!damageTransferStore.source) {
+      damageTransferStore.selectSource(target);
+      return;
+    }
+    damageTransferStore.addCounter(target, transferPromptEffectiveMax);
+  }
+
+  function resetTransferPrompt() {
+    damageTransferStore.reset();
+  }
+
+  function confirmTransferPrompt() {
+    if (!transferPrompt || damageTransferStore.counterCount < transferPromptMin) {
+      return;
+    }
+    void resolvePrompt(damageTransferStore.result());
+    damageTransferStore.reset();
+  }
+
+  function clickTransferPromptSlotAtPoint(event: MouseEvent) {
+    if (!transferPrompt || resolvingPrompt) {
+      return;
+    }
+    if (event.target instanceof Element && event.target.closest('.prompt-dock, .board-prompt-dock, .prompt-strip')) {
+      return;
+    }
+    const slot = boardPromptSlotAtPoint(event.clientX, event.clientY);
+    if (!slot || !isTransferSlotSelectable(slot)) {
+      return;
+    }
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    activateTransferSlot(slot);
   }
 
   function boardPromptSlotAtPoint(x: number, y: number) {
@@ -963,6 +1124,21 @@
           onresolve={resolvePrompt}
           onreset={resetDamagePrompt}
           onconfirm={confirmDamagePrompt}
+        />
+      {:else if transferPrompt}
+        <DamageTransferStrip
+          prompt={transferPrompt}
+          resolving={resolvingPrompt}
+          sourceLabel={transferSourceLabel}
+          destinationLabel={transferDestinationLabel}
+          counterCount={damageTransferStore.counterCount}
+          minCounters={transferPromptMin}
+          maxCounters={transferPromptEffectiveMax}
+          damagePerCounter={transferPromptStep}
+          allowCancel={!!transferPromptOptions.allowCancel}
+          onresolve={resolvePrompt}
+          onreset={resetTransferPrompt}
+          onconfirm={confirmTransferPrompt}
         />
       {:else if invitePrompt}
         <PromptDock>

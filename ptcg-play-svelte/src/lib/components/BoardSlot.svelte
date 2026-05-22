@@ -71,8 +71,10 @@
   {ondrop}
 >
   <div class="slot-label">{slot.slot === 'active' ? 'Active' : `B${slot.index + 1}`}</div>
-  {#if promptDamage > 0}
-    <div class="prompt-damage-badge">+{promptDamage}</div>
+  {#if promptDamage !== 0}
+    <div class="prompt-damage-badge" class:negative={promptDamage < 0}>
+      {promptDamage > 0 ? '+' : '−'}{Math.abs(promptDamage)}
+    </div>
   {/if}
 
   {#if slot.pokemon}
@@ -194,6 +196,11 @@
     line-height: 1;
     text-align: center;
     pointer-events: none;
+  }
+
+  .prompt-damage-badge.negative {
+    background: #166e5b;
+    box-shadow: 0 8px 18px rgba(15, 60, 49, 0.32);
   }
 
   .board-slot:hover .slot-label,
