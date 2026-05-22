@@ -19,11 +19,9 @@ WORKDIR /usr/src/app
 FROM base as deps
 
 # Download dependencies as a separate step to take advantage of Docker's caching.
-# Leverage a cache mount to /root/.npm to speed up subsequent builds.
 # Copy package manifests before installing so this layer can still be cached.
 COPY package.json package-lock.json ./
-RUN --mount=type=cache,id=ptcg-server-npm,target=/root/.npm \
-    npm ci
+RUN npm ci
 
 ################################################################################
 # Create a stage for building the application.
@@ -31,8 +29,7 @@ FROM deps as build
 
 # Download additional development dependencies before building, as some projects require
 # "devDependencies" to be installed to build. If you don't need this, remove this step.
-RUN --mount=type=cache,id=ptcg-server-npm,target=/root/.npm \
-    npm ci
+RUN npm ci
 
 # Copy the rest of the source files into the image.
 COPY . .
