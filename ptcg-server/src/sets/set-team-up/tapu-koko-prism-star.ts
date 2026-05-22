@@ -51,7 +51,6 @@ export class TapuKokoPrismStar extends PokemonCard {
   public setNumber: string = '51';
   public name = 'Tapu Koko Prism Star';
   public fullName = 'Tapu Koko Prism Star TEU';
-  public legacyFullName: string = 'Tapu Koko \u25C7 TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_POWER_USED(effect, 0, this)) {

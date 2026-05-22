@@ -1,12 +1,4 @@
-import {
-  Card,
-  ChooseCardsPrompt,
-  GameError,
-  GameLog,
-  GameMessage,
-  PlayerType,
-  StateUtils,
-} from '../../game';
+import { Card, ChooseCardsPrompt, GameError, GameLog, GameMessage, PlayerType, StateUtils } from '../../game';
 import { CardTag, TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
@@ -23,10 +15,8 @@ export class LysandrePrismStar extends TrainerCard {
   public setNumber: string = '110';
   public name: string = 'Lysandre Prism Star';
   public fullName: string = 'Lysandre Prism Star FLI';
-  public legacyFullName: string = 'Lysandre \u25C7 FLI';
 
-  public text: string =
-    "For each of your [R] Pokémon in play, put a card from your opponent's discard pile in the Lost Zone.";
+  public text: string = 'For each of your [R] Pokémon in play, put a card from your opponent\'s discard pile in the Lost Zone.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
@@ -56,33 +46,25 @@ export class LysandrePrismStar extends TrainerCard {
       effect.preventDefault = true;
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-      store.prompt(
-        state,
-        new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          opponent.discard,
-          {},
-          {
-            min: Math.min(opponent.discard.cards.length, firesInPlay),
-            max: Math.min(opponent.discard.cards.length, firesInPlay),
-            allowCancel: false,
-          },
-        ),
-        (selected) => {
-          cards = selected || [];
+      store.prompt(state, new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_DISCARD,
+        opponent.discard,
+        {},
+        { min: Math.min(opponent.discard.cards.length, firesInPlay), max: Math.min(opponent.discard.cards.length, firesInPlay), allowCancel: false }
+      ), selected => {
+        cards = selected || [];
 
-          // Operation canceled by the user
-          if (cards.length === 0) {
-            return state;
-          }
+        // Operation canceled by the user
+        if (cards.length === 0) {
+          return state;
+        }
 
-          opponent.discard.moveCardsTo(cards, opponent.lostzone);
-          player.supporter.moveCardTo(this, player.lostzone);
+        opponent.discard.moveCardsTo(cards, opponent.lostzone);
+        player.supporter.moveCardTo(this, player.lostzone);
 
-          store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
-        },
-      );
+        store.log(state, GameLog.LOG_PLAYER_DRAWS_CARD, { name: player.name });
+      });
     }
     return state;
   }

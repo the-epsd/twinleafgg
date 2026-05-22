@@ -14,7 +14,6 @@ export class UnitEnergyLPM extends EnergyCard {
   public setNumber: string = '138';
   public name = 'Unit Energy LPM';
   public fullName = 'Unit Energy LPM UPR';
-  public legacyFullName: string = 'Unit Energy LightningPsychicMetal UPR';
 
   public text =
     'This card provides [C] Energy.\n\n' +

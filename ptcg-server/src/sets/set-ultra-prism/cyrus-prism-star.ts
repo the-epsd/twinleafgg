@@ -25,7 +25,6 @@ export class CyrusPrismStar extends TrainerCard {
   public setNumber: string = '120';
   public name: string = 'Cyrus Prism Star';
   public fullName: string = 'Cyrus Prism Star UPR';
-  public legacyFullName: string = 'Cyrus \u25C7 UPR';
 
   public text: string =
     'You can play this card only if your Active Pokémon is a [W] or [M] Pokémon.\n\n' +

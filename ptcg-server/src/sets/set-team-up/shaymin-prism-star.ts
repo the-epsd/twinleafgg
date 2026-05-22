@@ -28,7 +28,6 @@ export class ShayminPrismStar extends PokemonCard {
   public setNumber: string = '10';
   public name: string = 'Shaymin Prism Star';
   public fullName: string = 'Shaymin Prism Star TEU';
-  public legacyFullName: string = 'Shaymin \u25C7 TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

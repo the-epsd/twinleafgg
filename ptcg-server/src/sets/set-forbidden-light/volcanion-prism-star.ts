@@ -50,7 +50,6 @@ export class VolcanionPrismStar extends PokemonCard {
   public cardImage = 'assets/cardback.png';
   public name: string = 'Volcanion Prism Star';
   public fullName: string = 'Volcanion Prism Star FLI';
-  public legacyFullName: string = 'Volcanion \u25C7 FLI';
 
   public readonly JET_GEYSER_MARKER = 'JET_GEYSER_MARKER';
 

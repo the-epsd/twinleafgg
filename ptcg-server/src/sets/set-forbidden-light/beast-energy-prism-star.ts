@@ -17,7 +17,6 @@ export class BeastEnergyPrismStar extends EnergyCard {
   public cardImage = 'assets/cardback.png';
   public name = 'Beast Energy Prism Star';
   public fullName = 'Beast Energy FLI';
-  public legacyFullName: string = 'Beast Energy ◇ FLI';
 
   public text =
     'This card provides [C] Energy.' +

@@ -14,7 +14,6 @@ export class UnitEnergyFDY extends EnergyCard {
   public setNumber: string = '118';
   public name = 'Unit Energy FDY';
   public fullName = 'Unit Energy FDY FLI';
-  public legacyFullName: string = 'Unit Energy FightingDarknessFairy FLI';
 
   public text =
     'This card provides [C] Energy.' +
