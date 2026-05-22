@@ -3,9 +3,7 @@
   import ActiveFocus from './lib/components/ActiveFocus.svelte';
   import AppHeader from './lib/components/AppHeader.svelte';
   import BoardLayer from './lib/components/BoardLayer.svelte';
-  import BoardPromptDock from './lib/components/BoardPromptDock.svelte';
-  import DamagePromptStrip from './lib/components/prompts/DamagePromptStrip.svelte';
-  import DamageTransferStrip from './lib/components/prompts/DamageTransferStrip.svelte';
+  import BoardPromptStrip from './lib/components/prompts/BoardPromptStrip.svelte';
   import EndGamePrompt from './lib/components/EndGamePrompt.svelte';
   import GameBoard from './lib/components/GameBoard.svelte';
   import GameStatus from './lib/components/GameStatus.svelte';
@@ -22,6 +20,7 @@
   import type { GameCommandApi } from './lib/game/gameApi';
   import { localGameApi } from './lib/game/httpClient';
   import { labelFor } from './lib/game/labels';
+  import type { BoardInteractionStrategy } from './lib/game/boardInteraction';
   import {
     canPlayCardToBoardArea,
     canPlayCardToPlayArea,
@@ -34,15 +33,19 @@
   import { benchSlotsFor, previewAttachEnergySlot, previewSlot } from './lib/game/preview';
   import { extractPromptCards, promptBlockedIndexes, promptInstanceKey, promptOptions } from './lib/game/prompts';
   import { getSetupPromptUiState, promptLimit, setupPromptResult } from './lib/game/setupPrompt';
-  import { getAttachPromptTargets, getBoardPromptTargets, getDamageTransferTargets, sameTarget, targetForPromptSlot } from './lib/game/targets';
+  import { getAttachPromptTargets, getBoardPromptTargets, sameTarget, targetForPromptSlot } from './lib/game/targets';
+  import { createChoosePokemonStrategy } from './lib/game/strategies/choosePokemonStrategy';
+  import { createDamageTransferStrategy } from './lib/game/strategies/damageTransferStrategy';
+  import { createPutDamageStrategy } from './lib/game/strategies/putDamageStrategy';
   import {
-    PlayerType,
     SlotType,
     targetFor,
     type CardTarget,
     type CardView,
+    type GameView,
     type PlayerView,
     type PokemonSlotView,
+    type PromptView,
   } from './lib/game/types';
   import { deckImportStore } from './state/deckImport.svelte';
   import { gameStore } from './state/game.svelte';
@@ -53,10 +56,7 @@
   import { remoteSessionStore } from './state/remoteSession.svelte';
   import {
     canAssignAttachTarget,
-    damagePlacementsToResult,
     isAttachEnergyAvailable as isAttachEnergyAvailableModel,
-    totalPlacedDamage,
-    type DamagePlacement,
   } from './state/promptSelectionModel';
   import { selectionStore } from './state/selection.svelte';
   import { setupSelectionStore } from './state/setupSelection.svelte';
@@ -81,7 +81,6 @@
   let focusedSlot = $derived(selectionStore.focusedSlot);
   let setupActiveIndex = $derived(setupSelectionStore.activeIndex);
   let setupBenchIndexes = $derived(setupSelectionStore.benchIndexes);
-  let selectedBoardTargets = $derived(promptSelectionStore.selectedBoardTargets);
   let attachPromptEnergyIndex = $derived(promptSelectionStore.activeAttachEnergyIndex);
   let attachPromptAssignments = $derived(promptSelectionStore.attachAssignments);
   let followActive = $derived(viewSettingsStore.followActive);
@@ -112,27 +111,11 @@
   let boardTargetPrompt = $derived(currentPrompt?.className === 'ChoosePokemonPrompt' ? currentPrompt : null);
   let attachPrompt = $derived(currentPrompt?.className === 'AttachEnergyPrompt' ? currentPrompt : null);
   let damagePrompt = $derived(currentPrompt?.className === 'PutDamagePrompt' ? currentPrompt : null);
-  let boardPromptTargets = $derived(boardTargetPrompt && game ? getBoardPromptTargets(game, boardTargetPrompt) : []);
   let attachPromptCards = $derived(attachPrompt ? extractPromptCards(attachPrompt.fields) : []);
   let attachPromptMin = $derived(normalizePromptLimit(promptOptions(attachPrompt).min, 0));
   let attachPromptMax = $derived(normalizePromptLimit(promptOptions(attachPrompt).max, attachPromptCards.length || 1));
   let attachPromptTargets = $derived(attachPrompt && game ? getAttachPromptTargets(game, attachPrompt) : []);
   let damagePromptTargets = $derived(damagePrompt && game ? getBoardPromptTargets(game, damagePrompt) : []);
-  let damagePromptOptions = $derived(promptOptions(damagePrompt));
-  let damagePromptStep = $derived(normalizePromptLimit(damagePromptOptions.damageMultiple, 10));
-  let damagePromptRequired = $derived(normalizePromptLimit(damagePrompt?.fields.damage, 0));
-  let damagePromptMaxAllowed = $derived(normalizeDamagePlacements(damagePrompt?.fields.maxAllowedDamage));
-  let damagePlacements = $derived(promptSelectionStore.damagePlacements);
-  let damagePlacedTotal = $derived(totalPlacedDamage(damagePlacements));
-  let canConfirmDamagePrompt = $derived(
-    !!damagePrompt
-      && damagePlacedTotal > 0
-      && (
-        damagePromptOptions.allowPlacePartialDamage
-          ? damagePlacedTotal <= damagePromptRequired
-          : damagePlacedTotal === damagePromptRequired
-      ),
-  );
   let damagePromptInstanceKey = $derived(promptInstanceKey(damagePrompt));
   let lastDamagePromptInstanceKey = $state('');
   $effect(() => {
@@ -150,79 +133,40 @@
       lastDamagePromptInstanceKey = damagePromptInstanceKey;
     }
   });
-  $effect(() => {
-    if (!damagePrompt || !game) {
-      return;
-    }
-    window.addEventListener('click', clickDamagePromptSlotAtPoint, true);
-    return () => {
-      window.removeEventListener('click', clickDamagePromptSlotAtPoint, true);
-    };
-  });
 
   let transferPrompt = $derived(
     currentPrompt?.className === 'MoveDamagePrompt' || currentPrompt?.className === 'RemoveDamagePrompt'
       ? currentPrompt
       : null,
   );
-  let transferPromptOptions = $derived(promptOptions(transferPrompt));
-  let transferPromptSources = $derived(transferPrompt && game ? getDamageTransferTargets(game, transferPrompt, 'blockedFrom') : []);
-  let transferPromptDestinations = $derived(transferPrompt && game ? getDamageTransferTargets(game, transferPrompt, 'blockedTo') : []);
-  let transferPromptMin = $derived(normalizePromptLimit(transferPromptOptions.min, 1));
-  let transferPromptMax = $derived(normalizePromptLimit(transferPromptOptions.max, 1));
-  let transferPromptStep = $derived(normalizePromptLimit(transferPromptOptions.damageMultiple, 10));
-  let transferPromptSameTarget = $derived(!!transferPromptOptions.sameTarget);
-  function damageOfTransferTarget(target: CardTarget): number {
-    if (!transferPrompt || !game) {
-      return 0;
-    }
-    const promptPlayerIndex = transferPrompt.playerIndex;
-    const ownerIndex = target.player === PlayerType.BOTTOM_PLAYER
-      ? promptPlayerIndex
-      : 1 - promptPlayerIndex;
-    const player = game.players[ownerIndex];
-    if (!player) {
-      return 0;
-    }
-    const slot = target.slot === SlotType.ACTIVE ? player.active : player.bench[target.index];
-    return slot?.damage ?? 0;
-  }
-  let transferSourceDamage = $derived(damageTransferStore.source ? damageOfTransferTarget(damageTransferStore.source) : 0);
-  let transferPromptEffectiveMax = $derived(
-    damageTransferStore.source
-      ? Math.min(transferPromptMax, Math.floor(transferSourceDamage / transferPromptStep))
-      : transferPromptMax,
-  );
   let transferPromptInstanceKey = $derived(promptInstanceKey(transferPrompt));
   let lastTransferPromptInstanceKey = $state('');
-  let transferSourceLabel = $derived(
-    damageTransferStore.source
-      ? (transferPromptSources.find((item) => sameTarget(item.target, damageTransferStore.source!))?.label ?? null)
-      : null,
-  );
-  let transferDestinationLabel = $derived(
-    damageTransferStore.destination
-      ? (transferPromptDestinations.find((item) => sameTarget(item.target, damageTransferStore.destination!))?.label ?? null)
-      : null,
-  );
   $effect(() => {
     if (transferPromptInstanceKey !== lastTransferPromptInstanceKey) {
       damageTransferStore.reset();
       lastTransferPromptInstanceKey = transferPromptInstanceKey;
     }
   });
+  let boardTargetPromptInstanceKey = $derived(promptInstanceKey(boardTargetPrompt));
+  let lastBoardTargetPromptInstanceKey = $state('');
   $effect(() => {
-    if (!transferPrompt || !game) {
+    if (boardTargetPromptInstanceKey !== lastBoardTargetPromptInstanceKey) {
+      promptSelectionStore.resetBoardTargets();
+      lastBoardTargetPromptInstanceKey = boardTargetPromptInstanceKey;
+    }
+  });
+  let boardStrategy = $derived<BoardInteractionStrategy | null>(
+    game && currentPrompt ? createBoardStrategy(game, currentPrompt) : null,
+  );
+  $effect(() => {
+    if (!boardStrategy || !game) {
       return;
     }
-    window.addEventListener('click', clickTransferPromptSlotAtPoint, true);
+    window.addEventListener('click', clickBoardPromptSlotAtPoint, true);
     return () => {
-      window.removeEventListener('click', clickTransferPromptSlotAtPoint, true);
+      window.removeEventListener('click', clickBoardPromptSlotAtPoint, true);
     };
   });
-  let boardPromptMin = $derived(normalizePromptLimit(promptOptions(boardTargetPrompt).min, 1));
-  let boardPromptMax = $derived(normalizePromptLimit(promptOptions(boardTargetPrompt).max, 1));
-  let canConfirmBoardPrompt = $derived(!!boardTargetPrompt && selectedBoardTargets.length >= boardPromptMin);
   let autoConfirmPrompt = $derived(
     !!currentPrompt && ['AlertPrompt', 'ShowCardsPrompt', 'ConfirmCardsPrompt', 'ShowMulliganPrompt'].includes(currentPrompt.className),
   );
@@ -264,6 +208,35 @@
   function resetPerspective() {
     viewSettingsStore.resetPerspective();
   }
+
+  function createBoardStrategy(currentGame: GameView, prompt: PromptView) {
+    if (prompt.className === 'PutDamagePrompt') {
+      return createPutDamageStrategy({
+        game: currentGame,
+        prompt,
+        store: promptSelectionStore,
+        resolve: (value) => void resolvePrompt(value),
+      });
+    }
+    if (prompt.className === 'MoveDamagePrompt' || prompt.className === 'RemoveDamagePrompt') {
+      return createDamageTransferStrategy({
+        game: currentGame,
+        prompt,
+        store: damageTransferStore,
+        resolve: (value) => void resolvePrompt(value),
+      });
+    }
+    if (prompt.className === 'ChoosePokemonPrompt') {
+      return createChoosePokemonStrategy({
+        game: currentGame,
+        prompt,
+        store: promptSelectionStore,
+        resolve: (value) => void resolvePrompt(value),
+      });
+    }
+    return null;
+  }
+
   $effect(() => {
     if (game && followActive && mode === 'local') {
       viewSettingsStore.followPlayer(currentPrompt?.playerIndex ?? game.activePlayerIndex);
@@ -437,18 +410,7 @@
       return;
     }
 
-    if (damagePrompt && isBoardPromptSelectable(slot)) {
-      placeDamageOnSlot(slot);
-      return;
-    }
-
-    if (transferPrompt && isTransferSlotSelectable(slot)) {
-      activateTransferSlot(slot);
-      return;
-    }
-
-    if (boardTargetPrompt && isBoardPromptSelectable(slot)) {
-      selectBoardPromptSlot(slot);
+    if (dispatchBoardClick(slot)) {
       return;
     }
 
@@ -680,18 +642,6 @@
     return promptLimit(value, fallback);
   }
 
-  function normalizeDamagePlacements(value: unknown): DamagePlacement[] {
-    return Array.isArray(value)
-      ? value.filter((item): item is DamagePlacement =>
-          item
-            && typeof item === 'object'
-            && 'target' in item
-            && 'damage' in item
-            && typeof item.damage === 'number',
-        )
-      : [];
-  }
-
   function canAct(playerIndex: number) {
     if (mode === 'remote' && remoteSessionStore.playerIndex !== playerIndex) {
       return false;
@@ -732,21 +682,10 @@
       const target = targetForPromptSlot(attachPrompt, slot);
       return canAssignAttachPromptTarget(target);
     }
-    if (damagePrompt) {
-      if (slot.empty || damagePlacedTotal >= damagePromptRequired) {
-        return false;
-      }
-      const target = targetForPromptSlot(damagePrompt, slot);
-      return damagePromptTargets.some((item) => sameTarget(item, target));
-    }
-    if (transferPrompt) {
-      return isTransferSlotSelectable(slot);
-    }
-    if (!boardTargetPrompt || slot.empty) {
+    if (!boardStrategy || !currentPrompt || slot.empty) {
       return false;
     }
-    const target = targetForPromptSlot(boardTargetPrompt, slot);
-    return boardPromptTargets.some((item) => sameTarget(item, target));
+    return boardStrategy.isEligible(targetForPromptSlot(currentPrompt, slot));
   }
 
   function isBoardPromptSelected(slot: PokemonSlotView) {
@@ -757,156 +696,44 @@
       const target = targetForPromptSlot(attachPrompt, slot);
       return attachPromptAssignments.some((assignment) => sameTarget(assignment.target, target));
     }
-    if (damagePrompt) {
-      if (slot.empty) {
-        return false;
-      }
-      const target = targetForPromptSlot(damagePrompt, slot);
-      return promptSelectionStore.damageForTarget(target) > 0;
-    }
-    if (transferPrompt) {
-      return isTransferSlotSelected(slot);
-    }
-    if (!boardTargetPrompt || slot.empty) {
+    if (!boardStrategy || !currentPrompt || slot.empty) {
       return false;
     }
-    const target = targetForPromptSlot(boardTargetPrompt, slot);
-    return selectedBoardTargets.some((item) => sameTarget(item, target));
+    return boardStrategy.isSelected(targetForPromptSlot(currentPrompt, slot));
   }
 
-  function selectBoardPromptSlot(slot: PokemonSlotView) {
-    if (!boardTargetPrompt || !isBoardPromptSelectable(slot)) {
-      return;
+  function boardSlotDelta(slot: PokemonSlotView) {
+    if (!boardStrategy || !currentPrompt || slot.empty) {
+      return 0;
     }
-    const target = targetForPromptSlot(boardTargetPrompt, slot);
-    if (boardPromptMax <= 1) {
-      void resolvePrompt([target]);
-      return;
-    }
-    promptSelectionStore.toggleBoardTarget(target, boardPromptMax);
+    return boardStrategy.deltaFor(targetForPromptSlot(currentPrompt, slot));
   }
 
-  function boardPromptDamage(slot: PokemonSlotView) {
-    if (damagePrompt && !slot.empty) {
-      return promptSelectionStore.damageForTarget(targetForPromptSlot(damagePrompt, slot));
+  function dispatchBoardClick(slot: PokemonSlotView) {
+    if (!boardStrategy || !currentPrompt || slot.empty) {
+      return false;
     }
-    if (transferPrompt && !slot.empty && damageTransferStore.counterCount > 0) {
-      const target = targetForPromptSlot(transferPrompt, slot);
-      const moved = damageTransferStore.counterCount * transferPromptStep;
-      if (damageTransferStore.isSource(target)) {
-        return -moved;
-      }
-      if (damageTransferStore.isDestination(target)) {
-        return moved;
-      }
+    const target = targetForPromptSlot(currentPrompt, slot);
+    if (!boardStrategy.isEligible(target)) {
+      return false;
     }
-    return 0;
+    boardStrategy.activate(target);
+    return true;
   }
 
-  function placeDamage(target: CardTarget) {
-    if (!damagePrompt || !damagePromptTargets.some((item) => sameTarget(item, target))) {
+  function clickBoardPromptSlotAtPoint(event: MouseEvent) {
+    if (!boardStrategy || resolvingPrompt) {
       return;
     }
-    promptSelectionStore.placeDamage(target, damagePromptStep, damagePromptRequired, damagePromptMaxAllowed);
-  }
-
-  function placeDamageOnSlot(slot: PokemonSlotView) {
-    if (!damagePrompt || slot.empty) {
-      return;
-    }
-    placeDamage(targetForPromptSlot(damagePrompt, slot));
-  }
-
-  function clickDamagePromptSlotAtPoint(event: MouseEvent) {
-    if (!damagePrompt || resolvingPrompt) {
-      return;
-    }
-    if (event.target instanceof Element && event.target.closest('.prompt-dock, .board-prompt-dock, .prompt-strip')) {
+    if (event.target instanceof Element && event.target.closest('.prompt-dock, .prompt-strip')) {
       return;
     }
     const slot = boardPromptSlotAtPoint(event.clientX, event.clientY);
-    if (!slot || !isBoardPromptSelectable(slot)) {
+    if (!slot || !dispatchBoardClick(slot)) {
       return;
     }
     event.preventDefault();
     event.stopImmediatePropagation();
-    placeDamageOnSlot(slot);
-  }
-
-  function isTransferSourceCandidate(target: CardTarget) {
-    if (!transferPromptSources.some((item) => sameTarget(item.target, target))) {
-      return false;
-    }
-    return damageOfTransferTarget(target) >= transferPromptStep;
-  }
-
-  function isTransferDestinationCandidate(target: CardTarget) {
-    return transferPromptDestinations.some((item) => sameTarget(item.target, target));
-  }
-
-  function isTransferSlotSelectable(slot: PokemonSlotView) {
-    if (!transferPrompt || slot.empty) {
-      return false;
-    }
-    const target = targetForPromptSlot(transferPrompt, slot);
-    if (!damageTransferStore.source) {
-      return isTransferSourceCandidate(target);
-    }
-    if (damageTransferStore.counterCount >= transferPromptEffectiveMax) {
-      return false;
-    }
-    if (transferPromptSameTarget && damageTransferStore.destination) {
-      return damageTransferStore.isDestination(target);
-    }
-    return isTransferDestinationCandidate(target);
-  }
-
-  function isTransferSlotSelected(slot: PokemonSlotView) {
-    if (!transferPrompt || slot.empty) {
-      return false;
-    }
-    const target = targetForPromptSlot(transferPrompt, slot);
-    return damageTransferStore.isSource(target) || damageTransferStore.isDestination(target);
-  }
-
-  function activateTransferSlot(slot: PokemonSlotView) {
-    if (!transferPrompt || slot.empty || !isTransferSlotSelectable(slot)) {
-      return;
-    }
-    const target = targetForPromptSlot(transferPrompt, slot);
-    if (!damageTransferStore.source) {
-      damageTransferStore.selectSource(target);
-      return;
-    }
-    damageTransferStore.addCounter(target, transferPromptEffectiveMax);
-  }
-
-  function resetTransferPrompt() {
-    damageTransferStore.reset();
-  }
-
-  function confirmTransferPrompt() {
-    if (!transferPrompt || damageTransferStore.counterCount < transferPromptMin) {
-      return;
-    }
-    void resolvePrompt(damageTransferStore.result());
-    damageTransferStore.reset();
-  }
-
-  function clickTransferPromptSlotAtPoint(event: MouseEvent) {
-    if (!transferPrompt || resolvingPrompt) {
-      return;
-    }
-    if (event.target instanceof Element && event.target.closest('.prompt-dock, .board-prompt-dock, .prompt-strip')) {
-      return;
-    }
-    const slot = boardPromptSlotAtPoint(event.clientX, event.clientY);
-    if (!slot || !isTransferSlotSelectable(slot)) {
-      return;
-    }
-    event.preventDefault();
-    event.stopImmediatePropagation();
-    activateTransferSlot(slot);
   }
 
   function boardPromptSlotAtPoint(x: number, y: number) {
@@ -936,24 +763,6 @@
       return player.bench.find((slot) => slot.index === slotIndex) ?? null;
     }
     return null;
-  }
-
-  function resetDamagePrompt() {
-    promptSelectionStore.resetDamagePlacements();
-  }
-
-  function confirmDamagePrompt() {
-    if (!canConfirmDamagePrompt) {
-      return;
-    }
-    void resolvePrompt(damagePlacementsToResult(damagePlacements));
-  }
-
-  function confirmBoardPromptTargets() {
-    if (!canConfirmBoardPrompt) {
-      return;
-    }
-    void resolvePrompt(selectedBoardTargets);
   }
 
   function assignAttachPromptTarget(slot: PokemonSlotView) {
@@ -1105,41 +914,8 @@
           resolving={resolvingPrompt}
           confirm={confirmSetupPokemon}
         />
-      {:else if boardTargetPrompt}
-        <BoardPromptDock
-          prompt={boardTargetPrompt}
-          maxSelections={boardPromptMax}
-          canConfirm={canConfirmBoardPrompt}
-          resolving={resolvingPrompt}
-          confirm={confirmBoardPromptTargets}
-        />
-      {:else if damagePrompt}
-        <DamagePromptStrip
-          prompt={damagePrompt}
-          resolving={resolvingPrompt}
-          {damagePlacedTotal}
-          damageRequired={damagePromptRequired}
-          canConfirm={canConfirmDamagePrompt}
-          allowCancel={!!damagePromptOptions.allowCancel}
-          onresolve={resolvePrompt}
-          onreset={resetDamagePrompt}
-          onconfirm={confirmDamagePrompt}
-        />
-      {:else if transferPrompt}
-        <DamageTransferStrip
-          prompt={transferPrompt}
-          resolving={resolvingPrompt}
-          sourceLabel={transferSourceLabel}
-          destinationLabel={transferDestinationLabel}
-          counterCount={damageTransferStore.counterCount}
-          minCounters={transferPromptMin}
-          maxCounters={transferPromptEffectiveMax}
-          damagePerCounter={transferPromptStep}
-          allowCancel={!!transferPromptOptions.allowCancel}
-          onresolve={resolvePrompt}
-          onreset={resetTransferPrompt}
-          onconfirm={confirmTransferPrompt}
-        />
+      {:else if boardStrategy}
+        <BoardPromptStrip strategy={boardStrategy} resolving={resolvingPrompt} />
       {:else if invitePrompt}
         <PromptDock>
           <div class="invite-panel">
@@ -1202,7 +978,7 @@
           {isPlayableTarget}
           {isBoardPromptSelectable}
           {isBoardPromptSelected}
-          boardPromptDamage={boardPromptDamage}
+          {boardSlotDelta}
           {clickSlot}
           {allowDrop}
           {dropToSlot}

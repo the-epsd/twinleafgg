@@ -9,7 +9,7 @@
     canDrop?: boolean;
     promptSelectable?: boolean;
     promptSelected?: boolean;
-    promptDamage?: number;
+    slotDelta?: number;
     placement?: '' | 'top-active-slot' | 'bottom-active-slot';
     onclick?: (event: MouseEvent) => void;
     ondragover?: (event: DragEvent) => void;
@@ -22,7 +22,7 @@
     canDrop = false,
     promptSelectable = false,
     promptSelected = false,
-    promptDamage = 0,
+    slotDelta = 0,
     placement = '',
     onclick,
     ondragover,
@@ -70,9 +70,9 @@
   {ondragover}
   {ondrop}
 >
-  {#if promptDamage !== 0}
-    <div class="prompt-damage-badge" class:negative={promptDamage < 0}>
-      {promptDamage > 0 ? '+' : '−'}{Math.abs(promptDamage)}
+  {#if slotDelta !== 0}
+    <div class="prompt-damage-badge" class:negative={slotDelta < 0}>
+      {slotDelta > 0 ? '+' : '−'}{Math.abs(slotDelta)}
     </div>
   {/if}
 
