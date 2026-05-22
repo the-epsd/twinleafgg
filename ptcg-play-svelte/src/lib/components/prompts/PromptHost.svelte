@@ -24,14 +24,10 @@
     autoContinue?: boolean;
     activeAttachEnergyIndex?: number | null;
     attachAssignments?: AttachAssignment[];
-    damagePlacedTotal?: number;
-    canConfirmDamagePrompt?: boolean;
     onresolve: (value: unknown) => void;
     onattachEnergySelect: (index: number | null) => void;
     onattachEnergyUnassign: (index: number) => void;
     onattachEnergyReset: () => void;
-    ondamageReset: () => void;
-    ondamageConfirm: () => void;
   };
 
   let {
@@ -41,14 +37,10 @@
     autoContinue = false,
     activeAttachEnergyIndex = null,
     attachAssignments = [],
-    damagePlacedTotal = 0,
-    canConfirmDamagePrompt = false,
     onresolve,
     onattachEnergySelect,
     onattachEnergyUnassign,
     onattachEnergyReset,
-    ondamageReset,
-    ondamageConfirm,
   }: Props = $props();
 
   let isAlertLike = $derived(
@@ -59,8 +51,7 @@
   );
   let isEnergyTransferPrompt = $derived(prompt.className === 'DiscardEnergyPrompt' || prompt.className === 'MoveEnergyPrompt');
   let isDamagePrompt = $derived(
-    prompt.className === 'PutDamagePrompt'
-      || prompt.className === 'MoveDamagePrompt'
+    prompt.className === 'MoveDamagePrompt'
       || prompt.className === 'RemoveDamagePrompt',
   );
   let isShuffleOrderPrompt = $derived((prompt.className.includes('Shuffle') || prompt.className.includes('Order'))
@@ -89,16 +80,7 @@
 {:else if isEnergyTransferPrompt}
   <EnergyTransferPrompt {game} {prompt} {resolving} {onresolve} />
 {:else if isDamagePrompt}
-  <DamagePrompt
-    {game}
-    {prompt}
-    {resolving}
-    {damagePlacedTotal}
-    {canConfirmDamagePrompt}
-    {onresolve}
-    {ondamageReset}
-    {ondamageConfirm}
-  />
+  <DamagePrompt {game} {prompt} {resolving} {onresolve} />
 {:else if isShuffleOrderPrompt}
   <ShuffleOrderPrompt {prompt} {resolving} {onresolve} />
 {:else if prompt.className === 'AttachEnergyPrompt'}

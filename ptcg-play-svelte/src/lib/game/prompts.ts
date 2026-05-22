@@ -67,6 +67,23 @@ export function isKnownPrompt(prompt: PromptView): prompt is KnownPrompt {
   );
 }
 
+export type PromptPlacement = 'center' | 'board' | 'zone';
+
+const BOARD_PROMPT_CLASS_NAMES: ReadonlySet<string> = new Set<string>([
+  'AttachEnergyPrompt',
+  'PutDamagePrompt',
+  'MoveDamagePrompt',
+  'RemoveDamagePrompt',
+  'ChoosePokemonPrompt',
+]);
+
+export function getPromptPlacement(className: string | undefined | null): PromptPlacement {
+  if (className && BOARD_PROMPT_CLASS_NAMES.has(className)) {
+    return 'board';
+  }
+  return 'center';
+}
+
 export function promptInstanceKey(
   prompt: Pick<PromptView, 'id' | 'className' | 'message'> | null | undefined,
 ) {

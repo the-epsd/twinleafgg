@@ -4,6 +4,7 @@
   import AppHeader from './lib/components/AppHeader.svelte';
   import BoardLayer from './lib/components/BoardLayer.svelte';
   import BoardPromptDock from './lib/components/BoardPromptDock.svelte';
+  import DamagePromptStrip from './lib/components/prompts/DamagePromptStrip.svelte';
   import EndGamePrompt from './lib/components/EndGamePrompt.svelte';
   import GameBoard from './lib/components/GameBoard.svelte';
   import GameStatus from './lib/components/GameStatus.svelte';
@@ -951,6 +952,18 @@
           resolving={resolvingPrompt}
           confirm={confirmBoardPromptTargets}
         />
+      {:else if damagePrompt}
+        <DamagePromptStrip
+          prompt={damagePrompt}
+          resolving={resolvingPrompt}
+          {damagePlacedTotal}
+          damageRequired={damagePromptRequired}
+          canConfirm={canConfirmDamagePrompt}
+          allowCancel={!!damagePromptOptions.allowCancel}
+          onresolve={resolvePrompt}
+          onreset={resetDamagePrompt}
+          onconfirm={confirmDamagePrompt}
+        />
       {:else if invitePrompt}
         <PromptDock>
           <div class="invite-panel">
@@ -971,14 +984,10 @@
               resolving={resolvingPrompt}
               activeAttachEnergyIndex={attachPromptEnergyIndex}
               attachAssignments={attachPromptAssignments}
-              {damagePlacedTotal}
-              {canConfirmDamagePrompt}
               onresolve={resolvePrompt}
               onattachEnergySelect={selectAttachPromptEnergy}
               onattachEnergyUnassign={removeAttachPromptAssignment}
               onattachEnergyReset={resetAttachPromptAssignments}
-              ondamageReset={resetDamagePrompt}
-              ondamageConfirm={confirmDamagePrompt}
             />
           {/key}
         </PromptDock>

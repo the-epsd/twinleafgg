@@ -1,6 +1,5 @@
 <script lang="ts">
   import PromptPanel from './primitives/PromptPanel.svelte';
-  import PromptMeta from './primitives/PromptMeta.svelte';
   import PromptIcon from './primitives/PromptIcon.svelte';
   import { labelFor } from '../../game/labels';
   import { promptOptions } from '../../game/prompts';
@@ -11,23 +10,10 @@
     game: GameView;
     prompt: PromptView;
     resolving?: boolean;
-    damagePlacedTotal?: number;
-    canConfirmDamagePrompt?: boolean;
     onresolve: (value: unknown) => void;
-    ondamageReset: () => void;
-    ondamageConfirm: () => void;
   };
 
-  let {
-    game,
-    prompt,
-    resolving = false,
-    damagePlacedTotal = 0,
-    canConfirmDamagePrompt = false,
-    onresolve,
-    ondamageReset,
-    ondamageConfirm,
-  }: Props = $props();
+  let { game, prompt, resolving = false, onresolve }: Props = $props();
 
   let sourceTarget = $state<CardTarget | null>(null);
   let selectedTargets = $state<CardTarget[]>([]);
@@ -37,7 +23,6 @@
   let destinationTargets = $derived(getDamageTransferTargets(game, prompt, 'blockedTo'));
   let selectionPoolSize = $derived(selectableTargets.length || 1);
   let maxSelections = $derived(normalizeSelectionLimit(options.max, normalizeSelectionLimit(options.count, selectionPoolSize)));
-  let requiredDamage = $derived(normalizeSelectionLimit(prompt.fields.damage, 0));
 
   function toggleTarget(target: CardTarget) {
     const exists = selectedTargets.some((item) => sameTarget(item, target));
@@ -80,49 +65,40 @@
 >
   {#snippet icon()}<PromptIcon name="damage" />{/snippet}
 
-  {#if prompt.className === 'PutDamagePrompt'}
-    <PromptMeta label="Placed" current={damagePlacedTotal} max={requiredDamage} />
-  {:else}
-    <p class="prompt-hint">Choose source, then destination.</p>
-    <div class="prompt-grid">
-      {#each sourceTargets as item}
-        <button
-          class:selected={sourceTarget && sameTarget(sourceTarget, item.target)}
-          disabled={resolving}
-          onclick={() => (sourceTarget = item.target)}
-        >
-          From {item.label}
-        </button>
-      {/each}
-    </div>
-    <div class="prompt-grid">
-      {#each destinationTargets as item}
-        <button
-          class:selected={selectedTargets.some((target) => sameTarget(target, item.target))}
-          disabled={resolving}
-          onclick={() => toggleTarget(item.target)}
-        >
-          To {item.label}
-        </button>
-      {/each}
-    </div>
-  {/if}
+  <p class="prompt-hint">Choose source, then destination.</p>
+  <div class="prompt-grid">
+    {#each sourceTargets as item}
+      <button
+        class:selected={sourceTarget && sameTarget(sourceTarget, item.target)}
+        disabled={resolving}
+        onclick={() => (sourceTarget = item.target)}
+      >
+        From {item.label}
+      </button>
+    {/each}
+  </div>
+  <div class="prompt-grid">
+    {#each destinationTargets as item}
+      <button
+        class:selected={selectedTargets.some((target) => sameTarget(target, item.target))}
+        disabled={resolving}
+        onclick={() => toggleTarget(item.target)}
+      >
+        To {item.label}
+      </button>
+    {/each}
+  </div>
 
   {#snippet actions()}
     {#if options.allowCancel}
       <button disabled={resolving} onclick={() => onresolve(null)}>Cancel</button>
     {/if}
-    {#if prompt.className === 'PutDamagePrompt'}
-      <button disabled={resolving || damagePlacedTotal === 0} onclick={ondamageReset}>Reset</button>
-      <button class="primary" disabled={resolving || !canConfirmDamagePrompt} onclick={ondamageConfirm}>Confirm</button>
-    {:else}
-      <button
-        class="primary"
-        disabled={resolving || !sourceTarget || selectedTargets.length === 0}
-        onclick={submitMoveDamage}
-      >
-        Confirm
-      </button>
-    {/if}
+    <button
+      class="primary"
+      disabled={resolving || !sourceTarget || selectedTargets.length === 0}
+      onclick={submitMoveDamage}
+    >
+      Confirm
+    </button>
   {/snippet}
 </PromptPanel>
