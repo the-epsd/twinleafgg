@@ -39,6 +39,27 @@
   --accent-tint: rgba(30, 127, 108, 0.10);
   --accent-glow-soft: 0 0 18px rgba(30, 127, 108, 0.18);
   --accent-glow-strong: 0 0 26px rgba(30, 127, 108, 0.28);
+  --glow-ring-rgb: 116 232 140;
+  --glow-aura-rgb: 67 136 84;
+  --glow-tint: rgb(var(--glow-aura-rgb) / 0.12);
+  --glow-aura-soft: 0 0 7px rgb(var(--glow-aura-rgb) / 0.36);
+  --glow-aura: 0 0 9px rgb(var(--glow-aura-rgb) / 0.42);
+  --glow-aura-strong: 0 0 15px rgb(var(--glow-aura-rgb) / 0.68);
+  --glow-falloff-soft: 0 0 13px rgb(var(--glow-ring-rgb) / 0.18);
+  --glow-falloff: 0 0 15px rgb(var(--glow-ring-rgb) / 0.22);
+  --glow-falloff-strong: 0 0 26px rgb(var(--glow-ring-rgb) / 0.42);
+  --glow-hover-shadow:
+    var(--glow-aura),
+    var(--glow-falloff),
+    0 12px 22px rgba(23, 30, 38, 0.22);
+  --glow-playable-shadow:
+    var(--glow-aura-soft),
+    var(--glow-falloff-soft),
+    0 6px 14px rgba(23, 30, 38, 0.18);
+  --glow-selected-shadow:
+    var(--glow-aura-strong),
+    var(--glow-falloff-strong),
+    0 8px 18px rgba(23, 30, 38, 0.20);
 
   --warning-base: #c47a0d;
   --warning-soft: rgba(196, 122, 13, 0.10);
@@ -52,14 +73,14 @@
 
   --selection-outline: 2px solid var(--accent-base);
   --selection-border-strong: var(--accent-base);
-  --selection-bg: var(--accent-tint);
+  --selection-bg: var(--glow-tint);
   --selection-shadow:
-    0 0 0 2px rgba(30, 127, 108, 0.24),
-    0 0 20px rgba(30, 127, 108, 0.16);
+    var(--glow-aura-soft),
+    var(--glow-falloff-soft);
   --selection-shadow-lift:
     0 14px 28px rgba(26, 31, 39, 0.18),
-    0 0 0 3px rgba(30, 127, 108, 0.58),
-    0 0 24px rgba(30, 127, 108, 0.22);
+    var(--glow-aura-strong),
+    var(--glow-falloff-strong);
 
   --button-bg: rgba(255, 255, 255, 0.95);
   --button-border: rgba(26, 31, 39, 0.18);
@@ -152,6 +173,27 @@
   --accent-tint: rgba(143, 232, 206, 0.10);
   --accent-glow-soft: 0 0 22px rgba(41, 161, 139, 0.20);
   --accent-glow-strong: 0 0 30px rgba(41, 161, 139, 0.38);
+  --glow-ring-rgb: 116 232 140;
+  --glow-aura-rgb: 67 136 84;
+  --glow-tint: rgb(var(--glow-ring-rgb) / 0.10);
+  --glow-aura-soft: 0 0 8px rgb(var(--glow-aura-rgb) / 0.42);
+  --glow-aura: 0 0 10px rgb(var(--glow-aura-rgb) / 0.48);
+  --glow-aura-strong: 0 0 17px rgb(var(--glow-aura-rgb) / 0.72);
+  --glow-falloff-soft: 0 0 15px rgb(var(--glow-ring-rgb) / 0.20);
+  --glow-falloff: 0 0 17px rgb(var(--glow-ring-rgb) / 0.24);
+  --glow-falloff-strong: 0 0 28px rgb(var(--glow-ring-rgb) / 0.46);
+  --glow-hover-shadow:
+    var(--glow-aura),
+    var(--glow-falloff),
+    0 12px 22px rgba(0, 0, 0, 0.30);
+  --glow-playable-shadow:
+    var(--glow-aura-soft),
+    var(--glow-falloff-soft),
+    0 6px 14px rgba(0, 0, 0, 0.24);
+  --glow-selected-shadow:
+    var(--glow-aura-strong),
+    var(--glow-falloff-strong),
+    0 8px 18px rgba(0, 0, 0, 0.28);
 
   --warning-base: rgba(242, 184, 68, 0.78);
   --warning-soft: rgba(242, 184, 68, 0.10);
@@ -165,14 +207,14 @@
 
   --selection-outline: 2px solid var(--accent-base);
   --selection-border-strong: rgba(143, 232, 206, 0.78);
-  --selection-bg: var(--accent-tint);
+  --selection-bg: var(--glow-tint);
   --selection-shadow:
-    0 0 0 2px rgba(143, 232, 206, 0.30),
-    0 0 24px rgba(41, 161, 139, 0.22);
+    var(--glow-aura-soft),
+    var(--glow-falloff-soft);
   --selection-shadow-lift:
     0 18px 36px rgba(0, 0, 0, 0.34),
-    0 0 0 3px rgba(143, 232, 206, 0.72),
-    0 0 30px rgba(41, 161, 139, 0.38);
+    var(--glow-aura-strong),
+    var(--glow-falloff-strong);
 
   --button-bg: rgba(255, 255, 255, 0.08);
   --button-border: rgba(255, 255, 255, 0.14);

@@ -145,9 +145,9 @@
   }
 
   .bench-drop-surface.can-drop {
-    border-color: rgba(41, 161, 139, 0.72);
-    background: rgba(41, 161, 139, 0.1);
-    box-shadow: inset 0 0 0 1px rgba(41, 161, 139, 0.16);
+    border-color: transparent;
+    background: var(--selection-bg);
+    box-shadow: var(--glow-playable-shadow);
     pointer-events: auto;
     cursor: pointer;
   }

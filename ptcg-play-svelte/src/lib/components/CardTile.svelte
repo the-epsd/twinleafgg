@@ -128,10 +128,7 @@
   button.card-tile:hover:not(:disabled) {
     z-index: 4;
     transform: translateY(-6px);
-    box-shadow:
-      0 0 0 2px rgba(143, 232, 206, 0.72),
-      0 0 20px rgba(41, 161, 139, 0.34),
-      0 12px 22px rgba(23, 30, 38, 0.22);
+    box-shadow: var(--glow-hover-shadow);
     filter: saturate(1.05);
   }
 
@@ -141,19 +138,18 @@
 
   .card-tile.selected {
     z-index: 3;
+    transform: translateY(-6px);
     outline: 0;
-    box-shadow:
-      0 0 0 3px rgba(143, 232, 206, 0.9),
-      0 0 22px rgba(41, 161, 139, 0.38),
-      0 8px 18px rgba(23, 30, 38, 0.2);
+    box-shadow: var(--glow-selected-shadow);
+  }
+
+  button.card-tile.selected:hover:not(:disabled) {
+    box-shadow: var(--glow-selected-shadow);
   }
 
   .card-tile.playable {
     outline: 0;
-    box-shadow:
-      0 0 0 2px rgba(143, 232, 206, 0.62),
-      0 0 18px rgba(41, 161, 139, 0.28),
-      0 6px 14px rgba(23, 30, 38, 0.18);
+    box-shadow: var(--glow-playable-shadow);
   }
 
   button.card-tile.selected:disabled {

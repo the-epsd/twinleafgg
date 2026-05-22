@@ -70,7 +70,6 @@
   {ondragover}
   {ondrop}
 >
-  <div class="slot-label">{slot.slot === 'active' ? 'Active' : `B${slot.index + 1}`}</div>
   {#if promptDamage !== 0}
     <div class="prompt-damage-badge" class:negative={promptDamage < 0}>
       {promptDamage > 0 ? '+' : '−'}{Math.abs(promptDamage)}
@@ -129,6 +128,10 @@
     background: transparent;
     box-shadow: none;
     display: block;
+    transition:
+      background var(--transition-fast),
+      box-shadow var(--transition-fast),
+      filter var(--transition-fast);
   }
 
   :global(.debug-zones) .board-slot {
@@ -149,34 +152,20 @@
 
   .board-slot.can-drop,
   .board-slot.prompt-selectable {
-    outline: 2px solid var(--selection-border-strong);
-    outline-offset: 6px;
+    outline: 0;
     background: var(--selection-bg);
+    box-shadow: var(--glow-playable-shadow);
+    filter: saturate(1.04);
   }
 
   .board-slot.prompt-selected {
-    outline-color: var(--warning-base);
+    background: var(--selection-bg);
+    box-shadow: var(--glow-selected-shadow);
   }
 
   .board-slot > :global(.card-tile) {
     width: 100%;
     height: 100%;
-  }
-
-  .slot-label {
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    z-index: 3;
-    transform: translateX(-50%);
-    padding: 2px 6px;
-    border-radius: var(--radius-pill);
-    background: var(--slot-label-bg);
-    color: var(--slot-label-text);
-    font-size: 10px;
-    font-weight: 800;
-    opacity: 0;
-    transition: opacity 120ms ease;
   }
 
   .prompt-damage-badge {
@@ -201,12 +190,6 @@
   .prompt-damage-badge.negative {
     background: #166e5b;
     box-shadow: 0 8px 18px rgba(15, 60, 49, 0.32);
-  }
-
-  .board-slot:hover .slot-label,
-  .board-slot.can-drop .slot-label,
-  .board-slot.prompt-selectable .slot-label {
-    opacity: 1;
   }
 
   .empty-zone {

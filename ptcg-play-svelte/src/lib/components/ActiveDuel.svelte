@@ -113,7 +113,7 @@
     background: rgba(245, 158, 11, 0.06);
   }
 
-  .active-duel > :global(.board-slot.active:not(.empty)) {
+  .active-duel > :global(.board-slot.active:not(.empty):not(.can-drop):not(.prompt-selectable):not(.prompt-selected)) {
     box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.7), 0 12px 26px rgba(23, 30, 38, 0.22);
   }
 
