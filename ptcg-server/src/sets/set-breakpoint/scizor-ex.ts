@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MOVED_TO_ACTIVE_THIS_TURN } from '../../game/store/prefabs/prefabs';
 
 export class ScizorEx extends PokemonCard {
   public tags = [CardTag.POKEMON_EX];
@@ -45,7 +45,7 @@ export class ScizorEx extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      if (this.movedToActiveThisTurn) {
+      if (MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)) {
         effect.damage += 60;
       }
     }

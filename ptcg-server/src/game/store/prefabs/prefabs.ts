@@ -62,6 +62,14 @@ export function MOVED_TO_ACTIVE_THIS_TURN(player: Player, pokemon: PokemonCard):
 }
 
 /**
+ * Returns whether the given Pokemon moved from the player's Active Spot to the Bench this turn.
+ * Uses engine-tracked player.movedFromActiveToBenchThisTurn (cleared at turn start).
+ */
+export function MOVED_FROM_ACTIVE_TO_BENCH_THIS_TURN(player: Player, pokemon: PokemonCard): boolean {
+  return player.movedFromActiveToBenchThisTurn.includes(pokemon.id);
+}
+
+/**
  * Adds the "ability used" board effect to the given Pokemon. 
  */
 export function ABILITY_USED(player: Player, card: PokemonCard) {

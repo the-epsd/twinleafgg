@@ -10,16 +10,16 @@ import {
   SlotType,
   StoreLike,
   State,
-  StateUtils,
   ConfirmPrompt,
   GameMessage,
   GameLog,
   MoveEnergyPrompt,
   CardTarget,
+  StateUtils,
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { MovedToActiveEffect } from '../../game/store/effects/game-effects';
+import { MOVED_TO_ACTIVE_THIS_TURN, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class XerneasPrismStar extends PokemonCard {
   public tags = [CardTag.PRISM_STAR];
@@ -56,84 +56,84 @@ export class XerneasPrismStar extends PokemonCard {
   public fullName: string = 'Xerneas \u25C7 LOT';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Path of Life
-    // Ref: set-twilight-masquerade/palafin.ts (movedToActiveThisTurn trigger)
-    // Refs: set-temporal-forces/iron-leaves-ex.ts (MoveEnergyPrompt to move energy to active)
-    if (effect instanceof EndTurnEffect) {
-      this.movedToActiveThisTurn = false;
-      effect.player.marker.removeMarker(this.ABILITY_USED_MARKER, this);
-    }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ABILITY_USED_MARKER, this);
 
-    const cardList = StateUtils.findCardList(state, this);
-    const owner = StateUtils.findOwner(state, cardList);
     const player = state.players[state.activePlayer];
+    if (
+      effect instanceof MovedToActiveEffect &&
+      effect.pokemonCard === this &&
+      state.players[state.activePlayer] === effect.player &&
+      MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)
+    ) {
+      if (player.marker.hasMarker(this.ABILITY_USED_MARKER, this)) {
+        return state;
+      }
 
-    if (player === owner && !player.marker.hasMarker(this.ABILITY_USED_MARKER, this)) {
-      if (this.movedToActiveThisTurn === true && cardList === player.active) {
-        player.marker.addMarker(this.ABILITY_USED_MARKER, this);
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        return state;
+      }
 
-        if (IS_ABILITY_BLOCKED(store, state, player, this)) {
-          return state;
-        }
+      state = store.prompt(
+        state,
+        new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY),
+        (wantToUse) => {
+          if (!wantToUse) {
+            player.marker.addMarker(this.ABILITY_USED_MARKER, this);
+            return;
+          }
 
-        state = store.prompt(
-          state,
-          new ConfirmPrompt(player.id, GameMessage.WANT_TO_USE_ABILITY),
-          (wantToUse) => {
-            if (wantToUse) {
-              store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, {
-                name: player.name,
-                ability: 'Path of Life',
-              });
+          store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, {
+            name: player.name,
+            ability: 'Path of Life',
+          });
 
-              const blockedFrom: CardTarget[] = [];
-              const blockedTo: CardTarget[] = [];
+          const blockedFrom: CardTarget[] = [];
+          const blockedTo: CardTarget[] = [];
 
-              let hasEnergyOnOther = false;
-              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-                if (cardList === player.active) {
-                  blockedFrom.push(target);
-                  return;
-                }
-                blockedTo.push(target);
-                if (cardList.cards.some((c) => c.superType === SuperType.ENERGY)) {
-                  hasEnergyOnOther = true;
-                }
-              });
+          let hasEnergyOnOther = false;
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+            if (cardList === player.active) {
+              blockedFrom.push(target);
+              return;
+            }
+            blockedTo.push(target);
+            if (cardList.cards.some((c) => c.superType === SuperType.ENERGY)) {
+              hasEnergyOnOther = true;
+            }
+          });
 
-              if (!hasEnergyOnOther) {
-                return state;
+          if (!hasEnergyOnOther) {
+            player.marker.addMarker(this.ABILITY_USED_MARKER, this);
+            return;
+          }
+
+          return store.prompt(
+            state,
+            new MoveEnergyPrompt(
+              player.id,
+              GameMessage.MOVE_ENERGY_CARDS,
+              PlayerType.BOTTOM_PLAYER,
+              [SlotType.BENCH, SlotType.ACTIVE],
+              { superType: SuperType.ENERGY },
+              { allowCancel: true, blockedFrom, blockedTo },
+            ),
+            (transfers) => {
+              player.marker.addMarker(this.ABILITY_USED_MARKER, this);
+
+              if (!transfers) {
+                return;
               }
 
-              return store.prompt(
-                state,
-                new MoveEnergyPrompt(
-                  player.id,
-                  GameMessage.MOVE_ENERGY_CARDS,
-                  PlayerType.BOTTOM_PLAYER,
-                  [SlotType.BENCH, SlotType.ACTIVE],
-                  { superType: SuperType.ENERGY },
-                  { allowCancel: true, blockedFrom, blockedTo },
-                ),
-                (transfers) => {
-                  if (!transfers) {
-                    return;
-                  }
-
-                  for (const transfer of transfers) {
-                    const source = StateUtils.getTarget(state, player, transfer.from);
-                    source.moveCardTo(transfer.card, player.active);
-                  }
-                },
-              );
-            }
-          },
-        );
-      }
+              for (const transfer of transfers) {
+                const source = StateUtils.getTarget(state, player, transfer.from);
+                source.moveCardTo(transfer.card, player.active);
+              }
+            },
+          );
+        },
+      );
     }
 
-    // Attack 1: Bright Horns
-    // Ref: set-celestial-storm/kyogre.ts (Grand Wave - can't use attack during next turn)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.player.active.cannotUseAttacksNextTurnPending.push('Bright Horns');
     }

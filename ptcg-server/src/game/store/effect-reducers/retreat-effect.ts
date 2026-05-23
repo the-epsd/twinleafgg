@@ -9,7 +9,6 @@ import { RetreatEffect, RetreatStartEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
 import { CheckRetreatCostEffect, CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { SpecialCondition } from '../card/card-types';
-import { PokemonCard } from '../..';
 import { Player } from '../state/player';
 import { PlayerType, SlotType } from '../actions/play-card-action';
 import { PokemonCardList } from '../state/pokemon-card-list';
@@ -54,13 +53,6 @@ function promptBenchAndRetreat(store: StoreLike, state: State, player: Player): 
     }
     const effect = new RetreatEffect(player, benchIndex);
     retreatPokemon(store, state, effect);
-    const activePokemonCard = player.active.getPokemonCard() as PokemonCard;
-    if (activePokemonCard && !player.movedToActiveThisTurn.includes(activePokemonCard.id)) {
-      player.movedToActiveThisTurn.push(activePokemonCard.id);
-    }
-    if (activePokemonCard) {
-      activePokemonCard.movedToActiveThisTurn = true;
-    }
   });
 }
 
@@ -175,13 +167,6 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
       player.active.clearEffects();
       player.active.moveCardsTo(cards, effect.moveRetreatCostTo);
       retreatPokemon(store, state, effect);
-      const activePokemonCard = player.active.getPokemonCard() as PokemonCard;
-      // Add to new tracking system
-      if (!player.movedToActiveThisTurn.includes(activePokemonCard.id)) {
-        player.movedToActiveThisTurn.push(activePokemonCard.id);
-      }
-      // Keep existing boolean for backwards compatibility
-      activePokemonCard.movedToActiveThisTurn = true;
       return state;
     }
 
@@ -195,11 +180,6 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
         player.active.clearEffects();
         player.active.moveCardsTo(cards, effect.moveRetreatCostTo);
         retreatPokemon(store, state, effect);
-        const activePokemonCard = player.active.getPokemonCard() as PokemonCard;
-        if (!player.movedToActiveThisTurn.includes(activePokemonCard.id)) {
-          player.movedToActiveThisTurn.push(activePokemonCard.id);
-        }
-        activePokemonCard.movedToActiveThisTurn = true;
         return state;
       }
     }
@@ -224,13 +204,6 @@ export function retreatReducer(store: StoreLike, state: State, effect: Effect): 
       player.active.clearEffects();
       player.active.moveCardsTo(cards, effect.moveRetreatCostTo);
       retreatPokemon(store, state, effect);
-      const activePokemonCard = player.active.getPokemonCard() as PokemonCard;
-      // Add to new tracking system
-      if (!player.movedToActiveThisTurn.includes(activePokemonCard.id)) {
-        player.movedToActiveThisTurn.push(activePokemonCard.id);
-      }
-      // Keep existing boolean for backwards compatibility
-      activePokemonCard.movedToActiveThisTurn = true;
     });
   }
 

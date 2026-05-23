@@ -1,12 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { StoreLike, State, PlayerType, SlotType, PowerType, GameError, ConfirmPrompt, AttachEnergyPrompt, StateUtils } from '../../game';
+import { StoreLike, State, PlayerType, SlotType, PowerType, ConfirmPrompt, AttachEnergyPrompt, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MovedToActiveEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { MOVED_TO_ACTIVE_THIS_TURN, REMOVE_MARKER_AT_END_OF_TURN, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Yanmegaex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex];
@@ -41,84 +39,71 @@ export class Yanmegaex extends PokemonCard {
   public setNumber: string = '3';
   public name: string = 'Yanmega ex';
   public fullName: string = 'Yanmega ex DRI';
-  public tachyonBits: number = 0;
 
   public readonly BUZZ_BOOST_MARKER = 'BUZZ_BOOST_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      this.movedToActiveThisTurn = false;
-      this.tachyonBits = 0;
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      this.tachyonBits = 0;
-      this.movedToActiveThisTurn = false;
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.BUZZ_BOOST_MARKER, this)) {
-      this.tachyonBits = 0;
-      effect.player.marker.removeMarker(this.BUZZ_BOOST_MARKER, this);
-    }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.BUZZ_BOOST_MARKER, this);
 
     const player = state.players[state.activePlayer];
+    if (
+      effect instanceof MovedToActiveEffect &&
+      effect.pokemonCard === this &&
+      state.players[state.activePlayer] === effect.player &&
+      MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)
+    ) {
+      if (player.marker.hasMarker(this.BUZZ_BOOST_MARKER, this)) {
+        return state;
+      }
 
-    if (this.movedToActiveThisTurn == true && player.active.getPokemonCard() == this) {
-      this.tachyonBits++;
-
-      if (this.tachyonBits === 1) {
-        if (player.marker.hasMarker(this.BUZZ_BOOST_MARKER, this)) {
-          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      state = store.prompt(state, new ConfirmPrompt(
+        player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (!wantToUse) {
+          player.marker.addMarker(this.BUZZ_BOOST_MARKER, this);
+          return;
         }
 
-        state = store.prompt(state, new ConfirmPrompt(
+        try {
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return;
+        }
+
+        player.marker.addMarker(this.BUZZ_BOOST_MARKER, this);
+
+        state = store.prompt(state, new AttachEnergyPrompt(
           player.id,
-          GameMessage.WANT_TO_USE_ABILITY,
-        ), wantToUse => {
-          if (wantToUse) {
+          GameMessage.ATTACH_ENERGY_TO_BENCH,
+          player.deck,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
+          { allowCancel: false, min: 0, max: 3 },
+        ), transfers => {
+          transfers = transfers || [];
+          if (transfers.length === 0) {
+            SHUFFLE_DECK(store, state, player);
+            return;
+          }
 
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-              const stub = new PowerEffect(player, {
-                name: 'test',
-                powerType: PowerType.ABILITY,
-                text: ''
-              }, this);
-              store.reduceEffect(state, stub);
-            } catch {
-              return state;
-            }
-
-            state = store.prompt(state, new AttachEnergyPrompt(
-              player.id,
-              GameMessage.ATTACH_ENERGY_TO_BENCH,
-              player.deck,
-              PlayerType.BOTTOM_PLAYER,
-              [SlotType.ACTIVE],
-              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
-              { allowCancel: false, min: 0, max: 3 },
-            ), transfers => {
-              transfers = transfers || [];
-              // cancelled by user
-              if (transfers.length === 0) {
-                SHUFFLE_DECK(store, state, player);
-                return state;
-              }
-
-              for (const transfer of transfers) {
-                const target = StateUtils.getTarget(state, player, transfer.to);
-                player.deck.moveCardTo(transfer.card, target);
-                SHUFFLE_DECK(store, state, player);
-              }
-            });
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            player.deck.moveCardTo(transfer.card, target);
+            SHUFFLE_DECK(store, state, player);
           }
         });
-      }
+      });
     }
 
-    // Jet Cyclone
     if (WAS_ATTACK_USED(effect, 0, this)) {
+      const player = effect.player;
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,
         GameMessage.ATTACH_ENERGY_TO_BENCH,

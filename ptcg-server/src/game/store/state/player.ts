@@ -3,7 +3,7 @@ import { GameMessage } from '../../game-message';
 import { CardTarget, PlayerType, SlotType } from '../actions/play-card-action';
 import { CardTag } from '../card/card-types';
 import { PokemonCard } from '../card/pokemon-card';
-import { MovedToActiveEffect } from '../effects/game-effects';
+import { MovedFromActiveToBenchEffect, MovedToActiveEffect } from '../effects/game-effects';
 import { CardList } from './card-list';
 import { Marker } from './card-marker';
 import { PokemonCardList } from './pokemon-card-list';
@@ -100,6 +100,9 @@ export class Player {
 
   // Track Pokemon cards that moved from Bench to Active this turn
   public movedToActiveThisTurn: number[] = [];
+
+  // Track Pokemon cards that moved from Active to Bench this turn
+  public movedFromActiveToBenchThisTurn: number[] = [];
 
   usedRapidStrikeSearchThisTurn: any;
   usedExcitingStageThisTurn: any;
@@ -264,6 +267,7 @@ export class Player {
   switchPokemon(target: PokemonCardList, store?: any, state?: any) {
     const benchIndex = this.bench.indexOf(target);
     if (benchIndex !== -1) {
+      const benchedOutCard = this.active.getPokemonCard();
       const temp = this.active;
 
       // Remove player-level markers scoped to the active Pokemon.
@@ -293,6 +297,16 @@ export class Player {
         // Dispatch MovedToActiveEffect for cards that intercept it (e.g. Cobalion-EX Metal Road)
         if (store && state) {
           store.reduceEffect(state, new MovedToActiveEffect(this, activePokemon));
+        }
+      }
+
+      if (benchedOutCard) {
+        if (!this.movedFromActiveToBenchThisTurn.includes(benchedOutCard.id)) {
+          this.movedFromActiveToBenchThisTurn.push(benchedOutCard.id);
+        }
+
+        if (store && state) {
+          store.reduceEffect(state, new MovedFromActiveToBenchEffect(this, benchedOutCard));
         }
       }
     }

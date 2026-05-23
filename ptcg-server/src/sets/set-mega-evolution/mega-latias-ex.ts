@@ -3,7 +3,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, ConfirmPrompt, GameMessage, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
-import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AfterAttackEffect } from '../../game/store/effects/game-phase-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -67,10 +67,6 @@ export class MegaLatiasex extends PokemonCard {
       const discardEnergy = new DiscardCardsEffect(effect, cards);
       discardEnergy.target = player.active;
       store.reduceEffect(state, discardEnergy);
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      this.movedToActiveThisTurn = false;
     }
 
     return state;
