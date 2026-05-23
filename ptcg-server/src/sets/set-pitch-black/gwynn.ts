@@ -51,7 +51,7 @@ function* playGwynn(next: Function, store: StoreLike, state: State, effect: Trai
     GameMessage.CHOOSE_CARD_TO_DISCARD,
     player.hand,
     {},
-    { min: 2, max: 2, allowCancel: false, blocked },
+    { min: 1, max: 2, allowCancel: false, blocked },
   ), selected => {
     cards = selected || [];
     next();
