@@ -10,15 +10,17 @@ export class Vulpix extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Singe',
-    cost: [R],
-    damage: 0,
-    text: 'Your opponent\'s Active Pokemon is now Burned.'
-  }];
+  public attacks = [
+    {
+      name: 'Singe',
+      cost: [R],
+      damage: 0,
+      text: "Your opponent's Active Pokémon is now Burned.",
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
   public name: string = 'Vulpix';

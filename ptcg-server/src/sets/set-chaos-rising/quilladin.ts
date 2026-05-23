@@ -1,6 +1,13 @@
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
-import { PokemonCard, StoreLike, State, ChooseCardsPrompt, GameMessage, ShuffleDeckPrompt } from '../../game';
+import {
+  PokemonCard,
+  StoreLike,
+  State,
+  ChooseCardsPrompt,
+  GameMessage,
+  ShuffleDeckPrompt,
+} from '../../game';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -12,21 +19,23 @@ export class Quilladin extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Leaf Charge',
-    cost: [G],
-    damage: 20,
-    text: 'Search your deck for 1 Basic [G] Energy and attach it to this Pokemon. Then, shuffle your deck.'
-  },
-  {
-    name: 'Vine Whip',
-    cost: [G, G, C],
-    damage: 80,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Leafy Charge',
+      cost: [G],
+      damage: 20,
+      text: 'Search your deck for 1 Basic [G] Energy card and attach it to this Pokémon. Then, shuffle your deck.',
+    },
+    {
+      name: 'Vine Whip',
+      cost: [G, G, C],
+      damage: 80,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
   public name: string = 'Quilladin';
@@ -41,26 +50,33 @@ export class Quilladin extends PokemonCard {
         else if (c.energyType !== EnergyType.BASIC) blocked.push(i);
         else if (!c.provides.includes(G)) blocked.push(i);
       });
-      const hasBasicG = player.deck.cards.some(c => c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(G));
+      const hasBasicG = player.deck.cards.some(
+        (c) =>
+          c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(G),
+      );
       if (!hasBasicG) {
         return state;
       }
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.deck,
-        { superType: SuperType.ENERGY },
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), selected => {
-        const cards = selected || [];
-        if (cards.length > 0) {
-          player.deck.moveCardTo(cards[0], player.active);
-          return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
-        }
-        return state;
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.deck,
+          { superType: SuperType.ENERGY },
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          if (cards.length > 0) {
+            player.deck.moveCardTo(cards[0], player.active);
+            return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+              player.deck.applyOrder(order);
+            });
+          }
+          return state;
+        },
+      );
     }
     return state;
   }

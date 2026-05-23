@@ -11,30 +11,32 @@ export class Skuntank extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Rear Kick',
-    cost: [D],
-    damage: 40,
-    text: ''
-  },
-  {
-    name: 'Smash Turn',
-    cost: [D, D, C],
-    damage: 100,
-    text: 'Switch this Pokemon with 1 of your Benched Pokemon.'
-  }];
+  public attacks = [
+    {
+      name: 'Rear Kick',
+      cost: [D],
+      damage: 40,
+      text: '',
+    },
+    {
+      name: 'Smash Turn',
+      cost: [D, D, C],
+      damage: 100,
+      text: 'Switch this Pokémon with 1 of your Benched Pokémon.',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '53';
+  public setNumber: string = '54';
   public name: string = 'Skuntank';
   public fullName: string = 'Skuntank M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 1, this)) {
       const player = effect.player;
-      const hasBench = player.bench.some(b => b.cards.length > 0);
+      const hasBench = player.bench.some((b) => b.cards.length > 0);
       if (hasBench) {
         SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
       }

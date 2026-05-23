@@ -21,15 +21,15 @@ export class Deoxys3 extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Psy Protect',
+      name: 'Psy Protection',
       cost: [P, P, C],
       damage: 80,
-      text: 'During your opponent\'s next turn, prevent all damage done to this Pokemon from attacks from your opponent\'s Pokemon that have any Abilities.'
-    }
+      text: "During your opponent's next turn, prevent all damage done to this Pokémon by attacks from Pokémon that have an Ability.",
+    },
   ];
 
   public regulationMark: string = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '33';
   public name: string = 'Deoxys';
@@ -48,8 +48,11 @@ export class Deoxys3 extends PokemonCard {
 
     // Prevent damage from Pokemon with Abilities (during opponent's next turn)
     // Ref: set-twilight-masquerade/cornerstone-mask-ogerpon-ex.ts (prevent damage from source with ability)
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
@@ -61,14 +64,17 @@ export class Deoxys3 extends PokemonCard {
         return state;
       }
       const sourceCard = effect.source.getPokemonCard();
-      if (!sourceCard || !sourceCard.powers.some(p => p.powerType === PowerType.ABILITY)) {
+      if (!sourceCard || !sourceCard.powers.some((p) => p.powerType === PowerType.ABILITY)) {
         return state;
       }
       effect.damage = 0;
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this
+    ) {
       if (state.phase !== GamePhase.ATTACK) {
         return state;
       }
@@ -80,15 +86,17 @@ export class Deoxys3 extends PokemonCard {
         return state;
       }
       const sourceCard = effect.source.getPokemonCard();
-      if (!sourceCard || !sourceCard.powers.some(p => p.powerType === PowerType.ABILITY)) {
+      if (!sourceCard || !sourceCard.powers.some((p) => p.powerType === PowerType.ABILITY)) {
         return state;
       }
       effect.preventDefault = true;
     }
 
     // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_PSY_PROTECT_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_PSY_PROTECT_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_PSY_PROTECT_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {

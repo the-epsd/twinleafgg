@@ -9,17 +9,19 @@ export class Ferroseed extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Rolling Tackle',
-    cost: [M, M],
-    damage: 40,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Rolling Tackle',
+      cost: [M, M],
+      damage: 40,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '60';
+  public setNumber: string = '62';
   public name: string = 'Ferroseed';
   public fullName: string = 'Ferroseed M4';
 }

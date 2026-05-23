@@ -10,12 +10,14 @@ export class NitroFireEnergy extends EnergyCard {
   public provides: CardType[] = [CardType.FIRE];
   public energyType = EnergyType.SPECIAL;
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '81';
+  public setNumber: string = '88';
   public name: string = 'Nitro Fire Energy';
   public fullName: string = 'Nitro Fire Energy M4';
-  public text: string = 'As long as this card is attached to a Pokemon, it provides [R] Energy. If an attack used by the [R] Pokemon this card is attached to would discard this card, put it into your hand instead.';
+  public text: string =
+    'As long as this card is attached to a Pokémon, it provides [R] Energy.\n\n' +
+    'If this card is discarded by an effect of an attack used by the [R] Pokémon this card is attached to, put this card into your hand after attack damage and effects.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DiscardCardsEffect && effect.cards?.includes(this)) {
@@ -27,7 +29,7 @@ export class NitroFireEnergy extends EnergyCard {
         const checkType = new CheckPokemonTypeEffect(pokemon);
         store.reduceEffect(state, checkType);
         if (checkType.cardTypes.includes(CardType.FIRE)) {
-          effect.cards = effect.cards.filter(c => c !== this);
+          effect.cards = effect.cards.filter((c) => c !== this);
           pokemon.energies.moveCardTo(this, owner.hand);
         }
       } catch {

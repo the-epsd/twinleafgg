@@ -8,21 +8,23 @@ export class Bergmite extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Chilly',
-    cost: [W],
-    damage: 10,
-    text: ''
-  },
-  {
-    name: 'Frost Breath',
-    cost: [W, C, C],
-    damage: 50,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Chilly',
+      cost: [W],
+      damage: 10,
+      text: '',
+    },
+    {
+      name: 'Frost Breath',
+      cost: [W, C, C],
+      damage: 50,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '23';
   public name: string = 'Bergmite';

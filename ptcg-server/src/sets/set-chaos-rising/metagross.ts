@@ -30,7 +30,7 @@ export class Metagross extends PokemonCard {
       name: 'Bounce Back',
       cost: [M],
       damage: 60,
-      text: 'Your opponent switches their Active Pokemon with 1 of their Benched Pokemon.',
+      text: 'Your opponent switches their Active Pokémon with 1 of their Benched Pokémon.',
     },
     {
       name: 'Metallic Hammer',

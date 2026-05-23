@@ -13,21 +13,25 @@ export class Kakuna extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public powers = [{
-    name: 'Exoskeleton',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokemon takes 20 less damage from attacks.'
-  }];
+  public powers = [
+    {
+      name: 'Exoskeleton',
+      powerType: PowerType.ABILITY,
+      text: 'This Pokémon takes 20 less damage from attacks (after applying Weakness and Resistance).',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Hang Down',
-    cost: [G],
-    damage: 20,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Hang Down',
+      cost: [G],
+      damage: 20,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '2';
   public name: string = 'Kakuna';

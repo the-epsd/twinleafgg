@@ -13,11 +13,11 @@ import { StoreLike } from '../../game/store/store-like';
 export class BubbleWaterEnergy extends EnergyCard {
   public provides: CardType[] = [CardType.WATER];
   public energyType = EnergyType.SPECIAL;
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public regulationMark = 'J';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '82';
-  public name = 'Bubble Water Energy';
+  public setNumber: string = '84';
+  public name = 'Bubbly Water Energy';
   public fullName = 'Bubble Water Energy M4';
   public text =
     'As long as this card is attached to a Pokémon, it provides [W] Energy.\n\n' +
@@ -37,7 +37,10 @@ export class BubbleWaterEnergy extends EnergyCard {
       effect.target.removeSpecialCondition(SpecialCondition.BURNED);
     }
     PREVENT_AND_CLEAR_SPECIAL_CONDITIONS(state, effect, {
-      shouldApply: (target, owner) => !!owner && target.cards.includes(this) && !IS_SPECIAL_ENERGY_BLOCKED(store, state, owner, this, target),
+      shouldApply: (target, owner) =>
+        !!owner &&
+        target.cards.includes(this) &&
+        !IS_SPECIAL_ENERGY_BLOCKED(store, state, owner, this, target),
     });
     return state;
   }

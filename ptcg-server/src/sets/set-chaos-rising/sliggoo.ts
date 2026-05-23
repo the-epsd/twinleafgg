@@ -6,21 +6,23 @@ export class Sliggoo extends PokemonCard {
   public evolvesFrom = 'Goomy';
   public hp: number = 90;
   public cardType: CardType = N;
-  public weakness: { type: CardType }[] = [];
-  public resistance: { type: CardType; value: number }[] = [];
+  public weakness = [];
+  public resistance = [];
   public retreat = [C, C, C];
 
-  public attacks = [{
-    name: 'Gentle Slap',
-    cost: [W, P],
-    damage: 70,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Gentle Slap',
+      cost: [W, P],
+      damage: 70,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '65';
+  public setNumber: string = '67';
   public name: string = 'Sliggoo';
   public fullName: string = 'Sliggoo M4';
 }

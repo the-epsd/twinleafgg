@@ -12,12 +12,12 @@ import { PlayerType, SlotType } from '../../game/store/actions/play-card-action'
 
 export class AzsTranquility extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public regulationMark = 'J';
-  public name: string = 'AZ\'s Tranquility';
-  public fullName: string = 'AZ\'s Tranquility M4';
+  public name: string = "AZ's Tranquility";
+  public fullName: string = "AZ's Tranquility M4";
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '75';
+  public setNumber: string = '76';
   public text: string =
     'Switch your Active Pokémon with 1 of your Benched Pokémon. If you moved a Pokémon ex to your Bench in this way, heal 80 damage from that Pokémon.';
 

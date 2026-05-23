@@ -11,16 +11,18 @@ export class Espurr extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Buddy Attack',
-    cost: [P],
-    damage: 10,
-    damageCalculation: '+',
-    text: 'If you played Emma from your hand this turn, this attack does 60 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Buddy Attack',
+      cost: [P],
+      damage: 10,
+      damageCalculation: '+',
+      text: 'If you played Emma from your hand this turn, this attack does 60 more damage.',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '36';
   public name: string = 'Espurr';

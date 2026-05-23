@@ -14,22 +14,24 @@ export class Gourgeistex extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Horror Rondo',
-    cost: [P],
-    damage: 30,
-    damageCalculation: '+',
-    text: 'This attack does 50 more damage for each of your Benched Pokemon that have any damage counters on them.'
-  },
-  {
-    name: 'Ghost Touch',
-    cost: [P, P],
-    damage: 140,
-    text: 'Discard a random card from your opponent\'s hand.'
-  }];
+  public attacks = [
+    {
+      name: 'Horrifying Rondo',
+      cost: [P],
+      damage: 30,
+      damageCalculation: '+',
+      text: 'This attack does 50 more damage for each of your Benched Pokémon that has any damage counters on it.',
+    },
+    {
+      name: 'Ghostly Touch',
+      cost: [P, P],
+      damage: 140,
+      text: "Discard a random card from your opponent's hand.",
+    },
+  ];
 
   public regulationMark: string = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Gourgeist ex';
@@ -40,7 +42,7 @@ export class Gourgeistex extends PokemonCard {
       const player = effect.player;
 
       let benchWithDamageCount = 0;
-      player.bench.forEach(slot => {
+      player.bench.forEach((slot) => {
         if (slot.cards.length > 0 && slot.damage > 0) {
           benchWithDamageCount++;
         }

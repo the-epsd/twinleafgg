@@ -7,16 +7,18 @@ export class Stunky extends PokemonCard {
   public cardType: CardType = D;
   public weakness = [{ type: F }];
   public retreat = [C, C];
-  public attacks = [{
-    name: 'Scratch',
-    cost: [D],
-    damage: 20,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Scratch',
+      cost: [D],
+      damage: 20,
+      text: '',
+    },
+  ];
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '52';
+  public setNumber: string = '53';
   public name: string = 'Stunky';
   public fullName: string = 'Stunky M4';
 }

@@ -10,16 +10,15 @@ import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 
 export class PrismTower extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.STADIUM;
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public setNumber: string = '80';
   public name: string = 'Prism Tower';
   public fullName: string = 'Prism Tower M4';
   public cardImage: string = 'assets/cardback.png';
 
   public text: string =
-    'Once during each player\'s turn, that player may discard 2 cards from their hand. If they do, they draw a card.';
+    "Once during each player's turn, that player may discard 2 cards from their hand in order to draw a card. ";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof UseStadiumEffect && StateUtils.getStadiumCard(state) === this) {
@@ -34,21 +33,25 @@ export class PrismTower extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        {},
-        { allowCancel: true, min: 2, max: 2 }
-      ), selected => {
-        selected = selected || [];
-        if (selected.length === 0) {
-          player.stadiumUsedTurn = stadiumUsedTurn;
-          return;
-        }
-        player.hand.moveCardsTo(selected, player.discard);
-        player.deck.moveTo(player.hand, 1);
-      });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          {},
+          { allowCancel: true, min: 2, max: 2 },
+        ),
+        (selected) => {
+          selected = selected || [];
+          if (selected.length === 0) {
+            player.stadiumUsedTurn = stadiumUsedTurn;
+            return;
+          }
+          player.hand.moveCardsTo(selected, player.discard);
+          player.deck.moveTo(player.hand, 1);
+        },
+      );
     }
 
     return state;

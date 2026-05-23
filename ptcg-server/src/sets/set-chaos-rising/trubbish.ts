@@ -11,23 +11,25 @@ export class Trubbish extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Acid Spray',
-    cost: [D],
-    damage: 10,
-    text: 'Flip a coin. If heads, discard an Energy attached to your opponent\'s Active Pokemon.'
-  }];
+  public attacks = [
+    {
+      name: 'Acid Spray',
+      cost: [D],
+      damage: 10,
+      text: "Flip a coin. If heads, discard an Energy attached to your opponent's Active Pokémon.",
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '54';
+  public setNumber: string = '56';
   public name: string = 'Trubbish';
   public fullName: string = 'Trubbish M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (result) {
           DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }

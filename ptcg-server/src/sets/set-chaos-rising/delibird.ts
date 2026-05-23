@@ -1,6 +1,15 @@
 import { CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
-import { PokemonCard, StoreLike, State, StateUtils, AttachEnergyPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import {
+  PokemonCard,
+  StoreLike,
+  State,
+  StateUtils,
+  AttachEnergyPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+} from '../../game';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Delibird extends PokemonCard {
@@ -10,21 +19,23 @@ export class Delibird extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Happy Present',
-    cost: [C],
-    damage: 0,
-    text: 'Both players may attach up to 3 Energy from their hand to their Pokemon in any way they like. (Your opponent attaches first.)'
-  },
-  {
-    name: 'Flap',
-    cost: [C, C],
-    damage: 40,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Pleasing Present',
+      cost: [C],
+      damage: 0,
+      text: 'Each player may attach up to 3 Basic Energy cards from their hand to their Pokémon in any way they like. Your opponent does this first.',
+    },
+    {
+      name: 'Flap',
+      cost: [C, C],
+      damage: 40,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
   public name: string = 'Delibird';
@@ -37,36 +48,44 @@ export class Delibird extends PokemonCard {
       // Ref: set-unified-minds/zygarde.ts (Boost Fang), set-emerging-powers/tornadus.ts (energy move)
       // AttachEnergyPrompt `playerType` is from the prompted player's POV (BOTTOM_PLAYER = their field).
       // TOP_PLAYER here would incorrectly offer the other player's Pokémon in the attach UI.
-      return store.prompt(state, new AttachEnergyPrompt(
-        opponent.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        opponent.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY },
-        { allowCancel: true, min: 0, max: 3 }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, opponent, transfer.to);
-          opponent.hand.moveCardTo(transfer.card, target);
-        }
-        store.prompt(state, new AttachEnergyPrompt(
-          player.id,
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          opponent.id,
           GameMessage.ATTACH_ENERGY_CARDS,
-          player.hand,
+          opponent.hand,
           PlayerType.BOTTOM_PLAYER,
           [SlotType.ACTIVE, SlotType.BENCH],
           { superType: SuperType.ENERGY },
-          { allowCancel: true, min: 0, max: 3 }
-        ), transfersSelf => {
-          transfersSelf = transfersSelf || [];
-          for (const transfer of transfersSelf) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.hand.moveCardTo(transfer.card, target);
+          { allowCancel: true, min: 0, max: 3 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, opponent, transfer.to);
+            opponent.hand.moveCardTo(transfer.card, target);
           }
-        });
-      });
+          store.prompt(
+            state,
+            new AttachEnergyPrompt(
+              player.id,
+              GameMessage.ATTACH_ENERGY_CARDS,
+              player.hand,
+              PlayerType.BOTTOM_PLAYER,
+              [SlotType.ACTIVE, SlotType.BENCH],
+              { superType: SuperType.ENERGY },
+              { allowCancel: true, min: 0, max: 3 },
+            ),
+            (transfersSelf) => {
+              transfersSelf = transfersSelf || [];
+              for (const transfer of transfersSelf) {
+                const target = StateUtils.getTarget(state, player, transfer.to);
+                player.hand.moveCardTo(transfer.card, target);
+              }
+            },
+          );
+        },
+      );
     }
     return state;
   }

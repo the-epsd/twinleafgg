@@ -9,15 +9,17 @@ export class Pumpkaboo extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Stampede',
-    cost: [P],
-    damage: 20,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Stampede',
+      cost: [P],
+      damage: 20,
+      text: '',
+    },
+  ];
 
   public regulationMark: string = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
   public name: string = 'Pumpkaboo';
