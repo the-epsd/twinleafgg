@@ -10,7 +10,7 @@ import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 import { PlayStadiumEffect } from '../../game/store/effects/play-card-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
-export class HyperrogueAngeFloette extends TrainerCard {
+export class AngeFloette extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'CRI';
   public setNumber: string = '75';

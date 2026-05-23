@@ -40,7 +40,7 @@ import { Golisopod } from './golisopod';
 import { Goomy } from './goomy';
 import { Gourgeistex } from './gourgeist-ex';
 import { HoOh } from './ho-oh';
-import { HyperrogueAngeFloette } from './hyperrogue-ange-floette';
+import { AngeFloette } from './hyperrogue-ange-floette';
 import { Kakuna } from './kakuna';
 import { Keldeo } from './keldeo';
 import { Litleo } from './litleo';
@@ -121,7 +121,6 @@ import {
 
 export const setChaosRising: Card[] = [
   // MARK: Main set
-  //
 
   new Weedle(), // 1
   new Kakuna(), // 2
@@ -202,7 +201,7 @@ export const setChaosRising: Card[] = [
   new Philippe(), // 76
   new RoxiesPerformance(), // 77
   new Emma(), // 78
-  new HyperrogueAngeFloette(), // 79
+  new AngeFloette(), // 79
   new PrismTower(), // 80
   new NitroFireEnergy(), // 81
   new MagnetMetalEnergy(), // 83
