@@ -290,8 +290,8 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
 
   formatReminderText(text: string): string {
     return text
-      .replace("(", '<span class="reminder">(')
-      .replace(")", ")</span>");
+      .replace(/\(/g, '<span class="reminder">(')
+      .replace(/\)/g, ")</span>");
   }
 
   formatBossMonMechanics(text: string): string {
