@@ -4,10 +4,8 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { GameMessage, PlayerType, StateUtils, StoreLike, State } from '../../game';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { GameMessage, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { DRAW_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { Card } from '../../game/store/card/card';
@@ -41,10 +39,6 @@ export class Skarmory extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Skarmory';
   public fullName: string = 'Skarmory PLS';
-
-  public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
-  public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Cargo Jet
     // Ref: set-surging-sparks/klefki.ts (Plug and Draw - discard from hand then draw)
@@ -84,33 +78,7 @@ export class Skarmory extends PokemonCard {
     // Attack 2: Steel Wing
     // Ref: set-team-up/pawniard.ts (Rigidify - damage reduction marker)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-    }
-
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-        effect.damage = Math.max(0, effect.damage - 20);
-        return state;
-      }
-    }
-
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
-      if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-        effect.damage = Math.max(0, effect.damage - 20);
-        return state;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      });
+      effect.player.active.damageReductionNextTurn = 20;
     }
 
     return state;

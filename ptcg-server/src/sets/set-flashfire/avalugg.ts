@@ -4,10 +4,8 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../game/store/prefabs/prefabs';
 
 export class Avalugg extends PokemonCard {
@@ -39,44 +37,15 @@ export class Avalugg extends PokemonCard {
   public name: string = 'Avalugg';
   public fullName: string = 'Avalugg FLF';
 
-  public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER_AVALUGG';
-  public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER_AVALUGG';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-dragons-exalted/mareep.ts (Cotton Guard)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      effect.player.active.damageReductionNextTurn = 20;
     }
 
     // Ref: set-plasma-blast/salamence.ts (Gaia Crush)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       DISCARD_A_STADIUM_CARD_IN_PLAY(state);
-    }
-
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-        effect.damage = Math.max(0, effect.damage - 20);
-        return state;
-      }
-    }
-
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
-      if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-        effect.damage = Math.max(0, effect.damage - 20);
-        return state;
-      }
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      });
     }
 
     return state;

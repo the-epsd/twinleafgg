@@ -4,11 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, CONFIRMATION_PROMPT, ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, CONFIRMATION_PROMPT } from '../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class Corviknight extends PokemonCard {
@@ -19,9 +17,6 @@ export class Corviknight extends PokemonCard {
   public weakness = [{ type: L }];
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
-
-  public readonly IRON_WINGS_REDUCE_MARKER = 'CORVIKNIGHT_SSH_IRON_WINGS_REDUCE_MARKER';
-  public readonly IRON_WINGS_CLEAR_MARKER = 'CORVIKNIGHT_SSH_IRON_WINGS_CLEAR_MARKER';
 
   public attacks = [
     {
@@ -46,35 +41,14 @@ export class Corviknight extends PokemonCard {
   public fullName: string = 'Corviknight SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 2: Iron Wings
-    // Ref: set-ex-hidden-legends/lanturn.ts (CONFIRMATION_PROMPT + discard energy),
-    //      set-unbroken-bonds/slowpoke.ts (REDUCE_DAMAGE_MARKER / CLEAR_REDUCE_DAMAGE_MARKER pattern)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       CONFIRMATION_PROMPT(store, state, player, result => {
         if (result) {
           DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
-          ADD_MARKER(this.IRON_WINGS_REDUCE_MARKER, player.active, this);
-          ADD_MARKER(this.IRON_WINGS_CLEAR_MARKER, opponent, this);
+          player.active.damageReductionNextTurn = 100;
         }
-      });
-    }
-
-    // Reduce damage during opponent's next turn
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.IRON_WINGS_REDUCE_MARKER, this)) {
-      effect.damage = Math.max(0, effect.damage - 100);
-    }
-
-    // Cleanup marker at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && HAS_MARKER(this.IRON_WINGS_CLEAR_MARKER, effect.player, this)) {
-      REMOVE_MARKER(this.IRON_WINGS_CLEAR_MARKER, effect.player, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.IRON_WINGS_REDUCE_MARKER, this);
       });
     }
 

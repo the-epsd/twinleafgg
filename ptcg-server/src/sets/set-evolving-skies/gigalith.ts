@@ -4,12 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../game';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../game/store/prefabs/prefabs';
-import { GamePhase } from '../../game/store/state/state';
 
 export class Gigalith extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -18,9 +15,6 @@ export class Gigalith extends PokemonCard {
   public hp: number = 180;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
-
-  public readonly REDUCE_DAMAGE_MARKER = 'GIGALITH_EVS_REDUCE_DAMAGE_MARKER';
-  public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'GIGALITH_EVS_CLEAR_REDUCE_DAMAGE_MARKER';
 
   public attacks = [
     {
@@ -48,26 +42,12 @@ export class Gigalith extends PokemonCard {
     // Attack 1: Guard Press
     // Ref: set-chilling-reign/furfrou.ts (Fur Attack - REDUCE_DAMAGE_MARKER with 2-marker pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
+      effect.player.active.damageReductionNextTurn = 50;
     }
 
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)
-      && state.phase === GamePhase.ATTACK) {
-      effect.damage = Math.max(0, effect.damage - 50);
-    }
+    
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
-      });
-    }
+    
 
     // Attack 2: Pressure Shot
     // Ref: AGENTS-patterns.md (THIS_POKEMON_DOES_DAMAGE_TO_ITSELF)

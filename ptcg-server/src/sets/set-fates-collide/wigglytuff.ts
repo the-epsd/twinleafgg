@@ -4,10 +4,8 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT } from '../../game/store/prefabs/prefabs';
 
 export class Wigglytuff extends PokemonCard {
@@ -18,8 +16,6 @@ export class Wigglytuff extends PokemonCard {
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
-
-  public readonly REDUCE_DAMAGE_MARKER = 'WIGGLYTUFF_FCO_REDUCE_DAMAGE';
 
   public attacks = [
     {
@@ -47,23 +43,14 @@ export class Wigglytuff extends PokemonCard {
     // Attack 1: Expand
     // Ref: AGENTS-patterns.md (Damage Prevention/Reduction during opponent's next turn)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      effect.player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
+      effect.player.active.damageReductionNextTurn = 30;
     }
 
     // Intercept damage to reduce by 30
-    if (effect instanceof DealDamageEffect) {
-      if (effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)) {
-        effect.damage = Math.max(0, effect.damage - 30);
-      }
-    }
+    
 
     // Cleanup marker at end of opponent's turn
-    if (effect instanceof EndTurnEffect) {
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
-      });
-    }
+    
 
     // Attack 2: Double Slap
     // Ref: set-ancient-origins/vespiquen-2.ts (Fury Swipes)

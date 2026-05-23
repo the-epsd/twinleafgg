@@ -4,10 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, ADD_MARKER, CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Bagon extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -15,9 +14,6 @@ export class Bagon extends PokemonCard {
   public hp: number = 60;
   public weakness = [{ type: Y }];
   public retreat = [C];
-
-  public readonly ROCK_HEAD_MARKER = 'BAGON_CES_ROCK_HEAD_MARKER';
-  public readonly CLEAR_ROCK_HEAD_MARKER = 'BAGON_CES_CLEAR_ROCK_HEAD_MARKER';
 
   public attacks = [
     {
@@ -35,22 +31,9 @@ export class Bagon extends PokemonCard {
   public fullName: string = 'Bagon CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Rock Head
-    // Ref: AGENTS-patterns.md (damage reduction during opponent's next turn)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.ROCK_HEAD_MARKER, player.active, this);
-      ADD_MARKER(this.CLEAR_ROCK_HEAD_MARKER, opponent, this);
+      effect.player.active.damageReductionNextTurn = 10;
     }
-
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.ROCK_HEAD_MARKER, this)
-      && effect.target.getPokemonCard() === this) {
-      effect.damage = Math.max(0, effect.damage - 10);
-    }
-
-    CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(state, effect, this.CLEAR_ROCK_HEAD_MARKER, this.ROCK_HEAD_MARKER, this);
 
     return state;
   }

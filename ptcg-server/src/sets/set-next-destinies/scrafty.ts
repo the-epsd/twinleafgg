@@ -1,10 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Scrafty extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -37,28 +35,11 @@ export class Scrafty extends PokemonCard {
   public name: string = 'Scrafty';
   public fullName: string = 'Scrafty NXD';
 
-  public readonly ROCK_HEAD_MARKER = 'ROCK_HEAD_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Rock Head - add marker for damage reduction
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.getPokemonCard() === this) {
-          ADD_MARKER(this.ROCK_HEAD_MARKER, cardList, this);
-        }
-      });
+      effect.player.active.damageReductionNextTurn = 20;
     }
 
-    // Reduce damage if marker is present
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
-      if (HAS_MARKER(this.ROCK_HEAD_MARKER, effect.target, this)) {
-        effect.damage = Math.max(0, effect.damage - 20);
-      }
-    }
-
-    // Hammer Kick - bonus damage if less HP
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -70,18 +51,6 @@ export class Scrafty extends PokemonCard {
       if (myRemainingHP < defenderRemainingHP) {
         effect.damage += 30;
       }
-    }
-
-    // Remove marker at end of opponent's turn
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.getPokemonCard() === this) {
-          REMOVE_MARKER(this.ROCK_HEAD_MARKER, cardList, this);
-        }
-      });
     }
 
     return state;

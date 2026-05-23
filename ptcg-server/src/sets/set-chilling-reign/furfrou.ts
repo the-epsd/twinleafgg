@@ -4,10 +4,8 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../game';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../game/store/prefabs/prefabs';
 
 export class Furfrou extends PokemonCard {
@@ -16,9 +14,6 @@ export class Furfrou extends PokemonCard {
   public hp: number = 90;
   public weakness = [{ type: F }];
   public retreat = [C];
-
-  public readonly REDUCE_DAMAGE_MARKER = 'FURFROU_CRE_REDUCE_DAMAGE_MARKER';
-  public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'FURFROU_CRE_CLEAR_REDUCE_DAMAGE_MARKER';
 
   public attacks = [
     {
@@ -53,24 +48,7 @@ export class Furfrou extends PokemonCard {
     // Attack 2: Fur Attack
     // Ref: set-unbroken-bonds/slowpoke.ts (Growl - REDUCE_DAMAGE_MARKER with 2-marker pattern)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-    }
-
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)) {
-      effect.damage = Math.max(0, effect.damage - 20);
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
-      });
+      effect.player.active.damageReductionNextTurn = 20;
     }
 
     return state;

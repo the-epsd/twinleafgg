@@ -4,11 +4,10 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, PlayerType } from '../../game';
+import { PowerType, StoreLike, State, StateUtils } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ScizorGx extends PokemonCard {
@@ -49,9 +48,6 @@ export class ScizorGx extends PokemonCard {
   public name: string = 'Scizor-GX';
   public fullName: string = 'Scizor-GX HIF';
 
-  public readonly STEEL_WING_MARKER = 'SCIZOR_GX_HIF_STEEL_WING_MARKER';
-  public readonly CLEAR_STEEL_WING_MARKER = 'SCIZOR_GX_HIF_CLEAR_STEEL_WING_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Danger Perception (passive - boost damage when HP is low)
     // Ref: set-celestial-storm/scizor-gx.ts (Danger Perception)
@@ -80,24 +76,7 @@ export class ScizorGx extends PokemonCard {
     // Attack 1: Steel Wing
     // Ref: set-celestial-storm/scizor-gx.ts (Steel Wing)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.STEEL_WING_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_STEEL_WING_MARKER, this);
-    }
-
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.STEEL_WING_MARKER, this)) {
-      effect.damage = Math.max(0, effect.damage - 30);
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_STEEL_WING_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_STEEL_WING_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.STEEL_WING_MARKER, this);
-      });
+      effect.player.active.damageReductionNextTurn = 30;
     }
 
     // Attack 2: Cross-Cut-GX

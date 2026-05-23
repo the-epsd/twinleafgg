@@ -5,8 +5,6 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 
 import { DiscardEnergyPrompt, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Scizorex extends PokemonCard {
@@ -33,10 +31,6 @@ export class Scizorex extends PokemonCard {
     text: 'Discard up to 2 [M] Energy from this Pokémon. This attack does 120 damage for each card you discarded in this way.'
   }];
 
-  // for preventing the pokemon from attacking on the next turn
-  public readonly STEEL_WING = 'STEEL_WING';
-  public readonly CLEAR_STEEL_WING = 'CLEAR_STEEL_WING';
-
   public set: string = 'TEF';
   public name: string = 'Scizor ex';
   public fullName: string = 'Scizor ex TEF';
@@ -46,27 +40,8 @@ export class Scizorex extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
-    // Steel Wing
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      player.active.marker.addMarker(this.STEEL_WING, this);
-      opponent.marker.addMarker(this.CLEAR_STEEL_WING, this);
-    }
-
-    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.STEEL_WING)) {
-      effect.damage -= 50;
-      return state;
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_STEEL_WING, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_STEEL_WING, this);
-
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.STEEL_WING, this);
-      });
+      effect.player.active.damageReductionNextTurn = 50;
     }
 
     // Cross Breaker

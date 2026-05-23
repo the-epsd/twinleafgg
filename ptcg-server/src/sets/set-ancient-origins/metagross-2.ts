@@ -4,10 +4,8 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Metagross2 extends PokemonCard {
@@ -19,24 +17,19 @@ export class Metagross2 extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C, C, C, C];
 
-  public readonly REDUCE_DAMAGE_MARKER = 'METAGROSS2_REDUCE_DAMAGE_MARKER';
-  public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'METAGROSS2_CLEAR_REDUCE_DAMAGE_MARKER';
-
-  public attacks = [
-    {
-      name: 'Machine Gun Stomp',
-      cost: [C, C],
-      damage: 20,
-      damageCalculation: '+',
-      text: 'This attack does 10 more damage for each card in your hand.'
-    },
-    {
-      name: 'Guard Press',
-      cost: [M, M, C, C],
-      damage: 80,
-      text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).'
-    }
-  ];
+  public attacks = [{
+    name: 'Machine Gun Stomp',
+    cost: [C, C],
+    damage: 20,
+    damageCalculation: '+',
+    text: 'This attack does 10 more damage for each card in your hand.'
+  },
+  {
+    name: 'Guard Press',
+    cost: [M, M, C, C],
+    damage: 80,
+    text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 20 (after applying Weakness and Resistance).'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '50';
@@ -55,25 +48,7 @@ export class Metagross2 extends PokemonCard {
     // Attack 2: Guard Press
     // Ref: set-primal-clash/aegislash.ts (Protect Charge)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-    }
-
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
-      if (effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)) {
-        effect.damage = Math.max(0, effect.damage - 20);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
-      });
+      effect.player.active.damageReductionNextTurn = 20;
     }
 
     return state;

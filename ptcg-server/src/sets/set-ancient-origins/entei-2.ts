@@ -4,10 +4,8 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../game/store/prefabs/prefabs';
 
 export class Entei2 extends PokemonCard {
@@ -17,20 +15,18 @@ export class Entei2 extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Flame Screen',
-      cost: [R, C],
-      damage: 30,
-      text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 30 (after applying Weakness and Resistance).'
-    },
-    {
-      name: 'Heat Tackle',
-      cost: [R, R, C, C],
-      damage: 130,
-      text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flame Screen',
+    cost: [R, C],
+    damage: 30,
+    text: 'During your opponent\'s next turn, any damage done to this Pokémon by attacks is reduced by 30 (after applying Weakness and Resistance).'
+  },
+  {
+    name: 'Heat Tackle',
+    cost: [R, R, C, C],
+    damage: 130,
+    text: 'Flip a coin. If tails, this Pokémon does 30 damage to itself.'
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '15';
@@ -38,17 +34,11 @@ export class Entei2 extends PokemonCard {
   public name: string = 'Entei';
   public fullName: string = 'Entei AOR 15';
 
-  public readonly REDUCE_DAMAGE_MARKER = 'ENTEI2_REDUCE_DAMAGE_MARKER';
-  public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'ENTEI2_CLEAR_REDUCE_DAMAGE_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Flame Screen
     // Ref: set-furious-fists/heracross-ex.ts (Guard Press)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
+      effect.player.active.damageReductionNextTurn = 30;
     }
 
     // Attack 2: Heat Tackle
@@ -58,27 +48,6 @@ export class Entei2 extends PokemonCard {
         if (!result) {
           THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 30);
         }
-      });
-    }
-
-    if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {
-      if (effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)) {
-        effect.damage = Math.max(0, effect.damage - 30);
-      }
-    }
-
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      if (effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)) {
-        effect.damage = Math.max(0, effect.damage - 30);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
       });
     }
 

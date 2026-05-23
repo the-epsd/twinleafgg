@@ -4,10 +4,8 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Dottler extends PokemonCard {
@@ -17,9 +15,6 @@ export class Dottler extends PokemonCard {
   public hp: number = 70;
   public weakness = [{ type: R }];
   public retreat = [C, C];
-
-  public readonly REFLECT_MARKER = 'DOTTLER_SSH_REFLECT_MARKER';
-  public readonly CLEAR_REFLECT_MARKER = 'DOTTLER_SSH_CLEAR_REFLECT_MARKER';
 
   public attacks = [
     {
@@ -44,27 +39,8 @@ export class Dottler extends PokemonCard {
   public fullName: string = 'Dottler SSH';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Reflect
-    // Ref: set-unbroken-bonds/slowpoke.ts (REDUCE_DAMAGE_MARKER / CLEAR_REDUCE_DAMAGE_MARKER pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.REFLECT_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_REFLECT_MARKER, this);
-    }
-
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.REFLECT_MARKER, this)) {
-      effect.damage = Math.max(0, effect.damage - 40);
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_REFLECT_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_REFLECT_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.REFLECT_MARKER, this);
-      });
+      effect.player.active.damageReductionNextTurn = 40;
     }
 
     return state;

@@ -4,10 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, PowerType, StoreLike, State, StateUtils } from '../../game';
+import { PowerType, StoreLike, State } from '../../game';
 import { AbstractAttackEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, PREVENT_DAMAGE_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS, PREVENT_EFFECTS_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS } from '../../game/store/prefabs/prefabs';
 
 export class Bronzong extends PokemonCard {
@@ -40,12 +39,7 @@ export class Bronzong extends PokemonCard {
   public name: string = 'Bronzong';
   public fullName: string = 'Bronzong FCO';
 
-  public readonly GUARD_PRESS_MARKER = 'BRONZONG_FCO_GUARD_PRESS_MARKER';
-  public readonly CLEAR_GUARD_PRESS_MARKER = 'BRONZONG_FCO_CLEAR_GUARD_PRESS_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Metal Fortress
-    // Ref: set-brilliant-stars/manaphy.ts (Wave Veil - prevent damage to benched Pokemon)
     if (effect instanceof PutDamageEffect) {
       state.players.forEach(owner => {
         PREVENT_DAMAGE_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS(store, state, effect, {
@@ -56,7 +50,6 @@ export class Bronzong extends PokemonCard {
       });
     }
 
-    // Ref: set-temporal-forces/rabsca.ts (prevent effects to benched Pokemon)
     if (effect instanceof AbstractAttackEffect && !(effect instanceof PutDamageEffect) && !(effect instanceof DealDamageEffect)) {
       state.players.forEach(owner => {
         PREVENT_EFFECTS_TO_YOUR_BENCHED_POKEMON_FROM_OPPONENT_ATTACKS(store, state, effect, {
@@ -66,30 +59,8 @@ export class Bronzong extends PokemonCard {
         });
       });
     }
-
-    // Attack 1: Guard Press
-    // Ref: set-primal-clash/skitty.ts (Charm - reduce damage during opponent's next turn)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.GUARD_PRESS_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_GUARD_PRESS_MARKER, this);
-    }
-
-    if (effect instanceof DealDamageEffect && effect.target.marker.hasMarker(this.GUARD_PRESS_MARKER, this)) {
-      effect.damage = Math.max(0, effect.damage - 20);
-    }
-
-    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.GUARD_PRESS_MARKER, this)) {
-      effect.damage = Math.max(0, effect.damage - 20);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_GUARD_PRESS_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_GUARD_PRESS_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.GUARD_PRESS_MARKER, this);
-      });
+      effect.player.active.damageReductionNextTurn = 20;
     }
 
     return state;

@@ -4,11 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS } from '../../game/store/prefabs/attack-effects';
 
 export class Torterra extends PokemonCard {
@@ -43,35 +41,11 @@ export class Torterra extends PokemonCard {
   public name: string = 'Torterra';
   public fullName: string = 'Torterra PLS';
 
-  public readonly GUARD_PRESS_MARKER = 'GUARD_PRESS_MARKER';
-  public readonly CLEAR_GUARD_PRESS_MARKER = 'CLEAR_GUARD_PRESS_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Guard Press
-    // Ref: set-plasma-storm/swadloon.ts (Swaddle Guard damage reduction pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.GUARD_PRESS_MARKER, player.active, this);
-      ADD_MARKER(this.CLEAR_GUARD_PRESS_MARKER, opponent, this);
+      effect.player.active.damageReductionNextTurn = 20;
     }
 
-    // Reduce damage by 20
-    if (effect instanceof DealDamageEffect && HAS_MARKER(this.GUARD_PRESS_MARKER, effect.target, this)) {
-      effect.damage = Math.max(0, effect.damage - 20);
-    }
-
-    // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect && HAS_MARKER(this.CLEAR_GUARD_PRESS_MARKER, effect.player, this)) {
-      REMOVE_MARKER(this.CLEAR_GUARD_PRESS_MARKER, effect.player, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        REMOVE_MARKER(this.GUARD_PRESS_MARKER, cardList, this);
-      });
-    }
-
-    // Attack 2: Rumble Stomp
-    // Ref: AGENTS-patterns.md (flip until tails, more damage per heads)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       return FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS(store, state, effect, 20);
     }

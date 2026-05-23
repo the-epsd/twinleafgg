@@ -4,10 +4,8 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Klang extends PokemonCard {
@@ -41,36 +39,18 @@ export class Klang extends PokemonCard {
   public name: string = 'Klang';
   public fullName: string = 'Klang BRS 103';
 
-  public readonly GUARD_PRESS_MARKER = 'KLANG_BRS_GUARD_PRESS_MARKER';
-  public readonly CLEAR_GUARD_PRESS_MARKER = 'KLANG_BRS_CLEAR_GUARD_PRESS_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 2: Guard Press
     // Ref: AGENTS-patterns.md (Damage Prevention/Reduction - during opponent's next turn pattern)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.GUARD_PRESS_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_GUARD_PRESS_MARKER, this);
+      effect.player.active.damageReductionNextTurn = 30;
     }
 
     // Intercept damage during opponent's next turn
-    if (effect instanceof DealDamageEffect
-      && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this
-      && effect.target.marker.hasMarker(this.GUARD_PRESS_MARKER, this)) {
-      effect.damage = Math.max(0, effect.damage - 30);
-    }
+    
 
     // Cleanup at end of opponent's turn only
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_GUARD_PRESS_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_GUARD_PRESS_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
-        cardList.marker.removeMarker(this.GUARD_PRESS_MARKER, this);
-      });
-    }
+    
 
     return state;
   }
