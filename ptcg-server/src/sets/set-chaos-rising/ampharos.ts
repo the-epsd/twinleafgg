@@ -12,21 +12,25 @@ export class Ampharos extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Synchronized Pulse',
-    powerType: PowerType.ABILITY,
-    text: 'If you and your opponent have the same number of cards in your hands, this Pokemon\'s attacks do 80 more damage to your opponent\'s Active Pokemon (before applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: 'Synchro Pulse',
+      powerType: PowerType.ABILITY,
+      text: "If you have the same number of cards in your hand as your opponent, attacks used by this Pokémon do 80 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Flash Bolt',
-    cost: [L, C],
-    damage: 140,
-    text: 'During your next turn, this Pokemon can\'t use Flash Bolt.'
-  }];
+  public attacks = [
+    {
+      name: 'Flashing Bolt',
+      cost: [L, C],
+      damage: 140,
+      text: "During your next turn, this Pokémon can't use Flashing Bolt.",
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
   public name: string = 'Ampharos';
@@ -41,7 +45,10 @@ export class Ampharos extends PokemonCard {
         return state;
       }
 
-      if (effect.target === opponent.active && player.hand.cards.length === opponent.hand.cards.length) {
+      if (
+        effect.target === opponent.active &&
+        player.hand.cards.length === opponent.hand.cards.length
+      ) {
         effect.damage += 80;
       }
     }

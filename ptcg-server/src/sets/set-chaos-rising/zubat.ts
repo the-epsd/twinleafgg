@@ -13,17 +13,19 @@ export class Zubat extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [];
 
-  public attacks = [{
-    name: 'Supersonic',
-    cost: [D],
-    damage: 0,
-    text: 'Your opponent\'s Active Pokemon is now Confused.'
-  }];
+  public attacks = [
+    {
+      name: 'Supersonic',
+      cost: [D],
+      damage: 0,
+      text: "Your opponent's Active Pokémon is now Confused.",
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '48';
+  public setNumber: string = '49';
   public name: string = 'Zubat';
   public fullName: string = 'Zubat M4';
 

@@ -8,15 +8,17 @@ export class Remoraid extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Slice Fin',
-    cost: [W],
-    damage: 20,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Sharp Fin',
+      cost: [W],
+      damage: 20,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Remoraid';

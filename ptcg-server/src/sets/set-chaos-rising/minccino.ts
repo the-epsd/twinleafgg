@@ -1,7 +1,10 @@
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard, StoreLike, State } from '../../game';
-import { THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 
 export class Minccino extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -10,17 +13,19 @@ export class Minccino extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Take Down',
-    cost: [C],
-    damage: 30,
-    text: 'This Pokemon also does 10 damage to itself.'
-  }];
+  public attacks = [
+    {
+      name: 'Take Down',
+      cost: [C],
+      damage: 30,
+      text: 'This Pokémon also does 10 damage to itself.',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '70';
+  public setNumber: string = '72';
   public name: string = 'Minccino';
   public fullName: string = 'Minccino M4';
 

@@ -10,28 +10,34 @@ export class Patrat extends PokemonCard {
   public cardType: CardType = C;
   public weakness = [{ type: F }];
   public retreat = [C];
-  public powers = [{
-    name: 'Watchful Eyes',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokemon is in play, you and your opponent can\'t move damage counters to another Pokemon.'
-  }];
-  public attacks = [{
-    name: 'Bite',
-    cost: [C],
-    damage: 10,
-    text: ''
-  }];
+
+  public powers = [
+    {
+      name: 'Watchful Eye',
+      powerType: PowerType.ABILITY,
+      text: "Damage counters on each Pokémon (both yours and your opponent's) can't be moved to other Pokémon.",
+    },
+  ];
+  public attacks = [
+    {
+      name: 'Bite',
+      cost: [C],
+      damage: 10,
+      text: '',
+    },
+  ];
+
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '68';
+  public setNumber: string = '70';
   public name: string = 'Patrat';
   public fullName: string = 'Patrat M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof MoveDamageCountersEffect) {
       let hasPatrat = false;
-      state.players.forEach(p => {
+      state.players.forEach((p) => {
         p.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
           if (card?.name === 'Patrat') hasPatrat = true;
         });

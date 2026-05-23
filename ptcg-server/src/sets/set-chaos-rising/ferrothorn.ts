@@ -14,22 +14,26 @@ export class Ferrothorn extends PokemonCard {
   public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C, C];
-  public powers = [{
-    name: 'Prank Drop',
-    powerType: PowerType.ABILITY,
-    text: 'When this Pokemon is discarded from your deck by your opponent\'s effect, your opponent discards the top 8 cards of their deck.'
-  }];
-  public attacks = [{
-    name: 'Special Whip',
-    cost: [M, M, C],
-    damage: 70,
-    damageCalculation: '+',
-    text: 'If this Pokemon has any Special Energy attached, this attack does 70 more damage.'
-  }];
+  public powers = [
+    {
+      name: 'Startling Drop',
+      powerType: PowerType.ABILITY,
+      text: "During your opponent's turn, if this Pokémon is discarded from your deck by an effect of an attack or Ability from your opponent's Pokémon, or by an effect of your opponent's Item or Supporter cards, discard the top 8 cards of your opponent's deck.",
+    },
+  ];
+  public attacks = [
+    {
+      name: 'Special Whip',
+      cost: [M, M],
+      damage: 70,
+      damageCalculation: '+',
+      text: 'If this Pokémon has any Special Energy attached, this attack does 70 more damage.',
+    },
+  ];
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '61';
+  public setNumber: string = '63';
   public name: string = 'Ferrothorn';
   public fullName: string = 'Ferrothorn M4';
 
@@ -40,8 +44,11 @@ export class Ferrothorn extends PokemonCard {
       if (effect.source === undefined || effect.destination === undefined) return state;
       try {
         const deckOwner = StateUtils.findOwner(state, effect.source);
-        const effectOwner = effect.sourceCard ? StateUtils.findOwner(state, StateUtils.findCardList(state, effect.sourceCard)) : null;
-        if (effect.source !== deckOwner.deck || effect.destination !== deckOwner.discard) return state;
+        const effectOwner = effect.sourceCard
+          ? StateUtils.findOwner(state, StateUtils.findCardList(state, effect.sourceCard))
+          : null;
+        if (effect.source !== deckOwner.deck || effect.destination !== deckOwner.discard)
+          return state;
         if (effectOwner !== deckOwner) {
           DISCARD_TOP_X_OF_OPPONENTS_DECK(store, state, deckOwner, 8, this, effect);
         }
@@ -50,7 +57,9 @@ export class Ferrothorn extends PokemonCard {
       }
     }
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const hasSpecialEnergy = effect.source?.cards.some((c: any) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL);
+      const hasSpecialEnergy = effect.source?.cards.some(
+        (c: any) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL,
+      );
       if (hasSpecialEnergy) {
         effect.damage += 70;
       }

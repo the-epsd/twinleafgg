@@ -9,21 +9,23 @@ export class Wimpod extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Gnaw',
-    cost: [W],
-    damage: 10,
-    text: ''
-  },
-  {
-    name: 'Corkscrew Punch',
-    cost: [C, C],
-    damage: 20,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Gnaw',
+      cost: [W],
+      damage: 10,
+      text: '',
+    },
+    {
+      name: 'Corkscrew Punch',
+      cost: [C, C],
+      damage: 20,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '25';
   public name: string = 'Wimpod';

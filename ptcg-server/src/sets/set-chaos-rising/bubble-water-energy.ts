@@ -3,22 +3,25 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
-import { IS_SPECIAL_ENERGY_BLOCKED, PREVENT_AND_CLEAR_SPECIAL_CONDITIONS } from '../../game/store/prefabs/prefabs';
+import {
+  IS_SPECIAL_ENERGY_BLOCKED,
+  PREVENT_AND_CLEAR_SPECIAL_CONDITIONS,
+} from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { GameError } from '../../game/game-error';
-import { GameMessage } from '../../game/game-message';
 
 export class BubbleWaterEnergy extends EnergyCard {
   public provides: CardType[] = [CardType.WATER];
   public energyType = EnergyType.SPECIAL;
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public regulationMark = 'J';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '82';
-  public name = 'Bubble Water Energy';
+  public setNumber: string = '84';
+  public name = 'Bubbly Water Energy';
   public fullName = 'Bubble Water Energy M4';
-  public text = 'This card can only be attached to [W] Pokémon. The [W] Pokémon this card is attached to cannot have any Special Conditions. Remove all Special Conditions from that Pokémon.';
+  public text =
+    'As long as this card is attached to a Pokémon, it provides [W] Energy.\n\n' +
+    "The [W] Pokémon this card is attached to recovers from all Special Conditions and can't be affected by any Special Conditions.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AttachEnergyEffect && effect.energyCard === this) {
@@ -27,9 +30,6 @@ export class BubbleWaterEnergy extends EnergyCard {
       }
       const checkPokemonType = new CheckPokemonTypeEffect(effect.target);
       store.reduceEffect(state, checkPokemonType);
-      if (!checkPokemonType.cardTypes.includes(CardType.WATER)) {
-        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
-      }
       effect.target.removeSpecialCondition(SpecialCondition.ASLEEP);
       effect.target.removeSpecialCondition(SpecialCondition.PARALYZED);
       effect.target.removeSpecialCondition(SpecialCondition.CONFUSED);
@@ -37,7 +37,10 @@ export class BubbleWaterEnergy extends EnergyCard {
       effect.target.removeSpecialCondition(SpecialCondition.BURNED);
     }
     PREVENT_AND_CLEAR_SPECIAL_CONDITIONS(state, effect, {
-      shouldApply: (target, owner) => !!owner && target.cards.includes(this) && !IS_SPECIAL_ENERGY_BLOCKED(store, state, owner, this, target),
+      shouldApply: (target, owner) =>
+        !!owner &&
+        target.cards.includes(this) &&
+        !IS_SPECIAL_ENERGY_BLOCKED(store, state, owner, this, target),
     });
     return state;
   }

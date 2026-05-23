@@ -9,23 +9,25 @@ export class Beldum extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Headbutt',
-    cost: [M],
-    damage: 10,
-    text: ''
-  },
-  {
-    name: 'Beam',
-    cost: [M, C],
-    damage: 20,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Headbutt',
+      cost: [M],
+      damage: 10,
+      text: '',
+    },
+    {
+      name: 'Beam',
+      cost: [M, C],
+      damage: 20,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '57';
+  public setNumber: string = '59';
   public name: string = 'Beldum';
   public fullName: string = 'Beldum M4';
 }

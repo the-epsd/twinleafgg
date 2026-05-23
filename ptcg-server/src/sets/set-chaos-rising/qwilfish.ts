@@ -13,30 +13,38 @@ export class Qwilfish extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Poison Point',
-    powerType: PowerType.ABILITY,
-    text: 'If this Pokemon is in the Active Spot and takes damage from an attack from your opponent\'s Pokemon, the Attacking Pokemon is now Poisoned.'
-  }];
+  public powers = [
+    {
+      name: 'Poison Point',
+      powerType: PowerType.ABILITY,
+      text: "If this Pokémon is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out), the Attacking Pokémon is now Poisoned.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Venoshock',
-    cost: [D],
-    damage: 30,
-    damageCalculation: '+',
-    text: 'If your opponent\'s Active Pokemon is Poisoned, this attack does 50 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Venoshock',
+      cost: [D],
+      damage: 30,
+      damageCalculation: '+',
+      text: "If your opponent's Active Pokémon is Poisoned, this attack does 50 more damage.",
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '51';
+  public setNumber: string = '52';
   public name: string = 'Qwilfish';
   public fullName: string = 'Qwilfish M4';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)
-      && effect.target.getPokemonCard() === this && state.phase === GamePhase.ATTACK) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      effect.target.getPokemonCard() === this &&
+      state.phase === GamePhase.ATTACK
+    ) {
       const targetOwner = StateUtils.findOwner(state, effect.target);
       const opponent = StateUtils.getOpponent(state, targetOwner);
 

@@ -12,22 +12,24 @@ export class MegaPyroarex extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Ferocious Bellow',
-    cost: [R, C],
-    damage: 80,
-    text: 'During your opponent\'s next turn, the Defending Pokemon\'s attacks do 50 less damage.'
-  },
-  {
-    name: 'Big Bang Fire',
-    cost: [R, R, C],
-    damage: 290,
-    damageCalculation: '-',
-    text: 'This attack does 10 less damage for each damage counter on this Pokemon.'
-  }];
+  public attacks = [
+    {
+      name: 'Ferocious Bellow',
+      cost: [R, C],
+      damage: 80,
+      text: "During your opponent's next turn, attacks used by the Defending Pokémon do 50 less damage (before applying Weakness and Resistance).",
+    },
+    {
+      name: 'Big Bang Fire',
+      cost: [R, R, C],
+      damage: 290,
+      damageCalculation: '-',
+      text: 'This attack does 10 less damage for each damage counter on this Pokémon.',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '15';
   public name: string = 'Mega Pyroar ex';

@@ -10,15 +10,17 @@ export class Weedle extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Surprise Attack',
-    cost: [G],
-    damage: 30,
-    text: 'Flip a coin. If tails, this attack does nothing.'
-  }];
+  public attacks = [
+    {
+      name: 'Surprise Attack',
+      cost: [G],
+      damage: 30,
+      text: 'Flip a coin. If tails, this attack does nothing.',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '1';
   public name: string = 'Weedle';
@@ -26,7 +28,7 @@ export class Weedle extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
         if (!result) {
           effect.damage = 0;
         }
