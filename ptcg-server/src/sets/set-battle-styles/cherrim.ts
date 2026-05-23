@@ -1,6 +1,17 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, StateUtils, GameError, GameMessage, EnergyCard, PlayerType, SlotType, CardTarget } from '../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  GameError,
+  GameMessage,
+  EnergyCard,
+  PlayerType,
+  SlotType,
+  CardTarget,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
@@ -16,20 +27,22 @@ export class Cherrim extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Spring Bloom',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn, you may attach a [G] Energy card from your hand to 1 of your Pokémon that doesn\'t have a Rule Box(Pokémon V, Pokémon- GX, etc.have Rule Boxes).'
-  }];
+  public powers = [
+    {
+      name: 'Spring Bloom',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "As often as you like during your turn, you may attach a [G] Energy card from your hand to 1 of your Pokémon that doesn't have a Rule Box (Pokémon V, Pokémon-GX, etc. have Rule Boxes).",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Seed Bomb',
       cost: [G, C, C],
       damage: 70,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'BST';
@@ -39,14 +52,15 @@ export class Cherrim extends PokemonCard {
   public fullName: string = 'Cherrim BST';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasEnergyInHand = player.hand.cards.some(c => {
-        return c instanceof EnergyCard
-          && c.energyType === EnergyType.BASIC
-          && c.provides.includes(CardType.GRASS);
+      const hasEnergyInHand = player.hand.cards.some((c) => {
+        return (
+          c instanceof EnergyCard &&
+          c.energyType === EnergyType.BASIC &&
+          c.provides.includes(CardType.GRASS)
+        );
       });
       if (!hasEnergyInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -77,23 +91,27 @@ export class Cherrim extends PokemonCard {
         }
       });
 
-      return store.prompt(state, new AttachEnergyPrompt(
-        player.id,
-        GameMessage.ATTACH_ENERGY_CARDS,
-        player.hand,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH, SlotType.ACTIVE],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
-        { allowCancel: false, blockedTo: blocked2 }
-      ), transfers => {
-        transfers = transfers || [];
-        for (const transfer of transfers) {
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          const energyCard = transfer.card as EnergyCard;
-          const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
-          store.reduceEffect(state, attachEnergyEffect);
-        }
-      });
+      return store.prompt(
+        state,
+        new AttachEnergyPrompt(
+          player.id,
+          GameMessage.ATTACH_ENERGY_CARDS,
+          player.hand,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Grass Energy' },
+          { allowCancel: false, blockedTo: blocked2 },
+        ),
+        (transfers) => {
+          transfers = transfers || [];
+          for (const transfer of transfers) {
+            const target = StateUtils.getTarget(state, player, transfer.to);
+            const energyCard = transfer.card as EnergyCard;
+            const attachEnergyEffect = new AttachEnergyEffect(player, energyCard, target);
+            store.reduceEffect(state, attachEnergyEffect);
+          }
+        },
+      );
     }
     return state;
   }
