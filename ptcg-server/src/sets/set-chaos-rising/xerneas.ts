@@ -12,16 +12,18 @@ export class Xerneas extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Geostorm',
-    cost: [P, P, P],
-    damage: 0,
-    damageCalculation: 'x',
-    text: 'This attack does 30 damage times the number of [P] Energy attached to all of your Pokemon.'
-  }];
+  public attacks = [
+    {
+      name: 'Geo Storm',
+      cost: [P, P, P],
+      damage: 30,
+      damageCalculation: 'x',
+      text: 'This attack does 30 damage for each [P] Energy attached to all of your Pokémon.',
+    },
+  ];
 
   public regulationMark: string = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
   public name: string = 'Xerneas';
@@ -35,8 +37,8 @@ export class Xerneas extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkEnergy);
-        checkEnergy.energyMap.forEach(em => {
-          em.provides.forEach(t => {
+        checkEnergy.energyMap.forEach((em) => {
+          em.provides.forEach((t) => {
             if (t === CardType.PSYCHIC || t === CardType.ANY) {
               psychicEnergyCount++;
             }

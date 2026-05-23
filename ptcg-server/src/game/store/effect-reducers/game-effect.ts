@@ -532,9 +532,14 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
   if (effect instanceof MoveCardsEffect) {
     const source = effect.source;
     const destination = effect.destination;
+    const isPartialMove = effect.cards !== undefined || effect.count !== undefined;
 
-    // If source is a PokemonCardList, always clean up when moving cards
-    if (source instanceof PokemonCardList) {
+    // Only reset in-play Pokemon state when moving the entire card list, not specific cards.
+    if (source instanceof PokemonCardList && !effect.skipCleanup && !isPartialMove) {
+      const tools = [...source.tools];
+      for (const tool of tools) {
+        source.moveCardTo(tool, destination);
+      }
       source.clearEffects();
       source.damage = 0;
       source.specialConditions = [];

@@ -4,7 +4,13 @@ import { Effect } from '../../game/store/effects/effect';
 import { RetreatEffect } from '../../game/store/effects/game-effects';
 import { PokemonCard, PlayerType, StateUtils, StoreLike, State } from '../../game';
 import { GameError, GameMessage } from '../../game';
-import { ADD_MARKER, COIN_FLIP_PROMPT, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK, REMOVE_MARKER, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  ADD_MARKER,
+  COIN_FLIP_PROMPT,
+  DISCARD_TOP_X_CARDS_FROM_YOUR_DECK,
+  REMOVE_MARKER,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 
 const GOODRA_SLIMY_SLIP_ALLOWED = 'GOODRA_SLIMY_SLIP_ALLOWED';
 
@@ -16,21 +22,25 @@ export class Goodra extends PokemonCard {
   public weakness: { type: CardType }[] = [];
   public resistance: { type: CardType; value: number }[] = [];
   public retreat = [C, C, C];
-  public powers = [{
-    name: 'Slimy Slip',
-    powerType: PowerType.ABILITY,
-    text: 'When your opponent\'s Active Pokemon retreats, they flip a coin. If tails, that retreat fails and no Energy is discarded.'
-  }];
-  public attacks = [{
-    name: 'Dragon Pulse',
-    cost: [N, N, C],
-    damage: 160,
-    text: 'Discard the top card of your deck.'
-  }];
+  public powers = [
+    {
+      name: 'Slimy Sliding',
+      powerType: PowerType.ABILITY,
+      text: "When your opponent's Active Pokémon retreats, your opponent flips a coin. If tails, Energy for its Retreat Cost is not discarded, and they don't switch Pokémon. The effect of Slimy Sliding doesn't stack.",
+    },
+  ];
+  public attacks = [
+    {
+      name: 'Dragon Pulse',
+      cost: [W, P],
+      damage: 160,
+      text: 'Discard the top card of your deck.',
+    },
+  ];
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '66';
+  public setNumber: string = '68';
   public name: string = 'Goodra';
   public fullName: string = 'Goodra M4';
 
@@ -48,7 +58,7 @@ export class Goodra extends PokemonCard {
       });
       if (isGoodraInPlay) {
         effect.preventDefault = true;
-        return COIN_FLIP_PROMPT(store, state, player, result => {
+        return COIN_FLIP_PROMPT(store, state, player, (result) => {
           if (!result) {
             throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
           }

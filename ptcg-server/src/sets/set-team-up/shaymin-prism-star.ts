@@ -13,13 +13,15 @@ export class ShayminPrismStar extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [];
 
-  public attacks = [{
-    name: 'Flower Storm',
-    cost: [G, G],
-    damage: 30,
-    damageCalculation: 'x',
-    text: 'This attack does 30 damage times the amount of basic Energy attached to all of your Pokémon.'
-  }];
+  public attacks = [
+    {
+      name: 'Flower Storm',
+      cost: [G, G],
+      damage: 30,
+      damageCalculation: 'x',
+      text: 'This attack does 30 damage times the amount of basic Energy attached to all of your Pokémon.',
+    },
+  ];
 
   public set: string = 'TEU';
   public cardImage: string = 'assets/cardback.png';
@@ -28,17 +30,16 @@ export class ShayminPrismStar extends PokemonCard {
   public fullName: string = 'Shaymin Prism Star TEU';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
       let energyCount = 0;
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, pokemon => {
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (pokemon) => {
         const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player, pokemon);
         store.reduceEffect(state, checkProvidedEnergyEffect);
 
-        checkProvidedEnergyEffect.energyMap.forEach(em => {
+        checkProvidedEnergyEffect.energyMap.forEach((em) => {
           if (em.card.energyType === EnergyType.BASIC && em.provides.length > 0) {
             energyCount += em.provides.length;
           }

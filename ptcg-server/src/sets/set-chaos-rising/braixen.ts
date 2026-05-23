@@ -12,15 +12,17 @@ export class Braixen extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Fire Blast',
-    cost: [R, R],
-    damage: 80,
-    text: 'Discard an Energy attached to this Pokemon.'
-  }];
+  public attacks = [
+    {
+      name: 'Flamethrower',
+      cost: [R, R],
+      damage: 80,
+      text: 'Discard an Energy attached to this Pokémon.',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Braixen';

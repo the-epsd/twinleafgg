@@ -19,7 +19,7 @@ import { Bruxish } from './bruxish';
 import { Carbink } from './carbink';
 import { Carbink2 } from './carbink-2';
 import { Cascoon } from './cascoon';
-import { Celebi } from './celebi';
+import { CelebiPrismStar } from './celebi-prism-star';
 import { Chandelure } from './chandelure';
 import { Chansey } from './chansey';
 import { Chikorita } from './chikorita';
@@ -36,7 +36,6 @@ import { Dedenne } from './dedenne';
 import { Dedenne2 } from './dedenne-2';
 import { Delibird } from './delibird';
 import { Dialga } from './dialga';
-import { Ditto } from './ditto';
 import { DittoPrismStar } from './ditto-prism-star';
 import { Donphan } from './donphan';
 import { Durant } from './durant';
@@ -164,7 +163,7 @@ import { Wobbuffet } from './wobbuffet';
 import { Wurmple } from './wurmple';
 import { Wurmple2 } from './wurmple-2';
 import { Xatu } from './xatu';
-import { Xerneas } from './xerneas';
+import { XerneasPrismStar } from './xerneas-prism-star';
 import { Yamask } from './yamask';
 import { Zebstrika } from './zebstrika';
 import { ZeraoraGX } from './zeraora-gx';
@@ -179,12 +178,11 @@ import { FairyCharmDragon } from './fairy-charm-dragon';
 import { FairyCharmFighting } from './fairy-charm-fighting';
 import { FairyCharmGrass } from './fairy-charm-grass';
 import { FairyCharmPsychic } from './fairy-charm-psychic';
-import { HeatFactory } from './heat-factory';
 import { HeatFactoryPrismStar } from './heat-factory-prism-star';
 import { Kahili } from './kahili';
-import { LifeForest } from './life-forest';
+import { LifeForestPrismStar } from './life-forest-prism-star';
 import { LostBlender } from './lost-blender';
-import { Lusamine } from './lusamine';
+import { LusaminePrismStar } from './lusamine-prism-star';
 import { Mina } from './mina';
 import { MixedHerbs } from './mixed-herbs';
 import { MoomooMilk } from './moomoo-milk';
@@ -193,7 +191,6 @@ import { NetBall } from './net-ball';
 import { ProfessorElmLecture } from './professor-elms-lecture';
 import { Sightseer } from './sightseer';
 import { SpellTag } from './spell-tag';
-import { ThunderMountain } from './thunder-mountain';
 import { ThunderMountainPrismStar } from './thunder-mountain-prism-star';
 import { WaitAndSeeHammer } from './wait-and-see-hammer';
 import { Whitney } from './whitney';
@@ -250,7 +247,7 @@ import {
 } from './other-prints';
 
 export const setLostThunder: Card[] = [
-  // Pokemon
+  // MARK: Pokemon
   new AlolanDiglett(),
   new AlolanDugtrio(),
   new AlolanMeowth(),
@@ -271,7 +268,7 @@ export const setLostThunder: Card[] = [
   new Carbink(),
   new Carbink2(),
   new Cascoon(),
-  new Celebi(),
+  new CelebiPrismStar(),
   new Chandelure(),
   new Chansey(),
   new Chikorita(),
@@ -288,7 +285,6 @@ export const setLostThunder: Card[] = [
   new Dedenne2(),
   new Delibird(),
   new Dialga(),
-  new Ditto(),
   new DittoPrismStar(),
   new Donphan(),
   new Durant(),
@@ -416,12 +412,12 @@ export const setLostThunder: Card[] = [
   new Wurmple(),
   new Wurmple2(),
   new Xatu(),
-  new Xerneas(),
+  new XerneasPrismStar(),
   new Yamask(),
   new Zebstrika(),
   new ZeraoraGX(),
 
-  // Trainers
+  // MARK: Trainers
   new AdventureBag(),
   new AetherFoundationEmployee(),
   new ChoiceHelmet(),
@@ -433,12 +429,11 @@ export const setLostThunder: Card[] = [
   new FairyCharmFighting(),
   new FairyCharmGrass(),
   new FairyCharmPsychic(),
-  new HeatFactory(),
   new HeatFactoryPrismStar(),
   new Kahili(),
-  new LifeForest(),
+  new LifeForestPrismStar(),
   new LostBlender(),
-  new Lusamine(),
+  new LusaminePrismStar(),
   new Mina(),
   new MixedHerbs(),
   new MoomooMilk(),
@@ -447,15 +442,14 @@ export const setLostThunder: Card[] = [
   new ProfessorElmLecture(),
   new Sightseer(),
   new SpellTag(),
-  new ThunderMountain(),
   new ThunderMountainPrismStar(),
   new WaitAndSeeHammer(),
   new Whitney(),
 
-  // Energy
+  // MARK: Special Energy
   new MemoryEnergy(),
 
-  // Other Prints (Reprints & Alt Arts)
+  // MARK: Secret rares
   new ZeraoraGXLOT(),
   new ShuckleGX2LOT(),
   new MagcargoGX2LOT(),

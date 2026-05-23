@@ -11,15 +11,17 @@ export class Claydol extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Devolution Ray',
-    cost: [F],
-    damage: 50,
-    text: 'If your opponent\'s Active Pokemon is an Evolved Pokemon, devolve it by putting the highest Stage Evolution card on it into your opponent\'s hand.'
-  }];
+  public attacks = [
+    {
+      name: 'Devolution Ray',
+      cost: [F],
+      damage: 50,
+      text: "If your opponent's Active Pokémon is an evolved Pokémon, devolve it by putting the highest Stage Evolution card on it into your opponent's hand.",
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '47';
   public name: string = 'Claydol';

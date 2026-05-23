@@ -8,21 +8,23 @@ export class Chespin extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Beat',
-    cost: [G],
-    damage: 10,
-    text: ''
-  },
-  {
-    name: 'Spike Sting',
-    cost: [G, G],
-    damage: 30,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Beat',
+      cost: [G],
+      damage: 10,
+      text: '',
+    },
+    {
+      name: 'Spike Sting',
+      cost: [G, G],
+      damage: 30,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
   public name: string = 'Chespin';

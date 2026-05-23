@@ -10,16 +10,18 @@ export class Carnivine extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Chomp Down',
-    cost: [C, C, C],
-    damage: 80,
-    damageCalculation: '+',
-    text: 'If your opponent\'s Active Pokemon has no Retreat Cost, this attack does 80 more damage.'
-  }];
+  public attacks = [
+    {
+      name: 'Chomp Whole',
+      cost: [C, C, C],
+      damage: 80,
+      damageCalculation: '+',
+      text: "If your opponent's Active Pokémon has no Retreat Cost, this attack does 80 more damage.",
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
   public name: string = 'Carnivine';

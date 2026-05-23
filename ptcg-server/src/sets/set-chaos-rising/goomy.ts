@@ -11,17 +11,19 @@ export class Goomy extends PokemonCard {
   public resistance: { type: CardType; value: number }[] = [];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Absorb',
-    cost: [W, P],
-    damage: 30,
-    text: 'Heal 30 damage from this Pokemon.'
-  }];
+  public attacks = [
+    {
+      name: 'Absorb',
+      cost: [W, P],
+      damage: 30,
+      text: 'Heal 30 damage from this Pokémon.',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '64';
+  public setNumber: string = '66';
   public name: string = 'Goomy';
   public fullName: string = 'Goomy M4';
 

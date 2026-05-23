@@ -7,23 +7,16 @@ import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
 export class UnitEnergyLPM extends EnergyCard {
-
   public provides: CardType[] = [CardType.COLORLESS];
-
   public energyType = EnergyType.SPECIAL;
-
   public set: string = 'UPR';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '138';
-
   public name = 'Unit Energy LPM';
-
   public fullName = 'Unit Energy LPM UPR';
 
-  public text = 'This card provides [C] Energy.' +
-    '\n\n' +
+  public text =
+    'This card provides [C] Energy.\n\n' +
     'While this card is attached to a Pokémon, it provides [L], [P], and [M] Energy but provides only 1 Energy at a time.';
 
   public blendedEnergies = [CardType.LIGHTNING, CardType.PSYCHIC, CardType.METAL];
@@ -38,15 +31,15 @@ export class UnitEnergyLPM extends EnergyCard {
       }
 
       // Find the first energy type that's not already provided by other energies
-      const neededType = this.blendedEnergies.find(type =>
-        !effect.energyMap.some(energy => energy.provides.includes(type))
+      const neededType = this.blendedEnergies.find(
+        (type) => !effect.energyMap.some((energy) => energy.provides.includes(type)),
       );
 
       if (neededType) {
         // Only provide the specific energy type that's needed
         effect.energyMap.push({
           card: this,
-          provides: [neededType]
+          provides: [neededType],
         });
       }
     }

@@ -16,10 +16,11 @@ export class RoxiesPerformance extends TrainerCard {
   public regulationMark = 'J';
   public set: string = 'M4';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '77';
-  public name: string = 'Roxie\'s Performance';
-  public fullName: string = 'Roxie\'s Performance M4';
-  public text: string = 'During your opponent\'s next turn, their Poisoned Pokemon can\'t retreat.';
+  public setNumber: string = '81';
+  public name: string = "Roxie's Performance";
+  public fullName: string = "Roxie's Performance M4";
+  public text: string =
+    "During your opponent's next turn, their Poisoned Pokémon can't retreat. (This includes newly Poisoned Pokémon.)";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

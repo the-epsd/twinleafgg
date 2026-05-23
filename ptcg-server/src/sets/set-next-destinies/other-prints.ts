@@ -19,7 +19,6 @@ export class DoubleColorlessEnergyNXD extends DoubleColorlessEnergy {
   public fullName = 'Double Colorless Energy NXD';
   public set = 'NXD';
   public setNumber = '92';
-  public text = 'Double Colorless Energy provides [C][C] Energy.';
 }
 
 export class LevelBallNXD extends LevelBall {

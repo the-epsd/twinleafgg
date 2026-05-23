@@ -46,7 +46,6 @@ export class DoubleColorlessEnergyGRISR extends DoubleColorlessEnergy {
   public setNumber = '166';
   public fullName: string = 'Double Colorless Energy GRI SR';
   public set = 'GRI';
-  public text = 'Double Colorless Energy provides [C][C] Energy.';
 }
 export class EnergyLotoGRI extends EnergyLoto {
   public fullName = 'Energy Loto GRI';

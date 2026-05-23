@@ -8,28 +8,30 @@ import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/stor
 export class MegaDragalgeex extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Skrelp';
-  public tags = [CardTag.POKEMON_ex, CardTag.MEGA];
+  public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_SV_MEGA];
   public hp: number = 330;
   public cardType: CardType = N;
   public weakness: { type: CardType }[] = [];
   public resistance: { type: CardType; value: number }[] = [];
   public retreat = [C, C];
-  public attacks = [{
-    name: 'Corrosive Liquid',
-    cost: [C, C],
-    damage: 0,
-    text: 'Discard all Pokemon Tool cards and Special Energy from all of your opponent\'s Pokemon.'
-  },
-  {
-    name: 'Pernicious Poison',
-    cost: [W, D],
-    damage: 0,
-    text: 'Your opponent\'s Active Pokemon is now Poisoned. During Pokemon Checkup, put 16 damage counters on that Pokemon instead of 1.'
-  }];
+  public attacks = [
+    {
+      name: 'Corrosive Liquid',
+      cost: [C, C],
+      damage: 0,
+      text: "Discard all Pokémon Tool cards and Special Energy from all of your opponent's Pokémon.",
+    },
+    {
+      name: 'Pernicious Poison',
+      cost: [W, D],
+      damage: 0,
+      text: "Your opponent's Active Pokémon is now Poisoned. During Pokémon Checkup, put 16 damage counters on that Pokémon instead of 1.",
+    },
+  ];
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '63';
+  public setNumber: string = '65';
   public name: string = 'Mega Dragalge ex';
   public fullName: string = 'Mega Dragalge ex M4';
 
@@ -37,9 +39,11 @@ export class MegaDragalgeex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        [...cardList.tools].forEach(t => cardList.moveCardTo(t, opponent.discard));
-        const specialEnergy = cardList.cards.filter(c => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL);
-        specialEnergy.forEach(e => cardList.moveCardTo(e, opponent.discard));
+        [...cardList.tools].forEach((t) => cardList.moveCardTo(t, opponent.discard));
+        const specialEnergy = cardList.cards.filter(
+          (c) => c instanceof EnergyCard && c.energyType === EnergyType.SPECIAL,
+        );
+        specialEnergy.forEach((e) => cardList.moveCardTo(e, opponent.discard));
       });
     }
     if (WAS_ATTACK_USED(effect, 1, this)) {

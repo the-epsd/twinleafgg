@@ -6,7 +6,7 @@ import { Baltoy } from './baltoy';
 import { Beedrillex } from './beedrill-ex';
 import { Beldum } from './beldum';
 import { Bergmite } from './bergmite';
-import { BigCatchNet } from './big-catch-net';
+import { GreatHaulNet } from './great-haul-net';
 import { Braixen } from './braixen';
 import { BubbleWaterEnergy } from './bubble-water-energy';
 import { Carnivine } from './carnivine';
@@ -27,7 +27,7 @@ import { Espurr } from './espurr';
 import { Fennekin } from './fennekin';
 import { Ferroseed } from './ferroseed';
 import { Ferrothorn } from './ferrothorn';
-import { BookOfTransformation } from './book-of-transformation';
+import { TransformationTome } from './transformation-tome';
 import { Cinccinoex } from './cinccino-ex';
 import { Emma } from './emma';
 import { Flaaffy } from './flaaffy';
@@ -40,7 +40,7 @@ import { Golisopod } from './golisopod';
 import { Goomy } from './goomy';
 import { Gourgeistex } from './gourgeist-ex';
 import { HoOh } from './ho-oh';
-import { HyperrogueAngeFloette } from './hyperrogue-ange-floette';
+import { AngeFloette } from './hyperrogue-ange-floette';
 import { Kakuna } from './kakuna';
 import { Keldeo } from './keldeo';
 import { Litleo } from './litleo';
@@ -82,89 +82,172 @@ import { Weedle } from './weedle';
 import { Wimpod } from './wimpod';
 import { Xerneas } from './xerneas';
 import { Zubat } from './zubat';
+import { MegaGalladeex } from './mega-gallade-ex';
+import {
+  AmpharosIR,
+  AzsTranquilityFA,
+  AzsTranquilitySIR,
+  BeedrillexFA,
+  ChespinIR,
+  CinccinoexSIR,
+  ClaydolIR,
+  CrobatIR,
+  EmmaFA,
+  EnergyRetrievalFACRI,
+  FroakieIR,
+  FrogadierIR,
+  GourgeistexFA,
+  JumboIceCreamFACRI,
+  MegaDragalgeexSIR,
+  MegaFloetteexFA,
+  MegaFloetteexSIR,
+  MegaGreninjaexFA,
+  MegaGreninjaexHR,
+  MegaGreninjaexSIR,
+  MegaPyroarexFA,
+  MetangIR,
+  PhilippeFA,
+  PrismTowerFA,
+  RoxiesPerformanceFA,
+  RoxiesPerformanceSIR,
+  SliggooIR,
+  SpecialRedCardFA,
+  SurfingBeachFACRI,
+  TaurosIR,
+  ToolScrapperFACRI,
+  WatchogIR,
+  XerneasIR,
+} from './other-prints';
 
 export const setChaosRising: Card[] = [
-  new Weedle(),      // 1
-  new Kakuna(),      // 2
-  new Beedrillex(),  // 3
-  new Carnivine(),   // 4
-  new Chespin(),     // 5
-  new Quilladin(),   // 6
-  new Chesnaught(),  // 7
-  new Vulpix(),      // 8
-  new Ninetales(),   // 9
-  new HoOh(),        // 10
-  new Fennekin(),    // 11
-  new Braixen(),     // 12
-  new Delphox(),     // 13
-  new Litleo(),      // 14
-  new MegaPyroarex(),// 15
-  new Remoraid(),    // 16
-  new Octillery(),   // 17
-  new Delibird(),    // 18
-  new Keldeo(),      // 19
-  new Froakie(),     // 20
-  new Frogadier(),   // 21
-  new MegaGreninjaex(),// 22
-  new Bergmite(),    // 23
-  new Avalugg(),     // 24
-  new Wimpod(),      // 25
-  new Golisopod(),   // 26
-  new Mareep(),      // 27
-  new Flaaffy(),     // 28
-  new Ampharos(),    // 29
-  new Emolga(),      // 30
-  new Deoxys(),      // 31
-  new Deoxys2(),     // 32
-  new Deoxys3(),     // 33
-  new Deoxys4(),     // 34
-  new MegaFloetteex(),// 35
-  new Espurr(),      // 36
-  new Meowstic(),    // 37
-  new Phantump(),    // 38
-  new Trevenant(),   // 39
-  new Pumpkaboo(),   // 40
+  // MARK: Main set
+
+  new Weedle(), // 1
+  new Kakuna(), // 2
+  new Beedrillex(), // 3
+  new Carnivine(), // 4
+  new Chespin(), // 5
+  new Quilladin(), // 6
+  new Chesnaught(), // 7
+  new Vulpix(), // 8
+  new Ninetales(), // 9
+  new HoOh(), // 10
+  new Fennekin(), // 11
+  new Braixen(), // 12
+  new Delphox(), // 13
+  new Litleo(), // 14
+  new MegaPyroarex(), // 15
+  new Remoraid(), // 16
+  new Octillery(), // 17
+  new Delibird(), // 18
+  new Keldeo(), // 19
+  new Froakie(), // 20
+  new Frogadier(), // 21
+  new MegaGreninjaex(), // 22
+  new Bergmite(), // 23
+  new Avalugg(), // 24
+  new Wimpod(), // 25
+  new Golisopod(), // 26
+  new Mareep(), // 27
+  new Flaaffy(), // 28
+  new Ampharos(), // 29
+  new Emolga(), // 30
+  new Deoxys(), // 31
+  new Deoxys2(), // 32
+  new Deoxys3(), // 33
+  new Deoxys4(), // 34
+  new MegaFloetteex(), // 35
+  new Espurr(), // 36
+  new Meowstic(), // 37
+  new Phantump(), // 38
+  new Trevenant(), // 39
+  new Pumpkaboo(), // 40
   new Gourgeistex(), // 41
-  new Xerneas(),     // 42
-  new Sudowoodo(),   // 43
-  new Phanpy(),      // 44
-  new Donphan(),     // 45
-  new Baltoy(),      // 46
-  new Claydol(),     // 47
-  new Zubat(),       // 48
-  new Golbat(),      // 49
-  new Crobat(),      // 50
-  new Qwilfish(),    // 51
-  new Stunky(),      // 52
-  new Skuntank(),    // 53
-  new Trubbish(),    // 54
-  new Garbodor(),    // 55
-  new Skrelp(),      // 56
-  new Beldum(),      // 57
-  new Metang(),      // 58
-  new Metagross(),   // 59
-  new Ferroseed(),   // 60
-  new Ferrothorn(),  // 61
-  new Cobalionex(),  // 62
-  new MegaDragalgeex(),// 63
-  new Goomy(),       // 64
-  new Sliggoo(),     // 65
-  new Goodra(),      // 66
-  new Tauros(),      // 67
-  new Patrat(),      // 68
-  new Watchog(),     // 69
-  new Minccino(),    // 70
-  new Cinccinoex(),  // 71
-  new SpecialRedCard(),// 72
-  new BigCatchNet(), // 73
-  new BookOfTransformation(),// 74
-  new AzsTranquility(),// 75
-  new Philippe(),    // 76
-  new RoxiesPerformance(),// 77
-  new Emma(),        // 78
-  new HyperrogueAngeFloette(),// 79
-  new PrismTower(),  // 80
-  new NitroFireEnergy(),// 81
-  new MagnetMetalEnergy(),// 83
-  new BubbleWaterEnergy(),// 99
+  new Xerneas(), // 42
+  new Sudowoodo(), // 43
+  new Phanpy(), // 44
+  new Donphan(), // 45
+  new Baltoy(), // 46
+  new Claydol(), // 47
+  new MegaGalladeex(),
+  new Zubat(), // 48
+  new Golbat(), // 49
+  new Crobat(), // 50
+  new Qwilfish(), // 51
+  new Stunky(), // 52
+  new Skuntank(), // 53
+  new Trubbish(), // 54
+  new Garbodor(), // 55
+  new Skrelp(), // 56
+  new Beldum(), // 57
+  new Metang(), // 58
+  new Metagross(), // 59
+  new Ferroseed(), // 60
+  new Ferrothorn(), // 61
+  new Cobalionex(), // 62
+  new MegaDragalgeex(), // 63
+  new Goomy(), // 64
+  new Sliggoo(), // 65
+  new Goodra(), // 66
+  new Tauros(), // 67
+  new Patrat(), // 68
+  new Watchog(), // 69
+  new Minccino(), // 70
+  new Cinccinoex(), // 71
+  new SpecialRedCard(), // 72
+  new GreatHaulNet(), // 73
+  new TransformationTome(), // 74
+  new AzsTranquility(), // 75
+  new Philippe(), // 76
+  new RoxiesPerformance(), // 77
+  new Emma(), // 78
+  new AngeFloette(), // 79
+  new PrismTower(), // 80
+  new NitroFireEnergy(), // 81
+  new MagnetMetalEnergy(), // 83
+  new BubbleWaterEnergy(), // 99
+
+  // MARK: Secret rares
+
+  new ChespinIR(),
+  new FroakieIR(),
+  new FrogadierIR(),
+  new AmpharosIR(),
+  new XerneasIR(),
+  new ClaydolIR(),
+  new CrobatIR(),
+  new MetangIR(),
+  new SliggooIR(),
+  new TaurosIR(),
+  new WatchogIR(),
+
+  new BeedrillexFA(),
+  new MegaPyroarexFA(),
+  new MegaGreninjaexFA(),
+  new MegaFloetteexFA(),
+  new GourgeistexFA(),
+  new Cobalionex(),
+  new MegaDragalgeex(),
+  new Cinccinoex(),
+
+  new AzsTranquilityFA(),
+  new EmmaFA(),
+  new EnergyRetrievalFACRI(),
+  new JumboIceCreamFACRI(),
+  new PhilippeFA(),
+  new PrismTowerFA(),
+  new RoxiesPerformanceFA(),
+  new SpecialRedCardFA(),
+  new SurfingBeachFACRI(),
+  new ToolScrapperFACRI(),
+
+  new MegaGreninjaexSIR(),
+  new MegaFloetteexSIR(),
+  new MegaDragalgeexSIR(),
+  new CinccinoexSIR(),
+
+  new AzsTranquilitySIR(),
+  new RoxiesPerformanceSIR(),
+
+  new MegaGreninjaexHR(),
 ];

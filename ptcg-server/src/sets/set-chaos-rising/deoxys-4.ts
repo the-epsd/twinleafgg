@@ -14,15 +14,15 @@ export class Deoxys4 extends PokemonCard {
 
   public attacks = [
     {
-      name: 'Psy Speed',
+      name: 'Psyspeed',
       cost: [P],
       damage: 30,
-      text: 'You may draw cards until you have 5 cards in your hand.'
-    }
+      text: 'You may draw cards until you have 5 cards in your hand.',
+    },
   ];
 
   public regulationMark: string = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '34';
   public name: string = 'Deoxys';
@@ -34,14 +34,15 @@ export class Deoxys4 extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      return store.prompt(state, new ConfirmPrompt(
-        player.id,
-        GameMessage.WANT_TO_DRAW_CARDS
-      ), wantToDraw => {
-        if (wantToDraw) {
-          DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 5);
-        }
-      });
+      return store.prompt(
+        state,
+        new ConfirmPrompt(player.id, GameMessage.WANT_TO_DRAW_CARDS),
+        (wantToDraw) => {
+          if (wantToDraw) {
+            DRAW_CARDS_UNTIL_CARDS_IN_HAND(player, 5);
+          }
+        },
+      );
     }
 
     return state;

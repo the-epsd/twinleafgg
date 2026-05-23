@@ -13,16 +13,18 @@ export class Beedrillex extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Bee Rumble',
-    cost: [G],
-    damage: 110,
-    damageCalculation: 'x',
-    text: 'This attack does 110 damage for each Beedrill you have in play (including Beedrill ex).'
-  }];
+  public attacks = [
+    {
+      name: 'Rumbling Bees',
+      cost: [G],
+      damage: 110,
+      damageCalculation: 'x',
+      text: 'This attack does 110 damage for each of your Beedrill and Beedrill ex in play.',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Beedrill ex';

@@ -17,23 +17,27 @@ export class Delphox extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Flare Magic',
-    powerType: PowerType.ABILITY,
-    useWhenInPlay: true,
-    text: 'Once during your turn, you may discard a Basic [R] Energy from your hand in order to use this Ability. Draw cards until you have 7 cards in your hand.'
-  }];
+  public powers = [
+    {
+      name: 'Flaring Magic',
+      powerType: PowerType.ABILITY,
+      useWhenInPlay: true,
+      text: 'Once during your turn, you may discard a Basic [R] Energy card from your hand in order to use this Ability. Draw cards until you have 7 cards in your hand.',
+    },
+  ];
 
-  public attacks = [{
-    name: 'Energy Storm',
-    cost: [R, R],
-    damage: 30,
-    damageCalculation: 'x',
-    text: 'This attack does 30 damage times the number of Energy attached to all Pokemon in play.'
-  }];
+  public attacks = [
+    {
+      name: 'Energized Storm',
+      cost: [R, R],
+      damage: 30,
+      damageCalculation: 'x',
+      text: 'This attack does 30 damage for each Energy attached to all Pokémon.',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '13';
   public name: string = 'Delphox';
@@ -45,8 +49,9 @@ export class Delphox extends PokemonCard {
       if (player.active.getPokemonCard() !== this) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
-      const basicRInHand = player.hand.cards.find(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(R)
+      const basicRInHand = player.hand.cards.find(
+        (c) =>
+          c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(R),
       );
       if (!basicRInHand) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
@@ -64,12 +69,16 @@ export class Delphox extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkEnergy);
-        checkEnergy.energyMap.forEach(em => { totalEnergy += em.provides.length; });
+        checkEnergy.energyMap.forEach((em) => {
+          totalEnergy += em.provides.length;
+        });
       });
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         const checkEnergy = new CheckProvidedEnergyEffect(opponent, cardList);
         store.reduceEffect(state, checkEnergy);
-        checkEnergy.energyMap.forEach(em => { totalEnergy += em.provides.length; });
+        checkEnergy.energyMap.forEach((em) => {
+          totalEnergy += em.provides.length;
+        });
       });
       effect.damage = 30 * totalEnergy;
     }

@@ -4,12 +4,20 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { PlayerType, SlotType, ChooseCardsPrompt, GameMessage, StoreLike, State, PokemonCardList } from '../../game';
+import {
+  PlayerType,
+  SlotType,
+  ChooseCardsPrompt,
+  GameMessage,
+  StoreLike,
+  State,
+  PokemonCardList,
+} from '../../game';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
-export class Latias extends PokemonCard {
+export class LatiasPrismStar extends PokemonCard {
   public tags = [CardTag.PRISM_STAR];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
@@ -22,14 +30,14 @@ export class Latias extends PokemonCard {
       name: 'Dreamy Mist',
       cost: [C],
       damage: 30,
-      text: 'Attach a basic Energy card from your discard pile to each of your Basic Benched Dragon Pokémon.'
-    }
+      text: 'Attach a basic Energy card from your discard pile to each of your Basic Benched [N] Pokémon.',
+    },
   ];
 
   public set: string = 'CES';
   public setNumber: string = '107';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Latias \u25c7';
+  public name: string = 'Latias Prism Star';
   public fullName: string = 'Latias \u25c7 CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -55,24 +63,28 @@ export class Latias extends PokemonCard {
       }
 
       // For each Dragon Pokemon on bench, attach a basic energy from discard
-      dragonBench.forEach(target => {
-        const hasBasicEnergy = player.discard.cards.some(c =>
-          c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC
+      dragonBench.forEach((target) => {
+        const hasBasicEnergy = player.discard.cards.some(
+          (c) => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC,
         );
 
         if (hasBasicEnergy) {
-          store.prompt(state, new ChooseCardsPrompt(
-            player,
-            GameMessage.CHOOSE_CARD_TO_ATTACH,
-            player.discard,
-            { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-            { min: 1, max: 1, allowCancel: false }
-          ), selected => {
-            const cards = selected || [];
-            cards.forEach(card => {
-              player.discard.moveCardTo(card, target);
-            });
-          });
+          store.prompt(
+            state,
+            new ChooseCardsPrompt(
+              player,
+              GameMessage.CHOOSE_CARD_TO_ATTACH,
+              player.discard,
+              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+              { min: 1, max: 1, allowCancel: false },
+            ),
+            (selected) => {
+              const cards = selected || [];
+              cards.forEach((card) => {
+                player.discard.moveCardTo(card, target);
+              });
+            },
+          );
         }
       });
     }

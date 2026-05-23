@@ -10,17 +10,17 @@ import { UseStadiumEffect } from '../../game/store/effects/game-effects';
 import { PlayStadiumEffect } from '../../game/store/effects/play-card-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 
-export class HyperrogueAngeFloette extends TrainerCard {
-
+export class AngeFloette extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
-  public set: string = 'M4';
-  public setNumber: string = '79';
-  public name: string = 'Hyperrogue Ange Floette';
+  public set: string = 'CRI';
+  public setNumber: string = '75';
+  public name: string = 'Ange Floette';
   public fullName: string = 'Hyperrogue Ange Floette M4';
   public cardImage: string = 'assets/cardback.png';
 
   public text: string =
-    'You may play this card only if Prism Tower is in play. Each Mega Floette ex in play gets +150 HP.';
+    'You can put this card into play only if you discard a Prism Tower in play, and you can put this card into play during the same turn you play Prism Tower.\n\n' +
+    "Each Mega Floette ex in play (both yours and your opponent's) gets +150 HP.";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PlayStadiumEffect && effect.trainerCard === this) {
@@ -32,9 +32,11 @@ export class HyperrogueAngeFloette extends TrainerCard {
 
     if (effect instanceof CheckHpEffect && StateUtils.getStadiumCard(state) === this) {
       const pokemonCard = effect.target.getPokemonCard();
-      if (pokemonCard
-          && pokemonCard.name === 'Mega Floette ex'
-          && pokemonCard.tags.includes(CardTag.POKEMON_SV_MEGA)) {
+      if (
+        pokemonCard &&
+        pokemonCard.name === 'Mega Floette ex' &&
+        pokemonCard.tags.includes(CardTag.POKEMON_SV_MEGA)
+      ) {
         effect.hp += 150;
       }
     }

@@ -5,23 +5,17 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { Effect } from '../../game/store/effects/effect';
 
 export class DoubleColorlessEnergy extends EnergyCard {
-
   public provides: CardType[] = [CardType.COLORLESS];
-
   public energyType = EnergyType.SPECIAL;
-
   public set: string = 'BS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '96';
-
   public name = 'Double Colorless Energy';
-
   public fullName = 'Double Colorless Energy BS';
 
-  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+  public text = 'Double Colorless Energy provides [C][C] Energy.';
 
+  public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       this.provides = [CardType.COLORLESS, CardType.COLORLESS];
     }

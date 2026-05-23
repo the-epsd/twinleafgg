@@ -7,43 +7,35 @@ import { DealDamageEffect, HealTargetEffect } from '../../game/store/effects/att
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class DianciePrismStar extends PokemonCard {
-
   public tags = [CardTag.PRISM_STAR];
-
   public stage: Stage = Stage.BASIC;
-
-  public cardType: CardType = CardType.FIGHTING;
-
+  public cardType: CardType = F;
   public hp: number = 120;
+  public weakness = [{ type: G }];
+  public retreat = [C, C];
 
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
-
-  public powers = [{
-    name: 'Princess\'s Cheers',
-    useWhenInPlay: false,
-    powerType: PowerType.ABILITY,
-    text: 'As long as this Pokémon is on your Bench, your [F] Pokémon\'s attacks do 20 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
-  }];
+  public powers = [
+    {
+      name: "Princess's Cheers",
+      useWhenInPlay: false,
+      powerType: PowerType.ABILITY,
+      text: "As long as this Pokémon is on your Bench, your [F] Pokémon's attacks do 20 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Diamond Rain',
-      cost: [CardType.FIGHTING, CardType.FIGHTING, CardType.FIGHTING],
+      cost: [F, F, F],
       damage: 90,
-      text: 'Heal 30 damage from each of your Benched Pokémon.'
-    }
+      text: 'Heal 30 damage from each of your Benched Pokémon.',
+    },
   ];
 
   public set: string = 'FLI';
-
   public setNumber = '74';
-
   public cardImage = 'assets/cardback.png';
-
   public name: string = 'Diancie Prism Star';
-
   public fullName: string = 'Diancie Prism Star FLI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -77,7 +69,11 @@ export class DianciePrismStar extends PokemonCard {
       const oppActive = opponent.active.getPokemonCard();
       const damageSource = effect.source.getPokemonCard();
 
-      if (damageSource && damageSource.cardType === CardType.FIGHTING && damageSource !== oppActive) {
+      if (
+        damageSource &&
+        damageSource.cardType === CardType.FIGHTING &&
+        damageSource !== oppActive
+      ) {
         effect.damage += 20;
         return state;
       }
@@ -97,5 +93,4 @@ export class DianciePrismStar extends PokemonCard {
 
     return state;
   }
-
 }

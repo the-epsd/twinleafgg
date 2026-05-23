@@ -5,31 +5,21 @@ import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 
-export class SuperBoostEnergy extends EnergyCard {
-
+export class SuperBoostEnergyPrismStar extends EnergyCard {
   public tags = [CardTag.PRISM_STAR];
-
   public provides: CardType[] = [CardType.COLORLESS];
-
   public energyType = EnergyType.SPECIAL;
-
   public set: string = 'UPR';
-
   public setNumber: string = '136';
-
   public cardImage = 'assets/cardback.png';
-
-  public name = 'Super Boost Energy';
-
+  public name = 'Super Boost Energy Prism Star';
   public fullName = 'Super Boost Energy UPR';
 
   public text =
-    'This card provides [C] Energy.' +
-    '\n\n' +
+    'This card provides [C] Energy.\n\n' +
     'While this card is attached to a Stage 2 Pokémon, it provides every type of Energy but provides only 1 Energy at a time. If you have 3 or more Stage 2 Pokémon in play, it provides every type of Energy but provides 4 Energy at a time.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       // Check for Stage 2
       if (effect.source.getPokemonCard()?.stage === Stage.STAGE_2) {
@@ -48,7 +38,10 @@ export class SuperBoostEnergy extends EnergyCard {
 
         // If 3 or more Stage 2s, provide 4 Rainbow; otherwise provide 1 Rainbow
         if (numStage2s >= 3) {
-          effect.energyMap.push({ card: this, provides: [CardType.ANY, CardType.ANY, CardType.ANY, CardType.ANY] });
+          effect.energyMap.push({
+            card: this,
+            provides: [CardType.ANY, CardType.ANY, CardType.ANY, CardType.ANY],
+          });
           return state;
         }
         effect.energyMap.push({ card: this, provides: [CardType.ANY] });

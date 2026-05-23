@@ -14,12 +14,20 @@ import { EnergyCard } from '../../game/store/card/energy-card';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { CardType } from '../../game/store/card/card-types';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
+function* playCard(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: TrainerEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const blocked: number[] = [];
   player.discard.cards.forEach((c, index) => {
     const isWaterPokemon = c instanceof PokemonCard && c.cardType === CardType.WATER;
-    const isBasicWaterEnergy = c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.WATER);
+    const isBasicWaterEnergy =
+      c instanceof EnergyCard &&
+      c.energyType === EnergyType.BASIC &&
+      c.provides.includes(CardType.WATER);
     if (!isWaterPokemon && !isBasicWaterEnergy) {
       blocked.push(index);
     }
@@ -30,38 +38,48 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   }
   effect.preventDefault = true;
   let cards: Card[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DECK,
-    player.discard,
-    {},
-    { min: 0, max: 6, allowCancel: false, blocked, maxPokemons: 3, maxBasicEnergies: 3 }
-  ), selected => {
-    cards = selected || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DECK,
+      player.discard,
+      {},
+      { min: 0, max: 6, allowCancel: false, blocked, maxPokemons: 3, maxBasicEnergies: 3 },
+    ),
+    (selected) => {
+      cards = selected || [];
+      next();
+    },
+  );
   if (cards.length > 0) {
-    cards.forEach(card => {
-      store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, { name: player.name, card: card.name });
+    cards.forEach((card) => {
+      store.log(state, GameLog.LOG_PLAYER_RETURNS_TO_DECK_FROM_DISCARD, {
+        name: player.name,
+        card: card.name,
+      });
     });
     player.discard.moveCardsTo(cards, player.deck);
   }
   const cardList = StateUtils.findCardList(state, effect.trainerCard);
   if (cardList) cardList.moveCardTo(effect.trainerCard, player.discard);
-  return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+  return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
     player.deck.applyOrder(order);
   });
 }
 
-export class BigCatchNet extends TrainerCard {
+export class GreatHaulNet extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public regulationMark = 'J';
-  public name: string = 'Big Catch Net';
+  public name: string = 'Great Haul Net';
   public fullName: string = 'Big Catch Net M4';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '73';
-  public text: string = 'Shuffle up to 3 [W] Pokemon and up to 3 Basic [W] Energy from your discard pile into your deck.';
+  public setNumber: string = '78';
+  public text: string = `Choose 1 or both:
+
+  • Shuffle up to 3 [W] Pokémon from your discard pile into your deck.
+  • Shuffle up to 3 Basic [W] Energy cards from your discard pile into your deck.`;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

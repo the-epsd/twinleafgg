@@ -9,7 +9,7 @@ import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
-export class Latios extends PokemonCard {
+export class LatiosPrismStar extends PokemonCard {
   public tags = [CardTag.PRISM_STAR];
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = N;
@@ -23,14 +23,14 @@ export class Latios extends PokemonCard {
       cost: [C, C],
       damage: 50,
       damageCalculation: 'x',
-      text: 'This attack does 50 damage for each of your Evolution Dragon Pokémon in play.'
-    }
+      text: 'This attack does 50 damage for each of your Evolution [N] Pokémon in play.',
+    },
   ];
 
   public set: string = 'CES';
   public setNumber: string = '108';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Latios \u25C7';
+  public name: string = 'Latios Prism Star';
   public fullName: string = 'Latios \u25C7 CES';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -8,31 +8,22 @@ import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effect
 import { StateUtils } from '../../game/store/state-utils';
 import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
-export class BeastEnergy extends EnergyCard {
-
+export class BeastEnergyPrismStar extends EnergyCard {
   public tags = [CardTag.PRISM_STAR];
-
   public provides: CardType[] = [CardType.COLORLESS];
-
   public energyType = EnergyType.SPECIAL;
-
   public set: string = 'FLI';
-
   public setNumber: string = '117';
-
   public cardImage = 'assets/cardback.png';
-
-  public name = 'Beast Energy';
-
+  public name = 'Beast Energy Prism Star';
   public fullName = 'Beast Energy FLI';
 
   public text =
     'This card provides [C] Energy.' +
     '\n\n' +
-    'While this card is attached to an Ultra Beast, it provides every type of Energy but provides only 1 Energy at a time. The attacks of the Ultra Beast this card is attached to do 30 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).';
+    "While this card is attached to an Ultra Beast, it provides every type of Energy but provides only 1 Energy at a time. The attacks of the Ultra Beast this card is attached to do 30 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Provide energy when attached to Ultra Beast Pokemon
     if (effect instanceof CheckProvidedEnergyEffect && effect.source.cards.includes(this)) {
       if (effect.source.getPokemonCard()?.tags.includes(CardTag.ULTRA_BEAST)) {
@@ -62,5 +53,4 @@ export class BeastEnergy extends EnergyCard {
 
     return state;
   }
-
 }

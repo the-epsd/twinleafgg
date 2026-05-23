@@ -4,20 +4,35 @@
 
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
+import {
+  StoreLike,
+  State,
+  GameError,
+  GameMessage,
+  StateUtils,
+  ChoosePokemonPrompt,
+  PlayerType,
+  SlotType,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { UseStadiumEffect, HealEffect, MoveCardsEffect } from '../../game/store/effects/game-effects';
+import {
+  UseStadiumEffect,
+  HealEffect,
+  MoveCardsEffect,
+} from '../../game/store/effects/game-effects';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
-export class LifeForest extends TrainerCard {
+export class LifeForestPrismStar extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
   public tags = [CardTag.PRISM_STAR];
   public set: string = 'LOT';
   public setNumber: string = '180';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Life Forest \u25c7';
+  public name: string = 'Life Forest Prism Star';
   public fullName: string = 'Life Forest \u25c7 LOT';
-  public text: string = 'Once during each player\'s turn, that player may heal 60 damage and remove all Special Conditions from 1 of their Grass Pokémon. Whenever any player plays an Item or Supporter card from their hand, prevent all effects of that card done to this Stadium card. \u25c7 (Prism Star) Rule: You can\'t have more than 1 \u25c7 card with the same name in your deck. If a \u25c7 card would go to the discard pile, put it in the Lost Zone instead.';
+  public text: string =
+    "Once during each player's turn, that player may heal 60 damage and remove all Special Conditions from 1 of their [G] Pokémon.\n\n" +
+    'Whenever any player plays an Item or Supporter card from their hand, prevent all effects of that card done to this Stadium card.';
 
   // Ref: set-breakpoint/all-night-party.ts (UseStadiumEffect pattern), set-lost-thunder/heat-factory-prism-star.ts (Prism Star stadium)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -54,33 +69,37 @@ export class LifeForest extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
 
-      store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { min: 1, max: 1, allowCancel: false, blocked }
-      ), selected => {
-        if (selected && selected.length > 0) {
-          const target = selected[0];
-          // Heal 60 damage
-          if (target.damage > 0) {
-            const healEffect = new HealEffect(player, target, 60);
-            store.reduceEffect(state, healEffect);
+      store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { min: 1, max: 1, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          if (selected && selected.length > 0) {
+            const target = selected[0];
+            // Heal 60 damage
+            if (target.damage > 0) {
+              const healEffect = new HealEffect(player, target, 60);
+              store.reduceEffect(state, healEffect);
+            }
+            // Remove all Special Conditions
+            target.specialConditions = [];
           }
-          // Remove all Special Conditions
-          target.specialConditions = [];
-        }
-      });
+        },
+      );
     }
 
     // Prevent effects of Item and Supporter cards on this Stadium
-    if (effect instanceof MoveCardsEffect
-      && StateUtils.getStadiumCard(state) === this) {
-
-      if (effect.sourceCard instanceof TrainerCard &&
-        (effect.sourceCard.trainerType === TrainerType.SUPPORTER || effect.sourceCard.trainerType === TrainerType.ITEM)) {
-
+    if (effect instanceof MoveCardsEffect && StateUtils.getStadiumCard(state) === this) {
+      if (
+        effect.sourceCard instanceof TrainerCard &&
+        (effect.sourceCard.trainerType === TrainerType.SUPPORTER ||
+          effect.sourceCard.trainerType === TrainerType.ITEM)
+      ) {
         const stadiumCard = StateUtils.getStadiumCard(state);
         if (stadiumCard !== undefined) {
           const cardList = StateUtils.findCardList(state, stadiumCard);

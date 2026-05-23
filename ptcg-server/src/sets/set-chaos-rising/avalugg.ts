@@ -12,22 +12,24 @@ export class Avalugg extends PokemonCard {
   public weakness = [{ type: M }];
   public retreat = [C, C, C, C];
 
-  public attacks = [{
-    name: 'Iceberg Destruction',
-    cost: [W],
-    damage: 60,
-    damageCalculation: 'x',
-    text: 'Discard the top 6 cards of your deck. This attack does 60 damage for each Basic [W] Energy discarded in this way.'
-  },
-  {
-    name: 'Frost Stomp',
-    cost: [W, W, C, C],
-    damage: 160,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Iceberg Breaker',
+      cost: [W],
+      damage: 60,
+      damageCalculation: 'x',
+      text: 'Discard the top 6 cards of your deck, and this attack does 60 damage for each Basic [W] Energy card you discarded in this way.',
+    },
+    {
+      name: 'Frost Stamp',
+      cost: [W, W, C, C],
+      damage: 160,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '24';
   public name: string = 'Avalugg';
@@ -38,13 +40,14 @@ export class Avalugg extends PokemonCard {
       const player = effect.player;
       const count = Math.min(6, player.deck.cards.length);
       const topCards = player.deck.cards.slice(0, count);
-      const basicWCount = topCards.filter(c =>
-        c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(W)
+      const basicWCount = topCards.filter(
+        (c) =>
+          c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(W),
       ).length;
       state = MOVE_CARDS(store, state, player.deck, player.discard, {
         cards: topCards,
         sourceCard: this,
-        sourceEffect: effect
+        sourceEffect: effect,
       });
       effect.damage = basicWCount * 60;
     }

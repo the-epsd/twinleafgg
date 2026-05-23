@@ -3,7 +3,14 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { CardTag, CardType, TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
-import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import {
+  ChoosePokemonPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StateUtils,
+} from '../../game';
 import { MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
@@ -20,7 +27,8 @@ export class CyrusPrismStar extends TrainerCard {
   public fullName: string = 'Cyrus Prism Star UPR';
 
   public text: string =
-    'You can play this card only if your Active Pokémon is a [W] or [M] Pokémon.\n\nYour opponent chooses 2 Benched Pokémon and shuffles the others, and all cards attached to them, into their deck.';
+    'You can play this card only if your Active Pokémon is a [W] or [M] Pokémon.\n\n' +
+    'Your opponent chooses 2 Benched Pokémon and shuffles the others, and all cards attached to them, into their deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {
@@ -40,7 +48,10 @@ export class CyrusPrismStar extends TrainerCard {
 
       const checkPokemonTypeEffect = new CheckPokemonTypeEffect(player.active);
       store.reduceEffect(state, checkPokemonTypeEffect);
-      if (checkPokemonTypeEffect.cardTypes.includes(CardType.WATER) || checkPokemonTypeEffect.cardTypes.includes(CardType.METAL)) {
+      if (
+        checkPokemonTypeEffect.cardTypes.includes(CardType.WATER) ||
+        checkPokemonTypeEffect.cardTypes.includes(CardType.METAL)
+      ) {
         hasActiveWaterMetal = true;
       }
 
@@ -48,27 +59,31 @@ export class CyrusPrismStar extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const opponentBenched = opponent.bench.filter(c => c.cards.length > 0);
+      const opponentBenched = opponent.bench.filter((c) => c.cards.length > 0);
       if (opponentBenched.length > 2) {
-        store.prompt(state, new ChoosePokemonPrompt(
-          opponent.id,
-          GameMessage.CHOOSE_CARDS,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH],
-          { allowCancel: false, min: Math.min(opponentBenched.length, 2), max: 2 }
-        ), targets => {
-          if (!targets || targets.length === 0) {
-            return;
-          }
-
-          opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-            if (card !== opponent.active && !targets.includes(card)) {
-              card.clearEffects();
-              MOVE_CARDS(store, state, card, opponent.deck);
-              SHUFFLE_DECK(store, state, opponent);
+        store.prompt(
+          state,
+          new ChoosePokemonPrompt(
+            opponent.id,
+            GameMessage.CHOOSE_CARDS,
+            PlayerType.BOTTOM_PLAYER,
+            [SlotType.BENCH],
+            { allowCancel: false, min: Math.min(opponentBenched.length, 2), max: 2 },
+          ),
+          (targets) => {
+            if (!targets || targets.length === 0) {
+              return;
             }
-          });
-        });
+
+            opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
+              if (card !== opponent.active && !targets.includes(card)) {
+                card.clearEffects();
+                MOVE_CARDS(store, state, card, opponent.deck);
+                SHUFFLE_DECK(store, state, opponent);
+              }
+            });
+          },
+        );
       }
 
       return state;
@@ -76,4 +91,3 @@ export class CyrusPrismStar extends TrainerCard {
     return state;
   }
 }
-

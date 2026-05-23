@@ -20,18 +20,19 @@ export class Deoxys extends PokemonCard {
       name: 'Genome Charge',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for up to 2 Basic [P] Energy cards and attach them to this Pokemon. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 Basic [P] Energy cards and attach them to this Pokémon. Then, shuffle your deck.',
     },
     {
       name: 'Psychic',
       cost: [P, P, C],
       damage: 80,
-      text: 'This attack does 20 more damage for each Energy attached to your opponent\'s Active Pokemon.'
-    }
+      damageCalculation: '+',
+      text: "This attack does 20 more damage for each Energy attached to your opponent's Active Pokémon.",
+    },
   ];
 
   public regulationMark: string = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '31';
   public name: string = 'Deoxys';
@@ -45,27 +46,33 @@ export class Deoxys extends PokemonCard {
 
       const blocked: number[] = [];
       player.deck.cards.forEach((c, index) => {
-        if (!(c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(P))) {
+        if (
+          !(c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(P))
+        ) {
           blocked.push(index);
         }
       });
 
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.deck,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { min: 0, max: 2, allowCancel: false, blocked }
-      ), (cards: Card[]) => {
-        cards = cards || [];
-        if (cards.length > 0) {
-          const cardList = StateUtils.findCardList(state, this);
-          if (cardList) {
-            player.deck.moveCardsTo(cards, cardList);
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.deck,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { min: 0, max: 2, allowCancel: false, blocked },
+        ),
+        (cards: Card[]) => {
+          cards = cards || [];
+          if (cards.length > 0) {
+            const cardList = StateUtils.findCardList(state, this);
+            if (cardList) {
+              player.deck.moveCardsTo(cards, cardList);
+            }
           }
-        }
-        SHUFFLE_DECK(store, state, player);
-      });
+          SHUFFLE_DECK(store, state, player);
+        },
+      );
     }
 
     // Attack 2: Psychic

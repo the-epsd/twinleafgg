@@ -10,15 +10,17 @@ import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
-export class Lusamine extends TrainerCard {
+export class LusaminePrismStar extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public tags = [CardTag.PRISM_STAR];
   public set: string = 'LOT';
   public setNumber: string = '182';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Lusamine \u25c7';
+  public name: string = 'Lusamine Prism Star';
   public fullName: string = 'Lusamine \u25c7 LOT';
-  public text: string = 'You can play this card only if your opponent has exactly 3 Prize cards remaining. Prevent all damage done to your Ultra Beasts by attacks during your opponent\'s next turn. You may play only 1 Supporter card during your turn (before your attack). \u25c7 (Prism Star) Rule: You can\'t have more than 1 \u25c7 card with the same name in your deck. If a \u25c7 card would go to the discard pile, put it in the Lost Zone instead.';
+  public text: string =
+    'You can play this card only if your opponent has exactly 3 Prize cards remaining.\n\n' +
+    "Prevent all damage done to your Ultra Beasts by attacks during your opponent's next turn.";
 
   public readonly PREVENT_DAMAGE_MARKER = 'LUSAMINE_PRISM_PREVENT_DAMAGE';
   public readonly CLEAR_PREVENT_DAMAGE_MARKER = 'LUSAMINE_PRISM_CLEAR_PREVENT_DAMAGE';
@@ -44,7 +46,10 @@ export class Lusamine extends TrainerCard {
     }
 
     // Prevent all damage to Ultra Beasts with marker (DealDamageEffect for active, PutDamageEffect for bench)
-    if (effect instanceof DealDamageEffect && effect.target.marker.hasMarker(this.PREVENT_DAMAGE_MARKER, this)) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.marker.hasMarker(this.PREVENT_DAMAGE_MARKER, this)
+    ) {
       const targetCard = effect.target.getPokemonCard();
       if (targetCard && targetCard.tags.includes(CardTag.ULTRA_BEAST)) {
         effect.damage = 0;
@@ -52,7 +57,10 @@ export class Lusamine extends TrainerCard {
       }
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(this.PREVENT_DAMAGE_MARKER, this)) {
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.marker.hasMarker(this.PREVENT_DAMAGE_MARKER, this)
+    ) {
       const targetCard = effect.target.getPokemonCard();
       if (targetCard && targetCard.tags.includes(CardTag.ULTRA_BEAST)) {
         effect.preventDefault = true;
@@ -61,11 +69,13 @@ export class Lusamine extends TrainerCard {
     }
 
     // Cleanup
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_PREVENT_DAMAGE_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.CLEAR_PREVENT_DAMAGE_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.CLEAR_PREVENT_DAMAGE_MARKER, this);
       const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         cardList.marker.removeMarker(this.PREVENT_DAMAGE_MARKER, this);
       });
     }

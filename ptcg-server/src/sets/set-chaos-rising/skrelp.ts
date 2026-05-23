@@ -8,17 +8,19 @@ export class Skrelp extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Hook',
-    cost: [C],
-    damage: 10,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Hook',
+      cost: [C],
+      damage: 10,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '56';
+  public setNumber: string = '58';
   public name: string = 'Skrelp';
   public fullName: string = 'Skrelp M4';
 }

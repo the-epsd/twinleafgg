@@ -22,7 +22,7 @@ import { Cosmog } from './cosmog';
 import { Cranidos } from './cranidos';
 import { Cresselia } from './cresselia';
 import { Croagunk } from './croagunk';
-import { Darkrai } from './darkrai';
+import { DarkraiPrismStar } from './darkrai-prism-star';
 import { DawnWingsNecrozmaGX } from './dawn-wings-necrozma-gx';
 import { DialgaGX } from './dialga-gx';
 import { Drampa } from './drampa';
@@ -43,7 +43,7 @@ import { Gabite } from './gabite';
 import { Garchomp } from './garchomp';
 import { Gible } from './gible';
 import { Gible2 } from './gible-2';
-import { Giratina } from './giratina';
+import { GiratinaPrismStar } from './giratina-prism-star';
 import { GlaceonGX } from './glaceon-gx';
 import { Glameow } from './glameow';
 import { Grotle } from './grotle';
@@ -59,7 +59,6 @@ import { Lickilicky } from './lickilicky';
 import { Lickitung } from './lickitung';
 import { Lopunny } from './lopunny';
 import { Lucario } from './lucario';
-import { Lunala } from './lunala';
 import { LunalaGx } from './lunala-gx';
 import { LunalaPrismStar } from './lunala-prism-star';
 import { Luxio } from './luxio';
@@ -103,7 +102,6 @@ import { Skorupi } from './skorupi';
 import { Skuntank } from './skuntank';
 import { Sneasel } from './sneasel';
 import { Snover } from './snover';
-import { Solgaleo } from './solgaleo';
 import { SolgaleoGx } from './solgaleo-gx';
 import { SolgaleoPrismStar } from './solgaleo-prism-star';
 import { Spiritomb } from './spiritomb';
@@ -123,7 +121,6 @@ import { Yanmega } from './yanmega';
 import { Yungoos } from './yungoos';
 import { AncientCrystal } from './ancient-crystal';
 import { Cynthia } from './cynthia';
-import { Cyrus } from './cyrus';
 import { CyrusPrismStar } from './cyrus-prism-star';
 import { ElectricMemory } from './electric-memory';
 import { EscapeBoard } from './escape-board';
@@ -138,10 +135,8 @@ import { MtCoronet } from './mt-coronet';
 import { OrderPad } from './order-pad';
 import { PokemonFanClub } from './pokemon-fan-club';
 import { Volkner } from './volkner';
-import { SuperBoostEnergy } from './super-boost-energy';
-import { UnitEnergyGrassfirewater } from './unit-energy-grassfirewater';
+import { SuperBoostEnergyPrismStar } from './super-boost-energy-prism-star';
 import { UnitEnergyGRW } from './unit-energy-grw';
-import { UnitEnergyLightningpsychicmetal } from './unit-energy-lightningpsychicmetal';
 import { UnitEnergyLPM } from './unit-energy-lpm';
 
 import {
@@ -211,7 +206,7 @@ export const setUltraPrism: Card[] = [
   new Cranidos(),
   new Cresselia(),
   new Croagunk(),
-  new Darkrai(),
+  new DarkraiPrismStar(),
   new DawnWingsNecrozmaGX(),
   new DialgaGX(),
   new Drampa(),
@@ -232,7 +227,7 @@ export const setUltraPrism: Card[] = [
   new Garchomp(),
   new Gible(),
   new Gible2(),
-  new Giratina(),
+  new GiratinaPrismStar(),
   new GlaceonGX(),
   new Glameow(),
   new Grotle(),
@@ -248,7 +243,6 @@ export const setUltraPrism: Card[] = [
   new Lickitung(),
   new Lopunny(),
   new Lucario(),
-  new Lunala(),
   new LunalaGx(),
   new LunalaPrismStar(),
   new Luxio(),
@@ -292,7 +286,6 @@ export const setUltraPrism: Card[] = [
   new Skuntank(),
   new Sneasel(),
   new Snover(),
-  new Solgaleo(),
   new SolgaleoGx(),
   new SolgaleoPrismStar(),
   new Spiritomb(),
@@ -314,7 +307,6 @@ export const setUltraPrism: Card[] = [
   // Trainers
   new AncientCrystal(),
   new Cynthia(),
-  new Cyrus(),
   new CyrusPrismStar(),
   new ElectricMemory(),
   new EscapeBoard(),
@@ -331,10 +323,8 @@ export const setUltraPrism: Card[] = [
   new Volkner(),
 
   // Energy
-  new SuperBoostEnergy(),
-  new UnitEnergyGrassfirewater(),
+  new SuperBoostEnergyPrismStar(),
   new UnitEnergyGRW(),
-  new UnitEnergyLightningpsychicmetal(),
   new UnitEnergyLPM(),
 
   // Other Prints (Reprints & Alt Arts)

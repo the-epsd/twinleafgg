@@ -12,23 +12,25 @@ export class Metang extends PokemonCard {
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Metal Claw',
-    cost: [M],
-    damage: 30,
-    text: ''
-  },
-  {
-    name: 'Guard Press',
-    cost: [M, M, C],
-    damage: 70,
-    text: 'During your opponent\'s next turn, this Pokemon takes 30 less damage from attacks.'
-  }];
+  public attacks = [
+    {
+      name: 'Metal Claw',
+      cost: [M],
+      damage: 30,
+      text: '',
+    },
+    {
+      name: 'Guard Press',
+      cost: [M, M, C],
+      damage: 70,
+      text: "During your opponent's next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).",
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '58';
+  public setNumber: string = '60';
   public name: string = 'Metang';
   public fullName: string = 'Metang M4';
 

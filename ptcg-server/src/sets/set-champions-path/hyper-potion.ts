@@ -14,9 +14,8 @@ import {
 } from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
 
-function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, self: HyperPotion): IterableIterator<State> {
+function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
 
   const blocked: CardTarget[] = [];
@@ -55,31 +54,32 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     return state;
   }
 
-  targets.forEach(target => {
-    // Heal Pokemon
-    const healEffect = new HealEffect(player, target, 120);
-    state = store.reduceEffect(state, healEffect);
+  const target = targets[0];
 
-    const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, target);
-    state = store.reduceEffect(state, checkProvidedEnergy);
+  const healEffect = new HealEffect(player, target, 120);
+  store.reduceEffect(state, healEffect);
 
-    const energyList: CardType[] = [];
-    for (let i = 0; i < 2; i++) {
-      energyList.push(CardType.COLORLESS);
-    }
+  const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, target);
+  state = store.reduceEffect(state, checkProvidedEnergy);
 
-    state = store.prompt(state, new ChooseEnergyPrompt(
-      player.id,
-      GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-      checkProvidedEnergy.energyMap,
-      energyList,
-      { allowCancel: false }
-    ), energy => {
-      const cards: Card[] = (energy || []).map(e => e.card);
-      MOVE_CARDS(store, state, target, player.discard, { cards: cards, sourceCard: self });
-    });
+  const energyList: CardType[] = [CardType.COLORLESS, CardType.COLORLESS];
+
+  let cards: Card[] = [];
+  yield store.prompt(state, new ChooseEnergyPrompt(
+    player.id,
+    GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+    checkProvidedEnergy.energyMap,
+    energyList,
+    { allowCancel: false }
+  ), energy => {
+    cards = (energy || []).map(e => e.card);
+    next();
   });
-  player.supporter.moveCardTo(effect.trainerCard, player.discard);
+
+  if (cards.length > 0) {
+    target.moveCardsTo(cards, player.discard);
+  }
+
   return state;
 }
 
@@ -91,9 +91,7 @@ export class HyperPotion extends TrainerCard {
   public setNumber: string = '54';
   public name: string = 'Hyper Potion';
   public fullName: string = 'Hyper Potion CPA';
-
-  public text: string =
-    'Heal 120 damage from 1 of your Pokémon that has at least 2 Energy attached. If you healed any damage in this way, discard 2 Energy from it.';
+  public text: string = 'Heal 120 damage from 1 of your Pokémon that has at least 2 Energy attached. If you healed any damage in this way, discard 2 Energy from it.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean {
     let hasPokemonWithDamage: boolean = false;
@@ -114,7 +112,7 @@ export class HyperPotion extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      const generator = playCard(() => generator.next(), store, state, effect, this);
+      const generator = playCard(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
     return state;

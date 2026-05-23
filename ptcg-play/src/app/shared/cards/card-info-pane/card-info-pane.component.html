@@ -83,7 +83,7 @@
             {{ power.name }}
           </div>
         </div>
-        <div class="card-text" [innerHTML]="transformEnergyText(power.text)" [ngStyle]="getCardTextKerningStyle()">
+        <div class="card-text" [innerHTML]="formatCardText(power.text)" [ngStyle]="getCardTextKerningStyle()">
         </div>
       </div>
     </ptcg-hover-highlight>
@@ -105,7 +105,7 @@
             {{ attack.damage }}{{attack.damageCalculation ? ' ' + attack.damageCalculation : ''}}
           </div>
         </div>
-        <div class="card-text" [innerHTML]="transformEnergyText(attack.text)" [ngStyle]="getCardTextKerningStyle()">
+        <div class="card-text" [innerHTML]="formatCardText(attack.text)" [ngStyle]="getCardTextKerningStyle()">
         </div>
       </div>
     </ptcg-hover-highlight>
@@ -159,7 +159,7 @@
           {{ card.name }}
         </div>
       </div>
-      <div class="card-text" [innerHTML]="transformEnergyText(card.text)" [ngStyle]="getCardTextKerningStyle()"></div>
+      <div class="card-text" [innerHTML]="formatCardText(card.text)" [ngStyle]="getCardTextKerningStyle()"></div>
     </div>
 
   </div>
@@ -178,6 +178,10 @@
         <span *ngSwitchCase="EnergyType.SPECIAL" translate>CARDS_SPECIAL_ENERGY</span>
       </div>
       <div class="ptcg-u-spacer"></div>
+      <div class="subtitle-tags" *ngIf="getDisplayTags().length > 0">
+        <span class="tag" *ngFor="let tag of getDisplayTags()">{{ tag }}</span>
+      </div>
+      <div class="ptcg-u-spacer"></div>
       <div class="subtitle-card-type">
         <ptcg-trainer-type></ptcg-trainer-type>
       </div>
@@ -189,7 +193,7 @@
           {{ card.name }}
         </div>
       </div>
-      <div class="card-text" [innerHTML]="transformEnergyText(card.text)" [ngStyle]="getCardTextKerningStyle()"></div>
+      <div class="card-text" [innerHTML]="formatCardText(card.text)" [ngStyle]="getCardTextKerningStyle()"></div>
     </div>
 
     <ptcg-hover-highlight *ngFor="let power of getDisplayPowers()"
@@ -205,7 +209,7 @@
             {{ power.name }}
           </div>
         </div>
-        <div class="card-text" [innerHTML]="transformEnergyText(power.text)" [ngStyle]="getCardTextKerningStyle()">
+        <div class="card-text" [innerHTML]="formatCardText(power.text)" [ngStyle]="getCardTextKerningStyle()">
         </div>
       </div>
     </ptcg-hover-highlight>
@@ -223,15 +227,31 @@
     <div class="subtitle">
       <div class="subtitle-stage" [ngSwitch]="card.trainerType">
         <span *ngSwitchDefaultCase translate>CARDS_ITEM</span>
+        <span *ngSwitchCase="TrainerType.ITEM" translate>CARDS_ITEM</span>
         <span *ngSwitchCase="TrainerType.SUPPORTER" translate>CARDS_SUPPORTER</span>
         <span *ngSwitchCase="TrainerType.STADIUM" translate>CARDS_STADIUM</span>
         <span *ngSwitchCase="TrainerType.TOOL" translate>CARDS_POKEMON_TOOL</span>
+      </div>
+      <div class="ptcg-u-spacer"></div>
+      <div class="subtitle-tags" *ngIf="getDisplayTags().length > 0">
+        <span class="tag" *ngFor="let tag of getDisplayTags()">{{ tag }}</span>
       </div>
       <div class="ptcg-u-spacer"></div>
       <div class="subtitle-card-type">
         <ptcg-trainer-type [type]="card.trainerType"></ptcg-trainer-type>
       </div>
     </div>
+
+    <ptcg-hover-highlight (click)="options.enableTrainer && clickAction({trainer: true})" [enabled]="options.enableTrainer">
+      <div class="power" *ngIf="card.text">
+        <div class="power-header">
+          <div class="power-name" translate>
+            {{ card.name }}
+          </div>
+        </div>
+        <div class="card-text" [innerHTML]="formatCardText(card.text)" [ngStyle]="getCardTextKerningStyle()"></div>
+      </div>
+    </ptcg-hover-highlight>
 
     <ptcg-hover-highlight *ngFor="let power of getDisplayPowers()"
       (click)="enabledAbilities[power.name] && clickAction({ability: power.name})"
@@ -246,7 +266,7 @@
             {{ power.name }}
           </div>
         </div>
-        <div class="card-text" [innerHTML]="transformEnergyText(power.text)" [ngStyle]="getCardTextKerningStyle()">
+        <div class="card-text" [innerHTML]="formatCardText(power.text)" [ngStyle]="getCardTextKerningStyle()">
         </div>
       </div>
     </ptcg-hover-highlight>
@@ -267,20 +287,8 @@
             {{ attack.damage }}
           </div>
         </div>
-        <div class="card-text" [innerHTML]="transformEnergyText(attack.text)" [ngStyle]="getCardTextKerningStyle()">
+        <div class="card-text" [innerHTML]="formatCardText(attack.text)" [ngStyle]="getCardTextKerningStyle()">
         </div>
-      </div>
-    </ptcg-hover-highlight>
-
-    <ptcg-hover-highlight (click)="options.enableTrainer && clickAction({trainer: true})"
-      [enabled]="options.enableTrainer">
-      <div class="power" *ngIf="card.text">
-        <div class="power-header">
-          <div class="power-name" translate>
-            {{ card.name }}
-          </div>
-        </div>
-        <div class="card-text" [innerHTML]="transformEnergyText(card.text)" [ngStyle]="getCardTextKerningStyle()"></div>
       </div>
     </ptcg-hover-highlight>
 

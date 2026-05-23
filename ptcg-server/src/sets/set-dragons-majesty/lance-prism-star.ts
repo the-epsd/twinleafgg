@@ -3,7 +3,11 @@ import { CardTag, CardType, TrainerType } from '../../game/store/card/card-types
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH } from '../../game/store/prefabs/prefabs';
+import {
+  ADD_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH,
+} from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -17,12 +21,12 @@ export class LancePrismStar extends TrainerCard {
   public name: string = 'Lance Prism Star';
   public fullName: string = 'Lance Prism Star DRM';
 
-  public text: string = 'You can play this card only if 1 of your Pokémon was Knocked Out during your opponent\'s last turn.\n\nSearch your deck for up to 2 [N] Pokémon and put them onto your Bench.Then, shuffle your deck.';
+  public text: string =
+    "You can play this card only if 1 of your Pokémon was Knocked Out during your opponent's last turn.\n\nSearch your deck for up to 2 [N] Pokémon and put them onto your Bench. Then, shuffle your deck.";
 
   public readonly LANCE_MARKER = 'LANCE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
@@ -46,7 +50,7 @@ export class LancePrismStar extends TrainerCard {
         state,
         player,
         { cardType: CardType.DRAGON },
-        { min: 0, max: 2, allowCancel: false }
+        { min: 0, max: 2, allowCancel: false },
       );
 
       player.supporter.moveCardTo(this, player.lostzone);

@@ -1,7 +1,12 @@
 import { CardType, Stage } from '../../game/store/card/card-types';
 import { Effect } from '../../game/store/effects/effect';
 import { PokemonCard, StoreLike, State, StateUtils } from '../../game';
-import { ADD_MARKER, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  ADD_MARKER,
+  HAS_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
@@ -14,15 +19,17 @@ export class Flaaffy extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C];
 
-  public attacks = [{
-    name: 'Disconnect',
-    cost: [L, C],
-    damage: 40,
-    text: 'During your opponent\'s next turn, your opponent can\'t play any Item cards from their hand.'
-  }];
+  public attacks = [
+    {
+      name: 'Disconnect',
+      cost: [L, C],
+      damage: 40,
+      text: "During your opponent's next turn, they can't play any Item cards from their hand.",
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
   public name: string = 'Flaaffy';

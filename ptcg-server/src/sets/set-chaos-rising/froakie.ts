@@ -10,21 +10,23 @@ export class Froakie extends PokemonCard {
   public weakness = [{ type: L }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Collect',
-    cost: [C],
-    damage: 0,
-    text: 'Draw 1 card.'
-  },
-  {
-    name: 'Water Gun',
-    cost: [W],
-    damage: 10,
-    text: ''
-  }];
+  public attacks = [
+    {
+      name: 'Collect',
+      cost: [C],
+      damage: 0,
+      text: 'Draw a card.',
+    },
+    {
+      name: 'Water Gun',
+      cost: [W],
+      damage: 10,
+      text: '',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name: string = 'Froakie';
