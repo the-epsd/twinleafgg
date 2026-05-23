@@ -7,8 +7,10 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { GameError } from '../../game/game-error';
 import { GameMessage } from '../../game/game-message';
 import { EnergyCard } from '../../game/store/card/energy-card';
-import { SlotType } from '../../game/store/actions/play-card-action';
-import { ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON } from '../../game/store/prefabs/prefabs';
+import { CardTarget, PlayerType, SlotType } from '../../game/store/actions/play-card-action';
+import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { AttachEnergyPrompt, StateUtils } from '../../game';
+import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 
 export class DarkPatch extends TrainerCard {
 
@@ -36,46 +38,62 @@ export class DarkPatch extends TrainerCard {
 
       const hasEnergyInDiscard = player.discard.cards.some(c => {
         return c.superType === SuperType.ENERGY
-          && (c as EnergyCard).energyType === EnergyType.BASIC
+          && c.energyType === EnergyType.BASIC
           && (c as EnergyCard).provides.includes(CardType.DARK);
       });
       if (!hasEnergyInDiscard) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const hasDarkPokemonOnBench = player.bench.some(bench => {
-        const pokemonCard = bench.getPokemonCard();
-        return pokemonCard !== undefined && pokemonCard.cardType === CardType.DARK;
+      let hasDarkPokemonOnBench = false;
+      const blockedTo: CardTarget[] = [];
+      player.bench.forEach((bench, index) => {
+        if (bench.cards.length === 0) {
+          return;
+        }
+        const checkPokemonTypeEffect = new CheckPokemonTypeEffect(bench);
+        store.reduceEffect(state, checkPokemonTypeEffect);
+
+        if (checkPokemonTypeEffect.cardTypes.includes(CardType.DARK)) {
+          hasDarkPokemonOnBench = true;
+        } else {
+          const target: CardTarget = {
+            player: PlayerType.BOTTOM_PLAYER,
+            slot: SlotType.BENCH,
+            index
+          };
+          blockedTo.push(target);
+        }
       });
 
       if (!hasDarkPokemonOnBench) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      /*
-       * Legacy pre-prefab implementation:
-       * - scanned bench and built blocked CardTargets manually
-       * - ran a direct AttachEnergyPrompt from discard to bench
-       * - moved cards with MOVE_CARDS + StateUtils target resolution
-       * - manually cleaned up trainer slot after prompt resolution
-       */
-      // Converted to prefab version (ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON).
-      ATTACH_X_TYPE_ENERGY_FROM_DISCARD_TO_1_OF_YOUR_POKEMON(
-        store,
-        state,
-        player,
-        1,
-        CardType.DARK,
-        {
-          destinationSlots: [SlotType.BENCH],
-          targetFilter: (_target, pokemonCard) => pokemonCard.cardType === CardType.DARK,
-          energyFilter: { energyType: EnergyType.BASIC, name: 'Darkness Energy' },
-          min: 1,
-          allowCancel: false
-        }
-      );
-    }
+      // We will discard this card after prompt confirmation
+      effect.preventDefault = true;
 
+      state = store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        player.discard,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Darkness Energy' },
+        { allowCancel: false, min: 1, max: 1, blockedTo }
+      ), transfers => {
+        transfers = transfers || [];
+
+        if (transfers.length === 0) {
+          return;
+        }
+
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          MOVE_CARDS(store, state, player.discard, target, { cards: [transfer.card], sourceCard: this });
+        }
+      });
+    }
     return state;
   }
 }
