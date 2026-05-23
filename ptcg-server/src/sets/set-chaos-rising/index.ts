@@ -40,7 +40,7 @@ import { Golisopod } from './golisopod';
 import { Goomy } from './goomy';
 import { Gourgeistex } from './gourgeist-ex';
 import { HoOh } from './ho-oh';
-import { AngeFloette } from './hyperrogue-ange-floette';
+import { AngeFloette } from './ange-floette';
 import { Kakuna } from './kakuna';
 import { Keldeo } from './keldeo';
 import { Litleo } from './litleo';
