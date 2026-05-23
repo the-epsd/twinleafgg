@@ -297,18 +297,14 @@ export class CardInfoPaneComponent implements OnChanges, OnDestroy {
   formatBossMonMechanics(text: string): string {
     return text
       .replace(
-        /Pokémon (ex|VMAX|VSTAR|V|BREAK)/g,
-        (match, mechanic) =>
-          `Pokémon <span class="boss-mon">${mechanic}</span>`,
+        / (ex|VMAX|VSTAR|V|TAG TEAM|GX|BREAK)($|\W)/g,
+        (match, mechanic, postscript) =>
+          ` <span class="boss-mon">${mechanic}</span>${postscript}`,
       )
       .replace(
-        /Pokémon-(EX|GX)/g,
-        (match, mechanic) =>
-          `Pokémon-<span class="boss-mon">${mechanic}</span>`,
-      )
-      .replace("GX attack", '<span class="boss-mon">GX</span> attack')
-      .replace("VSTAR Power", '<span class="boss-mon">VSTAR</span> Power')
-      .replace("TAG TEAM", '<span class="boss-mon">TAG TEAM</span>');
+        /-(EX|GX)/g,
+        (match, mechanic) => `-<span class="boss-mon">${mechanic}</span>`,
+      );
   }
 
   formatCardText(text: string): string {
