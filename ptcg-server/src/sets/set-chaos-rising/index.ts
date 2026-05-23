@@ -82,8 +82,47 @@ import { Weedle } from './weedle';
 import { Wimpod } from './wimpod';
 import { Xerneas } from './xerneas';
 import { Zubat } from './zubat';
+import { MegaGalladeex } from './mega-gallade-ex';
+import {
+  AmpharosIR,
+  AzsTranquilityFA,
+  AzsTranquilitySIR,
+  BeedrillexFA,
+  ChespinIR,
+  CinccinoexSIR,
+  ClaydolIR,
+  CrobatIR,
+  EmmaFA,
+  EnergyRetrievalFACRI,
+  FroakieIR,
+  FrogadierIR,
+  GourgeistexFA,
+  JumboIceCreamFACRI,
+  MegaDragalgeexSIR,
+  MegaFloetteexFA,
+  MegaFloetteexSIR,
+  MegaGreninjaexFA,
+  MegaGreninjaexHR,
+  MegaGreninjaexSIR,
+  MegaPyroarexFA,
+  MetangIR,
+  PhilippeFA,
+  PrismTowerFA,
+  RoxiesPerformanceFA,
+  RoxiesPerformanceSIR,
+  SliggooIR,
+  SpecialRedCardFA,
+  SurfingBeachFACRI,
+  TaurosIR,
+  ToolScrapperFACRI,
+  WatchogIR,
+  XerneasIR,
+} from './other-prints';
 
 export const setChaosRising: Card[] = [
+  // MARK: Main set
+  //
+
   new Weedle(), // 1
   new Kakuna(), // 2
   new Beedrillex(), // 3
@@ -131,6 +170,7 @@ export const setChaosRising: Card[] = [
   new Donphan(), // 45
   new Baltoy(), // 46
   new Claydol(), // 47
+  new MegaGalladeex(),
   new Zubat(), // 48
   new Golbat(), // 49
   new Crobat(), // 50
@@ -167,4 +207,48 @@ export const setChaosRising: Card[] = [
   new NitroFireEnergy(), // 81
   new MagnetMetalEnergy(), // 83
   new BubbleWaterEnergy(), // 99
+
+  // MARK: Secret rares
+
+  new ChespinIR(),
+  new FroakieIR(),
+  new FrogadierIR(),
+  new AmpharosIR(),
+  new XerneasIR(),
+  new ClaydolIR(),
+  new CrobatIR(),
+  new MetangIR(),
+  new SliggooIR(),
+  new TaurosIR(),
+  new WatchogIR(),
+
+  new BeedrillexFA(),
+  new MegaPyroarexFA(),
+  new MegaGreninjaexFA(),
+  new MegaFloetteexFA(),
+  new GourgeistexFA(),
+  new Cobalionex(),
+  new MegaDragalgeex(),
+  new Cinccinoex(),
+
+  new AzsTranquilityFA(),
+  new EmmaFA(),
+  new EnergyRetrievalFACRI(),
+  new JumboIceCreamFACRI(),
+  new PhilippeFA(),
+  new PrismTowerFA(),
+  new RoxiesPerformanceFA(),
+  new SpecialRedCardFA(),
+  new SurfingBeachFACRI(),
+  new ToolScrapperFACRI(),
+
+  new MegaGreninjaexSIR(),
+  new MegaFloetteexSIR(),
+  new MegaDragalgeexSIR(),
+  new CinccinoexSIR(),
+
+  new AzsTranquilitySIR(),
+  new RoxiesPerformanceSIR(),
+
+  new MegaGreninjaexHR(),
 ];
