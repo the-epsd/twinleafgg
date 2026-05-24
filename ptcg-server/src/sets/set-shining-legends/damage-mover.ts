@@ -4,9 +4,9 @@
 
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, GameError, DamageMap, MoveDamagePrompt, PlayerType, SlotType } from '../../game';
+import { CardTarget, Player, PlayerType, SlotType, StoreLike, State, GameMessage, GameError } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
+import { MOVE_DAMAGE_COUNTERS } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class DamageMover extends TrainerCard {
@@ -18,53 +18,46 @@ export class DamageMover extends TrainerCard {
   public fullName: string = 'Damage Mover SLG';
   public text: string = 'Move 3 damage counters from 1 of your Pokémon to another of your Pokémon.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    let totalPokemon = 0;
+    let hasPokemonWith30Damage = false;
+
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      totalPokemon++;
+      if (cardList.damage >= 30) {
+        hasPokemonWith30Damage = true;
+      }
+    });
+
+    return totalPokemon >= 2 && hasPokemonWith30Damage;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-unified-minds/jynx.ts (Ominous Posture), set-unified-minds/grimsley.ts (MoveDamagePrompt)
+    // Ref: set-unified-minds/grimsley.ts (exact counter move), set-flashfire/meowstic.ts (MOVE_DAMAGE_COUNTERS)
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
 
-      // Check that the player has at least 1 damaged Pokemon and at least 2 total Pokemon
-      const damagedPokemon: DamageMap[] = [];
-      let totalPokemon = 0;
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        totalPokemon++;
-        if (cardList.damage > 0) {
-          damagedPokemon.push({ target, damage: cardList.damage });
-        }
-      });
-
-      if (damagedPokemon.length === 0 || totalPokemon < 2) {
+      if (!this.canPlay(store, state, player)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      const maxAllowedDamage: DamageMap[] = [];
+      const blockedFrom: CardTarget[] = [];
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-        const checkHpEffect = new CheckHpEffect(player, cardList);
-        store.reduceEffect(state, checkHpEffect);
-        maxAllowedDamage.push({ target, damage: checkHpEffect.hp });
+        if (cardList.damage < 30) {
+          blockedFrom.push(target);
+        }
       });
 
-      return store.prompt(state, new MoveDamagePrompt(
-        player.id,
-        GameMessage.MOVE_DAMAGE,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        maxAllowedDamage,
-        { allowCancel: false, min: 3, max: 3, singleSourceTarget: true, singleDestinationTarget: true }
-      ), transfers => {
-        if (transfers === null) {
-          return;
-        }
-
-        for (const transfer of transfers) {
-          const source = StateUtils.getTarget(state, player, transfer.from);
-          const target = StateUtils.getTarget(state, player, transfer.to);
-          if (source.damage >= 10) {
-            source.damage -= 10;
-            target.damage += 10;
-          }
-        }
+      return MOVE_DAMAGE_COUNTERS(store, state, player, {
+        playerType: PlayerType.BOTTOM_PLAYER,
+        slots: [SlotType.ACTIVE, SlotType.BENCH],
+        min: 1,
+        max: 1,
+        allowCancel: false,
+        blockedFrom,
+        singleSourceTarget: true,
+        singleDestinationTarget: true,
+        damageMultiple: 30
       });
     }
 

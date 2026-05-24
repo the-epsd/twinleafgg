@@ -2,6 +2,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import {
   ChoosePokemonPrompt,
   GameMessage,
+  MoveDamagePrompt,
   PlayerType,
   PutDamagePrompt,
   RemoveDamagePrompt,
@@ -12,7 +13,7 @@ import {
 } from 'ptcg-server';
 import { cardTargetKey } from './prompts/removeDamagePromptModel';
 
-type SelectionOverlayKind = 'choose-pokemon' | 'remove-damage' | 'put-damage' | null;
+type SelectionOverlayKind = 'choose-pokemon' | 'remove-damage' | 'move-damage' | 'put-damage' | null;
 
 export interface BasicEntranceAnimationEvent {
   playerId: number;
@@ -189,6 +190,28 @@ export class BoardInteractionService {
   }
 
   /**
+   * Board overlay for Move damage: click Pokémon on the table, adjust HP with the bottom bar.
+   */
+  public startMoveDamageSelection(prompt: MoveDamagePrompt): void {
+    if (this.isReplayModeActive) {
+      return;
+    }
+
+    this.removeDamageHudAnchor = null;
+    this.overlayKind = 'move-damage';
+    this.promptSubject.next(null);
+    this.selectionModeSubject.next(true);
+    this.selectedTargetsSubject.next([]);
+    // Do not block 0-damage Pokémon — they are valid move-damage destinations.
+    this.blockedTargetsSubject.next([]);
+    this.eligiblePlayerTypeSubject.next(prompt.playerType);
+    this.eligibleSlotsSubject.next(prompt.slots);
+    this.minSelectionsSubject.next(0);
+    this.maxSelectionsSubject.next(1);
+    this.selectionCallback = null;
+  }
+
+  /**
    * Board overlay for Put damage: distribute counters on eligible Pokémon (+/− HUD).
    */
   public startPutDamageSelection(prompt: PutDamagePrompt, extraBlocked: CardTarget[]): void {
@@ -214,9 +237,21 @@ export class BoardInteractionService {
     return this.overlayKind === 'remove-damage';
   }
 
-  /** Floating +/− HUD for both remove-damage and put-damage prompts (3D anchor). */
+  public isMoveDamageOverlayActive(): boolean {
+    return this.overlayKind === 'move-damage';
+  }
+
+  public isDamageTransferOverlayActive(): boolean {
+    return this.overlayKind === 'remove-damage' || this.overlayKind === 'move-damage';
+  }
+
+  /** Floating +/− HUD for remove/move/put damage prompts (3D anchor). */
   public isFloatingDamageHudOverlayActive(): boolean {
-    return this.overlayKind === 'remove-damage' || this.overlayKind === 'put-damage';
+    return (
+      this.overlayKind === 'remove-damage'
+      || this.overlayKind === 'move-damage'
+      || this.overlayKind === 'put-damage'
+    );
   }
 
   public setRemoveDamageHudAnchor(pos: { x: number; y: number } | null): void {
@@ -407,7 +442,11 @@ export class BoardInteractionService {
    * Check if the current selection meets requirements
    */
   public isSelectionValid(): boolean {
-    if (this.overlayKind === 'remove-damage' || this.overlayKind === 'put-damage') {
+    if (
+      this.overlayKind === 'remove-damage'
+      || this.overlayKind === 'move-damage'
+      || this.overlayKind === 'put-damage'
+    ) {
       return true;
     }
     const currentTargets = this.selectedTargetsSubject.value.length;

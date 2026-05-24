@@ -1814,6 +1814,7 @@ export interface MoveDamageCountersOptions {
   blockedTo?: CardTarget[];
   singleSourceTarget?: boolean;
   singleDestinationTarget?: boolean;
+  damageMultiple?: number;
 }
 
 /**
@@ -1840,7 +1841,8 @@ export function MOVE_DAMAGE_COUNTERS(
     blockedFrom = [],
     blockedTo = [],
     singleSourceTarget = false,
-    singleDestinationTarget = false
+    singleDestinationTarget = false,
+    damageMultiple = 10
   } = options;
 
   const opponent = StateUtils.getOpponent(state, player);
@@ -1880,18 +1882,19 @@ export function MOVE_DAMAGE_COUNTERS(
       blockedFrom: computedBlockedFrom,
       blockedTo,
       singleSourceTarget,
-      singleDestinationTarget
+      singleDestinationTarget,
+      damageMultiple
     }
   ), transfers => {
     transfers = transfers || [];
     for (const transfer of transfers) {
       const source = StateUtils.getTarget(state, player, transfer.from);
       const target = StateUtils.getTarget(state, player, transfer.to);
-      if (source.damage < 10) {
+      if (source.damage < damageMultiple) {
         continue;
       }
-      source.damage -= 10;
-      target.damage += 10;
+      source.damage -= damageMultiple;
+      target.damage += damageMultiple;
     }
   });
 }

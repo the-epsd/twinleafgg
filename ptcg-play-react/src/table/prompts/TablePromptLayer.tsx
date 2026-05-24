@@ -14,6 +14,7 @@ import type {
   ConfirmPrompt,
   PutDamagePrompt,
   RemoveDamagePrompt,
+  MoveDamagePrompt,
   SelectPrompt,
   ShowCardsPrompt,
   ShowMulliganPrompt,
@@ -34,6 +35,7 @@ import { ChooseEnergyPromptPanel } from './ChooseEnergyPromptPanel';
 import { MoveEnergyPromptPanel } from './MoveEnergyPromptPanel';
 import { PutDamageOverlay } from './PutDamageOverlay';
 import { RemoveDamageOverlay } from './RemoveDamageOverlay';
+import { MoveDamageOverlay } from './MoveDamageOverlay';
 import { scanBlockedOwnZeroDamageFromState } from './pokemonPromptRows';
 import { BOARD3D_ATTACK_ANIMATION_DURATION_SEC } from '../board3d/services/board-3d-animation.service';
 
@@ -222,6 +224,40 @@ function useRemoveDamageBoardEffect(
   }, [removeDamagePromptId, clientId, boardInteraction, replay]);
 }
 
+function useMoveDamageBoardEffect(
+  localGameRef: React.MutableRefObject<LocalGameState>,
+  clientId: number,
+  boardInteraction: BoardInteractionService,
+  moveDamagePromptId: number | null,
+  replay: boolean | undefined,
+) {
+  useEffect(() => {
+    if (moveDamagePromptId == null) {
+      return;
+    }
+
+    if (replay) {
+      boardInteraction.setReplayMode(true);
+      return () => {
+        boardInteraction.setReplayMode(false);
+      };
+    }
+
+    boardInteraction.setReplayMode(false);
+    const game = localGameRef.current;
+    const prompt = activeGamePrompt(game, clientId);
+    if (!prompt || prompt.id !== moveDamagePromptId || prompt.type !== 'Move damage') {
+      return;
+    }
+
+    boardInteraction.startMoveDamageSelection(prompt as MoveDamagePrompt);
+
+    return () => {
+      boardInteraction.endBoardSelection();
+    };
+  }, [moveDamagePromptId, clientId, boardInteraction, replay]);
+}
+
 function usePutDamageBoardEffect(
   localGameRef: React.MutableRefObject<LocalGameState>,
   clientId: number,
@@ -332,6 +368,11 @@ export function TablePromptLayer({
       ? activePrompt.id
       : null;
 
+  const moveDamageId =
+    activePrompt?.type === 'Move damage' && !localGame.replay && !suppressTrainerEffectPrompts
+      ? activePrompt.id
+      : null;
+
   const putDamageId =
     activePrompt?.type === 'Put damage' && !localGame.replay && !suppressTrainerEffectPrompts
       ? activePrompt.id
@@ -351,6 +392,14 @@ export function TablePromptLayer({
     clientId,
     boardInteraction,
     removeDamageId,
+    !!localGame.replay,
+  );
+
+  useMoveDamageBoardEffect(
+    localGameRef,
+    clientId,
+    boardInteraction,
+    moveDamageId,
     !!localGame.replay,
   );
 
@@ -558,6 +607,20 @@ export function TablePromptLayer({
       <RemoveDamageOverlay
         key={rdp.id}
         prompt={rdp}
+        localGame={localGame}
+        boardInteraction={boardInteraction}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
+  if (p.type === 'Move damage') {
+    const mdp = p as MoveDamagePrompt;
+    return (
+      <MoveDamageOverlay
+        key={mdp.id}
+        prompt={mdp}
         localGame={localGame}
         boardInteraction={boardInteraction}
         gameMessageText={gameMessageText}

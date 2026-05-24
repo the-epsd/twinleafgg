@@ -2,6 +2,7 @@ import { SRGBColorSpace, TextureLoader, Texture, RepeatWrapping } from 'three';
 import type { HoloVariant } from '../../../components/cards/holoVariant';
 import { holoMaskUrl } from '../../../components/cards/holoMaskUrl';
 import { publicAssetUrl } from '../../../utils/publicAssetUrl';
+import { setBoard3dCardBorderMaskTexture } from '../board3dCardShared';
 
 /** Remote scans stay as-is; everything else (e.g. assets/energy/*.png) is resolved for the router base. */
 function resolveTextureRequestUrl(url: string): string {
@@ -22,6 +23,7 @@ export class Board3dAssetLoaderService {
   private boardGridTexture: Texture | null = null;
   private slotGridTexture: Texture | null = null;
   private cardMaskTexture: Texture | null = null;
+  private cardBorderMaskTexture: Texture | null = null;
   private holo2dMaskByUrl: Map<string, Texture> = new Map();
 
   private readonly MAX_CONCURRENT_LOADS = 6;
@@ -162,10 +164,10 @@ export class Board3dAssetLoaderService {
   }
 
   /**
-   * Load a marker texture (for status conditions)
+   * Load a marker texture (for status conditions and card markers)
    */
-  async loadMarkerTexture(condition: string): Promise<Texture> {
-    const markerUrl = publicAssetUrl(`assets/${condition}.webp`);
+  async loadMarkerTexture(markerFile: string): Promise<Texture> {
+    const markerUrl = publicAssetUrl(`assets/status-conditions/${markerFile}.webp`);
 
     if (this.textureCache.has(markerUrl)) {
       return this.textureCache.get(markerUrl)!;
@@ -179,7 +181,7 @@ export class Board3dAssetLoaderService {
       this.textureCache.set(markerUrl, texture);
       return texture;
     } catch (error) {
-      console.error('Failed to load marker texture:', condition, error);
+      console.error('Failed to load marker texture:', markerFile, error);
       return this.createFallbackTexture();
     }
   }
@@ -252,10 +254,35 @@ export class Board3dAssetLoaderService {
       texture.flipY = true; // Match card texture orientation
 
       this.cardMaskTexture = texture;
+      await this.loadCardBorderMaskTexture();
       return texture;
     } catch (error) {
       console.error('Failed to load card mask texture:', error);
       // Return a fallback texture (fully opaque white) so cards still render
+      return this.createFallbackTexture();
+    }
+  }
+
+  /**
+   * Concentric rounded ring alpha for the default blue card rim (matches 2D CardFace outline).
+   */
+  async loadCardBorderMaskTexture(): Promise<Texture> {
+    if (this.cardBorderMaskTexture) {
+      return this.cardBorderMaskTexture;
+    }
+
+    try {
+      const maskUrl = publicAssetUrl('assets/3d-card-border-mask.png');
+      const texture = await this.textureLoader.loadAsync(maskUrl);
+      texture.colorSpace = 'srgb';
+      texture.anisotropy = 4;
+      texture.flipY = true;
+
+      this.cardBorderMaskTexture = texture;
+      setBoard3dCardBorderMaskTexture(texture);
+      return texture;
+    } catch (error) {
+      console.error('Failed to load card border mask texture:', error);
       return this.createFallbackTexture();
     }
   }
@@ -356,6 +383,12 @@ export class Board3dAssetLoaderService {
     if (this.cardMaskTexture) {
       this.cardMaskTexture.dispose();
       this.cardMaskTexture = null;
+    }
+
+    if (this.cardBorderMaskTexture) {
+      this.cardBorderMaskTexture.dispose();
+      this.cardBorderMaskTexture = null;
+      setBoard3dCardBorderMaskTexture(undefined);
     }
 
     this.holo2dMaskByUrl.forEach((t) => t.dispose());

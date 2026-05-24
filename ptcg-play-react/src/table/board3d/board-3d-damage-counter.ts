@@ -4,26 +4,31 @@ import {
   Mesh,
   CanvasTexture,
   Group,
-  DoubleSide
+  DoubleSide,
+  Object3D,
+  PerspectiveCamera,
+  Quaternion,
+  Vector3,
 } from 'three';
 import gsap from 'gsap';
 import { BOARD_DAMAGE_COUNTER_SIZE, paintBoardDamageCounter } from './board-damage-counter-paint';
+import {
+  DAMAGE_COUNTER_REST_X,
+  DAMAGE_COUNTER_REST_Y,
+  DAMAGE_COUNTER_REST_Z,
+} from './board-3d-overlay-layout';
 
 const COUNTER_SIZE = 0.96; // Twice as large: 0.48 * 2 = 0.96 units
 
 /** Brief beat after damage changes before the counter moves in (reads clearer than instant swap). */
 const DAMAGE_COUNTER_APPEAR_DELAY_SEC = 0.08;
-/** Final local position on the card (top-right corner). */
-const DAMAGE_COUNTER_REST_X = 1.25;
-const DAMAGE_COUNTER_REST_Y = 0.15;
-const DAMAGE_COUNTER_REST_Z = -1.75;
 /**
- * Pre-rest pose: small X/Z nudge; modest Y lift. Primary “comes down onto the card” read is
+ * Pre-rest pose in overlay-anchor space. Primary “comes down onto the card” read is
  * {@link DAMAGE_COUNTER_PLACE_START_SCALE} → 1 (counter lowers as it shrinks into place).
  */
 const DAMAGE_COUNTER_PLACE_OFFSET_X = 0.04;
-const DAMAGE_COUNTER_PLACE_OFFSET_Y = 0.28;
-const DAMAGE_COUNTER_PLACE_OFFSET_Z = 0.06;
+const DAMAGE_COUNTER_PLACE_OFFSET_Y = -0.06;
+const DAMAGE_COUNTER_PLACE_OFFSET_Z = 0.28;
 const DAMAGE_COUNTER_PLACE_DURATION_SEC = 0.48;
 /** Starts oversized so scaling down reads as lowering onto the card surface. */
 const DAMAGE_COUNTER_PLACE_START_SCALE = 1.42;
@@ -41,9 +46,23 @@ export class Board3dDamageCounter {
   private currentDamage: number = 0;
   private damageAnim: gsap.core.Timeline | null = null;
   private appearAnimationDeferred = false;
+  private attachedParent: Object3D | null = null;
+  private static readonly _qParent = new Quaternion();
+  private static readonly _qCam = new Quaternion();
+  private static readonly _qFlip = new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), Math.PI);
 
   constructor() {
     this.group = new Group();
+  }
+
+  /** Parent to the card mesh so the counter follows in-plane condition rotation. */
+  attachTo(parent: Object3D): void {
+    if (this.attachedParent === parent) {
+      return;
+    }
+    this.attachedParent?.remove(this.group);
+    this.attachedParent = parent;
+    parent.add(this.group);
   }
 
   private killDamageAnim(): void {
@@ -163,14 +182,15 @@ export class Board3dDamageCounter {
       transparent: true,
       side: DoubleSide,
       alphaTest: 0.1,
+      depthWrite: false,
       color: 0xd0d0d0 // Darkened to prevent bloom (luminance ~0.815, below 0.85 threshold)
     });
 
     this.mesh = new Mesh(geometry, material);
+    this.mesh.renderOrder = 12;
 
     // Top-right on card; intro starts offset (placed motion), ends at rest.
     this.applyPrePlacePosition(this.mesh);
-    this.mesh.rotation.x = -Math.PI / 2;
     this.mesh.scale.setScalar(DAMAGE_COUNTER_PLACE_START_SCALE);
 
     this.group.add(this.mesh);
@@ -195,6 +215,9 @@ export class Board3dDamageCounter {
     paintBoardDamageCounter(ctx, damage);
 
     const texture = new CanvasTexture(canvas);
+    // Compensate for billboard Y-flip (same as energy icons).
+    texture.repeat.x = -1;
+    texture.offset.x = 1;
     texture.needsUpdate = true;
 
     return texture;
@@ -222,6 +245,25 @@ export class Board3dDamageCounter {
     this.disposeMeshOnly();
   }
 
+  /** Face the camera each frame (same pattern as energy icons / status markers). */
+  updateBillboards(camera: PerspectiveCamera): void {
+    if (!this.mesh) {
+      return;
+    }
+    camera.getWorldQuaternion(Board3dDamageCounter._qCam);
+    const parent = this.mesh.parent;
+    if (!parent) {
+      this.mesh.quaternion.copy(Board3dDamageCounter._qCam).multiply(Board3dDamageCounter._qFlip);
+      return;
+    }
+    parent.getWorldQuaternion(Board3dDamageCounter._qParent);
+    this.mesh.quaternion
+      .copy(Board3dDamageCounter._qParent)
+      .invert()
+      .multiply(Board3dDamageCounter._qCam)
+      .multiply(Board3dDamageCounter._qFlip);
+  }
+
   /**
    * Get the group to add to a parent
    */
@@ -244,5 +286,7 @@ export class Board3dDamageCounter {
     this.appearAnimationDeferred = false;
     this.disposeMeshOnly();
     this.currentDamage = 0;
+    this.attachedParent?.remove(this.group);
+    this.attachedParent = null;
   }
 }

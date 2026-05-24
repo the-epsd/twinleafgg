@@ -9,12 +9,18 @@ import {
   Vector3,
   type ShaderMaterial,
 } from 'three';
+import type { SpecialCondition } from 'ptcg-server';
+import { getSpecialConditionRotationZ } from './board-3d-marker';
 import { createBoard3dHoloMaterial, releaseBoard3dHoloMaterial } from './board-3d-holo-material';
 import {
   board3dCardMaterialKey,
   board3dCardFaceMaterialCache,
   board3dCardOutlineMaterialCache,
+  board3dCardBorderMaterialCache,
+  BOARD3D_DEFAULT_CARD_BORDER_COLOR,
+  getBoard3dCardBorderMaskTexture,
   getBoard3dCardBoxGeometry,
+  getBoard3dCardBorderGeometry,
   getBoard3dCardOutlineGeometry,
   getBoard3dCardEdgeMaterial,
   disposeBoard3dCardSharedResources,
@@ -23,6 +29,9 @@ import {
 export class Board3dCard {
   private group: Group;
   private cardMesh: Mesh;
+  /** Face-attached overlays (markers, energy, damage) — rotates with the card, not inside the box mesh. */
+  private overlayAnchor: Group;
+  private borderMesh: Mesh | null = null;
   private outlineMesh: Mesh | null = null;
   private maskTexture?: Texture;
   private frontMaterialKey?: string;
@@ -94,7 +103,11 @@ export class Board3dCard {
     // Rotate card to face upward (fix orientation)
     this.cardMesh.rotation.x = -Math.PI / 2;
 
+    this.overlayAnchor = new Group();
+    this.overlayAnchor.rotation.x = -Math.PI / 2;
+
     this.group.add(this.cardMesh);
+    this.group.add(this.overlayAnchor);
 
     // Set position, rotation, and scale
     this.group.position.copy(position);
@@ -103,6 +116,72 @@ export class Board3dCard {
 
     // Store mask texture for use in outline
     this.maskTexture = maskTexture;
+    this.ensureBorderMesh();
+  }
+
+  private borderMaterialKey(): string {
+    const borderMask = getBoard3dCardBorderMaskTexture();
+    const mask = borderMask ?? this.maskTexture;
+    const maskKey = mask
+      ? ((mask as { uuid?: string; image?: { src?: string } }).uuid ||
+          mask.image?.src ||
+          'unknown')
+      : 'no-mask';
+    return maskKey;
+  }
+
+  private borderAlphaMap(): Texture | undefined {
+    return getBoard3dCardBorderMaskTexture() ?? this.maskTexture;
+  }
+
+  private ensureBorderMesh(): void {
+    if (this.borderMesh) {
+      return;
+    }
+
+    const borderKey = this.borderMaterialKey();
+    const borderAlphaMap = this.borderAlphaMap();
+    let borderMaterial = board3dCardBorderMaterialCache.get(borderKey);
+    if (!borderMaterial) {
+      borderMaterial = new MeshBasicMaterial({
+        color: BOARD3D_DEFAULT_CARD_BORDER_COLOR,
+        side: DoubleSide,
+        ...(borderAlphaMap && { alphaMap: borderAlphaMap }),
+        alphaTest: 0.1,
+        depthWrite: true,
+      });
+      board3dCardBorderMaterialCache.set(borderKey, borderMaterial);
+    }
+
+    this.borderMesh = new Mesh(getBoard3dCardBorderGeometry(), borderMaterial);
+    this.borderMesh.position.z = 0.012;
+    this.borderMesh.rotation.x = -Math.PI / 2;
+    this.borderMesh.renderOrder = 1;
+    this.group.add(this.borderMesh);
+  }
+
+  private syncBorderMaterial(): void {
+    if (!this.borderMesh) {
+      return;
+    }
+
+    const borderKey = this.borderMaterialKey();
+    const borderAlphaMap = this.borderAlphaMap();
+    let borderMaterial = board3dCardBorderMaterialCache.get(borderKey);
+    if (!borderMaterial) {
+      borderMaterial = new MeshBasicMaterial({
+        color: BOARD3D_DEFAULT_CARD_BORDER_COLOR,
+        side: DoubleSide,
+        ...(borderAlphaMap && { alphaMap: borderAlphaMap }),
+        alphaTest: 0.1,
+        depthWrite: true,
+      });
+      board3dCardBorderMaterialCache.set(borderKey, borderMaterial);
+    }
+
+    if (this.borderMesh.material !== borderMaterial) {
+      this.borderMesh.material = borderMaterial;
+    }
   }
 
   public getGroup(): Group {
@@ -111,6 +190,11 @@ export class Board3dCard {
 
   public getMesh(): Mesh {
     return this.cardMesh;
+  }
+
+  /** Anchor for face overlays that must tilt with special conditions without clipping the card box. */
+  public getOverlayAnchor(): Group {
+    return this.overlayAnchor;
   }
 
   /**
@@ -145,6 +229,13 @@ export class Board3dCard {
 
   public setRotation(rotation: number): void {
     this.group.rotation.y = (rotation * Math.PI) / 180;
+  }
+
+  /** Asleep / confused / paralyzed in-plane tilt (matches Angular board-card). */
+  public setSpecialConditionRotation(conditions: SpecialCondition[]): void {
+    const rotationZ = getSpecialConditionRotationZ(conditions);
+    this.cardMesh.rotation.z = rotationZ;
+    this.overlayAnchor.rotation.z = rotationZ;
   }
 
   public setScale(scale: number): void {
@@ -198,6 +289,7 @@ export class Board3dCard {
     // Update stored mask texture for outline
     if (maskTexture !== undefined) {
       this.maskTexture = maskTexture;
+      this.syncBorderMaterial();
       // Update outline material if it exists
       if (this.outlineMesh) {
         const outlineMaterial = this.outlineMesh.material as MeshBasicMaterial;
@@ -282,6 +374,10 @@ export class Board3dCard {
     if (this.outlineMesh) {
       this.group.remove(this.outlineMesh);
       this.outlineMesh = null;
+    }
+    if (this.borderMesh) {
+      this.group.remove(this.borderMesh);
+      this.borderMesh = null;
     }
 
     if (this.group.parent) {

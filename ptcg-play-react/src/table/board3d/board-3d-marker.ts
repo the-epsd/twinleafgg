@@ -2,18 +2,19 @@ import {
   PlaneGeometry,
   MeshBasicMaterial,
   Mesh,
-  Texture,
   Group,
-  DoubleSide
+  DoubleSide,
+  Object3D,
+  PerspectiveCamera,
+  Quaternion,
+  Vector3,
 } from 'three';
-import { SpecialCondition } from 'ptcg-server';
+import { PokemonCardList, SpecialCondition } from 'ptcg-server';
 import { Board3dAssetLoaderService } from './services/board-3d-asset-loader.service';
+import { MARKER_SIZE, markerOverlayPosition, markerStackIndexForFile, resolveMarkerStack } from './board-3d-overlay-layout';
 
-const MARKER_SIZE = 0.875; // 25% of card height (card is ~3.5 units tall, so 25% = 0.875 units)
-const MARKER_VERTICAL_SPACING = 0.525; // 15% of card height (0.15 * 3.5 = 0.525 units)
-
-// Map SpecialCondition to marker image filenames
-const CONDITION_MARKER_NAMES: { [key: number]: string } = {
+/** Map SpecialCondition to marker image filenames in assets/status-conditions/. */
+export const STATUS_CONDITION_MARKER_FILES: { [key: number]: string } = {
   [SpecialCondition.POISONED]: 'poison-marker',
   [SpecialCondition.PARALYZED]: 'paralyzed-marker',
   [SpecialCondition.CONFUSED]: 'confused-marker',
@@ -21,80 +22,201 @@ const CONDITION_MARKER_NAMES: { [key: number]: string } = {
   [SpecialCondition.BURNED]: 'burned-marker',
 };
 
+export const IMPRISON_MARKER_NAME = 'IMPRISON_MARKER';
+export const IMPRISON_MARKER_FILE = 'imprison-marker';
+export const SHOCKWAVE_MARKER_FILE = 'shockwave-marker';
+
+/** DOM order in Angular board-card (stacking / overlap rules). */
+const MARKER_DISPLAY_ORDER: readonly string[] = [
+  STATUS_CONDITION_MARKER_FILES[SpecialCondition.POISONED],
+  STATUS_CONDITION_MARKER_FILES[SpecialCondition.PARALYZED],
+  STATUS_CONDITION_MARKER_FILES[SpecialCondition.CONFUSED],
+  STATUS_CONDITION_MARKER_FILES[SpecialCondition.ASLEEP],
+  STATUS_CONDITION_MARKER_FILES[SpecialCondition.BURNED],
+  IMPRISON_MARKER_FILE,
+  SHOCKWAVE_MARKER_FILE,
+];
+
+/** Only one card tilt applies at a time; asleep > confused > paralyzed (matches Angular). */
+function primaryOrientationCondition(conditions: SpecialCondition[]): SpecialCondition | undefined {
+  if (hasSpecialCondition(conditions, SpecialCondition.ASLEEP)) {
+    return SpecialCondition.ASLEEP;
+  }
+  if (hasSpecialCondition(conditions, SpecialCondition.CONFUSED)) {
+    return SpecialCondition.CONFUSED;
+  }
+  if (hasSpecialCondition(conditions, SpecialCondition.PARALYZED)) {
+    return SpecialCondition.PARALYZED;
+  }
+  return undefined;
+}
+
+function hasSpecialCondition(conditions: SpecialCondition[], condition: SpecialCondition): boolean {
+  return conditions.some((value) => {
+    if (value === condition || Number(value) === condition) {
+      return true;
+    }
+    if (typeof value === 'string') {
+      return SpecialCondition[value as keyof typeof SpecialCondition] === condition;
+    }
+    return false;
+  });
+}
+
+function addConditionMarker(active: Set<string>, conditions: SpecialCondition[], condition: SpecialCondition): void {
+  if (hasSpecialCondition(conditions, condition)) {
+    active.add(STATUS_CONDITION_MARKER_FILES[condition]);
+  }
+}
+
+/** Collect marker image filenames for a Pokémon (status conditions + custom markers). */
+export function collectPokemonMarkerFiles(cardList: PokemonCardList): string[] {
+  const active = new Set<string>();
+  const { specialConditions } = cardList;
+
+  addConditionMarker(active, specialConditions, SpecialCondition.POISONED);
+  addConditionMarker(active, specialConditions, SpecialCondition.PARALYZED);
+  addConditionMarker(active, specialConditions, SpecialCondition.CONFUSED);
+  addConditionMarker(active, specialConditions, SpecialCondition.ASLEEP);
+  addConditionMarker(active, specialConditions, SpecialCondition.BURNED);
+
+  if (cardList.marker.hasMarker(IMPRISON_MARKER_NAME)) {
+    active.add(IMPRISON_MARKER_FILE);
+  }
+
+  return MARKER_DISPLAY_ORDER.filter((file) => active.has(file));
+}
+
+/** Card in-plane rotation for asleep / confused / paralyzed (matches Angular board-card). */
+export function getSpecialConditionRotationZ(conditions: SpecialCondition[]): number {
+  const orientation = primaryOrientationCondition(conditions);
+  if (orientation === SpecialCondition.ASLEEP) {
+    return -Math.PI / 2;
+  }
+  if (orientation === SpecialCondition.CONFUSED) {
+    return Math.PI;
+  }
+  if (orientation === SpecialCondition.PARALYZED) {
+    return Math.PI / 2;
+  }
+  return 0;
+}
+
 export class Board3dMarker {
   private group: Group;
   private markerMeshes: Mesh[] = [];
   private static geometry: PlaneGeometry;
+  private static readonly _qParent = new Quaternion();
+  private static readonly _qCam = new Quaternion();
+  private static readonly _qFlip = new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), Math.PI);
   private assetLoader: Board3dAssetLoaderService;
+  private updateGeneration = 0;
+  private attachedParent: Object3D | null = null;
 
   constructor(assetLoader: Board3dAssetLoaderService) {
     this.group = new Group();
     this.assetLoader = assetLoader;
 
-    // Initialize shared geometry if not already created
     if (!Board3dMarker.geometry) {
       Board3dMarker.geometry = new PlaneGeometry(MARKER_SIZE, MARKER_SIZE);
     }
   }
 
+  /** Parent to the card mesh so markers rotate with asleep/confused/paralyzed tilts. */
+  attachTo(parent: Object3D): void {
+    if (this.attachedParent === parent) {
+      return;
+    }
+    this.attachedParent?.remove(this.group);
+    this.attachedParent = parent;
+    parent.add(this.group);
+  }
+
   /**
-   * Update markers from special conditions array
+   * Update markers from image filenames (without path/extension).
    */
-  async updateConditions(conditions: SpecialCondition[]): Promise<void> {
-    // Clear existing meshes
+  async updateMarkerFiles(markerFiles: string[]): Promise<void> {
+    const generation = ++this.updateGeneration;
     this.clear();
 
-    if (conditions.length === 0) {
+    const stack = resolveMarkerStack(markerFiles);
+    if (stack.length === 0) {
       return;
     }
 
-    // Filter to only conditions we have marker images for
-    const validConditions = conditions.filter(c => CONDITION_MARKER_NAMES[c] !== undefined);
+    const activeFiles = new Set(stack);
 
-    // Load textures for all markers
-    const texturePromises = validConditions.map(condition => {
-      const markerName = CONDITION_MARKER_NAMES[condition];
-      return this.assetLoader.loadMarkerTexture(markerName);
-    });
+    const textures = await Promise.all(
+      stack.map((file) => this.assetLoader.loadMarkerTexture(file)),
+    );
 
-    const textures = await Promise.all(texturePromises);
+    if (generation !== this.updateGeneration) {
+      return;
+    }
 
-    // Position markers on right side, stacked vertically
-    // Base position: top: 20% = ~0.7 units from top, right: 0 = ~1.25 units from center
-    const baseX = 1.25; // Right side of card
-    const baseZ = -0.7; // 20% from top (card top is at ~-1.75, so 20% down = -0.7)
-
-    for (let i = 0; i < validConditions.length; i++) {
+    for (let i = 0; i < stack.length; i++) {
+      const file = stack[i];
       const texture = textures[i];
+      const stackIndex = markerStackIndexForFile(file, activeFiles);
+      const { x, y, z } = markerOverlayPosition(stackIndex);
 
       const material = new MeshBasicMaterial({
         map: texture,
         transparent: true,
         side: DoubleSide,
-        alphaTest: 0.1
+        alphaTest: 0.1,
+        depthWrite: false,
+        depthTest: false,
       });
 
       const mesh = new Mesh(Board3dMarker.geometry, material);
-
-      // Stack vertically with 15% increments (0.525 units per marker)
-      mesh.position.set(
-        baseX,           // Right side of card
-        0.1,             // Slightly above ground
-        baseZ + (i * MARKER_VERTICAL_SPACING) // Stack vertically
-      );
-
-      // Rotate to face up
-      mesh.rotation.x = -Math.PI / 2;
+      mesh.renderOrder = 20 + stackIndex;
+      mesh.frustumCulled = false;
+      mesh.position.set(x, y, z);
+      mesh.userData.isStatusMarker = true;
+      mesh.userData.markerFile = file;
+      mesh.userData.stackIndex = stackIndex;
 
       this.group.add(mesh);
       this.markerMeshes.push(mesh);
     }
   }
 
+  /** Refresh markers from a Pokémon card list (preferred entry point). */
+  async updateForCard(cardList: PokemonCardList): Promise<void> {
+    await this.updateMarkerFiles(collectPokemonMarkerFiles(cardList));
+  }
 
-  /**
-   * Clear all marker meshes
-   */
+  /** Face the camera each frame (same pattern as {@link Board3dEnergySprite}). */
+  updateBillboards(camera: PerspectiveCamera): void {
+    camera.getWorldQuaternion(Board3dMarker._qCam);
+    for (const mesh of this.markerMeshes) {
+      const parent = mesh.parent;
+      if (!parent) {
+        mesh.quaternion.copy(Board3dMarker._qCam).multiply(Board3dMarker._qFlip);
+        continue;
+      }
+      parent.getWorldQuaternion(Board3dMarker._qParent);
+      mesh.quaternion
+        .copy(Board3dMarker._qParent)
+        .invert()
+        .multiply(Board3dMarker._qCam)
+        .multiply(Board3dMarker._qFlip);
+    }
+  }
+
+  /** @deprecated Prefer updateForCard(cardList). */
+  async updateConditions(conditions: SpecialCondition[]): Promise<void> {
+    const active = new Set<string>();
+    for (const condition of conditions) {
+      const file = STATUS_CONDITION_MARKER_FILES[condition];
+      if (file !== undefined) {
+        active.add(file);
+      }
+    }
+    await this.updateMarkerFiles(MARKER_DISPLAY_ORDER.filter((file) => active.has(file)));
+  }
+
   clear(): void {
     for (const mesh of this.markerMeshes) {
       this.group.remove(mesh);
@@ -103,23 +225,17 @@ export class Board3dMarker {
     this.markerMeshes = [];
   }
 
-  /**
-   * Get the group to add to a parent
-   */
   getGroup(): Group {
     return this.group;
   }
 
-  /**
-   * Dispose resources
-   */
   dispose(): void {
+    this.updateGeneration++;
     this.clear();
+    this.attachedParent?.remove(this.group);
+    this.attachedParent = null;
   }
 
-  /**
-   * Dispose shared resources
-   */
   static disposeSharedResources(): void {
     if (Board3dMarker.geometry) {
       Board3dMarker.geometry.dispose();

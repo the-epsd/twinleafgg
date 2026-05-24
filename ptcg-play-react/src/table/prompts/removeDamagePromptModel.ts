@@ -2,6 +2,8 @@ import type { CardTarget, DamageMap, DamageTransfer } from 'ptcg-server';
 import { PokemonCardList } from 'ptcg-server';
 import { mapPokemonItems, type PokemonItem, type PokemonRow } from './pokemonPromptRows';
 
+export type DamagePromptMode = 'move' | 'remove';
+
 export function targetsEqual(a: CardTarget, b: CardTarget): boolean {
   return a.player === b.player && a.slot === b.slot && a.index === b.index;
 }
@@ -52,7 +54,11 @@ export function patchDamageForTarget(
   });
 }
 
-export function buildDamageTransfers(rows: PokemonRow[], initialDamageMap: DamageMap[]): DamageTransfer[] {
+export function buildDamageTransfers(
+  rows: PokemonRow[],
+  initialDamageMap: DamageMap[],
+  damageMultiple = 10,
+): DamageTransfer[] {
   const fromItems: PokemonItem[] = [];
   const toItems: PokemonItem[] = [];
   for (const row of rows) {
@@ -64,10 +70,10 @@ export function buildDamageTransfers(rows: PokemonRow[], initialDamageMap: Damag
           i.target.index === item.target.index,
       );
       if (initial !== undefined) {
-        for (let i = initial.damage; i > item.cardList.damage; i -= 10) {
+        for (let i = initial.damage; i > item.cardList.damage; i -= damageMultiple) {
           fromItems.push(item);
         }
-        for (let i = initial.damage; i < item.cardList.damage; i += 10) {
+        for (let i = initial.damage; i < item.cardList.damage; i += damageMultiple) {
           toItems.push(item);
         }
       }
@@ -94,14 +100,15 @@ export function computeRemoveDamageHudDisplay(
   blockedFrom: CardTarget[],
   pendingDamage: number,
   maxTransfers: number | undefined,
+  damageMultiple = 10,
 ): number {
   if (selected === undefined) {
     return 0;
   }
   const target = selected.target;
   const cardList = selected.cardList;
-  const results = buildDamageTransfers(rows, initialDamageMap);
-  const slotsUsed = results.length + Math.round(pendingDamage / 10);
+  const results = buildDamageTransfers(rows, initialDamageMap, damageMultiple);
+  const slotsUsed = results.length + Math.round(pendingDamage / damageMultiple);
   const fromBlocked = blockedFrom.some((b) => targetsEqual(b, target));
 
   if (fromBlocked) {
@@ -113,7 +120,7 @@ export function computeRemoveDamageHudDisplay(
     return cardList.damage;
   }
   const remainingSlots = Math.max(0, maxTransfers - slotsUsed);
-  return Math.min(cardList.damage, remainingSlots * 10);
+  return Math.min(cardList.damage, remainingSlots * damageMultiple);
 }
 
 export function computeRemoveAddDisabled(
@@ -125,7 +132,10 @@ export function computeRemoveAddDisabled(
   initialDamageMap: DamageMap[],
   blockedFrom: CardTarget[],
   blockedTo: CardTarget[],
+  options: { promptMode?: DamagePromptMode; damageMultiple?: number } = {},
 ): { remove: boolean; add: boolean } {
+  const { promptMode = 'remove', damageMultiple = 10 } = options;
+
   if (selected === undefined) {
     return { remove: true, add: true };
   }
@@ -151,8 +161,11 @@ export function computeRemoveAddDisabled(
   let isRemoveDisabled = cardList.damage <= 0;
   let isAddDisabled = false;
 
-  /** Opponent (`blockedFrom`): − peels placed counters; cannot strip below snapshot. */
-  if (isBlockedFrom) {
+  /** Move damage: `blockedFrom` targets can receive but never be sources. */
+  if (isBlockedFrom && promptMode === 'move') {
+    isRemoveDisabled = true;
+  } else if (isBlockedFrom) {
+    /** Remove damage: opponent (`blockedFrom`) − peels placed counters; cannot strip below snapshot. */
     if (cardList.damage <= initialDamage) {
       isRemoveDisabled = true;
     }
@@ -169,8 +182,8 @@ export function computeRemoveAddDisabled(
     }
   }
 
-  const results = buildDamageTransfers(rows, initialDamageMap);
-  const transfers = results.length + Math.round(pendingDamage / 10);
+  const results = buildDamageTransfers(rows, initialDamageMap, damageMultiple);
+  const transfers = results.length + Math.round(pendingDamage / damageMultiple);
   if (maxTransfers !== undefined && transfers >= maxTransfers && initial !== undefined) {
     if (initial.damage >= cardList.damage) {
       isRemoveDisabled = true;
