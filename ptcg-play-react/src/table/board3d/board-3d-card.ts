@@ -16,11 +16,7 @@ import {
   board3dCardMaterialKey,
   board3dCardFaceMaterialCache,
   board3dCardOutlineMaterialCache,
-  board3dCardBorderMaterialCache,
-  BOARD3D_DEFAULT_CARD_BORDER_COLOR,
-  getBoard3dCardBorderMaskTexture,
   getBoard3dCardBoxGeometry,
-  getBoard3dCardBorderGeometry,
   getBoard3dCardOutlineGeometry,
   getBoard3dCardEdgeMaterial,
   disposeBoard3dCardSharedResources,
@@ -31,7 +27,6 @@ export class Board3dCard {
   private cardMesh: Mesh;
   /** Face-attached overlays (markers, energy, damage) — rotates with the card, not inside the box mesh. */
   private overlayAnchor: Group;
-  private borderMesh: Mesh | null = null;
   private outlineMesh: Mesh | null = null;
   private maskTexture?: Texture;
   private frontMaterialKey?: string;
@@ -116,72 +111,6 @@ export class Board3dCard {
 
     // Store mask texture for use in outline
     this.maskTexture = maskTexture;
-    this.ensureBorderMesh();
-  }
-
-  private borderMaterialKey(): string {
-    const borderMask = getBoard3dCardBorderMaskTexture();
-    const mask = borderMask ?? this.maskTexture;
-    const maskKey = mask
-      ? ((mask as { uuid?: string; image?: { src?: string } }).uuid ||
-          mask.image?.src ||
-          'unknown')
-      : 'no-mask';
-    return maskKey;
-  }
-
-  private borderAlphaMap(): Texture | undefined {
-    return getBoard3dCardBorderMaskTexture() ?? this.maskTexture;
-  }
-
-  private ensureBorderMesh(): void {
-    if (this.borderMesh) {
-      return;
-    }
-
-    const borderKey = this.borderMaterialKey();
-    const borderAlphaMap = this.borderAlphaMap();
-    let borderMaterial = board3dCardBorderMaterialCache.get(borderKey);
-    if (!borderMaterial) {
-      borderMaterial = new MeshBasicMaterial({
-        color: BOARD3D_DEFAULT_CARD_BORDER_COLOR,
-        side: DoubleSide,
-        ...(borderAlphaMap && { alphaMap: borderAlphaMap }),
-        alphaTest: 0.1,
-        depthWrite: true,
-      });
-      board3dCardBorderMaterialCache.set(borderKey, borderMaterial);
-    }
-
-    this.borderMesh = new Mesh(getBoard3dCardBorderGeometry(), borderMaterial);
-    this.borderMesh.position.z = 0.012;
-    this.borderMesh.rotation.x = -Math.PI / 2;
-    this.borderMesh.renderOrder = 1;
-    this.group.add(this.borderMesh);
-  }
-
-  private syncBorderMaterial(): void {
-    if (!this.borderMesh) {
-      return;
-    }
-
-    const borderKey = this.borderMaterialKey();
-    const borderAlphaMap = this.borderAlphaMap();
-    let borderMaterial = board3dCardBorderMaterialCache.get(borderKey);
-    if (!borderMaterial) {
-      borderMaterial = new MeshBasicMaterial({
-        color: BOARD3D_DEFAULT_CARD_BORDER_COLOR,
-        side: DoubleSide,
-        ...(borderAlphaMap && { alphaMap: borderAlphaMap }),
-        alphaTest: 0.1,
-        depthWrite: true,
-      });
-      board3dCardBorderMaterialCache.set(borderKey, borderMaterial);
-    }
-
-    if (this.borderMesh.material !== borderMaterial) {
-      this.borderMesh.material = borderMaterial;
-    }
   }
 
   public getGroup(): Group {
@@ -289,7 +218,6 @@ export class Board3dCard {
     // Update stored mask texture for outline
     if (maskTexture !== undefined) {
       this.maskTexture = maskTexture;
-      this.syncBorderMaterial();
       // Update outline material if it exists
       if (this.outlineMesh) {
         const outlineMaterial = this.outlineMesh.material as MeshBasicMaterial;
@@ -374,10 +302,6 @@ export class Board3dCard {
     if (this.outlineMesh) {
       this.group.remove(this.outlineMesh);
       this.outlineMesh = null;
-    }
-    if (this.borderMesh) {
-      this.group.remove(this.borderMesh);
-      this.borderMesh = null;
     }
 
     if (this.group.parent) {

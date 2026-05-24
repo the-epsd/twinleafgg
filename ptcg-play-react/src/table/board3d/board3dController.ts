@@ -50,6 +50,8 @@ import type { Board3dCardsAdapter } from './board3dCardsAdapter';
 import {
   BOARD3D_CARD_SLOT_BASE_HEIGHT,
   BOARD3D_CARD_SLOT_BASE_WIDTH,
+  BOARD3D_BENCH_DROP_ZONE_HEIGHT,
+  BOARD3D_BENCH_DROP_ZONE_WIDTH,
   BOARD3D_DROP_ZONE_TARGET_SCALE,
   BOARD_3D_BENCH_SLOT_OUTLINE_COLOR,
   BOARD_3D_BENCH_SLOT_OUTLINE_OPACITY,
@@ -1090,11 +1092,15 @@ export class Board3dController {
   private static readonly BENCH_OUTLINE_Y = 0.15;
   private static readonly BENCH_OUTLINE_COLOR = 0xffffff;
 
-  /** Card/slot dimensions for outlines (match enlarged {@link Board3dDropZone} defaults). */
+  /** Card/slot dimensions for non-bench outlines (match enlarged {@link Board3dDropZone} defaults). */
   private static readonly CARD_SLOT_WIDTH =
     BOARD3D_CARD_SLOT_BASE_WIDTH * BOARD3D_DROP_ZONE_TARGET_SCALE;
   private static readonly CARD_SLOT_HEIGHT =
     BOARD3D_CARD_SLOT_BASE_HEIGHT * BOARD3D_DROP_ZONE_TARGET_SCALE;
+
+  /** Bench slot outlines — match {@link BOARD3D_BENCH_DROP_ZONE_WIDTH} / height. */
+  private static readonly BENCH_SLOT_WIDTH = BOARD3D_BENCH_DROP_ZONE_WIDTH;
+  private static readonly BENCH_SLOT_HEIGHT = BOARD3D_BENCH_DROP_ZONE_HEIGHT;
 
   /**
    * Create per-slot outline meshes for bench and all other board slots.
@@ -1106,14 +1112,16 @@ export class Board3dController {
 
     const w = Board3dController.CARD_SLOT_WIDTH;
     const h = Board3dController.CARD_SLOT_HEIGHT;
+    const benchW = Board3dController.BENCH_SLOT_WIDTH;
+    const benchH = Board3dController.BENCH_SLOT_HEIGHT;
 
     // Bench slots
     const topPositions = getBenchPositions(topBenchSize, PlayerType.TOP_PLAYER);
     for (const pos of topPositions) {
       const group = this.createSpotOutlineGroup(
         pos,
-        w,
-        h,
+        benchW,
+        benchH,
         BOARD_3D_BENCH_SLOT_OUTLINE_COLOR,
         BOARD_3D_BENCH_SLOT_OUTLINE_OPACITY,
       );
@@ -1124,8 +1132,8 @@ export class Board3dController {
     for (const pos of bottomPositions) {
       const group = this.createSpotOutlineGroup(
         pos,
-        w,
-        h,
+        benchW,
+        benchH,
         BOARD_3D_BENCH_SLOT_OUTLINE_COLOR,
         BOARD_3D_BENCH_SLOT_OUTLINE_OPACITY,
       );

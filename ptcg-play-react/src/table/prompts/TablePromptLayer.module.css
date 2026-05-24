@@ -291,7 +291,7 @@
 @keyframes prizeFadeIn {
   from {
     opacity: 0;
-    transform: scale(0.97);
+    transform: scale(0.7);
   }
 
   to {

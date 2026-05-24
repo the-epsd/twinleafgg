@@ -14,18 +14,6 @@
   background: #f2f2f2;
 }
 
-/* Concentric rounded rim (matches 3D border ring + CardFace 6cqw clip). */
-.inner::after {
-  content: '';
-  position: absolute;
-  inset: -3px;
-  border: 3px solid #1a354b;
-  border-radius: calc(6cqw + 3px);
-  box-sizing: border-box;
-  pointer-events: none;
-  z-index: 4;
-}
-
 /* Iridescent rim (aligns with Angular 2D board `.holo` / `.fullart-holo` containers). */
 .innerHolo {
   background: linear-gradient(

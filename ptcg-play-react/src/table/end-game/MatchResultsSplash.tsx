@@ -48,7 +48,6 @@ export function MatchResultsSplash({ localGame, clientId, onDismiss }: MatchResu
     <div
       className={`${styles.overlay} ${leaving ? styles.overlayLeaving : ''}`}
       role="presentation"
-      onClick={finish}
     >
       <div className={styles.bg} />
       <div className={styles.content}>

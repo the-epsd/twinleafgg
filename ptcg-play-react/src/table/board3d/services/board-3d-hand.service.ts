@@ -283,7 +283,7 @@ export class Board3dHandService {
               handCard.updateTexture(loadedFront, backTexture, maskTexture);
               void apply3dCardHolo(this.assetLoader, handCard, card, false);
             }
-          }).catch(() => {});
+          }).catch(() => { });
         }
       } else {
         frontTexture = placeholder;

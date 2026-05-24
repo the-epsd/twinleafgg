@@ -29,6 +29,8 @@ import { selfPlayFocusPlayerId } from '../table/selfPlayFocusPlayerId';
 import promptStyles from '../table/prompts/TablePromptLayer.module.css';
 
 const RECONNECT_GAME_ID_KEY = 'ptcg_reconnect_gameId';
+const CHOOSE_PRIZE_POST_KO_DELAY_MS = 350;
+const END_GAME_SPLASH_DELAY_MS = 2000;
 
 const EMPTY_CATALOG: Card[] = [];
 
@@ -84,6 +86,7 @@ export function TablePage() {
   const [boardFps, setBoardFps] = useState<number | null>(null);
   const clientIdRef = useRef(clientId);
   clientIdRef.current = clientId;
+  const choosePrizeRevealTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const boardInteraction = useMemo(() => new BoardInteractionService(), []);
 
@@ -96,7 +99,26 @@ export function TablePage() {
   );
 
   const onKoSequenceActiveChange = useCallback((active: boolean) => {
-    setSuppressChoosePrizePrompt(active);
+    if (choosePrizeRevealTimeoutRef.current != null) {
+      clearTimeout(choosePrizeRevealTimeoutRef.current);
+      choosePrizeRevealTimeoutRef.current = null;
+    }
+    if (active) {
+      setSuppressChoosePrizePrompt(true);
+      return;
+    }
+    choosePrizeRevealTimeoutRef.current = window.setTimeout(() => {
+      choosePrizeRevealTimeoutRef.current = null;
+      setSuppressChoosePrizePrompt(false);
+    }, CHOOSE_PRIZE_POST_KO_DELAY_MS);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (choosePrizeRevealTimeoutRef.current != null) {
+        clearTimeout(choosePrizeRevealTimeoutRef.current);
+      }
+    };
   }, []);
 
   const onBoardFps = useCallback((fps: number) => {
@@ -331,8 +353,11 @@ export function TablePage() {
       setEndFlowStage(null);
       return;
     }
-    setEndFlowStage((s) => (s === null ? 'splash' : s));
-  }, [localGame]);
+    const t = window.setTimeout(() => {
+      setEndFlowStage((s) => (s === null ? 'splash' : s));
+    }, END_GAME_SPLASH_DELAY_MS);
+    return () => clearTimeout(t);
+  }, [localGame?.localId, localGame?.state.phase, localGame?.state.winner, localGame?.gameOver]);
 
   useEffect(() => {
     if (localGame?.state.phase === GamePhase.FINISHED) {

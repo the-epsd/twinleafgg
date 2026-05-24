@@ -60,7 +60,6 @@
     rgba(10, 14, 20, 0.5) 0%,
     rgba(4, 8, 22, 0.5) 70%
   );
-  cursor: pointer;
   overflow: hidden;
   animation: splashFadeIn 0.4s ease-out forwards;
 }

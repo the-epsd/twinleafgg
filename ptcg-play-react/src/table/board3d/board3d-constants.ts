@@ -26,11 +26,21 @@ export const BOARD3D_CARD_SLOT_BASE_HEIGHT = 3.8;
 
 /**
  * Drop-zone hit targets vs card footprint (~35% larger — middle of requested 30–40%).
- * Used by {@link Board3dDropZone} defaults, bench/general/board zones, and slot outlines.
+ * Used by {@link Board3dDropZone} defaults, active/supporter/stadium zones, and non-bench slot outlines.
  */
 export const BOARD3D_DROP_ZONE_TARGET_SCALE = 1.35;
 
-/** Snap radius when resolving drags to small zones (active, bench slot, supporter, stadium). */
+/**
+ * Bench slot drop targets — tighter than other slots so drags must land on the spot.
+ * Blue bench slot outlines use the same dimensions for visualization.
+ */
+export const BOARD3D_BENCH_DROP_ZONE_TARGET_SCALE = 1.0;
+export const BOARD3D_BENCH_DROP_ZONE_WIDTH =
+  BOARD3D_CARD_SLOT_BASE_WIDTH * BOARD3D_BENCH_DROP_ZONE_TARGET_SCALE;
+export const BOARD3D_BENCH_DROP_ZONE_HEIGHT =
+  BOARD3D_CARD_SLOT_BASE_HEIGHT * BOARD3D_BENCH_DROP_ZONE_TARGET_SCALE;
+
+/** Snap radius when resolving drags to small zones (active, supporter, stadium). */
 export const BOARD3D_DROP_ZONE_SNAP_DISTANCE = 3.5 * BOARD3D_DROP_ZONE_TARGET_SCALE;
 
 /**
