@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage, PlayerType, SuperType, TrainerType } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -32,24 +32,14 @@ export class Raticate extends PokemonCard {
   public fullName: string = 'Raticate M3';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Scrape Off - optionally discard Tool
+    // Scrape Off - discard all Tools from opponent's Active
+    // Ref: set-fusion-strike/sigilyph.ts (Joust)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
       if (opponent.active.tools.length > 0) {
-        return store.prompt(state, new ChooseCardsPrompt(
-          player,
-          GameMessage.CHOOSE_CARD_TO_DISCARD,
-          opponent.active,
-          { superType: SuperType.TRAINER, trainerType: TrainerType.TOOL },
-          { min: 0, max: 1, allowCancel: false }
-        ), selected => {
-          const cards = selected || [];
-          if (cards.length > 0) {
-            opponent.active.moveCardsTo(cards, opponent.discard);
-          }
-        });
+        opponent.active.moveCardsTo([...opponent.active.tools], opponent.discard);
       }
     }
 
