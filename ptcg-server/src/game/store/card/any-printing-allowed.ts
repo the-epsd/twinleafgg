@@ -53,5 +53,6 @@ export const ANY_PRINTING_ALLOWED: string[] = [
   'Double Colorless Energy',
   'Lady',
   'Max Potion',
-  'Pokédex'
+  'Pokédex',
+  'Here Comes Team Rocket!'
 ]; 
