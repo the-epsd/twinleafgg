@@ -38,6 +38,10 @@ import { RemoveDamageOverlay } from './RemoveDamageOverlay';
 import { MoveDamageOverlay } from './MoveDamageOverlay';
 import { scanBlockedOwnZeroDamageFromState } from './pokemonPromptRows';
 import { BOARD3D_ATTACK_ANIMATION_DURATION_SEC } from '../board3d/services/board-3d-animation.service';
+import {
+  autoTakeChoosePrizeIndices,
+  shouldAutoTakeChoosePrize,
+} from './choosePrizeAutoTake';
 
 const CHOOSE_CARDS_CARD_BACK = '/assets/cardback.png';
 
@@ -428,6 +432,38 @@ export function TablePromptLayer({
     [onResolvePrompt],
   );
 
+  const autoTakenChoosePrizeIdRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    autoTakenChoosePrizeIdRef.current = null;
+  }, [localGame.localId]);
+
+  useEffect(() => {
+    if (localGame.replay || suppressChoosePrizePrompt) {
+      return;
+    }
+    const p = activePrompt;
+    if (!p || p.type !== 'Choose prize' || p.playerId !== clientId) {
+      return;
+    }
+    const cpp = p as ChoosePrizePrompt;
+    if (!shouldAutoTakeChoosePrize(localGame, cpp)) {
+      return;
+    }
+    if (autoTakenChoosePrizeIdRef.current === p.id) {
+      return;
+    }
+    autoTakenChoosePrizeIdRef.current = p.id;
+    resolve(p.id, autoTakeChoosePrizeIndices(localGame, cpp));
+  }, [
+    activePrompt,
+    clientId,
+    localGame,
+    localGame.replay,
+    resolve,
+    suppressChoosePrizePrompt,
+  ]);
+
   if (localGame.replay) {
     return null;
   }
@@ -443,6 +479,14 @@ export function TablePromptLayer({
   const p = activePrompt;
 
   if (suppressChoosePrizePrompt && p.type === 'Choose prize') {
+    return null;
+  }
+
+  if (
+    p.type === 'Choose prize' &&
+    p.playerId === clientId &&
+    shouldAutoTakeChoosePrize(localGame, p as ChoosePrizePrompt)
+  ) {
     return null;
   }
 

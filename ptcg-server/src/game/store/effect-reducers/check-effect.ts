@@ -13,10 +13,10 @@ import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { ShuffleDeckPrompt } from '../prompts/shuffle-prompt';
 import { setupGame } from '../reducers/setup-reducer';
 import { CardList } from '../state/card-list';
+import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { GamePhase, GameWinner, State } from '../state/state';
 import { StoreLike } from '../store-like';
-import { GameStatsTracker } from '../game-stats-tracker';
 
 interface PokemonItem {
   playerNum: number;
@@ -180,6 +180,34 @@ function chooseActivePokemons(state: State): ChoosePokemonPrompt[] {
   return prompts;
 }
 
+function opponentHasNoPokemonInPlay(state: State, takerIndex: number): boolean {
+  const opponent = state.players[takerIndex === 0 ? 1 : 0];
+  if (opponent.active.cards.length > 0) {
+    return false;
+  }
+  return !opponent.bench.some(bench => bench.cards.length > 0);
+}
+
+function autoTakePrizeCards(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  count: number,
+  destination: CardList
+): number {
+  const prizesToTake = player.prizes.filter(p => p.cards.length > 0).slice(0, count);
+  if (prizesToTake.length === 0) {
+    return 0;
+  }
+
+  TAKE_SPECIFIC_PRIZES(store, state, player, prizesToTake, {
+    destination: destination || player.hand,
+    skipReduce: false
+  });
+
+  return prizesToTake.length;
+}
+
 function choosePrizeCards(store: StoreLike, state: State, prizeGroups: PrizeGroup[][]): ChoosePrizePrompt[] {
   const prompts: ChoosePrizePrompt[] = [];
 
@@ -195,19 +223,17 @@ function choosePrizeCards(store: StoreLike, state: State, prizeGroups: PrizeGrou
 
       // If prizes to take >= remaining prizes, automatically take all prizes and end game
       if (group.count >= prizeLeft && prizeLeft > 0) {
-        // Use TAKE_SPECIFIC_PRIZES to properly track the prizes taken
-        const remainingPrizes = player.prizes.filter(p => p.cards.length > 0);
-        TAKE_SPECIFIC_PRIZES(store, state, player, remainingPrizes, {
-          destination: group.destination || player.hand,
-          skipReduce: false
-        });
-
-        // Track the accurate number of prizes taken using GameStatsTracker
-        GameStatsTracker.trackPrizeTaken(player, remainingPrizes.length);
+        autoTakePrizeCards(store, state, player, prizeLeft, group.destination || player.hand);
 
         // End game with this player as winner
         endGame(store, state, i === 0 ? GameWinner.PLAYER_1 : GameWinner.PLAYER_2);
         return [];
+      }
+
+      // Last Pokémon in play — take KO prizes without prompting
+      if (group.count > 0 && opponentHasNoPokemonInPlay(state, i)) {
+        autoTakePrizeCards(store, state, player, group.count, group.destination || player.hand);
+        continue;
       }
 
       if (group.count > prizeLeft) {
