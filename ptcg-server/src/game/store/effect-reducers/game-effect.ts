@@ -164,10 +164,6 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     yield store.waitPrompt(state, () => next());
   }
 
-  // --- Attack Animation Trigger ---
-  // Set triggerAttackAnimation on the attacking Pokemon
-  attackingPokemon.triggerAttackAnimation = true;
-
   // Find slot and index for the attackingPokemon
   let slot: string | undefined = undefined;
   let index: number | undefined = undefined;
@@ -198,14 +194,6 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
       }
     });
   }
-
-  // Yield a wait prompt for the animation (1 second)
-  yield store.prompt(state, new WaitPrompt(player.id, 1000, 'Attack animation'), () => {
-    // After wait, clear the animation flag
-    attackingPokemon.triggerAttackAnimation = false;
-    next();
-  });
-  // --- End Attack Animation Trigger ---
 
   if (attackEffect.damage > 0) {
     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);
@@ -710,4 +698,3 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
 
   return state;
 }
-

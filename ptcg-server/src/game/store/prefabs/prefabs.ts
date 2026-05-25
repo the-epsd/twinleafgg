@@ -2299,7 +2299,7 @@ export function GET_FIRST_PLAYER_BENCH_SLOT(player: Player): PokemonCardList {
 }
 
 export function GET_PLAYER_BENCH_SLOTS(player: Player): PokemonCardList[] {
-  return player.bench.filter(b => b.cards.length === 0);
+  return player.bench.filter(b => b.cards.length === 0).reverse();
 }
 
 export function BLOCK_IF_NO_SLOTS(slots: PokemonCardList[]) {
