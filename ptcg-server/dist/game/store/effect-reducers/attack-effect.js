@@ -1,0 +1,233 @@
+import { GameError } from '../../game-error';
+import { GameLog, GameMessage } from '../../game-message';
+import { PutDamageEffect, DealDamageEffect, DiscardCardsEffect, AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect, RemoveSpecialConditionsEffect, ApplyWeaknessEffect, AfterDamageEffect, PutCountersEffect, CardsToHandEffect, KnockOutOpponentEffect, KOEffect, LostZoneCardsEffect, AfterWeaknessAndResistanceEffect } from '../effects/attack-effects';
+import { HealEffect } from '../effects/game-effects';
+import { StateUtils } from '../state-utils';
+import { getCardTarget } from '../../../simple-bot/simple-tactics/simple-tactics';
+import { EffectOfAttackEffect } from '../effects/effect-of-attack-effects';
+import { GameStatsTracker } from '../game-stats-tracker';
+import { CheckHpEffect } from '../effects/check-effects';
+export function attackReducer(store, state, effect) {
+    if (effect instanceof PutDamageEffect) {
+        const target = effect.target;
+        const sourceOwner = StateUtils.findOwner(state, effect.source);
+        const targetCard = target.getPokemonCard();
+        if (targetCard === undefined) {
+            throw new GameError(GameMessage.ILLEGAL_ACTION);
+        }
+        const opponent = StateUtils.getOpponent(state, effect.player);
+        if (effect.attackEffect && target === opponent.active && !effect.weaknessApplied) {
+            // Apply weakness
+            const applyWeakness = new ApplyWeaknessEffect(effect.attackEffect, effect.damage);
+            applyWeakness.target = effect.target;
+            applyWeakness.ignoreWeakness = effect.attackEffect.ignoreWeakness;
+            applyWeakness.ignoreResistance = effect.attackEffect.ignoreResistance;
+            state = store.reduceEffect(state, applyWeakness);
+            effect.damage = applyWeakness.damage;
+            const targetOwner = StateUtils.findOwner(state, target);
+            targetOwner.marker.addMarkerToState(targetOwner.DAMAGE_DEALT_MARKER);
+        }
+        // Apply damage reduction for "during opponent's next turn" effects
+        if (target.damageReductionNextTurn > 0) {
+            effect.damage = Math.max(0, effect.damage - target.damageReductionNextTurn);
+        }
+        const damage = Math.max(0, effect.damage);
+        target.damage += damage;
+        if (damage > 0) {
+            store.log(state, GameLog.LOG_PLAYER_DEALS_DAMAGE, {
+                name: sourceOwner.name,
+                damage: damage,
+                target: targetCard.name,
+                effect: effect.attack.name,
+            });
+            const targetOwner = StateUtils.findOwner(state, target);
+            targetOwner.marker.addMarkerToState(targetOwner.DAMAGE_DEALT_MARKER);
+            // Track damage dealt by the attacking Pokemon
+            if (effect.attackEffect && effect.source) {
+                GameStatsTracker.trackDamageDealt(effect.player, effect.source, damage);
+            }
+            if (targetCard.damageTakenLastTurn !== undefined) {
+                targetCard.damageTakenLastTurn += damage;
+            }
+            if (effect.surviveOnTenHPReason !== undefined) {
+                const checkHpEffect = new CheckHpEffect(effect.player, target);
+                state = store.reduceEffect(state, checkHpEffect);
+                if (target.damage > checkHpEffect.hp) {
+                    store.log(state, GameLog.LOG_SURVIVES_ON_TEN_HP, {
+                        pokemon: targetCard.name,
+                        reason: effect.surviveOnTenHPReason,
+                    });
+                    target.damage = checkHpEffect.hp - 10;
+                }
+            }
+            const afterDamageEffect = new AfterDamageEffect(effect.attackEffect, damage);
+            afterDamageEffect.target = effect.target;
+            store.reduceEffect(state, afterDamageEffect);
+        }
+        // --- Track damaged targets for animation ---
+        if (effect.attackEffect && effect.attackEffect.player && effect.attackEffect.player.active.pendingAttackTargets) {
+            try {
+                const cardTarget = getCardTarget(effect.attackEffect.player, state, target);
+                const pending = effect.attackEffect.player.active.pendingAttackTargets;
+                if (Array.isArray(pending) && !pending.some(t => t.player === cardTarget.player && t.slot === cardTarget.slot && t.index === cardTarget.index)) {
+                    pending.push(cardTarget);
+                }
+            }
+            catch (e) { /* ignore if cannot resolve target */ }
+        }
+        // --- End tracking ---
+    }
+    if (effect instanceof AfterWeaknessAndResistanceEffect) {
+        const target = effect.target;
+        const damage = Math.max(0, effect.damage);
+        target.damage += damage;
+        // Track damage dealt by the attacking Pokemon
+        if (damage > 0 && effect.attackEffect && effect.source) {
+            GameStatsTracker.trackDamageDealt(effect.player, effect.source, damage);
+        }
+    }
+    if (effect instanceof DealDamageEffect) {
+        const base = effect.attackEffect;
+        const applyWeakness = new ApplyWeaknessEffect(base, effect.damage);
+        applyWeakness.target = effect.target;
+        applyWeakness.ignoreWeakness = base.ignoreWeakness;
+        applyWeakness.ignoreResistance = base.ignoreResistance;
+        state = store.reduceEffect(state, applyWeakness);
+        const dealDamage = new PutDamageEffect(base, applyWeakness.damage);
+        dealDamage.target = effect.target;
+        dealDamage.weaknessApplied = true;
+        state = store.reduceEffect(state, dealDamage);
+        return state;
+    }
+    if (effect instanceof KOEffect) {
+        const target = effect.target;
+        const pokemonCard = target.getPokemonCard();
+        if (pokemonCard === undefined) {
+            throw new GameError(GameMessage.ILLEGAL_ACTION);
+        }
+        // Check if the effect is part of an attack and the target is the opponent's active Pokemon
+        const opponent = StateUtils.getOpponent(state, effect.player);
+        if (effect.attackEffect && target === opponent.active) {
+            // Apply weakness
+            const applyWeakness = new ApplyWeaknessEffect(effect.attackEffect, effect.damage);
+            applyWeakness.target = effect.target;
+            applyWeakness.ignoreWeakness = effect.attackEffect.ignoreWeakness;
+            applyWeakness.ignoreResistance = effect.attackEffect.ignoreResistance;
+            state = store.reduceEffect(state, applyWeakness);
+            effect.damage = applyWeakness.damage;
+        }
+        const damage = Math.max(0, effect.damage);
+        target.damage += damage;
+        const targetOwner = StateUtils.findOwner(state, target);
+        targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
+        if (damage > 0) {
+            // Track damage dealt by the attacking Pokemon
+            if (effect.attackEffect && effect.source) {
+                GameStatsTracker.trackDamageDealt(effect.player, effect.source, damage);
+            }
+            const afterDamageEffect = new AfterDamageEffect(effect.attackEffect, damage);
+            afterDamageEffect.target = effect.target;
+            store.reduceEffect(state, afterDamageEffect);
+        }
+    }
+    if (effect instanceof KnockOutOpponentEffect) {
+        const target = effect.target;
+        const pokemonCard = target.getPokemonCard();
+        if (pokemonCard === undefined) {
+            throw new GameError(GameMessage.ILLEGAL_ACTION);
+        }
+        const damage = Math.max(0, effect.damage);
+        target.damage += damage;
+        // Track damage dealt by the attacking Pokemon
+        if (damage > 0 && effect.attackEffect && effect.source) {
+            GameStatsTracker.trackDamageDealt(effect.player, effect.source, damage);
+        }
+    }
+    if (effect instanceof PutCountersEffect) {
+        const target = effect.target;
+        const sourceOwner = StateUtils.findOwner(state, effect.source);
+        const targetCard = target.getPokemonCard();
+        if (targetCard === undefined) {
+            throw new GameError(GameMessage.ILLEGAL_ACTION);
+        }
+        const damage = Math.max(0, effect.damage);
+        target.damage += damage;
+        if (damage > 0) {
+            store.log(state, GameLog.LOG_PLAYER_PLACES_DAMAGE_COUNTERS, {
+                name: sourceOwner.name,
+                damage: damage,
+                target: targetCard.name,
+                effect: effect.attack.name,
+            });
+            // Track damage dealt by the attacking Pokemon
+            if (effect.attackEffect && effect.source) {
+                GameStatsTracker.trackDamageDealt(effect.player, effect.source, damage);
+            }
+        }
+    }
+    if (effect instanceof AfterDamageEffect) {
+        const targetOwner = StateUtils.findOwner(state, effect.target);
+        targetOwner.marker.addMarkerToState(effect.player.DAMAGE_DEALT_MARKER);
+    }
+    if (effect instanceof DiscardCardsEffect) {
+        const target = effect.target;
+        const cards = effect.cards;
+        const owner = StateUtils.findOwner(state, target);
+        target.moveCardsTo(cards, owner.discard);
+        return state;
+    }
+    if (effect instanceof LostZoneCardsEffect) {
+        const target = effect.target;
+        const cards = effect.cards;
+        const owner = StateUtils.findOwner(state, target);
+        target.moveCardsTo(cards, owner.lostzone);
+        return state;
+    }
+    if (effect instanceof CardsToHandEffect) {
+        const target = effect.target;
+        const cards = effect.cards;
+        const owner = StateUtils.findOwner(state, target);
+        target.moveCardsTo(cards, owner.hand);
+        return state;
+    }
+    if (effect instanceof AddMarkerEffect) {
+        const target = effect.target;
+        target.marker.addMarker(effect.markerName, effect.markerSource);
+        return state;
+    }
+    if (effect instanceof HealTargetEffect) {
+        const target = effect.target;
+        const owner = StateUtils.findOwner(state, target);
+        const healEffect = new HealEffect(owner, target, effect.damage);
+        state = store.reduceEffect(state, healEffect);
+        return state;
+    }
+    if (effect instanceof AddSpecialConditionsEffect) {
+        const target = effect.target;
+        effect.specialConditions.forEach(sp => {
+            target.addSpecialCondition(sp);
+        });
+        if (effect.poisonDamage !== undefined) {
+            target.poisonDamage = effect.poisonDamage;
+        }
+        if (effect.burnDamage !== undefined) {
+            target.burnDamage = effect.burnDamage;
+        }
+        if (effect.confusionDamage !== undefined) {
+            target.confusionDamage = effect.confusionDamage;
+        }
+        return state;
+    }
+    if (effect instanceof RemoveSpecialConditionsEffect) {
+        const target = effect.target;
+        effect.specialConditions.forEach(sp => {
+            target.removeSpecialCondition(sp);
+        });
+        return state;
+    }
+    if (effect instanceof EffectOfAttackEffect) {
+        effect.applyEffect();
+        return state;
+    }
+    return state;
+}
