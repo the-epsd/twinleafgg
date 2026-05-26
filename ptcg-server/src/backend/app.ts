@@ -13,6 +13,7 @@ import {
   ControllerClass,
   Decks,
   Game,
+  Headless,
   Images,
   Login,
   Replays,
@@ -83,6 +84,7 @@ export class App {
     define('/v1/cards', Cards);
     define('/v1/decks', Decks);
     define('/v1/game', Game);
+    define('/v1/headless', Headless);
     define('/v1/images', Images);
     define('/v1/login', Login);
     define('/v1/replays', Replays);

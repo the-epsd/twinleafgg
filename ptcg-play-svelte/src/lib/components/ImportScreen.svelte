@@ -70,7 +70,7 @@
 
 <section class="import-screen">
   <div class="mode-tabs" role="tablist" aria-label="Play mode">
-    <button class:active={mode === 'local'} type="button" onclick={() => setMode('local')}>Local</button>
+    <button class:active={mode === 'local'} type="button" onclick={() => setMode('local')}>Single-player</button>
     <button class:active={mode === 'remote'} type="button" onclick={() => setMode('remote')}>Online</button>
   </div>
 
@@ -86,7 +86,7 @@
       </label>
     </div>
     <button class="primary" disabled={busy} onclick={handleStart}>
-      {busy ? 'Starting...' : 'Start local game'}
+      {busy ? 'Starting...' : 'Start game'}
     </button>
     {#if error}
       <pre class="error">{error}</pre>

@@ -51,6 +51,23 @@ SERVER_PASSWORD=''
 SERVER_SECRET='!secret!'
 ```
 
+For hosted clients on a separate origin, add the client URL to the server's
+CORS allowlist:
+
+```
+CORS_ALLOWED_ORIGINS='https://your-client.up.railway.app'
+```
+
+Use a comma-separated list if you need to allow more than one hosted client.
+The Svelte client can be pointed at the deployed server at build time:
+
+```
+VITE_DEFAULT_SERVER_URL='https://your-server.up.railway.app'
+```
+
+When this is set, the Svelte client's single-player mode uses the server's
+headless engine endpoint instead of the local development engine.
+
 3. Start the server.
 
 ```

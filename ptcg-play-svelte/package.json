@@ -8,15 +8,17 @@
   },
   "scripts": {
     "dev": "npm run dev:engine & npm run dev:web",
-    "dev:web": "vite --host 0.0.0.0 --port 5174 --strictPort",
+    "dev:web": "vite --host 0.0.0.0 --port 5173 --strictPort",
     "dev:engine": "tsx src/engine/server.ts",
     "build": "tsc -p tsconfig.json && vite build",
+    "start": "sirv dist --host 0.0.0.0 --port ${PORT:-4173} --single",
     "test": "vitest run",
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
     "@sveltejs/vite-plugin-svelte": "^6.2.1",
     "ptcg-server": "file:../ptcg-server",
+    "sirv-cli": "^3.0.1",
     "socket.io-client": "^4.8.3",
     "svelte": "^5.45.6",
     "vite": "^7.2.7"

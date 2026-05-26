@@ -3,6 +3,7 @@ import { Format, GameSettings, type ClientInfo, type CoreInfo, type GameInfo, ty
 import type { GameCommandApi } from '../lib/game/gameApi';
 import type { EngineResponse, GameView, LogView } from '../lib/game/types';
 import { RemoteCommandApi } from '../lib/game/remoteCommandApi';
+import { configuredServerUrl } from '../lib/game/serverConfig';
 import { applyCardsInfoToSerializer, gameStateToGameView } from '../lib/game/serverGameView';
 import { gameStore } from './game.svelte';
 import { gameSessionStore } from './gameSession.svelte';
@@ -30,7 +31,7 @@ export type PlayMode = 'local' | 'remote';
 class RemoteSessionStore {
   mode = $state<PlayMode>('local');
   displayName = $state('Player');
-  serverUrl = $state('');
+  serverUrl = $state(configuredServerUrl());
   connected = $state(false);
   connecting = $state(false);
   busy = $state(false);

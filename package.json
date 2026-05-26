@@ -1,4 +1,13 @@
 {
+  "private": true,
+  "workspaces": [
+    "ptcg-server",
+    "ptcg-play-svelte"
+  ],
+  "scripts": {
+    "build": "npm --workspace ptcg-play-svelte run build",
+    "start": "npm --workspace ptcg-play-svelte run start"
+  },
   "dependencies": {
     "@tcgdex/sdk": "^2.7.0",
     "node-fetch": "^3.3.2",

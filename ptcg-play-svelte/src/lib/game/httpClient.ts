@@ -1,5 +1,7 @@
 import type { GameCommandApi } from './gameApi';
-import type { CardTarget, EngineResponse } from './types';
+import { buildHeadlessGameView } from './headlessView';
+import { configuredServerUrl } from './serverConfig';
+import type { CardTarget, EngineResponse, GameView } from './types';
 
 type Command = {
   type: string;
@@ -7,6 +9,11 @@ type Command = {
 };
 
 async function send(command: Command): Promise<EngineResponse> {
+  const serverUrl = configuredServerUrl();
+  if (serverUrl) {
+    return sendHostedHeadless(serverUrl, toHeadlessCommand(command));
+  }
+
   const res = await fetch('/local-engine', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -14,6 +21,70 @@ async function send(command: Command): Promise<EngineResponse> {
   });
   const data = (await res.json()) as EngineResponse;
   return data;
+}
+
+let hostedLastView: GameView | undefined;
+
+async function sendHostedHeadless(serverUrl: string, command: Command): Promise<EngineResponse> {
+  const res = await fetch(`${serverUrl}/v1/headless`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      ...command,
+      sessionId: getHeadlessSessionId(),
+    }),
+  });
+  const data = await res.json();
+  if (typeof data.sessionId === 'string') {
+    setHeadlessSessionId(data.sessionId);
+  }
+  if (!res.ok || !data.ok) {
+    return {
+      ok: false,
+      error: data.error || 'Headless engine request failed.',
+      view: hostedLastView,
+    };
+  }
+  const view = buildHeadlessGameView(data);
+  hostedLastView = view;
+  return { ok: true, view };
+}
+
+function toHeadlessCommand(command: Command): Command {
+  if (command.type === 'startGame') {
+    return {
+      type: 'newGame',
+      payload: {
+        ...(command.payload as Record<string, unknown>),
+        promptMode: 'manual',
+      },
+    };
+  }
+  return command;
+}
+
+function getHeadlessSessionId(): string {
+  try {
+    const existing = window.sessionStorage.getItem('twinleaf.headlessSessionId');
+    if (existing) {
+      return existing;
+    }
+    const next = typeof window.crypto?.randomUUID === 'function'
+      ? window.crypto.randomUUID()
+      : `${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
+    setHeadlessSessionId(next);
+    return next;
+  } catch {
+    return '';
+  }
+}
+
+function setHeadlessSessionId(sessionId: string): void {
+  try {
+    window.sessionStorage.setItem('twinleaf.headlessSessionId', sessionId);
+  } catch {
+    // Session ids are only a convenience for separating in-memory engine sessions.
+  }
 }
 
 export const localGameApi: GameCommandApi & {
