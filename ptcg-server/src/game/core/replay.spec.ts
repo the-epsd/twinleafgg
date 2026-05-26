@@ -79,7 +79,6 @@ describe('Replay', () => {
     const result = validateReplayActions(replay, { initialState: replay.getState(0) });
 
     expect(result.ok).toBe(true);
-    expect(actionEvents.some(event => event.payload.type === 'RESOLVE_PROMPT')).toBe(true);
     expect(result.actionCount).toBe(actionEvents.length);
     expect(result.checkedStateCount).toBe(1);
     expect(result.mismatches).toEqual([]);

@@ -9,8 +9,11 @@ const Module = require('module');
 
 const setsDir = path.resolve(__dirname, '..');
 const EXPORT_PATH_REGEX = /export \* from '\.\/([^']+)'/g;
+const COMMONJS_EXPORT_PATH_REGEX = /__exportStar\(require\(["']\.\/([^"']+)["']\), exports\)/g;
 const IMPORT_PATH_REGEX = /from '\.\/([^']+)'/g;
+const COMMONJS_IMPORT_PATH_REGEX = /require\(["']\.\/([^"']+)["']\)/g;
 const SET_DECLARATION_REGEX = /public set(?:\s*:\s*string)?\s*=\s*['"]([^'"]+)['"]/;
+const COMPILED_SET_DECLARATION_REGEX = /this\.set\s*=\s*['"]([^'"]+)['"]/;
 const SET_CODE_REGEX = /^[A-Z0-9-]{2,8}$/;
 
 let setCodeToModules: Map<string, string[]> | undefined;
@@ -36,18 +39,22 @@ function defineSet(cards: Card[]): void {
 }
 
 function getExportedSetModulePaths(): string[] {
-  const indexContent = fs.readFileSync(path.join(setsDir, 'index.ts'), 'utf8');
+  const indexContent = fs.readFileSync(resolveModuleFile(path.join(setsDir, 'index')), 'utf8');
   const modulePaths: string[] = [];
   EXPORT_PATH_REGEX.lastIndex = 0;
+  COMMONJS_EXPORT_PATH_REGEX.lastIndex = 0;
   let match: RegExpExecArray | null;
   while ((match = EXPORT_PATH_REGEX.exec(indexContent)) !== null) {
+    modulePaths.push(match[1]);
+  }
+  while ((match = COMMONJS_EXPORT_PATH_REGEX.exec(indexContent)) !== null) {
     modulePaths.push(match[1]);
   }
   return modulePaths;
 }
 
 function extractSetCodeFromSource(source: string): string | undefined {
-  const match = SET_DECLARATION_REGEX.exec(source);
+  const match = SET_DECLARATION_REGEX.exec(source) || COMPILED_SET_DECLARATION_REGEX.exec(source);
   if (!match) {
     return undefined;
   }
@@ -57,7 +64,7 @@ function extractSetCodeFromSource(source: string): string | undefined {
 
 function inferSetCodeFromModule(moduleName: string): string | undefined {
   const moduleDir = path.join(setsDir, moduleName);
-  const indexPath = path.join(moduleDir, 'index.ts');
+  const indexPath = findModuleFile(path.join(moduleDir, 'index'));
   if (!fs.existsSync(indexPath)) {
     return undefined;
   }
@@ -65,13 +72,17 @@ function inferSetCodeFromModule(moduleName: string): string | undefined {
   const indexContent = fs.readFileSync(indexPath, 'utf8');
   const candidateFiles: string[] = [];
   IMPORT_PATH_REGEX.lastIndex = 0;
+  COMMONJS_IMPORT_PATH_REGEX.lastIndex = 0;
   let match: RegExpExecArray | null;
   while ((match = IMPORT_PATH_REGEX.exec(indexContent)) !== null) {
-    candidateFiles.push(path.join(moduleDir, `${match[1]}.ts`));
+    candidateFiles.push(resolveModuleFile(path.join(moduleDir, match[1])));
+  }
+  while ((match = COMMONJS_IMPORT_PATH_REGEX.exec(indexContent)) !== null) {
+    candidateFiles.push(resolveModuleFile(path.join(moduleDir, match[1])));
   }
 
   const fallbackFiles = fs.readdirSync(moduleDir)
-    .filter(file => file.endsWith('.ts') && file !== 'index.ts')
+    .filter(file => (file.endsWith('.ts') || file.endsWith('.js')) && file !== 'index.ts' && file !== 'index.js')
     .map(file => path.join(moduleDir, file));
 
   for (const candidateFile of [...candidateFiles, ...fallbackFiles]) {
@@ -117,11 +128,7 @@ function extractSetCodeFromFullName(fullName: string): string {
 }
 
 function loadSetModule(moduleName: string): void {
-  if (loadedSetModules.has(moduleName)) {
-    return;
-  }
-
-  const mod = requirePreferTs(path.join(setsDir, moduleName, 'index.ts'));
+  const mod = requirePreferLocal(path.join(setsDir, moduleName, 'index'));
   for (const key of Object.keys(mod)) {
     const value = mod[key];
     if (Array.isArray(value) && value.length > 0 && value[0] instanceof Card) {
@@ -159,7 +166,7 @@ export function registerAllCards(): void {
     return;
   }
 
-  const sets = requirePreferTs(path.join(setsDir, 'index.ts'));
+  const sets = requirePreferLocal(path.join(setsDir, 'index'));
   const entries = Object.keys(sets)
     .filter(key => key.startsWith('set') && Array.isArray(sets[key]))
     .map(key => ({ key: `sets.${key}`, cards: sets[key] as Card[] }));
@@ -173,25 +180,54 @@ export function registerAllCards(): void {
   updateKnownCards();
 }
 
-function requirePreferTs(filePath: string): any {
+function findModuleFile(filePath: string): string {
+  if (path.extname(filePath) && fs.existsSync(filePath)) {
+    return filePath;
+  }
+
+  const tsFile = `${filePath}.ts`;
+  if (fs.existsSync(tsFile)) {
+    return tsFile;
+  }
+
+  const jsFile = `${filePath}.js`;
+  if (fs.existsSync(jsFile)) {
+    return jsFile;
+  }
+
+  const tsIndex = path.join(filePath, 'index.ts');
+  if (fs.existsSync(tsIndex)) {
+    return tsIndex;
+  }
+
+  const jsIndex = path.join(filePath, 'index.js');
+  if (fs.existsSync(jsIndex)) {
+    return jsIndex;
+  }
+
+  return filePath;
+}
+
+function resolveModuleFile(filePath: string): string {
+  const resolved = findModuleFile(filePath);
+  if (fs.existsSync(resolved)) {
+    return resolved;
+  }
+  throw new Error(`[cards] Module file not found for "${filePath}"`);
+}
+
+function requirePreferLocal(filePath: string): any {
   const originalResolve = (Module as any)._resolveFilename;
   (Module as any)._resolveFilename = function (request: string, parent: any, isMain: boolean, options: any) {
     if (parent?.filename?.startsWith(setsDir) && request.startsWith('.') && !path.extname(request)) {
       const absolute = path.resolve(path.dirname(parent.filename), request);
-      const tsFile = `${absolute}.ts`;
-      const tsIndex = path.join(absolute, 'index.ts');
-      if (fs.existsSync(tsFile)) {
-        return tsFile;
-      }
-      if (fs.existsSync(tsIndex)) {
-        return tsIndex;
-      }
+      return resolveModuleFile(absolute);
     }
     return originalResolve.call(this, request, parent, isMain, options);
   };
 
   try {
-    return require(filePath);
+    return require(resolveModuleFile(filePath));
   } finally {
     (Module as any)._resolveFilename = originalResolve;
   }

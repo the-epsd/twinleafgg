@@ -9,6 +9,7 @@ import { Replay as GameReplay, ReplayPlayer } from '../../game';
 import { ReplayInfo, ReplayImport } from '../interfaces/replay.interface';
 import { Base64 } from '../../utils';
 import { config } from '../../config';
+import { deserializeReplayWithRegisteredCards } from '../../sets/registry/replay-card-registration';
 
 export class Replays extends Controller {
 
@@ -128,9 +129,9 @@ export class Replays extends Controller {
       return;
     }
 
-    const gameReplay = new GameReplay({ indexEnabled: false });
+    let gameReplay: GameReplay;
     try {
-      gameReplay.deserialize(match.replayData);
+      gameReplay = deserializeReplayWithRegisteredCards(match.replayData, { indexEnabled: false });
     } catch (error) {
       res.status(400);
       res.send({error: ApiErrorEnum.REPLAY_INVALID});
@@ -250,11 +251,11 @@ export class Replays extends Controller {
     }
 
     const base64 = new Base64();
-    const gameReplay = new GameReplay({ indexEnabled: false });
+    let gameReplay: GameReplay;
 
     try {
       const replayData = base64.decode(body.replayData);
-      gameReplay.deserialize(replayData);
+      gameReplay = deserializeReplayWithRegisteredCards(replayData, { indexEnabled: false });
 
       gameReplay.player1 = await this.syncReplayPlayer(gameReplay.player1);
       gameReplay.player2 = await this.syncReplayPlayer(gameReplay.player2);
