@@ -1,7 +1,6 @@
 <script lang="ts">
   import CardTile from '../CardTile.svelte';
   import PromptPanel from './primitives/PromptPanel.svelte';
-  import PromptMeta from './primitives/PromptMeta.svelte';
   import PromptIcon from './primitives/PromptIcon.svelte';
   import SelectableCard from './primitives/SelectableCard.svelte';
   import {
@@ -11,12 +10,7 @@
     prunePromptIndexes,
     samePromptIndexes,
   } from '../../game/prompts';
-  import type { CardView, PromptView } from '../../game/types';
-
-  type SelectedCard = {
-    index: number;
-    card: CardView;
-  };
+  import type { PromptView } from '../../game/types';
 
   type Props = {
     prompt: PromptView;
@@ -35,17 +29,6 @@
   let maxSelections = $derived(normalizeSelectionLimit(options.max, normalizeSelectionLimit(options.count, selectionPoolSize)));
   let minSelections = $derived(normalizeSelectionLimit(options.min, 0));
   let blockedIndexes = $derived(new Set<number>(promptBlockedIndexes(prompt)));
-  let selectedCards = $derived(
-    selectedIndexes
-      .map((index) => ({ index, card: cardForSelection(index) }))
-      .filter((item): item is SelectedCard => !!item.card),
-  );
-  let selectedSlotCount = $derived(
-    maxSelections <= 4
-      ? maxSelections
-      : Math.min(maxSelections, Math.max(minSelections, selectedIndexes.length + 1, 1)),
-  );
-  let selectedSlots = $derived(Array.from({ length: selectedSlotCount }, (_, index) => selectedCards[index] ?? null));
 
   $effect(() => {
     const key = `${prompt.id}:${prompt.className}`;
@@ -89,11 +72,7 @@
     return matchesCardFilter(cards.find((card, cardIndex) => (card.index ?? cardIndex) === index), fields.filter);
   }
 
-  function cardForSelection(index: number) {
-    return cards.find((card, cardIndex) => (card.index ?? cardIndex) === index);
-  }
-
-  function matchesCardFilter(card: CardView | undefined, filter: unknown) {
+  function matchesCardFilter(card: typeof cards[number] | undefined, filter: unknown) {
     if (!card || !filter || typeof filter !== 'object') {
       return true;
     }
@@ -112,28 +91,6 @@
   warning={!prompt.supported ? (prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.') : undefined}
 >
   {#snippet icon()}<PromptIcon name="cards" />{/snippet}
-
-  <PromptMeta label="Selected" current={selectedIndexes.length} max={maxSelections} min={minSelections} />
-
-  <div class="selected-card-slots" aria-label="Selected cards">
-    {#each selectedSlots as slot, slotIndex}
-      {#if slot}
-        <button
-          type="button"
-          class="selected-card-slot filled"
-          disabled={resolving}
-          title={`Remove ${slot.card.fullName ?? slot.card.name}`}
-          onclick={() => toggleIndex(slot.index)}
-        >
-          <CardTile card={slot.card} compact />
-        </button>
-      {:else}
-        <div class="selected-card-slot empty">
-          <span>{slotIndex + 1}</span>
-        </div>
-      {/if}
-    {/each}
-  </div>
 
   <div class="search-card-grid">
     {#each cards as card, index}

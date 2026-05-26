@@ -1,7 +1,7 @@
 <script lang="ts">
   import PromptPanel from './primitives/PromptPanel.svelte';
   import PromptIcon from './primitives/PromptIcon.svelte';
-  import { labelFor } from '../../game/labels';
+  import { promptTitle } from '../../game/promptCopy';
   import { promptOptions } from '../../game/prompts';
   import { getSelectableTargets, sameTarget } from '../../game/targets';
   import type { CardTarget, GameView, PromptView } from '../../game/types';
@@ -61,8 +61,7 @@
 </script>
 
 <PromptPanel
-  title={labelFor(prompt.className)}
-  subtitle={labelFor(prompt.message || prompt.type)}
+  title={promptTitle(prompt, isDiscard ? 'Discard energy' : 'Move energy')}
   warning={!prompt.supported ? (prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.') : undefined}
 >
   {#snippet icon()}<PromptIcon name="energy" />{/snippet}

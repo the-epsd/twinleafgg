@@ -11,6 +11,7 @@
   import ImportScreen from './lib/components/ImportScreen.svelte';
   import LogPanel from './lib/components/LogPanel.svelte';
   import PlayerPanel from './lib/components/PlayerPanel.svelte';
+  import PromptGallery from './lib/components/prompt-gallery/PromptGallery.svelte';
   import PromptDock from './lib/components/prompts/PromptDock.svelte';
   import PromptHost from './lib/components/prompts/PromptHost.svelte';
   import SetupDock from './lib/components/SetupDock.svelte';
@@ -94,11 +95,18 @@
   let showLogs = $derived(viewSettingsStore.showLogs);
   let theme = $derived(viewSettingsStore.theme);
   let themePreference = $derived(viewSettingsStore.themePreference);
+  let showPromptGallery = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('view') === 'prompt-gallery';
   onMount(() => viewSettingsStore.startThemeSync());
   $effect(() => {
     document.documentElement.dataset.theme = theme;
     document.documentElement.dataset.themePreference = themePreference;
     document.documentElement.style.colorScheme = theme;
+  });
+  $effect(() => {
+    document.body.classList.toggle('prompt-gallery-page', showPromptGallery);
+    return () => {
+      document.body.classList.remove('prompt-gallery-page');
+    };
   });
   let zoneViewerOpen = $derived(zoneViewerStore.open);
   let zoneViewerTitle = $derived(zoneViewerStore.title);
@@ -832,6 +840,9 @@
 
 </script>
 
+{#if showPromptGallery}
+  <PromptGallery />
+{:else}
 <main>
   {#if !game}
     <AppHeader />
@@ -1040,6 +1051,7 @@
     </TableShell>
   {/if}
 </main>
+{/if}
 
 <style>
   .invite-panel {

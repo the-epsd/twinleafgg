@@ -1,7 +1,7 @@
 <script lang="ts">
   import PromptPanel from './primitives/PromptPanel.svelte';
   import PromptIcon from './primitives/PromptIcon.svelte';
-  import { labelFor } from '../../game/labels';
+  import { promptTitle } from '../../game/promptCopy';
   import { extractPromptCards, promptOptions } from '../../game/prompts';
   import type { PromptView } from '../../game/types';
 
@@ -22,12 +22,10 @@
 </script>
 
 <PromptPanel
-  title={labelFor(prompt.className)}
-  subtitle={labelFor(prompt.message || prompt.type)}
+  title={promptTitle(prompt)}
   warning={!prompt.supported ? (prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.') : undefined}
 >
   {#snippet icon()}<PromptIcon name="shuffle" />{/snippet}
-  <p class="prompt-hint">Keep the shown order to continue.</p>
 
   {#snippet actions()}
     {#if options.allowCancel}

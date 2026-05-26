@@ -1,9 +1,16 @@
 <script lang="ts">
   import PromptPanel from './primitives/PromptPanel.svelte';
   import PromptIcon from './primitives/PromptIcon.svelte';
-  import { labelFor } from '../../game/labels';
+  import { promptTitle } from '../../game/promptCopy';
   import { extractPromptCards, promptOptions } from '../../game/prompts';
   import type { PromptView } from '../../game/types';
+
+  type AttackChoice = {
+    cardIndex: number;
+    cardName: string;
+    attackName: string;
+    blocked: boolean;
+  };
 
   type Props = {
     prompt: PromptView;
@@ -15,6 +22,15 @@
 
   let options = $derived(promptOptions(prompt));
   let cards = $derived(extractPromptCards(prompt.fields));
+  let attackChoices = $derived(cards.flatMap((card, cardIndex) =>
+    (card.attacks ?? []).map((attack) => ({
+      cardIndex: card.index ?? cardIndex,
+      cardName: card.name,
+      attackName: attack.name,
+      blocked: isBlockedAttack(card.index ?? cardIndex, attack.name),
+    } satisfies AttackChoice)),
+  ));
+  let multipleCards = $derived(new Set(attackChoices.map((choice) => choice.cardIndex)).size > 1);
 
   function isBlockedAttack(cardIndex: number, attackName: string) {
     const blocked = options.blocked;
@@ -24,23 +40,22 @@
 </script>
 
 <PromptPanel
-  title={labelFor(prompt.className)}
-  subtitle={labelFor(prompt.message || prompt.type)}
+  title={promptTitle(prompt, 'Choose attack')}
   warning={!prompt.supported ? (prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.') : undefined}
 >
   {#snippet icon()}<PromptIcon name="attack" />{/snippet}
 
   <div class="prompt-grid">
-    {#each cards as card, cardIndex}
-      {#each card.attacks ?? [] as attack}
-        <button
-          disabled={resolving || isBlockedAttack(card.index ?? cardIndex, attack.name)}
-          onclick={() => onresolve({ index: card.index ?? cardIndex, attack: attack.name })}
-        >
-          <strong>{card.name}: {attack.name}</strong>
-          {#if attack.damage}<span>{attack.damage}</span>{/if}
-        </button>
-      {/each}
+    {#each attackChoices as choice}
+      <button
+        class="attack-choice"
+        disabled={resolving || choice.blocked}
+        title={multipleCards ? `${choice.cardName}: ${choice.attackName}` : choice.attackName}
+        onclick={() => onresolve({ index: choice.cardIndex, attack: choice.attackName })}
+      >
+        {#if multipleCards}<span>{choice.cardName}</span>{/if}
+        <strong>{choice.attackName}</strong>
+      </button>
     {/each}
   </div>
 
@@ -50,3 +65,23 @@
     {/if}
   {/snippet}
 </PromptPanel>
+
+<style>
+  .attack-choice {
+    min-height: 46px;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .attack-choice span {
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 800;
+  }
+
+  .attack-choice strong {
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.15;
+  }
+</style>

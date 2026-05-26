@@ -1,6 +1,7 @@
 <script lang="ts">
   import PromptPanel from './primitives/PromptPanel.svelte';
   import { labelFor } from '../../game/labels';
+  import { promptTitle } from '../../game/promptCopy';
   import { promptOptions } from '../../game/prompts';
   import type { PromptView } from '../../game/types';
 
@@ -66,8 +67,7 @@
 </script>
 
 <PromptPanel
-  title={labelFor(prompt.className)}
-  subtitle={labelFor(prompt.message || prompt.type)}
+  title={isMulliganDrawPrompt ? 'Draw extra cards?' : promptTitle(prompt, 'Choose')}
   warning={!prompt.supported ? (prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.') : undefined}
 >
   {#if isMulliganDrawPrompt}

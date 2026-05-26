@@ -42,9 +42,6 @@
     <PromptTitle {title} {subtitle} {icon}>
       {#snippet trailing()}
         {#if headerExtra}{@render headerExtra()}{/if}
-        {#if collapsible}
-          <button type="button" class="ghost-button" onclick={() => (collapsed = true)}>Hide</button>
-        {/if}
       {/snippet}
     </PromptTitle>
 
@@ -58,9 +55,16 @@
       </div>
     {/if}
 
-    {#if actions}
+    {#if actions || collapsible}
       <div class="prompt-actions">
-        {@render actions()}
+        <div class="prompt-actions-left">
+          {#if collapsible}
+            <button type="button" onclick={() => (collapsed = true)}>Hide</button>
+          {/if}
+        </div>
+        <div class="prompt-actions-main">
+          {#if actions}{@render actions()}{/if}
+        </div>
       </div>
     {/if}
   </section>
@@ -137,17 +141,23 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: space-between;
   }
 
-  .ghost-button {
+  .prompt-actions-left,
+  .prompt-actions-main {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .prompt-actions-main {
+    justify-content: flex-end;
+    margin-left: auto;
+  }
+
+  .prompt-actions-left button {
     border-radius: var(--radius-sm);
-    padding: 6px 10px;
-    border-color: var(--button-ghost-border);
-    background: var(--button-ghost-bg);
-    color: var(--button-ghost-text);
-    box-shadow: none;
-    font-size: 12px;
   }
 </style>

@@ -11,6 +11,10 @@ body {
   color: var(--app-text);
 }
 
+body.prompt-gallery-page {
+  overflow: auto;
+}
+
 button,
 textarea,
 input {

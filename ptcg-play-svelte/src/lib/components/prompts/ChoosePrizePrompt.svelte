@@ -1,10 +1,9 @@
 <script lang="ts">
   import CardTile from '../CardTile.svelte';
   import PromptPanel from './primitives/PromptPanel.svelte';
-  import PromptMeta from './primitives/PromptMeta.svelte';
   import PromptIcon from './primitives/PromptIcon.svelte';
   import SelectableCard from './primitives/SelectableCard.svelte';
-  import { labelFor } from '../../game/labels';
+  import { promptTitle } from '../../game/promptCopy';
   import { promptBlockedIndexes, promptOptions, prunePromptIndexes, samePromptIndexes } from '../../game/prompts';
   import type { CardView, GameView, PromptView } from '../../game/types';
 
@@ -76,12 +75,10 @@
 </script>
 
 <PromptPanel
-  title={labelFor(prompt.className)}
-  subtitle={labelFor(prompt.message || prompt.type)}
+  title={promptTitle(prompt, 'Choose prize')}
   warning={!prompt.supported ? (prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.') : undefined}
 >
   {#snippet icon()}<PromptIcon name="prize" />{/snippet}
-  <PromptMeta label="Prizes" current={selectedIndexes.length} max={maxSelections} min={minSelections} />
 
   <div class="prize-prompt-grid">
     {#each prizeChoices as prize}
@@ -97,7 +94,6 @@
         {:else}
           <CardTile card={undefined} compact faceDown />
         {/if}
-        {#snippet label()}Prize {prize.index + 1}{/snippet}
       </SelectableCard>
     {/each}
   </div>

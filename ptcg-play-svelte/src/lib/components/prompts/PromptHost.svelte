@@ -148,51 +148,6 @@
     padding: 2px 4px 8px 2px;
   }
 
-  :global(.selected-card-slots) {
-    display: flex;
-    gap: 10px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding: 3px 1px 6px;
-  }
-
-  :global(.selected-card-slot) {
-    flex: 0 0 clamp(112px, 9.2vw, 148px);
-    width: clamp(112px, 9.2vw, 148px);
-    aspect-ratio: 63 / 88;
-    border-radius: var(--radius-md);
-  }
-
-  :global(.selected-card-slot.filled) {
-    padding: 0;
-    border: 1px solid var(--selection-border-strong);
-    background: var(--selection-bg);
-    box-shadow: var(--selection-shadow);
-  }
-
-  :global(.prompt-panel .selected-card-slot.filled > .card-tile),
-  :global(.prompt-panel .selected-card-slot.filled > .card-tile.compact) {
-    width: 100%;
-  }
-
-  :global(.selected-card-slot.empty) {
-    display: grid;
-    place-items: center;
-    border: 1px dashed var(--surface-inset-border);
-    background: var(--surface-inset-bg);
-    color: var(--text-muted);
-  }
-
-  :global(.selected-card-slot.empty span) {
-    display: grid;
-    place-items: center;
-    width: 28px;
-    height: 28px;
-    border-radius: var(--radius-pill);
-    background: var(--surface-inset-bg);
-    font-weight: 800;
-  }
-
   :global(.prize-prompt-grid) {
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
