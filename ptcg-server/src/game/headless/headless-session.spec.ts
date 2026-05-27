@@ -45,6 +45,27 @@ describe('HeadlessGameSession', () => {
     expect(snapshot.prompts.length).toBe(0);
   });
 
+  it('reports live total HP from CheckHpEffect modifiers', () => {
+    const game = createHeadlessGame({
+      player1: {
+        name: 'Agent A',
+        active: { card: 'Ralts SIT', tools: ['Hero\'s Cape TEF'] },
+        deck: ['Water Energy SVE']
+      },
+      player2: {
+        name: 'Agent B',
+        active: { card: 'Ralts SIT' },
+        deck: ['Water Energy SVE']
+      },
+      turn: 2,
+      activePlayer: 0
+    });
+    const snapshot = game.snapshot();
+
+    expect(snapshot.summary.players[0].active.pokemonCard.hp).toBe(60);
+    expect(snapshot.summary.players[0].active.hp).toBe(160);
+  });
+
   it('supports alternating players and prompted attack choices', () => {
     const game = createHeadlessGame({
       player1: {

@@ -82,11 +82,13 @@ export class Game implements StoreHandler {
       if (player.active.getPokemonCard() !== undefined) {
         const checkHp = new CheckHpEffect(player, player.active);
         this.store.reduceEffect(state, checkHp);
+        player.active.hp = checkHp.hp;
       }
       for (let b = 0; b < player.bench.length; b++) {
         if (player.bench[b].getPokemonCard() !== undefined) {
           const checkHp = new CheckHpEffect(player, player.bench[b]);
           this.store.reduceEffect(state, checkHp);
+          player.bench[b].hp = checkHp.hp;
         }
       }
     }
