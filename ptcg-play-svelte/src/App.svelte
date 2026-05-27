@@ -14,6 +14,7 @@
   import PromptGallery from './lib/components/prompt-gallery/PromptGallery.svelte';
   import PromptDock from './lib/components/prompts/PromptDock.svelte';
   import PromptHost from './lib/components/prompts/PromptHost.svelte';
+  import ReplayTimeline from './lib/components/ReplayTimeline.svelte';
   import SetupDock from './lib/components/SetupDock.svelte';
   import TableShell from './lib/components/TableShell.svelte';
   import Toolbar from './lib/components/Toolbar.svelte';
@@ -54,6 +55,7 @@
   import { promptLifecycleStore } from './state/promptLifecycle.svelte';
   import { damageTransferStore } from './state/damageTransfer.svelte';
   import { promptSelectionStore } from './state/promptSelection.svelte';
+  import { replayStore } from './state/replay.svelte';
   import { remoteSessionStore } from './state/remoteSession.svelte';
   import {
     canAssignAttachTarget,
@@ -70,10 +72,12 @@
   import { viewSettingsStore } from './state/viewSettings.svelte';
   import { zoneViewerStore } from './state/zoneViewer.svelte';
 
-  let game = $derived(gameStore.game);
-  let error = $derived(gameStore.error);
-  let busy = $derived(gameStore.busy);
-  let sessionBusy = $derived(busy || remoteSessionStore.busy || remoteSessionStore.connecting);
+  let showPromptGallery = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('view') === 'prompt-gallery';
+  let replayMode = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('view') === 'replay';
+  let game = $derived(replayMode ? replayStore.currentView : gameStore.game);
+  let error = $derived(replayMode ? replayStore.error : gameStore.error);
+  let busy = $derived(replayMode ? replayStore.loading : gameStore.busy);
+  let sessionBusy = $derived(replayMode ? replayStore.loading : busy || remoteSessionStore.busy || remoteSessionStore.connecting);
   let mode = $derived(remoteSessionStore.mode);
   let commandApi = $derived<GameCommandApi>(mode === 'remote' ? remoteSessionStore.api : localGameApi);
   let resolvingPrompt = $derived(gameStore.resolvingPrompt);
@@ -95,8 +99,13 @@
   let showLogs = $derived(viewSettingsStore.showLogs);
   let theme = $derived(viewSettingsStore.theme);
   let themePreference = $derived(viewSettingsStore.themePreference);
-  let showPromptGallery = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('view') === 'prompt-gallery';
-  onMount(() => viewSettingsStore.startThemeSync());
+  onMount(() => {
+    const stopThemeSync = viewSettingsStore.startThemeSync();
+    if (replayMode) {
+      void replayStore.loadSaved();
+    }
+    return stopThemeSync;
+  });
   $effect(() => {
     document.documentElement.dataset.theme = theme;
     document.documentElement.dataset.themePreference = themePreference;
@@ -114,7 +123,7 @@
   let activePlayer = $derived(game?.players[game.activePlayerIndex]);
   let bottomPlayer = $derived(game?.players[viewIndex] ?? game?.players[0]);
   let topPlayer = $derived(game?.players.find((player) => player.index !== bottomPlayer?.index));
-  let currentPrompt = $derived(game?.prompts[0]);
+  let currentPrompt = $derived(replayMode ? null : game?.prompts[0]);
   let invitePrompt = $derived(currentPrompt?.className === 'InvitePlayerPrompt' ? currentPrompt : null);
   let boardTargetPrompt = $derived(currentPrompt?.className === 'ChoosePokemonPrompt' ? currentPrompt : null);
   let attachPrompt = $derived(currentPrompt?.className === 'AttachEnergyPrompt' ? currentPrompt : null);
@@ -545,6 +554,10 @@
   }
 
   function resetGame() {
+    if (replayMode) {
+      window.location.search = '';
+      return;
+    }
     gameSessionStore.reset();
     remoteSessionStore.leaveActiveGame();
     zoneViewerStore.close();
@@ -651,6 +664,9 @@
   }
 
   function canAct(playerIndex: number) {
+    if (replayMode) {
+      return false;
+    }
     if (mode === 'remote' && remoteSessionStore.playerIndex !== playerIndex) {
       return false;
     }
@@ -844,7 +860,15 @@
   <PromptGallery />
 {:else}
 <main>
-  {#if !game}
+  {#if replayMode && !game}
+    <AppHeader />
+    <section class="replay-loading-screen">
+      <div class="replay-loading-panel">
+        <strong>{replayStore.loading ? 'Loading replay' : 'Replay unavailable'}</strong>
+        <span>{replayStore.loading ? 'Preparing replay states from the local engine.' : labelFor(error || 'Unable to load replay.')}</span>
+      </div>
+    </section>
+  {:else if !game}
     <AppHeader />
 
       <ImportScreen
@@ -903,7 +927,7 @@
         bind:showLogs={viewSettingsStore.showLogs}
         bind:themePreference={viewSettingsStore.themePreference}
         busy={sessionBusy}
-        promptActive={!!currentPrompt}
+        promptActive={replayMode || !!currentPrompt}
         {gameFinished}
         {error}
         {resetPerspective}
@@ -912,9 +936,26 @@
         {switchSides}
         switchDisabled={mode === 'remote'}
         {resetGame}
+        resetLabel={replayMode ? 'Exit replay' : 'Change decks'}
       />
 
-      {#if gameFinished}
+      {#if replayMode && replayStore.replay && replayStore.currentStep}
+        <ReplayTimeline
+          replay={replayStore.replay}
+          step={replayStore.currentStep}
+          stepIndex={replayStore.stepIndex}
+          copiedForkPoint={replayStore.copiedForkPoint}
+          setStep={(index) => replayStore.setStep(index)}
+          setStateIndex={(index) => replayStore.setStateIndex(index)}
+          previousStep={() => replayStore.previousStep()}
+          nextStep={() => replayStore.nextStep()}
+          firstStep={() => replayStore.firstStep()}
+          lastStep={() => replayStore.lastStep()}
+          copyForkPoint={() => void replayStore.copyForkPoint()}
+        />
+      {/if}
+
+      {#if gameFinished && !replayMode}
         <EndGamePrompt resultLabel={gameResultLabel} turn={game.turn} onconfirm={resetGame} />
       {/if}
 
@@ -1051,8 +1092,8 @@
     </TableShell>
   {:else}
     <AppHeader />
-    <section class="engine-error-screen">
-      <div class="engine-error-panel">
+    <section class="replay-loading-screen">
+      <div class="replay-loading-panel">
         <strong>Unable to start game</strong>
         <span>{labelFor(error || game.logs.at(-1)?.message || 'The engine returned an invalid pre-game state.')}</span>
         <button type="button" onclick={resetGame}>Change decks</button>
@@ -1098,7 +1139,7 @@
     padding: 72px 24px 24px;
   }
 
-  .engine-error-screen {
+  .replay-loading-screen {
     min-height: 100vh;
     display: grid;
     align-content: center;
@@ -1106,7 +1147,7 @@
     padding: 72px 24px 24px;
   }
 
-  .engine-error-panel {
+  .replay-loading-panel {
     display: grid;
     gap: 8px;
     width: min(420px, calc(100vw - 32px));
@@ -1118,11 +1159,11 @@
     box-shadow: 0 12px 32px rgba(12, 15, 19, 0.18);
   }
 
-  .engine-error-panel strong {
+  .replay-loading-panel strong {
     font-size: 14px;
   }
 
-  .engine-error-panel span {
+  .replay-loading-panel span {
     color: #566272;
     font-size: 13px;
   }

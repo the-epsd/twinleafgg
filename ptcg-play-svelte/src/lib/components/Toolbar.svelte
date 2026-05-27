@@ -23,6 +23,7 @@
     switchSides: () => void;
     switchDisabled?: boolean;
     resetGame: () => void;
+    resetLabel?: string;
   };
 
   let {
@@ -45,6 +46,7 @@
     switchSides,
     switchDisabled = false,
     resetGame,
+    resetLabel = 'Change decks',
   }: Props = $props();
 </script>
 
@@ -85,7 +87,7 @@
     <button class="danger" disabled={busy || promptActive || gameFinished} onclick={concede}>Concede</button>
   </div>
   <button disabled={switchDisabled} onclick={switchSides}>Switch sides</button>
-  <button onclick={resetGame}>Change decks</button>
+  <button onclick={resetGame}>{resetLabel}</button>
   {#if error}
     <span class="inline-error">{labelFor(error)}</span>
   {/if}

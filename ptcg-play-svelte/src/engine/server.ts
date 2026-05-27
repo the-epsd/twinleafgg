@@ -30,12 +30,41 @@ function writeJson(res: http.ServerResponse, status: number, body: unknown): voi
 }
 
 const server = http.createServer(async (req, res) => {
-  if (req.method === 'GET' && req.url === '/local-engine/health') {
+  const url = new URL(req.url ?? '/', 'http://localhost');
+
+  if (req.method === 'GET' && url.pathname === '/local-engine/health') {
     writeJson(res, 200, { ok: true });
     return;
   }
 
-  if (req.method !== 'POST' || req.url !== '/local-engine') {
+  if (req.method === 'GET' && url.pathname === '/local-engine/replays') {
+    writeJson(res, 200, controller.listReplays());
+    return;
+  }
+
+  if (req.method === 'GET' && url.pathname.startsWith('/local-engine/replays/')) {
+    const id = decodeURIComponent(url.pathname.slice('/local-engine/replays/'.length));
+    const response = controller.loadReplay(id);
+    writeJson(res, response.ok ? 200 : 404, response);
+    return;
+  }
+
+  if (req.method === 'POST' && url.pathname === '/local-engine/replays/load') {
+    try {
+      const raw = await readBody(req);
+      const body = raw ? JSON.parse(raw) : {};
+      const response = controller.loadReplayData(body.replayData, body.name);
+      writeJson(res, response.ok ? 200 : 400, response);
+    } catch (error) {
+      writeJson(res, 400, {
+        ok: false,
+        error: error instanceof Error ? error.message : String(error),
+      });
+    }
+    return;
+  }
+
+  if (req.method !== 'POST' || url.pathname !== '/local-engine') {
     writeJson(res, 404, { ok: false, error: 'Not found' });
     return;
   }

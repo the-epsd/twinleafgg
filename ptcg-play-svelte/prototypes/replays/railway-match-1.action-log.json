@@ -1,0 +1,4613 @@
+{
+  "source": "https://twinleaf-lite-production.up.railway.app/v1/replays/match/1",
+  "capturedAt": "2026-05-24T15:29:47.896Z",
+  "note": "Fetched from the Railway lite server as a prototyping fixture. Auth token intentionally omitted.",
+  "summary": {
+    "matchId": 1,
+    "version": 2,
+    "created": 1779636295270,
+    "createdIso": "2026-05-24T15:24:55.270Z",
+    "player1": {
+      "userId": 3,
+      "name": "Player2"
+    },
+    "player2": {
+      "userId": 2,
+      "name": "Player1"
+    },
+    "winner": 1,
+    "gameSettings": {
+      "rules": {
+        "firstTurnDrawCard": true,
+        "firstTurnUseSupporter": true,
+        "attackFirstTurn": false,
+        "supporterCleanupAtEndTurn": false,
+        "unlimitedEnergyAttachments": false,
+        "alternativeSetup": false
+      },
+      "timeLimit": 1200,
+      "recordingEnabled": true,
+      "format": 1,
+      "sandboxMode": false
+    },
+    "stateCount": 158,
+    "turnCount": 12,
+    "actionCount": 184,
+    "logEventCount": 1
+  },
+  "logEvents": [
+    {
+      "sequence": 3,
+      "type": "RESOLVE_PROMPT",
+      "turn": 0,
+      "phase": 1,
+      "activePlayer": 0,
+      "stateIndex": 0,
+      "log": {
+        "id": 0,
+        "message": "LOG_PLAYER_FLIPS_TAILS",
+        "params": {
+          "name": "Player2"
+        },
+        "client": 0
+      }
+    }
+  ],
+  "actions": [
+    {
+      "sequence": 0,
+      "type": "ADD_PLAYER",
+      "turn": 0,
+      "phase": 0,
+      "activePlayer": 0,
+      "stateIndex": -1,
+      "payload": {
+        "clientId": 3,
+        "name": "Player2",
+        "deck": [
+          "Dreepy TWM",
+          "Dreepy TWM",
+          "Dreepy TWM",
+          "Dreepy TWM",
+          "Drakloak TWM",
+          "Drakloak TWM",
+          "Drakloak TWM",
+          "Drakloak TWM",
+          "Dragapult ex TWM",
+          "Dragapult ex TWM",
+          "Dragapult ex TWM",
+          "Munkidori TWM",
+          "Munkidori TWM",
+          "Meowth ex POR",
+          "Meowth ex POR",
+          "Budew PRE",
+          "Fezandipiti ex SFA",
+          "Bloodmoon Ursaluna ex TWM",
+          "Latias ex SSP",
+          "Chien-Pao SSP",
+          "Lillie's Determination M1L",
+          "Lillie's Determination M1L",
+          "Lillie's Determination M1L",
+          "Lillie's Determination M1L",
+          "Boss's Orders MEG",
+          "Boss's Orders MEG",
+          "Boss's Orders MEG",
+          "Boss's Orders MEG",
+          "Crispin SCR",
+          "Crispin SCR",
+          "Brock's Scouting JTG",
+          "Brock's Scouting JTG",
+          "Buddy-Buddy Poffin TEF",
+          "Buddy-Buddy Poffin TEF",
+          "Buddy-Buddy Poffin TEF",
+          "Buddy-Buddy Poffin TEF",
+          "Poke Pad POR",
+          "Poke Pad POR",
+          "Poke Pad POR",
+          "Poke Pad POR",
+          "Ultra Ball MEG",
+          "Ultra Ball MEG",
+          "Ultra Ball MEG",
+          "Ultra Ball MEG",
+          "Rare Candy MEG",
+          "Rare Candy MEG",
+          "Rare Candy MEG",
+          "Night Stretcher SFA",
+          "Night Stretcher SFA",
+          "Unfair Stamp TWM",
+          "Area Zero Underdepths SCR",
+          "Area Zero Underdepths SCR",
+          "Fire Energy SVE",
+          "Fire Energy SVE",
+          "Fire Energy SVE",
+          "Psychic Energy SVE",
+          "Psychic Energy SVE",
+          "Psychic Energy SVE",
+          "Darkness Energy SVE",
+          "Darkness Energy SVE"
+        ]
+      }
+    },
+    {
+      "sequence": 1,
+      "type": "INVITE_PLAYER",
+      "turn": 0,
+      "phase": 0,
+      "activePlayer": 0,
+      "stateIndex": -1,
+      "payload": {
+        "clientId": 2,
+        "name": "Player1"
+      }
+    },
+    {
+      "sequence": 2,
+      "type": "RESOLVE_PROMPT",
+      "turn": 0,
+      "phase": 1,
+      "activePlayer": 0,
+      "stateIndex": 0,
+      "payload": {
+        "id": 1,
+        "result": [
+          "Dreepy TWM",
+          "Dreepy TWM",
+          "Dreepy TWM",
+          "Dreepy TWM",
+          "Drakloak TWM",
+          "Drakloak TWM",
+          "Drakloak TWM",
+          "Drakloak TWM",
+          "Dragapult ex TWM",
+          "Dragapult ex TWM",
+          "Dragapult ex TWM",
+          "Munkidori TWM",
+          "Munkidori TWM",
+          "Meowth ex POR",
+          "Meowth ex POR",
+          "Budew PRE",
+          "Fezandipiti ex SFA",
+          "Bloodmoon Ursaluna ex TWM",
+          "Latias ex SSP",
+          "Chien-Pao SSP",
+          "Lillie's Determination M1L",
+          "Lillie's Determination M1L",
+          "Lillie's Determination M1L",
+          "Lillie's Determination M1L",
+          "Boss's Orders MEG",
+          "Boss's Orders MEG",
+          "Boss's Orders MEG",
+          "Boss's Orders MEG",
+          "Crispin SCR",
+          "Crispin SCR",
+          "Brock's Scouting JTG",
+          "Brock's Scouting JTG",
+          "Buddy-Buddy Poffin TEF",
+          "Buddy-Buddy Poffin TEF",
+          "Buddy-Buddy Poffin TEF",
+          "Buddy-Buddy Poffin TEF",
+          "Poke Pad POR",
+          "Poke Pad POR",
+          "Poke Pad POR",
+          "Poke Pad POR",
+          "Ultra Ball MEG",
+          "Ultra Ball MEG",
+          "Ultra Ball MEG",
+          "Ultra Ball MEG",
+          "Rare Candy MEG",
+          "Rare Candy MEG",
+          "Rare Candy MEG",
+          "Night Stretcher SFA",
+          "Night Stretcher SFA",
+          "Unfair Stamp TWM",
+          "Area Zero Underdepths SCR",
+          "Area Zero Underdepths SCR",
+          "Fire Energy SVE",
+          "Fire Energy SVE",
+          "Fire Energy SVE",
+          "Psychic Energy SVE",
+          "Psychic Energy SVE",
+          "Psychic Energy SVE",
+          "Darkness Energy SVE",
+          "Darkness Energy SVE"
+        ],
+        "decodedResult": [
+          "Dreepy TWM",
+          "Dreepy TWM",
+          "Dreepy TWM",
+          "Dreepy TWM",
+          "Drakloak TWM",
+          "Drakloak TWM",
+          "Drakloak TWM",
+          "Drakloak TWM",
+          "Dragapult ex TWM",
+          "Dragapult ex TWM",
+          "Dragapult ex TWM",
+          "Munkidori TWM",
+          "Munkidori TWM",
+          "Meowth ex POR",
+          "Meowth ex POR",
+          "Budew PRE",
+          "Fezandipiti ex SFA",
+          "Bloodmoon Ursaluna ex TWM",
+          "Latias ex SSP",
+          "Chien-Pao SSP",
+          "Lillie's Determination M1L",
+          "Lillie's Determination M1L",
+          "Lillie's Determination M1L",
+          "Lillie's Determination M1L",
+          "Boss's Orders MEG",
+          "Boss's Orders MEG",
+          "Boss's Orders MEG",
+          "Boss's Orders MEG",
+          "Crispin SCR",
+          "Crispin SCR",
+          "Brock's Scouting JTG",
+          "Brock's Scouting JTG",
+          "Buddy-Buddy Poffin TEF",
+          "Buddy-Buddy Poffin TEF",
+          "Buddy-Buddy Poffin TEF",
+          "Buddy-Buddy Poffin TEF",
+          "Poke Pad POR",
+          "Poke Pad POR",
+          "Poke Pad POR",
+          "Poke Pad POR",
+          "Ultra Ball MEG",
+          "Ultra Ball MEG",
+          "Ultra Ball MEG",
+          "Ultra Ball MEG",
+          "Rare Candy MEG",
+          "Rare Candy MEG",
+          "Rare Candy MEG",
+          "Night Stretcher SFA",
+          "Night Stretcher SFA",
+          "Unfair Stamp TWM",
+          "Area Zero Underdepths SCR",
+          "Area Zero Underdepths SCR",
+          "Fire Energy SVE",
+          "Fire Energy SVE",
+          "Fire Energy SVE",
+          "Psychic Energy SVE",
+          "Psychic Energy SVE",
+          "Psychic Energy SVE",
+          "Darkness Energy SVE",
+          "Darkness Energy SVE"
+        ]
+      }
+    },
+    {
+      "sequence": 3,
+      "type": "RESOLVE_PROMPT",
+      "turn": 0,
+      "phase": 1,
+      "activePlayer": 0,
+      "stateIndex": 0,
+      "payload": {
+        "id": 2,
+        "result": false,
+        "log": {
+          "id": 0,
+          "message": "LOG_PLAYER_FLIPS_TAILS",
+          "params": {
+            "name": "Player2"
+          },
+          "client": 0
+        }
+      }
+    },
+    {
+      "sequence": 4,
+      "type": "RESOLVE_PROMPT",
+      "turn": 0,
+      "phase": 1,
+      "activePlayer": 1,
+      "stateIndex": 1,
+      "payload": {
+        "id": 3,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 5,
+      "type": "RESOLVE_PROMPT",
+      "turn": 0,
+      "phase": 1,
+      "activePlayer": 1,
+      "stateIndex": 1,
+      "payload": {
+        "id": 4,
+        "result": [
+          2,
+          43,
+          30,
+          46,
+          51,
+          49,
+          15,
+          32,
+          58,
+          13,
+          5,
+          19,
+          14,
+          38,
+          16,
+          40,
+          41,
+          24,
+          17,
+          54,
+          25,
+          6,
+          56,
+          11,
+          9,
+          0,
+          45,
+          7,
+          29,
+          12,
+          26,
+          31,
+          23,
+          33,
+          34,
+          48,
+          52,
+          35,
+          20,
+          4,
+          21,
+          57,
+          18,
+          59,
+          8,
+          50,
+          39,
+          47,
+          3,
+          37,
+          42,
+          36,
+          22,
+          53,
+          44,
+          55,
+          1,
+          27,
+          28,
+          10
+        ]
+      }
+    },
+    {
+      "sequence": 6,
+      "type": "RESOLVE_PROMPT",
+      "turn": 0,
+      "phase": 1,
+      "activePlayer": 1,
+      "stateIndex": 1,
+      "payload": {
+        "id": 5,
+        "result": [
+          52,
+          48,
+          11,
+          42,
+          45,
+          30,
+          32,
+          21,
+          5,
+          54,
+          36,
+          14,
+          0,
+          1,
+          35,
+          26,
+          37,
+          7,
+          46,
+          2,
+          38,
+          19,
+          41,
+          47,
+          27,
+          23,
+          40,
+          24,
+          43,
+          12,
+          10,
+          59,
+          28,
+          34,
+          17,
+          39,
+          3,
+          44,
+          6,
+          31,
+          20,
+          51,
+          55,
+          22,
+          56,
+          8,
+          58,
+          9,
+          29,
+          50,
+          4,
+          57,
+          25,
+          49,
+          33,
+          15,
+          53,
+          18,
+          16,
+          13
+        ]
+      }
+    },
+    {
+      "sequence": 7,
+      "type": "RESOLVE_PROMPT",
+      "turn": 0,
+      "phase": 1,
+      "activePlayer": 1,
+      "stateIndex": 2,
+      "payload": {
+        "id": 6,
+        "result": [
+          6
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 15,
+            "name": "Budew",
+            "fullName": "Budew PRE",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 8,
+      "type": "RESOLVE_PROMPT",
+      "turn": 1,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 3,
+      "payload": {
+        "id": 7,
+        "result": [
+          2
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 71,
+            "name": "Munkidori",
+            "fullName": "Munkidori TWM",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 9,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 1,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 4,
+      "payload": {
+        "id": 2,
+        "handIndex": 5,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 10,
+      "type": "RESOLVE_PROMPT",
+      "turn": 1,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 5,
+      "payload": {
+        "id": 8,
+        "result": [
+          9,
+          10
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 62,
+            "name": "Dreepy",
+            "fullName": "Dreepy TWM",
+            "superType": 1
+          },
+          {
+            "kind": "Card",
+            "id": 63,
+            "name": "Dreepy",
+            "fullName": "Dreepy TWM",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 11,
+      "type": "RESOLVE_PROMPT",
+      "turn": 1,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 5,
+      "payload": {
+        "id": 9,
+        "result": [
+          11,
+          9,
+          36,
+          25,
+          39,
+          41,
+          15,
+          1,
+          6,
+          16,
+          28,
+          33,
+          37,
+          35,
+          23,
+          13,
+          20,
+          5,
+          12,
+          7,
+          17,
+          32,
+          31,
+          21,
+          10,
+          3,
+          4,
+          24,
+          26,
+          43,
+          38,
+          34,
+          29,
+          14,
+          42,
+          19,
+          2,
+          18,
+          8,
+          0,
+          27,
+          22,
+          40,
+          30
+        ]
+      }
+    },
+    {
+      "sequence": 12,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 1,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 6,
+      "payload": {
+        "id": 2,
+        "handIndex": 5,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 2
+        }
+      }
+    },
+    {
+      "sequence": 13,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 1,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 7,
+      "payload": {
+        "id": 2,
+        "handIndex": 0,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 14,
+      "type": "PASS_TURN",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 8,
+      "payload": {
+        "clientId": 2
+      }
+    },
+    {
+      "sequence": 15,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 9,
+      "payload": {
+        "id": 3,
+        "handIndex": 0,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 16,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 10,
+      "payload": {
+        "id": 3,
+        "handIndex": 0,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 17,
+      "type": "RESOLVE_PROMPT",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 11,
+      "payload": {
+        "id": 10,
+        "result": [
+          2,
+          1
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 51,
+            "name": "Area Zero Underdepths",
+            "fullName": "Area Zero Underdepths SCR",
+            "superType": 2
+          },
+          {
+            "kind": "Card",
+            "id": 46,
+            "name": "Rare Candy",
+            "fullName": "Rare Candy MEG",
+            "superType": 2
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 18,
+      "type": "RESOLVE_PROMPT",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 12,
+      "payload": {
+        "id": 11,
+        "result": [
+          8
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 3,
+            "name": "Dreepy",
+            "fullName": "Dreepy TWM",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 19,
+      "type": "RESOLVE_PROMPT",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 13,
+      "payload": {
+        "id": 12,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 20,
+      "type": "RESOLVE_PROMPT",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 13,
+      "payload": {
+        "id": 13,
+        "result": [
+          16,
+          13,
+          24,
+          39,
+          41,
+          36,
+          8,
+          30,
+          20,
+          15,
+          14,
+          7,
+          40,
+          12,
+          44,
+          33,
+          10,
+          22,
+          21,
+          42,
+          5,
+          38,
+          32,
+          9,
+          3,
+          26,
+          18,
+          17,
+          43,
+          29,
+          25,
+          11,
+          35,
+          1,
+          27,
+          34,
+          4,
+          23,
+          31,
+          19,
+          2,
+          37,
+          28,
+          6,
+          0
+        ]
+      }
+    },
+    {
+      "sequence": 21,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 14,
+      "payload": {
+        "id": 3,
+        "handIndex": 3,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 1
+        }
+      }
+    },
+    {
+      "sequence": 22,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 15,
+      "payload": {
+        "id": 3,
+        "handIndex": 0,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 23,
+      "type": "RESOLVE_PROMPT",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 16,
+      "payload": {
+        "id": 14,
+        "result": [
+          6
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 4,
+            "name": "Drakloak",
+            "fullName": "Drakloak TWM",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 24,
+      "type": "RESOLVE_PROMPT",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 17,
+      "payload": {
+        "id": 15,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 25,
+      "type": "RESOLVE_PROMPT",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 17,
+      "payload": {
+        "id": 16,
+        "result": [
+          2,
+          28,
+          10,
+          12,
+          33,
+          39,
+          13,
+          1,
+          7,
+          6,
+          18,
+          20,
+          15,
+          35,
+          9,
+          27,
+          16,
+          4,
+          19,
+          25,
+          3,
+          5,
+          8,
+          41,
+          30,
+          38,
+          14,
+          24,
+          32,
+          17,
+          22,
+          29,
+          34,
+          43,
+          0,
+          21,
+          26,
+          31,
+          37,
+          36,
+          42,
+          11,
+          23,
+          40
+        ]
+      }
+    },
+    {
+      "sequence": 26,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 18,
+      "payload": {
+        "id": 3,
+        "handIndex": 1,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 27,
+      "type": "RESOLVE_PROMPT",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 19,
+      "payload": {
+        "id": 17,
+        "result": [
+          4
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 7,
+            "name": "Drakloak",
+            "fullName": "Drakloak TWM",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 28,
+      "type": "RESOLVE_PROMPT",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 19,
+      "payload": {
+        "id": 19,
+        "result": [
+          23,
+          10,
+          4,
+          18,
+          32,
+          1,
+          33,
+          13,
+          40,
+          11,
+          6,
+          8,
+          36,
+          34,
+          42,
+          41,
+          37,
+          15,
+          0,
+          28,
+          21,
+          12,
+          39,
+          7,
+          38,
+          3,
+          9,
+          19,
+          14,
+          31,
+          27,
+          24,
+          26,
+          20,
+          5,
+          17,
+          22,
+          29,
+          25,
+          30,
+          35,
+          2,
+          16
+        ]
+      }
+    },
+    {
+      "sequence": 29,
+      "type": "RESOLVE_PROMPT",
+      "turn": 2,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 20,
+      "payload": {
+        "id": 18,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 30,
+      "type": "ATTACK_ACTION",
+      "turn": 2,
+      "phase": 3,
+      "activePlayer": 0,
+      "stateIndex": 21,
+      "payload": {
+        "clientId": 3,
+        "name": "Itchy Pollen"
+      }
+    },
+    {
+      "sequence": 31,
+      "type": "RESOLVE_PROMPT",
+      "turn": 3,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 22,
+      "payload": {
+        "id": 20,
+        "result": null,
+        "decodedResult": null
+      }
+    },
+    {
+      "sequence": 32,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 3,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 23,
+      "payload": {
+        "id": 2,
+        "handIndex": 3,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 33,
+      "type": "RESOLVE_PROMPT",
+      "turn": 3,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 24,
+      "payload": {
+        "id": 21,
+        "result": [
+          6
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 67,
+            "name": "Drakloak",
+            "fullName": "Drakloak TWM",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 34,
+      "type": "RESOLVE_PROMPT",
+      "turn": 3,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 25,
+      "payload": {
+        "id": 22,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 35,
+      "type": "RESOLVE_PROMPT",
+      "turn": 3,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 25,
+      "payload": {
+        "id": 23,
+        "result": [
+          26,
+          15,
+          21,
+          39,
+          31,
+          24,
+          6,
+          27,
+          37,
+          10,
+          17,
+          3,
+          40,
+          32,
+          23,
+          30,
+          34,
+          13,
+          16,
+          12,
+          4,
+          29,
+          0,
+          2,
+          35,
+          25,
+          5,
+          18,
+          36,
+          41,
+          33,
+          19,
+          8,
+          20,
+          22,
+          1,
+          38,
+          28,
+          14,
+          9,
+          7,
+          11
+        ]
+      }
+    },
+    {
+      "sequence": 36,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 3,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 26,
+      "payload": {
+        "id": 2,
+        "handIndex": 4,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 37,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 3,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 27,
+      "payload": {
+        "clientId": 2,
+        "name": "Recon Directive",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 38,
+      "type": "RESOLVE_PROMPT",
+      "turn": 3,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 28,
+      "payload": {
+        "id": 24,
+        "result": [
+          0
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 99,
+            "name": "Poké Pad",
+            "fullName": "Poke Pad POR",
+            "superType": 2
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 39,
+      "type": "PASS_TURN",
+      "turn": 4,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 29,
+      "payload": {
+        "clientId": 2
+      }
+    },
+    {
+      "sequence": 40,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 4,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 30,
+      "payload": {
+        "id": 3,
+        "handIndex": 1,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 41,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 4,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 31,
+      "payload": {
+        "id": 3,
+        "handIndex": 1,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 1
+        }
+      }
+    },
+    {
+      "sequence": 42,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 4,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 32,
+      "payload": {
+        "id": 3,
+        "handIndex": 1,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 43,
+      "type": "RESOLVE_PROMPT",
+      "turn": 4,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 33,
+      "payload": {
+        "id": 25,
+        "result": [
+          6,
+          5
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 0,
+            "name": "Dreepy",
+            "fullName": "Dreepy TWM",
+            "superType": 1
+          },
+          {
+            "kind": "Card",
+            "id": 1,
+            "name": "Dreepy",
+            "fullName": "Dreepy TWM",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 44,
+      "type": "RESOLVE_PROMPT",
+      "turn": 4,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 33,
+      "payload": {
+        "id": 26,
+        "result": [
+          19,
+          11,
+          27,
+          34,
+          30,
+          9,
+          16,
+          3,
+          38,
+          31,
+          2,
+          39,
+          10,
+          8,
+          28,
+          15,
+          24,
+          36,
+          23,
+          4,
+          18,
+          29,
+          7,
+          6,
+          22,
+          21,
+          14,
+          25,
+          33,
+          32,
+          35,
+          17,
+          0,
+          26,
+          5,
+          37,
+          20,
+          12,
+          13,
+          1
+        ]
+      }
+    },
+    {
+      "sequence": 45,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 4,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 34,
+      "payload": {
+        "clientId": 3,
+        "name": "Recon Directive",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 46,
+      "type": "RESOLVE_PROMPT",
+      "turn": 4,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 35,
+      "payload": {
+        "id": 27,
+        "result": [
+          0
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 22,
+            "name": "Lillie's Determination",
+            "fullName": "Lillie's Determination M1L",
+            "superType": 2
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 47,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 4,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 36,
+      "payload": {
+        "id": 3,
+        "handIndex": 1,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 48,
+      "type": "RESOLVE_PROMPT",
+      "turn": 4,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 36,
+      "payload": {
+        "id": 28,
+        "result": [
+          34,
+          12,
+          22,
+          14,
+          28,
+          36,
+          4,
+          11,
+          15,
+          20,
+          30,
+          10,
+          1,
+          23,
+          26,
+          9,
+          32,
+          16,
+          33,
+          24,
+          0,
+          2,
+          35,
+          21,
+          3,
+          8,
+          18,
+          5,
+          7,
+          37,
+          25,
+          38,
+          27,
+          17,
+          31,
+          13,
+          29,
+          19,
+          6,
+          39
+        ]
+      }
+    },
+    {
+      "sequence": 49,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 4,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 37,
+      "payload": {
+        "clientId": 3,
+        "name": "Recon Directive",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 1
+        }
+      }
+    },
+    {
+      "sequence": 50,
+      "type": "RESOLVE_PROMPT",
+      "turn": 4,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 38,
+      "payload": {
+        "id": 29,
+        "result": [
+          0
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 54,
+            "name": "Fire Energy",
+            "fullName": "Fire Energy SVE",
+            "superType": 3
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 51,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 4,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 39,
+      "payload": {
+        "id": 3,
+        "handIndex": 4,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 52,
+      "type": "ATTACK_ACTION",
+      "turn": 4,
+      "phase": 3,
+      "activePlayer": 0,
+      "stateIndex": 40,
+      "payload": {
+        "clientId": 3,
+        "name": "Itchy Pollen"
+      }
+    },
+    {
+      "sequence": 53,
+      "type": "RESOLVE_PROMPT",
+      "turn": 5,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 41,
+      "payload": {
+        "id": 30,
+        "result": null,
+        "decodedResult": null
+      }
+    },
+    {
+      "sequence": 54,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 5,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 42,
+      "payload": {
+        "clientId": 2,
+        "name": "Recon Directive",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 55,
+      "type": "RESOLVE_PROMPT",
+      "turn": 5,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 43,
+      "payload": {
+        "id": 31,
+        "result": [
+          0
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 115,
+            "name": "Psychic Energy",
+            "fullName": "Psychic Energy SVE",
+            "superType": 3
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 56,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 5,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 44,
+      "payload": {
+        "id": 2,
+        "handIndex": 6,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 1
+        }
+      }
+    },
+    {
+      "sequence": 57,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 5,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 45,
+      "payload": {
+        "id": 2,
+        "handIndex": 3,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 3
+        }
+      }
+    },
+    {
+      "sequence": 58,
+      "type": "RESOLVE_PROMPT",
+      "turn": 5,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 46,
+      "payload": {
+        "id": 32,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 59,
+      "type": "RESOLVE_PROMPT",
+      "turn": 5,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 47,
+      "payload": {
+        "id": 33,
+        "result": [
+          18
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 83,
+            "name": "Lillie's Determination",
+            "fullName": "Lillie's Determination M1L",
+            "superType": 2
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 60,
+      "type": "RESOLVE_PROMPT",
+      "turn": 5,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 47,
+      "payload": {
+        "id": 35,
+        "result": [
+          16,
+          30,
+          12,
+          4,
+          3,
+          11,
+          20,
+          15,
+          25,
+          27,
+          34,
+          22,
+          35,
+          10,
+          37,
+          18,
+          21,
+          14,
+          17,
+          32,
+          9,
+          19,
+          0,
+          33,
+          29,
+          31,
+          2,
+          6,
+          8,
+          24,
+          1,
+          26,
+          13,
+          23,
+          36,
+          28,
+          5,
+          7
+        ]
+      }
+    },
+    {
+      "sequence": 61,
+      "type": "RESOLVE_PROMPT",
+      "turn": 5,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 48,
+      "payload": {
+        "id": 34,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 62,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 5,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 49,
+      "payload": {
+        "id": 2,
+        "handIndex": 5,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 63,
+      "type": "RESOLVE_PROMPT",
+      "turn": 5,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 49,
+      "payload": {
+        "id": 36,
+        "result": [
+          16,
+          14,
+          22,
+          28,
+          35,
+          31,
+          37,
+          0,
+          23,
+          32,
+          7,
+          19,
+          18,
+          10,
+          6,
+          40,
+          20,
+          21,
+          42,
+          2,
+          17,
+          13,
+          36,
+          9,
+          4,
+          39,
+          38,
+          29,
+          11,
+          15,
+          30,
+          24,
+          41,
+          26,
+          3,
+          33,
+          1,
+          27,
+          12,
+          25,
+          34,
+          8,
+          5
+        ]
+      }
+    },
+    {
+      "sequence": 64,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 5,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 50,
+      "payload": {
+        "id": 2,
+        "handIndex": 6,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 1
+        }
+      }
+    },
+    {
+      "sequence": 65,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 5,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 51,
+      "payload": {
+        "clientId": 2,
+        "name": "Recon Directive",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 1
+        }
+      }
+    },
+    {
+      "sequence": 66,
+      "type": "RESOLVE_PROMPT",
+      "turn": 5,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 52,
+      "payload": {
+        "id": 37,
+        "result": [
+          1
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 87,
+            "name": "Boss's Orders",
+            "fullName": "Boss's Orders MEG",
+            "superType": 2
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 67,
+      "type": "PASS_TURN",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 53,
+      "payload": {
+        "clientId": 2
+      }
+    },
+    {
+      "sequence": 68,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 54,
+      "payload": {
+        "id": 3,
+        "handIndex": 3,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 69,
+      "type": "RESOLVE_PROMPT",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 55,
+      "payload": {
+        "id": 38,
+        "result": [
+          3
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 6,
+            "name": "Drakloak",
+            "fullName": "Drakloak TWM",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 70,
+      "type": "RESOLVE_PROMPT",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 55,
+      "payload": {
+        "id": 40,
+        "result": [
+          9,
+          0,
+          12,
+          19,
+          6,
+          17,
+          5,
+          23,
+          13,
+          14,
+          1,
+          28,
+          18,
+          21,
+          2,
+          10,
+          22,
+          15,
+          27,
+          3,
+          8,
+          20,
+          25,
+          24,
+          11,
+          26,
+          7,
+          16,
+          4
+        ]
+      }
+    },
+    {
+      "sequence": 71,
+      "type": "RESOLVE_PROMPT",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 56,
+      "payload": {
+        "id": 39,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 72,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 57,
+      "payload": {
+        "id": 3,
+        "handIndex": 8,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 2
+        }
+      }
+    },
+    {
+      "sequence": 73,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 58,
+      "payload": {
+        "id": 3,
+        "handIndex": 4,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 74,
+      "type": "RESOLVE_PROMPT",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 58,
+      "payload": {
+        "id": 41,
+        "result": [
+          20,
+          10,
+          28,
+          7,
+          0,
+          1,
+          2,
+          8,
+          5,
+          18,
+          27,
+          24,
+          9,
+          16,
+          29,
+          19,
+          26,
+          13,
+          25,
+          21,
+          35,
+          6,
+          12,
+          4,
+          30,
+          31,
+          14,
+          22,
+          15,
+          33,
+          34,
+          32,
+          11,
+          17,
+          23,
+          3
+        ]
+      }
+    },
+    {
+      "sequence": 75,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 59,
+      "payload": {
+        "clientId": 3,
+        "name": "Recon Directive",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 76,
+      "type": "RESOLVE_PROMPT",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 60,
+      "payload": {
+        "id": 42,
+        "result": [
+          1
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 55,
+            "name": "Psychic Energy",
+            "fullName": "Psychic Energy SVE",
+            "superType": 3
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 77,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 61,
+      "payload": {
+        "clientId": 3,
+        "name": "Recon Directive",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 1
+        }
+      }
+    },
+    {
+      "sequence": 78,
+      "type": "RESOLVE_PROMPT",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 62,
+      "payload": {
+        "id": 43,
+        "result": [
+          1
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 28,
+            "name": "Crispin",
+            "fullName": "Crispin SCR",
+            "superType": 2
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 79,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 63,
+      "payload": {
+        "clientId": 3,
+        "name": "Recon Directive",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 2
+        }
+      }
+    },
+    {
+      "sequence": 80,
+      "type": "RESOLVE_PROMPT",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 64,
+      "payload": {
+        "id": 44,
+        "result": [
+          1
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 49,
+            "name": "Unfair Stamp",
+            "fullName": "Unfair Stamp TWM",
+            "superType": 2
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 81,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 65,
+      "payload": {
+        "id": 3,
+        "handIndex": 8,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 82,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 66,
+      "payload": {
+        "id": 3,
+        "handIndex": 5,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 83,
+      "type": "RETREAT_ACTION",
+      "turn": 6,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 67,
+      "payload": {
+        "clientId": 3,
+        "benchIndex": 0
+      }
+    },
+    {
+      "sequence": 84,
+      "type": "ATTACK_ACTION",
+      "turn": 6,
+      "phase": 3,
+      "activePlayer": 0,
+      "stateIndex": 68,
+      "payload": {
+        "clientId": 3,
+        "name": "Phantom Dive"
+      }
+    },
+    {
+      "sequence": 85,
+      "type": "RESOLVE_PROMPT",
+      "turn": 6,
+      "phase": 3,
+      "activePlayer": 0,
+      "stateIndex": 69,
+      "payload": {
+        "id": 45,
+        "result": [
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 1
+            },
+            "damage": 30
+          },
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 0
+            },
+            "damage": 30
+          }
+        ],
+        "decodedResult": [
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 1
+            },
+            "damage": 30
+          },
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 0
+            },
+            "damage": 30
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 86,
+      "type": "RESOLVE_PROMPT",
+      "turn": 6,
+      "phase": 3,
+      "activePlayer": 0,
+      "stateIndex": 70,
+      "payload": {
+        "id": 46,
+        "result": null,
+        "decodedResult": null
+      }
+    },
+    {
+      "sequence": 87,
+      "type": "RESOLVE_PROMPT",
+      "turn": 6,
+      "phase": 3,
+      "activePlayer": 0,
+      "stateIndex": 71,
+      "payload": {
+        "id": 47,
+        "result": [
+          0
+        ],
+        "decodedResult": [
+          {
+            "kind": "CardList",
+            "cards": []
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 88,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 72,
+      "payload": {
+        "id": 48,
+        "result": [
+          {
+            "player": 2,
+            "slot": 2,
+            "index": 0
+          }
+        ],
+        "decodedResult": [
+          {
+            "kind": "PokemonCardList",
+            "cards": [
+              {
+                "kind": "Card",
+                "id": 62,
+                "name": "Dreepy",
+                "fullName": "Dreepy TWM",
+                "superType": 1
+              },
+              {
+                "kind": "Card",
+                "id": 112,
+                "name": "Fire Energy",
+                "fullName": "Fire Energy SVE",
+                "superType": 3
+              },
+              {
+                "kind": "Card",
+                "id": 67,
+                "name": "Drakloak",
+                "fullName": "Drakloak TWM",
+                "superType": 1
+              }
+            ],
+            "damage": 30,
+            "hp": 0,
+            "specialConditions": []
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 89,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 73,
+      "payload": {
+        "id": 2,
+        "handIndex": 1,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 90,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 74,
+      "payload": {
+        "clientId": 2,
+        "name": "Recon Directive",
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 91,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 75,
+      "payload": {
+        "id": 49,
+        "result": [
+          0
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 110,
+            "name": "Area Zero Underdepths",
+            "fullName": "Area Zero Underdepths SCR",
+            "superType": 2
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 92,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 76,
+      "payload": {
+        "clientId": 2,
+        "name": "Recon Directive",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 1
+        }
+      }
+    },
+    {
+      "sequence": 93,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 77,
+      "payload": {
+        "id": 50,
+        "result": [
+          0
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 118,
+            "name": "Darkness Energy",
+            "fullName": "Darkness Energy SVE",
+            "superType": 3
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 94,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 78,
+      "payload": {
+        "id": 2,
+        "handIndex": 3,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 95,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 79,
+      "payload": {
+        "id": 51,
+        "result": [
+          1,
+          0
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 77,
+            "name": "Bloodmoon Ursaluna ex",
+            "fullName": "Bloodmoon Ursaluna ex TWM",
+            "superType": 1
+          },
+          {
+            "kind": "Card",
+            "id": 95,
+            "name": "Buddy-Buddy Poffin",
+            "fullName": "Buddy-Buddy Poffin TEF",
+            "superType": 2
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 96,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 80,
+      "payload": {
+        "id": 52,
+        "result": [
+          2
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 68,
+            "name": "Dragapult ex",
+            "fullName": "Dragapult ex TWM",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 97,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 81,
+      "payload": {
+        "id": 53,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 98,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 81,
+      "payload": {
+        "id": 54,
+        "result": [
+          23,
+          18,
+          14,
+          13,
+          26,
+          29,
+          11,
+          8,
+          3,
+          0,
+          4,
+          9,
+          5,
+          25,
+          1,
+          19,
+          20,
+          24,
+          7,
+          6,
+          17,
+          21,
+          27,
+          16,
+          28,
+          22,
+          2,
+          10,
+          12,
+          15
+        ]
+      }
+    },
+    {
+      "sequence": 99,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 82,
+      "payload": {
+        "id": 2,
+        "handIndex": 7,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 100,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 83,
+      "payload": {
+        "id": 2,
+        "handIndex": 0,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 101,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 84,
+      "payload": {
+        "clientId": 2,
+        "name": "Flip the Script",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 102,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 85,
+      "payload": {
+        "id": 2,
+        "handIndex": 7,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 103,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 86,
+      "payload": {
+        "id": 55,
+        "result": [
+          6
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 72,
+            "name": "Munkidori",
+            "fullName": "Munkidori TWM",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 104,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 86,
+      "payload": {
+        "id": 57,
+        "result": [
+          7,
+          24,
+          11,
+          22,
+          23,
+          25,
+          15,
+          10,
+          13,
+          9,
+          8,
+          3,
+          21,
+          12,
+          5,
+          16,
+          0,
+          20,
+          4,
+          6,
+          14,
+          18,
+          2,
+          17,
+          1,
+          19
+        ]
+      }
+    },
+    {
+      "sequence": 105,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 87,
+      "payload": {
+        "id": 56,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 106,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 88,
+      "payload": {
+        "id": 2,
+        "handIndex": 8,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 4
+        }
+      }
+    },
+    {
+      "sequence": 107,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 89,
+      "payload": {
+        "id": 2,
+        "handIndex": 1,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 108,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 90,
+      "payload": {
+        "id": 58,
+        "result": [
+          23,
+          24
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 119,
+            "name": "Darkness Energy",
+            "fullName": "Darkness Energy SVE",
+            "superType": 3
+          },
+          {
+            "kind": "Card",
+            "id": 113,
+            "name": "Fire Energy",
+            "fullName": "Fire Energy SVE",
+            "superType": 3
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 109,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 90,
+      "payload": {
+        "id": 61,
+        "result": [
+          4,
+          0,
+          5,
+          14,
+          10,
+          23,
+          19,
+          9,
+          13,
+          12,
+          21,
+          3,
+          22,
+          6,
+          17,
+          20,
+          18,
+          2,
+          15,
+          16,
+          7,
+          11,
+          1,
+          8
+        ]
+      }
+    },
+    {
+      "sequence": 110,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 91,
+      "payload": {
+        "id": 59,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 111,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 92,
+      "payload": {
+        "id": 60,
+        "result": [
+          {
+            "to": {
+              "player": 2,
+              "slot": 2,
+              "index": 4
+            },
+            "index": 0
+          }
+        ],
+        "decodedResult": [
+          {
+            "to": {
+              "player": 2,
+              "slot": 2,
+              "index": 4
+            },
+            "card": {
+              "kind": "Card",
+              "id": 119,
+              "name": "Darkness Energy",
+              "fullName": "Darkness Energy SVE",
+              "superType": 3
+            }
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 112,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 93,
+      "payload": {
+        "clientId": 2,
+        "name": "Adrena-Brain",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 4
+        }
+      }
+    },
+    {
+      "sequence": 113,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 94,
+      "payload": {
+        "id": 62,
+        "result": [
+          {
+            "from": {
+              "player": 2,
+              "slot": 2,
+              "index": 1
+            },
+            "to": {
+              "player": 1,
+              "slot": 2,
+              "index": 1
+            }
+          },
+          {
+            "from": {
+              "player": 2,
+              "slot": 2,
+              "index": 1
+            },
+            "to": {
+              "player": 1,
+              "slot": 2,
+              "index": 1
+            }
+          },
+          {
+            "from": {
+              "player": 2,
+              "slot": 2,
+              "index": 1
+            },
+            "to": {
+              "player": 1,
+              "slot": 2,
+              "index": 1
+            }
+          }
+        ],
+        "decodedResult": [
+          {
+            "from": {
+              "player": 2,
+              "slot": 2,
+              "index": 1
+            },
+            "to": {
+              "player": 1,
+              "slot": 2,
+              "index": 1
+            }
+          },
+          {
+            "from": {
+              "player": 2,
+              "slot": 2,
+              "index": 1
+            },
+            "to": {
+              "player": 1,
+              "slot": 2,
+              "index": 1
+            }
+          },
+          {
+            "from": {
+              "player": 2,
+              "slot": 2,
+              "index": 1
+            },
+            "to": {
+              "player": 1,
+              "slot": 2,
+              "index": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 114,
+      "type": "ATTACK_ACTION",
+      "turn": 7,
+      "phase": 3,
+      "activePlayer": 1,
+      "stateIndex": 95,
+      "payload": {
+        "clientId": 2,
+        "name": "Phantom Dive"
+      }
+    },
+    {
+      "sequence": 115,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 3,
+      "activePlayer": 1,
+      "stateIndex": 96,
+      "payload": {
+        "id": 63,
+        "result": [
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 1
+            },
+            "damage": 60
+          }
+        ],
+        "decodedResult": [
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 1
+            },
+            "damage": 60
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 116,
+      "type": "RESOLVE_PROMPT",
+      "turn": 7,
+      "phase": 3,
+      "activePlayer": 1,
+      "stateIndex": 97,
+      "payload": {
+        "id": 64,
+        "result": null,
+        "decodedResult": null
+      }
+    },
+    {
+      "sequence": 117,
+      "type": "RESOLVE_PROMPT",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 98,
+      "payload": {
+        "id": 65,
+        "result": [
+          0
+        ],
+        "decodedResult": [
+          {
+            "kind": "CardList",
+            "cards": []
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 118,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 99,
+      "payload": {
+        "id": 3,
+        "handIndex": 9,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 119,
+      "type": "RESOLVE_PROMPT",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 100,
+      "payload": {
+        "id": 66,
+        "result": [],
+        "decodedResult": []
+      }
+    },
+    {
+      "sequence": 120,
+      "type": "RESOLVE_PROMPT",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 100,
+      "payload": {
+        "id": 67,
+        "result": [
+          11,
+          1,
+          22,
+          5,
+          2,
+          21,
+          19,
+          15,
+          16,
+          10,
+          14,
+          20,
+          23,
+          3,
+          4,
+          18,
+          8,
+          12,
+          13,
+          17,
+          0,
+          7,
+          9,
+          6
+        ]
+      }
+    },
+    {
+      "sequence": 121,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 101,
+      "payload": {
+        "id": 3,
+        "handIndex": 9,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 122,
+      "type": "RESOLVE_PROMPT",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 102,
+      "payload": {
+        "id": 68,
+        "result": [],
+        "decodedResult": []
+      }
+    },
+    {
+      "sequence": 123,
+      "type": "RESOLVE_PROMPT",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 102,
+      "payload": {
+        "id": 69,
+        "result": [
+          5,
+          22,
+          16,
+          1,
+          21,
+          8,
+          13,
+          3,
+          14,
+          17,
+          9,
+          20,
+          12,
+          4,
+          19,
+          2,
+          18,
+          11,
+          0,
+          23,
+          15,
+          7,
+          10,
+          6
+        ]
+      }
+    },
+    {
+      "sequence": 124,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 103,
+      "payload": {
+        "id": 3,
+        "handIndex": 3,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 125,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 104,
+      "payload": {
+        "clientId": 3,
+        "name": "Recon Directive",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 2
+        }
+      }
+    },
+    {
+      "sequence": 126,
+      "type": "RESOLVE_PROMPT",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 105,
+      "payload": {
+        "id": 70,
+        "result": [
+          1
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 57,
+            "name": "Psychic Energy",
+            "fullName": "Psychic Energy SVE",
+            "superType": 3
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 127,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 106,
+      "payload": {
+        "id": 3,
+        "handIndex": 8,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 2
+        }
+      }
+    },
+    {
+      "sequence": 128,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 107,
+      "payload": {
+        "id": 3,
+        "handIndex": 7,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 129,
+      "type": "RESOLVE_PROMPT",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 107,
+      "payload": {
+        "id": 71,
+        "result": [
+          8,
+          12,
+          7,
+          25,
+          0,
+          9,
+          13,
+          29,
+          14,
+          27,
+          28,
+          3,
+          19,
+          16,
+          11,
+          2,
+          18,
+          26,
+          22,
+          17,
+          5,
+          24,
+          4,
+          1,
+          15,
+          6,
+          20,
+          21,
+          10,
+          23
+        ]
+      }
+    },
+    {
+      "sequence": 130,
+      "type": "RESOLVE_PROMPT",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 107,
+      "payload": {
+        "id": 72,
+        "result": [
+          19,
+          25,
+          22,
+          8,
+          17,
+          0,
+          14,
+          7,
+          27,
+          4,
+          1,
+          26,
+          5,
+          11,
+          18,
+          9,
+          16,
+          6,
+          3,
+          30,
+          20,
+          13,
+          15,
+          24,
+          28,
+          21,
+          29,
+          32,
+          12,
+          23,
+          10,
+          31,
+          2
+        ]
+      }
+    },
+    {
+      "sequence": 131,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 108,
+      "payload": {
+        "id": 3,
+        "handIndex": 2,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 132,
+      "type": "RESOLVE_PROMPT",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 109,
+      "payload": {
+        "id": 73,
+        "result": [
+          2,
+          0
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 18,
+            "name": "Latias ex",
+            "fullName": "Latias ex SSP",
+            "superType": 1
+          },
+          {
+            "kind": "Card",
+            "id": 34,
+            "name": "Buddy-Buddy Poffin",
+            "fullName": "Buddy-Buddy Poffin TEF",
+            "superType": 2
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 133,
+      "type": "RESOLVE_PROMPT",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 110,
+      "payload": {
+        "id": 74,
+        "result": [
+          5
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 11,
+            "name": "Munkidori",
+            "fullName": "Munkidori TWM",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 134,
+      "type": "RESOLVE_PROMPT",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 111,
+      "payload": {
+        "id": 75,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 135,
+      "type": "RESOLVE_PROMPT",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 111,
+      "payload": {
+        "id": 76,
+        "result": [
+          14,
+          11,
+          9,
+          20,
+          18,
+          1,
+          22,
+          19,
+          17,
+          2,
+          10,
+          3,
+          13,
+          7,
+          6,
+          8,
+          0,
+          12,
+          15,
+          4,
+          16,
+          21,
+          23,
+          5
+        ]
+      }
+    },
+    {
+      "sequence": 136,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 8,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 112,
+      "payload": {
+        "id": 3,
+        "handIndex": 2,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 1
+        }
+      }
+    },
+    {
+      "sequence": 137,
+      "type": "ATTACK_ACTION",
+      "turn": 8,
+      "phase": 3,
+      "activePlayer": 0,
+      "stateIndex": 113,
+      "payload": {
+        "clientId": 3,
+        "name": "Phantom Dive"
+      }
+    },
+    {
+      "sequence": 138,
+      "type": "RESOLVE_PROMPT",
+      "turn": 8,
+      "phase": 3,
+      "activePlayer": 0,
+      "stateIndex": 114,
+      "payload": {
+        "id": 77,
+        "result": [
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 0
+            },
+            "damage": 40
+          },
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 2
+            },
+            "damage": 10
+          },
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 3
+            },
+            "damage": 10
+          }
+        ],
+        "decodedResult": [
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 0
+            },
+            "damage": 40
+          },
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 2
+            },
+            "damage": 10
+          },
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 3
+            },
+            "damage": 10
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 139,
+      "type": "RESOLVE_PROMPT",
+      "turn": 9,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 115,
+      "payload": {
+        "id": 78,
+        "result": null,
+        "decodedResult": null
+      }
+    },
+    {
+      "sequence": 140,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 9,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 116,
+      "payload": {
+        "clientId": 2,
+        "name": "Adrena-Brain",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 4
+        }
+      }
+    },
+    {
+      "sequence": 141,
+      "type": "RESOLVE_PROMPT",
+      "turn": 9,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 117,
+      "payload": {
+        "id": 79,
+        "result": [
+          {
+            "from": {
+              "player": 2,
+              "slot": 1,
+              "index": 0
+            },
+            "to": {
+              "player": 1,
+              "slot": 2,
+              "index": 2
+            }
+          },
+          {
+            "from": {
+              "player": 2,
+              "slot": 1,
+              "index": 0
+            },
+            "to": {
+              "player": 1,
+              "slot": 2,
+              "index": 2
+            }
+          },
+          {
+            "from": {
+              "player": 2,
+              "slot": 1,
+              "index": 0
+            },
+            "to": {
+              "player": 1,
+              "slot": 2,
+              "index": 2
+            }
+          }
+        ],
+        "decodedResult": [
+          {
+            "from": {
+              "player": 2,
+              "slot": 1,
+              "index": 0
+            },
+            "to": {
+              "player": 1,
+              "slot": 2,
+              "index": 2
+            }
+          },
+          {
+            "from": {
+              "player": 2,
+              "slot": 1,
+              "index": 0
+            },
+            "to": {
+              "player": 1,
+              "slot": 2,
+              "index": 2
+            }
+          },
+          {
+            "from": {
+              "player": 2,
+              "slot": 1,
+              "index": 0
+            },
+            "to": {
+              "player": 1,
+              "slot": 2,
+              "index": 2
+            }
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 142,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 9,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 118,
+      "payload": {
+        "clientId": 2,
+        "name": "Recon Directive",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 1
+        }
+      }
+    },
+    {
+      "sequence": 143,
+      "type": "RESOLVE_PROMPT",
+      "turn": 9,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 119,
+      "payload": {
+        "id": 80,
+        "result": [
+          1
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 69,
+            "name": "Dragapult ex",
+            "fullName": "Dragapult ex TWM",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 144,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 9,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 120,
+      "payload": {
+        "id": 2,
+        "handIndex": 0,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 145,
+      "type": "RESOLVE_PROMPT",
+      "turn": 9,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 121,
+      "payload": {
+        "id": 81,
+        "result": [
+          2
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 66,
+            "name": "Drakloak",
+            "fullName": "Drakloak TWM",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 146,
+      "type": "RESOLVE_PROMPT",
+      "turn": 9,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 121,
+      "payload": {
+        "id": 83,
+        "result": [
+          2,
+          18,
+          23,
+          1,
+          10,
+          25,
+          5,
+          3,
+          16,
+          14,
+          0,
+          21,
+          19,
+          8,
+          26,
+          17,
+          24,
+          7,
+          11,
+          15,
+          9,
+          20,
+          13,
+          22,
+          12,
+          6,
+          27,
+          4
+        ]
+      }
+    },
+    {
+      "sequence": 147,
+      "type": "RESOLVE_PROMPT",
+      "turn": 9,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 122,
+      "payload": {
+        "id": 82,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 148,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 9,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 123,
+      "payload": {
+        "id": 2,
+        "handIndex": 3,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 2
+        }
+      }
+    },
+    {
+      "sequence": 149,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 9,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 124,
+      "payload": {
+        "clientId": 2,
+        "name": "Recon Directive",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 2
+        }
+      }
+    },
+    {
+      "sequence": 150,
+      "type": "RESOLVE_PROMPT",
+      "turn": 9,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 125,
+      "payload": {
+        "id": 84,
+        "result": [
+          0
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 78,
+            "name": "Latias ex",
+            "fullName": "Latias ex SSP",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 151,
+      "type": "ATTACK_ACTION",
+      "turn": 9,
+      "phase": 3,
+      "activePlayer": 1,
+      "stateIndex": 126,
+      "payload": {
+        "clientId": 2,
+        "name": "Phantom Dive"
+      }
+    },
+    {
+      "sequence": 152,
+      "type": "RESOLVE_PROMPT",
+      "turn": 9,
+      "phase": 3,
+      "activePlayer": 1,
+      "stateIndex": 127,
+      "payload": {
+        "id": 85,
+        "result": [
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 2
+            },
+            "damage": 60
+          }
+        ],
+        "decodedResult": [
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 2
+            },
+            "damage": 60
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 153,
+      "type": "RESOLVE_PROMPT",
+      "turn": 9,
+      "phase": 3,
+      "activePlayer": 1,
+      "stateIndex": 128,
+      "payload": {
+        "id": 86,
+        "result": null,
+        "decodedResult": null
+      }
+    },
+    {
+      "sequence": 154,
+      "type": "RESOLVE_PROMPT",
+      "turn": 9,
+      "phase": 3,
+      "activePlayer": 1,
+      "stateIndex": 129,
+      "payload": {
+        "id": 87,
+        "result": [
+          1,
+          2,
+          3
+        ],
+        "decodedResult": [
+          {
+            "kind": "CardList",
+            "cards": []
+          },
+          {
+            "kind": "CardList",
+            "cards": []
+          },
+          {
+            "kind": "CardList",
+            "cards": []
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 155,
+      "type": "RESOLVE_PROMPT",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 130,
+      "payload": {
+        "id": 88,
+        "result": [
+          {
+            "player": 2,
+            "slot": 2,
+            "index": 0
+          }
+        ],
+        "decodedResult": [
+          {
+            "kind": "PokemonCardList",
+            "cards": [
+              {
+                "kind": "Card",
+                "id": 15,
+                "name": "Budew",
+                "fullName": "Budew PRE",
+                "superType": 1
+              }
+            ],
+            "damage": 0,
+            "hp": 0,
+            "specialConditions": []
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 156,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 131,
+      "payload": {
+        "id": 3,
+        "handIndex": 2,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 157,
+      "type": "RESOLVE_PROMPT",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 132,
+      "payload": {
+        "id": 89,
+        "result": [
+          3
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 6,
+            "name": "Drakloak",
+            "fullName": "Drakloak TWM",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 158,
+      "type": "RESOLVE_PROMPT",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 133,
+      "payload": {
+        "id": 90,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 159,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 134,
+      "payload": {
+        "id": 3,
+        "handIndex": 2,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 3
+        }
+      }
+    },
+    {
+      "sequence": 160,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 135,
+      "payload": {
+        "clientId": 3,
+        "name": "Recon Directive",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 3
+        }
+      }
+    },
+    {
+      "sequence": 161,
+      "type": "RESOLVE_PROMPT",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 136,
+      "payload": {
+        "id": 91,
+        "result": [
+          1
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 31,
+            "name": "Brock's Scouting",
+            "fullName": "Brock's Scouting JTG",
+            "superType": 2
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 162,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 137,
+      "payload": {
+        "id": 3,
+        "handIndex": 2,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 163,
+      "type": "RESOLVE_PROMPT",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 138,
+      "payload": {
+        "id": 92,
+        "result": [
+          0,
+          3
+        ],
+        "decodedResult": [
+          {
+            "kind": "Card",
+            "id": 17,
+            "name": "Bloodmoon Ursaluna ex",
+            "fullName": "Bloodmoon Ursaluna ex TWM",
+            "superType": 1
+          },
+          {
+            "kind": "Card",
+            "id": 16,
+            "name": "Fezandipiti ex",
+            "fullName": "Fezandipiti ex SFA",
+            "superType": 1
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 164,
+      "type": "RESOLVE_PROMPT",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 139,
+      "payload": {
+        "id": 93,
+        "result": true,
+        "decodedResult": true
+      }
+    },
+    {
+      "sequence": 165,
+      "type": "RESOLVE_PROMPT",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 139,
+      "payload": {
+        "id": 94,
+        "result": [
+          13,
+          12,
+          10,
+          16,
+          3,
+          1,
+          2,
+          4,
+          14,
+          5,
+          0,
+          7,
+          8,
+          11,
+          15,
+          17,
+          18,
+          9,
+          6,
+          19
+        ]
+      }
+    },
+    {
+      "sequence": 166,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 140,
+      "payload": {
+        "id": 3,
+        "handIndex": 3,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 167,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 141,
+      "payload": {
+        "clientId": 3,
+        "name": "Flip the Script",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 168,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 142,
+      "payload": {
+        "id": 3,
+        "handIndex": 2,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 2
+        }
+      }
+    },
+    {
+      "sequence": 169,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 143,
+      "payload": {
+        "id": 3,
+        "handIndex": 0,
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 2
+        }
+      }
+    },
+    {
+      "sequence": 170,
+      "type": "RETREAT_ACTION",
+      "turn": 10,
+      "phase": 2,
+      "activePlayer": 0,
+      "stateIndex": 144,
+      "payload": {
+        "clientId": 3,
+        "benchIndex": 2
+      }
+    },
+    {
+      "sequence": 171,
+      "type": "ATTACK_ACTION",
+      "turn": 10,
+      "phase": 3,
+      "activePlayer": 0,
+      "stateIndex": 145,
+      "payload": {
+        "clientId": 3,
+        "name": "Blood Moon"
+      }
+    },
+    {
+      "sequence": 172,
+      "type": "RESOLVE_PROMPT",
+      "turn": 10,
+      "phase": 3,
+      "activePlayer": 0,
+      "stateIndex": 146,
+      "payload": {
+        "id": 95,
+        "result": null,
+        "decodedResult": null
+      }
+    },
+    {
+      "sequence": 173,
+      "type": "RESOLVE_PROMPT",
+      "turn": 10,
+      "phase": 3,
+      "activePlayer": 0,
+      "stateIndex": 147,
+      "payload": {
+        "id": 96,
+        "result": [
+          1,
+          2
+        ],
+        "decodedResult": [
+          {
+            "kind": "CardList",
+            "cards": []
+          },
+          {
+            "kind": "CardList",
+            "cards": []
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 174,
+      "type": "RESOLVE_PROMPT",
+      "turn": 11,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 148,
+      "payload": {
+        "id": 97,
+        "result": [
+          {
+            "player": 2,
+            "slot": 2,
+            "index": 1
+          }
+        ],
+        "decodedResult": [
+          {
+            "kind": "PokemonCardList",
+            "cards": [
+              {
+                "kind": "Card",
+                "id": 63,
+                "name": "Dreepy",
+                "fullName": "Dreepy TWM",
+                "superType": 1
+              },
+              {
+                "kind": "Card",
+                "id": 115,
+                "name": "Psychic Energy",
+                "fullName": "Psychic Energy SVE",
+                "superType": 3
+              },
+              {
+                "kind": "Card",
+                "id": 64,
+                "name": "Drakloak",
+                "fullName": "Drakloak TWM",
+                "superType": 1
+              }
+            ],
+            "damage": 0,
+            "hp": 0,
+            "specialConditions": []
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 175,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 11,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 149,
+      "payload": {
+        "id": 2,
+        "handIndex": 4,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 176,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 11,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 150,
+      "payload": {
+        "id": 2,
+        "handIndex": 0,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 177,
+      "type": "RESOLVE_PROMPT",
+      "turn": 11,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 151,
+      "payload": {
+        "id": 98,
+        "result": [
+          {
+            "player": 1,
+            "slot": 2,
+            "index": 0
+          }
+        ],
+        "decodedResult": [
+          {
+            "kind": "PokemonCardList",
+            "cards": [
+              {
+                "kind": "Card",
+                "id": 16,
+                "name": "Fezandipiti ex",
+                "fullName": "Fezandipiti ex SFA",
+                "superType": 1
+              }
+            ],
+            "damage": 0,
+            "hp": 0,
+            "specialConditions": []
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 178,
+      "type": "PLAY_CARD_ACTION",
+      "turn": 11,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 152,
+      "payload": {
+        "id": 2,
+        "handIndex": 1,
+        "target": {
+          "player": 2,
+          "slot": 1,
+          "index": 0
+        }
+      }
+    },
+    {
+      "sequence": 179,
+      "type": "USE_ABILITY_ACTION",
+      "turn": 11,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 153,
+      "payload": {
+        "clientId": 2,
+        "name": "Adrena-Brain",
+        "target": {
+          "player": 2,
+          "slot": 2,
+          "index": 4
+        }
+      }
+    },
+    {
+      "sequence": 180,
+      "type": "RESOLVE_PROMPT",
+      "turn": 11,
+      "phase": 2,
+      "activePlayer": 1,
+      "stateIndex": 154,
+      "payload": {
+        "id": 99,
+        "result": [
+          {
+            "from": {
+              "player": 2,
+              "slot": 2,
+              "index": 3
+            },
+            "to": {
+              "player": 1,
+              "slot": 1,
+              "index": 0
+            }
+          }
+        ],
+        "decodedResult": [
+          {
+            "from": {
+              "player": 2,
+              "slot": 2,
+              "index": 3
+            },
+            "to": {
+              "player": 1,
+              "slot": 1,
+              "index": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 181,
+      "type": "ATTACK_ACTION",
+      "turn": 11,
+      "phase": 3,
+      "activePlayer": 1,
+      "stateIndex": 155,
+      "payload": {
+        "clientId": 2,
+        "name": "Phantom Dive"
+      }
+    },
+    {
+      "sequence": 182,
+      "type": "RESOLVE_PROMPT",
+      "turn": 11,
+      "phase": 3,
+      "activePlayer": 1,
+      "stateIndex": 156,
+      "payload": {
+        "id": 100,
+        "result": [
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 2
+            },
+            "damage": 60
+          }
+        ],
+        "decodedResult": [
+          {
+            "target": {
+              "player": 1,
+              "slot": 2,
+              "index": 2
+            },
+            "damage": 60
+          }
+        ]
+      }
+    },
+    {
+      "sequence": 183,
+      "type": "RESOLVE_PROMPT",
+      "turn": 11,
+      "phase": 7,
+      "activePlayer": 1,
+      "stateIndex": 157,
+      "payload": {
+        "id": 101,
+        "result": null,
+        "decodedResult": null
+      }
+    }
+  ]
+}
