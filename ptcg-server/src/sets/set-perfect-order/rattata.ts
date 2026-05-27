@@ -19,11 +19,11 @@ export class Rattata extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';
   public name: string = 'Rattata';
-  public fullName: string = 'Rattata M3';
+  public fullName: string = 'Rattata POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

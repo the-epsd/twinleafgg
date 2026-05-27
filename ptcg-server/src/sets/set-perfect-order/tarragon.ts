@@ -73,7 +73,7 @@ export class Tarragon extends TrainerCard {
   public setNumber: string = '85';
   public regulationMark = 'J';
   public name: string = 'Tarragon';
-  public fullName: string = 'Tarragon M3';
+  public fullName: string = 'Tarragon POR';
   public text: string = 'Put up to 4 in any combination of [F] Pokémon and Basic [F] Energy cards from your discard pile into your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -130,7 +130,7 @@ export class ProbopassIR extends Probopass {
 
 export class TyruntIR extends Tyrunt {
   public fullName = 'TyruntIR POR';
-  public set = 'MEP';
+  public set = 'POR';
   public setNumber = '70';
 }
 
@@ -195,25 +195,25 @@ export class MeowthexFA extends Meowthex {
 
 export class EnergyRecyclerFA extends EnergyRecycler {
   public fullName = 'Energy Recycler FA POR';
-  public set = 'M3';
+  public set = 'POR';
   public setNumber = '108';
 }
 
 export class SacredAshFA extends SacredAsh {
   public fullName = 'Sacred Ash FA POR';
-  public set = 'M3';
+  public set = 'POR';
   public setNumber = '115';
 }
 
 export class PokePadFA extends PokePad {
   public fullName = 'Poke Pad FA POR';
-  public set = 'M3';
+  public set = 'POR';
   public setNumber = '113';
 }
 
 export class WondrousPatchFA extends WonderPatch {
   public fullName = 'Wondrous Patch FA POR';
-  public set = 'M3';
+  public set = 'POR';
   public setNumber = '117';
 }
 

@@ -28,11 +28,11 @@ export class Goodra extends PokemonCard {
     text: 'Discard the top card of your deck.'
   }];
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '66';
   public name: string = 'Goodra';
-  public fullName: string = 'Goodra M4';
+  public fullName: string = 'Goodra CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof RetreatEffect) {

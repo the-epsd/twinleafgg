@@ -28,7 +28,7 @@ export class Drapion extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '52';
   public name: string = 'Drapion';
-  public fullName: string = 'Drapion M3';
+  public fullName: string = 'Drapion POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Hazard Tail - self-damage and poison/paralyze

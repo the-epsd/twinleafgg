@@ -155,50 +155,50 @@ import { PokemonCatcher } from '../set-scarlet-and-violet/pokemon-catcher';
 // Start Deck 100 Reprints
 export class SuperPotionMC extends SuperPotion {
   public setNumber = '634';
-  public fullName: string = 'Super Potion MC';
-  public set = 'MC';
+  public fullName: string = 'Super Potion ASC';
+  public set = 'ASC';
   public regulationMark = 'I';
 }
 
 export class EnergySearchMC extends EnergySearch {
   public setNumber = '639';
-  public fullName: string = 'Energy Search MC';
-  public set = 'MC';
+  public fullName: string = 'Energy Search ASC';
+  public set = 'ASC';
   public regulationMark = 'I';
 }
 
 export class PotionMC extends Potion {
   public setNumber = '643';
-  public fullName: string = 'Potion MC';
-  public set = 'MC';
+  public fullName: string = 'Potion ASC';
+  public set = 'ASC';
   public regulationMark = 'I';
 }
 
 export class CrushingHammerMC extends CrushingHammer {
   public setNumber = '644';
-  public fullName: string = 'Crushing Hammer MC';
-  public set = 'MC';
+  public fullName: string = 'Crushing Hammer ASC';
+  public set = 'ASC';
   public regulationMark = 'I';
 }
 
 export class PokeGear30MC extends Pokegear30 {
   public setNumber = '660';
-  public fullName: string = 'Pokégear 3.0 MC';
-  public set = 'MC';
+  public fullName: string = 'Pokegear 3.0 ASC';
+  public set = 'ASC';
   public regulationMark = 'I';
 }
 
 export class PokemonCatcherMC extends PokemonCatcher {
   public setNumber = '665';
-  public fullName: string = 'Pokémon Catcher MC';
-  public set = 'MC';
+  public fullName: string = 'Pokemon Catcher ASC';
+  public set = 'ASC';
   public regulationMark = 'I';
 }
 
 export class JudgeMC extends Judge {
   public setNumber = '711';
-  public fullName: string = 'Judge MC';
-  public set = 'MC';
+  public fullName: string = 'Judge ASC';
+  public set = 'ASC';
   public regulationMark = 'I';
 }
 

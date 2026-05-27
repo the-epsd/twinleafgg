@@ -16,9 +16,9 @@ export class Remoraid extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Remoraid';
-  public fullName: string = 'Remoraid M4';
+  public fullName: string = 'Remoraid CRI';
 }

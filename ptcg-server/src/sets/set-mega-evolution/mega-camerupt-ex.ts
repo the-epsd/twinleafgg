@@ -33,7 +33,7 @@ export class MegaCameruptEx extends PokemonCard {
   public setNumber: string = '22';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Camerupt ex';
-  public fullName: string = 'Mega Camerupt ex M1L';
+  public fullName: string = 'Mega Camerupt ex MEG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Roasting Heat

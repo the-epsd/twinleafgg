@@ -13,7 +13,7 @@ export class JumboIce extends TrainerCard {
   public regulationMark = 'I';
   public set: string = 'PFL';
   public name: string = 'Jumbo Ice Cream';
-  public fullName: string = 'Jumbo Ice M2';
+  public fullName: string = 'Jumbo Ice PFL';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '91';
   public text: string = 'Heal 80 damage from your Active Pokémon that has 3 or more Energy attached.';

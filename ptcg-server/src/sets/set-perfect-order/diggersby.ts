@@ -29,7 +29,7 @@ export class Diggersby extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
   public name: string = 'Diggersby';
-  public fullName: string = 'Diggersby M3';
+  public fullName: string = 'Diggersby POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Earthquake - damage to benched Pokemon (no weakness/resistance)

@@ -19,11 +19,11 @@ export class Baltoy extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '46';
   public name: string = 'Baltoy';
-  public fullName: string = 'Baltoy M4';
+  public fullName: string = 'Baltoy CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

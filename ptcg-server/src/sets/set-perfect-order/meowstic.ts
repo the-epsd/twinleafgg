@@ -31,7 +31,7 @@ export class Meowstic extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '34';
   public name: string = 'Meowstic';
-  public fullName: string = 'Meowstic M3';
+  public fullName: string = 'Meowstic POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Perplex - confuse opponent's Active Pokemon

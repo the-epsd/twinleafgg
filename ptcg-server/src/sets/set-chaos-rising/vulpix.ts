@@ -18,11 +18,11 @@ export class Vulpix extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '8';
   public name: string = 'Vulpix';
-  public fullName: string = 'Vulpix M4';
+  public fullName: string = 'Vulpix CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {

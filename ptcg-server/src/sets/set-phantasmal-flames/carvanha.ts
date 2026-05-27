@@ -25,7 +25,7 @@ export class Carvanha extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';
   public name: string = 'Carvanha';
-  public fullName: string = 'Carvanha M2';
+  public fullName: string = 'Carvanha PFL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

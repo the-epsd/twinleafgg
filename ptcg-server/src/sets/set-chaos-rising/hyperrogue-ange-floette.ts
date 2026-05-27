@@ -13,10 +13,10 @@ import { CheckHpEffect } from '../../game/store/effects/check-effects';
 export class HyperrogueAngeFloette extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public setNumber: string = '79';
   public name: string = 'Hyperrogue Ange Floette';
-  public fullName: string = 'Hyperrogue Ange Floette M4';
+  public fullName: string = 'Hyperrogue Ange Floette CRI';
   public cardImage: string = 'assets/cardback.png';
 
   public text: string =

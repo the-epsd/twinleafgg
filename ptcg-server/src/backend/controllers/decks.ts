@@ -833,12 +833,11 @@ const SetReleaseDates: { [key: string]: Date } = {
   'WHT': new Date('2025-07-18'),
   'MEP': new Date('2025-09-26'),
   'MEG': new Date('2025-09-26'),
+  'MEE': new Date('2025-09-26'),
   'PFL': new Date('2025-11-14'),
   'ASC': new Date('2026-01-28'),
-  'MC': new Date('2026-03-27'),
-  'M3': new Date('2026-03-27'),
   'POR': new Date('2026-03-27'),
-  'M4': new Date('2026-05-22'),
+  'CRI': new Date('2026-05-22'),
   'M5': new Date('2026-05-23')
 };
 
@@ -863,7 +862,7 @@ function isPrintingLegalInStandard(card: any): boolean {
 }
 
 // --- isPrintingLegalInStandardNightly ---
-/** Same regulation rules as Standard, plus not-yet-released sets at or after TEF (e.g. M3, M4). */
+/** Same regulation rules as Standard, plus not-yet-released sets at or after TEF (e.g. POR, CRI). */
 function isPrintingLegalInStandardNightly(card: any): boolean {
   const setDate = SetReleaseDates[card.set];
   return !!setDate &&

@@ -11,11 +11,11 @@ export const EMMA_PLAYED_THIS_TURN = 'EMMA_PLAYED_THIS_TURN';
 export class Emma extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '78';
   public name: string = 'Emma';
-  public fullName: string = 'Emma M4';
+  public fullName: string = 'Emma CRI';
   public text: string = 'Your opponent reveals their hand. Draw a card for each Pokemon you find there.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

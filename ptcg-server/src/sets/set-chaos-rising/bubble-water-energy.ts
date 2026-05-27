@@ -12,12 +12,12 @@ import { GameMessage } from '../../game/game-message';
 export class BubbleWaterEnergy extends EnergyCard {
   public provides: CardType[] = [CardType.WATER];
   public energyType = EnergyType.SPECIAL;
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public regulationMark = 'J';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '82';
-  public name = 'Bubble Water Energy';
-  public fullName = 'Bubble Water Energy M4';
+  public setNumber: string = '84';
+  public name = 'Bubbly Water Energy';
+  public fullName = 'Bubbly Water Energy CRI';
   public text = 'This card can only be attached to [W] Pokémon. The [W] Pokémon this card is attached to cannot have any Special Conditions. Remove all Special Conditions from that Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

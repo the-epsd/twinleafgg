@@ -26,11 +26,11 @@ export class Garbodor extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '55';
   public name: string = 'Garbodor';
-  public fullName: string = 'Garbodor M4';
+  public fullName: string = 'Garbodor CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect && effect.damage > 0 && state.phase === GamePhase.ATTACK) {

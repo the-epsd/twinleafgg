@@ -19,5 +19,5 @@ export class Gastly extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '54';
   public name: string = 'Gastly';
-  public fullName: string = 'Gastly MBG';
+  public fullName: string = 'Gastly PFL';
 }

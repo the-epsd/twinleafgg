@@ -57,7 +57,7 @@ export class Misdreavus extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public name: string = 'Misdreavus';
-  public fullName: string = 'Misdreavus M2a';
+  public fullName: string = 'Misdreavus ASC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ascension attack

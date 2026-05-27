@@ -14,9 +14,9 @@ export class Stunky extends PokemonCard {
     text: ''
   }];
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '52';
   public name: string = 'Stunky';
-  public fullName: string = 'Stunky M4';
+  public fullName: string = 'Stunky CRI';
 }

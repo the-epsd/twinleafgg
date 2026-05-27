@@ -22,7 +22,7 @@ export class Snom extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '52';
   public name: string = 'Snom';
-  public fullName: string = 'Snom M2a';
+  public fullName: string = 'Snom ASC';
 }
 
 

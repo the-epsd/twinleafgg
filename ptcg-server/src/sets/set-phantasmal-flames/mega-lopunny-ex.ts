@@ -35,7 +35,7 @@ export class MegaLopunnyex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '84';
   public name: string = 'Mega Lopunny ex';
-  public fullName: string = 'Mega Lopunny ex M2';
+  public fullName: string = 'Mega Lopunny ex PFL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

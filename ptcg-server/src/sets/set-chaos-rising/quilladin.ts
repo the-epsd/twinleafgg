@@ -26,11 +26,11 @@ export class Quilladin extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '6';
   public name: string = 'Quilladin';
-  public fullName: string = 'Quilladin M4';
+  public fullName: string = 'Quilladin CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

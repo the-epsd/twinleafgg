@@ -33,7 +33,7 @@ export class MegaScraftyex extends PokemonCard {
   public setNumber: string = '135';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Scrafty ex';
-  public fullName: string = 'Mega Scrafty ex M2a';
+  public fullName: string = 'Mega Scrafty ex ASC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

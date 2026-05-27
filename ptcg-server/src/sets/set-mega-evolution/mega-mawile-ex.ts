@@ -32,7 +32,7 @@ export class MegaMawileEx extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '94';
   public name: string = 'Mega Mawile ex';
-  public fullName: string = 'Mega Mawile ex M1L';
+  public fullName: string = 'Mega Mawile ex MEG';
   public regulationMark: string = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

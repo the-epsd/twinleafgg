@@ -33,7 +33,7 @@ export class Seviper extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '62';
   public name: string = 'Seviper';
-  public fullName: string = 'Seviper M2';
+  public fullName: string = 'Seviper PFL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

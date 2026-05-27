@@ -22,9 +22,9 @@ export class Phanpy extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '44';
   public name: string = 'Phanpy';
-  public fullName: string = 'Phanpy M4';
+  public fullName: string = 'Phanpy CRI';
 }

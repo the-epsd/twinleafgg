@@ -29,7 +29,7 @@ export class Probopass extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '38';
   public name: string = 'Probopass';
-  public fullName: string = 'Probopass M3';
+  public fullName: string = 'Probopass POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Nose Bumper - discard 3 Energy from this Pokemon

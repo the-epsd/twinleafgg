@@ -31,7 +31,7 @@ export class Salazzleex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Salazzle ex';
-  public fullName: string = 'Salazzle ex M3';
+  public fullName: string = 'Salazzle ex POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Nasty Plot - Search deck for up to 2 cards

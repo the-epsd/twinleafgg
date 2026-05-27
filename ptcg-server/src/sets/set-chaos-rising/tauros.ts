@@ -17,11 +17,11 @@ export class Tauros extends PokemonCard {
     text: 'Choose 1 of your opponent\'s Pokemon. Flip a coin for each of your Pokemon that has "Tauros" in its name. This attack does 50 damage for each heads to that Pokemon.'
   }];
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public name: string = 'Tauros';
-  public fullName: string = 'Tauros M4';
+  public fullName: string = 'Tauros CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

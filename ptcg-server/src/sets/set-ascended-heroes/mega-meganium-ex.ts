@@ -26,7 +26,7 @@ export class MegaMeganiumex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '10';
   public name: string = 'Mega Meganium ex';
-  public fullName: string = 'Mega Meganium ex MC';
+  public fullName: string = 'Mega Meganium ex ASC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

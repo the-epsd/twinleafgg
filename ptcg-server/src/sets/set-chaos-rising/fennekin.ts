@@ -55,11 +55,11 @@ export class Fennekin extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '11';
   public name: string = 'Fennekin';
-  public fullName: string = 'Fennekin M4';
+  public fullName: string = 'Fennekin CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

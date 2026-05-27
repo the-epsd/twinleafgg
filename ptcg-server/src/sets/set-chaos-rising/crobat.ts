@@ -35,11 +35,11 @@ export class Crobat extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '50';
   public name: string = 'Crobat';
-  public fullName: string = 'Crobat M4';
+  public fullName: string = 'Crobat CRI';
 
   public readonly NIGHTTIME_MANEUVERS_MARKER = 'NIGHTTIME_MANEUVERS_MARKER';
 

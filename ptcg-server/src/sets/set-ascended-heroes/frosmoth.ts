@@ -36,7 +36,7 @@ export class Frosmoth extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
   public name: string = 'Frosmoth';
-  public fullName: string = 'Frosmoth M2a';
+  public fullName: string = 'Frosmoth ASC';
 
   public readonly INVITING_WINGS_MARKER = 'INVITING_WINGS_MARKER';
   private readonly COLD_CYCLONE_MARKER = 'COLD_CYCLONE_MARKER';

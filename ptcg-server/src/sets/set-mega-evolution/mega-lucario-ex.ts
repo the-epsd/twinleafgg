@@ -29,7 +29,7 @@ export class MegaLucarioex extends PokemonCard {
   public setNumber: string = '77';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Lucario ex';
-  public fullName: string = 'Mega Lucario ex M1L';
+  public fullName: string = 'Mega Lucario ex MEG';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Aura Jab

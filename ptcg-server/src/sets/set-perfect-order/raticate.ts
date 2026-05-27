@@ -29,7 +29,7 @@ export class Raticate extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '61';
   public name: string = 'Raticate';
-  public fullName: string = 'Raticate M3';
+  public fullName: string = 'Raticate POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Scrape Off - optionally discard Tool

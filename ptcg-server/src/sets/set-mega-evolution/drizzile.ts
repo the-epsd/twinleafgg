@@ -24,7 +24,7 @@ export class Drizzile extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
   public name: string = 'Drizzile';
-  public fullName: string = 'Drizzile M1S';
+  public fullName: string = 'Drizzile MEG';
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

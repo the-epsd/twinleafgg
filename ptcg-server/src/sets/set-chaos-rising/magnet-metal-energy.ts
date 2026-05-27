@@ -10,12 +10,12 @@ import { StoreLike } from '../../game/store/store-like';
 export class MagnetMetalEnergy extends EnergyCard {
   public provides: CardType[] = [CardType.METAL];
   public energyType = EnergyType.SPECIAL;
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '83';
-  public name: string = 'Magnet Metal Energy';
-  public fullName: string = 'Magnet Metal Energy M4';
+  public setNumber: string = '85';
+  public name: string = 'Magnetic Metal Energy';
+  public fullName: string = 'Magnetic Metal Energy CRI';
   public text: string = 'As long as this card is attached to a Pokemon, it provides [M] Energy. As long as this card is attached to a [M] Pokémon, that Pokemon has no Retreat Cost.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

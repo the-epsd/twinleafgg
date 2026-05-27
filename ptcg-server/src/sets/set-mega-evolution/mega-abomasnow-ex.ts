@@ -34,7 +34,7 @@ export class MegaAbomasnowEx extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '36';
   public name: string = 'Mega Abomasnow ex';
-  public fullName: string = 'Mega Abomasnow ex M1S';
+  public fullName: string = 'Mega Abomasnow ex MEG';
   public regulationMark: string = 'I';
 
   public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';

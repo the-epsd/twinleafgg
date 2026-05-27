@@ -22,11 +22,11 @@ export class Flaaffy extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
   public name: string = 'Flaaffy';
-  public fullName: string = 'Flaaffy M4';
+  public fullName: string = 'Flaaffy CRI';
 
   public readonly DISCONNECT_MARKER = 'FLAAFFY_M4_DISCONNECT_MARKER';
 

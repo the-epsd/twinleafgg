@@ -27,11 +27,11 @@ export class Donphan extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '45';
   public name: string = 'Donphan';
-  public fullName: string = 'Donphan M4';
+  public fullName: string = 'Donphan CRI';
 
   public readonly NO_REPRIEVE_MARKER = 'DONPHAN_M4_NO_REPRIEVE_MARKER';
   public readonly NO_REPRIEVE_CLEAR_MARKER = 'DONPHAN_M4_NO_REPRIEVE_CLEAR_MARKER';

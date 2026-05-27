@@ -1,4 +1,5 @@
 import { spawn, type ChildProcessWithoutNullStreams } from 'node:child_process';
+import { createRequire } from 'node:module';
 import path from 'node:path';
 import readline from 'node:readline';
 import { fileURLToPath } from 'node:url';
@@ -38,6 +39,8 @@ const phaseLabels: Record<number, string> = {
 const thisDir = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(thisDir, '../../..');
 const serverRoot = path.join(repoRoot, 'ptcg-server');
+const require = createRequire(import.meta.url);
+const tsNodeBin = require.resolve('ts-node/dist/bin.js');
 
 export class LocalEngineController {
   private child: ChildProcessWithoutNullStreams | null = null;
@@ -81,8 +84,24 @@ export class LocalEngineController {
     this.stderr = '';
     const child = spawn(
       process.execPath,
-      ['node_modules/ts-node/dist/bin.js', 'src/headless-cli.ts', '--stdio'],
-      { cwd: serverRoot },
+      [tsNodeBin, 'src/headless-cli.ts', '--stdio'],
+      {
+        cwd: serverRoot,
+        env: {
+          ...process.env,
+          TS_NODE_SKIP_PROJECT: '1',
+          TS_NODE_TRANSPILE_ONLY: '1',
+          TS_NODE_PREFER_TS_EXTS: '1',
+          TS_NODE_COMPILER_OPTIONS: JSON.stringify({
+            module: 'commonjs',
+            target: 'es2018',
+            experimentalDecorators: true,
+            emitDecoratorMetadata: true,
+            esModuleInterop: true,
+            skipLibCheck: true,
+          }),
+        },
+      },
     );
     this.child = child;
 

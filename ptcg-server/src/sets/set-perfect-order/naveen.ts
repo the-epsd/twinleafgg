@@ -17,7 +17,7 @@ export class Naveen extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '79';
   public name: string = 'Naveen';
-  public fullName: string = 'Naveen M3';
+  public fullName: string = 'Naveen POR';
   public text: string = 'Draw cards until you have 5 cards in your hand. Before drawing cards, you may discard any number of cards from your hand. (If you can\'t draw any cards in this way, you can\'t use this card.)';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -10,7 +10,7 @@ export class LumioseGalette extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '78';
   public name: string = 'Lumiose Galette';
-  public fullName: string = 'Lumiose Galette M3';
+  public fullName: string = 'Lumiose Galette POR';
   public text: string = 'Heal 20 damage and remove a Special Condition from your Active Pokemon.';
 
   public canPlay(store: StoreLike, state: State, player: Player): boolean | undefined {

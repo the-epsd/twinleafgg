@@ -19,6 +19,6 @@ export class Nacli extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '82';
   public name: string = 'Nacli';
-  public fullName: string = 'Nacli M1L';
+  public fullName: string = 'Nacli MEG';
   public regulationMark = 'I';
 }

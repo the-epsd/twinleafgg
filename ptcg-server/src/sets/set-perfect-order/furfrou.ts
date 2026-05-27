@@ -27,7 +27,7 @@ export class Furfrou extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '67';
   public name: string = 'Furfrou';
-  public fullName: string = 'Furfrou M3';
+  public fullName: string = 'Furfrou POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Hand Cut - discard random cards until opponent has 5 cards

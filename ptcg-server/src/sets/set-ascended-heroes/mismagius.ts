@@ -30,7 +30,7 @@ export class Mismagius extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
   public name: string = 'Mismagius';
-  public fullName: string = 'Mismagius M2a';
+  public fullName: string = 'Mismagius ASC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

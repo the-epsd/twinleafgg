@@ -32,11 +32,11 @@ export class Trevenant extends PokemonCard {
   }];
 
   public regulationMark: string = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '39';
   public name: string = 'Trevenant';
-  public fullName: string = 'Trevenant M4';
+  public fullName: string = 'Trevenant CRI';
 
   public readonly CURSED_ROOTS_MARKER = 'CURSED_ROOTS_MARKER';
   public readonly CLEAR_CURSED_ROOTS_MARKER = 'CLEAR_CURSED_ROOTS_MARKER';

@@ -25,7 +25,7 @@ export class Marshadow extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '80';
   public name: string = 'Marshadow';
-  public fullName: string = 'Marshadow M1L';
+  public fullName: string = 'Marshadow MEG';
   public regulationMark = 'I';
 
   private readonly PREVENT_ALL_DAMAGE_AND_EFFECTS = 'PREVENT_ALL_DAMAGE_AND_EFFECTS';

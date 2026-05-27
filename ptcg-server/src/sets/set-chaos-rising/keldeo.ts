@@ -26,11 +26,11 @@ export class Keldeo extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '19';
   public name: string = 'Keldeo';
-  public fullName: string = 'Keldeo M4';
+  public fullName: string = 'Keldeo CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -22,11 +22,11 @@ export class Deoxys4 extends PokemonCard {
   ];
 
   public regulationMark: string = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '34';
   public name: string = 'Deoxys';
-  public fullName: string = 'Deoxys M4 34';
+  public fullName: string = 'Deoxys CRI 34';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack: Psy Speed - optional draw until 5 cards

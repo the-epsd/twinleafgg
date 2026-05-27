@@ -27,11 +27,11 @@ export class MegaDragalgeex extends PokemonCard {
     text: 'Your opponent\'s Active Pokemon is now Poisoned. During Pokemon Checkup, put 16 damage counters on that Pokemon instead of 1.'
   }];
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '63';
   public name: string = 'Mega Dragalge ex';
-  public fullName: string = 'Mega Dragalge ex M4';
+  public fullName: string = 'Mega Dragalge ex CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

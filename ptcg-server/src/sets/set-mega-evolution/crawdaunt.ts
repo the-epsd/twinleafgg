@@ -29,7 +29,7 @@ export class Crawdaunt extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '85';
   public name: string = 'Crawdaunt';
-  public fullName: string = 'Crawdaunt M1L';
+  public fullName: string = 'Crawdaunt MEG';
   public regulationMark: string = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

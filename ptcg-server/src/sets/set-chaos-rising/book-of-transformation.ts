@@ -8,12 +8,12 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 export class BookOfTransformation extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '74';
-  public name: string = 'Book of Transformation';
-  public fullName: string = 'Book of Transformation M4';
-  public text: string = 'You must play 2 Book of Transformation cards at once. Switch 1 of your Basic Pokemon in play with 1 of your Basic Pokemon in your discard pile. (Any attached cards, damage counters, and effects remain on the new Pokemon.)';
+  public setNumber: string = '83';
+  public name: string = 'Transformation Tome';
+  public fullName: string = 'Transformation Tome CRI';
+  public text: string = 'You must play 2 Transformation Tome cards at once. Choose a Basic Pokemon in your discard pile and switch it with 1 of your Basic Pokemon in play. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokemon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

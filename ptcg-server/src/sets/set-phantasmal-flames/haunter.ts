@@ -20,5 +20,5 @@ export class Haunter extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '55';
   public name: string = 'Haunter';
-  public fullName: string = 'Haunter MBG';
+  public fullName: string = 'Haunter PFL';
 }

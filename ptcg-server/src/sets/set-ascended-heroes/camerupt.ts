@@ -31,7 +31,7 @@ export class Camerupt extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '28';
   public name: string = 'Camerupt';
-  public fullName: string = 'Camerupt M2a';
+  public fullName: string = 'Camerupt ASC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

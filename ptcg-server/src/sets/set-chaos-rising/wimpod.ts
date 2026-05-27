@@ -23,11 +23,11 @@ export class Wimpod extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '25';
   public name: string = 'Wimpod';
-  public fullName: string = 'Wimpod M4';
+  public fullName: string = 'Wimpod CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;

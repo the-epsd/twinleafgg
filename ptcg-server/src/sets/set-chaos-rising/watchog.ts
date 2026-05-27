@@ -18,11 +18,11 @@ export class Watchog extends PokemonCard {
     text: 'Flip 3 coins. For each heads, look at your opponent\'s hand and choose a card there. Your opponent shuffles those cards into their deck. This attack does 50 damage to 1 of your opponent\'s Pokemon. (Apply Weakness and Resistance for Benched Pokemon.)'
   }];
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '69';
   public name: string = 'Watchog';
-  public fullName: string = 'Watchog M4';
+  public fullName: string = 'Watchog CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

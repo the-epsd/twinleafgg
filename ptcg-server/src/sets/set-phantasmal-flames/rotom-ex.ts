@@ -35,7 +35,7 @@ export class Rotomex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
   public name: string = 'Rotom ex';
-  public fullName: string = 'Rotom ex M2';
+  public fullName: string = 'Rotom ex PFL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

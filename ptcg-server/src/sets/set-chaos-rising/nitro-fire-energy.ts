@@ -10,11 +10,11 @@ export class NitroFireEnergy extends EnergyCard {
   public provides: CardType[] = [CardType.FIRE];
   public energyType = EnergyType.SPECIAL;
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '81';
   public name: string = 'Nitro Fire Energy';
-  public fullName: string = 'Nitro Fire Energy M4';
+  public fullName: string = 'Nitro Fire Energy CRI';
   public text: string = 'As long as this card is attached to a Pokemon, it provides [R] Energy. If an attack used by the [R] Pokemon this card is attached to would discard this card, put it into your hand instead.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

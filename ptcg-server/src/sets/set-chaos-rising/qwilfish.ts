@@ -28,11 +28,11 @@ export class Qwilfish extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '51';
   public name: string = 'Qwilfish';
-  public fullName: string = 'Qwilfish M4';
+  public fullName: string = 'Qwilfish CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)

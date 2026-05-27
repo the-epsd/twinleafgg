@@ -28,11 +28,11 @@ export class Cinccinoex extends PokemonCard {
     text: 'This attack does 40 damage for each Energy attached to this Pokemon.'
   }];
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '71';
   public name: string = 'Cinccino ex';
-  public fullName: string = 'Cinccino ex M4';
+  public fullName: string = 'Cinccino ex CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if ((effect instanceof PutDamageEffect || effect instanceof DealDamageEffect) && effect.target.cards.includes(this)) {

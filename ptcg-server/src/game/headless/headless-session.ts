@@ -18,10 +18,12 @@ import { ShuffleDeckPrompt } from '../store/prompts/shuffle-prompt';
 import { ShuffleHandPrompt } from '../store/prompts/shuffle-hand-prompt';
 import { ShufflePrizesPrompt } from '../store/prompts/shuffle-prizes-prompt';
 import { WaitPrompt } from '../store/prompts/wait-prompt';
+import { CheckHpEffect } from '../store/effects/check-effects';
 import { Store } from '../store/store';
 import { StoreHandler } from '../store/store-handler';
 import { StateSerializer } from '../serializer/state-serializer';
 import { CardManager } from '../cards/card-manager';
+import { resolveCardImageUrl } from '../cards/card-image-resolver';
 import { registerCardsForNames } from '../../sets/registry/card-registration';
 import { HeadlessPromptResolver, HeadlessPromptOverride } from './prompt-resolution';
 import { serializeHeadlessPrompt } from './prompt-adapters';
@@ -241,6 +243,7 @@ export class HeadlessGameSession {
 
   public snapshot(): HeadlessSnapshot {
     const serializer = new StateSerializer();
+    setBonusHps(this.store, this.state);
     return {
       summary: summarizeState(this.state),
       prompts: this.state.prompts
@@ -385,7 +388,6 @@ function buildPokemonSlot(state: State, slot: PokemonCardList, config: HeadlessP
   });
   config.tools?.forEach(cardName => {
     const tool = createCard(state, cardName);
-    slot.cards.push(tool);
     slot.tools.push(tool);
   });
 }
@@ -444,6 +446,23 @@ function summarizePokemonList(list: PokemonCardList): any {
   };
 }
 
+function setBonusHps(store: Store, state: State): void {
+  for (const player of state.players) {
+    if (player.active.getPokemonCard() !== undefined) {
+      const checkHp = new CheckHpEffect(player, player.active);
+      store.reduceEffect(state, checkHp);
+      player.active.hp = checkHp.hp;
+    }
+    for (const bench of player.bench) {
+      if (bench.getPokemonCard() !== undefined) {
+        const checkHp = new CheckHpEffect(player, bench);
+        store.reduceEffect(state, checkHp);
+        bench.hp = checkHp.hp;
+      }
+    }
+  }
+}
+
 function summarizeCard(card: any): any {
   if (!card) {
     return undefined;
@@ -455,7 +474,7 @@ function summarizeCard(card: any): any {
     set: card.set,
     setNumber: card.setNumber,
     cardImage: card.cardImage,
-    imageUrl: getCardImageUrl(card),
+    imageUrl: resolveCardImageUrl(card),
     superType: card.superType,
     cardType: card.cardType,
     trainerType: card.trainerType,
@@ -479,47 +498,4 @@ function summarizeCard(card: any): any {
       }))
       : undefined
   };
-}
-
-function getCardImageUrl(card: any): string | undefined {
-  const setInfo = getPokemonTcgSetInfo(card?.set);
-  if (!setInfo || !card?.setNumber) {
-    return undefined;
-  }
-  if (setInfo.source === 'scrydex') {
-    return `https://images.scrydex.com/pokemon/${setInfo.id}-${card.setNumber}/large`;
-  }
-  return `https://images.pokemontcg.io/${setInfo.id}/${card.setNumber}.png`;
-}
-
-function getPokemonTcgSetInfo(setCode: string | undefined): { id: string; source?: 'scrydex' } | undefined {
-  const map: Record<string, string | { id: string; source?: 'scrydex' }> = {
-    SIT: 'swsh12',
-    ASR: 'swsh10',
-    LOR: 'swsh11',
-    SVI: 'sv1',
-    SVE: 'sve',
-    PAL: 'sv2',
-    OBF: 'sv3',
-    MEW: 'sv3pt5',
-    PAR: 'sv4',
-    PAF: 'sv4pt5',
-    TEF: 'sv5',
-    TWM: 'sv6',
-    SFA: 'sv6pt5',
-    SCR: 'sv7',
-    SSP: 'sv8',
-    PRE: 'sv8pt5',
-    DRI: 'sv10',
-    MEG: 'me1',
-    M1L: 'me1',
-    M1S: 'me1',
-    ASC: { id: 'me2pt5', source: 'scrydex' },
-    POR: { id: 'me3', source: 'scrydex' },
-  };
-  const info = setCode ? map[setCode] : undefined;
-  if (!info) {
-    return undefined;
-  }
-  return typeof info === 'string' ? { id: info } : info;
 }

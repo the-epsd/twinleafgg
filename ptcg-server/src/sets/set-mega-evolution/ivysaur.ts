@@ -22,6 +22,6 @@ export class Ivysaur extends PokemonCard {
   public setNumber: string = '2';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Ivysaur';
-  public fullName: string = 'Ivysaur M1L';
+  public fullName: string = 'Ivysaur MEG';
 
 } 

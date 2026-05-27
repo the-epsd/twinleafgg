@@ -24,7 +24,7 @@ export class Scraggy extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '134';
   public name: string = 'Scraggy';
-  public fullName: string = 'Scraggy M2a';
+  public fullName: string = 'Scraggy ASC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

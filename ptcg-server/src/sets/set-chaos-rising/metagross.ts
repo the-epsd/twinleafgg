@@ -30,11 +30,11 @@ export class Metagross extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '59';
   public name: string = 'Metagross';
-  public fullName: string = 'Metagross M4';
+  public fullName: string = 'Metagross CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {

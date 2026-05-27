@@ -61,7 +61,7 @@ export class WallysCompassion extends TrainerCard {
   public setNumber: string = '132';
   public regulationMark = 'I';
   public name: string = 'Wally\'s Compassion';
-  public fullName: string = 'Wally\'s Compassion M1S';
+  public fullName: string = 'Wally\'s Compassion MEG';
   public text: string = 'Heal all damage from 1 of your Mega Evolution Pokémon ex. If you do, put all Energy attached to that Pokémon back into your hand.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -27,11 +27,11 @@ export class Kakuna extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '2';
   public name: string = 'Kakuna';
-  public fullName: string = 'Kakuna M4';
+  public fullName: string = 'Kakuna CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect && effect.target.cards.includes(this)) {

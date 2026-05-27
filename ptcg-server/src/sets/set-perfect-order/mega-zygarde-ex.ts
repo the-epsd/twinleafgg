@@ -30,7 +30,7 @@ export class MegaZygardeex extends PokemonCard {
   public setNumber: string = '47';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Zygarde ex';
-  public fullName: string = 'Mega Zygarde ex M3';
+  public fullName: string = 'Mega Zygarde ex POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Gaia Wave

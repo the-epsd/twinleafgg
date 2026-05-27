@@ -28,7 +28,7 @@ export class Hippowdon extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
   public name: string = 'Hippowdon';
-  public fullName: string = 'Hippowdon M3';
+  public fullName: string = 'Hippowdon POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Tornado Drill - discard top 3 cards if Tarragon was played

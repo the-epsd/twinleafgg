@@ -14,11 +14,11 @@ const ROXIE_POISONED_NO_RETREAT = 'ROXIE_POISONED_NO_RETREAT';
 export class RoxiesPerformance extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '77';
   public name: string = 'Roxie\'s Performance';
-  public fullName: string = 'Roxie\'s Performance M4';
+  public fullName: string = 'Roxie\'s Performance CRI';
   public text: string = 'During your opponent\'s next turn, their Poisoned Pokemon can\'t retreat.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

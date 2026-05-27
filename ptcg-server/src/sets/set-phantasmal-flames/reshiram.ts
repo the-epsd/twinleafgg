@@ -32,7 +32,7 @@ export class Reshiram extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Reshiram';
-  public fullName: string = 'Reshiram M2';
+  public fullName: string = 'Reshiram PFL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 1, this)) {

@@ -29,11 +29,11 @@ export class Gourgeistex extends PokemonCard {
   }];
 
   public regulationMark: string = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '41';
   public name: string = 'Gourgeist ex';
-  public fullName: string = 'Gourgeist ex M4';
+  public fullName: string = 'Gourgeist ex CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

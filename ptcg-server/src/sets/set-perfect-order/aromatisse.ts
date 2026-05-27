@@ -30,7 +30,7 @@ export class Aromatisse extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '36';
   public name: string = 'Aromatisse';
-  public fullName: string = 'Aromatisse M3';
+  public fullName: string = 'Aromatisse POR';
 
   public readonly FRAGRANCE_COLLECTION_MARKER = 'FRAGRANCE_COLLECTION_MARKER';
 

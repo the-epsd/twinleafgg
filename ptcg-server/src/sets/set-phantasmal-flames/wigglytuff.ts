@@ -32,7 +32,7 @@ export class Wigglytuff extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '77';
   public name: string = 'Wigglytuff';
-  public fullName: string = 'Wigglytuff M2';
+  public fullName: string = 'Wigglytuff PFL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

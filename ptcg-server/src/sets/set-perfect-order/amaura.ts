@@ -23,7 +23,7 @@ export class Amaura extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '23';
   public name: string = 'Amaura';
-  public fullName: string = 'Amaura M3';
+  public fullName: string = 'Amaura POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {

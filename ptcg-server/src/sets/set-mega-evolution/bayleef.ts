@@ -23,7 +23,7 @@ export class Bayleef extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '9';
   public name: string = 'Bayleef';
-  public fullName: string = 'Bayleef M1S';
+  public fullName: string = 'Bayleef MEG';
   public regulationMark: string = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

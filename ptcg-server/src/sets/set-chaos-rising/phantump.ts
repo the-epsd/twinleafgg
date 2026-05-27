@@ -33,11 +33,11 @@ export class Phantump extends PokemonCard {
   }];
 
   public regulationMark: string = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '38';
   public name: string = 'Phantump';
-  public fullName: string = 'Phantump M4';
+  public fullName: string = 'Phantump CRI';
 
   public readonly ENVIOUS_EVOLUTION_MARKER = 'ENVIOUS_EVOLUTION_MARKER';
 

@@ -30,7 +30,7 @@ export class Steelix extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '93';
   public name: string = 'Steelix';
-  public fullName: string = 'Steelix M1L';
+  public fullName: string = 'Steelix MEG';
   public regulationMark = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -22,9 +22,9 @@ export class Chespin extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
   public name: string = 'Chespin';
-  public fullName: string = 'Chespin M4';
+  public fullName: string = 'Chespin CRI';
 }

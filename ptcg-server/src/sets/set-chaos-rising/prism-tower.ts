@@ -12,10 +12,10 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 export class PrismTower extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public setNumber: string = '80';
   public name: string = 'Prism Tower';
-  public fullName: string = 'Prism Tower M4';
+  public fullName: string = 'Prism Tower CRI';
   public cardImage: string = 'assets/cardback.png';
 
   public text: string =

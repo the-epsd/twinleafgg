@@ -11,7 +11,7 @@ export class GrowGrassEnergy extends EnergyCard {
   public regulationMark = 'J';
   public set: string = 'POR';
   public name = 'Growing [G] Energy';
-  public fullName = 'Grow [G] Energy M3';
+  public fullName = 'Grow [G] Energy POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
   public text = 'As long as this card is attached to a Pokémon, it provides [G] Energy.\n\nThe [G] Pokémon this card is attached to gets +20 HP.';

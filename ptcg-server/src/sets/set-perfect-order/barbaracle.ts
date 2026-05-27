@@ -34,7 +34,7 @@ export class Barbaracle extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '43';
   public name: string = 'Barbaracle';
-  public fullName: string = 'Barbaracle M3';
+  public fullName: string = 'Barbaracle POR';
 
   public readonly STONE_ARMS_MARKER = 'STONE_ARMS_MARKER';
 

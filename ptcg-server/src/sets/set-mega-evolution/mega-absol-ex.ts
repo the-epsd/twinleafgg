@@ -30,7 +30,7 @@ export class MegaAbsolex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '86';
   public name: string = 'Mega Absol ex';
-  public fullName: string = 'Mega Absol ex M1L';
+  public fullName: string = 'Mega Absol ex MEG';
   public regulationMark: string = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

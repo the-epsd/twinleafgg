@@ -15,4 +15,11 @@ describe('deck import', () => {
     expect(parsed.cards).not.toContain('Trainer: 32');
     expect(parsed.cards).not.toContain('Energy: 8');
   });
+
+  it('normalizes accented names from deck exports', () => {
+    const parsed = parseDeckList('1 Poké Pad POR 81');
+
+    expect(parsed.errors).toEqual([]);
+    expect(parsed.cards).toEqual(['Poke Pad POR']);
+  });
 });

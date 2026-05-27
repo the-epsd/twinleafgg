@@ -29,7 +29,7 @@ export class Espurr extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '33';
   public name: string = 'Espurr';
-  public fullName: string = 'Espurr M3';
+  public fullName: string = 'Espurr POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Nap - heal 20 damage from this Pokemon

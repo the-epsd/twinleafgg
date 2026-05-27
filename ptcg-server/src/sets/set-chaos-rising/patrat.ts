@@ -22,11 +22,11 @@ export class Patrat extends PokemonCard {
     text: ''
   }];
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '68';
   public name: string = 'Patrat';
-  public fullName: string = 'Patrat M4';
+  public fullName: string = 'Patrat CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof MoveDamageCountersEffect) {

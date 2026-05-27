@@ -53,7 +53,7 @@ export class LumioiseCity extends TrainerCard {
   public trainerType = TrainerType.STADIUM;
   public set = 'POR';
   public name = 'Lumiose City';
-  public fullName = 'Lumioise City M3';
+  public fullName = 'Lumioise City POR';
   public text = 'Once during each player\'s turn, that player may search their deck for a Basic Pokémon and put it onto their Bench. Then, that player shuffles their deck. If a player searches their deck in this way, their turn ends. ';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

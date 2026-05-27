@@ -31,7 +31,7 @@ export class MegaAudinoex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '172';
   public name: string = 'Mega Audino ex';
-  public fullName: string = 'Mega Audino ex MC';
+  public fullName: string = 'Mega Audino ex ASC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Kaleidowaltz attack

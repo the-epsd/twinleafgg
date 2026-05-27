@@ -27,7 +27,7 @@ export class Ceruledge extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '20';
   public name: string = 'Ceruledge';
-  public fullName: string = 'Ceruledge M2';
+  public fullName: string = 'Ceruledge PFL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -32,7 +32,7 @@ export class MegaGengarex extends PokemonCard {
   public setNumber: string = '56';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Gengar ex';
-  public fullName: string = 'Mega Gengar ex MBG';
+  public fullName: string = 'Mega Gengar ex PFL';
 
   private readonly VOID_GALE_MARKER = 'VOID_GALE_MARKER';
 

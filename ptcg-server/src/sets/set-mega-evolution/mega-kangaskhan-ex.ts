@@ -33,7 +33,7 @@ export class MegaKangaskhanex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '104';
   public name: string = 'Mega Kangaskhan ex';
-  public fullName: string = 'Mega Kangaskhan ex M1S';
+  public fullName: string = 'Mega Kangaskhan ex MEG';
   public regulationMark: string = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

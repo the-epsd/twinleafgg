@@ -1049,6 +1049,15 @@
         />
       </BoardLayer>
     </TableShell>
+  {:else}
+    <AppHeader />
+    <section class="engine-error-screen">
+      <div class="engine-error-panel">
+        <strong>Unable to start game</strong>
+        <span>{labelFor(error || game.logs.at(-1)?.message || 'The engine returned an invalid pre-game state.')}</span>
+        <button type="button" onclick={resetGame}>Change decks</button>
+      </div>
+    </section>
   {/if}
 </main>
 {/if}
@@ -1087,6 +1096,35 @@
     justify-content: center;
     gap: 12px;
     padding: 72px 24px 24px;
+  }
+
+  .engine-error-screen {
+    min-height: 100vh;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    padding: 72px 24px 24px;
+  }
+
+  .engine-error-panel {
+    display: grid;
+    gap: 8px;
+    width: min(420px, calc(100vw - 32px));
+    padding: 16px;
+    border-radius: 8px;
+    border: 1px solid rgba(26, 31, 39, 0.16);
+    background: #f7f8fa;
+    color: #1d232b;
+    box-shadow: 0 12px 32px rgba(12, 15, 19, 0.18);
+  }
+
+  .engine-error-panel strong {
+    font-size: 14px;
+  }
+
+  .engine-error-panel span {
+    color: #566272;
+    font-size: 13px;
   }
 
   .invite-error {

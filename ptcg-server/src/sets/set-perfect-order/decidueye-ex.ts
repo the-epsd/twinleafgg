@@ -34,7 +34,7 @@ export class Decidueyeex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '12';
   public name: string = 'Decidueye ex';
-  public fullName: string = 'Decidueye ex M3';
+  public fullName: string = 'Decidueye ex POR';
 
   public readonly SNIPER_EYE_MARKER = 'SNIPER_EYE_MARKER';
 

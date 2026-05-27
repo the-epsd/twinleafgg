@@ -35,7 +35,7 @@ export class MegaDragoniteex extends PokemonCard {
   public setNumber: string = '152';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Dragonite ex';
-  public fullName: string = 'Mega Dragonite ex M2a';
+  public fullName: string = 'Mega Dragonite ex ASC';
 
   public readonly SKY_CARRY_MARKER = 'SKY_CARRY_MARKER';
 

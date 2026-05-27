@@ -23,7 +23,7 @@ export class Haunter extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '49';
   public name: string = 'Haunter';
-  public fullName: string = 'Haunter M3';
+  public fullName: string = 'Haunter POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Haunt - put 3 damage counters (30 damage)

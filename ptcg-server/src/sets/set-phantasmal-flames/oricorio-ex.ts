@@ -34,7 +34,7 @@ export class Oricorioex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '18';
   public name: string = 'Oricorio ex';
-  public fullName: string = 'Oricorio ex M2';
+  public fullName: string = 'Oricorio ex PFL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

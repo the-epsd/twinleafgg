@@ -32,7 +32,7 @@ export class MegaGardevoirex extends PokemonCard {
   public setNumber: string = '60';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Gardevoir ex';
-  public fullName: string = 'Mega Gardevoir ex M1S';
+  public fullName: string = 'Mega Gardevoir ex MEG';
 
   public readonly MEGA_BRAVE_MARKER = 'MEGA_BRAVE_MARKER';
   public readonly CLEAR_MEGA_BRAVE_MARKER = 'CLEAR_MEGA_BRAVE_MARKER';

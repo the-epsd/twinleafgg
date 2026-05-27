@@ -18,9 +18,9 @@ export class Sliggoo extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '65';
   public name: string = 'Sliggoo';
-  public fullName: string = 'Sliggoo M4';
+  public fullName: string = 'Sliggoo CRI';
 }

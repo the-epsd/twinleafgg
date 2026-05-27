@@ -31,7 +31,7 @@ export class Yveltalex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
   public name: string = 'Yveltal ex';
-  public fullName: string = 'Yveltal ex M3';
+  public fullName: string = 'Yveltal ex POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Death Soul - KO opponent's Pokemon with ≤50 HP remaining

@@ -30,7 +30,7 @@ export class Hippopotas extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '39';
   public name: string = 'Hippopotas';
-  public fullName: string = 'Hippopotas M3';
+  public fullName: string = 'Hippopotas POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Sand Attack - mark opponent's Active Pokemon

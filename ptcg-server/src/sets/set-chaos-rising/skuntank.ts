@@ -25,11 +25,11 @@ export class Skuntank extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '53';
   public name: string = 'Skuntank';
-  public fullName: string = 'Skuntank M4';
+  public fullName: string = 'Skuntank CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 1, this)) {

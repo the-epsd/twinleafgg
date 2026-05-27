@@ -23,7 +23,7 @@ export class Mawile extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '32';
   public name: string = 'Mawile';
-  public fullName: string = 'Mawile M3';
+  public fullName: string = 'Mawile POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Double Eater - discard energy from hand for damage

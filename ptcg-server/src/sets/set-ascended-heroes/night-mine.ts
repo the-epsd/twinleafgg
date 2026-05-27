@@ -13,7 +13,7 @@ export class NightMine extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '197';
   public name: string = 'Nighttime Mine';
-  public fullName: string = 'Night Mine M2a';
+  public fullName: string = 'Night Mine ASC';
 
   public text: string = 'Attacks used by each Tera Pokémon in play (both yours and your opponent\'s) cost [C] more.';
 

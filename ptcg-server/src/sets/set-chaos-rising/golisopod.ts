@@ -29,11 +29,11 @@ export class Golisopod extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '26';
   public name: string = 'Golisopod';
-  public fullName: string = 'Golisopod M4';
+  public fullName: string = 'Golisopod CRI';
 
   public readonly INVULN_MARKER = 'GOLISOPOD_M4_INVULN_MARKER';
   public readonly CLEAR_MARKER = 'GOLISOPOD_M4_CLEAR_MARKER';

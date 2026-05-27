@@ -22,11 +22,11 @@ export class Beedrillex extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '3';
   public name: string = 'Beedrill ex';
-  public fullName: string = 'Beedrill ex M4';
+  public fullName: string = 'Beedrill ex CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

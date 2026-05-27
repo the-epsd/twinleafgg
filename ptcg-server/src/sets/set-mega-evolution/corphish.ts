@@ -28,7 +28,7 @@ export class Corphish extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '33';
   public name: string = 'Corphish';
-  public fullName: string = 'Corphish M1L';
+  public fullName: string = 'Corphish MEG';
   public regulationMark: string = 'I';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

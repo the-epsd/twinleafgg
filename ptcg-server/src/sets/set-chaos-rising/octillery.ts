@@ -29,11 +29,11 @@ export class Octillery extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '17';
   public name: string = 'Octillery';
-  public fullName: string = 'Octillery M4';
+  public fullName: string = 'Octillery CRI';
 
   public readonly CORNER_STOP_MARKER = 'OCTILLERY_M4_CORNER_STOP_MARKER';
   public readonly CLEAR_MARKER = 'OCTILLERY_M4_CLEAR_MARKER';

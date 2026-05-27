@@ -18,11 +18,11 @@ export class Mareep extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '27';
   public name: string = 'Mareep';
-  public fullName: string = 'Mareep M4';
+  public fullName: string = 'Mareep CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {

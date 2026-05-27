@@ -27,11 +27,11 @@ export class Ferrothorn extends PokemonCard {
     text: 'If this Pokemon has any Special Energy attached, this attack does 70 more damage.'
   }];
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '61';
   public name: string = 'Ferrothorn';
-  public fullName: string = 'Ferrothorn M4';
+  public fullName: string = 'Ferrothorn CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof MoveCardsEffect) {

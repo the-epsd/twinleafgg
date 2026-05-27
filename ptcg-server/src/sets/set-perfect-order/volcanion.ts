@@ -29,7 +29,7 @@ export class Volcanion extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '25';
   public name: string = 'Volcanion';
-  public fullName: string = 'Volcanion M3';
+  public fullName: string = 'Volcanion POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Powerful Steam - flip coin for each Water Energy

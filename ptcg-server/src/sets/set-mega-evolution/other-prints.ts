@@ -42,50 +42,50 @@ import { MegaLucarioex } from './mega-lucario-ex';
 import { MegaVenusaurEx } from './mega-venusaur-ex';
 
 export class BulbasaurM1S extends Bulbasaur {
-  public fullName = 'Bulbasaur M1S 64';
-  public set = 'M1L';
+  public fullName = 'Bulbasaur MEG 64';
+  public set = 'MEG';
   public setNumber = '64';
 }
 
 export class InteleonM1S extends Inteleon {
-  public fullName = 'Inteleon M1L 69';
-  public set = 'M1L';
+  public fullName = 'Inteleon MEG 69';
+  public set = 'MEG';
   public setNumber = '69';
 }
 
 export class MegaGardevoirexM1S extends MegaGardevoirex {
-  public fullName = 'Mega Gardevoir ex M1S 87';
-  public set = 'M1S';
+  public fullName = 'Mega Gardevoir ex MEG 87';
+  public set = 'MEG';
   public setNumber = '87';
 }
 
 export class MegaKangaskhanexM1S extends MegaKangaskhanex {
-  public fullName = 'Mega Kangaskhan ex M1S 89';
-  public set = 'M1S';
+  public fullName = 'Mega Kangaskhan ex MEG 89';
+  public set = 'MEG';
   public setNumber = '89';
 }
 
 export class MegaLucarioexM1S extends MegaLucarioex {
-  public fullName = 'Mega Lucario ex M1S 88';
-  public set = 'M1S';
+  public fullName = 'Mega Lucario ex MEG 88';
+  public set = 'MEG';
   public setNumber = '88';
 }
 
 export class MegaVenusaurExM1S extends MegaVenusaurEx {
-  public fullName = 'Mega Venusaur ex M1L 87';
-  public set = 'M1L';
+  public fullName = 'Mega Venusaur ex MEG 87';
+  public set = 'MEG';
   public setNumber = '87';
 }
 
 export class NightStretcherM1S extends NightlyStretcher {
-  public fullName = 'Night Stretcher M1L 83';
-  public set = 'M1L';
+  public fullName = 'Night Stretcher MEG 83';
+  public set = 'MEG';
   public setNumber = '83';
 }
 
 export class RareCandyM1S extends RareCandy {
-  public fullName = 'Rare Candy M1S 82';
-  public set = 'M1S';
+  public fullName = 'Rare Candy MEG 82';
+  public set = 'MEG';
   public setNumber = '82';
   public regulationMark = 'I';
 }
@@ -98,7 +98,7 @@ export class BossOrdersMEG extends BossOrders {
 
 export class RepelMEG extends Repel {
   public setNumber = '126';
-  public fullName = 'Repel M1L';
+  public fullName = 'Repel MEG';
   public set = 'MEG';
   public regulationMark = 'I';
 }

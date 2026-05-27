@@ -26,11 +26,11 @@ export class Ampharos extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
   public name: string = 'Ampharos';
-  public fullName: string = 'Ampharos M4';
+  public fullName: string = 'Ampharos CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof DealDamageEffect && effect.source.getPokemonCard() === this) {

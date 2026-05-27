@@ -36,6 +36,7 @@
   let failedImageUrl = $state('');
 
   let imageUrl = $derived(faceDown ? '/assets/cardback.png' : card?.imageUrl);
+  let lastImageUrl = $state<string | undefined>();
   let showImage = $derived(!!imageUrl && failedImageUrl !== imageUrl);
   let label = $derived(faceDown ? 'Card' : (card?.name ?? 'Empty'));
   let typeClass = $derived(faceDown
@@ -47,6 +48,13 @@
         : card
           ? 'pokemon'
           : 'empty');
+
+  $effect(() => {
+    if (imageUrl !== lastImageUrl) {
+      failedImageUrl = '';
+      lastImageUrl = imageUrl;
+    }
+  });
 
   function preventSelection(event: Event) {
     event.preventDefault();

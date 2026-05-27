@@ -28,7 +28,7 @@ export class Clawitizer extends PokemonCard {
   public setNumber: string = '38';
   public regulationMark = 'I';
   public cardImage: string = 'assets/cardback.png';
-  public fullName: string = 'Clawitizer M1S';
+  public fullName: string = 'Clawitizer MEG';
   public name: string = 'Clawitizer';
 
   public ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';

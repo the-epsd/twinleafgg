@@ -27,7 +27,7 @@ export class Darmanitan extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '16';
   public name: string = 'Darmanitan';
-  public fullName: string = 'Darmanitan M2';
+  public fullName: string = 'Darmanitan PFL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

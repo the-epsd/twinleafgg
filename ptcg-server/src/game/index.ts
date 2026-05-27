@@ -1,5 +1,6 @@
 export * from './cards/card-manager';
 export * from './cards/deck-analyser';
+export * from './cards/card-image-resolver';
 
 export * from './core/game-settings';
 export * from './core/player-stats';

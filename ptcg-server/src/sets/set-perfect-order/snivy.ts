@@ -23,7 +23,7 @@ export class Snivy extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '4';
   public name: string = 'Snivy';
-  public fullName: string = 'Snivy M3';
+  public fullName: string = 'Snivy POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

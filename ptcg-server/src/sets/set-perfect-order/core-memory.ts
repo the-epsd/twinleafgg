@@ -34,7 +34,7 @@ export class CoreMemory extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '70';
   public name: string = 'Core Memory';
-  public fullName: string = 'Core Memory M3';
+  public fullName: string = 'Core Memory POR';
 
   public attacks: Attack[] = [{
     name: 'Geobuster',

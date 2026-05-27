@@ -21,11 +21,11 @@ export class Xerneas extends PokemonCard {
   }];
 
   public regulationMark: string = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '42';
   public name: string = 'Xerneas';
-  public fullName: string = 'Xerneas M4';
+  public fullName: string = 'Xerneas CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

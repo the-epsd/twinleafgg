@@ -32,7 +32,7 @@ export class MegaClefableex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '31';
   public name: string = 'Mega Clefable ex';
-  public fullName: string = 'Mega Clefable ex M3';
+  public fullName: string = 'Mega Clefable ex POR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Wings of Light - Prevent opponent ability effects on this Pokemon

@@ -16,7 +16,7 @@ export const SAMPLE_DECK = `Pokémon: 20
 1 Chien-Pao SSP
 
 Trainer: 32
-4 Lillie's Determination M1L
+4 Lillie's Determination MEG
 4 Boss's Orders MEG
 2 Crispin SCR
 2 Brock's Scouting JTG
@@ -61,7 +61,7 @@ export function parseDeckList(text: string): ParsedDeck {
       errors.push(`Line ${idx + 1}: card names must include a set code, for example "Ralts SIT".`);
       return;
     }
-    const normalizedName = hasCollectorNumber ? tokens.slice(0, -1).join(' ') : name;
+    const normalizedName = normalizeImportName(hasCollectorNumber ? tokens.slice(0, -1).join(' ') : name);
     for (let i = 0; i < count; i += 1) {
       cards.push(normalizedName);
     }
@@ -72,4 +72,8 @@ export function parseDeckList(text: string): ParsedDeck {
   }
 
   return { cards, errors };
+}
+
+function normalizeImportName(name: string): string {
+  return name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }

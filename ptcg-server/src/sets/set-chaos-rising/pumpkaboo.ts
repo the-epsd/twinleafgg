@@ -17,9 +17,9 @@ export class Pumpkaboo extends PokemonCard {
   }];
 
   public regulationMark: string = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '40';
   public name: string = 'Pumpkaboo';
-  public fullName: string = 'Pumpkaboo M4';
+  public fullName: string = 'Pumpkaboo CRI';
 }

@@ -17,7 +17,7 @@ export class Clauncher extends PokemonCard {
 
   public set: string = 'MEG';
   public name: string = 'Clauncher';
-  public fullName: string = 'Clauncher M1S';
+  public fullName: string = 'Clauncher MEG';
   public setNumber: string = '37';
   public regulationMark: string = 'I';
   public cardImage: string = 'assets/cardback.png';

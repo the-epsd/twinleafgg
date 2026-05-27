@@ -59,7 +59,7 @@ export class MegaSignal extends TrainerCard {
   public setNumber: string = '121';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Signal';
-  public fullName: string = 'Mega Signal M1S';
+  public fullName: string = 'Mega Signal MEG';
 
   public text: string = 'Search your deck for a Mega Evolution Pokémon ex, reveal it, and put it into your hand. Then, shuffle your deck.';
 

@@ -21,5 +21,5 @@ export class Servine extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '5';
   public name: string = 'Servine';
-  public fullName: string = 'Servine M3';
+  public fullName: string = 'Servine POR';
 }

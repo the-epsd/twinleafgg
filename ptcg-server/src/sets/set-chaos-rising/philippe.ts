@@ -14,12 +14,12 @@ import { CardTarget, PlayerType, SlotType } from '../../game/store/actions/play-
 
 export class Philippe extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public regulationMark: string = 'J';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '76';
   public name: string = 'Philippe';
-  public fullName: string = 'Philippe M4';
+  public fullName: string = 'Philippe CRI';
   public text: string = 'Attach up to 2 Basic [M] Energy from your discard pile to 1 of your [M] Pokemon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

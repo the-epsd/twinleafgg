@@ -27,11 +27,11 @@ export class Cobalionex extends PokemonCard {
   }];
 
   public regulationMark: string = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '62';
   public name: string = 'Cobalion ex';
-  public fullName: string = 'Cobalion ex M4';
+  public fullName: string = 'Cobalion ex CRI';
 
   public readonly METAL_ROAD_MARKER = 'METAL_ROAD_MARKER';
 

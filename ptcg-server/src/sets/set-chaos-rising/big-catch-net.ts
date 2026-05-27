@@ -55,10 +55,10 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
 
 export class BigCatchNet extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public regulationMark = 'J';
   public name: string = 'Big Catch Net';
-  public fullName: string = 'Big Catch Net M4';
+  public fullName: string = 'Big Catch Net CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '73';
   public text: string = 'Shuffle up to 3 [W] Pokemon and up to 3 Basic [W] Energy from your discard pile into your deck.';

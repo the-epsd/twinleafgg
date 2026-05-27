@@ -26,6 +26,7 @@ import { ShuffleHandPrompt } from '../store/prompts/shuffle-hand-prompt';
 import { ShufflePrizesPrompt } from '../store/prompts/shuffle-prizes-prompt';
 import { ShuffleDeckPrompt } from '../store/prompts/shuffle-prompt';
 import { WaitPrompt } from '../store/prompts/wait-prompt';
+import { resolveCardImageUrl } from '../cards/card-image-resolver';
 
 export interface HeadlessPromptJson {
   id: number;
@@ -194,7 +195,7 @@ function summarizeCard(card: Card | undefined): any {
     set: (card as any).set,
     setNumber: (card as any).setNumber,
     cardImage: (card as any).cardImage,
-    imageUrl: getCardImageUrl(card),
+    imageUrl: resolveCardImageUrl(card as any),
     superType: card.superType,
     cardType: (card as any).cardType,
     trainerType: (card as any).trainerType,
@@ -209,49 +210,6 @@ function summarizeCard(card: Card | undefined): any {
       }))
       : undefined
   };
-}
-
-function getCardImageUrl(card: any): string | undefined {
-  const setInfo = getPokemonTcgSetInfo(card?.set);
-  if (!setInfo || !card?.setNumber) {
-    return undefined;
-  }
-  if (setInfo.source === 'scrydex') {
-    return `https://images.scrydex.com/pokemon/${setInfo.id}-${card.setNumber}/large`;
-  }
-  return `https://images.pokemontcg.io/${setInfo.id}/${card.setNumber}.png`;
-}
-
-function getPokemonTcgSetInfo(setCode: string | undefined): { id: string; source?: 'scrydex' } | undefined {
-  const map: Record<string, string | { id: string; source?: 'scrydex' }> = {
-    SIT: 'swsh12',
-    ASR: 'swsh10',
-    LOR: 'swsh11',
-    SVI: 'sv1',
-    SVE: 'sve',
-    PAL: 'sv2',
-    OBF: 'sv3',
-    MEW: 'sv3pt5',
-    PAR: 'sv4',
-    PAF: 'sv4pt5',
-    TEF: 'sv5',
-    TWM: 'sv6',
-    SFA: 'sv6pt5',
-    SCR: 'sv7',
-    SSP: 'sv8',
-    PRE: 'sv8pt5',
-    DRI: 'sv10',
-    MEG: 'me1',
-    M1L: 'me1',
-    M1S: 'me1',
-    ASC: { id: 'me2pt5', source: 'scrydex' },
-    POR: { id: 'me3', source: 'scrydex' },
-  };
-  const info = setCode ? map[setCode] : undefined;
-  if (!info) {
-    return undefined;
-  }
-  return typeof info === 'string' ? { id: info } : info;
 }
 
 function stringify(value: any): string | undefined {

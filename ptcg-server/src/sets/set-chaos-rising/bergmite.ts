@@ -22,9 +22,9 @@ export class Bergmite extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '23';
   public name: string = 'Bergmite';
-  public fullName: string = 'Bergmite M4';
+  public fullName: string = 'Bergmite CRI';
 }

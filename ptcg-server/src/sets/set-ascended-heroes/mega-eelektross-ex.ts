@@ -31,7 +31,7 @@ export class MegaEelektrossex extends PokemonCard {
   public setNumber: string = '61';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Mega Eelektross ex';
-  public fullName: string = 'Mega Eelektross ex M2a';
+  public fullName: string = 'Mega Eelektross ex ASC';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

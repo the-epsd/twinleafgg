@@ -15,7 +15,7 @@ export class Sudowoodo extends PokemonCard {
     name: 'Learning Journey',
     cost: [C],
     damage: 0,
-    text: 'Search your deck for up to 2 Book of Transformation, reveal them, and put them into your hand. Then, shuffle your deck.'
+    text: 'Search your deck for up to 2 Transformation Tome cards, reveal them, and put them into your hand. Then, shuffle your deck.'
   },
   {
     name: 'Rock Hurl',
@@ -25,17 +25,17 @@ export class Sudowoodo extends PokemonCard {
   }];
 
   public regulationMark = 'J';
-  public set: string = 'M4';
+  public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '43';
   public name: string = 'Sudowoodo';
-  public fullName: string = 'Sudowoodo M4';
+  public fullName: string = 'Sudowoodo CRI';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       SEARCH_DECK_FOR_CARDS_TO_HAND(store, state, player, this,
-        { superType: SuperType.TRAINER, name: 'Book of Transformation' },
+        { superType: SuperType.TRAINER, name: 'Transformation Tome' },
         { min: 0, max: 2, allowCancel: false },
         this.attacks[0]
       );
