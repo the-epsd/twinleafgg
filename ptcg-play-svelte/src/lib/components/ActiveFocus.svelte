@@ -31,6 +31,10 @@
   let pokemon = $derived(slot.pokemon);
   let isActive = $derived(slot.slot === 'active');
   let actionsDisabled = $derived(busy || promptActive || !canAct);
+  let printedHp = $derived(typeof pokemon?.hp === 'number' && Number.isFinite(pokemon.hp) ? pokemon.hp : 0);
+  let displayHp = $derived(slot.hp || printedHp);
+  let hpIncreased = $derived(!!displayHp && !!printedHp && displayHp > printedHp);
+  let hpDecreased = $derived(!!displayHp && !!printedHp && displayHp < printedHp);
 </script>
 
 {#if pokemon}
@@ -50,7 +54,7 @@
           <strong>{pokemon.name}</strong>
           <span>
             {slot.slot === 'active' ? 'Active' : `Bench ${slot.index + 1}`}
-            · {Math.max(0, slot.hp - slot.damage)}/{slot.hp} HP
+            · <span class="focus-hp" class:hp-increased={hpIncreased} class:hp-decreased={hpDecreased}>{Math.max(0, displayHp - slot.damage)}/{displayHp} HP</span>
             · {slot.energy.length} Energy
             {#if slot.tools.length}
               · {slot.tools.length} Tool
@@ -170,6 +174,19 @@
   .action-group > span {
     color: var(--text-muted);
     font-size: 11px;
+  }
+
+  .focus-title span .focus-hp {
+    display: inline;
+    font-size: inherit;
+  }
+
+  .focus-title span .hp-increased {
+    color: #15803d;
+  }
+
+  .focus-title span .hp-decreased {
+    color: #b91c1c;
   }
 
   .focus-close {

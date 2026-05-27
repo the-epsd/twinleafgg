@@ -73,7 +73,9 @@
           {#each visibleDeckLayers(topPlayer.deckCount) as layer, layerIndex}
             <span class="deck-card-layer" style={`--deck-layer: ${layerIndex};`}></span>
           {/each}
-          <span class="deck-card-face"></span>
+          {#if topPlayer.deckCount > 0}
+            <span class="deck-card-face"></span>
+          {/if}
           <span class="pile-count">{topPlayer.deckCount}</span>
         </span>
         <button
@@ -120,7 +122,9 @@
           {#each visibleDeckLayers(bottomPlayer.deckCount) as layer, layerIndex}
             <span class="deck-card-layer" style={`--deck-layer: ${layerIndex};`}></span>
           {/each}
-          <span class="deck-card-face"></span>
+          {#if bottomPlayer.deckCount > 0}
+            <span class="deck-card-face"></span>
+          {/if}
           <span class="pile-count">{bottomPlayer.deckCount}</span>
         </span>
         <button

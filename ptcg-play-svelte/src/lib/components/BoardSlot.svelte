@@ -31,6 +31,10 @@
 
   let stackedEnergy = $derived(slot.energy.length > 4);
   let displayHp = $derived(slot.hp || pokemonHp(slot.pokemon));
+  let printedHp = $derived(pokemonHp(slot.pokemon));
+  let hpModified = $derived(!!displayHp && !!printedHp && displayHp !== printedHp);
+  let hpIncreased = $derived(hpModified && displayHp > printedHp);
+  let hpDecreased = $derived(hpModified && displayHp < printedHp);
   let pokemonTypeIcon = $derived(pokemonTypeIconSrc(slot.pokemon?.cardType));
   let pokemonTypeLabel = $derived(pokemonTypeLabelFor(slot.pokemon?.cardType));
 
@@ -80,7 +84,12 @@
     <CardTile card={slot.pokemon} damage={slot.damage} />
     {#if displayHp || pokemonTypeIcon}
       <div class="pokemon-status">
-        <span class="pokemon-hp-bubble" title={`${displayHp ? `${displayHp} HP` : 'Pokemon'}${pokemonTypeIcon ? ` · ${pokemonTypeLabel}` : ''}`}>
+        <span
+          class="pokemon-hp-bubble"
+          class:hp-increased={hpIncreased}
+          class:hp-decreased={hpDecreased}
+          title={`${displayHp ? `${displayHp} HP${hpModified ? ` (printed ${printedHp})` : ''}` : 'Pokemon'}${pokemonTypeIcon ? ` · ${pokemonTypeLabel}` : ''}`}
+        >
           {#if displayHp}
             <span>{displayHp}</span>
           {/if}
@@ -251,6 +260,14 @@
     line-height: 1;
     white-space: nowrap;
     letter-spacing: 0;
+  }
+
+  .pokemon-hp-bubble.hp-increased {
+    color: #15803d;
+  }
+
+  .pokemon-hp-bubble.hp-decreased {
+    color: #b91c1c;
   }
 
   .pokemon-hp-bubble img {
