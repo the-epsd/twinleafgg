@@ -37,6 +37,19 @@
   let hpDecreased = $derived(hpModified && displayHp < printedHp);
   let pokemonTypeIcon = $derived(pokemonTypeIconSrc(slot.pokemon?.cardType));
   let pokemonTypeLabel = $derived(pokemonTypeLabelFor(slot.pokemon?.cardType));
+  let toolPreview = $derived(slot.tools[0]);
+  let toolPreviewImageUrl = $derived(toolPreview?.imageUrl ?? toolPreview?.cardImage);
+  let toolNames = $derived(slot.tools.map((tool) => tool.fullName || tool.name).join(', '));
+  let failedToolImageUrl = $state('');
+  let lastToolImageUrl = $state<string | undefined>();
+  let showToolImage = $derived(!!toolPreviewImageUrl && failedToolImageUrl !== toolPreviewImageUrl);
+
+  $effect(() => {
+    if (toolPreviewImageUrl !== lastToolImageUrl) {
+      failedToolImageUrl = '';
+      lastToolImageUrl = toolPreviewImageUrl;
+    }
+  });
 
   function energyStackStyle(index: number) {
     if (!stackedEnergy) {
@@ -111,10 +124,26 @@
         {/each}
       </div>
     {/if}
+    {#if slot.tools.length}
+      <div class="tool-card-preview" title={toolNames}>
+        {#if showToolImage}
+          <img
+            src={toolPreviewImageUrl}
+            alt={toolPreview?.name || 'Pokemon Tool'}
+            loading="lazy"
+            decoding="async"
+            draggable="false"
+            onerror={() => (failedToolImageUrl = toolPreviewImageUrl ?? '')}
+          />
+        {:else}
+          <span>{slot.tools.length > 1 ? `${slot.tools.length} Tools` : 'Tool'}</span>
+        {/if}
+        {#if slot.tools.length > 1}
+          <span class="tool-count" aria-label={`${slot.tools.length} attached tools`}>{slot.tools.length}</span>
+        {/if}
+      </div>
+    {/if}
     <div class="slot-badges" title={displayHp ? `${Math.max(0, displayHp - slot.damage)}/${displayHp} HP remaining` : undefined}>
-      {#if slot.tools.length}
-        <span>{slot.tools.length} T</span>
-      {/if}
       {#if slot.specialConditions.length}
         <span>{slot.specialConditions.length} S</span>
       {/if}
@@ -314,5 +343,68 @@
     left: var(--energy-offset);
     bottom: 0;
     z-index: var(--energy-z);
+  }
+
+  .tool-card-preview {
+    --tool-preview-top: calc(var(--slot-card-w) * 0.38);
+    --tool-preview-width: calc(var(--slot-card-w) * 0.5);
+    --tool-art-crop-width: 118%;
+    --tool-art-crop-height: 260%;
+    --tool-art-crop-left: -9%;
+    --tool-art-crop-top: -36.3%;
+    position: absolute;
+    right: 0;
+    top: var(--tool-preview-top);
+    z-index: 6;
+    width: var(--tool-preview-width);
+    aspect-ratio: 1.58;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    border-radius: clamp(3px, calc(var(--slot-card-w) * 0.035), 6px);
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    background:
+      linear-gradient(180deg, rgba(250, 252, 255, 0.92), rgba(210, 218, 227, 0.9));
+    box-shadow:
+      0 5px 10px rgba(23, 30, 38, 0.34),
+      inset 0 0 0 1px rgba(26, 31, 39, 0.18);
+    pointer-events: none;
+  }
+
+  .tool-card-preview img {
+    position: absolute;
+    width: var(--tool-art-crop-width);
+    height: var(--tool-art-crop-height);
+    left: var(--tool-art-crop-left);
+    top: var(--tool-art-crop-top);
+    display: block;
+    object-fit: fill;
+    pointer-events: none;
+    -webkit-user-drag: none;
+  }
+
+  .tool-card-preview > span:not(.tool-count) {
+    padding: 0 5px;
+    color: #2f3742;
+    font-size: clamp(8px, calc(var(--slot-card-w) * 0.07), 11px);
+    font-weight: 900;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .tool-count {
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    min-width: clamp(13px, calc(var(--slot-card-w) * 0.12), 18px);
+    min-height: clamp(13px, calc(var(--slot-card-w) * 0.12), 18px);
+    display: grid;
+    place-items: center;
+    border-radius: 999px 0 0 0;
+    background: rgba(20, 25, 32, 0.82);
+    color: #fff;
+    font-size: clamp(8px, calc(var(--slot-card-w) * 0.07), 11px);
+    font-weight: 900;
+    line-height: 1;
   }
 </style>

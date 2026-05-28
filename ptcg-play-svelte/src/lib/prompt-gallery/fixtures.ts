@@ -71,6 +71,7 @@ const cards = {
   nestBall: trainer(21, 'Nest Ball', 'Nest Ball', 'sv1', '181'),
   boss: trainer(22, "Boss's Orders", "Boss's Orders", 'swsh2', '154'),
   buddyBuddy: trainer(23, 'Buddy-Buddy Poffin', 'Buddy-Buddy Poffin', 'sv5', '144'),
+  braveryCharm: trainer(25, 'Bravery Charm', 'Bravery Charm', 'sv2', '173', 'Tool'),
   fireEnergy: energy(30, 'Basic Fire Energy', 'Basic Fire Energy', 'sve', '2'),
   psychicEnergy: energy(31, 'Basic Psychic Energy', 'Basic Psychic Energy', 'sve', '5'),
   grassEnergy: energy(32, 'Basic Grass Energy', 'Basic Grass Energy', 'sve', '1'),
@@ -330,7 +331,7 @@ function createGame(): GameView {
   bottom.active = slot(0, 'active', 0, cards.dragapult, {
     damage: 50,
     energy: [cards.fireEnergy, cards.psychicEnergy],
-    tools: [cards.rareCandy],
+    tools: [cards.braveryCharm],
   });
   bottom.bench = [
     slot(0, 'bench', 0, cards.munkidori, { damage: 20, energy: [cards.darknessEnergy] }),
@@ -457,7 +458,7 @@ function pokemon(id: number, name: string, fullName: string, set: string, setNum
   };
 }
 
-function trainer(id: number, name: string, fullName: string, set: string, setNumber: string): CardView {
+function trainer(id: number, name: string, fullName: string, set: string, setNumber: string, trainerType = 'Item'): CardView {
   return {
     id,
     name,
@@ -466,7 +467,7 @@ function trainer(id: number, name: string, fullName: string, set: string, setNum
     setNumber,
     imageUrl: image(set, setNumber),
     superType: 'Trainer',
-    trainerType: 'Item',
+    trainerType,
   };
 }
 
