@@ -211,7 +211,7 @@
   :global(.player-panel.bottom) .hand {
     min-height: 0;
     align-items: start;
-    padding-top: var(--hand-hover-pad);
-    padding-bottom: calc(var(--hand-hover-pad) * 0.65);
+    padding-top: var(--hand-hover-clearance);
+    padding-bottom: var(--hand-shadow-clearance);
   }
 </style>

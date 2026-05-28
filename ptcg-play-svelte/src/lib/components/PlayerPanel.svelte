@@ -41,7 +41,7 @@
 
   .player-panel.bottom {
     --card-w: var(--hand-card-w);
-    top: calc(100vh - var(--board-bottom-inset) + var(--hand-board-gap) - var(--hand-hover-pad));
+    top: calc(100vh - var(--board-bottom-inset) + var(--hand-board-gap) - var(--hand-hover-clearance));
     left: var(--table-side-gap);
     right: var(--player-panel-right);
     bottom: 8px;

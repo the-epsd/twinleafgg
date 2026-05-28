@@ -27,6 +27,8 @@
     --hand-board-gap: 0px;
     --board-top-inset: calc(var(--opponent-hand-height) + var(--hand-board-gap));
     --hand-hover-pad: calc(var(--board-card-w) * 0.065);
+    --hand-hover-clearance: calc(var(--hand-hover-pad) + 12px);
+    --hand-shadow-clearance: calc(var(--hand-hover-pad) + 14px);
     --board-bottom-inset: calc((var(--hand-card-w) * 1.397) + (var(--hand-hover-pad) * 2.5) + 14px);
     --board-right-rail: 150px;
     --table-side-gap: 14px;
