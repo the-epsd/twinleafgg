@@ -1,14 +1,11 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
 
-  type Emphasis = 'outline' | 'lift';
-
   type Props = {
     selected?: boolean;
     blocked?: boolean;
     assigned?: boolean;
     disabled?: boolean;
-    emphasis?: Emphasis;
     title?: string;
     draggable?: boolean;
     children: Snippet;
@@ -22,7 +19,6 @@
     blocked = false,
     assigned = false,
     disabled = false,
-    emphasis = 'outline',
     title,
     draggable = false,
     children,
@@ -38,7 +34,6 @@
   class:selected
   class:blocked
   class:assigned
-  data-emphasis={emphasis}
   {disabled}
   {title}
   {draggable}
@@ -81,23 +76,33 @@
     opacity: var(--disabled-opacity);
   }
 
-  .selectable-card[data-emphasis='outline'].selected {
-    outline: var(--selection-outline);
-    outline-offset: 1px;
-    border-color: var(--selection-border-strong);
-    background: var(--selection-bg);
+  .selectable-card:hover:not(:disabled) {
+    border-color: var(--surface-inset-border);
   }
 
-  .selectable-card[data-emphasis='lift']:hover:not(:disabled) {
-    transform: translateY(-4px);
-    box-shadow: var(--selection-shadow);
+  .selectable-card.selected {
+    z-index: 3;
+    outline: 0;
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
   }
 
-  .selectable-card[data-emphasis='lift'].selected {
-    transform: translateY(-5px);
-    border-color: var(--selection-border-strong);
-    background: var(--selection-bg);
-    box-shadow: var(--selection-shadow-lift);
+  .selectable-card.selected :global(.card-tile) {
+    border-radius: 6% / 4.5%;
+    box-shadow: var(--glow-selected-shadow);
+  }
+
+  .selectable-card:hover:not(:disabled):not(.selected) {
+    z-index: 2;
+  }
+
+  .selectable-card:hover:not(:disabled):not(.selected) :global(.card-tile) {
+    border-radius: 6% / 4.5%;
+    box-shadow:
+      var(--glow-falloff),
+      0 12px 22px rgba(23, 30, 38, 0.22);
+    filter: saturate(1.05);
   }
 
   .selectable-card.assigned {

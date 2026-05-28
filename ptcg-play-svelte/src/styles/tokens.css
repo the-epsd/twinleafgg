@@ -74,13 +74,6 @@
   --selection-outline: 2px solid var(--accent-base);
   --selection-border-strong: var(--accent-base);
   --selection-bg: var(--glow-tint);
-  --selection-shadow:
-    var(--glow-aura-soft),
-    var(--glow-falloff-soft);
-  --selection-shadow-lift:
-    0 14px 28px rgba(26, 31, 39, 0.18),
-    var(--glow-aura-strong),
-    var(--glow-falloff-strong);
 
   --button-bg: rgba(255, 255, 255, 0.95);
   --button-border: rgba(26, 31, 39, 0.18);
@@ -208,13 +201,6 @@
   --selection-outline: 2px solid var(--accent-base);
   --selection-border-strong: rgba(143, 232, 206, 0.78);
   --selection-bg: var(--glow-tint);
-  --selection-shadow:
-    var(--glow-aura-soft),
-    var(--glow-falloff-soft);
-  --selection-shadow-lift:
-    0 18px 36px rgba(0, 0, 0, 0.34),
-    var(--glow-aura-strong),
-    var(--glow-falloff-strong);
 
   --button-bg: rgba(255, 255, 255, 0.08);
   --button-border: rgba(255, 255, 255, 0.14);

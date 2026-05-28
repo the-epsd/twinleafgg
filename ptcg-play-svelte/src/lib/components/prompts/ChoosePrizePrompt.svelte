@@ -83,7 +83,6 @@
   <div class="prize-prompt-grid">
     {#each prizeChoices as prize}
       <SelectableCard
-        emphasis="lift"
         selected={selectedIndexes.includes(prize.index)}
         blocked={!isIndexSelectable(prize.index)}
         disabled={resolving || !isIndexSelectable(prize.index)}

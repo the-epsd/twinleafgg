@@ -145,7 +145,7 @@
     min-height: 0;
     max-height: min(52vh, 560px);
     overflow: auto;
-    padding: 2px 4px 8px 2px;
+    padding: 10px 12px 14px;
   }
 
   :global(.prize-prompt-grid) {
