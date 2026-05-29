@@ -1,4 +1,4 @@
-import { PokemonCard, Stage, CardType, PowerType, State, StoreLike } from '../../game';
+import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, CardTag } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
@@ -8,6 +8,8 @@ export class Revavroomex extends PokemonCard {
   public regulationMark = 'G';
 
   public stage: Stage = Stage.STAGE_1;
+
+  public tags = [CardTag.POKEMON_ex];
 
   public evolvesFrom = 'Varoom';
 
