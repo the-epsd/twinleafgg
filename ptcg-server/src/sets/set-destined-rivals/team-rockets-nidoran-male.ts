@@ -14,20 +14,20 @@ export class TeamRocketsNidoranMale extends PokemonCard {
       name: 'Pierce',
       cost: [D],
       damage: 10,
-      text: ''
+      text: '',
     },
     {
       name: 'Hammer In',
       cost: [D, D],
       damage: 30,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark = 'I';
   public set: string = 'DRI';
   public setNumber: string = '117';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Team Rocket\'s Nidoran M';
-  public fullName: string = 'Team Rocket\'s Nidoran M DRI';
+  public name: string = "Team Rocket's Nidoran ♂";
+  public fullName: string = "Team Rocket's Nidoran M DRI";
 }

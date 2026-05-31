@@ -1,11 +1,29 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, Card, ChooseCardsPrompt, GameMessage, GameLog, CardTarget, PlayerType, CardManager, PokemonCardList, ChoosePokemonPrompt, SlotType } from '../../game';
+import {
+  StoreLike,
+  State,
+  Card,
+  ChooseCardsPrompt,
+  GameMessage,
+  GameLog,
+  CardTarget,
+  PlayerType,
+  CardManager,
+  PokemonCardList,
+  ChoosePokemonPrompt,
+  SlotType,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 
-function* useDarkAwakening(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+function* useDarkAwakening(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
   const player = effect.player;
 
   if (player.deck.cards.length === 0) {
@@ -14,15 +32,17 @@ function* useDarkAwakening(next: Function, store: StoreLike, state: State, effec
 
   // Look through all known cards to find out if Pokemon can evolve
   const cm = CardManager.getInstance();
-  const evolutions = cm.getAllCards().filter(c => {
+  const evolutions = cm.getAllCards().filter((c) => {
     return c instanceof PokemonCard && c.stage !== Stage.BASIC;
   }) as PokemonCard[];
 
   // Build possible evolution card names
   const evolutionNames: string[] = [];
   player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
-    const valid = evolutions.filter(e => e.evolvesFrom === card.name && e.cardType === CardType.DARK);
-    valid.forEach(c => {
+    const valid = evolutions.filter(
+      (e) => e.evolvesFrom === card.name && e.cardType === CardType.DARK,
+    );
+    valid.forEach((c) => {
       if (!evolutionNames.includes(c.name)) {
         evolutionNames.push(c.name);
       }
@@ -42,25 +62,29 @@ function* useDarkAwakening(next: Function, store: StoreLike, state: State, effec
   });
 
   let targets: PokemonCardList[] = [];
-  yield store.prompt(state, new ChoosePokemonPrompt(
-    player.id,
-    GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
-    PlayerType.BOTTOM_PLAYER,
-    [SlotType.ACTIVE, SlotType.BENCH],
-    { min: 1, max: 2, allowCancel: false, blocked: blocked2 }
-  ), selection => {
-    targets = selection || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChoosePokemonPrompt(
+      player.id,
+      GameMessage.CHOOSE_POKEMON_TO_EVOLVE,
+      PlayerType.BOTTOM_PLAYER,
+      [SlotType.ACTIVE, SlotType.BENCH],
+      { min: 1, max: 2, allowCancel: false, blocked: blocked2 },
+    ),
+    (selection) => {
+      targets = selection || [];
+      next();
+    },
+  );
 
   if (targets.length === 0) {
     return state; // canceled by user
   }
 
   // Log the selected Pokémon targets
-  const targetNames = targets.map(target => target.getPokemonCard()?.name).filter(Boolean);
+  const targetNames = targets.map((target) => target.getPokemonCard()?.name).filter(Boolean);
   store.log(state, GameLog.LOG_TEXT, {
-    text: `${player.name} chooses to evolve ${targetNames.join(' and ')}`
+    text: `${player.name} chooses to evolve ${targetNames.join(' and ')}`,
   });
 
   for (const target of targets) {
@@ -78,16 +102,20 @@ function* useDarkAwakening(next: Function, store: StoreLike, state: State, effec
     });
 
     let cards: Card[] = [];
-    yield store.prompt(state, new ChooseCardsPrompt(
-      player,
-      GameMessage.CHOOSE_CARD_TO_EVOLVE,
-      player.deck,
-      { superType: SuperType.POKEMON },
-      { min: 0, max: 1, allowCancel: false, blocked }
-    ), selected => {
-      cards = selected || [];
-      next();
-    });
+    yield store.prompt(
+      state,
+      new ChooseCardsPrompt(
+        player,
+        GameMessage.CHOOSE_CARD_TO_EVOLVE,
+        player.deck,
+        { superType: SuperType.POKEMON },
+        { min: 0, max: 1, allowCancel: false, blocked },
+      ),
+      (selected) => {
+        cards = selected || [];
+        next();
+      },
+    );
 
     // Canceled by user, he didn't found the card in the deck
     if (cards.length === 0) {
@@ -107,7 +135,7 @@ function* useDarkAwakening(next: Function, store: StoreLike, state: State, effec
 
 export class TeamRocketsNidorina extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom = 'Team Rocket\'s Nidoran F';
+  public evolvesFrom = "Team Rocket's Nidoran ♀";
   public tags = [CardTag.TEAM_ROCKET];
   public cardType: CardType = D;
   public hp: number = 90;
@@ -119,22 +147,22 @@ export class TeamRocketsNidorina extends PokemonCard {
       name: 'Dark Awakening',
       cost: [D],
       damage: 0,
-      text: 'Choose up to 2 of your [D] Pokémon. For each of those Pokémon, search your deck for a card that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck.'
+      text: 'Choose up to 2 of your [D] Pokémon. For each of those Pokémon, search your deck for a card that evolves from that Pokémon and put it onto that Pokémon to evolve it. Then, shuffle your deck.',
     },
     {
       name: 'Scratch',
       cost: [D, D],
       damage: 50,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public regulationMark = 'I';
   public set: string = 'DRI';
   public setNumber: string = '115';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Team Rocket\'s Nidorina';
-  public fullName: string = 'Team Rocket\'s Nidorina DRI';
+  public name: string = "Team Rocket's Nidorina";
+  public fullName: string = "Team Rocket's Nidorina DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {

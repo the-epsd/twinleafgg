@@ -17,20 +17,24 @@ export class TeamRocketsNidoranFemale extends PokemonCard {
       name: 'Suprise Attack',
       cost: [D],
       damage: 30,
-      text: 'Flip a coin. If tails, this attack does nothing.'
-    }
+      text: 'Flip a coin. If tails, this attack does nothing.',
+    },
   ];
 
   public regulationMark = 'I';
   public set: string = 'DRI';
   public setNumber: string = '114';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Team Rocket\'s Nidoran F';
-  public fullName: string = 'Team Rocket\'s Nidoran F DRI';
+  public name: string = "Team Rocket's Nidoran ♀";
+  public fullName: string = "Team Rocket's Nidoran F DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      COIN_FLIP_PROMPT(store, state, effect.player, result => { if (!result) { effect.damage = 0; } });
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
+        if (!result) {
+          effect.damage = 0;
+        }
+      });
     }
 
     return state;

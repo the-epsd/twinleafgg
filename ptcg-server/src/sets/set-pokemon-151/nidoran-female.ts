@@ -17,15 +17,15 @@ export class NidoranFemale extends PokemonCard {
       name: 'Poison Horn',
       cost: [CardType.DARK, CardType.COLORLESS],
       damage: 20,
-      text: 'Your opponent\'s Active Pokémon is now Poisoned.'
-    }
+      text: "Your opponent's Active Pokémon is now Poisoned.",
+    },
   ];
 
   public set: string = 'MEW';
   public regulationMark = 'G';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '29';
-  public name: string = 'Nidoran F';
+  public name: string = 'Nidoran ♀';
   public fullName: string = 'Nidoran F MEW';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {

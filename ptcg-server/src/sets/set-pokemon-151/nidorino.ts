@@ -5,24 +5,24 @@ import { Attack } from '../../game/store/card/pokemon-types';
 export class Nidorino extends PokemonCard {
   public cardType = CardType.DARK;
   public stage = Stage.STAGE_1;
-  public evolvesFrom = 'Nidoran M';
+  public evolvesFrom = '♂';
   public hp = 90;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public retreat = [C, C];
 
   public attacks: Attack[] = [
     {
       name: 'Sharp Fang',
-      cost: [CardType.DARK],
+      cost: [D],
       damage: 30,
-      text: ''
+      text: '',
     },
     {
       name: 'Superpowered Horns',
-      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
+      cost: [D, D, C],
       damage: 100,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'MEW';
@@ -31,5 +31,4 @@ export class Nidorino extends PokemonCard {
   public setNumber: string = '33';
   public name: string = 'Nidorino';
   public fullName: string = 'Nidorino MEW';
-
 }
