@@ -1221,7 +1221,9 @@ export const SetReleaseDates: { [key: string]: Date } = {
   M3: new Date("2026-03-27"),
   POR: new Date("2026-03-27"),
   M4: new Date("2026-05-22"),
-  M5: new Date("2026-05-23"),
+  CRI: new Date("2026-05-22"),
+  M5: new Date("2026-07-16"),
+  PIB: new Date("2026-07-16"),
 };
 
 // ========== Constants ==========
