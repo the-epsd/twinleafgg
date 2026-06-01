@@ -64,6 +64,7 @@ import { Honchkrow } from './honchkrow';
 import { Hoopa } from './hoopa';
 import { Horsea } from './horsea';
 import { Inkay } from './inkay';
+import { InkayLOR77 } from './inkay77';
 import { Jynx } from './jynx';
 import { Kingdra } from './kingdra';
 import { Komala } from './komala';
@@ -234,7 +235,7 @@ import {
 } from './other-prints';
 
 export const setLostOrigin: Card[] = [
-  // Pokemon
+  // MARK: Pokemon
   new Abomasnow(),
   new AerodactylV(),
   new AerodactylVstar(),
@@ -300,6 +301,7 @@ export const setLostOrigin: Card[] = [
   new Hoopa(),
   new Horsea(),
   new Inkay(),
+  new InkayLOR77(),
   new Jynx(),
   new Kingdra(),
   new Komala(),
@@ -382,7 +384,7 @@ export const setLostOrigin: Card[] = [
   new Vileplume(),
   new Wurmple(),
 
-  // Trainers
+  // MARK: Trainers
   new ArcPhone(),
   new Arezu(),
   new BoxOfDisaster(),
@@ -403,10 +405,10 @@ export const setLostOrigin: Card[] = [
   new Volo(),
   new WindupArm(),
 
-  // Energy
+  // MARK: Energy
   new GiftEnergy(),
 
-  // Other Prints (Reprints & Alt Arts)
+  // MARK: Alt Arts
   new DelphoxV2LOR(),
   new KyuremV2LOR(),
   new MagnezoneV2LOR(),
