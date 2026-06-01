@@ -14,9 +14,9 @@ export class TelepathPsychicEnergy extends EnergyCard {
   public regulationMark = 'J';
   public set: string = 'POR';
   public name = 'Telepathic Psychic Energy';
-  public fullName = 'Telepath [P] Energy POR';
+  public fullName = 'Telepathic Psychic Energy POR';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '79';
+  public setNumber: string = '88';
   public text = 'As long as this card is attached to a Pokémon, it provides [P] Energy.\n\nWhen you attach this card from your hand to a [P] Pokémon, search your deck for up to 2 Basic [P] Pokémon and put them onto your Bench. Then, shuffle your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

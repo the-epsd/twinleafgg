@@ -30,7 +30,7 @@ export class Goodra extends PokemonCard {
   public regulationMark = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '66';
+  public setNumber: string = '68';
   public name: string = 'Goodra';
   public fullName: string = 'Goodra CRI';
 

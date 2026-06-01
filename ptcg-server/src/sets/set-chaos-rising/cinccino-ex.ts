@@ -30,7 +30,7 @@ export class Cinccinoex extends PokemonCard {
   public regulationMark = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '71';
+  public setNumber: string = '73';
   public name: string = 'Cinccino ex';
   public fullName: string = 'Cinccino ex CRI';
 

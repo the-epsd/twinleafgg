@@ -29,7 +29,7 @@ export class Cobalionex extends PokemonCard {
   public regulationMark: string = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '62';
+  public setNumber: string = '64';
   public name: string = 'Cobalion ex';
   public fullName: string = 'Cobalion ex CRI';
 

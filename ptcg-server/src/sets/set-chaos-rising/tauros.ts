@@ -19,7 +19,7 @@ export class Tauros extends PokemonCard {
   public regulationMark = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '67';
+  public setNumber: string = '69';
   public name: string = 'Tauros';
   public fullName: string = 'Tauros CRI';
 

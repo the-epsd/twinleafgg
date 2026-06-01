@@ -32,7 +32,7 @@ export class Metagross extends PokemonCard {
   public regulationMark = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '59';
+  public setNumber: string = '61';
   public name: string = 'Metagross';
   public fullName: string = 'Metagross CRI';
 

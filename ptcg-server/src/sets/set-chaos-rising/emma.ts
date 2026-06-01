@@ -13,7 +13,7 @@ export class Emma extends TrainerCard {
   public regulationMark = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '78';
+  public setNumber: string = '77';
   public name: string = 'Emma';
   public fullName: string = 'Emma CRI';
   public text: string = 'Your opponent reveals their hand. Draw a card for each Pokemon you find there.';

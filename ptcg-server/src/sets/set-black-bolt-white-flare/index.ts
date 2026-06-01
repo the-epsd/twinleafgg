@@ -9,6 +9,7 @@ import { Karrablast } from './karrablast';
 import { BraveBangle } from './brave-bangle';
 import { Carracosta } from './carracosta';
 import { Cobalion } from './cobalion';
+import { Cofagrigus } from './cofagrigus';
 import { Cottonee } from './cottonee';
 import { Dewott } from './dewott';
 import { Drillbur } from './drillbur';
@@ -69,6 +70,7 @@ import { Zorua } from './zorua';
 export const setSV11: Card[] = [
   new Harlequin(),
   new Purrloin(),
+  new Cofagrigus(),
   new Gothita(),
   new Gothorita(),
   new Gothitelle(),

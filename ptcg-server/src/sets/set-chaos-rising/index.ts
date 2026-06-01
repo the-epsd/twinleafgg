@@ -46,6 +46,7 @@ import { Keldeo } from './keldeo';
 import { Litleo } from './litleo';
 import { MagnetMetalEnergy } from './magnet-metal-energy';
 import { Mareep } from './mareep';
+import { MegaGalladeex } from './mega-gallade-ex';
 import { MegaFloetteex } from './mega-floette-ex';
 import { MegaGreninjaex } from './mega-greninja-ex';
 import { MegaPyroarex } from './mega-pyroar-ex';
@@ -131,40 +132,43 @@ export const setChaosRising: Card[] = [
   new Donphan(),     // 45
   new Baltoy(),      // 46
   new Claydol(),     // 47
-  new Zubat(),       // 48
-  new Golbat(),      // 49
-  new Crobat(),      // 50
-  new Qwilfish(),    // 51
-  new Stunky(),      // 52
-  new Skuntank(),    // 53
-  new Trubbish(),    // 54
-  new Garbodor(),    // 55
-  new Skrelp(),      // 56
-  new Beldum(),      // 57
-  new Metang(),      // 58
-  new Metagross(),   // 59
-  new Ferroseed(),   // 60
-  new Ferrothorn(),  // 61
-  new Cobalionex(),  // 62
-  new MegaDragalgeex(),// 63
-  new Goomy(),       // 64
-  new Sliggoo(),     // 65
-  new Goodra(),      // 66
-  new Tauros(),      // 67
-  new Patrat(),      // 68
-  new Watchog(),     // 69
-  new Minccino(),    // 70
-  new Cinccinoex(),  // 71
-  new SpecialRedCard(),// 72
-  new BigCatchNet(), // 73
-  new BookOfTransformation(),// 74
-  new AzsTranquility(),// 75
-  new Philippe(),    // 76
-  new RoxiesPerformance(),// 77
-  new Emma(),        // 78
-  new HyperrogueAngeFloette(),// 79
+  new MegaGalladeex(),// 48
+  new Zubat(),       // 49
+  new Golbat(),      // 50
+  new Crobat(),      // 51
+  new Qwilfish(),    // 52
+  new Stunky(),      // 53
+  new Skuntank(),    // 54
+  // 55 Krookodile ex not implemented
+  new Trubbish(),    // 56
+  new Garbodor(),    // 57
+  new Skrelp(),      // 58
+  new Beldum(),      // 59
+  new Metang(),      // 60
+  new Metagross(),   // 61
+  new Ferroseed(),   // 62
+  new Ferrothorn(),  // 63
+  new Cobalionex(),  // 64
+  new MegaDragalgeex(),// 65
+  new Goomy(),       // 66
+  new Sliggoo(),     // 67
+  new Goodra(),      // 68
+  new Tauros(),      // 69
+  new Patrat(),      // 70
+  new Watchog(),     // 71
+  new Minccino(),    // 72
+  new Cinccinoex(),  // 73
+  // 74 Adversity Policy not implemented
+  new HyperrogueAngeFloette(),// 75
+  new AzsTranquility(),// 76
+  new Emma(),        // 77
+  new BigCatchNet(), // 78
+  new Philippe(),    // 79
   new PrismTower(),  // 80
-  new NitroFireEnergy(),// 81
-  new MagnetMetalEnergy(),// 83
-  new BubbleWaterEnergy(),// 99
+  new RoxiesPerformance(),// 81
+  new SpecialRedCard(),// 82
+  new BookOfTransformation(),// 83
+  new BubbleWaterEnergy(),// 84
+  new MagnetMetalEnergy(),// 85
+  new NitroFireEnergy(),// 86
 ];

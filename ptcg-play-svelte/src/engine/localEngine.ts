@@ -144,10 +144,12 @@ export class LocalEngineController {
           TS_NODE_COMPILER_OPTIONS: JSON.stringify({
             module: 'commonjs',
             target: 'es2018',
+            rootDir: 'src',
             experimentalDecorators: true,
             emitDecoratorMetadata: true,
             esModuleInterop: true,
             skipLibCheck: true,
+            ignoreDeprecations: '6.0',
           }),
         },
       },

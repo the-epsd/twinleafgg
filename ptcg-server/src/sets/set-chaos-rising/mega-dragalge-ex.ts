@@ -29,7 +29,7 @@ export class MegaDragalgeex extends PokemonCard {
   public regulationMark = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '63';
+  public setNumber: string = '65';
   public name: string = 'Mega Dragalge ex';
   public fullName: string = 'Mega Dragalge ex CRI';
 

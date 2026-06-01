@@ -30,7 +30,7 @@ export class Qwilfish extends PokemonCard {
   public regulationMark = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '51';
+  public setNumber: string = '52';
   public name: string = 'Qwilfish';
   public fullName: string = 'Qwilfish CRI';
 

@@ -57,10 +57,10 @@ export class BigCatchNet extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
   public set: string = 'CRI';
   public regulationMark = 'J';
-  public name: string = 'Big Catch Net';
-  public fullName: string = 'Big Catch Net CRI';
+  public name: string = 'Great Haul Net';
+  public fullName: string = 'Great Haul Net CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '73';
+  public setNumber: string = '78';
   public text: string = 'Shuffle up to 3 [W] Pokemon and up to 3 Basic [W] Energy from your discard pile into your deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -14,9 +14,9 @@ export class HyperrogueAngeFloette extends TrainerCard {
 
   public trainerType: TrainerType = TrainerType.STADIUM;
   public set: string = 'CRI';
-  public setNumber: string = '79';
-  public name: string = 'Hyperrogue Ange Floette';
-  public fullName: string = 'Hyperrogue Ange Floette CRI';
+  public setNumber: string = '75';
+  public name: string = 'Ange Floette';
+  public fullName: string = 'Ange Floette CRI';
   public cardImage: string = 'assets/cardback.png';
 
   public text: string =

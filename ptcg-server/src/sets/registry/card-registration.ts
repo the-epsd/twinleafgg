@@ -12,8 +12,8 @@ const EXPORT_PATH_REGEX = /export \* from '\.\/([^']+)'/g;
 const COMMONJS_EXPORT_PATH_REGEX = /__exportStar\(require\(["']\.\/([^"']+)["']\), exports\)/g;
 const IMPORT_PATH_REGEX = /from '\.\/([^']+)'/g;
 const COMMONJS_IMPORT_PATH_REGEX = /require\(["']\.\/([^"']+)["']\)/g;
-const SET_DECLARATION_REGEX = /public set(?:\s*:\s*string)?\s*=\s*['"]([^'"]+)['"]/;
-const COMPILED_SET_DECLARATION_REGEX = /this\.set\s*=\s*['"]([^'"]+)['"]/;
+const SET_DECLARATION_REGEX = /public set(?:\s*:\s*string)?\s*=\s*['"]([^'"]+)['"]/g;
+const COMPILED_SET_DECLARATION_REGEX = /this\.set\s*=\s*['"]([^'"]+)['"]/g;
 const SET_CODE_REGEX = /^[A-Z0-9-]{2,8}$/;
 
 let setCodeToModules: Map<string, string[]> | undefined;
@@ -53,20 +53,26 @@ function getExportedSetModulePaths(): string[] {
   return modulePaths;
 }
 
-function extractSetCodeFromSource(source: string): string | undefined {
-  const match = SET_DECLARATION_REGEX.exec(source) || COMPILED_SET_DECLARATION_REGEX.exec(source);
-  if (!match) {
-    return undefined;
+function extractSetCodesFromSource(source: string): string[] {
+  const setCodes = new Set<string>();
+  for (const regex of [SET_DECLARATION_REGEX, COMPILED_SET_DECLARATION_REGEX]) {
+    regex.lastIndex = 0;
+    let match: RegExpExecArray | null;
+    while ((match = regex.exec(source)) !== null) {
+      const setCode = match[1].toUpperCase();
+      if (SET_CODE_REGEX.test(setCode)) {
+        setCodes.add(setCode);
+      }
+    }
   }
-  const setCode = match[1].toUpperCase();
-  return SET_CODE_REGEX.test(setCode) ? setCode : undefined;
+  return Array.from(setCodes);
 }
 
-function inferSetCodeFromModule(moduleName: string): string | undefined {
+function inferSetCodesFromModule(moduleName: string): string[] {
   const moduleDir = path.join(setsDir, moduleName);
   const indexPath = findModuleFile(path.join(moduleDir, 'index'));
   if (!fs.existsSync(indexPath)) {
-    return undefined;
+    return [];
   }
 
   const indexContent = fs.readFileSync(indexPath, 'utf8');
@@ -85,17 +91,17 @@ function inferSetCodeFromModule(moduleName: string): string | undefined {
     .filter(file => (file.endsWith('.ts') || file.endsWith('.js')) && file !== 'index.ts' && file !== 'index.js')
     .map(file => path.join(moduleDir, file));
 
+  const setCodes = new Set<string>();
   for (const candidateFile of [...candidateFiles, ...fallbackFiles]) {
     if (!fs.existsSync(candidateFile)) {
       continue;
     }
-    const setCode = extractSetCodeFromSource(fs.readFileSync(candidateFile, 'utf8'));
-    if (setCode) {
-      return setCode;
+    for (const setCode of extractSetCodesFromSource(fs.readFileSync(candidateFile, 'utf8'))) {
+      setCodes.add(setCode);
     }
   }
 
-  return undefined;
+  return Array.from(setCodes);
 }
 
 function getSetCodeToModules(): Map<string, string[]> {
@@ -105,13 +111,11 @@ function getSetCodeToModules(): Map<string, string[]> {
 
   const map = new Map<string, string[]>();
   for (const moduleName of getExportedSetModulePaths()) {
-    const setCode = inferSetCodeFromModule(moduleName);
-    if (!setCode) {
-      continue;
+    for (const setCode of inferSetCodesFromModule(moduleName)) {
+      const modules = map.get(setCode) ?? [];
+      modules.push(moduleName);
+      map.set(setCode, modules);
     }
-    const modules = map.get(setCode) ?? [];
-    modules.push(moduleName);
-    map.set(setCode, modules);
   }
 
   setCodeToModules = map;

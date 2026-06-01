@@ -28,7 +28,7 @@ export class Metang extends PokemonCard {
   public regulationMark = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '58';
+  public setNumber: string = '60';
   public name: string = 'Metang';
   public fullName: string = 'Metang CRI';
 

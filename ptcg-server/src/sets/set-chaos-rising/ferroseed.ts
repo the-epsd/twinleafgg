@@ -19,7 +19,7 @@ export class Ferroseed extends PokemonCard {
   public regulationMark = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '60';
+  public setNumber: string = '62';
   public name: string = 'Ferroseed';
   public fullName: string = 'Ferroseed CRI';
 }

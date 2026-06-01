@@ -20,7 +20,7 @@ export class Minccino extends PokemonCard {
   public regulationMark = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '70';
+  public setNumber: string = '72';
   public name: string = 'Minccino';
   public fullName: string = 'Minccino CRI';
 

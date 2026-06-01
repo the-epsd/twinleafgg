@@ -23,7 +23,7 @@ export class Zubat extends PokemonCard {
   public regulationMark = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '48';
+  public setNumber: string = '49';
   public name: string = 'Zubat';
   public fullName: string = 'Zubat CRI';
 

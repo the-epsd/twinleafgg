@@ -24,7 +24,7 @@ export class Patrat extends PokemonCard {
   public regulationMark = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '68';
+  public setNumber: string = '70';
   public name: string = 'Patrat';
   public fullName: string = 'Patrat CRI';
 
