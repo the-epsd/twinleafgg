@@ -7,6 +7,9 @@ import { PlayCardAction, CardTarget, PlayerType, SlotType } from '../store/actio
 import { ResolvePromptAction } from '../store/actions/resolve-prompt-action';
 import { EnergyCard } from '../store/card/energy-card';
 import { PokemonCard } from '../store/card/pokemon-card';
+import { BoardEffect } from '../store/card/card-types';
+import { Attack, Power } from '../store/card/pokemon-types';
+import { GameError } from '../game-error';
 import { GameSettings } from '../core/game-settings';
 import { State, GamePhase } from '../store/state/state';
 import { CardList } from '../store/state/card-list';
@@ -84,6 +87,34 @@ export interface HeadlessSnapshot {
   serializedState: string;
 }
 
+export interface AvailableActionStatus {
+  name: string;
+  legal: boolean;
+  reason?: string;
+}
+
+export interface AvailableAbilityStatus extends AvailableActionStatus {
+  used?: boolean;
+}
+
+export interface AvailableRetreatStatus {
+  legal: boolean;
+  targets: number[];
+  reason?: string;
+}
+
+export interface AvailableActionsView {
+  active?: {
+    attacks: AvailableActionStatus[];
+    abilities: AvailableAbilityStatus[];
+    retreat: AvailableRetreatStatus;
+  };
+  bench: Array<{
+    index: number;
+    abilities: AvailableAbilityStatus[];
+  }>;
+}
+
 const DEFAULT_FILLER = 'Water Energy SVE';
 
 class HeadlessStoreHandler implements StoreHandler {
@@ -139,6 +170,11 @@ class HeadlessStoreHandler implements StoreHandler {
       this.isResolving = false;
     }
   }
+}
+
+class DryRunStoreHandler implements StoreHandler {
+  public onAction(_action: Action, _state: State): void {}
+  public onStateChange(_state: State): void {}
 }
 
 function isMechanicalPrompt(prompt: Prompt<any>): boolean {
@@ -403,12 +439,14 @@ function createCard(state: State, fullName: string) {
 }
 
 function summarizeState(state: State): any {
+  const serializer = new StateSerializer();
+  const serializedState = serializer.serialize(state);
   return {
     phase: state.phase,
     turn: state.turn,
     activePlayer: state.activePlayer,
     winner: state.winner,
-    players: state.players.map(player => ({
+    players: state.players.map((player, index) => ({
       id: player.id,
       name: player.name,
       hand: player.hand.cards.map(summarizeCard),
@@ -420,7 +458,8 @@ function summarizeState(state: State): any {
       prizesLeft: player.getPrizeLeft(),
       active: summarizePokemonList(player.active),
       bench: player.bench.map(summarizePokemonList),
-      playableCardIds: player.playableCardIds
+      playableCardIds: player.playableCardIds,
+      availableActions: buildAvailableActions(state, serializedState, index)
     })),
     logs: state.logs.map(log => ({
       id: log.id,
@@ -428,6 +467,109 @@ function summarizeState(state: State): any {
       params: log.params,
       client: log.client
     }))
+  };
+}
+
+function buildAvailableActions(state: State, serializedState: string, playerIndex: number): AvailableActionsView {
+  const player = state.players[playerIndex];
+  const activePokemon = player.active.getPokemonCard();
+  const active = activePokemon === undefined
+    ? undefined
+    : {
+      attacks: activePokemon.attacks.map(attack =>
+        actionStatus(attack, () => new AttackAction(player.id, attack.name), serializedState)
+      ),
+      abilities: activePokemon.powers.map(power =>
+        abilityStatus(player.active, power, () => new UseAbilityAction(player.id, power.name, ownTarget(SlotType.ACTIVE)), serializedState)
+      ),
+      retreat: retreatStatus(player, serializedState)
+    };
+
+  return {
+    active,
+    bench: player.bench.map((bench, index) => {
+      const pokemon = bench.getPokemonCard();
+      return {
+        index,
+        abilities: pokemon?.powers.map(power =>
+          abilityStatus(bench, power, () => new UseAbilityAction(player.id, power.name, ownTarget(SlotType.BENCH, index)), serializedState)
+        ) ?? []
+      };
+    })
+  };
+}
+
+function actionStatus(attack: Attack, action: () => Action, serializedState: string): AvailableActionStatus {
+  const result = dryRun(serializedState, action);
+  return {
+    name: attack.name,
+    legal: result.legal,
+    reason: result.reason
+  };
+}
+
+function abilityStatus(
+  list: PokemonCardList,
+  power: Power,
+  action: () => Action,
+  serializedState: string
+): AvailableAbilityStatus {
+  const result = dryRun(serializedState, action);
+  const used = list.boardEffect.includes(BoardEffect.ABILITY_USED);
+  return {
+    name: power.name,
+    legal: result.legal,
+    used,
+    reason: result.reason ?? (used && !result.legal ? 'POWER_ALREADY_USED' : undefined)
+  };
+}
+
+function retreatStatus(player: Player, serializedState: string): AvailableRetreatStatus {
+  const reasons: string[] = [];
+  const targets: number[] = [];
+
+  player.bench.forEach((bench, index) => {
+    if (bench.getPokemonCard() === undefined) {
+      return;
+    }
+    const result = dryRun(serializedState, () => new RetreatAction(player.id, index));
+    if (result.legal) {
+      targets.push(index);
+      return;
+    }
+    if (result.reason) {
+      reasons.push(result.reason);
+    }
+  });
+
+  return {
+    legal: targets.length > 0,
+    targets,
+    reason: targets.length > 0 ? undefined : reasons[0]
+  };
+}
+
+function dryRun(serializedState: string, action: () => Action): { legal: boolean; reason?: string } {
+  const serializer = new StateSerializer();
+  const store = new Store(new DryRunStoreHandler());
+  store.state = serializer.deserialize(serializedState);
+
+  try {
+    store.dispatch(action());
+    return { legal: true };
+  } catch (error) {
+    return {
+      legal: false,
+      reason: error instanceof GameError ? error.message : error instanceof Error ? error.message : String(error)
+    };
+  }
+}
+
+function ownTarget(slot: SlotType, index = 0): CardTarget {
+  return {
+    player: PlayerType.BOTTOM_PLAYER,
+    slot,
+    index
   };
 }
 

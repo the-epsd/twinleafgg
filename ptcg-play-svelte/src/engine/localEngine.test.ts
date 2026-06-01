@@ -219,6 +219,98 @@ describe('LocalEngineController', () => {
     }
   });
 
+  it('exposes engine-owned ability used legality for repeated abilities', async () => {
+    const engine = new LocalEngineController();
+    try {
+      let res = await engine.handle({
+        type: 'setupScenario',
+        payload: {
+          promptMode: 'manual',
+          player1: {
+            name: 'A',
+            active: { card: 'Drakloak TWM' },
+            deck: ['Water Energy SVE', 'Psychic Energy SVE'],
+          },
+          player2: {
+            name: 'B',
+            active: { card: 'Ralts SIT' },
+            deck: ['Water Energy SVE'],
+          },
+          turn: 2,
+          activePlayer: 0,
+        },
+      });
+      expect(res.ok).toBe(true);
+      if (!res.ok) return;
+
+      expect(res.view.players[0]?.availableActions?.active?.abilities).toEqual([
+        { name: 'Recon Directive', legal: true, used: false },
+      ]);
+
+      res = await engine.handle({
+        type: 'useAbility',
+        payload: {
+          playerIndex: 0,
+          ability: 'Recon Directive',
+          target: targetFor(0, 0, SlotType.ACTIVE),
+        },
+      });
+      expect(res.ok).toBe(true);
+      if (!res.ok) return;
+      expect(res.view.prompts[0]?.className).toBe('ChooseCardsPrompt');
+
+      res = await engine.handle({
+        type: 'resolvePrompt',
+        payload: { id: res.view.prompts[0].id, result: [0] },
+      });
+      expect(res.ok).toBe(true);
+      if (!res.ok) return;
+
+      const ability = res.view.players[0]?.availableActions?.active?.abilities[0];
+      expect(ability).toMatchObject({
+        name: 'Recon Directive',
+        legal: false,
+        used: true,
+        reason: 'POWER_ALREADY_USED',
+      });
+    } finally {
+      engine.close();
+    }
+  });
+
+  it('exposes engine-owned attack legality from dry-run attack actions', async () => {
+    const engine = new LocalEngineController();
+    try {
+      const res = await engine.handle({
+        type: 'setupScenario',
+        payload: {
+          promptMode: 'manual',
+          player1: {
+            name: 'A',
+            active: { card: 'Raichu SIT', energy: ['Lightning Energy SVE'] },
+            deck: ['Water Energy SVE'],
+          },
+          player2: {
+            name: 'B',
+            active: { card: 'Ralts SIT' },
+            deck: ['Water Energy SVE'],
+          },
+          turn: 2,
+          activePlayer: 0,
+        },
+      });
+      expect(res.ok).toBe(true);
+      if (!res.ok) return;
+
+      expect(res.view.players[0]?.availableActions?.active?.attacks).toEqual([
+        { name: 'Ambushing Spark', legal: true },
+        { name: 'Electric Ball', legal: false, reason: 'NOT_ENOUGH_ENERGY' },
+      ]);
+    } finally {
+      engine.close();
+    }
+  });
+
   it('plays trainer cards that open manual deck-search prompts', async () => {
     const engine = new LocalEngineController();
     try {
@@ -460,6 +552,7 @@ describe('LocalEngineController', () => {
       if (!res.ok) return;
       expect(res.view.players[0]?.active.retreat).toHaveLength(1);
       expect(res.view.players[0]?.active.energy).toHaveLength(1);
+      expect(res.view.players[0]?.availableActions?.active?.retreat).toEqual({ legal: true, targets: [0] });
 
       res = await engine.handle({ type: 'retreat', payload: { playerIndex: 0, to: 0 } });
       expect(res.ok).toBe(true);
@@ -469,6 +562,41 @@ describe('LocalEngineController', () => {
         expect(res.view.players[0]?.active.energy).toHaveLength(0);
         expect(res.view.logs.map((log) => log.message)).toContain('LOG_PLAYER_RETREATS');
       }
+    } finally {
+      engine.close();
+    }
+  });
+
+  it('exposes engine-owned retreat illegality when retreat cost cannot be paid', async () => {
+    const engine = new LocalEngineController();
+    try {
+      const res = await engine.handle({
+        type: 'setupScenario',
+        payload: {
+          promptMode: 'manual',
+          player1: {
+            name: 'A',
+            active: { card: 'Ralts SIT' },
+            bench: [{ card: 'Ralts SIT' }],
+            deck: ['Water Energy SVE'],
+          },
+          player2: {
+            name: 'B',
+            active: { card: 'Ralts SIT' },
+            deck: ['Water Energy SVE'],
+          },
+          turn: 2,
+          activePlayer: 0,
+        },
+      });
+      expect(res.ok).toBe(true);
+      if (!res.ok) return;
+
+      expect(res.view.players[0]?.availableActions?.active?.retreat).toEqual({
+        legal: false,
+        targets: [],
+        reason: 'NOT_ENOUGH_ENERGY',
+      });
     } finally {
       engine.close();
     }

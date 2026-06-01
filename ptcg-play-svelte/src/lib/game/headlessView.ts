@@ -2,6 +2,7 @@ import { resolveCardImageUrl } from './cardImages';
 import {
   SlotType,
   targetFor,
+  type AvailableActionsView,
   type CardView,
   type GameView,
   type PlayerView,
@@ -65,6 +66,7 @@ function buildPlayerView(player: any, index: number, activePlayerIndex: number):
         )
       : [],
     playableCardIds: Array.isArray(player.playableCardIds) ? player.playableCardIds : [],
+    availableActions: normalizeAvailableActions(player.availableActions),
   };
 }
 
@@ -130,4 +132,48 @@ function normalizeCard(card: any): CardView | undefined {
     attacks: card.attacks,
     powers: card.powers,
   };
+}
+
+function normalizeAvailableActions(value: any): AvailableActionsView | undefined {
+  if (!value || typeof value !== 'object') {
+    return undefined;
+  }
+  return {
+    active: value.active
+      ? {
+          attacks: normalizeActionStatuses(value.active.attacks),
+          abilities: normalizeAbilityStatuses(value.active.abilities),
+          retreat: {
+            legal: value.active.retreat?.legal === true,
+            targets: Array.isArray(value.active.retreat?.targets) ? value.active.retreat.targets.filter(Number.isInteger) : [],
+            reason: typeof value.active.retreat?.reason === 'string' ? value.active.retreat.reason : undefined,
+          },
+        }
+      : undefined,
+    bench: Array.isArray(value.bench)
+      ? value.bench.map((item: any) => ({
+          index: Number.isInteger(item?.index) ? item.index : 0,
+          abilities: normalizeAbilityStatuses(item?.abilities),
+        }))
+      : [],
+  };
+}
+
+function normalizeActionStatuses(value: any): NonNullable<AvailableActionsView['active']>['attacks'] {
+  return Array.isArray(value)
+    ? value
+        .filter((item: any) => typeof item?.name === 'string')
+        .map((item: any) => ({
+          name: item.name,
+          legal: item.legal === true,
+          reason: typeof item.reason === 'string' ? item.reason : undefined,
+        }))
+    : [];
+}
+
+function normalizeAbilityStatuses(value: any): NonNullable<AvailableActionsView['active']>['abilities'] {
+  return normalizeActionStatuses(value).map((item, index) => ({
+    ...item,
+    used: value?.[index]?.used === true,
+  }));
 }

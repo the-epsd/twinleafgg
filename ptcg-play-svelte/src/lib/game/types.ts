@@ -53,6 +53,34 @@ export type PowerView = {
   text?: string;
 };
 
+export type AvailableActionStatus = {
+  name: string;
+  legal: boolean;
+  reason?: string;
+};
+
+export type AvailableAbilityStatus = AvailableActionStatus & {
+  used?: boolean;
+};
+
+export type AvailableRetreatStatus = {
+  legal: boolean;
+  targets: number[];
+  reason?: string;
+};
+
+export type AvailableActionsView = {
+  active?: {
+    attacks: AvailableActionStatus[];
+    abilities: AvailableAbilityStatus[];
+    retreat: AvailableRetreatStatus;
+  };
+  bench: Array<{
+    index: number;
+    abilities: AvailableAbilityStatus[];
+  }>;
+};
+
 export type PokemonSlotView = {
   ownerIndex: number;
   slot: 'active' | 'bench';
@@ -83,6 +111,7 @@ export type PlayerView = {
   active: PokemonSlotView;
   bench: PokemonSlotView[];
   playableCardIds: number[];
+  availableActions?: AvailableActionsView;
 };
 
 export type PromptView = {
