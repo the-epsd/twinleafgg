@@ -387,9 +387,9 @@
     --bench-card-w: calc(var(--board-card-w) * 1.24);
     --bench-row-h: calc(var(--bench-card-w) * 1.42);
     --board-top-inset: 150px;
-    --board-bottom-inset: 18px;
+    --board-bottom-inset: calc(var(--board-card-w) * 0.7);
     --board-right-rail: 0px;
-    --board-h: 590px;
+    --board-h: 620px;
     --board-edge-pad: calc(var(--board-card-w) * 0.32);
     --board-outline-pad-y: calc(var(--board-card-w) * 0.06);
     --board-content-pad: calc(var(--board-card-w) * 0.18);
@@ -397,7 +397,7 @@
     --board-content-inset-y: calc(var(--board-outline-pad-y) + var(--board-content-pad));
     --board-content-inset-x: calc(var(--board-edge-pad-x) + var(--board-content-pad));
     position: relative;
-    min-height: 760px;
+    min-height: calc(var(--board-top-inset) + var(--board-h) + var(--board-bottom-inset));
     overflow: hidden;
     border: 1px solid var(--surface-inset-border);
     border-radius: var(--radius-lg);
@@ -437,7 +437,7 @@
 
     .gallery-board-stage {
       --board-top-inset: 170px;
-      min-height: 700px;
+      --board-h: 560px;
     }
   }
 </style>

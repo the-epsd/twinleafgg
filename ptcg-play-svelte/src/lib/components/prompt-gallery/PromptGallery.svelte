@@ -1,21 +1,51 @@
 <script lang="ts">
+  import ActiveFocus from '../ActiveFocus.svelte';
   import PromptDock from '../prompts/PromptDock.svelte';
   import PromptHost from '../prompts/PromptHost.svelte';
   import PromptIcon from '../prompts/primitives/PromptIcon.svelte';
   import PromptPanel from '../prompts/primitives/PromptPanel.svelte';
   import PromptGalleryBoardDemo from './PromptGalleryBoardDemo.svelte';
   import { labelFor } from '../../game/labels';
+  import { canRetreatToSlot } from '../../game/playTargets';
   import {
     attachPromptDemo,
     boardPromptDemos,
     dockPromptDemos,
+    promptGalleryCards,
     promptGalleryGame,
     PROMPT_GALLERY_CLASS_NAMES,
     unsupportedPromptDemos,
     type PromptGalleryDemo,
   } from '../../prompt-gallery/fixtures';
+  import type { AvailableActionsView, CardTarget, PokemonSlotView } from '../../game/types';
 
   let results = $state<Record<string, string>>({});
+  let detailRetreatChoosing = $state(false);
+  let drakloakDetailSlot: PokemonSlotView = $derived({
+    ...promptGalleryGame.players[1].bench[1],
+    slot: 'active',
+    index: 0,
+    target: promptGalleryGame.players[1].active.target,
+    cards: [
+      promptGalleryCards.dreepy,
+      promptGalleryCards.drakloak,
+      promptGalleryCards.braveryCharm,
+      promptGalleryCards.fireEnergy,
+    ],
+    tools: [promptGalleryCards.braveryCharm],
+    energy: [promptGalleryCards.fireEnergy],
+  });
+  let drakloakBenchTargets = $derived([
+    promptGalleryGame.players[1].bench[0],
+  ]);
+  let drakloakAvailableActions: AvailableActionsView = $derived({
+    active: {
+      attacks: [{ name: 'Dragon Headbutt', legal: false, reason: 'Needs Psychic Energy.' }],
+      abilities: [{ name: 'Recon Directive', legal: true }],
+      retreat: { legal: true, targets: [0] },
+    },
+    bench: [],
+  });
 
   function recordResult(key: string, value: unknown) {
     results = {
@@ -25,6 +55,18 @@
   }
 
   function noop() {}
+
+  function recordDetailAction(value: unknown) {
+    recordResult('pokemon-detail', value);
+  }
+
+  function useDetailAbility(name: string, target: CardTarget) {
+    recordDetailAction({ action: 'ability', name, target });
+  }
+
+  function useDetailAttack(name: string) {
+    recordDetailAction({ action: 'attack', name });
+  }
 </script>
 
 <main class="prompt-gallery">
@@ -38,6 +80,7 @@
 
   <nav class="prompt-gallery-nav" aria-label="Prompt gallery sections">
     <a href="#dock-prompts">Dock prompts</a>
+    <a href="#pokemon-detail">Pokemon detail</a>
     <a href="#attach-energy">Attach energy</a>
     <a href="#board-prompts">Board prompts</a>
     <a href="#unsupported-prompts">Unsupported states</a>
@@ -79,6 +122,44 @@
         </article>
       {/each}
     </div>
+  </section>
+
+  <section id="pokemon-detail" class="gallery-section">
+    <div class="gallery-section-heading">
+      <h2>Pokemon Detail</h2>
+      <p>Action styling for abilities, attacks, retreat cost, and unavailable energy requirements.</p>
+    </div>
+
+    <article class="gallery-demo-card">
+      <div class="gallery-demo-heading">
+        <div>
+          <h3>Drakloak TWM</h3>
+          <p>One Fire Energy is attached, so Dragon Headbutt is missing Psychic. Retreat is available.</p>
+        </div>
+        {#if results['pokemon-detail']}
+          <pre>{results['pokemon-detail']}</pre>
+        {/if}
+      </div>
+      <div class="gallery-detail-stage">
+        <ActiveFocus
+          slot={drakloakDetailSlot}
+          availableActions={drakloakAvailableActions}
+          benchTargets={drakloakBenchTargets}
+          canAct
+          canRetreatToSlot={canRetreatToSlot}
+          close={() => recordDetailAction({ action: 'close' })}
+          useAbility={useDetailAbility}
+          attack={useDetailAttack}
+          startRetreat={() => {
+            detailRetreatChoosing = true;
+            recordDetailAction({ action: 'start-retreat' });
+          }}
+        />
+        {#if detailRetreatChoosing}
+          <div class="gallery-retreat-note">Retreat target mode would highlight valid bench Pokemon on the live board.</div>
+        {/if}
+      </div>
+    </article>
   </section>
 
   <section id="attach-energy" class="gallery-section">
@@ -365,6 +446,37 @@
     border-radius: var(--radius-lg);
     background: var(--surface-toolbar-bg);
     box-shadow: var(--surface-toolbar-shadow);
+  }
+
+  .gallery-detail-stage {
+    --card-w: clamp(78px, 9vw, 112px);
+    position: relative;
+    min-height: 520px;
+    overflow: hidden;
+    border: 1px solid var(--surface-inset-border);
+    border-radius: var(--radius-lg);
+    background: var(--app-backdrop-bg);
+    box-shadow: var(--surface-toolbar-shadow);
+  }
+
+  .gallery-detail-stage :global(.active-focus-backdrop) {
+    background: transparent;
+  }
+
+  .gallery-retreat-note {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    z-index: 12;
+    transform: translateX(-50%);
+    border: 1px solid var(--surface-inset-border);
+    border-radius: var(--radius-pill);
+    background: var(--surface-toolbar-bg);
+    color: var(--text-secondary);
+    box-shadow: var(--surface-toolbar-shadow);
+    padding: 8px 12px;
+    font-size: 12px;
+    font-weight: 800;
   }
 
   .gallery-dock-stage.search-stage {

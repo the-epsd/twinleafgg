@@ -47,9 +47,17 @@ const cards = {
     { name: 'Petty Grudge', damage: '10' },
     { name: 'Bite', damage: '40' },
   ]),
-  drakloak: pokemon(2, 'Drakloak', 'Dragapult deck Drakloak', 'sv6', '129', 90, [
-    { name: 'Corkscrew Punch', damage: '30' },
-  ]),
+  drakloak: pokemon(2, 'Drakloak', 'Drakloak TWM', 'sv6', '129', 90, [
+    { name: 'Dragon Headbutt', cost: ['Fire', 'Psychic'], damage: '70' },
+  ], {
+    cardType: 'Dragon',
+    retreat: ['Colorless'],
+    powers: [{
+      name: 'Recon Directive',
+      powerType: 'Ability',
+      text: 'Once during your turn, you may look at the top 2 cards of your deck and put 1 of them into your hand. Put the other card on the bottom of your deck.',
+    }],
+  }),
   dragapult: pokemon(3, 'Dragapult ex', 'Dragapult ex', 'sv6', '130', 320, [
     { name: 'Jet Headbutt', damage: '70' },
     { name: 'Phantom Dive', damage: '200' },
@@ -442,7 +450,16 @@ function emptySlot(ownerIndex: number, index: number): PokemonSlotView {
   };
 }
 
-function pokemon(id: number, name: string, fullName: string, set: string, setNumber: string, hp: number, attacks: CardView['attacks']): CardView {
+function pokemon(
+  id: number,
+  name: string,
+  fullName: string,
+  set: string,
+  setNumber: string,
+  hp: number,
+  attacks: CardView['attacks'],
+  overrides: Partial<CardView> = {},
+): CardView {
   return {
     id,
     name,
@@ -455,6 +472,7 @@ function pokemon(id: number, name: string, fullName: string, set: string, setNum
     hp,
     retreat: [],
     attacks,
+    ...overrides,
   };
 }
 
