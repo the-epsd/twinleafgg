@@ -24,12 +24,14 @@ describe('RemoteCommandApi', () => {
     const { api, emitGameAction } = createApi();
 
     await api.attack(0, 'Slash');
+    await api.useStadium(0);
     await api.passTurn(0);
     await api.concede(0);
 
     expect(emitGameAction).toHaveBeenNthCalledWith(1, 'game:action:attack', { attack: 'Slash' });
-    expect(emitGameAction).toHaveBeenNthCalledWith(2, 'game:action:passTurn', {});
-    expect(emitGameAction).toHaveBeenNthCalledWith(3, 'game:concede', {});
+    expect(emitGameAction).toHaveBeenNthCalledWith(2, 'game:action:stadium', {});
+    expect(emitGameAction).toHaveBeenNthCalledWith(3, 'game:action:passTurn', {});
+    expect(emitGameAction).toHaveBeenNthCalledWith(4, 'game:concede', {});
   });
 
   it('emits ability, retreat, and prompt-resolution payloads', async () => {

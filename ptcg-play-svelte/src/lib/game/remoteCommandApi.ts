@@ -20,6 +20,10 @@ export class RemoteCommandApi implements GameCommandApi {
     return this.session.emitGameAction('game:action:ability', { ability, target });
   }
 
+  useStadium(_playerIndex: number): Promise<EngineResponse> {
+    return this.session.emitGameAction('game:action:stadium', {});
+  }
+
   concede(_playerIndex: number): Promise<EngineResponse> {
     return this.session.emitGameAction('game:concede', {});
   }

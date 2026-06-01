@@ -24,6 +24,10 @@ class ZoneViewerStore {
     return this.openZone?.faceDown ?? false;
   }
 
+  get zone() {
+    return this.openZone?.zone;
+  }
+
   show(playerIndex: number, zone: ZoneName, title: string, faceDown = false) {
     this.openZone = { playerIndex, zone, title, faceDown };
   }

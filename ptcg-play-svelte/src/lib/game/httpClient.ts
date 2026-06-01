@@ -117,6 +117,10 @@ export const localGameApi: GameCommandApi & {
     return send({ type: 'useAbility', payload: { playerIndex, ability, target } });
   },
 
+  useStadium(playerIndex: number) {
+    return send({ type: 'useStadium', payload: { playerIndex } });
+  },
+
   concede(playerIndex: number) {
     return send({ type: 'concede', payload: { playerIndex } });
   },

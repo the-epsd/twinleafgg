@@ -120,6 +120,7 @@
   let zoneViewerOpen = $derived(zoneViewerStore.open);
   let zoneViewerTitle = $derived(zoneViewerStore.title);
   let zoneViewerFaceDown = $derived(zoneViewerStore.faceDown);
+  let zoneViewerIsStadium = $derived(zoneViewerStore.zone === 'stadium');
   let activePlayer = $derived(game?.players[game.activePlayerIndex]);
   let bottomPlayer = $derived(game?.players[viewIndex] ?? game?.players[0]);
   let topPlayer = $derived(game?.players.find((player) => player.index !== bottomPlayer?.index));
@@ -470,6 +471,12 @@
   async function useAbility(name: string, target: CardTarget) {
     if (!game || !focusedPlayer || !focusedCanAct) return;
     await gameSessionStore.run(() => commandApi.useAbility(focusedPlayer!.index, name, target));
+  }
+
+  async function useStadium() {
+    if (!game || !activePlayer || !canAct(activePlayer.index)) return;
+    zoneViewerStore.close();
+    await gameSessionStore.run(() => commandApi.useStadium(activePlayer.index));
   }
 
   async function concede() {
@@ -1086,6 +1093,10 @@
           title={zoneViewerTitle}
           cards={viewedCards}
           faceDown={zoneViewerFaceDown}
+          actionLabel={zoneViewerIsStadium && viewedCards.length ? 'Use stadium' : ''}
+          actionDisabled={sessionBusy || !!currentPrompt || gameFinished || replayMode}
+          actionTitle="Use this stadium's once-per-turn effect"
+          onAction={useStadium}
           close={() => zoneViewerStore.close()}
         />
       </BoardLayer>

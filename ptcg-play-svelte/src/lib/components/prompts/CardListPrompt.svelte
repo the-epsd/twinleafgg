@@ -3,6 +3,7 @@
   import PromptPanel from './primitives/PromptPanel.svelte';
   import PromptIcon from './primitives/PromptIcon.svelte';
   import SelectableCard from './primitives/SelectableCard.svelte';
+  import SelectedCardStrip from './primitives/SelectedCardStrip.svelte';
   import { promptTitle } from '../../game/promptCopy';
   import { extractPromptCards, promptBlockedIndexes, promptOptions, prunePromptIndexes, samePromptIndexes } from '../../game/prompts';
   import type { PromptView } from '../../game/types';
@@ -21,6 +22,7 @@
   let selectionPoolSize = $derived(cards.length || 1);
   let maxSelections = $derived(normalizeSelectionLimit(options.max, normalizeSelectionLimit(options.count, selectionPoolSize)));
   let minSelections = $derived(normalizeSelectionLimit(options.min, 0));
+  let selectionSlotCount = $derived(explicitSelectionLimit(options));
   let blockedIndexes = $derived(new Set<number>(promptBlockedIndexes(prompt)));
 
   $effect(() => {
@@ -50,6 +52,10 @@
     }
   }
 
+  function removeSelectedIndex(index: number) {
+    selectedIndexes = selectedIndexes.filter((item) => item !== index);
+  }
+
   function isIndexSelectable(index: number) {
     return !blockedIndexes.has(index);
   }
@@ -58,6 +64,12 @@
     const value = Number(raw);
     return Number.isFinite(value) ? value : fallback;
   }
+
+  function explicitSelectionLimit(options: Record<string, unknown>) {
+    const raw = options.max ?? options.count;
+    const value = Number(raw);
+    return Number.isFinite(value) && value > 0 ? value : 0;
+  }
 </script>
 
 <PromptPanel
@@ -65,6 +77,13 @@
   warning={!prompt.supported ? (prompt.unsupportedReason ?? 'This prompt needs the advanced resolver.') : undefined}
 >
   {#snippet icon()}<PromptIcon name="cards" />{/snippet}
+
+  <SelectedCardStrip
+    {cards}
+    {selectedIndexes}
+    slotCount={selectionSlotCount}
+    onremove={removeSelectedIndex}
+  />
 
   <div class="prompt-card-list">
     {#each cards as card, index}
