@@ -287,6 +287,7 @@
         ? 'attachEnergy'
         : 'default',
   );
+  let retreatSource = $state<PokemonSlotView | null>(null);
   let selectedCard = $derived(selectedHand && game ? game.players[selectedHand.playerIndex]?.hand[selectedHand.handIndex] : undefined);
   let draggingCard = $derived(draggingHand && game ? game.players[draggingHand.playerIndex]?.hand[draggingHand.handIndex] : undefined);
   let currentStadium = $derived(game ? game.players.flatMap((player) => player.stadium)[0] : undefined);
@@ -491,7 +492,27 @@
 
   async function retreat(to: number) {
     if (!game) return;
+    retreatSource = null;
     await gameSessionStore.run(() => commandApi.retreat(game.activePlayerIndex, to));
+  }
+
+  function canRetreatToSelectedTarget(slot: PokemonSlotView) {
+    if (!game || !retreatSource || slot.slot !== 'bench' || slot.empty || slot.ownerIndex !== retreatSource.ownerIndex) {
+      return false;
+    }
+    const retreatAction = game.players[retreatSource.ownerIndex]?.availableActions?.active?.retreat;
+    if (retreatAction) {
+      return retreatAction.targets.includes(slot.index);
+    }
+    return canRetreatToSlot(retreatSource, slot);
+  }
+
+  function startRetreatSelection() {
+    if (!focusedSlot || focusedSlot.slot !== 'active') {
+      return;
+    }
+    retreatSource = focusedSlot;
+    selectionStore.clearFocus();
   }
 
   async function resolvePrompt(value: unknown) {
@@ -713,6 +734,9 @@
       const target = targetForPromptSlot(attachPrompt, slot);
       return canAssignAttachPromptTarget(target);
     }
+    if (!currentPrompt && canRetreatToSelectedTarget(slot)) {
+      return true;
+    }
     if (!boardStrategy || !currentPrompt || slot.empty) {
       return false;
     }
@@ -720,6 +744,9 @@
   }
 
   function isBoardPromptSelected(slot: PokemonSlotView) {
+    if (!currentPrompt && retreatSource) {
+      return slot.slot === 'active' && slot.ownerIndex === retreatSource.ownerIndex;
+    }
     if (attachPrompt) {
       if (slot.empty) {
         return false;
@@ -741,6 +768,14 @@
   }
 
   function dispatchBoardClick(slot: PokemonSlotView) {
+    if (!currentPrompt && retreatSource) {
+      if (canRetreatToSelectedTarget(slot)) {
+        void retreat(slot.index);
+        return true;
+      }
+      retreatSource = null;
+      return false;
+    }
     if (!boardStrategy || !currentPrompt || slot.empty) {
       return false;
     }
@@ -1070,6 +1105,7 @@
         {#if focusedSlot}
           <ActiveFocus
             slot={focusedSlot}
+            availableActions={focusedPlayer?.availableActions}
             benchTargets={focusedBenchTargets}
             busy={sessionBusy}
             promptActive={!!currentPrompt}
@@ -1080,7 +1116,7 @@
             }}
             {useAbility}
             {attack}
-            {retreat}
+            startRetreat={startRetreatSelection}
           />
         {/if}
 
