@@ -75,5 +75,18 @@ export function parseDeckList(text: string): ParsedDeck {
 }
 
 function normalizeImportName(name: string): string {
-  return name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const normalized = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  return normalized.replace(/^Basic \{([A-Z])\} Energy\b/, (_match, type: string) => {
+    const energyNames: Record<string, string> = {
+      G: 'Grass',
+      R: 'Fire',
+      W: 'Water',
+      L: 'Lightning',
+      P: 'Psychic',
+      F: 'Fighting',
+      D: 'Darkness',
+      M: 'Metal',
+    };
+    return `${energyNames[type] ?? type} Energy`;
+  });
 }

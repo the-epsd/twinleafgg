@@ -7,6 +7,7 @@ export class CardManager {
   private static instance: CardManager;
   private cards: Card[] = [];
   private cardIndex: { [name: string]: number } = {};
+  private printIdCounts: { [name: string]: number } = {};
 
   public static getInstance(): CardManager {
     if (!CardManager.instance) {
@@ -16,83 +17,52 @@ export class CardManager {
   }
 
   /**
-   * Validates all sets for duplicate fullName and legacyFullName without loading.
+   * Validates all sets for duplicate lookup names without loading.
    * Returns an array of error messages (one per duplicate). Empty if no issues.
    */
   public static validateAllSets(
     entries: Array<{ key: string; cards: Card[] }>
   ): string[] {
-    const fullNameMap: { [name: string]: Array<{ key: string }> } = {};
-    const legacyFullNameMap: { [name: string]: Array<{ key: string }> } = {};
+    const manager = new CardManager();
+    const errors: string[] = [];
 
     for (const { key, cards } of entries) {
-      if (!Array.isArray(cards)) continue;
-      for (const card of cards) {
-        const fullName = card.fullName;
-        if (!fullNameMap[fullName]) fullNameMap[fullName] = [];
-        fullNameMap[fullName].push({ key });
-
-        const p = card as { legacyFullName?: string };
-        if (p.legacyFullName) {
-          const legacyName = p.legacyFullName;
-          if (!legacyFullNameMap[legacyName]) legacyFullNameMap[legacyName] = [];
-          legacyFullNameMap[legacyName].push({ key });
+      try {
+        if (Array.isArray(cards)) {
+          manager.defineSet(cards);
         }
+      } catch (error) {
+        errors.push(`${key}: ${error instanceof Error ? error.message : String(error)}`);
       }
     }
 
-    const errors: string[] = [];
-    for (const [name, entriesList] of Object.entries(fullNameMap)) {
-      if (entriesList.length > 1) {
-        const setKeys = [...new Set(entriesList.map((e) => e.key))];
-        errors.push(`Duplicate fullName '${name}': in ${setKeys.join(', ')}`);
-      }
-    }
-    for (const [name, entriesList] of Object.entries(legacyFullNameMap)) {
-      if (entriesList.length > 1) {
-        const setKeys = [...new Set(entriesList.map((e) => e.key))];
-        errors.push(`Duplicate legacyFullName '${name}': in ${setKeys.join(', ')}`);
-      }
-    }
     return errors;
   }
 
   public defineSet(set: Card[]): void {
     for (const card of set) {
-      if (this.cardIndex[card.fullName] !== undefined) {
-        throw new Error('Multiple cards with the same name: ' + card.fullName);
-      }
-
       const index = this.cards.length;
+      this.assignPrintId(card);
+      this.defineCardLookups(card, index);
       this.cards.push(card);
-      this.cardIndex[card.fullName] = index;
-
-      const p = card as any;
-      if (p.legacyFullName) {
-        if (this.cardIndex[p.legacyFullName] !== undefined) {
-          throw new Error('Multiple cards with the same name: ' + p.legacyFullName);
-        }
-        this.cardIndex[p.legacyFullName] = index;
-      }
     }
   }
 
   public loadCardsInfo(cardsInfo: CardsInfo) {
     this.cardIndex = {};
+    this.printIdCounts = {};
     this.cards = cardsInfo.cards;
     for (let i = 0; i < this.cards.length; i++) {
-      this.cardIndex[this.cards[i].fullName] = i;
+      this.assignPrintId(this.cards[i]);
+      this.defineCardLookups(this.cards[i], i);
     }
   }
 
   public defineCard(card: Card): void {
-    if (this.cardIndex[card.fullName] !== undefined) {
-      throw new Error('Multiple cards with the same name: ' + card.fullName);
-    }
-
     const index = this.cards.length;
+    this.assignPrintId(card);
+    this.defineCardLookups(card, index);
     this.cards.push(card);
-    this.cardIndex[card.fullName] = index;
   }
 
   public getCardByName(name: string): Card | undefined {
@@ -108,6 +78,57 @@ export class CardManager {
 
   public getAllCards(): Card[] {
     return this.cards;
+  }
+
+  public static getPrintId(card: Card): string {
+    return (card.printId || CardManager.buildPrintId(card)).trim();
+  }
+
+  private static buildPrintId(card: Card): string {
+    const name = (card.name || '').trim();
+    const set = (card.set || '').trim();
+    const setNumber = (card.setNumber || '').trim();
+
+    if (name && set && setNumber) {
+      return `${name} ${set} ${setNumber}`;
+    }
+
+    return (card.fullName || '').trim();
+  }
+
+  public static getLookupNames(card: Card): string[] {
+    const printId = CardManager.getPrintId(card);
+    card.printId = printId;
+
+    const names = [
+      printId,
+      card.fullName,
+      card.legacyFullName,
+      ...(card.legacyFullNames || []),
+      ...(card.aliases || [])
+    ];
+
+    return Array.from(new Set(names.map(name => (name || '').trim()).filter(Boolean)));
+  }
+
+  private defineCardLookups(card: Card, index: number): void {
+    for (const name of CardManager.getLookupNames(card)) {
+      const existingIndex = this.cardIndex[name];
+      if (existingIndex !== undefined && this.cards[existingIndex] !== card) {
+        if (name === card.printId) {
+          throw new Error('Multiple cards with the same print id: ' + name);
+        }
+        continue;
+      }
+      this.cardIndex[name] = index;
+    }
+  }
+
+  private assignPrintId(card: Card): void {
+    const basePrintId = CardManager.buildPrintId(card);
+    const count = (this.printIdCounts[basePrintId] || 0) + 1;
+    this.printIdCounts[basePrintId] = count;
+    card.printId = count === 1 ? basePrintId : `${basePrintId}#${count}`;
   }
 
 }

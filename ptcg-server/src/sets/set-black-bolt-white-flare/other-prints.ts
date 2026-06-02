@@ -495,6 +495,7 @@ export class HildaFA extends Hilda {
   public setNumber = '164';
   public set = 'WHT';
   public fullName: string = 'HildaFA SV11W';
+  public legacyFullName: string = 'Hilda WHT';
 }
 
 // SV11W SIRs

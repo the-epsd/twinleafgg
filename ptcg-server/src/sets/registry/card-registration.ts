@@ -125,10 +125,14 @@ function getSetCodeToModules(): Map<string, string[]> {
 function extractSetCodeFromFullName(fullName: string): string {
   const tokens = fullName.trim().split(/\s+/);
   const lastToken = tokens[tokens.length - 1]?.toUpperCase();
-  if (!lastToken || !SET_CODE_REGEX.test(lastToken)) {
+  const setNumberPattern = /^\d+[A-Z]?(?:#\d+)?$/;
+  const candidateToken = lastToken && setNumberPattern.test(lastToken)
+    ? tokens[tokens.length - 2]?.toUpperCase()
+    : lastToken;
+  if (!candidateToken || !SET_CODE_REGEX.test(candidateToken)) {
     throw new Error(`[headless] Could not infer set code from card fullName "${fullName}"`);
   }
-  return lastToken;
+  return candidateToken;
 }
 
 function loadSetModule(moduleName: string): void {

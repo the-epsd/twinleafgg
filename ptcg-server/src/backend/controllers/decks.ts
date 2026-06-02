@@ -136,7 +136,7 @@ export class Decks extends Controller {
     const cardManager = CardManager.getInstance();
     const resolvedCards = body.cards.map(cardName => {
       const card = cardManager.getCardByName(cardName);
-      return card ? card.fullName : cardName; // Fallback to original if not found
+      return card ? card.printId || CardManager.getPrintId(card) || card.fullName : cardName; // Fallback to original if not found
     });
 
     const userId: number = req.body.userId;
@@ -306,18 +306,9 @@ export class Decks extends Controller {
   // --- validateCards (private) ---
   private validateCards(deck: string[]): boolean {
     const cardManager = CardManager.getInstance();
-    const validNames = new Set<string>();
-
-    cardManager.getAllCards().forEach(c => {
-      validNames.add(c.fullName);
-      const p = c as any;
-      if (p.legacyFullName) {
-        validNames.add(p.legacyFullName);
-      }
-    });
 
     for (const cardName of deck) {
-      if (!validNames.has(cardName)) {
+      if (!cardManager.getCardByName(cardName)) {
         return false;
       }
     }

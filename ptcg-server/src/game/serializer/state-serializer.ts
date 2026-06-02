@@ -16,6 +16,7 @@ import { deepIterate, deepClone } from '../../utils';
 import { JsonPatch } from './json-patch';
 import { JsonDiff } from './json-patch.interface';
 import { GameSettings } from '../core/game-settings';
+import { CardManager } from '../cards/card-manager';
 
 export class StateSerializer {
 
@@ -163,7 +164,7 @@ export class StateSerializer {
     const names: string[] = parsed[1].cardNames;
     const cards: Card[] = [];
     names.forEach((name, index) => {
-      let card: Card | undefined = StateSerializer.knownCards.find(c => c.fullName === name);
+      let card: Card | undefined = StateSerializer.knownCards.find(c => CardManager.getLookupNames(c).includes(name));
       if (card === undefined) {
         throw new GameError(GameCoreError.ERROR_SERIALIZER, `Unknown card '${name}'.`);
       }

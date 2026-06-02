@@ -19,6 +19,14 @@ export abstract class Card {
 
   public abstract name: string;
 
+  public printId: string = '';
+
+  public aliases: string[] = [];
+
+  public legacyFullName?: string;
+
+  public legacyFullNames: string[] = [];
+
   public energyType: EnergyType | undefined;
 
   public id: number = -1;

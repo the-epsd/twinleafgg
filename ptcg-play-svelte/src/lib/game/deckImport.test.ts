@@ -22,4 +22,19 @@ describe('deck import', () => {
     expect(parsed.errors).toEqual([]);
     expect(parsed.cards).toEqual(['Poke Pad POR']);
   });
+
+  it('normalizes TCG Live basic energy shorthand', () => {
+    const parsed = parseDeckList('7 Basic {W} Energy MEE 3');
+
+    expect(parsed.errors).toEqual([]);
+    expect(parsed.cards).toEqual([
+      'Water Energy MEE',
+      'Water Energy MEE',
+      'Water Energy MEE',
+      'Water Energy MEE',
+      'Water Energy MEE',
+      'Water Energy MEE',
+      'Water Energy MEE',
+    ]);
+  });
 });

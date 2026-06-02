@@ -70,7 +70,8 @@ import { Qwilfish } from './qwilfish';
 import { Remoraid } from './remoraid';
 import { Sliggoo } from './sliggoo';
 import { Skrelp } from './skrelp';
-import { SpecialRedCard } from './special-red-card';
+import { SpecialRedCard, SpecialRedCardFA } from './special-red-card';
+import { SurfingBeach } from './surfing-beach';
 import { Skuntank } from './skuntank';
 import { Stunky } from './stunky';
 import { Sudowoodo } from './sudowoodo';
@@ -171,4 +172,6 @@ export const setChaosRising: Card[] = [
   new BubbleWaterEnergy(),// 84
   new MagnetMetalEnergy(),// 85
   new NitroFireEnergy(),// 86
+  new SpecialRedCardFA(),// 113
+  new SurfingBeach(), // 114
 ];

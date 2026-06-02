@@ -36,3 +36,8 @@ export class SpecialRedCard extends TrainerCard {
     return state;
   }
 }
+
+export class SpecialRedCardFA extends SpecialRedCard {
+  public setNumber: string = '113';
+  public fullName: string = 'Special Red Card FA CRI';
+}

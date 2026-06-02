@@ -441,7 +441,7 @@ function createCard(state: State, fullName: string) {
     throw new Error(`[headless] Card not found: ${fullName}`);
   }
   card.id = state.cardNames.length;
-  state.cardNames.push(card.fullName);
+  state.cardNames.push(card.printId || CardManager.getPrintId(card) || card.fullName);
   return card;
 }
 

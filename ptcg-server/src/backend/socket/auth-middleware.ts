@@ -52,10 +52,11 @@ export async function authMiddleware(socket: Socket, next: (err?: any) => void):
 
         const resolvedCards = cardNames.map(name => {
           const card = cardManager.getCardByName(name);
-          if (card && card.fullName !== name) {
+          const canonicalName = card ? card.printId || CardManager.getPrintId(card) || card.fullName : name;
+          if (card && canonicalName !== name) {
             needsNameUpdate = true;
-            changedCards.push(`${name} → ${card.fullName}`);
-            return card.fullName;
+            changedCards.push(`${name} → ${canonicalName}`);
+            return canonicalName;
           }
           return name;
         });

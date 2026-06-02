@@ -5,6 +5,7 @@ import { CardList } from '../state/card-list';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { ChooseCardsPrompt } from '../prompts/choose-cards-prompt';
 import { DeckAnalyser } from '../../cards/deck-analyser';
+import { CardManager } from '../../cards/card-manager';
 import { InvitePlayerAction } from '../actions/invite-player-action';
 import { InvitePlayerPrompt } from '../prompts/invite-player-prompt';
 import { Player } from '../state/player';
@@ -28,6 +29,10 @@ import { Format } from '../card/card-types';
 type SetupChooseCardsPrompt = ChooseCardsPrompt & {
   onResolve?: (cards: Card[], state: State) => void;
 };
+
+function getSerializedCardName(card: Card): string {
+  return card.printId || CardManager.getPrintId(card) || card.fullName;
+}
 
 function putStartingPokemonsAndPrizes(player: Player, cards: Card[], state: State): void {
   if (cards.length === 0) {
@@ -673,7 +678,7 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
       }
       player.deck.isSecret = true;
       player.deck.cards.forEach(c => {
-        state.cardNames.push(c.fullName);
+        state.cardNames.push(getSerializedCardName(c));
         c.id = state.cardNames.length - 1;
       });
 
@@ -730,7 +735,7 @@ export function setupPhaseReducer(store: StoreLike, state: State, action: Action
         player.deck = CardList.fromList(deckCards);
         player.deck.isSecret = true;
         player.deck.cards.forEach(c => {
-          state.cardNames.push(c.fullName);
+          state.cardNames.push(getSerializedCardName(c));
           c.id = state.cardNames.length - 1;
         });
 
