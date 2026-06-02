@@ -68,6 +68,11 @@ VITE_DEFAULT_SERVER_URL='https://your-server.up.railway.app'
 When this is set, the Svelte client's single-player mode uses the server's
 headless engine endpoint instead of the local development engine.
 
+Headless snapshots include active-player action legality by default. Agents or
+debug tools can pass `availableActionsScope` as `none`, `active`, or `full` on a
+headless command; use `full` only when both players' complete legal action
+surface is needed.
+
 3. Start the server.
 
 ```

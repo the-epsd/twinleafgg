@@ -311,6 +311,54 @@ describe('LocalEngineController', () => {
     }
   });
 
+  it('defaults headless available actions to active-player scope', async () => {
+    const engine = new LocalEngineController();
+    try {
+      let res = await engine.handle({
+        type: 'setupScenario',
+        payload: {
+          promptMode: 'manual',
+          player1: {
+            name: 'A',
+            active: { card: 'Raichu SIT', energy: ['Lightning Energy SVE'] },
+            deck: ['Water Energy SVE'],
+          },
+          player2: {
+            name: 'B',
+            active: { card: 'Ralts SIT' },
+            deck: ['Water Energy SVE'],
+          },
+          turn: 2,
+          activePlayer: 0,
+        },
+      });
+      expect(res.ok).toBe(true);
+      if (!res.ok) return;
+      expect(res.view.players[0]?.availableActions).toBeDefined();
+      expect(res.view.players[1]?.availableActions).toBeUndefined();
+
+      res = await engine.handle({
+        type: 'state',
+        availableActionsScope: 'full',
+      });
+      expect(res.ok).toBe(true);
+      if (!res.ok) return;
+      expect(res.view.players[0]?.availableActions).toBeDefined();
+      expect(res.view.players[1]?.availableActions).toBeDefined();
+
+      res = await engine.handle({
+        type: 'state',
+        availableActionsScope: 'none',
+      });
+      expect(res.ok).toBe(true);
+      if (!res.ok) return;
+      expect(res.view.players[0]?.availableActions).toBeUndefined();
+      expect(res.view.players[1]?.availableActions).toBeUndefined();
+    } finally {
+      engine.close();
+    }
+  });
+
   it('plays trainer cards that open manual deck-search prompts', async () => {
     const engine = new LocalEngineController();
     try {

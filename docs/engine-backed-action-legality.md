@@ -55,6 +55,20 @@ The frontend would use this data for highlighting, enabled buttons, drag/drop zo
 5. Update Svelte and React table UIs to consume `availableActions` and remove local card-rule checks.
 6. Keep prompt-local validation only when the prompt constraints were emitted by the engine.
 
+## Snapshot Scope
+
+Legality data should be scoped because dry-running candidate actions is intentionally more expensive than serializing board state. Headless snapshots default to `availableActionsScope: 'active'`, which emits `availableActions` only for the active player. Tools and agents can request `availableActionsScope: 'full'` when they need both players' complete action surface, or `availableActionsScope: 'none'` when they only need raw state.
+
+Examples:
+
+```json
+{ "type": "state", "availableActionsScope": "none" }
+{ "type": "state", "availableActionsScope": "active" }
+{ "type": "state", "availableActionsScope": "full" }
+```
+
+Human-facing clients should prefer cheap always-on hints, such as `playableCardIds`, and request broader legality only for UI surfaces that actually need it. Agents can opt into the broader snapshot when correctness is more important than response latency.
+
 ## Notes
 
 This should be implemented in the engine, not duplicated in each frontend. The frontend can still make ergonomic choices, such as preferring an open bench slot for a generic drop target, but it should not present that as legality unless the engine supplied it.

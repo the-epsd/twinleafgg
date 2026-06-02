@@ -66,6 +66,25 @@ describe('HeadlessGameSession', () => {
     expect(snapshot.summary.players[0].active.hp).toBe(160);
   });
 
+  it('scopes available actions to the active player by default', () => {
+    const game = createHeadlessGame(simpleScenario);
+    const snapshot = game.snapshot();
+
+    expect(snapshot.summary.players[0].availableActions).toBeDefined();
+    expect(snapshot.summary.players[1].availableActions).toBeUndefined();
+  });
+
+  it('can include full or no available actions on request', () => {
+    const game = createHeadlessGame(simpleScenario);
+    const full = game.snapshot({ availableActionsScope: 'full' });
+    const none = game.snapshot({ availableActionsScope: 'none' });
+
+    expect(full.summary.players[0].availableActions).toBeDefined();
+    expect(full.summary.players[1].availableActions).toBeDefined();
+    expect(none.summary.players[0].availableActions).toBeUndefined();
+    expect(none.summary.players[1].availableActions).toBeUndefined();
+  });
+
   it('supports alternating players and prompted attack choices', () => {
     const game = createHeadlessGame({
       player1: {

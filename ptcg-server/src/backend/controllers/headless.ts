@@ -46,8 +46,13 @@ function toHeadlessRequest(body: any): HeadlessCommandRequest {
   return {
     id: body.id,
     type: typeof body.type === 'string' ? body.type : '',
-    payload: body.payload
+    payload: body.payload,
+    availableActionsScope: normalizeAvailableActionsScope(body.availableActionsScope)
   };
+}
+
+function normalizeAvailableActionsScope(value: unknown) {
+  return value === 'none' || value === 'active' || value === 'full' ? value : undefined;
 }
 
 function shouldResetSession(request: HeadlessCommandRequest): boolean {

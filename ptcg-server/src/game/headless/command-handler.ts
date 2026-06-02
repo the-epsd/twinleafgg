@@ -1,5 +1,6 @@
 import {
   activeTarget,
+  AvailableActionsScope,
   createHeadlessGame,
   HeadlessDeckGameConfig,
   HeadlessGameSession,
@@ -10,6 +11,7 @@ export interface HeadlessCommandRequest {
   id?: string | number;
   type: string;
   payload?: any;
+  availableActionsScope?: AvailableActionsScope;
 }
 
 export class HeadlessCommandRunner {
@@ -21,21 +23,21 @@ export class HeadlessCommandRunner {
     switch (request.type) {
       case 'newGame':
         this.session = createHeadlessGame(payload as HeadlessDeckGameConfig);
-        return this.session.snapshot();
+        return this.session.snapshot({ availableActionsScope: this.getAvailableActionsScope(request) });
 
       case 'setupScenario':
         this.session = createHeadlessGame(payload as HeadlessScenarioConfig);
-        return this.session.snapshot();
+        return this.session.snapshot({ availableActionsScope: this.getAvailableActionsScope(request) });
 
       case 'state':
-        return this.requireSession().snapshot();
+        return this.requireSession().snapshot({ availableActionsScope: this.getAvailableActionsScope(request) });
 
       case 'playCard': {
         const game = this.requireSession();
         const playerIndex = this.getPlayerIndex(payload);
         const handIndex = this.findHandIndex(game, playerIndex, payload);
         game.playCard(playerIndex, handIndex, payload.target ?? activeTarget());
-        return game.snapshot();
+        return game.snapshot({ availableActionsScope: this.getAvailableActionsScope(request) });
       }
 
       case 'attack': {
@@ -44,7 +46,7 @@ export class HeadlessCommandRunner {
           throw new Error('attack requires payload.attack');
         }
         game.attack(this.getPlayerIndex(payload), payload.attack);
-        return game.snapshot();
+        return game.snapshot({ availableActionsScope: this.getAvailableActionsScope(request) });
       }
 
       case 'useAbility': {
@@ -53,19 +55,19 @@ export class HeadlessCommandRunner {
           throw new Error('useAbility requires payload.ability');
         }
         game.useAbility(this.getPlayerIndex(payload), payload.ability, payload.target ?? activeTarget());
-        return game.snapshot();
+        return game.snapshot({ availableActionsScope: this.getAvailableActionsScope(request) });
       }
 
       case 'useStadium': {
         const game = this.requireSession();
         game.useStadium(this.getPlayerIndex(payload));
-        return game.snapshot();
+        return game.snapshot({ availableActionsScope: this.getAvailableActionsScope(request) });
       }
 
       case 'concede': {
         const game = this.requireSession();
         game.concede(this.getPlayerIndex(payload));
-        return game.snapshot();
+        return game.snapshot({ availableActionsScope: this.getAvailableActionsScope(request) });
       }
 
       case 'passTurn': {
@@ -74,7 +76,7 @@ export class HeadlessCommandRunner {
           ? undefined
           : this.getPlayerIndex(payload);
         game.passTurn(playerIndex);
-        return game.snapshot();
+        return game.snapshot({ availableActionsScope: this.getAvailableActionsScope(request) });
       }
 
       case 'retreat': {
@@ -83,7 +85,7 @@ export class HeadlessCommandRunner {
           throw new Error('retreat requires payload.to');
         }
         game.retreat(this.getPlayerIndex(payload), payload.to);
-        return game.snapshot();
+        return game.snapshot({ availableActionsScope: this.getAvailableActionsScope(request) });
       }
 
       case 'resolvePrompt': {
@@ -92,7 +94,7 @@ export class HeadlessCommandRunner {
           throw new Error('resolvePrompt requires payload.id');
         }
         game.resolvePrompt(payload.id, payload.result);
-        return game.snapshot();
+        return game.snapshot({ availableActionsScope: this.getAvailableActionsScope(request) });
       }
 
       default:
@@ -133,5 +135,10 @@ export class HeadlessCommandRunner {
       throw new Error(`Card not found in hand: ${payload.card}`);
     }
     throw new Error('playCard requires payload.handIndex or payload.card');
+  }
+
+  private getAvailableActionsScope(request: HeadlessCommandRequest): AvailableActionsScope {
+    const value = request.availableActionsScope ?? request.payload?.availableActionsScope;
+    return value === 'none' || value === 'full' ? value : 'active';
   }
 }

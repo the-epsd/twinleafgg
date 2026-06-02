@@ -22,6 +22,7 @@ import type { ReplayLoadResponse, ReplayStep } from '../lib/game/replay';
 type Command = {
   type: string;
   payload?: any;
+  availableActionsScope?: 'none' | 'active' | 'full';
 };
 
 type PendingRequest = {

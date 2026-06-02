@@ -87,6 +87,12 @@ export interface HeadlessSnapshot {
   serializedState: string;
 }
 
+export type AvailableActionsScope = 'none' | 'active' | 'full';
+
+export interface HeadlessSnapshotOptions {
+  availableActionsScope?: AvailableActionsScope;
+}
+
 export interface AvailableActionStatus {
   name: string;
   legal: boolean;
@@ -277,16 +283,17 @@ export class HeadlessGameSession {
     this.resolver.overrideOnce(promptType, handler);
   }
 
-  public snapshot(): HeadlessSnapshot {
+  public snapshot(options: HeadlessSnapshotOptions = {}): HeadlessSnapshot {
     const serializer = new StateSerializer();
     setBonusHps(this.store, this.state);
+    const serializedState = serializer.serialize(this.state);
     return {
-      summary: summarizeState(this.state),
+      summary: summarizeState(this.state, serializedState, options.availableActionsScope ?? 'active'),
       prompts: this.state.prompts
         .filter(prompt => prompt.result === undefined)
         .map(prompt => serializeHeadlessPrompt(this.state, prompt)),
       events: this.drainEvents(),
-      serializedState: serializer.serialize(this.state)
+      serializedState
     };
   }
 
@@ -438,29 +445,38 @@ function createCard(state: State, fullName: string) {
   return card;
 }
 
-function summarizeState(state: State): any {
-  const serializer = new StateSerializer();
-  const serializedState = serializer.serialize(state);
+function summarizeState(
+  state: State,
+  serializedState: string,
+  availableActionsScope: AvailableActionsScope
+): any {
   return {
     phase: state.phase,
     turn: state.turn,
     activePlayer: state.activePlayer,
     winner: state.winner,
-    players: state.players.map((player, index) => ({
-      id: player.id,
-      name: player.name,
-      hand: player.hand.cards.map(summarizeCard),
-      deckCount: player.deck.cards.length,
-      discard: player.discard.cards.map(summarizeCard),
-      lostZone: player.lostzone.cards.map(summarizeCard),
-      stadium: player.stadium.cards.map(summarizeCard),
-      playZone: player.supporter.cards.map(summarizeCard),
-      prizesLeft: player.getPrizeLeft(),
-      active: summarizePokemonList(player.active),
-      bench: player.bench.map(summarizePokemonList),
-      playableCardIds: player.playableCardIds,
-      availableActions: buildAvailableActions(state, serializedState, index)
-    })),
+    players: state.players.map((player, index) => {
+      const summary: any = {
+        id: player.id,
+        name: player.name,
+        hand: player.hand.cards.map(summarizeCard),
+        deckCount: player.deck.cards.length,
+        discard: player.discard.cards.map(summarizeCard),
+        lostZone: player.lostzone.cards.map(summarizeCard),
+        stadium: player.stadium.cards.map(summarizeCard),
+        playZone: player.supporter.cards.map(summarizeCard),
+        prizesLeft: player.getPrizeLeft(),
+        active: summarizePokemonList(player.active),
+        bench: player.bench.map(summarizePokemonList),
+        playableCardIds: player.playableCardIds
+      };
+
+      if (shouldBuildAvailableActions(state, availableActionsScope, index)) {
+        summary.availableActions = buildAvailableActions(state, serializedState, index);
+      }
+
+      return summary;
+    }),
     logs: state.logs.map(log => ({
       id: log.id,
       message: log.message,
@@ -468,6 +484,16 @@ function summarizeState(state: State): any {
       client: log.client
     }))
   };
+}
+
+function shouldBuildAvailableActions(state: State, scope: AvailableActionsScope, playerIndex: number): boolean {
+  if (scope === 'none') {
+    return false;
+  }
+  if (scope === 'full') {
+    return true;
+  }
+  return playerIndex === state.activePlayer;
 }
 
 function buildAvailableActions(state: State, serializedState: string, playerIndex: number): AvailableActionsView {
