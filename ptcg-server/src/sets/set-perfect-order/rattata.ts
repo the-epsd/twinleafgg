@@ -2,7 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+} from '../../game/store/prefabs/prefabs';
 
 export class Rattata extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -11,15 +14,17 @@ export class Rattata extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C];
 
-  public attacks = [{
-    name: 'Take Down',
-    cost: [C],
-    damage: 30,
-    text: 'This Pokémon also does 10 damage to itself.'
-  }];
+  public attacks = [
+    {
+      name: 'Take Down',
+      cost: [C],
+      damage: 30,
+      text: 'This Pokémon also does 10 damage to itself.',
+    },
+  ];
 
   public regulationMark = 'J';
-  public set: string = 'M3';
+  public set: string = 'POR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '60';
   public name: string = 'Rattata';
