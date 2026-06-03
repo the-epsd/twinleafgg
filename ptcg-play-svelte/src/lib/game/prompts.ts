@@ -89,6 +89,9 @@ export function autoResolvablePromptResult(prompt: PromptView | undefined, game:
     }
     return Array.from({ length: deckCount }, (_item, index) => index);
   }
+  if (prompt.className === 'ConfirmPrompt' && prompt.message === 'GO_FIRST') {
+    return true;
+  }
   return undefined;
 }
 
@@ -96,7 +99,9 @@ export function shouldAutoResolvePrompt(prompt: PromptView | undefined, autoConf
   if (!prompt || result === undefined) {
     return false;
   }
-  return prompt.className === 'ShuffleDeckPrompt' || autoConfirmPrompts;
+  return prompt.className === 'ShuffleDeckPrompt'
+    || (prompt.className === 'ConfirmPrompt' && prompt.message === 'GO_FIRST')
+    || autoConfirmPrompts;
 }
 
 export type PromptPlacement = 'center' | 'board' | 'zone';

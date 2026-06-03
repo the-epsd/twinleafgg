@@ -92,6 +92,19 @@ describe('prompt helpers', () => {
     expect(shouldAutoResolvePrompt(item, false, result)).toBe(false);
     expect(shouldAutoResolvePrompt(item, true, result)).toBe(true);
   });
+
+  it('auto-resolves only the setup go-first confirm prompt', () => {
+    const goFirst = { ...prompt('ConfirmPrompt'), message: 'GO_FIRST' };
+    const ordinaryConfirm = { ...prompt('ConfirmPrompt'), message: 'WANT_TO_DISCARD_ENERGY' };
+
+    const goFirstResult = autoResolvablePromptResult(goFirst, null);
+    const ordinaryResult = autoResolvablePromptResult(ordinaryConfirm, null);
+
+    expect(goFirstResult).toBe(true);
+    expect(shouldAutoResolvePrompt(goFirst, false, goFirstResult)).toBe(true);
+    expect(ordinaryResult).toBeUndefined();
+    expect(shouldAutoResolvePrompt(ordinaryConfirm, true, ordinaryResult)).toBe(false);
+  });
 });
 
 function prompt(className: string, fields: Record<string, unknown> = {}, id = 1): PromptView {
