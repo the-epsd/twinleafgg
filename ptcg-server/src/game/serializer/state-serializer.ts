@@ -22,6 +22,7 @@ export class StateSerializer {
 
   public serializers: Serializer<any>[];
   public static knownCards: Card[] = [];
+  private static knownCardIndex: { [name: string]: Card } = {};
 
   constructor() {
     this.serializers = [
@@ -157,6 +158,15 @@ export class StateSerializer {
 
   public static setKnownCards(cards: Card[]) {
     StateSerializer.knownCards = cards;
+    StateSerializer.knownCardIndex = {};
+
+    for (const card of cards) {
+      for (const name of CardManager.getLookupNames(card)) {
+        if (StateSerializer.knownCardIndex[name] === undefined) {
+          StateSerializer.knownCardIndex[name] = card;
+        }
+      }
+    }
   }
 
   private restoreContext(serializedState: SerializedState): SerializerContext {
@@ -164,7 +174,7 @@ export class StateSerializer {
     const names: string[] = parsed[1].cardNames;
     const cards: Card[] = [];
     names.forEach((name, index) => {
-      let card: Card | undefined = StateSerializer.knownCards.find(c => CardManager.getLookupNames(c).includes(name));
+      let card: Card | undefined = StateSerializer.knownCardIndex[name];
       if (card === undefined) {
         throw new GameError(GameCoreError.ERROR_SERIALIZER, `Unknown card '${name}'.`);
       }
