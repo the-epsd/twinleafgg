@@ -36,6 +36,7 @@
   import {
     autoResolvablePromptResult,
     extractPromptCards,
+    isForcedAutoResolvePrompt,
     promptBlockedIndexes,
     promptInstanceKey,
     promptOptions,
@@ -354,6 +355,9 @@
     }
   });
   $effect(() => {
+    if (mode === 'remote' && isForcedAutoResolvePrompt(currentPrompt)) {
+      return;
+    }
     if (promptLifecycleStore.shouldAutoConfirm(currentPrompt, autoResolvePrompt, resolvingPrompt)) {
       void resolvePrompt(autoResolvePromptResult);
     }

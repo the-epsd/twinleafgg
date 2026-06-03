@@ -5,6 +5,7 @@ import type { EngineResponse, GameView, LogView } from '../lib/game/types';
 import { RemoteCommandApi } from '../lib/game/remoteCommandApi';
 import { configuredServerUrl } from '../lib/game/serverConfig';
 import { applyCardsInfoToSerializer, gameStateToGameView } from '../lib/game/serverGameView';
+import { autoResolvablePromptResult, isForcedAutoResolvePrompt } from '../lib/game/prompts';
 import { gameStore } from './game.svelte';
 import { gameSessionStore } from './gameSession.svelte';
 
@@ -49,6 +50,7 @@ class RemoteSessionStore {
 
   private socket: Socket | null = null;
   private unregisterGameEvents: (() => void) | null = null;
+  private autoResolvedPromptKeys = new Set<string>();
 
   get baseUrl(): string {
     const configured = this.serverUrl.trim().replace(/\/$/, '');
@@ -118,6 +120,7 @@ class RemoteSessionStore {
     this.games = [];
     this.activeGameId = null;
     this.playerIndex = null;
+    this.autoResolvedPromptKeys.clear();
   }
 
   async invite(clientId: number, deck: string[]): Promise<EngineResponse> {
@@ -181,6 +184,7 @@ class RemoteSessionStore {
     this.unregisterGameEvents = null;
     this.activeGameId = null;
     this.playerIndex = null;
+    this.autoResolvedPromptKeys.clear();
   }
 
   private async loadCards(): Promise<void> {
@@ -269,6 +273,7 @@ class RemoteSessionStore {
 
   private startGameFromState(gameState: GameState): void {
     this.activeGameId = gameState.gameId;
+    this.autoResolvedPromptKeys.clear();
     this.registerGameEvents(gameState.gameId);
     this.applyView(gameStateToGameView(gameState, this.clientId));
   }
@@ -278,6 +283,24 @@ class RemoteSessionStore {
     this.playerIndex = playerIndex === -1 ? null : playerIndex;
     gameStore.apply({ ok: true, view });
     gameSessionStore.syncExternalUpdate();
+    this.resolveRemoteSystemPrompt(view);
+  }
+
+  private resolveRemoteSystemPrompt(view: GameView): void {
+    const prompt = view.prompts[0];
+    if (!prompt || !isForcedAutoResolvePrompt(prompt)) {
+      return;
+    }
+    const result = autoResolvablePromptResult(prompt, view);
+    if (result === undefined || this.activeGameId === null) {
+      return;
+    }
+    const key = `${this.activeGameId}:${prompt.id}:${prompt.className}:${prompt.message ?? ''}`;
+    if (this.autoResolvedPromptKeys.has(key)) {
+      return;
+    }
+    this.autoResolvedPromptKeys.add(key);
+    void this.emitGameAction('game:action:resolvePrompt', { id: prompt.id, result });
   }
 
   private applyCoreInfo(info: CoreInfo): void {

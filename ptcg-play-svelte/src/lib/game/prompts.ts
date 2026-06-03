@@ -99,9 +99,12 @@ export function shouldAutoResolvePrompt(prompt: PromptView | undefined, autoConf
   if (!prompt || result === undefined) {
     return false;
   }
-  return prompt.className === 'ShuffleDeckPrompt'
-    || (prompt.className === 'ConfirmPrompt' && prompt.message === 'GO_FIRST')
-    || autoConfirmPrompts;
+  return isForcedAutoResolvePrompt(prompt) || autoConfirmPrompts;
+}
+
+export function isForcedAutoResolvePrompt(prompt: PromptView | undefined): boolean {
+  return prompt?.className === 'ShuffleDeckPrompt'
+    || (prompt?.className === 'ConfirmPrompt' && prompt.message === 'GO_FIRST');
 }
 
 export type PromptPlacement = 'center' | 'board' | 'zone';

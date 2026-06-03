@@ -3,6 +3,7 @@ import {
   autoResolvablePromptResult,
   extractPromptCards,
   fieldOptions,
+  isForcedAutoResolvePrompt,
   isKnownPrompt,
   promptBlockedIndexes,
   promptBlockedTargets,
@@ -101,8 +102,10 @@ describe('prompt helpers', () => {
     const ordinaryResult = autoResolvablePromptResult(ordinaryConfirm, null);
 
     expect(goFirstResult).toBe(true);
+    expect(isForcedAutoResolvePrompt(goFirst)).toBe(true);
     expect(shouldAutoResolvePrompt(goFirst, false, goFirstResult)).toBe(true);
     expect(ordinaryResult).toBeUndefined();
+    expect(isForcedAutoResolvePrompt(ordinaryConfirm)).toBe(false);
     expect(shouldAutoResolvePrompt(ordinaryConfirm, true, ordinaryResult)).toBe(false);
   });
 });
