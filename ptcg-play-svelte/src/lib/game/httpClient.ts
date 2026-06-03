@@ -6,7 +6,10 @@ import type { CardTarget, EngineResponse, GameView } from './types';
 type Command = {
   type: string;
   payload?: unknown;
+  availableActionsScope?: AvailableActionsScope;
 };
+
+type AvailableActionsScope = 'none' | 'active' | 'full';
 
 async function send(command: Command): Promise<EngineResponse> {
   const serverUrl = configuredServerUrl();
@@ -31,6 +34,7 @@ async function sendHostedHeadless(serverUrl: string, command: Command): Promise<
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       ...command,
+      ...hostedAvailableActionsOptions(command),
       sessionId: getHeadlessSessionId(),
     }),
   });
@@ -54,6 +58,7 @@ function toHeadlessCommand(command: Command): Command {
   if (command.type === 'startGame') {
     return {
       type: 'newGame',
+      availableActionsScope: command.availableActionsScope,
       payload: {
         ...(command.payload as Record<string, unknown>),
         promptMode: 'manual',
@@ -61,6 +66,30 @@ function toHeadlessCommand(command: Command): Command {
     };
   }
   return command;
+}
+
+export function hostedAvailableActionsScope(command: Command): AvailableActionsScope | undefined {
+  if (command.availableActionsScope) {
+    return command.availableActionsScope;
+  }
+
+  switch (command.type) {
+    case 'playCard':
+    case 'attack':
+    case 'useAbility':
+    case 'useStadium':
+    case 'concede':
+    case 'retreat':
+    case 'resolvePrompt':
+      return 'none';
+    default:
+      return undefined;
+  }
+}
+
+function hostedAvailableActionsOptions(command: Command): { availableActionsScope?: AvailableActionsScope } {
+  const availableActionsScope = hostedAvailableActionsScope(command);
+  return availableActionsScope ? { availableActionsScope } : {};
 }
 
 function getHeadlessSessionId(): string {

@@ -358,15 +358,31 @@ function socketAckErrorMessage(data: unknown, fallback: string): string {
   if (data instanceof Error) {
     return data.message;
   }
-  try {
-    return JSON.stringify(data);
-  } catch {
-    return fallback;
-  }
+  return stringifyUnknown(data, fallback);
 }
 
 function errorMessage(error: unknown): string {
-  return error instanceof Error ? error.message : String(error);
+  if (error instanceof Error) {
+    return error.message;
+  }
+  return stringifyUnknown(error, 'Unknown error.');
+}
+
+function stringifyUnknown(value: unknown, fallback: string): string {
+  if (value == null || value === '') {
+    return fallback;
+  }
+  if (typeof value === 'string') {
+    return value;
+  }
+  if (typeof value === 'number' || typeof value === 'boolean') {
+    return String(value);
+  }
+  try {
+    return JSON.stringify(value);
+  } catch {
+    return fallback;
+  }
 }
 
 export const remoteSessionStore = new RemoteSessionStore();

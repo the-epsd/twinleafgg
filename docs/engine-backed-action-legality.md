@@ -69,6 +69,8 @@ Examples:
 
 Human-facing clients should prefer cheap always-on hints, such as `playableCardIds`, and request broader legality only for UI surfaces that actually need it. Agents can opt into the broader snapshot when correctness is more important than response latency.
 
+Hosted single-player command responses should avoid paying for dry-run legality unless the response needs to immediately refresh an action menu. The Svelte client requests `availableActionsScope: 'none'` for latency-sensitive mutations like playing cards, resolving prompts, attacking, using abilities, retreating, and conceding. Initial game creation, explicit state refreshes, and turn passes keep the server default so the active-player action panel can still receive engine-owned legality at lower-frequency points.
+
 ## Notes
 
 This should be implemented in the engine, not duplicated in each frontend. The frontend can still make ergonomic choices, such as preferring an open bench slot for a generic drop target, but it should not present that as legality unless the engine supplied it.
