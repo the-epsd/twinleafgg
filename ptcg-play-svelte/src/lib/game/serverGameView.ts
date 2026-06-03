@@ -1,4 +1,4 @@
-import type { CardsInfo, GameState, State } from 'ptcg-server';
+import type { Card, CardsInfo, GameState, State } from 'ptcg-server';
 import { Base64, CardManager, StateSerializer } from 'ptcg-server';
 import { resolveCardImageUrl } from './cardImages';
 import { SlotType, targetFor, type CardView, type GameView, type LogView, type PlayerView, type PokemonSlotView, type PromptView } from './types';
@@ -44,7 +44,34 @@ const promptSchemas: Record<string, string> = {
 export function applyCardsInfoToSerializer(cardsInfo: CardsInfo): void {
   const cardManager = CardManager.getInstance();
   cardManager.loadCardsInfo(cardsInfo);
-  StateSerializer.setKnownCards(cardManager.getAllCards().slice());
+  StateSerializer.setKnownCards(cardsWithPrintIdAliases(cardManager.getAllCards()));
+}
+
+function cardsWithPrintIdAliases(cards: Card[]): Card[] {
+  const result = cards.slice();
+  const knownFullNames = new Set(result.map((card) => card.fullName).filter(Boolean));
+
+  for (const card of cards) {
+    const printId = printIdFor(card);
+    if (!printId || knownFullNames.has(printId)) {
+      continue;
+    }
+    result.push({ ...(card as any), fullName: printId } as Card);
+    knownFullNames.add(printId);
+  }
+
+  return result;
+}
+
+function printIdFor(card: Card): string {
+  const explicit = `${(card as any).printId ?? ''}`.trim();
+  if (explicit) {
+    return explicit;
+  }
+  const name = `${card.name ?? ''}`.trim();
+  const set = `${card.set ?? ''}`.trim();
+  const setNumber = `${card.setNumber ?? ''}`.trim();
+  return name && set && setNumber ? `${name} ${set} ${setNumber}` : '';
 }
 
 export function decodeServerState(stateData: string): State {

@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { stateToGameView } from './serverGameView';
+import { State, StateSerializer } from 'ptcg-server';
+import { applyCardsInfoToSerializer, stateToGameView } from './serverGameView';
 
 describe('serverGameView', () => {
   it('preserves sanitized unknown cards and merges incremental logs', () => {
@@ -28,6 +29,27 @@ describe('serverGameView', () => {
 
     expect(view.prompts).toHaveLength(1);
     expect(view.prompts[0]).toMatchObject({ id: 10, playerId: 1, playerIndex: 0 });
+  });
+
+  it('indexes canonical print ids from remote cards info', () => {
+    applyCardsInfoToSerializer({
+      hash: 'test',
+      cards: [
+        {
+          name: 'Dreepy',
+          fullName: 'Dreepy TWM',
+          printId: 'Dreepy TWM 128',
+          set: 'TWM',
+          setNumber: '128',
+        },
+      ] as any,
+    });
+
+    const state = new State();
+    state.cardNames = ['Dreepy TWM 128'];
+    const serialized = new StateSerializer().serialize(state);
+
+    expect(() => new StateSerializer().deserialize(serialized)).not.toThrow();
   });
 });
 
