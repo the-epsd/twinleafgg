@@ -1,7 +1,6 @@
 import {
   PokemonCard,
   Stage,
-  CardType,
   ChooseCardsPrompt,
   GameError,
   GameMessage,
@@ -13,7 +12,6 @@ import {
   ShuffleDeckPrompt,
 } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Nidorina extends PokemonCard {
