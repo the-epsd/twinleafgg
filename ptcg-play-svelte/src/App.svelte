@@ -33,7 +33,14 @@
     type BoardPlayAreaContext,
   } from './lib/game/playTargets';
   import { benchSlotsFor, previewAttachEnergySlot, previewSlot } from './lib/game/preview';
-  import { extractPromptCards, promptBlockedIndexes, promptInstanceKey, promptOptions } from './lib/game/prompts';
+  import {
+    autoResolvablePromptResult,
+    extractPromptCards,
+    promptBlockedIndexes,
+    promptInstanceKey,
+    promptOptions,
+    shouldAutoResolvePrompt,
+  } from './lib/game/prompts';
   import { getSetupPromptUiState, promptLimit, setupPromptResult } from './lib/game/setupPrompt';
   import { getAttachPromptTargets, getBoardPromptTargets, sameTarget, targetForPromptSlot } from './lib/game/targets';
   import { createChoosePokemonStrategy } from './lib/game/strategies/choosePokemonStrategy';
@@ -185,9 +192,8 @@
       window.removeEventListener('click', clickBoardPromptSlotAtPoint, true);
     };
   });
-  let autoConfirmPrompt = $derived(
-    !!currentPrompt && ['AlertPrompt', 'ShowCardsPrompt', 'ConfirmCardsPrompt', 'ShowMulliganPrompt'].includes(currentPrompt.className),
-  );
+  let autoResolvePromptResult = $derived(autoResolvablePromptResult(currentPrompt, game));
+  let autoResolvePrompt = $derived(shouldAutoResolvePrompt(currentPrompt, autoConfirmPrompts, autoResolvePromptResult));
   let setupPrompt = $derived(
     currentPrompt?.className === 'ChooseCardsPrompt' && currentPrompt.message === 'CHOOSE_STARTING_POKEMONS'
       ? currentPrompt
@@ -348,8 +354,8 @@
     }
   });
   $effect(() => {
-    if (promptLifecycleStore.shouldAutoConfirm(currentPrompt, autoConfirmPrompts && autoConfirmPrompt, resolvingPrompt)) {
-      void resolvePrompt(true);
+    if (promptLifecycleStore.shouldAutoConfirm(currentPrompt, autoResolvePrompt, resolvingPrompt)) {
+      void resolvePrompt(autoResolvePromptResult);
     }
   });
 
@@ -1021,7 +1027,7 @@
             </div>
           </div>
         </PromptDock>
-      {:else if currentPrompt && !(autoConfirmPrompts && autoConfirmPrompt)}
+      {:else if currentPrompt && !autoResolvePrompt}
         <PromptDock mode={currentPromptDockMode}>
           {#key promptInstanceKey(currentPrompt)}
             <PromptHost

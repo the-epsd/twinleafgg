@@ -1,10 +1,11 @@
-import { SlotType, type CardTarget, type CardView, type PromptView } from './types';
+import { SlotType, type CardTarget, type CardView, type GameView, type PromptView } from './types';
 
 export type PromptClassName =
   | 'AlertPrompt'
   | 'ShowCardsPrompt'
   | 'ConfirmCardsPrompt'
   | 'ShowMulliganPrompt'
+  | 'ShuffleDeckPrompt'
   | 'WaitPrompt'
   | 'ConfirmPrompt'
   | 'CoinFlipPrompt'
@@ -23,6 +24,7 @@ export type PromptClassName =
 
 export type KnownPrompt =
   | (PromptView & { className: 'AlertPrompt' | 'ShowCardsPrompt' | 'ConfirmCardsPrompt' | 'ShowMulliganPrompt' })
+  | (PromptView & { className: 'ShuffleDeckPrompt' })
   | (PromptView & { className: 'WaitPrompt'; fields: { duration?: number } & Record<string, unknown> })
   | (PromptView & { className: 'ConfirmPrompt' })
   | (PromptView & { className: 'CoinFlipPrompt' })
@@ -49,6 +51,7 @@ export function isKnownPrompt(prompt: PromptView): prompt is KnownPrompt {
     || prompt.className === 'ShowCardsPrompt'
     || prompt.className === 'ConfirmCardsPrompt'
     || prompt.className === 'ShowMulliganPrompt'
+    || prompt.className === 'ShuffleDeckPrompt'
     || prompt.className === 'WaitPrompt'
     || prompt.className === 'ConfirmPrompt'
     || prompt.className === 'CoinFlipPrompt'
@@ -65,6 +68,35 @@ export function isKnownPrompt(prompt: PromptView): prompt is KnownPrompt {
     || prompt.className === 'MoveDamagePrompt'
     || prompt.className === 'RemoveDamagePrompt'
   );
+}
+
+export function autoResolvablePromptResult(prompt: PromptView | undefined, game: GameView | null | undefined): unknown | undefined {
+  if (!prompt) {
+    return undefined;
+  }
+  if (
+    prompt.className === 'AlertPrompt'
+    || prompt.className === 'ShowCardsPrompt'
+    || prompt.className === 'ConfirmCardsPrompt'
+    || prompt.className === 'ShowMulliganPrompt'
+  ) {
+    return true;
+  }
+  if (prompt.className === 'ShuffleDeckPrompt') {
+    const deckCount = game?.players[prompt.playerIndex]?.deckCount;
+    if (typeof deckCount !== 'number' || !Number.isInteger(deckCount) || deckCount < 0) {
+      return undefined;
+    }
+    return Array.from({ length: deckCount }, (_item, index) => index);
+  }
+  return undefined;
+}
+
+export function shouldAutoResolvePrompt(prompt: PromptView | undefined, autoConfirmPrompts: boolean, result: unknown): boolean {
+  if (!prompt || result === undefined) {
+    return false;
+  }
+  return prompt.className === 'ShuffleDeckPrompt' || autoConfirmPrompts;
 }
 
 export type PromptPlacement = 'center' | 'board' | 'zone';

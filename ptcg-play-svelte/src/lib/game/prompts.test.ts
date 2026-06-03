@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  autoResolvablePromptResult,
   extractPromptCards,
   fieldOptions,
   isKnownPrompt,
@@ -10,13 +11,15 @@ import {
   prunePromptIndexes,
   promptSlots,
   samePromptIndexes,
+  shouldAutoResolvePrompt,
 } from './prompts';
-import { SlotType, targetFor, type PromptView } from './types';
+import { SlotType, targetFor, type GameView, type PromptView } from './types';
 
 describe('prompt helpers', () => {
   it('identifies migrated prompt classes as known prompts', () => {
     expect(isKnownPrompt(prompt('ConfirmPrompt'))).toBe(true);
     expect(isKnownPrompt(prompt('ChooseCardsPrompt'))).toBe(true);
+    expect(isKnownPrompt(prompt('ShuffleDeckPrompt'))).toBe(true);
     expect(isKnownPrompt(prompt('ChoosePokemonPrompt'))).toBe(false);
   });
 
@@ -65,6 +68,29 @@ describe('prompt helpers', () => {
     expect(prunePromptIndexes([1, 2, 3], (index) => index !== 2, 2)).toEqual([1, 3]);
     expect(samePromptIndexes([1, 3], [1, 3])).toBe(true);
     expect(samePromptIndexes([1, 3], [3, 1])).toBe(false);
+  });
+
+  it('auto-resolves shuffle prompts with the current deck order', () => {
+    const item = prompt('ShuffleDeckPrompt');
+    const game = {
+      players: [
+        { deckCount: 4 },
+      ],
+    } as GameView;
+
+    const result = autoResolvablePromptResult(item, game);
+
+    expect(result).toEqual([0, 1, 2, 3]);
+    expect(shouldAutoResolvePrompt(item, false, result)).toBe(true);
+  });
+
+  it('keeps alert-style auto prompts behind the auto-confirm setting', () => {
+    const item = prompt('ShowCardsPrompt');
+    const result = autoResolvablePromptResult(item, null);
+
+    expect(result).toBe(true);
+    expect(shouldAutoResolvePrompt(item, false, result)).toBe(false);
+    expect(shouldAutoResolvePrompt(item, true, result)).toBe(true);
   });
 });
 
