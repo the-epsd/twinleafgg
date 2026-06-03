@@ -393,7 +393,17 @@
 
   async function joinOnlineGame(gameId: number) {
     selectionStore.setSelectedHand(null);
-    await gameSessionStore.run(() => remoteSessionStore.joinGame(gameId));
+    const response = await gameSessionStore.run(() => remoteSessionStore.joinGame(gameId));
+    const prompt = response.view?.prompts[0];
+    if (!response.ok || prompt?.className !== 'InvitePlayerPrompt') {
+      return;
+    }
+    const deck = deckImportStore.parseRemoteDeck();
+    if (!deck.ok) {
+      gameStore.setError(deck.error);
+      return;
+    }
+    await gameSessionStore.resolve(() => remoteSessionStore.api.resolvePrompt(prompt.id, deck.cards));
   }
 
   async function acceptInvite() {
