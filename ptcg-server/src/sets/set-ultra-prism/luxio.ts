@@ -11,7 +11,7 @@ export class Luxio extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Shinx';
   public cardType: CardType = L;
-  public hp: number = 90;
+  public hp: number = 80;
   public weakness = [{ type: F }];
   public resistance = [{ type: M, value: -20 }];
   public retreat = [C];
