@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 import { appConfig } from '../env/config';
 import { useAuth } from '../context/AuthContext';
-import { ApiError } from '../api/apiError';
+import { ApiError, formatRegisterError } from '../api/apiError';
 
 export function RegisterPage() {
   const { t } = useTranslation();
@@ -27,7 +27,9 @@ export function RegisterPage() {
       await register(name.trim(), password, email.trim(), serverPassword.trim() || undefined);
       navigate('/login', { replace: true, state: { registered: true } });
     } catch (err) {
-      const msg = err instanceof ApiError ? err.message : t('REACT_ERROR_REGISTER_FAILED');
+      const msg = err instanceof ApiError
+        ? formatRegisterError(err, t)
+        : t('REACT_ERROR_REGISTER_FAILED');
       setError(msg);
     } finally {
       setLoading(false);
