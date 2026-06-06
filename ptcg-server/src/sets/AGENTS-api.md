@@ -6,7 +6,9 @@ This document explains how to fetch card data from the Pokemon TCG API for bulk 
 
 ## Overview
 
-The `fetch-set-cards.sh` script fetches card data from [pokemontcg.io](https://pokemontcg.io/) API and saves it as `card-data.json` in the appropriate set directory.
+The repository currently has `fetch-all-sets.sh`, which fetches missing set data from [pokemontcg.io](https://pokemontcg.io/) and saves each set as `card-data.json` in the matching set directory.
+
+For a one-off set fetch, either run the documented `curl` command below or add the set to `fetch-all-sets.sh` and run that script.
 
 ---
 
@@ -27,23 +29,24 @@ POKEMON_TCG_IO_API=your-api-key-here
 
 ## Usage
 
-### Fetch a Single Set
+### Fetch Missing Known Sets
 ```bash
-./fetch-set-cards.sh <set-id>
+./fetch-all-sets.sh
 ```
 
-Examples:
+The script skips set directories that already have `card-data.json`.
+
+### Fetch a Single Set Manually
 ```bash
-./fetch-set-cards.sh bw2     # Emerging Powers
-./fetch-set-cards.sh sv1     # Scarlet & Violet Base
-./fetch-set-cards.sh swsh1   # Sword & Shield
-./fetch-set-cards.sh base1   # Base Set
+# Replace SET_ID with the Pokemon TCG API set id, for example bw2.
+curl "https://api.pokemontcg.io/v2/cards?q=set.id:SET_ID&orderBy=number&pageSize=250" \
+  -H "X-Api-Key: $POKEMON_TCG_IO_API" \
+  | jq '.data' > ptcg-server/src/sets/set-target/card-data.json
 ```
 
-### Fetch All Sets
+### Generate Stubs After Fetching
 ```bash
-./fetch-set-cards.sh all                # Fetch all ~100 sets
-./fetch-set-cards.sh all --skip-existing  # Skip sets that already have card-data.json
+npx ts-node ptcg-server/src/sets/generate-set-stubs.ts set-target
 ```
 
 ---
@@ -199,14 +202,19 @@ Each card in the array has:
 ### Workflow
 1. Fetch the set data:
    ```bash
-   ./fetch-set-cards.sh bw2
+   ./fetch-all-sets.sh
    ```
 
-2. The JSON is saved to `set-emerging-powers/card-data.json`
+2. The JSON is saved to the target set directory, for example `ptcg-server/src/sets/set-emerging-powers/card-data.json`.
 
-3. Use Claude to read the JSON and generate card implementations:
+3. Generate stubs:
+   ```bash
+   npx ts-node ptcg-server/src/sets/generate-set-stubs.ts set-emerging-powers
    ```
-   Read the card-data.json for EPO set and implement all the Pokemon cards.
+
+4. Use agents to implement the remaining TODOs:
+   ```
+   Read the generated stubs for EPO and implement all remaining TODO card effects.
    ```
 
 ### Mapping API Data to Card Properties

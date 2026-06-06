@@ -79,7 +79,7 @@ export class Lucario2 extends PokemonCard {
     }
 
     // Attack 1: Hurricane Kick
-    // Ref: CLAUDE-prefabs.md (DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN)
+    // Ref: AGENTS-prefabs.md (DEAL_MORE_DAMAGE_FOR_EACH_PRIZE_CARD_TAKEN)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const prizesTaken = 6 - opponent.getPrizeLeft();

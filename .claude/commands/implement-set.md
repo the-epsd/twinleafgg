@@ -78,8 +78,8 @@ You are implementing Pokemon TCG cards for the twinleaf.gg simulator. You have b
 Before implementing ANY card, read these files in order:
 1. ptcg-server/src/sets/AGENTS.md (your workflow guide)
 2. ptcg-server/src/sets/AGENTS-patterns.md (card text → code mappings)
-3. ptcg-server/src/sets/CLAUDE-prefabs.md (prefab function signatures)
-4. ptcg-server/src/sets/CLAUDE-effects.md (effect timing reference - CRITICAL for Tier 2-3 cards)
+3. ptcg-server/src/sets/AGENTS-prefabs.md (prefab function signatures)
+4. ptcg-server/src/sets/AGENTS-effects.md (effect timing reference - CRITICAL for Tier 2-3 cards)
 
 ## Your Batch
 
@@ -96,14 +96,14 @@ For each card file in your batch:
 1. **Read the file** - find the // TODO: comments describing the effects to implement. **If the file has no // TODO: comments, it is already implemented — SKIP IT entirely. Do not modify it.**
 2. **Check for reprints** — BEFORE implementing, check if this card already exists in another set:
    - Search: `grep -r "public name.*'CardName'" ptcg-server/src/sets/ --include="*.ts" -l` (replace CardName with the card's name)
-   - If you find a match in another set, read that file and compare attack names and ability names
-   - If the card has the same name, same attack names, and same ability/power names → it is a **REPRINT**
+   - If you find a match in another set, read that file and compare attack names, attack text, ability names, and ability text
+   - If the card has the same name, same attack text, and same ability/power text → it is a **REPRINT**
    - For reprints: replace the stub file's entire content with a minimal reprint class (see Reprint Pattern below). Do NOT re-implement effects that already exist elsewhere.
 3. **Search for similar effects** - this is MANDATORY before writing any code:
    - Search by card text keywords (e.g., grep for "more damage", "is now Paralyzed")
    - Search by prefab usage (e.g., grep for "FLIP_A_COIN_IF_HEADS")
    - Read 1-2 matching reference implementations
-4. **Implement the effect** using prefabs from CLAUDE-prefabs.md, following the reference
+4. **Implement the effect** using prefabs from AGENTS-prefabs.md, following the reference
 5. **Replace // TODO: with // Ref:** - cite which file and attack/ability you used as reference:
    - Single ref: // Ref: set-emerging-powers/darmanitan.ts (Rock Smash)
    - Multiple refs: // Refs: set-noble-victories/stunfisk.ts (coin handling), set-noble-victories/audino.ts (self-heal)
@@ -176,8 +176,8 @@ You are reviewing Pokemon TCG card implementations for the twinleaf.gg simulator
 Before reviewing, read these files:
 1. ptcg-server/src/sets/AGENTS.md (implementation workflow)
 2. ptcg-server/src/sets/AGENTS-patterns.md (card text → code mappings)
-3. ptcg-server/src/sets/CLAUDE-prefabs.md (prefab function signatures)
-4. ptcg-server/src/sets/CLAUDE-effects.md (effect timing reference)
+3. ptcg-server/src/sets/AGENTS-prefabs.md (prefab function signatures)
+4. ptcg-server/src/sets/AGENTS-effects.md (effect timing reference)
 
 ## Your Batch to Review
 
@@ -227,7 +227,7 @@ Read all review notes files (`.claude/set-progress/$ARGUMENTS-review-notes-batch
 
 - **Recurring mistakes** → add gotcha to `ptcg-server/src/sets/AGENTS.md` under "Gotchas & Learnings" or similar section
 - **New patterns** → add to `ptcg-server/src/sets/AGENTS-patterns.md`
-- **New prefab usage** → update `ptcg-server/src/sets/CLAUDE-prefabs.md` with example
+- **New prefab usage** → update `ptcg-server/src/sets/AGENTS-prefabs.md` with example
 - **Skill-specific learnings** → update the twinleaf-card-implementer skill if applicable
 
 This feedback loop improves docs for future sets.
@@ -240,7 +240,7 @@ Write `committing` to `.claude/set-progress/$ARGUMENTS-phase.txt`.
 
 1. Run `cd ptcg-server && npm run compile` — **must pass clean with ZERO errors. If compilation fails, fix ALL errors before proceeding. Do NOT commit if there are any TypeScript errors. Repeat compile-fix cycles until clean.**
 2. Stage the set's files: `git add ptcg-server/src/sets/$ARGUMENTS/`
-3. Check for modified docs with `git diff --name-only ptcg-server/src/sets/AGENTS.md ptcg-server/src/sets/AGENTS-patterns.md ptcg-server/src/sets/CLAUDE-prefabs.md` — stage only files that appear in the output
+3. Check for modified docs with `git diff --name-only ptcg-server/src/sets/AGENTS.md ptcg-server/src/sets/AGENTS-patterns.md ptcg-server/src/sets/AGENTS-prefabs.md ptcg-server/src/sets/AGENTS-effects.md` — stage only files that appear in the output
 4. Commit with message: `Implement $ARGUMENTS card effects`
 5. Update `.claude/set-progress/$ARGUMENTS.json`: set `"status": "complete"`, `"reviewed": true`, update `"lastUpdated"`
 

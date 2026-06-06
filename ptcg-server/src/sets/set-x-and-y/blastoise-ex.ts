@@ -40,7 +40,7 @@ export class BlastoiseEx extends PokemonCard {
   public fullName: string = 'Blastoise-EX XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: AGENTS-patterns.md (post-damage switching), CLAUDE-effects.md (AfterAttackEffect pattern)
+    // Ref: AGENTS-patterns.md (post-damage switching), AGENTS-effects.md (AfterAttackEffect pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       this.usedRapidSpin = true;
     }

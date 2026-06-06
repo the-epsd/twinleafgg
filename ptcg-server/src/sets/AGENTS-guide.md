@@ -1,4 +1,4 @@
-# Card Development Guide for Claude Code
+# Card Development Guide for Agents
 
 This guide enables AI-assisted Pokemon TCG card implementation for twinleaf.gg.
 
@@ -10,12 +10,12 @@ For detailed information, see these reference files in the same directory:
 
 | File | Contents |
 |------|----------|
-| **CLAUDE-prefabs.md** | All prefab functions with signatures and usage |
-| **CLAUDE-state.md** | PokemonCardList, Player, StateUtils properties and methods |
-| **CLAUDE-effects.md** | Effect types, timing (AttackEffect vs AfterAttackEffect), patterns |
-| **CLAUDE-enums.md** | CardTag, SpecialCondition, GameMessage, Stage, TrainerType, etc. |
-| **CLAUDE-examples.md** | Complete card implementations demonstrating common patterns |
-| **CLAUDE-api.md** | Pokemon TCG API usage, fetch script, bulk card generation workflow |
+| **AGENTS-prefabs.md** | All prefab functions with signatures and usage |
+| **AGENTS-state.md** | PokemonCardList, Player, StateUtils properties and methods |
+| **AGENTS-effects.md** | Effect types, timing (AttackEffect vs AfterAttackEffect), patterns |
+| **AGENTS-enums.md** | CardTag, SpecialCondition, GameMessage, Stage, TrainerType, etc. |
+| **AGENTS-examples.md** | Complete card implementations demonstrating common patterns |
+| **AGENTS-api.md** | Pokemon TCG API usage, fetch script, bulk card generation workflow |
 
 ---
 
@@ -334,7 +334,7 @@ export const setExample: Card[] = [
 6. **Handle edge cases** → Markers for once-per-turn, generators for multi-step
 7. **Add to set index** → Register card in set's index.ts
 
-**For detailed examples, see CLAUDE-examples.md**
+**For detailed examples, see AGENTS-examples.md**
 
 ---
 
@@ -343,7 +343,7 @@ export const setExample: Card[] = [
 When implementing an entire Pokemon TCG set (50-100+ cards), use this tiered approach:
 
 ### Step 1: Gather Card Data
-Fetch card data from the Pokemon TCG API first (see CLAUDE-api.md). Save to `card-data.json` in the set directory. This provides exact stats, attack costs, and effect text for all cards.
+Fetch card data from the Pokemon TCG API first (see AGENTS-api.md). Save to `card-data.json` in the set directory. This provides exact stats, attack costs, and effect text for all cards.
 
 ### Step 2: Categorize Cards by Complexity
 

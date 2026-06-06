@@ -43,7 +43,7 @@ export class Heatmor extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Luring Flame
-    // Ref: CLAUDE.md (AfterAttackEffect pattern for switching)
+    // Ref: AGENTS-guide.md (AfterAttackEffect pattern for switching)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       this.usedLuringFlame = true;
     }

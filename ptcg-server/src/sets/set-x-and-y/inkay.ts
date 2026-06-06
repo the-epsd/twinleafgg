@@ -42,7 +42,7 @@ export class Inkay extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ability: Upside-Down Evolution
-    // Ref: CLAUDE-effects.md (Conditional Evolution Search pattern)
+    // Ref: AGENTS-effects.md (Conditional Evolution Search pattern)
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 

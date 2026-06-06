@@ -51,7 +51,7 @@ export class Beedrill extends PokemonCard {
     }
 
     // Attack 2: Flash Needle
-    // Refs: set-plasma-freeze/noctowl.ts (Fly - coin flip + prevent all effects marker), CLAUDE-prefabs.md (MULTIPLE_COIN_FLIPS_PROMPT)
+    // Refs: set-plasma-freeze/noctowl.ts (Fly - coin flip + prevent all effects marker), AGENTS-prefabs.md (MULTIPLE_COIN_FLIPS_PROMPT)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);

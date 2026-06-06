@@ -4,6 +4,37 @@ You are working with auto-generated card stubs. All card stats (HP, type, weakne
 
 ---
 
+## Current Automation Pipeline
+
+Use the automation that already exists before writing card boilerplate by hand:
+
+1. Make sure the target set has `ptcg-server/src/sets/<set-name>/card-data.json`.
+2. Generate or refresh stubs:
+   ```bash
+   npx ts-node ptcg-server/src/sets/generate-set-stubs.ts <set-name>
+   ```
+3. Implement only files that still contain `// TODO:` comments.
+4. Prefer reprints and prefabs before custom logic.
+5. Compile from the server package:
+   ```bash
+   cd ptcg-server && npm run compile
+   ```
+6. Run targeted card tests when behavior touches prompts, damage prevention, abilities, trainers, tools, or special energy. See `tests/GUIDE.md`.
+
+### What the stub generator already handles
+
+| Area | Automated | Agent still verifies |
+|------|-----------|----------------------|
+| Card stats | HP, type, weakness, resistance, retreat, attacks, costs, damage, set info | Values match `card-data.json` when data is unusual |
+| Boilerplate | Class, imports, properties, `reduceEffect()` TODO blocks, `index.ts` | Unused imports after implementation |
+| Reprints | Basic same-name cross-set and intra-set candidates | Exact effect text and behavior match the source card |
+| Basic Energy | Skipped | Existing energy classes cover the requested print |
+| Effects | TODO text copied into the stub | Actual game logic, references, tests |
+
+Do not hand-create full card files unless the generator cannot represent the card.
+
+---
+
 ## Reprints — Check Before Implementing
 
 Many Pokemon TCG cards are reprinted across multiple sets with identical effects. Before implementing any card, **always check if it already exists in another set**.
@@ -15,7 +46,7 @@ Search for the card name across all sets:
 grep -r "public name.*'CardName'" ptcg-server/src/sets/ --include="*.ts" -l
 ```
 
-If you find a match, compare the attack names and ability/power names. If they match, the card is a **reprint** — do NOT re-implement it.
+If you find a match, compare the attack names, attack text, ability/power names, and ability/power text. If they match, the card is a **reprint** — do NOT re-implement it. Matching only on attack or ability names is not enough; some cards reuse names with changed effects.
 
 ### Reprint pattern
 
@@ -95,7 +126,7 @@ Read **AGENTS-patterns.md** in this directory. It maps common card text phrases 
 
 ### 4. Implement Using Prefabs
 
-Always prefer prefab functions over custom logic. Read **CLAUDE-prefabs.md** for the complete list of available prefabs with signatures.
+Always prefer prefab functions over custom logic. Read **AGENTS-prefabs.md** for the complete list of available prefabs with signatures.
 
 ### 4.5 Public vs Private Knowledge (Search Rules)
 
@@ -114,7 +145,7 @@ Examples:
 
 After implementing cards, run:
 ```bash
-cd ptcg-server && npx tsc --noEmit
+cd ptcg-server && npm run compile
 ```
 
 ---
@@ -152,7 +183,7 @@ if (effect instanceof EndTurnEffect) {
 }
 ```
 
-For the full effect timing reference, read **CLAUDE-effects.md**.
+For the full effect timing reference, read **AGENTS-effects.md**.
 
 ---
 
@@ -283,7 +314,7 @@ DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, amount, type?)
 DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect)
 ```
 
-For the complete prefab reference with all signatures and imports, read **CLAUDE-prefabs.md**.
+For the complete prefab reference with all signatures and imports, read **AGENTS-prefabs.md**.
 
 ---
 
@@ -308,12 +339,34 @@ Read these files in this directory (`ptcg-server/src/sets/`) for in-depth docume
 | File | Read When |
 |------|-----------|
 | **AGENTS-patterns.md** | Translating card text to code — maps text phrases to prefab calls |
-| **CLAUDE-prefabs.md** | You need exact prefab function signatures and import paths |
-| **CLAUDE-effects.md** | You need to understand effect timing or use advanced effect patterns |
-| **CLAUDE-state.md** | You need to access PokemonCardList, Player, or StateUtils properties |
-| **CLAUDE-enums.md** | You need CardTag, GameMessage, SpecialCondition, or other enum values |
-| **CLAUDE-examples.md** | You want complete working card implementations to reference |
-| **CLAUDE.md** | General card development overview and gotchas |
+| **AGENTS-prefabs.md** | You need exact prefab function signatures and import paths |
+| **AGENTS-effects.md** | You need to understand effect timing or use advanced effect patterns |
+| **AGENTS-state.md** | You need to access PokemonCardList, Player, or StateUtils properties |
+| **AGENTS-enums.md** | You need CardTag, GameMessage, SpecialCondition, or other enum values |
+| **AGENTS-examples.md** | You want complete working card implementations to reference |
+| **AGENTS-guide.md** | General card development overview and gotchas |
+
+---
+
+## TODO Policy
+
+Every generated implementation TODO must be resolved before a card is considered implemented.
+
+Allowed TODOs are only explicit engine-limit notes that explain why the behavior cannot currently be represented, for example:
+
+```typescript
+// TODO: Coin-flip sequence re-rolls are not currently implementable in the engine.
+```
+
+Not allowed in finished card files:
+
+```typescript
+// TODO: Implement effect here
+// TODO: Implement trainer effect
+// TODO: Implement energy effect
+```
+
+When an engine-limit TODO remains, implement the supported part of the card if possible and make the limitation concrete enough for future engine work.
 
 ---
 
@@ -378,7 +431,7 @@ When card text says "X different types of basic Energy cards", use `differentTyp
 
 ### Ability-based evolution doesn't dispatch EvolveEffect
 
-Cards like Inkay's "Upside-Down Evolution" that evolve via ability use manual `moveCardTo` + `clearEffects` + `pokemonPlayedTurn`. This means other cards intercepting `EvolveEffect` won't see the evolution. This is the established pattern — see `CLAUDE-effects.md`.
+Cards like Inkay's "Upside-Down Evolution" that evolve via ability use manual `moveCardTo` + `clearEffects` + `pokemonPlayedTurn`. This means other cards intercepting `EvolveEffect` won't see the evolution. This is the established pattern — see `AGENTS-effects.md`.
 
 ### Active-slot verification for abilities that check conditions
 

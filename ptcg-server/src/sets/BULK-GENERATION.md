@@ -1,14 +1,15 @@
 # Bulk Card Generation Guide
 
-This guide documents the process for automatically generating entire Pokemon TCG sets using Claude Code. It complements the main `CLAUDE.md` which contains prefab references and card templates.
+This guide documents the process for automatically generating entire Pokemon TCG sets using the current repo tooling and agent workflows. Start with `AGENTS.md` for the per-card workflow; use this file for set-scale batching.
 
 ## Overview
 
 The bulk generation process uses:
 1. **card-data.json** - JSON file containing all cards in a set from Pokemon TCG API
-2. **Tier-based implementation** - Cards grouped by complexity for efficient batch processing
-3. **Pattern matching** - Attack text mapped to existing prefab functions
-4. **Existing examples** - Similar cards in the codebase used as templates
+2. **generate-set-stubs.ts** - Creates card files, TODO blocks, reprint wrappers, and `index.ts`
+3. **Tier-based implementation** - Cards grouped by complexity for efficient batch processing
+4. **Pattern matching** - Attack text mapped to existing prefab functions
+5. **Existing examples** - Similar cards in the codebase used as templates
 
 ---
 
@@ -60,9 +61,11 @@ curl "https://api.pokemontcg.io/v2/cards?q=set.id:SET_ID" \
 
 ```bash
 # From repository root
-./fetch-set-cards.sh bw2
-# Creates ptcg-server/src/sets/set-emerging-powers/card-data.json
+./fetch-all-sets.sh
+# Fetches missing card-data.json files for known set directories
 ```
+
+For a single set that is not in `fetch-all-sets.sh`, use the manual `curl` command above, write the output to the target set directory, and then run the stub generator.
 
 ### card-data.json Format
 
@@ -101,7 +104,26 @@ curl "https://api.pokemontcg.io/v2/cards?q=set.id:SET_ID" \
 
 ---
 
-## Step 2: Analyze and Categorize Cards
+## Step 2: Generate Stubs
+
+Run the generator after `card-data.json` exists:
+
+```bash
+npx ts-node ptcg-server/src/sets/generate-set-stubs.ts set-emerging-powers
+```
+
+The generator handles:
+- Pokemon, Trainer, and Energy boilerplate
+- card stats, attacks, powers, text, set info, and card image
+- duplicate names inside the set
+- basic cross-set and intra-set reprints
+- `index.ts` registration
+
+Use `--dry-run` to preview and `--force` only when intentionally replacing generated files.
+
+---
+
+## Step 3: Analyze and Categorize TODO Cards
 
 ### Tier-Based Complexity Classification
 
@@ -136,15 +158,15 @@ Pokemon with Abilities requiring:
 
 ---
 
-## Step 3: Implementation Workflow
+## Step 4: Implementation Workflow
 
 ### For Each Card:
 
 1. **Read from card-data.json** - Get exact HP, types, attacks, costs, damage
 2. **Search for similar effects** - Find existing cards with matching attack text
-3. **Select appropriate prefabs** - Reference CLAUDE.md prefab section
-4. **Generate implementation** - Use card template with correct properties
-5. **Verify properties match** - Double-check HP, weakness, retreat vs JSON
+3. **Select appropriate prefabs** - Reference AGENTS-guide.md prefab section
+4. **Implement only TODO blocks** - Leave generated stats and index entries intact unless they are wrong
+5. **Verify properties match** - Double-check HP, weakness, retreat vs JSON when the card is unusual
 
 ### File Naming Convention
 
@@ -163,7 +185,7 @@ export class Sewaddle2 extends PokemonCard { }  // Number suffix for duplicates
 
 ---
 
-## Step 4: Text Pattern → Code Mapping
+## Step 5: Text Pattern → Code Mapping
 
 ### Attack Effects
 
@@ -214,7 +236,7 @@ export class Sewaddle2 extends PokemonCard { }  // Number suffix for duplicates
 
 ---
 
-## Step 5: Common Gotchas and Fixes
+## Step 6: Common Gotchas and Fixes
 
 ### Import Errors
 
@@ -402,7 +424,7 @@ The Emerging Powers set (EPO/bw2) was implemented using this process:
 - Tier 4 (complex): ~12 cards
 - Tier 5 (ability): 1 card (Krookodile #62)
 
-**Time to implement:** ~2-3 hours with Claude Code
+**Time to implement:** ~2-3 hours with agent workflows
 
 **Key patterns used:**
 - Marker-based damage reduction (Cotton Guard, Reflect)
@@ -415,9 +437,10 @@ The Emerging Powers set (EPO/bw2) was implemented using this process:
 
 ## Reference Files
 
-- **CLAUDE.md** - Prefab reference, card templates, effect types
+- **AGENTS-guide.md** - Prefab reference, card templates, effect types
+- **generate-set-stubs.ts** - Bulk stub generation from `card-data.json`
 - **generate-card-from-tcgdex.ts** - Single card generation from TCGdex
-- **fetch-set-cards.sh** - Bulk card data fetching script
+- **fetch-all-sets.sh** - Bulk card data fetching script for known set directories
 - **set-emerging-powers/** - Reference implementation of a complete set
 
 ---
@@ -427,11 +450,12 @@ The Emerging Powers set (EPO/bw2) was implemented using this process:
 - [ ] Obtain card-data.json for target set
 - [ ] Create set directory: `set-{set-name}/`
 - [ ] Place card-data.json in set directory
-- [ ] Analyze cards, categorize by tier
-- [ ] Implement Tier 1 (no-effect) cards
-- [ ] Implement Tier 2-4 (effects) cards
-- [ ] Implement Tier 5 (abilities) cards
-- [ ] Create index.ts with all exports
+- [ ] Run `npx ts-node ptcg-server/src/sets/generate-set-stubs.ts set-{set-name}`
+- [ ] Analyze remaining TODO cards, categorize by tier
+- [ ] Implement simple effect cards
+- [ ] Implement medium/complex effect cards
+- [ ] Implement abilities, trainers, tools, stadiums, and special energy
+- [ ] Confirm `index.ts` generated correctly
 - [ ] Run `npm run compile`, fix errors
 - [ ] Clean up unused imports
 - [ ] Verify all properties match card-data.json
