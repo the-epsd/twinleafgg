@@ -3,7 +3,7 @@
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, EnergyType, SuperType } from '../../game/store/card/card-types';
+import { TrainerType, EnergyType } from '../../game/store/card/card-types';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { StoreLike, State, StateUtils, ChooseCardsPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
@@ -17,7 +17,8 @@ export class Sidney extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Sidney';
   public fullName: string = 'Sidney FST 241';
-  public text: string = 'Your opponent reveals their hand. Discard up to 2 in any combination of Pokémon Tool cards, Special Energy cards, and Stadium cards from it. You may play only 1 Supporter card during your turn.';
+  public text: string =
+    'Your opponent reveals their hand. Discard up to 2 in any combination of Pokémon Tool cards, Special Energy cards, and Stadium cards from it. You may play only 1 Supporter card during your turn.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-unbroken-bonds/honchkrow-gx.ts (discard from opponent's hand via ChooseCardsPrompt)
@@ -31,35 +32,36 @@ export class Sidney extends TrainerCard {
       }
 
       // Filter: only Tool cards, Special Energy cards, and Stadium cards are eligible
-      const eligibleIndices: number[] = [];
+      var eligibleCount: number = 0;
       const blocked: number[] = [];
       opponent.hand.cards.forEach((card, index) => {
         const isTool = card instanceof TrainerCard && card.trainerType === TrainerType.TOOL;
-        const isSpecialEnergy = card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL;
+        const isSpecialEnergy =
+          card instanceof EnergyCard && card.energyType === EnergyType.SPECIAL;
         const isStadium = card instanceof TrainerCard && card.trainerType === TrainerType.STADIUM;
         if (isTool || isSpecialEnergy || isStadium) {
-          eligibleIndices.push(index);
+          eligibleCount++;
         } else {
           blocked.push(index);
         }
       });
 
-      if (eligibleIndices.length === 0) {
-        return state;
-      }
+      const max = Math.min(2, eligibleCount);
 
-      const max = Math.min(2, eligibleIndices.length);
-
-      store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        opponent.hand,
-        { superType: SuperType.ANY },
-        { min: 0, max, allowCancel: false, blocked }
-      ), selected => {
-        const cards = selected || [];
-        opponent.hand.moveCardsTo(cards, opponent.discard);
-      });
+      store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          opponent.hand,
+          {},
+          { min: 0, max, allowCancel: false, blocked },
+        ),
+        (selected) => {
+          const cards = selected || [];
+          opponent.hand.moveCardsTo(cards, opponent.discard);
+        },
+      );
     }
 
     return state;

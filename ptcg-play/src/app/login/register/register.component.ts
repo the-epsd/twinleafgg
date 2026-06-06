@@ -10,6 +10,8 @@ import {
   keyframes
 } from '@angular/animations';
 import { TranslateService } from '@ngx-translate/core';
+import { ApiErrorEnum } from 'ptcg-server';
+import { ApiError } from '../../api/api.error';
 import { LoginService } from '../../api/services/login.service';
 import { AlertService } from '../../shared/alert/alert.service';
 import { ServerPasswordPopupService } from '../server-password-popup/server-password-popup.service';
@@ -186,29 +188,58 @@ export class RegisterComponent implements OnInit {
           this.alertService.toast('Account created successfully');
           this.router.navigate(['/login']);
         },
-        error: (error) => {
+        error: (error: ApiError) => {
           this.loading = false;
-          if (error.error === 'ERROR_NAME_EXISTS') {
-            this.invalidName = 'Username already exists';
-            this.errorMessage = this.translate.instant('REGISTER_NAME_TAKEN');
-          } else if (error.error === 'ERROR_EMAIL_EXISTS') {
-            this.errorMessage = 'Email already exists';
-          } else if (error.error === 'ERROR_REGISTER_DISABLED') {
-            this.errorMessage = 'Registration is currently disabled';
-            this.alertService.error('Registration is currently disabled');
-          } else if (error.error === 'ERROR_REGISTER_INVALID_SERVER_PASSWORD') {
-            this.serverPasswordPopupService.openDialog()
-              .pipe(untilDestroyed(this))
-              .subscribe(serverCode => {
-                if (serverCode !== undefined) {
-                  this.register(name, password, confirmPassword, serverCode);
-                }
-              });
-          } else {
-            this.errorMessage = this.translate.instant('ERROR_UNKNOWN');
+          switch (error.code) {
+            case ApiErrorEnum.REGISTER_NAME_EXISTS:
+              this.invalidName = name;
+              this.errorMessage = this.translate.instant('REGISTER_NAME_TAKEN');
+              break;
+            case ApiErrorEnum.REGISTER_EMAIL_EXISTS:
+              this.errorMessage = this.translate.instant('REGISTER_EMAIL_TAKEN');
+              break;
+            case ApiErrorEnum.REGISTER_DISABLED:
+              this.errorMessage = this.translate.instant('REGISTER_DISABLED');
+              break;
+            case ApiErrorEnum.REGISTER_INVALID_SERVER_PASSWORD:
+              this.serverPasswordPopupService.openDialog()
+                .pipe(untilDestroyed(this))
+                .subscribe(serverCode => {
+                  if (serverCode !== undefined) {
+                    this.register(name, password, confirmPassword, serverCode);
+                  }
+                });
+              break;
+            case ApiErrorEnum.REQUESTS_LIMIT_REACHED:
+              this.errorMessage = this.translate.instant('ERROR_REQUESTS_LIMIT_REACHED');
+              break;
+            case ApiErrorEnum.VALIDATION_INVALID_PARAM:
+              this.errorMessage = this.getValidationErrorMessage(error);
+              break;
+            default:
+              if (error.timeout) {
+                this.errorMessage = this.translate.instant('ERROR_TIMEOUT');
+              } else if (!error.code) {
+                this.errorMessage = this.translate.instant('ERROR_SERVER_CONNECT');
+              } else {
+                this.errorMessage = this.translate.instant('ERROR_UNKNOWN');
+              }
           }
         }
       });
+  }
+
+  private getValidationErrorMessage(error: ApiError): string {
+    switch (error.param) {
+      case 'name':
+        return this.translate.instant('VALIDATION_INVALID_NAME_FORMAT');
+      case 'email':
+        return this.translate.instant('VALIDATION_INVALID_EMAIL_FORMAT');
+      case 'password':
+        return this.translate.instant('VALIDATION_INVALID_PASSWORD_FORMAT');
+      default:
+        return this.translate.instant('ERROR_INVALID_REQUEST');
+    }
   }
 
   goToLogin(): void {
