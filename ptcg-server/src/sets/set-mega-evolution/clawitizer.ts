@@ -1,7 +1,7 @@
 import { PokemonCard, Stage, CardType, PowerType, State, StoreLike, StateUtils, ConfirmPrompt, GameMessage, ChooseCardsPrompt, SuperType, EnergyCard, EnergyType, GameError } from '../../game';
-import { Effect, PowerEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { DISCARD_ALL_ENERGY_FROM_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { Effect } from '../../game/store/effects/effect';
+import { MovedFromActiveToBenchEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { DISCARD_ALL_ENERGY_FROM_POKEMON, MOVED_FROM_ACTIVE_TO_BENCH_THIS_TURN, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Clawitizer extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -31,73 +31,73 @@ export class Clawitizer extends PokemonCard {
   public fullName: string = 'Clawitizer M1S';
   public name: string = 'Clawitizer';
 
-  public ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';
+  public readonly ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    const cardList = StateUtils.findCardList(state, this);
-    const owner = StateUtils.findOwner(state, cardList);
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ABILITY_USED_MARKER, this);
 
     const player = state.players[state.activePlayer];
+    if (
+      effect instanceof MovedFromActiveToBenchEffect &&
+      effect.pokemonCard === this &&
+      state.players[state.activePlayer] === effect.player &&
+      MOVED_FROM_ACTIVE_TO_BENCH_THIS_TURN(effect.player, this)
+    ) {
+      if (player.marker.hasMarker(this.ABILITY_USED_MARKER, this)) {
+        return state;
+      }
 
-    if (effect instanceof EndTurnEffect) {
-      this.movedToActiveThisTurn = false;
-      player.marker.removeMarker(this.ABILITY_USED_MARKER, this);
-    }
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
 
-    if (player === owner && !player.marker.hasMarker(this.ABILITY_USED_MARKER, this)) {
-      if (this.movedToActiveThisTurn === true) {
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
+      const energyCards = player.hand.cards.filter(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Water Energy');
+      if (energyCards.length === 0) {
+        return state;
+      }
+
+      state = store.prompt(state, new ConfirmPrompt(
+        player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (!wantToUse) {
+          player.marker.addMarker(this.ABILITY_USED_MARKER, this);
+          return;
         }
 
-        const energyCards = player.hand.cards.filter(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC && c.name === 'Water Energy');
-        if (energyCards.length === 0) {
-          return state;
+        const hasEnergyInHand = player.hand.cards.some(c => {
+          return c.superType === SuperType.ENERGY
+            && c.energyType === EnergyType.BASIC
+            && (c as EnergyCard).provides.includes(CardType.WATER);
+        });
+        if (!hasEnergyInHand) {
+          throw new GameError(GameMessage.CANNOT_USE_POWER);
         }
 
-        state = store.prompt(state, new ConfirmPrompt(
-          player.id,
-          GameMessage.WANT_TO_USE_ABILITY,
-        ), wantToUse => {
-          if (wantToUse) {
-            const hasEnergyInHand = player.hand.cards.some(c => {
-              return c.superType === SuperType.ENERGY
-                && c.energyType === EnergyType.BASIC
-                && (c as EnergyCard).provides.includes(CardType.WATER);
-            });
-            if (!hasEnergyInHand) {
-              throw new GameError(GameMessage.CANNOT_USE_POWER);
-            }
+        const cardList = StateUtils.findCardList(state, this);
 
-            const cardList = StateUtils.findCardList(state, this);
-            if (cardList === undefined) {
-              return state;
-            }
+        player.marker.addMarker(this.ABILITY_USED_MARKER, this);
 
-            return store.prompt(state, new ChooseCardsPrompt(
-              player,
-              GameMessage.CHOOSE_CARD_TO_ATTACH,
-              player.hand,
-              { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
-              { min: 0, max: 2, allowCancel: false }
-            ), cards => {
-              cards = cards || [];
-              if (cards.length > 0) {
-                player.hand.moveCardsTo(cards, cardList);
-              }
-            });
+        return store.prompt(state, new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.hand,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Water Energy' },
+          { min: 0, max: 2, allowCancel: false }
+        ), cards => {
+          cards = cards || [];
+          if (cards.length > 0) {
+            player.hand.moveCardsTo(cards, cardList);
           }
         });
-      }
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

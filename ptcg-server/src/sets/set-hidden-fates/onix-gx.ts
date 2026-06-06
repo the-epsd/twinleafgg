@@ -2,14 +2,11 @@
 // Card effects were implemented by an agent.
 // If you have any questions or feedback, reach out to @C4 in the discord.
 
-import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { ADD_PARALYZED_TO_PLAYER_ACTIVE, AFTER_ATTACK, COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
-import { StateUtils } from '../../game/store/state-utils';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { PlayerType, State, StoreLike } from '../../game';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { State, StoreLike } from '../../game';
 export class OnixGx extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
@@ -17,9 +14,6 @@ export class OnixGx extends PokemonCard {
   public hp: number = 200;
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
-
-  public readonly REDUCE_DAMAGE_MARKER = 'ONIX_GX_HIF_REDUCE_DAMAGE_MARKER';
-  public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'ONIX_GX_HIF_CLEAR_REDUCE_DAMAGE_MARKER';
 
   public attacks = [
     {
@@ -62,32 +56,14 @@ export class OnixGx extends PokemonCard {
     // Attack 3: Rocky Avalanche-GX
     // Ref: set-unified-minds/onix.ts (Bedrock Press - reduce damage during opponent's next turn)
     if (WAS_ATTACK_USED(effect, 2, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      BLOCK_IF_GX_ATTACK_USED(player);
-      player.usedGX = true;
-
-      player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
+      effect.player.active.damageReductionNextTurn = 100;
     }
 
     // Intercept damage
-    if (effect instanceof DealDamageEffect) {
-      if (effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)) {
-        effect.damage = Math.max(0, effect.damage - 100);
-      }
-    }
+    
 
     // Cleanup at end of opponent's turn only
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
-        cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
-      });
-    }
+    
 
     return state;
   }

@@ -9,6 +9,8 @@ import {
   Vector3,
   type ShaderMaterial,
 } from 'three';
+import type { SpecialCondition } from 'ptcg-server';
+import { getSpecialConditionRotationZ } from './board-3d-marker';
 import { createBoard3dHoloMaterial, releaseBoard3dHoloMaterial } from './board-3d-holo-material';
 import {
   board3dCardMaterialKey,
@@ -23,6 +25,8 @@ import {
 export class Board3dCard {
   private group: Group;
   private cardMesh: Mesh;
+  /** Face-attached overlays (markers, energy, damage) — rotates with the card, not inside the box mesh. */
+  private overlayAnchor: Group;
   private outlineMesh: Mesh | null = null;
   private maskTexture?: Texture;
   private frontMaterialKey?: string;
@@ -94,7 +98,11 @@ export class Board3dCard {
     // Rotate card to face upward (fix orientation)
     this.cardMesh.rotation.x = -Math.PI / 2;
 
+    this.overlayAnchor = new Group();
+    this.overlayAnchor.rotation.x = -Math.PI / 2;
+
     this.group.add(this.cardMesh);
+    this.group.add(this.overlayAnchor);
 
     // Set position, rotation, and scale
     this.group.position.copy(position);
@@ -111,6 +119,11 @@ export class Board3dCard {
 
   public getMesh(): Mesh {
     return this.cardMesh;
+  }
+
+  /** Anchor for face overlays that must tilt with special conditions without clipping the card box. */
+  public getOverlayAnchor(): Group {
+    return this.overlayAnchor;
   }
 
   /**
@@ -145,6 +158,13 @@ export class Board3dCard {
 
   public setRotation(rotation: number): void {
     this.group.rotation.y = (rotation * Math.PI) / 180;
+  }
+
+  /** Asleep / confused / paralyzed in-plane tilt (matches Angular board-card). */
+  public setSpecialConditionRotation(conditions: SpecialCondition[]): void {
+    const rotationZ = getSpecialConditionRotationZ(conditions);
+    this.cardMesh.rotation.z = rotationZ;
+    this.overlayAnchor.rotation.z = rotationZ;
   }
 
   public setScale(scale: number): void {

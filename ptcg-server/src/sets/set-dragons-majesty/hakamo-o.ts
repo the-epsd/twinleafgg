@@ -4,11 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class HakamoO extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -38,34 +36,13 @@ export class HakamoO extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Hakamo-o';
   public fullName: string = 'Hakamo-o DRM';
-
-  public readonly GUARD_PRESS_MARKER = 'GUARD_PRESS_MARKER';
   public readonly CLEAR_GUARD_PRESS_MARKER = 'CLEAR_GUARD_PRESS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Guard Press
     // Ref: set-guardians-rising/kommo-o-gx.ts (Adamantine Press - damage reduction marker)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.GUARD_PRESS_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_GUARD_PRESS_MARKER, this);
-    }
-
-    if (effect instanceof DealDamageEffect && effect.target.marker.hasMarker(this.GUARD_PRESS_MARKER, this)) {
-      const pokemonCard = effect.target.getPokemonCard();
-      if (pokemonCard === this) {
-        effect.damage = Math.max(0, effect.damage - 30);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_GUARD_PRESS_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_GUARD_PRESS_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
-        cardList.marker.removeMarker(this.GUARD_PRESS_MARKER, this);
-      });
+      effect.player.active.damageReductionNextTurn = 30;
     }
 
     return state;

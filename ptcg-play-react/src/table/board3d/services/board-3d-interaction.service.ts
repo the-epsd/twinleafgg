@@ -40,6 +40,8 @@ import { ZONE_POSITIONS, SNAP_DISTANCE, getBenchPositions } from '../board-3d-zo
 import {
   BOARD3D_CARD_SLOT_BASE_HEIGHT,
   BOARD3D_CARD_SLOT_BASE_WIDTH,
+  BOARD3D_BENCH_DROP_ZONE_HEIGHT,
+  BOARD3D_BENCH_DROP_ZONE_WIDTH,
   BOARD3D_DECK_BULK_VISUAL_UD,
   BOARD3D_DROP_ZONE_TARGET_SCALE,
   BOARD3D_STADIUM_DROP_ZONE_EXTRA_SCALE,
@@ -1442,8 +1444,18 @@ export class Board3dInteractionService {
         continue;
       }
 
-      // Handle other zones (including individual BENCH, ACTIVE, SUPPORTER zones)
-      // These are small enough that distance-based detection is accurate
+      // Handle individual bench slots — use bounds so hit area matches the smaller zone
+      if (config.type === DropZoneType.BENCH) {
+        if (zone.isPositionInBounds(position)) {
+          if (distance < minDistance) {
+            nearestZone = zone;
+            minDistance = distance;
+          }
+        }
+        continue;
+      }
+
+      // Handle other small zones (ACTIVE, SUPPORTER, STADIUM)
       const snapDist = SNAP_DISTANCE;
       if (distance < snapDist && distance < minDistance) {
         nearestZone = zone;
@@ -1698,6 +1710,8 @@ export class Board3dInteractionService {
         position: pos,
         player,
         index: i,
+        width: BOARD3D_BENCH_DROP_ZONE_WIDTH,
+        height: BOARD3D_BENCH_DROP_ZONE_HEIGHT,
         texture: this.slotGridTexture ?? undefined
       });
       this.dropZones.push(benchZone);

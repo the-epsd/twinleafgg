@@ -1,10 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../game';
+import { StoreLike, State } from '../../game';
 
 import { Effect } from '../../game/store/effects/effect';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Shelgon extends PokemonCard {
@@ -37,30 +35,9 @@ export class Shelgon extends PokemonCard {
   public name: string = 'Shelgon';
   public fullName: string = 'Shelgon JTG';
 
-  public readonly GUARD_PRESS = 'GUARD_PRESS';
-  public readonly CLEAR_GUARD_PRESS = 'CLEAR_GUARD_PRESS';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      player.active.marker.addMarker(this.GUARD_PRESS, this);
-      opponent.marker.addMarker(this.CLEAR_GUARD_PRESS, this);
-    }
-
-    if (effect instanceof DealDamageEffect && effect.target.marker.hasMarker(this.GUARD_PRESS)) {
-      effect.damage -= 30;
-      return state;
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_GUARD_PRESS, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_GUARD_PRESS, this);
-
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.GUARD_PRESS, this);
-      });
+      effect.player.active.damageReductionNextTurn = 30;
     }
 
     return state;

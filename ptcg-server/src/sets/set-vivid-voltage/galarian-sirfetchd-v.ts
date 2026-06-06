@@ -7,9 +7,8 @@ import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/stor
 import { BoardEffect, CardTransfer, GameMessage, MoveEnergyPrompt, PlayerType, PowerType, SlotType, StoreLike, State, StateUtils } from '../../game';
 import { CardTarget } from '../../game/store/actions/play-card-action';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { MovedToActiveEffect } from '../../game/store/effects/game-effects';
+import { MOVED_TO_ACTIVE_THIS_TURN, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
 export class GalarianSirfetchdV extends PokemonCard {
   public tags = [CardTag.POKEMON_V];
@@ -41,88 +40,73 @@ export class GalarianSirfetchdV extends PokemonCard {
   public name: string = 'Galarian Sirfetch\'d V';
   public fullName: string = 'Galarian Sirfetch\'d V VIV';
 
-  public ABILITY_USED_MARKER = 'GALARIAN_SIRFETCHD_V_ABILITY_USED_MARKER';
+  public readonly ABILITY_USED_MARKER = 'GALARIAN_SIRFETCHD_V_ABILITY_USED_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Resolute Spear (bench-to-active trigger)
-    // Ref: set-paradox-rift/iron-moth.ts (movedToActiveThisTurn + MoveEnergyPrompt pattern)
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ABILITY_USED_MARKER, this);
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = state.players[state.activePlayer];
-      player.marker.removeMarker(this.ABILITY_USED_MARKER, this);
-      this.movedToActiveThisTurn = false;
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      this.movedToActiveThisTurn = false;
-      effect.player.marker.removeMarker(this.ABILITY_USED_MARKER, this);
-    }
-
-    const cardList = StateUtils.findCardList(state, this);
-    const owner = StateUtils.findOwner(state, cardList);
     const player = state.players[state.activePlayer];
-
-    if (player === owner && !player.marker.hasMarker(this.ABILITY_USED_MARKER, this)) {
-      if (this.movedToActiveThisTurn === true) {
-        // Check if ability is blocked
-        if (IS_ABILITY_BLOCKED(store, state, player, this)) {
-          return state;
-        }
-
-        // Find Fighting energy on bench - energy moves FROM bench TO active (Sirfetch'd)
-        const blockedFrom: CardTarget[] = [];
-        const blockedTo: CardTarget[] = [];
-
-        let hasFightingEnergyOnBench = false;
-        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
-          if (cardList === player.active) {
-            // Energy comes FROM bench, not FROM active; active is blocked as source
-            blockedFrom.push(target);
-            return;
-          }
-          // Energy goes TO active only; bench slots are blocked as destinations
-          blockedTo.push(target);
-          // Check if this bench slot has Fighting energy
-          if (cardList.cards.some(c => c.superType === SuperType.ENERGY)) {
-            hasFightingEnergyOnBench = true;
-          }
-        });
-
-        if (!hasFightingEnergyOnBench) {
-          return state;
-        }
-
-        return store.prompt(state, new MoveEnergyPrompt(
-          player.id,
-          GameMessage.MOVE_ENERGY_CARDS,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.BENCH, SlotType.ACTIVE],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
-          { allowCancel: true, blockedTo, blockedFrom }
-        ), transfers => {
-          if (!transfers || transfers.length === 0) {
-            return;
-          }
-
-          const validTransfers: CardTransfer[] = transfers || [];
-          for (const transfer of validTransfers) {
-            const source = StateUtils.getTarget(state, player, transfer.from);
-            source.moveCardTo(transfer.card, player.active);
-          }
-
-          player.marker.addMarker(this.ABILITY_USED_MARKER, this);
-
-          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-            if (cardList.getPokemonCard() === this) {
-              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-            }
-          });
-        });
+    if (
+      effect instanceof MovedToActiveEffect &&
+      effect.pokemonCard === this &&
+      state.players[state.activePlayer] === effect.player &&
+      MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)
+    ) {
+      if (player.marker.hasMarker(this.ABILITY_USED_MARKER, this)) {
+        return state;
       }
+
+      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
+        return state;
+      }
+
+      const blockedFrom: CardTarget[] = [];
+      const blockedTo: CardTarget[] = [];
+
+      let hasFightingEnergyOnBench = false;
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (cardList === player.active) {
+          blockedFrom.push(target);
+          return;
+        }
+        blockedTo.push(target);
+        if (cardList.cards.some(c => c.superType === SuperType.ENERGY)) {
+          hasFightingEnergyOnBench = true;
+        }
+      });
+
+      if (!hasFightingEnergyOnBench) {
+        return state;
+      }
+
+      return store.prompt(state, new MoveEnergyPrompt(
+        player.id,
+        GameMessage.MOVE_ENERGY_CARDS,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH, SlotType.ACTIVE],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fighting Energy' },
+        { allowCancel: true, blockedTo, blockedFrom }
+      ), transfers => {
+        if (!transfers || transfers.length === 0) {
+          return;
+        }
+
+        const validTransfers: CardTransfer[] = transfers || [];
+        for (const transfer of validTransfers) {
+          const source = StateUtils.getTarget(state, player, transfer.from);
+          source.moveCardTo(transfer.card, player.active);
+        }
+
+        player.marker.addMarker(this.ABILITY_USED_MARKER, this);
+
+        player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+          if (cardList.getPokemonCard() === this) {
+            cardList.addBoardEffect(BoardEffect.ABILITY_USED);
+          }
+        });
+      });
     }
 
-    // Attack 1: Meteor Smash
-    // Ref: set-paradox-rift/iron-moth.ts (cannotAttackNextTurnPending)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       player.active.cannotAttackNextTurnPending = true;

@@ -4,11 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, PlayerType } from '../../game';
+import { StoreLike, State } from '../../game';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Wigglytuff extends PokemonCard {
@@ -19,9 +17,6 @@ export class Wigglytuff extends PokemonCard {
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
-
-  public readonly REDUCE_DAMAGE_MARKER = 'WIGGLYTUFF_REDUCE_DAMAGE';
-  public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'WIGGLYTUFF_CLEAR_REDUCE_DAMAGE';
 
   public attacks = [
     {
@@ -49,27 +44,14 @@ export class Wigglytuff extends PokemonCard {
     // Attack 1: Expand
     // Ref: set-dragons-majesty/kommo-o.ts (Guard Press - damage reduction marker pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
+      effect.player.active.damageReductionNextTurn = 30;
     }
 
     // Intercept damage
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)) {
-      effect.damage = Math.max(0, effect.damage - 30);
-    }
+    
 
     // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
-      });
-    }
+    
 
     // Attack 2: Charmed Slap
     // Ref: set-plasma-freeze/lanturn.ts (conditional bonus damage)

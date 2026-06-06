@@ -1,12 +1,10 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, BoardEffect } from '../../game/store/card/card-types';
-import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, PowerType, ConfirmPrompt, GameError } from '../../game';
+import { StoreLike, State, ChoosePokemonPrompt, PlayerType, SlotType, PowerType, ConfirmPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { GameMessage } from '../../game/game-message';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { EffectOfAbilityEffect, PowerEffect } from '../../game/store/effects/game-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { EffectOfAbilityEffect, MovedToActiveEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { MOVED_TO_ACTIVE_THIS_TURN, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class IronValiantex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -37,91 +35,74 @@ export class IronValiantex extends PokemonCard {
   public name: string = 'Iron Valiant ex';
   public fullName: string = 'Iron Valiant ex PAR';
 
-  public tachyonBits: number = 0;
   public readonly TACHYON_BITS_MARKER = 'TACHYON_BITS_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      this.movedToActiveThisTurn = false;
-      this.tachyonBits = 0;
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      this.tachyonBits = 0;
-      this.movedToActiveThisTurn = false;
-      console.log('movedToActiveThisTurn = false');
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
-      this.tachyonBits = 0;
-      effect.player.marker.removeMarker(this.TACHYON_BITS_MARKER, this);
-      console.log('marker cleared');
-    }
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.TACHYON_BITS_MARKER, this);
 
     const player = state.players[state.activePlayer];
+    if (
+      effect instanceof MovedToActiveEffect &&
+      effect.pokemonCard === this &&
+      state.players[state.activePlayer] === effect.player &&
+      MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)
+    ) {
+      if (player.marker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
+        return state;
+      }
 
-    if (this.movedToActiveThisTurn == true && player.active.cards[0] == this) {
-      this.tachyonBits++;
-
-      if (this.tachyonBits === 1) {
-        if (player.marker.hasMarker(this.TACHYON_BITS_MARKER, this)) {
-          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      state = store.prompt(state, new ConfirmPrompt(
+        player.id,
+        GameMessage.WANT_TO_USE_ABILITY,
+      ), wantToUse => {
+        if (!wantToUse) {
+          player.marker.addMarker(this.TACHYON_BITS_MARKER, this);
+          return;
         }
 
-        state = store.prompt(state, new ConfirmPrompt(
+        try {
+          const stub = new PowerEffect(player, {
+            name: 'test',
+            powerType: PowerType.ABILITY,
+            text: ''
+          }, this);
+          store.reduceEffect(state, stub);
+        } catch {
+          return;
+        }
+
+        player.marker.addMarker(this.TACHYON_BITS_MARKER, this);
+
+        state = store.prompt(state, new ChoosePokemonPrompt(
           player.id,
-          GameMessage.WANT_TO_USE_ABILITY,
-        ), wantToUse => {
-          if (wantToUse) {
+          GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH, SlotType.ACTIVE],
+          { min: 1, max: 1, allowCancel: true },
+        ), selected => {
+          const targets = selected || [];
 
-            // Try to reduce PowerEffect, to check if something is blocking our ability
-            try {
-              const stub = new PowerEffect(player, {
-                name: 'test',
-                powerType: PowerType.ABILITY,
-                text: ''
-              }, this);
-              store.reduceEffect(state, stub);
-            } catch {
-              return state;
+          player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
+            if (cardList.getPokemonCard() === this) {
+              cardList.addBoardEffect(BoardEffect.ABILITY_USED);
             }
-
-            state = store.prompt(state, new ChoosePokemonPrompt(
-              player.id,
-              GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
-              PlayerType.TOP_PLAYER,
-              [SlotType.BENCH, SlotType.ACTIVE],
-              { min: 1, max: 1, allowCancel: true },
-            ), selected => {
-
-              const targets = selected || [];
-
-              player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-                if (cardList.getPokemonCard() === this) {
-                  cardList.addBoardEffect(BoardEffect.ABILITY_USED);
-                }
-              });
-              if (targets.length > 0) {
-                const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, targets[0]);
-                store.reduceEffect(state, damageEffect);
-                if (damageEffect.target) {
-                  damageEffect.target.damage += 20;
-                }
-              }
-              this.tachyonBits++;
-            });
+          });
+          if (targets.length > 0) {
+            const damageEffect = new EffectOfAbilityEffect(player, this.powers[0], this, targets[0]);
+            store.reduceEffect(state, damageEffect);
+            if (damageEffect.target) {
+              damageEffect.target.damage += 20;
+            }
           }
         });
-      }
+      });
     }
 
-    // Laser Blade
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       player.active.cannotAttackNextTurnPending = true;
     }
-    
+
     return state;
   }
 }

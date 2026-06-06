@@ -4,11 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils, GameMessage } from '../../game';
+import { StoreLike, State, StateUtils, GameMessage } from '../../game';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../game/store/prompts/show-cards-prompt';
 import { WAS_ATTACK_USED, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
@@ -19,9 +17,6 @@ export class Carbink extends PokemonCard {
   public hp: number = 90;
   public weakness = [{ type: G }];
   public retreat = [C];
-
-  public readonly REDUCE_DAMAGE_MARKER = 'CARBINK_LOT_REDUCE_DAMAGE';
-  public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'CARBINK_LOT_CLEAR_REDUCE_DAMAGE';
 
   public attacks = [
     {
@@ -106,24 +101,7 @@ export class Carbink extends PokemonCard {
     // Attack 2: Guard Press
     // Ref: set-dragons-majesty/jangmo-o.ts (Rigidify - damage reduction marker pattern)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-    }
-
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)) {
-      effect.damage = Math.max(0, effect.damage - 20);
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
-      });
+      effect.player.active.damageReductionNextTurn = 20;
     }
 
     return state;

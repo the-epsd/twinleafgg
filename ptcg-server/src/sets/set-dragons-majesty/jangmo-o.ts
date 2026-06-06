@@ -4,10 +4,8 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class JangmoO extends PokemonCard {
@@ -16,9 +14,6 @@ export class JangmoO extends PokemonCard {
   public hp: number = 60;
   public weakness = [{ type: Y }];
   public retreat = [C];
-
-  public readonly REDUCE_DAMAGE_MARKER = 'JANGMOO_DRM_REDUCE_DAMAGE';
-  public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'JANGMOO_DRM_CLEAR_REDUCE_DAMAGE';
 
   public attacks = [
     {
@@ -45,24 +40,7 @@ export class JangmoO extends PokemonCard {
     // Attack 1: Rigidify
     // Ref: set-steam-siege/shieldon.ts (Rock Head - damage reduction marker pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-    }
-
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)) {
-      effect.damage = Math.max(0, effect.damage - 20);
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
-      });
+      effect.player.active.damageReductionNextTurn = 20;
     }
 
     return state;

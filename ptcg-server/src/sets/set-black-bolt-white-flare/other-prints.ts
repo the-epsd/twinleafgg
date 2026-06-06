@@ -134,8 +134,8 @@ export class ServineAR extends Servine {
 // }
 
 export class VictiniAR extends Victini {
-  public setNumber = '97';
-  public set = 'BLK';
+  public setNumber = '208';
+  public set = 'SVP';
   public fullName: string = 'VictiniAR SV11B';
 }
 

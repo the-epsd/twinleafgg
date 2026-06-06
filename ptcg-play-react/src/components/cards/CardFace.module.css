@@ -28,8 +28,15 @@
 }
 
 /* Library: highlight cards already in the active deck (ring only, no elevation). */
-.innerInDeckRing {
-  box-shadow: 0 0 0 2px rgba(67, 160, 71, 0.55);
+.innerInDeckRing::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid rgba(67, 160, 71, 0.55);
+  border-radius: calc(6cqw + 5px);
+  box-sizing: border-box;
+  pointer-events: none;
+  z-index: 3;
 }
 
 .img {

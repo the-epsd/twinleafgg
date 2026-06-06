@@ -7,7 +7,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Gumshoos extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -63,7 +63,7 @@ export class Gumshoos extends PokemonCard {
       // At end of opponent's turn, check if their active moved from bench this turn
       // and save that information via a marker (before movedToActiveThisTurn is cleared)
       const opponentActiveCard = player.active.getPokemonCard();
-      if (opponentActiveCard && opponentActiveCard.movedToActiveThisTurn) {
+      if (opponentActiveCard && MOVED_TO_ACTIVE_THIS_TURN(player, opponentActiveCard)) {
         // The current EndTurnEffect player is actually the opponent (from Gumshoos owner's perspective)
         // Mark that the opponent's active moved, for use during our next attack
         player.active.marker.addMarker(this.OPPONENT_MOVED_MARKER, this);

@@ -1,9 +1,7 @@
-import { GameError, GameMessage, PlayerType, Power, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { GameError, GameMessage, Power, PowerType, State, StoreLike } from '../../game';
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
@@ -37,9 +35,6 @@ export class Eldegoss extends PokemonCard {
   public fullName: string = 'Eldegoss EVS';
 
   public readonly COTTON_LIFT_MARKER = 'COTTON_LIFT_MARKER';
-  public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
-  public readonly CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Cotton Lift
     if (WAS_POWER_USED(effect, 0, this)) {
@@ -58,34 +53,17 @@ export class Eldegoss extends PokemonCard {
       ABILITY_USED(player, this);
     }
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.COTTON_LIFT_MARKER, this);
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      effect.player.active.damageReductionNextTurn = 30;
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this)) {
-      if (effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-        effect.damage -= 30;
-        return state;
-      }
-    }
+    
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this && HAS_MARKER(this.COTTON_LIFT_MARKER, effect.player, this)) {
       REMOVE_MARKER(this.COTTON_LIFT_MARKER, effect.player, this);
     }
 
-    if (effect instanceof EndTurnEffect
-      && (effect.player.marker.hasMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this))) {
-      effect.player.marker.removeMarker(this.CLEAR_DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      });
-    }
+    
     return state;
   }
 }

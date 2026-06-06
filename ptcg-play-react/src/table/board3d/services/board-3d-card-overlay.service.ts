@@ -1,4 +1,4 @@
-import { Scene, Vector3, Texture, PerspectiveCamera, Group } from 'three';
+import { Scene, Vector3, Texture, PerspectiveCamera, Group, Object3D } from 'three';
 import {
   PokemonCardList,
   Card,
@@ -11,13 +11,18 @@ import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import { Board3dEnergySprite } from '../board-3d-energy-sprite';
 import { Board3dDamageCounter } from '../board-3d-damage-counter';
 import { Board3dPendingPlaceDamage } from '../board-3d-pending-place-damage';
-import { Board3dMarker } from '../board-3d-marker';
+import { Board3dMarker, collectPokemonMarkerFiles } from '../board-3d-marker';
 import { Board3dAbilityUsedBadge } from '../board-3d-ability-used-badge';
 import type { Board3dCardsAdapter } from '../board3dCardsAdapter';
 import { apply3dCardHolo } from '../board-3d-holo-apply';
 
 function overlayAttachRoot(host: Board3dCard | Group): Group {
   return host instanceof Board3dCard ? host.getGroup() : host;
+}
+
+/** Overlays that stick to the card face and tilt with special conditions. */
+function cardOverlayAttachRoot(host: Board3dCard | Group): Object3D {
+  return host instanceof Board3dCard ? host.getOverlayAnchor() : host;
 }
 
 export interface CardOverlays {
@@ -49,6 +54,7 @@ export class Board3dCardOverlayService {
     pendingPlaceDamage: number = 0,
   ): Promise<void> {
     const root = overlayAttachRoot(cardHost);
+    const overlayRoot = cardOverlayAttachRoot(cardHost);
     let overlays = this.cardOverlays.get(cardId);
     if (!overlays) {
       overlays = {
@@ -60,11 +66,19 @@ export class Board3dCardOverlayService {
         toolCards: [],
       };
       this.cardOverlays.set(cardId, overlays);
-      root.add(overlays.energySprite.getGroup());
-      root.add(overlays.damageCounter.getGroup());
+      overlays.energySprite.attachTo(overlayRoot);
+      overlays.damageCounter.attachTo(overlayRoot);
       root.add(overlays.pendingPlaceDamage.getGroup());
-      root.add(overlays.marker.getGroup());
+      overlays.marker.attachTo(overlayRoot);
       root.add(overlays.abilityUsedBadge.getGroup());
+    } else {
+      overlays.energySprite.attachTo(overlayRoot);
+      overlays.damageCounter.attachTo(overlayRoot);
+      overlays.marker.attachTo(overlayRoot);
+    }
+
+    if (cardHost instanceof Board3dCard) {
+      cardHost.setSpecialConditionRotation(cardList.specialConditions);
     }
 
     if (cardList.energies && cardList.energies.cards.length > 0) {
@@ -78,7 +92,7 @@ export class Board3dCardOverlayService {
     });
     overlays.pendingPlaceDamage.update(pendingPlaceDamage);
 
-    await overlays.marker.updateConditions(cardList.specialConditions);
+    await overlays.marker.updateForCard(cardList);
 
     const hasAbilityUsed = cardList.boardEffect.includes(BoardEffect.ABILITY_USED);
     overlays.abilityUsedBadge.updateAbilityUsed(hasAbilityUsed);
@@ -130,6 +144,8 @@ export class Board3dCardOverlayService {
   updateBillboards(camera: PerspectiveCamera): void {
     this.cardOverlays.forEach((overlays) => {
       overlays.energySprite.updateBillboards(camera);
+      overlays.damageCounter.updateBillboards(camera);
+      overlays.marker.updateBillboards(camera);
     });
   }
 

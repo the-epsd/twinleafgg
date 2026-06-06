@@ -4,11 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
-import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MOVED_TO_ACTIVE_THIS_TURN } from '../../game/store/prefabs/prefabs';
 
 export class ScizorEx extends PokemonCard {
   public tags = [CardTag.POKEMON_EX];
@@ -41,39 +39,13 @@ export class ScizorEx extends PokemonCard {
   public name: string = 'Scizor-EX';
   public fullName: string = 'Scizor-EX BKP';
 
-  public readonly STEEL_WING_MARKER = 'SCIZOR_EX_STEEL_WING_MARKER';
-  public readonly CLEAR_STEEL_WING_MARKER = 'SCIZOR_EX_CLEAR_STEEL_WING_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Steel Wing
-    // Ref: set-primal-clash/skitty.ts (Charm - reduce damage during opponent's next turn)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.STEEL_WING_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_STEEL_WING_MARKER, this);
+      effect.player.active.damageReductionNextTurn = 20;
     }
 
-    // Reduce damage to this Pokemon
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect)
-      && effect.target.marker.hasMarker(this.STEEL_WING_MARKER, this)) {
-      effect.damage = Math.max(0, effect.damage - 20);
-    }
-
-    // Cleanup markers at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_STEEL_WING_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_STEEL_WING_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.STEEL_WING_MARKER, this);
-      });
-    }
-
-    // Attack 2: Gale Thrust
-    // Ref: set-evolutions/arcanine.ts (Burning Road - movedToActiveThisTurn check)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      if (this.movedToActiveThisTurn) {
+      if (MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)) {
         effect.damage += 60;
       }
     }

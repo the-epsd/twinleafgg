@@ -14,11 +14,13 @@ import type {
   ConfirmPrompt,
   PutDamagePrompt,
   RemoveDamagePrompt,
+  MoveDamagePrompt,
   SelectPrompt,
   ShowCardsPrompt,
   ShowMulliganPrompt,
   WaitPrompt,
   ChooseEnergyPrompt,
+  MoveEnergyPrompt,
 } from 'ptcg-server';
 import type { LocalGameState } from '../types/localGameState';
 import { activeGamePrompt } from '../activeGamePrompt';
@@ -30,10 +32,16 @@ import { CheckboxField } from '../../components/ui/CheckboxField';
 import styles from './TablePromptLayer.module.css';
 import { AttachEnergyPromptPanel } from './AttachEnergyPromptPanel';
 import { ChooseEnergyPromptPanel } from './ChooseEnergyPromptPanel';
+import { MoveEnergyPromptPanel } from './MoveEnergyPromptPanel';
 import { PutDamageOverlay } from './PutDamageOverlay';
 import { RemoveDamageOverlay } from './RemoveDamageOverlay';
+import { MoveDamageOverlay } from './MoveDamageOverlay';
 import { scanBlockedOwnZeroDamageFromState } from './pokemonPromptRows';
 import { BOARD3D_ATTACK_ANIMATION_DURATION_SEC } from '../board3d/services/board-3d-animation.service';
+import {
+  autoTakeChoosePrizeIndices,
+  shouldAutoTakeChoosePrize,
+} from './choosePrizeAutoTake';
 
 const CHOOSE_CARDS_CARD_BACK = '/assets/cardback.png';
 
@@ -220,6 +228,40 @@ function useRemoveDamageBoardEffect(
   }, [removeDamagePromptId, clientId, boardInteraction, replay]);
 }
 
+function useMoveDamageBoardEffect(
+  localGameRef: React.MutableRefObject<LocalGameState>,
+  clientId: number,
+  boardInteraction: BoardInteractionService,
+  moveDamagePromptId: number | null,
+  replay: boolean | undefined,
+) {
+  useEffect(() => {
+    if (moveDamagePromptId == null) {
+      return;
+    }
+
+    if (replay) {
+      boardInteraction.setReplayMode(true);
+      return () => {
+        boardInteraction.setReplayMode(false);
+      };
+    }
+
+    boardInteraction.setReplayMode(false);
+    const game = localGameRef.current;
+    const prompt = activeGamePrompt(game, clientId);
+    if (!prompt || prompt.id !== moveDamagePromptId || prompt.type !== 'Move damage') {
+      return;
+    }
+
+    boardInteraction.startMoveDamageSelection(prompt as MoveDamagePrompt);
+
+    return () => {
+      boardInteraction.endBoardSelection();
+    };
+  }, [moveDamagePromptId, clientId, boardInteraction, replay]);
+}
+
 function usePutDamageBoardEffect(
   localGameRef: React.MutableRefObject<LocalGameState>,
   clientId: number,
@@ -330,6 +372,11 @@ export function TablePromptLayer({
       ? activePrompt.id
       : null;
 
+  const moveDamageId =
+    activePrompt?.type === 'Move damage' && !localGame.replay && !suppressTrainerEffectPrompts
+      ? activePrompt.id
+      : null;
+
   const putDamageId =
     activePrompt?.type === 'Put damage' && !localGame.replay && !suppressTrainerEffectPrompts
       ? activePrompt.id
@@ -349,6 +396,14 @@ export function TablePromptLayer({
     clientId,
     boardInteraction,
     removeDamageId,
+    !!localGame.replay,
+  );
+
+  useMoveDamageBoardEffect(
+    localGameRef,
+    clientId,
+    boardInteraction,
+    moveDamageId,
     !!localGame.replay,
   );
 
@@ -377,6 +432,38 @@ export function TablePromptLayer({
     [onResolvePrompt],
   );
 
+  const autoTakenChoosePrizeIdRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    autoTakenChoosePrizeIdRef.current = null;
+  }, [localGame.localId]);
+
+  useEffect(() => {
+    if (localGame.replay || suppressChoosePrizePrompt) {
+      return;
+    }
+    const p = activePrompt;
+    if (!p || p.type !== 'Choose prize' || p.playerId !== clientId) {
+      return;
+    }
+    const cpp = p as ChoosePrizePrompt;
+    if (!shouldAutoTakeChoosePrize(localGame, cpp)) {
+      return;
+    }
+    if (autoTakenChoosePrizeIdRef.current === p.id) {
+      return;
+    }
+    autoTakenChoosePrizeIdRef.current = p.id;
+    resolve(p.id, autoTakeChoosePrizeIndices(localGame, cpp));
+  }, [
+    activePrompt,
+    clientId,
+    localGame,
+    localGame.replay,
+    resolve,
+    suppressChoosePrizePrompt,
+  ]);
+
   if (localGame.replay) {
     return null;
   }
@@ -392,6 +479,14 @@ export function TablePromptLayer({
   const p = activePrompt;
 
   if (suppressChoosePrizePrompt && p.type === 'Choose prize') {
+    return null;
+  }
+
+  if (
+    p.type === 'Choose prize' &&
+    p.playerId === clientId &&
+    shouldAutoTakeChoosePrize(localGame, p as ChoosePrizePrompt)
+  ) {
     return null;
   }
 
@@ -564,6 +659,20 @@ export function TablePromptLayer({
     );
   }
 
+  if (p.type === 'Move damage') {
+    const mdp = p as MoveDamagePrompt;
+    return (
+      <MoveDamageOverlay
+        key={mdp.id}
+        prompt={mdp}
+        localGame={localGame}
+        boardInteraction={boardInteraction}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
   if (p.type === 'Put damage') {
     const pdp = p as PutDamagePrompt;
     return (
@@ -601,6 +710,21 @@ export function TablePromptLayer({
         prompt={cep}
         localGame={localGame}
         catalog={catalog}
+        getScanUrl={getScanUrl}
+        t={t}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
+  if (p.type === 'Move energy') {
+    const mep = p as MoveEnergyPrompt;
+    return (
+      <MoveEnergyPromptPanel
+        key={mep.id}
+        prompt={mep}
+        localGame={localGame}
         getScanUrl={getScanUrl}
         t={t}
         gameMessageText={gameMessageText}

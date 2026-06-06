@@ -102,10 +102,6 @@ export class Clefairy extends PokemonCard {
 
   public fullName: string = 'Clefairy BS';
 
-  public REDUCE_DAMAGE_MARKER = 'REDUCE_DAMAGE_MARKER';
-
-  public CLEAR_REDUCE_DAMAGE_MARKER = 'CLEAR_REDUCE_DAMAGE_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (AFTER_ATTACK(effect, 0, this)) {

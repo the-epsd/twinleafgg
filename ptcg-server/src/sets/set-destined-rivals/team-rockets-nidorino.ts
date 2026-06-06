@@ -6,7 +6,7 @@ import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsNidorino extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom = 'Team Rocket\'s Nidoran M';
+  public evolvesFrom = "Team Rocket's Nidoran ♂";
   public tags = [CardTag.TEAM_ROCKET];
   public cardType: CardType = D;
   public hp: number = 100;
@@ -18,23 +18,23 @@ export class TeamRocketsNidorino extends PokemonCard {
       name: 'Hammer In',
       cost: [D, C],
       damage: 30,
-      text: ''
+      text: '',
     },
     {
       name: 'Horned Gouge',
       cost: [D, D, C],
       damage: 60,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 60 more damage.'
-    }
+      text: "If your opponent's Active Pokémon already has any damage counters on it, this attack does 60 more damage.",
+    },
   ];
 
   public regulationMark = 'I';
   public set: string = 'DRI';
   public setNumber: string = '118';
   public cardImage: string = 'assets/cardback.png';
-  public name: string = 'Team Rocket\'s Nidorino';
-  public fullName: string = 'Team Rocket\'s Nidorino DRI';
+  public name: string = "Team Rocket's Nidorino";
+  public fullName: string = "Team Rocket's Nidorino DRI";
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Horned Gouge

@@ -13,15 +13,14 @@ export class NidoranMale extends PokemonCard {
       name: 'Horn Attack',
       cost: [CardType.DARK],
       damage: 20,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'MEW';
   public regulationMark = 'G';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '32';
-  public name: string = 'Nidoran M';
+  public name: string = 'Nidoran ♂';
   public fullName: string = 'Nidoran M MEW';
-
 }

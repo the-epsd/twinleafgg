@@ -4,15 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Deoxys2 extends PokemonCard {
-  public readonly REDUCE_DAMAGE_MARKER = 'DEOXYS2_CES_REDUCE_DAMAGE_MARKER';
-  public readonly CLEAR_REDUCE_DAMAGE_MARKER = 'DEOXYS2_CES_CLEAR_REDUCE_DAMAGE_MARKER';
 
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
@@ -45,25 +41,12 @@ export class Deoxys2 extends PokemonCard {
     // Attack 1: Reflect
     // Ref: set-ultra-prism/heatran.ts (Guard Press - damage reduction marker pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.REDUCE_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
+      effect.player.active.damageReductionNextTurn = 40;
     }
 
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.REDUCE_DAMAGE_MARKER, this)) {
-      effect.damage = Math.max(0, effect.damage - 40);
-    }
+    
 
-    if (effect instanceof EndTurnEffect
-      && effect.player.marker.hasMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_REDUCE_DAMAGE_MARKER, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.REDUCE_DAMAGE_MARKER, this);
-      });
-    }
+    
 
     // Attack 2: Psychic Corkscrew
     // Ref: AGENTS-patterns.md (ignoreResistance)

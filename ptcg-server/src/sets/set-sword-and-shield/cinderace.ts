@@ -1,13 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { AttachEnergyPrompt, Card, ChooseEnergyPrompt, EnergyCard, GameError, GameMessage, PlayerType, PowerType, SlotType, State, StateUtils, StoreLike } from '../../game';
+import { AttachEnergyPrompt, Card, ChooseEnergyPrompt, EnergyCard, GameMessage, PlayerType, PowerType, SlotType, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PowerEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { MovedToActiveEffect, PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVED_TO_ACTIVE_THIS_TURN, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { StateUtils } from '../../game';
 
 export class Cinderace extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -37,71 +36,62 @@ export class Cinderace extends PokemonCard {
   public name: string = 'Cinderace';
   public fullName: string = 'Cinderace SSH';
 
-  public ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';
+  public readonly ABILITY_USED_MARKER = 'ABILITY_USED_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      const player = state.players[state.activePlayer];
-      player.marker.removeMarker(this.ABILITY_USED_MARKER, this);
-      this.movedToActiveThisTurn = false;
-    }
-
-    const cardList = StateUtils.findCardList(state, this);
-    const owner = StateUtils.findOwner(state, cardList);
+    REMOVE_MARKER_AT_END_OF_TURN(effect, this.ABILITY_USED_MARKER, this);
 
     const player = state.players[state.activePlayer];
-
-    if (effect instanceof EndTurnEffect) {
-      this.movedToActiveThisTurn = false;
-      player.marker.removeMarker(this.ABILITY_USED_MARKER, this);
-    }
-
-    if (player === owner && !player.marker.hasMarker(this.ABILITY_USED_MARKER, this)) {
-      if (this.movedToActiveThisTurn == true) {
-        player.marker.addMarker(this.ABILITY_USED_MARKER, this);
-        // Try to reduce PowerEffect, to check if something is blocking our ability
-        try {
-          const stub = new PowerEffect(player, {
-            name: 'test',
-            powerType: PowerType.ABILITY,
-            text: ''
-          }, this);
-          store.reduceEffect(state, stub);
-        } catch {
-          return state;
-        }
-
-        // Checking discard for fire energy
-        const hasEnergyInDiscard = player.discard.cards.some(c => {
-          return c instanceof EnergyCard
-            && c.energyType === EnergyType.BASIC
-            && c.provides.includes(CardType.FIRE);
-        });
-        if (!hasEnergyInDiscard) {
-          throw new GameError(GameMessage.CANNOT_USE_POWER);
-        }
-
-        return store.prompt(state, new AttachEnergyPrompt(
-          player.id,
-          GameMessage.ATTACH_ENERGY_TO_BENCH,
-          player.discard,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE],
-          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
-          { allowCancel: true, min: 1, max: 2 }
-        ), transfers => {
-          transfers = transfers || [];
-          // cancelled by user
-          if (transfers.length === 0) {
-            return;
-          }
-          for (const transfer of transfers) {
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            player.discard.moveCardTo(transfer.card, target);
-          }
-        });
+    if (
+      effect instanceof MovedToActiveEffect &&
+      effect.pokemonCard === this &&
+      state.players[state.activePlayer] === effect.player &&
+      MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)
+    ) {
+      if (player.marker.hasMarker(this.ABILITY_USED_MARKER, this)) {
+        return state;
       }
+
+      try {
+        const stub = new PowerEffect(player, {
+          name: 'test',
+          powerType: PowerType.ABILITY,
+          text: ''
+        }, this);
+        store.reduceEffect(state, stub);
+      } catch {
+        return state;
+      }
+
+      const hasEnergyInDiscard = player.discard.cards.some(c => {
+        return c instanceof EnergyCard
+          && c.energyType === EnergyType.BASIC
+          && c.provides.includes(CardType.FIRE);
+      });
+      if (!hasEnergyInDiscard) {
+        return state;
+      }
+
+      player.marker.addMarker(this.ABILITY_USED_MARKER, this);
+
+      return store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_TO_BENCH,
+        player.discard,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.ACTIVE],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Fire Energy' },
+        { allowCancel: true, min: 1, max: 2 }
+      ), transfers => {
+        transfers = transfers || [];
+        if (transfers.length === 0) {
+          return;
+        }
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.discard.moveCardTo(transfer.card, target);
+        }
+      });
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -16,7 +16,7 @@ export class Raboot extends PokemonCard {
   public attacks = [{
     name: 'Jumping Kick',
     cost: [C],
-    damage: 40,
+    damage: 0,
     text: 'This attack does 40 damage to 1 of your opponent\'s Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
   }];
 

@@ -27,11 +27,24 @@ export enum GameEffects {
   PUT_COUNTERS_EFFECT = 'PUT_COUNTERS_EFFECT',
   PLACE_DAMAGE_COUNTERS_EFFECT = 'PLACE_DAMAGE_COUNTERS_EFFECT',
   MOVE_DAMAGE_COUNTERS_EFFECT = 'MOVE_DAMAGE_COUNTERS_EFFECT',
-  MOVED_TO_ACTIVE_EFFECT = 'MOVED_TO_ACTIVE_EFFECT'
+  MOVED_TO_ACTIVE_EFFECT = 'MOVED_TO_ACTIVE_EFFECT',
+  MOVED_FROM_ACTIVE_TO_BENCH_EFFECT = 'MOVED_FROM_ACTIVE_TO_BENCH_EFFECT'
 }
 
 export class MovedToActiveEffect implements Effect {
   readonly type: string = GameEffects.MOVED_TO_ACTIVE_EFFECT;
+  public preventDefault = false;
+  public player: Player;
+  public pokemonCard: PokemonCard;
+
+  constructor(player: Player, pokemonCard: PokemonCard) {
+    this.player = player;
+    this.pokemonCard = pokemonCard;
+  }
+}
+
+export class MovedFromActiveToBenchEffect implements Effect {
+  readonly type: string = GameEffects.MOVED_FROM_ACTIVE_TO_BENCH_EFFECT;
   public preventDefault = false;
   public player: Player;
   public pokemonCard: PokemonCard;

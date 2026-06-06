@@ -7,7 +7,6 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED, DRAW_CARDS, SHUFFLE_CARDS_INTO_DECK } from '../../game/store/prefabs/prefabs';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class Yanmega extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -41,12 +40,6 @@ export class Yanmega extends PokemonCard {
   public fullName: string = 'Yanmega PHF';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Reset movedToActiveThisTurn at end of turn
-    // Ref: set-team-up/zapdos.ts (movedToActiveThisTurn pattern)
-    if (effect instanceof EndTurnEffect && this.movedToActiveThisTurn) {
-      this.movedToActiveThisTurn = false;
-    }
-
     // Attack 1: Windfall
     // Ref: set-next-destinies/darmanitan.ts (Synchrodraw)
     if (WAS_ATTACK_USED(effect, 0, this)) {

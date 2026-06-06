@@ -2,7 +2,12 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, StateUtils } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { ADD_POISON_TO_PLAYER_ACTIVE, AFTER_ATTACK, IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  ADD_POISON_TO_PLAYER_ACTIVE,
+  AFTER_ATTACK,
+  IS_POKEBODY_BLOCKED,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 import { CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 
 export class Nidoqueen extends PokemonCard {
@@ -13,26 +18,28 @@ export class Nidoqueen extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public powers = [{
-    name: 'Family Bonds',
-    powerType: PowerType.POKEBODY,
-    text: 'As long as Nidoqueen is in play, the Retreat Cost for Nidoran Female, Nidorina, Nidoran Male, Nidorino and Nidoking is 0.'
-  }];
+  public powers = [
+    {
+      name: 'Family Bonds',
+      powerType: PowerType.POKEBODY,
+      text: 'As long as Nidoqueen is in play, the Retreat Cost for Nidoran ♀, Nidorina, Nidoran ♂, Nidorino and Nidoking is 0.',
+    },
+  ];
 
   public attacks = [
     {
       name: 'Toxic',
       cost: [G],
       damage: 0,
-      text: 'The Defending Pokémon is now Poisoned. Put 2 damage counters instead of 1 on the Defending Pokémon between turns.'
+      text: 'The Defending Pokémon is now Poisoned. Put 2 damage counters instead of 1 on the Defending Pokémon between turns.',
     },
     {
       name: 'Power Lariat',
       cost: [F, C, C],
       damage: 40,
       damageCalculation: '+',
-      text: 'Does 40 damage plus 10 more damage for each Evolved Pokémon you have in play.'
-    }
+      text: 'Does 40 damage plus 10 more damage for each Evolved Pokémon you have in play.',
+    },
   ];
 
   public set: string = 'RG';
@@ -42,7 +49,6 @@ export class Nidoqueen extends PokemonCard {
   public fullName: string = 'Nidoqueen RG';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
-
     if (effect instanceof CheckRetreatCostEffect) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
@@ -64,12 +70,14 @@ export class Nidoqueen extends PokemonCard {
         return state;
       }
 
-      if (!IS_POKEBODY_BLOCKED(store, state, player, this)
-        && (active.name === 'Nidoran F'
-          || active.name === 'Nidorina'
-          || active.name === 'Nidoran M'
-          || active.name === 'Nidorino'
-          || active.name === 'Nidoking')) {
+      if (
+        !IS_POKEBODY_BLOCKED(store, state, player, this) &&
+        (active.name === 'Nidoran ♀' ||
+          active.name === 'Nidorina' ||
+          active.name === 'Nidoran ♂' ||
+          active.name === 'Nidorino' ||
+          active.name === 'Nidoking')
+      ) {
         effect.cost = [];
       }
       return state;
@@ -84,7 +92,12 @@ export class Nidoqueen extends PokemonCard {
       let evolvedCount = 0;
 
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
-        if (list.getPokemons().length > 1 && card.stage !== Stage.LEGEND && card.stage !== Stage.VUNION && card.stage !== Stage.LV_X) {
+        if (
+          list.getPokemons().length > 1 &&
+          card.stage !== Stage.LEGEND &&
+          card.stage !== Stage.VUNION &&
+          card.stage !== Stage.LV_X
+        ) {
           evolvedCount++;
         }
       });

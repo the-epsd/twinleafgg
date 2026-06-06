@@ -10,55 +10,48 @@ import { GameMessage } from '../../game';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Nidorino extends PokemonCard {
-
   public name = 'Nidorino';
-
   public set = 'BS';
-
+  public setNumber: string = '37';
   public fullName = 'Nidorino BS';
-
-  public cardType: CardType = CardType.GRASS;
-
-  public stage = Stage.STAGE_1;
-
-  public evolvesFrom = 'Nidoran M';
-
   public cardImage: string = 'assets/cardback.png';
 
-  public setNumber: string = '37';
-
+  public cardType: CardType = G;
+  public stage = Stage.STAGE_1;
+  public evolvesFrom = 'Nidoran ♂';
   public hp = 60;
-
-  public weakness = [{ type: CardType.PSYCHIC }];
-
-  public retreat = [CardType.COLORLESS];
+  public weakness = [{ type: P }];
+  public retreat = [C];
 
   public attacks: Attack[] = [
     {
       name: 'Double Kick',
-      cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [G, C, C],
       damage: 30,
-      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.'
+      text: 'Flip 2 coins. This attack does 30 damage times the number of heads.',
     },
     {
       name: 'Horn Drill',
-      cost: [CardType.GRASS, CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
+      cost: [G, G, C, C],
       damage: 50,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      return store.prompt(state, [
-        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
-        new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP)
-      ], (results) => {
-        const heads = results.filter(r => !!r).length;
-        effect.damage = heads * 30;
-      });
+      return store.prompt(
+        state,
+        [
+          new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
+          new CoinFlipPrompt(effect.player.id, GameMessage.COIN_FLIP),
+        ],
+        (results) => {
+          const heads = results.filter((r) => !!r).length;
+          effect.damage = heads * 30;
+        },
+      );
     }
     return state;
   }
-
 }

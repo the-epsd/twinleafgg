@@ -162,10 +162,10 @@ export class Board3dAssetLoaderService {
   }
 
   /**
-   * Load a marker texture (for status conditions)
+   * Load a marker texture (for status conditions and card markers)
    */
-  async loadMarkerTexture(condition: string): Promise<Texture> {
-    const markerUrl = publicAssetUrl(`assets/${condition}.webp`);
+  async loadMarkerTexture(markerFile: string): Promise<Texture> {
+    const markerUrl = publicAssetUrl(`assets/status-conditions/${markerFile}.webp`);
 
     if (this.textureCache.has(markerUrl)) {
       return this.textureCache.get(markerUrl)!;
@@ -179,7 +179,7 @@ export class Board3dAssetLoaderService {
       this.textureCache.set(markerUrl, texture);
       return texture;
     } catch (error) {
-      console.error('Failed to load marker texture:', condition, error);
+      console.error('Failed to load marker texture:', markerFile, error);
       return this.createFallbackTexture();
     }
   }

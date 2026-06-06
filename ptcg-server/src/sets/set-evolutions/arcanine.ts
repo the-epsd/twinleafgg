@@ -7,8 +7,7 @@ import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { Card, CardTarget, EnergyCard, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PowerType, SlotType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, MOVED_TO_ACTIVE_THIS_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Arcanine extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -53,7 +52,7 @@ export class Arcanine extends PokemonCard {
       }
 
       // Check that this Pokemon was moved to Active this turn
-      if (!this.movedToActiveThisTurn) {
+      if (!MOVED_TO_ACTIVE_THIS_TURN(player, this)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
@@ -122,11 +121,6 @@ export class Arcanine extends PokemonCard {
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.BURNING_ROAD_MARKER, this);
-
-    // Reset movedToActiveThisTurn at end of turn
-    if (effect instanceof EndTurnEffect && this.movedToActiveThisTurn) {
-      this.movedToActiveThisTurn = false;
-    }
 
     // Attack 1: Scorching Breath
     // Ref: AGENTS.md (can't attack next turn)

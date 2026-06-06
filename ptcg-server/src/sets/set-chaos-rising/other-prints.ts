@@ -51,12 +51,12 @@ export class AmpharosIR extends Ampharos {
 }
 
 export class XerneasIR extends Xerneas {
-  public fullName = 'Frogadier IR CRI';
+  public fullName = 'Xerneas IR CRI';
   public setNumber = '91';
 }
 
 export class ClaydolIR extends Claydol {
-  public fullName = 'Frogadier IR CRI';
+  public fullName = 'Claydol IR CRI';
   public setNumber = '92';
 }
 
@@ -206,12 +206,12 @@ export class CinccinoexSIR extends Cinccinoex {
 }
 
 export class AzsTranquilitySIR extends AzsTranquility {
-  public fullName = 'AZs Tranquility FA CRI';
+  public fullName = 'AZs Tranquility SIR CRI';
   public setNumber = '120';
 }
 
 export class RoxiesPerformanceSIR extends RoxiesPerformance {
-  public fullName = 'Roxies Performance FA CRI';
+  public fullName = 'Roxies Performance SIR CRI';
   public setNumber = '121';
 }
 

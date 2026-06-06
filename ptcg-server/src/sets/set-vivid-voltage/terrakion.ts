@@ -4,15 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, HAS_MARKER, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Terrakion extends PokemonCard {
-  public readonly GUARD_PRESS_MARKER = 'TERRAKION_VIV_GUARD_PRESS_MARKER';
-  public readonly CLEAR_GUARD_PRESS_MARKER = 'TERRAKION_VIV_CLEAR_GUARD_PRESS_MARKER';
 
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
@@ -47,25 +43,12 @@ export class Terrakion extends PokemonCard {
     // Attack 1: Guard Press
     // Ref: set-sword-and-shield/dubwool.ts (Cotton Guard - damage reduction marker pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      player.active.marker.addMarker(this.GUARD_PRESS_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_GUARD_PRESS_MARKER, this);
+      effect.player.active.damageReductionNextTurn = 30;
     }
 
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.GUARD_PRESS_MARKER, this)) {
-      effect.damage = Math.max(0, effect.damage - 30);
-    }
+    
 
-    if (effect instanceof EndTurnEffect
-      && HAS_MARKER(this.CLEAR_GUARD_PRESS_MARKER, effect.player, this)) {
-      REMOVE_MARKER(this.CLEAR_GUARD_PRESS_MARKER, effect.player, this);
-      const opponent = StateUtils.getOpponent(state, effect.player);
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
-        cardList.marker.removeMarker(this.GUARD_PRESS_MARKER, this);
-      });
-    }
+    
 
     // Attack 2: Earthen Power
     // Ref: set-guardians-rising/oricorio-2.ts (stadium in play check)

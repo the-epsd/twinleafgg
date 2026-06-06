@@ -6,8 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVED_TO_ACTIVE_THIS_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class Poliwrath extends PokemonCard {
@@ -41,16 +40,10 @@ export class Poliwrath extends PokemonCard {
   public fullName: string = 'Poliwrath EVO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Reset movedToActiveThisTurn at end of turn
-    // Ref: set-phantom-forces/yanmega.ts (Surprise Strike - movedToActiveThisTurn pattern)
-    if (effect instanceof EndTurnEffect && this.movedToActiveThisTurn) {
-      this.movedToActiveThisTurn = false;
-    }
-
     // Attack 1: Dashing Punch
     // Ref: set-phantom-forces/yanmega.ts (Surprise Strike)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      if (this.movedToActiveThisTurn) {
+      if (MOVED_TO_ACTIVE_THIS_TURN(effect.player, this)) {
         effect.damage += 50;
       }
     }

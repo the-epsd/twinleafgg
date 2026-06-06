@@ -8,7 +8,12 @@ import { SuperType } from '../../game/store/card/card-types';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
-function* useFamilyRescue(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+function* useFamilyRescue(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const blocked: number[] = [];
   let psychicCount = 0;
@@ -26,19 +31,23 @@ function* useFamilyRescue(next: Function, store: StoreLike, state: State, effect
 
   const max = Math.min(5, psychicCount);
   let cards: PokemonCard[] = [];
-  yield store.prompt(state, new ChooseCardsPrompt(
-    player,
-    GameMessage.CHOOSE_CARD_TO_DECK,
-    player.discard,
-    { superType: SuperType.POKEMON },
-    { min: 0, max, allowCancel: false, blocked }
-  ), selected => {
-    cards = selected as PokemonCard[] || [];
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseCardsPrompt(
+      player,
+      GameMessage.CHOOSE_CARD_TO_DECK,
+      player.discard,
+      { superType: SuperType.POKEMON },
+      { min: 0, max, allowCancel: false, blocked },
+    ),
+    (selected) => {
+      cards = (selected as PokemonCard[]) || [];
+      next();
+    },
+  );
   player.discard.moveCardsTo(cards, player.deck);
   if (cards.length > 0) {
-    yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+    yield store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
       player.deck.applyOrder(order);
     });
   }
@@ -46,7 +55,7 @@ function* useFamilyRescue(next: Function, store: StoreLike, state: State, effect
 
 export class Nidorina extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom = 'Nidoran F';
+  public evolvesFrom = 'Nidoran ♀';
   public cardType = P;
   public hp = 90;
   public weakness = [{ type: P }];
@@ -58,14 +67,14 @@ export class Nidorina extends PokemonCard {
       name: 'Family Rescue',
       cost: [C],
       damage: 0,
-      text: 'Shuffle 5 [P] Pokémon from your discard pile into your deck.'
+      text: 'Shuffle 5 [P] Pokémon from your discard pile into your deck.',
     },
     {
       name: 'Bite',
       cost: [C, C],
       damage: 30,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'TEU';

@@ -1,8 +1,5 @@
 import { PokemonCard, Stage, CardType, State, StoreLike, PowerType, GameError, GameMessage, SuperType, CardTag } from '../../game';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { HAS_MARKER, ABILITY_USED, ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN, SEARCH_DECK_FOR_CARDS_TO_HAND, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Genesectex extends PokemonCard {
@@ -34,18 +31,11 @@ export class Genesectex extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Genesect ex';
   public fullName: string = 'Genesect ex SV11B';
-
-  private turnTracker: number = 0;
   public readonly METAL_SIGNAL_MARKER = 'METAL_SIGNAL_MARKER';
-  public readonly DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER = 'DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
 
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      effect.player.marker.removeMarker(this.METAL_SIGNAL_MARKER, this);
-      effect.player.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-      this.turnTracker = 0;
-    }
+    
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
@@ -68,24 +58,10 @@ export class Genesectex extends PokemonCard {
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.METAL_SIGNAL_MARKER, this);
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      player.active.marker.addMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
+      effect.player.active.damageReductionNextTurn = 30;
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER)) {
-      effect.damage -= 30;
-      return state;
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this)) {
-      this.turnTracker++;
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this) && this.turnTracker == 2) {
-      effect.player.marker.removeMarker(this.DURING_OPPONENTS_NEXT_TURN_TAKE_LESS_DAMAGE_MARKER, this);
-    }
     return state;
   }
 }

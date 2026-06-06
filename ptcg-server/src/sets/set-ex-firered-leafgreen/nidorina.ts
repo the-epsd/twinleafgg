@@ -2,11 +2,14 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { AFTER_ATTACK, SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../game/store/prefabs/prefabs';
+import {
+  AFTER_ATTACK,
+  SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND,
+} from '../../game/store/prefabs/prefabs';
 
 export class Nidorina extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-  public evolvesFrom = 'Nidoran F';
+  public evolvesFrom = 'Nidoran ♀';
   public cardType: CardType = G;
   public hp: number = 80;
   public weakness = [{ type: P }];
@@ -17,14 +20,14 @@ export class Nidorina extends PokemonCard {
       name: 'Scratch',
       cost: [C],
       damage: 20,
-      text: ''
+      text: '',
     },
     {
       name: 'Fast Evolution',
       cost: [C, C],
       damage: 0,
-      text: 'Search your deck for up to 2 Evolution cards, show them to your opponent, and put them into your hand. Shuffle your deck afterward.'
-    }
+      text: 'Search your deck for up to 2 Evolution cards, show them to your opponent, and put them into your hand. Shuffle your deck afterward.',
+    },
   ];
 
   public set: string = 'RG';
@@ -34,9 +37,7 @@ export class Nidorina extends PokemonCard {
   public fullName: string = 'Nidorina RG';
 
   public reduceEffect(store: StoreLike, state: State, effect: AttackEffect): State {
-
     if (AFTER_ATTACK(effect, 1, this)) {
-
       const blocked: number[] = [];
       effect.player.deck.cards.forEach((card, index) => {
         if (card instanceof PokemonCard && card.evolvesFrom !== '' && card.stage !== Stage.LV_X) {
@@ -46,7 +47,13 @@ export class Nidorina extends PokemonCard {
         }
       });
 
-      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(store, state, effect.player, {}, { min: 0, max: 2, blocked });
+      SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND(
+        store,
+        state,
+        effect.player,
+        {},
+        { min: 0, max: 2, blocked },
+      );
     }
 
     return state;

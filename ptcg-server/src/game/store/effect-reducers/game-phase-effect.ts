@@ -60,6 +60,7 @@ export function initNextTurn(store: StoreLike, state: State): State {
 
   // Clear movement tracking for the new turn
   player.movedToActiveThisTurn = [];
+  player.movedFromActiveToBenchThisTurn = [];
 
   // Skip draw card on first turn
   if (state.turn === 1 && !state.rules.firstTurnDrawCard) {
