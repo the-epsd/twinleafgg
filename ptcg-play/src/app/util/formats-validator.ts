@@ -1,8 +1,6 @@
 import {
   Card,
   CardTag,
-  CardType,
-  EnergyCard,
   EnergyType,
   Format,
   PokemonCard,
@@ -21,7 +19,7 @@ export class FormatValidator {
       return [];
     }
 
-    let formats = [];
+    let formats: Format[][] = [];
 
     // Full catalog when provided enables ANY_PRINTING_ALLOWED (Standard/Nightly: legal if any same-name printing qualifies). Other cards stay per-deck-printing for those formats.
     const cardsToCheck = allCards || cards;
