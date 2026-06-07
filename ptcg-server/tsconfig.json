@@ -2,29 +2,35 @@
   "compilerOptions": {
     "target": "es2017",
     "module": "commonjs",
+    "moduleResolution": "node",
+    "ignoreDeprecations": "6.0",
     "lib": [
       "dom",
       "es2019"
     ],
     "declaration": true,
     "outDir": "output",
-    "rootDirs": [
-      "./src"
-    ],
+    "rootDir": "./src",
     "removeComments": false,
     "preserveConstEnums": true,
     "resolveJsonModule": true,
+    "skipLibCheck": true,
     "noEmitOnError": true,
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "strict": true,
     "noUnusedLocals": true,
-    "typeRoots": [
-      "node_modules/@types"
+    "types": [
+      "node",
+      "jasmine"
     ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
   },
   "include": [
     "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts"
   ]
 }

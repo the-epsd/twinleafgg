@@ -5,8 +5,7 @@ Goal
 - Import two decks, run ptcg-server headless game logic in manual prompt mode, render a smooth 2D board, support core actions/prompts, and validate behavior with action-level tests.
 
 Architecture decisions
-- Keep the existing React app untouched.
-- Create a separate ptcg-play-svelte app.
+- Use ptcg-play-svelte as the active web client.
 - Keep Node-only ptcg-server headless/card-registration code out of the browser bundle.
 - Run a tiny local HTTP engine service in the Svelte package instead of auth/lobby/socket infrastructure.
 - Browser UI talks to the engine through plain JSON GameView/PromptView objects.
@@ -33,7 +32,7 @@ Progress log
 - Removed the stale board component pass and aligned CSS to the actual App.svelte board layout.
 - Browser QA on fixed local ports confirmed import/start game, setup prompt resolution, attaching energy to active Pokemon, attack error surfacing, and passing turn to the other player.
 - Local dev ports are standardized as engine http://localhost:8095 and web http://localhost:5174.
-- Reworked the board presentation after comparing against the React table: visual card faces/backs, sparse playmat, compact badges for state, full-width table composition, and no nested text-card layout.
+- Reworked the board presentation: visual card faces/backs, sparse playmat, compact badges for state, full-width table composition, and no nested text-card layout.
 - Added lightweight target filtering on the board: energy highlights only own occupied Pokemon, Pokemon highlights only own empty Pokemon slots, and ordinary plays no longer present opponent zones as valid targets.
 - Added a small label layer so common engine constants render as readable UI text in prompts, errors, and the log.
 - Prompt card selection now honors simple engine filter fields, so invalid choices in card-search prompts are visibly disabled instead of relying on trial-and-error.
@@ -91,6 +90,6 @@ Current status
 
 Known gaps
 - Prompt controls are intentionally generic; rare cards may still need the Advanced JSON fallback until their prompt shape is promoted into a friendly control.
-- The board is a lightweight 2D implementation, not yet feature-complete polish against every React drag animation and zone affordance.
-- No auth, lobby, matchmaking, deck persistence, network rooms, or React migration layer are included by design.
+- The board is a lightweight 2D implementation and still has UI polish gaps.
+- No auth, lobby, matchmaking, deck persistence, or network rooms are included by design.
 - Full ptcg-server test suite still has unrelated base64 expectation failures under the current Node/runtime; do not treat that as this frontend's pass/fail signal.

@@ -1,5 +1,5 @@
 import { json } from 'body-parser';
-import * as express from 'express';
+import express from 'express';
 
 import { config } from '../config';
 import { BotManager } from '../game/bots/bot-manager';
@@ -57,7 +57,7 @@ export class App {
     app.use(cors());
 
     // Health check endpoint - must be first route
-    app.get('/health', async (req, res) => {
+    app.get('/health', async (_req: express.Request, res: express.Response) => {
       try {
         // Check database connection
         const dbStatus = await storage.checkConnection();

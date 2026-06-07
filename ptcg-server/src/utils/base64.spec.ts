@@ -8,12 +8,12 @@ describe('Base64', () => {
     base64 = new Base64();
   });
 
-  it('Should throw error if string has UTF-8 characters', () => {
+  it('Should encode and decode UTF-8 strings', () => {
     //when
-    const foo = () => base64.encode('Żółcić gęślą jaźń');
+    const encoded = base64.encode('Żółcić gęślą jaźń');
 
     //then
-    expect(foo).toThrowError('INVALID_CHARACTER_ERR: DOM Exception 5');
+    expect(base64.decode(encoded)).toBe('Żółcić gęślą jaźń');
   });
 
   it('Should encode to base64', () => {
@@ -32,7 +32,7 @@ describe('Base64', () => {
 
   it('Should throw error if base64 has invalid length', () => {
     //when
-    const foo = () => base64.decode('AA');
+    const foo = () => base64.decode('A');
 
     //then
     expect(foo).toThrowError('Cannot decode base64');

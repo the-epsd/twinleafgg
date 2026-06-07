@@ -8,7 +8,7 @@
     "backfill:deck-formats": "node start.js --backfill",
     "build": "npm run compile",
     "lint": "eslint -c .eslintrc.js --ext .ts src --fix",
-    "compile": "node --max-old-space-size=4096 ./node_modules/typescript/bin/tsc && node --max-old-space-size=4096 ./node_modules/typescript/bin/tsc -p tsconfig.dist.json",
+    "compile": "tsc && tsc -p tsconfig.dist.json",
     "start": "node start.js",
     "start:prod": "node start.js",
     "headless": "ts-node src/headless-cli.ts",
@@ -47,7 +47,7 @@
     "nodemon": "^2.0.13",
     "nyc": "^15.1.0",
     "ts-node": "~7.0.0",
-    "typescript": "~4.3.5"
+    "typescript": "~6.0.2"
   },
   "nodemonConfig": {
     "ignore": [

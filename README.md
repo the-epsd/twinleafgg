@@ -3,35 +3,20 @@
 
 The project is created to allow players of the Pokemon Trading Card Game to experience current and past formats that are not otherwise accesible in an online, web-based client.
 
-There are two projects:
+There are two active projects:
 
 * **ptcg-server** is the game server. It is responsible for calculating the game state and propagating it to the connected clients by websockets.
 
-* **ptcg-play-react** is the web client. It displays the game state and allows interaction with the server.
+* **ptcg-play-svelte** is the web client. It displays the game state and allows local or remote interaction with the server/headless engine.
 
 ### Server launch
 
 Server is a simple node.js application written in TypeScript. It uses express with websockets and [typeorm](https://typeorm.io/#/) for database access.
 
 Prerequisites:
-* Node.js 16 or 18 LTS (Node 20+ is not supported by current engine constraints)
+* Node.js 20.19+ or 24.x
 * npm 7+
 * mysql-5 or sqlite-3
-
-If you are currently on a newer Node version (for example Node 25), switch to Node 16 or 18 before installing dependencies.
-
-Example using `n`:
-
-```
-npm install -g n
-n 18
-```
-
-On macOS, if Node was installed through Homebrew, you may need to unlink it first:
-
-```
-brew unlink node
-```
 
 `config.js` contains all available options and its default values are defined in the `src/config.ts`
 
@@ -85,24 +70,23 @@ If you get a SQLite foreign key constraint error on startup, delete `ptcg-server
 
 ### Client launch
 
-The client is a Vite/React application. The source code of the client is located in the `ptcg-play-react` directory.
+The client is a Vite/Svelte application. The source code of the client is located in the `ptcg-play-svelte` directory.
 
-The server package is a dependency required by the client. Make sure the server dependencies are installed and the server is running before starting the client.
+The server package is a dependency required by the client. For local self-play, the client starts its own local headless engine service.
 
-1. With the server running, go to the `ptcg-play-react` directory and install dependencies.
+1. Install dependencies from the repository root.
 
 ```
-cd ../ptcg-play-react
 npm install
 ```
 
-2. Start the local client.
+2. Start the local client and engine.
 
 ```
-npm run dev
+npm --workspace ptcg-play-svelte run dev
 ```
 
-The command above will start the application at http://localhost:5173 by default.
+The command above starts the web app at http://localhost:5173 and the local engine at http://localhost:8095 by default.
 
 ### Credits:
 

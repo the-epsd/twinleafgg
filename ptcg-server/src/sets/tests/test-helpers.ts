@@ -631,7 +631,7 @@ class TestStoreHandler implements StoreHandler {
         if (providedType === CardType.ANY && costsToCover.length > 0) {
           costsToCover.shift();
         } else {
-          const costIndex = costsToCover.indexOf(providedType);
+          const costIndex = costsToCover.indexOf(providedType as typeof costsToCover[number]);
           if (costIndex !== -1) {
             costsToCover.splice(costIndex, 1);
           }

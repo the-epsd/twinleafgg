@@ -188,7 +188,7 @@ export class StateUtils {
         if (c === CardType.ANY && costs.length > 0) {
           costs.shift();
         } else {
-          const i = costs.indexOf(c);
+          const i = costs.indexOf(c as typeof costs[number]);
           if (i !== -1) {
             costs.splice(i, 1);
           }

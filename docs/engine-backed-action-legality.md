@@ -52,7 +52,7 @@ The frontend would use this data for highlighting, enabled buttons, drag/drop zo
 2. For each candidate action, run an isolated dry-run against a cloned state and catch `GameError`.
 3. Suppress dry-run side effects such as prompts, logs, random outcomes, animations, and socket events.
 4. Serialize the resulting `availableActions` on each player view.
-5. Update Svelte and React table UIs to consume `availableActions` and remove local card-rule checks.
+5. Update the Svelte table UI to consume `availableActions` and remove local card-rule checks.
 6. Keep prompt-local validation only when the prompt constraints were emitted by the engine.
 
 ## Snapshot Scope

@@ -9,8 +9,7 @@ const COLOR = 0x1a3a5aff;
 async function generate() {
   const image = new Jimp(WIDTH, HEIGHT, COLOR);
   const outPaths = [
-    path.resolve(__dirname, '../../ptcg-play-react/public/assets/cardback.png'),
-    path.resolve(__dirname, '../../ptcg-play-react/src/assets/cardback.png')
+    path.resolve(__dirname, '../../ptcg-play-svelte/public/assets/cardback.png')
   ];
   for (const outPath of outPaths) {
     await image.writeAsync(outPath);

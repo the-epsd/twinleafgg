@@ -15,13 +15,26 @@ const COMMONJS_IMPORT_PATH_REGEX = /require\(["']\.\/([^"']+)["']\)/g;
 const SET_DECLARATION_REGEX = /public set(?:\s*:\s*string)?\s*=\s*['"]([^'"]+)['"]/g;
 const COMPILED_SET_DECLARATION_REGEX = /this\.set\s*=\s*['"]([^'"]+)['"]/g;
 const SET_CODE_REGEX = /^[A-Z0-9-]{2,8}$/;
+const SET_CODE_ALIASES: Record<string, string> = {
+  M1L: 'MEG',
+  M1S: 'MEG'
+};
+const SET_CODE_REPLAY_ALIASES = new Map<string, string[]>();
+
+for (const [aliasSetCode, canonicalSetCode] of Object.entries(SET_CODE_ALIASES)) {
+  const aliases = SET_CODE_REPLAY_ALIASES.get(canonicalSetCode) ?? [];
+  aliases.push(aliasSetCode);
+  SET_CODE_REPLAY_ALIASES.set(canonicalSetCode, aliases);
+}
 
 let setCodeToModules: Map<string, string[]> | undefined;
 const loadedSetModules = new Set<string>();
 let allCardsRegistered = false;
 
 function updateKnownCards(): void {
-  StateSerializer.setKnownCards(CardManager.getInstance().getAllCards());
+  const cards = CardManager.getInstance().getAllCards();
+  addReplaySetAliases(cards);
+  StateSerializer.setKnownCards(cards);
 }
 
 function defineSet(cards: Card[]): void {
@@ -146,8 +159,36 @@ function loadSetModule(moduleName: string): void {
   loadedSetModules.add(moduleName);
 }
 
+function addReplaySetAliases(cards: Card[]): void {
+  for (const card of cards) {
+    const setAliases = SET_CODE_REPLAY_ALIASES.get(card.set?.toUpperCase());
+    if (!setAliases || setAliases.length === 0) {
+      continue;
+    }
+
+    const aliases = new Set(card.aliases);
+    for (const aliasSetCode of setAliases) {
+      addSetCodeAlias(card.fullName, card.set, aliasSetCode, aliases);
+      addSetCodeAlias(CardManager.getPrintId(card), card.set, aliasSetCode, aliases);
+    }
+    card.aliases = Array.from(aliases);
+  }
+}
+
+function addSetCodeAlias(name: string | undefined, setCode: string, aliasSetCode: string, aliases: Set<string>): void {
+  if (!name) {
+    return;
+  }
+  const setCodePattern = new RegExp(`\\b${setCode}\\b`, 'g');
+  const alias = name.replace(setCodePattern, aliasSetCode);
+  if (alias !== name) {
+    aliases.add(alias);
+  }
+}
+
 function ensureSetCodeLoaded(setCode: string): void {
-  const modulePaths = getSetCodeToModules().get(setCode);
+  const lookupSetCode = SET_CODE_ALIASES[setCode] ?? setCode;
+  const modulePaths = getSetCodeToModules().get(lookupSetCode);
   if (!modulePaths || modulePaths.length === 0) {
     throw new Error(`[headless] No set module found for set code "${setCode}"`);
   }

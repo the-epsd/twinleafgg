@@ -124,8 +124,9 @@ describe('HeadlessGameSession', () => {
 
   it('drives a simple game through the JSON stdio CLI', done => {
     const cwd = path.resolve(__dirname, '../../..');
+    const tsNodeBin = require.resolve('ts-node/dist/bin.js');
     const child = spawn(process.execPath, [
-      'node_modules/ts-node/dist/bin.js',
+      tsNodeBin,
       'src/headless-cli.ts',
       '--stdio'
     ], { cwd });
