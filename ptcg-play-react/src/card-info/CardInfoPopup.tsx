@@ -21,8 +21,8 @@ export type CardInfoPopupProps = {
   options?: CardInfoPaneOptions;
   showTags?: boolean;
   cardTextKerning?: number;
-  /** When set (in-game), ability/attack/trainer clicks invoke this then typically close. */
-  onTableAction?: (action: CardInfoTableAction) => void;
+  /** When set (in-game), ability/attack/trainer clicks invoke this then typically close. Return false to keep open. */
+  onTableAction?: (action: CardInfoTableAction) => void | boolean;
 };
 
 export function CardInfoPopup({
@@ -97,8 +97,10 @@ export function CardInfoPopup({
               onTableAction={
                 onTableAction
                   ? (action) => {
-                      onTableAction(action);
-                      onClose();
+                      const shouldClose = onTableAction(action);
+                      if (shouldClose !== false) {
+                        onClose();
+                      }
                     }
                   : undefined
               }

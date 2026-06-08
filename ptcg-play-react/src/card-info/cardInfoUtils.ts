@@ -65,7 +65,7 @@ export function getCardsWithSameName(catalog: Card[], card: Card): Card[] {
   return catalog.filter((c) => c.name === card.name && c.fullName !== card.fullName);
 }
 
-export function getDisplayPowers(card: Card): Power[] {
+function cardPowers(card: Card): Power[] {
   const p = (card as unknown as { powers?: Power[] }).powers;
   if (!Array.isArray(p)) {
     return [];
@@ -73,9 +73,145 @@ export function getDisplayPowers(card: Card): Power[] {
   return p.filter((x) => !x.isFossil);
 }
 
-export function getDisplayAttacks(card: Card): Attack[] {
+function cardAttacks(card: Card): Attack[] {
   const a = (card as unknown as { attacks?: Attack[] }).attacks;
   return Array.isArray(a) ? a : [];
+}
+
+function pokemonCardListTools(cardList: CardList): Card[] {
+  if (cardList instanceof PokemonCardList) {
+    return cardList.tools;
+  }
+  const tools = (cardList as unknown as { tools?: Card[] }).tools;
+  return Array.isArray(tools) ? tools : [];
+}
+
+export function isToolCardInList(card: Card, cardList?: CardList): boolean {
+  if (!cardList) {
+    return false;
+  }
+  return pokemonCardListTools(cardList).includes(card);
+}
+
+function getMainPokemonCard(card: Card, cardList: CardList): Card {
+  const tools = pokemonCardListTools(cardList);
+  const pokemons = cardList.cards.filter(
+    (c) => c.superType === SuperType.POKEMON && !tools.includes(c),
+  );
+  return pokemons[pokemons.length - 1] ?? card;
+}
+
+function addToolPowers(powers: Power[], tools: Card[]): Power[] {
+  let out = powers;
+  for (const tool of tools) {
+    if (tool.powers && tool.powers.length > 0) {
+      const nonFossil = tool.powers.filter((power) => !power.isFossil);
+      if (tool.superType !== SuperType.POKEMON) {
+        out = [...out, ...nonFossil];
+      }
+    }
+  }
+  return out;
+}
+
+function addToolAttacks(attacks: Attack[], tools: Card[]): Attack[] {
+  let out = attacks;
+  for (const tool of tools) {
+    if (tool.attacks && tool.attacks.length > 0) {
+      if (tool.superType !== SuperType.POKEMON) {
+        out = [...out, ...tool.attacks];
+      }
+    }
+  }
+  return out;
+}
+
+/**
+ * Powers shown in the card pane — matches Angular `CardInfoPaneComponent.getDisplayPowers`
+ * (main Pokémon, evolution stages when enabled, attached trainers, and tool abilities).
+ */
+export function getDisplayPowers(card: Card, cardList?: CardList): Power[] {
+  if (card.superType === SuperType.POKEMON) {
+    if (isToolCardInList(card, cardList)) {
+      return cardPowers(card);
+    }
+
+    if (cardList?.cards?.length) {
+      const tools = pokemonCardListTools(cardList);
+      const viewingSpecificCard = cardList.cards.includes(card);
+
+      if (viewingSpecificCard) {
+        return addToolPowers(cardPowers(card), tools);
+      }
+
+      const mainCard = getMainPokemonCard(card, cardList);
+      let powers = cardPowers(mainCard);
+
+      if (cardList instanceof PokemonCardList && cardList.showAllStageAbilities) {
+        for (const c of cardList.cards) {
+          if (c.superType === SuperType.POKEMON && c !== mainCard && !tools.includes(c)) {
+            powers = [...powers, ...cardPowers(c)];
+          }
+        }
+      }
+
+      for (const c of cardList.cards) {
+        if (c.superType === SuperType.TRAINER) {
+          powers = [...powers, ...cardPowers(c)];
+        }
+      }
+
+      return addToolPowers(powers, tools);
+    }
+
+    return cardPowers(card);
+  }
+
+  return cardPowers(card);
+}
+
+/**
+ * Attacks shown in the card pane — matches Angular `CardInfoPaneComponent.getDisplayAttacks`
+ * (main Pokémon, evolution stages when enabled, attached trainers, and tool attacks).
+ */
+export function getDisplayAttacks(card: Card, cardList?: CardList): Attack[] {
+  if (card.superType === SuperType.POKEMON) {
+    if (isToolCardInList(card, cardList)) {
+      return cardAttacks(card);
+    }
+
+    if (cardList?.cards?.length) {
+      const tools = pokemonCardListTools(cardList);
+      const viewingSpecificCard = cardList.cards.includes(card);
+
+      if (viewingSpecificCard) {
+        return addToolAttacks(cardAttacks(card), tools);
+      }
+
+      const mainCard = getMainPokemonCard(card, cardList);
+      let attacks = cardAttacks(mainCard);
+
+      if (cardList instanceof PokemonCardList && cardList.showAllStageAbilities) {
+        for (const c of cardList.cards) {
+          if (c.superType === SuperType.POKEMON && c !== mainCard && !tools.includes(c)) {
+            attacks = [...attacks, ...cardAttacks(c)];
+          }
+        }
+      }
+
+      for (const c of cardList.cards) {
+        if (c.superType === SuperType.TRAINER) {
+          attacks = [...attacks, ...cardAttacks(c)];
+        }
+      }
+
+      return addToolAttacks(attacks, tools);
+    }
+
+    return cardAttacks(card);
+  }
+
+  return cardAttacks(card);
 }
 
 /**

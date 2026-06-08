@@ -15,6 +15,11 @@ import { Board3dMarker, collectPokemonMarkerFiles } from '../board-3d-marker';
 import { Board3dAbilityUsedBadge } from '../board-3d-ability-used-badge';
 import type { Board3dCardsAdapter } from '../board3dCardsAdapter';
 import { apply3dCardHolo } from '../board-3d-holo-apply';
+import {
+  configureToolCardHitTarget,
+  disposeToolCardHitTarget,
+  refreshToolCardHitTarget,
+} from '../board-3d-tool-hit';
 
 function overlayAttachRoot(host: Board3dCard | Group): Group {
   return host instanceof Board3dCard ? host.getGroup() : host;
@@ -220,6 +225,7 @@ export class Board3dCardOverlayService {
     cardList?: PokemonCardList
   ): Promise<void> {
     for (const toolCard of overlays.toolCards) {
+      disposeToolCardHitTarget(toolCard.getGroup());
       attachRoot.remove(toolCard.getGroup());
       toolCard.dispose();
     }
@@ -300,9 +306,14 @@ export class Board3dCardOverlayService {
       toolCardMesh.getGroup().renderOrder = 150;
       toolCardMesh.getMesh().renderOrder = 150;
 
+      const centerZInHost = baseZ - i * verticalSpacing;
+      configureToolCardHitTarget(toolCardMesh, centerZInHost, 1.0);
+
       attachRoot.add(toolCardMesh.getGroup());
       overlays.toolCards.push(toolCardMesh);
-      void apply3dCardHolo(this.assetLoader, toolCardMesh, tool, false);
+      void apply3dCardHolo(this.assetLoader, toolCardMesh, tool, false).then(() => {
+        refreshToolCardHitTarget(toolCardMesh);
+      });
     }
   }
 
