@@ -19,6 +19,7 @@ import type {
   ShowCardsPrompt,
   ShowMulliganPrompt,
   WaitPrompt,
+  ChooseAttackPrompt,
   ChooseEnergyPrompt,
   MoveEnergyPrompt,
 } from 'ptcg-server';
@@ -31,6 +32,7 @@ import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { CheckboxField } from '../../components/ui/CheckboxField';
 import styles from './TablePromptLayer.module.css';
 import { AttachEnergyPromptPanel } from './AttachEnergyPromptPanel';
+import { ChooseAttackPromptPanel } from './ChooseAttackPromptPanel';
 import { ChooseEnergyPromptPanel } from './ChooseEnergyPromptPanel';
 import { MoveEnergyPromptPanel } from './MoveEnergyPromptPanel';
 import { PutDamageOverlay } from './PutDamageOverlay';
@@ -725,6 +727,22 @@ export function TablePromptLayer({
         key={mep.id}
         prompt={mep}
         localGame={localGame}
+        getScanUrl={getScanUrl}
+        t={t}
+        gameMessageText={gameMessageText}
+        resolve={resolve}
+      />
+    );
+  }
+
+  if (p.type === 'Choose attack') {
+    const cap = p as ChooseAttackPrompt;
+    return (
+      <ChooseAttackPromptPanel
+        key={cap.id}
+        prompt={cap}
+        localGame={localGame}
+        catalog={catalog}
         getScanUrl={getScanUrl}
         t={t}
         gameMessageText={gameMessageText}

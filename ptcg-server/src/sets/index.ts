@@ -189,6 +189,7 @@ export * from './set-ascended-heroes';
 export * from './set-perfect-order';
 export * from './set-chaos-rising';
 export * from './set-pitch-black';
+export * from './set-30th-celebration';
 
 //TEST
 export * from './set-test';

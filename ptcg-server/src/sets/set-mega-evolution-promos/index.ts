@@ -7,6 +7,8 @@ import { Golduck } from './golduck';
 import { Slowpoke } from './slowpoke';
 import { MegaSlowbroex } from './mega-slowbro-ex';
 import { MegaDelphoxex } from './mega-delphox-ex';
+import { Pikachuex } from './pikachu-ex';
+import { Pikachuex2 } from './pikachu-ex-2';
 import { Grisham } from './grisham';
 import { Jett } from './jett';
 
@@ -35,6 +37,8 @@ export const setMegaEvolutionPromos: Card[] = [
   new Slowpoke(),
   new MegaSlowbroex(),
   new MegaDelphoxex(),
+  new Pikachuex(),
+  new Pikachuex2(),
   new Grisham(),
   new Jett(),
   new SerperiorMEP(),

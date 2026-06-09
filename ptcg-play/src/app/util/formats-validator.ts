@@ -1,8 +1,6 @@
 import {
   Card,
   CardTag,
-  CardType,
-  EnergyCard,
   EnergyType,
   Format,
   PokemonCard,
@@ -21,7 +19,7 @@ export class FormatValidator {
       return [];
     }
 
-    let formats = [];
+    let formats: Format[][] = [];
 
     // Full catalog when provided enables ANY_PRINTING_ALLOWED (Standard/Nightly: legal if any same-name printing qualifies). Other cards stay per-deck-printing for those formats.
     const cardsToCheck = allCards || cards;
@@ -1220,7 +1218,7 @@ export const SetReleaseDates: { [key: string]: Date } = {
   POR: new Date("2026-03-27"),
   CRI: new Date("2026-05-22"),
   M5: new Date("2026-07-16"), // Abyss Eye
-  PIB: new Date("2026-07-16"),
+  PBL: new Date("2026-07-16"),
   M6: new Date("2099-12-31"), // Storm Emerald, no equivalent English release date yet
   M6a: new Date("2026-09-16"), // 30th Celebration
   "30C": new Date("2026-09-16"),

@@ -102,6 +102,8 @@ export class Board3dInteractionService {
   private dragOffset: Vector3 = new Vector3();
   private previousDragPosition: Vector3 = new Vector3();
   private dragVelocity: Vector3 = new Vector3();
+  private dragHoverRayScratch: Vector3 = new Vector3();
+  private dragHoverRayNdc: Vector2 = new Vector2();
 
   // Click detection
   private mouseDownPosition: Vector2 = new Vector2();
@@ -291,7 +293,7 @@ export class Board3dInteractionService {
   /**
    * Get the card object from an intersection
    * Traverses up the object hierarchy to find the card group.
-   * Energy icons and tool cards (overlays) take priority so clicking them shows that card's info.
+   * Energy icons and tool hit tabs take priority so clicking them shows that overlay's info.
    */
   private getCardFromIntersection(intersection: Intersection): Object3D | null {
     return this.resolveInteractiveCardFromSurface(intersection.object);
@@ -323,6 +325,89 @@ export class Board3dInteractionService {
     return null;
   }
 
+  /** Raycast from the world point projected on screen (matches dragged card center, not pointer). */
+  private setRaycasterFromWorldPosition(worldPos: Vector3, camera: Camera): void {
+    this.dragHoverRayScratch.copy(worldPos).project(camera);
+    this.dragHoverRayNdc.set(this.dragHoverRayScratch.x, this.dragHoverRayScratch.y);
+    this.raycaster.setFromCamera(this.dragHoverRayNdc, camera);
+  }
+
+  private isDraggedCardOrChild(object: Object3D): boolean {
+    if (!this.draggedCard) {
+      return false;
+    }
+    let obj: Object3D | null = object;
+    while (obj) {
+      if (obj === this.draggedCard) {
+        return true;
+      }
+      obj = obj.parent;
+    }
+    return false;
+  }
+
+  /** Walk from a hit (card mesh, energy icon, tool overlay, etc.) to the host Active/Bench Pokemon. */
+  private resolveBoardPokemonCardObject(hit: Object3D): Object3D | null {
+    let obj: Object3D | null = hit;
+    while (obj) {
+      if (obj.userData?.isBoardCard && obj.userData?.cardTarget) {
+        const target = obj.userData.cardTarget as CardTarget;
+        if (target.slot === SlotType.ACTIVE || target.slot === SlotType.BENCH) {
+          return obj;
+        }
+      }
+      obj = obj.parent;
+    }
+    return null;
+  }
+
+  private findPokemonBoardCardUnderWorldPoint(
+    worldPos: Vector3,
+    camera: Camera,
+    ctx: DragContext,
+    options: {
+      allowedPlayer?: PlayerType | null;
+      isEvolutionCard: boolean;
+      isEnergyOrTool: boolean;
+    }
+  ): Object3D | null {
+    this.setRaycasterFromWorldPosition(worldPos, camera);
+    const intersects = this.raycaster.intersectObjects(this.interactiveObjects, true);
+    for (const intersect of intersects) {
+      const hit = this.getCardFromIntersection(intersect);
+      if (!hit || this.isDraggedCardOrChild(hit)) {
+        continue;
+      }
+      const boardPokemon = this.resolveBoardPokemonCardObject(hit);
+      if (!boardPokemon) {
+        continue;
+      }
+      const target = boardPokemon.userData.cardTarget as CardTarget;
+      if (options.allowedPlayer != null && target.player !== options.allowedPlayer) {
+        continue;
+      }
+      if (
+        ctx.trainerType === TrainerType.TOOL &&
+        isOpponentAttachTool(ctx.card) &&
+        !isOpponentPokemonExToolTarget(boardPokemon.userData.cardList as PokemonCardList)
+      ) {
+        continue;
+      }
+      if (options.isEvolutionCard) {
+        const evolutionCard = ctx.card as PokemonCard;
+        const targetPokemonCard = boardPokemon.userData.cardData as PokemonCard;
+        if (!targetPokemonCard || !this.isValidEvolutionTarget(evolutionCard, targetPokemonCard)) {
+          continue;
+        }
+        return boardPokemon;
+      }
+      if (options.isEnergyOrTool) {
+        return boardPokemon;
+      }
+    }
+    return null;
+  }
+
   /**
    * Resolve attach/evolution drop target from the Pokemon board card under the pointer.
    * Opponent slots have no drop zones; raycast is required to target their Active/Bench.
@@ -341,57 +426,32 @@ export class Board3dInteractionService {
   }
 
   private findPokemonAttachTargetFromPointer(
-    event: MouseEvent,
+    _event: MouseEvent,
     camera: Camera,
-    canvas: HTMLCanvasElement,
+    _canvas: HTMLCanvasElement,
     ctx: DragContext
   ): CardTarget | null {
     const allowedPlayer = this.allowedAttachTargetPlayer(ctx);
-    if (allowedPlayer === null) {
+    if (allowedPlayer === null || !this.draggedCard) {
       return null;
     }
-
-    const rect = canvas.getBoundingClientRect();
-    this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-    this.raycaster.setFromCamera(this.mouse, camera);
 
     const isEvolutionCard =
       ctx.superType === SuperType.POKEMON &&
       ctx.stage !== undefined &&
       ctx.stage !== Stage.BASIC &&
       !cardPlaysAsBasicPokemonFromHand(ctx.card, this.handPlayZoneGameSettings);
+    const isEnergyOrTool =
+      ctx.superType === SuperType.ENERGY || ctx.trainerType === TrainerType.TOOL;
 
-    const intersects = this.raycaster.intersectObjects(this.interactiveObjects, true);
-    for (const intersect of intersects) {
-      const card = this.getCardFromIntersection(intersect);
-      if (!card?.userData.isCard || !card.userData.cardTarget) {
-        continue;
-      }
-      const target = card.userData.cardTarget as CardTarget;
-      if (target.slot !== SlotType.ACTIVE && target.slot !== SlotType.BENCH) {
-        continue;
-      }
-      if (target.player !== allowedPlayer) {
-        continue;
-      }
-      if (
-        ctx.trainerType === TrainerType.TOOL &&
-        isOpponentAttachTool(ctx.card) &&
-        !isOpponentPokemonExToolTarget(card.userData.cardList as PokemonCardList)
-      ) {
-        continue;
-      }
-      if (isEvolutionCard) {
-        const evolutionCard = ctx.card as PokemonCard;
-        const targetPokemonCard = card.userData.cardData as PokemonCard;
-        if (!targetPokemonCard || !this.isValidEvolutionTarget(evolutionCard, targetPokemonCard)) {
-          continue;
-        }
-      }
-      return target;
-    }
-    return null;
+    this.draggedCard.getWorldPosition(this.dragHoverRayScratch);
+    const boardPokemon = this.findPokemonBoardCardUnderWorldPoint(
+      this.dragHoverRayScratch,
+      camera,
+      ctx,
+      { allowedPlayer, isEvolutionCard, isEnergyOrTool },
+    );
+    return boardPokemon ? (boardPokemon.userData.cardTarget as CardTarget) : null;
   }
 
   /**
@@ -964,31 +1024,17 @@ export class Board3dInteractionService {
       // Detect Pokemon card under dragged card (for energy/tool cards and evolution cards)
       let pokemonUnderCard: Object3D | null = null;
       let pokemonInRetreatZone: Object3D | null = null;
-      if ((isEnergyOrTool || isEvolutionCard) && !isOverHand) {
-        // Perform raycast to find Pokemon cards
-        const intersects = this.raycaster.intersectObjects(this.interactiveObjects, true);
-        for (const intersect of intersects) {
-          const card = this.getCardFromIntersection(intersect);
-          if (card && card.userData.isBoardCard && card.userData.cardTarget) {
-            const target = card.userData.cardTarget as CardTarget;
-            // Only consider ACTIVE or BENCH Pokemon cards
-            if (target.slot === SlotType.ACTIVE || target.slot === SlotType.BENCH) {
-              // For evolution cards, validate that the evolution is valid
-              if (isEvolutionCard && this.currentDragContext) {
-                const evolutionCard = this.currentDragContext.card as PokemonCard;
-                const targetPokemonCard = card.userData.cardData as PokemonCard;
-                if (targetPokemonCard && this.isValidEvolutionTarget(evolutionCard, targetPokemonCard)) {
-                  pokemonUnderCard = card;
-                  break;
-                }
-              } else if (isEnergyOrTool) {
-                // For energy/tool cards, any Pokemon is valid
-                pokemonUnderCard = card;
-                break;
-              }
-            }
-          }
-        }
+      if ((isEnergyOrTool || isEvolutionCard) && !isOverHand && this.currentDragContext) {
+        // Raycast from dragged card center so hover matches the card visual (not pointer offset)
+        pokemonUnderCard = this.findPokemonBoardCardUnderWorldPoint(
+          worldPos,
+          camera,
+          this.currentDragContext,
+          {
+            isEvolutionCard: !!isEvolutionCard,
+            isEnergyOrTool: !!isEnergyOrTool,
+          },
+        );
       }
 
       let validRetreatZoneUnderCard = false;

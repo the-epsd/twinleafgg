@@ -12,6 +12,7 @@ import {
   getCurrentHp,
   getDisplayAttacks,
   getDisplayPowers,
+  isToolCardInList,
   getDisplayTagLabels,
   parseCardName,
   powerTypeLabel,
@@ -117,11 +118,14 @@ export function CardInfoPane({
 
   const kerningStyle = { letterSpacing: `${cardTextKerning}px` } as const;
 
+  const displayPowers = useMemo(() => getDisplayPowers(card, cardList), [card, cardList]);
+  const displayAttacks = useMemo(() => getDisplayAttacks(card, cardList), [card, cardList]);
+
   const enabledAbilities = useMemo(() => {
     const m: Record<string, boolean> = {};
     const e = options.enableAbility;
     if (!e) return m;
-    for (const power of getDisplayPowers(card)) {
+    for (const power of displayPowers) {
       const ok =
         !!(e.useWhenInPlay && power.useWhenInPlay) ||
         !!(e.useFromDiscard && power.useFromDiscard) ||
@@ -129,9 +133,11 @@ export function CardInfoPane({
       if (ok) m[power.name] = true;
     }
     return m;
-  }, [card, options.enableAbility]);
+  }, [displayPowers, options.enableAbility]);
 
-  const shouldEnableAttacks = !!options.enableAttack && getDisplayAttacks(card).length > 0;
+  const viewingToolCard = isToolCardInList(card, cardList);
+  const shouldEnableAttacks =
+    !!options.enableAttack && !viewingToolCard && displayAttacks.length > 0;
   const shouldEnableRetreat = !!(card.superType === SuperType.POKEMON && options.enableRetreat);
   const enableTrainerPlay = !!options.enableTrainer;
 
@@ -225,7 +231,7 @@ export function CardInfoPane({
             ) : null}
           </div>
 
-          {getDisplayPowers(card).map((power) => (
+          {displayPowers.map((power) => (
             <HoverHighlight
               key={power.name}
               enabled={!!enabledAbilities[power.name]}
@@ -255,7 +261,7 @@ export function CardInfoPane({
             </HoverHighlight>
           ))}
 
-          {getDisplayAttacks(card).map((attack) => (
+          {displayAttacks.map((attack) => (
             <HoverHighlight
               key={attack.name}
               enabled={shouldEnableAttacks}
