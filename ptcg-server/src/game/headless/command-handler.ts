@@ -93,7 +93,11 @@ export class HeadlessCommandRunner {
         if (typeof payload.id !== 'number') {
           throw new Error('resolvePrompt requires payload.id');
         }
-        game.resolvePrompt(payload.id, payload.result);
+        if (payload.useDefault === true) {
+          game.resolvePromptDefault(payload.id);
+        } else {
+          game.resolvePrompt(payload.id, payload.result);
+        }
         return game.snapshot({ availableActionsScope: this.getAvailableActionsScope(request) });
       }
 

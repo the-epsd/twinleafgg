@@ -151,6 +151,8 @@ describe('Headless prompt adapters', () => {
       new AttachEnergyPrompt(player.id, message, player.hand, PlayerType.BOTTOM_PLAYER, [SlotType.ACTIVE, SlotType.BENCH], { superType: SuperType.ENERGY }, { allowCancel: false, min: 1, max: 1 }),
       new ChooseAttackPrompt(player.id, message, [opponent.active.getPokemonCard()!], { allowCancel: false }),
       new ChooseCardsPrompt(player, message, player.hand, { superType: SuperType.ENERGY }, { allowCancel: false, min: 1, max: 1 }),
+      // Filter must be respected even when non-matching cards come first.
+      new ChooseCardsPrompt(player, message, player.deck, { superType: SuperType.POKEMON }, { allowCancel: false, min: 1, max: 2 }),
       new ChooseEnergyPrompt(player.id, message, [{ card: psychicEnergy, provides: psychicEnergy.provides }], [CardType.PSYCHIC], { allowCancel: false }),
       new ChoosePokemonPrompt(player.id, message, PlayerType.BOTTOM_PLAYER, [SlotType.ACTIVE, SlotType.BENCH], { allowCancel: false, min: 1, max: 1 }),
       new ChoosePrizePrompt(player.id, message, { allowCancel: false, count: 1 }),

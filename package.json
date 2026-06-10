@@ -2,7 +2,8 @@
   "private": true,
   "workspaces": [
     "ptcg-server",
-    "ptcg-play-svelte"
+    "ptcg-play-svelte",
+    "ptcg-agents"
   ],
   "scripts": {
     "build": "npm --workspace ptcg-server run build && npm --workspace ptcg-play-svelte run build",

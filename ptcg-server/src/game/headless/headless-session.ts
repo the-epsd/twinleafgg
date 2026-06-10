@@ -279,6 +279,14 @@ export class HeadlessGameSession {
     return this.dispatch(new ResolvePromptAction(id, decoded, undefined, rawResult));
   }
 
+  public resolvePromptDefault(id: number): State {
+    const prompt = this.state.prompts.find(item => item.id === id);
+    if (!prompt) {
+      throw new Error(`[headless] Prompt not found: ${id}`);
+    }
+    return this.resolvePrompt(id, this.resolver.defaultRawResult(this.state, prompt));
+  }
+
   public overridePromptOnce(promptType: string, handler: HeadlessPromptOverride): void {
     this.resolver.overrideOnce(promptType, handler);
   }

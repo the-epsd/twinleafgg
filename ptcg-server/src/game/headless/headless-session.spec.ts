@@ -2,6 +2,7 @@ import { spawn } from 'child_process';
 import * as path from 'path';
 
 import { GamePhase } from '../store/state/state';
+import { HeadlessCommandRunner } from './command-handler';
 import { createHeadlessGame } from './headless-session';
 
 describe('HeadlessGameSession', () => {
@@ -43,6 +44,32 @@ describe('HeadlessGameSession', () => {
     expect(snapshot.summary.players[0].active.pokemon).toBe('Ralts SIT');
     expect(snapshot.summary.players[1].active.pokemon).toBe('Ralts SIT');
     expect(snapshot.prompts.length).toBe(0);
+  });
+
+  it('resolves manual-mode prompts with engine defaults via resolvePrompt useDefault', () => {
+    const deck = ['Ralts SIT', 'Ralts SIT', 'Ralts SIT', 'Ralts SIT', ...Array(56).fill('Water Energy SVE')];
+    const runner = new HeadlessCommandRunner();
+    let response = runner.handle({
+      type: 'newGame',
+      payload: {
+        player1: { name: 'Agent A', deck },
+        player2: { name: 'Agent B', deck },
+        promptMode: 'manual'
+      }
+    });
+
+    expect(response.prompts.length).toBeGreaterThan(0);
+
+    let guard = 0;
+    while (response.prompts.length > 0 && guard++ < 50) {
+      response = runner.handle({
+        type: 'resolvePrompt',
+        payload: { id: response.prompts[0].id, useDefault: true }
+      });
+    }
+
+    expect(response.summary.phase).toBe(GamePhase.PLAYER_TURN);
+    expect(response.prompts.length).toBe(0);
   });
 
   it('reports live total HP from CheckHpEffect modifiers', () => {

@@ -171,14 +171,21 @@ export class HeadlessPromptResolver {
     const blocked = new Set(prompt.options.blocked);
     const indices: number[] = [];
     for (let i = 0; i < prompt.cards.cards.length && indices.length < prompt.options.max; i++) {
-      if (!blocked.has(i)) {
+      if (!blocked.has(i) && this.cardMatchesPartialFilter(prompt.cards.cards[i], prompt.filter as Partial<Card>)) {
         indices.push(i);
       }
     }
     if (indices.length < prompt.options.min) {
       return prompt.options.allowCancel ? null : indices;
     }
-    return indices;
+    // Composition caps (maxBasics, maxEnergies, ...) can still reject a greedy
+    // pick; trim from the end until the prompt accepts the selection.
+    for (let selection = indices; selection.length >= prompt.options.min; selection = selection.slice(0, -1)) {
+      if (prompt.validate(prompt.decode(selection))) {
+        return selection;
+      }
+    }
+    return prompt.options.allowCancel ? null : indices;
   }
 
   private resolveChooseAttackRaw(prompt: ChooseAttackPrompt): any {
