@@ -15,7 +15,7 @@ Server is a simple node.js application written in TypeScript. It uses express wi
 
 Prerequisites:
 * Node.js 20.19+ or 24.x
-* npm 7+
+* npm 10+
 * mysql-5 or sqlite-3
 
 `config.js` contains all available options and its default values are defined in the `src/config.ts`

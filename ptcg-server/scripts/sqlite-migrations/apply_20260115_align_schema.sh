@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-DB_PATH="${1:-/Users/joemyerscough/ptcg-elite/ptcg-server/database.sq3}"
-BASE_SQL="/Users/joemyerscough/ptcg-elite/ptcg-server/scripts/sqlite-migrations/20260115_align_schema.sql"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SERVER_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+DB_PATH="${1:-$SERVER_DIR/database.sq3}"
+BASE_SQL="$SCRIPT_DIR/20260115_align_schema.sql"
 
-sqlite3 "$DB_PATH" ".read $BASE_SQL"
+if [[ -f "$BASE_SQL" ]]; then
+  sqlite3 "$DB_PATH" ".read $BASE_SQL"
+fi
 
 has_column() {
   local table_name="$1"

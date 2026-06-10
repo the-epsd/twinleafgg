@@ -86,10 +86,9 @@ Current status
 - Known modern set codes now produce PokemonTCG image URLs in headless snapshots, so supported cards can render as real scans.
 - Svelte build passes and the Svelte action/unit suite currently has 20 passing tests.
 - Targeted ptcg-server headless prompt adapter specs pass.
-- Full ptcg-server compile passes after the local headless changes.
+- Full ptcg-server compile and test suite pass after the local headless changes.
 
 Known gaps
 - Prompt controls are intentionally generic; rare cards may still need the Advanced JSON fallback until their prompt shape is promoted into a friendly control.
 - The board is a lightweight 2D implementation and still has UI polish gaps.
 - No auth, lobby, matchmaking, deck persistence, or network rooms are included by design.
-- Full ptcg-server test suite still has unrelated base64 expectation failures under the current Node/runtime; do not treat that as this frontend's pass/fail signal.
