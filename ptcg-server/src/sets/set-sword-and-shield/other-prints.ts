@@ -157,7 +157,7 @@ export class Bede2SSH extends BedeSSH157 {
 
 export class ProfessorsResearch2SSH extends ProfessorsResearchSVI189 {
   public setNumber = '201';
-  public fullName: string = 'Professor\'s Research2 SSH';
+  public fullName: string = "Professor's Research2 SSH";
   public set = 'SSH';
 }
 
@@ -175,7 +175,7 @@ export class Bede3SSH extends BedeSSH157 {
 
 export class ProfessorsResearch3SSH extends ProfessorsResearchSVI189 {
   public setNumber = '209';
-  public fullName: string = 'Professor\'s Research3 SSH';
+  public fullName: string = "Professor's Research3 SSH";
   public set = 'SSH';
 }
 

@@ -54,7 +54,6 @@ import { TalonflameVFA } from './full-art';
 import { GalarianDarmanitanV } from './galarian-darmanitan-v';
 import { GalarianDarmanitanVmax } from './galarian-darmanitan-vmax';
 import { GalarianMeowth } from './galarian-meowth';
-import { GalarianObstagoon } from './galarian-obstagoon';
 import { GalarianPerrserker } from './galarian-perrserker';
 import { GalarianSirfetchdV } from './galarian-sirfetchd-v';
 import { GalarianStunfisk } from './galarian-stunfisk';
@@ -87,7 +86,6 @@ import { Mudsdale } from './mudsdale';
 import { Nincada } from './nincada';
 import { Ninjask } from './ninjask';
 import { Nuzleaf } from './nuzleaf';
-import { Oranguru } from './oranguru';
 import { OrbeetleV } from './orbeetle-v';
 import { OrbeetleVmax } from './orbeetle-vmax';
 import { Oshawott } from './oshawott';
@@ -205,6 +203,8 @@ import {
   HerosMedal2,
   MemoryCapsule2,
   TelescopicSight2,
+  GalarianObstagoonVIV,
+  OranguruVIV,
 } from './other-prints';
 
 export const setVividVoltage: Card[] = [
@@ -415,6 +415,8 @@ export const setVividVoltage: Card[] = [
   new Leon3(),
   new Nessa3(),
   new Opal3(),
+  new GalarianObstagoonVIV(),
+  new OranguruVIV(),
   new CapeOfToughnessVIV(),
   new HerosMedal2(),
   new MemoryCapsule2(),

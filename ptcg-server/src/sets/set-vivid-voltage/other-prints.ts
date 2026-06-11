@@ -27,6 +27,8 @@ import { CapeOfToughness } from '../set-darkness-ablaze/cape-of-toughness';
 import { HerosMedal } from './heros-medal';
 import { MemoryCapsule } from './memory-capsule';
 import { TelescopicSight } from './telescopic-sight';
+import { Oranguru } from '../set-sword-and-shield/oranguru';
+import { GalarianObstagoon } from '../set-sword-and-shield/galarian-obstagoon';
 
 export class RockyHelmetVIV extends RockyHelmet {
   public set: string = 'VIV';
@@ -214,6 +216,18 @@ export class Opal3 extends Opal {
   public fullName: string = 'Opal VIV 197';
 }
 
+export class GalarianObstagoonVIV extends GalarianObstagoon {
+  public set = 'VIV';
+  public setNumber = '198';
+  public fullName = 'Galarian Obstagoon VIV';
+}
+
+export class OranguruVIV extends Oranguru {
+  public set = 'VIV';
+  public setNumber = '199';
+  public fullName = 'Oranguru VIV';
+}
+
 export class CapeOfToughnessVIV extends CapeOfToughness {
   public set: string = 'VIV';
   public setNumber: string = '200';
@@ -223,7 +237,7 @@ export class CapeOfToughnessVIV extends CapeOfToughness {
 export class HerosMedal2 extends HerosMedal {
   public set: string = 'VIV';
   public setNumber: string = '201';
-  public fullName: string = 'Hero\'s Medal VIV 201';
+  public fullName: string = "Hero's Medal VIV 201";
 }
 
 export class MemoryCapsule2 extends MemoryCapsule {
