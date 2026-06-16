@@ -57,10 +57,6 @@ export class Slakingex extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      if (IS_ABILITY_BLOCKED(store, state, player, this)) {
-        return state;
-      }
-
       // Check each of our opponent's Pokemon to see if they have an ex or V.
       let hasSpecialPokemon = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
@@ -76,7 +72,7 @@ export class Slakingex extends PokemonCard {
       });
 
       // If we don't have a ex or V in play, block the attack.
-      if (!hasSpecialPokemon) {
+      if (!IS_ABILITY_BLOCKED(store, state, player, this) && !hasSpecialPokemon) {
         throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
       }
     }
