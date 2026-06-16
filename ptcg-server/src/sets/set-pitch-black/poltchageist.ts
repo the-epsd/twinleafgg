@@ -4,7 +4,7 @@ import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { reduceGhostVeil } from './ghost-veil';
+import { reduceHideNSneak } from './hide-n-sneak';
 
 export class Poltchageist extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -13,18 +13,22 @@ export class Poltchageist extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [];
 
-  public powers = [{
-    name: 'Ghost Veil',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon can\'t be affected by effects of attacks or Abilities from your opponent\'s Pokémon.',
-  }];
+  public powers = [
+    {
+      name: "Hide 'n' Sneak",
+      powerType: PowerType.ABILITY,
+      text: "This Pokémon can't be affected by effects of attacks or Abilities from your opponent's Pokémon.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Furtive Drop',
-    cost: [C],
-    damage: 0,
-    text: 'Place 1 damage counter on your opponent\'s Active Pokémon.',
-  }];
+  public attacks = [
+    {
+      name: 'Furtive Drop',
+      cost: [C],
+      damage: 0,
+      text: "Place 1 damage counter on your opponent's Active Pokémon.",
+    },
+  ];
 
   public set: string = 'M5';
   public setNumber: string = '5';
@@ -34,7 +38,7 @@ export class Poltchageist extends PokemonCard {
   public fullName: string = 'Poltchageist M5';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    reduceGhostVeil(store, state, effect, this);
+    reduceHideNSneak(store, state, effect, this);
 
     // Ref: set-surging-sparks/uxie.ts (Return Portal — PutCountersEffect damage counter placement)
     if (WAS_ATTACK_USED(effect, 0, this)) {

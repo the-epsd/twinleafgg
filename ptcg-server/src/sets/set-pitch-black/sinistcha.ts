@@ -4,7 +4,7 @@ import { PlayerType, PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlaceDamageCountersEffect } from '../../game/store/effects/game-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { countGhostVeilPokemonInDiscard, reduceGhostVeil } from './ghost-veil';
+import { countHideNSneakPokemonInDiscard, reduceHideNSneak } from './hide-n-sneak';
 
 export class Sinistcha extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -14,18 +14,22 @@ export class Sinistcha extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public powers = [{
-    name: 'Ghost Veil',
-    powerType: PowerType.ABILITY,
-    text: 'This Pokémon can\'t be affected by effects of attacks or Abilities from your opponent\'s Pokémon.',
-  }];
+  public powers = [
+    {
+      name: "Hide 'n' Sneak",
+      powerType: PowerType.ABILITY,
+      text: "This Pokémon can't be affected by effects of attacks or Abilities from your opponent's Pokémon.",
+    },
+  ];
 
-  public attacks = [{
-    name: 'Matcha Spin',
-    cost: [C],
-    damage: 0,
-    text: 'If you have 6 or more Pokémon in your discard with the Ghost Veil Ability, place 4 damage counters on each of your opponent\'s Pokémon.',
-  }];
+  public attacks = [
+    {
+      name: 'Matcha Spin',
+      cost: [C],
+      damage: 0,
+      text: "If you have 6 or more Pokémon in your discard with the Hide 'n' Sneak Ability, place 4 damage counters on each of your opponent's Pokémon.",
+    },
+  ];
 
   public set: string = 'M5';
   public setNumber: string = '6';
@@ -35,18 +39,18 @@ export class Sinistcha extends PokemonCard {
   public fullName: string = 'Sinistcha M5';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    reduceGhostVeil(store, state, effect, this);
+    reduceHideNSneak(store, state, effect, this);
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
       effect.damage = 0;
 
-      if (countGhostVeilPokemonInDiscard(player) < 6) {
+      if (countHideNSneakPokemonInDiscard(player) < 6) {
         return state;
       }
 
-      opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
         if (cardList.cards.length === 0) {
           return;
         }
