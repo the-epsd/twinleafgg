@@ -1,4 +1,4 @@
-import { EnergyCard, PlayerType, PowerType, State, StoreLike } from '../../game';
+import { EnergyCard, PlayerType, State, StoreLike } from '../../game';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -10,14 +10,6 @@ export class XerneasBREAK extends PokemonCard {
   public evolvesFrom = 'Xerneas';
   public cardType: CardType = Y;
   public hp: number = 150;
-
-  public powers = [
-    {
-      name: 'BREAK Evolution Rule',
-      powerType: PowerType.BREAK_RULE,
-      text: 'Xerneas BREAK retains the attacks, Abilities, Weakness, Resistance, and Retreat Cost of its previous Evolution.',
-    },
-  ];
 
   public attacks = [
     {

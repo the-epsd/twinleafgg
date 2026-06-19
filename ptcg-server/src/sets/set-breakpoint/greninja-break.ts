@@ -24,11 +24,6 @@ export class GreninjaBREAK extends PokemonCard {
 
   public powers = [
     {
-      name: 'BREAK Evolution Rule',
-      powerType: PowerType.BREAK_RULE,
-      text: 'Greninja BREAK retains the attacks, Abilities, Weakness, Resistance, and Retreat Cost of its previous Evolution.',
-    },
-    {
       name: 'Giant Water Shuriken',
       powerType: PowerType.ABILITY,
       useWhenInPlay: true,
@@ -46,7 +41,7 @@ export class GreninjaBREAK extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Giant Water Shuriken
-    if (WAS_POWER_USED(effect, 1, this)) {
+    if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
       // Check marker

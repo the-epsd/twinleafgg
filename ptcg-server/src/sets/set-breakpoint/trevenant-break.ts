@@ -1,4 +1,4 @@
-import { PlayerType, PowerType, State, StoreLike } from '../../game';
+import { PlayerType, State, StoreLike } from '../../game';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -11,14 +11,6 @@ export class TrevenantBREAK extends PokemonCard {
   public evolvesFrom = 'Trevenant';
   public cardType: CardType = P;
   public hp: number = 160;
-
-  public powers = [
-    {
-      name: 'BREAK Evolution Rule',
-      powerType: PowerType.BREAK_RULE,
-      text: 'Trevenant BREAK retains the attacks, Abilities, Weakness, Resistance, and Retreat Cost of its previous Evolution.',
-    },
-  ];
 
   public attacks = [
     {

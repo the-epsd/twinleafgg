@@ -4,7 +4,6 @@ import {
   DamageMap,
   GameMessage,
   PlayerType,
-  PowerType,
   PutDamagePrompt,
   SlotType,
   State,
@@ -24,14 +23,6 @@ export class BronzongBREAK extends PokemonCard {
   public evolvesFrom = 'Bronzong';
   public cardType: CardType = M;
   public hp: number = 130;
-
-  public powers = [
-    {
-      name: 'BREAK Evolution Rule',
-      powerType: PowerType.BREAK_RULE,
-      text: 'Bronzong BREAK retains the attacks, Abilities, Weakness, Resistance, and Retreat Cost of its previous Evolution.',
-    },
-  ];
 
   public attacks = [
     {
