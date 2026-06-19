@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BREAK_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS } from '../../game/store/prefabs/attack-effects';
 
 export class LuxrayBreak extends PokemonCard {
@@ -23,8 +23,8 @@ export class LuxrayBreak extends PokemonCard {
       cost: [L, L, C, C],
       damage: 130,
       damageCalculation: '+',
-      text: 'Flip a coin until you get tails. This attack does 40 more damage for each heads.'
-    }
+      text: 'Flip a coin until you get tails. This attack does 40 more damage for each heads.',
+    },
   ];
 
   public set: string = 'BKP';
@@ -39,6 +39,8 @@ export class LuxrayBreak extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return FLIP_A_COIN_UNTIL_YOU_GET_TAILS_DO_X_MORE_DAMAGE_PER_HEADS(store, state, effect, 40);
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

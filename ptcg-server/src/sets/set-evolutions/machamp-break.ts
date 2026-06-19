@@ -8,7 +8,13 @@ import { PlayerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  ADD_MARKER,
+  HAS_MARKER,
+  REMOVE_MARKER,
+  BREAK_RULE,
+} from '../../game/store/prefabs/prefabs';
 
 export class MachampBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -23,8 +29,8 @@ export class MachampBreak extends PokemonCard {
       name: 'Boomerang Lariat',
       cost: [F, F, F],
       damage: 100,
-      text: 'During your next turn, this Pokémon\'s attacks do 100 more damage to your opponent\'s Active Pokémon (before applying Weakness and Resistance).'
-    }
+      text: "During your next turn, this Pokémon's attacks do 100 more damage to your opponent's Active Pokémon (before applying Weakness and Resistance).",
+    },
   ];
 
   public set: string = 'EVO';
@@ -64,6 +70,8 @@ export class MachampBreak extends PokemonCard {
         }
       });
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

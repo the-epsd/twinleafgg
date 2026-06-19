@@ -7,7 +7,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BREAK_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class NinetalesBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -23,8 +23,8 @@ export class NinetalesBreak extends PokemonCard {
       cost: [R, C],
       damage: 10,
       damageCalculation: '+',
-      text: 'Discard all [R] Energy attached to this Pok\u00e9mon. This attack does 60 more damage for each Energy card discarded in this way.'
-    }
+      text: 'Discard all [R] Energy attached to this Pokémon. This attack does 60 more damage for each Energy card discarded in this way.',
+    },
   ];
 
   public set: string = 'EVO';
@@ -38,15 +38,17 @@ export class NinetalesBreak extends PokemonCard {
     // Ref: AGENTS.md (Discard all [type] Energy - manual pattern), set-primal-clash/manectric.ts
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const fireEnergy = player.active.cards.filter(c =>
-        c instanceof EnergyCard && c.provides.includes(CardType.FIRE)
+      const fireEnergy = player.active.cards.filter(
+        (c) => c instanceof EnergyCard && c.provides.includes(CardType.FIRE),
       );
       const discardCount = fireEnergy.length;
-      fireEnergy.forEach(c => {
+      fireEnergy.forEach((c) => {
         player.active.moveCardTo(c, player.discard);
       });
       effect.damage += 60 * discardCount;
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

@@ -7,7 +7,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BREAK_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class YveltalBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -22,8 +22,8 @@ export class YveltalBreak extends PokemonCard {
       name: 'Baleful Night',
       cost: [D, D, D],
       damage: 120,
-      text: 'This attack does 30 damage to each of your opponent\'s Benched Pokémon that has any damage counters on it. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "This attack does 30 damage to each of your opponent's Benched Pokémon that has any damage counters on it. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'STS';
@@ -39,7 +39,7 @@ export class YveltalBreak extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0 && benched.damage > 0) {
           const damage = new PutDamageEffect(effect, 30);
           damage.target = benched;
@@ -47,6 +47,8 @@ export class YveltalBreak extends PokemonCard {
         }
       });
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

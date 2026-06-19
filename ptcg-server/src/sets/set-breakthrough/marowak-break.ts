@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BREAK_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MarowakBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -22,8 +22,8 @@ export class MarowakBreak extends PokemonCard {
       cost: [F, C],
       damage: 20,
       damageCalculation: '+',
-      text: 'This attack does 40 more damage for each Prize card your opponent has taken.'
-    }
+      text: 'This attack does 40 more damage for each Prize card your opponent has taken.',
+    },
   ];
 
   public set: string = 'BKT';
@@ -37,9 +37,11 @@ export class MarowakBreak extends PokemonCard {
     // Ref: AGENTS-patterns.md (damage for each prize taken)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
-      const prizesTaken = opponent.prizes.filter(p => p.cards.length === 0).length;
+      const prizesTaken = opponent.prizes.filter((p) => p.cards.length === 0).length;
       effect.damage += 40 * prizesTaken;
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

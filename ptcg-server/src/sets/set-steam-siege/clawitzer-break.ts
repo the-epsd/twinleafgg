@@ -9,8 +9,12 @@ import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import {
-  WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER,
-  REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN
+  WAS_ATTACK_USED,
+  BLOCK_RETREAT,
+  BLOCK_RETREAT_IF_MARKER,
+  REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN,
+  REPLACE_MARKER_AT_END_OF_TURN,
+  BREAK_RULE,
 } from '../../game/store/prefabs/prefabs';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
 
@@ -27,8 +31,8 @@ export class ClawitzerBreak extends PokemonCard {
       name: 'Lock-On',
       cost: [C],
       damage: 0,
-      text: 'The Defending Pokémon can\'t retreat during your opponent\'s next turn. During your next turn, any damage done to that Pokémon by attacks is increased by 120 (after applying Weakness and Resistance).'
-    }
+      text: "The Defending Pokémon can't retreat during your opponent's next turn. During your next turn, any damage done to that Pokémon by attacks is increased by 120 (after applying Weakness and Resistance).",
+    },
   ];
 
   public set: string = 'STS';
@@ -60,11 +64,17 @@ export class ClawitzerBreak extends PokemonCard {
 
     // Retreat block helpers
     BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
+    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(
+      effect,
+      MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER,
+      this,
+    );
 
     // Increase damage by 120 to the targeted Pokemon during player's next turn
-    if (effect instanceof DealDamageEffect
-      && effect.target.marker.hasMarker(this.LOCK_ON_TARGET_MARKER, this)) {
+    if (
+      effect instanceof DealDamageEffect &&
+      effect.target.marker.hasMarker(this.LOCK_ON_TARGET_MARKER, this)
+    ) {
       const attackingPlayer = effect.player;
       // Only increase if the attacker has the clear marker (meaning it's their next turn)
       if (attackingPlayer.marker.hasMarker(this.LOCK_ON_CLEAR_MARKER, this)) {
@@ -75,7 +85,12 @@ export class ClawitzerBreak extends PokemonCard {
     // Phase transition and cleanup at end of turn
     if (effect instanceof EndTurnEffect) {
       // Phase 1 -> Phase 2 (end of current turn -> now waiting for next turn)
-      REPLACE_MARKER_AT_END_OF_TURN(effect, this.LOCK_ON_PHASE1_MARKER, this.LOCK_ON_CLEAR_MARKER, this);
+      REPLACE_MARKER_AT_END_OF_TURN(
+        effect,
+        this.LOCK_ON_PHASE1_MARKER,
+        this.LOCK_ON_CLEAR_MARKER,
+        this,
+      );
 
       // Phase 2 -> cleanup (end of next turn)
       if (effect.player.marker.hasMarker(this.LOCK_ON_CLEAR_MARKER, this)) {
@@ -83,11 +98,13 @@ export class ClawitzerBreak extends PokemonCard {
 
         // Remove Lock-On target marker from all of opponent's Pokemon
         const opponent = StateUtils.getOpponent(state, effect.player);
-        opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+        opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
           cardList.marker.removeMarker(this.LOCK_ON_TARGET_MARKER, this);
         });
       }
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

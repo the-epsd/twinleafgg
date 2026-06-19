@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BREAK_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED } from '../../game/store/prefabs/attack-effects';
 
 export class NidokingBreak extends PokemonCard {
@@ -22,8 +22,8 @@ export class NidokingBreak extends PokemonCard {
       name: 'Toxic Drill',
       cost: [P, P, C],
       damage: 120,
-      text: 'Your opponent\'s Active Pok\u00e9mon is now Poisoned. Put 2 damage counters instead of 1 on that Pok\u00e9mon between turns.'
-    }
+      text: "Your opponent's Active Pok\u00e9mon is now Poisoned. Put 2 damage counters instead of 1 on that Pok\u00e9mon between turns.",
+    },
   ];
 
   public set: string = 'EVO';
@@ -42,6 +42,8 @@ export class NidokingBreak extends PokemonCard {
       YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(store, state, effect);
       opponent.active.poisonDamage = 20;
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

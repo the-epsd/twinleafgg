@@ -7,7 +7,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BREAK_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class StarmieBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -22,8 +22,8 @@ export class StarmieBreak extends PokemonCard {
       name: 'Break Star',
       cost: [W],
       damage: 0,
-      text: 'This attack does 100 damage to each of your opponent\'s Pok\u00e9mon BREAK. (Don\'t apply Weakness and Resistance for Benched Pok\u00e9mon.)'
-    }
+      text: "This attack does 100 damage to each of your opponent's Pokémon BREAK. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'EVO';
@@ -49,7 +49,7 @@ export class StarmieBreak extends PokemonCard {
       }
 
       // Bench - use PutDamageEffect (ignores weakness/resistance per card text)
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const benchPokemon = benched.getPokemonCard();
           if (benchPokemon && benchPokemon.tags.includes(CardTag.BREAK)) {
@@ -60,6 +60,8 @@ export class StarmieBreak extends PokemonCard {
         }
       });
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

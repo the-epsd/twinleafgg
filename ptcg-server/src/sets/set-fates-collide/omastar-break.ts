@@ -4,9 +4,27 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameError, GameMessage, PlayerType, SlotType, ChoosePokemonPrompt, StateUtils, PokemonCardList } from '../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  GameError,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  ChoosePokemonPrompt,
+  StateUtils,
+  PokemonCardList,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_POWER_USED, IS_ABILITY_BLOCKED, ABILITY_USED, USE_ABILITY_ONCE_PER_TURN, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  ABILITY_USED,
+  USE_ABILITY_ONCE_PER_TURN,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  BREAK_RULE,
+} from '../../game/store/prefabs/prefabs';
 
 export class OmastarBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -16,12 +34,14 @@ export class OmastarBreak extends PokemonCard {
   public hp: number = 140;
   public retreat = [];
 
-  public powers = [  {
-    name: 'Dangerous Tentacle',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may switch 1 of your opponent\'s Benched Pokémon-EX with his or her Active Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Dangerous Tentacle',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "Once during your turn (before your attack), you may switch 1 of your opponent's Benched Pokémon-EX with his or her Active Pokémon.",
+    },
+  ];
 
   public set: string = 'FCO';
   public setNumber: string = '19';
@@ -44,7 +64,7 @@ export class OmastarBreak extends PokemonCard {
 
       // Check if opponent has a Benched Pokemon-EX
       const benchedEX: PokemonCardList[] = [];
-      opponent.bench.forEach(b => {
+      opponent.bench.forEach((b) => {
         if (b.cards.length > 0) {
           const pokemonCard = b.getPokemonCard();
           if (pokemonCard && pokemonCard.tags.includes(CardTag.POKEMON_EX)) {
@@ -61,28 +81,34 @@ export class OmastarBreak extends PokemonCard {
       ABILITY_USED(player, this);
 
       // Player chooses which benched EX to bring up
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), targets => {
-        if (!targets || targets.length === 0) {
-          return;
-        }
-        const target = targets[0];
-        const targetCard = target.getPokemonCard();
-        if (!targetCard || !targetCard.tags.includes(CardTag.POKEMON_EX)) {
-          return;
-        }
+      return store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON,
+          PlayerType.TOP_PLAYER,
+          [SlotType.BENCH],
+          { allowCancel: false },
+        ),
+        (targets) => {
+          if (!targets || targets.length === 0) {
+            return;
+          }
+          const target = targets[0];
+          const targetCard = target.getPokemonCard();
+          if (!targetCard || !targetCard.tags.includes(CardTag.POKEMON_EX)) {
+            return;
+          }
 
-        // Switch opponent's active with selected benched Pokemon
-        opponent.switchPokemon(target);
-      });
+          // Switch opponent's active with selected benched Pokemon
+          opponent.switchPokemon(target);
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.DANGEROUS_TENTACLE_MARKER, this);
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

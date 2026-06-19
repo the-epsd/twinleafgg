@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BREAK_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { THIS_ATTACKS_DAMAGE_ISNT_AFFECTED_BY_EFFECTS } from '../../game/store/prefabs/attack-effects';
 
 export class YanmegaBreak extends PokemonCard {
@@ -22,8 +22,8 @@ export class YanmegaBreak extends PokemonCard {
       name: 'Barrier Break',
       cost: [C, C, C],
       damage: 100,
-      text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, or any other effects on your opponent\'s Active Pok\u00e9mon.'
-    }
+      text: "This attack's damage isn't affected by Weakness, Resistance, or any other effects on your opponent's Active Pok\u00e9mon.",
+    },
   ];
 
   public set: string = 'STS';
@@ -40,6 +40,8 @@ export class YanmegaBreak extends PokemonCard {
       effect.ignoreWeakness = true;
       effect.ignoreResistance = true;
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

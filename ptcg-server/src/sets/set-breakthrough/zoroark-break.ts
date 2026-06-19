@@ -7,7 +7,11 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { COPY_OPPONENT_ACTIVE_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  BREAK_RULE,
+  COPY_OPPONENT_ACTIVE_ATTACK,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 
 export class ZoroarkBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -23,8 +27,8 @@ export class ZoroarkBreak extends PokemonCard {
       cost: [D],
       damage: 0,
       copycatAttack: true,
-      text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks and use it as this attack.'
-    }
+      text: "Choose 1 of your opponent's Active Pokémon's attacks and use it as this attack.",
+    },
   ];
 
   public set: string = 'BKT';
@@ -38,6 +42,8 @@ export class ZoroarkBreak extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return COPY_OPPONENT_ACTIVE_ATTACK(store, state, effect as AttackEffect);
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }
