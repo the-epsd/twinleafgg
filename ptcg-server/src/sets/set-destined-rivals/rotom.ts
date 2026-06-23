@@ -1,7 +1,6 @@
-import { Attack, CardType, PokemonCard, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { Attack, CardType, PlayerType, PokemonCard, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-
-import { AFTER_ATTACK, MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Rotom extends PokemonCard {
 
@@ -20,6 +19,7 @@ export class Rotom extends PokemonCard {
     name: 'Gadget Show',
     cost: [C, C],
     damage: 30,
+    damageCalculation: 'x',
     text: 'This attack does 30 damage for each Pokémon Tool attached to all of your Pokemon.',
   }];
 
@@ -43,6 +43,8 @@ export class Rotom extends PokemonCard {
       if (opponent.hand.cards.length > 0) {
         const randomIndex = Math.floor(Math.random() * opponent.hand.cards.length);
         const randomCard = opponent.hand.cards[randomIndex];
+
+        SHOW_CARDS_TO_PLAYER(store, state, player, [randomCard]);
         MOVE_CARDS(store, state, opponent.hand, opponent.deck, { cards: [randomCard], sourceCard: this, sourceEffect: this.attacks[0] });
         SHUFFLE_DECK(store, state, opponent);
       }
@@ -52,12 +54,8 @@ export class Rotom extends PokemonCard {
       const player = effect.player;
       let toolCount = 0;
 
-      [player.active, ...player.bench].forEach(list => {
-        list.cards.forEach(card => {
-          if (card instanceof PokemonCard && card.tools.length > 0) {
-            toolCount += card.tools.length;
-          }
-        });
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        toolCount += cardList.tools.length;
       });
       effect.damage = 30 * toolCount;
     }

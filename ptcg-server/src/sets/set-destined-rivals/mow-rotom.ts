@@ -1,7 +1,6 @@
-import { Attack, CardType, PokemonCard, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
+import { Attack, CardType, PlayerType, PokemonCard, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MowRotom extends PokemonCard {
 
@@ -20,6 +19,7 @@ export class MowRotom extends PokemonCard {
     name: 'Gadget Show',
     cost: [C, C],
     damage: 30,
+    damageCalculation: 'x',
     text: 'This attack does 30 damage for each Pokémon Tool attached to all of your Pokémon.',
   }];
 
@@ -36,10 +36,8 @@ export class MowRotom extends PokemonCard {
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard) {
         const cardList = StateUtils.findCardList(state, stadiumCard);
-        if (cardList) {
-          const player = StateUtils.findOwner(state, cardList);
-          cardList.moveTo(player.discard);
-        }
+        const owner = StateUtils.findOwner(state, cardList);
+        MOVE_CARDS(store, state, cardList, owner.discard, { cards: [stadiumCard], sourceCard: this, sourceEffect: this.attacks[0] });
       }
     }
 
@@ -47,12 +45,8 @@ export class MowRotom extends PokemonCard {
       const player = effect.player;
       let toolCount = 0;
 
-      [player.active, ...player.bench].forEach(list => {
-        list.cards.forEach(card => {
-          if (card instanceof PokemonCard && card.tools.length > 0) {
-            toolCount += card.tools.length;
-          }
-        });
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        toolCount += cardList.tools.length;
       });
       effect.damage = 30 * toolCount;
     }

@@ -1,7 +1,6 @@
-import { Attack, CardType, PlayerType, PokemonCard, PokemonCardList, SpecialCondition, Stage, State, StoreLike, Weakness } from '../../game';
-import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
+import { Attack, CardType, PlayerType, PokemonCard, Stage, State, StoreLike, Weakness } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-
+import { YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED } from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class HeatRotom extends PokemonCard {
@@ -21,6 +20,7 @@ export class HeatRotom extends PokemonCard {
     name: 'Gadget Show',
     cost: [C, C],
     damage: 30,
+    damageCalculation: 'x',
     text: 'This attack does 30 damage for each Pokémon Tool attached to all of your Pokémon.',
   }];
 
@@ -34,23 +34,15 @@ export class HeatRotom extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      player.forEachPokemon(PlayerType.TOP_PLAYER, (cardList: PokemonCardList) => {
-        const specialConditionEffect = new AddSpecialConditionsEffect(effect, [SpecialCondition.BURNED]);
-        state = store.reduceEffect(state, specialConditionEffect);
-      });
+      YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_BURNED(store, state, effect);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       let toolCount = 0;
 
-      [player.active, ...player.bench].forEach(list => {
-        list.cards.forEach(card => {
-          if (card instanceof PokemonCard && card.tools.length > 0) {
-            toolCount += card.tools.length;
-          }
-        });
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        toolCount += cardList.tools.length;
       });
       effect.damage = 30 * toolCount;
     }
