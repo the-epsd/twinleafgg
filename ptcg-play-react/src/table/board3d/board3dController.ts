@@ -2477,8 +2477,9 @@ export class Board3dController {
       const isTopDeck = this.topPlayer && this.topPlayer.deck === cardList;
 
       if (cardList) {
-        const facedown = true;
-        const allowReveal = !!this.gameState.replay;
+        const sandboxMode = this.gameState.state.gameSettings?.sandboxMode === true;
+        const facedown = !sandboxMode;
+        const allowReveal = !sandboxMode && !!this.gameState.replay;
         this.cardsAdapter.showCardInfoList({
           card: cardData,
           cardList: cardList, // Use full deck CardList from userData
