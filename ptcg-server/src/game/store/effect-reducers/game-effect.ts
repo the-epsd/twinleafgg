@@ -75,6 +75,15 @@ function applyWeaknessAndResistance(
   return (damage * multiply) + modifier;
 }
 
+function resetEmptyPokemonSlot(slot: PokemonCardList): void {
+  slot.clearEffects();
+  slot.damage = 0;
+  slot.specialConditions = [];
+  slot.marker.markers = [];
+  slot.tools = [];
+  slot.removeBoardEffect(BoardEffect.ABILITY_USED);
+}
+
 function* useAttack(next: Function, store: StoreLike, state: State, effect: UseAttackEffect | AttackEffect): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
@@ -534,18 +543,12 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     const destination = effect.destination;
     const isPartialMove = effect.cards !== undefined || effect.count !== undefined;
 
-    // Only reset in-play Pokemon state when moving the entire card list, not specific cards.
+    // moveTo() does not move tools; attach them before a full-stack move.
     if (source instanceof PokemonCardList && !effect.skipCleanup && !isPartialMove) {
       const tools = [...source.tools];
       for (const tool of tools) {
         source.moveCardTo(tool, destination);
       }
-      source.clearEffects();
-      source.damage = 0;
-      source.specialConditions = [];
-      source.marker.markers = [];
-      source.tools = [];
-      source.removeBoardEffect(BoardEffect.ABILITY_USED);
     }
 
     // Helper to get owner of a CardList
@@ -621,10 +624,16 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       }
     }
 
-    // If source is a PokemonCardList and we moved all cards, discard remaining attached cards
+    // Discard orphan attachments when no Pokemon remain in the slot.
     if (source instanceof PokemonCardList && source.getPokemons().length === 0) {
       const player = StateUtils.findOwner(state, source);
       source.moveTo(player.discard);
+    }
+
+    // In-play state (damage, special conditions, etc.) lives on the slot, not on cards.
+    // Reset whenever a slot is vacated — including after partial card moves.
+    if (source instanceof PokemonCardList && !effect.skipCleanup && source.getPokemons().length === 0) {
+      resetEmptyPokemonSlot(source);
     }
 
     return state;

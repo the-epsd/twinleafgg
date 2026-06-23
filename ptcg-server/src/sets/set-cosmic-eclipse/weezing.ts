@@ -2,6 +2,7 @@ import { CardType, PokemonCard, PowerType, Stage, State, StoreLike } from '../..
 import { Effect } from '../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { reduceBlowAwayBombEffect } from './blow-away-bomb';
 
 export class Weezing extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -14,6 +15,7 @@ export class Weezing extends PokemonCard {
   public powers = [{
     name: 'Blow-Away Bomb',
     powerType: PowerType.ABILITY,
+    useFromHand: true,
     text: 'Once during your turn, when you discard this Pokémon with the effect of Roxie, you may put 1 damage counter on each of your opponent\'s Pokémon. (Place damage counters after the effect of Roxie.)'
   }];
 
@@ -33,9 +35,7 @@ export class Weezing extends PokemonCard {
   public usedBalloonBurst = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    // Blow-Away Bomb is handled in Roxie. 
-    // It shouldn't be, so if you can figure out how to get it to be contained in Koffing and Weezing themselves, please do so.
+    state = reduceBlowAwayBombEffect(store, state, effect, this);
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       this.usedBalloonBurst = true;
