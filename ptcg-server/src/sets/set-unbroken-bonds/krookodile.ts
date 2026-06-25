@@ -25,7 +25,7 @@ export class Krookodile extends PokemonCard {
       cost: [C, C, C],
       damage: 50,
       damageCalculation: 'x',
-      text: 'This attack does 50 damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
+      text: 'This attack does 50 damage for each [C] in your opponent\'s Active Pokémon\'s Retreat Cost.'
     },
     {
       name: 'Crunch',

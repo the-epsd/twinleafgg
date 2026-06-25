@@ -23,7 +23,7 @@ export class Kartana extends PokemonCard {
     name: 'False Swipe',
     cost: [CardType.GRASS, CardType.COLORLESS, CardType.COLORLESS],
     damage: 0,
-    text: ' Flip a coin. If heads, put damage counters on your opponent\'s Active Pokémon until its remaining HP is 10. '
+    text: 'Flip a coin. If heads, put damage counters on your opponent\'s Active Pokémon until its remaining HP is 10.'
   }];
 
   public set: string = 'UNB';

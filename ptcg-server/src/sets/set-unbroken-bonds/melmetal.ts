@@ -26,7 +26,7 @@ export class Melmetal extends PokemonCard {
     name: 'Metal Eater',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may discard a Metal Pokémon from your hand. If you do, heal 100 damage from this Pokémon.'
+    text: 'Once during your turn (before your attack), you may discard a [M] Pokémon from your hand. If you do, heal 100 damage from this Pokémon.'
   }];
 
   public attacks = [

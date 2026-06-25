@@ -26,7 +26,7 @@ export class Mismagius extends PokemonCard {
     name: 'Hypnoblast',
     cost: [CardType.PSYCHIC, CardType.COLORLESS, CardType.COLORLESS],
     damage: 70,
-    text: 'Your opponent\'s Active Pokemon is now Asleep.'
+    text: 'Your opponent\'s Active Pokémon is now Asleep.'
   }];
 
   public set: string = 'UNB';

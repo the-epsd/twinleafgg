@@ -23,7 +23,7 @@ export class Meltan extends PokemonCard {
       cost: [M],
       damage: 10,
       damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is a Metal Pokémon, this attack does 40 more damage.'
+      text: 'If your opponent\'s Active Pokémon is a [M] Pokémon, this attack does 40 more damage.'
     }
   ];
 

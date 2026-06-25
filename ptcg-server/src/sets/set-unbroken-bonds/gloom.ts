@@ -17,8 +17,8 @@ export class Gloom extends PokemonCard {
     name: 'Irresistible Aroma',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: ' Once during your turn (before your attack), if your opponent\'s Bench isn\'t full, you may flip a coin.'
-      + 'If heads, your opponent reveals their hand.Put a Basic Pokémon you find there onto their Bench. '
+    text: 'Once during your turn (before your attack), if your opponent\'s Bench isn\'t full, you may flip a coin.'
+      + ' If heads, your opponent reveals their hand. Put a Basic Pokémon you find there onto their Bench.'
   }];
 
   public attacks = [{

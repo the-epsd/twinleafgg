@@ -19,13 +19,13 @@ export class ReshiramCharizardGX extends PokemonCard {
     cost: [R, C],
     damage: 30,
     damageCalculation: '+',
-    text: 'This attack does 10 more damage for each damage counter on this Pokemon.'
+    text: 'This attack does 10 more damage for each damage counter on this Pokémon.'
   },
   {
     name: 'Flare Strike',
     cost: [R, R, R, C],
     damage: 230,
-    text: 'This Pokemon can\'t use Flare Strike during your next turn.'
+    text: 'This Pokémon can\'t use Flare Strike during your next turn.'
   },
   {
     name: 'Double Blaze-GX',
@@ -34,9 +34,9 @@ export class ReshiramCharizardGX extends PokemonCard {
     shredAttack: false,
     gxAttack: true,
     damageCalculation: '+',
-    text: 'If this Pokemon has at least 3 extra [R] Energy attached to it (in addition to this attack\'s cost), ' +
+    text: 'If this Pokémon has at least 3 extra [R] Energy attached to it (in addition to this attack\'s cost), ' +
       'this attack does 100 more damage, and this attack\'s damage isn\'t affected by any effects on your ' +
-      'opponent\'s Active Pokemon. (You can\'t use more than 1 GX attack in a game.)'
+      'opponent\'s Active Pokémon. (You can\'t use more than 1 GX attack in a game.)'
   },];
 
   public set = 'UNB';

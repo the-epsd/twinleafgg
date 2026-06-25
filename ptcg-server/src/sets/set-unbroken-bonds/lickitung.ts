@@ -17,7 +17,7 @@ export class Lickitung extends PokemonCard {
     name: 'Lick',
     cost: [CardType.COLORLESS, CardType.COLORLESS],
     damage: 30,
-    text: ' Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
+    text: 'Flip a coin. If heads, your opponent\'s Active Pokémon is now Paralyzed.'
   }];
 
   public set = 'UNB';

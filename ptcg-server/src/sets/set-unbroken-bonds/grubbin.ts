@@ -20,7 +20,7 @@ export class Grubbin extends PokemonCard {
       name: 'Electrical Signal',
       cost: [C],
       damage: 0,
-      text: 'Search your deck for up to 2 Lightning Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.'
+      text: 'Search your deck for up to 2 [L] Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.'
     },
     {
       name: 'Corkscrew Punch',

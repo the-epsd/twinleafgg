@@ -21,7 +21,7 @@ export class MukAlolanMukGX extends PokemonCard {
       text: 'Your opponent\'s Active Pokémon is now Poisoned. Put 8 damage counters instead of 1 on that Pokémon between turns.'
     },
     {
-      name: 'Posion Absorption',
+      name: 'Poison Absorption',
       cost: [P, C, C, C],
       damage: 120,
       text: 'If your opponent\'s Active Pokémon is Poisoned, heal 100 damage from this Pokémon.'

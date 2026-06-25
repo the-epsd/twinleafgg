@@ -17,7 +17,7 @@ export class Aron extends PokemonCard {
     name: 'Rigidify',
     cost: [CardType.METAL],
     damage: 0,
-    text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks(after applying Weakness and Resistance).'
+    text: 'During your opponent\'s next turn, this Pokémon takes 30 less damage from attacks (after applying Weakness and Resistance).'
   },
   {
     name: 'Metal Claw',

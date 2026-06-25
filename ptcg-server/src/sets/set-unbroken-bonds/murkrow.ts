@@ -16,7 +16,7 @@ export class Murkrow extends PokemonCard {
   public attacks = [
     {
       name: 'Astonish',
-      cost: [C],
+      cost: [D],
       damage: 0,
       text: 'Choose a random card from your opponent\'s hand. Your opponent reveals that card and shuffles it into their deck.'
     }

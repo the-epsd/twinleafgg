@@ -22,7 +22,7 @@ export class AlolanDugtrio extends PokemonCard {
   public powers = [{
     name: 'Hair Wall',
     powerType: PowerType.ABILITY,
-    text: 'Your Metal Pokémon take 10 less damage from your opponent\'s attacks (after applying Weakness and Resistance).'
+    text: 'Your [M] Pokémon take 10 less damage from your opponent\'s attacks (after applying Weakness and Resistance).'
   }];
 
   public attacks = [

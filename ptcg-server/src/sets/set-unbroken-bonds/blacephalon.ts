@@ -17,12 +17,12 @@ export class Blacephalon extends PokemonCard {
       cost: [R],
       damage: 10,
       damageCalculation: '+',
-      text: 'Turn 1 of your face-down Prize cards face up. If it\'s a [R] Energy card, this attack does 50 more damage. (That Prize card remains face up for the rest of the game.) '
+      text: 'Turn 1 of your face-down Prize cards face up. If it\'s a [R] Energy card, this attack does 50 more damage. (That Prize card remains face up for the rest of the game.)'
     },
     {
       name: 'Fireball Circus',
       cost: [R, R, R],
-      damage: 0,
+      damage: 50,
       damageCalculation: 'x',
       text: 'Discard any number of [R] Energy cards from your hand. This attack does 50 damage for each card you discarded in this way.'
     },
@@ -62,9 +62,9 @@ export class Blacephalon extends PokemonCard {
         GameMessage.CHOOSE_CARD_TO_DISCARD,
         player.hand,
         { superType: SuperType.ENERGY, name: 'Fire Energy' },
-        { min: 1, allowCancel: false }
+        { min: 0, allowCancel: false }
       ), selected => {
-        effect.damage += (50 * selected.length);
+        effect.damage = (50 * selected.length);
         player.hand.moveCardsTo(selected, player.discard);
       });
     }

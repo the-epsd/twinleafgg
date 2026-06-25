@@ -25,7 +25,7 @@ export class Zeraora extends PokemonCard {
     name: 'Discharge',
     cost: [CardType.LIGHTNING, CardType.COLORLESS, CardType.COLORLESS],
     damage: 50,
-    text: 'Discard all [L] Energy from this Pokémon. This attack does 50 damage for each card you discarded in this way. '
+    text: 'Discard all [L] Energy from this Pokémon. This attack does 50 damage for each card you discarded in this way.'
   }];
 
   public set: string = 'UNB';

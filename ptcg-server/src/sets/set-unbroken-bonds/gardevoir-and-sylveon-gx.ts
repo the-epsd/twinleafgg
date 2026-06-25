@@ -22,20 +22,20 @@ export class GardevoirSylveonGX extends PokemonCard {
       name: 'Fairy Song',
       cost: [CardType.COLORLESS],
       damage: 0,
-      text: 'Search your deck for up to 2 [Y] Energy cards and attach them to your Benched Pokemon in any ' +
+      text: 'Search your deck for up to 2 [Y] Energy cards and attach them to your Benched Pokémon in any ' +
         'way you like. Then, shuffle your deck.'
     },
     {
       name: 'Kaleidostorm',
       cost: [CardType.FAIRY, CardType.FAIRY, CardType.COLORLESS],
       damage: 150,
-      text: 'Move any number of Energy from your Pokemon to your other Pokemon in any way you like.'
+      text: 'Move any number of Energy from your Pokémon to your other Pokémon in any way you like.'
     },
     {
       name: 'Magical Miracle-GX',
       cost: [CardType.FAIRY, CardType.FAIRY, CardType.FAIRY],
       damage: 200,
-      text: 'If this Pokemon has at least 3 extra [Y] Energy attached to it (in addition to this attack\'s cost), ' +
+      text: 'If this Pokémon has at least 3 extra [Y] Energy attached to it (in addition to this attack\'s cost), ' +
         'your opponent shuffles their hand into their deck. (You can\'t use more than 1 GX attack in a game.)'
     },
   ];

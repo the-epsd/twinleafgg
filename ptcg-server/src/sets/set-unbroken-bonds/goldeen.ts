@@ -15,7 +15,7 @@ export class Goldeen extends PokemonCard {
   public hp: number = 60;
 
   public weakness = [{ type: CardType.GRASS }];
-  public retreate = [CardType.COLORLESS];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Elegant Swim',

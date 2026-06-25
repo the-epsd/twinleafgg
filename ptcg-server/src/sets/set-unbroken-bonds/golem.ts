@@ -29,7 +29,7 @@ export class Golem extends PokemonCard {
       cost: [F, C, C, C],
       damage: 180,
       damageCalculation: '-',
-      text: 'This attack does 20 less damage for each Colorless in your opponent\'s Active Pokémon\'s Retreat Cost.'
+      text: 'This attack does 20 less damage for each [C] in your opponent\'s Active Pokémon\'s Retreat Cost.'
     }
   ];
 

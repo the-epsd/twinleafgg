@@ -23,7 +23,7 @@ export class Slowbro extends PokemonCard {
     {
       name: 'Yawn',
       cost: [W],
-      damage: 20,
+      damage: 0,
       text: 'Your opponent\'s Active Pokémon is now Asleep.'
     },
     {

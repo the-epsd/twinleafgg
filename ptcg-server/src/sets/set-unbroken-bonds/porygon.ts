@@ -15,7 +15,7 @@ export class Porygon extends PokemonCard {
 
   public weakness = [{ type: CardType.FIGHTING }];
 
-  public retreat = [];
+  public retreat = [CardType.COLORLESS];
 
   public attacks = [{
     name: 'Quick Draw',

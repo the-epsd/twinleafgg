@@ -33,7 +33,7 @@ export class Meowstic extends PokemonCard {
       name: 'Perplexing Eyes',
       cost: [P, C, C],
       damage: 70,
-      text: 'The Defending Pokémon\'s Weakness is now Psychic until the end of your next turn. (The amount of Weakness doesn\'t change.)'
+      text: 'The Defending Pokémon\'s Weakness is now [P] until the end of your next turn. (The amount of Weakness doesn\'t change.)'
     }
   ];
 

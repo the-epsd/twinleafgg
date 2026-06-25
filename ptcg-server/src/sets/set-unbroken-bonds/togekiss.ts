@@ -25,7 +25,7 @@ export class Togekiss extends PokemonCard {
     name: 'Fairy Feast',
     useWhenInPlay: true,
     powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may heal 30 damage from each of your Fairy Pokémon.'
+    text: 'Once during your turn (before your attack), you may heal 30 damage from each of your [Y] Pokémon.'
   }];
 
   public attacks = [
