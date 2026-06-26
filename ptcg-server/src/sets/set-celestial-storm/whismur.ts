@@ -3,7 +3,7 @@ import { StoreLike, State, GameError, GameMessage, StateUtils, CardType, Stage }
 import { Effect } from '../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayItemEffect, PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
+import { AttachPokemonToolEffect, PlayItemEffect, PlayStadiumEffect, PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Whismur extends PokemonCard {
@@ -60,18 +60,18 @@ export class Whismur extends PokemonCard {
         const opponent = StateUtils.getOpponent(state, player);
         opponent.marker.addMarker(this.SUDDEN_SHRIEK_MARKER, this);
       }
+    }
 
-      if (effect instanceof PlayItemEffect || effect instanceof PlaySupporterEffect) {
-        const player = effect.player;
-        const opponent = StateUtils.getOpponent(state, player);
-        if (opponent.marker.hasMarker(this.SUDDEN_SHRIEK_MARKER, this)) {
-          throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-        }
+    if (effect instanceof PlayItemEffect || effect instanceof PlaySupporterEffect || effect instanceof PlayStadiumEffect || effect instanceof AttachPokemonToolEffect) {
+      const player = effect.player;
+      const opponent = StateUtils.getOpponent(state, player);
+      if (opponent.marker.hasMarker(this.SUDDEN_SHRIEK_MARKER, this)) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
       }
+    }
 
-      if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SUDDEN_SHRIEK_MARKER, this)) {
-        effect.player.marker.removeMarker(this.SUDDEN_SHRIEK_MARKER, this);
-      }
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.SUDDEN_SHRIEK_MARKER, this)) {
+      effect.player.marker.removeMarker(this.SUDDEN_SHRIEK_MARKER, this);
     }
     return state;
   }
