@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import { BoardCardAnimationHelper, AnimationState } from './board-card-animations.helper';
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 import { getCustomEnergyIconPath } from '../../../shared/cards/energy-icons.utils';
+import { resolveDualStadiumDisplayHalves } from '../../../shared/cards/dual-stadium.utils';
 
 const MAX_ENERGY_CARDS = 8;
 
@@ -40,6 +41,16 @@ export class BoardCardComponent implements OnInit, OnDestroy {
       return;
     }
 
+    const dualHalves = resolveDualStadiumDisplayHalves(value.cards);
+    if (dualHalves) {
+      this.dualStadiumLeftCard = dualHalves[0];
+      this.dualStadiumRightCard = dualHalves[1];
+      this.mainCard = undefined;
+      return;
+    }
+
+    this.dualStadiumLeftCard = undefined;
+    this.dualStadiumRightCard = undefined;
     this.mainCard = value.cards[value.cards.length - 1];
   }
 
@@ -71,6 +82,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   public vunionTopRightCard: Card;
   public vunionBottomLeftCard: Card;
   public vunionBottomRightCard: Card;
+  public dualStadiumLeftCard: Card;
+  public dualStadiumRightCard: Card;
   public moreEnergies = 0;
   public cardCount = 0;
   public energyCards: Card[] = [];
@@ -148,6 +161,11 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   @HostBinding('style.--cardback-url')
   get cardbackCssVar(): string | null {
     return this.cardbackUrl ? `url(${this.cardbackUrl})` : null;
+  }
+
+  @HostBinding('class.dual-stadium-layout')
+  get isDualStadiumLayout(): boolean {
+    return !!(this.dualStadiumLeftCard && this.dualStadiumRightCard);
   }
 
   private resolveSleeveCardbackUrl(): string | undefined {
@@ -526,6 +544,8 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   // ==================== CARD STATE MANAGEMENT ====================
   private resetCardState() {
     this.mainCard = undefined;
+    this.dualStadiumLeftCard = undefined;
+    this.dualStadiumRightCard = undefined;
     this.energyCards = [];
     this.trainerCard = undefined;
     this.moreEnergies = 0;

@@ -53,6 +53,15 @@
     <ptcg-card [card]="vunionBottomRightCard" (click)="onCardClick(vunionBottomRightCard)"></ptcg-card>
   </div>
 
+  <div class="ptcg-dual-stadium-cards" *ngIf="dualStadiumLeftCard && dualStadiumRightCard">
+    <ptcg-card class="ptcg-dual-stadium-half" [card]="dualStadiumLeftCard"
+      [customArtworkUrl]="resolveArtUrlFor(dualStadiumLeftCard)"
+      (click)="onCardClick(dualStadiumLeftCard)"></ptcg-card>
+    <ptcg-card class="ptcg-dual-stadium-half" [card]="dualStadiumRightCard"
+      [customArtworkUrl]="resolveArtUrlFor(dualStadiumRightCard)"
+      (click)="onCardClick(dualStadiumRightCard)"></ptcg-card>
+  </div>
+
   <!-- Tool cards, rendered like energy cards, with custom image and click handler -->
   <div class="ptcg-tool-cards" *ngIf="cardListInternal instanceof PokemonCardList && cardListInternal.tools">
     <ptcg-card *ngFor="let tool of cardListInternal.tools; let i = index" [card]="tool"
