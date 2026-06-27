@@ -28,7 +28,7 @@ import {
   MULTI_DRAW_STAGE_TO_HAND_STAGGER_SEC,
   type DrawFlightVisualPreset,
 } from './services/board-3d-animation.service';
-import { Board3dInteractionService } from './services/board-3d-interaction.service';
+import { Board3dInteractionService, type DropResult } from './services/board-3d-interaction.service';
 import { Board3dHandService } from './services/board-3d-hand.service';
 import { Board3dWireframeService } from './services/board-3d-wireframe.service';
 import { Board3dLightingService } from './services/board-3d-lighting.service';
@@ -2020,11 +2020,13 @@ export class Board3dController {
       canvas.addEventListener('pointerup', this.onPointerUp);
       canvas.addEventListener('pointercancel', this.onPointerCancel);
       canvas.addEventListener('pointerleave', this.onPointerLeave);
+      canvas.addEventListener('contextmenu', this.onContextMenu);
     } else {
       canvas.addEventListener('mousedown', this.onMouseDown);
       canvas.addEventListener('mousemove', this.onMouseMove);
       canvas.addEventListener('mouseup', this.onMouseUp);
       canvas.addEventListener('mouseleave', this.onMouseLeave);
+      canvas.addEventListener('contextmenu', this.onContextMenu);
     }
   }
 
@@ -2037,11 +2039,13 @@ export class Board3dController {
       canvas.removeEventListener('pointerup', this.onPointerUp);
       canvas.removeEventListener('pointercancel', this.onPointerCancel);
       canvas.removeEventListener('pointerleave', this.onPointerLeave);
+      canvas.removeEventListener('contextmenu', this.onContextMenu);
     } else {
       canvas.removeEventListener('mousedown', this.onMouseDown);
       canvas.removeEventListener('mousemove', this.onMouseMove);
       canvas.removeEventListener('mouseup', this.onMouseUp);
       canvas.removeEventListener('mouseleave', this.onMouseLeave);
+      canvas.removeEventListener('contextmenu', this.onContextMenu);
     }
   }
 
@@ -2116,143 +2120,49 @@ export class Board3dController {
 
   private onMouseUp = (event: MouseEvent): void => {
     const canvas = this.canvasEl;
+    const isHandPlayTargetSelection = this.boardInteractionService.isHandPlayTargetSelectionActive();
     const result = this.interactionService.onMouseUp(
       event,
       this.camera,
       this.scene,
-      canvas
+      canvas,
+      this.boardInteractionService.isSelectionActive(),
+      isHandPlayTargetSelection,
     );
+
+    if (result?.action === 'cancelHandPlayTarget') {
+      this.boardInteractionService.cancelHandPlayTargetSelection();
+      this.updateSelectionVisuals();
+      canvas.style.cursor = 'default';
+      this.markDirty();
+      return;
+    }
+
+    if (
+      result &&
+      (result.action === 'playCard' ||
+        result.action === 'pickAttachTarget' ||
+        (result.action === 'click' && result.clickedCard?.userData.isHandCard))
+    ) {
+      if (isHandPlayTargetSelection) {
+        this.boardInteractionService.clearHandPlayTargetSelectionSilently();
+        this.updateSelectionVisuals();
+      }
+    }
 
     if (result) {
       if (result.action === 'click' && result.clickedCard) {
         this.onCardClicked(result.clickedCard);
+      } else if (result.action === 'pickAttachTarget' && result.handIndex !== undefined && result.eligibleTargets) {
+        this.boardInteractionService.startHandPlayTargetSelection(result.eligibleTargets, (target) => {
+          this.updateSelectionVisuals();
+          if (target && result.handIndex !== undefined) {
+            this.executeHandAttachPlay(result.handIndex, target);
+          }
+        });
+        this.updateSelectionVisuals();
       } else if (result.action === 'playCard' && result.handIndex !== undefined && result.zone) {
-        const playedHandCard =
-          result.handIndex >= 0 ? this.bottomPlayerHand.cards[result.handIndex] : undefined;
-        if (
-          !this.gameState.replay &&
-          playedHandCard?.superType === SuperType.TRAINER &&
-          !cardIsFossilLikeTrainer(playedHandCard)
-        ) {
-          this.boardInteractionService.beginTrainerPlayEffectPromptDelay(2000);
-        }
-        const trainerBoardHandPlay = cardIsTrainerBoardHandPlay(playedHandCard);
-        const playTarget: CardTarget = trainerBoardHandPlay
-          ? {
-            player: result.zone.player,
-            slot: SlotType.BOARD,
-            index: result.zone.index,
-          }
-          : result.zone;
-
-        const flight = result.playCardFlight;
-        if (flight) {
-          const group = flight.board3dCard.getGroup();
-          let flightDisposed = false;
-          const handCard = playedHandCard;
-          const resolvedTrainerType =
-            handCard?.superType === SuperType.TRAINER
-              ? (handCard as TrainerCard).trainerType
-              : flight.trainerType;
-
-          const itemHandPlayFlight =
-            trainerBoardHandPlay && !cardIsSupporter(playedHandCard);
-          if (itemHandPlayFlight) {
-            this.discardVisualFreezePlayerId =
-              playTarget.player === PlayerType.BOTTOM_PLAYER
-                ? this.bottomPlayer.id
-                : this.topPlayer.id;
-          }
-
-          const supporterSlotMeshId = trainerBoardHandPlay
-            ? board3dMeshIdForPlayTarget(
-              playTarget,
-              DropZoneType.SUPPORTER,
-              this.bottomPlayer,
-              this.topPlayer,
-              resolvedTrainerType
-            )
-            : null;
-
-          const flightHiddenMeshIds: string[] = [];
-          if (cardIsSupporter(playedHandCard)) {
-            if (supporterSlotMeshId) {
-              flightHiddenMeshIds.push(supporterSlotMeshId);
-            }
-          } else if (trainerBoardHandPlay) {
-            if (supporterSlotMeshId) {
-              flightHiddenMeshIds.push(supporterSlotMeshId);
-            }
-          } else {
-            const singleHidden = board3dMeshIdForPlayTarget(
-              playTarget,
-              flight.dropZoneType,
-              this.bottomPlayer,
-              this.topPlayer,
-              resolvedTrainerType
-            );
-            if (singleHidden) {
-              flightHiddenMeshIds.push(singleHidden);
-            }
-          }
-
-          this.handPlayFlightHiddenMeshIds =
-            flightHiddenMeshIds.length > 0 ? flightHiddenMeshIds : null;
-          if (this.handPlayFlightHiddenMeshIds) {
-            this.stateSync.hideBoardCardsForHandFlight(this.handPlayFlightHiddenMeshIds);
-          }
-
-          const trainerBoardLanding =
-            supporterSlotMeshId && worldPositionForSupporterMeshId(supporterSlotMeshId);
-          if (trainerBoardLanding && supporterSlotMeshId) {
-            flight.targetWorld.copy(trainerBoardLanding);
-            flight.endScale = 1.0;
-            flight.endRotationY = supporterSlotMeshId.startsWith('topPlayer_') ? Math.PI : 0;
-          }
-
-          const disposeFlight = (): void => {
-            if (flightDisposed) {
-              return;
-            }
-            flightDisposed = true;
-            this.handPlayFlightHiddenMeshIds = null;
-            this.discardVisualFreezePlayerId = null;
-            flight.board3dCard.dispose();
-            this.interactionService.updateInteractiveObjects(this.scene);
-            this.syncGameState();
-            this.markDirty();
-          };
-
-          void this.gameActions
-            .playCardAction(this.gameState.gameId, result.handIndex, playTarget)
-            .catch(() => {
-              gsap.killTweensOf(group.position);
-              gsap.killTweensOf(group.rotation);
-              gsap.killTweensOf(group.scale);
-              group.removeFromParent();
-              this.handPlayFlightHiddenMeshIds = null;
-              this.discardVisualFreezePlayerId = null;
-              if (!flightDisposed) {
-                flightDisposed = true;
-                flight.board3dCard.dispose();
-              }
-              this.interactionService.updateInteractiveObjects(this.scene);
-              this.syncGameState();
-              this.forceHandResyncAfterFailedPlay();
-              this.markDirty();
-            });
-
-          void this.animationService
-            .playHandCardDropOnBoard(group, flight.targetWorld, {
-              endScale: flight.endScale,
-              endRotationY: flight.endRotationY
-            })
-            .then(() => disposeFlight());
-        } else {
-          void this.gameActions
-            .playCardAction(this.gameState.gameId, result.handIndex, playTarget)
-            .catch(() => this.forceHandResyncAfterFailedPlay());
-        }
+        this.executeHandPlayCard(result);
       } else if (result.action === 'retreat' && result.benchIndex !== undefined) {
         void this.gameActions.retreatAction(this.gameState.gameId, result.benchIndex);
       }
@@ -2262,10 +2172,166 @@ export class Board3dController {
     this.markDirty();
   };
 
+  private executeHandAttachPlay(handIndex: number, zone: CardTarget): void {
+    this.handService.removeCard(handIndex);
+    void this.gameActions
+      .playCardAction(this.gameState.gameId, handIndex, zone)
+      .catch(() => this.forceHandResyncAfterFailedPlay());
+    this.markDirty();
+  }
+
+  private executeHandPlayCard(result: DropResult): void {
+    if (result.handIndex === undefined || !result.zone) {
+      return;
+    }
+
+    const playedHandCard =
+      result.handIndex >= 0 ? this.bottomPlayerHand.cards[result.handIndex] : undefined;
+    if (
+      !this.gameState.replay &&
+      playedHandCard?.superType === SuperType.TRAINER &&
+      !cardIsFossilLikeTrainer(playedHandCard)
+    ) {
+      this.boardInteractionService.beginTrainerPlayEffectPromptDelay(2000);
+    }
+    const trainerBoardHandPlay = cardIsTrainerBoardHandPlay(playedHandCard);
+    const playTarget: CardTarget = trainerBoardHandPlay
+      ? {
+        player: result.zone.player,
+        slot: SlotType.BOARD,
+        index: result.zone.index,
+      }
+      : result.zone;
+
+    const flight = result.playCardFlight;
+    if (flight) {
+      const group = flight.board3dCard.getGroup();
+      let flightDisposed = false;
+      const handCard = playedHandCard;
+      const resolvedTrainerType =
+        handCard?.superType === SuperType.TRAINER
+          ? (handCard as TrainerCard).trainerType
+          : flight.trainerType;
+
+      const itemHandPlayFlight =
+        trainerBoardHandPlay && !cardIsSupporter(playedHandCard);
+      if (itemHandPlayFlight) {
+        this.discardVisualFreezePlayerId =
+          playTarget.player === PlayerType.BOTTOM_PLAYER
+            ? this.bottomPlayer.id
+            : this.topPlayer.id;
+      }
+
+      const supporterSlotMeshId = trainerBoardHandPlay
+        ? board3dMeshIdForPlayTarget(
+          playTarget,
+          DropZoneType.SUPPORTER,
+          this.bottomPlayer,
+          this.topPlayer,
+          resolvedTrainerType
+        )
+        : null;
+
+      const flightHiddenMeshIds: string[] = [];
+      if (cardIsSupporter(playedHandCard)) {
+        if (supporterSlotMeshId) {
+          flightHiddenMeshIds.push(supporterSlotMeshId);
+        }
+      } else if (trainerBoardHandPlay) {
+        if (supporterSlotMeshId) {
+          flightHiddenMeshIds.push(supporterSlotMeshId);
+        }
+      } else {
+        const singleHidden = board3dMeshIdForPlayTarget(
+          playTarget,
+          flight.dropZoneType,
+          this.bottomPlayer,
+          this.topPlayer,
+          resolvedTrainerType
+        );
+        if (singleHidden) {
+          flightHiddenMeshIds.push(singleHidden);
+        }
+      }
+
+      this.handPlayFlightHiddenMeshIds =
+        flightHiddenMeshIds.length > 0 ? flightHiddenMeshIds : null;
+      if (this.handPlayFlightHiddenMeshIds) {
+        this.stateSync.hideBoardCardsForHandFlight(this.handPlayFlightHiddenMeshIds);
+      }
+
+      const trainerBoardLanding =
+        supporterSlotMeshId && worldPositionForSupporterMeshId(supporterSlotMeshId);
+      if (trainerBoardLanding && supporterSlotMeshId) {
+        flight.targetWorld.copy(trainerBoardLanding);
+        flight.endScale = 1.0;
+        flight.endRotationY = supporterSlotMeshId.startsWith('topPlayer_') ? Math.PI : 0;
+      }
+
+      const disposeFlight = (): void => {
+        if (flightDisposed) {
+          return;
+        }
+        flightDisposed = true;
+        this.handPlayFlightHiddenMeshIds = null;
+        this.discardVisualFreezePlayerId = null;
+        flight.board3dCard.dispose();
+        this.interactionService.updateInteractiveObjects(this.scene);
+        this.syncGameState();
+        this.markDirty();
+      };
+
+      void this.gameActions
+        .playCardAction(this.gameState.gameId, result.handIndex, playTarget)
+        .catch(() => {
+          gsap.killTweensOf(group.position);
+          gsap.killTweensOf(group.rotation);
+          gsap.killTweensOf(group.scale);
+          group.removeFromParent();
+          this.handPlayFlightHiddenMeshIds = null;
+          this.discardVisualFreezePlayerId = null;
+          if (!flightDisposed) {
+            flightDisposed = true;
+            flight.board3dCard.dispose();
+          }
+          this.interactionService.updateInteractiveObjects(this.scene);
+          this.syncGameState();
+          this.forceHandResyncAfterFailedPlay();
+          this.markDirty();
+        });
+
+      void this.animationService
+        .playHandCardDropOnBoard(group, flight.targetWorld, {
+          endScale: flight.endScale,
+          endRotationY: flight.endRotationY
+        })
+        .then(() => disposeFlight());
+    } else {
+      void this.gameActions
+        .playCardAction(this.gameState.gameId, result.handIndex, playTarget)
+        .catch(() => this.forceHandResyncAfterFailedPlay());
+    }
+  };
+
   private onMouseLeave = (): void => {
     this.interactionService.cancelDrag();
     this.currentHoveredCard = null;
     this.markDirty();
+  };
+
+  /** Right-click (or Ctrl+click on macOS) opens the card info pane. */
+  private onContextMenu = (event: MouseEvent): void => {
+    event.preventDefault();
+    const canvas = this.canvasEl;
+    const card = this.interactionService.onMouseMove(
+      event,
+      this.camera,
+      this.scene,
+      canvas,
+    );
+    if (card) {
+      this.onCardClicked(card);
+    }
   };
 
   /**

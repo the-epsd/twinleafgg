@@ -58,11 +58,12 @@ export type PlayCardFlightPayload = {
 };
 
 export interface DropResult {
-  action: 'playCard' | 'retreat' | 'click';
+  action: 'playCard' | 'retreat' | 'click' | 'pickAttachTarget' | 'cancelHandPlayTarget';
   handIndex?: number;
   benchIndex?: number;
   zone?: CardTarget;
   clickedCard?: Object3D;
+  eligibleTargets?: CardTarget[];
   /** Cosmetic flight to zone; playCardAction should still run immediately for correct handIndex. */
   playCardFlight?: PlayCardFlightPayload;
 }
@@ -505,7 +506,7 @@ export class Board3dInteractionService {
 
     if (card) {
       // Check if card is draggable, but DON'T start drag yet - wait for threshold
-      if (card.userData.isHandCard) {
+      if (card.userData.isHandCard && event.button === 0) {
         // Store pending drag info - will start on move threshold
         this.pendingDragCard = card;
         this.pendingDragCamera = camera;
@@ -1170,6 +1171,357 @@ export class Board3dInteractionService {
     return Math.sqrt(dx * dx + dy * dy) < this.clickThreshold;
   }
 
+  private findDropZoneByType(
+    type: DropZoneType,
+    player: PlayerType,
+    index: number = 0,
+  ): Board3dDropZone | null {
+    return this.dropZones.find(z => {
+      const c = z.getConfig();
+      return c.type === type && c.player === player && c.index === index;
+    }) ?? null;
+  }
+
+  private findDropZoneForCardTarget(target: CardTarget, ctx: DragContext): Board3dDropZone | null {
+    if (target.slot === SlotType.ACTIVE) {
+      return this.findDropZoneByType(DropZoneType.ACTIVE, target.player, target.index);
+    }
+    if (target.slot === SlotType.BENCH) {
+      return this.findDropZoneByType(DropZoneType.BENCH, target.player, target.index);
+    }
+    if (target.slot === SlotType.BOARD) {
+      if (ctx.trainerType === TrainerType.STADIUM) {
+        return this.findDropZoneByType(DropZoneType.STADIUM, PlayerType.BOTTOM_PLAYER, 0);
+      }
+      return this.findDropZoneByType(DropZoneType.BOARD, target.player, target.index);
+    }
+    return null;
+  }
+
+  private findAllValidPokemonAttachTargets(ctx: DragContext): CardTarget[] {
+    const allowedPlayer = this.allowedAttachTargetPlayer(ctx);
+    if (allowedPlayer === null) {
+      return [];
+    }
+
+    const isEvolutionCard =
+      ctx.superType === SuperType.POKEMON &&
+      ctx.stage !== undefined &&
+      ctx.stage !== Stage.BASIC &&
+      !this.playsAsBasicPokemonFromHand(ctx.card);
+    const checkOpponentEx = ctx.trainerType === TrainerType.TOOL && isOpponentAttachTool(ctx.card);
+    const benchSize =
+      allowedPlayer === PlayerType.BOTTOM_PLAYER
+        ? this.currentBenchSizes.bottom
+        : this.currentBenchSizes.top;
+
+    const candidates: Array<{ slot: SlotType; index: number }> = [{ slot: SlotType.ACTIVE, index: 0 }];
+    for (let i = 0; i < benchSize; i++) {
+      candidates.push({ slot: SlotType.BENCH, index: i });
+    }
+
+    const targets: CardTarget[] = [];
+
+    for (const { slot, index } of candidates) {
+      const pokemon = this.getPokemonInZone(allowedPlayer, slot, index);
+      if (!pokemon) {
+        continue;
+      }
+
+      const dropType = slot === SlotType.ACTIVE ? DropZoneType.ACTIVE : DropZoneType.BENCH;
+      const zoneKey = `${allowedPlayer}_${dropType}_${index}`;
+      if (!this.occupiedZones.has(zoneKey)) {
+        continue;
+      }
+
+      if (
+        checkOpponentEx &&
+        !isOpponentPokemonExToolTarget(pokemon.userData.cardList as PokemonCardList)
+      ) {
+        continue;
+      }
+
+      if (isEvolutionCard) {
+        const evolutionCard = ctx.card as PokemonCard;
+        const targetPokemonCard = pokemon.userData.cardData as PokemonCard;
+        if (!this.isValidEvolutionTarget(evolutionCard, targetPokemonCard)) {
+          continue;
+        }
+      }
+
+      const dropZone = this.findDropZoneByType(dropType, allowedPlayer, index);
+      if (dropZone && this.isValidDropZone(dropZone)) {
+        targets.push({ player: allowedPlayer, slot, index });
+      }
+    }
+
+    return targets;
+  }
+
+  private hasOccupiedBench(player: PlayerType): boolean {
+    const benchSize =
+      player === PlayerType.BOTTOM_PLAYER
+        ? this.currentBenchSizes.bottom
+        : this.currentBenchSizes.top;
+    for (let i = 0; i < benchSize; i++) {
+      if (this.occupiedZones.has(`${player}_${DropZoneType.BENCH}_${i}`)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  private isAttachPlayFromHand(ctx: DragContext): boolean {
+    if (this.playsAsBasicPokemonFromHand(ctx.card)) {
+      return false;
+    }
+    return (
+      ctx.superType === SuperType.ENERGY ||
+      ctx.trainerType === TrainerType.TOOL ||
+      (ctx.superType === SuperType.POKEMON &&
+        ctx.stage !== undefined &&
+        ctx.stage !== Stage.BASIC)
+    );
+  }
+
+  /**
+   * Auto-attach when unambiguous; otherwise the player must click a glowing target.
+   */
+  private resolveAutoAttachTarget(ctx: DragContext, targets: CardTarget[]): CardTarget | null {
+    if (targets.length === 0) {
+      return null;
+    }
+    if (targets.length === 1) {
+      return targets[0];
+    }
+
+    const isEvolution =
+      ctx.superType === SuperType.POKEMON &&
+      ctx.stage !== undefined &&
+      ctx.stage !== Stage.BASIC;
+
+    if (isEvolution) {
+      return null;
+    }
+
+    const allowedPlayer = this.allowedAttachTargetPlayer(ctx);
+    if (
+      allowedPlayer !== null &&
+      (ctx.superType === SuperType.ENERGY || ctx.trainerType === TrainerType.TOOL) &&
+      !this.hasOccupiedBench(allowedPlayer)
+    ) {
+      return (
+        targets.find(
+          (t) => t.player === allowedPlayer && t.slot === SlotType.ACTIVE && t.index === 0,
+        ) ?? null
+      );
+    }
+
+    return null;
+  }
+
+  private findDefaultPokemonAttachTarget(ctx: DragContext): CardTarget | null {
+    const targets = this.findAllValidPokemonAttachTargets(ctx);
+    return this.resolveAutoAttachTarget(ctx, targets);
+  }
+
+  private resolveDefaultPlayZone(ctx: DragContext): CardTarget | null {
+    const { card, superType, stage, trainerType } = ctx;
+
+    if (this.playsAsBasicPokemonFromHand(card)) {
+      const activeZone = this.findDropZoneByType(DropZoneType.ACTIVE, PlayerType.BOTTOM_PLAYER, 0);
+      if (activeZone && this.isValidDropZone(activeZone)) {
+        return this.configToCardTarget(activeZone.getConfig());
+      }
+      const benchZone = this.findNextOpenBenchSlot(PlayerType.BOTTOM_PLAYER);
+      if (benchZone && this.isValidDropZone(benchZone)) {
+        return this.configToCardTarget(benchZone.getConfig());
+      }
+      return null;
+    }
+
+    if (
+      superType === SuperType.POKEMON &&
+      stage !== undefined &&
+      stage !== Stage.BASIC
+    ) {
+      return this.findDefaultPokemonAttachTarget(ctx);
+    }
+
+    if (superType === SuperType.ENERGY || trainerType === TrainerType.TOOL) {
+      return this.findDefaultPokemonAttachTarget(ctx);
+    }
+
+    if (trainerType === TrainerType.STADIUM) {
+      const stadiumZone = this.findDropZoneByType(DropZoneType.STADIUM, PlayerType.BOTTOM_PLAYER, 0);
+      return stadiumZone && this.isValidDropZone(stadiumZone)
+        ? this.configToCardTarget(stadiumZone.getConfig())
+        : null;
+    }
+
+    if (trainerTypeIsSupporter(trainerType)) {
+      const boardZone = this.findDropZoneByType(DropZoneType.BOARD, PlayerType.BOTTOM_PLAYER, 0);
+      if (boardZone && this.isValidDropZone(boardZone)) {
+        return this.configToCardTarget(boardZone.getConfig());
+      }
+      const supporterZone = this.findDropZoneByType(DropZoneType.SUPPORTER, PlayerType.BOTTOM_PLAYER, 0);
+      return supporterZone && this.isValidDropZone(supporterZone)
+        ? this.configToCardTarget(supporterZone.getConfig())
+        : null;
+    }
+
+    if (superType === SuperType.TRAINER) {
+      const boardZone = this.findDropZoneByType(DropZoneType.BOARD, PlayerType.BOTTOM_PLAYER, 0);
+      return boardZone && this.isValidDropZone(boardZone)
+        ? this.configToCardTarget(boardZone.getConfig())
+        : null;
+    }
+
+    return null;
+  }
+
+  private buildHandPlayDropResult(handIndex: number, zone: CardTarget): DropResult | null {
+    const ctx = this.currentDragContext;
+    if (!ctx || handIndex < 0) {
+      return null;
+    }
+
+    const actsAsBasicFromHand = this.playsAsBasicPokemonFromHand(ctx.card);
+    const isAttachDropHand =
+      !actsAsBasicFromHand &&
+      (ctx.superType === SuperType.ENERGY ||
+        ctx.trainerType === TrainerType.TOOL ||
+        (ctx.superType === SuperType.POKEMON &&
+          ctx.stage !== undefined &&
+          ctx.stage !== Stage.BASIC));
+
+    const dropZone = this.findDropZoneForCardTarget(zone, ctx);
+    const config = dropZone?.getConfig();
+
+    if (this.draggedCard) {
+      gsap.killTweensOf(this.draggedCard.position);
+      gsap.killTweensOf(this.draggedCard.rotation);
+      gsap.killTweensOf(this.draggedCard.scale);
+    }
+
+    if (isAttachDropHand) {
+      this.handService.removeCard(handIndex);
+      return { action: 'playCard', handIndex, zone };
+    }
+
+    if (config) {
+      const landing = this.getHandPlayLandingTransform(config, ctx.card, ctx.trainerType);
+      const ejected = this.handService.detachCardForBoardPlay(handIndex, this.worldContentRoot);
+      if (ejected) {
+        return {
+          action: 'playCard',
+          handIndex,
+          zone,
+          playCardFlight: {
+            board3dCard: ejected,
+            targetWorld: landing.world,
+            endScale: landing.endScale,
+            endRotationY: landing.rotationY,
+            dropZoneType: config.type,
+            trainerType: ctx.trainerType,
+          },
+        };
+      }
+    }
+
+    return { action: 'playCard', handIndex, zone };
+  }
+
+  /**
+   * Left-click on a hand card: play to the default zone (active, bench, attach target, etc.).
+   */
+  private tryPlayHandCardFromClick(handCard: Object3D): DropResult | null {
+    if (!handCard.userData.isHandCard) {
+      return null;
+    }
+
+    const handIndex = handCard.userData.handIndex ?? -1;
+    if (handIndex < 0) {
+      return null;
+    }
+
+    this.createDragContext(handCard, 'hand');
+    const ctx = this.currentDragContext;
+    if (!ctx) {
+      return null;
+    }
+
+    if (this.isAttachPlayFromHand(ctx)) {
+      const eligibleTargets = this.findAllValidPokemonAttachTargets(ctx);
+      if (eligibleTargets.length === 0) {
+        this.currentDragContext = null;
+        this.hideAllDropZones();
+        return null;
+      }
+
+      const autoTarget = this.resolveAutoAttachTarget(ctx, eligibleTargets);
+      if (!autoTarget) {
+        this.currentDragContext = null;
+        this.hideAllDropZones();
+        return {
+          action: 'pickAttachTarget',
+          handIndex,
+          eligibleTargets,
+        };
+      }
+
+      this.draggedCard = handCard;
+      this.draggedCardHandIndex = handIndex;
+      const result = this.buildHandPlayDropResult(handIndex, autoTarget);
+      this.resetDragState();
+      this.hideAllDropZones();
+      return result;
+    }
+
+    const zone = this.resolveDefaultPlayZone(ctx);
+    if (!zone) {
+      this.currentDragContext = null;
+      this.hideAllDropZones();
+      return null;
+    }
+
+    this.draggedCard = handCard;
+    this.draggedCardHandIndex = handIndex;
+    const result = this.buildHandPlayDropResult(handIndex, zone);
+    this.resetDragState();
+    this.hideAllDropZones();
+    return result;
+  }
+
+  /**
+   * Left-click on hand cards plays them; left-click on in-play board cards opens the info pane.
+   * Right-click on any card opens the info pane via contextmenu.
+   */
+  private resolvePointerUpOnCard(
+    card: Object3D,
+    event: MouseEvent,
+    isSelectionActive: boolean,
+    isHandPlayTargetSelection: boolean,
+  ): DropResult | null {
+    if (isHandPlayTargetSelection && card.userData.isHandCard && event.button !== 2) {
+      return this.tryPlayHandCardFromClick(card);
+    }
+
+    if (isSelectionActive) {
+      return { action: 'click', clickedCard: card };
+    }
+
+    if (event.button === 2) {
+      return null;
+    }
+
+    if (card.userData.isHandCard) {
+      return this.tryPlayHandCardFromClick(card);
+    }
+
+    return { action: 'click', clickedCard: card };
+  }
+
   /**
    * Handle mouse up - end dragging or detect click
    */
@@ -1177,7 +1529,9 @@ export class Board3dInteractionService {
     event: MouseEvent,
     camera: Camera,
     scene: Scene,
-    canvas: HTMLCanvasElement
+    canvas: HTMLCanvasElement,
+    isSelectionActive: boolean = false,
+    isHandPlayTargetSelection: boolean = false,
   ): DropResult | null {
     // Clear pending drag state
     this.pendingDragCard = null;
@@ -1187,31 +1541,49 @@ export class Board3dInteractionService {
     if (!this.isDragging && this.mouseDownCard && this.isClick(event)) {
       const clickedCard = this.mouseDownCard;
       this.mouseDownCard = null;
-      return {
-        action: 'click',
-        clickedCard
-      };
+      return this.resolvePointerUpOnCard(clickedCard, event, isSelectionActive, isHandPlayTargetSelection);
     }
 
     if (!this.isDragging || !this.draggedCard) {
+      const hadMouseDownCard = this.mouseDownCard;
       this.mouseDownCard = null;
+      if (isHandPlayTargetSelection && this.isClick(event) && !hadMouseDownCard) {
+        return { action: 'cancelHandPlayTarget' };
+      }
       return null;
     }
 
     // Check if it was actually a click (no significant movement)
     if (this.isClick(event)) {
-      // Return card to original position and treat as click
-      this.returnCardToHand(this.draggedCard);
       const clickedCard = this.draggedCard;
+      const playOnClick =
+        !isSelectionActive &&
+        event.button !== 2 &&
+        clickedCard.userData.isHandCard;
+      const playResult = playOnClick ? this.tryPlayHandCardFromClick(clickedCard) : null;
+
+      if (!playResult) {
+        this.returnCardToHand(this.draggedCard);
+      }
 
       this.resetDragState();
       this.hideAllDropZones();
       this.mouseDownCard = null;
 
-      return {
-        action: 'click',
-        clickedCard
-      };
+      if (playResult) {
+        return playResult;
+      }
+
+      if (!playOnClick) {
+        return this.resolvePointerUpOnCard(
+          clickedCard,
+          event,
+          isSelectionActive,
+          isHandPlayTargetSelection,
+        );
+      }
+
+      return null;
     }
 
     // Get world position for checks
