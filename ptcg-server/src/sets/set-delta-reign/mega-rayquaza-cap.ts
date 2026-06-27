@@ -20,68 +20,24 @@ import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
 import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
 
-type CapHolder = { target: CardTarget };
-
-function buildCapHolders(player: State['players'][number], capName: string): CapHolder[] {
-  const holders: CapHolder[] = [];
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, _card, target) => {
-    if (cardList.tools.some(tool => tool.name === capName)) {
-      holders.push({ target });
-    }
-  });
-  return holders;
-}
-
-function buildBlockedTo(player: State['players'][number], allowed: CardTarget): CardTarget[] {
+function buildCapHolderBlockedTo(player: State['players'][number], capName: string): CardTarget[] {
   const blocked: CardTarget[] = [];
-  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (_list, _card, target) => {
-    if (target.slot !== allowed.slot || target.index !== allowed.index) {
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, _card, target) => {
+    if (!cardList.tools.some(tool => tool.name === capName)) {
       blocked.push(target);
     }
   });
   return blocked;
 }
 
-function* deltaGift(
-  next: Function,
-  store: StoreLike,
-  state: State,
-  player: typeof state.players[0],
-  holders: CapHolder[],
-  index: number,
-): IterableIterator<State> {
-  if (index >= holders.length) {
-    yield store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-      player.deck.applyOrder(order);
-      next();
-    });
-    return state;
-  }
-
-  if (player.deck.cards.length > 0) {
-    const { target } = holders[index];
-    const blockedTo = buildBlockedTo(player, target);
-
-    yield store.prompt(state, new AttachEnergyPrompt(
-      player.id,
-      GameMessage.CHOOSE_CARD_TO_ATTACH,
-      player.deck,
-      PlayerType.BOTTOM_PLAYER,
-      [SlotType.BENCH, SlotType.ACTIVE],
-      { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-      { allowCancel: false, min: 0, max: 1, blockedTo },
-    ), transfers => {
-      transfers = transfers || [];
-      for (const transfer of transfers) {
-        const attachTarget = StateUtils.getTarget(state, player, transfer.to);
-        player.deck.moveCardTo(transfer.card, attachTarget);
-      }
-      next();
-    });
-  }
-
-  const generator = deltaGift(() => generator.next(), store, state, player, holders, index + 1);
-  return generator.next().value;
+function countCapHolders(player: State['players'][number], capName: string): number {
+  let count = 0;
+  player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+    if (cardList.tools.some(tool => tool.name === capName)) {
+      count += 1;
+    }
+  });
+  return count;
 }
 
 export class MegaRayquazaCap extends TrainerCard {
@@ -130,14 +86,39 @@ export class MegaRayquazaCap extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 
-      const holders = buildCapHolders(player, this.name);
+      const capHolderCount = countCapHolders(player, this.name);
 
-      if (holders.length === 0) {
+      if (capHolderCount === 0) {
         return state;
       }
 
-      const generator = deltaGift(() => generator.next(), store, state, player, holders, 0);
-      return generator.next().value;
+      if (player.deck.cards.length === 0) {
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
+      }
+
+      const blockedTo = buildCapHolderBlockedTo(player, this.name);
+
+      // Ref: set-paradox-rift/professor-sadas-vitality.ts (one prompt, differentTargets)
+      return store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.CHOOSE_CARD_TO_ATTACH,
+        player.deck,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.BENCH, SlotType.ACTIVE],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+        { allowCancel: false, min: 0, max: capHolderCount, blockedTo, differentTargets: true },
+      ), transfers => {
+        transfers = transfers || [];
+        for (const transfer of transfers) {
+          const attachTarget = StateUtils.getTarget(state, player, transfer.to);
+          player.deck.moveCardTo(transfer.card, attachTarget);
+        }
+        store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          player.deck.applyOrder(order);
+        });
+      });
     }
 
     return state;
