@@ -39,7 +39,7 @@ import { PutDamageOverlay } from './PutDamageOverlay';
 import { RemoveDamageOverlay } from './RemoveDamageOverlay';
 import { MoveDamageOverlay } from './MoveDamageOverlay';
 import { scanBlockedOwnZeroDamageFromState } from './pokemonPromptRows';
-import { BOARD3D_ATTACK_ANIMATION_DURATION_SEC } from '../board3d/services/board-3d-animation.service';
+import { BOARD3D_ATTACK_ANIMATION_DURATION_SEC, BOARD3D_ABILITY_ANIMATION_DURATION_SEC } from '../board3d/services/board-3d-animation.service';
 import {
   autoTakeChoosePrizeIndices,
   shouldAutoTakeChoosePrize,
@@ -98,6 +98,15 @@ function isAttackAnimationWaitPrompt(wp: WaitPrompt): boolean {
   return String(m).toLowerCase().includes('attack animation');
 }
 
+/** Matches server WaitPrompt before board Pokémon ability resolution (see game-effect usePower). */
+function isAbilityAnimationWaitPrompt(wp: WaitPrompt): boolean {
+  const m = wp.message;
+  if (m === undefined || m === null) {
+    return false;
+  }
+  return String(m).toLowerCase().includes('ability animation');
+}
+
 function AttackAnimationWaitPrompt(props: {
   promptId: number;
   boardInteraction: BoardInteractionService;
@@ -133,6 +142,67 @@ function AttackAnimationWaitPrompt(props: {
         return;
       }
       await sleep(BOARD3D_ATTACK_ANIMATION_DURATION_SEC * 1000);
+      finish();
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [promptId, boardInteraction, resolve]);
+
+  return null;
+}
+
+function AbilityAnimationWaitPrompt(props: {
+  promptId: number;
+  boardInteraction: BoardInteractionService;
+  resolve: (id: number, result: unknown) => void | Promise<void>;
+}) {
+  const { promptId, boardInteraction, resolve } = props;
+  useEffect(() => {
+    let cancelled = false;
+    const finish = () => {
+      if (cancelled) return;
+      cancelled = true;
+      void resolve(promptId, null);
+    };
+
+    const sleep = (ms: number) => new Promise<void>((r) => window.setTimeout(r, ms));
+
+    void (async () => {
+      const mountTime = Date.now();
+      const minDurationMs = BOARD3D_ABILITY_ANIMATION_DURATION_SEC * 1000;
+      const animationStartDeadline = mountTime + 1200;
+
+      boardInteraction.requestAbilityAnimationPlayback();
+
+      let animationPromise: Promise<void> | null = null;
+      while (Date.now() < animationStartDeadline && !cancelled) {
+        const startedAt = boardInteraction.getAbilityAnimationStartedAt();
+        // Socket animation may begin slightly before the WaitPrompt state arrives.
+        if (startedAt >= mountTime - 200) {
+          animationPromise = boardInteraction.getPendingAbilityAnimationPromise();
+          if (animationPromise) {
+            break;
+          }
+        }
+        await sleep(16);
+      }
+
+      if (cancelled) {
+        return;
+      }
+
+      if (animationPromise) {
+        await animationPromise;
+      }
+
+      const elapsed = Date.now() - mountTime;
+      const remaining = minDurationMs - elapsed;
+      if (remaining > 0) {
+        await sleep(remaining);
+      }
+
       finish();
     })();
 
@@ -554,6 +624,16 @@ export function TablePromptLayer({
     if (isAttackAnimationWaitPrompt(wp)) {
       return (
         <AttackAnimationWaitPrompt
+          key={wp.id}
+          promptId={wp.id}
+          boardInteraction={boardInteraction}
+          resolve={resolve}
+        />
+      );
+    }
+    if (isAbilityAnimationWaitPrompt(wp)) {
+      return (
+        <AbilityAnimationWaitPrompt
           key={wp.id}
           promptId={wp.id}
           boardInteraction={boardInteraction}

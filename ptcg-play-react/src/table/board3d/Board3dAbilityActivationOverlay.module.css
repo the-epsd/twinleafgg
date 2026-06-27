@@ -1,0 +1,29 @@
+.root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 500;
+  overflow: hidden;
+}
+
+.maskLayer {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.dimFill {
+  fill: rgba(0, 0, 0, 0.65);
+  animation: dimFadeIn 0.15s ease-out forwards;
+}
+
+@keyframes dimFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

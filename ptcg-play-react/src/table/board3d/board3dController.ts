@@ -60,7 +60,7 @@ import {
 } from './board3d-constants';
 import type { CardInfoPaneOptions } from '../../card-info/CardInfoPane';
 import type { Board3dGameActions } from './board3dGameActions';
-import { BoardInteractionService, type BasicEntranceAnimationEvent } from '../BoardInteractionService';
+import { BoardInteractionService, type AbilityAnimationEvent, type AbilityFocusAnchor, type BasicEntranceAnimationEvent } from '../BoardInteractionService';
 import {
   getBoardConfig,
   getCameraConfig,
@@ -80,6 +80,8 @@ import { DropZoneType } from './board-3d-drop-zone';
 import { getBenchPositions, ZONE_POSITIONS } from './board-3d-zone-positions';
 import { r3fPointerEventAsMouse } from './board3dR3fPointer';
 import { subscribeBoard3dInteractionStreams } from './board3dControllerSubscriptions';
+import type { Board3dCard } from './board-3d-card';
+import { projectCardFaceToScreenAnchor } from './board3dAbilityFocusProjection';
 import { playDeckShufflePreview } from './board3dDeckShufflePreview';
 
 export interface Board3dControllerProps {
@@ -137,6 +139,7 @@ export class Board3dController {
   private boardGridGroup: Group | null = null;
 
   private animationFrameId: number = 0;
+  private abilityFocusRafId: number | null = null;
   private holoClock = new Clock();
   private needsRender: boolean = true;
   private currentHoveredCard: any = null;
@@ -180,8 +183,13 @@ export class Board3dController {
   /** Incremented when a failed play must supersede queued/in-flight hand sync (skip stale commits). */
   private handSyncInvalidationGen = 0;
 
-  /** Board mesh ids to hide while hand-play flight animates (server meshes would otherwise overlap). */
-  private handPlayFlightHiddenMeshIds: string[] | null = null;
+  /** Board mesh ids hidden while one or more hand-play flights are in progress. */
+  private handPlayFlightHiddenMeshIds = new Set<string>();
+  /**
+   * Bench/slot meshes that already have a local hand-play flight; suppress duplicate
+   * {@link playBoardBasicAnimation} from the server until consumed or timed out.
+   */
+  private handPlayBoardBasicAnimationSuppressedMeshIds = new Set<string>();
   /** During item hand-play flight, discard mesh stays at pre-play state until the flight ends. */
   private discardVisualFreezePlayerId: number | null = null;
 
@@ -320,6 +328,7 @@ export class Board3dController {
         playBoardAttackAnimation: (ev) => this.playBoardAttackAnimation(ev),
         playBoardBasicAnimation: (ev) => this.playBoardBasicAnimation(ev),
         playBoardEvolutionAnimation: (ev) => this.playBoardEvolutionAnimation(ev),
+        playBoardAbilityAnimation: (ev) => this.playBoardAbilityAnimation(ev),
       }),
     );
 
@@ -355,6 +364,7 @@ export class Board3dController {
         playBoardAttackAnimation: (ev) => this.playBoardAttackAnimation(ev),
         playBoardBasicAnimation: (ev) => this.playBoardBasicAnimation(ev),
         playBoardEvolutionAnimation: (ev) => this.playBoardEvolutionAnimation(ev),
+        playBoardAbilityAnimation: (ev) => this.playBoardAbilityAnimation(ev),
       }),
     );
 
@@ -440,6 +450,7 @@ export class Board3dController {
 
     // Kill any active animations
     this.animationService.killAllAnimations();
+    this.stopAbilityFocusTracking();
 
     this.lastSupporterTopCardIdByPlayerId.clear();
     this.trainerToDiscardResolvePlayerId = null;
@@ -482,8 +493,48 @@ export class Board3dController {
     this.lastHandSyncActivePlayerId = undefined;
     this.syncHandChain = Promise.resolve();
     this.handSyncInvalidationGen = 0;
-    this.handPlayFlightHiddenMeshIds = null;
+    this.handPlayFlightHiddenMeshIds.clear();
+    this.handPlayBoardBasicAnimationSuppressedMeshIds.clear();
     this.discardVisualFreezePlayerId = null;
+  }
+
+  private beginHandPlayFlightHiddenMeshes(meshIds: readonly string[]): void {
+    const ids = meshIds.filter((id): id is string => Boolean(id));
+    if (ids.length === 0) {
+      return;
+    }
+    for (const meshId of ids) {
+      this.handPlayFlightHiddenMeshIds.add(meshId);
+      this.handPlayBoardBasicAnimationSuppressedMeshIds.add(meshId);
+    }
+    this.stateSync.hideBoardCardsForHandFlight(ids);
+  }
+
+  private endHandPlayFlightHiddenMeshes(meshIds: readonly string[]): void {
+    const ids = meshIds.filter((id): id is string => Boolean(id));
+    if (ids.length === 0) {
+      return;
+    }
+    for (const meshId of ids) {
+      this.handPlayFlightHiddenMeshIds.delete(meshId);
+      if (!this.handPlayFlightHiddenMeshIds.has(meshId)) {
+        const boardCard = this.stateSync.getCardById(meshId);
+        if (boardCard) {
+          boardCard.getGroup().visible = true;
+        }
+      }
+    }
+    window.setTimeout(() => {
+      for (const meshId of ids) {
+        this.handPlayBoardBasicAnimationSuppressedMeshIds.delete(meshId);
+      }
+    }, 2000);
+  }
+
+  private getHandPlayFlightHiddenMeshIdsForSync(): readonly string[] | undefined {
+    return this.handPlayFlightHiddenMeshIds.size > 0
+      ? [...this.handPlayFlightHiddenMeshIds]
+      : undefined;
   }
 
   private initScene(): void {
@@ -974,7 +1025,7 @@ export class Board3dController {
           this.bottomPlayer,
           this.interactionService.getDraggedBoardCardId(),
           this.interactionService.getScaleLockedBoardCardIds(),
-          this.handPlayFlightHiddenMeshIds ?? undefined,
+          this.getHandPlayFlightHiddenMeshIdsForSync(),
           freezeDiscardForSync,
           freezeSupporterClearForSync
         );
@@ -1339,6 +1390,80 @@ export class Board3dController {
     this.boardInteractionService.setPendingAttackAnimationPromise(p);
   }
 
+  private playBoardAbilityAnimation(ev: AbilityAnimationEvent): void {
+    this.stopAbilityFocusTracking();
+    const maxAttempts = 12;
+    const fallbackWait = this.animationService.createAbilityActivationFallbackWait();
+
+    const tryPlay = (attempt: number): void => {
+      const meshId = this.boardMeshIdFromAnimationEvent(ev);
+      if (!meshId) {
+        this.boardInteractionService.setPendingAbilityAnimationPromise(fallbackWait());
+        return;
+      }
+      const boardCard = this.stateSync.getCardById(meshId);
+      if (!boardCard) {
+        if (attempt < maxAttempts) {
+          requestAnimationFrame(() => tryPlay(attempt + 1));
+          return;
+        }
+        this.boardInteractionService.setPendingAbilityAnimationPromise(fallbackWait());
+        return;
+      }
+      const group = boardCard.getGroup();
+      const data = group.userData?.cardData as Card | undefined;
+      if (data && data.id !== ev.cardId) {
+        if (attempt < maxAttempts) {
+          requestAnimationFrame(() => tryPlay(attempt + 1));
+          return;
+        }
+        this.boardInteractionService.setPendingAbilityAnimationPromise(fallbackWait());
+        return;
+      }
+
+      this.startAbilityFocusTracking(group, ev.abilityName);
+      const p = this.animationService.playAbilityActivationAnimation(group);
+      this.boardInteractionService.setPendingAbilityAnimationPromise(p);
+      void p.finally(() => {
+        this.stopAbilityFocusTracking();
+      });
+    };
+
+    tryPlay(0);
+  }
+
+  private projectCardGroupToScreenRect(group: Object3D): AbilityFocusAnchor | null {
+    if (!this.canvasEl || !this.camera) {
+      return null;
+    }
+
+    const bridge = group.userData?.board3dCard as Board3dCard | undefined;
+    const cardMesh = bridge?.getMesh();
+    if (!cardMesh) {
+      return null;
+    }
+
+    const canvasRect = this.canvasEl.getBoundingClientRect();
+    return projectCardFaceToScreenAnchor(cardMesh, this.camera, canvasRect, 6);
+  }
+
+  private startAbilityFocusTracking(group: Object3D, abilityName: string): void {
+    const tick = (): void => {
+      const anchor = this.projectCardGroupToScreenRect(group);
+      this.boardInteractionService.setAbilityFocus({ abilityName, anchor });
+      this.abilityFocusRafId = requestAnimationFrame(tick);
+    };
+    tick();
+  }
+
+  private stopAbilityFocusTracking(): void {
+    if (this.abilityFocusRafId != null) {
+      cancelAnimationFrame(this.abilityFocusRafId);
+      this.abilityFocusRafId = null;
+    }
+    this.boardInteractionService.clearAbilityFocus();
+  }
+
   /**
    * Basic Pokémon entrance from deck/item (socket): same motion as dragging from hand to bench
    * ({@link Board3dAnimationService.playHandCardDropOnBoard}), not {@link Board3dAnimationService.playBasicAnimation}.
@@ -1360,6 +1485,13 @@ export class Board3dController {
         if (attempt < maxAttempts) {
           requestAnimationFrame(() => tryPlay(attempt + 1));
         }
+        return;
+      }
+      if (this.handPlayBoardBasicAnimationSuppressedMeshIds.has(meshId)) {
+        this.handPlayBoardBasicAnimationSuppressedMeshIds.delete(meshId);
+        return;
+      }
+      if (this.handPlayFlightHiddenMeshIds.has(meshId)) {
         return;
       }
       const group = boardCard.getGroup();
@@ -2384,11 +2516,8 @@ export class Board3dController {
         }
       }
 
-      this.handPlayFlightHiddenMeshIds =
-        flightHiddenMeshIds.length > 0 ? flightHiddenMeshIds : null;
-      if (this.handPlayFlightHiddenMeshIds) {
-        this.stateSync.hideBoardCardsForHandFlight(this.handPlayFlightHiddenMeshIds);
-      }
+      const hiddenForThisFlight = flightHiddenMeshIds;
+      this.beginHandPlayFlightHiddenMeshes(hiddenForThisFlight);
 
       const trainerBoardLanding =
         supporterSlotMeshId && worldPositionForSupporterMeshId(supporterSlotMeshId);
@@ -2403,7 +2532,7 @@ export class Board3dController {
           return;
         }
         flightDisposed = true;
-        this.handPlayFlightHiddenMeshIds = null;
+        this.endHandPlayFlightHiddenMeshes(hiddenForThisFlight);
         this.discardVisualFreezePlayerId = null;
         flight.board3dCard.dispose();
         this.interactionService.updateInteractiveObjects(this.scene);
@@ -2418,7 +2547,7 @@ export class Board3dController {
           gsap.killTweensOf(group.rotation);
           gsap.killTweensOf(group.scale);
           group.removeFromParent();
-          this.handPlayFlightHiddenMeshIds = null;
+          this.endHandPlayFlightHiddenMeshes(hiddenForThisFlight);
           this.discardVisualFreezePlayerId = null;
           if (!flightDisposed) {
             flightDisposed = true;

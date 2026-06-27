@@ -21,6 +21,7 @@ import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { CardInfoListPopup } from '../../card-info/CardInfoListPopup';
 import type { Board3dCardInfoData, CardInfoPaneActionResult } from './board3dCardsAdapter';
 import styles from './Board3DCanvas.module.css';
+import { Board3dAbilityActivationOverlay } from './Board3dAbilityActivationOverlay';
 import { appConfig } from '../../env/config';
 
 const EMPTY_CATALOG: Card[] = [];
@@ -182,6 +183,7 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
             onBoardFps={props.onBoardFps}
           />
         </Canvas>
+        <Board3dAbilityActivationOverlay boardInteraction={props.boardInteraction} />
       </div>
 
       {cardPrompt?.kind === 'info' && cardPrompt.data.card ? (

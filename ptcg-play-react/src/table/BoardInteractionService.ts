@@ -28,6 +28,25 @@ export interface BasicEntranceAnimationEvent {
   index?: number;
 }
 
+export interface AbilityAnimationEvent extends BasicEntranceAnimationEvent {
+  abilityName: string;
+}
+
+export interface AbilityFocusPoint {
+  x: number;
+  y: number;
+}
+
+export interface AbilityFocusAnchor {
+  /** Card front face in viewport pixels (perspective quad matching the 3D mesh). */
+  polygon: readonly AbilityFocusPoint[];
+}
+
+export interface AbilityFocusState {
+  abilityName: string;
+  anchor: AbilityFocusAnchor | null;
+}
+
 export interface CoinFlipAnimationEvent {
   playerId: number;
   result: boolean;
@@ -107,6 +126,12 @@ export class BoardInteractionService {
 
   private attackAnimationSubject = new Subject<BasicEntranceAnimationEvent>();
   public attackAnimation$ = this.attackAnimationSubject.asObservable();
+
+  private abilityAnimationSubject = new Subject<AbilityAnimationEvent>();
+  public abilityAnimation$ = this.abilityAnimationSubject.asObservable();
+
+  private abilityFocusSubject = new BehaviorSubject<AbilityFocusState | null>(null);
+  public abilityFocus$ = this.abilityFocusSubject.asObservable();
 
   private coinFlipAnimationSubject = new Subject<CoinFlipAnimationEvent>();
   public coinFlipAnimation$ = this.coinFlipAnimationSubject.asObservable();
@@ -542,6 +567,55 @@ export class BoardInteractionService {
 
   public triggerAttackAnimation(event: BasicEntranceAnimationEvent) {
     this.attackAnimationSubject.next(event);
+  }
+
+  /**
+   * Latest 3D ability activation promise (set when the motion starts).
+   * {@link abilityAnimationStartedAt} must be checked so settled promises from prior abilities are ignored.
+   */
+  private pendingAbilityAnimationPromise: Promise<void> | null = null;
+  private abilityAnimationStartedAt = 0;
+  private lastAbilityAnimationEvent: AbilityAnimationEvent | null = null;
+
+  public setPendingAbilityAnimationPromise(p: Promise<void> | null): void {
+    this.pendingAbilityAnimationPromise = p;
+    if (p) {
+      this.abilityAnimationStartedAt = Date.now();
+    }
+  }
+
+  public getPendingAbilityAnimationPromise(): Promise<void> | null {
+    return this.pendingAbilityAnimationPromise;
+  }
+
+  public getAbilityAnimationStartedAt(): number {
+    return this.abilityAnimationStartedAt;
+  }
+
+  public clearPendingAbilityAnimation(): void {
+    this.pendingAbilityAnimationPromise = null;
+    this.abilityAnimationStartedAt = 0;
+  }
+
+  public triggerAbilityAnimation(event: AbilityAnimationEvent) {
+    this.lastAbilityAnimationEvent = event;
+    this.clearPendingAbilityAnimation();
+    this.abilityAnimationSubject.next(event);
+  }
+
+  /** Re-fire the last socket ability event when the server WaitPrompt arrives before the animation starts. */
+  public requestAbilityAnimationPlayback(): void {
+    if (this.lastAbilityAnimationEvent && !this.pendingAbilityAnimationPromise) {
+      this.abilityAnimationSubject.next(this.lastAbilityAnimationEvent);
+    }
+  }
+
+  public setAbilityFocus(state: AbilityFocusState | null): void {
+    this.abilityFocusSubject.next(state);
+  }
+
+  public clearAbilityFocus(): void {
+    this.abilityFocusSubject.next(null);
   }
 
   /**

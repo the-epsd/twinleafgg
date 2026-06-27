@@ -24,6 +24,9 @@ export const HAND_DRAW_STAGE_SCALE = 2.15;
 /** Total duration (seconds) of {@link Board3dAnimationService.playAttackAnimation}; keep in sync with server attack WaitPrompt. */
 export const BOARD3D_ATTACK_ANIMATION_DURATION_SEC = 1.35;
 
+/** Total duration (seconds) of {@link Board3dAnimationService.playAbilityActivationAnimation}. */
+export const BOARD3D_ABILITY_ANIMATION_DURATION_SEC = 0.9;
+
 /** Card mesh width in world units at scale 1 (match board-3d-config / hand service). */
 const HAND_CARD_MESH_WIDTH_WORLD = 2.75;
 /** Center-to-center spacing as a multiple of card width (no overlap, small gap). */
@@ -138,6 +141,7 @@ function stageToHandTiming(
 
 export class Board3dAnimationService {
   private activeAnimations: gsap.core.Timeline[] = [];
+  private activeAbilityTimeline: gsap.core.Timeline | null = null;
   private hasActiveAnimationsCache: boolean = false;
   private lastAnimationCheck: number = 0;
   private animationCheckInterval: number = 50; // Check every 50ms (20fps check rate)
@@ -360,6 +364,48 @@ export class Board3dAnimationService {
       this.activeAnimations.push(timeline);
       this.updateAnimationState();
     });
+  }
+
+  /**
+   * Ability activation timing: lift render order for the spotlight cutout, then hold for the DOM overlay duration.
+   */
+  playAbilityActivationAnimation(card: Object3D): Promise<void> {
+    return new Promise(resolve => {
+      if (this.activeAbilityTimeline) {
+        this.activeAbilityTimeline.kill();
+        this.activeAbilityTimeline = null;
+      }
+
+      const prevRenderOrder = card.renderOrder;
+      card.renderOrder = 100;
+
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          card.renderOrder = prevRenderOrder;
+          this.activeAbilityTimeline = null;
+          this.removeAnimation(timeline);
+          resolve();
+        },
+        onKill: () => {
+          card.renderOrder = prevRenderOrder;
+          this.activeAbilityTimeline = null;
+        },
+      });
+
+      timeline.to({}, { duration: BOARD3D_ABILITY_ANIMATION_DURATION_SEC });
+
+      this.activeAbilityTimeline = timeline;
+      this.activeAnimations.push(timeline);
+      this.updateAnimationState();
+    });
+  }
+
+  /** Wall-clock wait used when the board mesh is not ready; matches {@link BOARD3D_ABILITY_ANIMATION_DURATION_SEC}. */
+  createAbilityActivationFallbackWait(): () => Promise<void> {
+    return () =>
+      new Promise((resolve) => {
+        window.setTimeout(resolve, BOARD3D_ABILITY_ANIMATION_DURATION_SEC * 1000);
+      });
   }
 
   /**
@@ -994,6 +1040,10 @@ export class Board3dAnimationService {
    * Kill all active animations
    */
   killAllAnimations(): void {
+    if (this.activeAbilityTimeline) {
+      this.activeAbilityTimeline.kill();
+      this.activeAbilityTimeline = null;
+    }
     this.activeAnimations.forEach(animation => {
       animation.kill();
     });

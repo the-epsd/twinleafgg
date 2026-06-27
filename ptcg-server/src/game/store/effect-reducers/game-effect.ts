@@ -26,6 +26,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
+import { SlotType } from '../actions/play-card-action';
 import { StateUtils } from '../state-utils';
 import { GamePhase, State } from '../state/state';
 import { StoreLike } from '../store-like';
@@ -42,6 +43,33 @@ import { Card } from '../card/card';
 import { Attack } from '../card/pokemon-types';
 import { WaitPrompt } from '../prompts/wait-prompt';
 import { CoinFlipEffect, CoinFlipSequenceEffect } from '../effects/play-card-effects';
+
+/** Keep in sync with ptcg-play-react {@link BOARD3D_ABILITY_ANIMATION_DURATION_SEC} (× 1000). */
+const ABILITY_ANIMATION_WAIT_MS = 900;
+
+function emitAbilityAnimationEvent(
+  store: StoreLike,
+  player: { id: number },
+  card: { id: number | string },
+  slot: 'active' | 'bench',
+  index: number,
+  abilityName: string,
+): void {
+  const game = (store as any).handler;
+  if (game && game.core && typeof game.core.emit === 'function') {
+    game.core.emit((c: any) => {
+      if (typeof c.socket !== 'undefined') {
+        c.socket.emit(`game[${game.id}]:ability`, {
+          playerId: player.id,
+          cardId: card.id,
+          slot,
+          index,
+          abilityName,
+        });
+      }
+    });
+  }
+}
 
 
 function applyWeaknessAndResistance(
@@ -289,6 +317,26 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   return store.reduceEffect(state, new EndTurnEffect(player));
 }
 
+function* usePower(next: Function, store: StoreLike, state: State, effect: UsePowerEffect): IterableIterator<State> {
+  const player = effect.player;
+  const power = effect.power;
+  const card = effect.card;
+
+  store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: power.name });
+
+  const targetSlot = effect.target.slot;
+  if (targetSlot === SlotType.ACTIVE || targetSlot === SlotType.BENCH) {
+    const slot = targetSlot === SlotType.ACTIVE ? 'active' : 'bench';
+    const index = targetSlot === SlotType.BENCH ? effect.target.index : 0;
+    emitAbilityAnimationEvent(store, player, card, slot, index, power.name);
+    yield store.prompt(state, new WaitPrompt(player.id, ABILITY_ANIMATION_WAIT_MS, 'Ability animation'), () => next());
+    state = (store as StoreLike & { state: State }).state;
+  }
+
+  state = store.reduceEffect(state, new PowerEffect(player, power, card, effect.benchTarget));
+  return state;
+}
+
 export function gameReducer(store: StoreLike, state: State, effect: Effect): State {
 
   if (effect instanceof KnockOutEffect) {
@@ -400,13 +448,8 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
   }
 
   if (effect instanceof UsePowerEffect) {
-    const player = effect.player;
-    const power = effect.power;
-    const card = effect.card;
-
-    store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: power.name });
-    state = store.reduceEffect(state, new PowerEffect(player, power, card, effect.benchTarget));
-    return state;
+    const generator = usePower(() => generator.next(), store, state, effect);
+    return generator.next().value;
   }
 
   if (effect instanceof UseTrainerPowerEffect) {

@@ -226,6 +226,15 @@ export function TablePage() {
       }) => {
         boardInteraction.triggerAttackAnimation(data);
       };
+      const onAbility = (data: {
+        playerId: number;
+        cardId: number | string;
+        slot: string;
+        index?: number;
+        abilityName: string;
+      }) => {
+        boardInteraction.triggerAbilityAnimation(data);
+      };
       const onCoin = (data: { playerId: number; result: boolean }) => {
         boardInteraction.triggerCoinFlipAnimation(data.result, data.playerId);
       };
@@ -234,6 +243,7 @@ export function TablePage() {
       raw.on(`game[${gameId}]:playBasicAnimation`, onBasic);
       raw.on(`game[${gameId}]:evolution`, onEvo);
       raw.on(`game[${gameId}]:attack`, onAttack);
+      raw.on(`game[${gameId}]:ability`, onAbility);
       raw.on(`game[${gameId}]:coinFlip`, onCoin);
 
       return () => {
@@ -241,6 +251,7 @@ export function TablePage() {
         raw.off(`game[${gameId}]:playBasicAnimation`, onBasic);
         raw.off(`game[${gameId}]:evolution`, onEvo);
         raw.off(`game[${gameId}]:attack`, onAttack);
+        raw.off(`game[${gameId}]:ability`, onAbility);
         raw.off(`game[${gameId}]:coinFlip`, onCoin);
       };
     },
