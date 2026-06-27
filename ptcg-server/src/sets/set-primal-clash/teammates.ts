@@ -6,7 +6,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../game/store/state-utils';
@@ -99,9 +99,7 @@ Search your deck for up to 2 cards and put them into your hand. Shuffle your dec
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.TEAMMATES_MARKER);
-    }
+    REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.TEAMMATES_MARKER, this);
 
     return state;
   }

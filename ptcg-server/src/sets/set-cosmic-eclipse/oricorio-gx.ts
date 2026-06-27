@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { GameError, GameMessage, PowerType, StateUtils } from '../../game';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ABILITY_USED, ADD_MARKER, BLOCK_IF_GX_ATTACK_USED, HAS_MARKER, REMOVE_MARKER, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, BLOCK_IF_GX_ATTACK_USED, HAS_MARKER, REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, SWITCH_ACTIVE_WITH_BENCHED, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class OricorioGX extends PokemonCard {
 
@@ -92,7 +92,7 @@ export class OricorioGX extends PokemonCard {
       const owner = StateUtils.findOwner(state, cardList);
 
       if (owner === player) {
-        REMOVE_MARKER('OPPONENT_KNOCKOUT_MARKER', player, this);
+        REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, 'OPPONENT_KNOCKOUT_MARKER', this);
       }
       player.usedTributeDance = false;
     }

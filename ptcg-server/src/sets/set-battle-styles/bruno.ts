@@ -6,7 +6,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { DRAW_CARDS, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, HAS_MARKER, REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, MOVE_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class Bruno extends TrainerCard {
 
@@ -62,7 +62,7 @@ export class Bruno extends TrainerCard {
       DRAW_CARDS(player, cardsToDraw);
     }
 
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.BRUNO_MARKER, this);
+    REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.BRUNO_MARKER, this);
 
     return state;
   }

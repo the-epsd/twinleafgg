@@ -10,7 +10,7 @@ import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt'
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_MARKER, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { ABILITY_USED, ADD_MARKER, HAS_MARKER, REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Plusle extends PokemonCard {
 
@@ -129,7 +129,7 @@ export class Plusle extends PokemonCard {
       const owner = StateUtils.findOwner(state, cardList);
 
       if (owner === player) {
-        REMOVE_MARKER('OPPONENT_KNOCKOUT_MARKER', player, this);
+        REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, 'OPPONENT_KNOCKOUT_MARKER', this);
       }
       player.usedPlusCharge = false;
     }

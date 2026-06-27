@@ -194,7 +194,9 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
     });
 
     effect.player.marker.removeMarker(effect.player.DAMAGE_DEALT_MARKER);
-    effect.player.marker.removeMarker(MarkerConstants.REVENGE_MARKER);
+    if (!player.usedTurnSkip) {
+      effect.player.marker.removeMarker(MarkerConstants.REVENGE_MARKER);
+    }
 
     // Clear damage reduction effects on opponent's Pokémon when their turn ends
     const opponent = StateUtils.getOpponent(state, player);

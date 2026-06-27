@@ -9,7 +9,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { GamePhase } from '../../game/store/state/state';
-import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, BLOCK_IF_GX_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND, SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, REMOVE_MARKER_AT_END_OF_TURN, BLOCK_IF_GX_ATTACK_USED, SEARCH_DECK_FOR_CARDS_TO_HAND, SWITCH_ACTIVE_WITH_BENCHED } from '../../game/store/prefabs/prefabs';
 
 export class PersianGx extends PokemonCard {
   public tags = [CardTag.POKEMON_GX];
@@ -130,10 +130,9 @@ export class PersianGx extends PokemonCard {
       }
     }
 
-    // Cleanup markers
     if (effect instanceof EndTurnEffect) {
       this.usedSlashBack = false;
-      effect.player.marker.removeMarker(this.GX_EX_KO_MARKER, this);
+      REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.GX_EX_KO_MARKER, this);
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.CAT_WALK_MARKER, this);

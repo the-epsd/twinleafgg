@@ -7,9 +7,8 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { GamePhase } from '../../game/store/state/state';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class Stunfisk extends PokemonCard {
@@ -78,9 +77,7 @@ export class Stunfisk extends PokemonCard {
       DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
     }
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.REVENGE_MARKER, this);
-    }
+    REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.REVENGE_MARKER, this);
 
     return state;
   }

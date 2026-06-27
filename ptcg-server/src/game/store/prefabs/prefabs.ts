@@ -3085,6 +3085,26 @@ export function REMOVE_MARKER_AT_END_OF_TURN(effect: Effect, marker: string, sou
     REMOVE_MARKER(marker, effect.player, source);
 }
 
+/**
+ * Clear markers that track events from "your opponent's last turn" (e.g. a KO).
+ * Skipped when the player has an additional turn pending (Dialga-GX Timeless, etc.)
+ * so both consecutive player turns can still use those effects.
+ */
+export function REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(
+  effect: Effect,
+  marker: string,
+  source?: Card,
+  owner?: Player | Card | PokemonCard | PokemonCardList,
+) {
+  if (!(effect instanceof EndTurnEffect) || effect.player.usedTurnSkip) {
+    return;
+  }
+  const markerOwner = owner ?? effect.player;
+  if (HAS_MARKER(marker, markerOwner, source)) {
+    REMOVE_MARKER(marker, markerOwner, source);
+  }
+}
+
 export function REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(
   effect: Effect,
   marker: string,

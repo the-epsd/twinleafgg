@@ -9,7 +9,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { KnockOutEffect, MoveCardsEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { DRAW_CARDS, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { DRAW_CARDS, REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
 
 export class TeamRocketsArcher extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -100,9 +100,7 @@ Each player shuffles their hand into their deck. Then, you draw 5 cards, and you
     }
 
     // Reset marker at end of turn
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ARCHER_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ARCHER_MARKER, this);
-    }
+    REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.ARCHER_MARKER, this);
 
     if (effect instanceof EndTurnEffect && effect.player.rocketSupporter) {
       effect.player.rocketSupporter = false;
