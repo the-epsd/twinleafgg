@@ -54,6 +54,8 @@ export interface Power {
   effect?: (store: StoreLike, state: State, effect: PowerEffect) => State;
   useWhenInPlay?: boolean;
   useFromHand?: boolean;
+  /** When true with useFromHand, the Pokémon can be played onto an open Bench slot via drag/click (not only via the ability button). */
+  useFromHandToBench?: boolean;
   useFromDiscard?: boolean;
   exemptFromAbilityLock?: boolean;
   exemptFromInitialize?: boolean;

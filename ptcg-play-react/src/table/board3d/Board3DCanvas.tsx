@@ -116,7 +116,6 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
   const cardsAdapter: Board3dCardsAdapter = useMemo(
     () =>
       createBoard3dCardsAdapter({
-        catalog,
         maps,
         scansUrl: serverConfig?.scansUrl,
         apiBase: appConfig.apiUrl,
@@ -124,7 +123,7 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
         showCardInfo: queueInfo,
         showCardInfoList: queueList,
       }),
-    [catalog, maps, serverConfig?.scansUrl, serverConfig?.sleevesUrl, queueInfo, queueList],
+    [maps, serverConfig?.scansUrl, serverConfig?.sleevesUrl, queueInfo, queueList],
   );
 
   const runtime = useMemo(() => createBoard3dRuntime(cardsAdapter), [cardsAdapter]);

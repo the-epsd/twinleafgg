@@ -9,7 +9,7 @@ import {
   Card,
   type CardTarget,
 } from 'ptcg-server';
-import { Vector3, Scene, Object3D, PerspectiveCamera } from 'three';
+import { Vector3, Scene, Object3D, PerspectiveCamera, Texture } from 'three';
 import { Board3dCard } from '../board-3d-card';
 import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import type { LocalGameState } from '../../types/localGameState';
@@ -38,7 +38,7 @@ export class Board3dStateSyncService {
   private boardCardsMount: Object3D | null = null;
   private interactionScene!: Scene;
   private skippedCardIdForSync: string | null = null;
-  private skippedScaleCardIdForSync: string | null = null;
+  private skippedScaleCardIdsForSync: ReadonlySet<string> | null = null;
   /** Hide these board meshes while a hand card animates (avoid double image at discard + supporter, etc.). */
   private handPlayFlightHiddenCardIds: ReadonlySet<string> | null = null;
 
@@ -149,7 +149,7 @@ export class Board3dStateSyncService {
     topPlayer?: Player,
     bottomPlayer?: Player,
     skippedCardId?: string | null,
-    skippedScaleCardId?: string | null,
+    skippedScaleCardId?: string | readonly string[] | null,
     handPlayFlightHiddenCardId?: string | readonly string[] | null,
     /** Skip discard pile mesh updates for this player (item hand-play flight — keep prior discard until resolved). */
     freezeDiscardVisualForPlayerId?: number | null,
@@ -161,7 +161,19 @@ export class Board3dStateSyncService {
     }
 
     this.skippedCardIdForSync = skippedCardId ?? null;
-    this.skippedScaleCardIdForSync = skippedScaleCardId ?? null;
+    if (skippedScaleCardId == null) {
+      this.skippedScaleCardIdsForSync = null;
+    } else if (typeof skippedScaleCardId === 'string') {
+      this.skippedScaleCardIdsForSync = new Set([skippedScaleCardId]);
+    } else {
+      const next = new Set<string>();
+      for (const id of skippedScaleCardId) {
+        if (id) {
+          next.add(id);
+        }
+      }
+      this.skippedScaleCardIdsForSync = next.size > 0 ? next : null;
+    }
     if (handPlayFlightHiddenCardId == null) {
       this.handPlayFlightHiddenCardIds = null;
     } else if (typeof handPlayFlightHiddenCardId === 'string') {
@@ -456,7 +468,9 @@ export class Board3dStateSyncService {
     });
 
     const stadium = state?.players?.find((p: Player) => p.stadium?.cards?.length > 0)?.stadium;
-    if (stadium?.cards?.length) collectFromCardList(stadium, true);
+    if (stadium?.cards?.length) {
+      collectFromCardList(stadium, true);
+    }
 
     return urls;
   }
@@ -506,6 +520,10 @@ export class Board3dStateSyncService {
     }
 
     if (!mainCard) return;
+
+    const applyCardScale = (mesh: Board3dCard, s: number) => {
+      mesh.setScale(s);
+    };
 
     // Determine if card should be face-down (not public or is secret)
     const isFaceDown = cardList.isSecret || (!cardList.isPublic && !isOwner);
@@ -571,8 +589,8 @@ export class Board3dStateSyncService {
         cardMesh.setPosition(position);
         cardMesh.setRotation(rotation);
       }
-      if (cardId !== this.skippedCardIdForSync && cardId !== this.skippedScaleCardIdForSync) {
-        cardMesh.setScale(scale);
+      if (cardId !== this.skippedCardIdForSync && !this.skippedScaleCardIdsForSync?.has(cardId)) {
+        applyCardScale(cardMesh, scale);
       }
       // Update userData with latest cardList
       cardMesh.getGroup().userData.cardData = mainCard;
@@ -602,6 +620,7 @@ export class Board3dStateSyncService {
         this.boardCardsMount.add(cardMesh.getGroup());
       }
       this.cardsMap.set(cardId, cardMesh);
+      applyCardScale(cardMesh, scale);
     }
 
     const hiddenForHandFlight = this.handPlayFlightHiddenCardIds?.has(cardId) ?? false;
@@ -820,6 +839,22 @@ export class Board3dStateSyncService {
    */
   getCardById(cardId: string): Board3dCard | undefined {
     return this.cardsMap.get(cardId);
+  }
+
+  setSuppressedEnergyIconSlot(hostMeshId: string, energyIndex: number): void {
+    this.overlayService.setSuppressedEnergyIconSlot(hostMeshId, energyIndex);
+  }
+
+  clearSuppressedEnergyIconSlot(hostMeshId: string): void {
+    this.overlayService.clearSuppressedEnergyIconSlot(hostMeshId);
+  }
+
+  loadEnergyIconTexture(card: Card, energyCardList: CardList): Promise<Texture> {
+    return this.overlayService.loadEnergyIconTexture(card, energyCardList);
+  }
+
+  refreshEnergyOverlayForCard(cardId: string, energyCardList: CardList): Promise<void> {
+    return this.overlayService.refreshEnergyOverlayForCard(cardId, energyCardList);
   }
 
   /**

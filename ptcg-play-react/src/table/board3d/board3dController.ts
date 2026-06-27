@@ -28,7 +28,7 @@ import {
   MULTI_DRAW_STAGE_TO_HAND_STAGGER_SEC,
   type DrawFlightVisualPreset,
 } from './services/board-3d-animation.service';
-import { Board3dInteractionService, type DropResult } from './services/board-3d-interaction.service';
+import { Board3dInteractionService, type DropResult, type PlayCardFlightPayload } from './services/board-3d-interaction.service';
 import { Board3dHandService } from './services/board-3d-hand.service';
 import { Board3dWireframeService } from './services/board-3d-wireframe.service';
 import { Board3dLightingService } from './services/board-3d-lighting.service';
@@ -43,6 +43,7 @@ import {
   SuperType,
   TrainerCard,
   GamePhase,
+  PokemonCardList,
   type CardTarget,
   type State,
 } from 'ptcg-server';
@@ -972,7 +973,7 @@ export class Board3dController {
           this.topPlayer,
           this.bottomPlayer,
           this.interactionService.getDraggedBoardCardId(),
-          this.interactionService.getHoveredBoardCardId(),
+          this.interactionService.getScaleLockedBoardCardIds(),
           this.handPlayFlightHiddenMeshIds ?? undefined,
           freezeDiscardForSync,
           freezeSupporterClearForSync
@@ -2173,11 +2174,135 @@ export class Board3dController {
   };
 
   private executeHandAttachPlay(handIndex: number, zone: CardTarget): void {
+    const handCard = handIndex >= 0 ? this.bottomPlayerHand.cards[handIndex] : undefined;
+    if (handCard?.superType === SuperType.ENERGY) {
+      const ejected = this.handService.detachCardForBoardPlay(handIndex, this.worldContentRoot);
+      if (ejected) {
+        this.executeEnergyAttachFlight(handIndex, zone, {
+          board3dCard: ejected,
+          targetWorld: new Vector3(),
+          endScale: 1,
+          endRotationY: 0,
+          dropZoneType: DropZoneType.BENCH,
+          energyAttach: {
+            attachTarget: zone,
+            energyCard: handCard,
+          },
+        });
+        return;
+      }
+    }
     this.handService.removeCard(handIndex);
     void this.gameActions
       .playCardAction(this.gameState.gameId, handIndex, zone)
       .catch(() => this.forceHandResyncAfterFailedPlay());
     this.markDirty();
+  }
+
+  private pokemonListForAttachTarget(target: CardTarget): PokemonCardList | null {
+    const player = target.player === PlayerType.BOTTOM_PLAYER ? this.bottomPlayer : this.topPlayer;
+    if (!player) {
+      return null;
+    }
+    if (target.slot === SlotType.ACTIVE) {
+      return player.active;
+    }
+    if (target.slot === SlotType.BENCH) {
+      return player.bench[target.index] ?? null;
+    }
+    return null;
+  }
+
+  private hostMeshIdForAttachTarget(target: CardTarget): string | null {
+    const dropType = target.slot === SlotType.ACTIVE ? DropZoneType.ACTIVE : DropZoneType.BENCH;
+    return board3dMeshIdForPlayTarget(target, dropType, this.bottomPlayer, this.topPlayer);
+  }
+
+  private executeEnergyAttachFlight(
+    handIndex: number,
+    playTarget: CardTarget,
+    flight: PlayCardFlightPayload,
+  ): void {
+    const energyAttach = flight.energyAttach;
+    if (!energyAttach) {
+      return;
+    }
+
+    const hostMeshId = this.hostMeshIdForAttachTarget(playTarget);
+    const hostBoardCard = hostMeshId ? this.stateSync.getCardById(hostMeshId) : undefined;
+    const pokemonBeforeAttach = this.pokemonListForAttachTarget(playTarget);
+    const energySlotIndex = pokemonBeforeAttach?.energies?.cards.length ?? 0;
+    const group = flight.board3dCard.getGroup();
+    let flightDisposed = false;
+
+    if (hostMeshId) {
+      this.stateSync.setSuppressedEnergyIconSlot(hostMeshId, energySlotIndex);
+    }
+
+    const finishFlight = (): void => {
+      if (flightDisposed) {
+        return;
+      }
+      flightDisposed = true;
+      if (hostMeshId) {
+        this.stateSync.clearSuppressedEnergyIconSlot(hostMeshId);
+        const pokemonAfter = this.pokemonListForAttachTarget(playTarget);
+        if (pokemonAfter?.energies) {
+          void this.stateSync.refreshEnergyOverlayForCard(hostMeshId, pokemonAfter.energies);
+        }
+      }
+      flight.board3dCard.dispose();
+      this.interactionService.updateInteractiveObjects(this.scene);
+      this.markDirty();
+    };
+
+    const abortFlight = (): void => {
+      gsap.killTweensOf(group.position);
+      gsap.killTweensOf(group.rotation);
+      gsap.killTweensOf(group.scale);
+      group.removeFromParent();
+      if (hostMeshId) {
+        this.stateSync.clearSuppressedEnergyIconSlot(hostMeshId);
+      }
+      if (!flightDisposed) {
+        flightDisposed = true;
+        flight.board3dCard.dispose();
+      }
+      this.interactionService.updateInteractiveObjects(this.scene);
+      this.syncGameState();
+      this.forceHandResyncAfterFailedPlay();
+      this.markDirty();
+    };
+
+    void this.gameActions
+      .playCardAction(this.gameState.gameId, handIndex, playTarget)
+      .catch(() => abortFlight());
+
+    if (!hostBoardCard) {
+      finishFlight();
+      this.syncGameState();
+      return;
+    }
+
+    void (async () => {
+      try {
+        const energyList = pokemonBeforeAttach?.energies ?? new CardList();
+        const iconTexture = await this.stateSync.loadEnergyIconTexture(
+          energyAttach.energyCard,
+          energyList,
+        );
+        await this.animationService.playEnergyAttachToPokemon(
+          flight.board3dCard,
+          hostBoardCard,
+          energySlotIndex,
+          iconTexture,
+        );
+        finishFlight();
+        this.syncGameState();
+      } catch {
+        abortFlight();
+      }
+    })();
   }
 
   private executeHandPlayCard(result: DropResult): void {
@@ -2205,6 +2330,11 @@ export class Board3dController {
 
     const flight = result.playCardFlight;
     if (flight) {
+      if (flight.energyAttach) {
+        this.executeEnergyAttachFlight(result.handIndex, playTarget, flight);
+        return;
+      }
+
       const group = flight.board3dCard.getGroup();
       let flightDisposed = false;
       const handCard = playedHandCard;
@@ -2670,7 +2800,11 @@ export class Board3dController {
       };
 
       if (result.ability) {
-        this.gameActions.ability(gameId, result.ability, target);
+        if (cardData.superType === SuperType.TRAINER) {
+          this.gameActions.trainerAbility(gameId, result.ability, target);
+        } else {
+          this.gameActions.ability(gameId, result.ability, target);
+        }
       } else if (result.attack) {
         this.gameActions.attack(gameId, result.attack);
       } else if (result.retreat) {

@@ -22,7 +22,7 @@ const CARD_HALF_WIDTH = 1.25;
 const CARD_HALF_HEIGHT = 1.75;
 
 /** Card-mesh local position (matches prior card-group layout at zero condition rotation). */
-function energyCardLocalPosition(index: number): { x: number; y: number; z: number } {
+export function energyIconLocalPosition(index: number): { x: number; y: number; z: number } {
   const cardLeftEdge = -CARD_HALF_WIDTH;
   const startX = cardLeftEdge + 0.15;
   return {
@@ -31,6 +31,8 @@ function energyCardLocalPosition(index: number): { x: number; y: number; z: numb
     z: 0.1,
   };
 }
+
+export { ENERGY_SPRITE_HEIGHT, ENERGY_SPRITE_WIDTH };
 
 export class Board3dEnergySprite {
   private group: Group;
@@ -68,12 +70,16 @@ export class Board3dEnergySprite {
     textures: Map<string, Texture>,
     cardBackTexture: Texture,
     resolveTextureKey: (card: Card) => string | null = (c) => Board3dEnergySprite.getEnergyIconPath(c),
+    hideIndex: number = -1,
   ): void {
     this.clear();
 
     const visibleCount = Math.min(energyCards.length, MAX_VISIBLE_ENERGIES);
 
     for (let i = 0; i < visibleCount; i++) {
+      if (i === hideIndex) {
+        continue;
+      }
       const card = energyCards[i];
       const iconPath = resolveTextureKey(card);
       let texture: Texture;
@@ -96,7 +102,7 @@ export class Board3dEnergySprite {
       });
 
       const mesh = new Mesh(Board3dEnergySprite.geometry, material);
-      const { x, y, z } = energyCardLocalPosition(i);
+      const { x, y, z } = energyIconLocalPosition(i);
       mesh.position.set(x, y, z);
       mesh.renderOrder = 12;
 

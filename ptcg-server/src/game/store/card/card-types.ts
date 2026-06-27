@@ -31,6 +31,7 @@ export enum CardTag {
   HOLO = 'Holo',
   LEGEND = 'Legend',
   DUAL_LEGEND = 'Dual Legend',
+  DUAL_STADIUM = 'Dual Stadium',
   TEAM_FLARE = 'Team Flare',
   MEGA = 'Mega EX',
   PLAY_DURING_SETUP = 'Play During Setup',

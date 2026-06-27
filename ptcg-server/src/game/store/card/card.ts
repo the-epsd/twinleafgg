@@ -50,6 +50,12 @@ export abstract class Card {
    */
   public canPlay?(store: StoreLike, state: State, player: Player): boolean | undefined;
 
+  /**
+   * Optional check for useFromHandToBench abilities (Excitedive, Swelling Flash, etc.).
+   * Assumes bench space and ability-lock are checked by the caller.
+   */
+  public canUseFromHandToBench?(store: StoreLike, state: State, player: Player): boolean | undefined;
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     return state;
   }

@@ -4,6 +4,7 @@ import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, GameErr
 import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { StateUtils } from '../../game/store/state-utils';
+import { Player } from '../../game/store/state/player';
 import { BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, PLAY_POKEMON_FROM_HAND_TO_BENCH, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class GreninjaGX extends PokemonCard {
@@ -26,6 +27,7 @@ export class GreninjaGX extends PokemonCard {
     name: 'Elusive Master',
     powerType: PowerType.ABILITY,
     useFromHand: true,
+    useFromHandToBench: true,
     text: 'Once during your turn (before your attack), if this Pokémon is the last card in your hand, you may play it onto your Bench. If you do, draw 3 cards.'
   }];
 
@@ -55,14 +57,19 @@ export class GreninjaGX extends PokemonCard {
 
   public fullName: string = 'Greninja-GX SMP';
 
+  public canUseFromHandToBench(_store: StoreLike, _state: State, player: Player): boolean {
+    return player.hand.cards.filter(c => c !== this).length === 0;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Elusive Master
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      if (player.hand.cards.filter(c => c !== this).length !== 0)
+      if (!this.canUseFromHandToBench(store, state, player)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
-      PLAY_POKEMON_FROM_HAND_TO_BENCH(state, player, this);
+      PLAY_POKEMON_FROM_HAND_TO_BENCH(state, player, this, effect.target);
       player.deck.moveTo(player.hand, 3);
     }
 

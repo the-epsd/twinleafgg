@@ -7,8 +7,12 @@ import {
   Mesh,
   PlaneGeometry,
   MeshBasicMaterial,
+  DoubleSide,
+  Texture,
 } from 'three';
 import type { Board3dCard } from '../board-3d-card';
+import { CARD_HEIGHT } from '../board-3d-overlay-layout';
+import { energyIconLocalPosition, ENERGY_SPRITE_HEIGHT } from '../board-3d-energy-sprite';
 
 /** World Z: flip in the plane of the hand / table (not Y, which tumbles the card edge-on). */
 const DRAW_FLIP_AXIS_Z = new Vector3(0, 0, 1);
@@ -703,6 +707,99 @@ export class Board3dAnimationService {
           duration: 0.3,
           ease: 'bounce.out'
         });
+
+      this.activeAnimations.push(timeline);
+      this.updateAnimationState();
+    });
+  }
+
+  /**
+   * Energy from hand: arc onto the host Pokémon, then shrink/warp into the bottom energy icon slot.
+   */
+  playEnergyAttachToPokemon(
+    flyingCard: Board3dCard,
+    hostBoardCard: Board3dCard,
+    energySlotIndex: number,
+    energyIconTexture: Texture,
+  ): Promise<void> {
+    const cardGroup = flyingCard.getGroup();
+    const overlayAnchor = hostBoardCard.getOverlayAnchor();
+    const slotLocal = energyIconLocalPosition(energySlotIndex);
+    const iconScale = ENERGY_SPRITE_HEIGHT / CARD_HEIGHT;
+    const morphDuration = 0.48;
+    /** When scale is nearly at icon size: snap icon in and drop the card mesh. */
+    const handoffAt = morphDuration * 0.76;
+    const iconSnapDuration = 0.07;
+
+    flyingCard.setOutline(false);
+    flyingCard.setHolo(null);
+
+    const cardMesh = flyingCard.getMesh();
+
+    // Unlit overlay crossfade (matches energy icons) — avoids a hard swap onto lit card material (reads black).
+    const iconTex = energyIconTexture.clone();
+    iconTex.repeat.x = -1;
+    iconTex.offset.x = 1;
+    const iconMat = new MeshBasicMaterial({
+      map: iconTex,
+      transparent: true,
+      opacity: 0,
+      side: DoubleSide,
+      alphaTest: 0.05,
+      depthWrite: false,
+    });
+    const iconPlane = new Mesh(new PlaneGeometry(2.5, 3.5), iconMat);
+    iconPlane.position.set(0, 0, 0.015);
+    iconPlane.renderOrder = 11;
+    cardMesh.add(iconPlane);
+
+    // Reparent immediately so motion goes straight into the icon slot (no hover beat).
+    overlayAnchor.attach(cardGroup);
+
+    return new Promise(resolve => {
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          iconPlane.geometry.dispose();
+          iconMat.dispose();
+          iconTex.dispose();
+          this.removeAnimation(timeline);
+          resolve();
+        },
+      });
+
+      timeline
+        .to(cardGroup.position, {
+          x: slotLocal.x,
+          y: slotLocal.y,
+          z: slotLocal.z,
+          duration: morphDuration,
+          ease: 'power3.inOut',
+        })
+        .to(
+          cardGroup.scale,
+          {
+            x: iconScale,
+            y: iconScale,
+            z: iconScale,
+            duration: morphDuration,
+            ease: 'power3.inOut',
+          },
+          '<',
+        )
+        .to(
+          iconMat,
+          {
+            opacity: 1,
+            duration: iconSnapDuration,
+            ease: 'power2.out',
+          },
+          handoffAt - iconSnapDuration,
+        );
+
+      timeline.add(() => {
+        cardGroup.attach(iconPlane);
+        cardMesh.visible = false;
+      }, handoffAt);
 
       this.activeAnimations.push(timeline);
       this.updateAnimationState();

@@ -51,6 +51,7 @@ import {
 } from '../card/card-types';
 import { Attack } from '../card/pokemon-types';
 import { GamePhase } from '../state/state';
+import { canPlayDualStadium } from '../dual-stadium-utils';
 import { PokemonCard } from '../card/pokemon-card';
 import {
   AbstractAttackEffect,
@@ -890,8 +891,16 @@ export function TAKE_X_MORE_PRIZE_CARDS(effect: KnockOutEffect, state: State) {
   return state;
 }
 
-export function PLAY_POKEMON_FROM_HAND_TO_BENCH(state: State, player: Player, card: Card) {
-  const slot = GET_FIRST_PLAYER_BENCH_SLOT(player);
+export function PLAY_POKEMON_FROM_HAND_TO_BENCH(
+  state: State,
+  player: Player,
+  card: Card,
+  benchSlot?: PokemonCardList,
+) {
+  const slot = benchSlot ?? GET_FIRST_PLAYER_BENCH_SLOT(player);
+  if (slot.cards.length > 0) {
+    throw new GameError(GameMessage.INVALID_TARGET);
+  }
   player.hand.moveCardTo(card, slot);
   slot.pokemonPlayedTurn = state.turn;
 }
@@ -3350,6 +3359,9 @@ export function CAN_PLAY_TRAINER_CARD(
         }
         break;
       case TrainerType.STADIUM: {
+        if (trainerCard.tags.includes(CardTag.DUAL_STADIUM)) {
+          return canPlayDualStadium(store, state, player, trainerCard);
+        }
         const stadium = StateUtils.getStadiumCard(state);
         const isHyperrogueOverPrismTower =
           trainerCard.name === 'Hyperrogue Ange Floette' && stadium?.name === 'Prism Tower';
@@ -3494,6 +3506,47 @@ export function CAN_PLAY_ENERGY_CARD(
 }
 
 /**
+ * True when a hand Pokémon with useFromHandToBench can be played onto an open Bench slot.
+ */
+export function CAN_USE_FROM_HAND_TO_BENCH_POWER(
+  store: StoreLike,
+  state: State,
+  player: Player,
+  pokemonCard: PokemonCard,
+): boolean {
+  try {
+    const power = pokemonCard.powers?.find(p => p.useFromHandToBench === true);
+    if (!power) {
+      return false;
+    }
+
+    if (
+      state.phase !== GamePhase.PLAYER_TURN ||
+      state.players[state.activePlayer].id !== player.id
+    ) {
+      return false;
+    }
+
+    const benchCount = player.bench.filter(b => b.cards.length > 0).length;
+    if (benchCount >= 5) {
+      return false;
+    }
+
+    if (IS_ABILITY_BLOCKED(store, state, player, pokemonCard)) {
+      return false;
+    }
+
+    if (pokemonCard.canUseFromHandToBench) {
+      return pokemonCard.canUseFromHandToBench(store, state, player) === true;
+    }
+
+    return false;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Validates if a pokemon card can be played under current game conditions
  * Checks basic conditions and evolution requirements
  * @param store The store instance
@@ -3528,6 +3581,10 @@ export function CAN_PLAY_POKEMON_CARD(
 
     if (benchCount >= 5 && pokemonCard.stage === Stage.BASIC) {
       return false;
+    }
+
+    if (CAN_USE_FROM_HAND_TO_BENCH_POWER(store, state, player, pokemonCard)) {
+      return true;
     }
 
     // For evolution cards, check if base Pokemon is in play AND can be evolved

@@ -6,16 +6,18 @@ import {
 import { EnergyCard } from '../card/energy-card';
 import { GameError } from '../../game-error';
 import { GameMessage } from '../../game-message';
-import { PlayCardAction, CardTarget } from '../actions/play-card-action';
+import { PlayCardAction, CardTarget, PlayerType, SlotType } from '../actions/play-card-action';
 import { PokemonCard } from '../card/pokemon-card';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { State, GamePhase } from '../state/state';
 import { StoreLike } from '../store-like';
 import { TrainerCard } from '../card/trainer-card';
-import { TrainerType } from '../card/card-types';
+import { TrainerType, CardTag } from '../card/card-types';
+import { assembleDualStadiumFromHand } from '../dual-stadium-utils';
 import { Effect } from '../effects/effect';
 import { StateUtils } from '../state-utils';
 import { Player } from '../state/player';
+import { UsePowerEffect } from '../effects/game-effects';
 
 function findPokemonTarget(state: State, player: Player, target: CardTarget): PokemonCardList | undefined {
   try {
@@ -69,6 +71,22 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
           throw new GameError(GameMessage.INVALID_TARGET);
         }
 
+        const benchPower = handCard.powers?.find(p => p.useFromHandToBench === true);
+        if (
+          benchPower &&
+          action.target.slot === SlotType.BENCH &&
+          target.cards.length === 0
+        ) {
+          const usePower = new UsePowerEffect(
+            player,
+            benchPower,
+            handCard,
+            { player: PlayerType.BOTTOM_PLAYER, slot: SlotType.HAND, index: action.handIndex },
+            target,
+          );
+          return store.reduceEffect(state, usePower);
+        }
+
         const effect = new PlayPokemonEffect(player, handCard, target, action.target.slot, action.target.index);
         return store.reduceEffect(state, effect);
       }
@@ -87,6 +105,9 @@ export function playCardReducer(store: StoreLike, state: State, action: Action):
             effect = new PlaySupporterEffect(player, handCard, target);
             break;
           case TrainerType.STADIUM: {
+            if (handCard.tags.includes(CardTag.DUAL_STADIUM)) {
+              return assembleDualStadiumFromHand(store, state, player, handCard);
+            }
             const stadium = StateUtils.getStadiumCard(state);
             const isHyperrogueOverPrismTower = handCard.name === 'Hyperrogue Ange Floette' && stadium?.name === 'Prism Tower';
             if (player.stadiumPlayedTurn === state.turn && !isHyperrogueOverPrismTower) {
