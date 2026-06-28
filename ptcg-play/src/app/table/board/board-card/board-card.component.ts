@@ -6,6 +6,7 @@ import { BoardCardAnimationHelper, AnimationState } from './board-card-animation
 import { CardsBaseService } from '../../../shared/cards/cards-base.service';
 import { getCustomEnergyIconPath } from '../../../shared/cards/energy-icons.utils';
 import { resolveDualStadiumDisplayHalves } from '../../../shared/cards/dual-stadium.utils';
+import { getBreakDisplayCards } from '../../../shared/cards/break-card-display.utils';
 
 const MAX_ENERGY_CARDS = 8;
 
@@ -578,18 +579,9 @@ export class BoardCardComponent implements OnInit, OnDestroy {
   private setupPokemonCards(cardList: PokemonCardList) {
     const pokemonCard = cardList.getPokemonCard();
 
-    // Handle BREAK cards
-    if (pokemonCard?.tags?.includes(CardTag.BREAK)) {
-      const originalCard = cardList.cards.find(card =>
-        card.superType === SuperType.POKEMON &&
-        !card.tags?.includes(CardTag.BREAK)
-      );
-      this.mainCard = originalCard;
-      this.breakCard = pokemonCard;
-    } else {
-      this.mainCard = pokemonCard;
-      this.breakCard = undefined;
-    }
+    const breakDisplay = getBreakDisplayCards(cardList);
+    this.mainCard = breakDisplay.mainCard;
+    this.breakCard = breakDisplay.breakCard;
 
     // Handle Legend cards
     if (pokemonCard?.tags?.includes(CardTag.LEGEND)) {
