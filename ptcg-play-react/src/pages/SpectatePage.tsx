@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
 import { GameWinner, type GameInfo, type MatchInfo, type UserInfo } from 'ptcg-server';
+import { isActiveListGameInfo } from '../game/isActiveListGameInfo';
 import { getMatchHistory } from '../api/profileApi';
 import { ApiError } from '../api/apiError';
 import { useCoreSession } from '../context/CoreSessionContext';
@@ -35,10 +36,17 @@ export function SpectatePage() {
   const maxPage = Math.max(0, Math.ceil(matchesTotal / pageSize) - 1);
 
   const activeRows = useMemo(() => {
-    return games.map((game: GameInfo) => {
-      const users = game.players.map((player) => {
+    return games.filter(isActiveListGameInfo).map((game: GameInfo) => {
+      const users = game.players.map((player, index) => {
         const c = clients.find((x) => x.clientId === player.clientId);
-        return c ? usersById[c.userId] : undefined;
+        if (c && usersById[c.userId]) {
+          return usersById[c.userId];
+        }
+        const userId = game.playerUserIds?.[index];
+        if (userId !== undefined && usersById[userId]) {
+          return usersById[userId];
+        }
+        return undefined;
       });
       return { game, users };
     });
@@ -115,7 +123,11 @@ export function SpectatePage() {
                   <div className={styles.playersRow}>
                     <div className={styles.playerBlock}>
                       <div className={styles.playerName}>
-                        {u0 ? <Link to={`/profile/${u0.userId}`}>{u0.name}</Link> : '…'}
+                        {u0 ? (
+                          <Link to={`/profile/${u0.userId}`}>{u0.name}</Link>
+                        ) : (
+                          p0?.name ?? '…'
+                        )}
                       </div>
                       {p0 ? (
                         <div className={styles.playerMeta}>
@@ -126,7 +138,11 @@ export function SpectatePage() {
                     <span className={styles.vs}>VS</span>
                     <div className={styles.playerBlock} style={{ textAlign: 'right' }}>
                       <div className={styles.playerName}>
-                        {u1 ? <Link to={`/profile/${u1.userId}`}>{u1.name}</Link> : '…'}
+                        {u1 ? (
+                          <Link to={`/profile/${u1.userId}`}>{u1.name}</Link>
+                        ) : (
+                          p1?.name ?? '…'
+                        )}
                       </div>
                       {p1 ? (
                         <div className={styles.playerMeta}>

@@ -1,6 +1,7 @@
 import { GameSettings, StateSerializer, coerceGameSettings } from '../../game';
 import { Client } from '../../game/client/client.interface';
 import { Game } from '../../game/core/game';
+import { isActiveListGame } from '../../game/core/game-list-utils';
 import { State } from '../../game/store/state/state';
 import { User } from '../../storage';
 import { Core } from '../../game/core/core';
@@ -42,6 +43,9 @@ export class CoreSocket {
   }
 
   public onGameAdd(game: Game): void {
+    if (!isActiveListGame(game)) {
+      return;
+    }
     this.cache.lastLogIdCache[game.id] = 0;
     this.cache.gameInfoCache[game.id] = CoreSocket.buildGameInfo(game);
     this.socket.emit('core:createGame', this.cache.gameInfoCache[game.id]);
@@ -57,28 +61,18 @@ export class CoreSocket {
     const gameInfo = CoreSocket.buildGameInfo(game);
     const gameInfoChanged = !deepCompare(gameInfo, this.cache.gameInfoCache[game.id]);
 
-    // Check if this client is in the game
-    const isClientInGame = game.clients.includes(this.client);
-
-    // Check if this client's user ID matches any player in the game
-    // This ensures that when a player is added via invitation acceptance,
-    // other browser windows of the same user receive the game info update
-    const isClientAPlayer = game.isSelfPlayForUser(this.client.user.id) ||
-      state.players.some(player => {
-        const playerClient = this.core.clients.find(c => c.id === player.id);
-        return playerClient && playerClient.user.id === this.client.user.id;
-      });
-
-    // Send game info updates to clients that are in the game OR are players
-    // This fixes the issue where inviting yourself doesn't show the game in the dropdown
-    if (!isClientInGame && !isClientAPlayer) {
+    if (!gameInfoChanged) {
       return;
     }
 
-    if (gameInfoChanged) {
-      this.cache.gameInfoCache[game.id] = gameInfo;
-      this.socket.emit('core:gameInfo', gameInfo);
+    if (!isActiveListGame(game)) {
+      delete this.cache.gameInfoCache[game.id];
+      this.socket.emit('core:deleteGame', game.id);
+      return;
     }
+
+    this.cache.gameInfoCache[game.id] = gameInfo;
+    this.socket.emit('core:gameInfo', gameInfo);
   }
 
   public onUsersUpdate(users: User[]): void {
@@ -108,7 +102,7 @@ export class CoreSocket {
         userId: client.user.id
       })),
       users: this.core.clients.map(client => CoreSocket.buildUserInfo(client.user)),
-      games: this.core.games.map(game => CoreSocket.buildGameInfo(game)),
+      games: this.core.games.filter(isActiveListGame).map(game => CoreSocket.buildGameInfo(game)),
       ...(reconnectableGameId !== undefined && { reconnectableGameId })
     };
   }

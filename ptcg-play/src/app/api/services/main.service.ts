@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { GameInfo, CoreInfo, ClientInfo, GameSettings, UserInfo } from 'ptcg-server';
+import { GameInfo, CoreInfo, ClientInfo, GameSettings, UserInfo, isActiveListGameInfo } from 'ptcg-server';
 import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
@@ -33,7 +33,7 @@ export class MainService {
     this.sessionService.set({
       users,
       clients: coreInfo.clients,
-      games: coreInfo.games,
+      games: coreInfo.games.filter(isActiveListGameInfo),
       clientId: coreInfo.clientId
     });
     if (coreInfo.reconnectableGameId !== undefined) {
@@ -79,6 +79,10 @@ export class MainService {
   }
 
   private onGameInfo(game: GameInfo): void {
+    if (!isActiveListGameInfo(game)) {
+      this.onDeleteGame(game.gameId);
+      return;
+    }
     const games = this.sessionService.session.games.slice();
     const index = this.sessionService.session.games.findIndex(g => g.gameId === game.gameId);
     if (index !== -1) {
@@ -100,6 +104,9 @@ export class MainService {
   }
 
   private onCreateGame(game: GameInfo): void {
+    if (!isActiveListGameInfo(game)) {
+      return;
+    }
     const index = this.sessionService.session.games.findIndex(g => g.gameId === game.gameId);
     if (index !== -1) {
       return;
