@@ -10,23 +10,15 @@ import { ToolEffect } from '../../game/store/effects/play-card-effects';
 
 
 export class HandyFan extends TrainerCard {
-
-  public regulationMark = 'G';
-
+  public regulationMark = 'H';
   public trainerType: TrainerType = TrainerType.TOOL;
-
   public set: string = 'TWM';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '150';
-
   public name = 'Handheld Fan';
-
   public fullName = 'Handheld Fan TWM';
 
-  public text: string =
-    'Whenever the Active Pokémon this card is attached to takes damage from an opponent\'s attack, move an Energy from the attacking Pokémon to 1 of your opponent\'s Benched Pokémon.';
+  public text: string = 'Whenever the Active Pokémon this card is attached to takes damage from an opponent\'s attack, move an Energy from the attacking Pokémon to 1 of your opponent\'s Benched Pokémon.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AfterDamageEffect && effect.target.tools.includes(this)) {
