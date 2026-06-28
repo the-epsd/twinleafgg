@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
 import { GamePhase } from 'ptcg-server';
 import type { Player, StateLog } from 'ptcg-server';
@@ -13,7 +14,6 @@ import {
 import { cn } from '../../utils/cn';
 import styles from './TableGameLogToasts.module.css';
 
-const MAX_VISIBLE = 3;
 const VISIBLE_MS = 4000;
 const EXIT_MS = 480;
 
@@ -56,17 +56,20 @@ function delay(ms: number): Promise<void> {
   });
 }
 
+function maxLogIdFrom(logs: StateLog[]): number {
+  return logs.reduce((max, log) => Math.max(max, log.id), 0);
+}
+
 export function TableGameLogToasts(props: TableGameLogToastsProps) {
   const { t } = useTranslation();
   const { localGame, clientId, players } = props;
   const [toasts, setToasts] = useState<ToastItem[]>([]);
   const displayedIdsRef = useRef<Set<number>>(new Set());
-  const pendingLogsRef = useRef<StateLog[]>([]);
   const pendingExitsRef = useRef<PendingExit[]>([]);
   const schedulerRunningRef = useRef(false);
   const schedulerGenRef = useRef(0);
   const gameKeyRef = useRef(localGame.localId);
-  const flushPendingRef = useRef<() => void>(() => {});
+  const committedMaxLogIdRef = useRef(0);
   const runExitSchedulerRef = useRef<() => void>(() => {});
 
   const activePlayerId =
@@ -74,42 +77,16 @@ export function TableGameLogToasts(props: TableGameLogToastsProps) {
       ? localGame.state.players[localGame.state.activePlayer]?.id
       : undefined;
 
-  const cancelPendingExit = (logId: number) => {
-    pendingExitsRef.current = pendingExitsRef.current.filter((item) => item.logId !== logId);
-  };
+  const logCount = localGame.logs.length;
+  const logTailId = logCount > 0 ? localGame.logs[logCount - 1].id : 0;
 
-  const flushPendingLogs = () => {
-    let shouldSchedule = false;
-    setToasts((prev) => {
-      if (pendingLogsRef.current.length === 0) {
-        return prev;
-      }
-
-      let next = [...prev];
-      let changed = false;
-
-      while (pendingLogsRef.current.length > 0 && next.length < MAX_VISIBLE) {
-        const log = pendingLogsRef.current.shift();
-        if (!log) {
-          break;
-        }
-        const shownAt = Date.now();
-        next.push({ log, phase: 'visible', shownAt });
-        pendingExitsRef.current.push({ logId: log.id, shownAt });
-        changed = true;
-      }
-
-      if (changed) {
-        shouldSchedule = true;
-      }
-      return changed ? next : prev;
-    });
-    if (shouldSchedule) {
-      runExitSchedulerRef.current();
+  const scheduleExitFor = (logId: number, shownAt: number) => {
+    if (pendingExitsRef.current.some((item) => item.logId === logId)) {
+      return;
     }
+    pendingExitsRef.current.push({ logId, shownAt });
+    runExitSchedulerRef.current();
   };
-
-  flushPendingRef.current = flushPendingLogs;
 
   const runExitScheduler = () => {
     if (schedulerRunningRef.current) {
@@ -143,10 +120,12 @@ export function TableGameLogToasts(props: TableGameLogToastsProps) {
           break;
         }
 
-        if (pendingExitsRef.current[0]?.logId !== next.logId) {
+        const stillQueued = pendingExitsRef.current.find((item) => item.logId === next.logId);
+        if (!stillQueued) {
           continue;
         }
-        pendingExitsRef.current.shift();
+
+        pendingExitsRef.current = pendingExitsRef.current.filter((item) => item.logId !== next.logId);
 
         setToasts((prev) =>
           prev.some((item) => item.log.id === next.logId)
@@ -160,7 +139,6 @@ export function TableGameLogToasts(props: TableGameLogToastsProps) {
         }
 
         setToasts((prev) => prev.filter((item) => item.log.id !== next.logId));
-        flushPendingRef.current();
       }
 
       schedulerRunningRef.current = false;
@@ -175,7 +153,6 @@ export function TableGameLogToasts(props: TableGameLogToastsProps) {
   const resetScheduler = () => {
     schedulerGenRef.current += 1;
     pendingExitsRef.current = [];
-    pendingLogsRef.current = [];
     schedulerRunningRef.current = false;
   };
 
@@ -189,65 +166,88 @@ export function TableGameLogToasts(props: TableGameLogToastsProps) {
     if (gameKeyRef.current !== localGame.localId) {
       gameKeyRef.current = localGame.localId;
       displayedIdsRef.current.clear();
+      committedMaxLogIdRef.current = 0;
       resetScheduler();
       setToasts([]);
     }
   }, [localGame.localId]);
 
   useEffect(() => {
-    const maxLogId = localGame.logs.reduce((max, log) => Math.max(max, log.id), 0);
-
-    pendingLogsRef.current = pendingLogsRef.current.filter((log) => log.id <= maxLogId);
-
-    setToasts((prev) => {
-      const removed = prev.filter((item) => item.log.id > maxLogId);
-      for (const item of removed) {
-        cancelPendingExit(item.log.id);
-      }
-      const next = prev.filter((item) => item.log.id <= maxLogId);
-      for (const id of displayedIdsRef.current) {
-        if (id > maxLogId) {
-          displayedIdsRef.current.delete(id);
-        }
-      }
-      return next.length === prev.length ? prev : next;
-    });
-
-    const newLogs = localGame.logs.filter(
-      (log) => log.id <= maxLogId && !displayedIdsRef.current.has(log.id) && !isLogHidden(log, clientId),
-    );
-    if (newLogs.length === 0) {
-      flushPendingLogs();
+    if (localGame.logs.length === 0) {
       return;
     }
 
-    for (const log of newLogs) {
-      displayedIdsRef.current.add(log.id);
-      pendingLogsRef.current.push(log);
+    const maxLogId = maxLogIdFrom(localGame.logs);
+
+    if (maxLogId < committedMaxLogIdRef.current) {
+      resetScheduler();
+      setToasts([]);
+      displayedIdsRef.current.clear();
+      for (const log of localGame.logs) {
+        displayedIdsRef.current.add(log.id);
+      }
+      committedMaxLogIdRef.current = maxLogId;
+      return;
     }
 
-    flushPendingLogs();
-  }, [clientId, localGame.logs]);
+    committedMaxLogIdRef.current = Math.max(committedMaxLogIdRef.current, maxLogId);
+
+    const newLogs = localGame.logs
+      .filter((log) => !displayedIdsRef.current.has(log.id) && !isLogHidden(log, clientId))
+      .sort((a, b) => a.id - b.id);
+
+    if (newLogs.length === 0) {
+      return;
+    }
+
+    const batch: ToastItem[] = [];
+    for (const log of newLogs) {
+      displayedIdsRef.current.add(log.id);
+      const shownAt = Date.now();
+      batch.push({ log, phase: 'visible', shownAt });
+      scheduleExitFor(log.id, shownAt);
+    }
+
+    setToasts((prev) => [...prev, ...batch]);
+  }, [clientId, logCount, logTailId]);
+
+  // Repair visible toasts that lost their exit timer (e.g. first toast race on mount).
+  useLayoutEffect(() => {
+    for (const toast of toasts) {
+      if (toast.phase !== 'visible') {
+        continue;
+      }
+      const hasExit = pendingExitsRef.current.some((item) => item.logId === toast.log.id);
+      if (!hasExit) {
+        scheduleExitFor(toast.log.id, toast.shownAt);
+      }
+    }
+  }, [toasts]);
 
   if (toasts.length === 0) {
     return null;
   }
 
-  return (
-    <div className={styles.root} aria-live="polite" aria-relevant="additions">
+  return createPortal(
+    <div className={styles.portalRoot} aria-live="polite" aria-relevant="additions">
       {toasts.map((item) => {
         const name = logPlayerName(item.log, players);
         const speaker = logSpeakerClass(item.log, activePlayerId);
         return (
           <div
             key={item.log.id}
-            className={cn(styles.toast, item.phase === 'exiting' && styles.toastExiting)}
+            className={cn(
+              styles.toast,
+              item.phase === 'visible' && styles.toastEntering,
+              item.phase === 'exiting' && styles.toastExiting,
+            )}
           >
             <span className={cn(styles.name, speakerClassName(speaker))}>{name}</span>
             <span className={styles.message}>{formatGameLogLine(t, item.log)}</span>
           </div>
         );
       })}
-    </div>
+    </div>,
+    document.body,
   );
 }
