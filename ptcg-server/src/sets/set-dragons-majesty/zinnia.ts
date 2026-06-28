@@ -10,8 +10,8 @@ import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { AttachEnergyPrompt } from '../../game/store/prompts/attach-energy-prompt';
 import { CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { GamePhase } from '../../game/store/state/state';
+import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Zinnia, effect: TrainerEffect): IterableIterator<State> {
@@ -112,9 +112,7 @@ export class Zinnia extends TrainerCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.ZINNIA_MARKER, this)) {
-      effect.player.marker.removeMarker(this.ZINNIA_MARKER, this);
-    }
+    REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.ZINNIA_MARKER, this);
 
     return state;
   }

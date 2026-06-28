@@ -8,8 +8,12 @@ import { GameError, GameMessage, PowerType, StoreLike, State } from '../../game'
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
 import {
-  WAS_POWER_USED, IS_ABILITY_BLOCKED,
-  USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  BREAK_RULE,
 } from '../../game/store/prefabs/prefabs';
 
 export class FlorgesBreak extends PokemonCard {
@@ -20,12 +24,14 @@ export class FlorgesBreak extends PokemonCard {
   public hp: number = 140;
   public retreat = [];
 
-  public powers = [{
-    name: 'Floral Breeze',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may heal 30 damage and remove a Special Condition from your Active Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Floral Breeze',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), you may heal 30 damage and remove a Special Condition from your Active Pokémon.',
+    },
+  ];
 
   public set: string = 'BKT';
   public setNumber: string = '104';
@@ -59,6 +65,8 @@ export class FlorgesBreak extends PokemonCard {
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.FLORAL_BREEZE_MARKER, this);
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

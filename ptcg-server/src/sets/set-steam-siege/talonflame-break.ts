@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, EnergyCard } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BREAK_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class TalonflameBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -21,8 +21,8 @@ export class TalonflameBreak extends PokemonCard {
       name: 'Flare Blitz',
       cost: [R, R],
       damage: 150,
-      text: 'Discard all [R] Energy attached to this Pokémon.'
-    }
+      text: 'Discard all [R] Energy attached to this Pokémon.',
+    },
   ];
 
   public set: string = 'STS';
@@ -36,13 +36,15 @@ export class TalonflameBreak extends PokemonCard {
     // Ref: set-x-and-y/talonflame.ts (discard all [R] Energy pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const cards = player.active.cards.filter(c =>
-        c instanceof EnergyCard && c.provides.includes(CardType.FIRE)
+      const cards = player.active.cards.filter(
+        (c) => c instanceof EnergyCard && c.provides.includes(CardType.FIRE),
       );
-      cards.forEach(c => {
+      cards.forEach((c) => {
         player.active.moveCardTo(c, player.discard);
       });
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

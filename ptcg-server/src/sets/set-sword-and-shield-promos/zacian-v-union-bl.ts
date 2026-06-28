@@ -1,6 +1,14 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { GameError, GameMessage, PokemonCardList, Power, PowerType, State, StoreLike } from '../../game';
+import {
+  GameError,
+  GameMessage,
+  PokemonCardList,
+  Power,
+  PowerType,
+  State,
+  StoreLike,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
 import { ZacianVUNIONTopLeft } from './zacian-v-union-tl';
@@ -13,7 +21,7 @@ export class ZacianVUNIONBottomLeft extends PokemonCard {
   public tags = [CardTag.POKEMON_VUNION];
   public cardType: CardType = M;
   public hp: number = 320;
-  public weakness = [{ type: F }];
+  public weakness = [{ type: R }];
   public resistance = [{ type: G, value: -30 }];
   public retreat = [C, C];
 
@@ -24,7 +32,7 @@ export class ZacianVUNIONBottomLeft extends PokemonCard {
       useFromDiscard: true,
       exemptFromAbilityLock: true,
       powerType: PowerType.VUNION_ASSEMBLY,
-    }
+    },
   ];
 
   public attacks = [
@@ -32,8 +40,8 @@ export class ZacianVUNIONBottomLeft extends PokemonCard {
       name: 'Steel Cut',
       cost: [M, M, C],
       damage: 200,
-      text: ''
-    }
+      text: '',
+    },
   ];
 
   public set: string = 'SWSH';
@@ -47,7 +55,7 @@ export class ZacianVUNIONBottomLeft extends PokemonCard {
     // assemblin the v-union
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const slots: PokemonCardList[] = player.bench.filter(b => b.cards.length === 0);
+      const slots: PokemonCardList[] = player.bench.filter((b) => b.cards.length === 0);
 
       if (player.assembledVUNIONs.includes(this.name)) {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
@@ -60,20 +68,44 @@ export class ZacianVUNIONBottomLeft extends PokemonCard {
       let topRightPiece = false;
       let bottomLeftPiece = false;
       let bottomRightPiece = false;
-      player.discard.cards.forEach(card => {
-        if (card instanceof ZacianVUNIONTopLeft) { topLeftPiece = true; }
-        if (card instanceof ZacianVUNIONTopRight) { topRightPiece = true; }
-        if (card instanceof ZacianVUNIONBottomLeft) { bottomLeftPiece = true; }
-        if (card instanceof ZacianVUNIONBottomRight) { bottomRightPiece = true; }
+      player.discard.cards.forEach((card) => {
+        if (card instanceof ZacianVUNIONTopLeft) {
+          topLeftPiece = true;
+        }
+        if (card instanceof ZacianVUNIONTopRight) {
+          topRightPiece = true;
+        }
+        if (card instanceof ZacianVUNIONBottomLeft) {
+          bottomLeftPiece = true;
+        }
+        if (card instanceof ZacianVUNIONBottomRight) {
+          bottomRightPiece = true;
+        }
       });
 
       if (topLeftPiece && topRightPiece && bottomLeftPiece && bottomRightPiece) {
         if (slots.length > 0) {
-          player.discard.cards.forEach(card => { if (card instanceof ZacianVUNIONTopRight) { player.discard.moveCardTo(card, slots[0]); } });
-          player.discard.cards.forEach(card => { if (card instanceof ZacianVUNIONBottomLeft) { player.discard.moveCardTo(card, slots[0]); } });
-          player.discard.cards.forEach(card => { if (card instanceof ZacianVUNIONBottomRight) { player.discard.moveCardTo(card, slots[0]); } });
+          player.discard.cards.forEach((card) => {
+            if (card instanceof ZacianVUNIONTopRight) {
+              player.discard.moveCardTo(card, slots[0]);
+            }
+          });
+          player.discard.cards.forEach((card) => {
+            if (card instanceof ZacianVUNIONBottomLeft) {
+              player.discard.moveCardTo(card, slots[0]);
+            }
+          });
+          player.discard.cards.forEach((card) => {
+            if (card instanceof ZacianVUNIONBottomRight) {
+              player.discard.moveCardTo(card, slots[0]);
+            }
+          });
           // gotta make sure the actual mon ends up on top
-          player.discard.cards.forEach(card => { if (card instanceof ZacianVUNIONTopLeft) { player.discard.moveCardTo(card, slots[0]); } });
+          player.discard.cards.forEach((card) => {
+            if (card instanceof ZacianVUNIONTopLeft) {
+              player.discard.moveCardTo(card, slots[0]);
+            }
+          });
           player.assembledVUNIONs.push(this.name);
           slots[0].pokemonPlayedTurn = state.turn;
         }

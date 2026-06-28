@@ -1,11 +1,9 @@
-import { Effect } from '../../game/store/effects/effect';
-import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { State } from '../../game/store/state/state';
-import { StoreLike } from '../../game/store/store-like';
+import { PokemonCard, StateUtils, StoreLike, State } from '../../game';
+import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { TrainerType, SuperType } from '../../game/store/card/card-types';
-import { StateUtils } from '../../game/store/state-utils';
-import { SHUFFLE_CARDS_INTO_DECK } from '../../game/store/prefabs/prefabs';
+import { Effect } from '../../game/store/effects/effect';
+import { SHUFFLE_DECK } from '../../game/store/prefabs/prefabs';
+import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
 
 export class Karen extends TrainerCard {
 
@@ -19,12 +17,19 @@ export class Karen extends TrainerCard {
   public text: string = 'Each player shuffles all Pokémon in his or her discard pile into his or her deck.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      for (const p of [effect.player, StateUtils.getOpponent(state, effect.player)]) {
-        const discardedPokemon = p.discard.cards.filter(c => c.superType === SuperType.POKEMON);
-        SHUFFLE_CARDS_INTO_DECK(store, state, p, discardedPokemon);
+    // Ref: set-chilling-reign/spiritomb.ts (Ghostly Cries — move Pokemon from discard to deck, then shuffle)
+    if (WAS_TRAINER_USED(effect, this)) {
+      for (const player of [effect.player, StateUtils.getOpponent(state, effect.player)]) {
+        const pokemonCards = player.discard.cards.filter(c => c instanceof PokemonCard).slice();
+        pokemonCards.forEach(card => {
+          player.discard.moveCardTo(card, player.deck);
+        });
+        if (pokemonCards.length > 0) {
+          state = SHUFFLE_DECK(store, state, player);
+        }
       }
     }
+
     return state;
   }
 }

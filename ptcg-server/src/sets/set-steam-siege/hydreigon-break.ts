@@ -7,7 +7,11 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { SlotType } from '../../game/store/actions/play-card-action';
-import { WAS_ATTACK_USED, THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON,
+  BREAK_RULE,
+} from '../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class HydreigonBreak extends PokemonCard {
@@ -23,8 +27,8 @@ export class HydreigonBreak extends PokemonCard {
       name: 'Calamity Blast',
       cost: [P, D, D, C],
       damage: 150,
-      text: 'Discard 3 Energy attached to this Pokémon. This attack does 50 damage to 2 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "Discard 3 Energy attached to this Pokémon. This attack does 50 damage to 2 of your opponent's Benched Pokémon. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'STS';
@@ -38,8 +42,19 @@ export class HydreigonBreak extends PokemonCard {
     // Refs: set-roaring-skies/gliscor.ts (bench damage to X), set-fates-collide/zygarde-ex.ts (energy discard)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 3);
-      THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(50, effect, store, state, 2, 2, false, [SlotType.BENCH]);
+      THIS_ATTACK_DOES_X_DAMAGE_TO_X_OF_YOUR_OPPONENTS_POKEMON(
+        50,
+        effect,
+        store,
+        state,
+        2,
+        2,
+        false,
+        [SlotType.BENCH],
+      );
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

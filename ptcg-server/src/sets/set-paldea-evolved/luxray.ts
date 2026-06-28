@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, StateUtils, GameError, GameMessage } from '../../game';
+import { StoreLike, State, PowerType, StateUtils, GameError, GameMessage, Player } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { GET_PLAYER_PRIZES, PLAY_POKEMON_FROM_HAND_TO_BENCH, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
@@ -25,6 +25,7 @@ export class Luxray extends PokemonCard {
     name: 'Swelling Flash',
     powerType: PowerType.ABILITY,
     useFromHand: true,
+    useFromHandToBench: true,
     text: 'Once during your turn, if this Pokémon is in your hand and you have more Prize cards remaining than your opponent, you may put this Pokémon onto your Bench.'
   }];
 
@@ -46,16 +47,21 @@ export class Luxray extends PokemonCard {
 
   public fullName: string = 'Luxray PAL';
 
+  public canUseFromHandToBench(_store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+    return GET_PLAYER_PRIZES(player).length > GET_PLAYER_PRIZES(opponent).length;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
-      if (GET_PLAYER_PRIZES(player).length <= GET_PLAYER_PRIZES(opponent).length)
+      if (!this.canUseFromHandToBench(store, state, player)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
-      PLAY_POKEMON_FROM_HAND_TO_BENCH(state, player, this);
+      PLAY_POKEMON_FROM_HAND_TO_BENCH(state, player, this, effect.target);
     }
 
     if (WAS_ATTACK_USED(effect, 0, this))

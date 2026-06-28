@@ -2,7 +2,7 @@ import { PokemonCard, Stage, CardType, CardTag, SuperType, StoreLike, State, Sta
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttachEnergyEffect, AttachPokemonToolEffect, PlayItemEffect, PlayPokemonEffect, PlayStadiumEffect, PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
-import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_IF_GX_ATTACK_USED, DRAW_CARDS_UNTIL_CARDS_IN_HAND, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GengarMimikyuGX extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -61,9 +61,7 @@ export class GengarMimikyuGX extends PokemonCard {
 
       if (extraEnergy) {
         [player, opponent].forEach(p => {
-          while (p.hand.cards.length < 7) {
-            p.deck.moveTo(p.hand);
-          }
+          DRAW_CARDS_UNTIL_CARDS_IN_HAND(p, 7);
         });
       }
     }

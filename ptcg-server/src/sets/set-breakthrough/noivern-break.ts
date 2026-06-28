@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BREAK_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class NoivernBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -22,8 +22,8 @@ export class NoivernBreak extends PokemonCard {
       cost: [P, D, C],
       damage: 70,
       damageCalculation: '+',
-      text: 'If you have the same number of cards in your hand as your opponent, this attack does 80 more damage.'
-    }
+      text: 'If you have the same number of cards in your hand as your opponent, this attack does 80 more damage.',
+    },
   ];
 
   public set: string = 'BKT';
@@ -42,6 +42,8 @@ export class NoivernBreak extends PokemonCard {
         effect.damage += 80;
       }
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

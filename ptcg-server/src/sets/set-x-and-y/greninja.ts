@@ -2,7 +2,17 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
-import { PowerType, StoreLike, State, GameMessage, PlayerType, SlotType, GameError, ChoosePokemonPrompt, StateUtils } from '../../game';
+import {
+  PowerType,
+  StoreLike,
+  State,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  GameError,
+  ChoosePokemonPrompt,
+  StateUtils,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
@@ -10,44 +20,36 @@ import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects
 import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Greninja extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Frogadier';
-
-  public cardType: CardType = CardType.WATER;
-
+  public cardType: CardType = W;
   public hp: number = 130;
+  public weakness = [{ type: G }];
+  public retreat = [C];
 
-  public weakness = [{ type: CardType.GRASS }];
-
-  public retreat = [CardType.COLORLESS];
-
-  public powers = [{
-    name: 'Water Shuriken',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may discard a [W] Energy card from your hand. If you do, put 3 damage counters on 1 of your opponent\'s Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Water Shuriken',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: "Once during your turn (before your attack), you may discard a [W] Energy card from your hand. If you do, put 3 damage counters on 1 of your opponent's Pokémon.",
+    },
+  ];
 
   public attacks = [
     {
       name: 'Mist Slash',
-      cost: [CardType.WATER],
+      cost: [W],
       damage: 50,
       shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by Weakness, Resistance, or any other effects on your opponent\'s Active Pokémon. '
-    }
+      text: "This attack's damage isn't affected by Weakness, Resistance, or any other effects on your opponent's Active Pokémon. ",
+    },
   ];
 
   public set: string = 'XY';
-
   public setNumber = '41';
-
   public cardImage = 'assets/cardback.png';
-
   public name: string = 'Greninja';
-
   public fullName: string = 'Greninja XY';
 
   public readonly WATER_SHURIKEN_MARKER = 'WATER_SHURIKEN_MARKER';
@@ -68,7 +70,7 @@ export class Greninja extends PokemonCard {
       }
 
       let waterInHand = false;
-      player.hand.cards.forEach(card => {
+      player.hand.cards.forEach((card) => {
         if (card.superType === SuperType.ENERGY && card.name === 'Water Energy') {
           waterInHand = true;
         }
@@ -77,29 +79,37 @@ export class Greninja extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      state = store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_DISCARD,
-        player.hand,
-        { superType: SuperType.ENERGY, name: 'Water Energy' },
-        { allowCancel: false, min: 1, max: 1 }
-      ), cards => {
-        cards = cards || [];
-        player.marker.addMarker(this.WATER_SHURIKEN_MARKER, this);
-        player.hand.moveCardsTo(cards, player.discard);
+      state = store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_DISCARD,
+          player.hand,
+          { superType: SuperType.ENERGY, name: 'Water Energy' },
+          { allowCancel: false, min: 1, max: 1 },
+        ),
+        (cards) => {
+          cards = cards || [];
+          player.marker.addMarker(this.WATER_SHURIKEN_MARKER, this);
+          player.hand.moveCardsTo(cards, player.discard);
 
-        return store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-          PlayerType.TOP_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { allowCancel: false }
-        ), result => {
-          const target = result[0];
-          target.damage += 30;
-          return state;
-        });
-      });
+          return store.prompt(
+            state,
+            new ChoosePokemonPrompt(
+              player.id,
+              GameMessage.CHOOSE_POKEMON_TO_DAMAGE,
+              PlayerType.TOP_PLAYER,
+              [SlotType.ACTIVE, SlotType.BENCH],
+              { allowCancel: false },
+            ),
+            (result) => {
+              const target = result[0];
+              target.damage += 30;
+              return state;
+            },
+          );
+        },
+      );
 
       return state;
     }
@@ -122,7 +132,10 @@ export class Greninja extends PokemonCard {
       }
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.WATER_SHURIKEN_MARKER, this)) {
+    if (
+      effect instanceof EndTurnEffect &&
+      effect.player.marker.hasMarker(this.WATER_SHURIKEN_MARKER, this)
+    ) {
       effect.player.marker.removeMarker(this.WATER_SHURIKEN_MARKER, this);
     }
     return state;

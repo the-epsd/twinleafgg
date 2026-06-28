@@ -191,29 +191,42 @@ export function playerTurnReducer(store: StoreLike, state: State, action: Action
 
       let trainerCard: TrainerCard | undefined;
 
-      const discardCard = player.discard.cards[action.target.index];
-      if (discardCard instanceof TrainerCard) {
-        trainerCard = discardCard;
-
-        if (trainerCard !== undefined) {
-          let power;
-          if (action.target.slot === SlotType.DISCARD) {
-            power = trainerCard.powers.find(a => a.name === action.name);
+      switch (action.target.slot) {
+        case SlotType.DISCARD: {
+          const discardCard = player.discard.cards[action.target.index];
+          if (discardCard instanceof TrainerCard) {
+            trainerCard = discardCard;
           }
-
-          if (power === undefined) {
-            throw new GameError(GameMessage.UNKNOWN_POWER);
-          }
-
-          const slot = action.target.slot;
-
-          if (slot === SlotType.DISCARD && !power.useFromDiscard) {
-            throw new GameError(GameMessage.CANNOT_USE_POWER);
-          }
-
-          state = store.reduceEffect(state, new UseTrainerPowerEffect(player, power, trainerCard, action.target));
-          return state;
+          break;
         }
+        case SlotType.HAND: {
+          const handCard = player.hand.cards[action.target.index];
+          if (handCard instanceof TrainerCard) {
+            trainerCard = handCard;
+          }
+          break;
+        }
+      }
+
+      if (trainerCard !== undefined) {
+        const power = trainerCard.powers.find(a => a.name === action.name);
+
+        if (power === undefined) {
+          throw new GameError(GameMessage.UNKNOWN_POWER);
+        }
+
+        const slot = action.target.slot;
+
+        if (slot === SlotType.DISCARD && !power.useFromDiscard) {
+          throw new GameError(GameMessage.CANNOT_USE_POWER);
+        }
+
+        if (slot === SlotType.HAND && !power.useFromHand) {
+          throw new GameError(GameMessage.CANNOT_USE_POWER);
+        }
+
+        state = store.reduceEffect(state, new UseTrainerPowerEffect(player, power, trainerCard, action.target));
+        return state;
       }
     }
 

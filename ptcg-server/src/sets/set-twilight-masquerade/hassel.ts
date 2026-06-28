@@ -9,8 +9,8 @@ import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { CardList, ChooseCardsPrompt } from '../../game';
+import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Hassel, effect: TrainerEffect): IterableIterator<State> {
@@ -107,9 +107,7 @@ export class Hassel extends TrainerCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.HASSEL_MARKER, this)) {
-      effect.player.marker.removeMarker(this.HASSEL_MARKER, this);
-    }
+    REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.HASSEL_MARKER, this);
 
     return state;
   }

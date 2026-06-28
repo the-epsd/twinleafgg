@@ -26,3 +26,18 @@ export class GameSettings {
   selfPlay: boolean = false;
 
 }
+
+/** Normalize socket/API payloads into a full {@link GameSettings} instance. */
+export function coerceGameSettings(raw: GameSettings | Partial<GameSettings> | undefined | null): GameSettings {
+  const settings = new GameSettings();
+  if (raw != null) {
+    Object.assign(settings, raw);
+  }
+  settings.rules = new Rules(raw?.rules ?? {});
+  if (raw != null && raw.recordingEnabled !== undefined && raw.recordingEnabled !== null) {
+    settings.recordingEnabled = !!raw.recordingEnabled;
+  } else {
+    settings.recordingEnabled = true;
+  }
+  return settings;
+}

@@ -6,6 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 export class Diantha extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
@@ -78,13 +79,13 @@ export class Diantha extends TrainerCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DIANTHA_MARKER, this)) {
+    if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
 
       if (owner === player) {
-        effect.player.marker.removeMarker(this.DIANTHA_MARKER);
+        REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.DIANTHA_MARKER, this);
       }
     }
 

@@ -86,12 +86,21 @@ export class UsePowerEffect implements Effect {
   public power: Power;
   public card: PokemonCard;
   public target: CardTarget;
+  /** When playing from hand onto a chosen Bench slot, the open bench to receive the Pokémon. */
+  public benchTarget?: PokemonCardList;
 
-  constructor(player: Player, power: Power, card: PokemonCard, target: CardTarget) {
+  constructor(
+    player: Player,
+    power: Power,
+    card: PokemonCard,
+    target: CardTarget,
+    benchTarget?: PokemonCardList,
+  ) {
     this.player = player;
     this.power = power;
     this.card = card;
     this.target = target;
+    this.benchTarget = benchTarget;
   }
 }
 

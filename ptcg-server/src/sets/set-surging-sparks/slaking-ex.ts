@@ -1,14 +1,25 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PokemonCardList, StateUtils, GameMessage, Power, PowerType, ChooseEnergyPrompt, Card, PlayerType, GameError } from '../../game';
+import {
+  StoreLike,
+  State,
+  PokemonCardList,
+  StateUtils,
+  GameMessage,
+  Power,
+  PowerType,
+  ChooseEnergyPrompt,
+  Card,
+  PlayerType,
+  GameError,
+} from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Slakingex extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Vigoroth';
   public tags: string[] = [CardTag.POKEMON_ex];
@@ -21,8 +32,8 @@ export class Slakingex extends PokemonCard {
     {
       name: 'Born to Slack',
       powerType: PowerType.ABILITY,
-      text: 'If your opponent has no Pokémon ex or Pokémon V in play, this Pokémon can\'t attack.',
-    }
+      text: "If your opponent has no Pokémon ex or Pokémon V in play, this Pokémon can't attack.",
+    },
   ];
 
   public attacks = [
@@ -30,8 +41,8 @@ export class Slakingex extends PokemonCard {
       name: 'Great Swing',
       cost: [C, C],
       damage: 280,
-      text: 'Discard an Energy from this Pokémon.'
-    }
+      text: 'Discard an Energy from this Pokémon.',
+    },
   ];
 
   public set: string = 'SSP';
@@ -49,23 +60,22 @@ export class Slakingex extends PokemonCard {
       // Check each of our opponent's Pokemon to see if they have an ex or V.
       let hasSpecialPokemon = false;
       opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList, card) => {
-        if (card.tags.includes(CardTag.POKEMON_ex) || card.tags.includes(CardTag.POKEMON_V)) {
+        if (
+          card.tags.includes(CardTag.POKEMON_ex) ||
+          card.tags.includes(CardTag.POKEMON_V) ||
+          card.tags.includes(CardTag.POKEMON_VMAX) ||
+          card.tags.includes(CardTag.POKEMON_VSTAR) ||
+          card.tags.includes(CardTag.POKEMON_VUNION)
+        ) {
           hasSpecialPokemon = true;
         }
       });
 
-      // Try to reduce PowerEffect, to check if something is blocking our ability
-      try {
-        const powerEffect = new PowerEffect(player, this.powers[0], this);
-        store.reduceEffect(state, powerEffect);
-      } catch {
-        return state;
-      }
-
       // If we don't have a ex or V in play, block the attack.
-      if (!hasSpecialPokemon) { throw new GameError(GameMessage.BLOCKED_BY_ABILITY); }
+      if (!IS_ABILITY_BLOCKED(store, state, player, this) && !hasSpecialPokemon) {
+        throw new GameError(GameMessage.BLOCKED_BY_ABILITY);
+      }
     }
-
 
     // Great Swing
     if (WAS_ATTACK_USED(effect, 0, this)) {
@@ -75,21 +85,24 @@ export class Slakingex extends PokemonCard {
       const checkProvidedEnergy = new CheckProvidedEnergyEffect(player, cardList);
       state = store.reduceEffect(state, checkProvidedEnergy);
 
-      state = store.prompt(state, new ChooseEnergyPrompt(
-        player.id,
-        GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
-        checkProvidedEnergy.energyMap,
-        [CardType.COLORLESS],
-        { allowCancel: false }
-      ), energy => {
-        const cards: Card[] = (energy || []).map(e => e.card);
-        const discardEnergy = new DiscardCardsEffect(effect, cards);
-        discardEnergy.target = player.active;
-        store.reduceEffect(state, discardEnergy);
-      });
+      state = store.prompt(
+        state,
+        new ChooseEnergyPrompt(
+          player.id,
+          GameMessage.CHOOSE_ENERGIES_TO_DISCARD,
+          checkProvidedEnergy.energyMap,
+          [CardType.COLORLESS],
+          { allowCancel: false },
+        ),
+        (energy) => {
+          const cards: Card[] = (energy || []).map((e) => e.card);
+          const discardEnergy = new DiscardCardsEffect(effect, cards);
+          discardEnergy.target = player.active;
+          store.reduceEffect(state, discardEnergy);
+        },
+      );
     }
 
     return state;
   }
-
 }

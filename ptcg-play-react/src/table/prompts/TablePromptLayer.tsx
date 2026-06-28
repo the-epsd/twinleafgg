@@ -39,7 +39,7 @@ import { PutDamageOverlay } from './PutDamageOverlay';
 import { RemoveDamageOverlay } from './RemoveDamageOverlay';
 import { MoveDamageOverlay } from './MoveDamageOverlay';
 import { scanBlockedOwnZeroDamageFromState } from './pokemonPromptRows';
-import { BOARD3D_ATTACK_ANIMATION_DURATION_SEC } from '../board3d/services/board-3d-animation.service';
+import { BOARD3D_ATTACK_ANIMATION_DURATION_SEC, BOARD3D_ABILITY_ANIMATION_DURATION_SEC } from '../board3d/services/board-3d-animation.service';
 import {
   autoTakeChoosePrizeIndices,
   shouldAutoTakeChoosePrize,
@@ -98,6 +98,15 @@ function isAttackAnimationWaitPrompt(wp: WaitPrompt): boolean {
   return String(m).toLowerCase().includes('attack animation');
 }
 
+/** Matches server WaitPrompt before board Pokémon ability resolution (see game-effect usePower). */
+function isAbilityAnimationWaitPrompt(wp: WaitPrompt): boolean {
+  const m = wp.message;
+  if (m === undefined || m === null) {
+    return false;
+  }
+  return String(m).toLowerCase().includes('ability animation');
+}
+
 function AttackAnimationWaitPrompt(props: {
   promptId: number;
   boardInteraction: BoardInteractionService;
@@ -133,6 +142,67 @@ function AttackAnimationWaitPrompt(props: {
         return;
       }
       await sleep(BOARD3D_ATTACK_ANIMATION_DURATION_SEC * 1000);
+      finish();
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [promptId, boardInteraction, resolve]);
+
+  return null;
+}
+
+function AbilityAnimationWaitPrompt(props: {
+  promptId: number;
+  boardInteraction: BoardInteractionService;
+  resolve: (id: number, result: unknown) => void | Promise<void>;
+}) {
+  const { promptId, boardInteraction, resolve } = props;
+  useEffect(() => {
+    let cancelled = false;
+    const finish = () => {
+      if (cancelled) return;
+      cancelled = true;
+      void resolve(promptId, null);
+    };
+
+    const sleep = (ms: number) => new Promise<void>((r) => window.setTimeout(r, ms));
+
+    void (async () => {
+      const mountTime = Date.now();
+      const minDurationMs = BOARD3D_ABILITY_ANIMATION_DURATION_SEC * 1000;
+      const animationStartDeadline = mountTime + 1200;
+
+      boardInteraction.requestAbilityAnimationPlayback();
+
+      let animationPromise: Promise<void> | null = null;
+      while (Date.now() < animationStartDeadline && !cancelled) {
+        const startedAt = boardInteraction.getAbilityAnimationStartedAt();
+        // Socket animation may begin slightly before the WaitPrompt state arrives.
+        if (startedAt >= mountTime - 200) {
+          animationPromise = boardInteraction.getPendingAbilityAnimationPromise();
+          if (animationPromise) {
+            break;
+          }
+        }
+        await sleep(16);
+      }
+
+      if (cancelled) {
+        return;
+      }
+
+      if (animationPromise) {
+        await animationPromise;
+      }
+
+      const elapsed = Date.now() - mountTime;
+      const remaining = minDurationMs - elapsed;
+      if (remaining > 0) {
+        await sleep(remaining);
+      }
+
       finish();
     })();
 
@@ -561,6 +631,16 @@ export function TablePromptLayer({
         />
       );
     }
+    if (isAbilityAnimationWaitPrompt(wp)) {
+      return (
+        <AbilityAnimationWaitPrompt
+          key={wp.id}
+          promptId={wp.id}
+          boardInteraction={boardInteraction}
+          resolve={resolve}
+        />
+      );
+    }
     return (
       <WaitPromptPanel key={wp.id} prompt={wp} t={t} gameMessageText={gameMessageText} resolve={resolve} />
     );
@@ -572,6 +652,7 @@ export function TablePromptLayer({
       <ShowCardsPanel
         key={sc.id}
         prompt={sc}
+        players={localGame.state.players}
         catalog={catalog}
         getScanUrl={getScanUrl}
         t={t}
@@ -588,6 +669,7 @@ export function TablePromptLayer({
       <ShowCardsPanel
         key={cc.id}
         prompt={cc}
+        players={localGame.state.players}
         catalog={catalog}
         getScanUrl={getScanUrl}
         t={t}
@@ -605,6 +687,7 @@ export function TablePromptLayer({
       <ShowMulliganPanel
         key={sm.id}
         prompt={sm}
+        players={localGame.state.players}
         catalog={catalog}
         getScanUrl={getScanUrl}
         t={t}
@@ -620,6 +703,7 @@ export function TablePromptLayer({
       <ChooseCardsPanel
         key={ccp.id}
         prompt={ccp}
+        players={localGame.state.players}
         catalog={catalog}
         getScanUrl={getScanUrl}
         t={t}
@@ -980,6 +1064,7 @@ function ChoosePrizePanel(props: {
         <CardInfoPopup
           card={detail.card}
           facedown={detail.facedown}
+          players={localGame.state.players}
           catalog={catalog}
           getScanUrl={getScanUrl}
           onClose={() => setDetail(null)}
@@ -992,6 +1077,7 @@ function ChoosePrizePanel(props: {
 
 function ChooseCardsPanel(props: {
   prompt: ChooseCardsPrompt;
+  players: LocalGameState['state']['players'];
   catalog: Card[];
   getScanUrl: (card: Card) => string;
   t: TFunction;
@@ -999,7 +1085,7 @@ function ChooseCardsPanel(props: {
   resolve: (id: number, result: unknown) => void;
   replay: boolean;
 }) {
-  const { prompt, catalog, getScanUrl, t, gameMessageText, resolve, replay } = props;
+  const { prompt, players, catalog, getScanUrl, t, gameMessageText, resolve, replay } = props;
   const cards = prompt.cards.cards;
   const blocked = prompt.options.blocked ?? [];
   const { min, max, allowCancel, isSecret } = prompt.options;
@@ -1162,6 +1248,7 @@ function ChooseCardsPanel(props: {
         <CardInfoPopup
           card={detail.card}
           facedown={facedownForPopup}
+          players={players}
           catalog={catalog}
           getScanUrl={getScanUrl}
           onClose={() => setDetail(null)}
@@ -1250,6 +1337,7 @@ function WaitPromptPanel(props: {
 
 function ShowCardsPanel(props: {
   prompt: ShowCardsPrompt | ConfirmCardsPrompt;
+  players: LocalGameState['state']['players'];
   catalog: Card[];
   getScanUrl: (card: Card) => string;
   t: TFunction;
@@ -1258,7 +1346,7 @@ function ShowCardsPanel(props: {
   confirmResult: true | null;
   allowCancel?: boolean;
 }) {
-  const { prompt, catalog, getScanUrl, t, gameMessageText, resolve, confirmResult, allowCancel } = props;
+  const { prompt, players, catalog, getScanUrl, t, gameMessageText, resolve, confirmResult, allowCancel } = props;
   const [detail, setDetail] = useState<Card | null>(null);
 
   useEffect(() => {
@@ -1308,6 +1396,7 @@ function ShowCardsPanel(props: {
       {detail ? (
         <CardInfoPopup
           card={detail}
+          players={players}
           catalog={catalog}
           getScanUrl={getScanUrl}
           onClose={() => setDetail(null)}
@@ -1319,13 +1408,14 @@ function ShowCardsPanel(props: {
 
 function ShowMulliganPanel(props: {
   prompt: ShowMulliganPrompt;
+  players: LocalGameState['state']['players'];
   catalog: Card[];
   getScanUrl: (card: Card) => string;
   t: TFunction;
   gameMessageText: (t: TFunction, message: string | number) => string;
   resolve: (id: number, result: unknown) => void;
 }) {
-  const { prompt, catalog, getScanUrl, t, gameMessageText, resolve } = props;
+  const { prompt, players, catalog, getScanUrl, t, gameMessageText, resolve } = props;
   const [detail, setDetail] = useState<Card | null>(null);
 
   return (
@@ -1361,6 +1451,7 @@ function ShowMulliganPanel(props: {
       {detail ? (
         <CardInfoPopup
           card={detail}
+          players={players}
           catalog={catalog}
           getScanUrl={getScanUrl}
           onClose={() => setDetail(null)}

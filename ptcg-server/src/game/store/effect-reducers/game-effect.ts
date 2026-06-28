@@ -26,6 +26,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
+import { SlotType } from '../actions/play-card-action';
 import { StateUtils } from '../state-utils';
 import { GamePhase, State } from '../state/state';
 import { StoreLike } from '../store-like';
@@ -42,6 +43,33 @@ import { Card } from '../card/card';
 import { Attack } from '../card/pokemon-types';
 import { WaitPrompt } from '../prompts/wait-prompt';
 import { CoinFlipEffect, CoinFlipSequenceEffect } from '../effects/play-card-effects';
+
+/** Keep in sync with ptcg-play-react {@link BOARD3D_ABILITY_ANIMATION_DURATION_SEC} (× 1000). */
+const ABILITY_ANIMATION_WAIT_MS = 900;
+
+function emitAbilityAnimationEvent(
+  store: StoreLike,
+  player: { id: number },
+  card: { id: number | string },
+  slot: 'active' | 'bench',
+  index: number,
+  abilityName: string,
+): void {
+  const game = (store as any).handler;
+  if (game && game.core && typeof game.core.emit === 'function') {
+    game.core.emit((c: any) => {
+      if (typeof c.socket !== 'undefined') {
+        c.socket.emit(`game[${game.id}]:ability`, {
+          playerId: player.id,
+          cardId: card.id,
+          slot,
+          index,
+          abilityName,
+        });
+      }
+    });
+  }
+}
 
 
 function applyWeaknessAndResistance(
@@ -73,6 +101,15 @@ function applyWeaknessAndResistance(
   }
 
   return (damage * multiply) + modifier;
+}
+
+function resetEmptyPokemonSlot(slot: PokemonCardList): void {
+  slot.clearEffects();
+  slot.damage = 0;
+  slot.specialConditions = [];
+  slot.marker.markers = [];
+  slot.tools = [];
+  slot.removeBoardEffect(BoardEffect.ABILITY_USED);
 }
 
 function* useAttack(next: Function, store: StoreLike, state: State, effect: UseAttackEffect | AttackEffect): IterableIterator<State> {
@@ -280,6 +317,34 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
   return store.reduceEffect(state, new EndTurnEffect(player));
 }
 
+function* usePower(next: Function, store: StoreLike, state: State, effect: UsePowerEffect): IterableIterator<State> {
+  const player = effect.player;
+  const power = effect.power;
+  const card = effect.card;
+
+  store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: power.name });
+
+  // Resolve the ability first so validation errors (e.g. POWER_ALREADY_USED) never leave
+  // an ability-animation WaitPrompt stuck open.
+  state = store.reduceEffect(state, new PowerEffect(player, power, card, effect.benchTarget));
+
+  while (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+    state = (store as StoreLike & { state: State }).state;
+  }
+
+  const targetSlot = effect.target.slot;
+  if (targetSlot === SlotType.ACTIVE || targetSlot === SlotType.BENCH) {
+    const slot = targetSlot === SlotType.ACTIVE ? 'active' : 'bench';
+    const index = targetSlot === SlotType.BENCH ? effect.target.index : 0;
+    emitAbilityAnimationEvent(store, player, card, slot, index, power.name);
+    yield store.prompt(state, new WaitPrompt(player.id, ABILITY_ANIMATION_WAIT_MS, 'Ability animation'), () => next());
+    state = (store as StoreLike & { state: State }).state;
+  }
+
+  return state;
+}
+
 export function gameReducer(store: StoreLike, state: State, effect: Effect): State {
 
   if (effect instanceof KnockOutEffect) {
@@ -391,13 +456,8 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
   }
 
   if (effect instanceof UsePowerEffect) {
-    const player = effect.player;
-    const power = effect.power;
-    const card = effect.card;
-
-    store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: power.name });
-    state = store.reduceEffect(state, new PowerEffect(player, power, card));
-    return state;
+    const generator = usePower(() => generator.next(), store, state, effect);
+    return generator.next().value;
   }
 
   if (effect instanceof UseTrainerPowerEffect) {
@@ -534,18 +594,12 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
     const destination = effect.destination;
     const isPartialMove = effect.cards !== undefined || effect.count !== undefined;
 
-    // Only reset in-play Pokemon state when moving the entire card list, not specific cards.
+    // moveTo() does not move tools; attach them before a full-stack move.
     if (source instanceof PokemonCardList && !effect.skipCleanup && !isPartialMove) {
       const tools = [...source.tools];
       for (const tool of tools) {
         source.moveCardTo(tool, destination);
       }
-      source.clearEffects();
-      source.damage = 0;
-      source.specialConditions = [];
-      source.marker.markers = [];
-      source.tools = [];
-      source.removeBoardEffect(BoardEffect.ABILITY_USED);
     }
 
     // Helper to get owner of a CardList
@@ -621,10 +675,16 @@ export function gameReducer(store: StoreLike, state: State, effect: Effect): Sta
       }
     }
 
-    // If source is a PokemonCardList and we moved all cards, discard remaining attached cards
+    // Discard orphan attachments when no Pokemon remain in the slot.
     if (source instanceof PokemonCardList && source.getPokemons().length === 0) {
       const player = StateUtils.findOwner(state, source);
       source.moveTo(player.discard);
+    }
+
+    // In-play state (damage, special conditions, etc.) lives on the slot, not on cards.
+    // Reset whenever a slot is vacated — including after partial card moves.
+    if (source instanceof PokemonCardList && !effect.skipCleanup && source.getPokemons().length === 0) {
+      resetEmptyPokemonSlot(source);
     }
 
     return state;

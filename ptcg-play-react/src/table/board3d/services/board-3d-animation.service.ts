@@ -7,8 +7,12 @@ import {
   Mesh,
   PlaneGeometry,
   MeshBasicMaterial,
+  DoubleSide,
+  Texture,
 } from 'three';
 import type { Board3dCard } from '../board-3d-card';
+import { CARD_HEIGHT } from '../board-3d-overlay-layout';
+import { energyIconLocalPosition, ENERGY_SPRITE_HEIGHT } from '../board-3d-energy-sprite';
 
 /** World Z: flip in the plane of the hand / table (not Y, which tumbles the card edge-on). */
 const DRAW_FLIP_AXIS_Z = new Vector3(0, 0, 1);
@@ -19,6 +23,9 @@ export const HAND_DRAW_STAGE_SCALE = 2.15;
 
 /** Total duration (seconds) of {@link Board3dAnimationService.playAttackAnimation}; keep in sync with server attack WaitPrompt. */
 export const BOARD3D_ATTACK_ANIMATION_DURATION_SEC = 1.35;
+
+/** Total duration (seconds) of {@link Board3dAnimationService.playAbilityActivationAnimation}. */
+export const BOARD3D_ABILITY_ANIMATION_DURATION_SEC = 0.9;
 
 /** Card mesh width in world units at scale 1 (match board-3d-config / hand service). */
 const HAND_CARD_MESH_WIDTH_WORLD = 2.75;
@@ -134,6 +141,7 @@ function stageToHandTiming(
 
 export class Board3dAnimationService {
   private activeAnimations: gsap.core.Timeline[] = [];
+  private activeAbilityTimeline: gsap.core.Timeline | null = null;
   private hasActiveAnimationsCache: boolean = false;
   private lastAnimationCheck: number = 0;
   private animationCheckInterval: number = 50; // Check every 50ms (20fps check rate)
@@ -356,6 +364,48 @@ export class Board3dAnimationService {
       this.activeAnimations.push(timeline);
       this.updateAnimationState();
     });
+  }
+
+  /**
+   * Ability activation timing: lift render order for the spotlight cutout, then hold for the DOM overlay duration.
+   */
+  playAbilityActivationAnimation(card: Object3D): Promise<void> {
+    return new Promise(resolve => {
+      if (this.activeAbilityTimeline) {
+        this.activeAbilityTimeline.kill();
+        this.activeAbilityTimeline = null;
+      }
+
+      const prevRenderOrder = card.renderOrder;
+      card.renderOrder = 100;
+
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          card.renderOrder = prevRenderOrder;
+          this.activeAbilityTimeline = null;
+          this.removeAnimation(timeline);
+          resolve();
+        },
+        onKill: () => {
+          card.renderOrder = prevRenderOrder;
+          this.activeAbilityTimeline = null;
+        },
+      });
+
+      timeline.to({}, { duration: BOARD3D_ABILITY_ANIMATION_DURATION_SEC });
+
+      this.activeAbilityTimeline = timeline;
+      this.activeAnimations.push(timeline);
+      this.updateAnimationState();
+    });
+  }
+
+  /** Wall-clock wait used when the board mesh is not ready; matches {@link BOARD3D_ABILITY_ANIMATION_DURATION_SEC}. */
+  createAbilityActivationFallbackWait(): () => Promise<void> {
+    return () =>
+      new Promise((resolve) => {
+        window.setTimeout(resolve, BOARD3D_ABILITY_ANIMATION_DURATION_SEC * 1000);
+      });
   }
 
   /**
@@ -710,6 +760,99 @@ export class Board3dAnimationService {
   }
 
   /**
+   * Energy from hand: arc onto the host Pokémon, then shrink/warp into the bottom energy icon slot.
+   */
+  playEnergyAttachToPokemon(
+    flyingCard: Board3dCard,
+    hostBoardCard: Board3dCard,
+    energySlotIndex: number,
+    energyIconTexture: Texture,
+  ): Promise<void> {
+    const cardGroup = flyingCard.getGroup();
+    const overlayAnchor = hostBoardCard.getOverlayAnchor();
+    const slotLocal = energyIconLocalPosition(energySlotIndex);
+    const iconScale = ENERGY_SPRITE_HEIGHT / CARD_HEIGHT;
+    const morphDuration = 0.48;
+    /** When scale is nearly at icon size: snap icon in and drop the card mesh. */
+    const handoffAt = morphDuration * 0.76;
+    const iconSnapDuration = 0.07;
+
+    flyingCard.setOutline(false);
+    flyingCard.setHolo(null);
+
+    const cardMesh = flyingCard.getMesh();
+
+    // Unlit overlay crossfade (matches energy icons) — avoids a hard swap onto lit card material (reads black).
+    const iconTex = energyIconTexture.clone();
+    iconTex.repeat.x = -1;
+    iconTex.offset.x = 1;
+    const iconMat = new MeshBasicMaterial({
+      map: iconTex,
+      transparent: true,
+      opacity: 0,
+      side: DoubleSide,
+      alphaTest: 0.05,
+      depthWrite: false,
+    });
+    const iconPlane = new Mesh(new PlaneGeometry(2.5, 3.5), iconMat);
+    iconPlane.position.set(0, 0, 0.015);
+    iconPlane.renderOrder = 11;
+    cardMesh.add(iconPlane);
+
+    // Reparent immediately so motion goes straight into the icon slot (no hover beat).
+    overlayAnchor.attach(cardGroup);
+
+    return new Promise(resolve => {
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          iconPlane.geometry.dispose();
+          iconMat.dispose();
+          iconTex.dispose();
+          this.removeAnimation(timeline);
+          resolve();
+        },
+      });
+
+      timeline
+        .to(cardGroup.position, {
+          x: slotLocal.x,
+          y: slotLocal.y,
+          z: slotLocal.z,
+          duration: morphDuration,
+          ease: 'power3.inOut',
+        })
+        .to(
+          cardGroup.scale,
+          {
+            x: iconScale,
+            y: iconScale,
+            z: iconScale,
+            duration: morphDuration,
+            ease: 'power3.inOut',
+          },
+          '<',
+        )
+        .to(
+          iconMat,
+          {
+            opacity: 1,
+            duration: iconSnapDuration,
+            ease: 'power2.out',
+          },
+          handoffAt - iconSnapDuration,
+        );
+
+      timeline.add(() => {
+        cardGroup.attach(iconPlane);
+        cardMesh.visible = false;
+      }, handoffAt);
+
+      this.activeAnimations.push(timeline);
+      this.updateAnimationState();
+    });
+  }
+
+  /**
    * Trainer/item finished on supporter slot: arc to discard pile top position (same card mesh).
    */
   playTrainerResolveToDiscard(card: Object3D, targetWorld: Vector3): Promise<void> {
@@ -897,6 +1040,10 @@ export class Board3dAnimationService {
    * Kill all active animations
    */
   killAllAnimations(): void {
+    if (this.activeAbilityTimeline) {
+      this.activeAbilityTimeline.kill();
+      this.activeAbilityTimeline = null;
+    }
     this.activeAnimations.forEach(animation => {
       animation.kill();
     });

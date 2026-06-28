@@ -1,4 +1,4 @@
-import { Card, CardTarget, CardType, EnergyCard, GameError, GameMessage, MoveEnergyPrompt, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { Card, CardTarget, CardType, EnergyCard, GameError, GameMessage, MoveEnergyPrompt, Player, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
@@ -19,6 +19,7 @@ export class Eelektross extends PokemonCard {
       name: 'Electric Swamp',
       powerType: PowerType.ABILITY,
       useFromHand: true,
+      useFromHandToBench: true,
       text: 'Once during your turn (before your attack), if this Pokémon is in your hand and you have at least 4 [L] Energy cards in play, you may play this Pokémon onto your Bench. If you do, move any number of [L] Energy from your other Pokémon to this Pokémon.'
     }
   ];
@@ -38,25 +39,28 @@ export class Eelektross extends PokemonCard {
   public name = 'Eelektross';
   public fullName = 'Eelektross UNM';
 
+  public canUseFromHandToBench(_store: StoreLike, _state: State, player: Player): boolean {
+    const energyCards: Card[] = [];
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      cardList.cards.filter(c => (
+        (c instanceof EnergyCard) && (!energyCards.includes(c)) &&
+        (c.provides.includes(CardType.LIGHTNING) || c.provides.includes(CardType.ANY)))
+      ).forEach(c => energyCards.push(c));
+    });
+    return energyCards.length >= 4;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     // Electric Swamp
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
-      // Can't bench this Pokemon unless we have 4 Lightning Energy cards in play.
-      const energyCards: Card[] = [];
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        cardList.cards.filter(c => (
-          (c instanceof EnergyCard) && (!energyCards.includes(c)) &&
-          (c.provides.includes(CardType.LIGHTNING) || c.provides.includes(CardType.ANY)))
-        ).forEach(c => energyCards.push(c));
-      });
-      if (energyCards.length < 4)
+      if (!this.canUseFromHandToBench(store, state, player)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
-      // Bench this Pokemon to the desired slot.
-      PLAY_POKEMON_FROM_HAND_TO_BENCH(state, player, this);
+      PLAY_POKEMON_FROM_HAND_TO_BENCH(state, player, this, effect.target);
 
       // Then, prompt player to move Lightning energy from their other Pokemon to this one.
       const blockedFrom: CardTarget[] = [];

@@ -52,10 +52,12 @@ export class StateSanitizer {
   }
 
   private getSecretCardLists(state: State, viewerPlayerId: number): CardList[] {
+    const sandboxRevealDecks =
+      state.gameSettings?.sandboxMode === true && this.client.user.roleId === 4;
     const players = state.players.filter(p => p.id === viewerPlayerId);
     const cardLists: CardList[] = [];
     players.forEach(player => {
-      if (player.deck.isSecret) {
+      if (player.deck.isSecret && !sandboxRevealDecks) {
         cardLists.push(player.deck);
       }
       player.prizes.forEach(prize => {
@@ -74,7 +76,7 @@ export class StateSanitizer {
       if (!opponent.hand.isPublic && (!isObserver || (this.client.user.roleId !== 4 && this.client.user.roleId !== 5))) {
         cardLists.push(opponent.hand);
       }
-      if (!opponent.deck.isPublic) {
+      if (!opponent.deck.isPublic && !sandboxRevealDecks) {
         cardLists.push(opponent.deck);
       }
       opponent.prizes.forEach(prize => {

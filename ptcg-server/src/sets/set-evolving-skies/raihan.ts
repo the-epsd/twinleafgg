@@ -8,7 +8,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../game/store/state-utils';
 import { GamePhase, State } from '../../game/store/state/state';
@@ -132,13 +132,13 @@ Attach a basic Energy card from your discard pile to 1 of your Pokémon. If you 
       return state;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.RAIHAN_MARKER, this)) {
+    if (effect instanceof EndTurnEffect) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
 
       if (owner === player) {
-        effect.player.marker.removeMarker(this.RAIHAN_MARKER);
+        REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.RAIHAN_MARKER, this);
       }
     }
 

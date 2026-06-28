@@ -94,7 +94,8 @@ export const config = {
       'https://images.pokemontcg.io',
       'https://api.pokemontcg.io',
       'https://limitlesstcg.nyc3.cdn.digitaloceanspaces.com',
-      'https://www.serebii.net'
+      'https://www.serebii.net',
+      'https://www.pokemonproxies.com'
     ]
   },
   email: {

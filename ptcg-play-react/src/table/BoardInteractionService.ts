@@ -13,13 +13,38 @@ import {
 } from 'ptcg-server';
 import { cardTargetKey } from './prompts/removeDamagePromptModel';
 
-type SelectionOverlayKind = 'choose-pokemon' | 'remove-damage' | 'move-damage' | 'put-damage' | null;
+type SelectionOverlayKind =
+  | 'choose-pokemon'
+  | 'remove-damage'
+  | 'move-damage'
+  | 'put-damage'
+  | 'hand-play-target'
+  | null;
 
 export interface BasicEntranceAnimationEvent {
   playerId: number;
   cardId: number | string;
   slot: string;
   index?: number;
+}
+
+export interface AbilityAnimationEvent extends BasicEntranceAnimationEvent {
+  abilityName: string;
+}
+
+export interface AbilityFocusPoint {
+  x: number;
+  y: number;
+}
+
+export interface AbilityFocusAnchor {
+  /** Card front face in viewport pixels (perspective quad matching the 3D mesh). */
+  polygon: readonly AbilityFocusPoint[];
+}
+
+export interface AbilityFocusState {
+  abilityName: string;
+  anchor: AbilityFocusAnchor | null;
 }
 
 export interface CoinFlipAnimationEvent {
@@ -76,6 +101,9 @@ export class BoardInteractionService {
 
   private overlayKind: SelectionOverlayKind = null;
 
+  /** Explicit eligible targets when playing attach/evolution cards from hand. */
+  private handPlayEligibleTargets: CardTarget[] = [];
+
   /** Client pixel position for Remove damage floating +/- HUD (updated by Board3dController each frame). */
   private removeDamageHudAnchor: { x: number; y: number } | null = null;
 
@@ -98,6 +126,12 @@ export class BoardInteractionService {
 
   private attackAnimationSubject = new Subject<BasicEntranceAnimationEvent>();
   public attackAnimation$ = this.attackAnimationSubject.asObservable();
+
+  private abilityAnimationSubject = new Subject<AbilityAnimationEvent>();
+  public abilityAnimation$ = this.abilityAnimationSubject.asObservable();
+
+  private abilityFocusSubject = new BehaviorSubject<AbilityFocusState | null>(null);
+  public abilityFocus$ = this.abilityFocusSubject.asObservable();
 
   private coinFlipAnimationSubject = new Subject<CoinFlipAnimationEvent>();
   public coinFlipAnimation$ = this.coinFlipAnimationSubject.asObservable();
@@ -139,6 +173,57 @@ export class BoardInteractionService {
         onComplete(benchTarget.index);
       }
     });
+  }
+
+  /**
+   * Glow valid Pokémon and wait for a click when attaching energy/tools or evolving
+   * with multiple legal targets.
+   */
+  public startHandPlayTargetSelection(
+    eligibleTargets: CardTarget[],
+    onComplete: (target: CardTarget | null) => void,
+  ): void {
+    if (this.isReplayModeActive) {
+      return;
+    }
+
+    this.endBoardSelection();
+
+    this.overlayKind = 'hand-play-target';
+    this.handPlayEligibleTargets = [...eligibleTargets];
+    this.promptSubject.next(null);
+    this.selectionModeSubject.next(true);
+    this.selectedTargetsSubject.next([]);
+    this.blockedTargetsSubject.next([]);
+    this.eligiblePlayerTypeSubject.next(PlayerType.ANY);
+    this.eligibleSlotsSubject.next([SlotType.ACTIVE, SlotType.BENCH]);
+    this.minSelectionsSubject.next(1);
+    this.maxSelectionsSubject.next(1);
+    this.selectionCallback = (targets) => {
+      onComplete(targets?.[0] ?? null);
+    };
+  }
+
+  public isHandPlayTargetSelectionActive(): boolean {
+    return this.overlayKind === 'hand-play-target';
+  }
+
+  public cancelHandPlayTargetSelection(): void {
+    if (this.overlayKind !== 'hand-play-target') {
+      return;
+    }
+    if (this.selectionCallback) {
+      this.selectionCallback(null);
+    }
+    this.endBoardSelection();
+  }
+
+  /** End hand-play-target glow without invoking the play callback. */
+  public clearHandPlayTargetSelectionSilently(): void {
+    if (this.overlayKind !== 'hand-play-target') {
+      return;
+    }
+    this.endBoardSelection();
   }
 
   /**
@@ -309,6 +394,7 @@ export class BoardInteractionService {
   public endBoardSelection(): void {
     this.removeDamageHudAnchor = null;
     this.overlayKind = null;
+    this.handPlayEligibleTargets = [];
     this.clearPutDamagePlacementPreview();
     this.selectionModeSubject.next(false);
     this.promptSubject.next(null);
@@ -334,6 +420,15 @@ export class BoardInteractionService {
    * Toggle selection of a card target
    */
   public toggleTarget(target: CardTarget): void {
+    if (this.overlayKind === 'hand-play-target') {
+      if (!this.isTargetEligible(target) || !this.selectionCallback) {
+        return;
+      }
+      this.selectionCallback([target]);
+      this.endBoardSelection();
+      return;
+    }
+
     const currentTargets = this.selectedTargetsSubject.value;
     const maxSelections = this.maxSelectionsSubject.value;
 
@@ -365,6 +460,12 @@ export class BoardInteractionService {
    * Check if a target is eligible for selection
    */
   public isTargetEligible(target: CardTarget): boolean {
+    if (this.overlayKind === 'hand-play-target') {
+      return this.handPlayEligibleTargets.some(
+        (t) => t.player === target.player && t.slot === target.slot && t.index === target.index,
+      );
+    }
+
     const eligiblePlayerType = this.eligiblePlayerTypeSubject.value;
     const eligibleSlots = this.eligibleSlotsSubject.value;
     const blockedTargets = this.blockedTargetsSubject.value;
@@ -466,6 +567,55 @@ export class BoardInteractionService {
 
   public triggerAttackAnimation(event: BasicEntranceAnimationEvent) {
     this.attackAnimationSubject.next(event);
+  }
+
+  /**
+   * Latest 3D ability activation promise (set when the motion starts).
+   * {@link abilityAnimationStartedAt} must be checked so settled promises from prior abilities are ignored.
+   */
+  private pendingAbilityAnimationPromise: Promise<void> | null = null;
+  private abilityAnimationStartedAt = 0;
+  private lastAbilityAnimationEvent: AbilityAnimationEvent | null = null;
+
+  public setPendingAbilityAnimationPromise(p: Promise<void> | null): void {
+    this.pendingAbilityAnimationPromise = p;
+    if (p) {
+      this.abilityAnimationStartedAt = Date.now();
+    }
+  }
+
+  public getPendingAbilityAnimationPromise(): Promise<void> | null {
+    return this.pendingAbilityAnimationPromise;
+  }
+
+  public getAbilityAnimationStartedAt(): number {
+    return this.abilityAnimationStartedAt;
+  }
+
+  public clearPendingAbilityAnimation(): void {
+    this.pendingAbilityAnimationPromise = null;
+    this.abilityAnimationStartedAt = 0;
+  }
+
+  public triggerAbilityAnimation(event: AbilityAnimationEvent) {
+    this.lastAbilityAnimationEvent = event;
+    this.clearPendingAbilityAnimation();
+    this.abilityAnimationSubject.next(event);
+  }
+
+  /** Re-fire the last socket ability event when the server WaitPrompt arrives before the animation starts. */
+  public requestAbilityAnimationPlayback(): void {
+    if (this.lastAbilityAnimationEvent && !this.pendingAbilityAnimationPromise) {
+      this.abilityAnimationSubject.next(this.lastAbilityAnimationEvent);
+    }
+  }
+
+  public setAbilityFocus(state: AbilityFocusState | null): void {
+    this.abilityFocusSubject.next(state);
+  }
+
+  public clearAbilityFocus(): void {
+    this.abilityFocusSubject.next(null);
   }
 
   /**

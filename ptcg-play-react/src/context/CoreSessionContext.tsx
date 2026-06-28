@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from 'react';
 import type { ClientInfo, CoreInfo, GameInfo, GameSettings, GameState, UserInfo } from 'ptcg-server';
+import { isActiveListGameInfo } from '../game/isActiveListGameInfo';
 import { getStoredToken } from '../api/storage';
 import { useAuth } from './AuthContext';
 import { getSocketManager } from '../socket/socketManager';
@@ -103,6 +104,9 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
 
     const onGameInfo = (game: GameInfo) => {
       setCore((c) => {
+        if (!isActiveListGameInfo(game)) {
+          return { ...c, games: c.games.filter((g) => g.gameId !== game.gameId) };
+        }
         const games = c.games.slice();
         const i = games.findIndex((g) => g.gameId === game.gameId);
         if (i !== -1) {
@@ -126,7 +130,7 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
 
     const onCreateGame = (game: GameInfo) => {
       setCore((c) => {
-        if (c.games.some((g) => g.gameId === game.gameId)) {
+        if (!isActiveListGameInfo(game) || c.games.some((g) => g.gameId === game.gameId)) {
           return c;
         }
         return { ...c, games: [...c.games, game] };
@@ -160,7 +164,7 @@ export function CoreSessionProvider({ children }: { children: ReactNode }) {
           clientId: info.clientId,
           clients: info.clients,
           usersById: mergeUsers(info.users),
-          games: info.games,
+          games: info.games.filter(isActiveListGameInfo),
           connected: true,
           error: null,
         });

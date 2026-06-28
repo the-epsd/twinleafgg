@@ -3,8 +3,8 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
+import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 import { GamePhase, State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 export class CynthiasAmbition extends TrainerCard {
@@ -79,9 +79,7 @@ export class CynthiasAmbition extends TrainerCard {
       return state;
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CYNTHIAS_AMBITION_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CYNTHIAS_AMBITION_MARKER);
-    }
+    REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.CYNTHIAS_AMBITION_MARKER, this);
 
     return state;
   }

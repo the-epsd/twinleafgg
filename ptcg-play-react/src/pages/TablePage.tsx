@@ -71,7 +71,7 @@ export function TablePage() {
   const catalog = useMemo(() => cardsInfo?.cards ?? EMPTY_CATALOG, [cardsInfo?.cards]);
   const getScanUrl = useDeckCardScanUrl(serverConfig?.scansUrl);
   const { clientId, connected: coreConnected } = useCoreSession();
-  const { has3dBoardAccess, use3dBoardDefault, defaultSandboxMode } = useSettings();
+  const { defaultSandboxMode } = useSettings();
 
   const hasReplayParam = matchIdParam != null && matchIdParam !== '';
   const replayMatchId = hasReplayParam ? Number(matchIdParam) : NaN;
@@ -226,6 +226,15 @@ export function TablePage() {
       }) => {
         boardInteraction.triggerAttackAnimation(data);
       };
+      const onAbility = (data: {
+        playerId: number;
+        cardId: number | string;
+        slot: string;
+        index?: number;
+        abilityName: string;
+      }) => {
+        boardInteraction.triggerAbilityAnimation(data);
+      };
       const onCoin = (data: { playerId: number; result: boolean }) => {
         boardInteraction.triggerCoinFlipAnimation(data.result, data.playerId);
       };
@@ -234,6 +243,7 @@ export function TablePage() {
       raw.on(`game[${gameId}]:playBasicAnimation`, onBasic);
       raw.on(`game[${gameId}]:evolution`, onEvo);
       raw.on(`game[${gameId}]:attack`, onAttack);
+      raw.on(`game[${gameId}]:ability`, onAbility);
       raw.on(`game[${gameId}]:coinFlip`, onCoin);
 
       return () => {
@@ -241,6 +251,7 @@ export function TablePage() {
         raw.off(`game[${gameId}]:playBasicAnimation`, onBasic);
         raw.off(`game[${gameId}]:evolution`, onEvo);
         raw.off(`game[${gameId}]:attack`, onAttack);
+        raw.off(`game[${gameId}]:ability`, onAbility);
         raw.off(`game[${gameId}]:coinFlip`, onCoin);
       };
     },
@@ -434,12 +445,18 @@ export function TablePage() {
   }, [isLiveRoute, onGameSocketError, serverGameId]);
 
   const onLeave = useCallback(() => {
-    const leaveReplay = isReplayRoute || localGame?.replay != null;
-    if (!leaveReplay && localGame?.deleted) {
+    const isReplay = isReplayRoute || localGame?.replay != null;
+    const isSpectatingLive =
+      !isReplay &&
+      localGame != null &&
+      clientId != null &&
+      clientId !== 0 &&
+      !localGame.state.players.some((p) => p.id === clientId);
+    if (!isReplay && !isSpectatingLive && localGame?.deleted) {
       return;
     }
-    setLeaveConfirmKind(leaveReplay ? 'replay' : 'live');
-  }, [isReplayRoute, localGame?.deleted, localGame?.replay]);
+    setLeaveConfirmKind(isReplay || isSpectatingLive ? 'replay' : 'live');
+  }, [clientId, isReplayRoute, localGame?.deleted, localGame?.replay, localGame?.state.players]);
 
   const dismissLeaveConfirm = useCallback(() => {
     setLeaveConfirmKind(null);
@@ -492,8 +509,6 @@ export function TablePage() {
     navigate(localGame?.replay != null ? '/spectate' : '/games');
   }, [localGame?.replay, navigate]);
 
-  const show3d = has3dBoardAccess && use3dBoardDefault;
-
   if (error) {
     const backTarget = isReplayRoute ? '/spectate' : '/games';
     return (
@@ -539,18 +554,6 @@ export function TablePage() {
   /** Should not happen when ≥2 players and tableClientId is set; keep a safe fallback. */
   if (!tableView) {
     return <div style={{ padding: 24 }}>{t('REACT_LOADING')}</div>;
-  }
-
-  if (!show3d) {
-    const backTarget = isReplayRoute ? '/spectate' : '/games';
-    return (
-      <div style={{ padding: 24 }}>
-        <p>{t('REACT_TABLE_3D_DISABLED', 'Enable the 3D board in Settings and ensure your account has access.')}</p>
-        <button type="button" onClick={() => navigate(backTarget)}>
-          {t('BUTTON_BACK')}
-        </button>
-      </div>
-    );
   }
 
   const { bottomPlayer, topPlayer, bottomHand, topHand, isPlaying, isObserver } = tableView;

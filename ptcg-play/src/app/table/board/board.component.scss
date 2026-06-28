@@ -387,8 +387,19 @@ ptcg-board-card.draggable {
   position: relative;
   z-index: 1;
 
+  &.dual-stadium-layout {
+    width: calc(var(--card-size) * 2.3 * var(--card-scale));
+    max-width: none;
+    // Wider than a normal stadium slot; shift left so the pair lines up with lost zones / prizes column
+    transform: translateX(calc(var(--card-size) * -0.55 * var(--card-scale)));
+  }
+
   &.stadium-card-down {
     transform: rotate(180deg);
+
+    &.dual-stadium-layout {
+      transform: rotate(180deg) translateX(calc(var(--card-size) * 0.55 * var(--card-scale)));
+    }
   }
 }
 

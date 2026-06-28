@@ -1,9 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { Stage, CardType, SuperType, TrainerType } from '../../game/store/card/card-types';
+import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, Card, ChooseCardsPrompt, ShuffleDeckPrompt, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AttackEffect } from '../../game/store/effects/game-effects';
-import { TrainerCard } from '../../game/store/card/trainer-card';
 import { PlayPokemonFromDeckEffect } from '../../game/store/effects/play-card-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -113,11 +112,7 @@ export class Rotom extends PokemonCard {
 
       // Count tools on all player's Pokemon
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        cardList.tools.forEach(card => {
-          if (card instanceof TrainerCard && card.trainerType === TrainerType.TOOL) {
-            toolCount++;
-          }
-        });
+        toolCount += cardList.tools.length;
       });
 
       effect.damage = 30 * toolCount;

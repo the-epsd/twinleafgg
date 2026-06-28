@@ -9,7 +9,7 @@ import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 function* playCard(
   next: Function,
@@ -99,12 +99,7 @@ Each player shuffles their hand into their deck. Then, you draw 5 cards, and you
       return state;
     }
 
-    if (
-      effect instanceof EndTurnEffect &&
-      effect.player.marker.hasMarker(this.UNFAIR_STAMP_MARKER, this)
-    ) {
-      effect.player.marker.removeMarker(this.UNFAIR_STAMP_MARKER, this);
-    }
+    REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.UNFAIR_STAMP_MARKER, this);
 
     return state;
   }

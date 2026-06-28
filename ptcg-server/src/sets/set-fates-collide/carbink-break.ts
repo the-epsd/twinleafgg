@@ -4,10 +4,20 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { Card, CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType, StoreLike, State } from '../../game';
+import {
+  Card,
+  CardTarget,
+  ChooseCardsPrompt,
+  ChoosePokemonPrompt,
+  GameMessage,
+  PlayerType,
+  SlotType,
+  StoreLike,
+  State,
+} from '../../game';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BREAK_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class CarbinkBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -22,8 +32,8 @@ export class CarbinkBreak extends PokemonCard {
       name: 'Diamond Gift',
       cost: [F],
       damage: 20,
-      text: 'Attach 2 Energy cards from your discard pile to 1 of your Fighting Pokémon.'
-    }
+      text: 'Attach 2 Energy cards from your discard pile to 1 of your Fighting Pokémon.',
+    },
   ];
 
   public set: string = 'FCO';
@@ -38,9 +48,7 @@ export class CarbinkBreak extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      const hasEnergyInDiscard = player.discard.cards.some(c =>
-        c instanceof EnergyCard
-      );
+      const hasEnergyInDiscard = player.discard.cards.some((c) => c instanceof EnergyCard);
 
       if (!hasEnergyInDiscard) {
         return state;
@@ -76,36 +84,48 @@ export class CarbinkBreak extends PokemonCard {
         return state;
       }
 
-      const energyInDiscard = player.discard.cards.filter(c => c instanceof EnergyCard).length;
+      const energyInDiscard = player.discard.cards.filter((c) => c instanceof EnergyCard).length;
       const maxCards = Math.min(2, energyInDiscard);
 
       // Choose energy cards from discard pile
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.discard,
-        { superType: SuperType.ENERGY },
-        { min: 0, max: maxCards, allowCancel: true }
-      ), (selected: Card[] | null) => {
-        const cards = selected || [];
-        if (cards.length === 0) { return; }
-
-        // Choose a Fighting Pokemon to attach to
-        store.prompt(state, new ChoosePokemonPrompt(
-          player.id,
-          GameMessage.CHOOSE_POKEMON,
-          PlayerType.BOTTOM_PLAYER,
-          [SlotType.ACTIVE, SlotType.BENCH],
-          { min: 1, max: 1, allowCancel: false, blocked }
-        ), targets => {
-          if (targets && targets.length > 0) {
-            cards.forEach(card => {
-              player.discard.moveCardTo(card, targets[0]);
-            });
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.discard,
+          { superType: SuperType.ENERGY },
+          { min: 0, max: maxCards, allowCancel: true },
+        ),
+        (selected: Card[] | null) => {
+          const cards = selected || [];
+          if (cards.length === 0) {
+            return;
           }
-        });
-      });
+
+          // Choose a Fighting Pokemon to attach to
+          store.prompt(
+            state,
+            new ChoosePokemonPrompt(
+              player.id,
+              GameMessage.CHOOSE_POKEMON,
+              PlayerType.BOTTOM_PLAYER,
+              [SlotType.ACTIVE, SlotType.BENCH],
+              { min: 1, max: 1, allowCancel: false, blocked },
+            ),
+            (targets) => {
+              if (targets && targets.length > 0) {
+                cards.forEach((card) => {
+                  player.discard.moveCardTo(card, targets[0]);
+                });
+              }
+            },
+          );
+        },
+      );
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

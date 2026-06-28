@@ -1062,7 +1062,7 @@ const SetReleaseDates: { [key: string]: Date } = {
   'CRI': new Date('2026-05-22'),
   'M5': new Date('2026-05-23'),
   'PBL': new Date('2026-07-16'),
-  'M6': new Date('2099-12-31'),
+  'M6': new Date('2026-07-31'),
   'M6a': new Date('2026-09-16'),
   '30C': new Date('2026-09-16'),
   'M7': new Date('2099-12-31'),

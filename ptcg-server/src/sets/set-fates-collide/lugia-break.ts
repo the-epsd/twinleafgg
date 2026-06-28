@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BREAK_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
 
 export class LugiaBreak extends PokemonCard {
@@ -22,8 +22,8 @@ export class LugiaBreak extends PokemonCard {
       name: 'Flash of Destruction',
       cost: [C, C, C, C],
       damage: 150,
-      text: 'Discard 2 Energy attached to this Pokémon.'
-    }
+      text: 'Discard 2 Energy attached to this Pokémon.',
+    },
   ];
 
   public set: string = 'FCO';
@@ -38,6 +38,8 @@ export class LugiaBreak extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

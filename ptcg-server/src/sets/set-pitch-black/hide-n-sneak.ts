@@ -3,7 +3,12 @@ import { Player } from '../../game/store/state/player';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 import { Effect } from '../../game/store/effects/effect';
-import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import {
+  AbstractAttackEffect,
+  ApplyWeaknessEffect,
+  DealDamageEffect,
+  PutDamageEffect,
+} from '../../game/store/effects/attack-effects';
 import {
   PlaceDamageCountersEffect,
   PutDamageCountersEffect,
@@ -14,13 +19,13 @@ import { StateUtils } from '../../game/store/state-utils';
 import { AddSpecialConditionsPowerEffect } from '../../game/store/effects/check-effects';
 import { IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 
-/** Pokémon cards in discard whose Ability name is Ghost Veil (used by Sinistcha line / Spiritomb / Dhelmise). */
-export function countGhostVeilPokemonInDiscard(player: Player): number {
+/** Pokémon cards in discard whose Ability name is Hide 'n' Sneak (used by Sinistcha line / Spiritomb / Dhelmise). */
+export function countHideNSneakPokemonInDiscard(player: Player): number {
   let count = 0;
-  player.discard.cards.forEach(c => {
+  player.discard.cards.forEach((c) => {
     if (
       c instanceof PokemonCard &&
-      c.powers?.some(p => p.powerType === PowerType.ABILITY && p.name === 'Ghost Veil')
+      c.powers?.some((p) => p.powerType === PowerType.ABILITY && p.name === "Hide 'n' Sneak")
     ) {
       count++;
     }
@@ -33,7 +38,12 @@ export function countGhostVeilPokemonInDiscard(player: Player): number {
  * Refs: set-burning-shadows/alolan-ninetales.ts (AbstractAttackEffect — blocks attack-sourced status via preventDefault before attackReducer);
  *       set-lost-origin/enamorus-v.ts (AddSpecialConditionsPowerEffect — ability-sourced Special Conditions).
  */
-export function reduceGhostVeil(store: StoreLike, state: State, effect: Effect, self: PokemonCard): State {
+export function reduceHideNSneak(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  self: PokemonCard,
+): State {
   if (effect instanceof AbstractAttackEffect && effect.target?.cards.includes(self)) {
     if (effect.target.getPokemonCard() !== self) {
       return state;

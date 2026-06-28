@@ -5,6 +5,11 @@ $ptcg-max-energy-cards: 8;
 $ptcg-energy-card-offset: 13%;
 
 // ==================== MAIN COMPONENT STYLES ====================
+:host(.dual-stadium-layout) .ptcg-board-card {
+  max-width: calc(#{map-get($ptcg-size, card)} * 2);
+  min-width: calc(#{map-get($ptcg-size, board-card)} * 2);
+}
+
 .ptcg-board-card {
   max-width: map-get($ptcg-size, card);
   min-width: map-get($ptcg-size, board-card);
@@ -216,6 +221,18 @@ $ptcg-energy-card-offset: 13%;
     position: absolute;
     transform: translateX($ptcg-vunion-offset) scale(.5);
     z-index: 1;
+  }
+
+  .ptcg-dual-stadium-cards {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 0;
+
+    .ptcg-dual-stadium-half {
+      flex: 1 1 50%;
+      min-width: 0;
+    }
   }
 
   // ==================== CARD COUNTS AND DAMAGE ====================

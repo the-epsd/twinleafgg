@@ -9,8 +9,8 @@ import { GamePhase, State } from '../../game/store/state/state';
 import { StateUtils } from '../../game/store/state-utils';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { AttachEnergyPrompt, PlayerType, SlotType } from '../../game';
+import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Mela, effect: TrainerEffect): IterableIterator<State> {
@@ -121,9 +121,7 @@ Attach a Basic [R] Energy card from your discard pile to 1 of your Pokémon. If 
       return state;
     }
 
-    if (effect instanceof EndTurnEffect) {
-      effect.player.marker.removeMarker(this.MELA_MARKER);
-    }
+    REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.MELA_MARKER, this);
 
     return state;
   }

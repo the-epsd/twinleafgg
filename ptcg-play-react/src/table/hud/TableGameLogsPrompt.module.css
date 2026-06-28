@@ -1,0 +1,143 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(8, 12, 20, 0.72);
+  backdrop-filter: blur(6px);
+  pointer-events: auto;
+}
+
+.panel {
+  width: min(640px, 100%);
+  max-height: min(84vh, 680px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(165deg, rgba(22, 28, 40, 0.98), rgba(14, 18, 28, 0.98));
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.45);
+  color: rgba(245, 248, 255, 0.94);
+  pointer-events: auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: 12px 18px 8px;
+}
+
+.section + .section {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sectionTitle {
+  margin: 0 0 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(180, 200, 235, 0.88);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.row {
+  padding: 4px 0;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.ts {
+  color: rgba(160, 170, 190, 0.85);
+  margin-right: 6px;
+  font-size: 0.7rem;
+}
+
+.name {
+  font-weight: 600;
+  margin-right: 4px;
+}
+
+.nameSystem {
+  color: rgba(180, 190, 205, 0.95);
+}
+
+.nameActive {
+  color: rgba(120, 180, 255, 0.98);
+}
+
+.nameOpponent {
+  color: rgba(255, 140, 140, 0.98);
+}
+
+.footer {
+  flex: 0 0 auto;
+  display: flex;
+  gap: 8px;
+  padding: 12px 18px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.input {
+  flex: 1 1 auto;
+  min-height: 38px;
+  max-height: 88px;
+  resize: vertical;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(0, 0, 0, 0.35);
+  color: rgba(245, 248, 255, 0.94);
+  font: inherit;
+  font-size: 0.78rem;
+}
+
+.input:focus {
+  outline: none;
+  border-color: rgba(120, 180, 255, 0.45);
+}
+
+.sendBtn {
+  align-self: flex-end;
+  padding: 7px 12px !important;
+  font-size: 0.68rem !important;
+}
+
+.closeBtn {
+  padding: 6px 10px !important;
+  font-size: 0.68rem !important;
+}
+
+.empty {
+  margin: 0;
+  opacity: 0.7;
+  font-size: 0.82rem;
+}

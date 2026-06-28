@@ -4,11 +4,29 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, StoreLike, State } from '../../game';
+import {
+  Card,
+  ChooseCardsPrompt,
+  ChoosePokemonPrompt,
+  GameError,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  SlotType,
+  StoreLike,
+  State,
+} from '../../game';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
 import { ShuffleDeckPrompt } from '../../game/store/prompts/shuffle-prompt';
-import { WAS_POWER_USED, IS_ABILITY_BLOCKED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  USE_ABILITY_ONCE_PER_TURN,
+  ABILITY_USED,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  BREAK_RULE,
+} from '../../game/store/prefabs/prefabs';
 
 export class DelphoxBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -18,12 +36,14 @@ export class DelphoxBreak extends PokemonCard {
   public hp: number = 180;
   public retreat = [];
 
-  public powers = [{
-    name: 'Flare Witch',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'Once during your turn (before your attack), you may search your deck for a [R] Energy card and attach it to 1 of your Pokémon. Shuffle your deck afterward.'
-  }];
+  public powers = [
+    {
+      name: 'Flare Witch',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'Once during your turn (before your attack), you may search your deck for a [R] Energy card and attach it to 1 of your Pokémon. Shuffle your deck afterward.',
+    },
+  ];
 
   public set: string = 'FCO';
   public setNumber: string = '14';
@@ -52,51 +72,65 @@ export class DelphoxBreak extends PokemonCard {
 
       const blocked: number[] = [];
       player.deck.cards.forEach((card, index) => {
-        if (!(card instanceof EnergyCard) || card.energyType !== EnergyType.BASIC || !card.provides.includes(CardType.FIRE)) {
+        if (
+          !(card instanceof EnergyCard) ||
+          card.energyType !== EnergyType.BASIC ||
+          !card.provides.includes(CardType.FIRE)
+        ) {
           blocked.push(index);
         }
       });
 
       if (blocked.length === player.deck.cards.length) {
         // No Fire energy in deck, just shuffle
-        return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+        return store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
           player.deck.applyOrder(order);
         });
       }
 
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_ATTACH,
-        player.deck,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { min: 0, max: 1, allowCancel: true, blocked }
-      ), (selected: Card[] | null) => {
-        const cards = selected || [];
+      return store.prompt(
+        state,
+        new ChooseCardsPrompt(
+          player,
+          GameMessage.CHOOSE_CARD_TO_ATTACH,
+          player.deck,
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { min: 0, max: 1, allowCancel: true, blocked },
+        ),
+        (selected: Card[] | null) => {
+          const cards = selected || [];
 
-        if (cards.length > 0) {
-          store.prompt(state, new ChoosePokemonPrompt(
-            player.id,
-            GameMessage.CHOOSE_POKEMON,
-            PlayerType.BOTTOM_PLAYER,
-            [SlotType.ACTIVE, SlotType.BENCH],
-            { min: 1, max: 1, allowCancel: false }
-          ), targets => {
-            if (targets && targets.length > 0) {
-              player.deck.moveCardTo(cards[0], targets[0]);
-            }
-            store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
+          if (cards.length > 0) {
+            store.prompt(
+              state,
+              new ChoosePokemonPrompt(
+                player.id,
+                GameMessage.CHOOSE_POKEMON,
+                PlayerType.BOTTOM_PLAYER,
+                [SlotType.ACTIVE, SlotType.BENCH],
+                { min: 1, max: 1, allowCancel: false },
+              ),
+              (targets) => {
+                if (targets && targets.length > 0) {
+                  player.deck.moveCardTo(cards[0], targets[0]);
+                }
+                store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
+                  player.deck.applyOrder(order);
+                });
+              },
+            );
+          } else {
+            store.prompt(state, new ShuffleDeckPrompt(player.id), (order) => {
               player.deck.applyOrder(order);
             });
-          });
-        } else {
-          store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
-            player.deck.applyOrder(order);
-          });
-        }
-      });
+          }
+        },
+      );
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.FLARE_WITCH_MARKER, this);
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

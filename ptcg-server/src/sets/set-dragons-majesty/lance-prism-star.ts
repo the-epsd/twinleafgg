@@ -5,7 +5,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import {
   ADD_MARKER,
-  REMOVE_MARKER_AT_END_OF_TURN,
+  REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN,
   SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_ONTO_BENCH,
 } from '../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../game/store/prefabs/trainer-prefabs';
@@ -74,7 +74,7 @@ export class LancePrismStar extends TrainerCard {
       return state;
     }
 
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.LANCE_MARKER, this);
+    REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.LANCE_MARKER, this);
 
     return state;
   }

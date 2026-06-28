@@ -28,6 +28,7 @@ import gsap from 'gsap';
 import { Board3dDropZone, DropZoneType, type DropZoneConfig } from '../board-3d-drop-zone';
 import {
   cardPlaysAsBasicPokemonFromHand,
+  cardHasUseFromHandToBenchPower,
   trainerTypeIsSupporter,
   type HandPlayPokemonZoneGameSettings,
 } from '../board3dMeshIdForPlayTarget';
@@ -47,6 +48,11 @@ import {
   BOARD3D_STADIUM_DROP_ZONE_EXTRA_SCALE,
 } from '../board3d-constants';
 
+export type EnergyAttachFlightPayload = {
+  attachTarget: CardTarget;
+  energyCard: Card;
+};
+
 export type PlayCardFlightPayload = {
   board3dCard: Board3dCard;
   targetWorld: Vector3;
@@ -55,14 +61,17 @@ export type PlayCardFlightPayload = {
   dropZoneType: DropZoneType;
   /** Resolves correct board mesh when slot is BOARD but drop zone is the general trainer BOARD. */
   trainerType?: TrainerType;
+  /** Hand energy played onto a Pokémon — morph into the energy icon after flight. */
+  energyAttach?: EnergyAttachFlightPayload;
 };
 
 export interface DropResult {
-  action: 'playCard' | 'retreat' | 'click';
+  action: 'playCard' | 'retreat' | 'click' | 'pickAttachTarget' | 'cancelHandPlayTarget';
   handIndex?: number;
   benchIndex?: number;
   zone?: CardTarget;
   clickedCard?: Object3D;
+  eligibleTargets?: CardTarget[];
   /** Cosmetic flight to zone; playCardAction should still run immediately for correct handIndex. */
   playCardFlight?: PlayCardFlightPayload;
 }
@@ -128,6 +137,13 @@ export class Board3dInteractionService {
   private hoveredPokemonCard: Object3D | null = null;
   private hoveredPokemonBoard3dCard: Board3dCard | null = null;
   private hoveredPokemonOriginalScale: Vector3 = new Vector3();
+  private hoverMissStreak = 0;
+  /** Board mesh ids whose scale must not be overwritten by state sync (hover + hover-out). */
+  private scaleLockedBoardCardIds = new Set<string>();
+  private static readonly POKEMON_HOVER_SCALE_MULTIPLIER = 1.2;
+  private static readonly POKEMON_HOVER_SCALE_IN_DURATION = 0.15;
+  private static readonly POKEMON_HOVER_SCALE_OUT_DURATION = 0.28;
+  private static readonly HOVER_CLEAR_MISS_FRAMES = 4;
 
   // Drop zones
   private dropZones: Board3dDropZone[] = [];
@@ -361,17 +377,14 @@ export class Board3dInteractionService {
     return null;
   }
 
-  private findPokemonBoardCardUnderWorldPoint(
-    worldPos: Vector3,
-    camera: Camera,
+  private findPokemonBoardCardFromRaycast(
     ctx: DragContext,
     options: {
       allowedPlayer?: PlayerType | null;
       isEvolutionCard: boolean;
       isEnergyOrTool: boolean;
-    }
+    },
   ): Object3D | null {
-    this.setRaycasterFromWorldPosition(worldPos, camera);
     const intersects = this.raycaster.intersectObjects(this.interactiveObjects, true);
     for (const intersect of intersects) {
       const hit = this.getCardFromIntersection(intersect);
@@ -406,6 +419,152 @@ export class Board3dInteractionService {
       }
     }
     return null;
+  }
+
+  private findPokemonBoardCardUnderWorldPoint(
+    worldPos: Vector3,
+    camera: Camera,
+    ctx: DragContext,
+    options: {
+      allowedPlayer?: PlayerType | null;
+      isEvolutionCard: boolean;
+      isEnergyOrTool: boolean;
+    }
+  ): Object3D | null {
+    this.setRaycasterFromWorldPosition(worldPos, camera);
+    return this.findPokemonBoardCardFromRaycast(ctx, options);
+  }
+
+  /** Prefer cursor raycast; fall back to dragged-card center for reliable attach hover. */
+  private findPokemonBoardCardForAttachHover(
+    event: MouseEvent,
+    camera: Camera,
+    canvas: HTMLCanvasElement,
+    cardWorldPos: Vector3,
+    ctx: DragContext,
+    options: {
+      allowedPlayer?: PlayerType | null;
+      isEvolutionCard: boolean;
+      isEnergyOrTool: boolean;
+    },
+  ): Object3D | null {
+    const rect = canvas.getBoundingClientRect();
+    this.dragHoverRayNdc.set(
+      ((event.clientX - rect.left) / rect.width) * 2 - 1,
+      -((event.clientY - rect.top) / rect.height) * 2 + 1,
+    );
+    this.raycaster.setFromCamera(this.dragHoverRayNdc, camera);
+    const fromPointer = this.findPokemonBoardCardFromRaycast(ctx, options);
+    if (fromPointer) {
+      return fromPointer;
+    }
+    return this.findPokemonBoardCardUnderWorldPoint(cardWorldPos, camera, ctx, options);
+  }
+
+  private pokemonHoverTargetScale(): Vector3 {
+    return this.hoveredPokemonOriginalScale.clone().multiplyScalar(
+      Board3dInteractionService.POKEMON_HOVER_SCALE_MULTIPLIER,
+    );
+  }
+
+  private lockBoardCardScale(cardId: string | undefined): void {
+    if (cardId) {
+      this.scaleLockedBoardCardIds.add(cardId);
+    }
+  }
+
+  private unlockBoardCardScale(cardId: string | undefined): void {
+    if (cardId) {
+      this.scaleLockedBoardCardIds.delete(cardId);
+    }
+  }
+
+  private schedulePokemonHoverScaleRestore(
+    card: Object3D,
+    originalScale: Vector3,
+    board3d: Board3dCard | null,
+  ): void {
+    const cardId = card.userData?.cardId as string | undefined;
+    gsap.killTweensOf(card.scale);
+    this.lockBoardCardScale(cardId);
+    board3d?.setOutline(false);
+    gsap.to(card.scale, {
+      x: originalScale.x,
+      y: originalScale.y,
+      z: originalScale.z,
+      duration: Board3dInteractionService.POKEMON_HOVER_SCALE_OUT_DURATION,
+      ease: 'power2.inOut',
+      onComplete: () => {
+        this.unlockBoardCardScale(cardId);
+      },
+    });
+  }
+
+  private beginPokemonHoverEffects(pokemon: Object3D): void {
+    if (this.hoveredPokemonCard && this.hoveredPokemonCard !== pokemon) {
+      this.schedulePokemonHoverScaleRestore(
+        this.hoveredPokemonCard,
+        this.hoveredPokemonOriginalScale,
+        this.hoveredPokemonBoard3dCard,
+      );
+    }
+
+    this.hoverMissStreak = 0;
+    const pokemonId = pokemon.userData?.cardId as string | undefined;
+    if (pokemonId) {
+      gsap.killTweensOf(pokemon.scale);
+    }
+
+    this.hoveredPokemonCard = pokemon;
+    this.hoveredPokemonOriginalScale.copy(pokemon.scale);
+    this.hoveredPokemonBoard3dCard = this.getBoard3dCardFromObject3D(pokemon);
+    this.lockBoardCardScale(pokemonId);
+
+    if (this.hoveredPokemonBoard3dCard) {
+      this.hoveredPokemonBoard3dCard.setOutline(true, 0xffd700);
+      const targetScale = this.pokemonHoverTargetScale();
+      gsap.killTweensOf(pokemon.scale);
+      gsap.to(pokemon.scale, {
+        x: targetScale.x,
+        y: targetScale.y,
+        z: targetScale.z,
+        duration: Board3dInteractionService.POKEMON_HOVER_SCALE_IN_DURATION,
+        ease: 'power2.out',
+      });
+    }
+  }
+
+  private maintainPokemonHoverEffects(pokemon: Object3D): void {
+    this.hoverMissStreak = 0;
+    const targetScale = this.pokemonHoverTargetScale();
+    const s = pokemon.scale;
+    const drift =
+      Math.abs(s.x - targetScale.x) > 0.015 ||
+      Math.abs(s.y - targetScale.y) > 0.015 ||
+      Math.abs(s.z - targetScale.z) > 0.015;
+    if (drift) {
+      gsap.killTweensOf(pokemon.scale);
+      gsap.to(pokemon.scale, {
+        x: targetScale.x,
+        y: targetScale.y,
+        z: targetScale.z,
+        duration: Board3dInteractionService.POKEMON_HOVER_SCALE_IN_DURATION,
+        ease: 'power2.out',
+      });
+    }
+    this.hoveredPokemonBoard3dCard?.setOutline(true, 0xffd700);
+  }
+
+  private endPokemonHoverEffects(): void {
+    if (!this.hoveredPokemonCard) {
+      return;
+    }
+    const card = this.hoveredPokemonCard;
+    const board3d = this.hoveredPokemonBoard3dCard;
+    const original = this.hoveredPokemonOriginalScale.clone();
+    this.hoveredPokemonCard = null;
+    this.hoveredPokemonBoard3dCard = null;
+    this.schedulePokemonHoverScaleRestore(card, original, board3d);
   }
 
   /**
@@ -505,7 +664,7 @@ export class Board3dInteractionService {
 
     if (card) {
       // Check if card is draggable, but DON'T start drag yet - wait for threshold
-      if (card.userData.isHandCard) {
+      if (card.userData.isHandCard && event.button === 0) {
         // Store pending drag info - will start on move threshold
         this.pendingDragCard = card;
         this.pendingDragCamera = camera;
@@ -597,6 +756,9 @@ export class Board3dInteractionService {
     // Handle BENCH_GENERAL zone - only valid for Basic Pokemon (and fossils played as Basic) with open bench slots
     if (config.type === DropZoneType.BENCH_GENERAL) {
       const { card } = this.currentDragContext;
+      if (cardHasUseFromHandToBenchPower(card)) {
+        return false;
+      }
       if (this.playsAsBasicPokemonFromHand(card)) {
         return this.findNextOpenBenchSlot(config.player) !== null;
       }
@@ -605,6 +767,11 @@ export class Board3dInteractionService {
 
     // Hand to Board
     const { superType, stage, trainerType, card } = this.currentDragContext;
+
+    // useFromHandToBench abilities (Talonflame ex, Luxray, etc.) — open Bench slots only
+    if (cardHasUseFromHandToBenchPower(card)) {
+      return config.type === DropZoneType.BENCH && !isOccupied;
+    }
 
     // Basic Pokemon and Fossil items that play as Basic onto bench/active
     if (this.playsAsBasicPokemonFromHand(card)) {
@@ -673,6 +840,16 @@ export class Board3dInteractionService {
 
     for (const zone of this.dropZones) {
       const config = zone.getConfig();
+
+      // useFromHandToBench: highlight open bench slots (player picks the slot)
+      if (cardHasUseFromHandToBenchPower(card)) {
+        if (config.type === DropZoneType.BENCH && this.isValidDropZone(zone)) {
+          zone.setValid();
+        } else {
+          zone.hide();
+        }
+        continue;
+      }
 
       // When dragging a Basic Pokemon or a Fossil that benches as Basic: BENCH_GENERAL + active
       if (this.playsAsBasicPokemonFromHand(card)) {
@@ -1023,14 +1200,16 @@ export class Board3dInteractionService {
 
       // Detect Pokemon card under dragged card (for energy/tool cards and evolution cards)
       let pokemonUnderCard: Object3D | null = null;
-      let pokemonInRetreatZone: Object3D | null = null;
       if ((isEnergyOrTool || isEvolutionCard) && !isOverHand && this.currentDragContext) {
-        // Raycast from dragged card center so hover matches the card visual (not pointer offset)
-        pokemonUnderCard = this.findPokemonBoardCardUnderWorldPoint(
-          worldPos,
+        const allowedPlayer = this.allowedAttachTargetPlayer(this.currentDragContext);
+        pokemonUnderCard = this.findPokemonBoardCardForAttachHover(
+          event,
           camera,
+          canvas,
+          worldPos,
           this.currentDragContext,
           {
+            allowedPlayer,
             isEvolutionCard: !!isEvolutionCard,
             isEnergyOrTool: !!isEnergyOrTool,
           },
@@ -1038,6 +1217,7 @@ export class Board3dInteractionService {
       }
 
       let validRetreatZoneUnderCard = false;
+      let pokemonInRetreatZone: Object3D | null = null;
       if (isRetreatDrag && !isOverHand) {
         // For retreat: find valid drop zone under card, then get Pokemon in that zone (if any)
         const retreatZone = this.findValidDropZone(worldPos);
@@ -1054,77 +1234,23 @@ export class Board3dInteractionService {
         (isRetreatDrag && pokemonInRetreatZone !== null);
       const pokemonForHoverEffects = pokemonUnderCard ?? pokemonInRetreatZone;
 
-      if (shouldShowHoverEffects && pokemonForHoverEffects && pokemonForHoverEffects !== this.hoveredPokemonCard) {
-        // New Pokemon hovered - restore previous Pokemon's scale and remove glow
-        if (this.hoveredPokemonCard) {
-          // Restore scale of previous Pokemon
-          gsap.killTweensOf(this.hoveredPokemonCard.scale);
-          gsap.to(this.hoveredPokemonCard.scale, {
-            x: this.hoveredPokemonOriginalScale.x,
-            y: this.hoveredPokemonOriginalScale.y,
-            z: this.hoveredPokemonOriginalScale.z,
-            duration: 0.15,
-            ease: 'power2.out'
-          });
-
-          if (this.hoveredPokemonBoard3dCard) {
-            this.hoveredPokemonBoard3dCard.setOutline(false);
+      if (shouldShowHoverEffects && pokemonForHoverEffects) {
+        if (pokemonForHoverEffects !== this.hoveredPokemonCard) {
+          this.beginPokemonHoverEffects(pokemonForHoverEffects);
+        } else {
+          this.maintainPokemonHoverEffects(pokemonForHoverEffects);
+        }
+      } else if (this.hoveredPokemonCard) {
+        if (!shouldShowHoverEffects) {
+          this.endPokemonHoverEffects();
+          this.hoverMissStreak = 0;
+        } else {
+          this.hoverMissStreak += 1;
+          if (this.hoverMissStreak >= Board3dInteractionService.HOVER_CLEAR_MISS_FRAMES) {
+            this.endPokemonHoverEffects();
+            this.hoverMissStreak = 0;
           }
         }
-
-        // Store original scale and add effects to new Pokemon
-        this.hoveredPokemonCard = pokemonForHoverEffects;
-        this.hoveredPokemonOriginalScale.copy(pokemonForHoverEffects.scale);
-        this.hoveredPokemonBoard3dCard = this.getBoard3dCardFromObject3D(pokemonForHoverEffects);
-
-        if (this.hoveredPokemonBoard3dCard) {
-          // Add glow
-          this.hoveredPokemonBoard3dCard.setOutline(true, 0xffd700); // Golden yellow glow
-
-          // Scale up by 20% (1.2x)
-          const targetScale = this.hoveredPokemonOriginalScale.clone().multiplyScalar(1.2);
-          gsap.killTweensOf(pokemonForHoverEffects.scale);
-          gsap.to(pokemonForHoverEffects.scale, {
-            x: targetScale.x,
-            y: targetScale.y,
-            z: targetScale.z,
-            duration: 0.15,
-            ease: 'power2.out'
-          });
-        }
-      } else if (shouldShowHoverEffects && !pokemonForHoverEffects && this.hoveredPokemonCard) {
-        // No longer hovering over Pokemon - restore scale and remove glow
-        gsap.killTweensOf(this.hoveredPokemonCard.scale);
-        gsap.to(this.hoveredPokemonCard.scale, {
-          x: this.hoveredPokemonOriginalScale.x,
-          y: this.hoveredPokemonOriginalScale.y,
-          z: this.hoveredPokemonOriginalScale.z,
-          duration: 0.15,
-          ease: 'power2.out'
-        });
-
-        if (this.hoveredPokemonBoard3dCard) {
-          this.hoveredPokemonBoard3dCard.setOutline(false);
-        }
-        this.hoveredPokemonCard = null;
-        this.hoveredPokemonBoard3dCard = null;
-      } else if (!shouldShowHoverEffects && this.hoveredPokemonCard) {
-        // Dragged card changed type (shouldn't happen, but handle gracefully)
-        // Restore scale and remove glow
-        gsap.killTweensOf(this.hoveredPokemonCard.scale);
-        gsap.to(this.hoveredPokemonCard.scale, {
-          x: this.hoveredPokemonOriginalScale.x,
-          y: this.hoveredPokemonOriginalScale.y,
-          z: this.hoveredPokemonOriginalScale.z,
-          duration: 0.15,
-          ease: 'power2.out'
-        });
-
-        if (this.hoveredPokemonBoard3dCard) {
-          this.hoveredPokemonBoard3dCard.setOutline(false);
-        }
-        this.hoveredPokemonCard = null;
-        this.hoveredPokemonBoard3dCard = null;
       }
 
       // Determine scale based on priority:
@@ -1170,6 +1296,387 @@ export class Board3dInteractionService {
     return Math.sqrt(dx * dx + dy * dy) < this.clickThreshold;
   }
 
+  private findDropZoneByType(
+    type: DropZoneType,
+    player: PlayerType,
+    index: number = 0,
+  ): Board3dDropZone | null {
+    return this.dropZones.find(z => {
+      const c = z.getConfig();
+      return c.type === type && c.player === player && c.index === index;
+    }) ?? null;
+  }
+
+  private findDropZoneForCardTarget(target: CardTarget, ctx: DragContext): Board3dDropZone | null {
+    if (target.slot === SlotType.ACTIVE) {
+      return this.findDropZoneByType(DropZoneType.ACTIVE, target.player, target.index);
+    }
+    if (target.slot === SlotType.BENCH) {
+      return this.findDropZoneByType(DropZoneType.BENCH, target.player, target.index);
+    }
+    if (target.slot === SlotType.BOARD) {
+      if (ctx.trainerType === TrainerType.STADIUM) {
+        return this.findDropZoneByType(DropZoneType.STADIUM, PlayerType.BOTTOM_PLAYER, 0);
+      }
+      return this.findDropZoneByType(DropZoneType.BOARD, target.player, target.index);
+    }
+    return null;
+  }
+
+  private findAllValidPokemonAttachTargets(ctx: DragContext): CardTarget[] {
+    const allowedPlayer = this.allowedAttachTargetPlayer(ctx);
+    if (allowedPlayer === null) {
+      return [];
+    }
+
+    const isEvolutionCard =
+      ctx.superType === SuperType.POKEMON &&
+      ctx.stage !== undefined &&
+      ctx.stage !== Stage.BASIC &&
+      !this.playsAsBasicPokemonFromHand(ctx.card);
+    const checkOpponentEx = ctx.trainerType === TrainerType.TOOL && isOpponentAttachTool(ctx.card);
+    const benchSize =
+      allowedPlayer === PlayerType.BOTTOM_PLAYER
+        ? this.currentBenchSizes.bottom
+        : this.currentBenchSizes.top;
+
+    const candidates: Array<{ slot: SlotType; index: number }> = [{ slot: SlotType.ACTIVE, index: 0 }];
+    for (let i = 0; i < benchSize; i++) {
+      candidates.push({ slot: SlotType.BENCH, index: i });
+    }
+
+    const targets: CardTarget[] = [];
+
+    for (const { slot, index } of candidates) {
+      const dropType = slot === SlotType.ACTIVE ? DropZoneType.ACTIVE : DropZoneType.BENCH;
+      const zoneKey = `${allowedPlayer}_${dropType}_${index}`;
+      if (!this.occupiedZones.has(zoneKey)) {
+        continue;
+      }
+
+      const pokemon = this.getPokemonInZone(allowedPlayer, slot, index);
+
+      if (checkOpponentEx) {
+        if (!pokemon) {
+          continue;
+        }
+        if (!isOpponentPokemonExToolTarget(pokemon.userData.cardList as PokemonCardList)) {
+          continue;
+        }
+      }
+
+      if (isEvolutionCard) {
+        if (!pokemon) {
+          continue;
+        }
+        const evolutionCard = ctx.card as PokemonCard;
+        const targetPokemonCard = pokemon.userData.cardData as PokemonCard;
+        if (!this.isValidEvolutionTarget(evolutionCard, targetPokemonCard)) {
+          continue;
+        }
+      }
+
+      const dropZone = this.findDropZoneByType(dropType, allowedPlayer, index);
+      if (dropZone && this.isValidDropZone(dropZone)) {
+        targets.push({ player: allowedPlayer, slot, index });
+      }
+    }
+
+    return targets;
+  }
+
+  private countBoardPokemonForAttach(player: PlayerType): number {
+    let count = 0;
+    if (this.occupiedZones.has(`${player}_${DropZoneType.ACTIVE}_0`)) {
+      count += 1;
+    }
+    const benchSize =
+      player === PlayerType.BOTTOM_PLAYER
+        ? this.currentBenchSizes.bottom
+        : this.currentBenchSizes.top;
+    for (let i = 0; i < benchSize; i++) {
+      if (this.occupiedZones.has(`${player}_${DropZoneType.BENCH}_${i}`)) {
+        count += 1;
+      }
+    }
+    return count;
+  }
+
+  private isAttachPlayFromHand(ctx: DragContext): boolean {
+    if (this.playsAsBasicPokemonFromHand(ctx.card)) {
+      return false;
+    }
+    return (
+      ctx.superType === SuperType.ENERGY ||
+      ctx.trainerType === TrainerType.TOOL ||
+      (ctx.superType === SuperType.POKEMON &&
+        ctx.stage !== undefined &&
+        ctx.stage !== Stage.BASIC)
+    );
+  }
+
+  /**
+   * Auto-attach when unambiguous; otherwise the player must click a glowing target.
+   */
+  private resolveAutoAttachTarget(ctx: DragContext, targets: CardTarget[]): CardTarget | null {
+    if (targets.length === 0) {
+      return null;
+    }
+
+    const isEvolution =
+      ctx.superType === SuperType.POKEMON &&
+      ctx.stage !== undefined &&
+      ctx.stage !== Stage.BASIC;
+
+    if (isEvolution) {
+      return targets.length === 1 ? targets[0] : null;
+    }
+
+    if (ctx.superType === SuperType.ENERGY || ctx.trainerType === TrainerType.TOOL) {
+      const allowedPlayer = this.allowedAttachTargetPlayer(ctx);
+      const pokemonOnBoard =
+        allowedPlayer != null ? this.countBoardPokemonForAttach(allowedPlayer) : targets.length;
+      // Only skip the picker when there is literally one Pokémon on the board.
+      if (pokemonOnBoard <= 1) {
+        return targets[0] ?? null;
+      }
+      return null;
+    }
+
+    return targets.length === 1 ? targets[0] : null;
+  }
+
+  private findDefaultPokemonAttachTarget(ctx: DragContext): CardTarget | null {
+    const targets = this.findAllValidPokemonAttachTargets(ctx);
+    return this.resolveAutoAttachTarget(ctx, targets);
+  }
+
+  private resolveDefaultPlayZone(ctx: DragContext): CardTarget | null {
+    const { card, superType, stage, trainerType } = ctx;
+
+    if (cardHasUseFromHandToBenchPower(card)) {
+      const benchZone = this.findNextOpenBenchSlot(PlayerType.BOTTOM_PLAYER);
+      if (benchZone && this.isValidDropZone(benchZone)) {
+        return this.configToCardTarget(benchZone.getConfig());
+      }
+      return null;
+    }
+
+    if (this.playsAsBasicPokemonFromHand(card)) {
+      const activeZone = this.findDropZoneByType(DropZoneType.ACTIVE, PlayerType.BOTTOM_PLAYER, 0);
+      if (activeZone && this.isValidDropZone(activeZone)) {
+        return this.configToCardTarget(activeZone.getConfig());
+      }
+      const benchZone = this.findNextOpenBenchSlot(PlayerType.BOTTOM_PLAYER);
+      if (benchZone && this.isValidDropZone(benchZone)) {
+        return this.configToCardTarget(benchZone.getConfig());
+      }
+      return null;
+    }
+
+    if (
+      superType === SuperType.POKEMON &&
+      stage !== undefined &&
+      stage !== Stage.BASIC
+    ) {
+      return this.findDefaultPokemonAttachTarget(ctx);
+    }
+
+    if (superType === SuperType.ENERGY || trainerType === TrainerType.TOOL) {
+      return this.findDefaultPokemonAttachTarget(ctx);
+    }
+
+    if (trainerType === TrainerType.STADIUM) {
+      const stadiumZone = this.findDropZoneByType(DropZoneType.STADIUM, PlayerType.BOTTOM_PLAYER, 0);
+      return stadiumZone && this.isValidDropZone(stadiumZone)
+        ? this.configToCardTarget(stadiumZone.getConfig())
+        : null;
+    }
+
+    if (trainerTypeIsSupporter(trainerType)) {
+      const boardZone = this.findDropZoneByType(DropZoneType.BOARD, PlayerType.BOTTOM_PLAYER, 0);
+      if (boardZone && this.isValidDropZone(boardZone)) {
+        return this.configToCardTarget(boardZone.getConfig());
+      }
+      const supporterZone = this.findDropZoneByType(DropZoneType.SUPPORTER, PlayerType.BOTTOM_PLAYER, 0);
+      return supporterZone && this.isValidDropZone(supporterZone)
+        ? this.configToCardTarget(supporterZone.getConfig())
+        : null;
+    }
+
+    if (superType === SuperType.TRAINER) {
+      const boardZone = this.findDropZoneByType(DropZoneType.BOARD, PlayerType.BOTTOM_PLAYER, 0);
+      return boardZone && this.isValidDropZone(boardZone)
+        ? this.configToCardTarget(boardZone.getConfig())
+        : null;
+    }
+
+    return null;
+  }
+
+  private buildHandPlayDropResult(handIndex: number, zone: CardTarget): DropResult | null {
+    const ctx = this.currentDragContext;
+    if (!ctx || handIndex < 0) {
+      return null;
+    }
+
+    const actsAsBasicFromHand = this.playsAsBasicPokemonFromHand(ctx.card);
+    const isAttachDropHand =
+      !actsAsBasicFromHand &&
+      (ctx.superType === SuperType.ENERGY ||
+        ctx.trainerType === TrainerType.TOOL ||
+        (ctx.superType === SuperType.POKEMON &&
+          ctx.stage !== undefined &&
+          ctx.stage !== Stage.BASIC));
+
+    const dropZone = this.findDropZoneForCardTarget(zone, ctx);
+    const config = dropZone?.getConfig();
+
+    if (this.draggedCard) {
+      gsap.killTweensOf(this.draggedCard.position);
+      gsap.killTweensOf(this.draggedCard.rotation);
+      gsap.killTweensOf(this.draggedCard.scale);
+    }
+
+    if (isAttachDropHand) {
+      if (ctx.superType === SuperType.ENERGY) {
+        const ejected = this.handService.detachCardForBoardPlay(handIndex, this.worldContentRoot);
+        if (ejected) {
+          return {
+            action: 'playCard',
+            handIndex,
+            zone,
+            playCardFlight: {
+              board3dCard: ejected,
+              targetWorld: new Vector3(),
+              endScale: 1,
+              endRotationY: 0,
+              dropZoneType: DropZoneType.BENCH,
+              energyAttach: {
+                attachTarget: zone,
+                energyCard: ctx.card,
+              },
+            },
+          };
+        }
+      }
+      this.handService.removeCard(handIndex);
+      return { action: 'playCard', handIndex, zone };
+    }
+
+    if (config) {
+      const landing = this.getHandPlayLandingTransform(config, ctx.card, ctx.trainerType);
+      const ejected = this.handService.detachCardForBoardPlay(handIndex, this.worldContentRoot);
+      if (ejected) {
+        return {
+          action: 'playCard',
+          handIndex,
+          zone,
+          playCardFlight: {
+            board3dCard: ejected,
+            targetWorld: landing.world,
+            endScale: landing.endScale,
+            endRotationY: landing.rotationY,
+            dropZoneType: config.type,
+            trainerType: ctx.trainerType,
+          },
+        };
+      }
+    }
+
+    return { action: 'playCard', handIndex, zone };
+  }
+
+  /**
+   * Left-click on a hand card: play to the default zone (active, bench, attach target, etc.).
+   */
+  private tryPlayHandCardFromClick(handCard: Object3D): DropResult | null {
+    if (!handCard.userData.isHandCard) {
+      return null;
+    }
+
+    const handIndex = handCard.userData.handIndex ?? -1;
+    if (handIndex < 0) {
+      return null;
+    }
+
+    this.createDragContext(handCard, 'hand');
+    const ctx = this.currentDragContext;
+    if (!ctx) {
+      return null;
+    }
+
+    if (this.isAttachPlayFromHand(ctx)) {
+      const eligibleTargets = this.findAllValidPokemonAttachTargets(ctx);
+      if (eligibleTargets.length === 0) {
+        this.currentDragContext = null;
+        this.hideAllDropZones();
+        return null;
+      }
+
+      const autoTarget = this.resolveAutoAttachTarget(ctx, eligibleTargets);
+      if (!autoTarget) {
+        this.currentDragContext = null;
+        this.hideAllDropZones();
+        return {
+          action: 'pickAttachTarget',
+          handIndex,
+          eligibleTargets,
+        };
+      }
+
+      this.draggedCard = handCard;
+      this.draggedCardHandIndex = handIndex;
+      const result = this.buildHandPlayDropResult(handIndex, autoTarget);
+      this.resetDragState();
+      this.hideAllDropZones();
+      return result;
+    }
+
+    const zone = this.resolveDefaultPlayZone(ctx);
+    if (!zone) {
+      this.currentDragContext = null;
+      this.hideAllDropZones();
+      return null;
+    }
+
+    this.draggedCard = handCard;
+    this.draggedCardHandIndex = handIndex;
+    const result = this.buildHandPlayDropResult(handIndex, zone);
+    this.resetDragState();
+    this.hideAllDropZones();
+    return result;
+  }
+
+  /**
+   * Left-click on hand cards plays them; left-click on in-play board cards opens the info pane.
+   * Right-click on any card opens the info pane via contextmenu.
+   */
+  private resolvePointerUpOnCard(
+    card: Object3D,
+    event: MouseEvent,
+    isSelectionActive: boolean,
+    isHandPlayTargetSelection: boolean,
+  ): DropResult | null {
+    if (isHandPlayTargetSelection && card.userData.isHandCard && event.button !== 2) {
+      return this.tryPlayHandCardFromClick(card);
+    }
+
+    if (isSelectionActive) {
+      return { action: 'click', clickedCard: card };
+    }
+
+    if (event.button === 2) {
+      return null;
+    }
+
+    if (card.userData.isHandCard) {
+      return this.tryPlayHandCardFromClick(card);
+    }
+
+    return { action: 'click', clickedCard: card };
+  }
+
   /**
    * Handle mouse up - end dragging or detect click
    */
@@ -1177,7 +1684,9 @@ export class Board3dInteractionService {
     event: MouseEvent,
     camera: Camera,
     scene: Scene,
-    canvas: HTMLCanvasElement
+    canvas: HTMLCanvasElement,
+    isSelectionActive: boolean = false,
+    isHandPlayTargetSelection: boolean = false,
   ): DropResult | null {
     // Clear pending drag state
     this.pendingDragCard = null;
@@ -1187,31 +1696,49 @@ export class Board3dInteractionService {
     if (!this.isDragging && this.mouseDownCard && this.isClick(event)) {
       const clickedCard = this.mouseDownCard;
       this.mouseDownCard = null;
-      return {
-        action: 'click',
-        clickedCard
-      };
+      return this.resolvePointerUpOnCard(clickedCard, event, isSelectionActive, isHandPlayTargetSelection);
     }
 
     if (!this.isDragging || !this.draggedCard) {
+      const hadMouseDownCard = this.mouseDownCard;
       this.mouseDownCard = null;
+      if (isHandPlayTargetSelection && this.isClick(event) && !hadMouseDownCard) {
+        return { action: 'cancelHandPlayTarget' };
+      }
       return null;
     }
 
     // Check if it was actually a click (no significant movement)
     if (this.isClick(event)) {
-      // Return card to original position and treat as click
-      this.returnCardToHand(this.draggedCard);
       const clickedCard = this.draggedCard;
+      const playOnClick =
+        !isSelectionActive &&
+        event.button !== 2 &&
+        clickedCard.userData.isHandCard;
+      const playResult = playOnClick ? this.tryPlayHandCardFromClick(clickedCard) : null;
+
+      if (!playResult) {
+        this.returnCardToHand(this.draggedCard);
+      }
 
       this.resetDragState();
       this.hideAllDropZones();
       this.mouseDownCard = null;
 
-      return {
-        action: 'click',
-        clickedCard
-      };
+      if (playResult) {
+        return playResult;
+      }
+
+      if (!playOnClick) {
+        return this.resolvePointerUpOnCard(
+          clickedCard,
+          event,
+          isSelectionActive,
+          isHandPlayTargetSelection,
+        );
+      }
+
+      return null;
     }
 
     // Get world position for checks
@@ -1298,13 +1825,48 @@ export class Board3dInteractionService {
 
         if (this.draggedCard && isAttachDropHand) {
           if (handIndex >= 0) {
-            this.handService.removeCard(handIndex);
+            if (ctx.superType === SuperType.ENERGY) {
+              const ejected = this.handService.detachCardForBoardPlay(handIndex, this.worldContentRoot);
+              if (ejected) {
+                result = {
+                  action: 'playCard',
+                  handIndex,
+                  zone,
+                  playCardFlight: {
+                    board3dCard: ejected,
+                    targetWorld: new Vector3(),
+                    endScale: 1,
+                    endRotationY: 0,
+                    dropZoneType: DropZoneType.BENCH,
+                    energyAttach: {
+                      attachTarget: zone,
+                      energyCard: ctx.card,
+                    },
+                  },
+                };
+              } else {
+                this.handService.removeCard(handIndex);
+                result = {
+                  action: 'playCard',
+                  handIndex,
+                  zone,
+                };
+              }
+            } else {
+              this.handService.removeCard(handIndex);
+              result = {
+                action: 'playCard',
+                handIndex,
+                zone,
+              };
+            }
+          } else {
+            result = {
+              action: 'playCard',
+              handIndex,
+              zone,
+            };
           }
-          result = {
-            action: 'playCard',
-            handIndex,
-            zone
-          };
         } else if (this.draggedCard && handIndex >= 0 && config) {
           const landing = this.getHandPlayLandingTransform(
             config,
@@ -1612,23 +2174,10 @@ export class Board3dInteractionService {
    * Reset drag state
    */
   private resetDragState(): void {
-    // Restore scale and remove glow from any hovered Pokemon
     if (this.hoveredPokemonCard) {
-      gsap.killTweensOf(this.hoveredPokemonCard.scale);
-      gsap.to(this.hoveredPokemonCard.scale, {
-        x: this.hoveredPokemonOriginalScale.x,
-        y: this.hoveredPokemonOriginalScale.y,
-        z: this.hoveredPokemonOriginalScale.z,
-        duration: 0.15,
-        ease: 'power2.out'
-      });
+      this.endPokemonHoverEffects();
     }
-
-    if (this.hoveredPokemonBoard3dCard) {
-      this.hoveredPokemonBoard3dCard.setOutline(false);
-    }
-    this.hoveredPokemonCard = null;
-    this.hoveredPokemonBoard3dCard = null;
+    this.hoverMissStreak = 0;
 
     this.isDragging = false;
     this.draggedCard = null;
@@ -1821,6 +2370,16 @@ export class Board3dInteractionService {
     for (const zone of this.dropZones) {
       const config = zone.getConfig();
 
+      // useFromHandToBench: open bench slots only
+      if (cardHasUseFromHandToBenchPower(card)) {
+        if (config.type === DropZoneType.BENCH && this.isValidDropZone(zone)) {
+          zone.setValid();
+        } else {
+          zone.hide();
+        }
+        continue;
+      }
+
       // Basic Pokemon or Fossil played as Basic
       if (this.playsAsBasicPokemonFromHand(card)) {
         if (config.type === DropZoneType.BENCH_GENERAL) {
@@ -1934,11 +2493,17 @@ export class Board3dInteractionService {
   /**
    * Get the card ID of the board card being hovered during drag (for state sync to preserve scale)
    */
+  /**
+   * Board mesh ids whose scale is driven by drag hover tweens (state sync must not overwrite).
+   */
+  getScaleLockedBoardCardIds(): readonly string[] {
+    return [...this.scaleLockedBoardCardIds];
+  }
+
+  /** @deprecated Use {@link getScaleLockedBoardCardIds}. */
   getHoveredBoardCardId(): string | null {
-    if (!this.isDragging || !this.hoveredPokemonCard?.userData?.cardId) {
-      return null;
-    }
-    return (this.hoveredPokemonCard.userData.cardId as string) ?? null;
+    const ids = this.getScaleLockedBoardCardIds();
+    return ids.length > 0 ? ids[0] : null;
   }
 
   /**

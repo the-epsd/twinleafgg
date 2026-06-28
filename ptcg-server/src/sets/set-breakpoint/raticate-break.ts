@@ -8,7 +8,7 @@ import { StoreLike, State, StateUtils } from '../../game';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { CheckHpEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BREAK_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class RaticateBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -23,8 +23,8 @@ export class RaticateBreak extends PokemonCard {
       name: 'Super Fang',
       cost: [C, C],
       damage: 0,
-      text: 'Put damage counters on your opponent\'s Active Pokémon until its remaining HP is 10.'
-    }
+      text: "Put damage counters on your opponent's Active Pokémon until its remaining HP is 10.",
+    },
   ];
 
   public set: string = 'BKP';
@@ -51,6 +51,8 @@ export class RaticateBreak extends PokemonCard {
         store.reduceEffect(state, damageEffect);
       }
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

@@ -20,6 +20,7 @@ export class WashRotom extends PokemonCard {
     name: 'Gadget Show',
     cost: [C, C],
     damage: 30,
+    damageCalculation: 'x',
     text: 'This attack does 30 damage for each Pokémon Tool attached to all of your Pokémon.',
   }];
 
@@ -37,7 +38,6 @@ export class WashRotom extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList: PokemonCardList) => {
         const healEffect = new HealEffect(player, cardList, 10);
         state = store.reduceEffect(state, healEffect);
-        return state;
       });
     }
 
@@ -45,12 +45,8 @@ export class WashRotom extends PokemonCard {
       const player = effect.player;
       let toolCount = 0;
 
-      [player.active, ...player.bench].forEach(list => {
-        list.cards.forEach(card => {
-          if (card instanceof PokemonCard && card.tools.length > 0) {
-            toolCount += card.tools.length;
-          }
-        });
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        toolCount += cardList.tools.length;
       });
       effect.damage = 30 * toolCount;
     }

@@ -31,9 +31,14 @@ export function TablePlayerActions(props: TablePlayerActionsProps) {
   return (
     <div className={styles.root}>
       {localGame.replay || isObserver ? (
-        <ShellButton type="button" variant="secondary" className={styles.compactBtn} onClick={onSwitchSides}>
-          {t('TABLE_SWITCH_SIDES')}
-        </ShellButton>
+        <>
+          <ShellButton type="button" variant="secondary" className={styles.compactBtn} onClick={onSwitchSides}>
+            {t('TABLE_SWITCH_SIDES')}
+          </ShellButton>
+          <ShellButton type="button" variant="secondary" className={styles.compactBtn} onClick={onLeave}>
+            {t('BUTTON_LEAVE')}
+          </ShellButton>
+        </>
       ) : null}
       {isPlaying ? (
         <>

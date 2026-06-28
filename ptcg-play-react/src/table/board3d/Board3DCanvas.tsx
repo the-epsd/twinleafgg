@@ -21,6 +21,7 @@ import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { CardInfoListPopup } from '../../card-info/CardInfoListPopup';
 import type { Board3dCardInfoData, CardInfoPaneActionResult } from './board3dCardsAdapter';
 import styles from './Board3DCanvas.module.css';
+import { Board3dAbilityActivationOverlay } from './Board3dAbilityActivationOverlay';
 import { appConfig } from '../../env/config';
 
 const EMPTY_CATALOG: Card[] = [];
@@ -116,7 +117,6 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
   const cardsAdapter: Board3dCardsAdapter = useMemo(
     () =>
       createBoard3dCardsAdapter({
-        catalog,
         maps,
         scansUrl: serverConfig?.scansUrl,
         apiBase: appConfig.apiUrl,
@@ -124,7 +124,7 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
         showCardInfo: queueInfo,
         showCardInfoList: queueList,
       }),
-    [catalog, maps, serverConfig?.scansUrl, serverConfig?.sleevesUrl, queueInfo, queueList],
+    [maps, serverConfig?.scansUrl, serverConfig?.sleevesUrl, queueInfo, queueList],
   );
 
   const runtime = useMemo(() => createBoard3dRuntime(cardsAdapter), [cardsAdapter]);
@@ -183,12 +183,14 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
             onBoardFps={props.onBoardFps}
           />
         </Canvas>
+        <Board3dAbilityActivationOverlay boardInteraction={props.boardInteraction} />
       </div>
 
       {cardPrompt?.kind === 'info' && cardPrompt.data.card ? (
         <CardInfoPopup
           card={cardPrompt.data.card}
           cardList={cardPrompt.data.cardList}
+          players={cardPrompt.data.players}
           facedown={cardPrompt.data.facedown}
           catalog={catalog}
           getScanUrl={getScanUrl}
@@ -208,6 +210,7 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
       {cardPrompt?.kind === 'list' && cardPrompt.data.cardList ? (
         <CardInfoListPopup
           cardList={cardPrompt.data.cardList}
+          players={cardPrompt.data.players}
           catalog={catalog}
           getScanUrl={getScanUrl}
           facedown={cardPrompt.data.facedown}

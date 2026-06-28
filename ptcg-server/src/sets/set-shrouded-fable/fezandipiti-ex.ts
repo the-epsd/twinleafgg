@@ -6,7 +6,7 @@ import { Effect } from '../../game/store/effects/effect';
 import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PowerType, SlotType, StateUtils } from '../../game';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { DAMAGE_OPPONENT_POKEMON, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { DAMAGE_OPPONENT_POKEMON, REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Fezandipitiex extends PokemonCard {
 
@@ -103,7 +103,7 @@ export class Fezandipitiex extends PokemonCard {
       const owner = StateUtils.findOwner(state, cardList);
 
       if (owner === player) {
-        effect.player.marker.removeMarker(this.OPPONENT_KNOCKOUT_MARKER);
+        REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN(effect, this.OPPONENT_KNOCKOUT_MARKER);
       }
       player.usedTableTurner = false;
     }

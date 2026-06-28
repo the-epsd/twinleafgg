@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { GameError, GameMessage, PowerType, State, StateUtils, StoreLike } from '../../game';
+import { GameError, GameMessage, Player, PowerType, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { DISCARD_ALL_ENERGY_FROM_POKEMON, PLAY_POKEMON_FROM_HAND_TO_BENCH, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
@@ -17,6 +17,7 @@ export class Klinklang extends PokemonCard {
     name: 'Emergency Rotation',
     powerType: PowerType.ABILITY,
     useFromHand: true,
+    useFromHandToBench: true,
     text: 'Once during your turn, if this Pokémon is in your hand and your opponent has any Stage 2 Pokémon in play, ' +
       'you may put this Pokémon onto your Bench.'
   }];
@@ -37,17 +38,22 @@ export class Klinklang extends PokemonCard {
   public name: string = 'Klinklang';
   public fullName: string = 'Klinklang SCR';
 
+  public canUseFromHandToBench(_store: StoreLike, state: State, player: Player): boolean {
+    const opponentStage2InPlay = StateUtils.getOpponent(state, player)
+      .getPokemonInPlay().filter(c => c.getPokemonCard()?.stage === Stage.STAGE_2);
+    return opponentStage2InPlay.length > 0;
+  }
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
-      const opponentStage2InPlay = StateUtils.getOpponent(state, player)
-        .getPokemonInPlay().filter(c => c.getPokemonCard()?.stage === Stage.STAGE_2);
 
-      if (opponentStage2InPlay.length === 0)
+      if (!this.canUseFromHandToBench(store, state, player)) {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
+      }
 
-      PLAY_POKEMON_FROM_HAND_TO_BENCH(state, player, this);
+      PLAY_POKEMON_FROM_HAND_TO_BENCH(state, player, this, effect.target);
     }
 
     if (WAS_ATTACK_USED(effect, 0, this))

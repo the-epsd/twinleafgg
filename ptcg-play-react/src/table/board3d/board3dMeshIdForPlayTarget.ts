@@ -10,6 +10,7 @@ import {
   type Card,
   type CardTarget,
   type GameSettings,
+  type PokemonCard,
 } from 'ptcg-server';
 import { DropZoneType } from './board-3d-drop-zone';
 import { ZONE_POSITIONS } from './board-3d-zone-positions';
@@ -52,6 +53,15 @@ export function cardIsFossilLikeTrainer(card: Card | undefined | null): boolean 
 /** Subset of {@link GameSettings} needed for 3D hand→bench targeting (sandbox “all Pokémon as Basic”). */
 export type HandPlayPokemonZoneGameSettings = Pick<GameSettings, 'sandboxMode' | 'sandboxAllPokemonBasic'> | null | undefined;
 
+/** True when a hand power puts this Pokémon directly onto the Bench (Excitedive, Swelling Flash, etc.). */
+export function cardHasUseFromHandToBenchPower(card: Card | undefined | null): boolean {
+  if (!card || card.superType !== SuperType.POKEMON) {
+    return false;
+  }
+  const powers = (card as PokemonCard).powers;
+  return Array.isArray(powers) && powers.some(p => p.useFromHandToBench === true);
+}
+
 /** True when this card should use bench/active drop targets like a Basic Pokémon (includes trainer-printed fossils). */
 export function cardPlaysAsBasicPokemonFromHand(
   card: Card | undefined | null,
@@ -65,6 +75,9 @@ export function cardPlaysAsBasicPokemonFromHand(
     gameSettings.sandboxAllPokemonBasic &&
     card.superType === SuperType.POKEMON
   ) {
+    return true;
+  }
+  if (cardHasUseFromHandToBenchPower(card)) {
     return true;
   }
   if (card.superType === SuperType.POKEMON) {

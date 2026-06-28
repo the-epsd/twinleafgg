@@ -43,6 +43,8 @@ export interface CardOverlays {
 export class Board3dCardOverlayService {
   private cardOverlays: Map<string, CardOverlays> = new Map();
   private energyTextureCache: Map<string, Texture> = new Map();
+  /** Host mesh id → energy slot index hidden while attach flight morphs into place. */
+  private suppressedEnergyIconSlots = new Map<string, number>();
 
   constructor(
     private assetLoader: Board3dAssetLoaderService,
@@ -87,7 +89,7 @@ export class Board3dCardOverlayService {
     }
 
     if (cardList.energies && cardList.energies.cards.length > 0) {
-      await this.updateEnergyOverlay(overlays, cardList.energies);
+      await this.updateEnergyOverlay(overlays, cardList.energies, cardId);
     } else {
       overlays.energySprite.clear();
     }
@@ -106,6 +108,30 @@ export class Board3dCardOverlayService {
     await this.updateToolOverlay(cardId, overlays, cardList.tools, root, scene, cardList);
   }
 
+  setSuppressedEnergyIconSlot(hostMeshId: string, energyIndex: number): void {
+    this.suppressedEnergyIconSlots.set(hostMeshId, energyIndex);
+  }
+
+  clearSuppressedEnergyIconSlot(hostMeshId: string): void {
+    this.suppressedEnergyIconSlots.delete(hostMeshId);
+  }
+
+  async loadEnergyIconTexture(card: Card, energyCardList: CardList): Promise<Texture> {
+    const key = this.energyTextureKey(card, energyCardList);
+    if (key) {
+      if (!this.energyTextureCache.has(key)) {
+        try {
+          const texture = await this.assetLoader.loadCardTexture(key);
+          this.energyTextureCache.set(key, texture);
+        } catch {
+          return this.assetLoader.loadCardBack();
+        }
+      }
+      return this.energyTextureCache.get(key)!;
+    }
+    return this.assetLoader.loadCardBack();
+  }
+
   private energyTextureKey(card: Card, energyCardList: CardList): string | null {
     const custom = Board3dEnergySprite.getEnergyIconPath(card);
     if (custom) {
@@ -118,7 +144,11 @@ export class Board3dCardOverlayService {
     return null;
   }
 
-  private async updateEnergyOverlay(overlays: CardOverlays, energyCardList: CardList): Promise<void> {
+  private async updateEnergyOverlay(
+    overlays: CardOverlays,
+    energyCardList: CardList,
+    cardId?: string,
+  ): Promise<void> {
     if (!energyCardList || energyCardList.cards.length === 0) {
       return;
     }
@@ -143,7 +173,16 @@ export class Board3dCardOverlayService {
       this.energyTextureCache,
       cardBackTexture,
       (c) => this.energyTextureKey(c, energyCardList),
+      cardId != null ? (this.suppressedEnergyIconSlots.get(cardId) ?? -1) : -1,
     );
+  }
+
+  async refreshEnergyOverlayForCard(cardId: string, energyCardList: CardList): Promise<void> {
+    const overlays = this.cardOverlays.get(cardId);
+    if (!overlays || !energyCardList || energyCardList.cards.length === 0) {
+      return;
+    }
+    await this.updateEnergyOverlay(overlays, energyCardList, cardId);
   }
 
   updateBillboards(camera: PerspectiveCamera): void {

@@ -1,10 +1,7 @@
 import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
-import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { IS_TOOL_BLOCKED } from '../../game/store/prefabs/prefabs';
-
-import { StateUtils } from '../../game/store/state-utils';
+import { TOOL_ACTIVE_DAMAGE_BONUS } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -28,23 +25,8 @@ export class MuscleBand extends TrainerCard {
     'and Resistance).';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if (effect instanceof DealDamageEffect && effect.player.active.tools.includes(this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, effect.player);
-
-      if (IS_TOOL_BLOCKED(store, state, effect.player, this)) { return state; }
-
-      if (effect.target !== player.active && effect.target !== opponent.active) {
-        return state;
-      }
-
-      const attack = effect.attack;
-      if (attack && attack.damage > 0 && effect.target === opponent.active) {
-        effect.damage += 20;
-      }
-    }
-
+    // Ref: prefabs/prefabs.ts (TOOL_ACTIVE_DAMAGE_BONUS) — uses effect.damage, not printed attack.damage
+    TOOL_ACTIVE_DAMAGE_BONUS(store, state, effect, this, { damageBonus: 20 });
     return state;
   }
 

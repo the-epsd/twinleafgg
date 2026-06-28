@@ -4,7 +4,7 @@ import { Client } from '../client/client.interface';
 import { GameError } from '../game-error';
 import { GameMessage, GameCoreError } from '../game-message';
 import { Game } from './game';
-import { GameSettings } from './game-settings';
+import { GameSettings, coerceGameSettings } from './game-settings';
 import { InvitePlayerAction } from '../store/actions/invite-player-action';
 import { Messager } from './messager';
 import { RankingCalculator } from './ranking-calculator';
@@ -26,6 +26,7 @@ export class Core {
   public messager: Messager;
   private botManager: BotManager;
   private reconnectionManager: ReconnectionManager;
+  private inactiveCleanupIntervalRef: NodeJS.Timeout | undefined;
 
   constructor(reconnectionConfig?: ReconnectionConfig) {
     this.messager = new Messager(this);
@@ -130,6 +131,7 @@ export class Core {
     deckId2?: number,
     sleeveImagePath1?: string
   ): Game {
+    gameSettings = coerceGameSettings(gameSettings);
     if (this.clients.indexOf(client) === -1) {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
     }
@@ -167,15 +169,17 @@ export class Core {
       gameSettings.rules.firstTurnUseSupporter = true;
     }
     const game = new Game(this, generateId(this.games), gameSettings);
+    this.games.push(game);
     game.dispatch(client, new AddPlayerAction(client.id, client.name, deck, undefined, deckId1, sleeveImagePath1));
     if (invited) {
       game.dispatch(client, new InvitePlayerAction(invited.id, invited.name));
     }
-    this.games.push(game);
-    this.emit(c => c.onGameAdd(game));
-    this.joinGame(client, game);
-    if (invited) {
-      this.joinGame(invited, game);
+    if (this.games.indexOf(game) !== -1) {
+      this.emit(c => c.onGameAdd(game));
+      this.joinGame(client, game);
+      if (invited) {
+        this.joinGame(invited, game);
+      }
     }
     return game;
   }
@@ -190,6 +194,7 @@ export class Core {
     sleeveImagePath1?: string,
     sleeveImagePath2?: string
   ): Game {
+    gameSettings = coerceGameSettings(gameSettings);
     if (this.clients.indexOf(client) === -1) {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
     }
@@ -226,6 +231,7 @@ export class Core {
     }
 
     const game = new Game(this, generateId(this.games), gameSettings);
+    this.games.push(game);
     game.dispatch(client, new AddPlayerAction(client.id, client.name, deck1, undefined, deckId1, sleeveImagePath1));
     game.dispatch(
       client,
@@ -233,9 +239,10 @@ export class Core {
     );
     game.initSelfPlay(client.user.id);
 
-    this.games.push(game);
-    this.emit(c => c.onGameAdd(game));
-    this.joinGame(client, game);
+    if (this.games.indexOf(game) !== -1) {
+      this.emit(c => c.onGameAdd(game));
+      this.joinGame(client, game);
+    }
     return game;
   }
 
@@ -252,6 +259,7 @@ export class Core {
     sleeveImagePath1?: string,
     sleeveImagePath2?: string
   ): Game {
+    gameSettings = coerceGameSettings(gameSettings);
     if (this.clients.indexOf(client) === -1) {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
     }
@@ -276,12 +284,14 @@ export class Core {
       gameSettings.rules.firstTurnUseSupporter = true;
     }
     const game = new Game(this, generateId(this.games), gameSettings);
+    this.games.push(game);
     game.dispatch(client, new AddPlayerAction(client.id, client.name, deck, artworksMap1, deckId1, sleeveImagePath1));
     game.dispatch(client, new AddPlayerAction(client2.id, client2.name, deck2, artworksMap2, deckId2, sleeveImagePath2));
-    this.games.push(game);
-    this.emit(c => c.onGameAdd(game));
-    this.joinGame(client, game);
-    this.joinGame(client2, game);
+    if (this.games.indexOf(game) !== -1) {
+      this.emit(c => c.onGameAdd(game));
+      this.joinGame(client, game);
+      this.joinGame(client2, game);
+    }
     return game;
   }
 
@@ -369,53 +379,79 @@ export class Core {
   }
 
   private startInactiveGameCleanup(): void {
-    const scheduler = Scheduler.getInstance();
-    // Check for inactive games every 5 minutes
-    scheduler.run(async () => {
-      const inactiveTimeout = 5 * 60 * 1000; // 5 minutes
+    const everyMs = 5 * 60 * 1000;
+    const inactiveTimeout = 5 * 60 * 1000;
 
-      for (const game of this.games) {
-        if (game.isInactive(inactiveTimeout)) {
-          console.log(`[Game Cleanup] Checking inactive game ${game.id}`);
+    void this.runGameCleanupPass(inactiveTimeout);
 
-          // Check if this game has preserved sessions before cleaning up
-          try {
-            const activeSessions = await this.reconnectionManager.getActiveDisconnectedSessions();
-            const gameHasPreservedSessions = activeSessions.some(session => session.gameId === game.id);
+    this.inactiveCleanupIntervalRef = setInterval(() => {
+      void this.runGameCleanupPass(inactiveTimeout);
+    }, everyMs);
+  }
 
-            if (gameHasPreservedSessions) {
-              console.log(`[Game Cleanup] Skipping cleanup of game ${game.id} - has preserved sessions`);
-              continue;
-            }
-          } catch (error) {
-            console.log(`[Game Cleanup] Error checking preserved sessions for game ${game.id}: ${error}`);
-            // If we can't check, skip cleanup to be safe
-            continue;
-          }
+  private shouldRemoveStaleGame(game: Game, inactiveTimeout: number): boolean {
+    const state = game.state;
+    if (state.phase === GamePhase.FINISHED) {
+      return true;
+    }
+    if (state.players.length === 0) {
+      return true;
+    }
+    return game.isInactive(inactiveTimeout);
+  }
 
-          console.log(`[Game Cleanup] Cleaning up inactive game ${game.id}`);
-          // Force end the game
-          const state = game.state;
-          if (state.phase !== GamePhase.FINISHED) {
-            state.players.forEach(player => {
-              const action = new AbortGameAction(player.id, AbortGameReason.DISCONNECTED);
-              // Use the first client as the source for the abort action
-              if (game.clients.length > 0) {
-                game.dispatch(game.clients[0], action);
-              }
-            });
-          }
-          game.cleanup();
-          this.deleteGame(game);
+  private async runGameCleanupPass(inactiveTimeout: number): Promise<void> {
+    for (const game of [...this.games]) {
+      if (!this.shouldRemoveStaleGame(game, inactiveTimeout)) {
+        continue;
+      }
+      await this.forceRemoveGame(game);
+    }
+  }
+
+  private async forceRemoveGame(game: Game): Promise<void> {
+    if (this.games.indexOf(game) === -1) {
+      return;
+    }
+
+    if (game.clients.length === 0) {
+      try {
+        const activeSessions = await this.reconnectionManager.getActiveDisconnectedSessions();
+        const gameHasPreservedSessions = activeSessions.some(session => session.gameId === game.id);
+        if (gameHasPreservedSessions) {
+          console.log(`[Game Cleanup] Skipping cleanup of game ${game.id} - has preserved sessions`);
+          return;
+        }
+      } catch (error) {
+        console.log(`[Game Cleanup] Error checking preserved sessions for game ${game.id}: ${error}`);
+        return;
+      }
+    }
+
+    console.log(`[Game Cleanup] Cleaning up stale game ${game.id}`);
+    const state = game.state;
+    if (state.phase !== GamePhase.FINISHED && state.players.length > 0) {
+      for (const player of state.players) {
+        const action = new AbortGameAction(player.id, AbortGameReason.DISCONNECTED);
+        if (game.clients.length > 0) {
+          game.dispatch(game.clients[0], action);
+        } else {
+          game.getStore().dispatch(action);
         }
       }
-    }, 5 * 60); // Run every 5 minutes
+    }
+    game.cleanup();
+    this.deleteGame(game);
   }
 
   /**
    * Dispose of the Core and cleanup resources
    */
   public dispose(): void {
+    if (this.inactiveCleanupIntervalRef !== undefined) {
+      clearInterval(this.inactiveCleanupIntervalRef);
+      this.inactiveCleanupIntervalRef = undefined;
+    }
     if (this.reconnectionManager) {
       this.reconnectionManager.dispose();
     }

@@ -6,7 +6,11 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, THIS_POKEMON_DOES_DAMAGE_TO_ITSELF } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  THIS_POKEMON_DOES_DAMAGE_TO_ITSELF,
+  BREAK_RULE,
+} from '../../game/store/prefabs/prefabs';
 
 export class PyroarBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -21,8 +25,8 @@ export class PyroarBreak extends PokemonCard {
       name: 'Kaiser Tackle',
       cost: [R, R, C],
       damage: 180,
-      text: 'This Pokémon does 50 damage to itself.'
-    }
+      text: 'This Pokémon does 50 damage to itself.',
+    },
   ];
 
   public set: string = 'STS';
@@ -37,6 +41,8 @@ export class PyroarBreak extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       THIS_POKEMON_DOES_DAMAGE_TO_ITSELF(store, state, effect, 50);
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

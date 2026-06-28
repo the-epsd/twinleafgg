@@ -18,13 +18,13 @@ export const ANY_PRINTING_ALLOWED: string[] = [
   'Pokégear 3.0',
   'Pokémon Catcher',
   'Potion',
-  'Professor\'s Research',
+  "Professor's Research",
   'Rare Candy',
   'Rocky Helmet',
   'Switch',
   'Ultra Ball',
   'Vitality Band',
-  'Boss\'s Orders',
+  "Boss's Orders",
   'Choice Belt',
   'Great Ball',
   'Super Rod',
@@ -54,5 +54,6 @@ export const ANY_PRINTING_ALLOWED: string[] = [
   'Lady',
   'Max Potion',
   'Pokédex',
-  'Here Comes Team Rocket!'
-]; 
+  'Here Comes Team Rocket!',
+  'VS Seeker',
+];

@@ -177,6 +177,7 @@ export function ChooseEnergyPromptPanel(props: ChooseEnergyPromptPanelProps) {
       {detail ? (
         <CardInfoPopup
           card={detail}
+          players={localGame.state.players}
           catalog={catalog}
           getScanUrl={getScanUrl}
           onClose={() => setDetail(null)}

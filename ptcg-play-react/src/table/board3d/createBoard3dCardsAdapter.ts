@@ -45,7 +45,6 @@ function getScanUrlFor3D(
 }
 
 export function createBoard3dCardsAdapter(input: {
-  catalog: Card[];
   maps: CardImageMaps;
   scansUrl: string | undefined;
   apiBase: string;

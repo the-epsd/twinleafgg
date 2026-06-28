@@ -4,11 +4,26 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
-import { GameError, GameMessage, MoveEnergyPrompt, PowerType, StoreLike, State, StateUtils, PlayerType, SlotType } from '../../game';
+import {
+  GameError,
+  GameMessage,
+  MoveEnergyPrompt,
+  PowerType,
+  StoreLike,
+  State,
+  StateUtils,
+  PlayerType,
+  SlotType,
+} from '../../game';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_POWER_USED, IS_ABILITY_BLOCKED, ABILITY_USED } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_POWER_USED,
+  IS_ABILITY_BLOCKED,
+  ABILITY_USED,
+  BREAK_RULE,
+} from '../../game/store/prefabs/prefabs';
 
 export class GolduckBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -18,12 +33,14 @@ export class GolduckBreak extends PokemonCard {
   public hp: number = 140;
   public retreat = [];
 
-  public powers = [{
-    name: 'Hyper Transfer',
-    useWhenInPlay: true,
-    powerType: PowerType.ABILITY,
-    text: 'As often as you like during your turn (before your attack), you may move a basic Energy from 1 of your Pokémon to another of your Pokémon.'
-  }];
+  public powers = [
+    {
+      name: 'Hyper Transfer',
+      useWhenInPlay: true,
+      powerType: PowerType.ABILITY,
+      text: 'As often as you like during your turn (before your attack), you may move a basic Energy from 1 of your Pokémon to another of your Pokémon.',
+    },
+  ];
 
   public set: string = 'BKP';
   public setNumber: string = '18';
@@ -45,7 +62,11 @@ export class GolduckBreak extends PokemonCard {
       player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
         const checkEnergy = new CheckProvidedEnergyEffect(player, cardList);
         store.reduceEffect(state, checkEnergy);
-        if (checkEnergy.energyMap.some(em => em.card instanceof EnergyCard && em.card.energyType === EnergyType.BASIC)) {
+        if (
+          checkEnergy.energyMap.some(
+            (em) => em.card instanceof EnergyCard && em.card.energyType === EnergyType.BASIC,
+          )
+        ) {
           hasBasicEnergy = true;
         }
       });
@@ -54,24 +75,30 @@ export class GolduckBreak extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      return store.prompt(state, new MoveEnergyPrompt(
-        player.id,
-        GameMessage.MOVE_ENERGY_CARDS,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.ACTIVE, SlotType.BENCH],
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
-        { allowCancel: true, min: 0, max: 1 }
-      ), transfers => {
-        if (transfers && transfers.length > 0) {
-          for (const transfer of transfers) {
-            const source = StateUtils.getTarget(state, player, transfer.from);
-            const target = StateUtils.getTarget(state, player, transfer.to);
-            source.moveCardTo(transfer.card, target);
+      return store.prompt(
+        state,
+        new MoveEnergyPrompt(
+          player.id,
+          GameMessage.MOVE_ENERGY_CARDS,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.ACTIVE, SlotType.BENCH],
+          { superType: SuperType.ENERGY, energyType: EnergyType.BASIC },
+          { allowCancel: true, min: 0, max: 1 },
+        ),
+        (transfers) => {
+          if (transfers && transfers.length > 0) {
+            for (const transfer of transfers) {
+              const source = StateUtils.getTarget(state, player, transfer.from);
+              const target = StateUtils.getTarget(state, player, transfer.to);
+              source.moveCardTo(transfer.card, target);
+            }
+            ABILITY_USED(player, this);
           }
-          ABILITY_USED(player, this);
-        }
-      });
+        },
+      );
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

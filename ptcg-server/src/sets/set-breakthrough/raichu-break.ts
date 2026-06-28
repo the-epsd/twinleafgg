@@ -6,7 +6,11 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, DISCARD_ALL_ENERGY_FROM_POKEMON } from '../../game/store/prefabs/prefabs';
+import {
+  WAS_ATTACK_USED,
+  DISCARD_ALL_ENERGY_FROM_POKEMON,
+  BREAK_RULE,
+} from '../../game/store/prefabs/prefabs';
 
 export class RaichuBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -21,8 +25,8 @@ export class RaichuBreak extends PokemonCard {
       name: 'Grand Bolt',
       cost: [L, C, C],
       damage: 170,
-      text: 'Discard all Energy attached to this Pokémon.'
-    }
+      text: 'Discard all Energy attached to this Pokémon.',
+    },
   ];
 
   public set: string = 'BKT';
@@ -37,6 +41,8 @@ export class RaichuBreak extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, effect.player.active.getPokemonCard()!);
     }
+
+    BREAK_RULE(effect, state, this);
 
     return state;
   }

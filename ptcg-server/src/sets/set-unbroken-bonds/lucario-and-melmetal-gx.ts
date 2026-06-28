@@ -1,8 +1,8 @@
-import { Card, CardTag, CardType, ChooseCardsPrompt, EnergyType, GameMessage, PokemonCard, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
+import { AttachEnergyPrompt, CardTag, CardType, CardTarget, EnergyType, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike, SuperType, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { DealDamageEffect, DiscardCardsEffect } from '../../game/store/effects/attack-effects';
-import { BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, BLOCK_IF_GX_ATTACK_USED, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class LucarioMelmetalGX extends PokemonCard {
   public tags = [CardTag.POKEMON_GX, CardTag.TAG_TEAM];
@@ -43,32 +43,30 @@ export class LucarioMelmetalGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Steel Fist
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
-    
-      if (player.deck.cards.length === 0) {
-        return state;
-      }
-    
-      const hasBenched = player.bench.some(b => b.cards.length > 0);
-      if (!hasBenched) {
-        return state;
-      }
-    
-      let cards: Card[] = [];
-      return store.prompt(state, new ChooseCardsPrompt(
-        player,
-        GameMessage.CHOOSE_CARD_TO_HAND,
-        player.deck,
-        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },
-        { min: 0, max: 1, allowCancel: false }
-      ), selected => {
-        cards = selected || [];
-        
-        if (cards.length > 0){
-          player.deck.moveCardsTo(cards, player.active);
-        }
 
+      const blockedTo: CardTarget[] = [];
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card, target) => {
+        if (card !== this) {
+          blockedTo.push(target);
+        }
+      });
+
+      return store.prompt(state, new AttachEnergyPrompt(
+        player.id,
+        GameMessage.ATTACH_ENERGY_CARDS,
+        player.deck,
+        PlayerType.BOTTOM_PLAYER,
+        [SlotType.ACTIVE, SlotType.BENCH],
+        { superType: SuperType.ENERGY, energyType: EnergyType.BASIC, name: 'Metal Energy' },
+        { min: 0, max: 1, allowCancel: false, blockedTo }
+      ), transfers => {
+        transfers = transfers || [];
+        for (const transfer of transfers) {
+          const target = StateUtils.getTarget(state, player, transfer.to);
+          player.deck.moveCardTo(transfer.card, target);
+        }
         SHUFFLE_DECK(store, state, player);
       });
     }
