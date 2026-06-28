@@ -202,7 +202,7 @@ export function CardInfoPane({
           <div className={styles.title}>
             {parsed.prefix ? (
               <>
-                <span className={styles.subtitleSetCode}>{parsed.prefix}</span>
+                <span className={styles.cardNamePrefix}>{parsed.prefix}</span>
                 <span>{parsed.rest}</span>
               </>
             ) : (
@@ -210,6 +210,9 @@ export function CardInfoPane({
             )}
             <span className={styles.subtitleSetCode}>
               {card.set} {card.setNumber}
+            </span>
+            <span className={styles.regulationMark}>
+              {card.regulationMark}
             </span>
             <div className={styles.spacer} />
             <div className={styles.subtitleHpRow}>
@@ -421,6 +424,9 @@ export function CardInfoPane({
             <span className={styles.subtitleSetCode}>
               {card.set} {card.setNumber}
             </span>
+            <span className={styles.regulationMark}>
+              {card.regulationMark}
+            </span>
             {!isInGame ? favoriteToggle : null}
           </div>
           <div className={styles.subtitle}>
@@ -480,6 +486,9 @@ export function CardInfoPane({
             <span>{card.name}</span>{' '}
             <span className={styles.subtitleSetCode}>
               {card.set} {card.setNumber}
+            </span>
+            <span className={styles.regulationMark}>
+              {card.regulationMark}
             </span>
             {!isInGame ? favoriteToggle : null}
           </div>

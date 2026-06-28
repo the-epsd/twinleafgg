@@ -82,10 +82,27 @@
   background-color: rgba($twinleaf-700, 0.48);
 }
 
+.card-name-prefix {
+  font-size: 10px;
+  margin: map-get($padding, small) 0;
+  padding: map-get($padding, small);
+}
+
 .subtitle-set-code {
   font-size: 10px;
   margin: map-get($padding, small) 0;
   padding: map-get($padding, small);
+}
+
+.regulation-mark {
+  font-size: 10px;
+  margin: map-get($padding, small) 0;
+  padding: 0 3px;
+  background-color: rgba($twinleaf-50, 1);
+  border: 2px solid rgba($twinleaf-950, 1);
+  color: rgba($twinleaf-950, 1);
+  border-radius: 4px;
+  line-height: 20px;
 }
 
 .subtitle-hp {
