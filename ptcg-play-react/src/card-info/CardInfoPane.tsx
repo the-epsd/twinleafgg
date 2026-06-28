@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import type { Card, CardList, EnergyCard, Player, PokemonCard, TrainerCard } from 'ptcg-server';
-import { CardType, BoardEffect, EnergyType, PowerType, SuperType, TrainerType } from 'ptcg-server';
+import { CardType, BoardEffect, EnergyType, PokemonCardList, PowerType, SuperType, TrainerType } from 'ptcg-server';
 import { CardSwapDialog } from './CardSwapDialog';
 import { EnergyTypeIcon } from './EnergyTypeIcon';
 import { isFavoriteCard, toggleFavoriteCard } from './favoriteCardsStorage';
@@ -130,7 +130,9 @@ export function CardInfoPane({
   const displayPowers = useMemo(() => getDisplayPowers(card, cardList), [card, cardList]);
   const displayAttacks = useMemo(() => getDisplayAttacks(card, cardList), [card, cardList]);
 
-  const abilityUsedThisTurn = cardList?.boardEffect?.includes(BoardEffect.ABILITY_USED) ?? false;
+  const abilityUsedThisTurn =
+    cardList instanceof PokemonCardList &&
+    cardList.boardEffect.includes(BoardEffect.ABILITY_USED);
 
   const enabledAbilities = useMemo(() => {
     const m: Record<string, boolean> = {};
