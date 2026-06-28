@@ -12,7 +12,7 @@ export class NitroFireEnergy extends EnergyCard {
   public regulationMark = 'J';
   public set: string = 'CRI';
   public cardImage: string = 'assets/cardback.png';
-  public setNumber: string = '88';
+  public setNumber: string = '86';
   public name: string = 'Nitro Fire Energy';
   public fullName: string = 'Nitro Fire Energy M4';
   public text: string =
