@@ -93,7 +93,12 @@ export class Store implements StoreLike {
     }
 
     if (action instanceof ResolvePromptAction) {
-      state = this.reducePrompt(state, action);
+      try {
+        state = this.reducePrompt(state, action);
+      } catch (storeError) {
+        this.handler.onStateChange(state);
+        throw storeError;
+      }
       if (this.promptItems.length === 0) {
         state = checkState(this, state);
       }
@@ -239,8 +244,16 @@ export class Store implements StoreLike {
 
       this.resolveWaitItems();
     } catch (storeError) {
-      // Illegal action
-      prompt.result = undefined;
+      for (const id of promptItem.ids) {
+        const promptIndex = state.prompts.findIndex(item => item.id === id);
+        if (promptIndex !== -1) {
+          state.prompts.splice(promptIndex, 1);
+        }
+      }
+      const itemIndex = this.promptItems.indexOf(promptItem);
+      if (itemIndex !== -1) {
+        this.promptItems.splice(itemIndex, 1);
+      }
       throw storeError;
     }
 

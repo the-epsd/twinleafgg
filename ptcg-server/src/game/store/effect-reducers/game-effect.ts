@@ -324,6 +324,15 @@ function* usePower(next: Function, store: StoreLike, state: State, effect: UsePo
 
   store.log(state, GameLog.LOG_PLAYER_USES_ABILITY, { name: player.name, ability: power.name });
 
+  // Resolve the ability first so validation errors (e.g. POWER_ALREADY_USED) never leave
+  // an ability-animation WaitPrompt stuck open.
+  state = store.reduceEffect(state, new PowerEffect(player, power, card, effect.benchTarget));
+
+  while (store.hasPrompts()) {
+    yield store.waitPrompt(state, () => next());
+    state = (store as StoreLike & { state: State }).state;
+  }
+
   const targetSlot = effect.target.slot;
   if (targetSlot === SlotType.ACTIVE || targetSlot === SlotType.BENCH) {
     const slot = targetSlot === SlotType.ACTIVE ? 'active' : 'bench';
@@ -333,7 +342,6 @@ function* usePower(next: Function, store: StoreLike, state: State, effect: UsePo
     state = (store as StoreLike & { state: State }).state;
   }
 
-  state = store.reduceEffect(state, new PowerEffect(player, power, card, effect.benchTarget));
   return state;
 }
 

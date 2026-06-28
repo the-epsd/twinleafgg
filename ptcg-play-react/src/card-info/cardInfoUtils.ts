@@ -1,4 +1,4 @@
-import type { Attack, Card, CardList, PokemonCard, Power } from 'ptcg-server';
+import type { Attack, Card, CardList, Player, PokemonCard, Power } from 'ptcg-server';
 import { CardTag, CardType, PokemonCardList, PowerType, Stage, SuperType } from 'ptcg-server';
 import i18n from '../i18n/i18n';
 
@@ -49,15 +49,16 @@ const energyImageMap: Record<string, string> = {
 };
 
 const ENERGY_ICON_SIZE = '18px';
+export const CARD_INFO_ENERGY_ICON_SIZE = '15px';
 
-/** Inline [R]/[W]/… tokens → energy icon imgs (paths under /public/assets). No vertical translate so icons align with description text. */
-export function transformEnergyText(text: string): string {
+/** Inline [R]/[W]/… tokens → energy icon imgs (paths under /public/assets). */
+export function transformEnergyText(text: string, iconSize = ENERGY_ICON_SIZE): string {
   return text.replace(/\[([WFYRGLPMDCN])\]/g, (_match, type: string) => {
     const slug = energyImageMap[type];
     if (!slug) {
       return _match;
     }
-    return `<img align="middle" src="/assets/energy-icons/${slug}.webp" alt="${slug} Energy" width="${ENERGY_ICON_SIZE}" style="vertical-align: -0.2em">`;
+    return `<img align="middle" src="/assets/energy-icons/${slug}.webp" alt="${slug} Energy" width="${iconSize}" style="vertical-align: -0.2em">`;
   });
 }
 
@@ -359,4 +360,90 @@ export function getDisplayTagLabels(card: Card, showTags: boolean): string[] {
     return card.tags;
   }
   return [];
+}
+
+export type DebugMarkerDisplay = {
+  name: string;
+  location: 'pokemon' | 'player' | 'card';
+  sourceLabel?: string;
+};
+
+function pokemonCardsInList(cardList: CardList): Card[] {
+  const tools = pokemonCardListTools(cardList);
+  return cardList.cards.filter(
+    (c) => c.superType === SuperType.POKEMON && !tools.includes(c),
+  );
+}
+
+function markerSourceMatchesChain(source: Card | undefined, chainCards: Card[]): boolean {
+  if (!source) {
+    return false;
+  }
+  return chainCards.some((c) => c === source || c.fullName === source.fullName);
+}
+
+/** Active game markers on a Pokémon (card list, evolution cards, and player-scoped markers). */
+export function getDisplayDebugMarkers(
+  card: Card,
+  cardList: CardList | undefined,
+  players: Player[] | undefined,
+  enabled: boolean,
+): DebugMarkerDisplay[] {
+  if (!enabled || card.superType !== SuperType.POKEMON) {
+    return [];
+  }
+
+  const entries: DebugMarkerDisplay[] = [];
+  const seen = new Set<string>();
+
+  const add = (name: string, location: DebugMarkerDisplay['location'], sourceLabel?: string) => {
+    const key = `${location}:${name}:${sourceLabel ?? ''}`;
+    if (seen.has(key)) {
+      return;
+    }
+    seen.add(key);
+    entries.push({ name, location, sourceLabel });
+  };
+
+  for (const m of card.marker?.markers ?? []) {
+    add(m.name, 'card');
+  }
+
+  if (cardList) {
+    const chainCards = pokemonCardsInList(cardList);
+
+    if (cardList instanceof PokemonCardList) {
+      for (const m of cardList.marker.markers) {
+        add(m.name, 'pokemon');
+      }
+    } else {
+      const marker = (cardList as unknown as { marker?: { markers: { name: string }[] } }).marker;
+      for (const m of marker?.markers ?? []) {
+        add(m.name, 'pokemon');
+      }
+    }
+
+    for (const chainCard of chainCards) {
+      if (chainCard === card) {
+        continue;
+      }
+      for (const m of chainCard.marker?.markers ?? []) {
+        add(m.name, 'card', chainCard.fullName);
+      }
+    }
+
+    if (players?.length) {
+      for (const player of players) {
+        for (const m of player.marker.markers) {
+          if (markerSourceMatchesChain(m.source, chainCards)) {
+            const sourceLabel =
+              m.source && m.source.fullName !== card.fullName ? m.source.fullName : undefined;
+            add(m.name, 'player', sourceLabel);
+          }
+        }
+      }
+    }
+  }
+
+  return entries;
 }

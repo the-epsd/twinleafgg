@@ -14,30 +14,29 @@
   pointer-events: auto;
 }
 
+.selfBar {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  max-width: 228px;
+  min-width: 188px;
+  pointer-events: auto;
+}
+
 .rightColumn {
   position: absolute;
   top: 16px;
   right: 16px;
-  bottom: 16px;
-  width: min(236px, calc(100vw - 32px));
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   gap: 6px;
+  width: min(236px, calc(100vw - 32px));
   pointer-events: none;
 }
 
 .rightColumn > * {
   pointer-events: auto;
-}
-
-.rightColumnTop {
-  flex: 0 0 auto;
-  align-self: flex-end;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-  width: 100%;
 }
 
 .turnBadgeGroup {
@@ -67,24 +66,14 @@
   max-width: 100%;
 }
 
-/* Vertically centers leave / end turn, chat log, and local player bar in the column */
-.rightColumnCenter {
-  flex: 1 1 auto;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
-  width: 100%;
-}
-
-.rightColumnBottom {
-  flex: 0 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 6px;
-  width: 100%;
+.actionsRow {
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  width: 158px;
+  max-width: 67%;
+  pointer-events: auto;
 }
 
 .turnBadge {
@@ -102,29 +91,4 @@
   line-height: 1.25;
   width: fit-content;
   max-width: 100%;
-}
-
-.actionsRow {
-  flex: 0 0 auto;
-  width: 100%;
-}
-
-.logRow {
-  flex: 0 1 auto;
-  width: 100%;
-  min-height: 72px;
-  max-height: min(42vh, 360px);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.logRowCollapsed {
-  min-height: 0;
-  max-height: none;
-}
-
-.selfBarInColumn {
-  flex: 0 0 auto;
-  width: 100%;
 }

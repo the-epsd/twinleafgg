@@ -190,6 +190,7 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
         <CardInfoPopup
           card={cardPrompt.data.card}
           cardList={cardPrompt.data.cardList}
+          players={cardPrompt.data.players}
           facedown={cardPrompt.data.facedown}
           catalog={catalog}
           getScanUrl={getScanUrl}
@@ -209,6 +210,7 @@ export function Board3DCanvas(props: Board3DCanvasProps) {
       {cardPrompt?.kind === 'list' && cardPrompt.data.cardList ? (
         <CardInfoListPopup
           cardList={cardPrompt.data.cardList}
+          players={cardPrompt.data.players}
           catalog={catalog}
           getScanUrl={getScanUrl}
           facedown={cardPrompt.data.facedown}

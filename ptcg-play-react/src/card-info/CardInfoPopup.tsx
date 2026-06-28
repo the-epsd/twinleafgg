@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Card, CardList } from 'ptcg-server';
+import type { Card, CardList, Player } from 'ptcg-server';
 import type { CardInfoPaneOptions, CardInfoTableAction } from './CardInfoPane';
 import { CardInfoPane } from './CardInfoPane';
 import { CardInfoImageColumn } from './CardInfoImageColumn';
@@ -11,6 +11,7 @@ export type CardInfoPopupProps = {
   card: Card;
   /** When set (in-game Pokémon), HP reflects list damage and HP modifiers. */
   cardList?: CardList;
+  players?: Player[];
   facedown?: boolean;
   catalog: Card[];
   getScanUrl: (card: Card) => string;
@@ -28,6 +29,7 @@ export type CardInfoPopupProps = {
 export function CardInfoPopup({
   card,
   cardList,
+  players,
   facedown = false,
   catalog,
   getScanUrl,
@@ -86,6 +88,7 @@ export function CardInfoPopup({
               key={card.fullName}
               card={card}
               cardList={cardList}
+              players={players}
               facedown={facedown}
               catalog={catalog}
               getScanUrl={getScanUrl}

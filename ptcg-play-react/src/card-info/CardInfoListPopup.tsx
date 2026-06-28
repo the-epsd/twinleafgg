@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import type { Card, CardList } from 'ptcg-server';
+import type { Card, CardList, Player } from 'ptcg-server';
 import { SuperType as SuperTypeEnum } from 'ptcg-server';
 import { CardFace } from '../components/cards/CardFace';
 import { CARDBACK_ASSET_URL } from '../deck-editor/resolveScanUrl';
@@ -10,6 +10,7 @@ import styles from './CardInfoListPopup.module.css';
 
 export type CardInfoListPopupProps = {
   cardList: CardList;
+  players?: Player[];
   catalog: Card[];
   getScanUrl: (card: Card) => string;
   facedown?: boolean;
@@ -37,6 +38,7 @@ function sortCardsLikeAngular(cards: Card[]): Card[] {
 
 export function CardInfoListPopup({
   cardList,
+  players,
   catalog,
   getScanUrl,
   facedown = false,
@@ -122,6 +124,7 @@ export function CardInfoListPopup({
         <CardInfoPopup
           card={detailCard}
           cardList={cardList}
+          players={players}
           facedown={faceDownState}
           catalog={catalog}
           getScanUrl={getScanUrl}

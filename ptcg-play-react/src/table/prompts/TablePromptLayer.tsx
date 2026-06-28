@@ -652,6 +652,7 @@ export function TablePromptLayer({
       <ShowCardsPanel
         key={sc.id}
         prompt={sc}
+        players={localGame.state.players}
         catalog={catalog}
         getScanUrl={getScanUrl}
         t={t}
@@ -668,6 +669,7 @@ export function TablePromptLayer({
       <ShowCardsPanel
         key={cc.id}
         prompt={cc}
+        players={localGame.state.players}
         catalog={catalog}
         getScanUrl={getScanUrl}
         t={t}
@@ -685,6 +687,7 @@ export function TablePromptLayer({
       <ShowMulliganPanel
         key={sm.id}
         prompt={sm}
+        players={localGame.state.players}
         catalog={catalog}
         getScanUrl={getScanUrl}
         t={t}
@@ -700,6 +703,7 @@ export function TablePromptLayer({
       <ChooseCardsPanel
         key={ccp.id}
         prompt={ccp}
+        players={localGame.state.players}
         catalog={catalog}
         getScanUrl={getScanUrl}
         t={t}
@@ -1060,6 +1064,7 @@ function ChoosePrizePanel(props: {
         <CardInfoPopup
           card={detail.card}
           facedown={detail.facedown}
+          players={localGame.state.players}
           catalog={catalog}
           getScanUrl={getScanUrl}
           onClose={() => setDetail(null)}
@@ -1072,6 +1077,7 @@ function ChoosePrizePanel(props: {
 
 function ChooseCardsPanel(props: {
   prompt: ChooseCardsPrompt;
+  players: LocalGameState['state']['players'];
   catalog: Card[];
   getScanUrl: (card: Card) => string;
   t: TFunction;
@@ -1079,7 +1085,7 @@ function ChooseCardsPanel(props: {
   resolve: (id: number, result: unknown) => void;
   replay: boolean;
 }) {
-  const { prompt, catalog, getScanUrl, t, gameMessageText, resolve, replay } = props;
+  const { prompt, players, catalog, getScanUrl, t, gameMessageText, resolve, replay } = props;
   const cards = prompt.cards.cards;
   const blocked = prompt.options.blocked ?? [];
   const { min, max, allowCancel, isSecret } = prompt.options;
@@ -1242,6 +1248,7 @@ function ChooseCardsPanel(props: {
         <CardInfoPopup
           card={detail.card}
           facedown={facedownForPopup}
+          players={players}
           catalog={catalog}
           getScanUrl={getScanUrl}
           onClose={() => setDetail(null)}
@@ -1330,6 +1337,7 @@ function WaitPromptPanel(props: {
 
 function ShowCardsPanel(props: {
   prompt: ShowCardsPrompt | ConfirmCardsPrompt;
+  players: LocalGameState['state']['players'];
   catalog: Card[];
   getScanUrl: (card: Card) => string;
   t: TFunction;
@@ -1338,7 +1346,7 @@ function ShowCardsPanel(props: {
   confirmResult: true | null;
   allowCancel?: boolean;
 }) {
-  const { prompt, catalog, getScanUrl, t, gameMessageText, resolve, confirmResult, allowCancel } = props;
+  const { prompt, players, catalog, getScanUrl, t, gameMessageText, resolve, confirmResult, allowCancel } = props;
   const [detail, setDetail] = useState<Card | null>(null);
 
   useEffect(() => {
@@ -1388,6 +1396,7 @@ function ShowCardsPanel(props: {
       {detail ? (
         <CardInfoPopup
           card={detail}
+          players={players}
           catalog={catalog}
           getScanUrl={getScanUrl}
           onClose={() => setDetail(null)}
@@ -1399,13 +1408,14 @@ function ShowCardsPanel(props: {
 
 function ShowMulliganPanel(props: {
   prompt: ShowMulliganPrompt;
+  players: LocalGameState['state']['players'];
   catalog: Card[];
   getScanUrl: (card: Card) => string;
   t: TFunction;
   gameMessageText: (t: TFunction, message: string | number) => string;
   resolve: (id: number, result: unknown) => void;
 }) {
-  const { prompt, catalog, getScanUrl, t, gameMessageText, resolve } = props;
+  const { prompt, players, catalog, getScanUrl, t, gameMessageText, resolve } = props;
   const [detail, setDetail] = useState<Card | null>(null);
 
   return (
@@ -1441,6 +1451,7 @@ function ShowMulliganPanel(props: {
       {detail ? (
         <CardInfoPopup
           card={detail}
+          players={players}
           catalog={catalog}
           getScanUrl={getScanUrl}
           onClose={() => setDetail(null)}

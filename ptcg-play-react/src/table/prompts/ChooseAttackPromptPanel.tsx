@@ -94,6 +94,7 @@ export function ChooseAttackPromptPanel(props: ChooseAttackPromptPanelProps) {
         <CardInfoPopup
           card={detail.card}
           catalog={catalog}
+          players={localGame.state.players}
           getScanUrl={getScanUrl}
           onClose={() => setDetail(null)}
           isInGame

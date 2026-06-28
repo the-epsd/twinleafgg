@@ -89,6 +89,8 @@
   font-size: 14px;
   font-weight: 700;
   line-height: 24px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .subtitleSetCode {
@@ -98,7 +100,17 @@
 }
 
 .subtitleHp {
-  margin: 0 4px;
+  margin: 0 4px 0 0;
+  display: flex;
+  align-items: center;
+}
+
+.subtitleHpRow {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: auto;
+  flex-shrink: 0;
 }
 
 .subtitleHpValue {
@@ -116,9 +128,17 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* Angular source used gap:-12px (invalid); flex uses 0 gap */
   gap: 0;
-  margin-left: auto;
+  margin-left: 2px;
+}
+
+.subtitleCardType .titleTypeIcon {
+  transform-origin: center center;
+}
+
+.trainerStripCompact {
+  transform: scale(0.88);
+  transform-origin: left center;
 }
 
 .subtitleTags {
@@ -138,13 +158,50 @@
   letter-spacing: 0.5px;
 }
 
+.debugMarkers {
+  padding: 8px;
+  background-color: rgba(255, 183, 77, 0.12);
+  border-left: 3px solid #ffb74d;
+}
+
+.debugMarkersHeader {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  color: #ffb74d;
+  margin-bottom: 6px;
+}
+
+.debugMarkersList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.debugMarker {
+  background-color: rgba(37, 41, 53, 0.72);
+  color: #ffe0b2;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.debugMarkerScope {
+  color: #ffcc80;
+  font-weight: 400;
+}
+
 .subtitleEvolvesFrom,
 .subtitleEvolvesTo {
   font-size: 12px;
   font-weight: 400;
   line-height: 20px;
-  width: 100%;
-  margin-top: 4px;
+  flex: 1 1 auto;
+  min-width: 0;
+  text-align: right;
 }
 
 .spacer {
@@ -196,6 +253,9 @@
 
 .attackCost {
   display: flex;
+  align-items: center;
+  gap: 3px;
+  transform: translateY(5px);
 }
 
 .attackName {
@@ -209,7 +269,7 @@
   font-weight: 700;
 }
 
-.attackHeader + .cardText {
+.attackHeader+.cardText {
   padding-top: 8px;
 }
 
@@ -242,6 +302,8 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: center;
+  gap: 3px;
 }
 
 .statsItemValueModifier {

@@ -6,7 +6,6 @@
   margin: 1px 1px;
   width: 2rem;
   overflow: hidden;
-  transform: scale(0.75);
   transform-origin: top left;
   background: transparent url(/assets/type-icons-small.png) -45px -87px no-repeat;
 }

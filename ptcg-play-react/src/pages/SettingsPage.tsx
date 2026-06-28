@@ -20,10 +20,10 @@ export function SettingsPage() {
     showCardName: s.showCardName,
     showTags: s.showTags,
     hiddenFormats: [...s.hiddenFormats],
-    use3dBoardDefault: s.use3dBoardDefault,
     board2dPerspectiveEnabled: s.board2dPerspectiveEnabled,
     sfxEnabled: s.sfxEnabled,
     defaultSandboxMode: s.defaultSandboxMode,
+    debugMarkersEnabled: s.debugMarkersEnabled,
   }));
 
   function onHiddenFormatsChange(format: Format, isHidden: boolean) {
@@ -48,10 +48,11 @@ export function SettingsPage() {
       showCardName: draft.showCardName,
       showTags: draft.showTags,
       hiddenFormats: draft.hiddenFormats,
-      use3dBoardDefault: draft.use3dBoardDefault,
+      use3dBoardDefault: true,
       board2dPerspectiveEnabled: draft.board2dPerspectiveEnabled,
       sfxEnabled: draft.sfxEnabled,
       defaultSandboxMode: draft.defaultSandboxMode,
+      debugMarkersEnabled: draft.debugMarkersEnabled,
       sfxVolumePercent: Math.round(s.sfxVolume * 100),
       cardSize: s.cardSize,
       cardTextKerning: s.cardTextKerning,
@@ -89,16 +90,14 @@ export function SettingsPage() {
           />
           Show Tags
         </label>
-        {s.has3dBoardAccess ? (
-          <label className={styles.row}>
-            <input
-              type="checkbox"
-              checked={draft.use3dBoardDefault}
-              onChange={(e) => setDraft((d) => ({ ...d, use3dBoardDefault: e.target.checked }))}
-            />
-            Start Games with 3D Board
-          </label>
-        ) : null}
+        <label className={styles.row}>
+          <input
+            type="checkbox"
+            checked={draft.debugMarkersEnabled}
+            onChange={(e) => setDraft((d) => ({ ...d, debugMarkersEnabled: e.target.checked }))}
+          />
+          Debug Markers Turned On
+        </label>
         <label className={styles.row}>
           <input
             type="checkbox"
