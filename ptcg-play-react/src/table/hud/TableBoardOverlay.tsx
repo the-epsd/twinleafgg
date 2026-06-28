@@ -1,10 +1,13 @@
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { GamePhase } from 'ptcg-server';
-import type { Player } from 'ptcg-server';
+import type { Player, StateLog } from 'ptcg-server';
 import type { LocalGameState } from '../types/localGameState';
 import { TablePlayerBar } from './TablePlayerBar';
 import { TablePlayerActions } from './TablePlayerActions';
 import { TableReplayControls } from './TableReplayControls';
+import { TableGameLogToasts } from './TableGameLogToasts';
+import { TableGameLogsPrompt } from './TableGameLogsPrompt';
 import styles from './TableBoardOverlay.module.css';
 
 export type TableBoardOverlayProps = {
@@ -25,6 +28,7 @@ export type TableBoardOverlayProps = {
 
 export function TableBoardOverlay(props: TableBoardOverlayProps) {
   const { t } = useTranslation();
+  const [logsOpen, setLogsOpen] = useState(false);
   const {
     localGame,
     clientId,
@@ -35,11 +39,13 @@ export function TableBoardOverlay(props: TableBoardOverlayProps) {
     onPassTurn,
     onLeave,
     onSwitchSides,
+    onSendChat,
     onReplayStep,
     boardFps,
   } = props;
 
   const state = localGame.state;
+  const players = state.players;
   const active = state.players[state.activePlayer];
   const topActive = !!active && active.id === topPlayer.id && state.phase === GamePhase.PLAYER_TURN;
   const bottomActive = !!active && active.id === bottomPlayer.id && state.phase === GamePhase.PLAYER_TURN;
@@ -49,6 +55,25 @@ export function TableBoardOverlay(props: TableBoardOverlayProps) {
   const timeLimit = localGame.timeLimit ?? 0;
 
   const showReplay = !!localGame.replay;
+
+  const [sessionLogs, setSessionLogs] = useState<StateLog[]>([]);
+
+  useEffect(() => {
+    setSessionLogs([]);
+  }, [localGame.localId]);
+
+  useEffect(() => {
+    setSessionLogs((prev) => {
+      const byId = new Map<number, StateLog>();
+      for (const log of prev) {
+        byId.set(log.id, log);
+      }
+      for (const log of localGame.logs) {
+        byId.set(log.id, log);
+      }
+      return [...byId.values()].sort((a, b) => a.id - b.id);
+    });
+  }, [localGame.logs]);
 
   return (
     <div className={styles.root}>
@@ -78,14 +103,36 @@ export function TableBoardOverlay(props: TableBoardOverlayProps) {
             {t('TABLE_TABLE_NAME', { id: localGame.gameId })} —{' '}
             {t('TABLE_TURN_NUMBER', { turn: state.turn })}
           </div>
-          <div className={styles.boardFpsLine} aria-live="polite">
-            {boardFps != null ? t('TABLE_BOARD_FPS', { fps: boardFps }) : t('TABLE_BOARD_FPS_MEASURING')}
+          <div className={styles.badgeRow}>
+            <div className={styles.boardFpsLine} aria-live="polite">
+              {boardFps != null ? t('TABLE_BOARD_FPS', { fps: boardFps }) : t('TABLE_BOARD_FPS_MEASURING')}
+            </div>
+            <button
+              type="button"
+              className={styles.logsButton}
+              aria-expanded={logsOpen}
+              onClick={() => setLogsOpen(true)}
+            >
+              {t('TABLE_LOGS')}
+            </button>
           </div>
         </div>
+        <TableGameLogToasts localGame={localGame} clientId={clientId} players={players} />
         {showReplay && localGame.replay ? (
           <TableReplayControls localGame={localGame} replay={localGame.replay} onStep={onReplayStep} />
         ) : null}
       </div>
+
+      {logsOpen ? (
+        <TableGameLogsPrompt
+          logs={sessionLogs}
+          localGame={localGame}
+          clientId={clientId}
+          players={players}
+          onClose={() => setLogsOpen(false)}
+          onSendChat={onSendChat}
+        />
+      ) : null}
 
       <div className={styles.actionsRow}>
         <TablePlayerActions

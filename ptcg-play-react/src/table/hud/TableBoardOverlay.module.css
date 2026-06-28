@@ -31,8 +31,9 @@
   flex-direction: column;
   align-items: flex-end;
   gap: 6px;
-  width: min(236px, calc(100vw - 32px));
+  width: min(320px, calc(100vw - 32px));
   pointer-events: none;
+  z-index: 520;
 }
 
 .rightColumn > * {
@@ -46,6 +47,43 @@
   gap: 4px;
   width: fit-content;
   max-width: 100%;
+}
+
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.logsButton {
+  flex: 0 0 auto;
+  font-size: 0.6rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.92;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(210, 225, 255, 0.92);
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.logsButton:hover {
+  background: rgba(0, 0, 0, 0.78);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.logsButton:focus-visible {
+  outline: 2px solid rgba(120, 180, 255, 0.55);
+  outline-offset: 2px;
 }
 
 .boardFpsLine {
