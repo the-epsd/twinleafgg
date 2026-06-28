@@ -11,6 +11,7 @@ import type { DeckListEntry } from '../types/responses';
 import { FormatValidator } from '../deck-editor/formatValidator';
 import { formatOptionLabel } from '../deck-editor/formatLabelI18n';
 import { CREATE_GAME_FORMAT_VALUES } from './matchFormats';
+import { toGameSettingsPayload } from '../game/gameSettingsPayload';
 import styles from './CreateGameInviteDialog.module.css';
 
 const TIME_LIMIT_OPTIONS: { value: number; labelKey: string }[] = [
@@ -182,7 +183,7 @@ export function SelfPlayGameDialog({ open, onClose }: SelfPlayGameDialogProps) {
       const gameState = await createSelfPlayGame(
         cards1,
         cards2,
-        gs,
+        toGameSettingsPayload(gs),
         deckId,
         secondDeckId,
         deckRes1.deck.sleeveImagePath,

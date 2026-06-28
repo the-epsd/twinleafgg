@@ -3,6 +3,7 @@ import { LessThanOrEqual } from 'typeorm';
 
 import { Client } from '../client/client.interface';
 import { Core } from './core';
+import type { GameSettings } from './game-settings';
 import { State, GamePhase, GameWinner } from '../store/state/state';
 import { User, Match, Deck, BattlePassSeason, UserBattlePass, MatchXpAward } from '../../storage';
 import { RankingCalculator } from './ranking-calculator';
@@ -19,7 +20,7 @@ export class MatchRecorder {
   private transactionTimeout: NodeJS.Timeout | undefined;
   private readonly TRANSACTION_TIMEOUT_MS = 30000; // 30 seconds
 
-  constructor(private core: Core) {
+  constructor(private core: Core, private gameSettings?: GameSettings) {
     this.ranking = new RankingCalculator();
     this.replay = new Replay({ indexEnabled: false });
   }
@@ -222,6 +223,10 @@ export class MatchRecorder {
     }
     if (this.client2 === undefined) {
       this.client2 = this.findClient(player2Id);
+      // Self-play uses a synthetic opponent id that is not a connected client.
+      if (this.client2 === undefined && this.gameSettings?.selfPlay === true && this.client1 !== undefined) {
+        this.client2 = this.client1;
+      }
     }
   }
 

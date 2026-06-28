@@ -1,4 +1,4 @@
-import { GameSettings, StateSerializer } from '../../game';
+import { GameSettings, StateSerializer, coerceGameSettings } from '../../game';
 import { Client } from '../../game/client/client.interface';
 import { Game } from '../../game/core/game';
 import { State } from '../../game/store/state/state';
@@ -119,8 +119,9 @@ export class CoreSocket {
 
   private createGame(params: { deck: string[], gameSettings: GameSettings, clientId?: number, artworks?: { code: string; artworkId?: number }[], deckId?: number, sleeveImagePath?: string },
     response: Response<GameState>): void {
+    const gameSettings = coerceGameSettings(params.gameSettings);
     // Validate that only admins can enable sandbox mode
-    if (params.gameSettings.sandboxMode && this.client.user.roleId !== 4) {
+    if (gameSettings.sandboxMode && this.client.user.roleId !== 4) {
       response('error', ApiErrorEnum.ACTION_INVALID);
       return;
     }
@@ -130,13 +131,13 @@ export class CoreSocket {
     // Check if the invited client is a bot with format restrictions
     if (invited && this.isBotClient(invited)) {
       const botClient = invited as any; // Cast to access bot-specific methods
-      if (!botClient.isFormatAllowed(params.gameSettings.format)) {
+      if (!botClient.isFormatAllowed(gameSettings.format)) {
         response('error', ApiErrorEnum.INVALID_FORMAT);
         return;
       }
     }
 
-    const game = this.core.createGame(this.client, params.deck, params.gameSettings, invited, params.deckId, undefined, params.sleeveImagePath);
+    const game = this.core.createGame(this.client, params.deck, gameSettings, invited, params.deckId, undefined, params.sleeveImagePath);
     response('ok', CoreSocket.buildGameState(game));
   }
 
@@ -152,7 +153,8 @@ export class CoreSocket {
     },
     response: Response<GameState>,
   ): void {
-    if (params.gameSettings.sandboxMode && this.client.user.roleId !== 4) {
+    const gameSettings = coerceGameSettings(params.gameSettings);
+    if (gameSettings.sandboxMode && this.client.user.roleId !== 4) {
       response('error', ApiErrorEnum.ACTION_INVALID);
       return;
     }
@@ -160,7 +162,7 @@ export class CoreSocket {
       this.client,
       params.deck,
       params.secondDeck,
-      params.gameSettings,
+      gameSettings,
       params.deckId,
       params.secondDeckId,
       params.sleeveImagePath,

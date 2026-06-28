@@ -4,7 +4,7 @@ import { Client } from '../client/client.interface';
 import { GameError } from '../game-error';
 import { GameMessage, GameCoreError } from '../game-message';
 import { Game } from './game';
-import { GameSettings } from './game-settings';
+import { GameSettings, coerceGameSettings } from './game-settings';
 import { InvitePlayerAction } from '../store/actions/invite-player-action';
 import { Messager } from './messager';
 import { RankingCalculator } from './ranking-calculator';
@@ -130,6 +130,7 @@ export class Core {
     deckId2?: number,
     sleeveImagePath1?: string
   ): Game {
+    gameSettings = coerceGameSettings(gameSettings);
     if (this.clients.indexOf(client) === -1) {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
     }
@@ -190,6 +191,7 @@ export class Core {
     sleeveImagePath1?: string,
     sleeveImagePath2?: string
   ): Game {
+    gameSettings = coerceGameSettings(gameSettings);
     if (this.clients.indexOf(client) === -1) {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
     }
@@ -252,6 +254,7 @@ export class Core {
     sleeveImagePath1?: string,
     sleeveImagePath2?: string
   ): Game {
+    gameSettings = coerceGameSettings(gameSettings);
     if (this.clients.indexOf(client) === -1) {
       throw new GameError(GameMessage.ERROR_CLIENT_NOT_CONNECTED);
     }
