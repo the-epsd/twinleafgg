@@ -1,5 +1,8 @@
 import { DoubleSide, ShaderMaterial, Texture } from 'three';
 
+/** Full holo sweep duration (seconds). */
+export const BOARD3D_HOLO_CYCLE_SEC = 2.75;
+
 const holoVertexShader = `
 varying vec2 vUv;
 void main() {
@@ -19,20 +22,31 @@ void main() {
   float m = max(maskSample.a, max(max(maskSample.r, maskSample.g), maskSample.b));
   if (m < 0.04) discard;
 
+  // 110deg sweep axis — matches Angular/CSS linear-gradient(110deg, …).
   float ang = 1.91986;
   float c = cos(ang);
   float s = sin(ang);
   vec2 q = vUv - 0.5;
-  float px = c * q.x - s * q.y + 0.5;
-  float scroll = px * 3.0 - uTime * 1.0;
-  float f = fract(scroll);
-  float band = smoothstep(0.35, 0.48, f) * (1.0 - smoothstep(0.52, 0.65, f));
+  float along = c * q.x + s * q.y;
+
+  // One full pass; band starts fully off-screen and exits fully before looping.
+  float t = fract(uTime / ${BOARD3D_HOLO_CYCLE_SEC.toFixed(2)});
+  float bandCenter = mix(1.35, -1.35, t);
+  float rel = along - bandCenter;
+
+  // Wide stripe with soft leading/trailing falloff.
+  float band = smoothstep(-0.56, -0.18, rel) * (1.0 - smoothstep(0.18, 0.56, rel));
+
+  // Dimmer toward the top and bottom of the card; brightest through the middle.
+  float verticalFade = 1.0 - smoothstep(0.22, 0.50, abs(q.y));
+
   vec3 col1 = vec3(0.573, 0.949, 0.949);
   vec3 col2 = vec3(1.0, 1.0, 1.0);
   vec3 col3 = vec3(0.839, 0.812, 0.945);
   vec3 holo = mix(col1, col2, band);
   holo = mix(holo, col3, band * 0.45);
-  float alpha = 0.7 * m * (0.2 + 0.8 * band);
+
+  float alpha = 0.36 * m * band * verticalFade;
   gl_FragColor = vec4(holo, alpha);
 }
 `;
