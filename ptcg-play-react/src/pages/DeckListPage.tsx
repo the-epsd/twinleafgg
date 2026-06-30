@@ -7,13 +7,14 @@ import {
   createDeck,
   deleteDeck,
   duplicateDeck,
+  fetchAllDecks,
   getDeck,
-  getDeckList,
   renameDeck,
 } from '../api/deckApi';
 import type { DeckListEntry } from '../types/responses';
 import { ApiError } from '../api/apiError';
 import { useSettings } from '../context/SettingsContext';
+import { appConfig } from '../env/config';
 import { FormAlert } from '../components/ui/FormAlert';
 import { ShellButton } from '../components/ui/ShellButton';
 import { CheckboxField } from '../components/ui/CheckboxField';
@@ -185,13 +186,16 @@ export function DeckListPage() {
   const [formatDefaultDecks, setFormatDefaultDecks] = useState<Record<string, number>>(readFormatDefaults);
   const [openMenuDeckId, setOpenMenuDeckId] = useState<number | null>(null);
   const [moreOpen, setMoreOpen] = useState(false);
+  const [pageIndex, setPageIndex] = useState(0);
+
+  const pageSize = appConfig.defaultPageSize;
 
   const refresh = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await getDeckList({ summary: true, limit: 100, offset: 0 });
-      setDecks(res.decks);
+      const allDecks = await fetchAllDecks({ summary: true });
+      setDecks(allDecks);
     } catch (e) {
       setError(e instanceof ApiError ? e.message : t('REACT_ERROR_LOAD_DECKS'));
     } finally {
@@ -206,6 +210,7 @@ export function DeckListPage() {
   useEffect(() => {
     if (selectedFormat !== 'all' && isFormatTabHidden(selectedFormat, hiddenFormats)) {
       setSelectedFormat('all');
+      setPageIndex(0);
     }
   }, [hiddenFormats, selectedFormat]);
 
@@ -228,6 +233,23 @@ export function DeckListPage() {
     [decks, selectedFormat, showThemeDecksInAllTab],
   );
 
+  const maxPage = Math.max(0, Math.ceil(filteredDecks.length / pageSize) - 1);
+  const pageCount = maxPage + 1;
+  const safePageIndex = Math.min(pageIndex, maxPage);
+
+  const paginatedDecks = useMemo(() => {
+    const start = safePageIndex * pageSize;
+    return filteredDecks.slice(start, start + pageSize);
+  }, [filteredDecks, safePageIndex, pageSize]);
+
+  const rangeStart = filteredDecks.length > 0 ? safePageIndex * pageSize + 1 : 0;
+  const rangeEnd =
+    filteredDecks.length > 0 ? Math.min((safePageIndex + 1) * pageSize, filteredDecks.length) : 0;
+  const rangeLabel =
+    filteredDecks.length > 0
+      ? t('RANKING_RANGE', { start: rangeStart, end: rangeEnd, total: filteredDecks.length })
+      : '';
+
   const visiblePrimaryTabs = useMemo(
     () => PRIMARY_TAB_KEYS.filter((k) => k === 'all' || !isFormatTabHidden(k, hiddenFormats)),
     [hiddenFormats],
@@ -247,9 +269,15 @@ export function DeckListPage() {
     return fid === deckId;
   }
 
+  function selectFormatTab(tab: TabKey) {
+    setSelectedFormat(tab);
+    setPageIndex(0);
+  }
+
   function onShowThemeToggle(checked: boolean) {
     setShowThemeDecksInAllTab(checked);
     localStorage.setItem(LS_SHOW_THEME, JSON.stringify(checked));
+    setPageIndex(0);
   }
 
   async function onCreate() {
@@ -428,7 +456,7 @@ export function DeckListPage() {
               key={tab}
               type="button"
               className={`${styles.formatTab} ${selectedFormat === tab ? styles.formatTabActive : ''}`}
-              onClick={() => setSelectedFormat(tab)}
+              onClick={() => selectFormatTab(tab)}
             >
               {t(formatLabelKey(tab))}
             </button>
@@ -457,7 +485,7 @@ export function DeckListPage() {
                     className={`${styles.moreMenuItem} ${selectedFormat === tab ? styles.moreMenuItemActive : ''}`}
                     onClick={(e) => {
                       e.stopPropagation();
-                      setSelectedFormat(tab);
+                      selectFormatTab(tab);
                       setMoreOpen(false);
                     }}
                   >
@@ -480,8 +508,9 @@ export function DeckListPage() {
 
       <div className={styles.gridWrap}>
         {filteredDecks.length > 0 ? (
+          <>
           <div className={styles.grid}>
-            {filteredDecks.map((d) => (
+            {paginatedDecks.map((d) => (
               <div key={d.id} className={styles.tile}>
                 <div
                   className={styles.card}
@@ -653,6 +682,31 @@ export function DeckListPage() {
               </div>
             ))}
           </div>
+          {filteredDecks.length > pageSize ? (
+            <div className={styles.pagination}>
+              <button
+                type="button"
+                className={styles.paginationBtn}
+                disabled={safePageIndex <= 0}
+                onClick={() => setPageIndex((p) => Math.max(0, p - 1))}
+              >
+                {t('RANKING_PREV_PAGE')}
+              </button>
+              <span className={styles.paginationLabel}>
+                {t('RANKING_PAGE_OF', { current: safePageIndex + 1, total: pageCount })}
+                {rangeLabel ? ` · ${rangeLabel}` : ''}
+              </span>
+              <button
+                type="button"
+                className={styles.paginationBtn}
+                disabled={safePageIndex >= maxPage}
+                onClick={() => setPageIndex((p) => p + 1)}
+              >
+                {t('RANKING_NEXT_PAGE')}
+              </button>
+            </div>
+          ) : null}
+          </>
         ) : (
           <div className={styles.empty}>
             <div className={styles.emptyIcon} aria-hidden>
