@@ -709,6 +709,46 @@ export function TOOL_SET_HP_IF(
   effect.hp = options.hp;
 }
 
+/**
+ * Spirit Link: skip the Mega Evolution end-turn rule when evolving into the named Mega Pokemon.
+ * Call from the Spirit Link tool's reduceEffect with the target Mega's name.
+ */
+export function SPIRIT_LINK_SKIP_MEGA_EVOLUTION_END_TURN(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  tool: TrainerCard,
+  megaPokemonName: string,
+): void {
+  if (!(effect instanceof PlayPokemonEffect)
+    || !effect.target.tools.includes(tool)
+    || effect.pokemonCard.name !== megaPokemonName) {
+    return;
+  }
+
+  if (IS_TOOL_BLOCKED(store, state, effect.player, tool)) {
+    return;
+  }
+
+  effect.skipMegaEvolutionEndTurn = true;
+}
+
+/**
+ * Mega Evolution Rule: end the turn when this Pokemon is played to evolve,
+ * unless a Spirit Link set skipMegaEvolutionEndTurn on the PlayPokemonEffect.
+ */
+export function MEGA_EVOLUTION_END_TURN(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+  card: PokemonCard,
+): void {
+  if (effect instanceof PlayPokemonEffect && effect.pokemonCard === card
+    && !effect.skipMegaEvolutionEndTurn) {
+    store.reduceEffect(state, new EndTurnEffect(effect.player));
+  }
+}
+
 export function GET_TOTAL_ENERGY_ATTACHED_TO_PLAYERS_POKEMON(
   player: Player,
   store: StoreLike,
