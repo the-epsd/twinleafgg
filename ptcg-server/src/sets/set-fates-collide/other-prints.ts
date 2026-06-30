@@ -12,7 +12,7 @@ import { DoubleColorlessEnergy } from '../set-base-set/double-colorless-energy';
 import { StrongEnergy } from '../set-furious-fists/strong-energy';
 import { GlaceonEx } from './glaceon-ex';
 import { AlakazamEx } from './alakazam-ex';
-import { MAlakazamEx } from './m-alakazam-ex';
+import { MAlakazamEx } from './mega-alakazam-ex';
 import { UmbreonEx } from './umbreon-ex';
 import { MAltariaEx } from './m-altaria-ex';
 import { KingdraEx } from './kingdra-ex';
@@ -142,7 +142,7 @@ export class AltariaEx2 extends AltariaEx {
 export class TeamRocketsHandiwork2 extends TeamRocketsHandiwork {
   public set: string = 'FCO';
   public setNumber: string = '124';
-  public fullName: string = 'Team Rocket\'s Handiwork FCO 124';
+  public fullName: string = "Team Rocket's Handiwork FCO 124";
 }
 
 export class AlakazamEx3 extends AlakazamEx {
