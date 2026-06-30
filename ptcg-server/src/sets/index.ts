@@ -184,6 +184,7 @@ export * from './set-black-bolt-white-flare';
 export * from './set-mega-evolution-promos';
 export * from './set-mega-evolution';
 export * from './set-mega-evolution-energy';
+export * from './set-mega-starter-deck';
 export * from './set-phantasmal-flames';
 export * from './set-ascended-heroes';
 export * from './set-perfect-order';

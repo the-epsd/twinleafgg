@@ -204,6 +204,7 @@ cardManager.defineSet(sets.setSV11);
 
 cardManager.defineSet(sets.setMegaEvolutionPromos);
 cardManager.defineSet(sets.setMegaEvolution);
+cardManager.defineSet(sets.setMegaStarterDeck);
 cardManager.defineSet(sets.setPhantasmalFlames);
 cardManager.defineSet(sets.setAscendedHeroes);
 cardManager.defineSet(sets.setPerfectOrder);
