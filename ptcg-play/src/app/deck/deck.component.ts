@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { LegacyPageEvent as PageEvent } from '@angular/material/legacy-paginator';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import { finalize } from 'rxjs/operators';
+import { EMPTY, Observable } from 'rxjs';
+import { expand, finalize, map, reduce } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 import { ApiError } from '../api/api.error';
 import { DeckListEntry } from '../api/interfaces/deck.interface';
 import { DeckService } from '../api/services/deck.service';
@@ -30,6 +33,10 @@ export class DeckComponent implements OnInit {
   public formatDefaultDecks: { [key: string]: number } = {};
   public selectedFormat: string = 'all';
   public filteredDecks: DeckListEntry[] = [];
+  public paginatedDecks: DeckListEntry[] = [];
+  public pageIndex = 0;
+  public pageSize = environment.defaultPageSize;
+  public pageSizeOptions = [environment.defaultPageSize];
   public showThemeDecksInAllTab = false;
   public hiddenFormats: Format[] = [];
   public hoveredDeckId: number | null = null;
@@ -124,7 +131,7 @@ export class DeckComponent implements OnInit {
 
   private refreshList() {
     this.loading = true;
-    this.deckService.getList({ summary: true, limit: 100, offset: 0 }).pipe(
+    this.fetchAllDecks().pipe(
       finalize(() => {
         this.loading = false;
         // Update filtered decks based on current format
@@ -132,11 +139,11 @@ export class DeckComponent implements OnInit {
       }),
       untilDestroyed(this)
     )
-      .subscribe(response => {
-        this.decks = response.decks;
+      .subscribe(decks => {
+        this.decks = decks;
 
         // Only build deckItems when full card data is present (non-summary response)
-        if (response.decks.some(d => d.cards)) {
+        if (decks.some(d => d.cards)) {
           this.decks.forEach(deck => {
             if (deck.cards) {
               const deckCards: DeckItem[] = [];
@@ -155,6 +162,43 @@ export class DeckComponent implements OnInit {
       }, (error: ApiError) => {
         this.handleError(error);
       });
+  }
+
+  private fetchAllDecks(): Observable<DeckListEntry[]> {
+    const pageLimit = 500;
+
+    const fetchPage = (offset: number) => this.deckService.getList({
+      summary: true,
+      limit: pageLimit,
+      offset
+    }).pipe(
+      map(response => {
+        const total = response.total ?? response.decks.length;
+        const nextOffset = offset + pageLimit < total ? offset + pageLimit : null;
+        return { decks: response.decks, nextOffset };
+      })
+    );
+
+    return fetchPage(0).pipe(
+      expand(result => result.nextOffset !== null ? fetchPage(result.nextOffset) : EMPTY),
+      map(result => result.decks),
+      reduce((all, decks) => this.mergeDeckLists(all, decks), [] as DeckListEntry[]),
+    );
+  }
+
+  private mergeDeckLists(accumulated: DeckListEntry[], newDecks: DeckListEntry[]): DeckListEntry[] {
+    const existingIds = new Set(accumulated.map(d => d.id));
+    return [...accumulated, ...newDecks.filter(d => !existingIds.has(d.id))];
+  }
+
+  private updatePaginatedDecks() {
+    const start = this.pageIndex * this.pageSize;
+    this.paginatedDecks = this.filteredDecks.slice(start, start + this.pageSize);
+  }
+
+  public onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.updatePaginatedDecks();
   }
 
   public async createDeck() {
@@ -360,6 +404,7 @@ export class DeckComponent implements OnInit {
 
   public selectFormat(format: string) {
     this.selectedFormat = format;
+    this.pageIndex = 0;
 
     if (format === 'theme') {
       // Show only theme decks
@@ -377,6 +422,8 @@ export class DeckComponent implements OnInit {
         Array.isArray(deck.format) && deck.format.includes(Format[format.toUpperCase()])
       );
     }
+
+    this.updatePaginatedDecks();
   }
 
   public onShowThemeDecksToggleChange() {

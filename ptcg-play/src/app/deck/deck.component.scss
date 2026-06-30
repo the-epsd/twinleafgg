@@ -366,6 +366,29 @@ ptcg-archetype,
   }
 }
 
+.pagination-container {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+
+  ::ng-deep .mat-paginator {
+    background: linear-gradient(135deg, rgba($twinleaf-50, 0.05), rgba($twinleaf-50, 0.02));
+    border: 1px solid rgba($twinleaf-500, 0.3);
+    border-radius: 12px;
+    backdrop-filter: blur(20px);
+    color: $text-primary;
+
+    .mat-paginator-page-size-label,
+    .mat-paginator-range-label {
+      color: $text-primary;
+    }
+
+    .mat-icon-button {
+      color: $text-primary;
+    }
+  }
+}
+
 .no-decks-message {
   display: flex;
   flex-direction: column;
