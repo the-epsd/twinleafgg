@@ -1,6 +1,7 @@
 import type { Attack, Card, CardList, Player, PokemonCard, Power } from 'ptcg-server';
 import { CardTag, CardType, PokemonCardList, PowerType, Stage, SuperType } from 'ptcg-server';
 import i18n from '../i18n/i18n';
+import styles from './CardInfoPane.module.css';
 
 const CHARACTER_NAME_PREFIXES = [
   "Marnie's",
@@ -60,6 +61,24 @@ export function transformEnergyText(text: string, iconSize = ENERGY_ICON_SIZE): 
     }
     return `<img align="middle" src="/assets/energy-icons/${slug}.webp" alt="${slug} Energy" width="${iconSize}" style="vertical-align: -0.2em">`;
   });
+}
+
+export function formatReminderText(text: string): string {
+  return text.replace(/\(/g, `<span class=${styles.reminder}>(`).replace(/\)/g, ')</span>');
+}
+
+export function formatBossMonMechanics(text: string): string {
+  return text
+    .replace(
+      / (ex|V-UNION|VMAX|VSTAR|V|TAG TEAM|GX|BREAK|ACE SPEC)($|\W)/g,
+      (match, mechanic, postscript) =>
+        ` <span class=${styles.bossMon}>${mechanic}</span>${postscript}`,
+    )
+    .replace(/-(EX|GX)/g, (match, mechanic) => `-<span class=${styles.bossMon}>${mechanic}</span>`);
+}
+
+export function formatCardText(text: string, iconSize: string): string {
+  return transformEnergyText(formatBossMonMechanics(formatReminderText(text)), iconSize);
 }
 
 export function getCardsWithSameName(catalog: Card[], card: Card): Card[] {
@@ -213,6 +232,213 @@ export function getDisplayAttacks(card: Card, cardList?: CardList): Attack[] {
   }
 
   return cardAttacks(card);
+}
+
+interface RuleBox {
+  name: string;
+  isRuleBox: boolean;
+  text: string;
+}
+
+export function getDisplayRuleBoxes(card: Card, _?: CardList): RuleBox[] {
+  if (!card) {
+    return [];
+  }
+
+  var boxes: RuleBox[] = [];
+
+  // Miscellaneous tagged traits
+
+  if (card.tags.includes(CardTag.MEGA)) {
+    if (card.tags.includes(CardTag.PRIMAL)) {
+      var monName = card.name;
+      boxes.push({
+        name: 'Primal Reversion rule',
+        isRuleBox: true,
+        text: `When 1 of your Pokémon becomes ${monName}, your turn ends.`,
+      });
+    } else {
+      boxes.push({
+        name: 'Mega Evolution rule',
+        isRuleBox: true,
+        text: 'When 1 of your Pokémon becomes a Mega Evolution Pokémon, your turn ends.',
+      });
+    }
+  }
+
+  if (card.tags.includes(CardTag.POKEMON_TERA)) {
+    boxes.push({
+      name: 'Tera',
+      isRuleBox: false,
+      text: "As long as this Pokémon is on your Bench, prevent all damage done to this Pokémon by attacks (both yours and your opponent's).",
+    });
+  }
+
+  // Deck construction rules
+
+  if (card.tags.includes(CardTag.UNOWN)) {
+    boxes.push({
+      name: 'Neo Unown',
+      isRuleBox: false,
+      text: 'You may have up to 4 Basic Pokémon cards in your deck with Unown in their names.',
+    });
+  }
+
+  if (card.tags.includes(CardTag.ARCEUS)) {
+    boxes.push({
+      name: 'Platinum Arceus',
+      isRuleBox: false,
+      text: 'You may have as many of this card in your deck as you like.',
+    });
+  }
+
+  if (card.tags.includes(CardTag.STAR)) {
+    boxes.push({
+      name: 'Pokémon Star',
+      isRuleBox: false,
+      text: "You can't have more than 1 Pokémon Star in your deck.",
+    });
+  }
+
+  if (card.tags.includes(CardTag.ACE_SPEC)) {
+    boxes.push({
+      name: 'ACE SPEC',
+      isRuleBox: false,
+      text: "You can't have more than 1 ACE SPEC card in your deck.",
+    });
+  }
+
+  if (card.tags.includes(CardTag.PRISM_STAR)) {
+    boxes.push({
+      name: 'Prism Star Rule',
+      isRuleBox: true,
+      text:
+        "You can't have more than 1 Prism Star card with the same name in your deck. " +
+        'If a Prism Star card would go to the discard pile, put it in the Lost Zone instead.',
+    });
+  }
+
+  if (card.tags.includes(CardTag.RADIANT)) {
+    boxes.push({
+      name: 'Radiant Pokémon Rule',
+      isRuleBox: true,
+      text: "You can't have more than 1 Radiant Pokémon in your deck.",
+    });
+  }
+
+  // Play rules
+
+  if (card.tags.includes(CardTag.POKEMON_LV_X)) {
+    var monName = card.name;
+    boxes.push({
+      name: 'LV.X',
+      isRuleBox: false,
+      text: `Put this card onto your Active ${monName}. ${monName} LV.X can use any attack, Poké-Power, or Poké-Body from its previous Level.`,
+    });
+  }
+
+  if (card.tags.includes(CardTag.BREAK)) {
+    var monName = card.name;
+    boxes.push({
+      name: 'BREAK Evolution Rule',
+      isRuleBox: true,
+      text: `${monName} retains the attacks, Abilities, Weakness, Resistance, and Retreat Cost of its previous Evolution.`,
+    });
+  }
+
+  // Prize card rules
+
+  if (card.tags.includes(CardTag.POKEMON_ex)) {
+    if (card.tags.includes(CardTag.POKEMON_SV_MEGA)) {
+      boxes.push({
+        name: 'Mega Evolution ex rule',
+        isRuleBox: true,
+        text: 'When your Mega Evolution Pokémon ex is Knocked Out, your opponent takes 3 Prize cards.',
+      });
+    } else {
+      if (!card.regulationMark) {
+        // If there's no regulation mark, it's probably an ex-era card.
+        boxes.push({
+          name: 'Pokémon ex',
+          isRuleBox: false,
+          text: 'When Pokémon ex has been Knocked Out, your opponent takes 2 Prize cards.',
+        });
+      } else {
+        // SV-on era, has a rule box
+        boxes.push({
+          name: 'Pokémon ex rule',
+          isRuleBox: true,
+          text: 'When your Pokémon ex is Knocked Out, your opponent takes 2 Prize cards.',
+        });
+      }
+    }
+  }
+
+  if (card.tags.includes(CardTag.DUAL_LEGEND)) {
+    boxes.push({
+      name: 'Pair Legend',
+      isRuleBox: false,
+      text: 'When this Pokémon has been Knocked Out, your opponent takes 2 Prize cards.',
+    });
+  }
+
+  if (card.tags.includes(CardTag.POKEMON_EX)) {
+    boxes.push({
+      name: 'Pokémon-EX rule',
+      isRuleBox: true,
+      text: 'When a Pokémon-EX has been Knocked Out, your opponent takes 2 Prize cards.',
+    });
+  }
+
+  if (card.tags.includes(CardTag.POKEMON_GX)) {
+    if (card.tags.includes(CardTag.TAG_TEAM)) {
+      boxes.push({
+        name: 'TAG TEAM rule',
+        isRuleBox: true,
+        text: 'When your TAG TEAM is Knocked Out, your opponent takes 3 Prize cards.',
+      });
+    } else {
+      boxes.push({
+        name: 'Pokémon-GX rule',
+        isRuleBox: true,
+        text: 'When your Pokémon-GX has been Knocked Out, your opponent takes 2 Prize cards.',
+      });
+    }
+  }
+
+  if (card.tags.includes(CardTag.POKEMON_V)) {
+    boxes.push({
+      name: 'V rule',
+      isRuleBox: true,
+      text: 'When your Pokémon V is Knocked Out, your opponent takes 2 Prize cards.',
+    });
+  }
+
+  if (card.tags.includes(CardTag.POKEMON_VMAX)) {
+    boxes.push({
+      name: 'VMAX rule',
+      isRuleBox: true,
+      text: 'When your Pokémon VMAX is Knocked Out, your opponent takes 3 Prize cards.',
+    });
+  }
+
+  if (card.tags.includes(CardTag.POKEMON_VSTAR)) {
+    boxes.push({
+      name: 'VSTAR rule',
+      isRuleBox: true,
+      text: 'When your Pokémon VSTAR is Knocked Out, your opponent takes 2 Prize cards.',
+    });
+  }
+
+  if (card.tags.includes(CardTag.POKEMON_VUNION)) {
+    boxes.push({
+      name: 'V-UNION rule',
+      isRuleBox: true,
+      text: 'When your Pokémon V-UNION is Knocked Out, your opponent takes 3 Prize cards.',
+    });
+  }
+
+  return boxes;
 }
 
 /**
@@ -370,9 +596,7 @@ export type DebugMarkerDisplay = {
 
 function pokemonCardsInList(cardList: CardList): Card[] {
   const tools = pokemonCardListTools(cardList);
-  return cardList.cards.filter(
-    (c) => c.superType === SuperType.POKEMON && !tools.includes(c),
-  );
+  return cardList.cards.filter((c) => c.superType === SuperType.POKEMON && !tools.includes(c));
 }
 
 function markerSourceMatchesChain(source: Card | undefined, chainCards: Card[]): boolean {

@@ -13,12 +13,13 @@ import {
   getDisplayAttacks,
   getDisplayDebugMarkers,
   getDisplayPowers,
+  getDisplayRuleBoxes,
   getDisplayTagLabels,
   isToolCardInList,
   parseCardName,
   powerTypeLabel,
   stageLabel,
-  transformEnergyText as formatEnergyText,
+  formatCardText,
   CARD_INFO_ENERGY_ICON_SIZE,
 } from './cardInfoUtils';
 import { useOptionalSettings } from '../context/SettingsContext';
@@ -125,10 +126,11 @@ export function CardInfoPane({
   }
 
   const kerningStyle = { letterSpacing: `${cardTextKerning}px` } as const;
-  const energyText = (text: string) => formatEnergyText(text, CARD_INFO_ENERGY_ICON_SIZE);
+  const formattedText = (text: string) => formatCardText(text, CARD_INFO_ENERGY_ICON_SIZE);
 
   const displayPowers = useMemo(() => getDisplayPowers(card, cardList), [card, cardList]);
   const displayAttacks = useMemo(() => getDisplayAttacks(card, cardList), [card, cardList]);
+  const displayRuleBoxes = useMemo(() => getDisplayRuleBoxes(card, cardList), [card, cardList]);
 
   const abilityUsedThisTurn =
     cardList instanceof PokemonCardList &&
@@ -308,7 +310,7 @@ export function CardInfoPane({
                 <div
                   className={styles.cardText}
                   style={kerningStyle}
-                  dangerouslySetInnerHTML={{ __html: energyText(power.text ?? '') }}
+                  dangerouslySetInnerHTML={{ __html: formattedText(power.text ?? '') }}
                 />
               </div>
             </HoverHighlight>
@@ -351,10 +353,30 @@ export function CardInfoPane({
                 <div
                   className={styles.cardText}
                   style={kerningStyle}
-                  dangerouslySetInnerHTML={{ __html: energyText(attack.text ?? '') }}
+                  dangerouslySetInnerHTML={{ __html: formattedText(attack.text ?? '') }}
                 />
               </div>
             </HoverHighlight>
+          ))}
+
+          {displayRuleBoxes.map((ruleBox) => (
+              <div className={styles.power}>
+                <div className={styles.powerHeader}>
+                  {ruleBox.isRuleBox ? (
+                    <div className={styles.powerType}>
+                        <span className={styles.ability}>
+                          Rule Box
+                        </span>
+                    </div>
+                  ) : null}
+                  <div className={styles.powerName}>{ruleBox.name}</div>
+                </div>
+                <div
+                  className={styles.cardText}
+                  style={kerningStyle}
+                  dangerouslySetInnerHTML={{ __html: formattedText(ruleBox.text ?? '') }}
+                />
+              </div>
           ))}
 
           <div className={styles.stats}>
@@ -410,7 +432,7 @@ export function CardInfoPane({
               <div
                 className={styles.cardText}
                 style={kerningStyle}
-                dangerouslySetInnerHTML={{ __html: energyText(getCardRuleText(card)) }}
+                dangerouslySetInnerHTML={{ __html: formattedText(getCardRuleText(card)) }}
               />
             </div>
           ) : null}
@@ -446,7 +468,7 @@ export function CardInfoPane({
               <div
                 className={styles.cardText}
                 style={kerningStyle}
-                dangerouslySetInnerHTML={{ __html: energyText(getCardRuleText(card)) }}
+                dangerouslySetInnerHTML={{ __html: formattedText(getCardRuleText(card)) }}
               />
             </div>
           ) : null}
@@ -472,10 +494,30 @@ export function CardInfoPane({
                 <div
                   className={styles.cardText}
                   style={kerningStyle}
-                  dangerouslySetInnerHTML={{ __html: energyText(power.text ?? '') }}
+                  dangerouslySetInnerHTML={{ __html: formattedText(power.text ?? '') }}
                 />
               </div>
             </HoverHighlight>
+          ))}
+
+          {displayRuleBoxes.map((ruleBox) => (
+              <div className={styles.power}>
+                <div className={styles.powerHeader}>
+                  {ruleBox.isRuleBox ? (
+                    <div className={styles.powerType}>
+                        <span className={styles.ability}>
+                          Rule Box
+                        </span>
+                    </div>
+                  ) : null}
+                  <div className={styles.powerName}>{ruleBox.name}</div>
+                </div>
+                <div
+                  className={styles.cardText}
+                  style={kerningStyle}
+                  dangerouslySetInnerHTML={{ __html: formattedText(ruleBox.text ?? '') }}
+                />
+              </div>
           ))}
         </div>
       )}
@@ -521,7 +563,7 @@ export function CardInfoPane({
                 <div
                   className={styles.cardText}
                   style={kerningStyle}
-                  dangerouslySetInnerHTML={{ __html: energyText(power.text ?? '') }}
+                  dangerouslySetInnerHTML={{ __html: formattedText(power.text ?? '') }}
                 />
               </div>
             </HoverHighlight>
@@ -551,7 +593,7 @@ export function CardInfoPane({
                 <div
                   className={styles.cardText}
                   style={kerningStyle}
-                  dangerouslySetInnerHTML={{ __html: energyText(attack.text ?? '') }}
+                  dangerouslySetInnerHTML={{ __html: formattedText(attack.text ?? '') }}
                 />
               </div>
             </HoverHighlight>
@@ -570,11 +612,31 @@ export function CardInfoPane({
                 <div
                   className={styles.cardText}
                   style={kerningStyle}
-                  dangerouslySetInnerHTML={{ __html: energyText(getCardRuleText(card)) }}
+                  dangerouslySetInnerHTML={{ __html: formattedText(getCardRuleText(card)) }}
                 />
               </div>
             ) : null}
           </HoverHighlight>
+
+          {displayRuleBoxes.map((ruleBox) => (
+              <div className={styles.power}>
+                <div className={styles.powerHeader}>
+                  {ruleBox.isRuleBox ? (
+                    <div className={styles.powerType}>
+                        <span className={styles.ability}>
+                          Rule Box
+                        </span>
+                    </div>
+                  ) : null}
+                  <div className={styles.powerName}>{ruleBox.name}</div>
+                </div>
+                <div
+                  className={styles.cardText}
+                  style={kerningStyle}
+                  dangerouslySetInnerHTML={{ __html: formattedText(ruleBox.text ?? '') }}
+                />
+              </div>
+          ))}
         </div>
       )}
 

@@ -375,3 +375,14 @@
 .statsHighlight {
   flex: 1 1 auto;
 }
+
+.reminder {
+  font-style: italic;
+  font-size: 85%;
+  color: #d4d5d6;
+}
+
+.bossMon {
+  font-weight: bold;
+  font-style: italic;
+}

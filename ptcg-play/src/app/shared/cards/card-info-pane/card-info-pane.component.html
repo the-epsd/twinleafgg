@@ -111,6 +111,18 @@
       </div>
     </ptcg-hover-highlight>
 
+    <div class="power" *ngFor="let ruleBox of getDisplayRuleBoxes()">
+      <div class="power-header">
+        <div class="power-type" *ngIf="ruleBox.isRuleBox">
+          <div class="ability">Rule Box</div>
+        </div>
+        <div class="power-name">
+          {{ ruleBox.name }}
+        </div>
+      </div>
+      <div class="card-text" [innerHTML]="formatCardText(ruleBox.text)" [ngStyle]="getCardTextKerningStyle()"></div>
+    </div>
+
     <div class="stats">
       <div class="stats-item">
         <div class="stats-item-header" translate>CARDS_WEAKNESS</div>
@@ -217,6 +229,18 @@
       </div>
     </ptcg-hover-highlight>
 
+    <div class="power" *ngFor="let ruleBox of getDisplayRuleBoxes()">
+      <div class="power-header">
+        <div class="power-type" *ngIf="ruleBox.isRuleBox">
+          <div class="ability">Rule Box</div>
+        </div>
+        <div class="power-name">
+          {{ ruleBox.name }}
+        </div>
+      </div>
+      <div class="card-text" [innerHTML]="formatCardText(ruleBox.text)" [ngStyle]="getCardTextKerningStyle()"></div>
+    </div>
+
   </div>
 
   <div class="ptcg-card-info-text" *ngIf="!facedown && card.superType === SuperType.TRAINER">
@@ -296,6 +320,18 @@
         </div>
       </div>
     </ptcg-hover-highlight>
+
+    <div class="power" *ngFor="let ruleBox of getDisplayRuleBoxes()">
+      <div class="power-header">
+        <div class="power-type" *ngIf="ruleBox.isRuleBox">
+          <div class="ability">Rule Box</div>
+        </div>
+        <div class="power-name">
+          {{ ruleBox.name }}
+        </div>
+      </div>
+      <div class="card-text" [innerHTML]="formatCardText(ruleBox.text)" [ngStyle]="getCardTextKerningStyle()"></div>
+    </div>
 
   </div>
 
