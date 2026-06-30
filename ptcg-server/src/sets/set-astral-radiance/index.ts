@@ -56,8 +56,6 @@ import { HisuianTyphlosion } from './hisuian-typhlosion';
 import { HisuianTyphlosionV } from './hisuian-typhlosion-v';
 import { HisuianTyphlosionVstar } from './hisuian-typhlosion-vstar';
 import { HisuianVoltorb } from './hisuian-voltorb';
-import { HisuianZoroark } from './hisuian-zoroark';
-import { HisuianZorua } from './hisuian-zorua';
 import { Hoothoot } from './hoothoot';
 import { JirachiV } from './jirachi-v';
 import { Keldeo } from './keldeo';
@@ -300,8 +298,6 @@ export const setAstralRadiance: Card[] = [
   new HisuianTyphlosionV(),
   new HisuianTyphlosionVstar(),
   new HisuianVoltorb(),
-  new HisuianZoroark(),
-  new HisuianZorua(),
   new Hoothoot(),
   new JirachiV(),
   new Keldeo(),
