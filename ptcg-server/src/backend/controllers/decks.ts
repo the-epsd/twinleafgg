@@ -9,6 +9,7 @@ import { User, Deck, Match, Sleeve } from '../../storage';
 import { THEME_DECKS } from '../../game/store/prefabs/theme-decks';
 import { Format, CardTag, EnergyType, SuperType } from '../../game/store/card/card-types';
 import { ANY_PRINTING_ALLOWED } from '../../game/store/card/any-printing-allowed';
+import { getPrintingReleaseDate } from '../../game/format/printing-release-date';
 
 export class Decks extends Controller {
 
@@ -1079,9 +1080,9 @@ function standardRegulationMarkAllowed(card: any): boolean {
 }
 
 // --- isPrintingLegalInStandard ---
-/** Set must be in rotation (>= TEF), released (<= today), and regulation mark H+ when present. */
+/** Printing release (promo-aware) must be in rotation (>= TEF), released (<= today), and regulation mark H+ when present. */
 function isPrintingLegalInStandard(card: any): boolean {
-  const setDate = SetReleaseDates[card.set];
+  const setDate = getPrintingReleaseDate(card, SetReleaseDates);
   return !!setDate &&
     setDate >= SetReleaseDates['TEF'] &&
     setDate <= new Date() &&
@@ -1091,7 +1092,7 @@ function isPrintingLegalInStandard(card: any): boolean {
 // --- isPrintingLegalInStandardNightly ---
 /** Same regulation rules as Standard, plus not-yet-released sets at or after TEF (e.g. M3, M4). */
 function isPrintingLegalInStandardNightly(card: any): boolean {
-  const setDate = SetReleaseDates[card.set];
+  const setDate = getPrintingReleaseDate(card, SetReleaseDates);
   return !!setDate &&
     setDate >= SetReleaseDates['TEF'] &&
     standardRegulationMarkAllowed(card);
