@@ -17,14 +17,9 @@ export class PrimalGroudonEx extends PokemonCard {
 
   public powers = [
     {
-      name: 'Primal Reversion Rule',
-      powerType: PowerType.MEGA_EVOLUTION_RULE,
-      text: 'When 1 of your Pokémon becomes Primal Groudon-EX, your turn ends.'
-    },
-    {
       name: 'Ω Barrier',
       powerType: PowerType.ANCIENT_TRAIT,
-      text: 'Whenever your opponent plays a Trainer card (excluding Pokémon Tools and Stadium cards), prevent all effects of that card done to this Pokémon.'
+      text: 'Whenever your opponent plays a Trainer card (excluding Pokémon Tools and Stadium cards), prevent all effects of that card done to this Pokémon.',
     },
   ];
 
@@ -34,8 +29,8 @@ export class PrimalGroudonEx extends PokemonCard {
       cost: [F, F, F, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card.'
-    }
+      text: 'If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card.',
+    },
   ];
 
   public set: string = 'PRC';
@@ -62,22 +57,27 @@ export class PrimalGroudonEx extends PokemonCard {
 
       // finding if the owner of the card is playing the trainer or if the opponent is
       let isGroudonOnOpposingSide = false;
-      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.getPokemonCard() === this) { isGroudonOnOpposingSide = true; }
+      opponent.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+        if (cardList.getPokemonCard() === this) {
+          isGroudonOnOpposingSide = true;
+        }
       });
-      if (!isGroudonOnOpposingSide) { return state; }
+      if (!isGroudonOnOpposingSide) {
+        return state;
+      }
 
       effect.preventDefault = true;
     }
 
     // Gaia Volcano
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      if (StateUtils.getStadiumCard(state) === undefined) { return state; }
+      if (StateUtils.getStadiumCard(state) === undefined) {
+        return state;
+      }
       effect.damage += 100;
       DISCARD_A_STADIUM_CARD_IN_PLAY(state);
     }
 
     return state;
   }
-
 }

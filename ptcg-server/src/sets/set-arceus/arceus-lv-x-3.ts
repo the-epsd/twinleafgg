@@ -1,42 +1,50 @@
-import { ChooseAttackPrompt, EnergyMap, GameError, GameMessage, Player, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
+import {
+  ChooseAttackPrompt,
+  EnergyMap,
+  GameError,
+  GameMessage,
+  Player,
+  PlayerType,
+  PowerType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../game';
 import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import {CheckAttackCostEffect, CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckPokemonStatsEffect, CheckProvidedEnergyEffect, CheckTableStateEffect} from '../../game/store/effects/check-effects';
+import {
+  CheckAttackCostEffect,
+  CheckPokemonAttacksEffect,
+  CheckPokemonPowersEffect,
+  CheckPokemonStatsEffect,
+  CheckProvidedEnergyEffect,
+  CheckTableStateEffect,
+} from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {IS_POKEBODY_BLOCKED, WAS_POWER_USED} from '../../game/store/prefabs/prefabs';
-import {PlayPokemonEffect} from '../../game/store/effects/play-card-effects';
-import {UseAttackEffect} from '../../game/store/effects/game-effects';
+import { IS_POKEBODY_BLOCKED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
+import { UseAttackEffect } from '../../game/store/effects/game-effects';
 
 export class ArceusLvX3 extends PokemonCard {
   public stage: Stage = Stage.LV_X;
   public evolvesFrom = 'Arceus';
   public cardType: CardType = C;
-  public tags = [ CardTag.POKEMON_LV_X, CardTag.ARCEUS ];
+  public tags = [CardTag.POKEMON_LV_X, CardTag.ARCEUS];
   public hp: number = 120;
-  public retreat = [ C ];
+  public retreat = [C];
 
   public powers = [
     {
-      name: 'LV.X Rule',
-      powerType: PowerType.LV_X_RULE,
-      text: 'Put this card onto your Active Arceus. Arceus LV.X can use any attack, Poké-Power, or Poké-Body from its previous Level.'
-    },
-    {
-      name: 'Arceus Rule',
-      powerType: PowerType.ARCEUS_RULE,
-      text: 'You may have as many of this card in your deck as you like.'
-    },
-    {
       name: 'Multitype',
       powerType: PowerType.POKEBODY,
-      text: 'Arceus LV.X\'s type is the same type as its previous Level.'
+      text: "Arceus LV.X's type is the same type as its previous Level.",
     },
     {
       name: 'Omniscient',
       powerType: PowerType.POKEBODY,
       useWhenInPlay: true,
-      text: 'Arceus can use the attacks of all Arceus you have in play as its own. (You still need the necessary Energy to use each attack.)'
-    }
+      text: 'Arceus can use the attacks of all Arceus you have in play as its own. (You still need the necessary Energy to use each attack.)',
+    },
   ];
 
   public set: string = 'AR';
@@ -50,10 +58,12 @@ export class ArceusLvX3 extends PokemonCard {
     if (effect instanceof CheckPokemonStatsEffect && effect.target.getPokemonCard() === this) {
       const player = StateUtils.findOwner(state, effect.target);
 
-      if (IS_POKEBODY_BLOCKED(store, state, player, this)){ return state; }
+      if (IS_POKEBODY_BLOCKED(store, state, player, this)) {
+        return state;
+      }
 
-      effect.target.cards.forEach(card => {
-        if (card instanceof PokemonCard && card.name === 'Arceus' && card !== this){
+      effect.target.cards.forEach((card) => {
+        if (card instanceof PokemonCard && card.name === 'Arceus' && card !== this) {
           effect.target.getPokemonCard()?.cardType === card.cardType;
           return state;
         }
@@ -81,24 +91,28 @@ export class ArceusLvX3 extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_COPY,
-        pokemonCards,
-        { allowCancel: true, blocked }
-      ), attack => {
-        if (attack !== null) {
-          const useAttackEffect = new UseAttackEffect(player, attack);
-          store.reduceEffect(state, useAttackEffect);
-        }
-      });
+      return store.prompt(
+        state,
+        new ChooseAttackPrompt(player.id, GameMessage.CHOOSE_ATTACK_TO_COPY, pokemonCards, {
+          allowCancel: true,
+          blocked,
+        }),
+        (attack) => {
+          if (attack !== null) {
+            const useAttackEffect = new UseAttackEffect(player, attack);
+            store.reduceEffect(state, useAttackEffect);
+          }
+        },
+      );
     }
 
     // making sure it gets put on the active pokemon
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
-      if (effect.target !== effect.player.active){ throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD); }
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      if (effect.target !== effect.player.active) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
     }
-    
+
     // Trying to get all of the previous stage's attacks and powers
     if (effect instanceof CheckTableStateEffect) {
       const player = effect.player;
@@ -144,13 +158,17 @@ export class ArceusLvX3 extends PokemonCard {
 
       // Add attacks from the previous stage to this one
       for (const evolutionCard of cardList.cards) {
-        if (evolutionCard.superType === SuperType.POKEMON && evolutionCard !== this && evolutionCard.name === this.evolvesFrom) {
+        if (
+          evolutionCard.superType === SuperType.POKEMON &&
+          evolutionCard !== this &&
+          evolutionCard.name === this.evolvesFrom
+        ) {
           effect.attacks.push(...(evolutionCard.attacks || []));
         }
       }
     }
 
-    if (effect instanceof CheckPokemonPowersEffect){
+    if (effect instanceof CheckPokemonPowersEffect) {
       const player = effect.player;
       const cardList = StateUtils.findCardList(state, this);
       const owner = StateUtils.findOwner(state, cardList);
@@ -172,7 +190,11 @@ export class ArceusLvX3 extends PokemonCard {
 
       // Adds the powers from the previous stage
       for (const evolutionCard of cardList.cards) {
-        if (evolutionCard.superType === SuperType.POKEMON && evolutionCard !== this && evolutionCard.name === this.evolvesFrom) {
+        if (
+          evolutionCard.superType === SuperType.POKEMON &&
+          evolutionCard !== this &&
+          evolutionCard.name === this.evolvesFrom
+        ) {
           effect.powers.push(...(evolutionCard.powers || []));
         }
       }
@@ -182,15 +204,16 @@ export class ArceusLvX3 extends PokemonCard {
   }
 
   private buildAttackList(
-    state: State, store: StoreLike, player: Player
-  ): { pokemonCards: PokemonCard[], blocked: { index: number, attack: string }[] } {
-
+    state: State,
+    store: StoreLike,
+    player: Player,
+  ): { pokemonCards: PokemonCard[]; blocked: { index: number; attack: string }[] } {
     const checkProvidedEnergyEffect = new CheckProvidedEnergyEffect(player);
     store.reduceEffect(state, checkProvidedEnergyEffect);
     const energyMap = checkProvidedEnergyEffect.energyMap;
 
     const pokemonCards: PokemonCard[] = [];
-    const blocked: { index: number, attack: string }[] = [];
+    const blocked: { index: number; attack: string }[] = [];
 
     // Check player's Pokemon
     player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
@@ -200,16 +223,21 @@ export class ArceusLvX3 extends PokemonCard {
     return { pokemonCards, blocked };
   }
 
-  private checkAttack(state: State, store: StoreLike, player: Player,
-    card: PokemonCard, energyMap: EnergyMap[], pokemonCards: PokemonCard[],
-    blocked: { index: number, attack: string }[]
+  private checkAttack(
+    state: State,
+    store: StoreLike,
+    player: Player,
+    card: PokemonCard,
+    energyMap: EnergyMap[],
+    pokemonCards: PokemonCard[],
+    blocked: { index: number; attack: string }[],
   ) {
     // preventing this and anything not named arceus from being copied
     if (card instanceof ArceusLvX3 || card.name !== 'Arceus') {
       return;
     }
 
-    const attacks = card.attacks.filter(attack => {
+    const attacks = card.attacks.filter((attack) => {
       const checkAttackCost = new CheckAttackCostEffect(player, attack);
       state = store.reduceEffect(state, checkAttackCost);
       return StateUtils.checkEnoughEnergy(energyMap, checkAttackCost.cost as CardType[]);
@@ -217,7 +245,7 @@ export class ArceusLvX3 extends PokemonCard {
 
     const index = pokemonCards.length;
     pokemonCards.push(card);
-    card.attacks.forEach(attack => {
+    card.attacks.forEach((attack) => {
       if (!attacks.includes(attack)) {
         blocked.push({ index, attack: attack.name });
       }

@@ -18,14 +18,9 @@ export class MRayquazaEx extends PokemonCard {
 
   public powers = [
     {
-      name: 'Mega Evolution Rule',
-      powerType: PowerType.MEGA_EVOLUTION_RULE,
-      text: 'When 1 of your Pokémon becomes a Mega Evolution Pokémon, your turn ends.'
-    },
-    {
       name: 'Δ Evolution',
       powerType: PowerType.ANCIENT_TRAIT,
-      text: 'You may play this card from your hand to evolve a Pokémon during your first turn or the turn you play that Pokémon.'
+      text: 'You may play this card from your hand to evolve a Pokémon during your first turn or the turn you play that Pokémon.',
     },
   ];
 
@@ -35,8 +30,8 @@ export class MRayquazaEx extends PokemonCard {
       cost: [C, C, C],
       damage: 30,
       damageCalculation: 'x',
-      text: 'This attack does 30 damage times the number of your Benched Pokémon.'
-    }
+      text: 'This attack does 30 damage times the number of your Benched Pokémon.',
+    },
   ];
 
   public set: string = 'ROS';
@@ -54,7 +49,10 @@ export class MRayquazaEx extends PokemonCard {
     }
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      if (effect.target.tools.length > 0 && effect.target.tools[0].name === 'Rayquaza Spirit Link') {
+      if (
+        effect.target.tools.length > 0 &&
+        effect.target.tools[0].name === 'Rayquaza Spirit Link'
+      ) {
         return state;
       }
 
@@ -72,5 +70,4 @@ export class MRayquazaEx extends PokemonCard {
 
     return state;
   }
-
 }

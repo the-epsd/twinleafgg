@@ -1,9 +1,9 @@
 import { PowerType, State, StoreLike } from '../../game';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import {AfterDamageEffect, ApplyWeaknessEffect} from '../../game/store/effects/attack-effects';
+import { AfterDamageEffect, ApplyWeaknessEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import {WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ArceusWater extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -13,20 +13,14 @@ export class ArceusWater extends PokemonCard {
   public retreat = [C, C];
   public tags = [CardTag.ARCEUS];
 
-  public powers = [{
-    name: 'Arceus Rule',
-    powerType: PowerType.ARCEUS_RULE,
-    text: 'You may have as many of this card in your deck as you like.'
-  }];
-
   public attacks = [
     {
       name: 'Fastwave',
       cost: [W, C, C],
       damage: 50,
       shredAttack: true,
-      text: 'This attack\'s damage isn\'t affected by Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon.'
-    }
+      text: "This attack's damage isn't affected by Resistance, Poké-Powers, Poké-Bodies, or any other effects on the Defending Pokémon.",
+    },
   ];
 
   public set: string = 'AR';
@@ -36,7 +30,6 @@ export class ArceusWater extends PokemonCard {
   public fullName: string = 'Arceus Water AR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Fastwave
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = effect.opponent;

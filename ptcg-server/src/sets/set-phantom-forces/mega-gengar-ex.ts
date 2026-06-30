@@ -4,16 +4,24 @@ import { StoreLike, State, PowerType, StateUtils, ChooseAttackPrompt } from '../
 import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { GameLog, GameMessage } from '../../game/game-message';
-import {WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
-import {AttackEffect} from '../../game/store/effects/game-effects';
-import {PlayPokemonEffect} from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { AttackEffect } from '../../game/store/effects/game-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
-function* usePhantomGate(next: Function, store: StoreLike, state: State, effect: AttackEffect): IterableIterator<State> {
+function* usePhantomGate(
+  next: Function,
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+): IterableIterator<State> {
   const player = effect.player;
   const opponent = StateUtils.getOpponent(state, player);
 
-  const benched = opponent.bench.filter(b => b.cards.length > 0 && b.getPokemonCard()?.name !== 'M Gengar-EX' && opponent.active !== b);
+  const benched = opponent.bench.filter(
+    (b) =>
+      b.cards.length > 0 && b.getPokemonCard()?.name !== 'M Gengar-EX' && opponent.active !== b,
+  );
   benched.push(opponent.active);
 
   // Return early if no valid targets
@@ -21,18 +29,22 @@ function* usePhantomGate(next: Function, store: StoreLike, state: State, effect:
     return state;
   }
 
-  const allYourPokemon = [...benched.map(b => b.getPokemonCard())];
+  const allYourPokemon = [...benched.map((b) => b.getPokemonCard())];
 
   let selected: any;
-  yield store.prompt(state, new ChooseAttackPrompt(
-    player.id,
-    GameMessage.CHOOSE_ATTACK_TO_COPY,
-    allYourPokemon.filter((card): card is any => card !== undefined),
-    { allowCancel: false }
-  ), result => {
-    selected = result;
-    next();
-  });
+  yield store.prompt(
+    state,
+    new ChooseAttackPrompt(
+      player.id,
+      GameMessage.CHOOSE_ATTACK_TO_COPY,
+      allYourPokemon.filter((card): card is any => card !== undefined),
+      { allowCancel: false },
+    ),
+    (result) => {
+      selected = result;
+      next();
+    },
+  );
 
   // Validate selected attack
   if (!selected || selected.copycatAttack) {
@@ -41,7 +53,7 @@ function* usePhantomGate(next: Function, store: StoreLike, state: State, effect:
 
   store.log(state, GameLog.LOG_PLAYER_COPIES_ATTACK, {
     name: player.name,
-    attack: selected.name
+    attack: selected.name,
   });
 
   // Perform attack
@@ -60,28 +72,22 @@ function* usePhantomGate(next: Function, store: StoreLike, state: State, effect:
 }
 
 export class MGengarEx extends PokemonCard {
-  public tags = [ CardTag.POKEMON_EX, CardTag.MEGA ];
+  public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Gengar-EX';
   public cardType: CardType = P;
   public hp: number = 220;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -20 }];
-  public retreat = [ C ];
-
-  public powers = [{
-    name: 'Mega Evolution Rule',
-    powerType: PowerType.MEGA_EVOLUTION_RULE,
-    text: 'When 1 of your Pokémon becomes a Mega Evolution Pokémon, your turn ends.'
-  }];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Phantom Gate',
-      cost: [ P, C, C ],
+      cost: [P, C, C],
       damage: 0,
-      text: 'Choose 1 of your opponent\'s Pokémon\'s attacks and use it as this attack.'
-    }
+      text: "Choose 1 of your opponent's Pokémon's attacks and use it as this attack.",
+    },
   ];
 
   public set: string = 'PHF';
@@ -92,8 +98,8 @@ export class MGengarEx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // love me some funny evolution crap
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
-      if (effect.target.tools.length > 0 && effect.target.tools[0].name === 'Gengar Spirit Link'){
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      if (effect.target.tools.length > 0 && effect.target.tools[0].name === 'Gengar Spirit Link') {
         return state;
       }
 
@@ -102,12 +108,11 @@ export class MGengarEx extends PokemonCard {
     }
 
     // Phantom Gate
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const generator = usePhantomGate(() => generator.next(), store, state, effect);
       return generator.next().value;
     }
 
     return state;
   }
-
 }

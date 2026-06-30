@@ -12,7 +12,7 @@ import { MoveEnergyPrompt, CardTarget } from '../../game';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class PrimalKyogreEx extends PokemonCard {
-  public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
+  public tags = [CardTag.MEGA, CardTag.POKEMON_EX, CardTag.PRIMAL];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Kyogre-EX';
   public cardType: CardType = W;
@@ -25,8 +25,8 @@ export class PrimalKyogreEx extends PokemonCard {
       name: 'Tidal Storm',
       cost: [W, W, W, C],
       damage: 150,
-      text: 'Move 2 Energy from this Pokémon to 1 of your Benched Pokémon. This attack does 30 damage to each of your opponent\'s Benched Pokémon-EX. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    }
+      text: "Move 2 Energy from this Pokémon to 1 of your Benched Pokémon. This attack does 30 damage to each of your opponent's Benched Pokémon-EX. (Don't apply Weakness and Resistance for Benched Pokémon.)",
+    },
   ];
 
   public set: string = 'PRC';
@@ -43,7 +43,7 @@ export class PrimalKyogreEx extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Move 2 Energy from this Pokemon to 1 Benched Pokemon
-      if (player.bench.some(b => b.cards.length > 0)) {
+      if (player.bench.some((b) => b.cards.length > 0)) {
         const blockedTo: CardTarget[] = [];
         const blockedFrom: CardTarget[] = [];
 
@@ -55,31 +55,35 @@ export class PrimalKyogreEx extends PokemonCard {
           }
         });
 
-        const energyCount = player.active.cards.filter(c => c instanceof EnergyCard).length;
+        const energyCount = player.active.cards.filter((c) => c instanceof EnergyCard).length;
         const moveCount = Math.min(2, energyCount);
 
         if (moveCount > 0) {
-          store.prompt(state, new MoveEnergyPrompt(
-            player.id,
-            GameMessage.MOVE_ENERGY_CARDS,
-            PlayerType.BOTTOM_PLAYER,
-            [SlotType.ACTIVE, SlotType.BENCH],
-            { superType: SuperType.ENERGY },
-            { allowCancel: false, min: moveCount, max: moveCount, blockedFrom, blockedTo }
-          ), transfers => {
-            if (transfers) {
-              for (const transfer of transfers) {
-                const source = StateUtils.getTarget(state, player, transfer.from);
-                const target = StateUtils.getTarget(state, player, transfer.to);
-                source.moveCardTo(transfer.card, target);
+          store.prompt(
+            state,
+            new MoveEnergyPrompt(
+              player.id,
+              GameMessage.MOVE_ENERGY_CARDS,
+              PlayerType.BOTTOM_PLAYER,
+              [SlotType.ACTIVE, SlotType.BENCH],
+              { superType: SuperType.ENERGY },
+              { allowCancel: false, min: moveCount, max: moveCount, blockedFrom, blockedTo },
+            ),
+            (transfers) => {
+              if (transfers) {
+                for (const transfer of transfers) {
+                  const source = StateUtils.getTarget(state, player, transfer.from);
+                  const target = StateUtils.getTarget(state, player, transfer.to);
+                  source.moveCardTo(transfer.card, target);
+                }
               }
-            }
-          });
+            },
+          );
         }
       }
 
       // Deal 30 damage to each of opponent's Benched Pokemon-EX
-      opponent.bench.forEach(benched => {
+      opponent.bench.forEach((benched) => {
         if (benched.cards.length > 0) {
           const pokemon = benched.getPokemonCard();
           if (pokemon && pokemon.tags.includes(CardTag.POKEMON_EX)) {

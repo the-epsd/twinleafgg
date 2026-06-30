@@ -38,13 +38,13 @@ export enum PowerType {
   POKEMON_POWER,
   VUNION_ASSEMBLY,
   LEGEND_ASSEMBLY,
-  TRAINER_ABILITY,
-  HOLONS_SPECIAL_ENERGY_EFFECT,
-  MEGA_EVOLUTION_RULE,
-  LV_X_RULE,
-  BREAK_RULE,
-  ARCEUS_RULE,
-  ENERGY_ABILITY
+  TRAINER_ABILITY, // Fossil effects, etc.
+  HOLONS_SPECIAL_ENERGY_EFFECT, // Holon's Pokémon attach as energy effects
+  MEGA_EVOLUTION_RULE, // Deprecated, do not use
+  LV_X_RULE, // Deprecated, do not use
+  BREAK_RULE, // Deprecated, do not use
+  ARCEUS_RULE, // Deprecated, do not use
+  ENERGY_ABILITY, // Call Energy's in-play effect
 }
 
 export interface Power {

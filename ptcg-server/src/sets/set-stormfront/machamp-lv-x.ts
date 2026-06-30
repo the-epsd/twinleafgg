@@ -1,12 +1,32 @@
-import { GameError, GameMessage, PlayerType, PowerType, State, StateUtils, StoreLike } from '../../game';
+import {
+  GameError,
+  GameMessage,
+  PlayerType,
+  PowerType,
+  State,
+  StateUtils,
+  StoreLike,
+} from '../../game';
 import { CardTag, CardType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { CheckPokemonAttacksEffect, CheckPokemonPowersEffect, CheckTableStateEffect } from '../../game/store/effects/check-effects';
+import {
+  CheckPokemonAttacksEffect,
+  CheckPokemonPowersEffect,
+  CheckTableStateEffect,
+} from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { ADD_MARKER, COIN_FLIP_PROMPT, HAS_MARKER, IS_POKEBODY_BLOCKED, REMOVE_MARKER, REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  ADD_MARKER,
+  COIN_FLIP_PROMPT,
+  HAS_MARKER,
+  IS_POKEBODY_BLOCKED,
+  REMOVE_MARKER,
+  REMOVE_MARKER_AT_END_OF_TURN,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 
 export class MachampLVX extends PokemonCard {
   public stage: Stage = Stage.LV_X;
@@ -19,23 +39,20 @@ export class MachampLVX extends PokemonCard {
 
   public powers = [
     {
-      name: 'LV.X Rule',
-      powerType: PowerType.LV_X_RULE,
-      text: 'Put this card onto your Active Dialga G. Dialga G LV.X can use any attack, Poké-Power, or Poké-Body from its previous Level.'
-    },
-    {
       name: 'No Guard',
       powerType: PowerType.POKEBODY,
-      text: 'As long as Machamp is your Active Pokémon, each of Machamp\'s attacks does 60 more damage to the Active Pokémon (before applying Weakness and Resistance) and any damage done to Machamp by your opponent\'s Pokémon is increased by 60 (after applying Weakness and Resistance).'
-    }
+      text: "As long as Machamp is your Active Pokémon, each of Machamp's attacks does 60 more damage to the Active Pokémon (before applying Weakness and Resistance) and any damage done to Machamp by your opponent's Pokémon is increased by 60 (after applying Weakness and Resistance).",
+    },
   ];
 
-  public attacks = [{
-    name: 'Strong-Willed',
-    cost: [F, C, C],
-    damage: 20,
-    text: 'During your opponent\'s next turn, if Machamp would be Knocked Out by damage from an attack, flip a coin. If heads, Machamp is not Knocked Out and its remaining HP becomes 10 instead.'
-  }];
+  public attacks = [
+    {
+      name: 'Strong-Willed',
+      cost: [F, C, C],
+      damage: 20,
+      text: "During your opponent's next turn, if Machamp would be Knocked Out by damage from an attack, flip a coin. If heads, Machamp is not Knocked Out and its remaining HP becomes 10 instead.",
+    },
+  ];
 
   public set: string = 'SF';
   public cardImage: string = 'assets/cardback.png';
@@ -43,8 +60,10 @@ export class MachampLVX extends PokemonCard {
   public name: string = 'Machamp';
   public fullName: string = 'Machamp LV.X SF';
 
-  public readonly PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER = 'PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER';
-  public readonly CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER = 'CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER';
+  public readonly PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER =
+    'PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER';
+  public readonly CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER =
+    'CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // No Guard: dealing damage
@@ -73,7 +92,10 @@ export class MachampLVX extends PokemonCard {
     }
 
     // No Guard: taking damage
-    if ((effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) && effect.target.getPokemonCard() === this) {
+    if (
+      (effect instanceof DealDamageEffect || effect instanceof PutDamageEffect) &&
+      effect.target.getPokemonCard() === this
+    ) {
       const opponent = effect.player;
       const player = StateUtils.getOpponent(state, opponent);
 
@@ -92,25 +114,37 @@ export class MachampLVX extends PokemonCard {
     // Strong-Willed
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
-      COIN_FLIP_PROMPT(store, state, effect.player, result => {
-        if (!result)
-          return;
-        ADD_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.player.active, this);
-        ADD_MARKER(this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, opponent, this);
+      COIN_FLIP_PROMPT(store, state, effect.player, (result) => {
+        if (!result) return;
+        ADD_MARKER(
+          this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER,
+          effect.player.active,
+          this,
+        );
+        ADD_MARKER(
+          this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER,
+          opponent,
+          this,
+        );
       });
       return state;
     }
 
     //Strong-Willed in effect
-    if (effect instanceof PutDamageEffect
-      && effect.target.cards.includes(this)
-      && HAS_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.target, this)
+    if (
+      effect instanceof PutDamageEffect &&
+      effect.target.cards.includes(this) &&
+      HAS_MARKER(this.PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, effect.target, this)
     ) {
       effect.surviveOnTenHPReason = this.attacks[0].name;
       return state;
     }
 
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER, this);
+    REMOVE_MARKER_AT_END_OF_TURN(
+      effect,
+      this.CLEAR_PREVENT_KNOCKED_OUT_DURING_OPPONENTS_NEXT_TURN_MARKER,
+      this,
+    );
 
     if (effect instanceof EndTurnEffect) {
       //Remove the marker at the end of the opponent's turn.
@@ -123,7 +157,9 @@ export class MachampLVX extends PokemonCard {
     //Lv. X Stuff
     // making sure it gets put on the active pokemon
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      if (effect.target !== effect.player.active) { throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD); }
+      if (effect.target !== effect.player.active) {
+        throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
+      }
     }
 
     // Trying to get all of the previous stage's attacks and powers
@@ -171,7 +207,11 @@ export class MachampLVX extends PokemonCard {
 
       // Add attacks from the previous stage to this one
       for (const evolutionCard of cardList.cards) {
-        if (evolutionCard.superType === SuperType.POKEMON && evolutionCard !== this && evolutionCard.name === this.evolvesFrom) {
+        if (
+          evolutionCard.superType === SuperType.POKEMON &&
+          evolutionCard !== this &&
+          evolutionCard.name === this.evolvesFrom
+        ) {
           effect.attacks.push(...(evolutionCard.attacks || []));
         }
       }
@@ -199,7 +239,11 @@ export class MachampLVX extends PokemonCard {
 
       // Adds the powers from the previous stage
       for (const evolutionCard of cardList.cards) {
-        if (evolutionCard.superType === SuperType.POKEMON && evolutionCard !== this && evolutionCard.name === this.evolvesFrom) {
+        if (
+          evolutionCard.superType === SuperType.POKEMON &&
+          evolutionCard !== this &&
+          evolutionCard.name === this.evolvesFrom
+        ) {
           effect.powers.push(...(evolutionCard.powers || []));
         }
       }
