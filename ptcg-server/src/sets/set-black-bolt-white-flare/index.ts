@@ -14,6 +14,7 @@ import { Dewott } from './dewott';
 import { Drilbur } from './drilbur';
 import { Ducklett } from './ducklett';
 import { Duosion } from './duosion';
+import { Elgyem } from './elgyem';
 import { Durant } from './durant';
 import { Eelektrik } from './eelektrik';
 import { Emboar } from './emboar';
@@ -173,6 +174,7 @@ export const setSV11: Card[] = [
   new Solosis(),
   new Swadloon(),
   new Duosion(),
+  new Elgyem(),
   new Reuniclus(),
   new Shelmet(),
   new Karrablast(),

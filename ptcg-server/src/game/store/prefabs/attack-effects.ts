@@ -1,7 +1,8 @@
-import { Card, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, ConfirmPrompt, DamageMap, GameMessage, PlayerType, PutDamagePrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
+import { Card, CardTarget, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonPrompt, ConfirmPrompt, DamageMap, GameMessage, MoveEnergyPrompt, PlayerType, PutDamagePrompt, ShuffleDeckPrompt, SlotType, State, StateUtils, StoreLike } from '../..';
 import { CardType, SpecialCondition, SuperType, TrainerType } from '../card/card-types';
+import { EnergyCard } from '../card/energy-card';
 import { PokemonCard } from '../card/pokemon-card';
-import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, CardsToHandEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, KnockOutOpponentEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
+import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, CardsToHandEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, KnockOutOpponentEffect, MoveOpponentEnergyEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { AttackEffect } from '../effects/game-effects';
 import { AfterAttackEffect } from '../effects/game-phase-effects';
@@ -516,5 +517,63 @@ export function PUT_ENERGY_FROM_OPPONENTS_ACTIVE_INTO_THEIR_HAND(
         }
       });
     }
+  });
+}
+
+export interface MoveOpponentEnergyOptions {
+  min?: number;
+  max?: number;
+  allowCancel?: boolean;
+  blockedFrom?: CardTarget[];
+  blockedTo?: CardTarget[];
+}
+
+/**
+ * Move an Energy from 1 of your opponent's Pokémon to another of their Pokémon.
+ * Uses MoveOpponentEnergyEffect (AbstractAttackEffect) so abilities like Charmeleon's Flare Veil can block it.
+ */
+export function MOVE_AN_ENERGY_FROM_OPPONENTS_POKEMON_TO_ANOTHER(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  options?: MoveOpponentEnergyOptions
+): State {
+  const player = effect.player;
+  const opponent = StateUtils.getOpponent(state, player);
+
+  let hasEnergy = false;
+  let pokemonCount = 0;
+
+  opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+    pokemonCount += 1;
+    const energyAttached = cardList.cards.some(c => c instanceof EnergyCard);
+    hasEnergy = hasEnergy || energyAttached;
+  });
+
+  if (!hasEnergy || pokemonCount <= 1) {
+    return state;
+  }
+
+  const min = options?.min ?? 1;
+  const max = options?.max ?? 1;
+  const allowCancel = options?.allowCancel ?? false;
+  const blockedFrom = options?.blockedFrom ?? [];
+  const blockedTo = options?.blockedTo ?? [];
+
+  return store.prompt(state, new MoveEnergyPrompt(
+    player.id,
+    GameMessage.MOVE_ENERGY_CARDS,
+    PlayerType.TOP_PLAYER,
+    [SlotType.ACTIVE, SlotType.BENCH],
+    { superType: SuperType.ENERGY },
+    { min, max, allowCancel, blockedFrom, blockedTo }
+  ), result => {
+    const transfers = result || [];
+    transfers.forEach(transfer => {
+      const source = StateUtils.getTarget(state, player, transfer.from);
+      const destination = StateUtils.getTarget(state, player, transfer.to);
+      const moveEffect = new MoveOpponentEnergyEffect(effect, transfer.card, source, destination);
+      store.reduceEffect(state, moveEffect);
+    });
   });
 }

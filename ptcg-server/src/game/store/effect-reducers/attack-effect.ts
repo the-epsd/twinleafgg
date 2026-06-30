@@ -8,6 +8,7 @@ import {
   AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect,
   RemoveSpecialConditionsEffect, ApplyWeaknessEffect, AfterDamageEffect,
   PutCountersEffect, CardsToHandEffect,
+  MoveOpponentEnergyEffect,
   KnockOutOpponentEffect,
   KOEffect,
   LostZoneCardsEffect,
@@ -240,6 +241,13 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     const cards = effect.cards;
     const owner = StateUtils.findOwner(state, target);
     target.moveCardsTo(cards, owner.hand);
+    return state;
+  }
+
+  if (effect instanceof MoveOpponentEnergyEffect) {
+    if (!effect.preventDefault) {
+      effect.target.moveCardTo(effect.card, effect.destination);
+    }
     return state;
   }
 

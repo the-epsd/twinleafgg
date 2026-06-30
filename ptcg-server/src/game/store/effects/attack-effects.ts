@@ -21,6 +21,7 @@ export enum AttackEffects {
   MOVED_TO_ACTIVE_BONUS_EFFECT = 'MOVED_TO_ACTIVE_BONUS_EFFECT',
   LOST_ZONED_CARDS_EFFECT = 'LOST_ZONED_CARDS_EFFECT',
   AFTER_WEAKNESS_AND_RESISTANCE_EFFECT = 'AFTER_WEAKNESS_AND_RESISTANCE_EFFECT',
+  MOVE_OPPONENT_ENERGY_EFFECT = 'MOVE_OPPONENT_ENERGY_EFFECT',
 }
 
 export abstract class AbstractAttackEffect {
@@ -193,6 +194,20 @@ export class CardsToHandEffect extends AbstractAttackEffect implements Effect {
   constructor(base: AttackEffect, energyCards: Card[]) {
     super(base);
     this.cards = energyCards;
+  }
+}
+
+export class MoveOpponentEnergyEffect extends AbstractAttackEffect implements Effect {
+  readonly type: string = AttackEffects.MOVE_OPPONENT_ENERGY_EFFECT;
+  public preventDefault = false;
+  public card: Card;
+  public destination: PokemonCardList;
+
+  constructor(base: AttackEffect, card: Card, source: PokemonCardList, destination: PokemonCardList) {
+    super(base);
+    this.card = card;
+    this.target = source;
+    this.destination = destination;
   }
 }
 
