@@ -3,10 +3,8 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { EvolveEffect } from '../../game/store/effects/game-effects';
-import { CoinFlipPrompt, GameMessage, PlayerType } from '../../game';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { CoinFlipPrompt, GameMessage } from '../../game';
+import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MKangaskhanEX extends PokemonCard {
   public stage: Stage = Stage.MEGA;
@@ -32,20 +30,7 @@ export class MKangaskhanEX extends PokemonCard {
   public setNumber: string = '79';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if ((effect instanceof EvolveEffect) && effect.pokemonCard === this) {
-      const player = effect.player;
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tools.length > 0 && cardList.tools[0].name === 'Kangaskhan Spirit Link') {
-          return state;
-        } else {
-          const endTurnEffect = new EndTurnEffect(player);
-          store.reduceEffect(state, endTurnEffect);
-          return state;
-        }
-      });
-    }
+    MEGA_EVOLUTION_END_TURN(store, state, effect, this);
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;

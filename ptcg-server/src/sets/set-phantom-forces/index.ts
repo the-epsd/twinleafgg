@@ -53,7 +53,6 @@ import { Litleo } from './litleo';
 import { Litwick } from './litwick';
 import { Loudred } from './loudred';
 import { Lumineon } from './lumineon';
-import { MGengarEx } from './m-gengar-ex';
 import { MManectricEx } from './m-manectric-ex';
 import { MalamarEx } from './malamar-ex';
 import { ManectricEx } from './manectric-ex';
@@ -184,7 +183,6 @@ export const setPhantomForces: Card[] = [
   new Litwick(),
   new Loudred(),
   new Lumineon(),
-  new MGengarEx(),
   new MManectricEx(),
   new MalamarEx(),
   new ManectricEx(),

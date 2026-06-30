@@ -110,7 +110,6 @@ import {
   GardevoirSpiritLinkSTS,
   VolcanionEX2STS,
   GardevoirEx2STS,
-  MGardevoirEx2STS,
   PokemonRanger2STS,
   ProfessorSycamoreXYSTS,
   VolcanionEX3STS,
@@ -118,6 +117,7 @@ import {
   SteelixEx2,
   MSteelixEx2,
 } from './other-prints';
+import { MGardevoirEx2 } from '../set-primal-clash/m-gardevoir-ex-2';
 
 export const setSteamSiege: Card[] = [
   // Pokemon
@@ -169,6 +169,7 @@ export const setSteamSiege: Card[] = [
   new Litleo(),
   new Litwick(),
   new MGardevoirEx(),
+  new MGardevoirEx2(),
   new MSteelixEx(),
   new MagearnaEX(),
   new Mankey(),
@@ -234,7 +235,6 @@ export const setSteamSiege: Card[] = [
   new GardevoirSpiritLinkSTS(),
   new VolcanionEX2STS(),
   new GardevoirEx2STS(),
-  new MGardevoirEx2STS(),
   new PokemonRanger2STS(),
   new ProfessorSycamoreXYSTS(),
   new VolcanionEX3STS(),

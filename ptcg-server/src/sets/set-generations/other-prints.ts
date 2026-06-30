@@ -24,7 +24,7 @@ import { Swirlix } from '../set-phantom-forces/swirlix';
 import { Wally } from '../set-roaring-skies/wally';
 import { Pikachu as PikachuXY42 } from '../set-x-and-y/pikachu';
 import { GardevoirEx } from '../set-primal-clash/gardevoir-ex';
-import { MGardevoirEx } from '../set-primal-clash/mega-gardevoir-ex';
+import { MGardevoirEx2 } from '../set-primal-clash/m-gardevoir-ex-2';
 export class PonytaGEN extends Ponyta {
   public setNumber = '14';
   public fullName: string = 'Ponyta GEN';
@@ -181,7 +181,7 @@ export class GardevoirExGEN extends GardevoirEx {
   public set = 'GEN';
 }
 
-export class MGardevoirExGEN extends MGardevoirEx {
+export class MGardevoirExGEN extends MGardevoirEx2 {
   public setNumber = 'RC31';
   public fullName: string = 'M Gardevoir-EX GEN';
   public set = 'GEN';

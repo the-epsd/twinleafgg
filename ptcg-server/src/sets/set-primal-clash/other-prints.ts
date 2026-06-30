@@ -6,7 +6,7 @@ import { WailordEx as WailordExPRC38 } from '../set-primal-clash/wailord-ex';
 import { GroudonEx as GroudonExPRC85 } from '../set-primal-clash/groudon-ex';
 import { PrimalGroudonEx as PrimalGroudonExPRC86 } from '../set-primal-clash/primal-groudon-ex';
 import { GardevoirEx as GardevoirExPRC105 } from '../set-primal-clash/gardevoir-ex';
-import { MGardevoirEx as MGardevoirExPRC106 } from '../set-primal-clash/mega-gardevoir-ex';
+import { MGardevoirEx2 as MGardevoirExPRC106 } from './m-gardevoir-ex-2';
 import { ArchiesAceInTheHole as ArchiesAceInTheHolePRC124 } from '../set-primal-clash/archies-ace-in-the hole';
 import { MaxiesHiddenBallTrick as MaxiesHiddenBallTrickPRC133 } from '../set-primal-clash/maxies-hidden-ball-trick';
 import { Teammates as TeammatesPRC141 } from '../set-primal-clash/teammates';
@@ -72,7 +72,7 @@ export class GardevoirEx2PRC extends GardevoirExPRC105 {
 
 export class MGardevoirEx2PRC extends MGardevoirExPRC106 {
   public setNumber = '156';
-  public fullName: string = 'M Gardevoir-EX2 PRC';
+  public fullName: string = 'M Gardevoir-EX2 PRC 156';
   public set = 'PRC';
 }
 

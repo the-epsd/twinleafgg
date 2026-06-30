@@ -6,6 +6,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { SPIRIT_LINK_SKIP_MEGA_EVOLUTION_END_TURN } from '../../game/store/prefabs/prefabs';
 
 export class AltariaSpiritLink extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -16,8 +17,8 @@ export class AltariaSpiritLink extends TrainerCard {
   public fullName: string = 'Altaria Spirit Link FCO';
   public text: string = 'Your turn does not end if the Pokémon this card is attached to becomes M Altaria-EX.';
 
-  // Ref: set-breakthrough/houndoom-spirit-link.ts (Spirit Link - no-op, handled by engine)
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    SPIRIT_LINK_SKIP_MEGA_EVOLUTION_END_TURN(store, state, effect, this, 'M Altaria-EX');
     return state;
   }
 }

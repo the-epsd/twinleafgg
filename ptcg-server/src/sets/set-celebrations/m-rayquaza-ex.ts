@@ -6,9 +6,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class MRayquazaEx extends PokemonCard {
   public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
@@ -53,17 +52,7 @@ export class MRayquazaEx extends PokemonCard {
       effect.target.pokemonPlayedTurn = state.turn - 1;
     }
 
-    // Mega Evolution Rule: end the turn when this is played (unless it has Rayquaza Spirit Link)
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      if (
-        effect.target.tools.length > 0 &&
-        effect.target.tools[0].name === 'Rayquaza Spirit Link'
-      ) {
-        return state;
-      }
-      const endTurnEffect = new EndTurnEffect(effect.player);
-      store.reduceEffect(state, endTurnEffect);
-    }
+    MEGA_EVOLUTION_END_TURN(store, state, effect, this);
 
     // Attack 1: Emerald Break
     // Ref: set-roaring-skies/m-rayquaza-ex-2.ts (Emerald Break)

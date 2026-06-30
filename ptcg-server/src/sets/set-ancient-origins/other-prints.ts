@@ -19,7 +19,8 @@ import { MTyranitarEx } from './m-tyranitar-ex';
 import { LugiaEx } from './lugia-ex';
 import { Steven } from '../set-roaring-skies/steven';
 import { PrimalKyogreEx } from '../set-primal-clash/primal-kyogre-ex';
-import { MRayquazaEx2 } from '../set-roaring-skies/m-rayquaza-ex-2';
+import { MRayquazaEX2 } from '../set-roaring-skies/m-rayquaza-ex-2';
+
 
 export class LevelBallAOR extends LevelBall {
   public set: string = 'AOR';
@@ -146,7 +147,7 @@ export class PrimalKyogreExAOR extends PrimalKyogreEx {
   public fullName: string = 'Primal Kyogre-EX AOR';
 }
 
-export class MRayquazaExAOR extends MRayquazaEx2 {
+export class MRayquazaExAOR extends MRayquazaEX2 {
   public set: string = 'AOR';
   public setNumber: string = '98';
   public fullName: string = 'M Rayquaza-EX AOR';

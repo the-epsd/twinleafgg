@@ -3,6 +3,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
+import { SPIRIT_LINK_SKIP_MEGA_EVOLUTION_END_TURN } from '../../game/store/prefabs/prefabs';
 
 export class GardevoirSpiritLink extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -16,8 +17,7 @@ export class GardevoirSpiritLink extends TrainerCard {
     'Your turn does not end if the Pokémon this card is attached to becomes M Gardevoir-EX.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // aw yes look at this amazing effect i got cooking up here this is going to break the expanded meta into a million different pieces watch this
+    SPIRIT_LINK_SKIP_MEGA_EVOLUTION_END_TURN(store, state, effect, this, 'M Gardevoir-EX');
     return state;
   }
-
 }

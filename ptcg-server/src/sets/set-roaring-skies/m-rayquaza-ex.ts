@@ -3,29 +3,21 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { EvolveEffect, PowerEffect } from '../../game/store/effects/game-effects';
+import { PowerEffect } from '../../game/store/effects/game-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
-import { Card, ChooseEnergyPrompt, GameMessage, PlayerType } from '../../game';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { Card, ChooseEnergyPrompt, GameMessage } from '../../game';
 import { DiscardCardsEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect, CheckPokemonTypeEffect } from '../../game/store/effects/check-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MRayquazaEX extends PokemonCard {
-
   public stage: Stage = Stage.MEGA;
-
   public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
-
   public evolvesFrom = 'Rayquaza-EX';
-
-  public cardType: CardType = CardType.DRAGON;
-
+  public cardType: CardType = N;
   public hp: number = 230;
-
-  public weakness = [{ type: CardType.FAIRY }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: Y }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Delta Wild',
@@ -33,40 +25,21 @@ export class MRayquazaEX extends PokemonCard {
     text: 'Any damage done to this Pokémon by attacks from your opponent\'s Grass, Fire, Water, or Lightning Pokémon is reduced by 20 (after applying Weakness and Resistance).'
   }];
 
-  public attacks = [
-    {
-      name: 'Dragon Ascent',
-      cost: [CardType.FIRE, CardType.FIRE, CardType.FIRE, CardType.LIGHTNING, CardType.COLORLESS],
-      damage: 300,
-      text: 'Discard 2 Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Dragon Ascent',
+    cost: [R, R, R, L, C],
+    damage: 300,
+    text: 'Discard 2 Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'ROS';
-
   public name: string = 'M Rayquaza-EX';
-
   public fullName: string = 'M Rayquaza EX ROS';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '61';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
-    if ((effect instanceof EvolveEffect) && effect.pokemonCard === this) {
-      const player = effect.player;
-
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
-        if (card === this && cardList.tools.length > 0 && cardList.tools[0].name === 'Rayquaza Spirit Link') {
-          return state;
-        } else {
-          const endTurnEffect = new EndTurnEffect(player);
-          store.reduceEffect(state, endTurnEffect);
-          return state;
-        }
-      });
-    }
+    MEGA_EVOLUTION_END_TURN(store, state, effect, this);
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;

@@ -6,9 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { PowerType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, DISCARD_A_STADIUM_CARD_IN_PLAY, MEGA_EVOLUTION_END_TURN } from '../../game/store/prefabs/prefabs';
 
 export class PrimalGroudonEx extends PokemonCard {
   public tags = [CardTag.POKEMON_EX, CardTag.MEGA, CardTag.PRIMAL];
@@ -19,23 +17,19 @@ export class PrimalGroudonEx extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public powers = [
-    {
-      name: '\u03b8 Max',
-      powerType: PowerType.ANCIENT_TRAIT,
-      text: 'When 1 of your Pokemon becomes this Pokemon, heal all damage from it.',
-    },
-  ];
+  public powers = [{
+    name: '\u03b8 Max',
+    powerType: PowerType.ANCIENT_TRAIT,
+    text: 'When 1 of your Pokemon becomes this Pokemon, heal all damage from it.',
+  }];
 
-  public attacks = [
-    {
-      name: 'Gaia Volcano',
-      cost: [F, F, F, C],
-      damage: 100,
-      damageCalculation: '+',
-      text: 'If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card.',
-    },
-  ];
+  public attacks = [{
+    name: 'Gaia Volcano',
+    cost: [F, F, F, C],
+    damage: 100,
+    damageCalculation: '+',
+    text: 'If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card.',
+  }];
 
   public set: string = 'AOR';
   public setNumber: string = '97';
@@ -44,19 +38,7 @@ export class PrimalGroudonEx extends PokemonCard {
   public fullName: string = 'Primal Groudon-EX AOR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Primal Reversion Rule + Theta Max
-    // Ref: set-primal-clash/primal-groudon-ex.ts (Primal Reversion Rule)
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      // Theta Max: heal all damage when evolved
-      effect.target.damage = 0;
-
-      if (effect.target.tools.length > 0 && effect.target.tools[0].name === 'Groudon Spirit Link') {
-        return state;
-      }
-
-      const endTurnEffect = new EndTurnEffect(effect.player);
-      store.reduceEffect(state, endTurnEffect);
-    }
+    MEGA_EVOLUTION_END_TURN(store, state, effect, this);
 
     // Attack 1: Gaia Volcano
     // Ref: set-primal-clash/primal-groudon-ex.ts (Gaia Volcano)

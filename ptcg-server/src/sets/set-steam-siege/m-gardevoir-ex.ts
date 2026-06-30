@@ -6,29 +6,26 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PlayerType, ChoosePokemonPrompt, GameMessage, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN, MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MGardevoirEx extends PokemonCard {
   public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom: string = 'Gardevoir-EX';
   public cardType: CardType = Y;
+  public additionalCardTypes = [P];
   public hp: number = 210;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Despair Ray',
-      cost: [Y, C],
-      damage: 110,
-      damageCalculation: '+',
-      text: 'Discard as many of your Benched Pok\u00e9mon as you like. This attack does 10 more damage for each Benched Pok\u00e9mon you discarded in this way.'
-    }
-  ];
+  public attacks = [{
+    name: 'Despair Ray',
+    cost: [Y, C],
+    damage: 110,
+    damageCalculation: '+',
+    text: 'Discard as many of your Benched Pok\u00e9mon as you like. This attack does 10 more damage for each Benched Pok\u00e9mon you discarded in this way.'
+  }];
 
   public set: string = 'STS';
   public setNumber: string = '79';
@@ -38,65 +35,66 @@ export class MGardevoirEx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Mega Evolution Rule: end turn when evolving (unless Spirit Link attached)
-    // Ref: set-steam-siege/mega-gardevoir-ex.ts (Mega Evolution Rule)
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      if (effect.target.tools.length > 0 && effect.target.tools[0].name === 'Gardevoir Spirit Link') {
-        return state;
-      }
+    MEGA_EVOLUTION_END_TURN(store, state, effect, this);
 
-      const endTurnEffect = new EndTurnEffect(effect.player);
-      store.reduceEffect(state, endTurnEffect);
-    }
-
-    // Attack 1: Despair Ray
-    // Ref: set-steam-siege/mega-gardevoir-ex.ts (Despair Ray)
+    // Despair Ray
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
+      // Player has more Pokemons than bench size, discard some
       const count = player.bench.length;
-      store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_DISCARD,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { min: 0, max: count, allowCancel: false }
-      ), results => {
-        results = results || [];
+      store.prompt(
+        state,
+        new ChoosePokemonPrompt(
+          player.id,
+          GameMessage.CHOOSE_POKEMON_TO_DISCARD,
+          PlayerType.BOTTOM_PLAYER,
+          [SlotType.BENCH],
+          { min: 0, max: count, allowCancel: false },
+        ),
+        (results) => {
+          results = results || [];
 
-        let discardCount = 0;
+          let discardCount = 0;
 
-        for (let i = player.bench.length - 1; i >= 0; i--) {
-          if (results.includes(player.bench[i])) {
-            const cardList = player.bench[i];
-            const pokemons = cardList.getPokemons();
-            const otherCards = cardList.cards.filter(card =>
-              !(card instanceof PokemonCard) &&
-              !pokemons.includes(card as PokemonCard) &&
-              (!cardList.tools || !cardList.tools.includes(card))
-            );
-            const tools = [...cardList.tools];
+          // Discard all selected Pokemon
+          for (let i = player.bench.length - 1; i >= 0; i--) {
+            if (results.includes(player.bench[i])) {
+              const cardList = player.bench[i];
+              const pokemons = cardList.getPokemons();
+              const otherCards = cardList.cards.filter(
+                (card) =>
+                  !(card instanceof PokemonCard) &&
+                  !pokemons.includes(card as PokemonCard) &&
+                  (!cardList.tools || !cardList.tools.includes(card)),
+              );
+              const tools = [...cardList.tools];
 
-            if (otherCards.length > 0) {
-              MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
-            }
-
-            if (tools.length > 0) {
-              for (const tool of tools) {
-                cardList.moveCardTo(tool, player.discard);
+              // Move other cards (tools, energy, etc.) to discard
+              if (otherCards.length > 0) {
+                MOVE_CARDS(store, state, cardList, player.discard, { cards: otherCards });
               }
-            }
 
-            if (pokemons.length > 0) {
-              cardList.damage = 0;
-              cardList.clearEffects();
-              MOVE_CARDS(store, state, cardList, player.discard, { cards: pokemons });
+              // Move tools to discard
+              if (tools.length > 0) {
+                for (const tool of tools) {
+                  cardList.moveCardTo(tool, player.discard);
+                }
+              }
+
+              // Move Pokémon to discard and clear their effects
+              if (pokemons.length > 0) {
+                cardList.damage = 0;
+                cardList.clearEffects();
+                MOVE_CARDS(store, state, cardList, player.discard, { cards: pokemons });
+              }
+              discardCount++;
             }
-            discardCount++;
           }
-        }
 
-        effect.damage += (10 * discardCount);
-      });
+          effect.damage += 10 * discardCount;
+        },
+      );
     }
 
     return state;

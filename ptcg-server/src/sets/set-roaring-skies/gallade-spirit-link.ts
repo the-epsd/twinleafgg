@@ -6,6 +6,7 @@ import { TrainerCard } from '../../game/store/card/trainer-card';
 import { TrainerType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
+import { SPIRIT_LINK_SKIP_MEGA_EVOLUTION_END_TURN } from '../../game/store/prefabs/prefabs';
 
 export class GalladeSpiritLink extends TrainerCard {
   public trainerType: TrainerType = TrainerType.TOOL;
@@ -17,7 +18,7 @@ export class GalladeSpiritLink extends TrainerCard {
   public text: string = 'Your turn does not end if the Pok\u00e9mon this card is attached to becomes M Gallade-EX.';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ref: set-primal-clash/kyogre-spirit-link.ts (Spirit Link - no-op, handled by engine)
+    SPIRIT_LINK_SKIP_MEGA_EVOLUTION_END_TURN(store, state, effect, this, 'M Gallade-EX');
     return state;
   }
 }

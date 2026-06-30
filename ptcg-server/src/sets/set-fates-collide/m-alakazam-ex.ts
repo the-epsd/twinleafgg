@@ -13,15 +13,13 @@ export class MAlakazamEx extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Zen Force',
-      cost: [P, C],
-      damage: 10,
-      damageCalculation: '+',
-      text: "This attack does 30 more damage for each damage counter on your opponent's Active Pokémon.",
-    },
-  ];
+  public attacks = [{
+    name: 'Zen Force',
+    cost: [P, C],
+    damage: 10,
+    damageCalculation: '+',
+    text: "This attack does 30 more damage for each damage counter on your opponent's Active Pokémon.",
+  }];
 
   public set: string = 'FCO';
   public name: string = 'M Alakazam-EX';

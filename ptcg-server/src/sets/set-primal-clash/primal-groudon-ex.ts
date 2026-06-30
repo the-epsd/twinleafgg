@@ -2,9 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { StoreLike, State, PowerType, PlayerType, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { DISCARD_A_STADIUM_CARD_IN_PLAY, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { PlayPokemonEffect, TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { DISCARD_A_STADIUM_CARD_IN_PLAY, MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { TrainerTargetEffect } from '../../game/store/effects/play-card-effects';
 
 export class PrimalGroudonEx extends PokemonCard {
   public tags = [CardTag.POKEMON_EX, CardTag.MEGA, CardTag.PRIMAL];
@@ -15,23 +14,19 @@ export class PrimalGroudonEx extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C, C];
 
-  public powers = [
-    {
-      name: 'Ω Barrier',
-      powerType: PowerType.ANCIENT_TRAIT,
-      text: 'Whenever your opponent plays a Trainer card (excluding Pokémon Tools and Stadium cards), prevent all effects of that card done to this Pokémon.',
-    },
-  ];
+  public powers = [{
+    name: 'Ω Barrier',
+    powerType: PowerType.ANCIENT_TRAIT,
+    text: 'Whenever your opponent plays a Trainer card (excluding Pokémon Tools and Stadium cards), prevent all effects of that card done to this Pokémon.',
+  }];
 
-  public attacks = [
-    {
-      name: 'Gaia Volcano',
-      cost: [F, F, F, C],
-      damage: 100,
-      damageCalculation: '+',
-      text: 'If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card.',
-    },
-  ];
+  public attacks = [{
+    name: 'Gaia Volcano',
+    cost: [F, F, F, C],
+    damage: 100,
+    damageCalculation: '+',
+    text: 'If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card.',
+  }];
 
   public set: string = 'PRC';
   public name: string = 'Primal Groudon-EX';
@@ -40,15 +35,7 @@ export class PrimalGroudonEx extends PokemonCard {
   public setNumber: string = '86';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // wow i hate the rules
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      if (effect.target.tools.length > 0 && effect.target.tools[0].name === 'Groudon Spirit Link') {
-        return state;
-      }
-
-      const endTurnEffect = new EndTurnEffect(effect.player);
-      store.reduceEffect(state, endTurnEffect);
-    }
+    MEGA_EVOLUTION_END_TURN(store, state, effect, this);
 
     // Ω Barrier
     if (effect instanceof TrainerTargetEffect && effect.target?.cards.includes(this)) {

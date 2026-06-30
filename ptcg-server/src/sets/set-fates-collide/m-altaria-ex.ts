@@ -8,7 +8,7 @@ import { PlayerType, StoreLike, State } from '../../game';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MEGA_EVOLUTION_END_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MAltariaEx extends PokemonCard {
   public tags = [CardTag.MEGA, CardTag.POKEMON_EX];
@@ -20,15 +20,13 @@ export class MAltariaEx extends PokemonCard {
   public resistance = [{ type: D, value: -20 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Mist Purge',
-      cost: [Y, C, C],
-      damage: 100,
-      damageCalculation: '+',
-      text: 'If this Pokémon has any Special Energy attached to it, this attack does 30 more damage and heal 30 damage from each of your Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Mist Purge',
+    cost: [Y, C, C],
+    damage: 100,
+    damageCalculation: '+',
+    text: 'If this Pokémon has any Special Energy attached to it, this attack does 30 more damage and heal 30 damage from each of your Pokémon.'
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '69';
@@ -37,6 +35,8 @@ export class MAltariaEx extends PokemonCard {
   public fullName: string = 'M Altaria-EX FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
+    MEGA_EVOLUTION_END_TURN(store, state, effect, this);
+
     // Attack 1: Mist Purge
     // Ref: set-furious-fists/tyrantrum.ts (Special Energy check)
     if (WAS_ATTACK_USED(effect, 0, this)) {

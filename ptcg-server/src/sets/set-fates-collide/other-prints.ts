@@ -12,7 +12,7 @@ import { DoubleColorlessEnergy } from '../set-base-set/double-colorless-energy';
 import { StrongEnergy } from '../set-furious-fists/strong-energy';
 import { GlaceonEx } from './glaceon-ex';
 import { AlakazamEx } from './alakazam-ex';
-import { MAlakazamEx } from './mega-alakazam-ex';
+import { MAlakazamEx } from './m-alakazam-ex';
 import { UmbreonEx } from './umbreon-ex';
 import { MAltariaEx } from './m-altaria-ex';
 import { KingdraEx } from './kingdra-ex';

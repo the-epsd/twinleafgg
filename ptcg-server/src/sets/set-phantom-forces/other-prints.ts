@@ -7,7 +7,7 @@ import { GengarEx as GengarExPHF34 } from '../set-phantom-forces/gengar-ex';
 import { AZ as AZPHF91 } from '../set-phantom-forces/az';
 import { LysandresTrumpCard as LysandresTrumpCardPHF99 } from '../set-phantom-forces/lysandres-trump-card';
 import { Xerosic as XerosicPHF110 } from '../set-phantom-forces/xerosic';
-import { MGengarEx as MGengarExPHF35 } from '../set-phantom-forces/mega-gengar-ex';
+import { MGengarEx as MGengarExPHF35 } from './m-gengar-ex';
 import { AegislashEX as AegislashEXPHF65 } from '../set-phantom-forces/aegislash-ex';
 import { AegislashEX } from './aegislash-ex';
 import { MManectricEx } from './m-manectric-ex';

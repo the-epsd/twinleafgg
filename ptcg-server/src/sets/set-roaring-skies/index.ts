@@ -39,9 +39,7 @@ import { LatiosEx } from './latios-ex';
 import { MGalladeEx } from './m-gallade-ex';
 import { MLatiosEx } from './m-latios-ex';
 import { MRayquazaEX } from './m-rayquaza-ex';
-import { MRayquazaEx2 } from './m-rayquaza-ex-2';
 import { Manectric } from './manectric';
-import { MRayquazaEx } from './mega-rayquaza-ex';
 import { Meowth } from './meowth';
 import { Natu } from './natu';
 import { Natu2 } from './natu-2';
@@ -116,6 +114,7 @@ import {
   MLatiosEx2,
   HydreigonEx2,
 } from './other-prints';
+import { MRayquazaEX2 } from './m-rayquaza-ex-2';
 
 export const setRoaringSkies: Card[] = [
   // Pokemon
@@ -159,9 +158,8 @@ export const setRoaringSkies: Card[] = [
   new MGalladeEx(),
   new MLatiosEx(),
   new MRayquazaEX(),
-  new MRayquazaEx2(),
+  new MRayquazaEX2(),
   new Manectric(),
-  new MRayquazaEx(),
   new Meowth(),
   new Natu(),
   new Natu2(),

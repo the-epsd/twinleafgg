@@ -1,12 +1,12 @@
 import { GardevoirSpiritLink } from '../set-primal-clash/gardevoir-spirit-link';
 import { VolcanionEX as VolcanionEXSTS26 } from '../set-steam-siege/volcanion-ex';
 import { GardevoirEx as GardevoirExSTS78 } from '../set-steam-siege/gardevoir-ex';
-import { MGardevoirEx as MGardevoirExSTS79 } from '../set-steam-siege/mega-gardevoir-ex';
 import { PokemonRanger as PokemonRangerSTS104 } from '../set-steam-siege/pokemon-ranger';
 import { ProfessorSycamoreXY } from '../set-x-and-y/other-prints';
 import { MagearnaEX } from './magearna-ex';
 import { SteelixEx } from './steelix-ex';
 import { MSteelixEx } from './m-steelix-ex';
+import { MGardevoirEx2 } from '../set-primal-clash/m-gardevoir-ex-2';
 
 export class MagearnaEXSTS extends MagearnaEX {
   public set: string = 'STS';
@@ -31,7 +31,7 @@ export class GardevoirEx2STS extends GardevoirExSTS78 {
   public set = 'STS';
 }
 
-export class MGardevoirEx2STS extends MGardevoirExSTS79 {
+export class MGardevoirEx2STS extends MGardevoirEx2 {
   public setNumber = '112';
   public fullName: string = 'M Gardevoir-EX2 STS';
   public set = 'STS';
