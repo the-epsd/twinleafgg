@@ -26,20 +26,21 @@ if (validationErrors.length > 0) {
   process.exit(1);
 }
 
+// Base set era
+cardManager.defineSet(sets.setBaseSetEnergy);
+cardManager.defineSet(sets.setWOTCPromos);
+cardManager.defineSet(sets.setVendingSeries);
+
 cardManager.defineSet(sets.setBaseSet);
 cardManager.defineSet(sets.setJungle);
 cardManager.defineSet(sets.setFossil);
 cardManager.defineSet(sets.setTeamRocket);
-cardManager.defineSet(sets.setWOTCPromos);
-cardManager.defineSet(sets.setVendingSeries);
-
 cardManager.defineSet(sets.setGymHeros);
 cardManager.defineSet(sets.setGymChallenge);
 
 cardManager.defineSet(sets.setGameBoyExclusives);
 
-cardManager.defineSet(sets.setBaseSetEnergy);
-
+// Neo era
 cardManager.defineSet(sets.setNeoGenesis);
 cardManager.defineSet(sets.setNeoDiscovery);
 cardManager.defineSet(sets.setNeoRevelation);
@@ -47,33 +48,33 @@ cardManager.defineSet(sets.setNeoDestiny);
 
 cardManager.defineSet(sets.setSouthernIslands);
 
-//E-Card Era
+// e-Card era
 cardManager.defineSet(sets.setExpedition);
 cardManager.defineSet(sets.setAquapolis);
 cardManager.defineSet(sets.setSkyridge);
 
 cardManager.defineSet(sets.setBestOfGame);
 
-//ex Era shit
+// ex era
+cardManager.defineSet(sets.setNintendoPromos);
+cardManager.defineSet(sets.setUnnumberedPromos);
+
 cardManager.defineSet(sets.setEXRubyAndSapphire);
 cardManager.defineSet(sets.setEXSandstorm);
-cardManager.defineSet(sets.setEXHolonPhantoms);
-cardManager.defineSet(sets.setEXHiddenLegends)
 cardManager.defineSet(sets.setEXDragon);
 cardManager.defineSet(sets.setEXTeamMagmaVsTeamAqua);
-cardManager.defineSet(sets.setEXDragonFrontiers);
+cardManager.defineSet(sets.setEXHiddenLegends)
+cardManager.defineSet(sets.setEXFireRedLeafGreen);
+cardManager.defineSet(sets.setEXTeamRocketReturns);
 cardManager.defineSet(sets.setEXDeoxys);
 cardManager.defineSet(sets.setEXEmerald);
 cardManager.defineSet(sets.setEXUnseenForces);
-cardManager.defineSet(sets.setEXTeamRocketReturns);
-cardManager.defineSet(sets.setEXCrystalGuardians);
-cardManager.defineSet(sets.setEXPowerKeepers);
-cardManager.defineSet(sets.setEXFireRedLeafGreen);
 cardManager.defineSet(sets.setEXDeltaSpecies);
 cardManager.defineSet(sets.setEXLegendMaker);
-
-cardManager.defineSet(sets.setNintendoPromos);
-cardManager.defineSet(sets.setUnnumberedPromos);
+cardManager.defineSet(sets.setEXHolonPhantoms);
+cardManager.defineSet(sets.setEXCrystalGuardians);
+cardManager.defineSet(sets.setEXDragonFrontiers);
+cardManager.defineSet(sets.setEXPowerKeepers);
 
 cardManager.defineSet(sets.setPOPSeries2);
 cardManager.defineSet(sets.setPOPSeries3);
@@ -89,33 +90,37 @@ cardManager.defineSet(sets.setGiftBoxMewLucario);
 // VS Packs
 cardManager.defineSet(sets.setVSPackAurasLucario);
 
+cardManager.defineSet(sets.setDiamondAndPearlPromos);
+cardManager.defineSet(sets.setLPPromos);
+cardManager.defineSet(sets.setBattleRoadPromos);
 cardManager.defineSet(sets.setDiamondAndPearl);
 cardManager.defineSet(sets.setMysteriousTreasures);
-cardManager.defineSet(sets.setSupremeVictors);
 cardManager.defineSet(sets.setSecretWonders);
 // cardManager.defineSet(sets.setOP9);
 cardManager.defineSet(sets.setGreatEncounters);
+cardManager.defineSet(sets.setLegendsAwakened);
+cardManager.defineSet(sets.setStormfront);
+cardManager.defineSet(sets.setMajesticDawn);
+
 cardManager.defineSet(sets.setPlatinum);
 cardManager.defineSet(sets.setRisingRivals);
+cardManager.defineSet(sets.setSupremeVictors);
+cardManager.defineSet(sets.setArceus);
 
-cardManager.defineSet(sets.setDiamondAndPearlPromos);
-
-cardManager.defineSet(sets.setBattleRoadPromos);
-cardManager.defineSet(sets.setCallOfLegends);
 cardManager.defineSet(sets.setHeartGoldAndSoulSilver);
 cardManager.defineSet(sets.setHeartGoldAndSoulSilverPromos);
-cardManager.defineSet(sets.setLPPromos);
-cardManager.defineSet(sets.setTriumphant);
-cardManager.defineSet(sets.setUndaunted);
 cardManager.defineSet(sets.setUnleashed);
+cardManager.defineSet(sets.setUndaunted);
+cardManager.defineSet(sets.setTriumphant);
+cardManager.defineSet(sets.setCallOfLegends);
 
+// BW era
 cardManager.defineSet(sets.setBlackAndWhitePromos);
 cardManager.defineSet(sets.setBlackAndWhite);
 cardManager.defineSet(sets.setEmergingPowers);
 cardManager.defineSet(sets.setNobleVictories);
 cardManager.defineSet(sets.setNextDestinies);
 cardManager.defineSet(sets.setDarkExplorers);
-cardManager.defineSet(sets.setDoubleCrisis);
 cardManager.defineSet(sets.setDragonsExalted);
 cardManager.defineSet(sets.setDragonsMajesty);
 cardManager.defineSet(sets.setDragonVault);
@@ -125,48 +130,47 @@ cardManager.defineSet(sets.setPlasmaFreeze);
 cardManager.defineSet(sets.setPlasmaBlast);
 cardManager.defineSet(sets.setLegendaryTreasures);
 
-
+// XY era
+cardManager.defineSet(sets.setXYPromos);
 cardManager.defineSet(sets.setXY);
 cardManager.defineSet(sets.setFlashfire);
 cardManager.defineSet(sets.setFuriousFists);
 cardManager.defineSet(sets.setPhantomForces);
-cardManager.defineSet(sets.setBurningShadows);
 cardManager.defineSet(sets.setPrimalClash);
-cardManager.defineSet(sets.setXYPromos);
 cardManager.defineSet(sets.setRoaringSkies);
+cardManager.defineSet(sets.setDoubleCrisis);
 cardManager.defineSet(sets.setAncientOrigins);
 cardManager.defineSet(sets.setBreakpoint);
 cardManager.defineSet(sets.setBreakthrough);
-
 cardManager.defineSet(sets.setFatesCollide);
 cardManager.defineSet(sets.setGenerations);
-cardManager.defineSet(sets.setChampionsPath);
-
-cardManager.defineSet(sets.setSunAndMoon);
-cardManager.defineSet(sets.setSunAndMoonPromos);
-cardManager.defineSet(sets.setGuardiansRising);
 cardManager.defineSet(sets.setSteamSiege);
+cardManager.defineSet(sets.setEvolutions);
 
-
+// SuMo era
+cardManager.defineSet(sets.setSunAndMoonPromos);
+cardManager.defineSet(sets.setSunAndMoon);
+cardManager.defineSet(sets.setGuardiansRising);
+cardManager.defineSet(sets.setBurningShadows);
+cardManager.defineSet(sets.setShiningLegends);
+cardManager.defineSet(sets.setCrimsonInvasion);
 cardManager.defineSet(sets.setUltraPrism);
 cardManager.defineSet(sets.setForbiddenLight);
 cardManager.defineSet(sets.setCelestialStorm);
-cardManager.defineSet(sets.setCrimsonInvasion);
 cardManager.defineSet(sets.setLostThunder);
 cardManager.defineSet(sets.setTeamUp);
-
+cardManager.defineSet(sets.setDetectivePikachu);
 cardManager.defineSet(sets.setUnbrokenBonds);
 cardManager.defineSet(sets.setUnifiedMinds);
 cardManager.defineSet(sets.setHiddenFates);
 cardManager.defineSet(sets.setCosmicEclipse);
-cardManager.defineSet(sets.setEvolutions);
-cardManager.defineSet(sets.setDetectivePikachu);
 
-
-cardManager.defineSet(sets.setSwordAndShield);
+// SwSh era
 cardManager.defineSet(sets.setSwordAndShieldPromos);
+cardManager.defineSet(sets.setSwordAndShield);
+cardManager.defineSet(sets.setRebelClash);
 cardManager.defineSet(sets.setDarknessAblaze);
-cardManager.defineSet(sets.setShiningLegends);
+cardManager.defineSet(sets.setChampionsPath);
 cardManager.defineSet(sets.setVividVoltage);
 cardManager.defineSet(sets.setShiningFates);
 cardManager.defineSet(sets.setBattleStyles);
@@ -180,12 +184,11 @@ cardManager.defineSet(sets.setPokemonGO);
 cardManager.defineSet(sets.setLostOrigin);
 cardManager.defineSet(sets.setSilverTempest);
 cardManager.defineSet(sets.setCrownZenith);
-cardManager.defineSet(sets.setRebelClash);
 
-
-cardManager.defineSet(sets.setScarletAndViolet);
+// SV era
 cardManager.defineSet(sets.setScarletAndVioletEnergy);
 cardManager.defineSet(sets.setScarletAndVioletPromos);
+cardManager.defineSet(sets.setScarletAndViolet);
 cardManager.defineSet(sets.setPaldeaEvolved);
 cardManager.defineSet(sets.setObsidianFlames);
 cardManager.defineSet(sets.setPokemon151);
@@ -201,10 +204,10 @@ cardManager.defineSet(sets.setJourneyTogether);
 cardManager.defineSet(sets.setDestinedRivals);
 cardManager.defineSet(sets.setSV11);
 
-
+// Mega era
+cardManager.defineSet(sets.setMegaEvolutionEnergy);
 cardManager.defineSet(sets.setMegaEvolutionPromos);
 cardManager.defineSet(sets.setMegaEvolution);
-cardManager.defineSet(sets.setMegaStarterDeck);
 cardManager.defineSet(sets.setPhantasmalFlames);
 cardManager.defineSet(sets.setAscendedHeroes);
 cardManager.defineSet(sets.setPerfectOrder);
@@ -212,13 +215,9 @@ cardManager.defineSet(sets.setChaosRising);
 cardManager.defineSet(sets.setDeltaReign);
 cardManager.defineSet(sets.setPitchBlack);
 cardManager.defineSet(sets.set30thCelebration);
+cardManager.defineSet(sets.setMegaStarterDeck);
 
 cardManager.defineSet(sets.setTest);
-
-cardManager.defineSet(sets.setLegendsAwakened);
-cardManager.defineSet(sets.setStormfront);
-cardManager.defineSet(sets.setMajesticDawn);
-cardManager.defineSet(sets.setArceus);
 
 StateSerializer.setKnownCards(cardManager.getAllCards());
 
