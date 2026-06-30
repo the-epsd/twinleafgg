@@ -1,4 +1,4 @@
-import { GamePhase, PowerType, State, StoreLike } from '../../game';
+import { GamePhase, State, StoreLike } from '../../game';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';

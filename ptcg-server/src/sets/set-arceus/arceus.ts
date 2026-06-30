@@ -2,7 +2,6 @@ import {
   AttachEnergyPrompt,
   GameMessage,
   PlayerType,
-  PowerType,
   SlotType,
   State,
   StateUtils,

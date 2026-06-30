@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, StateUtils, ChooseAttackPrompt } from '../../game';
+import { StoreLike, State, StateUtils, ChooseAttackPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { GameLog, GameMessage } from '../../game/game-message';

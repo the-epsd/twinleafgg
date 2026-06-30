@@ -3,7 +3,6 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import {
   StoreLike,
   State,
-  PowerType,
   PlayerType,
   ChoosePokemonPrompt,
   GameMessage,
