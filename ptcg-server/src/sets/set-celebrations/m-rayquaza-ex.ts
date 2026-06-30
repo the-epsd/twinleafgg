@@ -22,15 +22,10 @@ export class MRayquazaEx extends PokemonCard {
 
   public powers = [
     {
-      name: 'Mega Evolution Rule',
-      powerType: PowerType.MEGA_EVOLUTION_RULE,
-      text: 'When 1 of your Pokémon becomes a Mega Evolution Pokémon, your turn ends.'
-    },
-    {
       name: 'Δ Evolution',
       powerType: PowerType.ANCIENT_TRAIT,
-      text: 'You may play this card from your hand to evolve a Pokémon during your first turn or the turn you play that Pokémon.'
-    }
+      text: 'You may play this card from your hand to evolve a Pokémon during your first turn or the turn you play that Pokémon.',
+    },
   ];
 
   public attacks = [
@@ -39,8 +34,8 @@ export class MRayquazaEx extends PokemonCard {
       cost: [C, C, C],
       damage: 30,
       damageCalculation: 'x',
-      text: 'This attack does 30 damage times the number of your Benched Pokémon.'
-    }
+      text: 'This attack does 30 damage times the number of your Benched Pokémon.',
+    },
   ];
 
   public set: string = 'CEL';
@@ -60,7 +55,10 @@ export class MRayquazaEx extends PokemonCard {
 
     // Mega Evolution Rule: end the turn when this is played (unless it has Rayquaza Spirit Link)
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
-      if (effect.target.tools.length > 0 && effect.target.tools[0].name === 'Rayquaza Spirit Link') {
+      if (
+        effect.target.tools.length > 0 &&
+        effect.target.tools[0].name === 'Rayquaza Spirit Link'
+      ) {
         return state;
       }
       const endTurnEffect = new EndTurnEffect(effect.player);
@@ -71,7 +69,7 @@ export class MRayquazaEx extends PokemonCard {
     // Ref: set-roaring-skies/m-rayquaza-ex-2.ts (Emerald Break)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      const benchCount = player.bench.filter(b => b.cards.length > 0).length;
+      const benchCount = player.bench.filter((b) => b.cards.length > 0).length;
       effect.damage = 30 * benchCount;
     }
 

@@ -1,9 +1,9 @@
-import { PowerType, State, StoreLike } from '../../game';
+import { State, StoreLike } from '../../game';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import {DISCARD_X_ENERGY_FROM_THIS_POKEMON} from '../../game/store/prefabs/costs';
-import {COIN_FLIP_PROMPT, WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
+import { DISCARD_X_ENERGY_FROM_THIS_POKEMON } from '../../game/store/prefabs/costs';
+import { COIN_FLIP_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class ArceusFire extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -13,19 +13,13 @@ export class ArceusFire extends PokemonCard {
   public retreat = [C];
   public tags = [CardTag.ARCEUS];
 
-  public powers = [{
-    name: 'Arceus Rule',
-    powerType: PowerType.ARCEUS_RULE,
-    text: 'You may have as many of this card in your deck as you like.'
-  }];
-
   public attacks = [
     {
       name: 'Bright FLame',
       cost: [R, C, C],
       damage: 80,
-      text: 'Flip a coin. If tails, discard 2 Energy attached to Arceus.'
-    }
+      text: 'Flip a coin. If tails, discard 2 Energy attached to Arceus.',
+    },
   ];
 
   public set: string = 'AR';
@@ -35,13 +29,12 @@ export class ArceusFire extends PokemonCard {
   public fullName: string = 'Arceus Fire AR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Bright Flame
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
-      COIN_FLIP_PROMPT(store, state, player, result => {
-        if (!result){
+      COIN_FLIP_PROMPT(store, state, player, (result) => {
+        if (!result) {
           DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 2);
         }
       });

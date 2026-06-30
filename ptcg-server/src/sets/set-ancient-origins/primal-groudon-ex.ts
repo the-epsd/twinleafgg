@@ -21,14 +21,9 @@ export class PrimalGroudonEx extends PokemonCard {
 
   public powers = [
     {
-      name: 'Primal Reversion Rule',
-      powerType: PowerType.MEGA_EVOLUTION_RULE,
-      text: 'When 1 of your Pokemon becomes Primal Groudon-EX, your turn ends.'
-    },
-    {
       name: '\u03b8 Max',
       powerType: PowerType.ANCIENT_TRAIT,
-      text: 'When 1 of your Pokemon becomes this Pokemon, heal all damage from it.'
+      text: 'When 1 of your Pokemon becomes this Pokemon, heal all damage from it.',
     },
   ];
 
@@ -38,8 +33,8 @@ export class PrimalGroudonEx extends PokemonCard {
       cost: [F, F, F, C],
       damage: 100,
       damageCalculation: '+',
-      text: 'If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card.'
-    }
+      text: 'If there is any Stadium card in play, this attack does 100 more damage. Discard that Stadium card.',
+    },
   ];
 
   public set: string = 'AOR';

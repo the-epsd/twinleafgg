@@ -1,4 +1,4 @@
-import { PowerType, State, StateUtils, StoreLike } from '../../game';
+import { State, StateUtils, StoreLike } from '../../game';
 import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
@@ -12,19 +12,13 @@ export class ArceusPsychic extends PokemonCard {
   public retreat = [C];
   public tags = [CardTag.ARCEUS];
 
-  public powers = [{
-    name: 'Arceus Rule',
-    powerType: PowerType.ARCEUS_RULE,
-    text: 'You may have as many of this card in your deck as you like.'
-  }];
-
   public attacks = [
     {
       name: 'Mind Bend',
       cost: [P, C, C],
       damage: 40,
-      text: 'The Defending Pokémon is now Confused.'
-    }
+      text: 'The Defending Pokémon is now Confused.',
+    },
   ];
 
   public set: string = 'AR';
@@ -34,10 +28,14 @@ export class ArceusPsychic extends PokemonCard {
   public fullName: string = 'Arceus Psychic AR';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Mind Bend
     if (AFTER_ATTACK(effect, 0, this)) {
-      ADD_CONFUSION_TO_PLAYER_ACTIVE(store, state, StateUtils.getOpponent(state, effect.player), this);
+      ADD_CONFUSION_TO_PLAYER_ACTIVE(
+        store,
+        state,
+        StateUtils.getOpponent(state, effect.player),
+        this,
+      );
     }
 
     return state;

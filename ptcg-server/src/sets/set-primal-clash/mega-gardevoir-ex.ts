@@ -1,37 +1,29 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType, PlayerType } from '../../game';
+import { StoreLike, State, PlayerType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import {WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
-import {PlayPokemonEffect} from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class MGardevoirEx extends PokemonCard {
-  public tags = [ CardTag.POKEMON_EX, CardTag.MEGA ];
+  public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Gardevoir-EX';
   public cardType: CardType = Y;
   public hp: number = 210;
   public weakness = [{ type: M }];
   public resistance = [{ type: D, value: -20 }];
-  public retreat = [ C, C ];
-
-  public powers = [
-    {
-      name: 'Mega Evolution Rule',
-      powerType: PowerType.MEGA_EVOLUTION_RULE,
-      text: 'When 1 of your Pokémon becomes a Mega Evolution Pokémon, your turn ends.'
-    }
-  ];
+  public retreat = [C, C];
 
   public attacks = [
     {
       name: 'Brilliant Arrow',
-      cost: [ Y, C, C ],
+      cost: [Y, C, C],
       damage: 30,
       damageCalculation: 'x',
-      text: 'This attack does 30 damage times the amount of [Y] Energy attached to all of your Pokémon.'
-    }
+      text: 'This attack does 30 damage times the amount of [Y] Energy attached to all of your Pokémon.',
+    },
   ];
 
   public set: string = 'PRC';
@@ -42,8 +34,11 @@ export class MGardevoirEx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // screw the rules
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
-      if (effect.target.tools.length > 0 && effect.target.tools[0].name === 'Gardevoir Spirit Link'){
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      if (
+        effect.target.tools.length > 0 &&
+        effect.target.tools[0].name === 'Gardevoir Spirit Link'
+      ) {
         return state;
       }
 
@@ -52,13 +47,13 @@ export class MGardevoirEx extends PokemonCard {
     }
 
     // Brilliant Arrow
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       let fairyEnergies = 0;
 
-      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, card => {
-        const goodEnergy = card.cards.filter(card =>
-          card.superType === SuperType.ENERGY && card.name === 'Fairy Energy'
+      player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (card) => {
+        const goodEnergy = card.cards.filter(
+          (card) => card.superType === SuperType.ENERGY && card.name === 'Fairy Energy',
         );
 
         fairyEnergies += goodEnergy.length;
@@ -69,5 +64,4 @@ export class MGardevoirEx extends PokemonCard {
 
     return state;
   }
-
 }

@@ -1,36 +1,28 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, PowerType } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import {WAS_ATTACK_USED} from '../../game/store/prefabs/prefabs';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
-import {PlayPokemonEffect} from '../../game/store/effects/play-card-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 
 export class MAlakazamEx extends PokemonCard {
-  public tags = [ CardTag.POKEMON_EX, CardTag.MEGA ];
+  public tags = [CardTag.POKEMON_EX, CardTag.MEGA];
   public stage: Stage = Stage.MEGA;
   public evolvesFrom = 'Alakazam-EX';
   public cardType: CardType = P;
   public hp: number = 210;
   public weakness = [{ type: P }];
-  public retreat = [ C ];
-
-  public powers = [
-    {
-      name: 'Mega Evolution Rule',
-      powerType: PowerType.MEGA_EVOLUTION_RULE,
-      text: 'When 1 of your Pokémon becomes a Mega Evolution Pokémon, your turn ends.'
-    }
-  ];
+  public retreat = [C];
 
   public attacks = [
     {
       name: 'Zen Force',
-      cost: [ P, C ],
+      cost: [P, C],
       damage: 10,
       damageCalculation: '+',
-      text: 'This attack does 30 more damage for each damage counter on your opponent\'s Active Pokémon.'
-    }
+      text: "This attack does 30 more damage for each damage counter on your opponent's Active Pokémon.",
+    },
   ];
 
   public set: string = 'FCO';
@@ -41,8 +33,11 @@ export class MAlakazamEx extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // screw the rules
-    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this){
-      if (effect.target.tools.length > 0 && effect.target.tools[0].name === 'Alakazam Spirit Link'){
+    if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
+      if (
+        effect.target.tools.length > 0 &&
+        effect.target.tools[0].name === 'Alakazam Spirit Link'
+      ) {
         return state;
       }
 
@@ -51,11 +46,10 @@ export class MAlakazamEx extends PokemonCard {
     }
 
     // Zen Force
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       effect.damage += effect.opponent.active.damage * 3;
     }
 
     return state;
   }
-
 }
