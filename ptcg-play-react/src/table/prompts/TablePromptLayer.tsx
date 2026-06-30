@@ -30,6 +30,7 @@ import { ShellButton } from '../../components/ui/ShellButton';
 import { CardFace } from '../../components/cards/CardFace';
 import { CardInfoPopup } from '../../card-info/CardInfoPopup';
 import { CheckboxField } from '../../components/ui/CheckboxField';
+import { useDeckName } from '../../hooks/useDeckName';
 import styles from './TablePromptLayer.module.css';
 import { AttachEnergyPromptPanel } from './AttachEnergyPromptPanel';
 import { ChooseAttackPromptPanel } from './ChooseAttackPromptPanel';
@@ -536,6 +537,23 @@ export function TablePromptLayer({
     suppressChoosePrizePrompt,
   ]);
 
+  const selfPlayGoFirstDeckId = useMemo(() => {
+    if (localGame.state.gameSettings?.selfPlay !== true) {
+      return undefined;
+    }
+    const p = activePrompt;
+    if (!p || p.type !== 'Confirm') {
+      return undefined;
+    }
+    const cp = p as ConfirmPrompt;
+    if (String(cp.message) !== 'GO_FIRST') {
+      return undefined;
+    }
+    return localGame.state.players.find((pl) => pl.id === cp.playerId)?.deckId;
+  }, [activePrompt, localGame.state.gameSettings?.selfPlay, localGame.state.players]);
+
+  const selfPlayGoFirstDeckName = useDeckName(selfPlayGoFirstDeckId);
+
   if (localGame.replay) {
     return null;
   }
@@ -576,10 +594,17 @@ export function TablePromptLayer({
 
   if (p.type === 'Confirm') {
     const cp = p as ConfirmPrompt;
+    const isSelfPlayGoFirst =
+      localGame.state.gameSettings?.selfPlay === true && String(cp.message) === 'GO_FIRST';
+    const confirmTitleBase = t('PROMPT_CONFIRM_TITLE', { defaultValue: 'Confirm' });
+    const confirmTitle =
+      isSelfPlayGoFirst && selfPlayGoFirstDeckName != null && selfPlayGoFirstDeckName !== ''
+        ? `${confirmTitleBase} [${selfPlayGoFirstDeckName}]`
+        : confirmTitleBase;
     return (
       <div className={styles.backdrop} role="presentation">
         <div className={styles.panel} role="dialog" aria-modal="true">
-          <h2 className={styles.title}>{t('PROMPT_CONFIRM_TITLE', { defaultValue: 'Confirm' })}</h2>
+          <h2 className={styles.title}>{confirmTitle}</h2>
           <p className={styles.message}>{gameMessageText(t, cp.message)}</p>
           <div className={styles.actions}>
             <ShellButton variant="secondary" type="button" onClick={() => resolve(cp.id, false)}>
