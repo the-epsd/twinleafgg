@@ -116,7 +116,7 @@ function insertOrdered(list: DeckSlot[], newSlot: DeckSlot): DeckSlot[] {
 
 export function addCardToDeck(slots: DeckSlot[], card: Card): AddCardResult {
   const gate = canAddOne(slots, card);
-  if (!gate.ok) {
+  if (gate.ok === false) {
     return gate;
   }
   const idx = slots.findIndex((c) => c.card.fullName === card.fullName);
@@ -128,6 +128,37 @@ export function addCardToDeck(slots: DeckSlot[], card: Card): AddCardResult {
     return { ok: false, reason: 'Maximum 4 copies per card name (except basic Energy).' };
   }
   return { ok: true, slots: sortDeckSlots(next) };
+}
+
+/** Max copies allowed for this printing (accounts for other printings of the same name). */
+export function maxCountForPrinting(slots: DeckSlot[], card: Card): number {
+  const otherSameNameCount = slots
+    .filter((i) => i.card.name === card.name && i.card.fullName !== card.fullName)
+    .reduce((sum, i) => sum + i.count, 0);
+  const maxPerName = isBasicEnergy(card) ? 60 : 4;
+  return Math.max(0, maxPerName - otherSameNameCount);
+}
+
+export type SetCountResult = { ok: true; slots: DeckSlot[] } | { ok: false; reason: string };
+
+export function setSlotCount(slots: DeckSlot[], card: Card, count: number): SetCountResult {
+  const maxForThisPrinting = maxCountForPrinting(slots, card);
+  const cappedCount = Math.min(Math.max(0, Math.floor(count)), maxForThisPrinting);
+  const without = slots.filter((s) => s.card.fullName !== card.fullName);
+
+  if (cappedCount === 0) {
+    return { ok: true, slots: sortDeckSlots(without) };
+  }
+
+  let next = without;
+  for (let i = 0; i < cappedCount; i++) {
+    const res = addCardToDeck(next, card);
+    if (!res.ok) {
+      return res;
+    }
+    next = res.slots;
+  }
+  return { ok: true, slots: next };
 }
 
 export function removeOneCopy(slots: DeckSlot[], fullName: string): DeckSlot[] {

@@ -49,6 +49,7 @@ function SortableDeckCard({
   disabled,
   onAddCopy,
   onRemoveCopy,
+  onEditQuantity,
   onOpenInfo,
 }: {
   slot: DeckSlot;
@@ -56,6 +57,7 @@ function SortableDeckCard({
   disabled: boolean;
   onAddCopy: () => void;
   onRemoveCopy: () => void;
+  onEditQuantity: () => void;
   onOpenInfo: () => void;
 }) {
   const { t } = useTranslation();
@@ -83,9 +85,11 @@ function SortableDeckCard({
             <button
               type="button"
               className={styles.countCircle}
+              disabled={disabled}
               onPointerDown={(e) => e.stopPropagation()}
               onClick={(e) => {
                 e.stopPropagation();
+                onEditQuantity();
               }}
               aria-label={t('DECK_EDIT_QUANTITY_ARIA', { count: slot.count })}
             >
@@ -141,6 +145,7 @@ export type DeckBuildPaneProps = {
   onToggleLibrary: () => void;
   onAddCopy: (fullName: string) => void;
   onRemoveCopy: (fullName: string) => void;
+  onEditQuantity: (card: Card) => void;
   onOpenCardInfo: (card: Card) => void;
   /** Fired when measured deck card width changes (library matches this). */
   onSlotWidthChange?: (slotWidthPx: number) => void;
@@ -157,6 +162,7 @@ export function DeckBuildPane({
   onToggleLibrary,
   onAddCopy,
   onRemoveCopy,
+  onEditQuantity,
   onOpenCardInfo,
   onSlotWidthChange,
 }: DeckBuildPaneProps) {
@@ -252,6 +258,7 @@ export function DeckBuildPane({
                   disabled={disabled}
                   onAddCopy={() => onAddCopy(slot.card.fullName)}
                   onRemoveCopy={() => onRemoveCopy(slot.card.fullName)}
+                  onEditQuantity={() => onEditQuantity(slot.card)}
                   onOpenInfo={() => onOpenCardInfo(slot.card)}
                 />
               ))}
