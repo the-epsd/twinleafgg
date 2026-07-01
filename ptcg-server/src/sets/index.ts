@@ -181,17 +181,17 @@ export * from './set-destined-rivals';
 export * from './set-black-bolt-white-flare';
 
 //MEG Era
-export * from './set-mega-evolution-promos';
-export * from './set-mega-evolution';
-export * from './set-mega-evolution-energy';
-export * from './set-mega-starter-deck';
-export * from './set-phantasmal-flames';
-export * from './set-ascended-heroes';
-export * from './set-perfect-order';
-export * from './set-chaos-rising';
-export * from './set-delta-reign';
-export * from './set-pitch-black';
-export * from './set-30th-celebration';
+export * from './11-mega-evolution/set-mega-evolution-promos';
+export * from './11-mega-evolution/set-mega-evolution';
+export * from './11-mega-evolution/set-mega-evolution-energy';
+export * from './11-mega-evolution/set-mega-starter-deck';
+export * from './11-mega-evolution/set-phantasmal-flames';
+export * from './11-mega-evolution/set-ascended-heroes';
+export * from './11-mega-evolution/set-perfect-order';
+export * from './11-mega-evolution/set-chaos-rising';
+export * from './11-mega-evolution/set-delta-reign';
+export * from './11-mega-evolution/set-pitch-black';
+export * from './11-mega-evolution/set-30th-celebration';
 
 //TEST
 export * from './set-test';
