@@ -12,6 +12,7 @@ export enum AttackEffects {
   DEAL_DAMAGE_EFFECT = 'DEAL_DAMAGE_EFFECT',
   PUT_DAMAGE_EFFECT = 'PUT_DAMAGE_EFFECT',
   KNOCK_OUT_OPPONENT_EFFECT = 'KNOCK_OUT_OPPONENT_EFFECT',
+  KNOCK_OUT_PLAYER_EFFECT = 'KNOCK_OUT_PLAYER_EFFECT',
   AFTER_DAMAGE_EFFECT = 'AFTER_DAMAGE_EFFECT',
   PUT_COUNTERS_EFFECT = 'PUT_COUNTERS_EFFECT',
   DISCARD_CARD_EFFECT = 'DISCARD_CARD_EFFECT',
@@ -173,6 +174,17 @@ export class SwitchOutOpponentsActiveEffect extends AbstractAttackEffect impleme
 
 export class KnockOutOpponentEffect extends AbstractAttackEffect implements Effect {
   readonly type: string = AttackEffects.KNOCK_OUT_OPPONENT_EFFECT;
+  public preventDefault = false;
+  public knockedOut = false;
+  public prizeCount = 0;
+
+  constructor(base: AttackEffect) {
+    super(base);
+  }
+}
+
+export class KnockOutPlayerEffect extends AbstractAttackEffect implements Effect {
+  readonly type: string = AttackEffects.KNOCK_OUT_PLAYER_EFFECT;
   public preventDefault = false;
   public knockedOut = false;
   public prizeCount = 0;

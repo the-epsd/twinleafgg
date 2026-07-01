@@ -1,62 +1,47 @@
 import { CardType, GameError, GameMessage, PokemonCard, PokemonCardList, Stage, State, StateUtils, StoreLike } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON, KNOCK_OUT_PLAYERS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Beedrill extends PokemonCard {
-
   public stage: Stage = Stage.STAGE_2;
-
   public evolvesFrom = 'Kakuna';
-
-  public cardType: CardType = CardType.GRASS;
-
+  public cardType: CardType = G;
   public hp: number = 130;
+  public weakness = [{ type: R }];
+  public retreat = [C];
 
-  public weakness = [{ type: CardType.FIRE }];
-
-  public retreat = [CardType.COLORLESS];
+  public attacks = [{
+    name: 'Destiny Stinger',
+    cost: [G],
+    damage: 0,
+    text: 'You can use this attack only if this Pokémon has any damage counters on it. Both Active Pokémon are Knocked Out.'
+  },
+  {
+    name: 'Reckless Charge',
+    cost: [C, C],
+    damage: 90,
+    text: 'This Pokémon does 10 damage to itself.'
+  }];
 
   public set = 'TEU';
-
   public setNumber = '5';
-
   public cardImage = 'assets/cardback.png';
-
   public name = 'Beedrill';
-
   public fullName = 'Beedrill TEU';
 
-  public attacks = [
-    {
-      name: 'Destiny Stinger',
-      cost: [CardType.GRASS],
-      damage: 0,
-      text: 'You can use this attack only if this Pokemon has any damage counters on it. Both Active Pokemon are Knocked Out.'
-    },
-    {
-      name: 'Reckless Charge',
-      cost: [CardType.COLORLESS, CardType.COLORLESS],
-      damage: 90,
-      text: 'This Pokemon does 10 damage to itself.'
-    },
-  ];
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     // Destiny Stinger
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
       const cardList = StateUtils.findCardList(state, this) as PokemonCardList;
 
       // If no damage counters on ourself, can't use the attack.
-      if (cardList.damage <= 0) { throw new GameError(GameMessage.BLOCKED_BY_EFFECT); }
-
-      // Knock out both active Pokemon, the dumb way.
-      player.active.damage += 999;
-      opponent.active.damage += 999;
+      if (cardList.damage <= 0) {
+        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+      }
+      KNOCK_OUT_PLAYERS_ACTIVE_POKEMON(store, state, effect);
+      KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
     }
 
     // Reckless Charge

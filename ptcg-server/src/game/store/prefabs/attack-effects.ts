@@ -2,7 +2,7 @@ import { Card, CardTarget, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonP
 import { CardType, SpecialCondition, SuperType, TrainerType } from '../card/card-types';
 import { EnergyCard } from '../card/energy-card';
 import { PokemonCard } from '../card/pokemon-card';
-import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, CardsToHandEffect, DealDamageEffect, DiscardCardsEffect, DiscardCardsFromOpponentsActivePokemonEffect, DiscardDefendingPokemonEffect, HealTargetEffect, KnockOutOpponentEffect, MoveOpponentEnergyEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
+import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, CardsToHandEffect, DealDamageEffect, DiscardCardsEffect, DiscardCardsFromOpponentsActivePokemonEffect, DiscardDefendingPokemonEffect, HealTargetEffect, KnockOutOpponentEffect, KnockOutPlayerEffect, MoveOpponentEnergyEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { AttackEffect } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
@@ -65,6 +65,21 @@ export function KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(
 ): State {
   const knockOutEffect = new KnockOutOpponentEffect(effect);
   knockOutEffect.target = target ?? effect.opponent.active;
+  return store.reduceEffect(state, knockOutEffect);
+}
+
+/**
+ * Knock Out your Active Pokémon (or another of your Pokémon via target).
+ * Your opponent takes the Prize cards. Blockable by effects like Mist Energy.
+ */
+export function KNOCK_OUT_PLAYERS_ACTIVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  target?: PokemonCardList,
+): State {
+  const knockOutEffect = new KnockOutPlayerEffect(effect);
+  knockOutEffect.target = target ?? effect.player.active;
   return store.reduceEffect(state, knockOutEffect);
 }
 

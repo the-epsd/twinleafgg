@@ -11,6 +11,7 @@ import {
   PutCountersEffect, CardsToHandEffect,
   MoveOpponentEnergyEffect,
   KnockOutOpponentEffect,
+  KnockOutPlayerEffect,
   DiscardDefendingPokemonEffect,
   KOEffect,
   LostZoneCardsEffect,
@@ -194,6 +195,30 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       effect.knockedOut = true;
       effect.prizeCount = knockOutEffect.prizeCount;
       return TAKE_X_PRIZES(store, state, effect.player, knockOutEffect.prizeCount);
+    }
+
+    return state;
+  }
+
+  if (effect instanceof KnockOutPlayerEffect) {
+    if (effect.preventDefault) {
+      return state;
+    }
+
+    const target = effect.target;
+    const pokemonCard = target.getPokemonCard();
+    if (pokemonCard === undefined) {
+      throw new GameError(GameMessage.ILLEGAL_ACTION);
+    }
+
+    const targetOwner = StateUtils.findOwner(state, target);
+    const knockOutEffect = new KnockOutEffect(targetOwner, target);
+    state = store.reduceEffect(state, knockOutEffect);
+
+    if (!knockOutEffect.preventDefault) {
+      effect.knockedOut = true;
+      effect.prizeCount = knockOutEffect.prizeCount;
+      return TAKE_X_PRIZES(store, state, effect.opponent, knockOutEffect.prizeCount);
     }
 
     return state;

@@ -2094,6 +2094,19 @@ export function IS_TOOL_BLOCKED(
 }
 
 /**
+ * True when an attack effect originated from the target owner's opponent's Pokémon.
+ * Used for text like "Prevent effects of attacks from your opponent's Pokémon done to …"
+ */
+export function IS_ATTACK_EFFECT_FROM_OPPONENTS_POKEMON(
+  state: State,
+  effect: AbstractAttackEffect,
+): boolean {
+  const targetOwner = StateUtils.findOwner(state, effect.target);
+  const sourceOwner = StateUtils.findOwner(state, effect.source);
+  return sourceOwner === StateUtils.getOpponent(state, targetOwner);
+}
+
+/**
  * Checks if a special energy's effect is being blocked for the given player and Pokemon it is attached to. Do not use in CheckProvidedEnergyEffect.
  * @returns `true` if the special energy's effect is blocked, `false` if the special energy's effect is able to activate.
  */

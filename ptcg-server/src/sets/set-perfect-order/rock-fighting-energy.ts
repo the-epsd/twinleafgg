@@ -5,7 +5,7 @@ import {
   CheckProvidedEnergyEffect
 } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { IS_ATTACK_EFFECT_FROM_OPPONENTS_POKEMON, IS_SPECIAL_ENERGY_BLOCKED } from '../../game/store/prefabs/prefabs';
 import { StateUtils } from '../../game/store/state-utils';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
@@ -32,15 +32,17 @@ Prevent all effects of attacks used by your opponent\'s Pokémon done to the [F]
 
     // Prevent effects of attacks
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard()?.cardType === CardType.FIGHTING) {
-
-      const opponent = StateUtils.getOpponent(state, effect.player);
+      const targetOwner = StateUtils.findOwner(state, effect.target);
+      const opponent = StateUtils.getOpponent(state, targetOwner);
       if (IS_SPECIAL_ENERGY_BLOCKED(store, state, opponent, this, effect.target)) {
         return state;
       }
 
-      const sourceCard = effect.source.getPokemonCard();
+      if (!IS_ATTACK_EFFECT_FROM_OPPONENTS_POKEMON(state, effect)) {
+        return state;
+      }
 
-      if (sourceCard) {
+      if (effect.source.getPokemonCard()) {
         // Allow Weakness & Resistance
         if (effect instanceof ApplyWeaknessEffect) {
           return state;
