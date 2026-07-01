@@ -7,7 +7,7 @@ import { EnergyTypeIcon } from './EnergyTypeIcon';
 import { isFavoriteCard, toggleFavoriteCard } from './favoriteCardsStorage';
 import {
   getCardRuleText,
-  getCardsWithSameName,
+  getGroupedAlternativePrintings,
   getComputedHp,
   getCurrentHp,
   getDisplayAttacks,
@@ -110,7 +110,7 @@ export function CardInfoPane({
   const [, favBump] = useState(0);
   const bumpFavorite = useCallback(() => favBump((n) => n + 1), []);
 
-  const alternatives = useMemo(() => getCardsWithSameName(catalog, card), [catalog, card]);
+  const groupedAlternatives = useMemo(() => getGroupedAlternativePrintings(catalog, card), [catalog, card]);
 
   function trainerSubtitle(trainerT: TrainerType): string {
     switch (trainerT) {
@@ -659,7 +659,7 @@ export function CardInfoPane({
         open={swapOpen}
         onClose={() => setSwapOpen(false)}
         currentCard={card}
-        alternativeCards={alternatives}
+        groupedAlternatives={groupedAlternatives}
         getScanUrl={getScanUrl}
         onSelect={onSwapSelect}
       />

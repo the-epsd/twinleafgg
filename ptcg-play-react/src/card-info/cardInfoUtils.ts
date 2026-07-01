@@ -1,5 +1,5 @@
-import type { Attack, Card, CardList, Player, PokemonCard, Power } from 'ptcg-server';
-import { CardTag, CardType, PokemonCardList, PowerType, Stage, SuperType } from 'ptcg-server';
+import type { Attack, Card, CardList, EnergyCard, Player, PokemonCard, Power, TrainerCard } from 'ptcg-server';
+import { CardTag, CardType, EnergyType, PokemonCardList, PowerType, Stage, SuperType } from 'ptcg-server';
 import i18n from '../i18n/i18n';
 import styles from './CardInfoPane.module.css';
 
@@ -81,8 +81,143 @@ export function formatCardText(text: string, iconSize: string): string {
   return transformEnergyText(formatBossMonMechanics(formatReminderText(text)), iconSize);
 }
 
+export type GroupedAlternativePrintings = {
+  /** Same card text/stats — alt art and set reprints. */
+  otherPrints: Card[];
+  /** Same deck-building name but different card. */
+  sameNameOnly: Card[];
+};
+
+function normalizePower(power: Power) {
+  return {
+    name: power.name,
+    powerType: power.powerType,
+    text: power.text ?? '',
+    useWhenInPlay: !!power.useWhenInPlay,
+    useFromHand: !!power.useFromHand,
+    useFromDiscard: !!power.useFromDiscard,
+  };
+}
+
+function normalizeAttack(attack: Attack) {
+  return {
+    name: attack.name,
+    cost: attack.cost,
+    damage: attack.damage,
+    damageCalculation: attack.damageCalculation ?? '',
+    text: attack.text ?? '',
+  };
+}
+
+/** Stable gameplay fingerprint — ignores set, number, and artwork fields. */
+export function getCardGameplaySignature(card: Card): string {
+  const pokemon = card as PokemonCard;
+  const trainer = card as TrainerCard;
+  const energy = card as EnergyCard;
+
+  const base = {
+    superType: card.superType,
+    tags: [...(card.tags ?? [])].sort(),
+    cardTag: [...(pokemon.cardTag ?? [])].sort(),
+    attacks: (card.attacks ?? []).map(normalizeAttack),
+    powers: (card.powers ?? []).filter((p) => !p.isFossil).map(normalizePower),
+  };
+
+  if (card.superType === SuperType.POKEMON) {
+    return JSON.stringify({
+      ...base,
+      hp: pokemon.hp,
+      cardType: pokemon.cardType,
+      additionalCardTypes: pokemon.additionalCardTypes ?? [],
+      stage: pokemon.stage,
+      evolvesFrom: pokemon.evolvesFrom ?? '',
+      weakness: pokemon.weakness ?? [],
+      resistance: pokemon.resistance ?? [],
+      retreat: pokemon.retreat ?? [],
+    });
+  }
+
+  if (card.superType === SuperType.TRAINER) {
+    return JSON.stringify({
+      ...base,
+      trainerType: trainer.trainerType,
+      text: trainer.text ?? '',
+    });
+  }
+
+  if (card.superType === SuperType.ENERGY) {
+    return JSON.stringify({
+      ...base,
+      energyType: energy.energyType ?? EnergyType.BASIC,
+      provides: energy.provides ?? [],
+      text: energy.text ?? '',
+      blendedEnergies: energy.blendedEnergies ?? [],
+      blendedEnergyCount: energy.blendedEnergyCount ?? 1,
+    });
+  }
+
+  return JSON.stringify(base);
+}
+
+export function areFunctionallyEquivalent(a: Card, b: Card): boolean {
+  if (a.superType !== b.superType) {
+    return false;
+  }
+  return getCardGameplaySignature(a) === getCardGameplaySignature(b);
+}
+
+function comparePrintings(a: Card, b: Card, reference: Card): number {
+  const aSameSet = a.set === reference.set;
+  const bSameSet = b.set === reference.set;
+  if (aSameSet !== bSameSet) {
+    return aSameSet ? -1 : 1;
+  }
+
+  const setCompare = a.set.localeCompare(b.set);
+  if (setCompare !== 0) {
+    return setCompare;
+  }
+
+  const numA = Number.parseInt(a.setNumber, 10);
+  const numB = Number.parseInt(b.setNumber, 10);
+  if (!Number.isNaN(numA) && !Number.isNaN(numB) && numA !== numB) {
+    return numA - numB;
+  }
+
+  const numberCompare = a.setNumber.localeCompare(b.setNumber, undefined, { numeric: true });
+  if (numberCompare !== 0) {
+    return numberCompare;
+  }
+
+  return a.fullName.localeCompare(b.fullName);
+}
+
+function sortPrintings(cards: Card[], reference: Card): Card[] {
+  return [...cards].sort((a, b) => comparePrintings(a, b, reference));
+}
+
+export function getGroupedAlternativePrintings(catalog: Card[], card: Card): GroupedAlternativePrintings {
+  const alternatives = catalog.filter((c) => c.name === card.name && c.fullName !== card.fullName);
+  const otherPrints: Card[] = [];
+  const sameNameOnly: Card[] = [];
+
+  for (const alt of alternatives) {
+    if (areFunctionallyEquivalent(card, alt)) {
+      otherPrints.push(alt);
+    } else {
+      sameNameOnly.push(alt);
+    }
+  }
+
+  return {
+    otherPrints: sortPrintings(otherPrints, card),
+    sameNameOnly: sortPrintings(sameNameOnly, card),
+  };
+}
+
 export function getCardsWithSameName(catalog: Card[], card: Card): Card[] {
-  return catalog.filter((c) => c.name === card.name && c.fullName !== card.fullName);
+  const { otherPrints, sameNameOnly } = getGroupedAlternativePrintings(catalog, card);
+  return [...otherPrints, ...sameNameOnly];
 }
 
 function cardPowers(card: Card): Power[] {

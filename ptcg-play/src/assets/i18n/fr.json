@@ -621,6 +621,8 @@
   "SWAP_CARD_TITLE": "Changer l’illustration de la carte",
   "CARD_CURRENT": "Actuelle",
   "NO_ALTERNATIVES": "Aucune autre illustration trouvée pour cette carte.",
+  "SWAP_SECTION_OTHER_PRINTS": "Autres impressions",
+  "SWAP_SECTION_SAME_NAME": "Même nom, carte différente",
   "FAVORITE_ADD": "Ajouter aux favoris",
   "FAVORITE_REMOVE": "Retirer des favoris",
   "LOGIN_REMEMBER_USERNAME": "Mémoriser le nom d’utilisateur",

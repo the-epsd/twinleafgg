@@ -707,6 +707,8 @@
   "SWAP_CARD_TITLE": "Swap Card Artwork",
   "CARD_CURRENT": "Current",
   "NO_ALTERNATIVES": "No alternative printings found for this card.",
+  "SWAP_SECTION_OTHER_PRINTS": "Other prints",
+  "SWAP_SECTION_SAME_NAME": "Same name, different card",
   "FAVORITE_ADD": "Add to favorites",
   "FAVORITE_REMOVE": "Remove from favorites",
   "LOGIN_REMEMBER_USERNAME": "Remember Username",
