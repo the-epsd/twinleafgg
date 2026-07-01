@@ -1,25 +1,19 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AfterDamageEffect, DealDamageEffect } from '../../game/store/effects/attack-effects';
+import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, SWITCH_OUT_OPPONENT_ACTIVE_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Rhydon extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Rhyhorn';
-
-  public cardType: CardType = CardType.FIGHTING;
-
+  public cardType: CardType = F;
   public hp: number = 100;
-
-  public weakness = [{ type: CardType.GRASS }];
-
-  public resistance = [{ type: CardType.LIGHTNING, value: -30 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: G }];
+  public resistance = [{ type: L, value: -30 }];
+  public retreat = [C, C, C];
 
   public attacks = [{
     name: 'Horn Attack',
@@ -35,16 +29,10 @@ export class Rhydon extends PokemonCard {
   }];
 
   public set: string = 'JU';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '45';
-
   public name: string = 'Rhydon';
-
   public fullName: string = 'Rhydon JU';
-
-  public usedRam: boolean = false;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -53,32 +41,20 @@ export class Rhydon extends PokemonCard {
 
       const dealDamage = new DealDamageEffect(effect, 20);
       dealDamage.target = player.active;
-
-      this.usedRam = true;
       return store.reduceEffect(state, dealDamage);
     }
 
-    if (effect instanceof AfterDamageEffect && this.usedRam) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const hasBench = opponent.bench.some(b => b.cards.length > 0);
+      const opponentHasBenched = opponent.bench.some(b => b.cards.length > 0);
 
-      if (hasBench === false) {
+      if (!opponentHasBenched) {
         return state;
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        opponent.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.BOTTOM_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), targets => {
-        if (targets && targets.length > 0) {
-          opponent.active.clearEffects();
-          opponent.switchPokemon(targets[0]);
-          return state;
-        }
+      return SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(store, state, effect.player, {
+        sourceEffect: effect,
       });
     }
 

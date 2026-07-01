@@ -1,6 +1,6 @@
-import { PokemonCard, Stage, CardType, StoreLike, State, StateUtils, ChoosePokemonPrompt, GameMessage, PlayerType, SlotType } from '../../game';
+import { PokemonCard, Stage, CardType, StoreLike, State, GameError, GameMessage, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { AFTER_ATTACK, GUST_OPPONENT_BENCHED_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Clefairy extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -31,28 +31,17 @@ export class Clefairy extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Follow Me - Switch opponent's Benched with Active
-    if (WAS_ATTACK_USED(effect, 0, this)) {
+    if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-
-      // Check if opponent has benched Pokemon
       const hasBench = opponent.bench.some(b => b.cards.length > 0);
+
       if (!hasBench) {
-        return state;
+        throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), selected => {
-        const targets = selected || [];
-        if (targets.length > 0) {
-          opponent.active.clearEffects();
-          opponent.switchPokemon(targets[0]);
-        }
+      return GUST_OPPONENT_BENCHED_POKEMON(store, state, effect.player, {
+        sourceEffect: effect,
       });
     }
 

@@ -64,6 +64,8 @@ import {
   HealTargetEffect,
   PutCountersEffect,
   PutDamageEffect,
+  GustOpponentBenchEffect,
+  SwitchOutOpponentsActiveEffect,
 } from '../effects/attack-effects';
 import {
   AddSpecialConditionsPowerEffect,
@@ -2149,6 +2151,7 @@ export interface SwitchInOpponentBenchedPokemonOptions {
   allowCancel?: boolean;
   blocked?: CardTarget[];
   onSwitched?: (target: PokemonCardList) => void;
+  sourceEffect?: AttackEffect | AfterAttackEffect;
 }
 
 /**
@@ -2161,7 +2164,7 @@ export function SWITCH_IN_OPPONENT_BENCHED_POKEMON(
   player: Player,
   options: SwitchInOpponentBenchedPokemonOptions = {},
 ): State {
-  const { allowCancel = false, blocked = [], onSwitched } = options;
+  const { allowCancel = false, blocked = [], onSwitched, sourceEffect } = options;
   const opponent = StateUtils.getOpponent(state, player);
   const hasBenchedPokemon = opponent.bench.some((bench) => bench.cards.length > 0);
   if (!hasBenchedPokemon) {
@@ -2181,9 +2184,17 @@ export function SWITCH_IN_OPPONENT_BENCHED_POKEMON(
       if (!selected || selected.length === 0) {
         return;
       }
-      opponent.switchPokemon(selected[0], store, state);
-      if (onSwitched !== undefined) {
-        onSwitched(selected[0]);
+      if (sourceEffect) {
+        const gustEffect = new GustOpponentBenchEffect(sourceEffect, selected[0]);
+        store.reduceEffect(state, gustEffect);
+        if (!gustEffect.preventDefault && onSwitched !== undefined) {
+          onSwitched(selected[0]);
+        }
+      } else {
+        opponent.switchPokemon(selected[0], store, state);
+        if (onSwitched !== undefined) {
+          onSwitched(selected[0]);
+        }
       }
     },
   );
@@ -2193,6 +2204,7 @@ export interface SwitchOutOpponentActivePokemonOptions {
   allowCancel?: boolean;
   blocked?: CardTarget[];
   onSwitched?: (target: PokemonCardList) => void;
+  sourceEffect?: AttackEffect | AfterAttackEffect;
 }
 
 /**
@@ -2208,11 +2220,19 @@ export function SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(
   player: Player,
   options: SwitchOutOpponentActivePokemonOptions = {},
 ): State {
-  const { allowCancel = false, blocked = [], onSwitched } = options;
+  const { allowCancel = false, blocked = [], onSwitched, sourceEffect } = options;
   const opponent = StateUtils.getOpponent(state, player);
   const hasBenchedPokemon = opponent.bench.some((bench) => bench.cards.length > 0);
   if (!hasBenchedPokemon) {
     return state;
+  }
+
+  if (sourceEffect) {
+    const switchOutEffect = new SwitchOutOpponentsActiveEffect(sourceEffect);
+    store.reduceEffect(state, switchOutEffect);
+    if (switchOutEffect.preventDefault) {
+      return state;
+    }
   }
 
   return store.prompt(
@@ -2228,9 +2248,18 @@ export function SWITCH_OUT_OPPONENT_ACTIVE_POKEMON(
       if (!selected || selected.length === 0) {
         return;
       }
-      opponent.switchPokemon(selected[0], store, state);
-      if (onSwitched !== undefined) {
-        onSwitched(selected[0]);
+      if (sourceEffect) {
+        const switchOutEffect = new SwitchOutOpponentsActiveEffect(sourceEffect);
+        switchOutEffect.benchTarget = selected[0];
+        store.reduceEffect(state, switchOutEffect);
+        if (!switchOutEffect.preventDefault && onSwitched !== undefined) {
+          onSwitched(selected[0]);
+        }
+      } else {
+        opponent.switchPokemon(selected[0], store, state);
+        if (onSwitched !== undefined) {
+          onSwitched(selected[0]);
+        }
       }
     },
   );

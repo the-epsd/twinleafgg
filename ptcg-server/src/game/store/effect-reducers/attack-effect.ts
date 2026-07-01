@@ -12,7 +12,9 @@ import {
   KnockOutOpponentEffect,
   KOEffect,
   LostZoneCardsEffect,
-  AfterWeaknessAndResistanceEffect
+  AfterWeaknessAndResistanceEffect,
+  GustOpponentBenchEffect,
+  SwitchOutOpponentsActiveEffect,
 } from '../effects/attack-effects';
 import { HealEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
@@ -247,6 +249,20 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
   if (effect instanceof MoveOpponentEnergyEffect) {
     if (!effect.preventDefault) {
       effect.target.moveCardTo(effect.card, effect.destination);
+    }
+    return state;
+  }
+
+  if (effect instanceof GustOpponentBenchEffect) {
+    if (!effect.preventDefault) {
+      effect.opponent.switchPokemon(effect.target, store, state);
+    }
+    return state;
+  }
+
+  if (effect instanceof SwitchOutOpponentsActiveEffect) {
+    if (!effect.preventDefault && effect.benchTarget) {
+      effect.opponent.switchPokemon(effect.benchTarget, store, state);
     }
     return state;
   }

@@ -1,12 +1,12 @@
-import { ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, StateUtils } from '../../game';
+import { GameError, GameMessage, StateUtils } from '../../game';
 import { CardType, SpecialCondition, Stage } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { GustOpponentBenchEffect } from '../../game/store/effects/attack-effects';
+import { AddSpecialConditionsEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { GUST_OPPONENT_BENCHED_POKEMON, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Oricorio extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -39,6 +39,7 @@ export class Oricorio extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    // Ref: set-darkness-ablaze/delcatty.ts (Captivating Tail - gust then special condition)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -48,24 +49,14 @@ export class Oricorio extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 
-      return store.prompt(state, new ChoosePokemonPrompt(
-        player.id,
-        GameMessage.CHOOSE_POKEMON_TO_SWITCH,
-        PlayerType.TOP_PLAYER,
-        [SlotType.BENCH],
-        { allowCancel: false }
-      ), result => {
-
-        const cardList = result[0];
-
-        const gustOpponentBenchEffect = new GustOpponentBenchEffect(effect, cardList);
-        store.reduceEffect(state, gustOpponentBenchEffect);
-
-        opponent.switchPokemon(cardList);
-
-        const active = opponent.active;
-        active.addSpecialCondition(SpecialCondition.BURNED);
-        active.addSpecialCondition(SpecialCondition.CONFUSED);
+      return GUST_OPPONENT_BENCHED_POKEMON(store, state, player, {
+        sourceEffect: effect,
+        onSwitched: () => {
+          const specialConditionEffect = new AddSpecialConditionsEffect(
+            effect, [SpecialCondition.BURNED, SpecialCondition.CONFUSED]
+          );
+          store.reduceEffect(state, specialConditionEffect);
+        },
       });
     }
 

@@ -5,6 +5,7 @@ import { Player } from '../state/player';
 import { PokemonCardList } from '../state/pokemon-card-list';
 import { Effect } from './effect';
 import { AttackEffect } from './game-effects';
+import { AfterAttackEffect } from './game-phase-effects';
 
 export enum AttackEffects {
   APPLY_WEAKNESS_EFFECT = 'APPLY_WEAKNESS_EFFECT',
@@ -16,6 +17,7 @@ export enum AttackEffects {
   DISCARD_CARD_EFFECT = 'DISCARD_CARD_EFFECT',
   CARDS_TO_HAND_EFFECT = 'CARDS_TO_HAND_EFFECT',
   GUST_OPPONENT_BENCH_EFFECT = 'GUST_OPPONENT_BENCH_EFFECT',
+  SWITCH_OUT_OPPONENTS_ACTIVE_EFFECT = 'SWITCH_OUT_OPPONENTS_ACTIVE_EFFECT',
   ADD_MARKER_EFFECT = 'ADD_MARKER_EFFECT',
   ADD_SPECIAL_CONDITIONS_EFFECT = 'ADD_SPECIAL_CONDITIONS_EFFECT',
   MOVED_TO_ACTIVE_BONUS_EFFECT = 'MOVED_TO_ACTIVE_BONUS_EFFECT',
@@ -147,9 +149,23 @@ export class GustOpponentBenchEffect extends AbstractAttackEffect implements Eff
   public preventDefault = false;
   public target: PokemonCardList;
 
-  constructor(base: AttackEffect, target: PokemonCardList) {
-    super(base);
+  constructor(base: AttackEffect | AfterAttackEffect, target: PokemonCardList) {
+    super(base instanceof AfterAttackEffect
+      ? new AttackEffect(base.player, base.opponent, base.attack)
+      : base);
     this.target = target;
+  }
+}
+
+export class SwitchOutOpponentsActiveEffect extends AbstractAttackEffect implements Effect {
+  readonly type: string = AttackEffects.SWITCH_OUT_OPPONENTS_ACTIVE_EFFECT;
+  public preventDefault = false;
+  public benchTarget?: PokemonCardList;
+
+  constructor(base: AttackEffect | AfterAttackEffect) {
+    super(base instanceof AfterAttackEffect
+      ? new AttackEffect(base.player, base.opponent, base.attack)
+      : base);
   }
 }
 
