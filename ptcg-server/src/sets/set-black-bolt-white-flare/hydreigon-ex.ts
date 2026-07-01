@@ -3,10 +3,8 @@ import { Stage, CardTag } from '../../game/store/card/card-types';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GamePhase, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect, RetreatEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { GameError, GameMessage, PlayerType } from '../../game';
-import { IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { IS_ABILITY_BLOCKED, BLOCK_RETREAT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Hydreigonex extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -38,27 +36,9 @@ export class Hydreigonex extends PokemonCard {
   public name: string = 'Hydreigon ex';
   public fullName: string = 'Hydreigon ex SV11W';
 
-  public readonly DEFENDING_POKEMON_CANNOT_RETREAT_MARKER: string = 'DEFENDING_POKEMON_CANNOT_RETREAT_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-      opponent.marker.addMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    }
-
-    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
-      effect.player.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, cardList => {
-        if (cardList.marker.hasMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
-          cardList.marker.removeMarker(this.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-        }
-      });
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
     if (effect instanceof KnockOutEffect && effect.target.isStage(Stage.BASIC)) {

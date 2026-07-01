@@ -11,12 +11,8 @@ import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import {
   WAS_ATTACK_USED,
   BLOCK_RETREAT,
-  BLOCK_RETREAT_IF_MARKER,
-  REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN,
   REPLACE_MARKER_AT_END_OF_TURN,
-  BREAK_RULE,
-} from '../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
+  BREAK_RULE } from '../../game/store/prefabs/prefabs';
 
 export class ClawitzerBreak extends PokemonCard {
   public tags = [CardTag.BREAK];
@@ -31,8 +27,7 @@ export class ClawitzerBreak extends PokemonCard {
       name: 'Lock-On',
       cost: [C],
       damage: 0,
-      text: "The Defending Pokémon can't retreat during your opponent's next turn. During your next turn, any damage done to that Pokémon by attacks is increased by 120 (after applying Weakness and Resistance).",
-    },
+      text: "The Defending Pokémon can't retreat during your opponent's next turn. During your next turn, any damage done to that Pokémon by attacks is increased by 120 (after applying Weakness and Resistance)." },
   ];
 
   public set: string = 'STS';
@@ -61,14 +56,6 @@ export class ClawitzerBreak extends PokemonCard {
       // 2-phase marker for "during your next turn" timing
       player.marker.addMarker(this.LOCK_ON_PHASE1_MARKER, this);
     }
-
-    // Retreat block helpers
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(
-      effect,
-      MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER,
-      this,
-    );
 
     // Increase damage by 120 to the targeted Pokemon during player's next turn
     if (

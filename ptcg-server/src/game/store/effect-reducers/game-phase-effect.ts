@@ -223,6 +223,14 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
         cardList.cannotUseAttacksNextTurn = [...cardList.cannotUseAttacksNextTurnPending];
         cardList.cannotUseAttacksNextTurnPending = [];
       }
+
+      if (cardList.cannotRetreatNextTurn) {
+        cardList.cannotRetreatNextTurn = false;
+      }
+      if (cardList.cannotRetreatNextTurnPending) {
+        cardList.cannotRetreatNextTurn = true;
+        cardList.cannotRetreatNextTurnPending = false;
+      }
     });
 
     player.supporterTurn = 0;

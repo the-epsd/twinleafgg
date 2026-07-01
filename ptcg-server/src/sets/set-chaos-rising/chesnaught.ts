@@ -5,13 +5,7 @@ import { PokemonCard, StoreLike, State, StateUtils } from '../../game';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import {
-  BLOCK_RETREAT,
-  BLOCK_RETREAT_IF_MARKER,
-  REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN,
-} from '../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../game/store/prefabs/prefabs';
 import { GamePhase } from '../../game/store/state/state';
 
 export class Chesnaught extends PokemonCard {
@@ -26,8 +20,7 @@ export class Chesnaught extends PokemonCard {
     {
       name: 'Needly Armor',
       powerType: PowerType.ABILITY,
-      text: "If this Pokémon is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out), place 3 damage counters on the Attacking Pokémon for each [G] Energy attached to this Pokémon.",
-    },
+      text: "If this Pokémon is in the Active Spot and is damaged by an attack from your opponent's Pokémon (even if this Pokémon is Knocked Out), place 3 damage counters on the Attacking Pokémon for each [G] Energy attached to this Pokémon." },
   ];
 
   public attacks = [
@@ -35,8 +28,7 @@ export class Chesnaught extends PokemonCard {
       name: 'Impound',
       cost: [G, G, C],
       damage: 160,
-      text: "During your opponent's next turn, the Defending Pokémon can't retreat.",
-    },
+      text: "During your opponent's next turn, the Defending Pokémon can't retreat." },
   ];
 
   public regulationMark = 'J';
@@ -74,12 +66,6 @@ export class Chesnaught extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(
-      effect,
-      MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER,
-      this,
-    );
     return state;
   }
 }

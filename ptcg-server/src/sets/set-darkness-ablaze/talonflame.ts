@@ -8,9 +8,7 @@ import { PowerType, StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { AfterDamageEffect } from '../../game/store/effects/attack-effects';
 import { GamePhase } from '../../game/store/state/state';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
-
+import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED, BLOCK_RETREAT } from '../../game/store/prefabs/prefabs';
 export class Talonflame extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom: string = 'Fletchinder';
@@ -66,10 +64,6 @@ export class Talonflame extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-
     return state;
   }
 }

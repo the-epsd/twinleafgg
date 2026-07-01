@@ -25,7 +25,7 @@ export abstract class EffectOfAttackEffect extends AbstractAttackEffect implemen
 }
 
 /**
- * Effect that adds a retreat prevention marker
+ * Effect that prevents the defending Pokemon from retreating during the opponent's next turn.
  */
 export class PreventRetreatEffect extends EffectOfAttackEffect {
   readonly type: string = 'PREVENT_RETREAT_EFFECT';
@@ -35,7 +35,7 @@ export class PreventRetreatEffect extends EffectOfAttackEffect {
   }
 
   applyEffect(): void {
-    this.opponent.active.marker.addMarker(MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this.markerSource, 'attack', 'pokemon');
+    this.opponent.active.cannotRetreatNextTurn = true;
   }
 }
 

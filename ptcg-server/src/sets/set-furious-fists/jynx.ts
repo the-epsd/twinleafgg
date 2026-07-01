@@ -7,9 +7,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { GameError, GameMessage, PowerType, StoreLike, State } from '../../game';
 import { HealEffect } from '../../game/store/effects/game-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, WAS_POWER_USED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
-
+import { WAS_ATTACK_USED, WAS_POWER_USED, USE_ABILITY_ONCE_PER_TURN, ABILITY_USED, REMOVE_MARKER_AT_END_OF_TURN, BLOCK_RETREAT, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 export class Jynx extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = P;
@@ -76,10 +74,6 @@ export class Jynx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-
     return state;
   }
 }

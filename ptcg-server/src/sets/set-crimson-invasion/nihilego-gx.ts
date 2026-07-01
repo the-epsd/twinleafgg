@@ -7,9 +7,7 @@ import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
 import { CardList, PowerType, StoreLike, State, StateUtils, ConfirmPrompt, GameMessage } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
-
+import { WAS_ATTACK_USED, BLOCK_IF_GX_ATTACK_USED, BLOCK_RETREAT, ADD_CONFUSION_TO_PLAYER_ACTIVE, ADD_POISON_TO_PLAYER_ACTIVE, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
 export class NihilegoGx extends PokemonCard {
   public tags = [CardTag.POKEMON_GX, CardTag.ULTRA_BEAST];
   public stage: Stage = Stage.BASIC;
@@ -76,10 +74,6 @@ export class NihilegoGx extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-
     // Attack 2: Symbiont-GX
     // Ref: set-triumphant/palkia-dialga-legend.ts (Time Control - add cards to prize)
     if (WAS_ATTACK_USED(effect, 1, this)) {

@@ -1,8 +1,7 @@
 import { PokemonCard, Stage, CardTag, CardType, StoreLike, State } from '../../game';
 import { DealDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { PreventRetreatEffect } from '../../game/store/effects/effect-of-attack-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class LarrysBraviary extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -36,9 +35,7 @@ export class LarrysBraviary extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const preventRetreat = new PreventRetreatEffect(effect);
-      preventRetreat.markerSource = this;
-      preventRetreat.applyEffect();
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

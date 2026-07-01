@@ -9,11 +9,9 @@ import { Effect } from '../../game/store/effects/effect';
 import { AfterAttackEffect, EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import {
   WAS_ATTACK_USED, SWITCH_ACTIVE_WITH_BENCHED,
-  BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN,
+  BLOCK_RETREAT,
   ADD_CONFUSION_TO_PLAYER_ACTIVE
 } from '../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
-
 export class Galvantula extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Joltik';
@@ -75,10 +73,6 @@ export class Galvantula extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 1, this)) {
       BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-
     return state;
   }
 }

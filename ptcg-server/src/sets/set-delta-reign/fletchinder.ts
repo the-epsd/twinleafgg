@@ -1,13 +1,9 @@
 import { CardType, Stage, State, StoreLike } from '../../game';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Effect } from '../../game/store/effects/effect';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
 import {
   BLOCK_RETREAT,
-  BLOCK_RETREAT_IF_MARKER,
-  REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN,
-  WAS_ATTACK_USED,
-} from '../../game/store/prefabs/prefabs';
+  WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Fletchinder extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -22,8 +18,7 @@ export class Fletchinder extends PokemonCard {
     name: 'Clutch',
     cost: [C, C],
     damage: 40,
-    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.',
-  }];
+    text: 'During your opponent\'s next turn, the Defending Pokémon can\'t retreat.' }];
 
   public regulationMark: string = 'J';
   public set: string = 'M6';
@@ -37,10 +32,6 @@ export class Fletchinder extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-
     return state;
   }
 }

@@ -6,9 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
-
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, BLOCK_RETREAT } from '../../game/store/prefabs/prefabs';
 export class Rockruff extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = F;
@@ -43,10 +41,6 @@ export class Rockruff extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-
     // Attack 2: Wild Kick
     // Ref: AGENTS-patterns.md (coin flip, if tails does nothing)
     if (WAS_ATTACK_USED(effect, 1, this)) {

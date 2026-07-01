@@ -34,6 +34,8 @@ export class PokemonCardList extends CardList {
   public cannotAttackNextTurnPending: boolean = false;
   public cannotUseAttacksNextTurn: string[] = [];
   public cannotUseAttacksNextTurnPending: string[] = [];
+  public cannotRetreatNextTurn: boolean = false;
+  public cannotRetreatNextTurnPending: boolean = false;
   public _preservedConditionsDuringEvolution?: SpecialCondition[];
 
 
@@ -159,6 +161,8 @@ export class PokemonCardList extends CardList {
     this.cannotAttackNextTurnPending = false;
     this.cannotUseAttacksNextTurn = [];
     this.cannotUseAttacksNextTurnPending = [];
+    this.cannotRetreatNextTurn = false;
+    this.cannotRetreatNextTurnPending = false;
     this.damageReductionNextTurn = 0;
   }
 
@@ -194,6 +198,8 @@ export class PokemonCardList extends CardList {
     this.cannotAttackNextTurnPending = false;
     this.cannotUseAttacksNextTurn = [];
     this.cannotUseAttacksNextTurnPending = [];
+    this.cannotRetreatNextTurn = false;
+    this.cannotRetreatNextTurnPending = false;
     // if (this.cards.length === 0) {
     //   this.damage = 0;
     // }

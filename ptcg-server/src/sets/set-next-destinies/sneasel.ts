@@ -1,7 +1,6 @@
-import { CardType, PokemonCard, Stage, State, StateUtils, StoreLike } from '../../game';
+import { CardType, PokemonCard, Stage, State, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { ADD_MARKER, BLOCK_RETREAT_IF_MARKER } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../game/store/prefabs/prefabs';
 
 export class Sneasel extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -30,18 +29,10 @@ export class Sneasel extends PokemonCard {
   public name: string = 'Sneasel';
   public fullName: string = 'Sneasel NXD';
 
-  public readonly CORNER_MARKER: string = 'CORNER_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      ADD_MARKER(this.CORNER_MARKER, opponent.active, this);
+      return BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, this.CORNER_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, this.CORNER_MARKER, this);
 
     return state;
   }

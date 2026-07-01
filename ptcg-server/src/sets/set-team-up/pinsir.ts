@@ -7,9 +7,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { KnockOutEffect } from '../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
-
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, BLOCK_RETREAT } from '../../game/store/prefabs/prefabs';
 export class Pinsir extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = G;
@@ -58,10 +56,6 @@ export class Pinsir extends PokemonCard {
         }
       });
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-
     return state;
   }
 }

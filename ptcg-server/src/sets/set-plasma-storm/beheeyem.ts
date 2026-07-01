@@ -8,8 +8,7 @@ import { CardTarget, DamageMap, GameMessage, PlayerType, SlotType, StoreLike, St
 import { Effect } from '../../game/store/effects/effect';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../game/store/prefabs/prefabs';
-import { BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { } from '../../game/store/prefabs/prefabs';
 import { MoveDamagePrompt } from '../../game/store/prompts/move-damage-prompt';
 
 export class Beheeyem extends PokemonCard {
@@ -48,10 +47,6 @@ export class Beheeyem extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-
     // Attack 2: Damakinesis
     // Ref: set-unified-minds/grimsley.ts (MoveDamagePrompt pattern)
     if (WAS_ATTACK_USED(effect, 1, this)) {

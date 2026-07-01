@@ -2,9 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../game/store/prefabs/prefabs';
 import { HealTargetEffect } from '../../game/store/effects/attack-effects';
-import { PreventRetreatEffect } from '../../game/store/effects/effect-of-attack-effects';
 
 export class Galvantula extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -45,9 +44,7 @@ export class Galvantula extends PokemonCard {
 
     // Electroweb - prevent retreat
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const preventRetreat = new PreventRetreatEffect(effect);
-      preventRetreat.markerSource = this;
-      preventRetreat.applyEffect();
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
     return state;

@@ -7,7 +7,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../game/store/prefabs/prefabs';
 
 export class Zygarde2 extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -15,8 +15,6 @@ export class Zygarde2 extends PokemonCard {
   public hp: number = 120;
   public weakness = [{ type: G }];
   public retreat = [C, C];
-
-  public readonly BLOCK_RETREAT_MARKER = 'ZYGARDE2_FCO_BLOCK_RETREAT';
 
   public attacks = [
     {
@@ -43,11 +41,8 @@ export class Zygarde2 extends PokemonCard {
     // Attack 1: Rumble
     // Ref: set-breakthrough/aromatisse.ts (Hug - block retreat 3-call pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      BLOCK_RETREAT(store, state, effect, this);
+      return BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, this.BLOCK_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, this.BLOCK_RETREAT_MARKER, this);
 
     // Attack 2: Geostrike
     // Ref: AGENTS-patterns.md (Damage to your own Benched Pokemon)

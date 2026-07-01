@@ -84,7 +84,6 @@ import {
   MoveCardsEffect,
   MoveDamageCountersEffect,
   PowerEffect,
-  RetreatEffect,
   SpecialEnergyEffect,
 } from '../effects/game-effects';
 import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
@@ -3186,11 +3185,6 @@ export function CLEAR_MARKER_AND_OPPONENTS_POKEMON_MARKER_AT_END_OF_TURN(
       REMOVE_MARKER(pokemonMarker, cardList, source),
     );
   }
-}
-
-export function BLOCK_RETREAT_IF_MARKER(effect: Effect, marker: string, source: Card) {
-  if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(marker, source))
-    throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
 }
 
 //#endregion

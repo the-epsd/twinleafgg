@@ -9,8 +9,7 @@ import { GreninjaVUNIONBottomLeft } from './greninja-v-union-bl';
 import { GreninjaVUNIONBottomRight } from './greninja-v-union-br';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayItemEffect } from '../../game/store/effects/play-card-effects';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
-import { BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class GreninjaVUNIONTopLeft extends PokemonCard {
   public stage: Stage = Stage.VUNION;
@@ -26,8 +25,7 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
       text: 'Once per game during your turn, combine 4 different Greninja V-UNION from your discard pile and put them onto your bench.',
       useFromDiscard: true,
       exemptFromAbilityLock: true,
-      powerType: PowerType.VUNION_ASSEMBLY,
-    },
+      powerType: PowerType.VUNION_ASSEMBLY },
     {
       name: 'Ninja Body',
       text: 'Whenever your opponent plays an Item card from their hand, prevent all effects of that card done to this Pokémon.',
@@ -220,10 +218,6 @@ export class GreninjaVUNIONTopLeft extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 3, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.FEEL_THE_WAY_MARKER, this)) {
       effect.player.marker.removeMarker(this.FEEL_THE_WAY_MARKER, this);
       this.marker.removeMarker(this.FEEL_THE_WAY_MARKER, this);

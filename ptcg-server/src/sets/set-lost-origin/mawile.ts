@@ -1,12 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameError, GameMessage } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { RetreatEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { MarkerConstants } from '../../game/store/markers/marker-constants';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../game/store/prefabs/prefabs';
 
 export class Mawile extends PokemonCard {
 
@@ -56,20 +55,13 @@ export class Mawile extends PokemonCard {
       // Add markers for next turn effects
       opponent.active.marker.addMarker(MarkerConstants.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
       opponent.marker.addMarker(MarkerConstants.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
-      opponent.active.marker.addMarker(MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
 
-      return state;
+      return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    // Handle retreat blocking
-    if (effect instanceof RetreatEffect && effect.player.active.marker.hasMarker(MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this)) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    // Clear retreat block at end of affected turn
+    // Clear damage boost marker at end of affected turn
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(MarkerConstants.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this)) {
       effect.player.marker.removeMarker(MarkerConstants.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
-      effect.player.active.marker.removeMarker(MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     }
 
     // Handle damage boost effect

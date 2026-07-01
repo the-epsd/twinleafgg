@@ -7,9 +7,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, REPLACE_MARKER_AT_END_OF_TURN, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
-
+import { WAS_ATTACK_USED, BLOCK_RETREAT, REPLACE_MARKER_AT_END_OF_TURN, REMOVE_MARKER_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
 export class Grapploct extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Clobbopus';
@@ -53,10 +51,6 @@ export class Grapploct extends PokemonCard {
       player.marker.addMarker(this.FULL_NELSON_MARKER, this);
       return BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-
     // Attack 2: Tentacle Buster
     // Ref: set-sword-and-shield/galarian-meowth.ts (2-marker pattern for "during your last turn")
     if (WAS_ATTACK_USED(effect, 1, this)) {

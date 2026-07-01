@@ -3,9 +3,7 @@ import { Stage, CardType, CardTag, SuperType } from '../../game/store/card/card-
 import { StoreLike, State, GameMessage, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType } from '../../game';
 
 import { Effect } from '../../game/store/effects/effect';
-import { BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, DAMAGE_OPPONENT_POKEMON, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, TERA_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
-
+import { BLOCK_RETREAT, DAMAGE_OPPONENT_POKEMON, TERA_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 export class Wugtrioex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
@@ -69,9 +67,6 @@ export class Wugtrioex extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
     TERA_RULE(effect, state, this);
 
     return state;

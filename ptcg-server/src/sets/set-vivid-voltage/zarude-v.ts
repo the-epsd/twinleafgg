@@ -7,8 +7,7 @@ import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/stor
 import { AttachEnergyPrompt, GameMessage, PlayerType, SlotType, StoreLike, State, StateUtils } from '../../game';
 import { CardTarget } from '../../game/store/actions/play-card-action';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
+import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../game/store/prefabs/prefabs';
 import { EnergyCard } from '../../game/store/card/energy-card';
 import { HealEffect } from '../../game/store/effects/game-effects';
 
@@ -48,10 +47,6 @@ export class ZarudeV extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-
     // Attack 2: Jungle Rising
     // Ref: set-darkness-ablaze/rose.ts (AttachEnergyPrompt from source to bench)
     if (WAS_ATTACK_USED(effect, 1, this)) {

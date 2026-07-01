@@ -2,7 +2,7 @@ import { TrainerType } from '../../game/store/card/card-types';
 import { TrainerCard } from '../../game/store/card/trainer-card';
 import { Effect } from '../../game/store/effects/effect';
 import { TrainerEffect } from '../../game/store/effects/play-card-effects';
-import { RetreatEffect } from '../../game/store/effects/game-effects';
+import { RetreatEffect, RetreatStartEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { SpecialCondition } from '../../game/store/card/card-types';
 import { StateUtils, StoreLike, State } from '../../game';
@@ -31,7 +31,7 @@ export class RoxiesPerformance extends TrainerCard {
     if (effect instanceof EndTurnEffect) {
       REMOVE_MARKER_AT_END_OF_TURN(effect, ROXIE_POISONED_NO_RETREAT, this);
     }
-    if (effect instanceof RetreatEffect) {
+    if (effect instanceof RetreatEffect || effect instanceof RetreatStartEffect) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
       if (opponent.marker.hasMarker(ROXIE_POISONED_NO_RETREAT, this)) {

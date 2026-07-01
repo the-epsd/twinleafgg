@@ -2,7 +2,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, GameMessage, Card } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, ADD_MARKER, BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, MULTIPLE_COIN_FLIPS_PROMPT, BLOCK_RETREAT } from '../../game/store/prefabs/prefabs';
 import { DiscardCardsEffect } from '../../game/store/effects/attack-effects';
 import { ChooseCardsPrompt } from '../../game/store/prompts/choose-cards-prompt';
 
@@ -33,8 +33,6 @@ export class Pinsir extends PokemonCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Pinsir';
   public fullName: string = 'Pinsir NXD';
-
-  public readonly GRIP_AND_SQUEEZE_MARKER = 'GRIP_AND_SQUEEZE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Power Pinch - flip coins to discard energy
@@ -78,14 +76,8 @@ export class Pinsir extends PokemonCard {
 
     // Grip and Squeeze - prevent retreat
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      ADD_MARKER(this.GRIP_AND_SQUEEZE_MARKER, opponent.active, this);
+      return BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, this.GRIP_AND_SQUEEZE_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, this.GRIP_AND_SQUEEZE_MARKER, this);
 
     return state;
   }

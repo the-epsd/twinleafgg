@@ -6,9 +6,7 @@ import {
   WAS_ATTACK_USED, COIN_FLIP_PROMPT, BLOCK_RETREAT,
   HEAL_X_DAMAGE_FROM_THIS_POKEMON, SHUFFLE_DECK, SHOW_CARDS_TO_PLAYER
 } from '../../game/store/prefabs/prefabs';
-import { BLOCK_RETREAT_IF_MARKER, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN } from '../../game/store/prefabs/prefabs';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
-
+import { } from '../../game/store/prefabs/prefabs';
 export class Mawile extends PokemonCard {
   public stage: Stage = Stage.BASIC;
   public cardType: CardType = M;
@@ -64,10 +62,6 @@ export class Mawile extends PokemonCard {
       HEAL_X_DAMAGE_FROM_THIS_POKEMON(effect, store, state, 30);
       BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-
     return state;
   }
 }

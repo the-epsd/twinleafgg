@@ -1,8 +1,7 @@
 import { Card, CardTarget, CardType, EnergyCard, GameError, GameMessage, MoveEnergyPrompt, Player, PlayerType, PokemonCard, PowerType, SlotType, Stage, State, StateUtils, StoreLike, SuperType } from '../../game';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
-import { BLOCK_RETREAT, BLOCK_RETREAT_IF_MARKER, PLAY_POKEMON_FROM_HAND_TO_BENCH, REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { BLOCK_RETREAT, PLAY_POKEMON_FROM_HAND_TO_BENCH, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Eelektross extends PokemonCard {
 
@@ -29,8 +28,7 @@ export class Eelektross extends PokemonCard {
       name: 'Hover Over',
       cost: [L, C, C, C],
       damage: 130,
-      text: 'The Defending Pokemon can\'t retreat during your opponent\'s next turn',
-    }
+      text: 'The Defending Pokemon can\'t retreat during your opponent\'s next turn' }
   ];
 
   public set = 'UNM';
@@ -104,10 +102,6 @@ export class Eelektross extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       return BLOCK_RETREAT(store, state, effect, this);
     }
-
-    BLOCK_RETREAT_IF_MARKER(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-    REMOVE_MARKER_FROM_ACTIVE_AT_END_OF_TURN(effect, MarkerConstants.DEFENDING_POKEMON_CANNOT_RETREAT_MARKER, this);
-
     return state;
   }
 }
