@@ -2,10 +2,10 @@ import { Card, CardTarget, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonP
 import { CardType, SpecialCondition, SuperType, TrainerType } from '../card/card-types';
 import { EnergyCard } from '../card/energy-card';
 import { PokemonCard } from '../card/pokemon-card';
-import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, CardsToHandEffect, DealDamageEffect, DiscardCardsEffect, HealTargetEffect, KnockOutOpponentEffect, MoveOpponentEnergyEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
+import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, CardsToHandEffect, DealDamageEffect, DiscardCardsEffect, DiscardCardsFromOpponentsActivePokemonEffect, HealTargetEffect, KnockOutOpponentEffect, MoveOpponentEnergyEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { AttackEffect } from '../effects/game-effects';
-import { AfterAttackEffect } from '../effects/game-phase-effects';
+import { AfterAttackEffect, BeforeDoingDamageEffect } from '../effects/game-phase-effects';
 import { FLIP_UNTIL_TAILS_AND_COUNT_HEADS, MOVE_CARDS } from './prefabs';
 import { CoinFlipEffect } from '../effects/play-card-effects';
 
@@ -442,6 +442,20 @@ export function YOUR_OPPPONENTS_ACTIVE_POKEMON_IS_NOW_POISIONED(
   );
   store.reduceEffect(state, specialConditionEffect);
 
+}
+
+export function DISCARD_CARDS_FROM_OPPONENTS_ACTIVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  effect: BeforeDoingDamageEffect,
+  cards: Card[]
+): State {
+  if (cards.length === 0) {
+    return state;
+  }
+
+  const discardEffect = new DiscardCardsFromOpponentsActivePokemonEffect(effect.attackEffect, cards);
+  return store.reduceEffect(state, discardEffect);
 }
 
 export function DISCARD_AN_ENERGY_FROM_OPPONENTS_ACTIVE_POKEMON(

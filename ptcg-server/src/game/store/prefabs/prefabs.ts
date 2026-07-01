@@ -88,7 +88,7 @@ import {
   PowerEffect,
   SpecialEnergyEffect,
 } from '../effects/game-effects';
-import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
+import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
 import { preventRetreatEffect, preventDamageEffect } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
@@ -133,6 +133,14 @@ export const AFTER_ATTACK = (
   user: PokemonCard,
 ): effect is AfterAttackEffect => {
   return effect instanceof AfterAttackEffect && effect.attack === user.attacks[index];
+};
+
+export const BEFORE_DAMAGE = (
+  effect: Effect,
+  index: number,
+  user: PokemonCard,
+): effect is BeforeDoingDamageEffect => {
+  return effect instanceof BeforeDoingDamageEffect && effect.attack === user.attacks[index];
 };
 
 /**

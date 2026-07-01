@@ -7,7 +7,8 @@ import { PowerEffect } from '../../game/store/effects/game-effects';
 import { CheckPokemonPowersEffect } from '../../game/store/effects/check-effects';
 import { PowerType } from '../../game/store/card/pokemon-types';
 import { GameError, GameMessage, PokemonCardList, StateUtils } from '../../game';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { BEFORE_DAMAGE } from '../../game/store/prefabs/prefabs';
+import { DISCARD_CARDS_FROM_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class Klefki extends PokemonCard {
 
@@ -116,22 +117,9 @@ export class Klefki extends PokemonCard {
       }
     }
 
-    if (WAS_ATTACK_USED(effect, 0, this)) {
-
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Discard active Pokemon's tool first
-      const activePokemon = opponent.active;
-      if (activePokemon.tools.length > 0) {
-        activePokemon.moveCardsTo([...activePokemon.tools], opponent.discard);
-      }
-
-      // Then deal damage
-      effect.damage = 10;
-
-      return state;
-
+    if (BEFORE_DAMAGE(effect, 0, this)) {
+      const tools = [...effect.opponent.active.tools];
+      return DISCARD_CARDS_FROM_OPPONENTS_ACTIVE_POKEMON(store, state, effect, tools);
     }
 
     return state;

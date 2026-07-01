@@ -15,6 +15,7 @@ export enum AttackEffects {
   AFTER_DAMAGE_EFFECT = 'AFTER_DAMAGE_EFFECT',
   PUT_COUNTERS_EFFECT = 'PUT_COUNTERS_EFFECT',
   DISCARD_CARD_EFFECT = 'DISCARD_CARD_EFFECT',
+  DISCARD_CARDS_FROM_OPPONENTS_ACTIVE_EFFECT = 'DISCARD_CARDS_FROM_OPPONENTS_ACTIVE_EFFECT',
   CARDS_TO_HAND_EFFECT = 'CARDS_TO_HAND_EFFECT',
   GUST_OPPONENT_BENCH_EFFECT = 'GUST_OPPONENT_BENCH_EFFECT',
   SWITCH_OUT_OPPONENTS_ACTIVE_EFFECT = 'SWITCH_OUT_OPPONENTS_ACTIVE_EFFECT',
@@ -188,6 +189,18 @@ export class DiscardCardsEffect extends AbstractAttackEffect implements Effect {
   constructor(base: AttackEffect, energyCards: Card[]) {
     super(base);
     this.cards = energyCards;
+  }
+}
+
+export class DiscardCardsFromOpponentsActivePokemonEffect extends AbstractAttackEffect implements Effect {
+  readonly type: string = AttackEffects.DISCARD_CARDS_FROM_OPPONENTS_ACTIVE_EFFECT;
+  public preventDefault = false;
+  public cards: Card[];
+
+  constructor(base: AttackEffect, cards: Card[]) {
+    super(base);
+    this.cards = cards;
+    this.target = base.opponent.active;
   }
 }
 

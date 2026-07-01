@@ -24,7 +24,7 @@ import {
   UseStadiumEffect,
   UseTrainerPowerEffect
 } from '../effects/game-effects';
-import { AfterAttackEffect, EndTurnEffect } from '../effects/game-phase-effects';
+import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { SlotType } from '../actions/play-card-action';
 import { StateUtils } from '../state-utils';
@@ -243,6 +243,9 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     next();
   });
   // --- End Attack Animation Trigger ---
+
+  const beforeDoingDamageEffect = new BeforeDoingDamageEffect(attackEffect);
+  state = store.reduceEffect(state, beforeDoingDamageEffect);
 
   if (attackEffect.damage > 0) {
     const dealDamage = new DealDamageEffect(attackEffect, attackEffect.damage);

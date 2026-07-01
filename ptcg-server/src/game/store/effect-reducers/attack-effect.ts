@@ -5,6 +5,7 @@ import { State } from '../state/state';
 import { StoreLike } from '../store-like';
 import {
   PutDamageEffect, DealDamageEffect, DiscardCardsEffect,
+  DiscardCardsFromOpponentsActivePokemonEffect,
   AddMarkerEffect, HealTargetEffect, AddSpecialConditionsEffect,
   RemoveSpecialConditionsEffect, ApplyWeaknessEffect, AfterDamageEffect,
   PutCountersEffect, CardsToHandEffect,
@@ -22,6 +23,7 @@ import { getCardTarget } from '../../../simple-bot/simple-tactics/simple-tactics
 import { EffectOfAttackEffect } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 import { CheckHpEffect } from '../effects/check-effects';
+import { MOVE_CARDS } from '../prefabs/prefabs';
 
 export function attackReducer(store: StoreLike, state: State, effect: Effect): State {
 
@@ -227,6 +229,16 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
     const cards = effect.cards;
     const owner = StateUtils.findOwner(state, target);
     target.moveCardsTo(cards, owner.discard);
+    return state;
+  }
+
+  if (effect instanceof DiscardCardsFromOpponentsActivePokemonEffect) {
+    if (!effect.preventDefault) {
+      const target = effect.target;
+      const cards = effect.cards;
+      const owner = StateUtils.findOwner(state, target);
+      return MOVE_CARDS(store, state, target, owner.discard, { cards, sourceEffect: effect });
+    }
     return state;
   }
 
