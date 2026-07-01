@@ -1,9 +1,9 @@
 import { ChooseCardsPrompt, EnergyCard, GameMessage } from '../../game';
 import { CardType, EnergyType, Stage, SuperType } from '../../game/store/card/card-types';
 import { PokemonCard } from '../../game/store/card/pokemon-card';
-import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
+import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { State } from '../../game/store/state/state';
 import { StoreLike } from '../../game/store/store-like';
 
@@ -16,20 +16,18 @@ export class Hydrapple extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Hydra Breath',
-      cost: [G],
-      damage: 0,
-      text: 'Discard 6 Basic [G] Energy from your hand in order to Knock Out your opponent\'s Active Pokémon. If you can\'t discard 6 Basic [G] Energy in this way, this attack does nothing.'
-    },
-    {
-      name: 'Whip Smash',
-      cost: [G, C, C],
-      damage: 140,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Hydra Breath',
+    cost: [G],
+    damage: 0,
+    text: 'Discard 6 Basic [G] Energy from your hand in order to Knock Out your opponent\'s Active Pokémon. If you can\'t discard 6 Basic [G] Energy in this way, this attack does nothing.'
+  },
+  {
+    name: 'Whip Smash',
+    cost: [G, C, C],
+    damage: 140,
+    text: ''
+  }];
 
   public set: string = 'DRI';
   public cardImage: string = 'assets/cardback.png';
@@ -64,11 +62,8 @@ export class Hydrapple extends PokemonCard {
           return;
         }
 
-        player.hand.moveCardsTo(cards, player.discard);
-
-        const dealDamage = new KnockOutOpponentEffect(effect, 999);
-        dealDamage.target = effect.opponent.active;
-        store.reduceEffect(state, dealDamage);
+        MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards });
+        KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
       });
     }
 

@@ -3,7 +3,7 @@ import { Stage } from '../../game/store/card/card-types';
 import { StoreLike, State } from '../../game';
 
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 import { StateUtils } from '../../game';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -16,21 +16,19 @@ export class Haxorus extends PokemonCard {
   public resistance = [];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Cross-Cut',
-      cost: [C, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 80 more damage.'
-    },
-    {
-      name: 'Axe Bomber',
-      cost: [F, M, C],
-      damage: 0,
-      text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, it is Knocked Out.'
-    }
-  ];
+  public attacks = [{
+    name: 'Cross-Cut',
+    cost: [C, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'If your opponent\'s Active Pokémon is an Evolution Pokémon, this attack does 80 more damage.'
+  },
+  {
+    name: 'Axe Bomber',
+    cost: [F, M, C],
+    damage: 0,
+    text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, it is Knocked Out.'
+  }];
 
   public set: string = 'BLK';
   public regulationMark: string = 'I';
@@ -55,9 +53,7 @@ export class Haxorus extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       const opponentActive = opponent.active.getPokemonCard();
       if (opponentActive && (opponentActive.stage === Stage.BASIC)) {
-        const knockOut = new KnockOutOpponentEffect(effect, 999);
-        knockOut.target = opponent.active;
-        state = store.reduceEffect(state, knockOut);
+        state = KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
       }
       return state;
     }

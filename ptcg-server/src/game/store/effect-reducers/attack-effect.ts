@@ -11,19 +11,21 @@ import {
   PutCountersEffect, CardsToHandEffect,
   MoveOpponentEnergyEffect,
   KnockOutOpponentEffect,
+  DiscardDefendingPokemonEffect,
   KOEffect,
   LostZoneCardsEffect,
   AfterWeaknessAndResistanceEffect,
   GustOpponentBenchEffect,
   SwitchOutOpponentsActiveEffect,
 } from '../effects/attack-effects';
-import { HealEffect } from '../effects/game-effects';
+import { HealEffect, KnockOutEffect } from '../effects/game-effects';
 import { StateUtils } from '../state-utils';
+import { PokemonCard } from '../card/pokemon-card';
 import { getCardTarget } from '../../../simple-bot/simple-tactics/simple-tactics';
 import { EffectOfAttackEffect } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 import { CheckHpEffect } from '../effects/check-effects';
-import { MOVE_CARDS } from '../prefabs/prefabs';
+import { MOVE_CARDS, TAKE_X_PRIZES } from '../prefabs/prefabs';
 
 export function attackReducer(store: StoreLike, state: State, effect: Effect): State {
 
@@ -184,13 +186,17 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       throw new GameError(GameMessage.ILLEGAL_ACTION);
     }
 
-    const damage = Math.max(0, effect.damage);
-    target.damage += damage;
+    const targetOwner = StateUtils.findOwner(state, target);
+    const knockOutEffect = new KnockOutEffect(targetOwner, target);
+    state = store.reduceEffect(state, knockOutEffect);
 
-    // Track damage dealt by the attacking Pokemon
-    if (damage > 0 && effect.attackEffect && effect.source) {
-      GameStatsTracker.trackDamageDealt(effect.player, effect.source, damage);
+    if (!knockOutEffect.preventDefault) {
+      effect.knockedOut = true;
+      effect.prizeCount = knockOutEffect.prizeCount;
+      return TAKE_X_PRIZES(store, state, effect.player, knockOutEffect.prizeCount);
     }
+
+    return state;
   }
 
   if (effect instanceof PutCountersEffect) {
@@ -239,6 +245,39 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       const owner = StateUtils.findOwner(state, target);
       return MOVE_CARDS(store, state, target, owner.discard, { cards, sourceEffect: effect });
     }
+    return state;
+  }
+
+  if (effect instanceof DiscardDefendingPokemonEffect) {
+    if (effect.preventDefault) {
+      return state;
+    }
+
+    const target = effect.target;
+    const pokemonCard = target.getPokemonCard();
+    if (pokemonCard === undefined) {
+      throw new GameError(GameMessage.ILLEGAL_ACTION);
+    }
+
+    const owner = StateUtils.findOwner(state, target);
+    const pokemons = target.getPokemons();
+    const tools = [...target.tools];
+    const otherCards = target.cards.filter(card =>
+      !pokemons.includes(card as PokemonCard) &&
+      !tools.includes(card)
+    );
+
+    if (pokemons.length > 0) {
+      state = MOVE_CARDS(store, state, target, owner.discard, { cards: pokemons, sourceEffect: effect });
+    }
+    if (otherCards.length > 0) {
+      state = MOVE_CARDS(store, state, target, owner.discard, { cards: otherCards, sourceEffect: effect });
+    }
+    for (const tool of tools) {
+      target.moveCardTo(tool, owner.discard);
+    }
+    target.clearEffects();
+    effect.discarded = true;
     return state;
   }
 

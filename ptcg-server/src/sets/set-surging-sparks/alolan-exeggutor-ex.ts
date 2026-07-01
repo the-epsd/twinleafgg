@@ -1,32 +1,30 @@
 import { PokemonCard, CardTag, Stage, CardType, StoreLike, State, StateUtils, CoinFlipPrompt, GameMessage, ChoosePokemonPrompt, PlayerType, SlotType, CardTarget, AttachEnergyPrompt, EnergyCard, EnergyType, SuperType } from '../../game';
-import { KnockOutOpponentEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 import { AttachEnergyEffect } from '../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { TERA_RULE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class AlolanExeggutorex extends PokemonCard {
   public tags = [CardTag.POKEMON_ex, CardTag.POKEMON_TERA];
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom = 'Exeggcute';
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType = N;
   public hp: number = 300;
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C, C];
 
-  public attacks = [
-    {
+  public attacks = [{
       name: 'Tropical Fever',
-      cost: [CardType.GRASS, CardType.WATER],
+      cost: [G, W],
       damage: 150,
       text: 'Choose any number of Basic Energy cards from your hand and attach them to your Pokemon in any way you like.'
     },
     {
       name: 'Swinging Sphene',
-      cost: [CardType.GRASS, CardType.WATER, CardType.FIGHTING],
+      cost: [G, W, F],
       damage: 0,
       text: 'Flip a coin. If heads, Knock Out your opponent\'s Active Basic Pokemon. If tails, Knock Out 1 of your opponent\'s Benched Basic Pokemon.'
-    }
-  ];
+    }];
 
   public regulationMark = 'H';
   public set: string = 'SSP';
@@ -36,7 +34,7 @@ export class AlolanExeggutorex extends PokemonCard {
   public fullName: string = 'Alolan Exeggutor ex SSP';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
+    // Tropical Fever
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -67,6 +65,7 @@ export class AlolanExeggutorex extends PokemonCard {
       });
     }
 
+    // Swinging Sphene
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -88,9 +87,7 @@ export class AlolanExeggutorex extends PokemonCard {
             return state;
           }
           if (opponentActive && opponentActive.stage === Stage.BASIC) {
-            const dealDamage = new KnockOutOpponentEffect(effect, 999);
-            dealDamage.target = opponent.active;
-            store.reduceEffect(state, dealDamage);
+            KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
           }
         }
         if (!result) {
@@ -107,9 +104,7 @@ export class AlolanExeggutorex extends PokemonCard {
             ), selected => {
               const targets = selected || [];
               targets.forEach(target => {
-                const dealDamage = new KnockOutOpponentEffect(effect, 999);
-                dealDamage.target = target;
-                store.reduceEffect(state, dealDamage);
+                KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect, target);
               });
             });
           }
@@ -117,17 +112,8 @@ export class AlolanExeggutorex extends PokemonCard {
       });
     }
 
-    if (effect instanceof PutDamageEffect && effect.target.cards.includes(this) && effect.target.getPokemonCard() === this) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+    TERA_RULE(effect, state, this);
 
-      // Target is not Active
-      if (effect.target === player.active || effect.target === opponent.active) {
-        return state;
-      }
-
-      effect.preventDefault = true;
-    }
     return state;
   }
 }

@@ -50,12 +50,13 @@ export class Weezing extends PokemonCard {
         return state;
 
       COIN_FLIP_PROMPT(store, state, player, (result) => {
-        if (!result)
+        if (!result) {
           return;
-        const dealDamage = new KnockOutEffect(opponent, opponent.active);
-        store.reduceEffect(state, dealDamage);
-        
-        return TAKE_X_PRIZES(store, state, player, dealDamage.prizeCount);
+        }
+        // Ability-triggered KO — not attack-sourced, so KnockOutEffect is used directly
+        const ko = new KnockOutEffect(opponent, opponent.active);
+        store.reduceEffect(state, ko);
+        return TAKE_X_PRIZES(store, state, player, ko.prizeCount);
       });
     }
 

@@ -16,6 +16,7 @@ export enum AttackEffects {
   PUT_COUNTERS_EFFECT = 'PUT_COUNTERS_EFFECT',
   DISCARD_CARD_EFFECT = 'DISCARD_CARD_EFFECT',
   DISCARD_CARDS_FROM_OPPONENTS_ACTIVE_EFFECT = 'DISCARD_CARDS_FROM_OPPONENTS_ACTIVE_EFFECT',
+  DISCARD_DEFENDING_POKEMON_EFFECT = 'DISCARD_DEFENDING_POKEMON_EFFECT',
   CARDS_TO_HAND_EFFECT = 'CARDS_TO_HAND_EFFECT',
   GUST_OPPONENT_BENCH_EFFECT = 'GUST_OPPONENT_BENCH_EFFECT',
   SWITCH_OUT_OPPONENTS_ACTIVE_EFFECT = 'SWITCH_OUT_OPPONENTS_ACTIVE_EFFECT',
@@ -171,13 +172,13 @@ export class SwitchOutOpponentsActiveEffect extends AbstractAttackEffect impleme
 }
 
 export class KnockOutOpponentEffect extends AbstractAttackEffect implements Effect {
-  readonly type: string = AttackEffects.DEAL_DAMAGE_EFFECT;
+  readonly type: string = AttackEffects.KNOCK_OUT_OPPONENT_EFFECT;
   public preventDefault = false;
-  public damage: number;
+  public knockedOut = false;
+  public prizeCount = 0;
 
-  constructor(base: AttackEffect, damage: number) {
+  constructor(base: AttackEffect) {
     super(base);
-    this.damage = damage;
   }
 }
 
@@ -201,6 +202,16 @@ export class DiscardCardsFromOpponentsActivePokemonEffect extends AbstractAttack
     super(base);
     this.cards = cards;
     this.target = base.opponent.active;
+  }
+}
+
+export class DiscardDefendingPokemonEffect extends AbstractAttackEffect implements Effect {
+  readonly type: string = AttackEffects.DISCARD_DEFENDING_POKEMON_EFFECT;
+  public preventDefault = false;
+  public discarded = false;
+
+  constructor(base: AttackEffect) {
+    super(base);
   }
 }
 

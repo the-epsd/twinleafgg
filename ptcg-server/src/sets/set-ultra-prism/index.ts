@@ -59,7 +59,7 @@ import { Lickilicky } from './lickilicky';
 import { Lickitung } from './lickitung';
 import { Lopunny } from './lopunny';
 import { Lucario } from './lucario';
-import { LunalaGx } from './lunala-gx';
+import { LunalaGxUPR } from './other-prints';
 import { LunalaPrismStar } from './lunala-prism-star';
 import { Luxio } from './luxio';
 import { Luxray } from './luxray';
@@ -243,7 +243,7 @@ export const setUltraPrism: Card[] = [
   new Lickitung(),
   new Lopunny(),
   new Lucario(),
-  new LunalaGx(),
+  new LunalaGxUPR(),
   new LunalaPrismStar(),
   new Luxio(),
   new Luxray(),

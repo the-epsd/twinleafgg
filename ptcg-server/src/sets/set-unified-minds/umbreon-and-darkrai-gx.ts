@@ -1,10 +1,11 @@
 import { CardTag, CardTarget, CardType, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, PokemonCard, SlotType, Stage, State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
-import { KnockOutOpponentEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 import { BLOCK_IF_GX_ATTACK_USED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import {AttachPokemonToolEffect, PlayItemEffect, PlayStadiumEffect, PlaySupporterEffect} from '../../game/store/effects/play-card-effects';
-import {EndTurnEffect} from '../../game/store/effects/game-phase-effects';
+import { AttachPokemonToolEffect, PlayItemEffect, PlayStadiumEffect, PlaySupporterEffect } from '../../game/store/effects/play-card-effects';
+import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 
 export class UmbreonDarkraiGX extends PokemonCard {
@@ -14,23 +15,21 @@ export class UmbreonDarkraiGX extends PokemonCard {
   public hp: number = 270;
   public weakness = [{ type: F }];
   public resistance = [{ type: P, value: -20 }];
-  public retreat = [ C, C ];
+  public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Black Lance',
-      cost: [ D, D, C ],
-      damage: 150,
-      text: 'This attack does 60 damage to 1 of your opponent\'s Benched Pokémon-GX or Benched Pokémon-EX. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-    {
-      name: 'Dark Moon-GX',
-      cost: [ C ],
-      damage: 0,
-      gxAttack: true,
-      text: 'Your opponent can\'t play any Trainer cards from their hand during their next turn. If this Pokémon has at least 5 extra [D] Energy attached to it (in addition to this attack\'s cost), your opponent\'s Active Pokémon is Knocked Out. (You can\'t use more than 1 GX attack in a game.)'
-    },
-  ];
+  public attacks = [{
+    name: 'Black Lance',
+    cost: [D, D, C],
+    damage: 150,
+    text: 'This attack does 60 damage to 1 of your opponent\'s Benched Pokémon-GX or Benched Pokémon-EX. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  },
+  {
+    name: 'Dark Moon-GX',
+    cost: [C],
+    damage: 0,
+    gxAttack: true,
+    text: 'Your opponent can\'t play any Trainer cards from their hand during their next turn. If this Pokémon has at least 5 extra [D] Energy attached to it (in addition to this attack\'s cost), your opponent\'s Active Pokémon is Knocked Out. (You can\'t use more than 1 GX attack in a game.)'
+  }];
 
   public set = 'UNM';
   public setNumber = '125';
@@ -42,7 +41,7 @@ export class UmbreonDarkraiGX extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Black Lance
-    if (WAS_ATTACK_USED(effect, 0, this)){
+    if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = effect.opponent;
 
@@ -70,7 +69,7 @@ export class UmbreonDarkraiGX extends PokemonCard {
         }
       });
 
-      if (!gxsEXsOnBench){
+      if (!gxsEXsOnBench) {
         return state;
       }
 
@@ -84,13 +83,13 @@ export class UmbreonDarkraiGX extends PokemonCard {
         if (!targets || targets.length === 0) {
           return;
         }
-        
-        for (const target of targets){
+
+        for (const target of targets) {
           const damageEffect = new PutDamageEffect(effect, 60);
           damageEffect.target = target;
           store.reduceEffect(state, damageEffect);
         }
-        
+
       });
     }
 
@@ -111,23 +110,21 @@ export class UmbreonDarkraiGX extends PokemonCard {
 
       if (meetsExtraEffectCost) {
         const activePokemon = opponent.active.getPokemonCard();
-  
+
         if (activePokemon) {
-          const dealDamage = new KnockOutOpponentEffect(effect, 999);
-          dealDamage.target = opponent.active;
-          store.reduceEffect(state, dealDamage);
+          KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }
       }
     }
 
-    if ((effect instanceof PlayItemEffect 
-      || effect instanceof PlaySupporterEffect 
-      || effect instanceof PlayStadiumEffect 
-      || effect instanceof AttachPokemonToolEffect) && effect.player.marker.hasMarker(this.DARK_MOON_MARKER, this)){
+    if ((effect instanceof PlayItemEffect
+      || effect instanceof PlaySupporterEffect
+      || effect instanceof PlayStadiumEffect
+      || effect instanceof AttachPokemonToolEffect) && effect.player.marker.hasMarker(this.DARK_MOON_MARKER, this)) {
       throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
     }
 
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DARK_MOON_MARKER, this)){
+    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.DARK_MOON_MARKER, this)) {
       effect.player.marker.removeMarker(this.DARK_MOON_MARKER, this);
     }
 

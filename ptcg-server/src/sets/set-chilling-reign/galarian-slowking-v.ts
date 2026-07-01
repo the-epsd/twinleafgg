@@ -4,10 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils, GameMessage, ChooseCardsPrompt, PlayerType } from '../../game';
+import { StoreLike, State, GameMessage, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
+import {
+  KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN,
+} from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED, DRAW_CARDS } from '../../game/store/prefabs/prefabs';
 
 export class GalarianSlowkingV extends PokemonCard {
@@ -18,23 +19,18 @@ export class GalarianSlowkingV extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public readonly WORD_OF_RUIN_MARKER = 'GALARIAN_SLOWKING_V_WORD_OF_RUIN_MARKER';
-  public readonly CLEAR_WORD_OF_RUIN_MARKER = 'GALARIAN_SLOWKING_V_CLEAR_WORD_OF_RUIN_MARKER';
-
-  public attacks = [
-    {
-      name: 'Concoction',
-      cost: [C],
-      damage: 0,
-      text: 'Discard a card from your hand. If you do, draw 3 cards.'
-    },
-    {
-      name: 'Word of Ruin',
-      cost: [D, C],
-      damage: 0,
-      text: 'At the end of your opponent\'s next turn, the Defending Pokémon will be Knocked Out.'
-    }
-  ];
+  public attacks = [{
+    name: 'Concoction',
+    cost: [C],
+    damage: 0,
+    text: 'Discard a card from your hand. If you do, draw 3 cards.'
+  },
+  {
+    name: 'Word of Ruin',
+    cost: [D, C],
+    damage: 0,
+    text: 'At the end of your opponent\'s next turn, the Defending Pokémon will be Knocked Out.'
+  }];
 
   public regulationMark: string = 'E';
   public set: string = 'CRE';
@@ -44,8 +40,6 @@ export class GalarianSlowkingV extends PokemonCard {
   public fullName: string = 'Galarian Slowking V CRE';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Concoction
-    // Ref: set-pokemon-go/lunatone.ts (Cycle Draw - discard 1 card, draw 3)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -67,29 +61,8 @@ export class GalarianSlowkingV extends PokemonCard {
       return state;
     }
 
-    // Attack 2: Word of Ruin
-    // Ref: set-guardians-rising/absol.ts (Doom News - KO at end of opponent's next turn)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      opponent.active.marker.addMarker(this.WORD_OF_RUIN_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_WORD_OF_RUIN_MARKER, this);
-    }
-
-    // At end of opponent's turn, KO the marked Pokemon
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_WORD_OF_RUIN_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_WORD_OF_RUIN_MARKER, this);
-
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.marker.hasMarker(this.WORD_OF_RUIN_MARKER, this)) {
-          cardList.marker.removeMarker(this.WORD_OF_RUIN_MARKER, this);
-
-          const checkHp = new CheckHpEffect(effect.player, cardList);
-          store.reduceEffect(state, checkHp);
-          cardList.damage = checkHp.hp;
-        }
-      });
+      KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(effect, this);
     }
 
     return state;

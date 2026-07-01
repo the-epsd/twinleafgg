@@ -8,6 +8,7 @@ import { CardList } from './card-list';
 import { Marker } from './card-marker';
 import { PokemonCardList } from './pokemon-card-list';
 import { GameStats } from './game-stats-interfaces';
+import { PendingEndOfTurnEffect } from './pending-end-of-turn-effects';
 export class Player {
 
   id: number = 0;
@@ -56,6 +57,8 @@ export class Player {
   stadiumUsedTurn: number = 0;
 
   marker = new Marker();
+
+  pendingEndOfTurnEffects: PendingEndOfTurnEffect[] = [];
 
   avatarName: string = '';
 

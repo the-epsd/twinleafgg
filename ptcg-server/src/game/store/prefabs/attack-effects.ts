@@ -2,10 +2,14 @@ import { Card, CardTarget, ChooseCardsPrompt, ChooseEnergyPrompt, ChoosePokemonP
 import { CardType, SpecialCondition, SuperType, TrainerType } from '../card/card-types';
 import { EnergyCard } from '../card/energy-card';
 import { PokemonCard } from '../card/pokemon-card';
-import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, CardsToHandEffect, DealDamageEffect, DiscardCardsEffect, DiscardCardsFromOpponentsActivePokemonEffect, HealTargetEffect, KnockOutOpponentEffect, MoveOpponentEnergyEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
+import { AddSpecialConditionsEffect, AfterDamageEffect, ApplyWeaknessEffect, CardsToHandEffect, DealDamageEffect, DiscardCardsEffect, DiscardCardsFromOpponentsActivePokemonEffect, DiscardDefendingPokemonEffect, HealTargetEffect, KnockOutOpponentEffect, MoveOpponentEnergyEffect, PutCountersEffect, PutDamageEffect } from '../effects/attack-effects';
 import { CheckProvidedEnergyEffect } from '../effects/check-effects';
 import { AttackEffect } from '../effects/game-effects';
-import { AfterAttackEffect, BeforeDoingDamageEffect } from '../effects/game-phase-effects';
+import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
+import { Effect } from '../effects/effect';
+import { PokemonCardList } from '../state/pokemon-card-list';
+import { PendingEndOfTurnEffect } from '../state/pending-end-of-turn-effects';
+import { Player } from '../state/player';
 import { FLIP_UNTIL_TAILS_AND_COUNT_HEADS, MOVE_CARDS } from './prefabs';
 import { CoinFlipEffect } from '../effects/play-card-effects';
 
@@ -56,12 +60,182 @@ export function HEAL_X_DAMAGE_FROM_THIS_POKEMON(
 export function KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(
   store: StoreLike,
   state: State,
-  effect: AttackEffect
+  effect: AttackEffect,
+  target?: PokemonCardList,
 ): State {
-  const knockOutEffect = new KnockOutOpponentEffect(effect, 999);
-  knockOutEffect.target = effect.opponent.active;
+  const knockOutEffect = new KnockOutOpponentEffect(effect);
+  knockOutEffect.target = target ?? effect.opponent.active;
   return store.reduceEffect(state, knockOutEffect);
 }
+
+/**
+ * Discard the opponent's Active Pokémon and all cards attached to it.
+ * Not a KO — no prizes are taken. Blockable by effects like Mist Energy.
+ */
+export function DISCARD_OPPONENTS_ACTIVE_POKEMON(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  target?: PokemonCardList,
+): State {
+  const discardEffect = new DiscardDefendingPokemonEffect(effect);
+  discardEffect.target = target ?? effect.opponent.active;
+  return store.reduceEffect(state, discardEffect);
+}
+
+/**
+ * "At the end of your opponent's next turn, the Defending Pokémon will be Knocked Out."
+ * Schedules a blockable KnockOutOpponentEffect to resolve when that turn ends.
+ */
+export function KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
+  effect: AttackEffect,
+  source: PokemonCard,
+  target?: PokemonCardList,
+): void {
+  scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(effect, source, { type: 'knock_out' }, target);
+}
+
+/**
+ * "At the end of your opponent's next turn, discard the Defending Pokémon and all cards attached to it."
+ * Not a KO — no prizes are taken.
+ */
+export function DISCARD_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
+  effect: AttackEffect,
+  source: PokemonCard,
+  target?: PokemonCardList,
+): void {
+  scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(effect, source, { type: 'discard' }, target);
+}
+
+/**
+ * "Put X damage counters on the Defending Pokémon at the end of your opponent's next turn."
+ * Damage is specified in counter units (10 per counter).
+ */
+export function PUT_DAMAGE_COUNTERS_ON_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
+  effect: AttackEffect,
+  source: PokemonCard,
+  damage: number,
+  target?: PokemonCardList,
+): void {
+  scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(
+    effect, source, { type: 'damage_counters', damage }, target,
+  );
+}
+
+/**
+ * "At the end of your opponent's next turn, the Defending Pokémon is now [condition]."
+ */
+export function APPLY_SPECIAL_CONDITION_TO_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(
+  effect: AttackEffect,
+  source: PokemonCard,
+  specialCondition: SpecialCondition,
+  target?: PokemonCardList,
+): void {
+  scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(
+    effect, source, { type: 'special_condition', specialCondition }, target,
+  );
+}
+
+function scheduleDefendingPokemonEffectAtEndOfOpponentsNextTurn(
+  effect: AttackEffect,
+  source: PokemonCard,
+  pending: Pick<PendingEndOfTurnEffect, 'type'> & (
+    | { type: 'knock_out' }
+    | { type: 'discard' }
+    | { type: 'damage_counters'; damage: number }
+    | { type: 'special_condition'; specialCondition: SpecialCondition }
+  ),
+  target?: PokemonCardList,
+): void {
+  effect.opponent.pendingEndOfTurnEffects.push({
+    target: target ?? effect.opponent.active,
+    attack: effect.attack,
+    sourceCard: source,
+    attackerPlayerId: effect.player.id,
+    ...pending,
+  } as PendingEndOfTurnEffect);
+}
+
+function buildAttackEffectFromPending(
+  state: State,
+  defendingPlayer: Player,
+  item: PendingEndOfTurnEffect,
+): AttackEffect | null {
+  const attacker = state.players.find(p => p.id === item.attackerPlayerId);
+  if (!attacker) {
+    return null;
+  }
+
+  let sourceList = attacker.active;
+  attacker.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+    if (card === item.sourceCard) {
+      sourceList = cardList;
+    }
+  });
+
+  const attackEffect = new AttackEffect(attacker, defendingPlayer, item.attack);
+  attackEffect.source = sourceList;
+  return attackEffect;
+}
+
+/**
+ * Resolves pending end-of-turn effects for the player whose turn just ended.
+ * Called automatically from the EndTurnEffect reducer.
+ */
+export function RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS(
+  store: StoreLike,
+  state: State,
+  effect: Effect,
+): State {
+  if (!(effect instanceof EndTurnEffect)) {
+    return state;
+  }
+
+  const pending = effect.player.pendingEndOfTurnEffects.splice(0);
+  for (const item of pending) {
+    if (!item.target.getPokemonCard()) {
+      continue;
+    }
+
+    const attackEffect = buildAttackEffectFromPending(state, effect.player, item);
+    if (!attackEffect) {
+      continue;
+    }
+
+    switch (item.type) {
+      case 'knock_out': {
+        const ko = new KnockOutOpponentEffect(attackEffect);
+        ko.target = item.target;
+        state = store.reduceEffect(state, ko);
+        break;
+      }
+      case 'discard': {
+        const discard = new DiscardDefendingPokemonEffect(attackEffect);
+        discard.target = item.target;
+        state = store.reduceEffect(state, discard);
+        break;
+      }
+      case 'damage_counters': {
+        const putCounters = new PutCountersEffect(attackEffect, item.damage);
+        putCounters.target = item.target;
+        state = store.reduceEffect(state, putCounters);
+        break;
+      }
+      case 'special_condition': {
+        const sc = new AddSpecialConditionsEffect(attackEffect, [item.specialCondition]);
+        sc.target = item.target;
+        state = store.reduceEffect(state, sc);
+        break;
+      }
+    }
+  }
+
+  return state;
+}
+
+/** @deprecated Use RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS */
+export const RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_KNOCK_OUTS =
+  RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS;
 
 export function PUT_X_CARDS_FROM_YOUR_DISCARD_PILE_INTO_YOUR_HAND(
   x: number,

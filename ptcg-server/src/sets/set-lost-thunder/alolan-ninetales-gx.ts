@@ -1,28 +1,20 @@
 import { PokemonCard, CardTag, Stage, CardType, PowerType, StoreLike, State, ConfirmPrompt, GameMessage, ChooseCardsPrompt, SuperType, TrainerType, StateUtils, ChoosePokemonPrompt, PlayerType, SlotType, ShuffleDeckPrompt, BoardEffect } from '../../game';
-import { PutDamageEffect, KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
+import { PutDamageEffect } from '../../game/store/effects/attack-effects';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
 import { BLOCK_IF_GX_ATTACK_USED, IS_ABILITY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
-
 // LOT Alolan Ninetales-GX 132 (https://limitlesstcg.com/cards/LOT/132)
 export class AlolanNinetalesGX extends PokemonCard {
-
   public tags = [CardTag.POKEMON_GX];
-
   public stage: Stage = Stage.STAGE_1;
-
   public evolvesFrom = 'Alolan Vulpix';
-
-  public cardType: CardType = CardType.FAIRY;
-
+  public cardType: CardType = Y;
   public hp: number = 200;
-
-  public weakness = [{ type: CardType.METAL }];
-
-  public resistance = [{ type: CardType.DARK, value: -20 }];
-
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: M }];
+  public resistance = [{ type: D, value: -20 }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Mysterious Guidance',
@@ -31,31 +23,24 @@ export class AlolanNinetalesGX extends PokemonCard {
     text: 'When you play this Pokémon from your hand to evolve 1 of your Pokémon during your turn, you may search your deck for up to 2 Item cards, reveal them, and put them into your hand. Then, shuffle your deck.'
   }];
 
-  public attacks = [
-    {
-      name: 'Snowy Wind',
-      cost: [CardType.FAIRY, CardType.COLORLESS],
-      damage: 70,
-      text: 'This attack does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
-    },
-
-    {
-      name: 'Sublimation-GX',
-      cost: [CardType.FAIRY, CardType.COLORLESS],
-      damage: 0,
-      gxAttack: true,
-      text: 'If your opponent\'s Active Pokémon is an Ultra Beast, it is Knocked Out. (You can\'t use more than 1 GX attack in a game.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Snowy Wind',
+    cost: [Y, C],
+    damage: 70,
+    text: 'This attack does 30 damage to 1 of your opponent\'s Benched Pokémon. (Don\'t apply Weakness and Resistance for Benched Pokémon.)'
+  },
+  {
+    name: 'Sublimation-GX',
+    cost: [Y, C],
+    damage: 0,
+    gxAttack: true,
+    text: 'If your opponent\'s Active Pokémon is an Ultra Beast, it is Knocked Out. (You can\'t use more than 1 GX attack in a game.)'
+  }];
 
   public set: string = 'LOT';
-
   public name: string = 'Alolan Ninetales-GX';
-
   public fullName: string = 'Alolan Ninetales-GX LOT';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '132';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
@@ -125,6 +110,7 @@ export class AlolanNinetalesGX extends PokemonCard {
       });
     }
 
+    // Sublimation-GX
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -133,12 +119,10 @@ export class AlolanNinetalesGX extends PokemonCard {
       // set GX attack as used for game
       player.usedGX = true;
 
-      const pokemon = opponent.active.getPokemonCard();
-
-      if (pokemon && pokemon.tags.includes(CardTag.ULTRA_BEAST)) {
-        const dealDamage = new KnockOutOpponentEffect(effect, 999);
-        dealDamage.target = opponent.active;
-        store.reduceEffect(state, dealDamage);
+      const activePokemon = opponent.active.getPokemonCard();
+      if (activePokemon && activePokemon.tags.includes(CardTag.ULTRA_BEAST)) {
+        KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
+        return state;
       }
     }
     return state;

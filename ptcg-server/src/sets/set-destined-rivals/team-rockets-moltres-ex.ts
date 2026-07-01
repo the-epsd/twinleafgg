@@ -2,7 +2,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, SuperType, EnergyType } from '../../game/store/card/card-types';
 import { StoreLike, State, GameMessage, PlayerType, StateUtils, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { MOVE_CARDS, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { DISCARD_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 
 export class TeamRocketsMoltresex extends PokemonCard {
@@ -14,20 +15,18 @@ export class TeamRocketsMoltresex extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Flame Screen',
-      cost: [R, C, C],
-      damage: 110,
-      text: 'During your opponent\'s next turn, this Pokémon takes 50 less damage from attacks (after applying Weakness and Resistance).'
-    },
-    {
-      name: 'Evil Burn',
-      cost: [R, C, C, C],
-      damage: 0,
-      text: 'Discard a Team Rocket\'s Energy from this Pokémon. If you do, discard your opponent\'s Active Pokémon and all attached cards.'
-    }
-  ];
+  public attacks = [{
+    name: 'Flame Screen',
+    cost: [R, C, C],
+    damage: 110,
+    text: 'During your opponent\'s next turn, this Pokémon takes 50 less damage from attacks (after applying Weakness and Resistance).'
+  },
+  {
+    name: 'Evil Burn',
+    cost: [R, C, C, C],
+    damage: 0,
+    text: 'Discard a Team Rocket\'s Energy from this Pokémon. If you do, discard your opponent\'s Active Pokémon and all attached cards.'
+  }];
 
   public regulationMark = 'I';
   public set: string = 'DRI';
@@ -63,7 +62,6 @@ export class TeamRocketsMoltresex extends PokemonCard {
     // Evil Burn
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const opponent = effect.opponent;
 
       if (!player.active.cards.some(c => c.superType === SuperType.ENERGY && c.name === 'Team Rocket Energy')) {
         return state;
@@ -79,8 +77,7 @@ export class TeamRocketsMoltresex extends PokemonCard {
         const cards = selected || [];
 
         player.active.moveCardsTo(cards, player.discard);
-        opponent.active.clearEffects();
-        MOVE_CARDS(store, state, opponent.active, opponent.discard);
+        DISCARD_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
       });
     }
 

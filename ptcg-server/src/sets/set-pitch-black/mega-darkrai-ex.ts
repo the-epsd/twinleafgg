@@ -2,9 +2,9 @@ import { CardTag, CardType, Stage } from '../../game/store/card/card-types';
 import { StoreLike } from '../../game/store/store-like';
 import { State } from '../../game/store/state/state';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutEffect } from '../../game/store/effects/game-effects';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 import { PokemonCard, StateUtils } from '../../game';
-import { TAKE_X_PRIZES, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class MegaDarkraiex extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -47,17 +47,14 @@ export class MegaDarkraiex extends PokemonCard {
     }
 
     // Abyss Eye
-    // Ref: set-pokemon-151/weezing.ts (KnockOutEffect + TAKE_X_PRIZES — effect KO, not damage)
+    // Ref: set-paradox-rift/roaring-moon-ex.ts (KnockOutOpponentEffect — blockable attack KO)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const opponent = StateUtils.getOpponent(state, effect.player);
       const opponentActive = opponent.active;
 
       if (opponentActive.specialConditions.length > 0) {
         opponentActive.clearAllSpecialConditions();
-
-        const ko = new KnockOutEffect(opponent, opponent.active);
-        store.reduceEffect(state, ko);
-        return TAKE_X_PRIZES(store, state, effect.player, ko.prizeCount);
+        KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
       }
     }
 

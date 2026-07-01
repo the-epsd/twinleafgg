@@ -2,8 +2,10 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils, EnergyCard, AttachEnergyPrompt, GameMessage, PlayerType, SlotType } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { REMOVE_MARKER_AT_END_OF_TURN, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import {
+  PUT_DAMAGE_COUNTERS_ON_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN,
+} from '../../game/store/prefabs/attack-effects';
 import { PutCountersEffect } from '../../game/store/effects/attack-effects';
 
 export class Forretress extends PokemonCard {
@@ -34,27 +36,11 @@ export class Forretress extends PokemonCard {
   public name: string = 'Forretress';
   public fullName: string = 'Forretress UF';
 
-  public readonly COUNTERS_MARKER = 'COUNTERS_MARKER';
-  public readonly CLEAR_COUNTERS_MARKER = 'CLEAR_COUNTERS_MARKER';
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const opponent = effect.opponent;
-      // Apply Spiky Shell effect at the end of opponent's next turn
-      effect.player.marker.addMarker(this.COUNTERS_MARKER, this);
-      opponent.active.marker.addMarker(this.CLEAR_COUNTERS_MARKER, this);
+      PUT_DAMAGE_COUNTERS_ON_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(effect, this, 30);
     }
-
-    // 30 damage to opponent's active if end turn and counters marker is present
-    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.CLEAR_COUNTERS_MARKER, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      effect.player.active.damage += 30;
-      effect.player.active.marker.removeMarker(this.CLEAR_COUNTERS_MARKER, this);
-      opponent.marker.removeMarker(this.COUNTERS_MARKER, this);
-    }
-    REMOVE_MARKER_AT_END_OF_TURN(effect, this.COUNTERS_MARKER, this);
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;

@@ -1,18 +1,18 @@
 import { PokemonCard, CardType, Stage, PowerType, GameError, GameMessage, PokemonCardList, State, StoreLike, AttachEnergyPrompt, CardTarget, EnergyCard, EnergyType, PlayerType, SlotType, StateUtils, SuperType, SpecialCondition, CardTag } from '../../game';
-import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { BLOCK_IF_GX_ATTACK_USED, MOVE_CARDS, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class DarkraiGX extends PokemonCard {
-  public cardType: CardType = CardType.DARK;
-  public tags = [CardTag.POKEMON_GX];
   public stage: Stage = Stage.BASIC;
+  public tags = [CardTag.POKEMON_GX];
+  public cardType: CardType = D;
   public hp: number = 180;
-  public weakness = [{ type: CardType.FIGHTING }];
-  public resistance = [{ type: CardType.PSYCHIC, value: -20 }];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public weakness = [{ type: F }];
+  public resistance = [{ type: P, value: -20 }];
+  public retreat = [C, C];
 
   public powers = [{
     name: 'Restoration',
@@ -21,21 +21,19 @@ export class DarkraiGX extends PokemonCard {
     text: 'Once during your turn (before your attack), if this Pokémon is in your discard pile, you may put it onto your Bench. Then, attach a [D] Energy card from your discard pile to this Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Dark Cleave',
-      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
-      damage: 130,
-      text: 'This attack\'s damage isn\'t affected by Resistance.'
-    },
-    {
-      name: 'Dead End-GX',
-      cost: [CardType.DARK, CardType.DARK, CardType.COLORLESS],
-      damage: 0,
-      gxAttack: true,
-      text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, that Pokémon is Knocked Out. (You can\'t use more than 1 GX attack in a game.)'
-    }
-  ];
+  public attacks = [{
+    name: 'Dark Cleave',
+    cost: [D, D, C],
+    damage: 130,
+    text: 'This attack\'s damage isn\'t affected by Resistance.'
+  },
+  {
+    name: 'Dead End-GX',
+    cost: [D, D, C],
+    damage: 0,
+    gxAttack: true,
+    text: 'If your opponent\'s Active Pokémon is affected by a Special Condition, that Pokémon is Knocked Out. (You can\'t use more than 1 GX attack in a game.)'
+  }];
 
   public set: string = 'BUS';
   public cardImage: string = 'assets/cardback.png';
@@ -167,10 +165,7 @@ export class DarkraiGX extends PokemonCard {
             opponentActive.specialConditions = opponentActive.specialConditions.filter(
               c => !tcgSpecialConditions.includes(c)
             );
-
-            const dealDamage = new KnockOutOpponentEffect(effect, 999);
-            dealDamage.target = opponent.active;
-            store.reduceEffect(state, dealDamage);
+            KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
           }
         }
       }

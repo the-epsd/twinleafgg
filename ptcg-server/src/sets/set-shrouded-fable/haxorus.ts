@@ -6,31 +6,28 @@ import { Effect } from '../../game/store/effects/effect';
 
 import { StateUtils } from '../../game/store/state-utils';
 import { CardList, EnergyCard, GameLog } from '../../game';
-import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Haxorus extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
   public evolvesFrom = 'Fraxure';
-  public cardType: CardType = CardType.DRAGON;
+  public cardType: CardType = N;
   public hp: number = 170;
-  public weakness = [];
-  public resistance = [];
-  public retreat = [CardType.COLORLESS, CardType.COLORLESS];
+  public retreat = [C, C];
 
   public attacks = [{
     name: 'Bring Down the Axe',
-    cost: [CardType.FIGHTING],
+    cost: [F],
     damage: 0,
     text: 'If your opponent\'s Active Pokémon has any Special Energy attached, it is Knocked Out.'
   },
   {
     name: 'Dragon Pulse',
-    cost: [CardType.FIGHTING, CardType.METAL],
+    cost: [F, M],
     damage: 230,
     text: 'Discard the top 3 cards of your deck'
-  }
-  ];
+  }];
 
   public regulationMark: string = 'H';
   public set: string = 'SFA';
@@ -41,13 +38,13 @@ export class Haxorus extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
+    // Bring Down the Axe
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      const pokemon = opponent.active;
 
       let specialEnergyCount = 0;
-      pokemon.cards.forEach(c => {
+      opponent.active.cards.forEach(c => {
         if (c instanceof EnergyCard) {
           if (c.energyType === EnergyType.SPECIAL) {
             specialEnergyCount++;
@@ -56,15 +53,12 @@ export class Haxorus extends PokemonCard {
       });
 
       if (specialEnergyCount > 0) {
-        if (pokemon) {
-          const dealDamage = new KnockOutOpponentEffect(effect, 999);
-          dealDamage.target = opponent.active;
-          store.reduceEffect(state, dealDamage);
-        }
+        KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
+        return state;
       }
-
     }
 
+    // Dragon Pulse
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 
@@ -77,8 +71,6 @@ export class Haxorus extends PokemonCard {
       discards.forEach((card, index) => {
         store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD, { name: player.name, card: card.name, effectName: effect.attack.name });
       });
-
-      return state;
     }
 
     return state;

@@ -3,7 +3,7 @@ import { Stage, CardType } from '../../game/store/card/card-types';
 import { State, StateUtils, StoreLike } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
 import { MULTIPLE_COIN_FLIPS_PROMPT, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class Machamp extends PokemonCard {
 
@@ -14,28 +14,26 @@ export class Machamp extends PokemonCard {
   public weakness = [{ type: P, value: 30 }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Take Out',
-      cost: [F],
-      damage: 40,
-      text: 'If the Defending Pokémon isn\'t an Evolved Pokémon, that Pokémon is Knocked Out instead of damaged by this attack.',
-    },
-    {
-      name: 'Hurricane Punch',
-      cost: [C, C],
-      damage: 30,
-      damageCalculation: 'x',
-      text: 'Flip 4 coins. This attack does 30 damage times the number of heads.',
-    },
-    {
-      name: 'Rage',
-      cost: [F, F, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'Does 60 damage plus 10 more damage for each damage counter on Machamp.',
-    },
-  ];
+  public attacks = [{
+    name: 'Take Out',
+    cost: [F],
+    damage: 40,
+    text: 'If the Defending Pokémon isn\'t an Evolved Pokémon, that Pokémon is Knocked Out instead of damaged by this attack.',
+  },
+  {
+    name: 'Hurricane Punch',
+    cost: [C, C],
+    damage: 30,
+    damageCalculation: 'x',
+    text: 'Flip 4 coins. This attack does 30 damage times the number of heads.',
+  },
+  {
+    name: 'Rage',
+    cost: [F, F, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Does 60 damage plus 10 more damage for each damage counter on Machamp.',
+  }];
 
   public set: string = 'SF';
   public cardImage: string = 'assets/cardback.png';
@@ -53,10 +51,7 @@ export class Machamp extends PokemonCard {
         return state;
       }
       effect.damage = 0;
-
-      const dealDamage = new KnockOutOpponentEffect(effect, 999);
-      dealDamage.target = opponent.active;
-      store.reduceEffect(state, dealDamage);
+      KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
     }
 
     // Hurricane Punch

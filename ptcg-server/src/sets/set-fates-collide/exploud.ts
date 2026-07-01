@@ -4,11 +4,13 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
-import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/attack-effects';
+import {
+  DISCARD_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN,
+  FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE,
+} from '../../game/store/prefabs/attack-effects';
+import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Exploud extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -18,24 +20,19 @@ export class Exploud extends PokemonCard {
   public weakness = [{ type: F }];
   public retreat = [C, C, C];
 
-  public readonly CACOPHONY_MARKER = 'EXPLOUD_FCO_CACOPHONY_MARKER';
-  public readonly CLEAR_CACOPHONY_MARKER = 'EXPLOUD_FCO_CLEAR_CACOPHONY_MARKER';
-
-  public attacks = [
-    {
-      name: 'Ambush',
-      cost: [C, C, C],
-      damage: 80,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 40 more damage.'
-    },
-    {
-      name: 'Cacophony',
-      cost: [C, C, C],
-      damage: 0,
-      text: 'At the end of your opponent\'s next turn, discard the Defending Pokémon and all cards attached to it.'
-    }
-  ];
+  public attacks = [{
+    name: 'Ambush',
+    cost: [C, C, C],
+    damage: 80,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 40 more damage.'
+  },
+  {
+    name: 'Cacophony',
+    cost: [C, C, C],
+    damage: 0,
+    text: 'At the end of your opponent\'s next turn, discard the Defending Pokémon and all cards attached to it.'
+  }];
 
   public set: string = 'FCO';
   public setNumber: string = '82';
@@ -44,50 +41,12 @@ export class Exploud extends PokemonCard {
   public fullName: string = 'Exploud FCO';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Ambush
-    // Ref: set-phantom-forces/pachirisu.ts (Pachi)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, 40);
     }
 
-    // Attack 2: Cacophony
-    // Ref: set-roaring-skies/jirachi.ts (Doom Desire - delayed effect on opponent's active)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      opponent.active.marker.addMarker(this.CACOPHONY_MARKER, this);
-      opponent.marker.addMarker(this.CLEAR_CACOPHONY_MARKER, this);
-    }
-
-    // At end of opponent's turn, discard the marked Pokemon (not a KO - no prizes)
-    // Ref: set-ancient-origins/unown.ts (Farewell Letter - discard Pokemon and all attached cards)
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.CLEAR_CACOPHONY_MARKER, this)) {
-      effect.player.marker.removeMarker(this.CLEAR_CACOPHONY_MARKER, this);
-
-      effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-        if (cardList.marker.hasMarker(this.CACOPHONY_MARKER, this)) {
-          cardList.marker.removeMarker(this.CACOPHONY_MARKER, this);
-
-          // Discard all cards (Pokemon, energy, tools) - this is NOT a KO
-          const pokemons = cardList.getPokemons();
-          const tools = [...cardList.tools];
-          const otherCards = cardList.cards.filter(card =>
-            !pokemons.includes(card as PokemonCard) &&
-            !tools.includes(card)
-          );
-
-          if (pokemons.length > 0) {
-            MOVE_CARDS(store, state, cardList, effect.player.discard, { cards: pokemons });
-          }
-          if (otherCards.length > 0) {
-            MOVE_CARDS(store, state, cardList, effect.player.discard, { cards: otherCards });
-          }
-          for (const tool of tools) {
-            cardList.moveCardTo(tool, effect.player.discard);
-          }
-          cardList.clearEffects();
-        }
-      });
+      DISCARD_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(effect, this);
     }
 
     return state;

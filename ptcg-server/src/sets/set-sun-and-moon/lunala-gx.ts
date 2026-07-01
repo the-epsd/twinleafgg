@@ -8,7 +8,8 @@ import { PowerType, StoreLike, State, StateUtils, GameMessage, GameError, Player
 import { CheckProvidedEnergyEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { HealEffect } from '../../game/store/effects/game-effects';
-import { HealTargetEffect, KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
+import { HealTargetEffect } from '../../game/store/effects/attack-effects';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { WAS_ATTACK_USED, WAS_POWER_USED, IS_ABILITY_BLOCKED, BLOCK_IF_GX_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -181,10 +182,7 @@ export class LunalaGx extends PokemonCard {
         [SlotType.ACTIVE, SlotType.BENCH],
         { min: 1, max: 1, allowCancel: false, blocked }
       ), selected => {
-        const target = selected[0];
-        const knockOut = new KnockOutOpponentEffect(effect, 999);
-        knockOut.target = target;
-        store.reduceEffect(state, knockOut);
+        KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect, selected[0]);
       });
     }
 

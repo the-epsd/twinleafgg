@@ -6,7 +6,7 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Palossand extends PokemonCard {
@@ -18,20 +18,18 @@ export class Palossand extends PokemonCard {
   public resistance = [{ type: F, value: -30 }];
   public retreat = [C, C, C, C];
 
-  public attacks = [
-    {
-      name: 'Spooky Sand',
-      cost: [P, P, C],
-      damage: 120,
-      text: ''
-    },
-    {
-      name: 'Oppressing Sandstorm',
-      cost: [P, P, P, C],
-      damage: 0,
-      text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, it is Knocked Out.'
-    }
-  ];
+  public attacks = [{
+    name: 'Spooky Sand',
+    cost: [P, P, C],
+    damage: 120,
+    text: ''
+  },
+  {
+    name: 'Oppressing Sandstorm',
+    cost: [P, P, P, C],
+    damage: 0,
+    text: 'If your opponent\'s Active Pokémon is a Basic Pokémon, it is Knocked Out.'
+  }];
 
   public regulationMark: string = 'E';
   public set: string = 'FST';
@@ -49,9 +47,7 @@ export class Palossand extends PokemonCard {
       const opponentActive = opponent.active.getPokemonCard();
 
       if (opponentActive && opponentActive.stage === Stage.BASIC) {
-        const knockOut = new KnockOutOpponentEffect(effect, 999);
-        knockOut.target = opponent.active;
-        state = store.reduceEffect(state, knockOut);
+        state = KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
       }
     }
 

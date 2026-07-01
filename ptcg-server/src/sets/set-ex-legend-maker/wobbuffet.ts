@@ -1,7 +1,9 @@
 import { PokemonCard, Stage, CardType, PowerType, StoreLike, State, StateUtils, PlayerType, Card } from '../../game';
 import { CheckProvidedEnergyEffect, CheckRetreatCostEffect } from '../../game/store/effects/check-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import {
+  PUT_DAMAGE_COUNTERS_ON_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN,
+} from '../../game/store/prefabs/attack-effects';
 import { IS_POKEBODY_BLOCKED, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Wobbuffet extends PokemonCard {
@@ -36,9 +38,6 @@ export class Wobbuffet extends PokemonCard {
   public setNumber: string = '28';
   public name: string = 'Wobbuffet';
   public fullName: string = 'Wobbuffet LM';
-
-  public readonly KNOCKOUT_MARKER = 'KNOCKOUT_MARKER';
-  public readonly CLEAR_KNOCKOUT_MARKER = 'CLEAR_KNOCKOUT_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -92,19 +91,7 @@ export class Wobbuffet extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      effect.player.marker.addMarker(this.KNOCKOUT_MARKER, this);
-      opponent.active.marker.addMarker(this.CLEAR_KNOCKOUT_MARKER, this);
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(this.CLEAR_KNOCKOUT_MARKER, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      effect.player.active.damage += 70;
-      effect.player.active.marker.removeMarker(this.CLEAR_KNOCKOUT_MARKER, this);
-      opponent.marker.removeMarker(this.KNOCKOUT_MARKER, this);
+      PUT_DAMAGE_COUNTERS_ON_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(effect, this, 70);
     }
 
     return state;

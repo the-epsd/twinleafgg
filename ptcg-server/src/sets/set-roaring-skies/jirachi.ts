@@ -4,10 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { PlayerType, StoreLike, State, StateUtils, GameMessage, CardList, ChooseCardsPrompt } from '../../game';
+import { StoreLike, State, GameMessage, CardList, ChooseCardsPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { CheckHpEffect } from '../../game/store/effects/check-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import {
+  KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN,
+} from '../../game/store/prefabs/attack-effects';
 import { WAS_ATTACK_USED, MOVE_CARDS, SHUFFLE_DECK, DISCARD_ALL_ENERGY_FROM_POKEMON } from '../../game/store/prefabs/prefabs';
 
 export class Jirachi extends PokemonCard {
@@ -18,28 +19,24 @@ export class Jirachi extends PokemonCard {
   public resistance = [{ type: P, value: -20 }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Diminutive Desire',
-      cost: [M],
-      damage: 0,
-      text: 'Look at the top 7 cards of your deck and put 1 of them into your hand. Shuffle the other cards back into your deck.'
-    },
-    {
-      name: 'Doom Desire',
-      cost: [M, C],
-      damage: 0,
-      text: 'Discard all Energy attached to this Pokémon. The Defending Pokémon is Knocked Out at the end of your opponent\'s next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Diminutive Desire',
+    cost: [M],
+    damage: 0,
+    text: 'Look at the top 7 cards of your deck and put 1 of them into your hand. Shuffle the other cards back into your deck.'
+  },
+  {
+    name: 'Doom Desire',
+    cost: [M, C],
+    damage: 0,
+    text: 'Discard all Energy attached to this Pokémon. The Defending Pokémon is Knocked Out at the end of your opponent\'s next turn.'
+  }];
 
   public set: string = 'ROS';
   public setNumber: string = '42';
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Jirachi';
   public fullName: string = 'Jirachi ROS';
-
-  public readonly DOOM_DESIRE_MARKER = 'JIRACHI_ROS_DOOM_DESIRE_MARKER';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Attack 1: Diminutive Desire
@@ -68,34 +65,9 @@ export class Jirachi extends PokemonCard {
     }
 
     // Attack 2: Doom Desire
-    // Refs: set-primal-clash/beedrill.ts (Allergic Shock - 2-phase KO marker), AGENTS-patterns.md (discard all energy)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, player.active.getPokemonCard()!);
-
-      opponent.active.marker.addMarker(this.DOOM_DESIRE_MARKER, this);
-      opponent.marker.addMarker(this.DOOM_DESIRE_MARKER, this);
-    }
-
-    // Doom Desire: KO at end of opponent's next turn
-    if (effect instanceof EndTurnEffect) {
-      if (effect.player.marker.hasMarker(this.DOOM_DESIRE_MARKER, this)) {
-        effect.player.marker.removeMarker(this.DOOM_DESIRE_MARKER, this);
-
-        // KO any Pokemon that still has the doom desire marker
-        effect.player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
-          if (cardList.marker.hasMarker(this.DOOM_DESIRE_MARKER, this)) {
-            cardList.marker.removeMarker(this.DOOM_DESIRE_MARKER, this);
-
-            // Deal damage equal to HP to KO the Pokemon
-            const checkHp = new CheckHpEffect(effect.player, cardList);
-            store.reduceEffect(state, checkHp);
-            cardList.damage = checkHp.hp;
-          }
-        });
-      }
+      DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, effect.player.active.getPokemonCard()!);
+      KNOCK_OUT_DEFENDING_POKEMON_AT_END_OF_OPPONENTS_NEXT_TURN(effect, this);
     }
 
     return state;

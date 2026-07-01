@@ -1,5 +1,5 @@
-import { Attack, CardType, PokemonCard, Stage, State, StateUtils, StoreLike, Weakness } from '../../game';
-import { KnockOutOpponentEffect } from '../../game/store/effects/attack-effects';
+import { Attack, CardType, PokemonCard, Stage, State, StoreLike, Weakness } from '../../game';
+import { KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
 import { ADD_CONFUSION_TO_PLAYER_ACTIVE, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
@@ -32,14 +32,11 @@ export class Annihilape extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       // Knock out both active Pokemon
       player.active.damage += 999;
 
-      const dealDamage = new KnockOutOpponentEffect(effect, 999);
-      dealDamage.target = opponent.active;
-      store.reduceEffect(state, dealDamage);
+      KNOCK_OUT_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
     }
 
     return state;

@@ -11,6 +11,7 @@ import { CoinFlipPrompt } from '../prompts/coin-flip-prompt';
 import { PlayerType } from '../actions/play-card-action';
 import { MarkerConstants } from '../markers/marker-constants';
 import { StateUtils } from '../state-utils';
+import { RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS } from '../prefabs/attack-effects';
 
 function getActivePlayer(state: State): Player {
   return state.players[state.activePlayer];
@@ -183,6 +184,8 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
 
   if (effect instanceof EndTurnEffect) {
     const player = state.players[state.activePlayer];
+
+    state = RESOLVE_PENDING_END_OF_OPPONENTS_NEXT_TURN_EFFECTS(store, state, effect);
 
     player.canEvolve = false;
 

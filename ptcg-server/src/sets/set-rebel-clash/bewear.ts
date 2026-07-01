@@ -6,7 +6,8 @@ import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
 import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK, MOVE_CARDS } from '../../game/store/prefabs/prefabs';
+import { WAS_ATTACK_USED, COIN_FLIP_PROMPT, DISCARD_TOP_X_CARDS_FROM_YOUR_DECK } from '../../game/store/prefabs/prefabs';
+import { DISCARD_OPPONENTS_ACTIVE_POKEMON } from '../../game/store/prefabs/attack-effects';
 
 export class Bewear extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -39,8 +40,7 @@ export class Bewear extends PokemonCard {
   public fullName: string = 'Bewear RCL';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Hammer Arm
-    // Ref: set-unbroken-bonds/malamar.ts (Dark Pressure)
+    // Hammer Arm
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
@@ -48,19 +48,13 @@ export class Bewear extends PokemonCard {
       DISCARD_TOP_X_CARDS_FROM_YOUR_DECK(store, state, opponent, 1, this, effect);
     }
 
-    // Attack 2: Big Throw
-    // Ref: set-destined-rivals/team-rockets-moltres-ex.ts (Evil Burn - discard opponent's active and attached)
+    // Big Throw
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
 
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {
-          // Discard all cards attached to opponent's active (tools too)
-          const tools = opponent.active.tools.slice();
-          tools.forEach(t => { opponent.active.moveCardTo(t, opponent.discard); });
-          opponent.active.clearEffects();
-          MOVE_CARDS(store, state, opponent.active, opponent.discard);
+          DISCARD_OPPONENTS_ACTIVE_POKEMON(store, state, effect);
         }
       });
     }
