@@ -33,7 +33,7 @@ export class AncientRuins extends TrainerCard {
       }
 
       SHOW_CARDS_TO_PLAYER(store, state, opponent, player.hand.cards);
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
     }
 
     return state;

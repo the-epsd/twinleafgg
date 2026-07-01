@@ -52,7 +52,7 @@ export class CynthiasFeelings extends TrainerCard {
 
       MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards.filter(c => c !== this) });
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, cardsToDraw);
+      DRAW_CARDS(store, state, player, cardsToDraw);
       player.supporter.moveCardTo(this, player.discard);
     }
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.FEELINGS_MARKER, this);

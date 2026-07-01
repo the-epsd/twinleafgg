@@ -97,7 +97,7 @@ export class GalarianArticunoV extends PokemonCard {
         }
         player.marker.addMarker(this.RECONSTITUTE_MARKER, this);
         MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
-        DRAW_CARDS(player, 1);
+        DRAW_CARDS(store, state, player, 1);
 
       });
 

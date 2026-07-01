@@ -77,7 +77,7 @@ export class Mismagius extends PokemonCard {
         SHUFFLE_DECK(store, state, opponent);
 
         // Opponent draws cards equal to remaining prize cards
-        DRAW_CARDS(opponent, prizeCount);
+        DRAW_CARDS(store, state, opponent, prizeCount);
       });
     }
 

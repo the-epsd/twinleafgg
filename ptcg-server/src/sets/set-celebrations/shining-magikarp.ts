@@ -47,7 +47,7 @@ export class ShiningMagikarp extends PokemonCard {
       if (opponent.deck.cards.length > 0) {
         CONFIRMATION_PROMPT(store, state, opponent, result => {
           if (result) {
-            DRAW_CARDS(opponent, 2);
+            DRAW_CARDS(store, state, opponent, 2);
           }
         }, GameMessage.WANT_TO_DRAW_CARDS);
       }
@@ -56,7 +56,7 @@ export class ShiningMagikarp extends PokemonCard {
       if (player.deck.cards.length > 0) {
         CONFIRMATION_PROMPT(store, state, player, result => {
           if (result) {
-            DRAW_CARDS(player, 2);
+            DRAW_CARDS(store, state, player, 2);
           }
         }, GameMessage.WANT_TO_DRAW_CARDS);
       }

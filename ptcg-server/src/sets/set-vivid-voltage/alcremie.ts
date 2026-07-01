@@ -57,8 +57,8 @@ export class Alcremie extends PokemonCard {
         GameMessage.WANT_TO_USE_ABILITY
       ), wantToUse => {
         if (wantToUse) {
-          DRAW_CARDS(player, 1);
-          DRAW_CARDS(opponent, 1);
+          DRAW_CARDS(store, state, player, 1);
+          DRAW_CARDS(store, state, opponent, 1);
         }
       });
     }

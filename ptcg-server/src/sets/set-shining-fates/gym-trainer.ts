@@ -26,11 +26,11 @@ export class GymTrainer extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
 
       // If opponent took prizes last turn, our Pokemon were knocked out
       if (opponent.prizesTakenLastTurn > 0) {
-        DRAW_CARDS(player, 2);
+        DRAW_CARDS(store, state, player, 2);
       }
     }
 

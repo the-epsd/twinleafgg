@@ -36,7 +36,7 @@ export class Allister extends TrainerCard {
       const deckSize = player.deck.cards.length;
       const drawnCount = Math.min(3, deckSize);
 
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
 
       // If we drew any cards, must discard at least 1 (up to 3)
       if (drawnCount > 0) {

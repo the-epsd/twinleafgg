@@ -45,7 +45,7 @@ export class Swampert extends PokemonCard {
         throw new GameError(GameMessage.POWER_ALREADY_USED);
       }
 
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
 
       ABILITY_USED(player, this);
       ADD_MARKER(this.ECHO_DRAW_MARKER, player, this);

@@ -45,8 +45,8 @@ export class MrMime extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      DRAW_CARDS(player, 1);
-      DRAW_CARDS(opponent, 1);
+      DRAW_CARDS(store, state, player, 1);
+      DRAW_CARDS(store, state, opponent, 1);
     }
 
     // Attack 2: Double Slap

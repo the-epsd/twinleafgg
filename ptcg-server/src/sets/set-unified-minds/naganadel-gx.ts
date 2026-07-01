@@ -90,7 +90,7 @@ export class NaganadelGx extends PokemonCard {
         const cards = selected || [];
         if (cards.length > 0) {
           player.hand.moveCardTo(cards[0], player.discard);
-          DRAW_CARDS(player, 3);
+          DRAW_CARDS(store, state, player, 3);
         }
       });
     }

@@ -44,7 +44,7 @@ export class Pikachu extends PokemonCard {
     // Ref: set-shining-legends/shroomish.ts (simple draw pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
     }
 
     // Attack 2: Quick Attack

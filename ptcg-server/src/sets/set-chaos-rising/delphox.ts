@@ -59,7 +59,7 @@ export class Delphox extends PokemonCard {
       player.hand.moveCardTo(basicRInHand, player.discard);
       const toDraw = Math.max(0, 7 - player.hand.cards.length);
       if (toDraw > 0) {
-        DRAW_CARDS(player, toDraw);
+        DRAW_CARDS(store, state, player, toDraw);
       }
     }
     if (WAS_ATTACK_USED(effect, 0, this)) {

@@ -58,7 +58,7 @@ function* playGwynn(next: Function, store: StoreLike, state: State, effect: Trai
   });
 
   MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self });
-  DRAW_CARDS(player, cards.length * 3);
+  DRAW_CARDS(store, state, player, cards.length * 3);
   CLEAN_UP_SUPPORTER(store, effect, player);
 }
 

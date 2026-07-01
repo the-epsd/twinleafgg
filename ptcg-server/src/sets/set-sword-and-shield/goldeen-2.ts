@@ -41,7 +41,7 @@ export class Goldeen2 extends PokemonCard {
     // Attack 1: Collect
     // Ref: set-sword-and-shield/sudowoodo.ts (Double Draw)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 1);
+      DRAW_CARDS(store, state, effect.player, 1);
     }
 
     return state;

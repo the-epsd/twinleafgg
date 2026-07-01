@@ -44,7 +44,7 @@ export class Luvdisc extends PokemonCard {
       const player = effect.player;
       player.hand.moveTo(player.deck);
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, 5);
+      DRAW_CARDS(store, state, player, 5);
     }
 
     return state;

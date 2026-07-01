@@ -47,7 +47,7 @@ export class RocketsMission extends TrainerCard {
         if (cards[0] instanceof PokemonCard && (cards[0].tags.includes(CardTag.ROCKETS) || cards[0].tags.includes(CardTag.DARK))) {
           cardsToDraw = 4;
         }
-        DRAW_CARDS(player, cardsToDraw);
+        DRAW_CARDS(store, state, player, cardsToDraw);
         return state;
       }
 
@@ -74,7 +74,7 @@ export class RocketsMission extends TrainerCard {
             store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
           });
 
-          DRAW_CARDS(player, cardsToDraw);
+          DRAW_CARDS(store, state, player, cardsToDraw);
         });
       }
       return state;

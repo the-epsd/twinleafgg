@@ -147,6 +147,11 @@ function* useAttack(next: Function, store: StoreLike, state: State, effect: UseA
     throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
   }
 
+  // Check if a specific attack was disabled by an opponent's effect
+  if (attackingPokemon.blockedAttackNameNextTurn === attack.name) {
+    throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
+  }
+
   // Get the actual PokemonCard for power checks
   const attackingPokemonCard = attackingPokemon.getPokemonCard();
   // Check for barrage on powers (and not blocked)

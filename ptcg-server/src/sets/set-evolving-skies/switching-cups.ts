@@ -32,7 +32,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
   });
 
   cards.forEach(c => c.cards.moveToTopOfDestination(player.deck));
-  DRAW_CARDS(player, 1);
+  DRAW_CARDS(store, state, player, 1);
 }
 
 export class SwitchingCups extends TrainerCard {

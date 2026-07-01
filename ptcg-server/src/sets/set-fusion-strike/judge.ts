@@ -60,12 +60,12 @@ export class Judge extends TrainerCard {
       // opponent shuffle and draw
       if (!opponentMoveEffect.preventDefault) {
         SHUFFLE_DECK(store, state, opponent);
-        DRAW_CARDS(opponent, 4);
+        DRAW_CARDS(store, state, opponent, 4);
       }
 
       // player shuffle and draw
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, 4);
+      DRAW_CARDS(store, state, player, 4);
 
 
     }

@@ -38,7 +38,7 @@ export class RichEnergy extends EnergyCard {
       if (IS_SPECIAL_ENERGY_BLOCKED(store, state, player, this, effect.target)) {
         return state;
       }
-      DRAW_CARDS(player, 4);
+      DRAW_CARDS(store, state, player, 4);
     }
     return state;
   }

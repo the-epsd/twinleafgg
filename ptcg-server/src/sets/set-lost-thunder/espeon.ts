@@ -43,7 +43,7 @@ export class Espeon extends PokemonCard {
     // Attack 1: Allure
     // Ref: AGENTS-patterns.md (Draw cards)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 3);
+      DRAW_CARDS(store, state, effect.player, 3);
     }
 
     // Attack 2: Energy Crush

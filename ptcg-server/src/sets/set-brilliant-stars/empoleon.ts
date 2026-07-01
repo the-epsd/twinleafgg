@@ -84,7 +84,7 @@ export class Empoleon extends PokemonCard {
       const cards = player.discard.cards.filter(c => c === this);
       cards.forEach(card => {
         player.discard.moveCardTo(card, slots[0]); // Move to Bench
-        DRAW_CARDS(player, 3);
+        DRAW_CARDS(store, state, player, 3);
       });
 
       if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.EMERGENCY_SURFACING_MARKER, this)) {

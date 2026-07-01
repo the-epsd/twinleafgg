@@ -34,7 +34,7 @@ export class Dan extends TrainerCard {
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
 
       const options = [
         { value: 'Rock', message: 'Rock' },
@@ -68,7 +68,7 @@ export class Dan extends TrainerCard {
         if ((playerChosenValue === 1 && opponentChosenValue === 0)
           || (playerChosenValue === 2 && opponentChosenValue === 1)
           || (playerChosenValue === 0 && opponentChosenValue === 2)) {
-          DRAW_CARDS(player, 2);
+          DRAW_CARDS(store, state, player, 2);
         }
       });
 

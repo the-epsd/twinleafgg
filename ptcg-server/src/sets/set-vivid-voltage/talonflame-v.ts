@@ -42,7 +42,7 @@ export class TalonflameV extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       player.hand.moveTo(player.discard, player.hand.cards.length);
-      DRAW_CARDS(player, 6);
+      DRAW_CARDS(store, state, player, 6);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

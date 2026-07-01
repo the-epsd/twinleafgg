@@ -42,7 +42,7 @@ export class Vullaby extends PokemonCard {
     // Ref: set-lost-thunder/pikipek.ts (Collect)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
     }
 
     return state;

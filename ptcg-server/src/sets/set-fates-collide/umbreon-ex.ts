@@ -62,7 +62,7 @@ export class UmbreonEx extends PokemonCard {
             return;
           }
           player.hand.moveCardsTo(cards, player.discard);
-          DRAW_CARDS(player, cards.length);
+          DRAW_CARDS(store, state, player, cards.length);
         });
       }
     }

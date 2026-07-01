@@ -42,7 +42,7 @@ export class Dunsparce extends PokemonCard {
     // Attack 1: Double Draw
     // Ref: set-noble-victories/virizion.ts (Double Draw)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 2);
+      DRAW_CARDS(store, state, effect.player, 2);
     }
 
     // Attack 2: Dig

@@ -35,7 +35,7 @@ export class Lickitung extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 2);
+      DRAW_CARDS(store, state, effect.player, 2);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

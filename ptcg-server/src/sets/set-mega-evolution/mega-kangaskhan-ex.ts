@@ -54,7 +54,7 @@ export class MegaKangaskhanex extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
       ABILITY_USED(player, this);
       player.usedRunErrand = true;
     }

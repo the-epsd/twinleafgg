@@ -25,7 +25,7 @@ export class SamsonOak extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
 
       // Check if both Active Pokemon are the same type
       const checkPlayerType = new CheckPokemonTypeEffect(player.active);
@@ -36,7 +36,7 @@ export class SamsonOak extends TrainerCard {
 
       const sameType = checkPlayerType.cardTypes.some(t => checkOpponentType.cardTypes.includes(t));
       if (sameType) {
-        DRAW_CARDS(player, 2);
+        DRAW_CARDS(store, state, player, 2);
       }
     }
 

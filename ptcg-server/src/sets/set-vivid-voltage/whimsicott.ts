@@ -47,7 +47,7 @@ export class Whimsicott extends PokemonCard {
     // Ref: set-sword-and-shield/hop.ts (DRAW_CARDS pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
     }
 
     // Attack 2: Flying Fury

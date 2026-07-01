@@ -25,11 +25,11 @@ export class Dancer extends TrainerCard {
       const player = effect.player;
 
       // Draw 2 cards
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
 
       // If you go second and it's your first turn (turn 2), draw 3 more
       if (state.turn === 2) {
-        DRAW_CARDS(player, 3);
+        DRAW_CARDS(store, state, player, 3);
       }
     }
 

@@ -51,7 +51,7 @@ export class Doduo2 extends PokemonCard {
     // Attack 2: Doduo Delivery
     // Ref: AGENTS-patterns.md (draw cards)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      DRAW_CARDS(effect.player, 2);
+      DRAW_CARDS(store, state, effect.player, 2);
     }
 
     return state;

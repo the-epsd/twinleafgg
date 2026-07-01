@@ -31,7 +31,7 @@ export class TvReporter extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
       effect.preventDefault = true;
 
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
       DISCARD_X_CARDS_FROM_YOUR_HAND(effect, store, state, 1, 1);
     }
 

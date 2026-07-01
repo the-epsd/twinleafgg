@@ -55,7 +55,7 @@ export class Kirlia extends PokemonCard {
       });
 
       if (psychicCount > 0) {
-        DRAW_CARDS(player, psychicCount);
+        DRAW_CARDS(store, state, player, psychicCount);
       }
     }
 

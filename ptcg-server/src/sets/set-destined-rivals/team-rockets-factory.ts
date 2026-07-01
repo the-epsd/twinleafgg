@@ -29,7 +29,7 @@ export class TeamRocketsFactory extends TrainerCard {
       if (!player.rocketSupporter) {
         throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
       player.marker.addMarker(this.FACTORY_USED_MARKER, this);
     }
 

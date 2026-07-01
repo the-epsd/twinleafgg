@@ -38,7 +38,7 @@ export class Eeveeex extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-rebel-clash/snorlax.ts (Collect)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 3);
+      DRAW_CARDS(store, state, effect.player, 3);
     }
 
     // Ref: set-noble-victories/stunfisk-2.ts (Thunder)

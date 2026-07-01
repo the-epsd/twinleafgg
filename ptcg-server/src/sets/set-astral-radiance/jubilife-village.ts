@@ -45,7 +45,7 @@ export class JubilifeVillage extends TrainerCard {
         player.deck.applyOrder(order);
       });
 
-      DRAW_CARDS(player, 5);
+      DRAW_CARDS(store, state, player, 5);
 
       effect.preventDefault = true;
       store.log(state, GameLog.LOG_PLAYER_USES_STADIUM, { name: player.name, stadium: effect.stadium.name });

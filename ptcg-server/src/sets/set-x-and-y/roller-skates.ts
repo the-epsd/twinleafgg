@@ -30,7 +30,7 @@ export class RollerSkates extends TrainerCard {
       COIN_FLIP_PROMPT(store, state, effect.player, (result => {
         if (result) {
           const player = effect.player;
-          DRAW_CARDS(player, 3);
+          DRAW_CARDS(store, state, player, 3);
         }
       }));
 

@@ -59,7 +59,7 @@ export class Magmar extends PokemonCard {
         }
 
         player.hand.moveCardsTo(cards, player.discard);
-        DRAW_CARDS(player, cards.length * 2);
+        DRAW_CARDS(store, state, player, cards.length * 2);
       });
     }
 

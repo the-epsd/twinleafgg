@@ -58,7 +58,7 @@ export class Jett extends TrainerCard {
         }
       });
 
-      DRAW_CARDS(player, megaEvolutionExCount);
+      DRAW_CARDS(store, state, player, megaEvolutionExCount);
 
 
     }

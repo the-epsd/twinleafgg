@@ -104,7 +104,7 @@ export class Polteageist extends PokemonCard {
         });
 
         MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: this, sourceEffect: this.powers[0] });
-        DRAW_CARDS(player, 2);
+        DRAW_CARDS(store, state, player, 2);
       });
       return state;
     }

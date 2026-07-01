@@ -88,7 +88,7 @@ export class Cinccino extends PokemonCard {
           const cards = selected || [];
           if (cards.length > 0) {
             player.hand.moveCardsTo(cards, player.discard);
-            DRAW_CARDS(player, 2);
+            DRAW_CARDS(store, state, player, 2);
           }
         },
       );

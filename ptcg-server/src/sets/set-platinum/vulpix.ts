@@ -59,7 +59,7 @@ export class Vulpix extends PokemonCard {
 
         // Perform an action for each energy card discarded
         cards.forEach(() => {
-          DRAW_CARDS(player, 2);
+          DRAW_CARDS(store, state, player, 2);
         });
 
         return state;

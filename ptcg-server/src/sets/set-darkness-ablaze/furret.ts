@@ -43,7 +43,7 @@ export class Furret extends PokemonCard {
     // Ref: set-darkness-ablaze/polteageist.ts (DRAW_CARDS)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
     }
 
     // Attack 2: Tail Smash

@@ -104,7 +104,7 @@ export class Melony extends TrainerCard {
           MOVE_CARDS(store, state, player.discard, targetList, { cards: [transfer.card], sourceCard: this, sourceEffect: effect });
 
           // Draw 3 cards
-          DRAW_CARDS(player, 3);
+          DRAW_CARDS(store, state, player, 3);
         });
       });
     }

@@ -44,7 +44,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
         store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: discarded[0].name });
         MOVE_CARDS(store, state, player.hand, player.discard, { cards: discarded, sourceCard: self });
         // Draw 3 cards
-        DRAW_CARDS(player, 3);
+        DRAW_CARDS(store, state, player, 3);
       }
     });
     return state;

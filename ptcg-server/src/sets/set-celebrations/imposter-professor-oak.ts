@@ -26,7 +26,7 @@ export class ImposterProfessorOak extends TrainerCard {
 
       MOVE_CARDS(store, state, opponent.hand, opponent.deck, { sourceCard: this });
       SHUFFLE_DECK(store, state, opponent);
-      DRAW_CARDS(opponent, 7);
+      DRAW_CARDS(store, state, opponent, 7);
     }
 
     return state;

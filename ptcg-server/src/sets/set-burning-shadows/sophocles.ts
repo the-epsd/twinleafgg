@@ -33,7 +33,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   MOVE_CARDS(store, state, player.hand, player.discard, { cards, sourceCard: self });
-  DRAW_CARDS(player, 4);
+  DRAW_CARDS(store, state, player, 4);
 }
 
 export class Sophocles extends TrainerCard {

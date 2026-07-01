@@ -41,7 +41,7 @@ export class Hitmontop extends PokemonCard {
     // Attack 1: Spinning Draw
     // Ref: AGENTS-patterns.md (Draw a card)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 1);
+      DRAW_CARDS(store, state, effect.player, 1);
     }
 
     return state;

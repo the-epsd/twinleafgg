@@ -41,7 +41,7 @@ export class BrocksZubat extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_ATTACK);
       }
 
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
       SWITCH_ACTIVE_WITH_BENCHED(store, state, player);
     }
 

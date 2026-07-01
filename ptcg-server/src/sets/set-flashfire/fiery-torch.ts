@@ -62,7 +62,7 @@ function* playCard(
   }
 
   player.hand.moveCardsTo(cards, player.discard);
-  DRAW_CARDS(player, 2);
+  DRAW_CARDS(store, state, player, 2);
 
   return state;
 }

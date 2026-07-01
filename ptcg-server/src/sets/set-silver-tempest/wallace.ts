@@ -26,14 +26,14 @@ export class Wallace extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
 
       // Draw 3 cards first
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
 
       // Opponent may draw a card; if they do, draw 1 more
       if (opponent.deck.cards.length > 0) {
         CONFIRMATION_PROMPT(store, state, opponent, result => {
           if (result) {
-            DRAW_CARDS(opponent, 1);
-            DRAW_CARDS(player, 1);
+            DRAW_CARDS(store, state, opponent, 1);
+            DRAW_CARDS(store, state, player, 1);
           }
         }, GameMessage.WANT_TO_DRAW_CARDS);
       }

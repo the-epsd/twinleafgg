@@ -28,7 +28,7 @@ export class BlainesLastResort extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      DRAW_CARDS(player, 5);
+      DRAW_CARDS(store, state, player, 5);
 
     }
 

@@ -42,7 +42,7 @@ export class Meowstic extends PokemonCard {
     // Attack 1: Allure
     // Ref: set-guardians-rising/drampa.ts (draw pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 3);
+      DRAW_CARDS(store, state, effect.player, 3);
     }
 
     // Attack 2: Hand Kinesis

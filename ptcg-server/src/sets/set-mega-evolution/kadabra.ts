@@ -44,7 +44,7 @@ export class Kadabra extends PokemonCard {
 
       CONFIRMATION_PROMPT(store, state, player, result => {
         if (result) {
-          DRAW_CARDS(player, 2);
+          DRAW_CARDS(store, state, player, 2);
         }
       }, GameMessage.WANT_TO_USE_ABILITY);
     }

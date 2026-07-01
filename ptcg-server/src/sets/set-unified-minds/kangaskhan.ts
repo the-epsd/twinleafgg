@@ -41,7 +41,7 @@ export class Kangaskhan extends PokemonCard {
     // Attack 1: Double Draw
     // Ref: set-team-up/eevee-and-snorlax-gx.ts (draw cards)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 2);
+      DRAW_CARDS(store, state, effect.player, 2);
     }
 
     // Attack 2: Tag Impact

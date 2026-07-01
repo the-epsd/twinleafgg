@@ -4,13 +4,10 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { Attack, PowerType, StoreLike, State, StateUtils, GameError, GameMessage, GameLog, PokemonCardList } from '../../game';
+import { PowerType, StoreLike, State, StateUtils } from '../../game';
 import { AbstractAttackEffect, ApplyWeaknessEffect, DealDamageEffect, PutDamageEffect } from '../../game/store/effects/attack-effects';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { ChooseAttackPrompt } from '../../game/store/prompts/choose-attack-prompt';
-import { WAS_ATTACK_USED, IS_ABILITY_BLOCKED } from '../../game/store/prefabs/prefabs';
+import { IS_ABILITY_BLOCKED, OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Bibarel extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -26,14 +23,12 @@ export class Bibarel extends PokemonCard {
     text: 'Prevent all effects of your opponent\'s attacks, except damage, done to this Pokémon.'
   }];
 
-  public attacks = [
-    {
-      name: 'Amnesia',
-      cost: [C, C, C],
-      damage: 60,
-      text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. That Pokémon can\'t use that attack during your opponent\'s next turn.'
-    }
-  ];
+  public attacks = [{
+    name: 'Amnesia',
+    cost: [C, C, C],
+    damage: 60,
+    text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. That Pokémon can\'t use that attack during your opponent\'s next turn.'
+  }];
 
   public set: string = 'UNM';
   public setNumber: string = '172';
@@ -41,11 +36,7 @@ export class Bibarel extends PokemonCard {
   public name: string = 'Bibarel';
   public fullName: string = 'Bibarel UNM';
 
-  public amnesiaAttack: Attack | null = null;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Ability: Unaware (passive - prevent effects except damage)
-    // Ref: set-team-up/dratini-2.ts (Defensive Scales)
     if (effect instanceof AbstractAttackEffect && effect.target.cards.includes(this)) {
       const pokemonCard = effect.target.getPokemonCard();
       if (pokemonCard !== this) {
@@ -75,46 +66,8 @@ export class Bibarel extends PokemonCard {
       effect.preventDefault = true;
     }
 
-    // Attack 1: Amnesia
-    // Ref: set-team-up/golduck.ts (Amnesia)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const pokemonCard = opponent.active.getPokemonCard();
-
-      if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
-        return state;
-      }
-
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_DISABLE,
-        [pokemonCard],
-        { allowCancel: false }
-      ), result => {
-        if (!result) {
-          return state;
-        }
-
-        this.amnesiaAttack = result;
-        opponent.active.marker.addMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-        store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
-          name: player.name,
-          attack: this.amnesiaAttack.name
-        });
-      });
-    }
-
-    if (effect instanceof AttackEffect
-      && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)
-      && effect.attack === this.amnesiaAttack) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
-      effect.player.active.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-      this.amnesiaAttack = null;
+      return OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK(store, state, effect, this);
     }
 
     return state;

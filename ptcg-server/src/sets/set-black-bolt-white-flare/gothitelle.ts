@@ -59,7 +59,7 @@ export class Gothitelle extends PokemonCard {
       }
 
       MOVE_CARDS(store, state, opponent.hand, opponent.deck, { sourceCard: this });
-      DRAW_CARDS(opponent, 3);
+      DRAW_CARDS(store, state, opponent, 3);
     }
 
     if (effect instanceof EndTurnEffect) {

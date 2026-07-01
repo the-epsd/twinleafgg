@@ -30,7 +30,7 @@ export class Evelyn extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      DRAW_CARDS(player, 4);
+      DRAW_CARDS(store, state, player, 4);
     }
 
     return state;

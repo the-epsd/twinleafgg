@@ -34,8 +34,8 @@ export class Misdreavus extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      DRAW_CARDS(effect.player, 3);
-      DRAW_CARDS(effect.opponent, 3);
+      DRAW_CARDS(store, state, effect.player, 3);
+      DRAW_CARDS(store, state, effect.opponent, 3);
     }
 
     return state;

@@ -69,7 +69,7 @@ export class Flygon extends PokemonCard {
 
           store.prompt(state, new ShuffleDeckPrompt(targetPlayer.id), order => {
             targetPlayer.deck.applyOrder(order);
-            DRAW_CARDS(targetPlayer, 4);
+            DRAW_CARDS(store, state, targetPlayer, 4);
           });
         }
       );

@@ -45,7 +45,7 @@ export class Morpekoex extends PokemonCard {
       copied.forEach(c => player.hand.moveCardTo(c, player.deck));
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
-        DRAW_CARDS(player, 6);
+        DRAW_CARDS(store, state, player, 6);
       });
     }
     if (WAS_ATTACK_USED(effect, 1, this)) {

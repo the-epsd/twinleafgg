@@ -44,7 +44,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   // Draw 4 cards
-  DRAW_CARDS(player, 4);
+  DRAW_CARDS(store, state, player, 4);
   return state;
 }
 

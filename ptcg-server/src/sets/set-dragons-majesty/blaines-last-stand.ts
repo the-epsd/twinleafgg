@@ -44,7 +44,7 @@ export class BlaineSLastStand extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      DRAW_CARDS(player, 2 * fireCount);
+      DRAW_CARDS(store, state, player, 2 * fireCount);
     }
 
     return state;

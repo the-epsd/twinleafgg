@@ -36,7 +36,7 @@ export class DrawEnergy extends EnergyCard {
         return state;
       }
 
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
     }
 
     return state;

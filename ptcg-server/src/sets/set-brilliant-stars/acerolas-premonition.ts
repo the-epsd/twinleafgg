@@ -54,7 +54,7 @@ export class AcerolasPremonition extends TrainerCard {
       ), () => {
 
         const cardsToMove = cardsInOpponentHand.length;
-        DRAW_CARDS(player, cardsToMove);
+        DRAW_CARDS(store, state, player, cardsToMove);
 
       });
     }

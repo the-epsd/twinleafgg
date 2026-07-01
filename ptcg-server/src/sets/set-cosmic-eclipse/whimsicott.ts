@@ -62,7 +62,7 @@ export class Whimsicott extends PokemonCard {
           cards.forEach(card => {
             player.hand.moveCardTo(card, player.lostzone);
           });
-          DRAW_CARDS(player, 3);
+          DRAW_CARDS(store, state, player, 3);
         }
       });
     }

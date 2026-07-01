@@ -22,11 +22,11 @@ export class CoachTrainer extends TrainerCard {
     // Ref: set-unbroken-bonds/snorlax.ts (TAG_TEAM check pattern)
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
 
       const activePokemon = player.active.getPokemonCard();
       if (activePokemon && activePokemon.tags.includes(CardTag.TAG_TEAM)) {
-        DRAW_CARDS(player, 2);
+        DRAW_CARDS(store, state, player, 2);
       }
     }
 

@@ -34,7 +34,7 @@ export class Barry extends TrainerCard {
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
 
 
     }

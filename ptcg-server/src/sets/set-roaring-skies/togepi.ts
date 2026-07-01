@@ -37,7 +37,7 @@ export class Togepi extends PokemonCard {
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
-      DRAW_CARDS(opponent, 1);
+      DRAW_CARDS(store, state, opponent, 1);
     }
 
     return state;

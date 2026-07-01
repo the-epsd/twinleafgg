@@ -36,7 +36,7 @@ export class Feebas extends PokemonCard {
       MULTIPLE_COIN_FLIPS_PROMPT(store, state, player, 2, results => {
         const heads = results.filter(r => r).length;
         if (heads > 0) {
-          DRAW_CARDS(player, heads);
+          DRAW_CARDS(store, state, player, heads);
         }
       });
     }

@@ -47,7 +47,7 @@ export class Chatot extends PokemonCard {
       const cardsInOpponentHand = opponent.hand.cards.length;
       player.hand.moveTo(player.deck);
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, cardsInOpponentHand);
+      DRAW_CARDS(store, state, player, cardsInOpponentHand);
     }
 
     // Attack 2: Tone-Deaf

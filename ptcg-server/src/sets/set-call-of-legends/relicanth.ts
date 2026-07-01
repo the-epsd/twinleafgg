@@ -58,7 +58,7 @@ export class Relicanth extends PokemonCard {
           return;
         }
         MOVE_CARDS(store, state, player.hand, player.lostzone, { cards, sourceCard: this, sourceEffect: this.attacks[0] });
-        DRAW_CARDS(player, 3);
+        DRAW_CARDS(store, state, player, 3);
       });
 
       return state;

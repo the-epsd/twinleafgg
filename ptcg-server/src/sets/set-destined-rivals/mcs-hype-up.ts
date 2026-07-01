@@ -44,9 +44,9 @@ export class EmceesHype extends TrainerCard {
 
       effect.preventDefault = true;
 
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
       if (opponent.getPrizeLeft() <= 3) {
-        DRAW_CARDS(player, 2);
+        DRAW_CARDS(store, state, player, 2);
       }
 
       player.supporter.moveTo(player.discard);

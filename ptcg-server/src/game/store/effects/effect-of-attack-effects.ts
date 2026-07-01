@@ -1,6 +1,7 @@
 import { Effect } from './effect';
 import { AbstractAttackEffect } from './attack-effects';
 import { AttackEffect } from './game-effects';
+import { Attack } from '../card/pokemon-types';
 import { Card } from '../card/card';
 import { MarkerConstants } from '../markers/marker-constants';
 
@@ -72,6 +73,21 @@ export class PreventAttackEffect extends EffectOfAttackEffect {
 }
 
 /**
+ * Effect that prevents the defending Pokemon from using a specific attack during the opponent's next turn.
+ */
+export class OpponentPokemonCannotUseAttackEffect extends EffectOfAttackEffect {
+  readonly type: string = 'OPPONENT_POKEMON_CANNOT_USE_ATTACK_EFFECT';
+
+  constructor(base: AttackEffect, public blockedAttack: Attack) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.active.blockedAttackNameNextTurn = this.blockedAttack.name;
+  }
+}
+
+/**
  * Effect that adds a damage reduction marker
  */
 export class ReduceDamageEffect extends EffectOfAttackEffect {
@@ -103,6 +119,16 @@ export function preventDamageEffect(attackEffect: AttackEffect, source: Card): P
 
 export function preventAttackEffect(attackEffect: AttackEffect, source: Card): PreventAttackEffect {
   const effect = new PreventAttackEffect(attackEffect);
+  effect.markerSource = source;
+  return effect;
+}
+
+export function opponentPokemonCannotUseAttackEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  blockedAttack: Attack,
+): OpponentPokemonCannotUseAttackEffect {
+  const effect = new OpponentPokemonCannotUseAttackEffect(attackEffect, blockedAttack);
   effect.markerSource = source;
   return effect;
 }

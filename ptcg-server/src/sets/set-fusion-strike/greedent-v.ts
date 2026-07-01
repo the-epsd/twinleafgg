@@ -48,7 +48,7 @@ export class GreedentV extends PokemonCard {
     // Nom-Nom-Nom Incisors
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
     }
 
     return state;

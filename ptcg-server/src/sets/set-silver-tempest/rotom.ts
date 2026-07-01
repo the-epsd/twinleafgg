@@ -44,7 +44,7 @@ export class Rotom extends PokemonCard {
       const player = effect.player;
       player.hand.moveTo(player.deck);
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, 6);
+      DRAW_CARDS(store, state, player, 6);
     }
 
     return state;

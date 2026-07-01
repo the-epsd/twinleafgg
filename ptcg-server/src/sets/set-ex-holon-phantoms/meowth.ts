@@ -32,7 +32,7 @@ export class Meowth extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
     if (AFTER_ATTACK(effect, 1, this)) {
-      DRAW_CARDS(effect.player, 1);
+      DRAW_CARDS(store, state, effect.player, 1);
     }
 
     return state;

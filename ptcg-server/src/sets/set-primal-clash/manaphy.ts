@@ -51,7 +51,7 @@ export class Manaphy extends PokemonCard {
 
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
-        DRAW_CARDS(player, 6);
+        DRAW_CARDS(store, state, player, 6);
       });
     }
 

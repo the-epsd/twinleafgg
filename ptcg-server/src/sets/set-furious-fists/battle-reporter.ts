@@ -37,7 +37,7 @@ export class BattleReporter extends TrainerCard {
 
       if (currentHandSize < opponentHandSize && player.deck.cards.length > 0) {
         const cardsToDraw = opponentHandSize - currentHandSize;
-        DRAW_CARDS(player, cardsToDraw);
+        DRAW_CARDS(store, state, player, cardsToDraw);
       }
     }
 

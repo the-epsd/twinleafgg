@@ -46,7 +46,7 @@ export class Yanmega extends PokemonCard {
       const player = effect.player;
       const cardsToShuffle = player.hand.cards.slice();
       SHUFFLE_CARDS_INTO_DECK(store, state, player, cardsToShuffle);
-      DRAW_CARDS(player, 6);
+      DRAW_CARDS(store, state, player, 6);
     }
 
     // Attack 2: Surprise Strike

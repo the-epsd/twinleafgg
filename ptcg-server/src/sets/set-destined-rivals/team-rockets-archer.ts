@@ -69,12 +69,12 @@ Each player shuffles their hand into their deck. Then, you draw 5 cards, and you
       // opponent shuffle and draw
       if (!opponentMoveEffect.preventDefault) {
         SHUFFLE_DECK(store, state, opponent);
-        DRAW_CARDS(opponent, 3);
+        DRAW_CARDS(store, state, opponent, 3);
       }
 
       // player shuffle and draw
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, 5);
+      DRAW_CARDS(store, state, player, 5);
     }
 
     // Track when a Team Rocket's Pokemon is knocked out

@@ -48,7 +48,7 @@ export class VirizionGx extends PokemonCard {
     // Attack 1: Double Draw
     // Ref: AGENTS-patterns.md (Draw cards)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 2);
+      DRAW_CARDS(store, state, effect.player, 2);
     }
 
     // Attack 2: Sensitive Blade

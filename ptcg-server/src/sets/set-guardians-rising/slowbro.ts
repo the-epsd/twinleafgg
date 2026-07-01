@@ -4,11 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, SpecialCondition } from '../../game/store/card/card-types';
-import { Attack, ChooseAttackPrompt, GameError, GameLog, GameMessage, PokemonCardList, StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Slowbro extends PokemonCard {
   public stage: Stage = Stage.STAGE_1;
@@ -18,21 +16,19 @@ export class Slowbro extends PokemonCard {
   public weakness = [{ type: P }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Amnesia',
-      cost: [C],
-      damage: 20,
-      text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. That Pokémon can\'t use that attack during your opponent\'s next turn.'
-    },
-    {
-      name: 'Facade',
-      cost: [P, C, C],
-      damage: 50,
-      damageCalculation: '+',
-      text: 'If this Pokémon is Burned or Poisoned, this attack does 80 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Amnesia',
+    cost: [C],
+    damage: 20,
+    text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. That Pokémon can\'t use that attack during your opponent\'s next turn.'
+  },
+  {
+    name: 'Facade',
+    cost: [P, C, C],
+    damage: 50,
+    damageCalculation: '+',
+    text: 'If this Pokémon is Burned or Poisoned, this attack does 80 more damage.'
+  }];
 
   public set: string = 'GRI';
   public setNumber: string = '49';
@@ -40,53 +36,11 @@ export class Slowbro extends PokemonCard {
   public name: string = 'Slowbro';
   public fullName: string = 'Slowbro GRI';
 
-  public amnesiaAttack: Attack | null = null;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Amnesia
-    // Ref: set-primal-clash/whiscash.ts (Amnesia)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const pokemonCard = opponent.active.getPokemonCard();
-
-      if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
-        return state;
-      }
-
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_DISABLE,
-        [pokemonCard],
-        { allowCancel: false }
-      ), result => {
-        if (!result) {
-          return state;
-        }
-
-        this.amnesiaAttack = result;
-        opponent.active.marker.addMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-        store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
-          name: player.name,
-          attack: this.amnesiaAttack.name
-        });
-      });
+      return OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK(store, state, effect, this);
     }
 
-    if (effect instanceof AttackEffect
-      && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)
-      && effect.attack === this.amnesiaAttack) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
-      effect.player.active.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-      this.amnesiaAttack = null;
-    }
-
-    // Attack 2: Facade
-    // Ref: set-sun-and-moon/toxapex.ts (Venoshock - conditional bonus damage)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       const player = effect.player;
 

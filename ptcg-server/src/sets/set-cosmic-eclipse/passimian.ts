@@ -40,7 +40,7 @@ export class Passimian extends PokemonCard {
     // Attack 1: Spike Draw
     // Ref: AGENTS-patterns.md (Draw cards)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 2);
+      DRAW_CARDS(store, state, effect.player, 2);
     }
 
     return state;

@@ -83,7 +83,7 @@ export class MysteryPlateGamma extends TrainerCard {
       if (opponent.getPrizeLeft() >= 5) {
         MOVE_CARDS(store, state, player.hand, player.deck, { cards: player.hand.cards });
         SHUFFLE_DECK(store, state, player);
-        DRAW_CARDS(player, 6);
+        DRAW_CARDS(store, state, player, 6);
       } else if (opponent.getPrizeLeft() === 2) {
         let canDevolve = false;
         const blocked: CardTarget[] = [];

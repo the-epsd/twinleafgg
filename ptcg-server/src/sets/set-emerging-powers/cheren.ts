@@ -33,7 +33,7 @@ export class Cheren extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
     }
 
     return state;

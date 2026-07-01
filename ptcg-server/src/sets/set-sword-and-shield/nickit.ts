@@ -45,7 +45,7 @@ export class Nickit extends PokemonCard {
         opponent.hand.moveTo(deckBottom);
         deckBottom.moveTo(opponent.deck);
         // Draw 3 cards
-        DRAW_CARDS(opponent, Math.min(3, opponent.deck.cards.length));
+        DRAW_CARDS(store, state, opponent, Math.min(3, opponent.deck.cards.length));
       }
     }
 

@@ -23,7 +23,7 @@ At the end of this turn, if you have 3 or more cards in your hand, shuffle cards
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      DRAW_CARDS(effect.player, 4);
+      DRAW_CARDS(store, state, effect.player, 4);
       ADD_MARKER(this.LILLIES_FORCE_MARKER, effect.player, this);
     }
 

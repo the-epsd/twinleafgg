@@ -74,7 +74,7 @@ export class Hitmontop extends PokemonCard {
         cards.forEach(card => player.hand.moveCardTo(card, player.discard));
 
         if (cards.length > 0) {
-          DRAW_CARDS(player, 3);
+          DRAW_CARDS(store, state, player, 3);
         }
       });
     }

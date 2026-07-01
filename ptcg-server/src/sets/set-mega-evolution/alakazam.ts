@@ -45,7 +45,7 @@ export class Alakazam extends PokemonCard {
 
       CONFIRMATION_PROMPT(store, state, player, result => {
         if (result) {
-          DRAW_CARDS(player, 3);
+          DRAW_CARDS(store, state, player, 3);
         }
       }, GameMessage.WANT_TO_USE_ABILITY);
     }

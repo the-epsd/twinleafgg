@@ -27,7 +27,7 @@ export class Hau extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
       return state;
     }
     return state;

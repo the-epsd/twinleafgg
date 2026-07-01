@@ -47,7 +47,7 @@ export class TornadusEx extends PokemonCard {
         player.hand.moveCardTo(c, player.deck);
       });
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, 6);
+      DRAW_CARDS(store, state, player, 6);
     }
 
     // Attack 2: Jet Blast - +30 per Plasma Energy attached

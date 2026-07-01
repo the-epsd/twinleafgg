@@ -23,7 +23,7 @@ export class AromaLady extends TrainerCard {
     // Ref: set-chilling-reign/doctor.ts (Draw 2 cards), set-base-set/full-heal.ts (clear special conditions)
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
       // Remove all special conditions from active pokemon
       player.active.specialConditions = [];
     }

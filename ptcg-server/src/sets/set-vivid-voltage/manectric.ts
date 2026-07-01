@@ -48,7 +48,7 @@ export class Manectric extends PokemonCard {
         return state;
       }
 
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
     }
 
     return state;

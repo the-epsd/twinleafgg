@@ -35,7 +35,7 @@ export class Ilima extends TrainerCard {
       // Flip coin for player
       COIN_FLIP_PROMPT(store, state, player, playerResult => {
         const playerDraw = playerResult ? 6 : 3;
-        DRAW_CARDS(player, Math.min(playerDraw, player.deck.cards.length));
+        DRAW_CARDS(store, state, player, Math.min(playerDraw, player.deck.cards.length));
       });
 
       // Shuffle opponent's hand into deck
@@ -49,7 +49,7 @@ export class Ilima extends TrainerCard {
       // Flip coin for opponent
       COIN_FLIP_PROMPT(store, state, opponent, opponentResult => {
         const opponentDraw = opponentResult ? 6 : 3;
-        DRAW_CARDS(opponent, Math.min(opponentDraw, opponent.deck.cards.length));
+        DRAW_CARDS(store, state, opponent, Math.min(opponentDraw, opponent.deck.cards.length));
       });
     }
 

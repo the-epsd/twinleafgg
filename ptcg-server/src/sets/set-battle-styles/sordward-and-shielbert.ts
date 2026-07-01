@@ -53,7 +53,7 @@ function* playCard(next: Function, store: StoreLike, state: State, effect: Train
     player.discard.moveCardTo(selectedCard, player.hand);
   } else {
     // Opponent says no: draw 3 cards instead
-    DRAW_CARDS(player, 3);
+    DRAW_CARDS(store, state, player, 3);
   }
   return state;
 }

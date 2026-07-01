@@ -28,7 +28,7 @@ export class SpeedStadium extends TrainerCard {
         new CoinFlipPrompt(player.id, GameMessage.COIN_FLIP)
       ], result => {
         if (result === true) {
-          DRAW_CARDS(player, 1);
+          DRAW_CARDS(store, state, player, 1);
           return this.reduceEffect(store, state, effect);
         }
       });

@@ -37,7 +37,7 @@ export class Wicke extends TrainerCard {
       });
 
       // Draw same number of cards
-      DRAW_CARDS(player, Math.min(playerHandCount, player.deck.cards.length));
+      DRAW_CARDS(store, state, player, Math.min(playerHandCount, player.deck.cards.length));
 
       // Shuffle opponent's hand into deck
       const opponentCards = opponent.hand.cards.slice();
@@ -48,7 +48,7 @@ export class Wicke extends TrainerCard {
       });
 
       // Draw same number of cards
-      DRAW_CARDS(opponent, Math.min(opponentHandCount, opponent.deck.cards.length));
+      DRAW_CARDS(store, state, opponent, Math.min(opponentHandCount, opponent.deck.cards.length));
     }
 
     return state;

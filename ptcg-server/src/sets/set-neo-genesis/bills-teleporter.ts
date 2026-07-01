@@ -31,7 +31,7 @@ export class BillsTeleporter extends TrainerCard {
       COIN_FLIP_PROMPT(store, state, effect.player, (result => {
         if (result) {
           const player = effect.player;
-          DRAW_CARDS(player, 4);
+          DRAW_CARDS(store, state, player, 4);
         }
       }));
 

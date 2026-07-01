@@ -47,7 +47,7 @@ export class Milo extends TrainerCard {
         cards = cards || [];
         if (cards.length > 0) {
           player.hand.moveCardsTo(cards, player.discard);
-          DRAW_CARDS(player, cards.length * 2);
+          DRAW_CARDS(store, state, player, cards.length * 2);
         }
         player.supporter.moveCardTo(this, player.discard);
       });

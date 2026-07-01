@@ -42,7 +42,7 @@ export class Castform extends PokemonCard {
     // Ref: AGENTS-patterns.md (Draw 2 cards)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
     }
 
     // Attack 2: Hurricane

@@ -40,7 +40,7 @@ export class Chatot extends PokemonCard {
       const opponent = StateUtils.getOpponent(state, player);
       MOVE_CARDS(store, state, player.hand, player.deck);
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, opponent.hand.cards.length);
+      DRAW_CARDS(store, state, player, opponent.hand.cards.length);
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {

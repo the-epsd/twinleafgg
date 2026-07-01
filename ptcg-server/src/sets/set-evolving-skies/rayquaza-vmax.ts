@@ -74,7 +74,7 @@ export class RayquazaVMAX extends PokemonCard {
 
       const cards = player.hand.cards.filter(c => c !== this);
       MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
       player.marker.addMarker(this.AZURE_PULSE_MARKER, this);
     }
 

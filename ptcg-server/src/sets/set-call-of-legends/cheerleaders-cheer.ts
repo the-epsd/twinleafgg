@@ -33,12 +33,12 @@ export class CheerleadersCheer extends TrainerCard {
 
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
 
       if (opponent.deck.cards.length > 0) {
         CONFIRMATION_PROMPT(store, state, opponent, result => {
           if (result) {
-            DRAW_CARDS(opponent, 1);
+            DRAW_CARDS(store, state, opponent, 1);
           }
         }, GameMessage.WANT_TO_DRAW_CARDS);
       }

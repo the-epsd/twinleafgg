@@ -44,7 +44,7 @@ export class Pikachu extends PokemonCard {
       const player = effect.player;
       FLIP_UNTIL_TAILS_AND_COUNT_HEADS(store, state, player, heads => {
         if (heads > 0) {
-          DRAW_CARDS(player, heads);
+          DRAW_CARDS(store, state, player, heads);
         }
       });
     }

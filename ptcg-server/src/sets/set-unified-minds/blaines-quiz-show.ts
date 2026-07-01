@@ -22,7 +22,7 @@ export class BlainesQuizShow extends TrainerCard {
     // Ref: Simplified - guessing mechanic not supported by engine. Player draws 4 cards.
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 4);
+      DRAW_CARDS(store, state, player, 4);
     }
 
     return state;

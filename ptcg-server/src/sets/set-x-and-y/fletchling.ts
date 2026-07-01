@@ -42,7 +42,7 @@ export class Fletchling extends PokemonCard {
     // Ref: set-noble-victories/meowth.ts (Pay Day)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
     }
 
     return state;

@@ -43,7 +43,7 @@ export class Rapidash extends PokemonCard {
       }
 
       ABILITY_USED(player, this);
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
 
       ADD_MARKER(this.HURRIED_GAIT_MARKER, player, this);
     }

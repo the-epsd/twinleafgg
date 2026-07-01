@@ -48,7 +48,7 @@ export class Wishiwashi extends PokemonCard {
 
       // Shuffle deck, then draw 8
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, 8);
+      DRAW_CARDS(store, state, player, 8);
     }
 
     return state;

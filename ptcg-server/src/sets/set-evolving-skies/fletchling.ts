@@ -43,10 +43,10 @@ export class Fletchling extends PokemonCard {
     // Ref: set-burning-shadows/wimpod.ts (state.turn === 2 for going second)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
       // If going second and it's your first turn (turn 2)
       if (state.turn === 2) {
-        DRAW_CARDS(player, 3);
+        DRAW_CARDS(store, state, player, 3);
       }
     }
 

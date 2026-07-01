@@ -25,11 +25,11 @@ export class Doctor extends TrainerCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
 
       const opponentActive = opponent.active.getPokemonCard();
       if (opponentActive && opponentActive.tags.includes(CardTag.POKEMON_VMAX)) {
-        DRAW_CARDS(player, 2);
+        DRAW_CARDS(store, state, player, 2);
       }
     }
 

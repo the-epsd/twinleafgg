@@ -40,7 +40,7 @@ export class HolonScientist extends TrainerCard {
 
       if (cards.length === 1) {
         MOVE_CARDS(store, state, player.hand, player.discard);
-        DRAW_CARDS(player, opponent.hand.cards.length);
+        DRAW_CARDS(store, state, player, opponent.hand.cards.length);
       }
 
       if (cards.length > 1) {

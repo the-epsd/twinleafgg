@@ -29,7 +29,7 @@ export class Amarys extends TrainerCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
-      DRAW_CARDS(effect.player, 4);
+      DRAW_CARDS(store, state, effect.player, 4);
       ADD_MARKER(this.AMARYS_USED_MARKER, effect.player, this);
     }
 

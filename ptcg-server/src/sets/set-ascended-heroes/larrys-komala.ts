@@ -95,7 +95,7 @@ export class LarrysKomala extends PokemonCard {
       store.reduceEffect(state, specialConditionEffect);
 
       // Draw 2 cards
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
     }
 
     // Reset marker at end of turn

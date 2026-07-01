@@ -43,7 +43,7 @@ export class Hitmontop extends PokemonCard {
     // Attack 1: Quick Draw
     // Ref: set-great-encounters/baltoy.ts (draw card pattern)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 1);
+      DRAW_CARDS(store, state, effect.player, 1);
     }
 
     // Attack 2: Helicoptero

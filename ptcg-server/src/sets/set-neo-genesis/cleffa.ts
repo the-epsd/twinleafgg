@@ -80,7 +80,7 @@ export class Cleffa extends PokemonCard {
       const player = effect.player;
       MOVE_CARDS(store, state, player.hand, player.deck);
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, 7);
+      DRAW_CARDS(store, state, player, 7);
     }
 
     return state;

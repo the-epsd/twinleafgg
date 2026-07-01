@@ -42,12 +42,12 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // opponent shuffle and draw
   if (!opponentMoveEffect.preventDefault) {
     SHUFFLE_DECK(store, state, opponent);
-    DRAW_CARDS(opponent, 2);
+    DRAW_CARDS(store, state, opponent, 2);
   }
 
   // player shuffle and draw
   SHUFFLE_DECK(store, state, player);
-  DRAW_CARDS(player, 6);
+  DRAW_CARDS(store, state, player, 6);
 
   return state;
 }

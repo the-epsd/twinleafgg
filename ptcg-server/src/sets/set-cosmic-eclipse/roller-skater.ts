@@ -55,7 +55,7 @@ export class RollerSkater extends TrainerCard {
           store.log(state, GameLog.LOG_PLAYER_DISCARDS_CARD_FROM_HAND, { name: player.name, card: card.name });
         });
 
-        DRAW_CARDS(player, cardsToDraw);
+        DRAW_CARDS(store, state, player, cardsToDraw);
       });
       return state;
     }

@@ -39,7 +39,7 @@ export class Simisear extends PokemonCard {
     // Collect - draw 3 cards
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
     }
 
     // Stadium Burn - bonus damage and burn if stadium in play

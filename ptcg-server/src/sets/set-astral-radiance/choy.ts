@@ -30,7 +30,7 @@ export class Choy extends TrainerCard {
       SHOW_CARDS_TO_PLAYER(store, state, player, opponent.hand.cards);
 
       // Draw 3 cards
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
     }
 
     return state;

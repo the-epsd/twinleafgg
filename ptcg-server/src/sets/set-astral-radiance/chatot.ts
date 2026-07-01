@@ -42,7 +42,7 @@ export class Chatot extends PokemonCard {
     // Ref: AGENTS-patterns.md (Draw a card)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
     }
 
     // Attack 2: Jabber On

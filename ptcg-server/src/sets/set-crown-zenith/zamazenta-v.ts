@@ -60,7 +60,7 @@ export class ZamazentaV extends PokemonCard {
       }
 
       MOVE_CARDS(store, state, player.hand, player.discard, { sourceCard: this, sourceEffect: this.powers[0] });
-      DRAW_CARDS(player, 5);
+      DRAW_CARDS(store, state, player, 5);
       const endTurnEffect = new EndTurnEffect(player);
       store.reduceEffect(state, endTurnEffect);
       return state;

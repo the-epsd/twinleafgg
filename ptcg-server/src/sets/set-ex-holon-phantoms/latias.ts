@@ -87,7 +87,7 @@ export class Latias extends PokemonCard {
 
     // Spearhead
     if (AFTER_ATTACK(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 1);
+      DRAW_CARDS(store, state, effect.player, 1);
     }
 
     return state;

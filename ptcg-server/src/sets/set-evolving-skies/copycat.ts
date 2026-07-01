@@ -29,7 +29,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   });
 
   const cardsNumber = opponent.hand.cards.length;
-  DRAW_CARDS(player, cardsNumber);
+  DRAW_CARDS(store, state, player, cardsNumber);
   return state;
 }
 

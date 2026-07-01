@@ -52,7 +52,7 @@ export class Darmanitan extends PokemonCard {
 
         // Draw cards equal to opponent's hand size
         if (opponentHandSize > 0) {
-          DRAW_CARDS(player, opponentHandSize);
+          DRAW_CARDS(store, state, player, opponentHandSize);
         }
       });
     }

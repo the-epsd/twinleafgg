@@ -32,8 +32,8 @@ export class Hoothoot extends PokemonCard {
       const player = effect.player;
       const opponent = StateUtils.getOpponent(state, player);
 
-      DRAW_CARDS(player, 2);
-      DRAW_CARDS(opponent, 2);
+      DRAW_CARDS(store, state, player, 2);
+      DRAW_CARDS(store, state, opponent, 2);
     }
 
     return state;

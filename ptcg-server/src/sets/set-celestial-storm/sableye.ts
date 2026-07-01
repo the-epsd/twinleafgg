@@ -1,12 +1,11 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, BoardEffect } from '../../game/store/card/card-types';
-import { Attack, PowerType } from '../../game/store/card/pokemon-types';
-import { StoreLike, State, GameError, GameMessage, CardList, PlayerType, ShowCardsPrompt, ConfirmPrompt, StateUtils, ChooseAttackPrompt, PokemonCardList, GameLog } from '../../game';
+import { PowerType } from '../../game/store/card/pokemon-types';
+import { StoreLike, State, GameError, GameMessage, CardList, PlayerType, ShowCardsPrompt, ConfirmPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
 import { PlayPokemonEffect } from '../../game/store/effects/play-card-effects';
-import { WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
+import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK, WAS_ATTACK_USED, WAS_POWER_USED } from '../../game/store/prefabs/prefabs';
 
 export class Sableye extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -35,10 +34,8 @@ export class Sableye extends PokemonCard {
   public fullName: string = 'Sableye CES';
 
   public readonly EXCAVATE_MARKER = 'EXCAVATE_MARKER';
-  public DISABLED_ATTACK: Attack | undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-
     if (WAS_POWER_USED(effect, 0, this)) {
       const player = effect.player;
 
@@ -60,23 +57,18 @@ export class Sableye extends PokemonCard {
         }
       });
 
-
       return store.prompt(state, new ShowCardsPrompt(
         player.id,
         GameMessage.CARDS_SHOWED_BY_THE_OPPONENT,
         deckTop.cards
       ), () => {
-
         state = store.prompt(state, new ConfirmPrompt(
           effect.player.id,
           GameMessage.WANT_TO_USE_ABILITY,
         ), wantToUse => {
           if (wantToUse) {
-
             deckTop.moveTo(player.discard);
-
           } else {
-
             deckTop.moveToTopOfDestination(player.deck);
           }
         });
@@ -85,51 +77,7 @@ export class Sableye extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const pokemonCard = opponent.active.getPokemonCard();
-
-      if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
-        return state;
-      }
-
-      store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_DISABLE,
-        [pokemonCard],
-        { allowCancel: false }
-      ), result => {
-        result;
-
-        if (!result) {
-          return state;
-        }
-
-        this.DISABLED_ATTACK = result;
-
-        store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
-          name: player.name,
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          attack: this.DISABLED_ATTACK!.name
-        });
-
-        opponent.active.marker.addMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-
-        return state;
-      });
-
-      return state;
-    }
-
-    if (effect instanceof AttackEffect && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
-      if (effect.attack === this.DISABLED_ATTACK) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
-      effect.player.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-      this.DISABLED_ATTACK = undefined;
+      return OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK(store, state, effect, this);
     }
 
     if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(this.EXCAVATE_MARKER, this)) {
@@ -139,7 +87,6 @@ export class Sableye extends PokemonCard {
 
     if (effect instanceof PlayPokemonEffect && effect.pokemonCard === this) {
       const player = effect.player;
-
       player.marker.removeMarker(this.EXCAVATE_MARKER, this);
       return state;
     }

@@ -49,7 +49,7 @@ export class Audino extends PokemonCard {
         throw new GameError(GameMessage.CANNOT_USE_POWER);
       }
 
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
 
       player.marker.addMarker(this.HEARING_MARKER, this);
       ABILITY_USED(player, this);

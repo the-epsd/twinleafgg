@@ -42,12 +42,12 @@ function* playCard(next: Function, store: StoreLike, state: State,
   // opponent shuffle and draw
   if (!opponentMoveEffect.preventDefault) {
     SHUFFLE_DECK(store, state, opponent);
-    DRAW_CARDS(opponent, coinResult ? 3 : 5);
+    DRAW_CARDS(store, state, opponent, coinResult ? 3 : 5);
   }
 
   // player shuffle and draw
   SHUFFLE_DECK(store, state, player);
-  DRAW_CARDS(player, coinResult ? 5 : 3);
+  DRAW_CARDS(store, state, player, coinResult ? 5 : 3);
 }
 
 export class Harlequin extends TrainerCard {

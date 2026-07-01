@@ -53,7 +53,7 @@ export class Ludicolo extends PokemonCard {
 
       USE_ABILITY_ONCE_PER_TURN(player, this.SWING_DANCE_MARKER, this);
       ABILITY_USED(player, this);
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.SWING_DANCE_MARKER, this);

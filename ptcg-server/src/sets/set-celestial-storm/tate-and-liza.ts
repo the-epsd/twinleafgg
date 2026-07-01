@@ -71,7 +71,7 @@ export class TateAndLiza extends TrainerCard {
               player.deck.applyOrder(order);
             });
 
-            DRAW_CARDS(player, 5);
+            DRAW_CARDS(store, state, player, 5);
           }
         }
       ];

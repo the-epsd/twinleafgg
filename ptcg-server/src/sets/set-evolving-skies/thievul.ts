@@ -55,8 +55,8 @@ export class Thievul extends PokemonCard {
           deckBottom.moveTo(player.deck);
           opponentDeckBottom.moveTo(opponent.deck);
 
-          DRAW_CARDS(player, 4);
-          DRAW_CARDS(opponent, 4);
+          DRAW_CARDS(store, state, player, 4);
+          DRAW_CARDS(store, state, opponent, 4);
         }
       }, GameMessage.WANT_TO_USE_ABILITY);
     }

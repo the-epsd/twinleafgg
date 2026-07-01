@@ -43,12 +43,12 @@ export class AceTrainer extends TrainerCard {
       // opponent shuffle and draw
       if (!opponentMoveEffect.preventDefault) {
         SHUFFLE_DECK(store, state, opponent);
-        DRAW_CARDS(opponent, 3);
+        DRAW_CARDS(store, state, opponent, 3);
       }
 
       // player shuffle and draw
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, 6);
+      DRAW_CARDS(store, state, player, 6);
     }
 
     return state;

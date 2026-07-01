@@ -46,7 +46,7 @@ export class Avery extends TrainerCard {
       effect.preventDefault = true;
 
       // Draw 3 cards
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
 
       // Get opponent
       const opponent = StateUtils.getOpponent(state, player);

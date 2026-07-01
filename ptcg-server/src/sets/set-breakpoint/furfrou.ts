@@ -39,7 +39,7 @@ export class Furfrou extends PokemonCard {
     // Attack 1: Collect
     // Ref: set-evolutions/vulpix.ts (Collect)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 1);
+      DRAW_CARDS(store, state, effect.player, 1);
     }
 
     // Attack 2: Tight Jaw

@@ -63,7 +63,7 @@ export class TeamPlasmaGrunt extends TrainerCard {
           selected = selected || [];
           if (selected.length > 0) {
             player.hand.moveCardsTo(selected, player.discard);
-            DRAW_CARDS(player, 4);
+            DRAW_CARDS(store, state, player, 4);
           }
           player.supporter.moveCardTo(this, player.discard);
         },

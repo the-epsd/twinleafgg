@@ -40,7 +40,7 @@ export class Gliscor extends PokemonCard {
     // Attack 1: Collect
     // Ref: set-lost-thunder/virizion-gx.ts (Double Draw)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 3);
+      DRAW_CARDS(store, state, effect.player, 3);
     }
 
     // Attack 2: Poison Jab

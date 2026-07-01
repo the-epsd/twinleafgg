@@ -96,7 +96,7 @@ export class TeamRocketsPorygonZ extends PokemonCard {
         MOVE_CARDS(store, state, player.hand, player.discard, { cards: cards, sourceCard: this });
 
         // Draw a card
-        DRAW_CARDS(player, 1);
+        DRAW_CARDS(store, state, player, 1);
       });
 
       return state;

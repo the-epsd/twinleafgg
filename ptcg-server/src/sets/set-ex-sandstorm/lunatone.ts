@@ -79,7 +79,7 @@ export class Lunatone extends PokemonCard {
         }
       });
       if (hasEvolvedPokemonInPlay) {
-        DRAW_CARDS(effect.player, 3);
+        DRAW_CARDS(store, state, effect.player, 3);
       }
     }
 

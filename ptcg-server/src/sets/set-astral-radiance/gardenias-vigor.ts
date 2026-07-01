@@ -45,7 +45,7 @@ export class GardeniasVigor extends TrainerCard {
       // We will discard this card after prompt confirmation
       effect.preventDefault = true;
 
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
 
       return store.prompt(state, new AttachEnergyPrompt(
         player.id,

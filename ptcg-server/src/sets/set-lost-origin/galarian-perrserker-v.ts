@@ -39,7 +39,7 @@ export class GalarianPerrserkerV extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Feelin' Fine
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 3);
+      DRAW_CARDS(store, state, effect.player, 3);
     }
 
     // Treasure Rush

@@ -49,7 +49,7 @@ export class FelicitysDrawing extends TrainerCard {
         const drawCount = cards.length === 1 ? 3 : cards.length === 2 ? 4 : 0;
 
         player.hand.moveCardsTo(cards, player.discard);
-        DRAW_CARDS(player, drawCount);
+        DRAW_CARDS(store, state, player, drawCount);
       });
 
 

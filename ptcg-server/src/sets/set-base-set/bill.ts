@@ -33,7 +33,7 @@ export class Bill extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_PLAY_THIS_CARD);
       }
 
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
     }
 
     return state;

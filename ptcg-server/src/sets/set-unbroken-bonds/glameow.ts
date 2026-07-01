@@ -42,7 +42,7 @@ export class Glameow extends PokemonCard {
     // Ref: set-unbroken-bonds/meowstic.ts (Caturday - draw + self-sleep)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
       ADD_SLEEP_TO_PLAYER_ACTIVE(store, state, player, this);
     }
 

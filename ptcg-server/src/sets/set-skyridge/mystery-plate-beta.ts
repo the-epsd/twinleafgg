@@ -81,7 +81,7 @@ export class MysteryPlateBeta extends TrainerCard {
       const opponent = effect.opponent;
 
       if (opponent.getPrizeLeft() >= 5) {
-        DRAW_CARDS(player, 3);
+        DRAW_CARDS(store, state, player, 3);
       } else if (opponent.getPrizeLeft() === 1) {
         store.prompt(state, new ChooseCardsPrompt(
           player,

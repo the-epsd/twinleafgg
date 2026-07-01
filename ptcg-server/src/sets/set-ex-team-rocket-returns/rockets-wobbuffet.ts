@@ -1,10 +1,8 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag, TrainerType } from '../../game/store/card/card-types';
-import { StoreLike, State, Attack, StateUtils, ChooseAttackPrompt, GameMessage, GameLog, PokemonCardList, GameError, TrainerCard, ChooseCardsPrompt, Card, SelectPrompt } from '../../game';
+import { StoreLike, State, GameMessage, GameLog, TrainerCard, ChooseCardsPrompt, Card, SelectPrompt } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { MOVE_CARDS, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { MOVE_CARDS, OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK, SHUFFLE_DECK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class RocketsWobbuffet extends PokemonCard {
   public stage: Stage = Stage.BASIC;
@@ -32,8 +30,6 @@ export class RocketsWobbuffet extends PokemonCard {
   public fullName: string = 'Rocket\'s Wobbuffet TRR';
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '47';
-
-  public DISABLED_ATTACK: Attack | undefined;
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 
@@ -113,47 +109,13 @@ export class RocketsWobbuffet extends PokemonCard {
     }
 
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const pokemonCard = opponent.active.getPokemonCard();
+      const pokemonCard = effect.opponent.active.getPokemonCard();
 
       if (pokemonCard === undefined || pokemonCard.attacks.length === 0 || pokemonCard.stage !== Stage.BASIC) {
         return state;
       }
 
-      store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_DISABLE,
-        [pokemonCard],
-        { allowCancel: false }
-      ), result => {
-        result;
-
-        if (!result) {
-          return state;
-        }
-
-        this.DISABLED_ATTACK = result;
-
-        store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
-          name: player.name,
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          attack: this.DISABLED_ATTACK!.name
-        });
-
-        opponent.active.marker.addMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-      });
-    }
-
-    if (effect instanceof AttackEffect && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
-      if (effect.attack === this.DISABLED_ATTACK) {
-        throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-      }
-    }
-
-    if (effect instanceof EndTurnEffect && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
-      effect.player.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-      this.DISABLED_ATTACK = undefined;
+      return OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK(store, state, effect, this);
     }
 
     return state;

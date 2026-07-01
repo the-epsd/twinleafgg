@@ -60,7 +60,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
 
   // Draw 3 cards for each card discarded
   const drawCount = cards.length * 3;
-  DRAW_CARDS(player, drawCount);
+  DRAW_CARDS(store, state, player, drawCount);
 
   return state;
 }

@@ -231,6 +231,9 @@ export function gamePhaseReducer(store: StoreLike, state: State, effect: Effect)
         cardList.cannotRetreatNextTurn = true;
         cardList.cannotRetreatNextTurnPending = false;
       }
+      if (cardList.blockedAttackNameNextTurn !== undefined) {
+        cardList.blockedAttackNameNextTurn = undefined;
+      }
     });
 
     player.supporterTurn = 0;

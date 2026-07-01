@@ -131,7 +131,7 @@ export class VenomothGx extends PokemonCard {
       SHUFFLE_DECK(store, state, player);
 
       // Draw 10 cards
-      DRAW_CARDS(player, 10);
+      DRAW_CARDS(store, state, player, 10);
     }
 
     return state;

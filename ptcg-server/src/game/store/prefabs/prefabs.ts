@@ -90,7 +90,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, preventDamageEffect } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, preventDamageEffect, opponentPokemonCannotUseAttackEffect } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
 /**
@@ -1721,8 +1721,12 @@ export function SHUFFLE_PRIZES_INTO_DECK(store: StoreLike, state: State, player:
 /**
  * Draws `count` cards, putting them into your hand.
  */
-export function DRAW_CARDS(player: Player, count: number) {
-  player.deck.moveTo(player.hand, Math.min(count, player.deck.cards.length));
+export function DRAW_CARDS(store: StoreLike, state: State, player: Player, count: number): State {
+  const drawCount = Math.min(count, player.deck.cards.length);
+  if (drawCount <= 0) {
+    return state;
+  }
+  return MOVE_CARDS(store, state, player.deck, player.hand, { count: drawCount });
 }
 
 /**
@@ -1747,7 +1751,7 @@ export function DRAW_UP_TO_X_CARDS(store: StoreLike, state: State, player: Playe
       ),
       (choice) => {
         const numCardsToDraw = options[choice].value;
-        DRAW_CARDS(player, numCardsToDraw);
+        DRAW_CARDS(store, state, player, numCardsToDraw);
       },
     );
   }
@@ -3773,6 +3777,44 @@ export function BLOCK_RETREAT(
 ): State {
   const retreatEffect = preventRetreatEffect(effect, source);
   return store.reduceEffect(state, retreatEffect);
+}
+
+/**
+ * Prompts the player to choose one of the opponent's Active Pokemon's attacks to disable
+ * during the opponent's next turn.
+ */
+export function OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+): State {
+  const player = effect.player;
+  const opponent = effect.opponent;
+  const pokemonCard = opponent.active.getPokemonCard();
+
+  if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
+    return state;
+  }
+
+  return store.prompt(state, new ChooseAttackPrompt(
+    player.id,
+    GameMessage.CHOOSE_ATTACK_TO_DISABLE,
+    [pokemonCard],
+    { allowCancel: false }
+  ), result => {
+    if (!result) {
+      return state;
+    }
+
+    store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
+      name: player.name,
+      attack: result.name
+    });
+
+    const disableEffect = opponentPokemonCannotUseAttackEffect(effect, source, result);
+    return store.reduceEffect(state, disableEffect);
+  });
 }
 
 /**

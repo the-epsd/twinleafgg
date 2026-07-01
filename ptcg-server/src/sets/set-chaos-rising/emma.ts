@@ -30,7 +30,7 @@ export class Emma extends TrainerCard {
       const opponent = StateUtils.getOpponent(state, player);
       SHOW_CARDS_TO_PLAYER(store, state, player, opponent.hand.cards);
       const pokemonCount = opponent.hand.cards.filter((c) => c instanceof PokemonCard).length;
-      DRAW_CARDS(player, pokemonCount);
+      DRAW_CARDS(store, state, player, pokemonCount);
       ADD_MARKER(EMMA_PLAYED_THIS_TURN, player, this);
       REMOVE_MARKER_AT_END_OF_TURN(effect, EMMA_PLAYED_THIS_TURN, this);
     }

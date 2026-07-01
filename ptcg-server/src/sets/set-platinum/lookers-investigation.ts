@@ -48,13 +48,13 @@ export class LookersInvestigation extends TrainerCard {
           // Option 1
           MOVE_CARDS(store, state, player.hand, player.deck);
           SHUFFLE_DECK(store, state, player);
-          DRAW_CARDS(player, 5);
+          DRAW_CARDS(store, state, player, 5);
 
         } else if (choice === 1) {
           // Option 2
           MOVE_CARDS(store, state, opponent.hand, opponent.deck);
           SHUFFLE_DECK(store, state, opponent);
-          DRAW_CARDS(opponent, 5);
+          DRAW_CARDS(store, state, opponent, 5);
 
         }
       });

@@ -50,7 +50,7 @@ export class Starmie extends PokemonCard {
 
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
-        DRAW_CARDS(player, 7);
+        DRAW_CARDS(store, state, player, 7);
       });
     }
 

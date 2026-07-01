@@ -4,14 +4,11 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { Attack, ChooseAttackPrompt, GameError, GameLog, GameMessage, PokemonCardList, StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Simisage extends PokemonCard {
-  public tormentAttack: Attack | null = null;
   public stage: Stage = Stage.STAGE_1;
   public evolvesFrom: string = 'Pansage';
   public cardType: CardType = G;
@@ -19,20 +16,18 @@ export class Simisage extends PokemonCard {
   public weakness = [{ type: R }];
   public retreat = [C];
 
-  public attacks = [
-    {
-      name: 'Torment',
-      cost: [C],
-      damage: 20,
-      text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. That Pokémon can\'t use that attack during your opponent\'s next turn.'
-    },
-    {
-      name: 'Solar Beam',
-      cost: [G, G, C],
-      damage: 70,
-      text: ''
-    }
-  ];
+  public attacks = [{
+    name: 'Torment',
+    cost: [C],
+    damage: 20,
+    text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. That Pokémon can\'t use that attack during your opponent\'s next turn.'
+  },
+  {
+    name: 'Solar Beam',
+    cost: [G, G, C],
+    damage: 70,
+    text: ''
+  }];
 
   public set: string = 'XY';
   public setNumber: string = '11';
@@ -41,46 +36,8 @@ export class Simisage extends PokemonCard {
   public fullName: string = 'Simisage XY';
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Torment
-    // Ref: set-plasma-storm/infernape.ts (Torment)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const pokemonCard = opponent.active.getPokemonCard();
-
-      if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
-        return state;
-      }
-
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_DISABLE,
-        [pokemonCard],
-        { allowCancel: false }
-      ), result => {
-        if (!result) {
-          return state;
-        }
-
-        this.tormentAttack = result;
-        opponent.active.marker.addMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-        store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
-          name: player.name,
-          attack: this.tormentAttack.name
-        });
-      });
-    }
-
-    if (effect instanceof AttackEffect
-      && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)
-      && effect.attack === this.tormentAttack) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
-      effect.player.active.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-      this.tormentAttack = null;
+      return OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK(store, state, effect, this);
     }
 
     return state;

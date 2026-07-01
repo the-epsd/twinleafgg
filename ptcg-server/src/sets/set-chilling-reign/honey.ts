@@ -38,7 +38,7 @@ export class Honey extends TrainerCard {
         }
       });
 
-      DRAW_CARDS(player, vCount);
+      DRAW_CARDS(store, state, player, vCount);
     }
 
     return state;

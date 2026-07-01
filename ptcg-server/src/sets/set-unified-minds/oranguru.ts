@@ -38,7 +38,7 @@ export class Oranguru extends PokemonCard {
     // Simplified: Player always draws 4 cards.
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 4);
+      DRAW_CARDS(store, state, player, 4);
     }
 
     return state;

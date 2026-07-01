@@ -45,7 +45,7 @@ export class Ghetsis extends TrainerCard {
       SHUFFLE_DECK(store, state, opponent);
 
       // Draw cards equal to the number of Item cards shuffled
-      DRAW_CARDS(player, itemsShown.length);
+      DRAW_CARDS(store, state, player, itemsShown.length);
 
 
       return state;

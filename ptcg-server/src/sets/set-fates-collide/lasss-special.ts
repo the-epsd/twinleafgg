@@ -36,7 +36,7 @@ export class LasssSpecial extends TrainerCard {
       });
 
       if (basicBenchedCount > 0) {
-        DRAW_CARDS(player, basicBenchedCount);
+        DRAW_CARDS(store, state, player, basicBenchedCount);
       }
     }
 

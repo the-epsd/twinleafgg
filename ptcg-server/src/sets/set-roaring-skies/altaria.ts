@@ -57,7 +57,7 @@ export class Altaria extends PokemonCard {
       return store.prompt(state, new ShuffleDeckPrompt(player.id), order => {
         player.deck.applyOrder(order);
         if (benchCount > 0) {
-          DRAW_CARDS(player, benchCount);
+          DRAW_CARDS(store, state, player, benchCount);
         }
       });
     }

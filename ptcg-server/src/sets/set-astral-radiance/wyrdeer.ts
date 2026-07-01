@@ -55,7 +55,7 @@ export class Wyrdeer extends PokemonCard {
 
       USE_ABILITY_ONCE_PER_TURN(player, this.HURRIED_GAIT_MARKER, this);
       ABILITY_USED(player, this);
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
     }
 
     REMOVE_MARKER_AT_END_OF_TURN(effect, this.HURRIED_GAIT_MARKER, this);

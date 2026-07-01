@@ -42,7 +42,7 @@ export class Talonflame extends PokemonCard {
     // Refs: AGENTS-patterns.md (draw cards), set-furious-fists/dragonite-ex.ts (optional switch)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 3);
+      DRAW_CARDS(store, state, player, 3);
 
       if (player.bench.some(b => b.cards.length > 0)) {
         store.prompt(state, new ConfirmPrompt(

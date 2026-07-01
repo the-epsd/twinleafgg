@@ -81,7 +81,7 @@ export class RotomVstar extends PokemonCard {
         if (numDiscarded > 0) {
           cards.forEach(card => player.hand.moveCardTo(card, player.discard));
         }
-        DRAW_CARDS(player, numDiscarded);
+        DRAW_CARDS(store, state, player, numDiscarded);
       });
     }
 

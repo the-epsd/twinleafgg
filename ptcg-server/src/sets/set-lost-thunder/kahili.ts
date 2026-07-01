@@ -31,7 +31,7 @@ export class Kahili extends TrainerCard {
       effect.preventDefault = true;
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
 
       COIN_FLIP_PROMPT(store, state, player, result => {
         if (result) {

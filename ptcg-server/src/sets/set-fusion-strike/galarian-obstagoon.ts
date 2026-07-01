@@ -4,12 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { Attack, GameError, GameLog, GameMessage, PokemonCardList, StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State, StateUtils } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
-import { ChooseAttackPrompt } from '../../game/store/prompts/choose-attack-prompt';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
+import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class GalarianObstagoon extends PokemonCard {
   public stage: Stage = Stage.STAGE_2;
@@ -19,21 +16,19 @@ export class GalarianObstagoon extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C];
 
-  public attacks = [
-    {
-      name: 'Silence',
-      cost: [D],
-      damage: 30,
-      text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. During your opponent\'s next turn, that Pokémon can\'t use that attack.'
-    },
-    {
-      name: 'Merciless Strike',
-      cost: [D],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 90 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Silence',
+    cost: [D],
+    damage: 30,
+    text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. During your opponent\'s next turn, that Pokémon can\'t use that attack.'
+  },
+  {
+    name: 'Merciless Strike',
+    cost: [D],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'If your opponent\'s Active Pokémon already has any damage counters on it, this attack does 90 more damage.'
+  }];
 
   public regulationMark: string = 'E';
   public set: string = 'FST';
@@ -42,58 +37,13 @@ export class GalarianObstagoon extends PokemonCard {
   public name: string = 'Galarian Obstagoon';
   public fullName: string = 'Galarian Obstagoon FST 161';
 
-  public silencedAttack: Attack | null = null;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Silence
-    // Ref: set-team-up/golduck.ts (Amnesia - choose opponent's attack to block next turn)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const pokemonCard = opponent.active.getPokemonCard();
-
-      if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
-        return state;
-      }
-
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_DISABLE,
-        [pokemonCard],
-        { allowCancel: false }
-      ), result => {
-        if (!result) {
-          return state;
-        }
-
-        this.silencedAttack = result;
-        opponent.active.marker.addMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-        store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
-          name: player.name,
-          attack: this.silencedAttack!.name
-        });
-      });
+      return OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK(store, state, effect, this);
     }
 
-    // Block the chosen attack during opponent's next turn
-    if (effect instanceof AttackEffect
-      && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)
-      && effect.attack === this.silencedAttack) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    // Cleanup at end of opponent's turn
-    if (effect instanceof EndTurnEffect
-      && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
-      effect.player.active.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-      this.silencedAttack = null;
-    }
-
-    // Attack 2: Merciless Strike
-    // Ref: AGENTS-patterns.md (damage counter check)
     if (WAS_ATTACK_USED(effect, 1, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
+      const opponent = StateUtils.getOpponent(state, effect.player);
 
       if (opponent.active.damage > 0) {
         effect.damage += 90;

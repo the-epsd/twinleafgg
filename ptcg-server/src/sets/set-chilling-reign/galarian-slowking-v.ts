@@ -61,7 +61,7 @@ export class GalarianSlowkingV extends PokemonCard {
           return;
         }
         player.hand.moveCardsTo(cards, player.discard);
-        DRAW_CARDS(player, 3);
+        DRAW_CARDS(store, state, player, 3);
       });
 
       return state;

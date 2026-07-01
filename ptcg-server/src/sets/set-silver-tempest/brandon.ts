@@ -39,7 +39,7 @@ export class Brandon extends TrainerCard {
       const totalBenched = playerBenched + opponentBenched;
 
       if (totalBenched > 0) {
-        DRAW_CARDS(player, totalBenched);
+        DRAW_CARDS(store, state, player, totalBenched);
       }
     }
 

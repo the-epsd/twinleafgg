@@ -23,7 +23,7 @@ export class PaintRoller extends TrainerCard {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;
       DISCARD_A_STADIUM_CARD_IN_PLAY(state);
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
     }
 
     return state;

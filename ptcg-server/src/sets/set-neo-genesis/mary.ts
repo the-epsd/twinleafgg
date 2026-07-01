@@ -29,7 +29,7 @@ export class Mary extends TrainerCard {
       effect.preventDefault = true;
 
       const cardsToDraw = Math.min(2, player.deck.cards.length);
-      DRAW_CARDS(player, cardsToDraw);
+      DRAW_CARDS(store, state, player, cardsToDraw);
 
       return store.prompt(state, new ChooseCardsPrompt(
         player,

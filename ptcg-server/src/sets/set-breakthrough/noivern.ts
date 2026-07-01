@@ -55,7 +55,7 @@ export class Noivern extends PokemonCard {
         player.deck.applyOrder(order);
 
         if (opponentHandSize > 0) {
-          DRAW_CARDS(player, opponentHandSize);
+          DRAW_CARDS(store, state, player, opponentHandSize);
         }
       });
     }

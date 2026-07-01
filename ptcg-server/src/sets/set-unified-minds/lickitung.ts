@@ -51,7 +51,7 @@ export class Lickitung extends PokemonCard {
       });
 
       if (count > 0) {
-        DRAW_CARDS(player, count);
+        DRAW_CARDS(store, state, player, count);
       }
     }
 

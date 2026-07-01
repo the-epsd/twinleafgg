@@ -32,12 +32,12 @@ export class Iscan extends TrainerCard {
       player.hand.moveCardTo(effect.trainerCard, player.supporter);
 
       // Draw 2 cards
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
 
       // If active Pokemon has "Hisuian" in its name, draw 2 more
       const activePokemon = player.active.getPokemonCard();
       if (activePokemon && activePokemon.name.includes('Hisuian')) {
-        DRAW_CARDS(player, 2);
+        DRAW_CARDS(store, state, player, 2);
       }
 
 

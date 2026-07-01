@@ -47,7 +47,7 @@ export class Luvdisc extends PokemonCard {
       const cardsInOpponentHand = opponent.hand.cards.length;
       player.hand.moveTo(player.deck);
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, cardsInOpponentHand);
+      DRAW_CARDS(store, state, player, cardsInOpponentHand);
     }
 
     return state;

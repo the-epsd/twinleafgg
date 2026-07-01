@@ -4,11 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType, CardTag } from '../../game/store/card/card-types';
-import { Attack, ChooseAttackPrompt, GameError, GameLog, GameMessage, PokemonCardList, StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED, DISCARD_ALL_ENERGY_FROM_POKEMON } from '../../game/store/prefabs/prefabs';
+import { DISCARD_ALL_ENERGY_FROM_POKEMON, OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 
 export class Infernape extends PokemonCard {
   public tags = [CardTag.TEAM_PLASMA];
@@ -19,20 +17,18 @@ export class Infernape extends PokemonCard {
   public weakness = [{ type: W }];
   public retreat = [];
 
-  public attacks = [
-    {
-      name: 'Torment',
-      cost: [C],
-      damage: 30,
-      text: 'Choose 1 of the Defending Pokémon\'s attack. That Pokémon can\'t use that attack during your opponent\'s next turn.'
-    },
-    {
-      name: 'Malevolent Fire',
-      cost: [R, C],
-      damage: 120,
-      text: 'Discard all Energy attached to this Pokémon.'
-    }
-  ];
+  public attacks = [{
+    name: 'Torment',
+    cost: [C],
+    damage: 30,
+    text: 'Choose 1 of the Defending Pokémon\'s attack. That Pokémon can\'t use that attack during your opponent\'s next turn.'
+  },
+  {
+    name: 'Malevolent Fire',
+    cost: [R, C],
+    damage: 120,
+    text: 'Discard all Energy attached to this Pokémon.'
+  }];
 
   public set: string = 'PLS';
   public setNumber: string = '17';
@@ -40,53 +36,11 @@ export class Infernape extends PokemonCard {
   public name: string = 'Infernape';
   public fullName: string = 'Infernape PLS';
 
-  public tormentAttack: Attack | null = null;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Torment
-    // Ref: set-boundaries-crossed/golduck-2.ts (Amnesia attack disable)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const pokemonCard = opponent.active.getPokemonCard();
-
-      if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
-        return state;
-      }
-
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_DISABLE,
-        [pokemonCard],
-        { allowCancel: false }
-      ), result => {
-        if (!result) {
-          return state;
-        }
-
-        this.tormentAttack = result;
-        opponent.active.marker.addMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-        store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
-          name: player.name,
-          attack: this.tormentAttack.name
-        });
-      });
+      return OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK(store, state, effect, this);
     }
 
-    if (effect instanceof AttackEffect
-      && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)
-      && effect.attack === this.tormentAttack) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
-      effect.player.active.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-      this.tormentAttack = null;
-    }
-
-    // Attack 2: Malevolent Fire
-    // Ref: set-boundaries-crossed/golduck-2.ts (Aquafall - discard all energy)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       DISCARD_ALL_ENERGY_FROM_POKEMON(store, state, effect, this);
     }

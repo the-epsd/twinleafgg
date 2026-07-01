@@ -49,7 +49,7 @@ export class Crobat extends PokemonCard {
       const player = effect.player;
       USE_ABILITY_ONCE_PER_TURN(player, this.NIGHT_SIGHT_MARKER, this);
       ABILITY_USED(player, this);
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
     }
 
     // Attack 1: Ultra-Toxic Fang

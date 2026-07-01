@@ -36,7 +36,7 @@ export class DarkGolduck extends PokemonCard {
 
     if (WAS_ATTACK_USED(effect, 0, this)) {
       DISCARD_X_ENERGY_FROM_THIS_POKEMON(store, state, effect, 1);
-      DRAW_CARDS(effect.player, 3);
+      DRAW_CARDS(store, state, effect.player, 3);
     }
 
     return state;

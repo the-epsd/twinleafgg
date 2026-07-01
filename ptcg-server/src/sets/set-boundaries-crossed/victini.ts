@@ -42,7 +42,7 @@ export class Victini extends PokemonCard {
     // Attack 1: Collect
     // Ref: set-noble-victories/meowth.ts (Pickup)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 1);
+      DRAW_CARDS(store, state, effect.player, 1);
     }
 
     // Attack 2: Relentless Flames

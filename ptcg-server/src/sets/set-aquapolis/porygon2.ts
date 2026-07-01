@@ -68,7 +68,7 @@ export class Porygon2 extends PokemonCard {
         if (player.deck.cards.length === 0) {
           break;
         }
-        DRAW_CARDS(player, 1);
+        DRAW_CARDS(store, state, player, 1);
       }
       player.marker.addMarker(this.BACKUP_MARKER, this);
 

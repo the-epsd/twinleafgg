@@ -82,7 +82,7 @@ export class Bibarel extends PokemonCard {
         if (player.deck.cards.length === 0) {
           break;
         }
-        DRAW_CARDS(player, 1);
+        DRAW_CARDS(store, state, player, 1);
       }
 
       player.marker.addMarker(this.INDUSTRIOUS_INCISORS_MARKER, this);

@@ -45,7 +45,7 @@ export class Scorbunny2 extends PokemonCard {
           if (result === true) {
             return flipCoin(heads + 1);
           }
-          DRAW_CARDS(player, heads);
+          DRAW_CARDS(store, state, player, heads);
           return state;
         });
       };

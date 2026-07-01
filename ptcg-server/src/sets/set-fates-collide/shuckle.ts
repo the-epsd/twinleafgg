@@ -42,7 +42,7 @@ export class Shuckle extends PokemonCard {
     // Ref: set-skyridge/haunter.ts (Shadow Hand - draw then put back)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
 
       if (player.hand.cards.length > 0) {
         return store.prompt(state, new ChooseCardsPrompt(

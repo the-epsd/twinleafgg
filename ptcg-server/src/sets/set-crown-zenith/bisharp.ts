@@ -44,7 +44,7 @@ export class Bisharp extends PokemonCard {
     // Ref: set-astral-radiance/chatot.ts (Collect - DRAW_CARDS)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
     }
 
     return state;

@@ -65,7 +65,7 @@ export class Torchic2 extends PokemonCard {
         const cards = selected || [];
         if (cards.length > 0) {
           MOVE_CARDS(store, state, player.hand, player.discard, { cards });
-          DRAW_CARDS(player, 2);
+          DRAW_CARDS(store, state, player, 2);
         }
       });
     }

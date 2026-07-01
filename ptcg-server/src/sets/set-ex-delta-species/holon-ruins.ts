@@ -34,7 +34,7 @@ export class HolonRuins extends TrainerCard {
         throw new GameError(GameMessage.CANNOT_USE_STADIUM);
       }
 
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
       state = store.prompt(state, new ChooseCardsPrompt(
         effect.player,
         GameMessage.CHOOSE_CARD_TO_DISCARD,

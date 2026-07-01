@@ -54,7 +54,7 @@ function* playCard(next: Function, store: StoreLike, state: State,
   return store.prompt(state, new ShuffleDeckPrompt(player.id), (order: any[]) => {
     player.deck.applyOrder(order);
 
-    DRAW_CARDS(player, 1);
+    DRAW_CARDS(store, state, player, 1);
   });
 }
 

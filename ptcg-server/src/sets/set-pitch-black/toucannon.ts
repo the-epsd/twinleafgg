@@ -60,7 +60,7 @@ export class Toucannon extends PokemonCard {
       }
 
       player.marker.addMarker(this.SKY_DRAW_MARKER, this);
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
     }
 
     if (WAS_ATTACK_USED(effect, 0, this)) {

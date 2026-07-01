@@ -41,7 +41,7 @@ export class Snorlax extends PokemonCard {
     // Attack 1: Collect
     // Ref: set-ex-team-rocket-returns/magmar.ts (DRAW_CARDS)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 2);
+      DRAW_CARDS(store, state, effect.player, 2);
     }
 
     // Attack 2: Collapse

@@ -23,12 +23,12 @@ export class LeagueStaff extends TrainerCard {
     // Ref: AGENTS-patterns.md (simple supporter draw), AGENTS-patterns.md (StateUtils.getStadiumCard)
     if (WAS_TRAINER_USED(effect, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
 
       // Check if Wyndon Stadium is in play
       const stadiumCard = StateUtils.getStadiumCard(state);
       if (stadiumCard && stadiumCard.name === 'Wyndon Stadium') {
-        DRAW_CARDS(player, 2);
+        DRAW_CARDS(store, state, player, 2);
       }
     }
 

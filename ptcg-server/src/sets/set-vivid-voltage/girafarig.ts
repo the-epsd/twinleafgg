@@ -58,7 +58,7 @@ export class Girafarig extends PokemonCard {
           opponent.hand.moveTo(opponent.deck);
           SHUFFLE_DECK(store, state, opponent);
           // Opponent draws 4 cards
-          DRAW_CARDS(opponent, 4);
+          DRAW_CARDS(store, state, opponent, 4);
         }
       });
     }

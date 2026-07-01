@@ -35,7 +35,7 @@ export class Binacle extends PokemonCard {
 
     if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 2);
+      DRAW_CARDS(store, state, player, 2);
       return state;
     }
     return state;

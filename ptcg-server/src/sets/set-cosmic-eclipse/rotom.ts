@@ -57,7 +57,7 @@ export class Rotom extends PokemonCard {
         cards = cards || [];
         if (cards.length === 0) { return; }
         player.hand.moveCardsTo(cards, player.discard);
-        DRAW_CARDS(player, 2);
+        DRAW_CARDS(store, state, player, 2);
       });
     }
 

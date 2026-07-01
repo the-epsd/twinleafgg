@@ -77,10 +77,10 @@ export class Frosmoth extends PokemonCard {
 
       // Draw cards for both players
       if (player.deck.cards.length > 0) {
-        DRAW_CARDS(player, 1);
+        DRAW_CARDS(store, state, player, 1);
       }
       if (opponent.deck.cards.length > 0) {
-        DRAW_CARDS(opponent, 1);
+        DRAW_CARDS(store, state, opponent, 1);
       }
 
       // Mark ability as used

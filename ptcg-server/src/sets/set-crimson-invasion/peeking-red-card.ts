@@ -52,7 +52,7 @@ export class PeekingRedCard extends TrainerCard {
             });
 
             // Opponent draws same number of cards
-            DRAW_CARDS(opponent, Math.min(cardCount, opponent.deck.cards.length));
+            DRAW_CARDS(store, state, opponent, Math.min(cardCount, opponent.deck.cards.length));
           }
         });
       });

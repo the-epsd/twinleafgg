@@ -36,7 +36,7 @@ export class Manaphy extends PokemonCard {
       const player = effect.player;
       MOVE_CARDS(store, state, player.hand, player.deck, {});
       SHUFFLE_DECK(store, state, player);
-      DRAW_CARDS(player, 5);
+      DRAW_CARDS(store, state, player, 5);
     }
 
     return state;

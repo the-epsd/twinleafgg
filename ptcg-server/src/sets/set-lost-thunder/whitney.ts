@@ -28,7 +28,7 @@ export class Whitney extends TrainerCard {
 
       // Draw 1 + 2 per Whitney in discard
       const totalDraw = 1 + (2 * whitneyCount);
-      DRAW_CARDS(player, totalDraw);
+      DRAW_CARDS(store, state, player, totalDraw);
     }
 
     return state;

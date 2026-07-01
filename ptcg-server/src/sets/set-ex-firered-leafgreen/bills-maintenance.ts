@@ -47,7 +47,7 @@ export class BillsMaintenance extends TrainerCard {
         }
         MOVE_CARDS(store, state, player.hand, player.deck, { cards: cards, sourceCard: this });
         SHUFFLE_DECK(store, state, player);
-        DRAW_CARDS(player, 3);
+        DRAW_CARDS(store, state, player, 3);
       });
       return state;
     }

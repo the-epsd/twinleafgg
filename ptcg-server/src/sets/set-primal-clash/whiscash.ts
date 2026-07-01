@@ -4,11 +4,9 @@
 
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { Attack, ChooseAttackPrompt, GameError, GameLog, GameMessage, PokemonCardList, StateUtils, StoreLike, State } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { AttackEffect } from '../../game/store/effects/game-effects';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
+import { OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK, WAS_ATTACK_USED } from '../../game/store/prefabs/prefabs';
 import { FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE } from '../../game/store/prefabs/attack-effects';
 
 export class Whiscash extends PokemonCard {
@@ -19,21 +17,19 @@ export class Whiscash extends PokemonCard {
   public weakness = [{ type: G }];
   public retreat = [C, C, C];
 
-  public attacks = [
-    {
-      name: 'Amnesia',
-      cost: [C],
-      damage: 20,
-      text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. That Pokémon can\'t use that attack during your opponent\'s next turn.'
-    },
-    {
-      name: 'Rising Lunge',
-      cost: [W, C, C],
-      damage: 60,
-      damageCalculation: '+',
-      text: 'Flip a coin. If heads, this attack does 30 more damage.'
-    }
-  ];
+  public attacks = [{
+    name: 'Amnesia',
+    cost: [C],
+    damage: 20,
+    text: 'Choose 1 of your opponent\'s Active Pokémon\'s attacks. That Pokémon can\'t use that attack during your opponent\'s next turn.'
+  },
+  {
+    name: 'Rising Lunge',
+    cost: [W, C, C],
+    damage: 60,
+    damageCalculation: '+',
+    text: 'Flip a coin. If heads, this attack does 30 more damage.'
+  }];
 
   public set: string = 'PRC';
   public setNumber: string = '40';
@@ -41,53 +37,11 @@ export class Whiscash extends PokemonCard {
   public name: string = 'Whiscash';
   public fullName: string = 'Whiscash PRC';
 
-  public amnesiaAttack: Attack | null = null;
-
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
-    // Attack 1: Amnesia
-    // Ref: set-furious-fists/slaking.ts (Amnesia)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-      const pokemonCard = opponent.active.getPokemonCard();
-
-      if (pokemonCard === undefined || pokemonCard.attacks.length === 0) {
-        return state;
-      }
-
-      return store.prompt(state, new ChooseAttackPrompt(
-        player.id,
-        GameMessage.CHOOSE_ATTACK_TO_DISABLE,
-        [pokemonCard],
-        { allowCancel: false }
-      ), result => {
-        if (!result) {
-          return state;
-        }
-
-        this.amnesiaAttack = result;
-        opponent.active.marker.addMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-        store.log(state, GameLog.LOG_PLAYER_DISABLES_ATTACK, {
-          name: player.name,
-          attack: this.amnesiaAttack.name
-        });
-      });
+      return OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK(store, state, effect, this);
     }
 
-    if (effect instanceof AttackEffect
-      && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)
-      && effect.attack === this.amnesiaAttack) {
-      throw new GameError(GameMessage.BLOCKED_BY_EFFECT);
-    }
-
-    if (effect instanceof EndTurnEffect
-      && effect.player.active.marker.hasMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this)) {
-      effect.player.active.marker.removeMarker(PokemonCardList.OPPONENTS_POKEMON_CANNOT_USE_THAT_ATTACK_MARKER, this);
-      this.amnesiaAttack = null;
-    }
-
-    // Attack 2: Rising Lunge
-    // Ref: AGENTS-patterns.md (flip heads more damage)
     if (WAS_ATTACK_USED(effect, 1, this)) {
       FLIP_A_COIN_IF_HEADS_DEAL_MORE_DAMAGE(store, state, effect, 30);
     }

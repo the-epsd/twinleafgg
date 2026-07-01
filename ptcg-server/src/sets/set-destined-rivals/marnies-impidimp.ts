@@ -25,7 +25,7 @@ export class MarniesImpidimp extends PokemonCard {
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (AFTER_ATTACK(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
       return state;
     }
     return state;

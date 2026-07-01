@@ -55,7 +55,7 @@ export class Spiritomb extends PokemonCard {
 
           opponent.hand.moveTo(opponent.deck);
           SHUFFLE_DECK(store, state, opponent);
-          DRAW_CARDS(opponent, 6);
+          DRAW_CARDS(store, state, opponent, 6);
         }
 
         return state;

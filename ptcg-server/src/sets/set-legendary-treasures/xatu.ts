@@ -78,11 +78,11 @@ export class Xatu extends PokemonCard {
           || (playerChoice === 0 && opponentChoice === 2);
 
         if (playerWins) {
-          DRAW_CARDS(player, 3);
+          DRAW_CARDS(store, state, player, 3);
           const millCount = Math.min(3, opponent.deck.cards.length);
           opponent.deck.moveTo(opponent.discard, millCount);
         } else {
-          DRAW_CARDS(opponent, 3);
+          DRAW_CARDS(store, state, opponent, 3);
           const millCount = Math.min(3, player.deck.cards.length);
           player.deck.moveTo(player.discard, millCount);
         }

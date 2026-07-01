@@ -50,7 +50,7 @@ export class Houndour extends PokemonCard {
       });
 
       if (houndourCount > 0) {
-        DRAW_CARDS(player, houndourCount);
+        DRAW_CARDS(store, state, player, houndourCount);
       }
     }
 

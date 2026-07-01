@@ -49,7 +49,7 @@ export class Fearow extends PokemonCard {
       opponent.hand.moveCardsTo(cardsInHand, opponent.deck);
 
       SHUFFLE_DECK(store, state, opponent);
-      DRAW_CARDS(opponent, 3);
+      DRAW_CARDS(store, state, opponent, 3);
     }
 
     // Attack 2: Slashing Strike

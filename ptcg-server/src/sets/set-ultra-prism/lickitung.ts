@@ -37,7 +37,7 @@ export class Lickitung extends PokemonCard {
     // Attack 1: Lap Up
     // Ref: AGENTS-patterns.md (Draw 3 cards)
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      DRAW_CARDS(effect.player, 3);
+      DRAW_CARDS(store, state, effect.player, 3);
     }
 
     // Attack 2: Slam

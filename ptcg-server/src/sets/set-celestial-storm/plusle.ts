@@ -57,7 +57,7 @@ export class Plusle extends PokemonCard {
       opponent.bench.forEach(b => { if (b.cards.length > 0) benchCount++; });
 
       if (benchCount > 0) {
-        DRAW_CARDS(player, benchCount);
+        DRAW_CARDS(store, state, player, benchCount);
       }
     }
 

@@ -64,7 +64,7 @@ export class Ludicolo extends PokemonCard {
         ABILITY_USED(player, this);
         ADD_MARKER(this.SWING_DANCE_MARKER, player, this);
         // Draw a card
-        DRAW_CARDS(player, 1);
+        DRAW_CARDS(store, state, player, 1);
       }
     }
 

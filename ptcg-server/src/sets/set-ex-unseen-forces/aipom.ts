@@ -66,7 +66,7 @@ export class Aipom extends PokemonCard {
 
       ADD_MARKER(this.SNAPPY_MOVE_MARKER, player, this);
       ABILITY_USED(player, this);
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
 
       const pokemons = aipomSlot.getPokemons();
       const otherCards = aipomSlot.cards.filter(card =>

@@ -57,7 +57,7 @@ export class Roxie extends TrainerCard {
 
         const discardEffect = createTrainerDiscardCardsEffect(state, effect, cards, player.hand);
         store.reduceEffect(state, discardEffect);
-        DRAW_CARDS(player, 3 * cards.length);
+        DRAW_CARDS(store, state, player, 3 * cards.length);
       });
 
       return state;

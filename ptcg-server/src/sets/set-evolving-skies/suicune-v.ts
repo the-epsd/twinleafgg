@@ -77,7 +77,7 @@ export class SuicuneV extends PokemonCard {
         return state; // Not active
       }
       // Draw a card
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
       player.marker.addMarker(this.FLEET_FOOTED_MARKER, this);
     }
 

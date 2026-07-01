@@ -41,7 +41,7 @@ export class Bunnelby extends PokemonCard {
     // Ref: set-breakpoint/rattata.ts (Dangerous Suspicion)
     if (WAS_ATTACK_USED(effect, 0, this)) {
       const player = effect.player;
-      DRAW_CARDS(player, 1);
+      DRAW_CARDS(store, state, player, 1);
     }
 
     return state;

@@ -47,7 +47,7 @@ export class Plusle extends PokemonCard {
 
       // Draw 4 cards (or 8 if Minun is on Bench)
       const cardsToDraw = hasMinun ? 8 : 4;
-      DRAW_CARDS(player, cardsToDraw);
+      DRAW_CARDS(store, state, player, cardsToDraw);
     }
 
     // Positive Ion - flip a coin, if heads +10 damage
