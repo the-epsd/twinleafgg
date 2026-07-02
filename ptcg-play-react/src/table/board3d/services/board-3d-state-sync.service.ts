@@ -533,11 +533,13 @@ export class Board3dStateSyncService {
 
     // Prize cards (show in 2x3 grid)
     if (player.prizes) {
+      const revealPrizes = prizeIsOwner && !isOwner;
       await this.prizeService.updatePrizes(
         playerPrefix,
         player.prizes,
         ZONE_POSITIONS[position].prizes,
-        prizeIsOwner,
+        isOwner,
+        revealPrizes,
         rotation,
         this.worldMount,
         player,
@@ -562,9 +564,11 @@ export class Board3dStateSyncService {
     adminRevealPrizes: boolean,
   ): string[] {
     const urls: string[] = [];
-    const collectFromCardList = (cardList: CardList, isOwner: boolean) => {
+    const collectFromCardList = (cardList: CardList, isOwner: boolean, revealPrize = false) => {
       if (!cardList || !cardList.cards.length) return;
-      const isFaceDown = !isOwner && (cardList.isSecret || !cardList.isPublic);
+      const isFaceDown = revealPrize
+        ? false
+        : (cardList.isSecret || (!cardList.isPublic && !isOwner));
       if (isFaceDown) return;
       if (cardList instanceof PokemonCardList) {
         const main = cardList.getPokemonCard();
@@ -596,7 +600,7 @@ export class Board3dStateSyncService {
         topList.isSecret = player.discard.isSecret;
         collectFromCardList(topList, true);
       }
-      player.prizes?.forEach(prize => collectFromCardList(prize, prizeIsOwner));
+      player.prizes?.forEach(prize => collectFromCardList(prize, isOwner, prizeIsOwner && !isOwner));
     });
 
     const stadium = state?.players?.find((p: Player) => p.stadium?.cards?.length > 0)?.stadium;
@@ -627,7 +631,8 @@ export class Board3dStateSyncService {
     rotation: number,
     cardTarget?: CardTarget,
     scale: number = 1.0,
-    sleeveImagePath?: string
+    sleeveImagePath?: string,
+    revealPrize: boolean = false,
   ): Promise<void> {
     cardId = String(cardId);
 
@@ -658,7 +663,9 @@ export class Board3dStateSyncService {
     };
 
     // Determine if card should be face-down (not public or is secret)
-    const isFaceDown = !isOwner && (cardList.isSecret || !cardList.isPublic);
+    const isFaceDown = revealPrize
+      ? false
+      : (cardList.isSecret || (!cardList.isPublic && !isOwner));
 
     // Get card scan URL (checks artworksMap for overrides first, like 2D components do)
     const scanUrl = this.cardsAdapter.getScanUrlFor3D(mainCard, cardList);

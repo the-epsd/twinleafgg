@@ -3261,8 +3261,9 @@ export class Board3dController {
         return;
       }
       const card = cardList.cards[0];
-      const canSeePrize = owner || this.canRevealPrizesToViewer();
-      const facedown = !canSeePrize && (cardList.isSecret || !cardList.isPublic);
+      const facedown = this.canRevealPrizesToViewer()
+        ? false
+        : (cardList.isSecret || (!cardList.isPublic && !owner));
       const allowReveal = facedown && (!!this.gameState.replay || this.canRevealPrizesToViewer());
       this.cardsAdapter.showCardInfo({
         card,

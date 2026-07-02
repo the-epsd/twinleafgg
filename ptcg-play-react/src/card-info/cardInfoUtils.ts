@@ -729,16 +729,8 @@ export type DebugMarkerDisplay = {
   sourceLabel?: string;
 };
 
-function pokemonCardsInList(cardList: CardList): Card[] {
-  const tools = pokemonCardListTools(cardList);
-  return cardList.cards.filter((c) => c.superType === SuperType.POKEMON && !tools.includes(c));
-}
-
-function markerSourceMatchesChain(source: Card | undefined, chainCards: Card[]): boolean {
-  if (!source) {
-    return false;
-  }
-  return chainCards.some((c) => c === source || c.fullName === source.fullName);
+function markerSourceIsViewedCard(source: Card | undefined, card: Card): boolean {
+  return source === card;
 }
 
 /** Active game markers on a Pokémon (card list, evolution cards, and player-scoped markers). */
@@ -769,8 +761,6 @@ export function getDisplayDebugMarkers(
   }
 
   if (cardList) {
-    const chainCards = pokemonCardsInList(cardList);
-
     if (cardList instanceof PokemonCardList) {
       for (const m of cardList.marker.markers) {
         add(m.name, 'pokemon');
@@ -782,22 +772,11 @@ export function getDisplayDebugMarkers(
       }
     }
 
-    for (const chainCard of chainCards) {
-      if (chainCard === card) {
-        continue;
-      }
-      for (const m of chainCard.marker?.markers ?? []) {
-        add(m.name, 'card', chainCard.fullName);
-      }
-    }
-
     if (players?.length) {
       for (const player of players) {
         for (const m of player.marker.markers) {
-          if (markerSourceMatchesChain(m.source, chainCards)) {
-            const sourceLabel =
-              m.source && m.source.fullName !== card.fullName ? m.source.fullName : undefined;
-            add(m.name, 'player', sourceLabel);
+          if (markerSourceIsViewedCard(m.source, card)) {
+            add(m.name, 'player');
           }
         }
       }
