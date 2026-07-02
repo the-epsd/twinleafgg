@@ -6,7 +6,6 @@ import { GamePhase } from 'ptcg-server';
 import { useAuth } from '../context/AuthContext';
 import { useDeckCardScanUrl } from '../context/CardImagesContext';
 import { useCoreSession } from '../context/CoreSessionContext';
-import { useSettings } from '../context/SettingsContext';
 import tablePageStyles from './TablePage.module.css';
 import { getSocketManager } from '../socket/socketManager';
 import { ApiError, formatUnknownError } from '../api/apiError';
@@ -24,7 +23,6 @@ import type { AdminSpectatorReveal } from '../table/hud/AdminSpectatorControls';
 import { GameOverOverlay } from '../table/end-game/GameOverOverlay';
 import { MatchResultsSplash } from '../table/end-game/MatchResultsSplash';
 import { SandboxControlPanel } from '../table/sandbox/SandboxControlPanel';
-import { SandboxTableHint } from '../table/sandbox/SandboxTableHint';
 import { ShellButton } from '../components/ui/ShellButton';
 import { selfPlayFocusPlayerId } from '../table/selfPlayFocusPlayerId';
 import promptStyles from '../table/prompts/TablePromptLayer.module.css';
@@ -72,7 +70,6 @@ export function TablePage() {
   const catalog = useMemo(() => cardsInfo?.cards ?? EMPTY_CATALOG, [cardsInfo?.cards]);
   const getScanUrl = useDeckCardScanUrl(serverConfig?.scansUrl);
   const { clientId, connected: coreConnected } = useCoreSession();
-  const { defaultSandboxMode } = useSettings();
 
   const hasReplayParam = matchIdParam != null && matchIdParam !== '';
   const replayMatchId = hasReplayParam ? Number(matchIdParam) : NaN;
@@ -565,7 +562,7 @@ export function TablePage() {
 
   const sandboxGameEnabled = Boolean(localGame.state.gameSettings?.sandboxMode);
   const showSandboxDock =
-    user?.roleId === 4 && localGame.replay == null && (sandboxGameEnabled || defaultSandboxMode);
+    user?.roleId === 4 && localGame.replay == null && sandboxGameEnabled;
   const showAdminSpectatorControls =
     user?.roleId === 4 && isObserver && localGame.replay == null;
 
@@ -596,16 +593,12 @@ export function TablePage() {
       >
         {showSandboxDock ? (
           <div className={tablePageStyles.sandboxDock}>
-            {sandboxGameEnabled ? (
-              <SandboxControlPanel
-                gameId={localGame.gameId}
-                gameState={localGame.state}
-                players={localGame.state.players}
-                clientId={tableClientId}
-              />
-            ) : (
-              <SandboxTableHint />
-            )}
+            <SandboxControlPanel
+              gameId={localGame.gameId}
+              gameState={localGame.state}
+              players={localGame.state.players}
+              clientId={tableClientId}
+            />
           </div>
         ) : null}
       <Board3DCanvas

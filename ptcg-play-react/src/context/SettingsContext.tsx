@@ -6,7 +6,6 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { useAuth } from './AuthContext';
 import {
   readClientSettingsSnapshot,
   writeBoard2dPerspectiveEnabled,
@@ -19,7 +18,6 @@ import {
   writeSfxEnabled,
   writeSfxVolume,
   writeUse3dBoardDefault,
-  writeDefaultSandboxMode,
   writeDebugMarkersEnabled,
   type ClientSettingsSnapshot,
 } from '../settings/settingsStorage';
@@ -33,7 +31,6 @@ export type SettingsDraftCommit = Pick<
   | 'use3dBoardDefault'
   | 'board2dPerspectiveEnabled'
   | 'sfxEnabled'
-  | 'defaultSandboxMode'
   | 'debugMarkersEnabled'
 > & {
   /**0–100 UI percentage, stored0–1 */
@@ -52,8 +49,6 @@ interface SettingsContextValue extends ClientSettingsSnapshot {
 const SettingsContext = createContext<SettingsContextValue | null>(null);
 
 export function SettingsProvider({ children }: { children: ReactNode }) {
-  const { user } = useAuth();
-
   const [state, setState] = useState<ClientSettingsSnapshot>(() => readClientSettingsSnapshot());
 
   const setCardSize = useCallback((size: number) => {
@@ -85,10 +80,6 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
       writeSfxVolume(draft.sfxVolumePercent / 100);
       writeDebugMarkersEnabled(draft.debugMarkersEnabled);
 
-      const isAdmin = user?.roleId === 4;
-      const sandboxResolved = isAdmin ? draft.defaultSandboxMode : false;
-      writeDefaultSandboxMode(sandboxResolved, isAdmin);
-
       setState({
         holoEnabled: draft.holoEnabled,
         showCardName: draft.showCardName,
@@ -100,23 +91,21 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
         cardTextKerning: draft.cardTextKerning,
         sfxEnabled: draft.sfxEnabled,
         sfxVolume: Math.max(0, Math.min(1, draft.sfxVolumePercent / 100)),
-        defaultSandboxMode: sandboxResolved,
         debugMarkersEnabled: draft.debugMarkersEnabled,
       });
     },
-    [user?.roleId],
+    [],
   );
 
   const value = useMemo<SettingsContextValue>(
     () => ({
       ...state,
-      defaultSandboxMode: user?.roleId === 4 ? state.defaultSandboxMode : false,
       setCardSize,
       setCardTextKerning,
       setSfxVolume,
       commitFromSave,
     }),
-    [state, user?.roleId, setCardSize, setCardTextKerning, setSfxVolume, commitFromSave],
+    [state, setCardSize, setCardTextKerning, setSfxVolume, commitFromSave],
   );
 
   return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>;
