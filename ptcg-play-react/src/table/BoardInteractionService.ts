@@ -13,6 +13,9 @@ import {
 } from 'ptcg-server';
 import { cardTargetKey } from './prompts/removeDamagePromptModel';
 
+/** Pause before trainer effect prompts so the hand → board play animation can finish. */
+export const TRAINER_PLAY_EFFECT_PROMPT_DELAY_MS = 2500;
+
 type SelectionOverlayKind =
   | 'choose-pokemon'
   | 'remove-damage'
@@ -653,7 +656,7 @@ export class BoardInteractionService {
   /**
    * Hide table prompts briefly after playing a trainer from the 3D board so the play animation is not overlapped.
    */
-  public beginTrainerPlayEffectPromptDelay(ms: number = 2000): void {
+  public beginTrainerPlayEffectPromptDelay(ms: number = TRAINER_PLAY_EFFECT_PROMPT_DELAY_MS): void {
     if (this.trainerEffectPromptDelayTimer != null) {
       clearTimeout(this.trainerEffectPromptDelayTimer);
       this.trainerEffectPromptDelayTimer = null;

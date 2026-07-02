@@ -182,6 +182,8 @@ export class Board3dController {
   private syncHandChain: Promise<void> = Promise.resolve();
   /** Incremented when a failed play must supersede queued/in-flight hand sync (skip stale commits). */
   private handSyncInvalidationGen = 0;
+  /** Hand update arrived while dragging; flush when drag ends. */
+  private pendingHandSyncWhileDragging = false;
 
   /** Board mesh ids hidden while one or more hand-play flights are in progress. */
   private handPlayFlightHiddenMeshIds = new Set<string>();
@@ -493,6 +495,7 @@ export class Board3dController {
     this.lastHandSyncActivePlayerId = undefined;
     this.syncHandChain = Promise.resolve();
     this.handSyncInvalidationGen = 0;
+    this.pendingHandSyncWhileDragging = false;
     this.handPlayFlightHiddenMeshIds.clear();
     this.handPlayBoardBasicAnimationSuppressedMeshIds.clear();
     this.discardVisualFreezePlayerId = null;
@@ -1554,9 +1557,69 @@ export class Board3dController {
     tryPlay(0);
   }
 
+  private getRenderedHandCardIds(): number[] {
+    return this.handService
+      .getHandSlotSnapshots()
+      .map(s => s.cardId)
+      .filter((id): id is number => id !== undefined);
+  }
+
+  /**
+   * Detect newly drawn cards by id (not positional prefix/suffix overlap).
+   * Merges rendered hand ids so a stale {@link lastHandCardIds} snapshot cannot
+   * re-animate cards that are already on screen.
+   */
+  private computeHandDrawDelta(prevIds: number[], nextIds: number[]): {
+    incomingDrawIds: number[];
+    stableK: number;
+    drawCount: number;
+    incomingFormsContiguousSuffix: boolean;
+    effectivePrevCardCount: number;
+  } {
+    const renderedIds = this.getRenderedHandCardIds();
+    const effectivePrevSet = new Set([...prevIds, ...renderedIds]);
+    const incomingDrawIds = nextIds.filter(id => !effectivePrevSet.has(id));
+    const drawCount = incomingDrawIds.length;
+
+    let stableK = nextIds.length;
+    if (drawCount > 0) {
+      const incomingSet = new Set(incomingDrawIds);
+      const firstIncomingIdx = nextIds.findIndex(id => incomingSet.has(id));
+      stableK = firstIncomingIdx >= 0 ? firstIncomingIdx : nextIds.length;
+    }
+
+    const incomingFormsContiguousSuffix =
+      drawCount === 0 ||
+      (nextIds.length - stableK === drawCount &&
+        nextIds.slice(stableK).every((id, i) => id === incomingDrawIds[i]));
+
+    const effectivePrevCardCount = Math.max(prevIds.length, renderedIds.length);
+
+    return {
+      incomingDrawIds,
+      stableK,
+      drawCount,
+      incomingFormsContiguousSuffix,
+      effectivePrevCardCount,
+    };
+  }
+
+  private flushPendingHandSyncAfterDrag(): void {
+    if (!this.pendingHandSyncWhileDragging) {
+      return;
+    }
+    this.pendingHandSyncWhileDragging = false;
+    if (this.interactionService.getIsDragging() || this.interactionService.hasPendingDrag()) {
+      this.pendingHandSyncWhileDragging = true;
+      return;
+    }
+    this.syncHand();
+  }
+
   private syncHand(): void {
     // Skip sync if user is currently dragging a card to prevent destroying the dragged card
     if (this.interactionService.getIsDragging()) {
+      this.pendingHandSyncWhileDragging = true;
       return;
     }
 
@@ -1576,6 +1639,7 @@ export class Board3dController {
   /** After server rejects playCard: skip animation queue and rebuild hand from current props immediately. */
   private forceHandResyncAfterFailedPlay(): void {
     if (this.interactionService.getIsDragging()) {
+      this.pendingHandSyncWhileDragging = true;
       return;
     }
     if (!this.bottomPlayerHand || !this.bottomPlayer) {
@@ -1784,6 +1848,7 @@ export class Board3dController {
         }
         try {
           const flightStart = flightStartAtGlobal(globalBase);
+          const flyCardId = fullIncoming[globalBase];
           const prep = await this.handService.prepareBatchDrawFlightStep(
             this.bottomPlayerHand,
             isOwner,
@@ -1793,7 +1858,8 @@ export class Board3dController {
             playableCardIds,
             stableKRun,
             0,
-            true
+            true,
+            flyCardId
           );
           if (!prep) {
             return false;
@@ -1849,6 +1915,7 @@ export class Board3dController {
           const runCardToStageOnly = async (localStep: number) => {
             const g = globalBase + localStep;
             const flightStart = flightStartAtGlobal(g);
+            const flyCardId = fullIncoming[g];
             const prep = await this.handService.prepareBatchDrawFlightStep(
               this.bottomPlayerHand,
               isOwner,
@@ -1858,7 +1925,8 @@ export class Board3dController {
               playableCardIds,
               stableKRun,
               localStep,
-              globalFirstStep
+              globalFirstStep,
+              flyCardId
             );
             globalFirstStep = false;
             if (!prep) {
@@ -1976,30 +2044,13 @@ export class Board3dController {
       const prevIds = this.lastHandCardIds;
       const prevLen = prevIds.length;
 
-      let prefixK = 0;
-      const maxPrefix = Math.min(prevLen, nextIds.length);
-      while (prefixK < maxPrefix && prevIds[prefixK] === nextIds[prefixK]) {
-        prefixK++;
-      }
-
-      let overlapK = 0;
-      const maxOverlap = Math.min(prevLen, nextIds.length);
-      for (let len = maxOverlap; len >= 0; len--) {
-        let matches = true;
-        for (let i = 0; i < len; i++) {
-          if (prevIds[prevLen - len + i] !== nextIds[i]) {
-            matches = false;
-            break;
-          }
-        }
-        if (matches) {
-          overlapK = len;
-          break;
-        }
-      }
-
-      const stableK = Math.max(prefixK, overlapK);
-      const drawCount = nextIds.length - stableK;
+      const {
+        incomingDrawIds,
+        stableK,
+        drawCount,
+        incomingFormsContiguousSuffix,
+        effectivePrevCardCount,
+      } = this.computeHandDrawDelta(prevIds, nextIds);
 
       const handIdsSameMultiset = (a: number[], b: number[]): boolean => {
         if (a.length !== b.length) {
@@ -2018,15 +2069,19 @@ export class Board3dController {
       const looksLikeHandReorderOnly =
         drawCount > 0 &&
         prevLen === nextIds.length &&
-        stableK < prevLen &&
         handIdsSameMultiset(prevIds, nextIds);
 
       // Playing a card removes from hand (shorter). Deck draws keep size or grow; never treat a shrink as draw.
-      const handShrank = nextIds.length < prevLen;
+      const nextIdSet = new Set(nextIds);
+      const removedCount = prevIds.filter(id => !nextIdSet.has(id)).length;
+      const netGrowth = nextIds.length - effectivePrevCardCount;
+      const handShrank = netGrowth < 0;
       const shouldAnimateDraw =
-        prevLen > 0 &&
+        effectivePrevCardCount > 0 &&
         !handShrank &&
         drawCount >= 1 &&
+        removedCount + netGrowth === drawCount &&
+        incomingFormsContiguousSuffix &&
         !looksLikeHandReorderOnly;
 
       const isOwner = this.bottomPlayer.id === this.clientId || this.isReplayOmniscient();
@@ -2035,8 +2090,6 @@ export class Board3dController {
         : this.bottomPlayer.playableCardIds;
       const aspect = this.canvasEl.clientWidth / Math.max(this.canvasEl.clientHeight, 1);
       const boardConfig = getBoardConfig(aspect);
-
-      const incomingDrawIds = nextIds.slice(stableK);
 
       const gs = this.gameState?.state;
       const nowActivePlayerId = gs ? gs.players[gs.activePlayer]?.id : undefined;
@@ -2302,6 +2355,7 @@ export class Board3dController {
     }
 
     canvas.style.cursor = 'default';
+    this.flushPendingHandSyncAfterDrag();
     this.markDirty();
   };
 
@@ -2449,7 +2503,7 @@ export class Board3dController {
       playedHandCard?.superType === SuperType.TRAINER &&
       !cardIsFossilLikeTrainer(playedHandCard)
     ) {
-      this.boardInteractionService.beginTrainerPlayEffectPromptDelay(2000);
+      this.boardInteractionService.beginTrainerPlayEffectPromptDelay();
     }
     const trainerBoardHandPlay = cardIsTrainerBoardHandPlay(playedHandCard);
     const playTarget: CardTarget = trainerBoardHandPlay
@@ -2575,6 +2629,7 @@ export class Board3dController {
   private onMouseLeave = (): void => {
     this.interactionService.cancelDrag();
     this.currentHoveredCard = null;
+    this.flushPendingHandSyncAfterDrag();
     this.markDirty();
   };
 

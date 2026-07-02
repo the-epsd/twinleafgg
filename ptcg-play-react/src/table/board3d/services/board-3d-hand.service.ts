@@ -385,7 +385,8 @@ export class Board3dHandService {
     playableCardIds: number[] | undefined,
     stablePrefixLen: number,
     stepIndex: number,
-    isFirstStep: boolean
+    isFirstStep: boolean,
+    flyCardId?: number
   ): Promise<PrepareDrawFlightResult | null> {
     if (this.batchDrawPrepareDepth === 0) {
       return null;
@@ -394,7 +395,13 @@ export class Board3dHandService {
     if (cards.length === 0) {
       return null;
     }
-    const flyIdx = stablePrefixLen + stepIndex;
+    let flyIdx = stablePrefixLen + stepIndex;
+    if (flyCardId !== undefined) {
+      const idIdx = cards.findIndex(c => c.id === flyCardId);
+      if (idIdx >= 0) {
+        flyIdx = idIdx;
+      }
+    }
     if (flyIdx < 0 || flyIdx >= cards.length) {
       return null;
     }
@@ -413,7 +420,7 @@ export class Board3dHandService {
 
       this.clearHand(handSlot);
 
-      for (let j = 0; j < stablePrefixLen; j++) {
+      for (let j = 0; j < flyIdx; j++) {
         const isPlayable = isOwner && playableCardIds?.includes(cards[j].id);
         await this.createHandCard(cards[j], j, cards.length, isOwner, isPlayable, hand, false);
       }
