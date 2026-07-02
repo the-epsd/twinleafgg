@@ -38,6 +38,11 @@ export interface Board3dSyncStateOptions {
   freezeDiscardHandFlightIds?: readonly number[] | null;
   /** Keep supporter slot mesh when game state cleared it (trainer/item resolve → discard flight). */
   freezeSupporterClearForPlayerId?: number | null;
+  /** Admin spectator UI toggles for hidden zones (client-side display only). */
+  adminSpectatorReveal?: {
+    revealPrizes: boolean;
+    revealHands: boolean;
+  };
 }
 
 export class Board3dStateSyncService {
@@ -179,6 +184,7 @@ export class Board3dStateSyncService {
       freezeDiscardHandFlightBaseStack = null,
       freezeDiscardHandFlightIds = null,
       freezeSupporterClearForPlayerId = null,
+      adminSpectatorReveal,
     } = options;
 
     this.skippedCardIdForSync = skippedCardId ?? null;
@@ -226,6 +232,7 @@ export class Board3dStateSyncService {
     }
 
     const omniscient = !!gameState.replay;
+    const adminRevealPrizes = adminSpectatorReveal?.revealPrizes ?? false;
 
     // Clear old cards that no longer match the current player assignments
     this.cleanupOldCards(state, topPlayerToSync, bottomPlayerToSync, this.worldMount);
@@ -236,17 +243,20 @@ export class Board3dStateSyncService {
       topPlayerToSync,
       currentPlayerId,
       state,
-      omniscient
+      omniscient,
+      adminRevealPrizes,
     );
     this.assetLoader.preloadCardTextures(preloadUrls);
 
     // Sync bottomPlayer
     if (bottomPlayerToSync) {
       const isOwner = bottomPlayerToSync.id === currentPlayerId || omniscient;
+      const prizeIsOwner = isOwner || adminRevealPrizes;
       await this.syncPlayer(
         bottomPlayerToSync,
         'bottomPlayer',
         isOwner,
+        prizeIsOwner,
         freezeDiscardVisualForPlayerId ?? null,
         freezeDiscardVisibleCardCount ?? null,
         freezeDiscardHandFlightBaseStack ?? null,
@@ -258,10 +268,12 @@ export class Board3dStateSyncService {
     // Sync topPlayer
     if (topPlayerToSync) {
       const isOwner = topPlayerToSync.id === currentPlayerId || omniscient;
+      const prizeIsOwner = isOwner || adminRevealPrizes;
       await this.syncPlayer(
         topPlayerToSync,
         'topPlayer',
         isOwner,
+        prizeIsOwner,
         freezeDiscardVisualForPlayerId ?? null,
         freezeDiscardVisibleCardCount ?? null,
         freezeDiscardHandFlightBaseStack ?? null,
@@ -380,6 +392,7 @@ export class Board3dStateSyncService {
     player: Player,
     position: 'topPlayer' | 'bottomPlayer',
     isOwner: boolean,
+    prizeIsOwner: boolean,
     freezeDiscardVisualForPlayerId: number | null,
     freezeDiscardVisibleCardCount: number | null,
     freezeDiscardHandFlightBaseStack: number | null,
@@ -524,7 +537,7 @@ export class Board3dStateSyncService {
         playerPrefix,
         player.prizes,
         ZONE_POSITIONS[position].prizes,
-        isOwner,
+        prizeIsOwner,
         rotation,
         this.worldMount,
         player,
@@ -545,12 +558,13 @@ export class Board3dStateSyncService {
     topPlayer: Player | undefined,
     currentPlayerId: number,
     state: any,
-    omniscient: boolean
+    omniscient: boolean,
+    adminRevealPrizes: boolean,
   ): string[] {
     const urls: string[] = [];
     const collectFromCardList = (cardList: CardList, isOwner: boolean) => {
       if (!cardList || !cardList.cards.length) return;
-      const isFaceDown = cardList.isSecret || (!cardList.isPublic && !isOwner);
+      const isFaceDown = !isOwner && (cardList.isSecret || !cardList.isPublic);
       if (isFaceDown) return;
       if (cardList instanceof PokemonCardList) {
         const main = cardList.getPokemonCard();
@@ -570,6 +584,7 @@ export class Board3dStateSyncService {
     [bottomPlayer, topPlayer].forEach(player => {
       if (!player) return;
       const isOwner = player.id === currentPlayerId || omniscient;
+      const prizeIsOwner = isOwner || adminRevealPrizes;
       if (player.active) collectFromCardList(player.active, isOwner);
       if (player.supporter) collectFromCardList(player.supporter, isOwner);
       player.bench?.forEach(bench => collectFromCardList(bench, isOwner));
@@ -581,7 +596,7 @@ export class Board3dStateSyncService {
         topList.isSecret = player.discard.isSecret;
         collectFromCardList(topList, true);
       }
-      player.prizes?.forEach(prize => collectFromCardList(prize, isOwner));
+      player.prizes?.forEach(prize => collectFromCardList(prize, prizeIsOwner));
     });
 
     const stadium = state?.players?.find((p: Player) => p.stadium?.cards?.length > 0)?.stadium;
@@ -643,7 +658,7 @@ export class Board3dStateSyncService {
     };
 
     // Determine if card should be face-down (not public or is secret)
-    const isFaceDown = cardList.isSecret || (!cardList.isPublic && !isOwner);
+    const isFaceDown = !isOwner && (cardList.isSecret || !cardList.isPublic);
 
     // Get card scan URL (checks artworksMap for overrides first, like 2D components do)
     const scanUrl = this.cardsAdapter.getScanUrlFor3D(mainCard, cardList);

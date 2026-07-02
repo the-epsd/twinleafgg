@@ -87,6 +87,11 @@ import type { Board3dCard } from './board-3d-card';
 import { projectCardFaceToScreenAnchor } from './board3dAbilityFocusProjection';
 import { playDeckShufflePreview } from './board3dDeckShufflePreview';
 
+export type AdminSpectatorReveal = {
+  revealPrizes: boolean;
+  revealHands: boolean;
+};
+
 export interface Board3dControllerProps {
   gameState: LocalGameState;
   topPlayer: Player;
@@ -95,6 +100,7 @@ export interface Board3dControllerProps {
   topPlayerHand: CardList;
   clientId: number;
   player?: unknown;
+  adminSpectatorReveal?: AdminSpectatorReveal;
   /** While true, React may hide Choose Prize until KO motion finishes. */
   onKoSequenceActiveChange?: (active: boolean) => void;
 }
@@ -121,6 +127,7 @@ export class Board3dController {
   topPlayerHand!: CardList;
   clientId!: number;
   player?: unknown;
+  private adminSpectatorReveal?: AdminSpectatorReveal;
 
   private canvasEl!: HTMLCanvasElement;
   private selectionSubs: Subscription[] = [];
@@ -382,6 +389,7 @@ export class Board3dController {
     this.topPlayerHand = p.topPlayerHand;
     this.clientId = p.clientId;
     this.player = p.player;
+    this.adminSpectatorReveal = p.adminSpectatorReveal;
     this.onKoSequenceActiveChange = p.onKoSequenceActiveChange;
     this.interactionService.setHandPlayZoneGameSettings(p.gameState.state.gameSettings);
   }
@@ -508,6 +516,9 @@ export class Board3dController {
     const clientChanged = this.clientId !== next.clientId;
     const gameStateChanged = this.gameState !== next.gameState;
     const handChanged = this.bottomPlayerHand !== next.bottomPlayerHand;
+    const revealChanged =
+      this.adminSpectatorReveal?.revealPrizes !== next.adminSpectatorReveal?.revealPrizes ||
+      this.adminSpectatorReveal?.revealHands !== next.adminSpectatorReveal?.revealHands;
 
     // Capture prize layout *before* applying incoming props so prize→hand draws still
     // match card ids to grid slots after setProps (prizes may already be empty on next).
@@ -548,11 +559,11 @@ export class Board3dController {
       this.tryArmPendingHandDiscardFreeze();
     }
 
-    if (this.scene && (gameStateChanged || topChanged || bottomChanged)) {
+    if (this.scene && (gameStateChanged || topChanged || bottomChanged || revealChanged)) {
       this.syncGameState();
     }
 
-    if (this.scene && handChanged) {
+    if (this.scene && (handChanged || revealChanged)) {
       this.syncHand();
       this.hasInitializedHand = true;
     }
@@ -1206,6 +1217,7 @@ export class Board3dController {
           freezeDiscardHandFlightBaseStack: freezeDiscardHandFlightBaseStackForSync,
           freezeDiscardHandFlightIds: freezeDiscardHandFlightIdsForSync,
           freezeSupporterClearForPlayerId: freezeSupporterClearForSync,
+          adminSpectatorReveal: this.adminSpectatorReveal,
         },
       );
 
@@ -1529,6 +1541,26 @@ export class Board3dController {
   /** Replay viewer sees both hands; near-hand must render face-up like the owner's. */
   private isReplayOmniscient(): boolean {
     return !!this.gameState?.replay;
+  }
+
+  private isHandVisibleToViewer(): boolean {
+    if (!this.bottomPlayer) {
+      return false;
+    }
+    if (this.bottomPlayer.id === this.clientId) {
+      return true;
+    }
+    if (this.isReplayOmniscient()) {
+      return true;
+    }
+    return this.adminSpectatorReveal?.revealHands ?? false;
+  }
+
+  private canRevealPrizesToViewer(): boolean {
+    if (this.isReplayOmniscient()) {
+      return true;
+    }
+    return this.adminSpectatorReveal?.revealPrizes ?? false;
   }
 
   /**
@@ -2309,7 +2341,7 @@ export class Board3dController {
         if (genAtStart !== this.handSyncInvalidationGen) {
           return;
         }
-        const isOwnerImm = this.bottomPlayer.id === this.clientId || this.isReplayOmniscient();
+        const isOwnerImm = this.isHandVisibleToViewer();
         const playableImm = this.getHandPlayableCardIdsForDisplay();
         await this.handService.updateHand(
           this.bottomPlayerHand,
@@ -2376,7 +2408,7 @@ export class Board3dController {
         incomingFormsContiguousSuffix &&
         !looksLikeHandReorderOnly;
 
-      const isOwner = this.bottomPlayer.id === this.clientId || this.isReplayOmniscient();
+      const isOwner = this.isHandVisibleToViewer();
       const playableCardIds = this.getHandPlayableCardIdsForDisplay();
       const aspect = this.canvasEl.clientWidth / Math.max(this.canvasEl.clientHeight, 1);
       const boardConfig = getBoardConfig(aspect);
@@ -3229,8 +3261,9 @@ export class Board3dController {
         return;
       }
       const card = cardList.cards[0];
-      const facedown = cardList.isSecret || (!cardList.isPublic && !owner);
-      const allowReveal = facedown && !!this.gameState.replay;
+      const canSeePrize = owner || this.canRevealPrizesToViewer();
+      const facedown = !canSeePrize && (cardList.isSecret || !cardList.isPublic);
+      const allowReveal = facedown && (!!this.gameState.replay || this.canRevealPrizesToViewer());
       this.cardsAdapter.showCardInfo({
         card,
         allowReveal,

@@ -114,6 +114,14 @@
   pointer-events: auto;
 }
 
+.adminSpectatorControls {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  z-index: 45;
+  pointer-events: auto;
+}
+
 .turnBadge {
   flex: 0 0 auto;
   font-size: 0.68rem;

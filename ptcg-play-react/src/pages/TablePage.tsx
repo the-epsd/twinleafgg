@@ -20,6 +20,7 @@ import type { Board3dGameActions } from '../table/board3d/board3dGameActions';
 import { Board3DCanvas } from '../table/board3d/Board3DCanvas';
 import { TablePromptLayer } from '../table/prompts/TablePromptLayer';
 import { TableBoardOverlay } from '../table/hud/TableBoardOverlay';
+import type { AdminSpectatorReveal } from '../table/hud/AdminSpectatorControls';
 import { GameOverOverlay } from '../table/end-game/GameOverOverlay';
 import { MatchResultsSplash } from '../table/end-game/MatchResultsSplash';
 import { SandboxControlPanel } from '../table/sandbox/SandboxControlPanel';
@@ -84,6 +85,10 @@ export function TablePage() {
   const [leaveConfirmKind, setLeaveConfirmKind] = useState<'live' | 'replay' | null>(null);
   const [suppressChoosePrizePrompt, setSuppressChoosePrizePrompt] = useState(false);
   const [boardFps, setBoardFps] = useState<number | null>(null);
+  const [adminSpectatorReveal, setAdminSpectatorReveal] = useState<AdminSpectatorReveal>({
+    revealPrizes: false,
+    revealHands: false,
+  });
   const clientIdRef = useRef(clientId);
   clientIdRef.current = clientId;
   const choosePrizeRevealTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -561,6 +566,8 @@ export function TablePage() {
   const sandboxGameEnabled = Boolean(localGame.state.gameSettings?.sandboxMode);
   const showSandboxDock =
     user?.roleId === 4 && localGame.replay == null && (sandboxGameEnabled || defaultSandboxMode);
+  const showAdminSpectatorControls =
+    user?.roleId === 4 && isObserver && localGame.replay == null;
 
   const showEndGame =
     localGame.state.phase === GamePhase.FINISHED &&
@@ -609,6 +616,7 @@ export function TablePage() {
         topPlayerHand={topHand}
         clientId={tableClientId}
         catalog={catalog}
+        adminSpectatorReveal={showAdminSpectatorControls ? adminSpectatorReveal : undefined}
         boardInteraction={boardInteraction}
         gameActions={gameActions}
         onKoSequenceActiveChange={onKoSequenceActiveChange}
@@ -621,6 +629,9 @@ export function TablePage() {
         bottomPlayer={bottomPlayer}
         isPlaying={isPlaying}
         isObserver={isObserver}
+        showAdminSpectatorControls={showAdminSpectatorControls}
+        adminSpectatorReveal={adminSpectatorReveal}
+        onAdminSpectatorRevealChange={setAdminSpectatorReveal}
         onPassTurn={onPassTurn}
         onLeave={onLeave}
         onSwitchSides={toggleSwitchSides}

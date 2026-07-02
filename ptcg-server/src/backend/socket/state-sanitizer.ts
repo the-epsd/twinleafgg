@@ -79,8 +79,9 @@ export class StateSanitizer {
       if (!opponent.deck.isPublic && !sandboxRevealDecks) {
         cardLists.push(opponent.deck);
       }
+      const adminObserver = isObserver && this.client.user.roleId === 4;
       opponent.prizes.forEach(prize => {
-        if (!prize.isPublic) {
+        if (!prize.isPublic && !adminObserver) {
           cardLists.push(prize);
         }
       });
