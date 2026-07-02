@@ -10,7 +10,7 @@ export class Slowpoke extends PokemonCard {
   public hp: number = 80;
   public weakness = [{ type: D }];
   public resistance = [{ type: F, value: -30 }];
-  public retreat = [C];
+  public retreat = [C, C];
 
   public attacks = [
     {
