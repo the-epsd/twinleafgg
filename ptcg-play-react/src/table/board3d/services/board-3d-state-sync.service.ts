@@ -24,6 +24,22 @@ import { apply3dCardHolo } from '../board-3d-holo-apply';
 import type { Board3dBoardCardSnapshot, Board3dHandSlotSnapshot, Board3dSceneModelSnapshot } from '../board3dSceneModel';
 import { emptySceneModelSnapshot } from '../board3dSceneModel';
 
+export interface Board3dSyncStateOptions {
+  skippedCardId?: string | null;
+  skippedScaleCardId?: string | readonly string[] | null;
+  handPlayFlightHiddenCardId?: string | readonly string[] | null;
+  /** Skip discard pile mesh updates for this player (item hand-play flight — keep prior discard until resolved). */
+  freezeDiscardVisualForPlayerId?: number | null;
+  /** When frozen, show only this many discard cards (incremental hand-discard animations). */
+  freezeDiscardVisibleCardCount?: number | null;
+  /** Base discard count before an in-progress hand→discard flight batch. */
+  freezeDiscardHandFlightBaseStack?: number | null;
+  /** Discard ids already flown this batch (in pile order). */
+  freezeDiscardHandFlightIds?: readonly number[] | null;
+  /** Keep supporter slot mesh when game state cleared it (trainer/item resolve → discard flight). */
+  freezeSupporterClearForPlayerId?: number | null;
+}
+
 export class Board3dStateSyncService {
   private cardsMap: Map<string, Board3dCard> = new Map();
 
@@ -148,17 +164,22 @@ export class Board3dStateSyncService {
     currentPlayerId: number,
     topPlayer?: Player,
     bottomPlayer?: Player,
-    skippedCardId?: string | null,
-    skippedScaleCardId?: string | readonly string[] | null,
-    handPlayFlightHiddenCardId?: string | readonly string[] | null,
-    /** Skip discard pile mesh updates for this player (item hand-play flight — keep prior discard until resolved). */
-    freezeDiscardVisualForPlayerId?: number | null,
-    /** Keep supporter slot mesh when game state cleared it (trainer/item resolve → discard flight). */
-    freezeSupporterClearForPlayerId?: number | null
+    options: Board3dSyncStateOptions = {},
   ): Promise<void> {
     if (!gameState || !gameState.state) {
       return;
     }
+
+    const {
+      skippedCardId = null,
+      skippedScaleCardId = null,
+      handPlayFlightHiddenCardId = null,
+      freezeDiscardVisualForPlayerId = null,
+      freezeDiscardVisibleCardCount = null,
+      freezeDiscardHandFlightBaseStack = null,
+      freezeDiscardHandFlightIds = null,
+      freezeSupporterClearForPlayerId = null,
+    } = options;
 
     this.skippedCardIdForSync = skippedCardId ?? null;
     if (skippedScaleCardId == null) {
@@ -227,6 +248,9 @@ export class Board3dStateSyncService {
         'bottomPlayer',
         isOwner,
         freezeDiscardVisualForPlayerId ?? null,
+        freezeDiscardVisibleCardCount ?? null,
+        freezeDiscardHandFlightBaseStack ?? null,
+        freezeDiscardHandFlightIds ?? null,
         freezeSupporterClearForPlayerId ?? null
       );
     }
@@ -239,6 +263,9 @@ export class Board3dStateSyncService {
         'topPlayer',
         isOwner,
         freezeDiscardVisualForPlayerId ?? null,
+        freezeDiscardVisibleCardCount ?? null,
+        freezeDiscardHandFlightBaseStack ?? null,
+        freezeDiscardHandFlightIds ?? null,
         freezeSupporterClearForPlayerId ?? null
       );
     }
@@ -268,13 +295,95 @@ export class Board3dStateSyncService {
   }
 
   /**
-   * Sync a single player's board state
+   * Update discard pile mesh to show only the first `visibleCount` cards from game state.
    */
+  async updateDiscardPileVisibleCount(
+    player: Player,
+    position: 'topPlayer' | 'bottomPlayer',
+    visibleCount: number,
+  ): Promise<void> {
+    const rotation = position === 'topPlayer' ? 180 : 0;
+    const playerPrefix = `${position}_${player.id}`;
+    const discardStackId = `${playerPrefix}_discard`;
+
+    if (!player.discard || visibleCount <= 0 || player.discard.cards.length === 0) {
+      this.stackService.removeStack(discardStackId, this.worldMount, false);
+      this.removeCard(`${discardStackId}_top`);
+      return;
+    }
+
+    const count = Math.min(visibleCount, player.discard.cards.length);
+    const visibleDiscard = new CardList();
+    visibleDiscard.cards = player.discard.cards.slice(0, count);
+    visibleDiscard.isPublic = player.discard.isPublic;
+    visibleDiscard.isSecret = player.discard.isSecret;
+
+    await this.stackService.updateDiscardStack(
+      visibleDiscard,
+      discardStackId,
+      ZONE_POSITIONS[position].discard,
+      rotation,
+      this.worldMount,
+      this.updateCard.bind(this),
+      this.getCardById.bind(this)
+    );
+  }
+
+  /**
+   * Show base discard pile plus cards discarded so far (in flight order).
+   * Avoids reading the wrong interim top from the final game-state pile order.
+   */
+  async updateDiscardPileAfterHandDiscards(
+    player: Player,
+    position: 'topPlayer' | 'bottomPlayer',
+    baseStack: number,
+    discardedIdsInFlightOrder: number[],
+  ): Promise<void> {
+    const rotation = position === 'topPlayer' ? 180 : 0;
+    const playerPrefix = `${position}_${player.id}`;
+    const discardStackId = `${playerPrefix}_discard`;
+
+    if (!player.discard) {
+      this.stackService.removeStack(discardStackId, this.worldMount, false);
+      this.removeCard(`${discardStackId}_top`);
+      return;
+    }
+
+    if (discardedIdsInFlightOrder.length === 0) {
+      await this.updateDiscardPileVisibleCount(player, position, baseStack);
+      return;
+    }
+
+    const cardsById = new Map(player.discard.cards.map(c => [c.id, c]));
+    const baseCards = player.discard.cards.slice(0, baseStack);
+    const flownCards = discardedIdsInFlightOrder
+      .map(id => cardsById.get(id))
+      .filter((c): c is Card => c != null);
+
+    const visibleDiscard = new CardList();
+    visibleDiscard.cards = [...baseCards, ...flownCards];
+    visibleDiscard.isPublic = player.discard.isPublic;
+    visibleDiscard.isSecret = player.discard.isSecret;
+
+    await this.stackService.updateDiscardStack(
+      visibleDiscard,
+      discardStackId,
+      ZONE_POSITIONS[position].discard,
+      rotation,
+      this.worldMount,
+      this.updateCard.bind(this),
+      this.getCardById.bind(this)
+    );
+  }
+
   private async syncPlayer(
     player: Player,
     position: 'topPlayer' | 'bottomPlayer',
     isOwner: boolean,
     freezeDiscardVisualForPlayerId: number | null,
+    freezeDiscardVisibleCardCount: number | null,
+    freezeDiscardHandFlightBaseStack: number | null,
+    freezeDiscardHandFlightIds: readonly number[] | null,
     freezeSupporterClearForPlayerId: number | null
   ): Promise<void> {
     const rotation = position === 'topPlayer' ? 180 : 0;
@@ -380,7 +489,15 @@ export class Board3dStateSyncService {
         this.stackService.removeStack(discardStackId, this.worldMount, false);
         this.removeCard(`${discardStackId}_top`);
       }
+    } else if (freezeDiscardHandFlightBaseStack != null) {
+      await this.updateDiscardPileAfterHandDiscards(
+        player,
+        position,
+        freezeDiscardHandFlightBaseStack,
+        freezeDiscardHandFlightIds ? [...freezeDiscardHandFlightIds] : [],
+      );
     }
+    // else: item hand-play flight freeze — keep existing discard mesh until flight ends
 
     // Lost Zone (stacked with latest on top)
     const lostZoneStackId = `${playerPrefix}_lostzone`;

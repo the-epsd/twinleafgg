@@ -45,6 +45,9 @@ import {
   autoTakeChoosePrizeIndices,
   shouldAutoTakeChoosePrize,
 } from './choosePrizeAutoTake';
+import {
+  shouldUseBoardHandForChooseCards,
+} from './chooseCardsHandSelection';
 
 const CHOOSE_CARDS_CARD_BACK = '/assets/cardback.png';
 
@@ -260,6 +263,49 @@ function useChoosePokemonBoardEffect(
   }, [choosePokemonPromptId, clientId, boardInteraction, onResolvePrompt, replay]);
 }
 
+function useChooseHandCardsBoardEffect(
+  localGameRef: React.MutableRefObject<LocalGameState>,
+  clientId: number,
+  boardInteraction: BoardInteractionService,
+  onResolvePrompt: (promptId: number, result: unknown) => void,
+  chooseHandCardsPromptId: number | null,
+  replay: boolean | undefined,
+) {
+  useEffect(() => {
+    if (chooseHandCardsPromptId == null) {
+      return;
+    }
+
+    if (replay) {
+      boardInteraction.setReplayMode(true);
+      return () => {
+        boardInteraction.setReplayMode(false);
+      };
+    }
+
+    boardInteraction.setReplayMode(false);
+    const game = localGameRef.current;
+    const prompt = activeGamePrompt(game, clientId);
+    if (!prompt || prompt.id !== chooseHandCardsPromptId || prompt.type !== 'Choose cards') {
+      return;
+    }
+
+    const ccp = prompt as ChooseCardsPrompt;
+    if (!shouldUseBoardHandForChooseCards(ccp, clientId)) {
+      return;
+    }
+
+    const pid = ccp.id;
+    boardInteraction.startChooseHandCardsSelection(ccp, (indices) => {
+      void onResolvePrompt(pid, indices);
+    });
+
+    return () => {
+      boardInteraction.endBoardSelection();
+    };
+  }, [chooseHandCardsPromptId, clientId, boardInteraction, onResolvePrompt, replay]);
+}
+
 function useRemoveDamageBoardEffect(
   localGameRef: React.MutableRefObject<LocalGameState>,
   clientId: number,
@@ -413,6 +459,52 @@ function ChoosePokemonActionBar(props: {
   );
 }
 
+/** Board hand Choose cards: top snackbar + OK centered between Active and Bench. */
+function ChooseHandCardsBoardOverlay(props: {
+  boardInteraction: BoardInteractionService;
+  message: string;
+  allowCancel: boolean;
+}) {
+  const { t } = useTranslation();
+  const { boardInteraction, message, allowCancel } = props;
+  const [, setTick] = useState(0);
+
+  useEffect(() => {
+    const sub = merge(
+      boardInteraction.selectionMode$,
+      boardInteraction.selectedTargets$,
+      boardInteraction.maxSelections$,
+      boardInteraction.minSelections$,
+    ).subscribe(() => setTick((x) => x + 1));
+    return () => sub.unsubscribe();
+  }, [boardInteraction]);
+
+  const valid = boardInteraction.isSelectionValid();
+  const active = boardInteraction.isSelectionActive();
+
+  if (!active) {
+    return null;
+  }
+
+  return (
+    <>
+      <div className={styles.chooseStartingTopSnackbar} role="status">
+        {message}
+      </div>
+      <div className={styles.chooseStartingBoardOk}>
+        {allowCancel ? (
+          <ShellButton type="button" variant="secondary" onClick={() => boardInteraction.cancelSelection()}>
+            {t('BUTTON_CANCEL')}
+          </ShellButton>
+        ) : null}
+        <ShellButton type="button" disabled={!valid} onClick={() => boardInteraction.confirmSelection()}>
+          {t('BUTTON_OK')}
+        </ShellButton>
+      </div>
+    </>
+  );
+}
+
 export function TablePromptLayer({
   localGame,
   clientId,
@@ -440,6 +532,14 @@ export function TablePromptLayer({
       ? activePrompt.id
       : null;
 
+  const chooseHandCardsId =
+    activePrompt?.type === 'Choose cards' &&
+    !localGame.replay &&
+    !suppressTrainerEffectPrompts &&
+    shouldUseBoardHandForChooseCards(activePrompt as ChooseCardsPrompt, clientId)
+      ? activePrompt.id
+      : null;
+
   const removeDamageId =
     activePrompt?.type === 'Remove damage' && !localGame.replay && !suppressTrainerEffectPrompts
       ? activePrompt.id
@@ -461,6 +561,15 @@ export function TablePromptLayer({
     boardInteraction,
     onResolvePrompt,
     choosePokemonId,
+    !!localGame.replay,
+  );
+
+  useChooseHandCardsBoardEffect(
+    localGameRef,
+    clientId,
+    boardInteraction,
+    onResolvePrompt,
+    chooseHandCardsId,
     !!localGame.replay,
   );
 
@@ -724,6 +833,16 @@ export function TablePromptLayer({
 
   if (p.type === 'Choose cards') {
     const ccp = p as ChooseCardsPrompt;
+    if (shouldUseBoardHandForChooseCards(ccp, clientId) && !localGame.replay) {
+      const msg = gameMessageText(t, ccp.message);
+      return (
+        <ChooseHandCardsBoardOverlay
+          boardInteraction={boardInteraction}
+          message={msg}
+          allowCancel={ccp.options.allowCancel}
+        />
+      );
+    }
     return (
       <ChooseCardsPanel
         key={ccp.id}

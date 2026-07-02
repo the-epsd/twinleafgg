@@ -191,7 +191,7 @@ export class Board3dInteractionService {
       if (object.userData && (object.userData.isCard || object.userData.isDropZone)) {
         let p: Object3D | null = object;
         while (p) {
-          if (p.userData?.drawingFromDeck || p.userData?.playingToBoard) {
+          if (p.userData?.drawingFromDeck || p.userData?.playingToBoard || p.userData?.discardingFromHand) {
             return;
           }
           p = p.parent;
@@ -650,7 +650,8 @@ export class Board3dInteractionService {
     camera: Camera,
     scene: Scene,
     canvas: HTMLCanvasElement,
-    r3fSurfaceHit?: Object3D | null
+    r3fSurfaceHit?: Object3D | null,
+    disableHandDrag: boolean = false,
   ): Object3D | null {
     // Track mouse down position for click detection
     this.mouseDownPosition.set(event.clientX, event.clientY);
@@ -664,7 +665,7 @@ export class Board3dInteractionService {
 
     if (card) {
       // Check if card is draggable, but DON'T start drag yet - wait for threshold
-      if (card.userData.isHandCard && event.button === 0) {
+      if (card.userData.isHandCard && event.button === 0 && !disableHandDrag) {
         // Store pending drag info - will start on move threshold
         this.pendingDragCard = card;
         this.pendingDragCamera = camera;

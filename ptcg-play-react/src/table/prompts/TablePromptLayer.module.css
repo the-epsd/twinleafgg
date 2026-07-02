@@ -125,6 +125,37 @@
   gap: 10px;
 }
 
+/* Setup starting Pokémon on 3D board — message at top, OK between Active and Bench. */
+.chooseStartingTopSnackbar {
+  position: fixed;
+  top: 55px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  max-width: min(560px, calc(100vw - 32px));
+  padding: 14px 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.4;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  background: #323232;
+  color: #fff;
+  text-align: center;
+  pointer-events: none;
+}
+
+.chooseStartingBoardOk {
+  position: fixed;
+  left: 50%;
+  top: 54%;
+  transform: translate(-50%, -50%);
+  z-index: 46;
+  display: flex;
+  flex-shrink: 0;
+  gap: 10px;
+  pointer-events: auto;
+}
+
 .removeDamageBarControls {
   display: flex;
   flex-shrink: 0;

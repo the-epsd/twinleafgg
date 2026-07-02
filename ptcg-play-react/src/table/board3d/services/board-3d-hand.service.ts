@@ -567,6 +567,39 @@ export class Board3dHandService {
    * Detach a hand card to the scene for a play animation without disposing it.
    * Caller must dispose the Board3dCard after the animation (or on play failure, call syncHand).
    */
+  /**
+   * Detach a hand card by id for a discard-pile flight (sequential hand → discard animations).
+   */
+  detachHandCardForDiscardFlight(cardId: number, attachRoot: Object3D): Board3dCard | null {
+    let foundIndex = -1;
+    let board3d: Board3dCard | undefined;
+    for (const [idx, card] of this.handCards.entries()) {
+      const data = card.getGroup().userData.cardData as Card | undefined;
+      if (data?.id === cardId) {
+        foundIndex = idx;
+        board3d = card;
+        break;
+      }
+    }
+    if (foundIndex < 0 || !board3d) {
+      return null;
+    }
+
+    const cardGroup = board3d.getGroup();
+    gsap.killTweensOf(cardGroup.position);
+    gsap.killTweensOf(cardGroup.rotation);
+    gsap.killTweensOf(cardGroup.scale);
+
+    attachRoot.attach(cardGroup);
+    cardGroup.userData.isHandCard = false;
+    cardGroup.userData.discardingFromHand = true;
+    delete cardGroup.userData.handIndex;
+
+    this.handCards.delete(foundIndex);
+    this.repositionRemainingCards();
+    return board3d;
+  }
+
   detachCardForBoardPlay(index: number, attachRoot: Object3D): Board3dCard | null {
     const board3d = this.handCards.get(index);
     if (!board3d) {

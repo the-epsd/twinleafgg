@@ -1,5 +1,6 @@
 import { BehaviorSubject, Subject } from 'rxjs';
 import {
+  ChooseCardsPrompt,
   ChoosePokemonPrompt,
   GameMessage,
   MoveDamagePrompt,
@@ -12,12 +13,20 @@ import {
   type StateLog,
 } from 'ptcg-server';
 import { cardTargetKey } from './prompts/removeDamagePromptModel';
+import {
+  chooseCardsHandIndicesToCards,
+  chooseCardsHandIndexToPromptIndex,
+  chooseCardsHandTargetsToPromptIndices,
+  isChooseCardsHandIndexEligible,
+  isChooseCardsFromPlayerHand,
+} from './prompts/chooseCardsHandSelection';
 
 /** Pause before trainer effect prompts so the hand → board play animation can finish. */
 export const TRAINER_PLAY_EFFECT_PROMPT_DELAY_MS = 2500;
 
 type SelectionOverlayKind =
   | 'choose-pokemon'
+  | 'choose-hand-cards'
   | 'remove-damage'
   | 'move-damage'
   | 'put-damage'
@@ -101,6 +110,9 @@ export class BoardInteractionService {
   public gameLogs$ = this.gameLogsSubject.asObservable();
 
   private selectionCallback: ((targets: CardTarget[] | null) => void) | null = null;
+
+  private chooseCardsPrompt: ChooseCardsPrompt | null = null;
+  private chooseCardsCallback: ((indices: number[] | null) => void) | null = null;
 
   private overlayKind: SelectionOverlayKind = null;
 
@@ -211,6 +223,10 @@ export class BoardInteractionService {
     return this.overlayKind === 'hand-play-target';
   }
 
+  public isChooseHandCardsSelectionActive(): boolean {
+    return this.overlayKind === 'choose-hand-cards';
+  }
+
   public cancelHandPlayTargetSelection(): void {
     if (this.overlayKind !== 'hand-play-target') {
       return;
@@ -251,6 +267,53 @@ export class BoardInteractionService {
     this.minSelectionsSubject.next(prompt.options.min);
     this.maxSelectionsSubject.next(prompt.options.max);
     this.selectionCallback = onComplete;
+  }
+
+  /**
+   * Select cards from the 3D hand for a Choose cards prompt (own hand only).
+   */
+  public startChooseHandCardsSelection(
+    prompt: ChooseCardsPrompt,
+    onComplete: (indices: number[] | null) => void,
+  ): void {
+    if (this.isReplayModeActive) {
+      return;
+    }
+
+    if (!isChooseCardsFromPlayerHand(prompt)) {
+      return;
+    }
+
+    const cards = prompt.cards.cards;
+    const blocked = prompt.options.blocked ?? [];
+    const blockedTargets: CardTarget[] = [];
+    const handCards = prompt.player.hand.cards;
+    for (let handIndex = 0; handIndex < handCards.length; handIndex++) {
+      const promptIndex = chooseCardsHandIndexToPromptIndex(prompt, handIndex);
+      if (
+        promptIndex === -1 ||
+        !isChooseCardsHandIndexEligible(cards, prompt.filter, blocked, promptIndex)
+      ) {
+        blockedTargets.push({
+          player: PlayerType.BOTTOM_PLAYER,
+          slot: SlotType.HAND,
+          index: handIndex,
+        });
+      }
+    }
+
+    this.overlayKind = 'choose-hand-cards';
+    this.chooseCardsPrompt = prompt;
+    this.chooseCardsCallback = onComplete;
+    this.promptSubject.next(null);
+    this.selectionModeSubject.next(true);
+    this.selectedTargetsSubject.next([]);
+    this.blockedTargetsSubject.next(blockedTargets);
+    this.eligiblePlayerTypeSubject.next(PlayerType.BOTTOM_PLAYER);
+    this.eligibleSlotsSubject.next([SlotType.HAND]);
+    this.minSelectionsSubject.next(prompt.options.min);
+    this.maxSelectionsSubject.next(prompt.options.max);
+    this.selectionCallback = null;
   }
 
   /**
@@ -406,6 +469,8 @@ export class BoardInteractionService {
     this.eligiblePlayerTypeSubject.next(null);
     this.eligibleSlotsSubject.next([]);
     this.selectionCallback = null;
+    this.chooseCardsPrompt = null;
+    this.chooseCardsCallback = null;
   }
 
   /**
@@ -512,6 +577,24 @@ export class BoardInteractionService {
    * Confirm the current selection
    */
   public confirmSelection(): void {
+    if (this.overlayKind === 'choose-hand-cards') {
+      if (!this.chooseCardsPrompt || !this.chooseCardsCallback) {
+        return;
+      }
+      const prompt = this.chooseCardsPrompt;
+      const handIndices = this.selectedTargetsSubject.value
+        .filter(t => t.slot === SlotType.HAND)
+        .map(t => t.index);
+      const indices = chooseCardsHandTargetsToPromptIndices(prompt, handIndices);
+      const selectedCards = chooseCardsHandIndicesToCards(prompt, indices);
+      if (!prompt.validate(selectedCards)) {
+        return;
+      }
+      this.chooseCardsCallback(indices);
+      this.endBoardSelection();
+      return;
+    }
+
     if (this.overlayKind !== 'choose-pokemon') {
       return;
     }
@@ -526,6 +609,14 @@ export class BoardInteractionService {
    * Cancel the current selection
    */
   public cancelSelection(): void {
+    if (this.overlayKind === 'choose-hand-cards') {
+      if (this.chooseCardsCallback) {
+        this.chooseCardsCallback(null);
+      }
+      this.endBoardSelection();
+      return;
+    }
+
     if (this.overlayKind !== 'choose-pokemon') {
       return;
     }
@@ -546,6 +637,15 @@ export class BoardInteractionService {
    * Check if the current selection meets requirements
    */
   public isSelectionValid(): boolean {
+    if (this.overlayKind === 'choose-hand-cards' && this.chooseCardsPrompt) {
+      const prompt = this.chooseCardsPrompt;
+      const handIndices = this.selectedTargetsSubject.value
+        .filter(t => t.slot === SlotType.HAND)
+        .map(t => t.index);
+      const indices = chooseCardsHandTargetsToPromptIndices(prompt, handIndices);
+      return prompt.validate(chooseCardsHandIndicesToCards(prompt, indices));
+    }
+
     if (
       this.overlayKind === 'remove-damage'
       || this.overlayKind === 'move-damage'

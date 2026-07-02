@@ -8,6 +8,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StateUtils } from '../../../game/store/state-utils';
 import { UseStadiumEffect } from '../../../game/store/effects/game-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
+import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class PrismTower extends TrainerCard {
   public trainerType: TrainerType = TrainerType.STADIUM;
@@ -40,7 +41,7 @@ export class PrismTower extends TrainerCard {
           GameMessage.CHOOSE_CARD_TO_DISCARD,
           player.hand,
           {},
-          { allowCancel: true, min: 2, max: 2 },
+          { allowCancel: false, min: 2, max: 2 },
         ),
         (selected) => {
           selected = selected || [];
@@ -48,8 +49,8 @@ export class PrismTower extends TrainerCard {
             player.stadiumUsedTurn = stadiumUsedTurn;
             return;
           }
-          player.hand.moveCardsTo(selected, player.discard);
-          player.deck.moveTo(player.hand, 1);
+          MOVE_CARDS(store, state, player.hand, player.discard, { cards: selected, sourceCard: this, sourceEffect: this });
+          MOVE_CARDS(store, state, player.deck, player.hand, { count: 1, sourceCard: this, sourceEffect: this });
         },
       );
     }
