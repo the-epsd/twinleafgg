@@ -93,6 +93,7 @@ import { Wugtrioex } from './wugtrio-ex';
 import { Zeraora } from './zeraora';
 import { CiphermaniacsCodebreaking } from './cryptomaniacs-deciphering';
 import { Sawsbuck } from './sawsbuck';
+import { Whimsicott } from './whimsicott';
 
 export const setTemporalForces: Card[] = [
 
@@ -169,6 +170,7 @@ export const setTemporalForces: Card[] = [
   new Salvatore(),
   new SandyShocks(),
   new Sawsbuck(),
+  new Whimsicott(),
   new Scovillainex(),
   new Sizzlipede(),
   new Skitty(),

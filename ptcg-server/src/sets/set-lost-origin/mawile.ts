@@ -1,11 +1,12 @@
 import { PokemonCard } from '../../game/store/card/pokemon-card';
 import { Stage, CardType } from '../../game/store/card/card-types';
-import { StoreLike, State, StateUtils } from '../../game';
+import { StoreLike, State } from '../../game';
 import { Effect } from '../../game/store/effects/effect';
-import { EndTurnEffect } from '../../game/store/effects/game-phase-effects';
-import { PutDamageEffect } from '../../game/store/effects/attack-effects';
-import { MarkerConstants } from '../../game/store/markers/marker-constants';
-import { WAS_ATTACK_USED, BLOCK_RETREAT } from '../../game/store/prefabs/prefabs';
+import {
+  BLOCK_RETREAT,
+  DEFENDING_POKEMON_TAKES_MORE_DAMAGE_DURING_YOUR_NEXT_TURN,
+  WAS_ATTACK_USED,
+} from '../../game/store/prefabs/prefabs';
 
 export class Mawile extends PokemonCard {
 
@@ -49,34 +50,10 @@ export class Mawile extends PokemonCard {
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_ATTACK_USED(effect, 0, this)) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      // Add markers for next turn effects
-      opponent.active.marker.addMarker(MarkerConstants.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
-      opponent.marker.addMarker(MarkerConstants.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
-
+      state = DEFENDING_POKEMON_TAKES_MORE_DAMAGE_DURING_YOUR_NEXT_TURN(store, state, effect, this, 90);
       return BLOCK_RETREAT(store, state, effect, this);
     }
 
-    // Clear damage boost marker at end of affected turn
-    if (effect instanceof EndTurnEffect && effect.player.marker.hasMarker(MarkerConstants.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this)) {
-      effect.player.marker.removeMarker(MarkerConstants.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
-    }
-
-    // Handle damage boost effect
-    if (effect instanceof PutDamageEffect && effect.target.marker.hasMarker(MarkerConstants.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this) && effect.damage > 0) {
-      return state;
-    }
-
-    if (effect instanceof EndTurnEffect) {
-      const player = effect.player;
-      const opponent = StateUtils.getOpponent(state, player);
-
-      if (opponent.active.marker.hasMarker(MarkerConstants.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this) && !opponent.marker.hasMarker(MarkerConstants.CLEAR_DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this)) {
-        opponent.active.marker.removeMarker(MarkerConstants.DURING_OPPONENTS_NEXT_TURN_DEFENDING_POKEMON_TAKES_MORE_DAMAGE_MARKER, this);
-      }
-    }
     return state;
   }
 }

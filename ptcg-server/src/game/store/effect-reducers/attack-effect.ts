@@ -60,6 +60,13 @@ export function attackReducer(store: StoreLike, state: State, effect: Effect): S
       effect.damage = Math.max(0, effect.damage - target.damageReductionNextTurn);
     }
 
+    // Apply extra damage for "during your next turn, the Defending Pokemon takes more damage" effects
+    if (target.defendingPokemonExtraDamageNextTurn > 0
+      && !target.defendingPokemonExtraDamagePending
+      && target.defendingPokemonExtraDamageAttackerId === effect.player.id) {
+      effect.damage += target.defendingPokemonExtraDamageNextTurn;
+    }
+
     const damage = Math.max(0, effect.damage);
     target.damage += damage;
 

@@ -138,3 +138,31 @@ export function reduceDamageEffect(attackEffect: AttackEffect, source: Card): Re
   effect.markerSource = source;
   return effect;
 }
+
+/**
+ * Effect that causes the defending Pokemon to take more damage from attacks
+ * during the attacking player's next turn (after applying Weakness and Resistance).
+ */
+export class DefendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect extends EffectOfAttackEffect {
+  readonly type: string = 'DEFENDING_POKEMON_TAKES_MORE_DAMAGE_DURING_ATTACKER_NEXT_TURN_EFFECT';
+
+  constructor(base: AttackEffect, public damageBonus: number) {
+    super(base);
+  }
+
+  applyEffect(): void {
+    this.opponent.active.defendingPokemonExtraDamageNextTurn = this.damageBonus;
+    this.opponent.active.defendingPokemonExtraDamageAttackerId = this.player.id;
+    this.opponent.active.defendingPokemonExtraDamagePending = true;
+  }
+}
+
+export function defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect(
+  attackEffect: AttackEffect,
+  source: Card,
+  damageBonus: number,
+): DefendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect {
+  const effect = new DefendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect(attackEffect, damageBonus);
+  effect.markerSource = source;
+  return effect;
+}

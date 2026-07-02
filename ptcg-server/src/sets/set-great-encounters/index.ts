@@ -10,6 +10,7 @@ import { Floatzel } from './floatzel';
 import { Illumise } from './illumise';
 import { MoonlightStadium } from './moonlight-stadium';
 import { Porygon } from './porygon';
+import { Porygon2 } from './porygon2';
 import { PremierBall } from './premier-ball';
 import { UnownG } from './unown-g';
 import { Volbeat } from './volbeat';
@@ -29,6 +30,7 @@ export const setGreatEncounters: Card[] = [
   new Illumise(),
   new MoonlightStadium(),
   new Porygon(),
+  new Porygon2(),
   new PremierBall(),
   new UnownG(),
   new Volbeat(),

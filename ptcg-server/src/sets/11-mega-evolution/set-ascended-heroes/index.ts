@@ -31,6 +31,7 @@ import { Scraggy } from './scraggy';
 import { Snom } from './snom';
 import { Snorunt } from './snorunt';
 import { Spectrier } from './spectrier';
+import { Stunfisk } from './stunfisk';
 import { TapuKoko } from './tapu-koko';
 import { TeamRocketsHonchkrow } from './team-rockets-honchkrow';
 import { TeamRocketsKangaskhanex } from './team-rockets-kangaskhan-ex';
@@ -115,6 +116,7 @@ export const setAscendedHeroes: Card[] = [
   new Snom(),
   new Snorunt(),
   new Spectrier(),
+  new Stunfisk(),
   new TapuKoko(),
   new TeamRocketsHonchkrow(),
   new TeamRocketsKangaskhanex(),

@@ -90,7 +90,7 @@ import {
 } from '../effects/game-effects';
 import { AfterAttackEffect, BeforeDoingDamageEffect, EndTurnEffect } from '../effects/game-phase-effects';
 import { ChooseAttackPrompt } from '../prompts/choose-attack-prompt';
-import { preventRetreatEffect, preventDamageEffect, opponentPokemonCannotUseAttackEffect } from '../effects/effect-of-attack-effects';
+import { preventRetreatEffect, preventDamageEffect, opponentPokemonCannotUseAttackEffect, defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect } from '../effects/effect-of-attack-effects';
 import { GameStatsTracker } from '../game-stats-tracker';
 
 /**
@@ -3790,6 +3790,21 @@ export function BLOCK_RETREAT(
 ): State {
   const retreatEffect = preventRetreatEffect(effect, source);
   return store.reduceEffect(state, retreatEffect);
+}
+
+/**
+ * Causes the defending Pokemon to take extra damage from attacks during the
+ * attacking player's next turn (after applying Weakness and Resistance).
+ */
+export function DEFENDING_POKEMON_TAKES_MORE_DAMAGE_DURING_YOUR_NEXT_TURN(
+  store: StoreLike,
+  state: State,
+  effect: AttackEffect,
+  source: Card,
+  damageBonus: number,
+): State {
+  const bonusEffect = defendingPokemonTakesMoreDamageDuringAttackerNextTurnEffect(effect, source, damageBonus);
+  return store.reduceEffect(state, bonusEffect);
 }
 
 /**

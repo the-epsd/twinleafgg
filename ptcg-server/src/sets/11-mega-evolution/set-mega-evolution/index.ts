@@ -48,6 +48,7 @@ import {
 } from './other-prints';
 import { Card } from '../../../game/store/card/card';
 import { Abra } from './abra';
+import { AcerolasMischief } from './acerolas-mischief';
 import { Alakazam } from './alakazam';
 import { Bayleef } from './bayleef';
 import { Bulbasaur } from './bulbasaur';
@@ -117,6 +118,7 @@ import { IronDefender } from './iron-defender';
 
 export const setMegaEvolution: Card[] = [
   new Abra(),
+  new AcerolasMischief(),
   new Alakazam(),
   new Bayleef(),
   new Bulbasaur(),
