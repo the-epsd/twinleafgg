@@ -4,7 +4,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { Effect } from '../../../game/store/effects/effect';
-import { GameError, GameMessage, MoveEnergyPrompt, StateUtils, PlayerType, SlotType } from '../../../game';
+import { GameError, GameMessage, MoveEnergyPrompt, Player, StateUtils, PlayerType, SlotType } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class NsPlan extends TrainerCard {
@@ -16,6 +16,24 @@ export class NsPlan extends TrainerCard {
   public name: string = 'N\'s Plan';
   public fullName: string = 'N\'s Plot SV11B';
   public text: string = 'Move up to 2 Energy from your Benched Pokémon to your Active Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    let hasEnergy = false;
+    let pokemonCount = 0;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      pokemonCount += 1;
+      const energyAttached = cardList.cards.some(c => c.superType === SuperType.ENERGY);
+      hasEnergy = hasEnergy || energyAttached;
+    });
+    if (!hasEnergy || pokemonCount <= 1) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -9,7 +9,7 @@ import { GamePhase, State } from '../../../game/store/state/state';
 import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { AttachEnergyPrompt, PlayerType, SlotType } from '../../../game';
+import { AttachEnergyPrompt, Player, PlayerType, SlotType } from '../../../game';
 import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -95,6 +95,26 @@ export class Mela extends TrainerCard {
 Attach a Basic [R] Energy card from your discard pile to 1 of your Pokémon. If you do, draw cards until you have 6 cards in your hand.`;
 
   public readonly MELA_MARKER = 'MELA_MARKER';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (!player.marker.hasMarker(this.MELA_MARKER)) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    const hasFireEnergy = player.discard.cards.some(c =>
+      c instanceof EnergyCard && c.energyType === EnergyType.BASIC && c.provides.includes(CardType.FIRE)
+    );
+    if (!hasFireEnergy) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -12,6 +12,7 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { Player } from '../../../game/store/state/player';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: EarthenVessel, effect: TrainerEffect): IterableIterator<State> {
@@ -109,6 +110,14 @@ export class EarthenVessel extends TrainerCard {
     `You can use this card only if you discard another card from your hand.
 
 Search your deck for up to 2 Basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.`;
+
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

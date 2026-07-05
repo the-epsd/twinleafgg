@@ -10,6 +10,7 @@ import { GameMessage } from '../../../game/game-message';
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { AttachEnergyPrompt } from '../../../game/store/prompts/attach-energy-prompt';
 import { CardTarget, PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
+import { Player } from '../../../game/store/state/player';
 
 export class RebootPod extends TrainerCard {
 
@@ -31,6 +32,17 @@ export class RebootPod extends TrainerCard {
 
   public text: string =
     'Attach a Basic Energy card from your discard pile to each of your Future Pokémon in play.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const hasBasicEnergy = player.discard.cards.some(c =>
+      c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+    );
+    if (!hasBasicEnergy) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

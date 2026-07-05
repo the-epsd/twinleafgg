@@ -1,4 +1,4 @@
-import { CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, GameStoreMessage, PlayerType, SlotType, TrainerCard } from '../../../game';
+import { CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, GameStoreMessage, PlayerType, SlotType, TrainerCard, Player } from '../../../game';
 import { CardType, SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CheckPokemonTypeEffect } from '../../../game/store/effects/check-effects';
@@ -19,6 +19,22 @@ export class StrangeTimepiece extends TrainerCard {
   public trainerType = TrainerType.ITEM;
 
   public text = 'Devolve 1 of your evolved [P] Pokémon by putting any number of Evolution cards on it into your hand. (That Pokémon can\'t evolve this turn.)';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    let canDevolve = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list) => {
+      const checkTypeEffect = new CheckPokemonTypeEffect(list);
+      store.reduceEffect(state, checkTypeEffect);
+      if (list.isEvolved() && checkTypeEffect.cardTypes.includes(CardType.PSYCHIC)) {
+        canDevolve = true;
+      }
+    });
+    if (!canDevolve) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -5,7 +5,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SpecialCondition, TrainerType } from '../../../game/store/card/card-types';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { GameError, GameMessage, StateUtils } from '../../../game';
+import { GameError, GameMessage, Player, StateUtils } from '../../../game';
 
 export class Atticus extends TrainerCard {
 
@@ -27,6 +27,18 @@ export class Atticus extends TrainerCard {
     'You can use this card only if your opponent\'s Active Pokémon is Poisoned.' +
     '' +
     'Shuffle your hand into your deck, then draw 7 cards.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const opponent = StateUtils.getOpponent(state, player);
+    if (!opponent.active.specialConditions.includes(SpecialCondition.POISONED)) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

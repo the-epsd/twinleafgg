@@ -5,7 +5,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../../game/store/card/card-types';
-import { ChoosePokemonPrompt, GameError, PlayerType, SelectPrompt, SlotType, StateUtils } from '../../../game';
+import { ChoosePokemonPrompt, GameError, Player, PlayerType, SelectPrompt, SlotType, StateUtils } from '../../../game';
 import { DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
@@ -31,6 +31,14 @@ export class Kieran extends TrainerCard {
   
     • Switch your Active Pokémon with 1 of your Benched Pokémon.
     • Your Pokémon's attacks do 30 more damage to your opponent's Active Pokémon ex and Pokémon V this turn.`;
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

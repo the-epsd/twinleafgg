@@ -7,7 +7,7 @@ import { CoinFlipPrompt } from '../../../game/store/prompts/coin-flip-prompt';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { Effect } from '../../../game/store/effects/effect';
-import { AttachEnergyPrompt, Card, PlayerType, SlotType, StateUtils } from '../../../game';
+import { AttachEnergyPrompt, Card, Player, PlayerType, SlotType, StateUtils } from '../../../game';
 import { MOVE_CARDS, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, sourceCard: Card): IterableIterator<State> {
@@ -66,6 +66,10 @@ export class EnergyCoin extends TrainerCard {
   public fullName: string = 'Energy Coin SV11B';
 
   public text: string = 'Flip 2 coins. If both of them are heads, search your deck for a Basic Energy card and attach it to 1 of your Pokémon. Then, shuffle your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, SuperType, PokemonType } from '../../../game/store/card/card-types';
-import { GameError, GameLog, GameMessage, Power, PowerType, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
+import { GameError, GameLog, GameMessage, Player, Power, PowerType, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
 import { AbstractAttackEffect, ApplyWeaknessEffect, PutDamageEffect, DealDamageEffect } from '../../../game/store/effects/attack-effects';
 import { PowerEffect, RetreatEffect } from '../../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
@@ -52,6 +52,15 @@ At any time during your turn, you may discard this card from play.`,
   public setNumber: string = '129';
   public name: string = 'Antique Cover Fossil';
   public fullName: string = 'Antique Cover Fossil SCR';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const openSlots = player.bench.filter(b => b.cards.length === 0);
+    if (openSlots.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
     if (WAS_POWER_USED(effect, 0, this)) {

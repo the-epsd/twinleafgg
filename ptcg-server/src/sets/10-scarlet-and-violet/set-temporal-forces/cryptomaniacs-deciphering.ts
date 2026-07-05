@@ -10,7 +10,7 @@ import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { CardList } from '../../../game/store/state/card-list';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { OrderCardsPrompt } from '../../../game';
+import { OrderCardsPrompt, Player } from '../../../game';
 
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -89,6 +89,17 @@ export class CiphermaniacsCodebreaking extends TrainerCard {
 
   public text: string =
     'Search your deck for 2 cards, shuffle your deck, then put those cards on top of it in any order.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

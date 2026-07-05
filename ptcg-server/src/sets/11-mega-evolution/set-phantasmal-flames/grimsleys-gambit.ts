@@ -1,4 +1,4 @@
-import { TrainerCard, TrainerType, StoreLike, State, Card, CardList, ChooseCardsPrompt, GameError, GameMessage, ShuffleDeckPrompt, SuperType, CardType } from '../../../game';
+import { TrainerCard, TrainerType, StoreLike, State, Card, CardList, ChooseCardsPrompt, GameError, GameMessage, ShuffleDeckPrompt, SuperType, CardType, Player } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
@@ -12,6 +12,23 @@ export class GrimsleysGambit extends TrainerCard {
   public name: string = 'Grimsley\'s Move';
   public fullName: string = 'Grimsley\'s Gambit M2';
   public text: string = 'Look at the top 7 cards of your deck and put a [D] Pokémon you find there onto your Bench. Shuffle the other cards and put them on the bottom of your deck. You can\'t use this card on your first turn.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    if (player.bench.filter(b => b.cards.length === 0).length === 0) {
+      return false;
+    }
+    if (state.turn === 1 || state.turn === 2) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

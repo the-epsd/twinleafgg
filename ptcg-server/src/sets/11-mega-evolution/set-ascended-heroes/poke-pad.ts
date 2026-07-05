@@ -5,7 +5,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 import { SEARCH_YOUR_DECK_FOR_POKEMON_AND_PUT_INTO_HAND } from '../../../game/store/prefabs/prefabs';
-import { PokemonCard } from '../../../game';
+import { PokemonCard, Player } from '../../../game';
 
 function hasRuleBox(card: PokemonCard): boolean {
   return card.tags.includes(CardTag.POKEMON_ex) ||
@@ -34,6 +34,11 @@ export class PokePad extends TrainerCard {
   public name: string = 'Poké Pad';
   public fullName: string = 'Poké Pad MC';
   public text: string = 'Search your deck for a Pokémon that doesn\'t have a Rule Box, reveal it, and put it into your hand. Then, shuffle your deck. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {

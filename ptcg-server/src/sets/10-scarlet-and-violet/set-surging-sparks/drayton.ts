@@ -12,7 +12,7 @@ import { GameMessage } from '../../../game/game-message';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { PokemonCard } from '../../../game';
+import { Player, PokemonCard } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -105,6 +105,17 @@ export class Drayton extends TrainerCard {
 
   public text: string =
     'Look at the top 7 cards of your deck. Choose a Pokémon and a Trainer card from those cards, reveal them, and put them into your hand. Shuffle the other cards back into your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

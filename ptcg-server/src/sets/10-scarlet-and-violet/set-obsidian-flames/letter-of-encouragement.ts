@@ -10,7 +10,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { ChooseCardsPrompt } from '../../../game';
+import { ChooseCardsPrompt, Player } from '../../../game';
 import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -64,6 +64,14 @@ export class LetterOfEncouragement extends TrainerCard {
 Search your deck for up to 3 Basic Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.`;
 
   public readonly LETTER_OF_ENCOURAGEMENT_MARKER = 'LETTER_OF_ENCOURAGEMENT_MARKER';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

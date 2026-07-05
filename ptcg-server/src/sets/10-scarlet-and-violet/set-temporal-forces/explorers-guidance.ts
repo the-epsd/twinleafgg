@@ -4,7 +4,7 @@ import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { GameError, GameMessage, CardList, ChooseCardsPrompt } from '../../../game';
+import { CardList, ChooseCardsPrompt, GameError, GameMessage, Player } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 
@@ -27,6 +27,17 @@ export class ExplorersGuidance extends TrainerCard {
   public fullName: string = 'Explorer\'s Guidance TEF';
 
   public text: string = 'Look at the top 6 cards of your deck and put 2 of them into your hand. Discard the other cards.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

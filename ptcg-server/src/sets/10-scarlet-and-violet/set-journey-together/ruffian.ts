@@ -1,4 +1,4 @@
-import { CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, EnergyType, GameError, GameMessage, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
+import { CardTarget, ChooseCardsPrompt, ChoosePokemonPrompt, EnergyType, GameError, GameMessage, Player, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
@@ -12,6 +12,24 @@ export class Ruffian extends TrainerCard {
   public fullName: string = 'Ruffian JTG';
 
   public text: string = 'Discard a Pokémon Tool and a Special Energy from 1 of your opponent\'s Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const opponent = StateUtils.getOpponent(state, player);
+    let hasTarget = false;
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+      if (cardList.energies.cards.length > 0 || cardList.tools.length > 0) {
+        hasTarget = true;
+      }
+    });
+    if (!hasTarget) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

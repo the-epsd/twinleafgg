@@ -6,6 +6,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ADD_MARKER, DRAW_CARDS, HAS_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { Player } from '../../../game/store/state/player';
 
 export class Amarys extends TrainerCard {
 
@@ -26,6 +27,14 @@ export class Amarys extends TrainerCard {
   public readonly AMARYS_USED_MARKER = 'AMARYS_USED_MARKER';
 
   public text: string = 'Draw 4 cards. At the end of this turn, if you have 5 or more cards in your hand, discard your hand.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

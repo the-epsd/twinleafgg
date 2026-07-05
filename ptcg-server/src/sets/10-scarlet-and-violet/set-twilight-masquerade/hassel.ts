@@ -9,7 +9,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
-import { CardList, ChooseCardsPrompt } from '../../../game';
+import { CardList, ChooseCardsPrompt, Player } from '../../../game';
 import { REMOVE_OPPONENT_LAST_TURN_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -81,6 +81,17 @@ export class Hassel extends TrainerCard {
     'You can play this card only if any of your Pokémon were Knocked Out during your opponent\'s last turn. Look at the top 8 cards of your deck. Put up to 3 of them into your hand, and shuffle the rest into your deck.';
 
   public readonly HASSEL_MARKER = 'HASSEL_MARKER';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -1,18 +1,4 @@
-import {
-  Card,
-  CardType,
-  ChooseCardsPrompt,
-  EnergyCard,
-  EnergyType,
-  GameError,
-  GameMessage,
-  ShowCardsPrompt,
-  ShuffleDeckPrompt,
-  State,
-  StateUtils,
-  StoreLike,
-  SuperType,
-} from '../../../game';
+import { Card, CardType, ChooseCardsPrompt, EnergyCard, EnergyType, GameError, GameMessage, ShowCardsPrompt, ShuffleDeckPrompt, State, StateUtils, StoreLike, SuperType, Player } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -85,6 +71,14 @@ export class AdventuringLantern extends TrainerCard {
   public name: string = 'Adventuring Lantern';
   public fullName: string = 'Adventuring Lantern M6';
   public text: string = 'Search your deck for a Basic [R] Energy and a Basic [L] Energy, reveal them, and put them into your hand. Then, shuffle your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

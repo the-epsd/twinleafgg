@@ -9,7 +9,7 @@ import { StateUtils } from '../../../game/store/state-utils';
 import { DiscardToHandEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
-import { EnergyCard, GameError, PokemonCard } from '../../../game';
+import { EnergyCard, GameError, Player, PokemonCard, SuperType } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: NightlyStretcher, effect: TrainerEffect): IterableIterator<State> {
@@ -78,6 +78,17 @@ export class NightlyStretcher extends TrainerCard {
 
   public text: string =
     'Put a Pokémon or a Basic Energy card from your discard pile into your hand.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const hasTarget = player.discard.cards.some(c =>
+      c instanceof PokemonCard || (c.superType === SuperType.ENERGY)
+    );
+    if (!hasTarget) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

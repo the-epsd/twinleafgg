@@ -7,6 +7,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Player } from '../../../game/store/state/player';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
@@ -66,6 +67,15 @@ export class SacredAsh extends TrainerCard {
   public setNumber: string = '168';
 
   public text: string = 'Shuffle up to 5 Pokémon from your discard pile into your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const pokemonInDiscard = player.discard.cards.filter(c => c instanceof PokemonCard).length;
+    if (pokemonInDiscard < 5) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

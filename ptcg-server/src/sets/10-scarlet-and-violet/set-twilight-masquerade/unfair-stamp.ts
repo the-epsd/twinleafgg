@@ -4,6 +4,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
+import { Player } from '../../../game/store/state/player';
 import { GamePhase, State } from '../../../game/store/state/state';
 import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
@@ -66,6 +67,17 @@ export class UnfairStamp extends TrainerCard {
 Each player shuffles their hand into their deck. Then, you draw 5 cards, and your opponent draws 2 cards.`;
 
   public readonly UNFAIR_STAMP_MARKER = 'UNFAIR_STAMP_MARKER';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (!player.marker.hasMarker(this.UNFAIR_STAMP_MARKER)) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

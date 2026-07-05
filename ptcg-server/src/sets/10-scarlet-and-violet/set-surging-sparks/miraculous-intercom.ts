@@ -8,7 +8,7 @@ import { GameError } from '../../../game/game-error';
 import { GameLog, GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { StateUtils, ShowCardsPrompt } from '../../../game';
+import { Player, ShowCardsPrompt, StateUtils } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, self: MiraculousIntercom, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -73,6 +73,17 @@ export class MiraculousIntercom extends TrainerCard {
 
   public text: string =
     'Put up to 2 Supporter cards from your discard pile into your hand.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const hasSupporter = player.discard.cards.some(c =>
+      c instanceof TrainerCard && c.trainerType === TrainerType.SUPPORTER
+    );
+    if (!hasSupporter) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

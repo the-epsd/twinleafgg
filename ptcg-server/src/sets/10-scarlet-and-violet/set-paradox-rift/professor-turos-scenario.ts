@@ -6,7 +6,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
-import { GameError, TrainerType } from '../../../game';
+import { GameError, Player, TrainerType } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { CardTag } from '../../../game/store/card/card-types';
@@ -24,6 +24,14 @@ export class ProfessorTurosScenario extends TrainerCard {
 
   public text: string =
     'Put 1 of your Pokémon in play into your hand. (Discard all cards attached to that Pokémon.)';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

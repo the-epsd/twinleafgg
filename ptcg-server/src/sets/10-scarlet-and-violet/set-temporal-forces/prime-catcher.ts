@@ -1,4 +1,4 @@
-import { PokemonCardList } from '../../../game';
+import { Player, PokemonCardList } from '../../../game';
 import { GameMessage } from '../../../game/game-message';
 import { PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
 import { CardTag, TrainerType } from '../../../game/store/card/card-types';
@@ -86,6 +86,15 @@ export class PrimeCatcher extends TrainerCard {
 
   public text: string =
     'Switch in 1 of your opponent\'s Benched Pokémon to the Active Spot. If you do, switch your Active Pokémon with 1 of your Benched Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+    if (!opponent.bench.some(b => b.cards.length > 0)) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

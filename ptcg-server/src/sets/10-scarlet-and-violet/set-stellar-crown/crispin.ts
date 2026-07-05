@@ -3,7 +3,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, AttachEnergyPrompt, SlotType, StateUtils, ChooseCardsPrompt, CardList, ShowCardsPrompt, ShuffleDeckPrompt } from '../../../game';
+import { AttachEnergyPrompt, CardList, ChooseCardsPrompt, GameError, GameMessage, Player, PlayerType, ShowCardsPrompt, ShuffleDeckPrompt, SlotType, StateUtils } from '../../../game';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 export class Crispin extends TrainerCard {
@@ -24,6 +24,14 @@ export class Crispin extends TrainerCard {
 
   public text: string =
     'Search your deck for up to 2 Basic Energy cards of different types, reveal them, and put 1 of them into your hand. Attach the other to 1 of your Pokémon. Then, shuffle your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -11,7 +11,7 @@ import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../../game/game-error';
 import { GameLog, GameMessage } from '../../../game/game-message';
-import { PokemonCard } from '../../../game';
+import { PokemonCard, Player } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: Dawn, effect: TrainerEffect): IterableIterator<State> {
@@ -96,6 +96,14 @@ export class Dawn extends TrainerCard {
   public fullName: string = 'Dawn M2';
 
   public text: string = 'Search your deck for a Basic Pokémon, a Stage 1 Pokémon, and a Stage 2 Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

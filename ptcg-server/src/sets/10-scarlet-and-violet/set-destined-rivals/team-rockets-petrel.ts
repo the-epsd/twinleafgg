@@ -9,7 +9,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
-import { StateUtils } from '../../../game';
+import { Player, StateUtils } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect, self: Card): IterableIterator<State> {
@@ -58,6 +58,17 @@ export class TeamRocketsPetrel extends TrainerCard {
 
   public text: string =
     'Search your deck for a Trainer card, reveal it, and put it into your hand. Then, shuffle your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

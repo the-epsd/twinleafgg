@@ -1,4 +1,4 @@
-import { ChoosePokemonPrompt, GameError, PlayerType, SlotType } from '../../../game';
+import { ChoosePokemonPrompt, GameError, Player, PlayerType, SlotType } from '../../../game';
 import { GameMessage } from '../../../game/game-message';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
@@ -25,6 +25,14 @@ export class Surfer extends TrainerCard {
 
   public text: string =
     'Switch your Active Pokémon with 1 of your Benched Pokémon. If you do, draw cards until you have 5 cards in your hand.';
+
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

@@ -1,7 +1,7 @@
 import { Card } from '../../../game/store/card/card';
 import { GameMessage } from '../../../game/game-message';
 import { Effect } from '../../../game/store/effects/effect';
-import { AttachEnergyPrompt, GameError, PlayerType, SlotType, StateUtils } from '../../../game';
+import { AttachEnergyPrompt, GameError, Player, PlayerType, SlotType, StateUtils } from '../../../game';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
@@ -85,6 +85,14 @@ export class GiovannisCharisma extends TrainerCard {
 
   public text: string =
     'Put an Energy attached to your opponent\'s Active Pokémon into their hand. If you do, attach an Energy card from your hand to your Active Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

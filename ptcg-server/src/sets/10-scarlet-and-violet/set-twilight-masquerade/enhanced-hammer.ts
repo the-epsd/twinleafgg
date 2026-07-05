@@ -5,10 +5,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  PlayerType, SlotType, StateUtils, CardTarget, GameError, GameMessage,
-  PokemonCardList, ChooseCardsPrompt, Card
-} from '../../../game';
+import { Card, CardTarget, ChooseCardsPrompt, GameError, GameMessage, Player, PlayerType, PokemonCardList, SlotType, StateUtils, SuperType } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -86,6 +83,21 @@ export class EnhancedHammer extends TrainerCard {
 
   public text: string =
     'Discard a Special Energy attached to 1 of your opponent\'s Pokemon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+    let hasSpecialEnergy = false;
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+      if (cardList.cards.some(c => c.superType === SuperType.ENERGY && c.energyType === EnergyType.SPECIAL)) {
+        hasSpecialEnergy = true;
+      }
+    });
+    if (!hasSpecialEnergy) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

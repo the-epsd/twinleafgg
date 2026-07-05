@@ -5,7 +5,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { GameLog, GameMessage } from '../../../game/game-message';
-import { StoreLike, State, StateUtils, PokemonCard, Card, GameError } from '../../../game';
+import { Card, GameError, Player, PokemonCard, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -67,6 +67,14 @@ export class TeraOrb extends TrainerCard {
 
   public text =
     'Search your deck for a Tera Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

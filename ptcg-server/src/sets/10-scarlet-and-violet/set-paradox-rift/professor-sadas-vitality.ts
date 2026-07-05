@@ -6,7 +6,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { AttachEnergyPrompt, EnergyCard, GameError, StateUtils } from '../../../game';
+import { AttachEnergyPrompt, EnergyCard, GameError, Player, StateUtils } from '../../../game';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
 export class ProfessorSadasVitality extends TrainerCard {
@@ -29,6 +29,29 @@ export class ProfessorSadasVitality extends TrainerCard {
 
   public text: string =
     'Choose up to 2 of your Ancient Pokémon and attach a Basic Energy card from your discard pile to each of them. If you attached any Energy in this way, draw 3 cards.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const hasEnergyInDiscard = player.discard.cards.some(c =>
+      c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+    );
+    if (!hasEnergyInDiscard) {
+      return false;
+    }
+    let ancientPokemonInPlay = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
+      if (card.tags.includes(CardTag.ANCIENT)) {
+        ancientPokemonInPlay = true;
+      }
+    });
+    if (!ancientPokemonInPlay) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

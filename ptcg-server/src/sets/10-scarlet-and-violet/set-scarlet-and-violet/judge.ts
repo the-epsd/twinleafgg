@@ -1,4 +1,4 @@
-import { GameError, GameMessage } from '../../../game';
+import { GameError, GameMessage, Player } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -27,6 +27,17 @@ export class Judge extends TrainerCard {
 
   public text: string =
     'Each player shuffles their hand into their deck and draws 4 cards.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.hand.cards.length === 0 && player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {

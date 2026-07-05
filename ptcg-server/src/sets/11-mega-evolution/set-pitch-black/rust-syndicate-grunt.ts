@@ -1,11 +1,4 @@
-import {
-  CardTarget,
-  PlayerType,
-  SlotType,
-  StateUtils,
-  StoreLike,
-  State,
-} from '../../../game';
+import { CardTarget, PlayerType, SlotType, StateUtils, StoreLike, State, Player } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
@@ -26,6 +19,30 @@ export class RustSyndicateGrunt extends TrainerCard {
   public name: string = 'Rust Syndicate Grunt';
   public fullName: string = 'Rust Syndicate Grunt M5';
   public text: string = `You may only play this card if 1 of your Pokémon was Knocked Out during your opponent\'s last turn.\n\nDiscard 1 Energy attached to 1 of your opponent\'s Pokémon.`;
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.hand.cards.filter(c => c !== this).length > 0) {
+      return false;
+    }
+    if (!player.marker.hasMarker(MarkerConstants.REVENGE_MARKER)) {
+      return false;
+    }
+    const opponent = StateUtils.getOpponent(state, player);
+    let anyEnergy = false;
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, cardList => {
+      if (cardList.energies.cards.length > 0) {
+        anyEnergy = true;
+      }
+    });
+    if (!anyEnergy) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

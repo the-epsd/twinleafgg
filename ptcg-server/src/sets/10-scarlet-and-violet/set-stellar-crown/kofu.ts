@@ -4,7 +4,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
-import { Card, CardList, OrderCardsPrompt } from '../../../game';
+import { Card, CardList, OrderCardsPrompt, Player } from '../../../game';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
@@ -75,6 +75,17 @@ export class Kofu extends TrainerCard {
 
   public text: string =
     'Put 2 cards from your hand on the bottom of your deck in any order. If you put 2 cards on the bottom of your deck in this way, draw 4 cards. (If you can\'t put 2 cards from your hand on the bottom of your deck, you can\'t use this card.)';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.hand.cards.length <= 2) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

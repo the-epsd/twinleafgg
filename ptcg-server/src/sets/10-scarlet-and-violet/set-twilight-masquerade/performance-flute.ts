@@ -1,7 +1,7 @@
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { Effect } from '../../../game/store/effects/effect';
-import { CardList, PokemonCardList, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
+import { CardList, Player, PokemonCardList, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, SuperType, Stage } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
@@ -27,6 +27,16 @@ export class PerformanceFlute extends TrainerCard {
 
   public text: string =
     'Reveal the top 5 cards of your opponent\'s deck, and put any number of Basic Pokémon you find there onto your opponent\'s Bench. Then, they shuffle the remaining cards back into their deck.';
+
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+    const openSlots = opponent.bench.filter(b => b.cards.length === 0);
+    if (openSlots.length === 0) {
+      return false;
+    }
+    return true;
+  }
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

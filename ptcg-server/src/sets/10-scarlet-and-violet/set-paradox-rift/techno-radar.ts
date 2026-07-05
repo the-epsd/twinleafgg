@@ -12,7 +12,7 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { CardList } from '../../../game/store/state/card-list';
-import { PokemonCard } from '../../../game';
+import { Player, PokemonCard } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: TechnoRadar, effect: TrainerEffect): IterableIterator<State> {
@@ -105,6 +105,14 @@ export class TechnoRadar extends TrainerCard {
     `You can play this card only if you discard another card from your hand.
 
     Search your deck for up to 2 Future Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.`;
+
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

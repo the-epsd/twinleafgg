@@ -1,4 +1,4 @@
-import { EnergyCard, GameError, PokemonCard } from '../../../game';
+import { EnergyCard, GameError, Player, PokemonCard } from '../../../game';
 import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { CardType, EnergyType, TrainerType } from '../../../game/store/card/card-types';
@@ -86,6 +86,14 @@ export class Tulip extends TrainerCard {
 
   public text: string =
     'Put up to 4 in any combination of [P] Pokémon and Basic [P] Energy cards from your discard pile into your hand.';
+
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

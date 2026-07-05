@@ -5,7 +5,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { PlayerType } from '../../../game/store/actions/play-card-action';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { GameError, GameMessage } from '../../../game';
+import { GameError, GameMessage, Player } from '../../../game';
 export class Fennel extends TrainerCard {
   public trainerType: TrainerType = TrainerType.SUPPORTER;
   public regulationMark = 'I';
@@ -15,6 +15,14 @@ export class Fennel extends TrainerCard {
   public name: string = 'Fennel';
   public fullName: string = 'Fennel SV11B';
   public text: string = 'Heal 40 damage from each of your Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

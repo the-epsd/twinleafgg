@@ -1,8 +1,10 @@
 import { Card } from '../../../game/store/card/card';
+import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
+import { Player } from '../../../game/store/state/player';
 import { State } from '../../../game/store/state/state';
 import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
@@ -97,6 +99,18 @@ export class Perrin extends TrainerCard {
 
   public text: string =
     'Reveal up to 2 Pokémon from your hand and shuffle them into your deck. If you do, search your deck for up to that many Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
+
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const hasPokemon = player.hand.cards.some(c => c instanceof PokemonCard);
+    if (!hasPokemon) {
+      return false;
+    }
+    return true;
+  }
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

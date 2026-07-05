@@ -5,7 +5,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { EnergyCard, GameError, MoveEnergyPrompt, PlayerType, SlotType, StateUtils } from '../../../game';
+import { EnergyCard, GameError, MoveEnergyPrompt, Player, PlayerType, SlotType, StateUtils } from '../../../game';
 
 export class Poppy extends TrainerCard {
 
@@ -26,6 +26,24 @@ export class Poppy extends TrainerCard {
   public text: string =
     'Move up to 2 Energy from 1 of your Pokémon to another ' +
     'of your Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    let hasEnergy = false;
+    let pokemonCount = 0;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      pokemonCount += 1;
+      const energyAttached = cardList.cards.some(c => c.superType === SuperType.ENERGY);
+      hasEnergy = hasEnergy || energyAttached;
+    });
+    if (!hasEnergy || pokemonCount <= 1) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

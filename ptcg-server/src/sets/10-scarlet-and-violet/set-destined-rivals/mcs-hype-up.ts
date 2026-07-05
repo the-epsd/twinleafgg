@@ -7,7 +7,7 @@ import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { MoveCardsEffect } from '../../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { StateUtils } from '../../../game';
+import { Player, StateUtils } from '../../../game';
 import { DRAW_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class EmceesHype extends TrainerCard {
@@ -19,6 +19,17 @@ export class EmceesHype extends TrainerCard {
   public name: string = 'Emcee\'s Hype';
   public fullName: string = 'Emcee\'s Hype DRI';
   public text: string = 'Draw 2 cards. If your opponent has 3 or fewer Prize cards remaining, draw 2 more cards.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

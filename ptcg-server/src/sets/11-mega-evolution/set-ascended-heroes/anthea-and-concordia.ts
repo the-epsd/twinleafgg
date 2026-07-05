@@ -1,4 +1,4 @@
-import { TrainerCard, TrainerType, StoreLike, State, StateUtils, GamePhase, GameError, GameMessage, PlayerType } from '../../../game';
+import { TrainerCard, TrainerType, StoreLike, State, StateUtils, GamePhase, GameError, GameMessage, PlayerType, Player } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect } from '../../../game/store/effects/game-effects';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
@@ -17,6 +17,31 @@ export class AntheaAndConcordia extends TrainerCard {
   public text: string = `You can use this card only if you have N's Darmanitan, N's Zoroark ex, N's Vanilluxe, N's Klinklang, N's Reshiram, and N's Zekrom in play.
 
 During this turn, if your opponent's Active Pokémon is Knocked Out by damage from an attack used by your N's Pokémon, take 3 more Prize cards.`;
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const requiredPokemon = [
+      'N\'s Darmanitan',
+      'N\'s Zoroark ex',
+      'N\'s Vanilluxe',
+      'N\'s Klinklang',
+      'N\'s Reshiram',
+      'N\'s Zekrom'
+    ];
+    const foundPokemon = new Set<string>();
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, pokemonCard) => {
+      if (requiredPokemon.includes(pokemonCard.name)) {
+        foundPokemon.add(pokemonCard.name);
+      }
+    });
+    if (foundPokemon.size !== requiredPokemon.length) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

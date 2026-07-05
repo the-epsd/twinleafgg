@@ -4,7 +4,7 @@ import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { CardList, GameMessage, ShuffleDeckPrompt, ChooseCardsPrompt, ShowCardsPrompt, GameLog, StateUtils } from '../../../game';
+import { CardList, ChooseCardsPrompt, GameLog, GameMessage, Player, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
 
 export class DuskBall extends TrainerCard {
 
@@ -18,6 +18,10 @@ export class DuskBall extends TrainerCard {
 
   public text: string =
     'Look at the 7 cards from the bottom of your deck. Choose 1 Pokémon you find there, show it to your opponent, and put it into your hand. Put the remaining cards back on top of your deck. Shuffle your deck afterward.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

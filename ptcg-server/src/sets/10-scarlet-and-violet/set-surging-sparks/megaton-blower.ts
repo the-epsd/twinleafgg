@@ -1,6 +1,6 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, EnergyType, TrainerType, SuperType } from '../../../game/store/card/card-types';
-import { StoreLike, State, EnergyCard, PokemonCardList, StateUtils } from '../../../game';
+import { EnergyCard, Player, PokemonCardList, State, StateUtils, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
@@ -25,6 +25,10 @@ export class MegatonBlower extends TrainerCard {
 
   public text: string =
     'Discard all Pokémon Tools and Special Energy from all of your opponent\'s Pokémon, and discard a Stadium in play.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

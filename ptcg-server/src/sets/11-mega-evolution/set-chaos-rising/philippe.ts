@@ -4,7 +4,7 @@ import { TrainerType, CardType, EnergyType, SuperType } from '../../../game/stor
 import { EnergyCard } from '../../../game/store/card/energy-card';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
-import { StoreLike, State } from '../../../game';
+import { StoreLike, State, Player } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
@@ -22,6 +22,33 @@ export class Philippe extends TrainerCard {
   public fullName: string = 'Philippe M4';
   public text: string =
     'Attach up to 2 Basic [M] Energy cards from your discard pile to 1 of your [M] Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const basicMetalInDiscard = player.discard.cards.filter(c =>
+      c instanceof EnergyCard &&
+      c.energyType === EnergyType.BASIC &&
+      c.provides.includes(CardType.METAL)
+    );
+    if (basicMetalInDiscard.length === 0) {
+      return false;
+    }
+    let metalPokemonCount = 0;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      const checkType = new CheckPokemonTypeEffect(cardList);
+      store.reduceEffect(state, checkType);
+      if (checkType.cardTypes.includes(CardType.METAL)) {
+        metalPokemonCount++;
+      }
+    });
+    if (metalPokemonCount === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {

@@ -1,3 +1,4 @@
+import { Player } from '../../../game/store/state/player';
 import { Card } from '../../../game/store/card/card';
 import { GameError } from '../../../game/game-error';
 import { GameLog, GameMessage } from '../../../game/game-message';
@@ -80,6 +81,25 @@ export class GreatHaulNet extends TrainerCard {
 
   • Shuffle up to 3 [W] Pokémon from your discard pile into your deck.
   • Shuffle up to 3 Basic [W] Energy cards from your discard pile into your deck.`;
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const blocked: number[] = [];
+    player.discard.cards.forEach((c, index) => {
+      const isWaterPokemon = c instanceof PokemonCard && c.cardType === CardType.WATER;
+      const isBasicWaterEnergy =
+        c instanceof EnergyCard &&
+        c.energyType === EnergyType.BASIC &&
+        c.provides.includes(CardType.WATER);
+      if (!isWaterPokemon && !isBasicWaterEnergy) {
+        blocked.push(index);
+      }
+    });
+    if (player.discard.cards.length - blocked.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

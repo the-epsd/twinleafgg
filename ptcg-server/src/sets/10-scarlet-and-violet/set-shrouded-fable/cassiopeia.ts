@@ -7,7 +7,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { ShuffleDeckPrompt } from '../../../game';
+import { Player, ShuffleDeckPrompt } from '../../../game';
 
 export class Cassiopeia extends TrainerCard {
 
@@ -23,6 +23,18 @@ export class Cassiopeia extends TrainerCard {
     `You can play this card only when it is the last card in your hand.
 
 Search your deck for up to 2 cards and put them into your hand. Then, shuffle your deck.`;
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const otherHand = player.hand.cards.filter(c => c !== this);
+    if (otherHand.length !== 0 || player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -4,7 +4,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { ChooseCardsPrompt, GameMessage } from '../../../game';
+import { ChooseCardsPrompt, GameMessage, Player } from '../../../game';
 import { DRAW_CARDS_UNTIL_CARDS_IN_HAND } from '../../../game/store/prefabs/prefabs';
 
 export class IrisFightingSpirit extends TrainerCard {
@@ -27,6 +27,17 @@ export class IrisFightingSpirit extends TrainerCard {
     'You can use this card only if you discard another card from your hand.' +
     '\n\n' +
     'Draw cards until you have 6 cards in your hand.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.hand.cards.filter(c => c !== this).length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

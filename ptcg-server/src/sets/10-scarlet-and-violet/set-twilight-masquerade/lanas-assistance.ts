@@ -6,7 +6,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { PokemonCard, Card, ChooseCardsPrompt, StateUtils } from '../../../game';
+import { Card, ChooseCardsPrompt, Player, PokemonCard, StateUtils } from '../../../game';
 import { SHOW_CARDS_TO_PLAYER } from '../../../game/store/prefabs/prefabs';
 
 function* playCard(next: Function, store: StoreLike, state: State,
@@ -78,6 +78,20 @@ export class LanasAssistance extends TrainerCard {
 
   public text: string =
     'Put up to 3 in any combination of Pokémon that don\'t have a Rule Box and Basic Energy cards from your discard pile into your hand.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const hasTarget = player.discard.cards.some(c =>
+      c instanceof PokemonCard || (c.superType === SuperType.ENERGY)
+    );
+    if (!hasTarget) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

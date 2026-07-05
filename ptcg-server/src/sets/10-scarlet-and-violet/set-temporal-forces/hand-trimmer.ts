@@ -4,7 +4,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { ChooseCardsPrompt, GameMessage, StateUtils } from '../../..';
+import { ChooseCardsPrompt, GameMessage, Player, StateUtils } from '../../..';
 
 
 export class HandTrimmer extends TrainerCard {
@@ -25,6 +25,11 @@ export class HandTrimmer extends TrainerCard {
 
   public text: string =
     'Both players discard cards from their hand until they each have 5 cards in hand. (Your opponent discards first. Any player with 5 cards or less in their hands do not discard any cards.)';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

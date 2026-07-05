@@ -10,7 +10,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { PokemonCard } from '../../../game';
+import { PokemonCard, Player } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -75,6 +75,11 @@ export class FightingGong extends TrainerCard {
   public name: string = 'Fighting Gong';
   public fullName: string = 'Fighting Gong M1L';
   public text: string = 'Search your deck for a Basic [F] Pokémon or a Basic [F] Energy card, reveal it, and put it into your hand. Then, shuffle your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

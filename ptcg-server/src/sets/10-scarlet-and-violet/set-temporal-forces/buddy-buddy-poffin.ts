@@ -1,28 +1,30 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, ShuffleDeckPrompt, PokemonCard } from '../../../game';
+import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, ShuffleDeckPrompt, PokemonCard, Player } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonFromDeckEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
 
 export class BuddyBuddyPoffin extends TrainerCard {
-
   public trainerType: TrainerType = TrainerType.ITEM;
-
   public set: string = 'TEF';
-
   public cardImage: string = 'assets/cardback.png';
-
   public setNumber: string = '144';
-
   public regulationMark = 'H';
-
   public name: string = 'Buddy-Buddy Poffin';
-
   public fullName: string = 'Buddy-Buddy Poffin TEF';
+  public text: string = 'Search your deck for up to 2 Basic Pokémon with 70 HP or less and put them onto your Bench. Then, shuffle your deck.';
 
-  public text: string =
-    'Search your deck for up to 2 Basic Pokémon with 70 HP or less and put them onto your Bench. Then, shuffle your deck.';
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    const openSlots = player.bench.filter(b => b.cards.length === 0);
+    if (openSlots.length === 0) {
+      return false;
+    }
+    return true;
+  }
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if ((effect instanceof TrainerEffect && effect.trainerCard === this)) {

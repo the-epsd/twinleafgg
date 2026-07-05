@@ -5,10 +5,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  PlayerType, SlotType, StateUtils, CardTarget,
-  GameError, GameMessage, PokemonCardList, ChooseCardsPrompt, Card
-} from '../../../game';
+import { Card, CardTarget, ChooseCardsPrompt, GameError, GameMessage, Player, PlayerType, PokemonCardList, SlotType, StateUtils } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -83,6 +80,24 @@ export class ChillTeaserToy extends TrainerCard {
 
   public text: string =
     'You can use this card only if you go second, and only during your first turn. \n Put an Energy attached to 1 of your opponent\'s Pokemon into your hand.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (state.turn !== 2) {
+      return false;
+    }
+    const opponent = StateUtils.getOpponent(state, player);
+    let hasPokemonWithEnergy = false;
+    opponent.forEachPokemon(PlayerType.TOP_PLAYER, (cardList) => {
+      if (cardList.energies.cards.length > 0) {
+        hasPokemonWithEnergy = true;
+      }
+    });
+    if (!hasPokemonWithEnergy) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

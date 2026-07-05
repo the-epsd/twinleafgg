@@ -11,7 +11,7 @@ import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prom
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
-import { CardList, EnergyCard } from '../../../game';
+import { CardList, EnergyCard, Player } from '../../../game';
 
 function* playCard(
   next: Function,
@@ -93,6 +93,10 @@ export class BugCatchingSet extends TrainerCard {
 
   public text: string =
     'Look at the top 7 cards of your deck. You may reveal up to 2 in any combination of [G] Pokémon and Basic [G] Energy cards you find there and put them into your hand. Shuffle the other cards back into your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

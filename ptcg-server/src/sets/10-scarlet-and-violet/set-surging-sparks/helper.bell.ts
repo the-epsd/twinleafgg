@@ -1,6 +1,6 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, Card, ShuffleDeckPrompt } from '../../../game';
+import { Card, ChooseCardsPrompt, GameError, GameMessage, Player, ShuffleDeckPrompt, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
@@ -19,6 +19,17 @@ export class HelperBell extends TrainerCard {
     `You can use this card only if you go second, and only on your first turn.
 
 Search your deck for a Supporter card, reveal it, and put it into your hand. Then, shuffle your deck.`;
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (state.turn !== 2) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

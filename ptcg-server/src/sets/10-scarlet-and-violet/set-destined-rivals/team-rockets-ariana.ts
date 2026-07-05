@@ -4,6 +4,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
+import { Player } from '../../../game/store/state/player';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
@@ -21,6 +22,14 @@ export class TeamRocketsAriana extends TrainerCard {
 
   public text: string =
     'Draw cards until you have 5 cards in your hand. If all of your Pokémon in play are Team Rocket\'s Pokemon, draw cards until you have 8 cards in your hand instead.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

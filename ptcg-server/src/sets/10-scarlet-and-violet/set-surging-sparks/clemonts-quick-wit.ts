@@ -3,6 +3,7 @@ import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { Player } from '../../../game/store/state/player';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType, CardType } from '../../../game/store/card/card-types';
 import { HealEffect } from '../../../game/store/effects/game-effects';
@@ -20,6 +21,23 @@ export class ClemontsQuickWit extends TrainerCard {
   public name: string = 'Clemont\'s Quick Wit';
   public fullName: string = 'Clemont\'s Quick Wit SSP';
   public text: string = 'Heal 60 damage from each of your [L] Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    let hasTarget = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList, card) => {
+      if (card.cardType === CardType.LIGHTNING && cardList.damage > 0) {
+        hasTarget = true;
+      }
+    });
+    if (!hasTarget) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

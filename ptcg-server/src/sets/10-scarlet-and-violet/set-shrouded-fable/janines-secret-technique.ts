@@ -6,7 +6,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { AttachEnergyPrompt, GameError, StateUtils } from '../../../game';
+import { AttachEnergyPrompt, GameError, Player, StateUtils } from '../../../game';
 import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 
 export class JaninesSecretTechnique extends TrainerCard {
@@ -27,6 +27,23 @@ export class JaninesSecretTechnique extends TrainerCard {
 
   public text: string =
     'Choose up to 2 of your [D] Pokémon. For each of those Pokémon, search your deck for a Basic [D] Energy card and attach it to that Pokémon. Then, shuffle your deck. If you attached Energy to your Active Pokémon in this way, it is now Poisoned.';
+
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    let hasDarkPokemon = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
+      if (card.cardType === CardType.DARK) {
+        hasDarkPokemon = true;
+      }
+    });
+    if (!hasDarkPokemon) {
+      return false;
+    }
+    return true;
+  }
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

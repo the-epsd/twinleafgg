@@ -10,7 +10,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { EnergyCard, GameError } from '../../../game';
+import { EnergyCard, GameError, Player } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: ColresssObsession, effect: TrainerEffect): IterableIterator<State> {
@@ -96,6 +96,14 @@ export class ColresssObsession extends TrainerCard {
 
   public text: string =
     'Search your deck for a Stadium card and an Energy card, reveal them, and put them into your hand. Then, shuffle your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

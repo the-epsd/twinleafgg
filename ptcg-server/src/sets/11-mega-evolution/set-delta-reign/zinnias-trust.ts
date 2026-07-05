@@ -1,14 +1,4 @@
-import {
-  ChooseCardsPrompt,
-  ChoosePokemonPrompt,
-  GameError,
-  GameMessage,
-  PlayerType,
-  SlotType,
-  State,
-  StoreLike,
-  SuperType,
-} from '../../../game';
+import { ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, PlayerType, SlotType, State, StoreLike, SuperType, Player } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
@@ -23,6 +13,17 @@ export class ZinniasTrust extends TrainerCard {
   public name: string = 'Zinnia\'s Trust';
   public fullName: string = 'Zinnia\'s Trust M6';
   public text: string = 'Switch your Active Pokémon with 1 of your Benched Pokémon. If you do, move 1 Energy from your previous Active Pokémon to your new Active Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (!player.bench.some(b => b.cards.length > 0)) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Ref: set-chaos-rising/azs-tranquility.ts (switch), set-plasma-storm/scramble-switch.ts (move energy)

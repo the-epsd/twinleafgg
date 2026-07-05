@@ -2,17 +2,7 @@ import { Stage, SuperType, TrainerType } from '../../../game/store/card/card-typ
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  CardTarget,
-  GameError,
-  GameMessage,
-  ChooseCardsPrompt,
-  ChoosePokemonPrompt,
-  PlayerType,
-  SlotType,
-  StoreLike,
-  State,
-} from '../../../game';
+import { CardTarget, GameError, GameMessage, ChooseCardsPrompt, ChoosePokemonPrompt, PlayerType, SlotType, StoreLike, State, Player } from '../../../game';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 
 export class TransformationTome extends TrainerCard {
@@ -26,6 +16,26 @@ export class TransformationTome extends TrainerCard {
   public text: string =
     'You must play 2 Transformation Tome cards at once. (This effect works one time for 2 cards.)\n\n' +
     'Choose a Basic Pokémon in your discard pile and switch it with 1 of your Basic Pokémon in play. Any attached cards, damage counters, Special Conditions, turns in play, and any other effects remain on the new Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const second = player.hand.cards.find(c => c.name === this.name && c !== this);
+    if (second === undefined) {
+      return false;
+    }
+    const hasBasicInPlay =
+      player.active.cards.some(c => c instanceof PokemonCard && c.stage === Stage.BASIC) ||
+      player.bench.some(b =>
+        b.cards.some(c => c instanceof PokemonCard && c.stage === Stage.BASIC)
+      );
+    const hasBasicInDiscard = player.discard.cards.some(
+      c => c instanceof PokemonCard && c.stage === Stage.BASIC
+    );
+    if (!hasBasicInPlay || !hasBasicInDiscard) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

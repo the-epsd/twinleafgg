@@ -1,6 +1,7 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
+import { Player } from '../../../game/store/state/player';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
@@ -25,6 +26,10 @@ export class DrumsOfAwakening extends TrainerCard {
 
   public text: string =
     'Draw a card for each of your Ancient Pokémon in play.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

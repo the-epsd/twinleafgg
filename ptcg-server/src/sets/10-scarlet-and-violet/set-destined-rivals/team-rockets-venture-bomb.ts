@@ -6,7 +6,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { COIN_FLIP_PROMPT } from '../../../game/store/prefabs/prefabs';
-import { ChoosePokemonPrompt, PlayerType, SlotType } from '../../../game';
+import { ChoosePokemonPrompt, Player, PlayerType, SlotType } from '../../../game';
 
 export class TeamRocketsVentureBomb extends TrainerCard {
   public trainerType: TrainerType = TrainerType.ITEM;
@@ -19,6 +19,10 @@ export class TeamRocketsVentureBomb extends TrainerCard {
   public setNumber: string = '179';
 
   public text: string = 'Flip a coin. If heads, put 2 damage counters on 1 of your opponent\'s Pokémon. If tails, put 2 damage counters on your Active Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

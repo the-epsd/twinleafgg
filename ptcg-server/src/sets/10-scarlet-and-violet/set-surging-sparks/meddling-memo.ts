@@ -16,6 +16,15 @@ export class MeddlingMemo extends TrainerCard {
 
   public text: string = 'Your opponent counts the cards in their hand, shuffles those cards, and puts them on the bottom of their deck. If they do, they draw that many cards.';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const opponent = StateUtils.getOpponent(state, player);
+    if (opponent.hand.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       const player = effect.player;

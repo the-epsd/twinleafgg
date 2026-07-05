@@ -3,7 +3,7 @@ import { SuperType, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
-import { Card, ChooseCardsPrompt, GameError, GameLog, GameMessage, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
+import { Card, ChooseCardsPrompt, GameError, GameLog, GameMessage, Player, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
@@ -77,6 +77,14 @@ export class TMMachine extends TrainerCard {
 
   public text: string = 'Search your deck for up to 3 Pokémon Tool cards with Technical Machine in their name, ' +
     'reveal them, and put them into your hand. Then, shuffle your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

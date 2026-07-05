@@ -4,7 +4,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
-import { GameError, GameMessage } from '../../../game';
+import { GameError, GameMessage, Player } from '../../../game';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 
 export class ArvensSandwich extends TrainerCard {
@@ -18,6 +18,14 @@ export class ArvensSandwich extends TrainerCard {
   public fullName: string = 'Arven\'s Sandwich DRI';
 
   public text: string = 'Heal 30 damage from your Active Pokémon. If that Pokémon is an Arven\'s Pokémon, heal 100 damage instead.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.active.damage === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (WAS_TRAINER_USED(effect, this)) {

@@ -1,4 +1,4 @@
-import { TrainerCard, TrainerType, Stage, CardType, PokemonType, Power, PowerType, StoreLike, State, GameLog, StateUtils, GameError, GameMessage, CardTag } from '../../../game';
+import { CardTag, CardType, GameError, GameLog, GameMessage, Player, PokemonType, Power, PowerType, Stage, State, StateUtils, StoreLike, TrainerCard, TrainerType } from '../../../game';
 import { AddSpecialConditionsEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { KnockOutEffect, RetreatEffect } from '../../../game/store/effects/game-effects';
@@ -46,6 +46,10 @@ This card can't be affected by any Special Conditions and can't retreat. If this
       powerType: PowerType.TRAINER_ABILITY
     }
   ];
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {    return false;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

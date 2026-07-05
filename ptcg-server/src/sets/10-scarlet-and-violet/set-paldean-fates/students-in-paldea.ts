@@ -4,7 +4,7 @@ import { CardTag, SuperType, TrainerType } from '../../../game/store/card/card-t
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { Card, ChooseCardsPrompt, GameError, GameMessage, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
+import { Card, ChooseCardsPrompt, GameError, GameMessage, Player, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
 
 export class StudentsInPaldea extends TrainerCard {
 
@@ -24,6 +24,14 @@ export class StudentsInPaldea extends TrainerCard {
 
   public text: string =
     'Search your deck for a Pokémon that doesn\'t have a Rule Box, reveal it, and put it into your hand. For each other Students in Paldea in your discard pile, you may search your deck for another Pokémon that doesn\'t have a Rule Box. Then, shuffle your deck. (Pokémon ex, Pokémon V, etc. have Rule Boxes.)';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

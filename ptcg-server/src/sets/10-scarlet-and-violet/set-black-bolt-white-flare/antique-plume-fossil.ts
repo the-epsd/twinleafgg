@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, PokemonType, TrainerType } from '../../../game/store/card/card-types';
-import { GameError, GameLog, GameMessage, Power, PowerType, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
+import { GameError, GameLog, GameMessage, Player, Power, PowerType, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
 import { RetreatEffect } from '../../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
 import { WAS_POWER_USED } from '../../../game/store/prefabs/prefabs';
@@ -43,6 +43,15 @@ At any time during your turn, you may discard this card from play.`,
   public setNumber: string = '79';
   public name: string = 'Antique Plume Fossil';
   public fullName: string = 'Antique Plume Fossil SV11W';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const openSlots = player.bench.filter(b => b.cards.length === 0);
+    if (openSlots.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: any): State {
 

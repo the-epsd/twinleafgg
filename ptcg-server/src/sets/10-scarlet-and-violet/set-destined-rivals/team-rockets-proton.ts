@@ -6,7 +6,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, StateUtils } from '../../../game';
+import { Card, ChooseCardsPrompt, Player, StateUtils } from '../../../game';
 import { MOVE_CARDS, SHOW_CARDS_TO_PLAYER, SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 
@@ -25,6 +25,17 @@ export class TeamRocketsProton extends TrainerCard {
     `If you go first, you may use this card during your first turn.
 
 Search your deck for up to 3 Basic Team Rocket's Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.`;
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

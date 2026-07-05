@@ -2,7 +2,7 @@ import { Card } from '../../../game/store/card/card';
 import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { Effect } from '../../../game/store/effects/effect';
-import { PokemonCardList, StateUtils } from '../../../game';
+import { Player, PokemonCardList, StateUtils } from '../../../game';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { Stage, TrainerType, SuperType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
@@ -90,6 +90,22 @@ export class EreikasInvitation extends TrainerCard {
 
   public text: string =
     'Your opponent reveals their hand, and you put a Basic Pokémon you find there onto your opponent\'s Bench. If you put a Pokémon onto their Bench in this way, switch in that Pokémon to the Active Spot.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const opponent = StateUtils.getOpponent(state, player);
+    if (opponent.hand.cards.length === 0) {
+      return false;
+    }
+    const openSlots = player.bench.filter(b => b.cards.length === 0);
+    if (openSlots.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

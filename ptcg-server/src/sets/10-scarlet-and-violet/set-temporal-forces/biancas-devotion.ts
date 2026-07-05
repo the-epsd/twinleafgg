@@ -1,9 +1,4 @@
-import {
-  CardTarget, GameError, GameMessage,
-  PlayerType,
-  PokemonCardList,
-  SlotType
-} from '../../../game';
+import { CardTarget, GameError, GameMessage, Player, PlayerType, PokemonCardList, SlotType } from '../../../game';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CheckHpEffect } from '../../../game/store/effects/check-effects';
@@ -80,6 +75,25 @@ export class BiancasDevotion extends TrainerCard {
   public fullName: string = 'Bianca\'s Devotion TEF';
 
   public text: string = 'Heal all damage from 1 of your Pokémon that has 30 HP or less remaining.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    let hasValidTarget = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      const checkHpEffect = new CheckHpEffect(player, cardList);
+      store.reduceEffect(state, checkHpEffect);
+      if (checkHpEffect.hp - cardList.damage <= 30) {
+        hasValidTarget = true;
+      }
+    });
+    if (!hasValidTarget) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

@@ -8,7 +8,7 @@ import { GameError } from '../../../game/game-error';
 import { GameMessage } from '../../../game/game-message';
 import { Card } from '../../../game/store/card/card';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
-import { CardManager, PokemonCard, PlayerType, CardTarget, PokemonCardList, ChoosePokemonPrompt, SlotType, PowerType } from '../../../game';
+import { CardManager, CardTarget, ChoosePokemonPrompt, Player, PlayerType, PokemonCard, PokemonCardList, PowerType, SlotType } from '../../../game';
 import { SHUFFLE_DECK } from '../../../game/store/prefabs/prefabs';
 import { CheckPokemonPowersEffect } from '../../../game/store/effects/check-effects';
 
@@ -135,6 +135,32 @@ export class Salvatore extends TrainerCard {
   public name: string = 'Salvatore';
   public fullName: string = 'Salvatore TEF';
   public text: string = 'Search your deck for a Pokémon, except any Pokémon with an Ability, that evolves from 1 of your Pokémon in play and put it on that Pokémon to evolve it. Then, shuffle your deck. (You can use this card on a Pokémon that was put into play when setting up to play or on the turn it was put into play.)';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    const cm = CardManager.getInstance();
+    const evolutions = cm.getAllCards().filter(c =>
+      c instanceof PokemonCard && c.stage !== Stage.BASIC
+    ) as PokemonCard[];
+    const evolutionNames: string[] = [];
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
+      evolutions.filter(e => e.evolvesFrom === card.name).forEach(c => {
+        if (!evolutionNames.includes(c.name)) {
+          evolutionNames.push(c.name);
+        }
+      });
+    });
+    if (evolutionNames.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

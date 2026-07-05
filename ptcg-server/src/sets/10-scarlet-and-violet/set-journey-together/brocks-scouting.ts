@@ -11,7 +11,7 @@ import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { GameError } from '../../../game/game-error';
 import { GameLog, GameMessage } from '../../../game/game-message';
-import { PokemonCard } from '../../../game';
+import { Player, PokemonCard } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: BrocksScouting, effect: TrainerEffect): IterableIterator<State> {
@@ -100,6 +100,14 @@ export class BrocksScouting extends TrainerCard {
   public fullName: string = 'Brock\'s Scouting JTG';
 
   public text: string = 'Search your deck for up to 2 Basic Pokémon or 1 Evolution Pokémon, reveal them, and put them into your hand. Then, shuffle your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

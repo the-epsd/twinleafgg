@@ -1,6 +1,6 @@
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { StoreLike, State, ChooseCardsPrompt, GameMessage, GameError, Card, PokemonCardList, ShuffleDeckPrompt, GameLog } from '../../../game';
+import { Card, ChooseCardsPrompt, GameError, GameLog, GameMessage, Player, PokemonCardList, ShuffleDeckPrompt, State, StoreLike } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { PlayPokemonFromDeckEffect, TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
@@ -17,6 +17,18 @@ export class PreciousTrolley extends TrainerCard {
 
   public text: string =
     'Search your deck for any number of Basic Pokémon and put them onto your Bench. Then, shuffle your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    const openSlots = player.bench.filter(b => b.cards.length === 0);
+    if (openSlots.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

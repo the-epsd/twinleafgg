@@ -1,5 +1,5 @@
 import { SuperType, EnergyType } from '../../../game/store/card/card-types';
-import { StoreLike, State, GameError, GameMessage, EnergyCard, AttachEnergyPrompt, PlayerType, SlotType, StateUtils, CoinFlipPrompt, TrainerCard } from '../../../game';
+import { AttachEnergyPrompt, CoinFlipPrompt, EnergyCard, GameError, GameMessage, Player, PlayerType, SlotType, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
@@ -20,6 +20,21 @@ export class EnergySticker extends TrainerCard {
   public fullName: string = 'Energy Sticker MEW';
 
   public text = 'Flip a coin. If heads, attach a Basic Energy card from your discard pile to 1 of your Benched Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const openSlots = player.bench.filter(b => b.cards.length === 0);
+    if (openSlots.length === 0) {
+      return false;
+    }
+    const hasBasicEnergy = player.discard.cards.some(c =>
+      c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC
+    );
+    if (!hasBasicEnergy) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

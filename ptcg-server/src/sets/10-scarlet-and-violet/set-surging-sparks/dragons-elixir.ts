@@ -4,9 +4,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  GameError, GameMessage
-} from '../../../game';
+import { GameError, GameMessage, Player } from '../../../game';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -51,6 +49,15 @@ export class DragonsElixir extends TrainerCard {
 
   public text: string =
     'Heal 60 damage from your Active Dragon Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const active = player.active.getPokemonCard();
+    if (!active || active.cardType !== CardType.DRAGON || player.active.damage === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

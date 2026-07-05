@@ -1,4 +1,4 @@
-import { TrainerCard, TrainerType, Stage, CardType, PokemonType, Power, PowerType, StoreLike, State, GameLog, StateUtils, GameError, GameMessage, PokemonCard, GamePhase } from '../../../game';
+import { TrainerCard, TrainerType, Stage, CardType, PokemonType, Power, PowerType, StoreLike, State, GameLog, StateUtils, GameError, GameMessage, PokemonCard, GamePhase, Player } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { RetreatEffect } from '../../../game/store/effects/game-effects';
 import { PlayItemEffect, PlayPokemonEffect } from '../../../game/store/effects/play-card-effects';
@@ -50,6 +50,15 @@ export class AntiqueJawFossil extends TrainerCard {
   public setNumber: string = '68';
   public name: string = 'Antique Jaw Fossil';
   public fullName: string = 'Antique Jaw Fossil M3';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const openSlots = player.bench.filter(b => b.cards.length === 0);
+    if (openSlots.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     // Discard from play

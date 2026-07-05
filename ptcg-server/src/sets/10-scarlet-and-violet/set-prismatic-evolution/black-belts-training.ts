@@ -4,7 +4,7 @@ import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
-import { GameError, GameMessage, StateUtils } from '../../../game';
+import { GameError, GameMessage, Player, StateUtils } from '../../../game';
 import { ADD_MARKER, DEAL_DAMAGE, HAS_MARKER, REMOVE_MARKER } from '../../../game/store/prefabs/prefabs';
 import { WAS_TRAINER_USED } from '../../../game/store/prefabs/trainer-prefabs';
 
@@ -28,6 +28,14 @@ export class BlackBeltsTraining extends TrainerCard {
     'During this turn, attacks used by your Pokémon do 40 more damage to your opponent\'s Active Pokémon ex (before applying Weakness and Resistance).';
 
   private readonly BLACK_BELTS_TRAINING_MARKER = 'BLACK_BELTS_TRAINING_MARKER';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

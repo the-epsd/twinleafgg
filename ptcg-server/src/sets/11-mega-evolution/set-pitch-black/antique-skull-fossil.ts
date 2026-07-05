@@ -1,6 +1,6 @@
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
 import { Stage, CardType, PokemonType, TrainerType } from '../../../game/store/card/card-types';
-import { GameError, GameLog, GameMessage, Power, PowerType, State, StateUtils, StoreLike, TrainerCard } from '../../../game';
+import { GameError, GameLog, GameMessage, Power, PowerType, State, StateUtils, StoreLike, TrainerCard, Player } from '../../../game';
 import { AddSpecialConditionsEffect, AfterDamageEffect } from '../../../game/store/effects/attack-effects';
 import { Effect } from '../../../game/store/effects/effect';
 import { PowerEffect, RetreatEffect } from '../../../game/store/effects/game-effects';
@@ -49,6 +49,15 @@ export class AntiqueSkullFossil extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public name: string = 'Antique Skull Fossil';
   public fullName: string = 'Antique Skull Fossil M5';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const openSlots = player.bench.filter(b => b.cards.length === 0);
+    if (openSlots.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof AddSpecialConditionsEffect && effect.target.getPokemonCard() === this) {

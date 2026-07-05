@@ -3,7 +3,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { EnergyType, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { GameError, GameMessage, PlayerType, SlotType, ChooseCardsPrompt, ShuffleDeckPrompt, Card, ChoosePokemonPrompt } from '../../../game';
+import { Card, ChooseCardsPrompt, ChoosePokemonPrompt, GameError, GameMessage, Player, PlayerType, ShuffleDeckPrompt, SlotType } from '../../../game';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { AttackEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
@@ -21,6 +21,14 @@ export class Geeta extends TrainerCard {
     'Search your deck for up to 2 Basic Energy cards and attach them to 1 of your Pokémon. Then, shuffle your deck. During this turn, your Pokémon can\'t attack. (This includes Pokémon that come into play this turn.)';
 
   public readonly GEETA_MARKER = 'GEETA_MARKER';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

@@ -10,7 +10,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { ShowCardsPrompt } from '../../../game/store/prompts/show-cards-prompt';
 import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
-import { CardList, GameError } from '../../../game';
+import { CardList, GameError, Player } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: SecretBox, effect: TrainerEffect): IterableIterator<State> {
@@ -125,6 +125,14 @@ export class SecretBox extends TrainerCard {
     `You can use this card only if you discard 3 other cards from your hand.
 
 Search your deck for an Item card, a Pokémon Tool card, a Supporter card, and a Stadium card, reveal them, and put them into your hand. Then, shuffle your deck.`;
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.hand.cards.filter(c => c !== this).length < 3) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

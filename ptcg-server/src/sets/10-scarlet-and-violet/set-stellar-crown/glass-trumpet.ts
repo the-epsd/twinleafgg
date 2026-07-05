@@ -6,7 +6,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { AttachEnergyPrompt, GameError, StateUtils } from '../../../game';
+import { AttachEnergyPrompt, GameError, Player, StateUtils } from '../../../game';
 
 export class GlassTrumpet extends TrainerCard {
 
@@ -22,6 +22,35 @@ export class GlassTrumpet extends TrainerCard {
     `You can use this card only if you have any Tera Pokémon in play.
 
 Choose up to 2 of your Benched [C] Pokémon and attach a Basic Energy card from your discard pile to each of them.`;
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const hasEnergyInDiscard = player.discard.cards.some(c =>
+      c.superType === SuperType.ENERGY && c.energyType === EnergyType.BASIC
+    );
+    if (!hasEnergyInDiscard) {
+      return false;
+    }
+    let teraPokemonInPlay = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card) => {
+      if (card.tags.includes(CardTag.POKEMON_TERA)) {
+        teraPokemonInPlay = true;
+      }
+    });
+    if (!teraPokemonInPlay) {
+      return false;
+    }
+    let hasColorlessBench = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+      if (target.slot === SlotType.BENCH && card.cardType === CardType.COLORLESS) {
+        hasColorlessBench = true;
+      }
+    });
+    if (!hasColorlessBench) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

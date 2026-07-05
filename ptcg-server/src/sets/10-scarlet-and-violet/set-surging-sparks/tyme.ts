@@ -7,7 +7,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { StateUtils } from '../../../game/store/state-utils';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { CardList, ChooseCardsPrompt, PokemonCard, SelectPrompt, ShowCardsPrompt } from '../../../game';
+import { CardList, ChooseCardsPrompt, Player, PokemonCard, SelectPrompt, ShowCardsPrompt } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State, self: Tyme, effect: TrainerEffect): IterableIterator<State> {
   const player = effect.player;
@@ -100,6 +100,18 @@ export class Tyme extends TrainerCard {
 
   public text: string =
     'Tell your opponent the name of a Pokémon in your hand and put that Pokémon face down in front of you. Your opponent guesses that Pokémon\'s HP, and then you reveal it. If your opponent guessed right, they draw 4 cards. If they guessed wrong, you draw 4 cards. Then, return the Pokémon to your hand.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const hasPokemon = player.hand.cards.some(c => c instanceof PokemonCard);
+    if (!hasPokemon) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

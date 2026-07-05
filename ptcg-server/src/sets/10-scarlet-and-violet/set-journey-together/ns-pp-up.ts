@@ -1,4 +1,4 @@
-import { TrainerCard, TrainerType, CardTag, StoreLike, State, EnergyCard, EnergyType, GameError, GameMessage, CardTarget, PlayerType, AttachEnergyPrompt, SlotType, SuperType, StateUtils } from '../../../game';
+import { AttachEnergyPrompt, CardTag, CardTarget, EnergyCard, EnergyType, GameError, GameMessage, Player, PlayerType, SlotType, State, StateUtils, StoreLike, SuperType, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
@@ -22,6 +22,26 @@ export class NsPPUp extends TrainerCard {
 
   public text: string =
     'Attach 1 Basic Energy from your discard pile to 1 of your Benched N\'s Pokémon.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const hasBasicEnergy = player.discard.cards.some(c =>
+      c instanceof EnergyCard && c.energyType === EnergyType.BASIC
+    );
+    if (!hasBasicEnergy) {
+      return false;
+    }
+    let hasNsPokemon = false;
+    player.bench.forEach(list => {
+      if (list && list.cards.some(card => card.tags.includes(CardTag.NS))) {
+        hasNsPokemon = true;
+      }
+    });
+    if (!hasNsPokemon) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

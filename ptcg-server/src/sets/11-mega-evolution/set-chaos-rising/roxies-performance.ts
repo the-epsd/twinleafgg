@@ -5,7 +5,7 @@ import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { RetreatEffect, RetreatStartEffect } from '../../../game/store/effects/game-effects';
 import { EndTurnEffect } from '../../../game/store/effects/game-phase-effects';
 import { SpecialCondition } from '../../../game/store/card/card-types';
-import { StateUtils, StoreLike, State } from '../../../game';
+import { StateUtils, StoreLike, State, Player } from '../../../game';
 import { GameError, GameMessage } from '../../../game';
 import { ADD_MARKER, REMOVE_MARKER_AT_END_OF_TURN } from '../../../game/store/prefabs/prefabs';
 
@@ -21,6 +21,14 @@ export class RoxiesPerformance extends TrainerCard {
   public fullName: string = "Roxie's Performance M4";
   public text: string =
     "During your opponent's next turn, their Poisoned Pokémon can't retreat. (This includes newly Poisoned Pokémon.)";
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

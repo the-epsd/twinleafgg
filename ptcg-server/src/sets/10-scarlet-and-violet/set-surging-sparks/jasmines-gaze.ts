@@ -24,6 +24,14 @@ export class JasminesGaze extends TrainerCard {
 
   private readonly JASMINES_GAZE_MARKER = 'JASMINES_GAZE_MARKER';
 
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
+
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
       effect.player.marker.addMarker(this.JASMINES_GAZE_MARKER, this);

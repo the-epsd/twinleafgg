@@ -1,4 +1,4 @@
-import { GameError, GameMessage } from '../../../game';
+import { GameError, GameMessage, Player } from '../../../game';
 import { CardTarget, PlayerType, SlotType } from '../../../game/store/actions/play-card-action';
 import { CardTag, TrainerType } from '../../../game/store/card/card-types';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
@@ -22,6 +22,32 @@ export class TeamRocketsGiovanni extends TrainerCard {
 
   public text: string =
     'Switch your Active Team Rocket\'s Pokemon with 1 of your Benched Team Rocket\'s Pokemon. If you do, switch in 1 of your opponent\'s Benched Pokémon to the Active Spot.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const opponent = StateUtils.getOpponent(state, player);
+    const activePokemon = player.active.getPokemonCard();
+    if (!activePokemon || !activePokemon.tags || !activePokemon.tags.includes(CardTag.TEAM_ROCKET)) {
+      return false;
+    }
+    let teamRocketBenchCount = 0;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (list, card, target) => {
+      if (target.slot === SlotType.BENCH && card.tags && card.tags.includes(CardTag.TEAM_ROCKET)) {
+        teamRocketBenchCount++;
+      }
+    });
+    if (teamRocketBenchCount === 0) {
+      return false;
+    }
+    const benchCount = opponent.bench.reduce((sum, b) => sum + (b.cards.length > 0 ? 1 : 0), 0);
+    if (benchCount === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

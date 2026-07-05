@@ -1,4 +1,4 @@
-import { Card, GameError, GameMessage, State, StoreLike, TrainerCard, TrainerType } from '../../../game';
+import { Card, GameError, GameMessage, Player, State, StoreLike, TrainerCard, TrainerType } from '../../../game';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 
@@ -20,6 +20,14 @@ export class RedeemableTicket extends TrainerCard {
 
   public text: string =
     'Count your Prize cards and shuffle them face down, then put them at the bottom of your deck. If you do, add that many cards from the top of your deck to your Prize cards.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.getPrizeLeft() === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

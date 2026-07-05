@@ -1,3 +1,4 @@
+import { Player } from '../../../game/store/state/player';
 import { Card } from '../../../game/store/card/card';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
@@ -69,6 +70,17 @@ export class Firebreather extends TrainerCard {
   public name: string = 'Firebreather';
   public fullName: string = 'Firebreather M2';
   public text: string = 'Search your deck for up to 7 Basic [R] Energy cards, reveal them, and put them into your hand. Then, shuffle your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

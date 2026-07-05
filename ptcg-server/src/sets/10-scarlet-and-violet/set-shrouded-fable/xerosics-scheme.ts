@@ -2,6 +2,7 @@ import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { Player } from '../../../game/store/state/player';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
 import { ChooseCardsPrompt, GameError, GameMessage, StateUtils } from '../../..';
@@ -25,6 +26,18 @@ export class XerosicsScheme extends TrainerCard {
 
   public text: string =
     'Your opponent discards cards from their hand until they have 3 cards in their hand.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    const opponent = StateUtils.getOpponent(state, player);
+    if (opponent.hand.cards.length <= 3) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

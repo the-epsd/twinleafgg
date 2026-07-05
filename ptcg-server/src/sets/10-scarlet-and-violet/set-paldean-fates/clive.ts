@@ -4,7 +4,7 @@ import { TrainerType } from '../../../game/store/card/card-types';
 import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { GameError, GameMessage, ShowCardsPrompt, StateUtils } from '../../../game';
+import { GameError, GameMessage, Player, ShowCardsPrompt, StateUtils } from '../../../game';
 
 export class Clive extends TrainerCard {
 
@@ -24,6 +24,14 @@ export class Clive extends TrainerCard {
 
   public text: string =
     'Your opponent reveals their hand. Draw 2 cards for each Supporter card you find there.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
 

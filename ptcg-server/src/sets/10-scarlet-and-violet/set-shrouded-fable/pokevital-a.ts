@@ -5,10 +5,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  PlayerType, SlotType, CardTarget, GameError, GameMessage,
-  PokemonCardList
-} from '../../../game';
+import { CardTarget, GameError, GameMessage, Player, PlayerType, PokemonCardList, SlotType } from '../../../game';
 import { HealEffect } from '../../../game/store/effects/game-effects';
 
 function* playCard(next: Function, store: StoreLike, state: State, effect: TrainerEffect): IterableIterator<State> {
@@ -71,6 +68,20 @@ export class PokeVitalA extends TrainerCard {
     `Heal 150 damage from 1 of your Pokémon.
 
 If this card is in your discard pile, it can't be put into your deck or hand.`;
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    let hasDamagedPokemon = false;
+    player.forEachPokemon(PlayerType.BOTTOM_PLAYER, (cardList) => {
+      if (cardList.damage > 0) {
+        hasDamagedPokemon = true;
+      }
+    });
+    if (!hasDamagedPokemon) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

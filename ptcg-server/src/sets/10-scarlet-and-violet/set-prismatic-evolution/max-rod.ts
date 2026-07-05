@@ -7,10 +7,11 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { PokemonCard } from '../../../game/store/card/pokemon-card';
+import { Player } from '../../../game/store/state/player';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
 import { ChooseCardsPrompt } from '../../../game/store/prompts/choose-cards-prompt';
 import { EnergyCard } from '../../../game/store/card/energy-card';
-import { ShowCardsPrompt, StateUtils } from '../../../game';
+import { ShowCardsPrompt, StateUtils, SuperType } from '../../../game';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: MaxRod, effect: TrainerEffect): IterableIterator<State> {
@@ -85,6 +86,17 @@ export class MaxRod extends TrainerCard {
 
   public text: string =
     'Choose up to 5 in any combination of Pokémon and Basic Energy cards from your discard pile and put them into your hand.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    const hasTarget = player.discard.cards.some(c =>
+      c instanceof PokemonCard || (c.superType === SuperType.ENERGY)
+    );
+    if (!hasTarget) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

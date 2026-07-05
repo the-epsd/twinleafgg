@@ -4,10 +4,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  StateUtils,
-  GameMessage, ChooseCardsPrompt, CardList
-} from '../../../game';
+import { CardList, ChooseCardsPrompt, GameMessage, Player, StateUtils } from '../../../game';
 
 
 export class Grabber extends TrainerCard {
@@ -28,6 +25,10 @@ export class Grabber extends TrainerCard {
 
   public text: string =
     'Your opponent reveals their hand, and you put a Pokémon you find there on the bottom of their deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

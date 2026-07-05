@@ -11,6 +11,7 @@ import { ShuffleDeckPrompt } from '../../../game/store/prompts/shuffle-prompt';
 import { StateUtils } from '../../../game/store/state-utils';
 import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
+import { Player } from '../../../game/store/state/player';
 
 function* playCard(next: Function, store: StoreLike, state: State,
   self: TreasureTracker, effect: TrainerEffect): IterableIterator<State> {
@@ -72,6 +73,14 @@ export class TreasureTracker extends TrainerCard {
   public fullName: string = 'Treasure Tracker PRE';
 
   public text: string = 'Search your deck for up to 5 Pokémon Tool cards, reveal them, and then put them into your hand. Then, shuffle your deck.';
+
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
 
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {

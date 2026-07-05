@@ -6,7 +6,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { TrainerType } from '../../../game/store/card/card-types';
-import { StateUtils } from '../../../game';
+import { Player, StateUtils } from '../../../game';
 
 export class Caretaker extends TrainerCard {
 
@@ -26,6 +26,17 @@ export class Caretaker extends TrainerCard {
 
   public text: string =
     'Draw 2 cards. Then, if Community Center is in play, shuffle this Caretaker back into your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

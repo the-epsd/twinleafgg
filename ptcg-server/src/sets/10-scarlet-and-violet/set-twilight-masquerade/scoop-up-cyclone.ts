@@ -6,7 +6,7 @@ import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { ChoosePokemonPrompt } from '../../../game/store/prompts/choose-pokemon-prompt';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import { PlayerType, PokemonCard, SlotType } from '../../../game';
+import { Player, PlayerType, PokemonCard, SlotType } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class ScoopUpCyclone extends TrainerCard {
@@ -19,6 +19,10 @@ export class ScoopUpCyclone extends TrainerCard {
   public cardImage: string = 'assets/cardback.png';
   public setNumber: string = '162';
   public text: string = 'Put 1 of your Pokémon and all cards attached to it into your hand.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

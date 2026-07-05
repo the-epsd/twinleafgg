@@ -4,11 +4,7 @@ import { StoreLike } from '../../../game/store/store-like';
 import { State } from '../../../game/store/state/state';
 import { Effect } from '../../../game/store/effects/effect';
 import { TrainerEffect } from '../../../game/store/effects/play-card-effects';
-import {
-  StateUtils,
-  GameMessage, ChooseCardsPrompt,
-  GameError
-} from '../../../game';
+import { ChooseCardsPrompt, GameError, GameMessage, Player, StateUtils } from '../../../game';
 
 
 export class Eri extends TrainerCard {
@@ -29,6 +25,14 @@ export class Eri extends TrainerCard {
 
   public text: string =
     'Your opponent reveals their hand. Discard up to 2 Item cards you find there.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.supporterTurn > 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {

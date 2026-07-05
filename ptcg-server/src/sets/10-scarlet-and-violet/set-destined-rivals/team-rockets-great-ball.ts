@@ -6,7 +6,7 @@ import { State } from '../../../game/store/state/state';
 import { StoreLike } from '../../../game/store/store-like';
 import { TrainerCard } from '../../../game/store/card/trainer-card';
 import { CardTag, Stage, SuperType, TrainerType } from '../../../game/store/card/card-types';
-import { Card, ChooseCardsPrompt, CoinFlipPrompt, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
+import { Card, ChooseCardsPrompt, CoinFlipPrompt, Player, PokemonCard, ShowCardsPrompt, ShuffleDeckPrompt, StateUtils } from '../../../game';
 import { MOVE_CARDS } from '../../../game/store/prefabs/prefabs';
 
 export class TeamRocketsGreatBall extends TrainerCard {
@@ -26,6 +26,14 @@ export class TeamRocketsGreatBall extends TrainerCard {
   public fullName: string = 'Team Rocket\'s Great Ball DRI';
 
   public text: string = 'Flip a coin. If heads, search your deck for an Evolution Team Rocket Pokémon, reveal it, and put it into your hand. If tails, search your deck for a Basic Team Rocket Pokémon, reveal it, and put it into your hand. Then, shuffle your deck.';
+
+  public canPlay(store: StoreLike, state: State, player: Player): boolean {
+    if (player.deck.cards.length === 0) {
+      return false;
+    }
+    return true;
+  }
+
 
   public reduceEffect(store: StoreLike, state: State, effect: Effect): State {
     if (effect instanceof TrainerEffect && effect.trainerCard === this) {
