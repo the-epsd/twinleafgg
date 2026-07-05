@@ -1,4 +1,4 @@
-import { DuskBall } from '../set-surging-sparks/dusk-ball';
+import { DuskBall } from '../10-scarlet-and-violet/set-surging-sparks/dusk-ball';
 import { QuickBall } from '../set-majestic-dawn/quick-ball';
 import { DarknessEnergySpecial } from '../set-neo-genesis/darkness-energy-special';
 import { MetalEnergyN1 } from '../set-neo-genesis/other-prints';

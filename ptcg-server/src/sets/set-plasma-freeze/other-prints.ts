@@ -6,7 +6,7 @@ import { Ghetsis as GhetsisPLF101 } from '../set-plasma-freeze/ghetsis';
 import { Empoleon } from '../set-dark-explorers/empoleon';
 import { Sigilyph } from '../set-dragons-exalted/sigilyph';
 import { Garbodor } from '../set-dragons-exalted/garbodor';
-import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
+import { UltraBall } from '../10-scarlet-and-violet/set-scarlet-and-violet/ultra-ball';
 import { MaxPotion } from '../set-emerging-powers/max-potion';
 import { ProfessorJuniper } from '../set-black-and-white/professor-juniper';
 import { HeatranEx } from './heatran-ex';

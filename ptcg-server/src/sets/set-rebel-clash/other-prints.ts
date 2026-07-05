@@ -1,12 +1,12 @@
 import { GalarianWeezing } from '../set-shining-fates/galarian-weezing';
-import { BossOrders } from '../set-paldea-evolved/boss-orders';
+import { BossOrders } from '../10-scarlet-and-violet/set-paldea-evolved/boss-orders';
 import { FullHeal } from '../set-base-set/full-heal';
 import { PokeBall } from '../set-jungle/pokeball';
 import { Skyla } from '../set-boundaries-crossed/skyla';
 import { Sonia } from '../set-champions-path/sonia';
 import { ToolScrapper } from '../set-dragons-exalted/tool-scrapper';
 import { DragapultV as DragapultVRCL92 } from '../set-rebel-clash/dragapult-v';
-import { BossOrders as BossOrdersPAL172 } from '../set-paldea-evolved/boss-orders';
+import { BossOrders as BossOrdersPAL172 } from '../10-scarlet-and-violet/set-paldea-evolved/boss-orders';
 import { Sonia as SoniaCPA65 } from '../set-champions-path/sonia';
 import { DragapultVMAX as DragapultVMAXRCL93 } from '../set-rebel-clash/dragapult-vmax';
 import { Frosmoth } from '../set-sword-and-shield/frosmoth';

@@ -1,8 +1,8 @@
 import { PlayerType, SlotType } from '../../game/store/actions/play-card-action';
 import { ChooseCardsPromptType } from '../../game/store/prompts/choose-cards-prompt';
 import { ChoosePokemonPromptType } from '../../game/store/prompts/choose-pokemon-prompt';
-import { NestBall } from '../set-scarlet-and-violet/nest-ball';
-import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
+import { NestBall } from '../10-scarlet-and-violet/set-scarlet-and-violet/nest-ball';
+import { UltraBall } from '../10-scarlet-and-violet/set-scarlet-and-violet/ultra-ball';
 import { endTurn, playTrainerCard, zoneContains } from './card-test-helpers';
 import { padDeck, setupGame } from './test-helpers';
 

@@ -1,4 +1,4 @@
-import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';
+import { EnhancedHammer } from '../10-scarlet-and-violet/set-twilight-masquerade/enhanced-hammer';
 import { ProfessorSycamoreXY } from '../set-x-and-y/other-prints';
 import { RollerSkates } from '../set-x-and-y/roller-skates';
 import { Shauna } from '../set-x-and-y/shauna';

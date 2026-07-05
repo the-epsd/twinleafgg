@@ -1,0 +1,349 @@
+import { RellorDRI, JudgeULDRI, Yanma2DRI, CynthiasRoserade2DRI, Shaymin2DRI, Crustle2DRI, TeamRocketsSpidops2DRI, Hydrapple2DRI, Rapidash2DRI, EthansTyphlosion2DRI, Blaziken2DRI, MistysPsyduck2DRI, MistysLapras2DRI, Clamperl2DRI, Rotom2DRI, TeamRocketsWeezing2DRI, TeamRocketsMurkrow2DRI, TeamRocketsMeowth2DRI, ArvensGreedent2DRI, Yanmegaex2DRI, Arbolivaex2DRI, TeamRocketsMoltresex2DRI, EthansHoOhex2DRI, Cetitanex2DRI, Dondozoex2DRI, Electivireex2DRI, TeamRocketsMewtwoex2DRI, Regirockex2DRI, CynthiasGarchompex2DRI, TeamRocketsNidokingex2DRI, TeamRocketsCrobatex2DRI, ArvensMabosstiffex2DRI, TeamRocketsPersianex2DRI, EmceesHype2DRI, EthansAdventure2DRI, JudgeUL2DRI, TeamRocketsArcher2DRI, TeamRocketsAriana2DRI, TeamRocketsGiovanni2DRI, TeamRocketsPetrel2DRI, TeamRocketsProton2DRI, Yanmegaex3DRI, TeamRocketsMoltresex3DRI, EthansHoOhex3DRI, TeamRocketsMewtwoex3DRI, CynthiasGarchompex3DRI, TeamRocketsNidokingex3DRI, TeamRocketsCrobatex3DRI, ArvensMabosstiffex3DRI, EthansAdventure3DRI, TeamRocketsAriana3DRI, TeamRocketsGiovanni3DRI, EthansHoOhex4DRI, TeamRocketsMewtwoex4DRI, CynthiasGarchompex4DRI, TeamRocketsCrobatex4DRI, JammingTowerDRI, LevinciaDRI } from './other-prints';
+import { Card } from '../../../game/store/card/card';
+import { EthansAdventure } from './ethans-adventure';
+import { EthansCyndaquil } from './ethans-cyndaquil';
+import { EthansHoOhex } from './ethans-ho-oh-ex';
+import { EthansMagcargo } from './ethans-magcargo';
+import { EthansPichu } from './ethans-pichu';
+import { EthansQuilava } from './ethans-quilava';
+import { EthansSlugma } from './ethans-slugma';
+import { EthansTyphlosion } from './ethans-typhlosion';
+import { MistysGyarados } from './mistys-gyarados';
+import { MistysMagikarp } from './mistys-magikarp';
+import { MistysPsyduck } from './mistys-psyduck';
+import { CynthiasRoseradeIR, EnergyRecyclerDRI, EthansHoOhexSIR } from './other-prints';
+import { CynthiasGarchompex } from './cynthias-garchomp-ex';
+import { CynthiasGible } from './cynthias-gible';
+import { CynthiasRoserade } from './cynthias-roserade';
+import { CynthiasRoselia } from './cynthias-roselia';
+import { CynthiasGabite } from './cynthias-gabite';
+import { CynthiasSpiritomb } from './cynthias-spiritomb';
+import { CynthiasPowerWeight } from './cynthias-power-weight';
+import { Rotom } from './rotom';
+import { MowRotom } from './mow-rotom';
+import { WashRotom } from './wash-rotom';
+import { HeatRotom } from './heat-rotom';
+import { Zeraora } from './zeraora';
+import { TealMaskOgerpon } from './teal-mask-ogerpon';
+import { HearthflameMaskOgerpon } from './hearthflame-mask-ogerpon';
+import { WellspringMaskOgerpon } from './wellspring-mask-ogerpon';
+import { CornerstoneMaskOgerpon } from './cornerstone-mask-ogerpon';
+import { Ponyta } from './ponyta';
+import { Rapidash } from './rapidash';
+import { Shaymin } from './shaymin';
+import { MistysStaryu } from './mistys-staryu';
+import { Applin } from './applin';
+import { Dipplin } from './dipplin';
+import { Hydrapple } from './hydrapple';
+import { Dwebble } from './dwebble';
+import { Crustle } from './crustle';
+import { EmceesHype } from './mcs-hype-up';
+import { MistysStarmie } from './mistys-starmie';
+import { CynthiasFeebas } from './cynthias-feebas';
+import { CynthiasMilotic } from './cynthias-milotic';
+import { MistysLapras } from './mistys-lapras';
+import { Yanma } from './yanma';
+import { Yanmegaex } from './yanmega-ex';
+import { Dondozoex } from './dondozo-ex';
+import { Electabuzz } from './electabuzz';
+import { Electivireex } from './electivire-ex';
+import { SacredAsh } from './sacred-ash';
+import { EthansPinsir } from './ethans-pinsir';
+import { ArvensToedscool } from './arvens-toedscool';
+import { ArvensToedscruel } from './arvens-toedscruel';
+import { ArvensMaschiff } from './arvens-maschiff';
+import { ArvensMabosstiffex } from './arvens-mabosstiff-ex';
+import { ArvensSkwovet } from './arvens-skwovet';
+import { ArvensGreedent } from './arvens-greedent';
+import { ArvensSandwich } from './arvens-sandwich';
+import { Annihilape } from './annihilape';
+import { Arbolivaex } from './arboliva-ex';
+import { Blaziken } from './blaziken';
+import { Cetitanex } from './cetitan-ex';
+import { Cetoddle } from './cetoddle';
+import { Clamperl } from './clamperl';
+import { Combusken } from './combusken';
+import { Dolliv } from './dolliv';
+import { Gorebyss } from './gorebyss';
+import { GraniteCave } from './granite-cave';
+import { Huntail } from './huntail';
+import { Mankey } from './mankey';
+import { MarniesGrimmsnarlex } from './marnies-grimmsnarl-ex';
+import { MarniesImpidimp } from './marnies-impidimp';
+import { MarniesLiepard } from './marnies-liepard';
+import { MarniesMorgrem } from './marnies-morgrem';
+import { MarniesMorpeko } from './marnies-morpeko';
+import { MarniesPurrloin } from './marnies-purrloin';
+import { MarniesScrafty } from './marnies-scrafty';
+import { MarniesScraggy } from './marnies-scraggy';
+import { Primeape } from './primeape';
+import { Regirockex } from './regirock-ex';
+import { Smoliv } from './smoliv';
+import { SpikemuthGym } from './spikemuth-gym';
+import { StevensBaltoy } from './stevens-baltoy';
+import { StevensBeldum } from './stevens-beldum';
+import { StevensCarbink } from './stevens-carbink';
+import { StevensClaydol } from './stevens-claydol';
+import { StevensMetagrossex } from './stevens-metagross-ex';
+import { StevensMetang } from './stevens-metang';
+import { StevensSkarmory } from './stevens-skarmory';
+import { Taillow } from './taillow';
+import { TeamRocketsEnergy } from './team-rockets-energy';
+import { TeamRocketsAmpharos } from './team-rockets-ampharos';
+import { TeamRocketsArbok } from './team-rockets-arbok';
+import { TeamRocketsArcher } from './team-rockets-archer';
+import { TeamRocketsAriana } from './team-rockets-ariana';
+import { TeamRocketsArticuno } from './team-rockets-articuno';
+import { TeamRocketsChingling } from './team-rockets-chingling';
+import { TeamRocketsCrobatex } from './team-rockets-crobat-ex';
+import { TeamRocketsDrowzee } from './team-rockets-drowzee';
+import { TeamRocketsEkans } from './team-rockets-ekans';
+import { TeamRocketsFactory } from './team-rockets-factory';
+import { TeamRocketsFlaaffy } from './team-rockets-flaaffy';
+import { TeamRocketsGiovanni } from './team-rockets-giovanni';
+import { TeamRocketsGolbat } from './team-rockets-golbat';
+import { TeamRocketsGreatBall } from './team-rockets-great-ball';
+import { TeamRocketsHypno } from './team-rockets-hypno';
+import { TeamRocketsKoffing } from './team-rockets-koffing';
+import { TeamRocketsLarvitar } from './team-rockets-larvitar';
+import { TeamRocketsMareep } from './team-rockets-mareep';
+import { TeamRocketsMeowth } from './team-rockets-meowth';
+import { TeamRocketsMewtwoex } from './team-rockets-mewtwo-ex';
+import { TeamRocketsMimikyu } from './team-rockets-mimikyu';
+import { TeamRocketsMoltresex } from './team-rockets-moltres-ex';
+import { TeamRocketsMurkrow } from './team-rockets-murkrow';
+import { TeamRocketsNidokingex } from './team-rockets-nidoking-ex';
+import { TeamRocketsNidoqueen } from './team-rockets-nidoqueen';
+import { TeamRocketsNidoranFemale } from './team-rockets-nidoran-female';
+import { TeamRocketsNidoranMale } from './team-rockets-nidoran-male';
+import { TeamRocketsNidorina } from './team-rockets-nidorina';
+import { TeamRocketsNidorino } from './team-rockets-nidorino';
+import { TeamRocketsPersianex } from './team-rockets-persian-ex';
+import { TeamRocketsPetrel } from './team-rockets-petrel';
+import { TeamRocketsPorygon } from './team-rockets-porygon';
+import { TeamRocketsPorygonZ } from './team-rockets-porygon-z';
+import { TeamRocketsPorygon2 } from './team-rockets-porygon2';
+import { TeamRocketsProton } from './team-rockets-proton';
+import { TeamRocketsPupitar } from './team-rockets-pupitar';
+import { TeamRocketsTransceiver } from './team-rockets-transceiver';
+import { TeamRocketsSneasel } from './team-rockets-sneasel';
+import { TeamRocketsSpidops } from './team-rockets-spidops';
+import { TeamRocketsTarountula } from './team-rockets-tarountula';
+import { TeamRocketsTyranitar } from './team-rockets-tyranitar';
+import { TeamRocketsVentureBomb } from './team-rockets-venture-bomb';
+import { TeamRocketsWatchtower } from './team-rockets-watchtower';
+import { TeamRocketsWeezing } from './team-rockets-weezing';
+import { TeamRocketsWobbuffet } from './team-rockets-wobbuffet';
+import { TeamRocketsZapdos } from './team-rockets-zapdos';
+import { TeamRocketsZubat } from './team-rockets-zubat';
+import { Torchic } from './torchic';
+import { TMMachine } from './tm-machine';
+
+export const setDestinedRivals: Card[] = [
+  new Taillow(),
+  new TealMaskOgerpon(),
+  new HearthflameMaskOgerpon(),
+  new WellspringMaskOgerpon(),
+  new Rotom(),
+  new MowRotom(),
+  new WashRotom(),
+  new HeatRotom(),
+  new Zeraora(),
+  new CornerstoneMaskOgerpon(),
+  new Ponyta(),
+  new Rapidash(),
+  new Shaymin(),
+  new Applin(),
+  new Dipplin(),
+  new Hydrapple(),
+  new Dwebble(),
+  new Crustle(),
+  new EmceesHype(),
+  new Yanma(),
+  new Yanmegaex(),
+  new Dondozoex(),
+  new Electabuzz(),
+  new Electivireex(),
+  new SacredAsh(),
+  new TMMachine(),
+
+  new ArvensToedscool(),
+  new ArvensToedscruel(),
+  new ArvensMaschiff(),
+  new ArvensMabosstiffex(),
+  new ArvensSkwovet(),
+  new ArvensGreedent(),
+  new ArvensSandwich(),
+
+  new CynthiasRoseradeIR(),
+  new CynthiasGarchompex(),
+  new CynthiasGible(),
+  new CynthiasRoserade(),
+  new CynthiasRoselia(),
+  new CynthiasGabite(),
+  new CynthiasSpiritomb(),
+  new CynthiasPowerWeight(),
+  new CynthiasFeebas(),
+  new CynthiasMilotic(),
+
+  new EthansHoOhexSIR(),
+  new EthansAdventure(),
+  new EthansHoOhex(),
+  new EthansCyndaquil(),
+  new EthansQuilava(),
+  new EthansTyphlosion(),
+  new EthansSlugma(),
+  new EthansMagcargo(),
+  new EthansPichu(),
+  new EthansPinsir(),
+
+  new MistysPsyduck(),
+  new MistysMagikarp(),
+  new MistysGyarados(),
+  new MistysStaryu(),
+  new MistysStarmie(),
+  new MistysLapras(),
+
+  new Cetoddle(),
+  new Cetitanex(),
+  new Torchic(),
+  new Combusken(),
+  new Blaziken(),
+  new Mankey(),
+  new Primeape(),
+  new Annihilape(),
+  new EnergyRecyclerDRI(),
+  new Regirockex(),
+  new Smoliv(),
+  new Dolliv(),
+  new Arbolivaex(),
+  new Clamperl(),
+  new Huntail(),
+  new Gorebyss(),
+
+  new MarniesImpidimp(),
+  new MarniesMorgrem(),
+  new MarniesGrimmsnarlex(),
+  new MarniesMorpeko(),
+  new MarniesPurrloin(),
+  new MarniesLiepard(),
+  new MarniesScrafty(),
+  new MarniesScraggy(),
+  new SpikemuthGym(),
+
+  new StevensBeldum(),
+  new StevensMetang(),
+  new StevensMetagrossex(),
+  new StevensCarbink(),
+  new StevensBaltoy(),
+  new StevensClaydol(),
+  new StevensSkarmory(),
+  new GraniteCave(),
+
+  new TeamRocketsMewtwoex(),
+  new TeamRocketsTarountula(),
+  new TeamRocketsSpidops(),
+  new TeamRocketsPorygon(),
+  new TeamRocketsPorygon2(),
+  new TeamRocketsPorygonZ(),
+  new TeamRocketsTransceiver(),
+  new TeamRocketsArcher(),
+  new TeamRocketsAriana(),
+  new TeamRocketsEnergy(),
+  new TeamRocketsGiovanni(),
+  new TeamRocketsMeowth(),
+  new TeamRocketsPersianex(),
+  new TeamRocketsMareep(),
+  new TeamRocketsFlaaffy(),
+  new TeamRocketsAmpharos(),
+  new TeamRocketsWobbuffet(),
+  new TeamRocketsGreatBall(),
+  new TeamRocketsDrowzee(),
+  new TeamRocketsHypno(),
+  new TeamRocketsLarvitar(),
+  new TeamRocketsPupitar(),
+  new TeamRocketsTyranitar(),
+  new TeamRocketsMoltresex(),
+  new TeamRocketsArticuno(),
+  new TeamRocketsZapdos(),
+  new TeamRocketsZubat(),
+  new TeamRocketsGolbat(),
+  new TeamRocketsCrobatex(),
+  new TeamRocketsVentureBomb(),
+  new TeamRocketsPetrel(),
+  new TeamRocketsProton(),
+  new TeamRocketsSneasel(),
+  new TeamRocketsKoffing(),
+  new TeamRocketsWeezing(),
+  new TeamRocketsMimikyu(),
+  new TeamRocketsNidoranMale(),
+  new TeamRocketsNidorino(),
+  new TeamRocketsNidokingex(),
+  new TeamRocketsNidoranFemale(),
+  new TeamRocketsNidorina(),
+  new TeamRocketsNidoqueen(),
+  new TeamRocketsEkans(),
+  new TeamRocketsArbok(),
+  new TeamRocketsMurkrow(),
+  new TeamRocketsWatchtower(),
+  new TeamRocketsFactory(),
+  new TeamRocketsChingling(),
+  new RellorDRI(),
+  new JudgeULDRI(),
+  new Yanma2DRI(),
+  new CynthiasRoserade2DRI(),
+  new Shaymin2DRI(),
+  new Crustle2DRI(),
+  new TeamRocketsSpidops2DRI(),
+  new Hydrapple2DRI(),
+  new Rapidash2DRI(),
+  new EthansTyphlosion2DRI(),
+  new Blaziken2DRI(),
+  new MistysPsyduck2DRI(),
+  new MistysLapras2DRI(),
+  new Clamperl2DRI(),
+  new Rotom2DRI(),
+  new TeamRocketsWeezing2DRI(),
+  new TeamRocketsMurkrow2DRI(),
+  new TeamRocketsMeowth2DRI(),
+  new ArvensGreedent2DRI(),
+  new Yanmegaex2DRI(),
+  new Arbolivaex2DRI(),
+  new TeamRocketsMoltresex2DRI(),
+  new EthansHoOhex2DRI(),
+  new Cetitanex2DRI(),
+  new Dondozoex2DRI(),
+  new Electivireex2DRI(),
+  new TeamRocketsMewtwoex2DRI(),
+  new Regirockex2DRI(),
+  new CynthiasGarchompex2DRI(),
+  new TeamRocketsNidokingex2DRI(),
+  new TeamRocketsCrobatex2DRI(),
+  new ArvensMabosstiffex2DRI(),
+  new TeamRocketsPersianex2DRI(),
+  new EmceesHype2DRI(),
+  new EthansAdventure2DRI(),
+  new JudgeUL2DRI(),
+  new TeamRocketsArcher2DRI(),
+  new TeamRocketsAriana2DRI(),
+  new TeamRocketsGiovanni2DRI(),
+  new TeamRocketsPetrel2DRI(),
+  new TeamRocketsProton2DRI(),
+  new Yanmegaex3DRI(),
+  new TeamRocketsMoltresex3DRI(),
+  new EthansHoOhex3DRI(),
+  new TeamRocketsMewtwoex3DRI(),
+  new CynthiasGarchompex3DRI(),
+  new TeamRocketsNidokingex3DRI(),
+  new TeamRocketsCrobatex3DRI(),
+  new ArvensMabosstiffex3DRI(),
+  new EthansAdventure3DRI(),
+  new TeamRocketsAriana3DRI(),
+  new TeamRocketsGiovanni3DRI(),
+  new EthansHoOhex4DRI(),
+  new TeamRocketsMewtwoex4DRI(),
+  new CynthiasGarchompex4DRI(),
+  new TeamRocketsCrobatex4DRI(),
+  new JammingTowerDRI(),
+  new LevinciaDRI(),
+];

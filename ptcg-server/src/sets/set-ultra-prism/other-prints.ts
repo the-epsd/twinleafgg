@@ -1,5 +1,5 @@
 import { Cosmoem } from '../set-sun-and-moon/cosmoem';
-import { PalPad } from '../set-scarlet-and-violet/pal-pad';
+import { PalPad } from '../10-scarlet-and-violet/set-scarlet-and-violet/pal-pad';
 import { UnidentifiedFossil } from '../set-silver-tempest/unidentified-fossil';
 import { GlaceonGX as GlaceonGXUPR39 } from '../set-ultra-prism/glaceon-gx';
 import { DawnWingsNecrozmaGX as DawnWingsNecrozmaGXUPR63 } from '../set-ultra-prism/dawn-wings-necrozma-gx';
@@ -12,7 +12,7 @@ import { Lusamine } from '../set-crimson-invasion/lusamine';
 import { Mars as MarsUPR128 } from '../set-ultra-prism/mars';
 import { PokemonFanClub as PokemonFanClubP49 } from '../set-pop-series-4/pokemon-fan-club';
 import { Volkner as VolknerUPR135 } from '../set-ultra-prism/volkner';
-import { CrushingHammer } from '../set-scarlet-and-violet/crushing-hammer';
+import { CrushingHammer } from '../10-scarlet-and-violet/set-scarlet-and-violet/crushing-hammer';
 import { EscapeBoard as EscapeBoardUPR122 } from '../set-ultra-prism/escape-board';
 import { UnitEnergyGRW as UnitEnergyGRWUPR137 } from '../set-ultra-prism/unit-energy-grw';
 import { UnitEnergyLPM as UnitEnergyLPMUPR138 } from '../set-ultra-prism/unit-energy-lpm';

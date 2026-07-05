@@ -33,7 +33,7 @@ import { CrobatV } from '../set-darkness-ablaze/crobat-v';
 import { EternatusV } from '../set-darkness-ablaze/eternatus-v';
 import { EternatusVMAX } from '../set-darkness-ablaze/eternatus-vmax';
 import { AdventurersDiscovery } from '../set-fusion-strike/adventurers-discovery';
-import { BossOrders } from '../set-paldea-evolved/boss-orders';
+import { BossOrders } from '../10-scarlet-and-violet/set-paldea-evolved/boss-orders';
 import { Cook } from '../set-fusion-strike/cook';
 import { Nessa } from '../set-vivid-voltage/nessa';
 import { MewVMAX } from '../set-fusion-strike/mew-vmax';

@@ -1,4 +1,4 @@
-import { ExpShare } from '../set-scarlet-and-violet/exp-share';
+import { ExpShare } from '../10-scarlet-and-violet/set-scarlet-and-violet/exp-share';
 import { SuperRod } from '../set-noble-victories/super-rod';
 import { Shelgon } from '../set-plasma-blast/shelgon';
 export class ExpShareDRV extends ExpShare {

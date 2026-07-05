@@ -162,23 +162,23 @@ export * from './set-sword-and-shield-promos';
 export * from './set-vivid-voltage';
 
 //SVI Era
-export * from './set-scarlet-and-violet';
-export * from './set-scarlet-and-violet-energy';
-export * from './set-scarlet-and-violet-promos';
-export * from './set-paldea-evolved';
-export * from './set-obsidian-flames';
-export * from './set-pokemon-151';
-export * from './set-paradox-rift';
-export * from './set-paldean-fates';
-export * from './set-temporal-forces';
-export * from './set-twilight-masquerade';
-export * from './set-shrouded-fable';
-export * from './set-stellar-crown';
-export * from './set-surging-sparks';
-export * from './set-prismatic-evolution';
-export * from './set-journey-together';
-export * from './set-destined-rivals';
-export * from './set-black-bolt-white-flare';
+export * from './10-scarlet-and-violet/set-scarlet-and-violet';
+export * from './10-scarlet-and-violet/set-scarlet-and-violet-energy';
+export * from './10-scarlet-and-violet/set-scarlet-and-violet-promos';
+export * from './10-scarlet-and-violet/set-paldea-evolved';
+export * from './10-scarlet-and-violet/set-obsidian-flames';
+export * from './10-scarlet-and-violet/set-pokemon-151';
+export * from './10-scarlet-and-violet/set-paradox-rift';
+export * from './10-scarlet-and-violet/set-paldean-fates';
+export * from './10-scarlet-and-violet/set-temporal-forces';
+export * from './10-scarlet-and-violet/set-twilight-masquerade';
+export * from './10-scarlet-and-violet/set-shrouded-fable';
+export * from './10-scarlet-and-violet/set-stellar-crown';
+export * from './10-scarlet-and-violet/set-surging-sparks';
+export * from './10-scarlet-and-violet/set-prismatic-evolution';
+export * from './10-scarlet-and-violet/set-journey-together';
+export * from './10-scarlet-and-violet/set-destined-rivals';
+export * from './10-scarlet-and-violet/set-black-bolt-white-flare';
 
 //MEG Era
 export * from './11-mega-evolution/set-mega-evolution-promos';

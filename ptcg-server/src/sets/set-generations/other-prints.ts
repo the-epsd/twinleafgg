@@ -7,7 +7,7 @@ import { Slowpoke } from '../set-fossil/slowpoke';
 import { Haunter } from '../set-breakthrough/haunter';
 import { Gengar } from '../set-breakthrough/gengar';
 import { MrMime } from '../set-breakthrough/mr-mime';
-import { CrushingHammer } from '../set-scarlet-and-violet/crushing-hammer';
+import { CrushingHammer } from '../10-scarlet-and-violet/set-scarlet-and-violet/crushing-hammer';
 import { EnergySwitchPK } from '../set-ex-power-keepers/other-prints';
 import { Evosoda } from '../set-x-and-y/evosoda';
 import { Maintenance } from '../set-base-set/maintenance';

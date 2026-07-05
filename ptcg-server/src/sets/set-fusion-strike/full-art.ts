@@ -1,6 +1,6 @@
 import { TrainingCourt } from '../set-rebel-clash/training-court';
-import { FireEnergy } from '../set-scarlet-and-violet-energy/fire-energy';
-import { GrassEnergy } from '../set-scarlet-and-violet-energy/grass-energy';
+import { FireEnergy } from '../10-scarlet-and-violet/set-scarlet-and-violet-energy/fire-energy';
+import { GrassEnergy } from '../10-scarlet-and-violet/set-scarlet-and-violet-energy/grass-energy';
 import { CelebiV } from '../set-chilling-reign/celebi-v';
 import { ElesasSparkle } from './elesas-sparkle';
 import { GenesectV } from './genesect-v';

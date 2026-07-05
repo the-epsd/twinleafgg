@@ -1,6 +1,6 @@
 import { BillsMaintenance } from '../set-ex-firered-leafgreen/bills-maintenance';
 import { DualBall } from '../set-unleashed/dual-ball';
-import { EnergySearch } from '../set-scarlet-and-violet/energy-search';
+import { EnergySearch } from '../10-scarlet-and-violet/set-scarlet-and-violet/energy-search';
 import { PokeBall } from '../set-jungle/pokeball';
 import { PokeNav } from '../set-ex-ruby-and-sapphire/pokenav';
 import { Potion } from '../set-base-set/potion';

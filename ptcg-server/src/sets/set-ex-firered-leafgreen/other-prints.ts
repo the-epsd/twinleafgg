@@ -4,7 +4,7 @@ import { MultiEnergy } from '../set-ex-sandstorm/multi-energy';
 import { PokemonReversal } from '../set-ex-unseen-forces/pokemon-reversal';
 import { ProfessorOaksResearch } from '../set-ex-dragon-frontiers/professor-oaks-research';
 import { VsSeeker } from '../set-phantom-forces/vs-seeker';
-import { Switch } from '../set-scarlet-and-violet/switch';
+import { Switch } from '../10-scarlet-and-violet/set-scarlet-and-violet/switch';
 
 export class EnergyRemoval2RG extends EnergyRemoval2 {
   public fullName = 'Energy Removal 2 RG';

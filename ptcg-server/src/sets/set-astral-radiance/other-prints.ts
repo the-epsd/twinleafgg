@@ -18,7 +18,7 @@ import { OriginFormePalkiaVSTAR as OriginFormePalkiaVSTARASR40 } from '../set-as
 import { HisuianDecidueyeVSTAR as HisuianDecidueyeVSTARASR84 } from '../set-astral-radiance/hisuian-decidueye-vstar';
 import { HisuianSamurottVSTAR as HisuianSamurottVSTARASR102 } from '../set-astral-radiance/hisuian-samurott-vstar';
 import { OriginFormeDialgaVSTAR as OriginFormeDialgaVSTARASR114 } from '../set-astral-radiance/origin-forme-dialga-vstar';
-import { ChoiceBelt } from '../set-paldea-evolved/choice-belt';
+import { ChoiceBelt } from '../10-scarlet-and-violet/set-paldea-evolved/choice-belt';
 import { JubilifeVillage as JubilifeVillageASR148 } from '../set-astral-radiance/jubilife-village';
 import { PathToThePeak } from '../set-chilling-reign/path-to-the-peak';
 import { TempleofSinnoh as TempleofSinnohASR155 } from '../set-astral-radiance/temple-of-sinnoh';

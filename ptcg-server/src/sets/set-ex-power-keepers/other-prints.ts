@@ -1,6 +1,6 @@
 import { DarknessEnergySpecial } from '../set-ex-ruby-and-sapphire/darkness-energy-special';
 import { Delcatty } from '../set-ex-ruby-and-sapphire/delcatty';
-import { EnergySwitch } from '../set-scarlet-and-violet/energy-switch';
+import { EnergySwitch } from '../10-scarlet-and-violet/set-scarlet-and-violet/energy-switch';
 import { GreatBall } from '../set-ex-firered-leafgreen/great-ball';
 import { Magneton } from '../set-ex-dragon/magneton';
 import { MetalEnergySpecial } from '../set-undaunted/metal-energy-special';

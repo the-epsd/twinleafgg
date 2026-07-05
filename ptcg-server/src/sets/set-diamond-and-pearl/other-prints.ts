@@ -3,7 +3,7 @@ import { PokeBall } from '../set-jungle/pokeball';
 import { WarpPointG2 } from '../set-gym-challenge/other-prints';
 import { EnergySearch } from '../set-fossil/energy-search';
 import { Potion } from '../set-base-set/potion';
-import { Switch } from '../set-scarlet-and-violet/switch';
+import { Switch } from '../10-scarlet-and-violet/set-scarlet-and-violet/switch';
 
 export class SwitchDP extends Switch {
   public set: string = 'DP';

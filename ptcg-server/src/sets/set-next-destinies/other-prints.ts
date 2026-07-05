@@ -1,7 +1,7 @@
 import { Reshiram } from '../set-black-and-white/reshiram';
 import { Zekrom } from '../set-black-and-white/zekrom';
 import { Riolu } from '../set-legendary-treasures/riolu';
-import { ExpShare } from '../set-scarlet-and-violet/exp-share';
+import { ExpShare } from '../10-scarlet-and-violet/set-scarlet-and-violet/exp-share';
 import { ShayminEX as ShayminEXNXD5 } from '../set-next-destinies/shaymin-ex';
 import { ReshiramEx as ReshiramExNXD22 } from '../set-next-destinies/reshiram-ex';
 import { ZekromEx as ZekromExNXD51 } from '../set-next-destinies/zekrom-ex';

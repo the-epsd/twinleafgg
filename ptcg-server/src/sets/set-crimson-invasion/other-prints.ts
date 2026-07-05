@@ -1,12 +1,12 @@
 import { SilvallyGX } from '../set-ultra-prism/silvally-gx';
-import { CounterCatcher } from '../set-paradox-rift/counter-catcher';
+import { CounterCatcher } from '../10-scarlet-and-violet/set-paradox-rift/counter-catcher';
 import { BuzzwoleGX as BuzzwoleGXCIN57 } from '../set-crimson-invasion/buzzwole-gx';
 import { GuzzlordGX as GuzzlordGXCIN63 } from '../set-crimson-invasion/guzzlord-gx';
 import { KartanaGX as KartanaGXCIN70 } from '../set-crimson-invasion/kartana-gx';
 import { SilvallyGX as SilvallyGXUPR116 } from '../set-ultra-prism/silvally-gx';
 import { Gladion as GladionCIN95 } from '../set-crimson-invasion/gladion';
 import { Lusamine as LusamineCIN96 } from '../set-crimson-invasion/lusamine';
-import { CounterCatcher as CounterCatcherPAR160 } from '../set-paradox-rift/counter-catcher';
+import { CounterCatcher as CounterCatcherPAR160 } from '../10-scarlet-and-violet/set-paradox-rift/counter-catcher';
 import { WishfulBaton } from '../set-burning-shadows/wishful-baton';
 import { CounterEnergy as CounterEnergyCIN100 } from '../set-crimson-invasion/counter-energy';
 import { WarpEnergySF } from '../set-stormfront/other-prints';

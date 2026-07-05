@@ -7,8 +7,8 @@ import { Potion } from '../set-base-set/potion';
 import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
 import { Reshiram as ReshiramBLW26 } from '../set-black-and-white/reshiram';
 import { Zekrom as ZekromBLW47 } from '../set-black-and-white/zekrom';
-import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
-import { Switch } from '../set-scarlet-and-violet/switch';
+import { EnergyRetrieval } from '../10-scarlet-and-violet/set-scarlet-and-violet/energy-retrieval';
+import { Switch } from '../10-scarlet-and-violet/set-scarlet-and-violet/switch';
 
 export class EnergyRetrievalBLW extends EnergyRetrieval {
   public set: string = 'BLW';

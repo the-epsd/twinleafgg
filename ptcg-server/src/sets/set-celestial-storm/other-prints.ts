@@ -20,7 +20,7 @@ import { RainbowEnergyPL as RainbowEnergyPLPL121 } from '../set-platinum/other-p
 import { Sceptile as SceptileCES10 } from '../set-celestial-storm/sceptile';
 import { AcroBike } from '../set-primal-clash/acro-bike';
 import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
-import { Switch } from '../set-scarlet-and-violet/switch';
+import { Switch } from '../10-scarlet-and-violet/set-scarlet-and-violet/switch';
 import { Combusken } from '../set-dark-explorers/combusken';
 import { FriendBall } from '../set-skyridge/friend-ball';
 import { UndergroundExpedition } from '../set-skyridge/underground-expedition';

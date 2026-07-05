@@ -1,6 +1,6 @@
 import { EnergyRetrieval } from '../set-base-set/energy-retrieval';
 import { EscapeRopeBUS } from '../set-burning-shadows/other-prints';
-import { ExpShare } from '../set-scarlet-and-violet/exp-share';
+import { ExpShare } from '../10-scarlet-and-violet/set-scarlet-and-violet/exp-share';
 import { RareCandy } from '../set-ex-holon-phantoms/rare-candy';
 import { WailordEx as WailordExPRC38 } from '../set-primal-clash/wailord-ex';
 import { GroudonEx as GroudonExPRC85 } from '../set-primal-clash/groudon-ex';
@@ -11,7 +11,7 @@ import { ArchiesAceInTheHole as ArchiesAceInTheHolePRC124 } from '../set-primal-
 import { MaxiesHiddenBallTrick as MaxiesHiddenBallTrickPRC133 } from '../set-primal-clash/maxies-hidden-ball-trick';
 import { Teammates as TeammatesPRC141 } from '../set-primal-clash/teammates';
 import { DiveBall as DiveBallPRC125 } from '../set-primal-clash/dive-ball';
-import { EnhancedHammer } from '../set-twilight-masquerade/enhanced-hammer';
+import { EnhancedHammer } from '../10-scarlet-and-violet/set-twilight-masquerade/enhanced-hammer';
 import { Switch } from '../set-base-set/switch';
 import { WeaknessPolicy as WeaknessPolicyPRC142 } from '../set-primal-clash/weakness-policy';
 import { TrevenantEx } from './trevenant-ex';

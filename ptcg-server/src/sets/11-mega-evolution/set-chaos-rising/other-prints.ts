@@ -1,7 +1,7 @@
 import { ToolScrapper } from '../../set-dragons-exalted/tool-scrapper';
 import { SurfingBeach } from '../set-mega-evolution/surfing-beach';
 import { JumboIce } from '../set-phantasmal-flames/jumbo-ice';
-import { EnergyRetrieval } from '../../set-scarlet-and-violet/energy-retrieval';
+import { EnergyRetrieval } from '../../10-scarlet-and-violet/set-scarlet-and-violet/energy-retrieval';
 import { Ampharos } from './ampharos';
 import { AzsTranquility } from './azs-tranquility';
 import { Beedrillex } from './beedrill-ex';

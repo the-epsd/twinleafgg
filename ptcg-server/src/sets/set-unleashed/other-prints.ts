@@ -1,7 +1,7 @@
 import { Jirachi } from '../set-call-of-legends/jirachi';
 import { CheerleadersCheer } from '../set-call-of-legends/cheerleaders-cheer';
 import { PlusPower } from '../set-base-set/pluspower';
-import { Judge } from '../set-scarlet-and-violet/judge';
+import { Judge } from '../10-scarlet-and-violet/set-scarlet-and-violet/judge';
 import { RareCandy } from '../set-ex-holon-phantoms/rare-candy';
 import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
 

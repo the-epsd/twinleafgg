@@ -1,4 +1,4 @@
-import { RockyHelmet } from '../set-scarlet-and-violet/rocky-helmet';
+import { RockyHelmet } from '../10-scarlet-and-violet/set-scarlet-and-violet/rocky-helmet';
 import { OrbeetleV } from './orbeetle-v';
 import { ZarudeV } from './zarude-v';
 import { TalonflameV } from './talonflame-v';

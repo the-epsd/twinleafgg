@@ -1,6 +1,6 @@
 import { Revive } from '../set-base-set/revive';
 import { Switch } from '../set-base-set/switch';
-import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
+import { UltraBall } from '../10-scarlet-and-violet/set-scarlet-and-violet/ultra-ball';
 import { RayquazaEx as RayquazaExROS75 } from '../set-roaring-skies/rayquaza-ex';
 import { MRayquazaEX2 as MRayquazaExROS76 } from './m-rayquaza-ex-2';
 import { ShayminEx as ShayminExROS77 } from '../set-roaring-skies/shaymin-ex';

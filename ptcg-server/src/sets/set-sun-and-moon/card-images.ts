@@ -1,7 +1,7 @@
-import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
-import { ExpShare } from '../set-scarlet-and-violet/exp-share';
-import { NestBall } from '../set-scarlet-and-violet/nest-ball';
-import { RareCandy } from '../set-scarlet-and-violet/rare-candy';
+import { EnergyRetrieval } from '../10-scarlet-and-violet/set-scarlet-and-violet/energy-retrieval';
+import { ExpShare } from '../10-scarlet-and-violet/set-scarlet-and-violet/exp-share';
+import { NestBall } from '../10-scarlet-and-violet/set-scarlet-and-violet/nest-ball';
+import { RareCandy } from '../10-scarlet-and-violet/set-scarlet-and-violet/rare-candy';
 import { RotomDex } from './rotom-dex';
 
 export class EnergyRetrievalSUM extends EnergyRetrieval {

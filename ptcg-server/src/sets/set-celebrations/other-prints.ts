@@ -1,4 +1,4 @@
-import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
+import { ProfessorsResearch } from '../10-scarlet-and-violet/set-scarlet-and-violet/professors-research';
 import { Pikachu } from '../set-evolutions/pikachu';
 import { HereComesTeamRocket } from '../set-team-rocket/here-comes-team-rocket';
 import { Mew } from './mew';

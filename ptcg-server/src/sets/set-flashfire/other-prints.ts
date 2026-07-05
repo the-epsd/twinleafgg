@@ -1,5 +1,5 @@
-import { PalPad } from '../set-scarlet-and-violet/pal-pad';
-import { UltraBall } from '../set-scarlet-and-violet/ultra-ball';
+import { PalPad } from '../10-scarlet-and-violet/set-scarlet-and-violet/pal-pad';
+import { UltraBall } from '../10-scarlet-and-violet/set-scarlet-and-violet/ultra-ball';
 import { ToxicroakEx as ToxicroakExFLF41 } from '../set-flashfire/toxicroak-ex';
 import { KangaskhanEX as KangaskhanEXFLF78 } from '../set-flashfire/kangaskhan-ex';
 import { Lysandre as LysandreFLF90 } from '../set-flashfire/lysandre';

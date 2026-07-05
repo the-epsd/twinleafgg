@@ -1,4 +1,4 @@
-import { DuskBall } from '../set-surging-sparks/dusk-ball';
+import { DuskBall } from '../10-scarlet-and-violet/set-surging-sparks/dusk-ball';
 import { PokeBall } from '../set-jungle/pokeball';
 import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
 import { EnergySearch } from '../set-fossil/energy-search';

@@ -6,7 +6,7 @@ import { GreatBall } from '../set-ex-firered-leafgreen/great-ball';
 import { Hop } from '../set-sword-and-shield/hop';
 import { PokeBall } from '../set-jungle/pokeball';
 import { Potion } from '../set-base-set/potion';
-import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
+import { ProfessorsResearch } from '../10-scarlet-and-violet/set-scarlet-and-violet/professors-research';
 import { Hop as HopSSH165 } from '../set-sword-and-shield/hop';
 import { Piers as PiersCPA58 } from '../set-champions-path/piers';
 import { Marnie } from '../set-sword-and-shield/marnie';

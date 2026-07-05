@@ -1,4 +1,4 @@
-import { ExpShare } from '../set-scarlet-and-violet/exp-share';
+import { ExpShare } from '../10-scarlet-and-violet/set-scarlet-and-violet/exp-share';
 import { KricketuneV as KricketuneVBST6 } from '../set-battle-styles/kricketune-v';
 import { FlappleV as FlappleVBST18 } from '../set-battle-styles/flapple-v';
 import { VictiniV as VictiniVBST21 } from '../set-battle-styles/victini-v';
@@ -21,7 +21,7 @@ import { SingleStrikeUrshifuVMAX as SingleStrikeUrshifuVMAXBST86 } from '../set-
 import { RapidStrikeUrshifuVMAX as RapidStrikeUrshifuVMAXBST88 } from '../set-battle-styles/rapid-strike-urshifu-vmax';
 import { Octillery as OctilleryBST37 } from '../set-battle-styles/octillery';
 import { Houndoom as HoundoomBST96 } from '../set-battle-styles/houndoom';
-import { ExpShare as ExpShareSVI174 } from '../set-scarlet-and-violet/exp-share';
+import { ExpShare as ExpShareSVI174 } from '../10-scarlet-and-violet/set-scarlet-and-violet/exp-share';
 import { LevelBall as LevelBallBST129 } from '../set-battle-styles/level-ball';
 import { RapidStrikeEnergy as RapidStrikeEnergyBST140 } from '../set-battle-styles/rapid-strike-energy';
 import { SingleStrikeEnergy as SingleStrikeEnergyBST141 } from '../set-battle-styles/single-strike-energy';

@@ -1,9 +1,9 @@
-import { BossOrders } from '../set-paldea-evolved/boss-orders';
+import { BossOrders } from '../10-scarlet-and-violet/set-paldea-evolved/boss-orders';
 import { Bronzong } from '../set-battle-styles/bronzong';
 import { Charizard } from '../set-vivid-voltage/charizard';
 import { Kirlia } from '../set-silver-tempest/kirlia';
 import { Marnie } from '../set-sword-and-shield/marnie';
-import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
+import { ProfessorsResearch } from '../10-scarlet-and-violet/set-scarlet-and-violet/professors-research';
 import { HisuianSamurott } from '../set-astral-radiance/hisuian-samurott';
 import { ZeraoraV } from '../set-crown-zenith/zeraora-v';
 import { ZeraoraVMAX } from '../set-crown-zenith/zeraora-vmax';

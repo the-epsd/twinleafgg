@@ -24,7 +24,7 @@ import { Molayne } from './molayne';
 import { RedsChallenge } from './reds-challenge';
 import { BlastoiseGx } from './blastoise-gx';
 import { BeastBringer } from './beast-bringer';
-import { Pokegear30 } from '../set-scarlet-and-violet/pokegear-30';
+import { Pokegear30 } from '../10-scarlet-and-violet/set-scarlet-and-violet/pokegear-30';
 
 export class DedenneGXUNB extends DedenneGX {
   public fullName = 'Dedenne-GX UNB';
