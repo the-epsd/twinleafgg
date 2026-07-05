@@ -1,4 +1,4 @@
-import { GreatBall } from '../../set-ex-firered-leafgreen/great-ball';
+import { GreatBall } from '../../03-ex-ruby-and-sapphire/set-ex-firered-leafgreen/great-ball';
 import { MaxPotion } from '../../06-black-and-white/set-emerging-powers/max-potion';
 import { PokemonCatcher } from '../../10-scarlet-and-violet/set-scarlet-and-violet/pokemon-catcher';
 import { Potion } from '../../set-base-set/potion';

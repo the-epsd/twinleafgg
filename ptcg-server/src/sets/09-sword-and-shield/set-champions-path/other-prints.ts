@@ -2,7 +2,7 @@ import { Sizzlipede } from '../set-sword-and-shield/sizzlipede';
 import { Purrloin } from '../set-darkness-ablaze/purrloin';
 import { Bede } from '../set-sword-and-shield/bede';
 import { FullHeal } from '../../set-base-set/full-heal';
-import { GreatBall } from '../../set-ex-firered-leafgreen/great-ball';
+import { GreatBall } from '../../03-ex-ruby-and-sapphire/set-ex-firered-leafgreen/great-ball';
 import { Hop } from '../set-sword-and-shield/hop';
 import { PokeBall } from '../../set-jungle/pokeball';
 import { Potion } from '../../set-base-set/potion';

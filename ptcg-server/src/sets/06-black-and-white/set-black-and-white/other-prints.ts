@@ -1,5 +1,5 @@
 import { EnergySearch } from '../../set-fossil/energy-search';
-import { EnergySwitchPK } from '../../set-ex-power-keepers/other-prints';
+import { EnergySwitchPK } from '../../03-ex-ruby-and-sapphire/set-ex-power-keepers/other-prints';
 import { FullHeal } from '../../set-base-set/full-heal';
 import { PokeBall } from '../../set-jungle/pokeball';
 import { PokemonCommunicationHS } from '../../05-heartgold-and-soulsilver/set-heartgold-and-soulsilver/other-prints';

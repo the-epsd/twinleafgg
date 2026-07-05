@@ -1,4 +1,4 @@
-import { MrBrineysCompassion } from '../set-ex-dragon/mr-brineys-compassion';
+import { MrBrineysCompassion } from '../03-ex-ruby-and-sapphire/set-ex-dragon/mr-brineys-compassion';
 
 export class MrBrineysCompassionPS2 extends MrBrineysCompassion {
   public fullName = 'Mr. Briney\'s Compassion P2';

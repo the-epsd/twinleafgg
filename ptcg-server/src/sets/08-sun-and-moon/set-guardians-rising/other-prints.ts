@@ -11,7 +11,7 @@ import { Mallow as MallowGRI127 } from './mallow';
 import { DecidueyeGX } from '../set-sun-and-moon/decidueye-gx';
 import { AquaPatch as AquaPatchGRI119 } from './aqua-patch';
 import { EnhancedHammer as EnhancedHammerTWM148 } from '../../10-scarlet-and-violet/set-twilight-masquerade/enhanced-hammer';
-import { RareCandy } from '../../set-ex-holon-phantoms/rare-candy';
+import { RareCandy } from '../../03-ex-ruby-and-sapphire/set-ex-holon-phantoms/rare-candy';
 import { GrassEnergy } from '../../set-base-set-energy/grass-energy';
 import { LightningEnergy } from '../../set-base-set-energy/lightning-energy';
 import { FightingEnergy } from '../../set-base-set-energy/fighting-energy';

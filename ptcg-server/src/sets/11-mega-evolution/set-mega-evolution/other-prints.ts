@@ -1,7 +1,7 @@
 import { BossOrders } from '../../10-scarlet-and-violet/set-paldea-evolved/boss-orders';
 import { Repel } from '../../08-sun-and-moon/set-sun-and-moon/repel';
-import { EnergySwitchPK } from '../../set-ex-power-keepers/other-prints';
-import { RareCandy } from '../../set-ex-holon-phantoms/rare-candy';
+import { EnergySwitchPK } from '../../03-ex-ruby-and-sapphire/set-ex-power-keepers/other-prints';
+import { RareCandy } from '../../03-ex-ruby-and-sapphire/set-ex-holon-phantoms/rare-candy';
 import { Switch } from '../../set-base-set/switch';
 import { UltraBall } from '../../10-scarlet-and-violet/set-scarlet-and-violet/ultra-ball';
 import { Bulbasaur as BulbasaurMEG1 } from './bulbasaur';
@@ -32,7 +32,7 @@ import { MegaSignal as MegaSignalMEG121 } from './mega-signal';
 import { MysteryGarden as MysteryGardenMEG122 } from './mystery-garden';
 import { NightlyStretcher } from '../../10-scarlet-and-violet/set-shrouded-fable/nightly-stretcher';
 import { PowerProtein as PowerProteinMEG124 } from './power-protein';
-import { RareCandy as RareCandyHP90 } from '../../set-ex-holon-phantoms/rare-candy';
+import { RareCandy as RareCandyHP90 } from '../../03-ex-ruby-and-sapphire/set-ex-holon-phantoms/rare-candy';
 import { WallysCompassion as WallysCompassionMEG132 } from './wallys-compassion';
 import { Bulbasaur } from './bulbasaur';
 import { Inteleon } from './inteleon';

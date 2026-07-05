@@ -30,22 +30,22 @@ export * from './set-skyridge';
 export * from './set-best-of-game';
 
 //ex Era
-export * from './set-ex-ruby-and-sapphire';
-export * from './set-ex-sandstorm';
-export * from './set-ex-holon-phantoms';
-export * from './set-ex-hidden-legends';
-export * from './set-ex-delta-species';
-export * from './set-ex-dragon';
-export * from './set-ex-team-magma-vs-team-aqua';
-export * from './set-ex-dragon-frontiers';
-export * from './set-ex-unseen-forces';
-export * from './set-ex-deoxys';
-export * from './set-ex-emerald';
-export * from './set-ex-team-rocket-returns';
-export * from './set-ex-crystal-guardians';
-export * from './set-ex-power-keepers';
-export * from './set-ex-firered-leafgreen';
-export * from './set-ex-legend-maker';
+export * from './03-ex-ruby-and-sapphire/set-ex-ruby-and-sapphire';
+export * from './03-ex-ruby-and-sapphire/set-ex-sandstorm';
+export * from './03-ex-ruby-and-sapphire/set-ex-holon-phantoms';
+export * from './03-ex-ruby-and-sapphire/set-ex-hidden-legends';
+export * from './03-ex-ruby-and-sapphire/set-ex-delta-species';
+export * from './03-ex-ruby-and-sapphire/set-ex-dragon';
+export * from './03-ex-ruby-and-sapphire/set-ex-team-magma-vs-team-aqua';
+export * from './03-ex-ruby-and-sapphire/set-ex-dragon-frontiers';
+export * from './03-ex-ruby-and-sapphire/set-ex-unseen-forces';
+export * from './03-ex-ruby-and-sapphire/set-ex-deoxys';
+export * from './03-ex-ruby-and-sapphire/set-ex-emerald';
+export * from './03-ex-ruby-and-sapphire/set-ex-team-rocket-returns';
+export * from './03-ex-ruby-and-sapphire/set-ex-crystal-guardians';
+export * from './03-ex-ruby-and-sapphire/set-ex-power-keepers';
+export * from './03-ex-ruby-and-sapphire/set-ex-firered-leafgreen';
+export * from './03-ex-ruby-and-sapphire/set-ex-legend-maker';
 
 export * from './set-nintendo-promos';
 export * from './set-unnumbered-promos';

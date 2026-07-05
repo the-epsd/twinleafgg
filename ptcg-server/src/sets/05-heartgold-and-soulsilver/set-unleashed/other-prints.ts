@@ -2,7 +2,7 @@ import { Jirachi } from '../set-call-of-legends/jirachi';
 import { CheerleadersCheer } from '../set-call-of-legends/cheerleaders-cheer';
 import { PlusPower } from '../../set-base-set/pluspower';
 import { Judge } from '../../10-scarlet-and-violet/set-scarlet-and-violet/judge';
-import { RareCandy } from '../../set-ex-holon-phantoms/rare-candy';
+import { RareCandy } from '../../03-ex-ruby-and-sapphire/set-ex-holon-phantoms/rare-candy';
 import { SuperScoopUp } from '../../04-diamond-pearl-platinum/set-diamond-and-pearl/super-scoop-up';
 
 export class JudgeUL extends Judge {

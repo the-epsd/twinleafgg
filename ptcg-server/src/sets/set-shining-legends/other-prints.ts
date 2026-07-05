@@ -1,5 +1,5 @@
 import { EnergyRetrieval } from '../set-base-set/energy-retrieval';
-import { GreatBall } from '../set-ex-firered-leafgreen/great-ball';
+import { GreatBall } from '../03-ex-ruby-and-sapphire/set-ex-firered-leafgreen/great-ball';
 import { Hau } from '../08-sun-and-moon/set-celestial-storm/hau';
 import { Lillie } from '../08-sun-and-moon/set-ultra-prism/lillie';
 import { PokemonBreeder } from '../set-base-set/pokemon-breeder';

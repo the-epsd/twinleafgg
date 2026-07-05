@@ -1,13 +1,13 @@
 import { CrushingHammer } from '../../10-scarlet-and-violet/set-scarlet-and-violet/crushing-hammer';
 import { EnergyRetrieval } from '../../set-base-set/energy-retrieval';
 import { EnergySearch } from '../../set-fossil/energy-search';
-import { EnergySwitchPK } from '../../set-ex-power-keepers/other-prints';
-import { LumBerry } from '../../set-ex-emerald/lum-berry';
+import { EnergySwitchPK } from '../../03-ex-ruby-and-sapphire/set-ex-power-keepers/other-prints';
+import { LumBerry } from '../../03-ex-ruby-and-sapphire/set-ex-emerald/lum-berry';
 import { PalPad } from '../../10-scarlet-and-violet/set-scarlet-and-violet/pal-pad';
 import { Pokegear30HS } from '../../05-heartgold-and-soulsilver/set-heartgold-and-soulsilver/other-prints';
 import { PokemonCatcher } from '../../10-scarlet-and-violet/set-scarlet-and-violet/pokemon-catcher';
 import { Potion } from '../../set-base-set/potion';
-import { RareCandy } from '../../set-ex-holon-phantoms/rare-candy';
+import { RareCandy } from '../../03-ex-ruby-and-sapphire/set-ex-holon-phantoms/rare-candy';
 import { VitalityBand } from '../../10-scarlet-and-violet/set-scarlet-and-violet/vitality-band';
 import { StonjournerV as StonjournerVSSH115 } from './stonjourner-v';
 import { ZacianV as ZacianVSSH138 } from './zacian-v';

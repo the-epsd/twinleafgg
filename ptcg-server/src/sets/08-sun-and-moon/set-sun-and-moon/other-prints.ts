@@ -1,6 +1,6 @@
 import { CrushingHammer } from '../../10-scarlet-and-violet/set-scarlet-and-violet/crushing-hammer';
-import { EnergySwitchPK } from '../../set-ex-power-keepers/other-prints';
-import { GreatBall } from '../../set-ex-firered-leafgreen/great-ball';
+import { EnergySwitchPK } from '../../03-ex-ruby-and-sapphire/set-ex-power-keepers/other-prints';
+import { GreatBall } from '../../03-ex-ruby-and-sapphire/set-ex-firered-leafgreen/great-ball';
 import { Lillie } from '../set-ultra-prism/lillie';
 import { PokeBall } from '../../set-jungle/pokeball';
 import { PokemonCatcher } from '../../10-scarlet-and-violet/set-scarlet-and-violet/pokemon-catcher';

@@ -1,0 +1,77 @@
+import { Card } from '../../../game';
+import { Altaria } from './altaria';
+import { Camerupt } from './camerupt';
+import { CrystalShard } from './crystal-shard';
+import { Electrike } from './electrike';
+import { Electrike2 } from './electrike2';
+import { EnergyCharge } from './energy-charge';
+import { Golbat } from './golbat';
+import { HealEnergy } from './heal-energy';
+import { Jirachi } from './jirachi';
+import { Koffing } from './koffing';
+import { LatiasStar } from './latias-star';
+import { LatiosStar } from './latios-star';
+import { Lombre } from './lombre';
+import { Lotad } from './lotad';
+import { Lotad2 } from './lotad2';
+import { Ludicolo } from './ludicolo';
+import { Ludicolo2 } from './ludicolo2';
+import { Lunatone } from './lunatone';
+import { Magcargo } from './magcargo';
+import { Manectricex } from './manectric-ex';
+import { MasterBall } from './master-ball';
+import { Metagross } from './metagross';
+import { Minun } from './minun';
+import { Nosepass } from './nosepass';
+import { Numel } from './numel';
+import { RayquazaStar } from './rayquaza-star';
+import { Sableye } from './sableye';
+import { Salamenceex } from './salamence-ex';
+import { ScrambleEnergy } from './scramble-energy';
+import { Seedot } from './seedot';
+import { Slugma } from './slugma';
+import { SpaceCenter } from './space-center';
+import { Weezing } from './weezing';
+
+// Other prints
+import { BalloonBerryDX, LadyOutingDX } from './other-prints';
+
+export const setEXDeoxys: Card[] = [
+  new Altaria(),
+  new Camerupt(),
+  new CrystalShard(),
+  new Electrike(),
+  new Electrike2(),
+  new EnergyCharge(),
+  new Golbat(),
+  new HealEnergy(),
+  new Jirachi(),
+  new Koffing(),
+  new LatiasStar(),
+  new LatiosStar(),
+  new Lombre(),
+  new Lotad(),
+  new Lotad2(),
+  new Ludicolo(),
+  new Ludicolo2(),
+  new Lunatone(),
+  new Magcargo(),
+  new Manectricex(),
+  new MasterBall(),
+  new Metagross(),
+  new Minun(),
+  new Nosepass(),
+  new Numel(),
+  new RayquazaStar(),
+  new Sableye(),
+  new Salamenceex(),
+  new ScrambleEnergy(),
+  new Seedot(),
+  new Slugma(),
+  new SpaceCenter(),
+  new Weezing(),
+
+  // Other prints
+  new BalloonBerryDX(),
+  new LadyOutingDX(),
+];

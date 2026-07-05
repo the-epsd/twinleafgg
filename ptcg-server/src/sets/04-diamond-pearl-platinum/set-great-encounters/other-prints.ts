@@ -1,5 +1,5 @@
 import { Leftovers } from '../../10-scarlet-and-violet/set-pokemon-151/leftovers';
-import { RareCandy } from '../../set-ex-holon-phantoms/rare-candy';
+import { RareCandy } from '../../03-ex-ruby-and-sapphire/set-ex-holon-phantoms/rare-candy';
 
 export class RareCandyGE extends RareCandy {
   public fullName = 'Rare Candy GE';

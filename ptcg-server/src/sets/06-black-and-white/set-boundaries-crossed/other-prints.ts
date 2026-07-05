@@ -1,5 +1,5 @@
 import { EnergySearch } from '../../set-fossil/energy-search';
-import { GreatBall } from '../../set-ex-firered-leafgreen/great-ball';
+import { GreatBall } from '../../03-ex-ruby-and-sapphire/set-ex-firered-leafgreen/great-ball';
 import { PokeBall } from '../../set-jungle/pokeball';
 import { Switch } from '../../set-base-set/switch';
 import { TownMap } from '../../07-x-and-y/set-breakthrough/town-map';

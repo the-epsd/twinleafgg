@@ -1,7 +1,7 @@
 import { EnergyRetrieval } from '../../set-base-set/energy-retrieval';
 import { EscapeRopeBUS } from '../../08-sun-and-moon/set-burning-shadows/other-prints';
 import { ExpShare } from '../../10-scarlet-and-violet/set-scarlet-and-violet/exp-share';
-import { RareCandy } from '../../set-ex-holon-phantoms/rare-candy';
+import { RareCandy } from '../../03-ex-ruby-and-sapphire/set-ex-holon-phantoms/rare-candy';
 import { WailordEx as WailordExPRC38 } from './wailord-ex';
 import { GroudonEx as GroudonExPRC85 } from './groudon-ex';
 import { PrimalGroudonEx as PrimalGroudonExPRC86 } from './primal-groudon-ex';

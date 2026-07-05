@@ -1,6 +1,6 @@
 import { Yveltal } from '../set-steam-siege/yveltal';
 import { Xerneas } from '../set-steam-siege/xerneas';
-import { GreatBall } from '../../set-ex-firered-leafgreen/great-ball';
+import { GreatBall } from '../../03-ex-ruby-and-sapphire/set-ex-firered-leafgreen/great-ball';
 import { MaxRevive } from '../set-generations/max-revive';
 import { RedCard } from '../set-generations/red-card';
 import { TeamFlareGrunt } from '../set-generations/team-flare-grunt';

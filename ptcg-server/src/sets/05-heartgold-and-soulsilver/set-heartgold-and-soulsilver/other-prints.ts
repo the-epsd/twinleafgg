@@ -1,14 +1,14 @@
 import { Bill } from '../../set-base-set/bill';
-import { Copycat } from '../../set-ex-dragon-frontiers/copycat';
-import { EnergySwitchPK } from '../../set-ex-power-keepers/other-prints';
+import { Copycat } from '../../03-ex-ruby-and-sapphire/set-ex-dragon-frontiers/copycat';
+import { EnergySwitchPK } from '../../03-ex-ruby-and-sapphire/set-ex-power-keepers/other-prints';
 import { FullHeal } from '../../set-base-set/full-heal';
 import { PokeBall } from '../../set-jungle/pokeball';
-import { ProfessorElmsTrainingMethod } from '../../set-ex-unseen-forces/professors-elm-training-method';
+import { ProfessorElmsTrainingMethod } from '../../03-ex-ruby-and-sapphire/set-ex-unseen-forces/professors-elm-training-method';
 import { DoubleColorlessEnergy } from '../../set-base-set/double-colorless-energy';
 import { Fisherman } from '../../08-sun-and-moon/set-celestial-storm/fisherman';
 import { Pokegear30 } from '../../10-scarlet-and-violet/set-scarlet-and-violet/pokegear-30';
 import { PokemonCommunication } from '../../08-sun-and-moon/set-team-up/pokemon-communication';
-import { PokemonReversal } from '../../set-ex-unseen-forces/pokemon-reversal';
+import { PokemonReversal } from '../../03-ex-ruby-and-sapphire/set-ex-unseen-forces/pokemon-reversal';
 import { RainbowEnergy } from '../../08-sun-and-moon/set-sun-and-moon/rainbow-energy';
 import { Switch } from '../../10-scarlet-and-violet/set-scarlet-and-violet/switch';
 

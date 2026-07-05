@@ -16,7 +16,7 @@ import { RegielekiVMAX as RegielekiVMAXSIT58 } from './regieleki-vmax';
 import { UnownVSTAR as UnownVSTARSIT66 } from './unown-vstar';
 import { RegidragoVSTAR as RegidragoVSTARSIT136 } from './regidrago-vstar';
 import { LugiaVSTAR as LugiaVSTARSIT139 } from './lugia-vstar';
-import { EnergySwitchPK } from '../../set-ex-power-keepers/other-prints';
+import { EnergySwitchPK } from '../../03-ex-ruby-and-sapphire/set-ex-power-keepers/other-prints';
 import { GapejawBog } from '../set-astral-radiance/gapejaw-bog';
 import { LeafyCamoPoncho as LeafyCamoPonchoSIT160 } from './leafy-camo-poncho';
 import { VGuardEnergy as VGuardEnergySIT169 } from './v-guard-energy';

@@ -27,7 +27,7 @@ import { WaterEnergy } from '../../set-base-set-energy/water-energy';
 import { PsychicEnergy } from '../../set-base-set-energy/psychic-energy';
 import { FightingEnergy } from '../../set-base-set-energy/fighting-energy';
 import { Bronzong } from '../set-battle-styles/bronzong';
-import { Koffing } from '../../set-ex-deoxys/koffing';
+import { Koffing } from '../../03-ex-ruby-and-sapphire/set-ex-deoxys/koffing';
 import { Venipede } from '../../06-black-and-white/set-black-and-white/venipede';
 import { CelebiV } from './celebi-v';
 import { VolcanionV } from './volcanion-v';

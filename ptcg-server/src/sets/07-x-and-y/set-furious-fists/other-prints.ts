@@ -1,4 +1,4 @@
-import { EnergySwitchPK } from '../../set-ex-power-keepers/other-prints';
+import { EnergySwitchPK } from '../../03-ex-ruby-and-sapphire/set-ex-power-keepers/other-prints';
 import { FullHeal } from '../../set-base-set/full-heal';
 import { SeismitoadEx as SeismitoadExFFI20 } from './seismitoad-ex';
 import { LucarioEx as LucarioExFFI54 } from './lucario-ex';

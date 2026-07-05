@@ -25,7 +25,7 @@ import { Miriam as MiriamSVI179 } from './miriam';
 import { Penny as PennySVI183 } from './penny';
 import { TeamStarGrunt as TeamStarGruntSVI195 } from './team-star-grunt';
 import { NestBall as NestBallSVI181 } from './nest-ball';
-import { RareCandy as RareCandyHP90 } from '../../set-ex-holon-phantoms/rare-candy';
+import { RareCandy as RareCandyHP90 } from '../../03-ex-ruby-and-sapphire/set-ex-holon-phantoms/rare-candy';
 export class ProfessorsResearch2SVI extends ProfessorsResearchSVI189 {
   public setNumber = '190';
   public fullName: string = 'Professor\'s Research2 SVI';

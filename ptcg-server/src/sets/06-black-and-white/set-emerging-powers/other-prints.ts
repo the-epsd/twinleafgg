@@ -1,6 +1,6 @@
 import { Gothorita } from '../set-legendary-treasures/gothorita';
 import { Gothitelle } from '../set-legendary-treasures/gothitelle';
-import { GreatBall } from '../../set-ex-firered-leafgreen/great-ball';
+import { GreatBall } from '../../03-ex-ruby-and-sapphire/set-ex-firered-leafgreen/great-ball';
 import { Tornadus as TornadusEPO89 } from './tornadus';
 import { Recycle } from '../../set-fossil/recycle';
 import { CrushingHammer } from '../../10-scarlet-and-violet/set-scarlet-and-violet/crushing-hammer';

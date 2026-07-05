@@ -2,7 +2,7 @@ import { Cleffa } from '../set-heartgold-and-soulsilver/cleffa';
 import { Copycat } from '../../09-sword-and-shield/set-evolving-skies/copycat';
 import { DualBall } from '../set-unleashed/dual-ball';
 import { Ninetales } from '../set-heartgold-and-soulsilver/ninetales';
-import { ProfessorElmsTrainingMethod } from '../../set-ex-unseen-forces/professors-elm-training-method';
+import { ProfessorElmsTrainingMethod } from '../../03-ex-ruby-and-sapphire/set-ex-unseen-forces/professors-elm-training-method';
 import { Quilava } from '../set-heartgold-and-soulsilver/quilava';
 import { Smeargle } from '../set-undaunted/smeargle';
 import { Vulpix } from '../set-heartgold-and-soulsilver/vulpix';

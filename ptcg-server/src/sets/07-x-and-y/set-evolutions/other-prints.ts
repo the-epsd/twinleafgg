@@ -19,7 +19,7 @@ import { MetalEnergy } from '../../04-diamond-pearl-platinum/set-diamond-and-pea
 import { FairyEnergy } from '../set-x-and-y/basic-energies';
 import { DragoniteEX as DragoniteEXEVO72 } from './dragonite-ex';
 import { BrocksGrit as BrocksGritEVO74 } from './brocks-grit';
-import { HereComesTeamRocket } from '../../set-ex-team-rocket-returns/here-comes-team-rocket';
+import { HereComesTeamRocket } from '../../03-ex-ruby-and-sapphire/set-ex-team-rocket-returns/here-comes-team-rocket';
 import { Pokedex } from '../../06-black-and-white/set-black-and-white/pokedex';
 import { DarknessEnergy } from '../../10-scarlet-and-violet/set-scarlet-and-violet-energy/darkness-energy';
 import { MVenusaurEX } from '../set-x-and-y/m-venusaur-ex';

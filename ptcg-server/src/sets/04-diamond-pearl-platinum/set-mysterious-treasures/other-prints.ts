@@ -2,7 +2,7 @@ import { DuskBall } from '../../10-scarlet-and-violet/set-surging-sparks/dusk-ba
 import { QuickBall } from '../set-majestic-dawn/quick-ball';
 import { DarknessEnergySpecial } from '../../set-neo-genesis/darkness-energy-special';
 import { MetalEnergyN1 } from '../../set-neo-genesis/other-prints';
-import { MultiEnergy } from '../../set-ex-sandstorm/multi-energy';
+import { MultiEnergy } from '../../03-ex-ruby-and-sapphire/set-ex-sandstorm/multi-energy';
 import { SuperRod } from '../../06-black-and-white/set-noble-victories/super-rod';
 
 export class MultiEnergyMT extends MultiEnergy {

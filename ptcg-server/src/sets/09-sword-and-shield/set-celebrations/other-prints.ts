@@ -2,7 +2,7 @@ import { ProfessorsResearch } from '../../10-scarlet-and-violet/set-scarlet-and-
 import { Pikachu } from '../../07-x-and-y/set-evolutions/pikachu';
 import { HereComesTeamRocket } from '../../set-team-rocket/here-comes-team-rocket';
 import { Mew } from './mew';
-import { RocketsAdmin } from '../../set-ex-team-rocket-returns/rockets-admin';
+import { RocketsAdmin } from '../../03-ex-ruby-and-sapphire/set-ex-team-rocket-returns/rockets-admin';
 
 export class ProfessorsResearchCEL extends ProfessorsResearch {
   public fullName = 'Professor\'s Research CEL';

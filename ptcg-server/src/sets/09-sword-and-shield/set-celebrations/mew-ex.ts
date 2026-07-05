@@ -1,4 +1,4 @@
-import { Mewex } from '../../set-ex-legend-maker/mew-ex';
+import { Mewex } from '../../03-ex-ruby-and-sapphire/set-ex-legend-maker/mew-ex';
 
 export class MewEx extends Mewex {
   public set: string = 'CEL';
