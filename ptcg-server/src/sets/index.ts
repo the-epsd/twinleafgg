@@ -124,22 +124,22 @@ export * from './set-x-and-y-promos';
 
 //SM Era
 export * from './09-sword-and-shield/set-champions-path';
-export * from './set-burning-shadows';
-export * from './set-celestial-storm';
-export * from './set-cosmic-eclipse';
-export * from './set-crimson-invasion';
+export * from './08-sun-and-moon/set-burning-shadows';
+export * from './08-sun-and-moon/set-celestial-storm';
+export * from './08-sun-and-moon/set-cosmic-eclipse';
+export * from './08-sun-and-moon/set-crimson-invasion';
 export * from './set-dragons-majesty';
-export * from './set-forbidden-light';
-export * from './set-guardians-rising';
+export * from './08-sun-and-moon/set-forbidden-light';
+export * from './08-sun-and-moon/set-guardians-rising';
 export * from './set-hidden-fates';
-export * from './set-lost-thunder';
+export * from './08-sun-and-moon/set-lost-thunder';
 export * from './set-shining-legends';
-export * from './set-sun-and-moon';
-export * from './set-sun-and-moon-promos';
-export * from './set-team-up';
-export * from './set-ultra-prism';
-export * from './set-unbroken-bonds';
-export * from './set-unified-minds';
+export * from './08-sun-and-moon/set-sun-and-moon';
+export * from './08-sun-and-moon/set-sun-and-moon-promos';
+export * from './08-sun-and-moon/set-team-up';
+export * from './08-sun-and-moon/set-ultra-prism';
+export * from './08-sun-and-moon/set-unbroken-bonds';
+export * from './08-sun-and-moon/set-unified-minds';
 export * from './set-detective-pikachu';
 
 //SWSH Era

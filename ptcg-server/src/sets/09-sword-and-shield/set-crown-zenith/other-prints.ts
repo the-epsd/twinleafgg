@@ -115,7 +115,7 @@ import { Graveler } from '../set-fusion-strike/graveler';
 import { Baltoy } from '../set-fusion-strike/baltoy';
 import { Koffing } from '../../set-ex-deoxys/koffing';
 import { Krokorok } from '../set-vivid-voltage/krokorok';
-import { Metang } from '../../set-celestial-storm/metang';
+import { Metang } from '../../08-sun-and-moon/set-celestial-storm/metang';
 import { Pawniard } from '../set-astral-radiance/pawniard';
 import { Snorlax } from '../set-fusion-strike/snorlax';
 import { Starly } from '../set-brilliant-stars/starly';

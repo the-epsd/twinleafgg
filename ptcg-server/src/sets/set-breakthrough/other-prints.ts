@@ -5,7 +5,7 @@ import { SuperRod } from '../set-noble-victories/super-rod';
 import { RainbowEnergyPL } from '../set-platinum/other-prints';
 import { Brigette as BrigetteBKT134 } from '../set-breakthrough/brigette';
 import { ProfessorsLetter as ProfessorsLetterXY123 } from '../set-x-and-y/professors-letter';
-import { Fisherman } from '../set-celestial-storm/fisherman';
+import { Fisherman } from '../08-sun-and-moon/set-celestial-storm/fisherman';
 import { FloatStone } from '../set-plasma-freeze/float-stone';
 import { ProfessorsLetter } from '../set-x-and-y/professors-letter';
 import { Swablu } from '../set-roaring-skies/swablu';

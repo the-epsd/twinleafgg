@@ -9,7 +9,7 @@ import { HisuianGoodraV as HisuianGoodraVLOR135 } from './hisuian-goodra-v';
 import { PidgeotV as PidgeotVLOR137 } from './pidgeot-v';
 import { Arezu as ArezuLOR153 } from './arezu';
 import { ColresssExperiment as ColresssExperimentLOR155 } from './colresss-experiment';
-import { LadyFLI as LadyFLIFLI109 } from '../../set-forbidden-light/other-prints';
+import { LadyFLI as LadyFLIFLI109 } from '../../08-sun-and-moon/set-forbidden-light/other-prints';
 import { MissFortuneSisters as MissFortuneSistersLOR164 } from './miss-fortune-sisters';
 import { Thorton as ThortonLOR167 } from './thorton';
 import { Volo as VoloLOR169 } from './volo';

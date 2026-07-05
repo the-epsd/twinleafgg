@@ -2,7 +2,7 @@ import { QuickBall } from '../set-sword-and-shield/quick-ball';
 import { Gossifleur } from '../set-evolving-skies/gossifleur';
 import { Mankey } from '../set-battle-styles/mankey';
 import { Carvanha } from '../set-evolving-skies/carvanha';
-import { BugCatcher } from '../../set-unified-minds/bug-catcher';
+import { BugCatcher } from '../../08-sun-and-moon/set-unified-minds/bug-catcher';
 import { TrainingCourt } from '../set-rebel-clash/training-court';
 import { TsareenaV } from './tsareena-v';
 import { ChandelureV } from './chandelure-v';

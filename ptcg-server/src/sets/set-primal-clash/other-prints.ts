@@ -1,5 +1,5 @@
 import { EnergyRetrieval } from '../set-base-set/energy-retrieval';
-import { EscapeRopeBUS } from '../set-burning-shadows/other-prints';
+import { EscapeRopeBUS } from '../08-sun-and-moon/set-burning-shadows/other-prints';
 import { ExpShare } from '../10-scarlet-and-violet/set-scarlet-and-violet/exp-share';
 import { RareCandy } from '../set-ex-holon-phantoms/rare-candy';
 import { WailordEx as WailordExPRC38 } from '../set-primal-clash/wailord-ex';

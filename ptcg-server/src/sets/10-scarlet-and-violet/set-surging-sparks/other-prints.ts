@@ -1,4 +1,4 @@
-import { CounterGain } from '../../set-lost-thunder/counter-gain';
+import { CounterGain } from '../../08-sun-and-moon/set-lost-thunder/counter-gain';
 import { ScrambleSwitch } from '../../set-plasma-storm/scramble-switch';
 
 export class ScrambleSwitchSSP extends ScrambleSwitch {

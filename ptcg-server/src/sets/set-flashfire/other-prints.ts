@@ -7,7 +7,7 @@ import { PokemonFanClub as PokemonFanClubP49 } from '../set-pop-series-4/pokemon
 import { MCharizardEX as MCharizardEXFLF69 } from '../set-flashfire/m-charizard-ex';
 import { MKangaskhanEX as MKangaskhanEXFLF79 } from '../set-flashfire/m-kangaskhan-ex';
 import { Blacksmith as BlacksmithFLF88 } from '../set-flashfire/blacksmith';
-import { PokemonFanClub } from '../set-ultra-prism/pokemon-fan-club';
+import { PokemonFanClub } from '../08-sun-and-moon/set-ultra-prism/pokemon-fan-club';
 import { Druddigon } from '../09-sword-and-shield/set-brilliant-stars/druddigon';
 import { CharizardEx } from './charizard-ex';
 import { MagnezoneEx } from './magnezone-ex';

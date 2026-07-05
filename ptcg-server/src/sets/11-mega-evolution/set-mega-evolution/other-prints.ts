@@ -1,5 +1,5 @@
 import { BossOrders } from '../../10-scarlet-and-violet/set-paldea-evolved/boss-orders';
-import { Repel } from '../../set-sun-and-moon/repel';
+import { Repel } from '../../08-sun-and-moon/set-sun-and-moon/repel';
 import { EnergySwitchPK } from '../../set-ex-power-keepers/other-prints';
 import { RareCandy } from '../../set-ex-holon-phantoms/rare-candy';
 import { Switch } from '../../set-base-set/switch';

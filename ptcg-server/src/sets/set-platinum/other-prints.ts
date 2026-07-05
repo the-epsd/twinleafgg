@@ -4,7 +4,7 @@ import { PokedexHandy } from '../set-diamond-and-pearl/pokedex-handy';
 import { Electabuzz } from '../set-base-set/electabuzz';
 import { Hitmonchan } from '../set-base-set/hitmonchan';
 import { Scyther } from '../set-jungle/scyther';
-import { RainbowEnergy } from '../set-sun-and-moon/rainbow-energy';
+import { RainbowEnergy } from '../08-sun-and-moon/set-sun-and-moon/rainbow-energy';
 
 export class RainbowEnergyPL extends RainbowEnergy {
   public fullName = 'Rainbow Energy PL';

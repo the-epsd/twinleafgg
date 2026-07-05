@@ -1,10 +1,10 @@
 import { EnergyRetrieval } from '../set-base-set/energy-retrieval';
 import { GreatBall } from '../set-ex-firered-leafgreen/great-ball';
-import { Hau } from '../set-celestial-storm/hau';
-import { Lillie } from '../set-ultra-prism/lillie';
+import { Hau } from '../08-sun-and-moon/set-celestial-storm/hau';
+import { Lillie } from '../08-sun-and-moon/set-ultra-prism/lillie';
 import { PokemonBreeder } from '../set-base-set/pokemon-breeder';
 import { PokemonCatcher } from '../10-scarlet-and-violet/set-scarlet-and-violet/pokemon-catcher';
-import { Sophocles } from '../set-burning-shadows/sophocles';
+import { Sophocles } from '../08-sun-and-moon/set-burning-shadows/sophocles';
 import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
 import { Switch } from '../set-base-set/switch';
 import { UltraBall } from '../10-scarlet-and-violet/set-scarlet-and-violet/ultra-ball';

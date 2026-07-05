@@ -3,7 +3,7 @@ import { EnergySwitch } from '../10-scarlet-and-violet/set-scarlet-and-violet/en
 import { EnergyRemoval2 } from '../set-ex-power-keepers/energy-removal-2';
 import { MetalEnergySpecial } from '../set-undaunted/metal-energy-special';
 import { PokemonReversal } from '../set-ex-unseen-forces/pokemon-reversal';
-import { RainbowEnergy } from '../set-sun-and-moon/rainbow-energy';
+import { RainbowEnergy } from '../08-sun-and-moon/set-sun-and-moon/rainbow-energy';
 import { Switch } from '../set-base-set/switch';
 
 export class EnergySearchRS extends EnergySearch {

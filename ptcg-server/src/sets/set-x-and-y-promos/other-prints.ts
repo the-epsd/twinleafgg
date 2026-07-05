@@ -7,7 +7,7 @@ import { GroudonEx } from '../set-primal-clash/groudon-ex';
 import { HoopaEX } from '../set-ancient-origins/hoopa-ex';
 import { Meloetta } from '../set-x-and-y-promos/meloetta';
 import { MewEx } from '../set-legendary-treasures/mew-ex';
-import { PalaceBook } from '../set-sun-and-moon-promos/palace-book';
+import { PalaceBook } from '../08-sun-and-moon/set-sun-and-moon-promos/palace-book';
 import { Froakie as FroakieBKP38 } from '../set-breakpoint/froakie';
 import { Volcanion } from '../set-steam-siege/volcanion';
 import { XerneasEX as XerneasEXXY97 } from '../set-x-and-y/xerneas-ex';

@@ -64,7 +64,7 @@ import { Terapagos } from '../../10-scarlet-and-violet/set-surging-sparks/terapa
 import { Terapagosex } from '../../10-scarlet-and-violet/set-stellar-crown/terapagos-ex';
 import { AirBalloon } from '../../09-sword-and-shield/set-sword-and-shield/air-balloon';
 import { BuddyBuddyPoffin } from '../../10-scarlet-and-violet/set-temporal-forces/buddy-buddy-poffin';
-import { CounterGain } from '../../set-lost-thunder/counter-gain';
+import { CounterGain } from '../../08-sun-and-moon/set-lost-thunder/counter-gain';
 import { LushForest } from '../set-mega-evolution/forest-of-vitality';
 import { GlassTrumpet } from '../../10-scarlet-and-violet/set-stellar-crown/glass-trumpet';
 import { IrisFightingSpirit } from '../../10-scarlet-and-violet/set-journey-together/iris-fighting-spirit';
@@ -115,7 +115,7 @@ import { BlackBeltsTraining } from '../../10-scarlet-and-violet/set-prismatic-ev
 import { BossOrders as BossOrdersPAL172 } from '../../10-scarlet-and-violet/set-paldea-evolved/boss-orders';
 import { Canari as CanariASC185 } from './canari';
 import { Cheren } from '../../set-emerging-powers/cheren';
-import { CounterGain as CounterGainLOT170 } from '../../set-lost-thunder/counter-gain';
+import { CounterGain as CounterGainLOT170 } from '../../08-sun-and-moon/set-lost-thunder/counter-gain';
 import { GlassTrumpet as GlassTrumpetSCR135 } from '../../10-scarlet-and-violet/set-stellar-crown/glass-trumpet';
 import { JammingTower } from '../../10-scarlet-and-violet/set-twilight-masquerade/jamming-tower';
 import { NsPPUp as NsPPUpJTG153 } from '../../10-scarlet-and-violet/set-journey-together/ns-pp-up';

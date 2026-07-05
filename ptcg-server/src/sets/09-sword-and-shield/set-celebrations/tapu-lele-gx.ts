@@ -1,4 +1,4 @@
-import { TapuLeleGX } from '../../set-guardians-rising/tapu-lele-gx';
+import { TapuLeleGX } from '../../08-sun-and-moon/set-guardians-rising/tapu-lele-gx';
 
 export class TapuLeleGx extends TapuLeleGX {
   public set: string = 'CEL';
