@@ -21,7 +21,7 @@ import { Sceptile as SceptileCES10 } from './sceptile';
 import { AcroBike } from '../../07-x-and-y/set-primal-clash/acro-bike';
 import { SuperScoopUp } from '../../set-diamond-and-pearl/super-scoop-up';
 import { Switch } from '../../10-scarlet-and-violet/set-scarlet-and-violet/switch';
-import { Combusken } from '../../set-dark-explorers/combusken';
+import { Combusken } from '../../06-black-and-white/set-dark-explorers/combusken';
 import { FriendBall } from '../../set-skyridge/friend-ball';
 import { UndergroundExpedition } from '../../set-skyridge/underground-expedition';
 import { ShiftryGx } from './shiftry-gx';

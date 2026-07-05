@@ -5,7 +5,7 @@ import { HoopaEX as HoopaEXAOR36 } from './hoopa-ex';
 import { GiratinaEX as GiratinaEXAOR57 } from './giratina-ex';
 import { EnergyRetrieval } from '../../10-scarlet-and-violet/set-scarlet-and-violet/energy-retrieval';
 import { HexManiac as HexManiacAOR75 } from './hex-maniac';
-import { LevelBall } from '../../set-next-destinies/level-ball';
+import { LevelBall } from '../../06-black-and-white/set-next-destinies/level-ball';
 import { TrainersMail } from '../set-roaring-skies/trainers-mail';
 import { LevelBall as LevelBallBattleStyles } from '../../09-sword-and-shield/set-battle-styles/level-ball';
 import { SceptileEx } from './sceptile-ex';

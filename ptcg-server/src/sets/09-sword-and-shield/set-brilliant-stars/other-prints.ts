@@ -52,7 +52,7 @@ import { UltraBall } from '../../10-scarlet-and-violet/set-scarlet-and-violet/ul
 import { WhimsicottV } from './whimsicott-v';
 import { WhimsicottVSTAR } from './whimsicott-vstar';
 import { Burmy } from '../../07-x-and-y/set-fates-collide/burmy';
-import { Karrablast } from '../../set-plasma-blast/karrablast';
+import { Karrablast } from '../../06-black-and-white/set-plasma-blast/karrablast';
 import { FreshWaterSet } from '../../07-x-and-y/set-primal-clash/fresh-water-set';
 import { CharizardV } from './charizard-v';
 import { GranbullV } from './granbull-v';

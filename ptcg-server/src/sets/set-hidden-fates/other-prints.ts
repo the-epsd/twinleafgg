@@ -80,7 +80,7 @@ import { AetherFoundationEmployee } from '../08-sun-and-moon/set-lost-thunder/ae
 import { Hiker } from '../08-sun-and-moon/set-celestial-storm/hiker';
 import { Charmeleon } from '../set-base-set/charmeleon';
 import { Staryu } from '../08-sun-and-moon/set-team-up/staryu';
-import { Pikachu } from '../set-black-and-white-promos/pikachu';
+import { Pikachu } from '../06-black-and-white/set-black-and-white-promos/pikachu';
 import { BlaineSLastStand } from '../set-dragons-majesty/blaines-last-stand';
 import { GiovannisExile } from '../08-sun-and-moon/set-unbroken-bonds/giovannis-exile';
 import { KogasTrap } from '../08-sun-and-moon/set-unbroken-bonds/kogas-trap';

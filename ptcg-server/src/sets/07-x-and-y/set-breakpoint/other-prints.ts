@@ -1,10 +1,10 @@
 import { GreatBall } from '../../set-ex-firered-leafgreen/great-ball';
-import { MaxPotion } from '../../set-emerging-powers/max-potion';
+import { MaxPotion } from '../../06-black-and-white/set-emerging-powers/max-potion';
 import { PokemonCatcher } from '../../10-scarlet-and-violet/set-scarlet-and-violet/pokemon-catcher';
 import { Potion } from '../../set-base-set/potion';
 import { ProfessorSycamoreXY } from '../set-x-and-y/other-prints';
 import { ManaphyEX as ManaphyEXBKP32 } from './manaphy-ex';
-import { Skyla } from '../../set-boundaries-crossed/skyla';
+import { Skyla } from '../../06-black-and-white/set-boundaries-crossed/skyla';
 import { Delinquent as DelinquentBKP98 } from './delinquent';
 import { ProfessorSycamoreXY as ProfessorSycamoreXYXY122 } from '../set-x-and-y/other-prints';
 import { MistysDetermination } from '../set-evolutions/mistys-determination';

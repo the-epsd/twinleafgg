@@ -16,7 +16,7 @@ import { RareCandy as RareCandyHP } from '../../../sets/set-ex-holon-phantoms/ra
 import { RareCandy as RareCandySVI } from '../../../sets/10-scarlet-and-violet/set-scarlet-and-violet/rare-candy';
 // import { SuperRod as SuperRodNVI } from '../../../sets/set-noble-victories/super-rod';
 // import { SuperRod as SuperRodPAL } from '../../../sets/set-paldea-evolved/super-rod';
-import { PokemonCatcher as PokemonCatcherEPO } from '../../../sets/set-emerging-powers/pokemon-catcher';
+import { PokemonCatcher as PokemonCatcherEPO } from '../../../sets/06-black-and-white/set-emerging-powers/pokemon-catcher';
 import { PokemonCatcher as PokemonCatcherSVI } from '../../../sets/10-scarlet-and-violet/set-scarlet-and-violet/pokemon-catcher';
 
 const effectOverrides: {

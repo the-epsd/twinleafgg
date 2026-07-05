@@ -1,0 +1,125 @@
+import { EnergySearch } from '../../set-fossil/energy-search';
+import { GreatBall } from '../../set-ex-firered-leafgreen/great-ball';
+import { PokeBall } from '../../set-jungle/pokeball';
+import { Switch } from '../../set-base-set/switch';
+import { TownMap } from '../../07-x-and-y/set-breakthrough/town-map';
+import { LandorusEx as LandorusExBCR89 } from './landorus-ex';
+import { Bianca } from '../set-emerging-powers/bianca';
+import { Cheren } from '../set-emerging-powers/cheren';
+import { Skyla as SkylaBCR134 } from './skyla';
+import { Terrakion } from '../set-noble-victories/terrakion';
+import { Altaria } from '../set-dragons-exalted/altaria';
+import { RockyHelmet as RockyHelmetSVI193 } from '../../10-scarlet-and-violet/set-scarlet-and-violet/rocky-helmet';
+import { KeldeoEx } from './keldeo-ex';
+import { RockyHelmet } from '../../10-scarlet-and-violet/set-scarlet-and-violet/rocky-helmet';
+import { CelebiEx } from './celebi-ex';
+import { CresseliaEx } from './cresselia-ex';
+import { BlackKyuremEx } from './black-kyurem-ex';
+import { WhiteKyuremEx } from './white-kyurem-ex';
+
+export class KeldeoExBCR extends KeldeoEx {
+  public setNumber = '142';
+  public fullName: string = 'Keldeo EX BCR 142';
+  public set = 'BCR';
+}
+
+export class RockyHelmetBCR extends RockyHelmet {
+  public setNumber = '133';
+  public fullName: string = 'Rocky Helmet BCR';
+  public set = 'BCR';
+}
+export class EnergySearchBCR extends EnergySearch {
+  public setNumber = '128';
+  public fullName: string = 'Energy Search BCR';
+  public set = 'BCR';
+}
+
+export class GreatBallBCR extends GreatBall {
+  public setNumber = '129';
+  public fullName: string = 'Great Ball BCR';
+  public set = 'BCR';
+}
+
+export class PokeBallBCR extends PokeBall {
+  public setNumber = '131';
+  public fullName: string = 'Poké Ball BCR';
+  public set = 'BCR';
+}
+
+export class SwitchBCR extends Switch {
+  public setNumber = '135';
+  public fullName: string = 'Switch BCR';
+  public set = 'BCR';
+}
+
+export class TownMapBCR extends TownMap {
+  public setNumber = '136';
+  public fullName: string = 'Town Map BCR';
+  public set = 'BCR';
+}
+
+export class LandorusEx2BCR extends LandorusExBCR89 {
+  public setNumber = '144';
+  public fullName: string = 'Landorus EX2 BCR';
+  public set = 'BCR';
+}
+
+export class BiancaBCR extends Bianca {
+  public setNumber = '147';
+  public fullName: string = 'Bianca BCR';
+  public set = 'BCR';
+}
+
+export class CherenBCR extends Cheren {
+  public setNumber = '148';
+  public fullName: string = 'Cheren BCR';
+  public set = 'BCR';
+}
+
+export class Skyla2BCR extends SkylaBCR134 {
+  public setNumber = '149';
+  public fullName: string = 'Skyla2 BCR';
+  public set = 'BCR';
+}
+
+export class TerrakionBCR extends Terrakion {
+  public setNumber = '151';
+  public fullName: string = 'Terrakion BCR';
+  public set = 'BCR';
+}
+
+export class AltariaBCR extends Altaria {
+  public setNumber = '152';
+  public fullName: string = 'Altaria BCR';
+  public set = 'BCR';
+}
+
+export class RockyHelmet2BCR extends RockyHelmetSVI193 {
+  public setNumber = '153';
+  public fullName: string = 'Rocky Helmet2 BCR';
+  public set = 'BCR';
+}
+
+export class CelebiEx2 extends CelebiEx {
+  public set: string = 'BCR';
+  public setNumber: string = '141';
+  public fullName: string = 'Celebi-EX BCR 141';
+}
+
+export class CresseliaEx2 extends CresseliaEx {
+  public set: string = 'BCR';
+  public setNumber: string = '143';
+  public fullName: string = 'Cresselia-EX BCR 143';
+}
+
+export class BlackKyuremEx2 extends BlackKyuremEx {
+  public set: string = 'BCR';
+  public setNumber: string = '145';
+  public fullName: string = 'Black Kyurem-EX BCR 145';
+}
+
+export class WhiteKyuremEx2 extends WhiteKyuremEx {
+  public set: string = 'BCR';
+  public setNumber: string = '146';
+  public fullName: string = 'White Kyurem-EX BCR 146';
+}

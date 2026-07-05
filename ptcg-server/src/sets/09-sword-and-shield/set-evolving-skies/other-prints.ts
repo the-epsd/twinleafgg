@@ -1,4 +1,4 @@
-import { Slakoth } from '../../set-dragons-exalted/slakoth';
+import { Slakoth } from '../../06-black-and-white/set-dragons-exalted/slakoth';
 import { LeafeonV } from './leafeon-v';
 import { TrevenantV } from './trevenant-v';
 import { VolcaronaV } from './volcarona-v';

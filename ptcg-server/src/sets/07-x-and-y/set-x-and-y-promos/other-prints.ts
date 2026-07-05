@@ -6,7 +6,7 @@ import { Dragalge } from '../set-flashfire/dragalge';
 import { GroudonEx } from '../set-primal-clash/groudon-ex';
 import { HoopaEX } from '../set-ancient-origins/hoopa-ex';
 import { Meloetta } from './meloetta';
-import { MewEx } from '../../set-legendary-treasures/mew-ex';
+import { MewEx } from '../../06-black-and-white/set-legendary-treasures/mew-ex';
 import { PalaceBook } from '../../08-sun-and-moon/set-sun-and-moon-promos/palace-book';
 import { Froakie as FroakieBKP38 } from '../set-breakpoint/froakie';
 import { Volcanion } from '../set-steam-siege/volcanion';

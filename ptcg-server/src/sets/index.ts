@@ -90,19 +90,19 @@ export * from './set-undaunted';
 export * from './set-unleashed';
 
 //BW Era
-export * from './set-black-and-white-promos';
-export * from './set-black-and-white';
-export * from './set-boundaries-crossed';
-export * from './set-dark-explorers';
-export * from './set-dragon-vault';
-export * from './set-dragons-exalted';
-export * from './set-emerging-powers';
-export * from './set-legendary-treasures';
-export * from './set-next-destinies';
-export * from './set-noble-victories';
-export * from './set-plasma-blast';
-export * from './set-plasma-freeze';
-export * from './set-plasma-storm';
+export * from './06-black-and-white/set-black-and-white-promos';
+export * from './06-black-and-white/set-black-and-white';
+export * from './06-black-and-white/set-boundaries-crossed';
+export * from './06-black-and-white/set-dark-explorers';
+export * from './06-black-and-white/set-dragon-vault';
+export * from './06-black-and-white/set-dragons-exalted';
+export * from './06-black-and-white/set-emerging-powers';
+export * from './06-black-and-white/set-legendary-treasures';
+export * from './06-black-and-white/set-next-destinies';
+export * from './06-black-and-white/set-noble-victories';
+export * from './06-black-and-white/set-plasma-blast';
+export * from './06-black-and-white/set-plasma-freeze';
+export * from './06-black-and-white/set-plasma-storm';
 
 //XY Era
 export * from './07-x-and-y/set-flashfire';

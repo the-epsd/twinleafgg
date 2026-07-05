@@ -90,7 +90,7 @@ import { GymTrainer } from './gym-trainer';
 import { Piers } from '../09-sword-and-shield/set-champions-path/piers';
 import { PokeKid } from '../09-sword-and-shield/set-sword-and-shield/poke-kid';
 import { Rose } from '../09-sword-and-shield/set-darkness-ablaze/rose';
-import { Skyla } from '../set-boundaries-crossed/skyla';
+import { Skyla } from '../06-black-and-white/set-boundaries-crossed/skyla';
 import { AlcremieVmax } from '../09-sword-and-shield/set-champions-path/alcremie-vmax';
 import { Orbeetle } from '../09-sword-and-shield/set-sword-and-shield/orbeetle';
 import { Greedent } from '../09-sword-and-shield/set-rebel-clash/greedent';

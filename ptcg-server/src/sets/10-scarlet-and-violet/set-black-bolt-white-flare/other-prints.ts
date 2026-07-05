@@ -1,6 +1,6 @@
-import { ToolScrapper } from '../../set-dragons-exalted/tool-scrapper';
-import { Cheren } from '../../set-emerging-powers/cheren';
-import { PrismEnergy } from '../../set-next-destinies/prism-energy';
+import { ToolScrapper } from '../../06-black-and-white/set-dragons-exalted/tool-scrapper';
+import { Cheren } from '../../06-black-and-white/set-emerging-powers/cheren';
+import { PrismEnergy } from '../../06-black-and-white/set-next-destinies/prism-energy';
 import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
 import { Pokegear30 } from '../set-scarlet-and-violet/pokegear-30';
 import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';

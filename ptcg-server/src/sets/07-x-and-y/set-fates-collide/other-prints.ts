@@ -4,7 +4,7 @@ import { DevolutionSpray } from '../../set-base-set/devolution-spray';
 import { FairyGarden } from '../set-x-and-y/fairy-garden';
 import { N } from './n';
 import { PokemonFanClub } from '../../set-pop-series-4/pokemon-fan-club';
-import { RandomReceiver } from '../../set-dark-explorers/random-receiver';
+import { RandomReceiver } from '../../06-black-and-white/set-dark-explorers/random-receiver';
 import { ScorchedEarth } from '../set-primal-clash/scorched-earth';
 import { Shauna } from '../../09-sword-and-shield/set-fusion-strike/shauna';
 import { UltraBall } from '../../10-scarlet-and-violet/set-scarlet-and-violet/ultra-ball';

@@ -26,7 +26,7 @@ import { LevelBall as LevelBallBST129 } from './level-ball';
 import { RapidStrikeEnergy as RapidStrikeEnergyBST140 } from './rapid-strike-energy';
 import { SingleStrikeEnergy as SingleStrikeEnergyBST141 } from './single-strike-energy';
 import { Tepig } from '../set-sword-and-shield-promos/tepig';
-import { Timburr } from '../../set-black-and-white/timburr';
+import { Timburr } from '../../06-black-and-white/set-black-and-white/timburr';
 import { Spearow } from '../../07-x-and-y/set-roaring-skies/spearow';
 import { CorviknightV } from './corviknight-v';
 import { Phoebe } from './phoebe';

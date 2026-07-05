@@ -1,4 +1,4 @@
-import { ToolScrapper } from '../../set-dragons-exalted/tool-scrapper';
+import { ToolScrapper } from '../../06-black-and-white/set-dragons-exalted/tool-scrapper';
 import { SurfingBeach } from '../set-mega-evolution/surfing-beach';
 import { JumboIce } from '../set-phantasmal-flames/jumbo-ice';
 import { EnergyRetrieval } from '../../10-scarlet-and-violet/set-scarlet-and-violet/energy-retrieval';

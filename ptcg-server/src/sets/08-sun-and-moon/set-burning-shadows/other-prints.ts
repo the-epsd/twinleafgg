@@ -25,7 +25,7 @@ import { WeaknessPolicy } from '../../07-x-and-y/set-primal-clash/weakness-polic
 import { Charmander } from './charmander';
 import { CharizardGX } from './charizard-gx';
 import { Kirlia } from './kirlia';
-import { Meowth } from '../../set-boundaries-crossed/meowth';
+import { Meowth } from '../../06-black-and-white/set-boundaries-crossed/meowth';
 import { PorygonZ } from './porygon-z';
 import { GolisopodGx } from './golisopod-gx';
 import { HoOhGx } from './ho-oh-gx';

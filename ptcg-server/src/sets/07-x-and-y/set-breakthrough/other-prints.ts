@@ -1,12 +1,12 @@
-import { HeavyBall } from '../../set-next-destinies/heavy-ball';
+import { HeavyBall } from '../../06-black-and-white/set-next-destinies/heavy-ball';
 import { JudgeUL } from '../../set-unleashed/other-prints';
-import { Skyla } from '../../set-boundaries-crossed/skyla';
-import { SuperRod } from '../../set-noble-victories/super-rod';
+import { Skyla } from '../../06-black-and-white/set-boundaries-crossed/skyla';
+import { SuperRod } from '../../06-black-and-white/set-noble-victories/super-rod';
 import { RainbowEnergyPL } from '../../set-platinum/other-prints';
 import { Brigette as BrigetteBKT134 } from './brigette';
 import { ProfessorsLetter as ProfessorsLetterXY123 } from '../set-x-and-y/professors-letter';
 import { Fisherman } from '../../08-sun-and-moon/set-celestial-storm/fisherman';
-import { FloatStone } from '../../set-plasma-freeze/float-stone';
+import { FloatStone } from '../../06-black-and-white/set-plasma-freeze/float-stone';
 import { ProfessorsLetter } from '../set-x-and-y/professors-letter';
 import { Swablu } from '../set-roaring-skies/swablu';
 import { HoundoomEx } from './houndoom-ex';

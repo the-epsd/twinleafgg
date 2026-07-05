@@ -22,7 +22,7 @@ import { AlolanVulpix } from '../../set-hidden-fates/alolan-vulpix';
 import { DoubleColorlessEnergy } from '../../set-base-set/double-colorless-energy';
 import { EnhancedHammer } from '../../10-scarlet-and-violet/set-twilight-masquerade/enhanced-hammer';
 import { FieldBlower } from './field-blower';
-import { MaxPotion } from '../../set-emerging-powers/max-potion';
+import { MaxPotion } from '../../06-black-and-white/set-emerging-powers/max-potion';
 import { RescueStretcher } from './rescue-stretcher';
 import { EnergyLoto } from '../../09-sword-and-shield/set-astral-radiance/energy-loto';
 import { AlolanSandshrew } from './alolan-sandshrew';

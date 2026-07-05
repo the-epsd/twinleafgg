@@ -4,7 +4,7 @@ import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
 import { EnergySearch } from '../set-fossil/energy-search';
 import { DarknessEnergySpecial } from '../set-neo-genesis/darkness-energy-special';
 import { MetalEnergyN1 } from '../set-neo-genesis/other-prints';
-import { EscapeRope } from '../set-plasma-storm/escape-rope';
+import { EscapeRope } from '../06-black-and-white/set-plasma-storm/escape-rope';
 
 export class WarpPointMD extends EscapeRope {
   public fullName = 'Warp Point MD';
