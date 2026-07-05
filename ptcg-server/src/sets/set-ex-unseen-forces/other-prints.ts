@@ -2,7 +2,7 @@ import { BoostEnergy } from '../set-aquapolis/boost-energy';
 import { CycloneEnergy } from '../set-ex-power-keepers/cyclone-energy';
 import { DarknessEnergySpecial } from '../set-ex-ruby-and-sapphire/darkness-energy-special';
 import { EnergyRemoval2 } from '../set-ex-power-keepers/energy-removal-2';
-import { MetalEnergySpecial } from '../set-undaunted/metal-energy-special';
+import { MetalEnergySpecial } from '../05-heartgold-and-soulsilver/set-undaunted/metal-energy-special';
 import { PokeBall } from '../set-jungle/pokeball';
 import { WarpEnergy } from '../set-shining-legends/warp-energy';
 import { WarpPointMA } from '../set-ex-team-magma-vs-team-aqua/other-prints';

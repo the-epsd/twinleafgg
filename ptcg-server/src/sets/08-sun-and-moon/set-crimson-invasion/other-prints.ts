@@ -9,7 +9,7 @@ import { Lusamine as LusamineCIN96 } from './lusamine';
 import { CounterCatcher as CounterCatcherPAR160 } from '../../10-scarlet-and-violet/set-paradox-rift/counter-catcher';
 import { WishfulBaton } from '../set-burning-shadows/wishful-baton';
 import { CounterEnergy as CounterEnergyCIN100 } from './counter-energy';
-import { WarpEnergySF } from '../../set-stormfront/other-prints';
+import { WarpEnergySF } from '../../04-diamond-pearl-platinum/set-stormfront/other-prints';
 import { WaterEnergy } from '../../set-base-set-energy/water-energy';
 import { Regigigas as RegigigasCIN84 } from './regigigas';
 import { GyaradosGx } from './gyarados-gx';

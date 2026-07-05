@@ -1,13 +1,13 @@
 import { BillsMaintenance } from '../set-ex-firered-leafgreen/bills-maintenance';
 import { Copycat } from '../set-ex-dragon-frontiers/copycat';
-import { DualBall } from '../set-unleashed/dual-ball';
+import { DualBall } from '../05-heartgold-and-soulsilver/set-unleashed/dual-ball';
 import { EnergyRemoval2 } from '../set-ex-power-keepers/energy-removal-2';
 import { EnergySearch } from '../10-scarlet-and-violet/set-scarlet-and-violet/energy-search';
 import { PokemonReversal } from '../set-ex-unseen-forces/pokemon-reversal';
 import { ProfessorElmsTrainingMethod } from '../set-ex-unseen-forces/professors-elm-training-method';
 import { ProfessorOaksResearch } from '../set-ex-dragon-frontiers/professor-oaks-research';
 import { StrengthCharm } from '../set-ex-dragon-frontiers/strength-charm';
-import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
+import { SuperScoopUp } from '../04-diamond-pearl-platinum/set-diamond-and-pearl/super-scoop-up';
 import { Switch } from '../10-scarlet-and-violet/set-scarlet-and-violet/switch';
 
 export class BillsMaintenanceEX extends BillsMaintenance {

@@ -3,7 +3,7 @@ import { Delcatty } from '../set-ex-ruby-and-sapphire/delcatty';
 import { EnergySwitch } from '../10-scarlet-and-violet/set-scarlet-and-violet/energy-switch';
 import { GreatBall } from '../set-ex-firered-leafgreen/great-ball';
 import { Magneton } from '../set-ex-dragon/magneton';
-import { MetalEnergySpecial } from '../set-undaunted/metal-energy-special';
+import { MetalEnergySpecial } from '../05-heartgold-and-soulsilver/set-undaunted/metal-energy-special';
 import { WarpEnergy } from '../set-shining-legends/warp-energy';
 
 export class DarknessEnergySpecialPK extends DarknessEnergySpecial {

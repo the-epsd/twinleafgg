@@ -67,27 +67,27 @@ export * from './set-gift-box-mew-lucario';
 export * from './set-vs-pack-auras-lucario';
 
 //DP Era
-export * from './set-diamond-and-pearl';
-export * from './set-mysterious-treasures';
-export * from './set-supreme-victors';
-export * from './set-secret-wonders';
-export * from './set-great-encounters';
+export * from './04-diamond-pearl-platinum/set-diamond-and-pearl';
+export * from './04-diamond-pearl-platinum/set-mysterious-treasures';
+export * from './04-diamond-pearl-platinum/set-supreme-victors';
+export * from './04-diamond-pearl-platinum/set-secret-wonders';
+export * from './04-diamond-pearl-platinum/set-great-encounters';
 export * from './set-op9';
-export * from './set-platinum';
-export * from './set-rising-rivals';
+export * from './04-diamond-pearl-platinum/set-platinum';
+export * from './04-diamond-pearl-platinum/set-rising-rivals';
 
-export * from './set-diamond-and-pearl-promos';
+export * from './04-diamond-pearl-platinum/set-diamond-and-pearl-promos';
 
 //HGSS Era
 
 export * from './set-battle-road-promos';
-export * from './set-call-of-legends';
-export * from './set-heartgold-and-soulsilver';
-export * from './set-heartgold-and-soulsilver-promos';
+export * from './05-heartgold-and-soulsilver/set-call-of-legends';
+export * from './05-heartgold-and-soulsilver/set-heartgold-and-soulsilver';
+export * from './05-heartgold-and-soulsilver/set-heartgold-and-soulsilver-promos';
 export * from './set-l-p-promos';
-export * from './set-triumphant';
-export * from './set-undaunted';
-export * from './set-unleashed';
+export * from './05-heartgold-and-soulsilver/set-triumphant';
+export * from './05-heartgold-and-soulsilver/set-undaunted';
+export * from './05-heartgold-and-soulsilver/set-unleashed';
 
 //BW Era
 export * from './06-black-and-white/set-black-and-white-promos';
@@ -197,7 +197,7 @@ export * from './11-mega-evolution/set-30th-celebration';
 export * from './set-test';
 
 //Sort Later
-export * from './set-legends-awakened';
-export * from './set-stormfront';
-export * from './set-majestic-dawn';
-export * from './set-arceus';
+export * from './04-diamond-pearl-platinum/set-legends-awakened';
+export * from './04-diamond-pearl-platinum/set-stormfront';
+export * from './04-diamond-pearl-platinum/set-majestic-dawn';
+export * from './04-diamond-pearl-platinum/set-arceus';

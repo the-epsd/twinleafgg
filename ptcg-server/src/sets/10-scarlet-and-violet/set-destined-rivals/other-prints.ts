@@ -1,5 +1,5 @@
 import { Rellor } from '../set-surging-sparks/rellor';
-import { JudgeUL } from '../../set-unleashed/other-prints';
+import { JudgeUL } from '../../05-heartgold-and-soulsilver/set-unleashed/other-prints';
 import { Yanma as YanmaDRI2 } from './yanma';
 import { CynthiasRoserade as CynthiasRoseradeDRI8 } from './cynthias-roserade';
 import { Shaymin as ShayminDRI10 } from './shaymin';
@@ -33,7 +33,7 @@ import { ArvensMabosstiffex as ArvensMabosstiffexDRI139 } from './arvens-mabosst
 import { TeamRocketsPersianex as TeamRocketsPersianexDRI150 } from './team-rockets-persian-ex';
 import { EmceesHype as EmceesHypeDRI163 } from './mcs-hype-up';
 import { EthansAdventure as EthansAdventureDRI165 } from './ethans-adventure';
-import { JudgeUL as JudgeULUL78 } from '../../set-unleashed/other-prints';
+import { JudgeUL as JudgeULUL78 } from '../../05-heartgold-and-soulsilver/set-unleashed/other-prints';
 import { TeamRocketsArcher as TeamRocketsArcherDRI170 } from './team-rockets-archer';
 import { TeamRocketsAriana as TeamRocketsArianaDRI171 } from './team-rockets-ariana';
 import { TeamRocketsGiovanni as TeamRocketsGiovanniDRI174 } from './team-rockets-giovanni';

@@ -4,7 +4,7 @@ import { EnergySearch } from '../../set-fossil/energy-search';
 import { EnergySwitchPK } from '../../set-ex-power-keepers/other-prints';
 import { LumBerry } from '../../set-ex-emerald/lum-berry';
 import { PalPad } from '../../10-scarlet-and-violet/set-scarlet-and-violet/pal-pad';
-import { Pokegear30HS } from '../../set-heartgold-and-soulsilver/other-prints';
+import { Pokegear30HS } from '../../05-heartgold-and-soulsilver/set-heartgold-and-soulsilver/other-prints';
 import { PokemonCatcher } from '../../10-scarlet-and-violet/set-scarlet-and-violet/pokemon-catcher';
 import { Potion } from '../../set-base-set/potion';
 import { RareCandy } from '../../set-ex-holon-phantoms/rare-candy';
@@ -23,7 +23,7 @@ import { GreatBall } from '../../10-scarlet-and-violet/set-paldea-evolved/great-
 import { Marnie } from './marnie';
 import { ProfessorsResearch } from '../../10-scarlet-and-violet/set-scarlet-and-violet/professors-research';
 import { HyperPotion } from '../set-champions-path/hyper-potion';
-import { LuckyEgg } from '../../set-arceus/lucky-egg';
+import { LuckyEgg } from '../../04-diamond-pearl-platinum/set-arceus/lucky-egg';
 import { PokemonCenterLady } from '../../07-x-and-y/set-flashfire/pokemon-center-lady';
 import { DhelmiseV } from './dhelmise-v';
 import { TorkoalV } from './torkoal-v';

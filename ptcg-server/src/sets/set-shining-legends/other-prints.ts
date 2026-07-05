@@ -5,7 +5,7 @@ import { Lillie } from '../08-sun-and-moon/set-ultra-prism/lillie';
 import { PokemonBreeder } from '../set-base-set/pokemon-breeder';
 import { PokemonCatcher } from '../10-scarlet-and-violet/set-scarlet-and-violet/pokemon-catcher';
 import { Sophocles } from '../08-sun-and-moon/set-burning-shadows/sophocles';
-import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
+import { SuperScoopUp } from '../04-diamond-pearl-platinum/set-diamond-and-pearl/super-scoop-up';
 import { Switch } from '../set-base-set/switch';
 import { UltraBall } from '../10-scarlet-and-violet/set-scarlet-and-violet/ultra-ball';
 import { DoubleColorlessEnergy } from '../set-base-set/double-colorless-energy';

@@ -6,7 +6,7 @@ import { AlolanNinetalesGX as AlolanNinetalesGXLOT132 } from './alolan-ninetales
 import { MimikyuGX as MimikyuGXLOT149 } from './mimikyu-gx';
 import { LugiaGX as LugiaGXLOT159 } from './lugia-gx';
 import { Faba as FabaLOT173 } from './faba';
-import { JudgeUL } from '../../set-unleashed/other-prints';
+import { JudgeUL } from '../../05-heartgold-and-soulsilver/set-unleashed/other-prints';
 import { Mina as MinaLOT183 } from './mina';
 import { ProfessorElmLecture as ProfessorElmLectureLOT188 } from './professor-elms-lecture';
 import { ZeraoraGX as ZeraoraGXLOT201 } from './zeraora-gx';

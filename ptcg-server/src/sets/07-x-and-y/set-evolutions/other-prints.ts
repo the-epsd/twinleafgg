@@ -15,7 +15,7 @@ import { WaterEnergy } from '../../set-base-set-energy/water-energy';
 import { LightningEnergy } from '../../set-base-set-energy/lightning-energy';
 import { PsychicEnergy } from '../../set-base-set-energy/psychic-energy';
 import { FightingEnergy } from '../../set-base-set-energy/fighting-energy';
-import { MetalEnergy } from '../../set-diamond-and-pearl/basic-energies';
+import { MetalEnergy } from '../../04-diamond-pearl-platinum/set-diamond-and-pearl/basic-energies';
 import { FairyEnergy } from '../set-x-and-y/basic-energies';
 import { DragoniteEX as DragoniteEXEVO72 } from './dragonite-ex';
 import { BrocksGrit as BrocksGritEVO74 } from './brocks-grit';

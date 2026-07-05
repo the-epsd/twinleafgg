@@ -4,7 +4,7 @@ import { GreatBall } from '../../set-ex-firered-leafgreen/great-ball';
 import { MaxRevive } from '../set-generations/max-revive';
 import { RedCard } from '../set-generations/red-card';
 import { TeamFlareGrunt } from '../set-generations/team-flare-grunt';
-import { RainbowEnergyPL } from '../../set-platinum/other-prints';
+import { RainbowEnergyPL } from '../../04-diamond-pearl-platinum/set-platinum/other-prints';
 import { YveltalEx as YveltalExXY79 } from './yveltal-ex';
 import { XerneasEX as XerneasEXXY97 } from './xerneas-ex';
 import { ProfessorJuniper } from '../../06-black-and-white/set-black-and-white/professor-juniper';

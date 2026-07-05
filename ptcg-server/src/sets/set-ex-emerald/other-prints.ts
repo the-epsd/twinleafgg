@@ -1,6 +1,6 @@
 import { DarknessEnergySpecial } from '../set-ex-ruby-and-sapphire/darkness-energy-special';
 import { DoubleRainbowEnergy } from '../set-ex-team-magma-vs-team-aqua/double-rainbow-energy';
-import { MetalEnergySpecial } from '../set-undaunted/metal-energy-special';
+import { MetalEnergySpecial } from '../05-heartgold-and-soulsilver/set-undaunted/metal-energy-special';
 import { MultiEnergy } from '../set-ex-sandstorm/multi-energy';
 import { RareCandy } from '../set-ex-holon-phantoms/rare-candy';
 import { WallysTraining } from '../set-ex-sandstorm/wallys-training';

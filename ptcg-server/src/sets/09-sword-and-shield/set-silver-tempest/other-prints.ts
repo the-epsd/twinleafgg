@@ -30,7 +30,7 @@ import { BlazikenVMAX } from '../set-chilling-reign/blaziken-vmax';
 import { RayquazaVMAX } from '../set-evolving-skies/rayquaza-vmax';
 import { DuraludonVMAX } from '../set-evolving-skies/duraludon-vmax';
 import { BlisseyV } from '../set-chilling-reign/blissey-v';
-import { JudgeUL } from '../../set-unleashed/other-prints';
+import { JudgeUL } from '../../05-heartgold-and-soulsilver/set-unleashed/other-prints';
 import { Raihan } from '../set-evolving-skies/raihan';
 import { RayquazaVMAX as RayquazaVMAXEVS111 } from '../set-evolving-skies/rayquaza-vmax';
 import { DuraludonVMAX as DuraludonVMAXEVS123 } from '../set-evolving-skies/duraludon-vmax';

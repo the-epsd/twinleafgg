@@ -1,4 +1,4 @@
-import { Claydol as ClaydolGE } from '../../set-great-encounters/claydol';
+import { Claydol as ClaydolGE } from '../../04-diamond-pearl-platinum/set-great-encounters/claydol';
 
 export class Claydol extends ClaydolGE {
   public set: string = 'CEL';

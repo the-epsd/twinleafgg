@@ -1,8 +1,8 @@
 import { DarknessEnergySpecial } from '../set-ex-ruby-and-sapphire/darkness-energy-special';
-import { DualBall } from '../set-unleashed/dual-ball';
+import { DualBall } from '../05-heartgold-and-soulsilver/set-unleashed/dual-ball';
 import { GreatBall } from '../set-ex-firered-leafgreen/great-ball';
-import { MetalEnergySpecial } from '../set-undaunted/metal-energy-special';
-import { SuperScoopUp } from '../set-diamond-and-pearl/super-scoop-up';
+import { MetalEnergySpecial } from '../05-heartgold-and-soulsilver/set-undaunted/metal-energy-special';
+import { SuperScoopUp } from '../04-diamond-pearl-platinum/set-diamond-and-pearl/super-scoop-up';
 
 export class DarknessEnergySpecialDS extends DarknessEnergySpecial {
   public fullName = 'Darkness Energy Special DS';

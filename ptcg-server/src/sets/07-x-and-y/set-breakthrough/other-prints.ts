@@ -1,8 +1,8 @@
 import { HeavyBall } from '../../06-black-and-white/set-next-destinies/heavy-ball';
-import { JudgeUL } from '../../set-unleashed/other-prints';
+import { JudgeUL } from '../../05-heartgold-and-soulsilver/set-unleashed/other-prints';
 import { Skyla } from '../../06-black-and-white/set-boundaries-crossed/skyla';
 import { SuperRod } from '../../06-black-and-white/set-noble-victories/super-rod';
-import { RainbowEnergyPL } from '../../set-platinum/other-prints';
+import { RainbowEnergyPL } from '../../04-diamond-pearl-platinum/set-platinum/other-prints';
 import { Brigette as BrigetteBKT134 } from './brigette';
 import { ProfessorsLetter as ProfessorsLetterXY123 } from '../set-x-and-y/professors-letter';
 import { Fisherman } from '../../08-sun-and-moon/set-celestial-storm/fisherman';

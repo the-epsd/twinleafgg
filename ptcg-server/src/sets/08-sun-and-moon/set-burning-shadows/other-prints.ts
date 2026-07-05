@@ -1,4 +1,4 @@
-import { SuperScoopUp } from '../../set-diamond-and-pearl/super-scoop-up';
+import { SuperScoopUp } from '../../04-diamond-pearl-platinum/set-diamond-and-pearl/super-scoop-up';
 import { SalazzleGX as SalazzleGXBUS25 } from './salazzle-gx';
 import { TapuFiniGX as TapuFiniGXBUS39 } from './tapu-fini-gx';
 import { NecrozmaGX as NecrozmaGXBUS63 } from './necrozma-gx';
@@ -14,9 +14,9 @@ import { TapuBuluGX as TapuBuluGXBUS130 } from './tapu-bulu-gx';
 import { BodybuildingDumbbells as BodybuildingDumbbellsBUS113 } from './bodybuilding-dumbbells';
 import { ChoiceBand } from '../set-guardians-rising/choice-band';
 import { EscapeRopeBUS as EscapeRopeBUSBUS114 } from './other-prints';
-import { SuperScoopUp as SuperScoopUpDP115 } from '../../set-diamond-and-pearl/super-scoop-up';
+import { SuperScoopUp as SuperScoopUpDP115 } from '../../04-diamond-pearl-platinum/set-diamond-and-pearl/super-scoop-up';
 import { FireEnergy } from '../../set-base-set-energy/fire-energy';
-import { DarknessEnergy } from '../../set-diamond-and-pearl/basic-energies';
+import { DarknessEnergy } from '../../04-diamond-pearl-platinum/set-diamond-and-pearl/basic-energies';
 import { FairyEnergy } from '../../07-x-and-y/set-x-and-y/basic-energies';
 import { EscapeRope } from '../../09-sword-and-shield/set-battle-styles/escape-rope';
 import { Guzma } from './guzma';

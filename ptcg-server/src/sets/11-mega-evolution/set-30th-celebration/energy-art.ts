@@ -1,4 +1,4 @@
-import { DarknessEnergy, MetalEnergy } from "../../set-diamond-and-pearl/basic-energies";
+import { DarknessEnergy, MetalEnergy } from "../../04-diamond-pearl-platinum/set-diamond-and-pearl/basic-energies";
 import { GrassEnergy, FireEnergy, WaterEnergy, LightningEnergy, PsychicEnergy, FightingEnergy } from "../../set-gym-heros/basic-energies";
 
 export class GrassEnergyArt extends GrassEnergy {

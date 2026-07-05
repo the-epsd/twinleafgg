@@ -1,4 +1,4 @@
-import { JudgeUL } from '../../set-unleashed/other-prints';
+import { JudgeUL } from '../../05-heartgold-and-soulsilver/set-unleashed/other-prints';
 import { UnidentifiedFossil } from '../../09-sword-and-shield/set-silver-tempest/unidentified-fossil';
 import { GreninjaGX as GreninjaGXFLI24 } from './greninja-gx';
 import { NaganadelGX as NaganadelGXFLI56 } from './naganadel-gx';

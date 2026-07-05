@@ -47,7 +47,7 @@ import { NoivernGX } from '../08-sun-and-moon/set-burning-shadows/noivern-gx';
 import { SilvallyGX } from '../08-sun-and-moon/set-ultra-prism/silvally-gx';
 import { DrampaGX } from '../08-sun-and-moon/set-guardians-rising/drampa-gx';
 import { Cynthia } from '../08-sun-and-moon/set-ultra-prism/cynthia';
-import { FishermanHS } from '../set-heartgold-and-soulsilver/other-prints';
+import { FishermanHS } from '../05-heartgold-and-soulsilver/set-heartgold-and-soulsilver/other-prints';
 import { LadyFLI } from '../08-sun-and-moon/set-forbidden-light/other-prints';
 import { AetherParadiseConvserationArea } from '../08-sun-and-moon/set-guardians-rising/aether-paradise-conservation-area';
 import { BrookletHill } from '../08-sun-and-moon/set-guardians-rising/brooklet-hill';

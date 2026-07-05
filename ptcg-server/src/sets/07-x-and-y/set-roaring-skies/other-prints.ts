@@ -7,7 +7,7 @@ import { ShayminEx as ShayminExROS77 } from './shaymin-ex';
 import { Wally as WallyROS94 } from './wally';
 import { Winona as WinonaROS96 } from './winona';
 import { EnergySwitchPK } from '../../set-ex-power-keepers/other-prints';
-import { VsSeekerSV } from '../../set-supreme-victors/other-prints';
+import { VsSeekerSV } from '../../04-diamond-pearl-platinum/set-supreme-victors/other-prints';
 import { TrainersMail } from './trainers-mail';
 import { ThundurusEx } from './thundurus-ex';
 import { GalladeEx } from './gallade-ex';

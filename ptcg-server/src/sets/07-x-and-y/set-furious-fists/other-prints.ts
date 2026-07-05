@@ -4,7 +4,7 @@ import { SeismitoadEx as SeismitoadExFFI20 } from './seismitoad-ex';
 import { LucarioEx as LucarioExFFI54 } from './lucario-ex';
 import { Korrina } from './korrina';
 import { Maintenance } from '../../set-base-set/maintenance';
-import { SuperScoopUp } from '../../set-diamond-and-pearl/super-scoop-up';
+import { SuperScoopUp } from '../../04-diamond-pearl-platinum/set-diamond-and-pearl/super-scoop-up';
 import { MLucarioEx } from './m-lucario-ex';
 import { DragoniteEx } from './dragonite-ex';
 import { BattleReporter } from './battle-reporter';

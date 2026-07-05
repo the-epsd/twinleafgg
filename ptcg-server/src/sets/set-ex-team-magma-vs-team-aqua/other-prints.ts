@@ -1,5 +1,5 @@
 import { EscapeRope } from '../09-sword-and-shield/set-battle-styles/escape-rope';
-import { DualBall } from '../set-unleashed/dual-ball';
+import { DualBall } from '../05-heartgold-and-soulsilver/set-unleashed/dual-ball';
 import { StrengthCharm } from '../set-ex-dragon-frontiers/strength-charm';
 
 export class WarpPointMA extends EscapeRope {
