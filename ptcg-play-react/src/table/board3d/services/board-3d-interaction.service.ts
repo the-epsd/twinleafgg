@@ -66,7 +66,7 @@ export type PlayCardFlightPayload = {
 };
 
 export interface DropResult {
-  action: 'playCard' | 'retreat' | 'click' | 'pickAttachTarget' | 'cancelHandPlayTarget';
+  action: 'playCard' | 'retreat' | 'click' | 'pickAttachTarget' | 'cancelHandPlayTarget' | 'setupSelectCard';
   handIndex?: number;
   benchIndex?: number;
   zone?: CardTarget;
@@ -85,6 +85,11 @@ export interface DragContext {
   trainerType?: TrainerType;
   originalTarget?: CardTarget;
 }
+
+export type SetupStartingPokemonDragState = {
+  activeLocked: boolean;
+  skipActivePhase: boolean;
+};
 
 export class Board3dInteractionService {
   private raycaster: Raycaster;
@@ -153,6 +158,13 @@ export class Board3dInteractionService {
 
   /** Matches server {@link GameSettings} flags for sandbox bench targeting. */
   private handPlayZoneGameSettings: HandPlayPokemonZoneGameSettings = undefined;
+
+  /** Game setup: drag Basics to Active/Bench instead of playCardAction. */
+  private setupStartingPokemonDrag: SetupStartingPokemonDragState | null = null;
+
+  setSetupStartingPokemonDrag(state: SetupStartingPokemonDragState | null): void {
+    this.setupStartingPokemonDrag = state;
+  }
 
   constructor(
     private assetLoader: Board3dAssetLoaderService,
@@ -726,6 +738,28 @@ export class Board3dInteractionService {
     return null;
   }
 
+  /** Setup starting Pokémon: Active must be chosen before Bench; no BENCH_GENERAL. */
+  private isSetupStartingDropZoneAllowed(config: DropZoneConfig, isOccupied: boolean): boolean {
+    if (!this.setupStartingPokemonDrag || this.currentDragContext?.source !== 'hand') {
+      return false;
+    }
+    const { card } = this.currentDragContext;
+    if (!this.playsAsBasicPokemonFromHand(card)) {
+      return false;
+    }
+    if (config.player !== PlayerType.BOTTOM_PLAYER) {
+      return false;
+    }
+    if (config.type === DropZoneType.BENCH_GENERAL) {
+      return false;
+    }
+    const { activeLocked, skipActivePhase } = this.setupStartingPokemonDrag;
+    if (!skipActivePhase && !activeLocked) {
+      return config.type === DropZoneType.ACTIVE;
+    }
+    return config.type === DropZoneType.BENCH && !isOccupied;
+  }
+
   /**
    * Check if a drop zone is valid for the current drag context
    */
@@ -752,6 +786,14 @@ export class Board3dInteractionService {
         return true; // Can always switch to active (will swap)
       }
       return false;
+    }
+
+    // Setup starting Pokémon — before BENCH_GENERAL so bench area cannot bypass Active-first rule
+    if (this.setupStartingPokemonDrag && this.currentDragContext.source === 'hand') {
+      if (config.type === DropZoneType.BENCH_GENERAL) {
+        return false;
+      }
+      return this.isSetupStartingDropZoneAllowed(config, isOccupied);
     }
 
     // Handle BENCH_GENERAL zone - only valid for Basic Pokemon (and fossils played as Basic) with open bench slots
@@ -838,6 +880,17 @@ export class Board3dInteractionService {
     }
 
     const { superType, stage, trainerType, card } = this.currentDragContext;
+
+    if (this.setupStartingPokemonDrag && this.currentDragContext.source === 'hand') {
+      for (const zone of this.dropZones) {
+        if (this.isValidDropZone(zone)) {
+          zone.setValid();
+        } else {
+          zone.hide();
+        }
+      }
+      return;
+    }
 
     for (const zone of this.dropZones) {
       const config = zone.getConfig();
@@ -1793,6 +1846,59 @@ export class Board3dInteractionService {
     if (zone) {
       const dropZoneForFlight = this.findValidDropZone(worldPos);
       const config = dropZoneForFlight?.getConfig();
+      const handIndex = this.draggedCard?.userData?.handIndex ?? this.draggedCardHandIndex;
+
+      if (
+        this.setupStartingPokemonDrag &&
+        this.currentDragContext?.source === 'hand' &&
+        handIndex >= 0
+      ) {
+        gsap.killTweensOf(this.draggedCard!.position);
+        gsap.killTweensOf(this.draggedCard!.rotation);
+        gsap.killTweensOf(this.draggedCard!.scale);
+
+        let playCardFlight: PlayCardFlightPayload | undefined;
+        if (this.draggedCard && config) {
+          const zoneKey = `${config.player}_${config.type}_${config.index}`;
+          const isOccupied = this.occupiedZones.has(zoneKey);
+          if (!this.isSetupStartingDropZoneAllowed(config, isOccupied)) {
+            this.returnCardToHand(this.draggedCard);
+          } else {
+            const landing = this.getHandPlayLandingTransform(
+              config,
+              this.currentDragContext?.card,
+              this.currentDragContext?.trainerType,
+            );
+            const ejected = this.handService.liftHandCardForSetupAnimation(handIndex, this.worldContentRoot);
+            if (ejected) {
+              playCardFlight = {
+                board3dCard: ejected,
+                targetWorld: landing.world,
+                endScale: landing.endScale,
+                endRotationY: landing.rotationY,
+                dropZoneType: config.type,
+              };
+            } else {
+              this.returnCardToHand(this.draggedCard);
+            }
+          }
+        } else if (this.draggedCard) {
+          this.returnCardToHand(this.draggedCard);
+        }
+
+        this.resetDragState();
+        this.hideAllDropZones();
+        this.mouseDownCard = null;
+        if (!playCardFlight) {
+          return null;
+        }
+        return {
+          action: 'setupSelectCard',
+          handIndex,
+          zone,
+          playCardFlight,
+        };
+      }
 
       const useHandPlayFlight =
         this.currentDragContext?.source === 'hand' && this.draggedCard && !isAttachDropHand;

@@ -125,35 +125,81 @@
   gap: 10px;
 }
 
-/* Setup starting Pokémon on 3D board — message at top, OK between Active and Bench. */
-.chooseStartingTopSnackbar {
+/* Board hand choose-cards on 3D board — full-width instruction bar at top. */
+.chooseStartingTopBar {
   position: fixed;
   top: 55px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
   z-index: 10000;
-  max-width: min(560px, calc(100vw - 32px));
-  padding: 14px 20px;
-  border-radius: 4px;
-  font-size: 14px;
-  line-height: 1.4;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
-  background: #323232;
-  color: #fff;
-  text-align: center;
-  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 8px 20px;
+  background: #3a3a3a;
+  border-top: 2px solid #d8d8d8;
+  border-bottom: 2px solid #d8d8d8;
+  color: #f2f2f2;
+  pointer-events: auto;
 }
 
-.chooseStartingBoardOk {
-  position: fixed;
-  left: 50%;
-  top: 54%;
-  transform: translate(-50%, -50%);
-  z-index: 46;
+.chooseStartingTopBarContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  max-width: min(720px, calc(100vw - 40px));
+}
+
+.chooseStartingTopBarMessage {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.chooseStartingTopBarActions {
   display: flex;
   flex-shrink: 0;
   gap: 10px;
-  pointer-events: auto;
+}
+
+.chooseStartingTopBarActions .chooseStartingTopBarOkBtn {
+  padding: 8px 20px;
+  border: 1px solid #c8c8c8;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #1a1a1a;
+  background: #e8e8e8;
+  box-shadow: none;
+}
+
+.chooseStartingTopBarActions .chooseStartingTopBarOkBtn:hover:not(:disabled) {
+  background: #f2f2f2;
+}
+
+.chooseStartingTopBarActions .chooseStartingTopBarOkBtn:disabled {
+  opacity: 0.45;
+  filter: none;
+}
+
+.chooseStartingTopBarActions .chooseStartingTopBarCancelBtn {
+  padding: 8px 16px;
+  border: 1px solid #888;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: #e8e8e8;
+  background: transparent;
+  box-shadow: none;
+}
+
+.chooseStartingTopBarActions .chooseStartingTopBarCancelBtn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .removeDamageBarControls {
@@ -426,13 +472,11 @@
   transform: translateX(-50%);
   width: calc(100% + 60px);
   height: 100%;
-  background: linear-gradient(
-    to right,
-    transparent,
-    rgba(255, 193, 7, 0.15) 15%,
-    rgba(255, 193, 7, 0.15) 85%,
-    transparent
-  );
+  background: linear-gradient(to right,
+      transparent,
+      rgba(255, 193, 7, 0.15) 15%,
+      rgba(255, 193, 7, 0.15) 85%,
+      transparent);
   border-top: 1px solid rgba(255, 215, 0, 0.3);
   border-bottom: 1px solid rgba(255, 215, 0, 0.3);
   z-index: -1;

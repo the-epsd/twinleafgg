@@ -8,6 +8,7 @@ import {
   SuperType,
   Card,
   type CardTarget,
+  type ChooseCardsPrompt,
 } from 'ptcg-server';
 import { Vector3, Scene, Object3D, PerspectiveCamera, Texture } from 'three';
 import { Board3dCard } from '../board-3d-card';
@@ -15,6 +16,10 @@ import { Board3dAssetLoaderService } from './board-3d-asset-loader.service';
 import type { LocalGameState } from '../../types/localGameState';
 import type { Board3dCardsAdapter } from '../board3dCardsAdapter';
 import { BoardInteractionService } from '../../BoardInteractionService';
+import {
+  getSetupPlaySlotForPickOrder,
+  setupPreviewMeshId,
+} from '../../prompts/chooseCardsHandSelection';
 import { Board3dAnimationService } from './board-3d-animation.service';
 import { Board3dCardOverlayService } from './board-3d-card-overlay.service';
 import { Board3dStackService } from './board-3d-stack.service';
@@ -68,6 +73,9 @@ export class Board3dStateSyncService {
 
   /** When set, Put damage prompt placement previews can be painted on Pokémon overlays. */
   private boardInteractionForDamagePreview: BoardInteractionService | null = null;
+
+  /** Setup starting-Pokémon preview meshes (not part of live game state). */
+  private setupPreviewMeshIds = new Set<string>();
 
   constructor(
     private assetLoader: Board3dAssetLoaderService,
@@ -1096,6 +1104,11 @@ export class Board3dStateSyncService {
         return;
       }
 
+      if (userData.isSetupPreview) {
+        card.setOutline(false);
+        return;
+      }
+
       if (isSelectionMode) {
         const isEligible = interactionService.isTargetEligible(cardTarget);
         const isSelected = interactionService.isTargetSelected(cardTarget);
@@ -1114,9 +1127,132 @@ export class Board3dStateSyncService {
   }
 
   /**
+   * Show picked Basics on Active/Bench during setup (client preview until OK is pressed).
+   */
+  async updateSetupStartingPokemonPreview(
+    player: Player,
+    prompt: ChooseCardsPrompt,
+    handIndices: number[],
+  ): Promise<void> {
+    const neededIds = new Set<string>();
+    const updates: Promise<void>[] = [];
+
+    for (let pickOrder = 0; pickOrder < handIndices.length; pickOrder++) {
+      const handIndex = handIndices[pickOrder];
+      const card = prompt.player.hand.cards[handIndex];
+      const slotTarget = getSetupPlaySlotForPickOrder(prompt, pickOrder);
+      if (!card || !slotTarget) {
+        continue;
+      }
+
+      const meshId = setupPreviewMeshId(player.id, slotTarget.slot, slotTarget.index);
+      neededIds.add(meshId);
+
+      if (this.cardsMap.has(meshId)) {
+        continue;
+      }
+
+      const tempList = new PokemonCardList();
+      tempList.cards = [card];
+      tempList.isPublic = true;
+      tempList.isSecret = false;
+
+      const position =
+        slotTarget.slot === SlotType.ACTIVE
+          ? ZONE_POSITIONS.bottomPlayer.active.clone()
+          : getBenchPositions(player.bench.length, PlayerType.BOTTOM_PLAYER)[slotTarget.index].clone();
+
+      const scale = slotTarget.slot === SlotType.ACTIVE ? 1.5 : 1.0;
+      const cardTarget: CardTarget = {
+        player: slotTarget.player,
+        slot: slotTarget.slot,
+        index: slotTarget.index,
+      };
+
+      updates.push(
+        this.updateCard(
+          tempList,
+          meshId,
+          position,
+          true,
+          0,
+          cardTarget,
+          scale,
+        ).then(() => {
+          const mesh = this.cardsMap.get(meshId);
+          if (!mesh) {
+            return;
+          }
+          const group = mesh.getGroup();
+          group.userData.isSetupPreview = true;
+          group.userData.setupPreviewHandIndex = handIndex;
+          group.userData.isBoardCard = true;
+        }),
+      );
+    }
+
+    await Promise.all(updates);
+
+    for (const id of [...this.setupPreviewMeshIds]) {
+      if (!neededIds.has(id)) {
+        this.removeCard(id);
+        this.setupPreviewMeshIds.delete(id);
+      }
+    }
+    for (const id of neededIds) {
+      this.setupPreviewMeshIds.add(id);
+    }
+  }
+
+  clearSetupStartingPokemonPreview(): void {
+    if (this.setupPreviewMeshIds.size === 0) {
+      return;
+    }
+    for (const id of this.setupPreviewMeshIds) {
+      this.removeCard(id);
+    }
+    this.setupPreviewMeshIds.clear();
+  }
+
+  /** Register a hand-play flight mesh as the setup preview for a slot (after animation). */
+  adoptSetupPreviewCard(
+    board3dCard: Board3dCard,
+    meshId: string,
+    handIndex: number,
+    card: Card,
+    cardTarget: CardTarget,
+    landing: { position: Vector3; rotationY: number; scale: number },
+  ): void {
+    this.removeCard(meshId);
+
+    const group = board3dCard.getGroup();
+    group.userData.cardId = meshId;
+    group.userData.cardData = card;
+    group.userData.cardTarget = cardTarget;
+    group.userData.isSetupPreview = true;
+    group.userData.setupPreviewHandIndex = handIndex;
+    group.userData.isBoardCard = true;
+    delete group.userData.setupPlacementInFlight;
+    delete group.userData.playingToBoard;
+    delete group.userData.isHandCard;
+
+    board3dCard.setPosition(landing.position);
+    board3dCard.setRotation(landing.rotationY);
+    board3dCard.setScale(landing.scale);
+
+    if (this.boardCardsMount) {
+      this.boardCardsMount.add(group);
+    }
+    this.cardsMap.set(meshId, board3dCard);
+    this.setupPreviewMeshIds.add(meshId);
+  }
+
+  /**
    * Dispose all resources
    */
   dispose(scene: Scene): void {
+    this.clearSetupStartingPokemonPreview();
+
     // Clean up overlays
     this.overlayService.dispose(scene);
 
