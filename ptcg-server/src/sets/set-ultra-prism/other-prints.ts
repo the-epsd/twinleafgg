@@ -1,6 +1,6 @@
 import { Cosmoem } from '../set-sun-and-moon/cosmoem';
 import { PalPad } from '../10-scarlet-and-violet/set-scarlet-and-violet/pal-pad';
-import { UnidentifiedFossil } from '../set-silver-tempest/unidentified-fossil';
+import { UnidentifiedFossil } from '../09-sword-and-shield/set-silver-tempest/unidentified-fossil';
 import { GlaceonGX as GlaceonGXUPR39 } from '../set-ultra-prism/glaceon-gx';
 import { DawnWingsNecrozmaGX as DawnWingsNecrozmaGXUPR63 } from '../set-ultra-prism/dawn-wings-necrozma-gx';
 import { DuskManeNecrozmaGX as DuskManeNecrozmaGXUPR90 } from '../set-ultra-prism/dusk-mane-necrozma-gx';

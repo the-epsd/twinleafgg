@@ -4,7 +4,7 @@ import { PrismEnergy } from '../../set-next-destinies/prism-energy';
 import { EnergyRetrieval } from '../set-scarlet-and-violet/energy-retrieval';
 import { Pokegear30 } from '../set-scarlet-and-violet/pokegear-30';
 import { ProfessorsResearch } from '../set-scarlet-and-violet/professors-research';
-import { AirBalloon } from '../../set-sword-and-shield/air-balloon';
+import { AirBalloon } from '../../09-sword-and-shield/set-sword-and-shield/air-balloon';
 import { Alomomola } from './alomomola';
 import { Archen } from './archen';
 import { Archeops } from './archeops';

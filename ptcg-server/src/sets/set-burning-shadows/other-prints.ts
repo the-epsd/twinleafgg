@@ -18,7 +18,7 @@ import { SuperScoopUp as SuperScoopUpDP115 } from '../set-diamond-and-pearl/supe
 import { FireEnergy } from '../set-base-set-energy/fire-energy';
 import { DarknessEnergy } from '../set-diamond-and-pearl/basic-energies';
 import { FairyEnergy } from '../set-x-and-y/basic-energies';
-import { EscapeRope } from '../set-battle-styles/escape-rope';
+import { EscapeRope } from '../09-sword-and-shield/set-battle-styles/escape-rope';
 import { Guzma } from './guzma';
 import { RescueStretcher } from '../set-guardians-rising/rescue-stretcher';
 import { WeaknessPolicy } from '../set-primal-clash/weakness-policy';

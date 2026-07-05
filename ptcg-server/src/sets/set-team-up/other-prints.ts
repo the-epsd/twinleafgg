@@ -1,6 +1,6 @@
 import { PikachuZekromGX } from '../set-sun-and-moon-promos/pikachu-and-zekrom-gx';
 import { ErikasHospitality } from '../set-hidden-fates/erikas-hospitality';
-import { UnidentifiedFossil } from '../set-silver-tempest/unidentified-fossil';
+import { UnidentifiedFossil } from '../09-sword-and-shield/set-silver-tempest/unidentified-fossil';
 import { CelebiVenusaurGX as CelebiVenusaurGXTEU1 } from '../set-team-up/celebi-and-venusaur-gx';
 import { MagikarpWailordGX as MagikarpWailordGXTEU160 } from '../set-team-up/magikarp-and-wailord-gx';
 import { PikachuZekromGX as PikachuZekromGXSMP168 } from '../set-sun-and-moon-promos/pikachu-and-zekrom-gx';

@@ -6,7 +6,7 @@ import { N } from './n';
 import { PokemonFanClub } from '../set-pop-series-4/pokemon-fan-club';
 import { RandomReceiver } from '../set-dark-explorers/random-receiver';
 import { ScorchedEarth } from '../set-primal-clash/scorched-earth';
-import { Shauna } from '../set-fusion-strike/shauna';
+import { Shauna } from '../09-sword-and-shield/set-fusion-strike/shauna';
 import { UltraBall } from '../10-scarlet-and-violet/set-scarlet-and-violet/ultra-ball';
 import { DoubleColorlessEnergy } from '../set-base-set/double-colorless-energy';
 import { StrongEnergy } from '../set-furious-fists/strong-energy';

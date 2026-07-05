@@ -1,5 +1,5 @@
 import { Blastoise } from '../set-boundaries-crossed/blastoise';
-import { Caitlin } from '../set-chilling-reign/caitlin';
+import { Caitlin } from '../09-sword-and-shield/set-chilling-reign/caitlin';
 import { EnergyRetrieval } from '../set-base-set/energy-retrieval';
 import { PlumeFossil } from '../set-noble-victories/plume-fossil';
 import { PokemonCatcher } from '../10-scarlet-and-violet/set-scarlet-and-violet/pokemon-catcher';

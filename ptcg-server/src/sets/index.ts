@@ -123,7 +123,7 @@ export * from './set-x-and-y-promos';
 //export
 
 //SM Era
-export * from './set-champions-path';
+export * from './09-sword-and-shield/set-champions-path';
 export * from './set-burning-shadows';
 export * from './set-celestial-storm';
 export * from './set-cosmic-eclipse';
@@ -143,23 +143,23 @@ export * from './set-unified-minds';
 export * from './set-detective-pikachu';
 
 //SWSH Era
-export * from './set-astral-radiance';
-export * from './set-battle-styles';
-export * from './set-brilliant-stars';
-export * from './set-celebrations';
-export * from './set-chilling-reign';
-export * from './set-crown-zenith';
-export * from './set-darkness-ablaze';
-export * from './set-evolving-skies';
-export * from './set-fusion-strike';
-export * from './set-lost-origin';
-export * from './set-pokemon-go';
-export * from './set-rebel-clash';
+export * from './09-sword-and-shield/set-astral-radiance';
+export * from './09-sword-and-shield/set-battle-styles';
+export * from './09-sword-and-shield/set-brilliant-stars';
+export * from './09-sword-and-shield/set-celebrations';
+export * from './09-sword-and-shield/set-chilling-reign';
+export * from './09-sword-and-shield/set-crown-zenith';
+export * from './09-sword-and-shield/set-darkness-ablaze';
+export * from './09-sword-and-shield/set-evolving-skies';
+export * from './09-sword-and-shield/set-fusion-strike';
+export * from './09-sword-and-shield/set-lost-origin';
+export * from './09-sword-and-shield/set-pokemon-go';
+export * from './09-sword-and-shield/set-rebel-clash';
 export * from './set-shining-fates';
-export * from './set-silver-tempest';
-export * from './set-sword-and-shield';
-export * from './set-sword-and-shield-promos';
-export * from './set-vivid-voltage';
+export * from './09-sword-and-shield/set-silver-tempest';
+export * from './09-sword-and-shield/set-sword-and-shield';
+export * from './09-sword-and-shield/set-sword-and-shield-promos';
+export * from './09-sword-and-shield/set-vivid-voltage';
 
 //SVI Era
 export * from './10-scarlet-and-violet/set-scarlet-and-violet';

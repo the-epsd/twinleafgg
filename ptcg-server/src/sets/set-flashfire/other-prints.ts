@@ -8,7 +8,7 @@ import { MCharizardEX as MCharizardEXFLF69 } from '../set-flashfire/m-charizard-
 import { MKangaskhanEX as MKangaskhanEXFLF79 } from '../set-flashfire/m-kangaskhan-ex';
 import { Blacksmith as BlacksmithFLF88 } from '../set-flashfire/blacksmith';
 import { PokemonFanClub } from '../set-ultra-prism/pokemon-fan-club';
-import { Druddigon } from '../set-brilliant-stars/druddigon';
+import { Druddigon } from '../09-sword-and-shield/set-brilliant-stars/druddigon';
 import { CharizardEx } from './charizard-ex';
 import { MagnezoneEx } from './magnezone-ex';
 import { PokemonCenterLady } from './pokemon-center-lady';

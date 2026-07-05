@@ -62,7 +62,7 @@ import { FanRotom } from '../../10-scarlet-and-violet/set-stellar-crown/fan-roto
 import { HopsCramorant } from '../../10-scarlet-and-violet/set-journey-together/hops-cramorant';
 import { Terapagos } from '../../10-scarlet-and-violet/set-surging-sparks/terapagos';
 import { Terapagosex } from '../../10-scarlet-and-violet/set-stellar-crown/terapagos-ex';
-import { AirBalloon } from '../../set-sword-and-shield/air-balloon';
+import { AirBalloon } from '../../09-sword-and-shield/set-sword-and-shield/air-balloon';
 import { BuddyBuddyPoffin } from '../../10-scarlet-and-violet/set-temporal-forces/buddy-buddy-poffin';
 import { CounterGain } from '../../set-lost-thunder/counter-gain';
 import { LushForest } from '../set-mega-evolution/forest-of-vitality';

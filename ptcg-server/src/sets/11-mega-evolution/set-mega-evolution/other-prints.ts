@@ -24,7 +24,7 @@ import { MegaAbsolex as MegaAbsolexMEG86 } from './mega-absol-ex';
 import { MegaMawileEx as MegaMawileExMEG94 } from './mega-mawile-ex';
 import { MegaLatiasex as MegaLatiasexMEG100 } from './mega-latias-ex';
 import { MegaKangaskhanex as MegaKangaskhanexMEG104 } from './mega-kangaskhan-ex';
-import { AirBalloon } from '../../set-sword-and-shield/air-balloon';
+import { AirBalloon } from '../../09-sword-and-shield/set-sword-and-shield/air-balloon';
 import { BuddyBuddyPoffin } from '../../10-scarlet-and-violet/set-temporal-forces/buddy-buddy-poffin';
 import { FightingGong as FightingGongMEG116 } from './fighting-gong';
 import { LilliesDetermination as LilliesDeterminationMEG119 } from './lillies-determination';

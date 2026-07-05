@@ -1,4 +1,4 @@
-import { UnidentifiedFossil } from '../set-silver-tempest/unidentified-fossil';
+import { UnidentifiedFossil } from '../09-sword-and-shield/set-silver-tempest/unidentified-fossil';
 import { VenusaurSnivyGX as VenusaurSnivyGXCEC1 } from '../set-cosmic-eclipse/venusaur-and-snivy-gx';
 import { VileplumeGX as VileplumeGXCEC4 } from '../set-cosmic-eclipse/vileplume-gx';
 import { CharizardBraixenGX as CharizardBraixenGXCEC22 } from '../set-cosmic-eclipse/charizard-braixen-gx';
@@ -21,7 +21,7 @@ import { Mimikyu as MimikyuCEC96 } from '../set-cosmic-eclipse/mimikyu';
 import { Excadrill as ExcadrillCEC115 } from '../set-cosmic-eclipse/excadrill';
 import { Steelix as SteelixCEC139 } from '../set-cosmic-eclipse/steelix';
 import { Stoutland as StoutlandCEC176 } from '../set-cosmic-eclipse/stoutland';
-import { GiantHearth } from '../set-sword-and-shield/giant-hearth';
+import { GiantHearth } from '../09-sword-and-shield/set-sword-and-shield/giant-hearth';
 import { GreatCatcher as GreatCatcherCEC192 } from '../set-cosmic-eclipse/great-catcher';
 import { LanasFishingRod as LanasFishingRodCEC195 } from '../set-cosmic-eclipse/lanas-fishing-rod';
 import { LilliesPokeDoll as LilliesPokeDollCEC197 } from '../set-cosmic-eclipse/lillies-poke-doll';

@@ -1,4 +1,4 @@
-import { EnergyRecycler } from '../set-battle-styles/energy-recycler';
+import { EnergyRecycler } from '../09-sword-and-shield/set-battle-styles/energy-recycler';
 import { AlolanNinetalesGX as AlolanNinetalesGXGRI22 } from '../set-guardians-rising/alolan-ninetales-gx';
 import { TapuKokoGX as TapuKokoGXGRI47 } from '../set-guardians-rising/tapu-koko-gx';
 import { TapuLeleGX as TapuLeleGXGRI60 } from '../set-guardians-rising/tapu-lele-gx';
@@ -24,7 +24,7 @@ import { EnhancedHammer } from '../10-scarlet-and-violet/set-twilight-masquerade
 import { FieldBlower } from './field-blower';
 import { MaxPotion } from '../set-emerging-powers/max-potion';
 import { RescueStretcher } from './rescue-stretcher';
-import { EnergyLoto } from '../set-astral-radiance/energy-loto';
+import { EnergyLoto } from '../09-sword-and-shield/set-astral-radiance/energy-loto';
 import { AlolanSandshrew } from './alolan-sandshrew';
 import { Machop } from '../set-evolutions/machop';
 import { TurtonatorGx } from './turtonator-gx';

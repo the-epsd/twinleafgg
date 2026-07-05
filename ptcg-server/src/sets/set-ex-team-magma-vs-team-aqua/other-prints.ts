@@ -1,4 +1,4 @@
-import { EscapeRope } from '../set-battle-styles/escape-rope';
+import { EscapeRope } from '../09-sword-and-shield/set-battle-styles/escape-rope';
 import { DualBall } from '../set-unleashed/dual-ball';
 import { StrengthCharm } from '../set-ex-dragon-frontiers/strength-charm';
 

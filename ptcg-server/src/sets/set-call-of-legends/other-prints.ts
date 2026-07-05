@@ -1,5 +1,5 @@
 import { Cleffa } from '../set-heartgold-and-soulsilver/cleffa';
-import { Copycat } from '../set-evolving-skies/copycat';
+import { Copycat } from '../09-sword-and-shield/set-evolving-skies/copycat';
 import { DualBall } from '../set-unleashed/dual-ball';
 import { Ninetales } from '../set-heartgold-and-soulsilver/ninetales';
 import { ProfessorElmsTrainingMethod } from '../set-ex-unseen-forces/professors-elm-training-method';

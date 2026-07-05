@@ -7,7 +7,7 @@ import { HonchkrowGX as HonchkrowGXUNB109 } from '../set-unbroken-bonds/honchkro
 import { LucarioMelmetalGX as LucarioMelmetalGXUNB120 } from '../set-unbroken-bonds/lucario-and-melmetal-gx';
 import { GardevoirSylveonGX as GardevoirSylveonGXUNB130 } from '../set-unbroken-bonds/gardevoir-and-sylveon-gx';
 import { GreensExploration as GreensExplorationUNB175 } from '../set-unbroken-bonds/greens-exploration';
-import { Welder as WelderUNB189 } from '../set-sword-and-shield/welder';
+import { Welder as WelderUNB189 } from '../09-sword-and-shield/set-sword-and-shield/welder';
 import { DedenneGX as DedenneGXUNB195 } from '../set-unbroken-bonds/dedenne-gx';
 import { ElectromagneticRadar as ElectromagneticRadarUNB169 } from '../set-unbroken-bonds/electromagnetic-radar';
 import { FireCrystal as FireCrystalUNB173 } from '../set-unbroken-bonds/fire-crystal';

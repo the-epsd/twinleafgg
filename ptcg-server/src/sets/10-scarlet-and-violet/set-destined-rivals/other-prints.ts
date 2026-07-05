@@ -41,7 +41,7 @@ import { TeamRocketsPetrel as TeamRocketsPetrelDRI176 } from './team-rockets-pet
 import { TeamRocketsProton as TeamRocketsProtonDRI177 } from './team-rockets-proton';
 import { JammingTower } from '../set-twilight-masquerade/jamming-tower';
 import { Levincia } from '../set-journey-together/levincia';
-import { EnergyRecycler } from '../../set-battle-styles/energy-recycler';
+import { EnergyRecycler } from '../../09-sword-and-shield/set-battle-styles/energy-recycler';
 import { CynthiasRoserade } from './cynthias-roserade';
 import { EthansHoOhex } from './ethans-ho-oh-ex';
 

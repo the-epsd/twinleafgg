@@ -1,6 +1,6 @@
 import { Riolu as RioluUNM115 } from '../set-unified-minds/riolu';
 import { Murkrow } from '../set-unbroken-bonds/murkrow';
-import { UnidentifiedFossil } from '../set-silver-tempest/unidentified-fossil';
+import { UnidentifiedFossil } from '../09-sword-and-shield/set-silver-tempest/unidentified-fossil';
 import { RowletAlolanExeggutorGX as RowletAlolanExeggutorGXUNM1 } from '../set-unified-minds/rowlet-and-alolan-exeggutor-gx';
 import { SlowpokePsyduckGX as SlowpokePsyduckGXUNM35 } from '../set-unified-minds/slowpoke-and-psyduck-gx';
 import { KeldeoGX as KeldeoGXUNM47 } from '../set-unified-minds/keldeo-gx';

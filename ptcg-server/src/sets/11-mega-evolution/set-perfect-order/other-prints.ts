@@ -18,7 +18,7 @@ import { MegaZygardeex } from './mega-zygarde-ex';
 import { Yveltalex } from './yveltal-ex';
 import { MegaSkarmoryex } from './mega-skarmory-ex';
 import { Meowthex } from './meowth-ex';
-import { EnergyRecycler } from '../../set-battle-styles/energy-recycler';
+import { EnergyRecycler } from '../../09-sword-and-shield/set-battle-styles/energy-recycler';
 import { SacredAsh } from '../../10-scarlet-and-violet/set-destined-rivals/sacred-ash';
 import { PokePad } from '../set-ascended-heroes/poke-pad';
 import { WonderPatch } from '../set-phantasmal-flames/wonder-patch';

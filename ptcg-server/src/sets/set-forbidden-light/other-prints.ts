@@ -1,5 +1,5 @@
 import { JudgeUL } from '../set-unleashed/other-prints';
-import { UnidentifiedFossil } from '../set-silver-tempest/unidentified-fossil';
+import { UnidentifiedFossil } from '../09-sword-and-shield/set-silver-tempest/unidentified-fossil';
 import { GreninjaGX as GreninjaGXFLI24 } from '../set-forbidden-light/greninja-gx';
 import { NaganadelGX as NaganadelGXFLI56 } from '../set-forbidden-light/naganadel-gx';
 import { LucarioGX } from '../set-sun-and-moon-promos/lucario-gx';
@@ -10,12 +10,12 @@ import { UltraNecrozmaGX as UltraNecrozmaGXFLI95 } from '../set-forbidden-light/
 import { Diantha as DianthaFLI105 } from '../set-forbidden-light/diantha';
 import { LucarioGX as LucarioGXSMP100 } from '../set-sun-and-moon-promos/lucario-gx';
 import { BeastRing as BeastRingFLI102 } from '../set-forbidden-light/beast-ring';
-import { EnergyRecycler } from '../set-battle-styles/energy-recycler';
+import { EnergyRecycler } from '../09-sword-and-shield/set-battle-styles/energy-recycler';
 import { MetalFryingPan as MetalFryingPanFLI112 } from '../set-forbidden-light/metal-frying-pan';
 import { MysteriousTreasure as MysteriousTreasureFLI113 } from '../set-forbidden-light/mysterious-treasure';
 import { UnitEnergyFDY as UnitEnergyFDYFLI118 } from '../set-forbidden-light/unit-energy-fdy';
 import { AlolanExeggutor as AlolanExeggutorFLI2 } from '../set-forbidden-light/alolan-exeggutor';
-import { Lady } from '../set-lost-origin/lady';
+import { Lady } from '../09-sword-and-shield/set-lost-origin/lady';
 import { MysteriousTreasure } from './mysterious-treasure';
 import { Snover } from '../set-ultra-prism/snover';
 import { Heatran } from '../set-ultra-prism/heatran';

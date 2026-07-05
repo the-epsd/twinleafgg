@@ -1,4 +1,4 @@
-import { EnergyRecycler } from '../set-battle-styles/energy-recycler';
+import { EnergyRecycler } from '../09-sword-and-shield/set-battle-styles/energy-recycler';
 import { LuckyHelmet } from '../10-scarlet-and-violet/set-twilight-masquerade/lucky-helmet';
 import { Lysandre } from '../set-flashfire/lysandre';
 import { HoopaEX as HoopaEXAOR36 } from '../set-ancient-origins/hoopa-ex';
@@ -7,7 +7,7 @@ import { EnergyRetrieval } from '../10-scarlet-and-violet/set-scarlet-and-violet
 import { HexManiac as HexManiacAOR75 } from '../set-ancient-origins/hex-maniac';
 import { LevelBall } from '../set-next-destinies/level-ball';
 import { TrainersMail } from '../set-roaring-skies/trainers-mail';
-import { LevelBall as LevelBallBattleStyles } from '../set-battle-styles/level-ball';
+import { LevelBall as LevelBallBattleStyles } from '../09-sword-and-shield/set-battle-styles/level-ball';
 import { SceptileEx } from './sceptile-ex';
 import { MSceptileEx } from './m-sceptile-ex';
 import { KyuremEx } from './kyurem-ex';

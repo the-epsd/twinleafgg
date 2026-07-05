@@ -1,4 +1,4 @@
-import { Cook } from '../../set-fusion-strike/cook';
+import { Cook } from '../../09-sword-and-shield/set-fusion-strike/cook';
 import { LuminousEnergy } from '../set-paldea-evolved/luminous-energy';
 import { BuddyBuddyPoffin } from '../set-temporal-forces/buddy-buddy-poffin';
 import { EmergencyBoard } from '../set-temporal-forces/emergency-board';

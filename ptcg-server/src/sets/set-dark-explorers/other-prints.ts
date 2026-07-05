@@ -5,7 +5,7 @@ import { RaikouEx as RaikouExDEX38 } from '../set-dark-explorers/raikou-ex';
 import { TornadusEx as TornadusExDEX90 } from '../set-dark-explorers/tornadus-ex';
 import { Archeops } from '../set-noble-victories/archeops';
 import { PokemonCatcher } from '../set-emerging-powers/pokemon-catcher';
-import { DarkPatch } from '../set-astral-radiance/dark-patch';
+import { DarkPatch } from '../09-sword-and-shield/set-astral-radiance/dark-patch';
 import { DarkraiEx } from './darkrai-ex';
 import { EnhancedHammer } from '../10-scarlet-and-violet/set-twilight-masquerade/enhanced-hammer';
 import { ProfessorJuniper } from '../set-black-and-white/professor-juniper';
