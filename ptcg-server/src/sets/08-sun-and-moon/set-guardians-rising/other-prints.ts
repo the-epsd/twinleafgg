@@ -26,7 +26,7 @@ import { MaxPotion } from '../../set-emerging-powers/max-potion';
 import { RescueStretcher } from './rescue-stretcher';
 import { EnergyLoto } from '../../09-sword-and-shield/set-astral-radiance/energy-loto';
 import { AlolanSandshrew } from './alolan-sandshrew';
-import { Machop } from '../../set-evolutions/machop';
+import { Machop } from '../../07-x-and-y/set-evolutions/machop';
 import { TurtonatorGx } from './turtonator-gx';
 import { WishiwashiGx } from './wishiwashi-gx';
 import { VikavoltGx } from './vikavolt-gx';

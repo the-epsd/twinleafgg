@@ -1,5 +1,5 @@
 import { Cheren } from '../set-emerging-powers/cheren';
-import { N } from '../set-fates-collide/n';
+import { N } from '../07-x-and-y/set-fates-collide/n';
 import { UltraBall } from '../10-scarlet-and-violet/set-scarlet-and-violet/ultra-ball';
 import { RaikouEx as RaikouExDEX38 } from '../set-dark-explorers/raikou-ex';
 import { TornadusEx as TornadusExDEX90 } from '../set-dark-explorers/tornadus-ex';

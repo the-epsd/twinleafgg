@@ -105,21 +105,21 @@ export * from './set-plasma-freeze';
 export * from './set-plasma-storm';
 
 //XY Era
-export * from './set-flashfire';
-export * from './set-furious-fists';
-export * from './set-phantom-forces';
-export * from './set-primal-clash';
-export * from './set-x-and-y';
-export * from './set-double-crisis';
-export * from './set-ancient-origins';
-export * from './set-breakpoint';
-export * from './set-breakthrough';
-export * from './set-evolutions';
-export * from './set-fates-collide';
-export * from './set-generations';
-export * from './set-roaring-skies';
-export * from './set-steam-siege';
-export * from './set-x-and-y-promos';
+export * from './07-x-and-y/set-flashfire';
+export * from './07-x-and-y/set-furious-fists';
+export * from './07-x-and-y/set-phantom-forces';
+export * from './07-x-and-y/set-primal-clash';
+export * from './07-x-and-y/set-x-and-y';
+export * from './07-x-and-y/set-double-crisis';
+export * from './07-x-and-y/set-ancient-origins';
+export * from './07-x-and-y/set-breakpoint';
+export * from './07-x-and-y/set-breakthrough';
+export * from './07-x-and-y/set-evolutions';
+export * from './07-x-and-y/set-fates-collide';
+export * from './07-x-and-y/set-generations';
+export * from './07-x-and-y/set-roaring-skies';
+export * from './07-x-and-y/set-steam-siege';
+export * from './07-x-and-y/set-x-and-y-promos';
 //export
 
 //SM Era

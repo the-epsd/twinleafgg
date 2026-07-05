@@ -39,7 +39,7 @@ import { Nessa } from '../set-vivid-voltage/nessa';
 import { MewVMAX } from '../set-fusion-strike/mew-vmax';
 import { Blipbug } from '../set-sword-and-shield/blipbug';
 import { Ducklett } from '../../set-boundaries-crossed/ducklett';
-import { Rhyhorn } from '../../set-primal-clash/rhyhorn';
+import { Rhyhorn } from '../../07-x-and-y/set-primal-clash/rhyhorn';
 import { Murkrow } from '../../set-dragons-exalted/murkrow';
 import { Goomy } from '../set-fusion-strike/goomy';
 import { HisuianElectrodeV } from '../set-sword-and-shield-promos/hisuian-electrode-v';

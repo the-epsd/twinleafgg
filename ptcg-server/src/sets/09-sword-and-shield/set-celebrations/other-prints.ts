@@ -1,5 +1,5 @@
 import { ProfessorsResearch } from '../../10-scarlet-and-violet/set-scarlet-and-violet/professors-research';
-import { Pikachu } from '../../set-evolutions/pikachu';
+import { Pikachu } from '../../07-x-and-y/set-evolutions/pikachu';
 import { HereComesTeamRocket } from '../../set-team-rocket/here-comes-team-rocket';
 import { Mew } from './mew';
 import { RocketsAdmin } from '../../set-ex-team-rocket-returns/rockets-admin';

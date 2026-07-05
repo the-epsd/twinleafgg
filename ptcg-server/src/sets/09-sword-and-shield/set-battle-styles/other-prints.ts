@@ -27,7 +27,7 @@ import { RapidStrikeEnergy as RapidStrikeEnergyBST140 } from './rapid-strike-ene
 import { SingleStrikeEnergy as SingleStrikeEnergyBST141 } from './single-strike-energy';
 import { Tepig } from '../set-sword-and-shield-promos/tepig';
 import { Timburr } from '../../set-black-and-white/timburr';
-import { Spearow } from '../../set-roaring-skies/spearow';
+import { Spearow } from '../../07-x-and-y/set-roaring-skies/spearow';
 import { CorviknightV } from './corviknight-v';
 import { Phoebe } from './phoebe';
 import { RapidStrikeStyleMustard } from './rapid-strike-style-mustard';

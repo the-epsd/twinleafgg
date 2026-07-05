@@ -51,9 +51,9 @@ import { RapidStrikeUrshifuVMAX as RapidStrikeUrshifuVMAXBST88 } from '../set-ba
 import { UltraBall } from '../../10-scarlet-and-violet/set-scarlet-and-violet/ultra-ball';
 import { WhimsicottV } from './whimsicott-v';
 import { WhimsicottVSTAR } from './whimsicott-vstar';
-import { Burmy } from '../../set-fates-collide/burmy';
+import { Burmy } from '../../07-x-and-y/set-fates-collide/burmy';
 import { Karrablast } from '../../set-plasma-blast/karrablast';
-import { FreshWaterSet } from '../../set-primal-clash/fresh-water-set';
+import { FreshWaterSet } from '../../07-x-and-y/set-primal-clash/fresh-water-set';
 import { CharizardV } from './charizard-v';
 import { GranbullV } from './granbull-v';
 import { HonchkrowV } from './honchkrow-v';

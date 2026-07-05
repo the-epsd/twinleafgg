@@ -146,7 +146,7 @@ import { MegaCharizardYex as MegaCharizardYexASC22 } from './mega-charizard-y-ex
 import { BossOrders } from '../../10-scarlet-and-violet/set-paldea-evolved/boss-orders';
 import { Judge } from '../../10-scarlet-and-violet/set-scarlet-and-violet/judge';
 import { Pokegear30 } from '../../10-scarlet-and-violet/set-scarlet-and-violet/pokegear-30';
-import { SuperPotion } from '../../set-x-and-y/super-potion';
+import { SuperPotion } from '../../07-x-and-y/set-x-and-y/super-potion';
 import { EnergySearch } from '../../10-scarlet-and-violet/set-scarlet-and-violet/energy-search';
 import { CrushingHammer } from '../../10-scarlet-and-violet/set-scarlet-and-violet/crushing-hammer';
 import { Potion } from '../../10-scarlet-and-violet/set-scarlet-and-violet/potion';

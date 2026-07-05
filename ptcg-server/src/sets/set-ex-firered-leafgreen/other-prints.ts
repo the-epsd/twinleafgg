@@ -3,7 +3,7 @@ import { LifeHerb } from '../set-ex-hidden-legends/life-herb';
 import { MultiEnergy } from '../set-ex-sandstorm/multi-energy';
 import { PokemonReversal } from '../set-ex-unseen-forces/pokemon-reversal';
 import { ProfessorOaksResearch } from '../set-ex-dragon-frontiers/professor-oaks-research';
-import { VsSeeker } from '../set-phantom-forces/vs-seeker';
+import { VsSeeker } from '../07-x-and-y/set-phantom-forces/vs-seeker';
 import { Switch } from '../10-scarlet-and-violet/set-scarlet-and-violet/switch';
 
 export class EnergyRemoval2RG extends EnergyRemoval2 {

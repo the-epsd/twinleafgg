@@ -16,7 +16,7 @@ import { Beauty } from './beauty';
 import { Leon } from './leon';
 import { Nessa } from './nessa';
 import { Opal } from './opal';
-import { PokemonCenterLady } from '../../set-flashfire/pokemon-center-lady';
+import { PokemonCenterLady } from '../../07-x-and-y/set-flashfire/pokemon-center-lady';
 import { OrbeetleVmax } from './orbeetle-vmax';
 import { GalarianDarmanitanVmax } from './galarian-darmanitan-vmax';
 import { PikachuVmax } from './pikachu-vmax';

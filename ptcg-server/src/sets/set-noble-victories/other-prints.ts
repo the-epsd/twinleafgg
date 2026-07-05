@@ -1,9 +1,9 @@
 import { Cobalion } from '../set-legendary-treasures/cobalion';
-import { N } from '../set-fates-collide/n';
+import { N } from '../07-x-and-y/set-fates-collide/n';
 import { RockyHelmet } from '../10-scarlet-and-violet/set-scarlet-and-violet/rocky-helmet';
 import { Terrakion as TerrakionNVI73 } from '../set-noble-victories/terrakion';
 import { Cobalion as CobalionLTR91 } from '../set-legendary-treasures/cobalion';
-import { N as NFCO105 } from '../set-fates-collide/n';
+import { N as NFCO105 } from '../07-x-and-y/set-fates-collide/n';
 import { SuperRod } from '../10-scarlet-and-violet/set-paldea-evolved/super-rod';
 import { Virizion } from './virizion';
 import { Victini2 } from './victini-2';

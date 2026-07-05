@@ -13,7 +13,7 @@ import { Marnie } from '../set-sword-and-shield/marnie';
 import { Trubbish } from '../set-rebel-clash/trubbish';
 import { Kabu } from '../set-darkness-ablaze/kabu';
 import { Milo } from '../set-rebel-clash/milo';
-import { PokemonCenterLady } from '../../set-flashfire/pokemon-center-lady';
+import { PokemonCenterLady } from '../../07-x-and-y/set-flashfire/pokemon-center-lady';
 import { RotomBike } from '../set-sword-and-shield/rotom-bike';
 import { TeamYellGrunt } from '../set-sword-and-shield/team-yell-grunt';
 import { DrednawV } from './drednaw-v';

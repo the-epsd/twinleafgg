@@ -24,7 +24,7 @@ import { Marnie } from './marnie';
 import { ProfessorsResearch } from '../../10-scarlet-and-violet/set-scarlet-and-violet/professors-research';
 import { HyperPotion } from '../set-champions-path/hyper-potion';
 import { LuckyEgg } from '../../set-arceus/lucky-egg';
-import { PokemonCenterLady } from '../../set-flashfire/pokemon-center-lady';
+import { PokemonCenterLady } from '../../07-x-and-y/set-flashfire/pokemon-center-lady';
 import { DhelmiseV } from './dhelmise-v';
 import { TorkoalV } from './torkoal-v';
 import { LaprasV } from './lapras-v';

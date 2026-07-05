@@ -18,7 +18,7 @@ import { HustleBelt as HustleBeltCES134 } from './hustle-belt';
 import { PokeNav as PokeNavRS88 } from '../../set-ex-ruby-and-sapphire/pokenav';
 import { RainbowEnergyPL as RainbowEnergyPLPL121 } from '../../set-platinum/other-prints';
 import { Sceptile as SceptileCES10 } from './sceptile';
-import { AcroBike } from '../../set-primal-clash/acro-bike';
+import { AcroBike } from '../../07-x-and-y/set-primal-clash/acro-bike';
 import { SuperScoopUp } from '../../set-diamond-and-pearl/super-scoop-up';
 import { Switch } from '../../10-scarlet-and-violet/set-scarlet-and-violet/switch';
 import { Combusken } from '../../set-dark-explorers/combusken';

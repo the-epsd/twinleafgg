@@ -21,7 +21,7 @@ import { LugiaEx } from '../set-plasma-storm/lugia-ex';
 import { Eevee } from '../set-plasma-freeze/eevee';
 import { TornadusEx } from '../set-dark-explorers/tornadus-ex';
 import { Eevee as EeveePLF89 } from '../set-plasma-freeze/eevee';
-import { N } from '../set-fates-collide/n';
+import { N } from '../07-x-and-y/set-fates-collide/n';
 import { KeldeoEx } from '../set-boundaries-crossed/keldeo-ex';
 import { TropicalBeach } from './tropical-beach';
 

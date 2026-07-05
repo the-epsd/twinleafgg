@@ -57,7 +57,7 @@ import { TapuBuluGX } from '../08-sun-and-moon/set-burning-shadows/tapu-bulu-gx'
 import { TapuFiniGX } from '../08-sun-and-moon/set-burning-shadows/tapu-fini-gx';
 import { TapuKokoGX } from '../08-sun-and-moon/set-guardians-rising/tapu-koko-gx';
 import { TapuLeleGX } from '../08-sun-and-moon/set-guardians-rising/tapu-lele-gx';
-import { BrocksGrit } from '../set-evolutions/brocks-grit';
+import { BrocksGrit } from '../07-x-and-y/set-evolutions/brocks-grit';
 import { Guzma } from '../08-sun-and-moon/set-burning-shadows/guzma';
 import { CharizardGX as CharizardGXBUS } from '../08-sun-and-moon/set-burning-shadows/charizard-gx';
 import { Scyther } from '../08-sun-and-moon/set-celestial-storm/scyther';
@@ -84,8 +84,8 @@ import { Pikachu } from '../set-black-and-white-promos/pikachu';
 import { BlaineSLastStand } from '../set-dragons-majesty/blaines-last-stand';
 import { GiovannisExile } from '../08-sun-and-moon/set-unbroken-bonds/giovannis-exile';
 import { KogasTrap } from '../08-sun-and-moon/set-unbroken-bonds/kogas-trap';
-import { MistysDetermination } from '../set-evolutions/mistys-determination';
-import { PokemonCenterLady } from '../set-flashfire/pokemon-center-lady';
+import { MistysDetermination } from '../07-x-and-y/set-evolutions/mistys-determination';
+import { PokemonCenterLady } from '../07-x-and-y/set-flashfire/pokemon-center-lady';
 import { SabrinasSuggestion } from '../08-sun-and-moon/set-team-up/sabrinas-suggestion';
 import { JessieAndJames } from './jessie-and-james';
 

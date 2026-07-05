@@ -16,7 +16,7 @@ import { ToolScrapper as ToolScrapperDRX116 } from '../../set-dragons-exalted/to
 import { TwinEnergy as TwinEnergyRCL174 } from './twin-energy';
 import { EldegossV } from '../set-champions-path/eldegoss-v';
 import { TurffieldStadium } from '../set-champions-path/turffield-stadium';
-import { Voltorb } from '../../set-evolutions/voltorb';
+import { Voltorb } from '../../07-x-and-y/set-evolutions/voltorb';
 import { RillaboomV } from './rillaboom-v';
 import { EldegossV as EldegossV176 } from './eldegoss-v';
 import { NinetalesV } from './ninetales-v';

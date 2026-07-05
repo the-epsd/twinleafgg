@@ -37,7 +37,7 @@ import { DuraludonVMAX as DuraludonVMAXEVS123 } from '../set-evolving-skies/dura
 import { Sandile } from '../../set-emerging-powers/sandile';
 import { Mareanie } from '../../08-sun-and-moon/set-sun-and-moon/mareanie';
 import { Metang } from '../../08-sun-and-moon/set-celestial-storm/metang';
-import { Fletchling } from '../../set-steam-siege/fletchling';
+import { Fletchling } from '../../07-x-and-y/set-steam-siege/fletchling';
 import { GymTrainer } from '../../set-shining-fates/gym-trainer';
 import { ChesnaughtV } from './chesnaught-v';
 import { ReshiramV } from './reshiram-v';
