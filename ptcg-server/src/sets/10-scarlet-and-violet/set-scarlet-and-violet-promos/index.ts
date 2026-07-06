@@ -1,3 +1,4 @@
+import { ToxelSVP, Kingambit2SVP, Miraidonex3SVP, EspeonexSVP, UmbreonexSVP, NsDarmanitanSVP, IonosKilowattrelSVP, LilliesRibombeeSVP, HopsSnorlaxSVP, HopsZacianexSVP, IonosBelliboltexSVP, LilliesClefairyexSVP, Charizardex4SVP, TeamRocketsWobbuffetSVP, CynthiasGarchompexSVP, TeamRocketsMewtwoexSVP, GothitelleSVP, ReuniclusSVP, TeamRocketsMewtwoex2SVP, TeamRocketsNidokingexSVP, TeamRocketsPersianexSVP, BlackBeltsTrainingSVP, BlackBeltsTraining2SVP, ProfessorsResearchSVP, ProfessorsResearch2SVP, ProfessorsResearch3SVP } from './other-prints';
 import { Card } from '../../../game/store/card/card';
 import { AegislashSVP, AlakazamexSVP, ArctibaxSVP, ArmarougeexSVP, BaxcaliburSVP, BloodmoonUrsalunaexSVP, BouffalantSVP, Charizardex2SVP, Charizardex3SVP, CharizardexSVP, CharmanderIRSVP, ChienPaoexSVP, ChienPaoSVP, ChiYuSVP, CinderaceexSVP, CleffaSVP, CrabominableSVP, CrocalorSVP, DrifblimSVP, EeveeSVP, FeraligatrSVP, FloragatoSVP, FlutterManeSVP, FroslassSVP, GougingFireexSVP, GougingFireSVP, GreatTuskexSVP, GrowlitheSVP, HawluchaSVP, InfernapeSVP, IonoSVP, IronBundleIRSVP, IronBundleSVP, IronCrownexSVP, IronLeavesexSVP, IronThornsSVP, IronValiantexSVP, JolteonSVP, KangaskhanexSVP, KingdraexSVP, KoraidonexSVP, KoraidonSVP, LaprasexSVP, MagnetonIRSVP, MagnetonSVP, MarniesMorpekoIR, MeowscaradaexFASVP, MeowscaradaexSVP, MetangSVP, MewexSVP, MimikyuSVP, Miraidonex2SVP, MiraidonexSVP, MiraidonSVP, MurkrowSVP, NoctowlSVP, NsZoruaSVP, PalafinexSVP, PalafinSVP, PawmotSVP, PecharuntIRSVP, PelipperSVP, PinecoSVP, Porygon2SVP, PupitarSVP, QuaquavalexFASVP, QuaquavalexSVP, RagingBoltexSVP, RevavroomSVP, RoaringMoonexSVP, ScreamTailSVP, SkeledirgeexFASVP, SkeledirgeexSVP, SmolivSVP, SnorlaxSVP, SquawkabillyexSVP, StevensBeldumIR, TatsugiriSVP, TealMaskOgerponexSVP, TerapagosexSVP, ThwackeySVP, TinkatonSVP, TogekissSVP, VictiniexSVP, WalkingWakeexSVP, XatuSVP, ZapdosexSVP } from './alt-arts';
 import { Ampharosex } from './ampharos-ex';
@@ -108,4 +109,30 @@ export const setScarletAndVioletPromos: Card[] = [
   new NsZoruaSVP(),
   new MarniesMorpekoIR(),
   new StevensBeldumIR(),
+  new ToxelSVP(),
+  new Kingambit2SVP(),
+  new Miraidonex3SVP(),
+  new EspeonexSVP(),
+  new UmbreonexSVP(),
+  new NsDarmanitanSVP(),
+  new IonosKilowattrelSVP(),
+  new LilliesRibombeeSVP(),
+  new HopsSnorlaxSVP(),
+  new HopsZacianexSVP(),
+  new IonosBelliboltexSVP(),
+  new LilliesClefairyexSVP(),
+  new Charizardex4SVP(),
+  new TeamRocketsWobbuffetSVP(),
+  new CynthiasGarchompexSVP(),
+  new TeamRocketsMewtwoexSVP(),
+  new GothitelleSVP(),
+  new ReuniclusSVP(),
+  new TeamRocketsMewtwoex2SVP(),
+  new TeamRocketsNidokingexSVP(),
+  new TeamRocketsPersianexSVP(),
+  new BlackBeltsTrainingSVP(),
+  new BlackBeltsTraining2SVP(),
+  new ProfessorsResearchSVP(),
+  new ProfessorsResearch2SVP(),
+  new ProfessorsResearch3SVP(),
 ];
